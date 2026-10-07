@@ -1,0 +1,936 @@
+# Character LoRA datasets (comic-creator t-016). Silas, 2026-10-07: "go ahead with the LoRA sets"; trainer: kohya
+# sd-scripts. Build with: python scripts/build_lora_dataset.py <this file> --out DIR. Each set: the 8 locked angles
+# (CAST-PICKS.md, negative id = mirrored), 3 upper-body crops of the front views, 6 expressions (LORA-EXPRESSIONS.yaml),
+# and for the coyote both stump states. Left angles face picture-left, as Zuzu's set does.
+base_model: D:\comfy\comfy-fast\models\checkpoints\Illustrious\arthemyWesternArt_v30.safetensors
+output_dir: D:\comfy\comfy-fast\models\Lora\import
+characters:
+- key: zuzu
+  name: Zuzu
+  trigger: zuzukoala
+  class: koala
+  repeats: 10
+  identity:
+  - anthro koala
+  - male
+  - grey fur
+  - rust-brown poncho
+  - orange zigzag trim
+  - orange sash
+  - dark brown trousers
+  - wide straw hat
+  - katana on back
+  images:
+  - id: 242395
+    tags:
+    - front view
+    - facing viewer
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242397
+    tags:
+    - three-quarter view
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242193
+    tags:
+    - from side
+    - profile
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242113
+    tags:
+    - from behind
+    - three-quarter back view
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242117
+    tags:
+    - from behind
+    - back view
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242120
+    tags:
+    - from behind
+    - three-quarter back view
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: -242193
+    tags:
+    - from side
+    - profile
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242399
+    tags:
+    - three-quarter view
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242395
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - front view
+    - facing viewer
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - id: 242397
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - three-quarter view
+    - facing left
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - id: 242399
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - three-quarter view
+    - facing right
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-zuzu-angry
+    tags:
+    - front view
+    - facing viewer
+    - angry
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-zuzu-sad
+    tags:
+    - front view
+    - facing viewer
+    - sad
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-zuzu-surprised
+    tags:
+    - front view
+    - facing viewer
+    - surprised
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-zuzu-smiling
+    tags:
+    - front view
+    - facing viewer
+    - smile
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-zuzu-frightened
+    tags:
+    - front view
+    - facing viewer
+    - scared
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-zuzu-determined
+    tags:
+    - front view
+    - facing viewer
+    - serious
+    - full body
+    - standing
+    - simple background
+    - white background
+- key: sister
+  name: The sister
+  trigger: zkasister
+  class: fennec
+  repeats: 10
+  identity:
+  - anthro fennec fox
+  - female
+  - young
+  - enormous ears
+  - sand-colored fur
+  - ragged pale dress
+  - bandaged wrists
+  images:
+  - id: 242128
+    tags:
+    - front view
+    - facing viewer
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242130
+    tags:
+    - three-quarter view
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242132
+    tags:
+    - from side
+    - profile
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242135
+    tags:
+    - from behind
+    - three-quarter back view
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242137
+    tags:
+    - from behind
+    - back view
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242138
+    tags:
+    - from behind
+    - three-quarter back view
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242140
+    tags:
+    - from side
+    - profile
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242143
+    tags:
+    - three-quarter view
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242128
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - front view
+    - facing viewer
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - id: 242130
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - three-quarter view
+    - facing left
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - id: 242143
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - three-quarter view
+    - facing right
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-sister-angry
+    tags:
+    - front view
+    - facing viewer
+    - angry
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-sister-sad
+    tags:
+    - front view
+    - facing viewer
+    - sad
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-sister-surprised
+    tags:
+    - front view
+    - facing viewer
+    - surprised
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-sister-smiling
+    tags:
+    - front view
+    - facing viewer
+    - smile
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-sister-frightened
+    tags:
+    - front view
+    - facing viewer
+    - scared
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-sister-determined
+    tags:
+    - front view
+    - facing viewer
+    - serious
+    - full body
+    - standing
+    - simple background
+    - white background
+- key: toddler
+  name: The toddler
+  trigger: zkatoddler
+  class: fennec
+  repeats: 10
+  identity:
+  - anthro fennec fox
+  - toddler
+  - enormous ears
+  - sand-colored fur
+  - ragged checked tunic
+  - bandaged paw
+  images:
+  - id: 242144
+    tags:
+    - front view
+    - facing viewer
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242146
+    tags:
+    - three-quarter view
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242148
+    tags:
+    - from side
+    - profile
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242150
+    tags:
+    - from behind
+    - three-quarter back view
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242153
+    tags:
+    - from behind
+    - back view
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242154
+    tags:
+    - from behind
+    - three-quarter back view
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242156
+    tags:
+    - from side
+    - profile
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242158
+    tags:
+    - three-quarter view
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242144
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - front view
+    - facing viewer
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - id: 242146
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - three-quarter view
+    - facing left
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - id: 242158
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - three-quarter view
+    - facing right
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-toddler-angry
+    tags:
+    - front view
+    - facing viewer
+    - angry
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-toddler-sad
+    tags:
+    - front view
+    - facing viewer
+    - sad
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-toddler-surprised
+    tags:
+    - front view
+    - facing viewer
+    - surprised
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-toddler-smiling
+    tags:
+    - front view
+    - facing viewer
+    - smile
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-toddler-frightened
+    tags:
+    - front view
+    - facing viewer
+    - scared
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-toddler-determined
+    tags:
+    - front view
+    - facing viewer
+    - serious
+    - full body
+    - standing
+    - simple background
+    - white background
+- key: coyote
+  name: The coyote
+  trigger: zkacoyote
+  class: coyote
+  repeats: 10
+  identity:
+  - anthro coyote
+  - male
+  - eyepatch over right eye
+  - battered brown hat
+  - tattered olive riding coat
+  - revolver holstered on right hip
+  - thin
+  images:
+  - id: 242531
+    tags:
+    - front view
+    - facing viewer
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242209
+    tags:
+    - three-quarter view
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: -242404
+    tags:
+    - from side
+    - profile
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: -242216
+    tags:
+    - from behind
+    - three-quarter back view
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242214
+    tags:
+    - from behind
+    - back view
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: -242537
+    tags:
+    - from behind
+    - three-quarter back view
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242404
+    tags:
+    - from side
+    - profile
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242220
+    tags:
+    - three-quarter view
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242531
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - front view
+    - facing viewer
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - id: 242209
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - three-quarter view
+    - facing left
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - id: 242220
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - three-quarter view
+    - facing right
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-coyote-angry
+    tags:
+    - front view
+    - facing viewer
+    - angry
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-coyote-sad
+    tags:
+    - front view
+    - facing viewer
+    - sad
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-coyote-surprised
+    tags:
+    - front view
+    - facing viewer
+    - surprised
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-coyote-smiling
+    tags:
+    - front view
+    - facing viewer
+    - smile
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-coyote-frightened
+    tags:
+    - front view
+    - facing viewer
+    - scared
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-coyote-determined
+    tags:
+    - front view
+    - facing viewer
+    - serious
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242550
+    tags:
+    - front view
+    - facing viewer
+    - missing right hand
+    - bleeding stump
+    - amputee
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242588
+    tags:
+    - front view
+    - facing viewer
+    - missing right hand
+    - bandaged stump
+    - amputee
+    - full body
+    - standing
+    - simple background
+    - white background
+- key: abbess
+  name: The abbess
+  trigger: zkaabbess
+  class: otter
+  repeats: 10
+  identity:
+  - anthro otter
+  - female
+  - elderly
+  - nun
+  - black habit
+  - white wimple
+  - flat round face
+  - brown fur
+  images:
+  - id: 242559
+    tags:
+    - front view
+    - facing viewer
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: -242513
+    tags:
+    - three-quarter view
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: -242561
+    tags:
+    - from side
+    - profile
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242515
+    tags:
+    - from behind
+    - three-quarter back view
+    - facing left
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242356
+    tags:
+    - from behind
+    - back view
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242520
+    tags:
+    - from behind
+    - three-quarter back view
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242521
+    tags:
+    - from side
+    - profile
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: -242524
+    tags:
+    - three-quarter view
+    - facing right
+    - full body
+    - standing
+    - simple background
+    - white background
+  - id: 242559
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - front view
+    - facing viewer
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - id: -242513
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - three-quarter view
+    - facing left
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - id: -242524
+    crop:
+    - 0.0
+    - 0.0
+    - 1.0
+    - 0.5
+    tags:
+    - three-quarter view
+    - facing right
+    - upper body
+    - portrait
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-abbess-angry
+    tags:
+    - front view
+    - facing viewer
+    - angry
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-abbess-sad
+    tags:
+    - front view
+    - facing viewer
+    - sad
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-abbess-surprised
+    tags:
+    - front view
+    - facing viewer
+    - surprised
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-abbess-smiling
+    tags:
+    - front view
+    - facing viewer
+    - smile
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-abbess-frightened
+    tags:
+    - front view
+    - facing viewer
+    - scared
+    - full body
+    - standing
+    - simple background
+    - white background
+  - ledger: LORA-EXPRESSIONS.yaml
+    ledger_key: lora-abbess-determined
+    tags:
+    - front view
+    - facing viewer
+    - serious
+    - full body
+    - standing
+    - simple background
+    - white background
