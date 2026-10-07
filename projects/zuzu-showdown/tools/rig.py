@@ -173,6 +173,7 @@ def hurtbox(frame: Image.Image, anchor: tuple[int, int], scale: float) -> dict:
 def main(slug: str, source_dir: str, out_dir: str) -> None:
     rig = importlib.import_module(f"rigs.{slug}")
     src, out = Path(source_dir), Path(out_dir)
+    rig.SOURCE_DIR = src  # for rigs whose drawn pieces paste source art (the Coyote's sleeves)
     sources = {}
     parts = {}
     for name, spec in rig.PARTS.items():
