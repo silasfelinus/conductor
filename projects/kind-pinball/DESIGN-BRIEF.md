@@ -1,7 +1,7 @@
 # Kind Pinball — Design Brief
 
 date: 2026-10-07
-status: v2 (FX3 architecture reset)
+status: v3 (Silas's scope answers, 2026-10-07: one table, hidden sub-table, one leaderboard, FX3 standard)
 author: Claude session (Silas-directed)
 
 ## What it is
@@ -49,17 +49,23 @@ too.
 7. **Levels.** An **upper playfield** reached by a ramp (a mini-table with its own flipper), plus
    **several tables** to choose from, each with its own theme, layout and rules.
 
-## Tables (themes are original to Kind Robots)
+## Scope decision (Silas, 2026-10-07)
 
-- **Table 1 — AMI Village Rescue.** The current table, rebuilt. Against-Malaria theme: deliver nets to
-  villages, AMI multiball. The mansion-grid idea becomes a **village map**: 12 awards lit from the
-  scoop that lead to a **"Malaria-Free" wizard mode**.
-- **Table 2 — proposed: Zuzu's Dojo.** Zuzu the koala ronin (comic canon at
-  projects/comic-creator/issues/zuzu-koala-assassin-01/). Battle modes against the cast, Godzilla-style.
-  It ties pinball to the zuzu-lair and zuzu-showdown work. **Lighter tone**, per Silas's 2026-10-07
-  zuzu-showdown note: more Street Fighter than Mortal Kombat.
-- **Table 3 — proposed: Robot Factory** (or the Cthulhuquarium deep sea). A T2-style lock-and-jackpot
-  machine with a toy that builds a robot as you play.
+*"one leaderboard, a sub-table to be discovered, leading back to the original. the fx3 quality reset is
+important and should be followed ... this project finishes when it's a truly fun, complex, and quality
+table ... it should be as good as any pinball fx3 table, that's our standard."*
+
+- **One table: AMI Village Rescue.** The current table, rebuilt in 3D per FX3-QUALITY-BLUEPRINT.md.
+  Against-Malaria theme: deliver nets to villages, AMI multiball. The mansion-grid idea becomes a
+  **village map**: 12 awards lit from the scoop that lead to a **"Malaria-Free" wizard mode**.
+- **"Levels" = a hidden sub-table.** A secret playfield the player discovers through play (not an
+  always-open labelled ramp). It has its own flipper, toy and short mode, and the ball returns through a
+  visible habitrail or kickout to the main table, carrying its rewards back.
+- **One leaderboard:** the existing `kind-pinball` Arcade board. No table select.
+- **The proposed Tables 2 and 3 (Zuzu's Dojo; Robot Factory / Cthulhuquarium) are dropped.** Those
+  ideas can come back as pitches someday, never as part of this project.
+- **The standard:** as good as any Pinball FX3 table -- fun, complex and quality. The project finishes
+  only on Silas's verdict against that standard (t-016), never by task count.
 
 ## MVP (what ships first)
 
@@ -114,9 +120,6 @@ any label.
 - Stays a free arcade cabinet. No paywall, ads or spending.
 - Zuzu content follows the comic's guardrails (CAST-PICKS.md, VIDEO-GUARDRAILS.md, bannedTerms).
 
-## Open questions for Silas (soft, t-002)
+## Open questions
 
-1. "Different levels": does that mean **several tables**, an **upper playfield** on one table, or
-   both? (The plan assumes both.)
-2. Are Table 2 and Table 3 (Zuzu's Dojo; Robot Factory or Cthulhuquarium) the right themes?
-3. Should each table get **its own leaderboard**, or one pinball board?
+None. Silas answered t-002 on 2026-10-07 (see "Scope decision" above).

@@ -599,10 +599,15 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
   kombat." No blood, no gore, no fatalities. The Coyote fights without his hand. Online play later.
 
 ### kind-pinball  (software)
-**Direction:** A real-quality pinball game on Kind Robots, as good as a Williams ROM: a polished, lit, art-directed table with multiple ramps and orbits, a dot-matrix display, deep mode/wizard rules, multiple tables or levels, and sound -- modelled on The Addams Family, Terminator 2, Stern's Godzilla and the Pinball FX3 tables, playable free in the Arcade.
+**Direction:** ONE pinball table (AMI Village Rescue) as good as any Pinball FX3 table: truly fun, complex and high quality. Real 3D per projects/kind-pinball/FX3-QUALITY-BLUEPRINT.md, deep rules, an animated DMD, signature toys, sound, and a hidden sub-table discovered through play that leads back to the main table. One leaderboard. Modelled on The Addams Family, Terminator 2, Stern's Godzilla and the Pinball FX3 tables, playable free in the Arcade.
 **Notes:**
 - Silas, 2026-10-07: split out of kr-arcade as its own project and made one of the four HIGH-priority
   projects (with zuzu-lair, kr-arcade and zuzu-showdown). "As good as a rom for a Williams machine ...
   a few style passes would do wonders. Different levels, multiple ramps, a REAL quality game."
 - The reference machines are models for feel, shot map, display, lights and rules depth. Their names,
   characters, art and sounds are never used (the arcade riff rule). Brief: projects/kind-pinball/DESIGN-BRIEF.md.
+- Silas, 2026-10-07 (answering t-002): "one leaderboard, a sub-table to be discovered, leading back to the
+  original. the fx3 quality reset is important and should be followed, it was a new agent with a better
+  eye on quality. we want quality. this project finishes when it's a truly fun, complex, and quality table
+  ... it should be as good as any pinball fx3 table, that's our standard." No Tables 2/3, no table select.
+  Follow FX3-QUALITY-BLUEPRINT.md. Never call it finished by task count; only his verdict (t-016) ends it.
