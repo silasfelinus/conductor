@@ -180,16 +180,15 @@ tasks:
 
   - id: t-006
     milestone: m2
-    title: "kind_robots: renderer, HUD and playable page on placeholders (unlisted)"
-    status: claimed
+    title: "kind_robots: renderer, HUD and playable page on placeholders (Admin tab)"
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-005]
     note: >-
-      Page /play/zuzu-showdown on the Projects tab (content/channels/projects/zuzu-showdown.md +
-      utils/projectPlacements.ts) but UNLISTED until t-025: reachable by URL, hidden from the hall and the
-      Projects list. A 480x270 canvas, integer-scaled with nearest-neighbor, the arcade CRT overlay
+      Page /play/zuzu-showdown as an Admin tab (requiredRole ADMIN) until t-025, not an unlisted URL:
+      Silas's no-hidden-routes rule puts anything not for everyone in Admin. A 480x270 canvas, integer-scaled with nearest-neighbor, the arcade CRT overlay
       option, and the touch-play lock (kind_robots#3276). It draws placeholder fighters from the sim
       state, a placeholder parallax stage, and the HUD: life bars with red recoverable damage, the
       three-bar meter, timer, round pips, names in the pixel font (utils/arcade/font.ts), combo counter
@@ -198,10 +197,18 @@ tasks:
       store. Verify a full local versus match with Playwright at phone, tablet and desktop widths
       (keyboard and touch), and screenshot every state.
 
+      2026-10-07: implemented in silasfelinus/kind_robots#3304 (render.ts, stage component,
+      options store, Admin tab /play/zuzu-showdown). Admin tab instead of an unlisted URL, per
+      Silas's no-hidden-routes rule. Screenshots: projects/zuzu-showdown/docs/t-006-screens/.
+
+      2026-10-07: merged silasfelinus/kind_robots#3304 with all 34 CI checks green (after a
+      prettier-ratchet fix commit). Admin tab at /play/zuzu-showdown.
+
   # ---------------------------------------------------------------- m3 ART
     claimed_by: 2026-10-07T03:40:00Z-zs-t006
     claimed_at: '2026-10-07T03:01:16Z'
-    updated: '2026-10-07T03:01:16Z'
+    updated: '2026-10-07T03:46:08Z'
+    implementation_pr: 'silasfelinus/kind_robots#3304'
   - id: t-007
     milestone: m3
     title: "Sprite pipeline bake-off on Zuzu (pose-locked generation vs cutout rig vs hand pixel)"
@@ -421,12 +428,12 @@ tasks:
       is 2-3 pixelized stills plus a line or two. The score (time, combos, Perfects, READ!s, difficulty
       multiplier) goes through the arcade store's submitScore as gameSlug `zuzu-showdown`, with
       maxPlausibleScore registered and three-initial entry. The Arcade hall tile links to
-      /play/zuzu-showdown but stays hidden until t-025.
+      /play/zuzu-showdown but stays out of the hall until t-025.
 
   - id: t-022
     milestone: m4
     title: "kind_robots: Training mode"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -439,7 +446,7 @@ tasks:
   - id: t-023
     milestone: m4
     title: "Sound: stage loops, hit/block/whiff/parry, KO sting, super stinger, the bell"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -479,7 +486,8 @@ tasks:
     note: >-
       FOR SILAS (once all eight fighters are in): play Arcade and Versus on phone and desktop and judge the
       feel, the look, the lines and the KO tone. Agents fold your notes into the roadmap. When you accept
-      it, an agent un-hides the Arcade hall tile and the Projects listing.
+      it, an agent moves the Admin tab to the Projects channel (content doc +
+      utils/projectPlacements.ts) and shows the Arcade hall tile.
 
   - id: t-026
     milestone: m5
