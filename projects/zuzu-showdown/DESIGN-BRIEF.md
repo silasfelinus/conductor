@@ -309,9 +309,12 @@ the counter, so your habits get read. Kid difficulty blocks rarely and never use
 - **Renderer:** a canvas component draws the sim state with sprite atlases, parallax and HUD. It reuses
   `utils/arcade/font.ts`, `sound.ts` and `leaderboard.ts`, and extends `input.ts` for two players and six
   buttons.
-- **Page:** `/play/zuzu-showdown` on the Projects tab (`content/channels/projects/zuzu-showdown.md` plus
-  `utils/projectPlacements.ts`), with an Arcade hall tile that links to it. The page stays **unlisted**
-  (reachable by URL, not in the hall or the Projects list) until Silas's verdict (t-025).
+- **Page:** `/play/zuzu-showdown`. Until Silas's verdict (t-025) it is an **Admin tab**
+  (`content/channels/admin/zuzu-showdown.md`, `requiredRole: ADMIN`), not an unlisted URL. Silas's
+  no-hidden-routes rule (kind_robots `verifyNoHiddenRoutes.ts`, 2026-09-30) is *"if it's not to be seen,
+  then it should be in admin."* After the verdict the tab moves to the Projects channel
+  (`content/channels/projects/zuzu-showdown.md` plus `utils/projectPlacements.ts`) and gets an Arcade
+  hall tile that links to it.
 - **Assets:** sprite atlases and stage layers live under `public/images/zuzu-showdown/` as WebP or PNG
   sheets with JSON frame maps. Keep the prompt, model, seed and source metadata for every generated
   image (AGENTS.md).

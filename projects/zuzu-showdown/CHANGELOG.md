@@ -1,6 +1,10 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- Engine milestone (kind_robots): t-003 sim core (#3291), t-004 controls + motion reader (#3294), t-005 combat
+  systems (#3298), t-006 playable Admin-tab page with renderer and HUD (#3304). Screenshots in
+  docs/t-006-screens/. The pre-verdict page is an Admin tab rather than an unlisted URL (Silas's
+  no-hidden-routes rule).
 - t-002 done: Silas confirmed the Coyote without his hand, a lighter Street Fighter tone (no blood, no
   gore, no fatalities), the name Zuzu Showdown, and online play later. Brief v1.2; fighters.yaml tone
   rule, and the Abbess's altar grab and Komodo's super toned down.
