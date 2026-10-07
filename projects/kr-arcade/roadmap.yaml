@@ -250,7 +250,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -373,10 +373,22 @@ tasks:
       pilot probe seeds 1-6 (studio 6-7 after escalating extra-life thresholds), Playwright.
       Next cycle: zuzu-ghost-trail slice 1 (one stage + poncho/armor rule; Zuzu canon and
       VIDEO-GUARDRAILS apply), then station-sweep, plus remaining kindness-gauntlet slices.
+
+      RAN 2026-10-07: Zuzu: Ghost Trail slice 1 (Ghosts 'n Goblins riff) shipped live in
+      silasfelinus/kind_robots#3293 -- ghost-town trail with pits/boardwalks/tombstones,
+      rising spirits, storm crows, bone hyenas, kunai, committed jumps, the poncho rule (first
+      hit loses poncho+kasa, second to the checkpoint), crates with a fresh poncho, dusk
+      timer; Zuzu drawn to canon (kasa, rust poncho with orange zigzag, katana hilt over the
+      right shoulder, never smiling); no bannedTerms on screen or in the art prompt. Title art
+      requested as kr-arcade-games-zuzu-ghost-trail-title. Verified: test:arcade-engine,
+      eslint/prettier, vue-tsc, pilot probe seeds 1-6 (clears in 3/6 after fixing respawn
+      camera, tombstone jump and pit-edge spawns), Playwright. zuzu-ghost-trail stays
+      building; next slices: throwables + pickups, bosses, stage progression. Queue: station-
+      sweep (Xenophobe) slice 1, kindness-gauntlet slices.
     claimed_by: 2026-10-07T0100Z-kr-arcade-t009-zuzu-ghost-trail-s1
     claimed_at: '2026-10-07T02:01:25Z'
-    updated: '2026-10-07T02:01:25Z'
-    implementation_pr: 'silasfelinus/kind_robots#3292'
+    updated: '2026-10-07T02:04:10Z'
+    implementation_pr: 'silasfelinus/kind_robots#3293'
 
   - id: t-010
     milestone: m2
