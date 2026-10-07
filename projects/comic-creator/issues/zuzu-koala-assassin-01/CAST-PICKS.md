@@ -512,3 +512,9 @@ dagger to 242571 in two ways. Gripped at her chest: 242997 and 242998. Hanging a
 **s13 is 243000**: the bloodied dagger hangs from her loose right hand, with tremble lines around her, which is the
 right first frame for the drop. Its LTX clip, with the motion prompt "her fingers loosen and the dagger slips and falls to
 the stone floor", is ArtJob 34765. Our jobs were raised to priority 101, ahead of the page-backdrops batch.
+
+**The falling knife works (2026-10-07).** With only a first frame, the LTX clip never dropped the knife (243054). Two fixes:
+- An end keyframe: 243070, a Kontext edit with her hand empty and the dagger on the floor.
+- kind_robots#3343: `motion.lastFrameImageId`, which lets a clip end on a chosen image.
+
+The re-clip (ArtJob 34804, clip 243098) runs from 243000 to 243070. The dagger slips and lands at about 58.3–59.5 s. Re-exported as final ArtImage 243105.
