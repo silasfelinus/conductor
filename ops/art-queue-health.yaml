@@ -1,4 +1,229 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: project-art
+  target: projects/images/comic-film-card.webp
+  kind: contract-rejected
+  rules:
+  - format-vocabulary
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [format-vocabulary]
+    "comic page" asks for a physical format, so the model renders the format — frame, title bar, and invented
+    text included. Describe the su…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/comic-film-hero.webp
+  kind: contract-rejected
+  rules:
+  - format-vocabulary
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [format-vocabulary]
+    "comic panel" asks for a physical format, so the model renders the format — frame, title bar, and
+    invented text included. Describe the s…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/evolve-rebel-button-card.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-daily-riddle-card.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-daily-riddle-hero.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-daily-riddle-icon.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-lantern-garden-card.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-lantern-garden-hero.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-lantern-garden-icon.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-nonogram-gallery-card.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-nonogram-gallery-hero.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-nonogram-gallery-icon.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-oracle-card.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-pinball-card.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text, no logos names text on an engine whose negative prompt is inert, so the word lands in POSITIVE
+    conditioning on a model from t…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-pinball-hero.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text, no logos names text on an engine whose negative prompt is inert, so the word lands in POSITIVE
+    conditioning on a model from t…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kind-pinball-icon.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kr-adventures-card.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/kr-solitaire-card.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/robot-mashup-flipbook-hero.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/robot-sound-garden-hero.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/robot-species-sorting-quiz-card.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/robot-species-sorting-quiz-hero.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: project-art
+  target: projects/images/robot-species-sorting-quiz-icon.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE conditioning
+    on a model from the stronge…'
+  first_seen: '2026-10-07'
+- source: kr-failed-jobs
+  target: ArtJob 34375
+  kind: kr-job-failed
+  rules:
+  - frame-noun
+  detail: 'engine=COMFY; error=ArtJob validation failed before claim: Art prompt rejected by the prompt
+    contract (1 violation): [frame-noun] "The overall composition is encased in a rounded frame with a
+    thin, polished silver border, inviting a sense …'
+  first_seen: '2026-10-07'
+- source: kr-failed-jobs
+  target: ArtJob 34381
+  kind: kr-job-failed
+  rules:
+  - frame-noun
+  detail: 'engine=COMFY; error=ArtJob validation failed before claim: Art prompt rejected by the prompt
+    contract (1 violation): [frame-noun] "Stylish wide interface background for Tzaddik Gallery: an elegant
+    contemporary hall of portrait frames curvi…'
+  first_seen: '2026-10-07'
