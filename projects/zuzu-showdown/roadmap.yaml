@@ -95,8 +95,8 @@ tasks:
   - id: t-003
     milestone: m2
     title: "kind_robots: deterministic fight sim core + contract test (utils/zuzuShowdown/)"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -110,6 +110,9 @@ tasks:
       default normals from fighters.yaml) so the sim is exercised. Contract test under utils/scripts/,
       run by tsx in contract-tests.yml like verifyArcadeEngine.test.ts: walk/jump/block/throw cases,
       round flow, and a determinism replay (one input log run twice, equal hashes at every frame).
+    claimed_by: 2026-10-07T01:10:00Z-zs-t003
+    claimed_at: '2026-10-07T01:36:08Z'
+    updated: '2026-10-07T01:36:08Z'
 
   - id: t-004
     milestone: m2
