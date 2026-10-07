@@ -12460,3 +12460,6 @@ Reviewed worker/milestone-status-drift-20261002: four status-field-only mileston
 
 ## 2026-10-06 — Reviewer: conductor#5652 kr-arcade/t-009 Timber Bot (approved, merged)
 Reviewed the game-factory close-out: art-prompt request, games.yaml timber-bot → shipped (kind_robots#3273 confirmed merged), t-009 re-armed to ready via close_task.py. Reversible, scoped, CI green; squash-merged. Recurring task, so no kaizen task added. Also fixed three milestone-status drifts (kind-daily-riddle, kind-lantern-garden, robot-species-sorting-quiz m1 → in-progress). Pattern: the factory worker closes out cleanly; nothing to improve.
+
+## 2026-10-07 — Reviewer: conductor#5698 zuzu-showdown fighters.yaml sync (approved, merged)
+Reviewed the t-014 Zuzu-half sync: fighters.yaml damage/height notes now mirror the engine kit (kind_robots#3309). YAML parses, 23/23 checks green, reversible and scoped; squash-merged. t-014 stays claimed (Coyote half pending), so no kaizen task added. Pattern: Worker followed the yaml-and-TS-updated-together rule; nothing to improve.
