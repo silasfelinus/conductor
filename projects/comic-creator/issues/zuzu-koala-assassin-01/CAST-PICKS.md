@@ -491,3 +491,16 @@ The old left-hip stumps 242428 and 242435 drop to `liked` in the studio.
 - s11 is 242688: the otter is removed and nothing else changed.
 - s08: both removals (242685, 242686) kept round 1's black robe. Kontext adds the poncho to 242686 (ArtJobs
   34363–34364).
+
+## Music video 12, round 3 (2026-10-07)
+
+Silas, on round 2: *"Coyote should be without hand in 6 and 7, obv flaw in abbess"*. The abbess flaw is the s11 nun's
+pale, human face. Each fix places a locked cast render, padded to 16:9 with the new `source_pad` option, into
+its scene with Kontext:
+- **s06 is 242731**, from the fresh stump 242550. His right arm ends in a bleeding stump with no hand. 242732
+  grew something hand-shaped; 242733 also works.
+- **s07 is 242735**, from the bandaged stump 242588. A wrapped, blood-banded stump with a tied-off tail, and no
+  hand.
+- **s11 is 242738**, from the abbess front 242559. Her flat brown face, at the mission gate with the merry-go-round.
+
+The re-export is final ArtImage 242748: 72.0 s, 8.2 MB at CRF 24.
