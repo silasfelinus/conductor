@@ -1,0 +1,128 @@
+# Kontext removals for the Zuzu intro music video (KR music video 12). The round-1 stills for s03 and s08 had the
+# right poncho but a stray baby koala beside Zuzu; round 2 (solo tags) lost the poncho for a black robe. s11's
+# abbess-faced nun came with a real otter at her feet. Kontext is good at removal, so these clean the r1/r2 picks.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# mvfix-s08-poncho-*: both s08 removals kept the r1 black robe, so Kontext adds his poncho to 242686.
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-fix
+  label: Flux Kontext dev (fp8), object removal
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: mvfix-s03-1
+  entity: music-video
+  title: 'MV s03: stray figure removed (seed 1)'
+  size: 1344x768
+  source_image_id: 242564
+  prompt_prose: 'Remove the small koala cub standing beside him and fill the space with the water and desert behind.
+    Change nothing else: the big koala, his poncho, hat and sword, the pool, the light, colours and the inked comic
+    style.'
+  jobs:
+    kontext-fix: 34353
+  art:
+    kontext-fix:
+      status: DONE
+      art_image_id: 242683
+- key: mvfix-s03-2
+  entity: music-video
+  title: 'MV s03: stray figure removed (seed 2)'
+  size: 1344x768
+  source_image_id: 242564
+  prompt_prose: 'Remove the small koala cub standing beside him and fill the space with the water and desert behind.
+    Change nothing else: the big koala, his poncho, hat and sword, the pool, the light, colours and the inked comic
+    style.'
+  jobs:
+    kontext-fix: 34354
+  art:
+    kontext-fix:
+      status: DONE
+      art_image_id: 242684
+- key: mvfix-s08-1
+  entity: music-video
+  title: 'MV s08: stray figure removed (seed 1)'
+  size: 1344x768
+  source_image_id: 242567
+  prompt_prose: 'Remove the small koala standing beside him and fill the space with the burning street behind. Change
+    nothing else: the big koala, his poncho, hat and sword, the bell tower, fire, smoke, colours and the inked comic
+    style.'
+  jobs:
+    kontext-fix: 34355
+  art:
+    kontext-fix:
+      status: DONE
+      art_image_id: 242685
+- key: mvfix-s08-2
+  entity: music-video
+  title: 'MV s08: stray figure removed (seed 2)'
+  size: 1344x768
+  source_image_id: 242567
+  prompt_prose: 'Remove the small koala standing beside him and fill the space with the burning street behind. Change
+    nothing else: the big koala, his poncho, hat and sword, the bell tower, fire, smoke, colours and the inked comic
+    style.'
+  jobs:
+    kontext-fix: 34356
+  art:
+    kontext-fix:
+      status: DONE
+      art_image_id: 242686
+- key: mvfix-s11-1
+  entity: music-video
+  title: 'MV s11: stray figure removed (seed 1)'
+  size: 1344x768
+  source_image_id: 242586
+  prompt_prose: 'Remove the small brown otter animal at her feet and fill the space with the stone paving. Change
+    nothing else: the nun, her habit and face, the gate, the walls, light, colours and the inked comic style.'
+  jobs:
+    kontext-fix: 34357
+  art:
+    kontext-fix:
+      status: DONE
+      art_image_id: 242687
+- key: mvfix-s11-2
+  entity: music-video
+  title: 'MV s11: stray figure removed (seed 2)'
+  size: 1344x768
+  source_image_id: 242586
+  prompt_prose: 'Remove the small brown otter animal at her feet and fill the space with the stone paving. Change
+    nothing else: the nun, her habit and face, the gate, the walls, light, colours and the inked comic style.'
+  jobs:
+    kontext-fix: 34358
+  art:
+    kontext-fix:
+      status: DONE
+      art_image_id: 242688
+- key: mvfix-s08-poncho-1
+  entity: music-video
+  title: 'MV s08: poncho added (seed 1)'
+  size: 1344x768
+  source_image_id: 242686
+  prompt_prose: 'Dress the koala in a rust-brown poncho with an orange zigzag trim, draped over his shoulders and
+    hanging to his hips over the dark tunic and orange sash. Keep everything else exactly as it is: his face, pose,
+    the katana, the burning street, bell tower, smoke, fire, colours and the inked comic style.'
+  jobs:
+    kontext-fix: 34363
+  art:
+    kontext-fix:
+      status: PENDING
+      art_image_id: null
+- key: mvfix-s08-poncho-2
+  entity: music-video
+  title: 'MV s08: poncho added (seed 2)'
+  size: 1344x768
+  source_image_id: 242686
+  prompt_prose: 'Dress the koala in a rust-brown poncho with an orange zigzag trim, draped over his shoulders and
+    hanging to his hips over the dark tunic and orange sash. Keep everything else exactly as it is: his face, pose,
+    the katana, the burning street, bell tower, smoke, fire, colours and the inked comic style.'
+  jobs:
+    kontext-fix: 34364
+  art:
+    kontext-fix:
+      status: PENDING
+      art_image_id: null

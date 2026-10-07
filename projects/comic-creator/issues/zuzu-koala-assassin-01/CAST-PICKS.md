@@ -446,3 +446,48 @@ tests no longer match. They are re-rendered in brown (ArtJobs 34227–34230).
     34245–34248). ANGLES-ZUZU.yaml mv-zuzu-hero-* places 242395 on the road (34249–34250).
     Both failed the prompt contract before claim (frame-noun: "in the frame"); reworded and resubmitted as
     34272–34273, and the failed rows were cancelled.
+
+## Final cast (2026-10-07)
+
+All five sets are locked and in the Kind Robots Comic Studio as `cast-*` slots with a final pick. The Cast tab
+(kind_robots#3271) shows them as model sheets.
+
+**Facing convention.** These follow Zuzu's set: left angles face the left of the picture, right angles face the
+right. The abbess broke the convention in three places: 242513 (3/4 front left) faced right, 242524 (3/4 front right)
+faced left, and both her profiles faced right. Mirroring all three fixes it, and her habit is symmetric. Her set is:
+
+| Front | 3/4 front L | Profile L | 3/4 back L | Back | 3/4 back R | Profile R | 3/4 front R |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 242559 | m242513 | m242561 | 242515 | 242356 | 242520 | 242521 | m242524 |
+
+242559 and 242561 are the brown re-renders (ART-ROUND-14 `r14-abbess-*-brown*`); 242558 sat on a dark backdrop and
+242560's snout ran long.
+
+**The coyote's stump, holster on his right hip.** 242550 (ART-ROUND-16 `r16-coyote-front-stump-11`) is the first
+native render with every side right. The eyepatch, holster and bleeding stump all sit on the left of the picture,
+and the gloved hand is on the right. The tight-mask bandage on it (ANGLES-COYOTE `r20-*`, box 0.22–0.315 ×
+0.405–0.53) gave:
+- 242588, a wrapped stump with a blood-soaked band and a tied-off tail. This is the pick.
+- 242577, which reads as a sack over a hand.
+
+The old left-hip stumps 242428 and 242435 drop to `liked` in the studio.
+
+**Next:** the LoRA training sets (t-016) wait on Silas's go-ahead.
+
+## Music video 12, round 2 (2026-10-07)
+
+**Round 2 fixed some scenes:**
+- The solo tags removed the stray baby koala, but on s03 and s08 they swapped the poncho for a black robe.
+- s07 is now a close-up insert of the bandaging.
+- s09 shows the girl carrying the toddler.
+- s11's nun came with a real otter at her feet.
+
+**Kontext removals** on the r1 s03/s08 stills and on s11 are in MV-FIXES.yaml (ArtJobs 34353–34358).
+
+**Clips:** s05 (34359), s14 (34360), s02 (34361) and s15 (34362). s08 is re-clipped once its fix lands.
+
+**Round-2 removals screened:**
+- s03 is 242684: the cub is removed and the pool keeps its warm light. 242683 turned the water blue.
+- s11 is 242688: the otter is removed and nothing else changed.
+- s08: both removals (242685, 242686) kept round 1's black robe. Kontext adds the poncho to 242686 (ArtJobs
+  34363–34364).

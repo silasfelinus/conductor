@@ -78,11 +78,11 @@ CAST = [
     ("siblings", "sister", "The sister", [242128, 242130, 242132, 242135, 242137, 242138, 242140, 242143]),
     ("siblings", "toddler", "The toddler", [242144, 242146, 242148, 242150, 242153, 242154, 242156, 242158]),
     ("coyote", "coyote", "The coyote", [242531, 242209, -242404, -242216, 242214, -242537, 242404, 242220]),
-    ("otter-house", "abbess", "The abbess", [None, 242513, None, 242515, 242356, 242520, 242521, 242524]),
+    ("otter-house", "abbess", "The abbess", [242559, -242513, -242561, 242515, 242356, 242520, 242521, -242524]),
 ]
 CAST_EXTRA = [
-    ("coyote", "coyote-stump-fresh", "The coyote: fresh stump (chapter 1, after the croc)", 242428),
-    ("coyote", "coyote-stump-bandaged", "The coyote: stump bandaged by Zuzu", 242435),
+    ("coyote", "coyote-stump-fresh", "The coyote: fresh stump (chapter 1, after the croc)", 242550),
+    ("coyote", "coyote-stump-bandaged", "The coyote: stump bandaged by Zuzu", 242588),
 ]
 CAST_ENTITIES = [
     ("coyote", "character", "The one-eyed coyote", "Destitute drifter, sick and underfed, never skeletal. Eyepatch on his RIGHT eye, revolver on his RIGHT hip. The croc takes his right (gun) hand in chapter 1; Zuzu bandages the stump and they part with their backs turned. Returns later as an ally.", None),
