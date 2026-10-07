@@ -483,3 +483,9 @@ The old left-hip stumps 242428 and 242435 drop to `liked` in the studio.
 **Kontext removals** on the r1 s03/s08 stills and on s11 are in MV-FIXES.yaml (ArtJobs 34353–34358).
 
 **Clips:** s05 (34359), s14 (34360), s02 (34361) and s15 (34362). s08 is re-clipped once its fix lands.
+
+**Round-2 removals screened:**
+- s03 is 242684: the cub is removed and the pool keeps its warm light. 242683 turned the water blue.
+- s11 is 242688: the otter is removed and nothing else changed.
+- s08: both removals (242685, 242686) kept round 1's black robe. Kontext adds the poncho to 242686 (ArtJobs
+  34363–34364).
