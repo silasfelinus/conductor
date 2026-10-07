@@ -250,7 +250,7 @@ tasks:
 - id: t-016
   milestone: m3
   title: Character LoRA datasets for Zuzu and the fennec siblings
-  status: ready
+  status: waiting
   owner: null
   passes: 0
   stakes: reversible
@@ -268,6 +268,10 @@ tasks:
 
     Reset stale claimed (null claimed_by/at) back to ready: lost close-out write, per
     check_recurring_claim_drift.
+
+    2026-10-07: ready -> waiting. t-015 (the angle sets) is still open, and the roadmap
+    audit refuses a ready task with unmet dependencies; the resolver promotes this to ready
+    when t-015 closes. Silas's approval stands.
   approved_by_human: true
 - id: t-017
   milestone: m2
