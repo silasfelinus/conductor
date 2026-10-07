@@ -202,11 +202,11 @@ tasks:
 - id: t-015
   milestone: m2
   title: 'Character 360 spinner: 8 consistent angles per approved design (Flux Kontext)'
-  status: ready
+  status: done
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-05T13:46:37Z'
+  updated: '2026-10-07T11:47:56Z'
   depends_on:
   - t-013
   note: >-
@@ -246,15 +246,22 @@ tasks:
     2026-10-05 agent: repaired a second lost claim (status claimed with null
     claimed_by/claimed_at); still awaiting the coyote stump retry and Silas's verdict on the
     sets.
+
+    Done 2026-10-07. All five eight-angle sets are locked (Zuzu, the sister, the toddler,
+    the coyote with both right-hip stump states, the abbess variant B), recorded in CAST-
+    PICKS.md and imported into the Comic Studio as cast-* slots with final picks (model
+    sheets in the Cast tab, kind_robots#3271). Silas reviewed the final cast sheet and moved
+    on to the LoRA sets ("go ahead with the LoRA sets").
   gate_reason: creative-approval
+  approved_by_human: true
 - id: t-016
   milestone: m3
   title: Character LoRA datasets for Zuzu and the fennec siblings
-  status: waiting
+  status: needs-human
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-07T08:46:52Z'
+  updated: '2026-10-07T11:50:09Z'
   depends_on:
   - t-015
   note: >-
@@ -272,7 +279,21 @@ tasks:
     2026-10-07: ready -> waiting. t-015 (the angle sets) is still open, and the roadmap
     audit refuses a ready task with unmet dependencies; the resolver promotes this to ready
     when t-015 closes. Silas's approval stands.
+
+    All five datasets built and sent to Silas 2026-10-07 (zuzukoala, zkasister, zkatoddler
+    17 images; zkacoyote 19 with both stump states; zkaabbess 17). Expression retries:
+    coyote surprised 243052, abbess surprised 243053. Remaining: Silas sets up kohya sd-
+    scripts on the box and runs each train.ps1 (docs/lora-training.md); finished LoRAs land
+    in Lora/import for lora_import_agent. Known nit: abbess profile-left (m242561) carries a
+    small teal ground strip.
+
+    Soft access gate (not a decision): Silas already approved; the only remaining step is
+    running train.ps1 on the render box, which agents cannot reach. Nothing else waits on
+    it.
   approved_by_human: true
+  gate_human: false
+  gate_reason: physical-access
+  soft_gate: true
 - id: t-017
   milestone: m2
   title: Adversarial editor in the Comic Studio (kind_robots, admin)
