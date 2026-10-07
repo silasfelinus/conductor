@@ -22,7 +22,8 @@ HERE = Path(__file__).resolve().parent.parent
 MAX_CHARS = 60
 BANNED = ["human", "humans", "humanity", "mankind", "people", "pharmacy", "great wall", "skyscraper",
           "highway", "billboard", "road sign", "english lettering"]
-CROC_SOUND = re.compile(r"^(?:\*[^*]+\*|[HSRGhsrg.!]+|\s)+$")
+# One character (or one *action*) per repetition, so a long run of "!" cannot backtrack.
+CROC_SOUND = re.compile(r"^(?:\*[^*]+\*|[HSRGhsrg.!\s])+$")
 
 
 def check(matchups: dict, roster: list[str]) -> list[str]:
