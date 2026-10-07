@@ -1,5 +1,10 @@
 # zuzu-showdown CHANGELOG
 
+## 2026-10-07
+- t-002 done: Silas confirmed the Coyote without his hand, a lighter Street Fighter tone (no blood, no
+  gore, no fatalities), the name Zuzu Showdown, and online play later. Brief v1.2; fighters.yaml tone
+  rule, and the Abbess's altar grab and Komodo's super toned down.
+
 ## 2026-10-06
 - Silas confirmed the roster (the Hyena Matriarch and Old Komodo), the tentacle boss and the Siblings
   rules (t-002, in session). Four questions stay open (Coyote's stump, KO tone, name, online play).

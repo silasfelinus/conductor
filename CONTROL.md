@@ -589,3 +589,5 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
   Canon and guardrails: projects/comic-creator/issues/zuzu-koala-assassin-01/ (CAST-PICKS.md,
   VIDEO-GUARDRAILS.md); bannedTerms apply to every prompt and line. Brief: DESIGN-BRIEF.md; kits:
   fighters.yaml; lines: matchups.yaml. The page stays unlisted until Silas's verdict (t-025).
+- Silas, 2026-10-07: "this is a lighter game than the mature comic. More street fighter than mortal
+  kombat." No blood, no gore, no fatalities. The Coyote fights without his hand. Online play later.
