@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-06T18:28:23.528925+00:00",
+  "generated_at": "2026-10-07T13:35:08.029721+00:00",
   "summary": {
     "status": "semantic-review-due",
     "roadmap_errors": 0,
-    "roadmap_warnings": 16,
+    "roadmap_warnings": 18,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -14,7 +14,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 81.07,
+    "hours_since": 100.19,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -22,7 +22,7 @@
   "intent_review": {
     "due": true,
     "last_report": "INTENT-AUDIT-2026-10-03.md",
-    "days_since": 3,
+    "days_since": 4,
     "stale_days": 3.0
   },
   "project_parity": {
@@ -31,20 +31,20 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-06T18:28:23.528930+00:00",
+    "generated_at": "2026-10-07T13:35:08.029728+00:00",
     "summary": {
-      "roadmaps": 71,
-      "active_projects": 31,
-      "continuous_projects": 4,
-      "tasks": 1928,
-      "ready": 67,
-      "waiting": 89,
-      "needs_human": 40,
-      "in_progress": 10,
-      "done": 1706,
+      "roadmaps": 74,
+      "active_projects": 35,
+      "continuous_projects": 3,
+      "tasks": 1982,
+      "ready": 79,
+      "waiting": 100,
+      "needs_human": 42,
+      "in_progress": 17,
+      "done": 1728,
       "errors": 0,
-      "warnings": 16,
-      "info": 44
+      "warnings": 18,
+      "info": 52
     },
     "errors": [],
     "warnings": [
@@ -60,21 +60,21 @@
         "code": "STALE_IN_PROGRESS",
         "project": "animation-manager",
         "task": "t-022",
-        "message": "Task has remained claimed for 12 days."
+        "message": "Task has remained claimed for 13 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "art-archive",
         "task": "t-033",
-        "message": "Task has remained claimed for 3 days."
+        "message": "Task has remained claimed for 4 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "art-archive",
         "task": "t-044",
-        "message": "Task has remained claimed for 3 days."
+        "message": "Task has remained claimed for 4 days."
       },
       {
         "severity": "warning",
@@ -106,6 +106,20 @@
       },
       {
         "severity": "warning",
+        "code": "POSSIBLY_UNNECESSARY_GATE",
+        "project": "kind-pinball",
+        "task": "t-016",
+        "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "kind-robots",
+        "task": "t-127",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
         "code": "GATED_DONE_WITHOUT_APPROVAL",
         "project": "kindrobots-unraid",
         "task": "t-014",
@@ -134,17 +148,10 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "kr-arcade",
-        "task": "t-009",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "mandarin-tutor",
         "task": "t-030",
-        "message": "Task has remained claimed for 3 days."
+        "message": "Task has remained claimed for 4 days."
       },
       {
         "severity": "warning",
@@ -158,6 +165,13 @@
         "code": "POSSIBLY_UNNECESSARY_GATE",
         "project": "zuzu-lair",
         "task": "t-010",
+        "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+      },
+      {
+        "severity": "warning",
+        "code": "POSSIBLY_UNNECESSARY_GATE",
+        "project": "zuzu-showdown",
+        "task": "t-025",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
       }
     ]
