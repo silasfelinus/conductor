@@ -1,0 +1,285 @@
+# zuzu-showdown t-007, method A: pose-locked generation. Flux Kontext re-poses Zuzu's reference build
+# (A7, ArtImage 242193; Silas: "a7 profile right is where we want him"), mirrored so he faces right like
+# every P1 sprite, into the 15 bake-off frames: idle (4), walk (6) and standing HP, the draw-cut (5).
+# One fixed seed across every frame. The backend has no pose-ControlNet workflow yet (filed as an
+# engineering task), so the pose lives in each frame's prompt, not a skeleton.
+# Post-process: scripts in projects/zuzu-showdown/tools/ (key the off-white background, crop, scale to 72 px,
+# quantize to a shared ~24-colour palette). Submit/refresh with scripts/enqueue_art_requests.py
+# (dry run by default; --live; --status). Private.
+# post_mirror (lane default, per-subject override) is read only by tools/method_a_process.py: Kontext turned
+# the first frames back to face left despite the prompt, so they are mirrored after download.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-sprites
+  label: Flux Kontext dev (fp8), re-posed from A7 (242193, mirrored)
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+  seed: 70071
+  post_mirror: true
+subjects:
+- key: zuzu-sprite-idle-1
+  entity: zuzu
+  title: 'Zuzu sprite (method A): idle-1'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Put him in a low fighting stance facing right, knees bent and feet apart, his right hand on the
+    katana hilt above his shoulder, his left hand open in front of his belly, breathing out, shoulders low. Keep
+    the same koala character, the same grumpy face, the same portly build and short proportions, the same rust-brown
+    poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange neckerchief, the dark
+    brown trousers, and the same western comic art style. Full body, seen from the side facing right, on a plain
+    off-white background, nothing else in the picture.
+  jobs:
+    kontext-sprites: 34387
+  art:
+    kontext-sprites:
+      status: DONE
+      art_image_id: 242716
+- key: zuzu-sprite-idle-2
+  entity: zuzu
+  title: 'Zuzu sprite (method A): idle-2'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Put him in a low fighting stance facing right, knees bent and feet apart, his right hand on the
+    katana hilt above his shoulder, his left hand open in front of his belly, breathing in, shoulders rising a little.
+    Keep the same koala character, the same grumpy face, the same portly build and short proportions, the same rust-brown
+    poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange neckerchief, the dark
+    brown trousers, and the same western comic art style. Full body, seen from the side facing right, on a plain
+    off-white background, nothing else in the picture.
+  jobs:
+    kontext-sprites: 34388
+  art:
+    kontext-sprites:
+      status: DONE
+      art_image_id: 242717
+- key: zuzu-sprite-idle-3
+  entity: zuzu
+  title: 'Zuzu sprite (method A): idle-3'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Put him in a low fighting stance facing right, knees bent and feet apart, his right hand on the
+    katana hilt above his shoulder, his left hand open in front of his belly, breath held, shoulders at their highest,
+    the poncho lifted. Keep the same koala character, the same grumpy face, the same portly build and short proportions,
+    the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange
+    neckerchief, the dark brown trousers, and the same western comic art style. Full body, seen from the side facing
+    right, on a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-sprites: 34389
+  art:
+    kontext-sprites:
+      status: DONE
+      art_image_id: 242718
+- key: zuzu-sprite-idle-4
+  entity: zuzu
+  title: 'Zuzu sprite (method A): idle-4'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Put him in a low fighting stance facing right, knees bent and feet apart, his right hand on the
+    katana hilt above his shoulder, his left hand open in front of his belly, breathing out, shoulders dropping,
+    the poncho settling. Keep the same koala character, the same grumpy face, the same portly build and short proportions,
+    the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange
+    neckerchief, the dark brown trousers, and the same western comic art style. Full body, seen from the side facing
+    right, on a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-sprites: 34390
+  art:
+    kontext-sprites:
+      status: DONE
+      art_image_id: 242719
+- key: zuzu-sprite-walk-1
+  entity: zuzu
+  title: 'Zuzu sprite (method A): walk-1'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: 'Show him walking to the right, mid-stride: the front foot just landing heel first, the back foot
+    pushing off on its toes, legs at their widest. Keep the same koala character, the same grumpy face, the same
+    portly build and short proportions, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa
+    with the orange band, the orange neckerchief, the dark brown trousers, and the same western comic art style.
+    Full body, seen from the side facing right, on a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-sprites: 34391
+  art:
+    kontext-sprites:
+      status: RUNNING
+      art_image_id: null
+- key: zuzu-sprite-walk-2
+  entity: zuzu
+  title: 'Zuzu sprite (method A): walk-2'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: 'Show him walking to the right: his weight sinking onto the front foot, front knee bent, the back
+    foot lifting, body at its lowest. Keep the same koala character, the same grumpy face, the same portly build
+    and short proportions, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the
+    orange band, the orange neckerchief, the dark brown trousers, and the same western comic art style. Full body,
+    seen from the side facing right, on a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-sprites: 34392
+  art:
+    kontext-sprites:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-sprite-walk-3
+  entity: zuzu
+  title: 'Zuzu sprite (method A): walk-3'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: 'Show him walking to the right: standing on one leg while the other leg swings forward past it,
+    knee raised a little. Keep the same koala character, the same grumpy face, the same portly build and short proportions,
+    the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange
+    neckerchief, the dark brown trousers, and the same western comic art style. Full body, seen from the side facing
+    right, on a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-sprites: 34393
+  art:
+    kontext-sprites:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-sprite-walk-4
+  entity: zuzu
+  title: 'Zuzu sprite (method A): walk-4'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: 'Show him walking to the right: rising up on the standing leg, body at its highest, the swinging
+    foot reaching forward. Keep the same koala character, the same grumpy face, the same portly build and short
+    proportions, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band,
+    the orange neckerchief, the dark brown trousers, and the same western comic art style. Full body, seen from
+    the side facing right, on a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-sprites: 34394
+  art:
+    kontext-sprites:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-sprite-walk-5
+  entity: zuzu
+  title: 'Zuzu sprite (method A): walk-5'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: 'Show him walking to the right, mid-stride on the other leg: the front foot just landing heel first,
+    the back foot pushing off, legs at their widest. Keep the same koala character, the same grumpy face, the same
+    portly build and short proportions, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa
+    with the orange band, the orange neckerchief, the dark brown trousers, and the same western comic art style.
+    Full body, seen from the side facing right, on a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-sprites: 34395
+  art:
+    kontext-sprites:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-sprite-walk-6
+  entity: zuzu
+  title: 'Zuzu sprite (method A): walk-6'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: 'Show him walking to the right: standing on the other leg while the back leg swings forward past
+    it. Keep the same koala character, the same grumpy face, the same portly build and short proportions, the same
+    rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange neckerchief,
+    the dark brown trousers, and the same western comic art style. Full body, seen from the side facing right, on
+    a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-sprites: 34396
+  art:
+    kontext-sprites:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-sprite-hp-1
+  entity: zuzu
+  title: 'Zuzu sprite (method A): hp-1'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Show him facing right, crouched and gripping the katana hilt above his shoulder with his right hand,
+    about to draw. Keep the same koala character, the same grumpy face, the same portly build and short proportions,
+    the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange
+    neckerchief, the dark brown trousers, and the same western comic art style. Full body, seen from the side facing
+    right, on a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-sprites: 34397
+  art:
+    kontext-sprites:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-sprite-hp-2
+  entity: zuzu
+  title: 'Zuzu sprite (method A): hp-2'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Show him facing right, drawing the katana from the scabbard on his back, the blade half out and
+    flashing. Keep the same koala character, the same grumpy face, the same portly build and short proportions,
+    the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange
+    neckerchief, the dark brown trousers, and the same western comic art style. Full body, seen from the side facing
+    right, on a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-sprites: 34398
+  art:
+    kontext-sprites:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-sprite-hp-3
+  entity: zuzu
+  title: 'Zuzu sprite (method A): hp-3'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: 'Show him facing right at the end of a fast horizontal slash: the katana held out straight in front
+    of him at chest height, his arm fully extended, front foot stepped forward. Keep the same koala character, the
+    same grumpy face, the same portly build and short proportions, the same rust-brown poncho with the orange zigzag
+    trim, the wide straw kasa with the orange band, the orange neckerchief, the dark brown trousers, and the same
+    western comic art style. Full body, seen from the side facing right, on a plain off-white background, nothing
+    else in the picture.'
+  jobs:
+    kontext-sprites: 34399
+  art:
+    kontext-sprites:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-sprite-hp-4
+  entity: zuzu
+  title: 'Zuzu sprite (method A): hp-4'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: 'Show him facing right in the follow-through of a sword slash: the katana swept past, held low behind
+    him, body twisted. Keep the same koala character, the same grumpy face, the same portly build and short proportions,
+    the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange
+    neckerchief, the dark brown trousers, and the same western comic art style. Full body, seen from the side facing
+    right, on a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-sprites: 34400
+  art:
+    kontext-sprites:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-sprite-hp-5
+  entity: zuzu
+  title: 'Zuzu sprite (method A): hp-5'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Show him facing right, sliding the katana back into the scabbard on his back, standing upright again.
+    Keep the same koala character, the same grumpy face, the same portly build and short proportions, the same rust-brown
+    poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange neckerchief, the dark
+    brown trousers, and the same western comic art style. Full body, seen from the side facing right, on a plain
+    off-white background, nothing else in the picture.
+  jobs:
+    kontext-sprites: 34401
+  art:
+    kontext-sprites:
+      status: PENDING
+      art_image_id: null

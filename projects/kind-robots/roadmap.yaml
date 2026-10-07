@@ -66,6 +66,11 @@ milestones:
   weight: 10
   status: in-progress
 
+- id: m7
+  title: "Structural control for art lanes (pose and depth guided generation)"
+  weight: 5
+  status: not-started
+
 tasks:
 - id: t-001
   milestone: m1
@@ -2225,6 +2230,21 @@ tasks:
     Merged silasfelinus/kind_robots#3266 at 995190fbaa03f68902b7711f4062cf8622d14727 after all 30 PR workflows completed successfully. The ArtJob queue scroll owner now uses fail-safe grid/block stacking instead of flex plus a separate direction utility, and its layout contract runs in Entity Art Manager CI. Production is self-hosted and this merge is not deployed until the next Unraid Force Update.
   claimed_by: 2026-10-06T113100Z-kind-robots-t-132-artqueue-layout-9c4e
   claimed_at: '2026-10-06T11:31:00Z'
+
+- id: t-133
+  milestone: m7
+  title: 'Pose ControlNet lane on /api/art/enqueue (OpenPose skeleton in, posed figure out)'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  updated: '2026-10-07T05:40:00Z'
+  note: |-
+    Filed by zuzu-showdown t-007 (the sprite bake-off), which needs a fighter drawn in an exact pose frame after frame. Today the enqueue route has no pose-conditioned graph: CONTROLNET exists only as a ResourceType and in the provenance/queue-affinity name patterns, and the Kontext lane can only be told a pose in words, which drifts (t-007's Kontext frames swapped a sheathed sword for a bare blade between frames and ignored "facing right").
+
+    Build a ControlNet lane on /api/art/enqueue: accept a pose image (an OpenPose-style skeleton PNG, `poseImageBase64`) plus the usual prompt/checkpoint/seed, and build a graph that applies a pose ControlNet (ControlNetLoader + ControlNetApplyAdvanced) to the SDXL/Illustrious lanes that the house art uses. Register the pose ControlNet model through the Resource registry (CONTROLNET type) so conductor resolves it like any other model, and check the home server actually has one on disk (ops/home-server/extra_model_paths.yaml maps models/controlnet) before wiring a default. Optional second step: let Kontext take the pose image as a stitched reference.
+
+    Done when: a contract test builds the graph from a fixed skeleton and asserts the ControlNet nodes and strength; conductor's scripts/enqueue_art_requests.py forwards a subject's `pose_image` path; one live render of a stick-figure pose comes back in that pose. Then zuzu-showdown can re-run t-007's method A (projects/zuzu-showdown/art/T007-METHOD-A.yaml) with skeletons instead of pose prose.
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
