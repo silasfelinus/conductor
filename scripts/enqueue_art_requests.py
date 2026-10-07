@@ -19,7 +19,9 @@ the image is fetched and sent as ``sourceImageBase64``, so an approved design ca
 re-posed (the 8-angle renders, comic-creator t-015). Kontext lanes may set ``steps``
 and ``guidance``. ``source_crop: [l, t, r, b]`` (fractions) cuts one figure out of a
 turnaround sheet, ``source_flip: true`` mirrors it (a back view with the sword on the wrong
-shoulder), and ``reference_image_id`` (with optional ``reference_crop``) is
+shoulder), ``source_pad: "16:9"`` pads it with white, centred, to that aspect (a portrait
+cast pick placed into a widescreen scene; Kontext fills the margins), and
+``reference_image_id`` (with optional ``reference_crop``) is
 stitched to the LEFT of the source at the same height, so Kontext can dress the right
 figure like the left one (the ImageStitch trick of Kind Robots' kontext/kombine route).
 ``mask_box: [l, t, r, b]`` (fractions of the composed source) makes the edit masked: only that box may
@@ -177,6 +179,29 @@ def _crop(image, box):
     return image.crop((round(left * w), round(top * h), round(right * w), round(bottom * h)))
 
 
+def pad_to_aspect(image, aspect):
+    """Pad ``image`` with white, centred, to ``aspect`` ("W:H"). Never crops; already-matching images pass through."""
+    from PIL import Image
+
+    try:
+        aw, ah = (float(v) for v in str(aspect).split(":"))
+    except ValueError:
+        raise ValueError(f"source_pad {aspect!r} must look like '16:9'") from None
+    if aw <= 0 or ah <= 0:
+        raise ValueError(f"source_pad {aspect!r} must look like '16:9'")
+    w, h = image.size
+    target = aw / ah
+    if abs(w / h - target) < 1e-3:
+        return image
+    if w / h < target:
+        size = (round(h * target), h)
+    else:
+        size = (w, round(w / target))
+    canvas = Image.new("RGB", size, "white")
+    canvas.paste(image, ((size[0] - w) // 2, (size[1] - h) // 2))
+    return canvas
+
+
 def stitch_images(reference, source):
     """Reference on the left, source on the right, both scaled to the source's height."""
     from PIL import Image
@@ -199,7 +224,8 @@ def compose_source(subject, fetch):
     source = fetch(subject["source_image_id"])
     crop, reference_id = subject.get("source_crop"), subject.get("reference_image_id")
     flip = bool(subject.get("source_flip"))
-    if not crop and not reference_id and not flip:
+    pad = subject.get("source_pad")
+    if not crop and not reference_id and not flip and not pad:
         return source
     import base64
     import io
@@ -209,6 +235,8 @@ def compose_source(subject, fetch):
         from PIL import ImageOps
 
         image = ImageOps.mirror(image)
+    if pad:
+        image = pad_to_aspect(image, pad)
     if reference_id:
         reference = _crop(_decode_data_url(fetch(reference_id)), subject.get("reference_crop"))
         image = stitch_images(reference, image)
