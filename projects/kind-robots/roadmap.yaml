@@ -2230,13 +2230,15 @@ tasks:
 - id: t-133
   milestone: m6
   title: 'Default the ArtJob queue to the first non-empty status section'
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
-  updated: '2026-10-07T05:56:00Z'
+  updated: '2026-10-07T06:00:00Z'
   note: |-
     Silas-directed 2026-10-06 from the live ArtJob queue: after a browser refresh the queue can open on an empty status section instead of showing useful jobs. On initial page load, choose the first non-empty concrete status in dashboard order (PENDING, RUNNING, FAILED, DONE, CANCELLED), then load that section. Preserve explicit user status choices after the initial default has been established. Add regression coverage for the startup selection contract.
+
+    Implementation is complete on worker/kind-robots-t133-default-filter-20261007T055600Z. Startup now loads fresh queue stats, selects PENDING -> RUNNING -> FAILED -> DONE -> CANCELLED by first non-zero count, retries once if the chosen section drains during the fetch race, and preserves established/manual selections. Added a dedicated source contract and wired it into Entity Art Manager CI.
   owner: worker
   claimed_by: 20261007T055600Z-kind-robots-t133-default-filter-a91c
   claimed_at: '2026-10-07T05:56:00Z'
