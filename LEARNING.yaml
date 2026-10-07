@@ -17383,3 +17383,14 @@ records:
   failure_category: null
   lesson: Re-seeding a fuzz test (the input change shifted the random stream) found a sim bug the old
     seeds missed (wall back-throw overlap); run fuzz invariants over a dozen seeds, not three.
+- date: 2026-10-07
+  project: zuzu-showdown
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: kind_robots' contract job runs an ESLint ratchet that fails on any new finding, including in
+    test files; run `npm run test:lint-ratchet` locally (after provision_kind_robots_deps.sh) before pushing,
+    not just tsx and tsc.
