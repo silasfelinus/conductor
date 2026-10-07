@@ -203,7 +203,10 @@ games:
   - slug: kindness-gauntlet
     title: Kindness Gauntlet
     riffs_on: Gauntlet II (1986)
-    status: queued
+    status: building
+    task: t-009
+    shipped_in: [silasfelinus/kind_robots#3289]
+    slices_done: [one floor + one class, floor progression]
     phase: factory
     effort: large
     source: catalog
@@ -212,6 +215,9 @@ games:
       healer, runner, maker), shutting down glitch generators and rescuing trapped bots floor by floor.
     challenge: Deeper floors bring more generators, locked doors, and an ever-draining battery you refill with snacks.
     slices: [one floor + one class, all four classes, generators + keys, floor progression]
+    # Slice 1 (silasfelinus/kind_robots#3289) also built floor progression and generators; still to
+    # come: all four classes, keys + locked doors, then same-device co-op (needs more cabinet
+    # input streams).
 
   - slug: prize-show-panic
     title: Prize Show Panic
