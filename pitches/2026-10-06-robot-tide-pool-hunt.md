@@ -1,7 +1,7 @@
 # Pitch: Robot Tide Pool Hunt
 date: 2026-10-06
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A cozy seek-and-find toy where a pre-painted tide pool hides twelve tiny robot sea creatures among shells and kelp, and tapping a find makes it wave and join a collection tray. Locations are fixed coordinates, so checking a tap needs no server and no model.

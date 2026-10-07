@@ -52,8 +52,11 @@ works on a phone in portrait with touch controls, on a tablet, and on a desktop 
 2. **Attract mode** loop: title, a short scripted demo, how-to-play card, high scores, back to title.
 3. **Incremental challenge**: waves or levels that ramp speed, enemy count and enemy types on a curve
    declared in the game module, plus a bonus round or intermission every few levels where it fits.
-4. **Leaderboard**: top-10 all-time and today, with three-initial entry on game over. Signed-in players
-   are linked automatically.
+4. **Global leaderboard** (Silas, 2026-10-06: "global leaderboard is a high priority for all games"):
+   top-10 all-time and today, worldwide, with three-initial entry on game over. Scores go through the
+   arcade store (`submitScore`), never a board of the game's own, so they land in the shared
+   `ArcadeScore` table and the hall of fame picks the cabinet up automatically from `ARCADE_GAMES`.
+   Signed-in players are linked automatically.
 5. **Controls** for keyboard, gamepad (Gamepad API) and touch (on-screen stick and buttons sized for
    thumbs). Pause on blur.
 6. **Sound**: WebAudio chiptune bleeps and a jingle, muted by default until the first interaction, with a
@@ -81,6 +84,10 @@ Built once in t-004 so each later game is one module plus one registry row:
   `maxPlausibleScore`, with a per-IP rate limit.
 - It is a hobby leaderboard: the checks are plausibility checks, not anti-cheat. If the API is down, the
   board falls back to the browser's own local scores.
+- **Global by default (t-011, kind_robots#3277):** `GET /api/arcade/leaderboard` is the hall of fame for
+  every registered cabinet in one call (top 3, today's best, scores on the board), shown in the hall. A
+  score that cannot reach the server waits in a per-browser pending queue and uploads on the next visit,
+  on reconnect, or after the next successful submit; scores the server rejects are never retried.
 
 ## Game catalog
 
@@ -98,6 +105,23 @@ riffs borrow *mechanics* from the classics, never names, sprites, sounds or leve
 | 6 | Butterfly Joust | Joust | medium | factory |
 | 7 | Kind Pinball | pinball | large (sliced) | factory |
 | 8 | Kindness Gauntlet | Gauntlet II | large (sliced) | factory |
+| 9 | Gloom Invaders | Space Invaders | small | factory |
+| 10 | Hedgehog Crossing | Frogger | small | factory |
+| 11 | Ribbon Riders | Tron light cycles | small | factory |
+| 12 | Burrow Buddy | Dig Dug | medium | factory |
+| 13 | Repair Rampage | Rampage | medium | factory |
+| 14 | Prize Show Panic | Smash TV | medium | factory |
+| 15 | Zuzu: Ghost Trail (was Bolt Knight) | Ghosts 'n Goblins | large (sliced) | factory |
+| 16 | Station Sweep | Xenophobe | large (sliced) | factory |
+
+Rows 9-16 are Silas's second batch (2026-10-06). The table numbers them in the order he asked; the
+build order is `games.yaml`, where the quick builds (Gloom Invaders, Hedgehog Crossing, Ribbon Riders,
+Burrow Buddy, Repair Rampage) queue ahead of Kindness Gauntlet, and Prize Show Panic follows it because
+it reuses Gauntlet's twin-stick input. Dragon's Lair is its own project (`zuzu-lair`), not a cabinet.
+
+**Zuzu: Ghost Trail** (Silas, 2026-10-06: *"our ghosts and goblin game should also be zuzu themed"*) is the
+one cabinet that leaves the Kind Robots logo style. It stars Zuzu in his comic canon look and tone, on a haunted
+weird-west trail. The fighting game is `zuzu-showdown`, a separate project.
 
 The launch games are the most achievable of the set (Butterfly Blaster, Silas's own addition, builds first): both use a fixed screen, simple collision and
 well-understood enemy AI. Together they prove the engine kit for both maze/tile games and free-movement

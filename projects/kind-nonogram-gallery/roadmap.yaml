@@ -1,0 +1,76 @@
+# Copy this folder to projects/<your-project>/ to add a project.
+# Default scaffold per PROJECT-CREATION.md (approved by Silas 2026-07-04):
+# three milestones — SHAPE / BUILD / POLISH & SHIP — with a NON-BLOCKING scope
+# gate. Agents build the design brief and start working immediately; scope
+# confirmation runs in parallel as a soft needs-human. Two-word slugs preferred.
+project: kind-nonogram-gallery
+kind: software
+goal: "Picture-cross puzzles where row/column clues reveal pixel portraits of Kind Robot species, with a mistake-forgiving mode and a gallery of solved grids that colour in with species palettes; no LLM at runtime."
+
+notes_from_silas: |
+  Approved pitch 2026-10-06 (pitches/2026-10-06-kind-nonogram-gallery.md). Free for every
+  visitor: no LLM at runtime. Art plan: 30 hand-authored grids + 30 pre-generated colour reveals.
+
+milestones:
+  - id: m1
+    title: "SHAPE — outline, brainstorm, design brief"
+    weight: 25
+    status: not-started
+
+  - id: m2
+    title: "BUILD — actualize, adjust, test"
+    weight: 50
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — aesthetics, performance, delivery"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and start building"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Take the idea and run: write DESIGN-BRIEF.md (what it is, who it serves,
+      the creative direction, MVP shape), then immediately create and claim the
+      first BUILD tasks. Do NOT wait for scope approval — that's t-002, and it
+      runs in parallel.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    # AGENTS.md, "Hard vs soft needs-human": scope gates on NEW projects are soft
+    # (Silas, 2026-07-04) -- the whole point of this task is that it runs in
+    # parallel and blocks nothing. Without soft_gate, audit_human_gates.py
+    # classifies it `[hard]` and it reports to Silas as a blocker every session.
+    soft_gate: true
+    note: >
+      FOR SILAS: soft checkpoint, nothing is blocked on it. Read DESIGN-BRIEF.md
+      and confirm or redirect the scope. Development is already underway; if you
+      redirect, agents fold your correction into the roadmap and keep moving.
+      (Outward-facing/irreversible steps still hard-gate as always.)
+    gate_reason: creative-approval
+    gate_rechecked: '2026-10-07'
+
+  - id: t-003
+    milestone: m2
+    title: "First slice: one 8x8 puzzle with clue generation, tap-to-fill and colour reveal"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Suggested first task from the approved pitch. One 8x8 puzzle stored as a
+      bitmap; row/column clues generated from it; tap-to-fill and mark-empty;
+      gentle mistake-forgiving mode; on solve, colour the grid with the species
+      palette. Lives in silasfelinus/kind_robots; no LLM calls at runtime.
+      Verify at phone/tablet/desktop widths.

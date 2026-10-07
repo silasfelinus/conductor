@@ -273,10 +273,100 @@ tasks:
 
       RAN 2026-10-06: Sink Suds (Bubbles riff) shipped in silasfelinus/kind_robots#3270; title
       art requested. Next in games.yaml: pipe-pals.
-    claimed_by: 2026-10-06T1305Z-kr-arcade-t009-pipe-pals
-    claimed_at: '2026-10-06T13:02:53Z'
-    updated: '2026-10-06T13:02:53Z'
-    implementation_pr: 'silasfelinus/kind_robots#3270'
+
+      RAN 2026-10-06: Pipe Pals (Mario Bros. riff) shipped in silasfelinus/kind_robots#3272;
+      title art requested. Co-op and icy platforms deferred. Next in games.yaml: timber-bot.
+
+      RAN 2026-10-06: Timber Bot (logging-game riff) shipped in silasfelinus/kind_robots#3273;
+      title art requested. Next in games.yaml: butterfly-joust.
+
+      RAN 2026-10-06: Butterfly Joust (Joust riff) shipped in silasfelinus/kind_robots#3274;
+      title art requested. Next in games.yaml: kind-pinball.
+
+      RAN 2026-10-06: Kind Pinball slices 1-2 (table, flippers, physics, bumpers, targets,
+      scoring) shipped in silasfelinus/kind_robots#3275; title art requested. kind-pinball
+      stays building: the next cycle builds its slice 3 (ramp + modes) before taking a queued
+      entry, then slice 4 (AMI multiball).
+
+      RAN 2026-10-06: Kind Pinball slice 3 (ramp + modes) in silasfelinus/kind_robots#3280 --
+      raised ramp from an upper-right mouth into the left inlane, streak scoring, four 30 s
+      modes (Net Rush, Ramp Frenzy, Lane Lights, Saucer Rescue) started by every third ramp
+      shot, and a 250,000 x level super jackpot once all four are played. Verified:
+      test:arcade-engine, eslint/prettier, vue-tsc, balance probe seeds 1-8 (1-5 rides per
+      game, no stalls), ramp exit reaches the left flipper on every seed, Playwright
+      phone/desktop. kind-pinball stays building; next cycle builds slice 4 (AMI multiball),
+      then the queue resumes at gloom-invaders.
+
+      RAN 2026-10-06: Kind Pinball slice 4 (AMI multiball) in silasfelinus/kind_robots#3282 --
+      the third village lights multiball at the saucer; three balls with a 10 s multiball
+      save; ramp/saucer shots fly mosquito nets to the villages (20,000 x level), five nets
+      pay the AMI JACKPOT (150,000 x level). Table refactored to a ball list (flippers swing
+      once per substep). Also wrapped the cabinet's empty-board message for narrow screens.
+      Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-8, forced-
+      multiball probe seeds 1-5 (always reaches 3 balls, always settles back to one),
+      Playwright renders. kind-pinball is now shipped (all four slices). Next cycle takes the
+      first queued games.yaml entry: gloom-invaders (Space Invaders riff).
+
+      RAN 2026-10-06: Gloom Invaders (Space Invaders riff) shipped in
+      silasfelinus/kind_robots#3283 -- 5x9 gloom-cloud formation with a speeding march, one-
+      beam-at-a-time sunbeams, four erodible rainbow umbrellas, a mystery-bonus rainbow kite,
+      waves that start lower and march faster, and a garden that grows a flower per wave.
+      Title art requested as kr-arcade-games-gloom-invaders-title. Verified: test:arcade-
+      engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6, Playwright phone/desktop. Next
+      cycle takes the next queued games.yaml entry: hedgehog-crossing (Frogger riff).
+
+      RAN 2026-10-06: Hedgehog Crossing (Frogger riff) shipped in
+      silasfelinus/kind_robots#3284 -- robot-traffic road, creek of logs and diving turtles,
+      five hedge burrows, snoozing fox from level 2, ladybug bonus, 30 s time bar, faster
+      lanes/shorter logs/more divers per level. Title art requested as kr-arcade-games-
+      hedgehog-crossing-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot
+      probe seeds 1-6 (3-4 homes per game after fixing hop drift), Playwright phone/desktop.
+      Next cycle takes the next queued games.yaml entry: ribbon-riders (Tron light-cycles
+      riff).
+
+      RAN 2026-10-06: Ribbon Riders (Tron light-cycles riff) shipped in
+      silasfelinus/kind_robots#3285 -- rainbow-ribbon light-bike, 1-4 rivals with room-seeking
+      and cut-off steering, closing arena wall with a warning flash, rationed turbo, fading
+      ribbons on crash. Title art requested as kr-arcade-games-ribbon-riders-title. Verified:
+      test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (rounds 3-5 after
+      teaching AI riders to dodge the closing wall), Playwright phone/desktop. Next cycle
+      takes the next queued games.yaml entry: burrow-buddy (Dig Dug riff).
+
+      RAN 2026-10-06: Burrow Buddy (Dig Dug riff) shipped in silasfelinus/kind_robots#3287 --
+      tile tunnels with break-through digging, four-puff bubble pump with aim-in-place,
+      ghosting grubs, fire-breathing beetles from garden 2, falling turnips with group bonus,
+      veggie bonus after two turnips, last grub flees. Title art requested as kr-arcade-games-
+      burrow-buddy-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe
+      seeds 1-6 (gardens 3-5), forced turnip-crush test, Playwright phone/desktop. Next cycle
+      takes the next queued games.yaml entry: repair-rampage (Rampage riff).
+
+      RAN 2026-10-07: Repair Rampage (Rampage riff, turned around) shipped in
+      silasfelinus/kind_robots#3288 -- climb-and-fix towers, kitten rescues, flashbulb drones
+      that dazzle Bolt off the wall, towers whose hold time scales with broken windows and
+      that wobble then fall, a charge meter that drains (game over at zero). Shipped single-
+      player; the hook's two-players-on-one-device needs a second cabinet input stream
+      (follow-up). Title art requested as kr-arcade-games-repair-rampage-title. Verified:
+      test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (city 6-12 after
+      rebalancing an initially endless game), Playwright phone/desktop. Next cycle takes the
+      next queued games.yaml entry: kindness-gauntlet (Gauntlet riff).
+
+      RAN 2026-10-07: Kindness Gauntlet slice 1 (Gauntlet II riff) shipped live in
+      silasfelinus/kind_robots#3289 -- Fix the repair android on procedurally built server-
+      dungeon floors (rooms + 2-wide corridors, fog of war), glitch generators with hp,
+      clinging glitches, caged bots, snacks, kindness pulses, stairs to harder floors, a
+      draining battery; hold-fire-to-turn as in the classic. Same PR fits the cabinet how-to
+      card to short screens (Repair Rampage's sixth line was clipped) with a contract test.
+      Title art requested as kr-arcade-games-kindness-gauntlet-title. Verified: test:arcade-
+      engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (floors 10-22, every run ends),
+      Playwright. kindness-gauntlet stays building: next slices are all four classes, then
+      keys + locked doors (co-op needs cabinet input work). Next cycle: build the next
+      Kindness Gauntlet slice OR the next queued quick cabinet if one is waiting; the queue
+      continues with prize-show-panic (Smash TV riff, uses Gauntlet's twin-stick-style aim)
+      and bolt-knight / station-sweep.
+    claimed_by: 2026-10-07T0040Z-kr-arcade-t009-prize-show-panic
+    claimed_at: '2026-10-07T01:38:16Z'
+    updated: '2026-10-07T01:38:16Z'
+    implementation_pr: 'silasfelinus/kind_robots#3289'
 
   - id: t-010
     milestone: m2
@@ -300,3 +390,23 @@ tasks:
       (/play/arcade?game=butterfly-blaster). Title art request queued via conductor#5638.
     updated: '2026-10-06T11:51:05Z'
     implementation_pr: 'silasfelinus/kind_robots#3265'
+
+  - id: t-011
+    milestone: m3
+    title: "Global leaderboard for every game: hall of fame + guaranteed uploads"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    approved_by_human: true
+    note: >-
+      Silas, 2026-10-06 (verbatim): "global leaderboard is a high priority for all games". The
+      per-game boards were already global and live (ArcadeScore + /api/arcade/scores, checked in
+      production). DONE in kind_robots#3277: GET /api/arcade/leaderboard (hall of fame for every
+      registered cabinet: top 3, today's best, scores on the board; new cabinets join automatically),
+      a Hall of Fame section in the hall, and a pending-upload queue so a score that fails to post
+      retries until it reaches the global board instead of staying in one browser. The per-game
+      checklist in DESIGN-BRIEF.md now requires every cabinet to post through the arcade store.
+      zuzu-lair/t-009 reuses the same board.
+    updated: '2026-10-06T19:00:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3277'

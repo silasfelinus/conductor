@@ -1,0 +1,75 @@
+# Zuzu Showdown -- matchup lines (v0 voice sample, 2026-10-06)
+#
+# The game shows these in the pixel font: `intro` on the pre-fight VS screen (first speaker, then the
+# reply) and `win[<winner>]` on the post-fight win screen, spoken to the loser.
+# t-018 completes the set: an intro for every unordered pair (28) and every mirror (8) = 36, plus a
+# win quote for every ordered pair including mirrors = 64, plus the boss lines.
+#
+# Voice rules (fighters.yaml `voice`): Zuzu is silence or two or three words. The croc only makes
+# sounds. The Siblings are short, fierce and scared; the toddler only babbles. No lines gloat over
+# hurting the Siblings. bannedTerms apply (never "people" / "human"; say townsfolk or the species).
+# This file is NOT canon for the comic: it is a versus game where anyone can fight anyone.
+#
+# This v0 holds the rivalries only, so Silas can judge the voices before the full set is written.
+
+matchups:
+  - pair: [zuzu, coyote-vagrant]
+    intro:
+      - {speaker: coyote-vagrant, line: "You again. Last time we met, something ate my hand."}
+      - {speaker: zuzu, line: "..."}
+      - {speaker: coyote-vagrant, line: "Yeah. I figured you'd say that."}
+    win:
+      zuzu: "Eat something."
+      coyote-vagrant: "Ha! Left-handed! Nobody's gonna believe this."
+
+  - pair: [coyote-vagrant, river-croc]
+    intro:
+      - {speaker: coyote-vagrant, line: "I know you. I know your teeth. I want my hand back."}
+      - {speaker: river-croc, line: "HSSSSSSS."}
+    win:
+      coyote-vagrant: "Hold still. I'm makin' gloves outta you."
+      river-croc: "grrrRRRR... *gulp*"
+
+  - pair: [the-abbess, the-siblings]
+    intro:
+      - {speaker: the-abbess, line: "There you are, my lambs. Supper's getting cold."}
+      - {speaker: the-siblings, line: "We're not hungry."}
+    win:
+      the-abbess: "Hush now. Nobody leaves the mission hungry."
+      the-siblings: "Ba! Ba ba!"
+
+  - pair: [storm-crow, hyena-matriarch]
+    intro:
+      - {speaker: hyena-matriarch, line: "Look, the pack! Supper fell out of the sky!"}
+      - {speaker: storm-crow, line: "Laugh while you can, scavenger. The storm's on my side."}
+    win:
+      storm-crow: "Everything that crawls gets picked clean in the end."
+      hyena-matriarch: "Hee hee hee! Plucked! PLUCKED!"
+
+  - pair: [river-croc, old-komodo]
+    intro:
+      - {speaker: old-komodo, line: "Water lizard. You smell like old fish and bad luck."}
+      - {speaker: river-croc, line: "HSSSSS... grrrRRR."}
+    win:
+      river-croc: "*bubbles rise, and nothing else*"
+      old-komodo: "Mm. Too wet. I'll come back after you dry out."
+
+  - pair: [zuzu, the-siblings]
+    intro:
+      - {speaker: the-siblings, line: "Stay back. I bite."}
+      - {speaker: zuzu, line: "...I know."}
+    win:
+      zuzu: "...Go on. Eat."
+      the-siblings: "Don't follow us. ...Okay. Maybe follow us."
+
+boss:
+  # Shown before the final fight in Arcade mode; the Thing never speaks.
+  intro:
+    zuzu: "..."
+    coyote-vagrant: "Nope. Nope nope nope. Somebody shut that door."
+    the-abbess: "Oh, there you are. I left it open for you."
+    the-siblings: "Hold my hand. Don't look at it."
+    storm-crow: "Even the storm won't go near that thing."
+    river-croc: "HSSSSSSS."
+    hyena-matriarch: "Heh... heh. Okay, that one's not funny."
+    old-komodo: "I have eaten many things. Not that."

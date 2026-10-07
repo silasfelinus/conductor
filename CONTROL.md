@@ -565,4 +565,29 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 ### kr-arcade  (software)
 **Direction:** A free, in-browser Kind Robots arcade on its own Arcade tab in the Projects channel: a classic-cabinet front end with attract-mode splash screens, three-initial leaderboards, and original Kind Robots games that riff on golden-age classics (maze chase, twin-stick rescue, single-screen platformer, sink-bubble, lumberjack, flap-and-joust, pinball, co-op dungeon), each with rising difficulty. No LLM at runtime; all art pre-generated.
 **Notes:**
+- Silas, 2026-10-06: "our ghosts and goblin game should also be zuzu themed" -- the Ghosts 'n Goblins
+  riff is Zuzu: Ghost Trail (games.yaml `zuzu-ghost-trail`), in Zuzu's comic canon, not the logo style.
+
+### zuzu-lair  (software)
+**Direction:** A Dragon's Lair-style quick-time adventure starring Zuzu the koala ronin, built from branching animations: press the right button in time to reach the next scene, miss and watch a death scene, playable free in the browser on Kind Robots.
+**Notes:**
+- Silas, 2026-10-06: its own project (not an arcade cabinet). Quick-time system; the animation creator
+  (comic-film / music-video pipeline) makes the branches. Stars Zuzu (canon and guardrails:
+  projects/comic-creator/issues/zuzu-koala-assassin-01/). First and last animations, with success and
+  death branches between. Needs sound, optional on-screen buttons and flash assist.
+
+### kind-nonogram-gallery  (software)
+**Direction:** Picture-cross puzzles where row/column clues reveal pixel portraits of Kind Robot species, with a mistake-forgiving mode and a gallery of solved grids that colour in with species palettes; no LLM at runtime.
+**Notes:**
 - (your notes)
+
+### zuzu-showdown  (software)
+**Direction:** A free browser 2D pixel-art fighting game (Street Fighter / Skullgirls / MvC style) in the world of Zuzu: Koala Assassin: eight fighters with special moves, chain combos, a strike/grab/guard triangle, a super meter and unique supers, animated stages and matchup-specific pre- and post-fight lines, playable on Kind Robots.
+**Notes:**
+- Silas, 2026-10-06: its own project ("possibly our largest yet"), not an arcade cabinet. Named fighters:
+  Zuzu, Coyote Vagrant, the Abbess, the Siblings, Storm Crow, the River Croc, plus a couple others (8).
+  Canon and guardrails: projects/comic-creator/issues/zuzu-koala-assassin-01/ (CAST-PICKS.md,
+  VIDEO-GUARDRAILS.md); bannedTerms apply to every prompt and line. Brief: DESIGN-BRIEF.md; kits:
+  fighters.yaml; lines: matchups.yaml. The page stays unlisted until Silas's verdict (t-025).
+- Silas, 2026-10-07: "this is a lighter game than the mature comic. More street fighter than mortal
+  kombat." No blood, no gore, no fatalities. The Coyote fights without his hand. Online play later.

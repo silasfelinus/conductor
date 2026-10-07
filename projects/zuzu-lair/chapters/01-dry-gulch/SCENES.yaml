@@ -1,0 +1,193 @@
+# Zuzu's Lair, chapter 1: "The Dry Gulch" -- scene graph (draft v1, 2026-10-06).
+#
+# One node per clip. The player starts at `opening`, plays each node's clip, and follows:
+#   - opening / success nodes: `next`
+#   - moment nodes: the input window. The right button inside it -> `success`; a wrong button,
+#     or no press before the window closes -> `death` (a life is lost, then the moment replays)
+#   - death nodes: back to `retry` (the moment that killed you)
+#   - closing: the end (score, initials)
+#
+# Times are seconds into the node's own clip. `window` is the Classic window; Assist adds
+# `assist_extra` seconds to its end. `seconds` is always 2-5 (the clip generator's sweet spot). `expect` is one of up, down, left, right, sword (the A button).
+#
+# Prompts follow projects/comic-creator/issues/zuzu-koala-assassin-01/VIDEO-GUARDRAILS.md:
+#   - keyframe: house lane (il-arthemy) tags; `{ZUZU}` expands to the canonical Zuzu string in
+#     kind_robots utils/musicVideoSpecs.ts (ZUZU). Never write the bannedTerms; name species.
+#   - motion: prose, one camera move plus one action (LTX image-to-video, ltx-12gb-balanced, ~4 s).
+#   - `from_last_frame_of`: start the keyframe from that clip's last frame (music-video t-026 pinning),
+#     so success and death branches cut seamlessly off their moment.
+#
+# Deaths (Silas, 2026-10-06): "cartoonishly violent" at the level of the laserdisc original -- big,
+# exaggerated slapstick deaths played for dark comedy, Zuzu on screen when it happens; no realistic
+# gore. Every clip runs 2-5 s (what our generator makes well); deaths sit in that range too.
+
+chapter: 01-dry-gulch
+title: The Dry Gulch
+setting: >-
+  A sun-bleached weird-west canyon at late afternoon: red rock walls, a frayed rope bridge over a deep
+  gorge, bone-dry scrub, long shadows. Muted, earthy, gritty; the comic's house look.
+assist_extra: 0.8
+lives: 3
+
+nodes:
+  - id: opening
+    kind: opening
+    seconds: 5
+    keyframe: >-
+      {ZUZU}, standing at the mouth of a narrow red-rock canyon at late afternoon, long shadow stretching
+      ahead of him, dust blowing, bleached cattle skull on a rock, wide shot
+    motion: >-
+      The camera slowly pushes in as Zuzu tilts his kasa down against the wind and walks into the canyon.
+    next: m1-bridge
+
+  - id: m1-bridge
+    kind: moment
+    seconds: 4
+    keyframe: >-
+      {ZUZU}, halfway across a frayed rope bridge over a deep canyon gorge, planks splintering under his
+      feet, ropes snapping, low angle from the far cliff
+    motion: >-
+      The bridge planks crack and drop away one by one toward Zuzu as the camera shakes.
+    window: [2.2, 3.0]
+    expect: up
+    hint: leap
+    success: m1-bridge-ok
+    death: m1-bridge-death
+
+  - id: m1-bridge-ok
+    kind: success
+    seconds: 3
+    from_last_frame_of: m1-bridge
+    keyframe: >-
+      {ZUZU}, leaping across a gap in a collapsing rope bridge, poncho flaring, landing on the far cliff
+      edge in a crouch, dust rising
+    motion: >-
+      Zuzu leaps the gap and lands on the cliff edge as the last of the bridge falls away behind him.
+    next: m2-scorpion
+
+  - id: m1-bridge-death
+    kind: death
+    seconds: 4
+    from_last_frame_of: m1-bridge
+    keyframe: >-
+      {ZUZU}, falling backward off a snapped rope bridge into a deep canyon gorge, arms and short legs
+      flailing, eyes wide, his kasa flying off above him, broken planks tumbling around him
+    motion: >-
+      Zuzu plummets away from the camera into the gorge, shrinking to a speck, and a tiny puff of dust
+      rises from far below.
+    retry: m1-bridge
+  - id: m2-scorpion
+    kind: moment
+    seconds: 4
+    keyframe: >-
+      {ZUZU}, walking along a narrow canyon ledge, a giant scorpion rising from behind a boulder on his
+      left, its stinger arched high over him, low angle
+    motion: >-
+      The giant scorpion's tail whips down toward Zuzu from the left as the camera pulls back.
+    window: [1.8, 2.5]
+    expect: right
+    hint: dodge
+    success: m2-scorpion-ok
+    death: m2-scorpion-death
+
+  - id: m2-scorpion-ok
+    kind: success
+    seconds: 3
+    from_last_frame_of: m2-scorpion
+    keyframe: >-
+      {ZUZU}, rolling right across the canyon ledge as a giant scorpion stinger strikes the rock where he
+      stood, rock chips flying
+    motion: >-
+      Zuzu rolls clear and comes up running as the stinger cracks into the empty rock behind him.
+    next: m3-rockslide
+
+  - id: m2-scorpion-death
+    kind: death
+    seconds: 3
+    from_last_frame_of: m2-scorpion
+    keyframe: >-
+      {ZUZU}, just stung by a giant scorpion's stinger, his grey fur turned sickly green, cheeks puffed
+      out, eyes crossed, body stiff as a plank, tipping over backward on a canyon ledge
+    motion: >-
+      Zuzu swells up green, goes stiff as a plank and topples over backward onto the rock with a thud.
+    retry: m2-scorpion
+  - id: m3-rockslide
+    kind: moment
+    seconds: 4
+    keyframe: >-
+      {ZUZU}, running down a steep canyon trail as a wall of tumbling boulders and dust pours down the
+      slope behind him, a dark crevice in the rock wall to his left
+    motion: >-
+      Boulders thunder down the slope after Zuzu as the camera tracks alongside him.
+    window: [2.0, 2.7]
+    expect: left
+    hint: crevice
+    success: m3-rockslide-ok
+    death: m3-rockslide-death
+
+  - id: m3-rockslide-ok
+    kind: success
+    seconds: 3
+    from_last_frame_of: m3-rockslide
+    keyframe: >-
+      {ZUZU}, pressed flat inside a narrow rock crevice, boulders and dust roaring past the opening in
+      front of him, his eyes narrowed under the kasa
+    motion: >-
+      The rockslide roars past the crevice mouth and the dust slowly settles around Zuzu.
+    next: m4-bandit
+
+  - id: m3-rockslide-death
+    kind: death
+    seconds: 3
+    from_last_frame_of: m3-rockslide
+    keyframe: >-
+      a huge round boulder sitting on a canyon trail with a pair of small grey koala feet sticking out
+      from under it, a flattened straw kasa beside them, dust hanging in the air
+    motion: >-
+      The boulder slams down flat onto the trail and the little feet twitch once as the dust settles.
+    retry: m3-rockslide
+  - id: m4-bandit
+    kind: moment
+    seconds: 4
+    keyframe: >-
+      {ZUZU}, facing an anthro gila monster bandit in a tattered long riding coat across a dusty canyon
+      floor, the bandit reaching for a revolver at his hip, high noon standoff, wide shot
+    motion: >-
+      The camera pushes in slowly as the gila monster's claw twitches toward his revolver.
+    window: [2.4, 2.9]
+    expect: sword
+    hint: draw
+    success: m4-bandit-ok
+    death: m4-bandit-death
+
+  - id: m4-bandit-ok
+    kind: success
+    seconds: 3
+    from_last_frame_of: m4-bandit
+    keyframe: >-
+      {ZUZU}, katana drawn in one flash of steel, the gila monster bandit's revolver spinning out of his
+      claw into the dust, the bandit stumbling back wide-eyed
+    motion: >-
+      Zuzu's blade flashes once and the revolver spins away into the dust as the bandit staggers back.
+    next: closing
+
+  - id: m4-bandit-death
+    kind: death
+    seconds: 3
+    from_last_frame_of: m4-bandit
+    keyframe: >-
+      {ZUZU}, blown backward off his feet by a revolver shot, his kasa spinning off his head with a
+      smoking hole through the brim, the gila monster bandit grinning behind a smoking revolver, dusty
+      canyon floor
+    motion: >-
+      Zuzu flies backward through the air and lands flat on his back in the dust as his hat spins down
+      onto his face.
+    retry: m4-bandit
+  - id: closing
+    kind: closing
+    seconds: 5
+    keyframe: >-
+      {ZUZU}, walking away from the camera out of the canyon mouth into a huge orange sunset, katana on his
+      back, long shadow behind him, the defeated gila monster sitting in the dust in the foreground
+    motion: >-
+      The camera holds still as Zuzu walks out into the sunset and the dust settles.

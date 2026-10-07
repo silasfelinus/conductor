@@ -93,15 +93,20 @@ tasks:
 - id: t-006
   milestone: m2
   title: 'Deck design bible: suits, pips, court cards and the 52-card prompt table'
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T00:00:00Z'
-  note: 'Write projects/kr-solitaire/docs/deck-bible.md: the four suits (names, colours, pips, personality),
-    the 12 court characters mapped to existing characters, the style bible and seed policy, and a 52-row
-    prompt table following the Krea 2 contract in ART-PROMPTS.md. Silas may rename suits; keep them one-line
-    edits.'
+  updated: '2026-10-06T17:52:41Z'
+  note: >-
+    Write projects/kr-solitaire/docs/deck-bible.md: the four suits (names, colours, pips, personality), the 12 court characters mapped to existing characters, the style bible and seed policy, and a 52-row prompt table following the Krea 2 contract in ART-PROMPTS.md. Silas may rename suits; keep them one-line edits.
+
+    2026-10-06: merged conductor#5658. docs/deck-bible.md: suits, court cast, style bible,
+    seed policy, 52-row prompt table. t-007 should swap generic court costumes for each
+    character's established look.
+  claimed_by: 20261006-worker
+  claimed_at: '2026-10-06T17:48:21Z'
+  implementation_pr: 'silasfelinus/conductor#5658'
 - id: t-007
   milestone: m2
   title: Generate and commit the 52 faces

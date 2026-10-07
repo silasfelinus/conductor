@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-10-06T01:18:18.763874+00:00",
+  "generated_at": "2026-10-06T16:50:53.374960+00:00",
   "summary": {
-    "roadmaps": 66,
-    "active_projects": 27,
-    "continuous_projects": 3,
-    "tasks": 1888,
-    "ready": 57,
-    "waiting": 86,
-    "needs_human": 40,
-    "in_progress": 8,
-    "done": 1681,
+    "roadmaps": 70,
+    "active_projects": 30,
+    "continuous_projects": 4,
+    "tasks": 1915,
+    "ready": 64,
+    "waiting": 83,
+    "needs_human": 39,
+    "in_progress": 10,
+    "done": 1703,
     "errors": 0,
-    "warnings": 13,
-    "info": 40
+    "warnings": 15,
+    "info": 44
   },
   "projects": [
     {
@@ -43,16 +43,16 @@
       "autonomous": false,
       "task_count": 28,
       "counts": {
+        "claimed": 1,
         "done": 22,
         "needs-human": 1,
-        "ready": 1,
         "waiting": 4
       },
       "open_count": 6,
       "human_attention": 1,
-      "ready": 1,
+      "ready": 0,
       "waiting": 4,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 22
     },
@@ -182,19 +182,19 @@
       "override_status": "active",
       "priority_index": 9,
       "autonomous": false,
-      "task_count": 130,
+      "task_count": 132,
       "counts": {
-        "done": 127,
+        "done": 128,
         "ready": 2,
-        "review": 1
+        "review": 2
       },
-      "open_count": 3,
+      "open_count": 4,
       "human_attention": 0,
       "ready": 2,
       "waiting": 0,
       "claimed": 0,
-      "review": 1,
-      "done": 127
+      "review": 2,
+      "done": 128
     },
     {
       "slug": "rainbow-butterflies",
@@ -222,20 +222,20 @@
       "override_status": "active",
       "priority_index": 11,
       "autonomous": false,
-      "task_count": 29,
+      "task_count": 35,
       "counts": {
-        "done": 16,
-        "needs-human": 2,
-        "ready": 5,
-        "waiting": 6
+        "done": 25,
+        "needs-human": 1,
+        "ready": 6,
+        "waiting": 3
       },
-      "open_count": 13,
-      "human_attention": 2,
-      "ready": 5,
-      "waiting": 6,
+      "open_count": 10,
+      "human_attention": 1,
+      "ready": 6,
+      "waiting": 3,
       "claimed": 0,
       "review": 0,
-      "done": 16
+      "done": 25
     },
     {
       "slug": "comic-film",
@@ -689,10 +689,86 @@
       "done": 0
     },
     {
+      "slug": "kind-lantern-garden",
+      "kind": "software",
+      "override_status": "active",
+      "priority_index": 35,
+      "autonomous": false,
+      "task_count": 3,
+      "counts": {
+        "done": 1,
+        "ready": 2
+      },
+      "open_count": 2,
+      "human_attention": 0,
+      "ready": 2,
+      "waiting": 0,
+      "claimed": 0,
+      "review": 0,
+      "done": 1
+    },
+    {
+      "slug": "robot-species-sorting-quiz",
+      "kind": "software",
+      "override_status": "active",
+      "priority_index": 36,
+      "autonomous": false,
+      "task_count": 3,
+      "counts": {
+        "done": 1,
+        "ready": 2
+      },
+      "open_count": 2,
+      "human_attention": 0,
+      "ready": 2,
+      "waiting": 0,
+      "claimed": 0,
+      "review": 0,
+      "done": 1
+    },
+    {
+      "slug": "kind-daily-riddle",
+      "kind": "software",
+      "override_status": "active",
+      "priority_index": 37,
+      "autonomous": false,
+      "task_count": 3,
+      "counts": {
+        "done": 1,
+        "ready": 2
+      },
+      "open_count": 2,
+      "human_attention": 0,
+      "ready": 2,
+      "waiting": 0,
+      "claimed": 0,
+      "review": 0,
+      "done": 1
+    },
+    {
+      "slug": "kr-arcade",
+      "kind": "software",
+      "override_status": "continuous",
+      "priority_index": 38,
+      "autonomous": false,
+      "task_count": 10,
+      "counts": {
+        "done": 9,
+        "ready": 1
+      },
+      "open_count": 1,
+      "human_attention": 0,
+      "ready": 1,
+      "waiting": 0,
+      "claimed": 0,
+      "review": 0,
+      "done": 9
+    },
+    {
       "slug": "dream-cycle",
       "kind": "software",
       "override_status": "continuous",
-      "priority_index": 35,
+      "priority_index": 39,
       "autonomous": true,
       "task_count": 36,
       "counts": {
@@ -1317,6 +1393,13 @@
     {
       "severity": "warning",
       "code": "STALE_IN_PROGRESS",
+      "project": "art-archive",
+      "task": "t-044",
+      "message": "Task has remained claimed for 3 days."
+    },
+    {
+      "severity": "warning",
+      "code": "STALE_IN_PROGRESS",
       "project": "coloring-book",
       "task": "t-058",
       "message": "Task has remained claimed for 8 days."
@@ -1333,14 +1416,7 @@
       "code": "STALE_IN_PROGRESS",
       "project": "conductor",
       "task": "t-203",
-      "message": "Task has remained claimed for 4 days."
-    },
-    {
-      "severity": "warning",
-      "code": "STALE_CLAIM_FIELDS",
-      "project": "kind-economy",
-      "task": "t-011",
-      "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      "message": "Task has remained claimed for 5 days."
     },
     {
       "severity": "warning",
@@ -1376,6 +1452,20 @@
       "project": "kindrobots-unraid",
       "task": "t-018",
       "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+    },
+    {
+      "severity": "warning",
+      "code": "STALE_CLAIM_FIELDS",
+      "project": "kr-arcade",
+      "task": "t-009",
+      "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+    },
+    {
+      "severity": "warning",
+      "code": "STALE_IN_PROGRESS",
+      "project": "mandarin-tutor",
+      "task": "t-030",
+      "message": "Task has remained claimed for 3 days."
     },
     {
       "severity": "warning",
@@ -1513,6 +1603,13 @@
     {
       "severity": "info",
       "code": "APPROVAL_WITHOUT_GATE",
+      "project": "kind-daily-riddle",
+      "task": "t-002",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
       "project": "kind-economy",
       "task": "t-011",
       "message": "approved_by_human is set on a task that is not human-gated."
@@ -1522,6 +1619,13 @@
       "code": "APPROVAL_WITHOUT_GATE",
       "project": "kind-economy",
       "task": "t-021",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "kind-lantern-garden",
+      "task": "t-002",
       "message": "approved_by_human is set on a task that is not human-gated."
     },
     {
@@ -1625,7 +1729,21 @@
     {
       "severity": "info",
       "code": "APPROVAL_WITHOUT_GATE",
+      "project": "music-video",
+      "task": "t-012",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
       "project": "pocket-pet-robot",
+      "task": "t-002",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "robot-species-sorting-quiz",
       "task": "t-002",
       "message": "approved_by_human is set on a task that is not human-gated."
     },

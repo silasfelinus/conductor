@@ -17362,3 +17362,14 @@ records:
   lesson: 'Arcade game factory cycle: write the game against the engine kit, then probe balance with a
     scratch tsx script that drives the game''s own demoInput() pilot for a few thousand ticks; a pilot
     that never climbs or dies in the first wave flags a physics or curve bug before any browser test.'
+- date: 2026-10-07
+  project: zuzu-showdown
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A fight sim''s contract test earns its keep at once: a simultaneous-trade test caught a null
+    crash (one hit''s reaction cleared the other attacker''s move) and an off-by-one in throw startup;
+    write the trade and frame-count cases first.'

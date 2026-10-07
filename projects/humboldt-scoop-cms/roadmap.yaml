@@ -901,6 +901,11 @@ tasks:
     (one linked to a customer with a property, to hit the address tier), run a draw for an
     eligible month, assert a winner row with the expected household_key_source, and assert a
     second draw for that month is refused. Then hand Silas the same one-line rerun.
+
+    UPDATE 2026-10-06 (agent run): Poopstakes self-test added to site/tools/schema-dry-
+    run.sh (humboldtscoopsolutions#112, merged; not run in cloud, needs Docker). FOR SILAS:
+    rerun 'bash /mnt/user/appdata/hss-repo/site/tools/schema-dry-run.sh' on Alexandria and
+    confirm it prints 'Safe to activate'; then approve.
   updated: '2026-09-30T09:00:00Z'
   soft_gate: false
   gate_reason: physical-access

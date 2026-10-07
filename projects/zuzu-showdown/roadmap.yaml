@@ -1,0 +1,467 @@
+# Zuzu Showdown -- a 2D pixel-art fighting game in the world of Zuzu: Koala Assassin (Silas, 2026-10-06).
+# Scaffolded via intake.py; brief in DESIGN-BRIEF.md; roster in fighters.yaml; lines in matchups.yaml.
+# Code lives in kind_robots (utils/zuzuShowdown/, components/zuzu-showdown/, /play/zuzu-showdown).
+project: zuzu-showdown
+kind: software
+goal: >-
+  A free browser 2D pixel-art fighting game on Kind Robots in the world of Zuzu: Koala Assassin --
+  eight fighters (Zuzu, Coyote Vagrant, the Abbess, the Siblings, Storm Crow, River Croc and two more)
+  with motion-input specials, a Level 1 and a Level 3 super each, chain combos and launchers, a
+  strike/grab/guard triangle, life bars and a three-bar meter, animated parallax stages, matchup-specific
+  pre- and post-fight lines, victory and KO poses, Arcade (with a boss), Versus and Training modes, on
+  keyboard, gamepad and touch -- accepted by Silas and listed in the Arcade hall.
+
+notes_from_silas: |
+  2026-10-06, verbatim: "new arcade game project, this will be another distinct project, possibly our
+  largest yet: I want a 2d fighting game styled like street fighter/skullgirls/marvel v capcom, in the
+  world of Zuzu Koala Assassin. Characters should include Zuzu, Coyote Vagrant, The Abbess, the
+  Siblings, Storm Crow, the River Croc, and a couple others. We'll need special moves per character,
+  styled like street fighter or mortal kombat, a combo system, and some sort of paper rock scissors level
+  of strategy. moving background animations, pixelly art graphics, punch, kick, dodge, flying kick,
+  flying punch animations, plus special moves, victory and death poses, taunt screens before and after,
+  customized lines per each matchup (aim for 8 starting fighters), life bars, special meter, unique
+  super attacks."
+
+  2026-10-06, answering t-002, verbatim: "Love the two additions, tentacle monster is the perfect boss.
+  Sibling rules are great."
+
+  2026-10-07, answering t-002, verbatim: "He should be without his hand. Yes on knockout tone, this is a
+  lighter game than the mature comic. More street fighter than mortal kombat. Zuzu Showdown works for
+  me. Sounds good on defraying online for later"
+
+milestones:
+  - id: m1
+    title: "SHAPE -- design brief, roster, scope"
+    weight: 5
+    status: done
+
+  - id: m2
+    title: "ENGINE -- deterministic fight sim, input, combat systems, renderer on placeholders"
+    weight: 25
+    status: not-started
+
+  - id: m3
+    title: "ART -- sprite pipeline, eight sprite sets, portraits, eight animated stages"
+    weight: 30
+    status: not-started
+
+  - id: m4
+    title: "FIGHTERS & MODES -- movesets, lines, taunt screens, CPU, Arcade, Training, sound"
+    weight: 30
+    status: not-started
+
+  - id: m5
+    title: "POLISH & SHIP -- balance, devices, Silas's verdict, hall listing"
+    weight: 10
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief, roster data and voice sample"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      2026-10-06: DESIGN-BRIEF.md v1 (genre riff only, canon from the comic folder, controls, motion
+      inputs, the strike/grab/guard triangle with READ! callouts, chains/launchers/scaling/infinite
+      protection/combo breaker, life bars with red recoverable health, three-bar meter with Lv1 and Lv3
+      Showdown supers, taunt screens, eight stages with moving parts and events, pixel-art spec, the art
+      pipeline options, modes, CPU, engine architecture, MVP phases, guardrails, open questions).
+      fighters.yaml v1: eight fighters plus the boss, five specials and two supers each, intro, taunt,
+      victory/Perfect/KO poses, children rules for the Siblings. matchups.yaml v0: the six rivalries and
+      the boss intros, as a voice sample.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    gate_reason: creative-approval
+    updated: '2026-10-07T00:30:00Z'
+    approved_by_human: true
+    note: >-
+      DECIDED by Silas in session, 2026-10-06 and 2026-10-07: yes to the Hyena Matriarch and Old Komodo;
+      the tentacle monster is "the perfect boss"; the Siblings rules stand; the Coyote fights without his
+      right hand; the tone is lighter than the comic, "more street fighter than mortal kombat" (no blood,
+      no gore, no fatalities, KOs are knockouts); the name is Zuzu Showdown; online play waits for a
+      later phase. Folded into DESIGN-BRIEF.md "Decisions" and fighters.yaml.
+
+  # ---------------------------------------------------------------- m2 ENGINE
+  - id: t-003
+    milestone: m2
+    title: "kind_robots: deterministic fight sim core + contract test (utils/zuzuShowdown/)"
+    status: claimed
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Framework-free TypeScript, no DOM, see DESIGN-BRIEF.md "Engine architecture". A fixed 60 Hz step
+      `step(state, p1Input, p2Input) -> state` over plain serializable state with integer/fixed-point
+      math (no Math.random -- a seeded PRNG in state). Fighter data types (animations as per-frame
+      hitbox/hurtbox/pushbox lists, cancel windows, properties), pushbox separation and corners, walking,
+      jumping (up/forward/back arcs), crouching, blocking high/low (hold back), hit and block stun,
+      hitstop, knockdown and wake-up, throws and throw tech, rounds (best of three, 99 s timer, KO, time
+      over, double KO), and a state hash. Two placeholder fighters (rectangles with real boxes and the
+      default normals from fighters.yaml) so the sim is exercised. Contract test under utils/scripts/,
+      run by tsx in contract-tests.yml like verifyArcadeEngine.test.ts: walk/jump/block/throw cases,
+      round flow, and a determinism replay (one input log run twice, equal hashes at every frame).
+    claimed_by: 2026-10-07T01:10:00Z-zs-t003
+    claimed_at: '2026-10-07T01:36:08Z'
+    updated: '2026-10-07T01:36:08Z'
+
+  - id: t-004
+    milestone: m2
+    title: "kind_robots: two-player input, motion parser and Easy Specials"
+    status: claimed
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Extend utils/arcade/input.ts (don't fork it) for two players and the six-button layout (LP HP LK HK
+      Dodge plus Start): keyboard split (P1 WASD + U I J K + Space, P2 arrows + numpad 4 5 1 2 + 0),
+      remappable; two gamepads by index; touch stick plus five buttons. Side-relative directions (forward
+      flips when the fighter turns). A pure motion parser over a 30-frame input history with a 10-frame
+      leniency: QCF, QCB, DP (with shortcut), HCB, 360 and 720 (with jump-cancel leniency), [b]f and [d]u
+      charge (45 f), dd, plus priority rules (super motion beats special beats normal; DP beats QCF).
+      Easy Specials: a Special button plus a direction maps to each fighter's specials, Special plus Heavy
+      to the Lv1 super, at 80% damage. Contract-test every motion, every priority rule, and the
+      side-switch.
+    claimed_by: 2026-10-07T02:05:00Z-zs-t004
+    claimed_at: '2026-10-07T01:58:28Z'
+    updated: '2026-10-07T01:58:28Z'
+
+  - id: t-005
+    milestone: m2
+    title: "kind_robots: combat systems -- chains, cancels, launcher, triangle, meter, supers"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003, t-004]
+    note: >-
+      DESIGN-BRIEF.md "The Showdown triangle", "Combos" and "Meter, life and rounds". Chains (per-fighter
+      chain tables), normal->special->super cancels, crouch HK launcher with jump-cancel into an air chain
+      and an air finisher, damage scaling (10% per hit after the second, 30% floor, supers ignore half),
+      infinite protection (same move twice or decayed hitstun -> Breakout), the strike/grab/guard
+      resolution with READ! (+0.25 bar), Dodge (strike/projectile invulnerability, grabbable recovery),
+      parry-type specials, counter hits, red recoverable health, the three-bar meter and its gains, Lv1
+      and Lv3 supers (super freeze, the SF1 eye-strip hook for the renderer), Combo Breaker (2 bars),
+      projectiles (clash and cancel), armor, poison, and the `fling_vs_siblings` swap flag. Contract-test
+      every triangle outcome, scaling, infinite protection, and meter math.
+
+  - id: t-006
+    milestone: m2
+    title: "kind_robots: renderer, HUD and playable page on placeholders (unlisted)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-005]
+    note: >-
+      Page /play/zuzu-showdown on the Projects tab (content/channels/projects/zuzu-showdown.md +
+      utils/projectPlacements.ts) but UNLISTED until t-025: reachable by URL, hidden from the hall and the
+      Projects list. A 480x270 canvas, integer-scaled with nearest-neighbor, the arcade CRT overlay
+      option, and the touch-play lock (kind_robots#3276). It draws placeholder fighters from the sim
+      state, a placeholder parallax stage, and the HUD: life bars with red recoverable damage, the
+      three-bar meter, timer, round pips, names in the pixel font (utils/arcade/font.ts), combo counter
+      and the FIRST ATTACK / COUNTER / REVERSAL / READ! / BREAKOUT callouts. Hit sparks, screen shake
+      and flashes are off under prefers-reduced-motion and never above 3 Hz. Options stored in a Pinia
+      store. Verify a full local versus match with Playwright at phone, tablet and desktop widths
+      (keyboard and touch), and screenshot every state.
+
+  # ---------------------------------------------------------------- m3 ART
+  - id: t-007
+    milestone: m3
+    title: "Sprite pipeline bake-off on Zuzu (pose-locked generation vs cutout rig vs hand pixel)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      DESIGN-BRIEF.md "The art pipeline". Make Zuzu's idle (4 f), walk (6 f) and standing HP (5 f) three
+      ways: (A) pose skeletons as data -> ComfyUI with the Zuzu house lane (il-arthemy prefix/suffix and
+      negatives) plus a pose ControlNet if the backend has one (check the Comfy workflows first; if none,
+      file the engineering task rather than improvising), fixed seed, then background removal, downscale
+      to 72 px and quantize to a ~24-color indexed palette; (B) a cutout rig of pixelized body parts
+      animated in code; (C) hand-authored indexed pixel maps. Keep prompt/model/seed metadata for every
+      image. Write projects/zuzu-showdown/docs/t-007-sprite-bakeoff.md with the three strips side by side
+      (animated GIF/WebP), the cost per frame of each method, and a recommendation (default: A for
+      fighters, C for effects). Show Silas; if no answer in 7 days, the recommendation stands
+      (default-recommendation rule).
+
+  - id: t-008
+    milestone: m3
+    title: "Portraits: character select, VS screen and win/defeat art for all eight"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Generated art is pre-approved. For each fighter: a select-screen bust (square), a VS-screen
+      half-body slam (tall), a victory portrait and a beaten portrait (the Siblings' "beaten" portrait is
+      the sister shielding her brother, never hurt). Use the house lane and the canon references in
+      fighters.yaml `look` (Zuzu, the Coyote, the Abbess and the Siblings have locked angle sets); follow
+      VIDEO-GUARDRAILS.md word traps and bannedTerms; no lettering. Then pixelize them (downscale and
+      quantize to the fighter's palette) so they sit with the sprites. Commit to kind_robots
+      public/images/zuzu-showdown/portraits/ with a metadata JSON per image.
+
+  - id: t-009
+    milestone: m3
+    title: "Eight animated stages (parallax layers, animated elements, stage events)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-007]
+    note: >-
+      DESIGN-BRIEF.md "Stages with moving backgrounds": Hollow Bell, the Watering Hole, the Mission, the
+      Lone Apple Tree, Storm Canyon, the Bone Yard, the Dunes, the Thin Place. Each one gets 3 to 5
+      parallax layers rendered in the house lane, pixelized to the stage palette at 480x270 (wider for
+      scroll), animated element loops (sprite strips or palette cycling), and its stage event wired to sim
+      events (round start, KO, Showdown super). No lettering except canon diegetic signs. Ship two stages
+      first (Hollow Bell, the Watering Hole) for the t-010 art slice.
+
+  - id: t-010
+    milestone: m3
+    title: "Sprite sets: Zuzu and Coyote Vagrant (the first art slice)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-007]
+    note: >-
+      The full animation list in DESIGN-BRIEF.md "Pixel art" (about 30 animations each), through the t-007
+      pipeline, as atlases plus JSON frame maps with per-frame box overlays authored against the art. Two
+      palettes each (P1 and P2 alternates). The Coyote is post-croc (right-hand stump with a lashed
+      knife, eyepatch on the right eye), confirmed by Silas 2026-10-07. Together with t-009's first two
+      stages and t-014, this is the first build Silas plays.
+
+  - id: t-011
+    milestone: m3
+    title: "Sprite sets: the Abbess and the Siblings"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-010]
+    note: >-
+      As t-010. The Abbess: sea-otter flat face, brown fur, prompt "abbess"/"elderly head nun", never
+      "mother"; tentacle and portal effects through method C. The Siblings: the sister animates as the
+      fighter, and the toddler is a separate puppet layer (rides her back, toddles behind, ducks, throws
+      apples, is scooped up on KO) with no hurtbox. Follow the children rules in fighters.yaml exactly.
+
+  - id: t-012
+    milestone: m3
+    title: "Sprite sets: Storm Crow and River Croc"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-010]
+    note: >-
+      As t-010. Storm Crow needs flight animations and a feather/flock effect set. River Croc is 140 px or
+      more and quadrupedal with rear-up poses, plus submerge/erupt water effects.
+
+  - id: t-013
+    milestone: m3
+    title: "Sprite sets: the Hyena Matriarch, Old Komodo, and the boss"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-010]
+    note: >-
+      As t-010. Old Komodo: lead every prompt
+      with "komodo dragon, giant monitor lizard, scaled reptile" (the models drew him as a koala before).
+      The boss: portal, eye and tentacle pieces animated by the sim's boss phases, never the whole Thing.
+
+  # ---------------------------------------------------------------- m4 FIGHTERS & MODES
+  - id: t-014
+    milestone: m4
+    title: "Movesets: Zuzu and Coyote Vagrant (frame data from fighters.yaml)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-005]
+    note: >-
+      Port both kits into utils/zuzuShowdown/fighters/<slug>.ts: normals, chains, five specials, Lv1 and
+      Lv3 supers, intro/taunt/victory/Perfect/KO sequences, health and walk speed. Placeholder boxes
+      until t-010's art lands, then re-fit boxes to the art. Contract-test every special's motion, its
+      triangle side, and a sample combo route per fighter. If a number changes, update fighters.yaml in
+      the same conductor PR.
+
+  - id: t-015
+    milestone: m4
+    title: "Movesets: the Abbess and the Siblings"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-014]
+    note: >-
+      As t-014. The Siblings: the toddler puppet is driven by the sim (position, apple count, refill on
+      the Lone Apple Tree), has no hurtbox, and the flee-on-KO sequence replaces death. Implement the
+      engine-wide `fling_vs_siblings` swap (Abbess Last Rites, Croc Death Roll/Swallow/Watering Hole,
+      Komodo Venom Bite/Feeding Time) and contract-test it.
+
+  - id: t-016
+    milestone: m4
+    title: "Movesets: Storm Crow and River Croc"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-014]
+    note: >-
+      As t-014. Storm Crow: flight mode (free movement, timer, ends on hit). River Croc: armor on heavies,
+      no air throw against him, submerge/erupt state, 360/720 grabs.
+
+  - id: t-017
+    milestone: m4
+    title: "Movesets: the Hyena Matriarch and Old Komodo"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-014]
+    note: >-
+      As t-014. Hyena: Hook Lash into Drag follow-up, Cackle meter build. Komodo: armor on heavies, poison
+      (3/s for 6 s, as red health), burrow/rise state.
+
+  - id: t-018
+    milestone: m4
+    title: "Write every matchup line (matchups.yaml: 36 intros, 64 win quotes, boss lines)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Finish projects/zuzu-showdown/matchups.yaml from the v0 voice sample: an intro exchange (2-3 lines)
+      for every unordered pair and every mirror match (36), a win quote for every ordered pair
+      including mirrors (64), and the boss intros (done in v0). Rules are in the file header: Zuzu is
+      silence or 2-3 words, the croc only makes sounds, the toddler babbles, nothing gloats over hurting
+      the Siblings, bannedTerms everywhere. Keep each line under 60 characters so it fits two pixel-font
+      lines at 480 px. Add a tiny check script or test that every pair is present and every line passes
+      the bannedTerms list and the length cap.
+
+  - id: t-019
+    milestone: m4
+    title: "kind_robots: taunt screens -- VS intro, in-match taunt, KO/victory sequence, win screen"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-006, t-018]
+    note: >-
+      DESIGN-BRIEF.md "Taunt screens, before and after". Character select (8 busts, P2 alternate palette),
+      the VS screen with portraits slamming in and the matchup intro lines from matchups.yaml (ported to a
+      TS module), stage entrance intros, ROUND/FIGHT, the in-match taunt, the slow-mo KO and flash
+      (reduced-motion safe), victory/Perfect/KO poses, and the post-fight win screen with the winner's
+      matchup quote. Playwright screenshots of every screen at three widths.
+
+  - id: t-020
+    milestone: m4
+    title: "kind_robots: CPU opponent (difficulty ladder, plays the triangle, reads habits)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-005]
+    note: >-
+      DESIGN-BRIEF.md "CPU opponents". A state machine over the same frame data and the same input path as
+      players (it emits input frames, never touches state directly). Four levels (Kid, Normal, Hard,
+      Showdown) set reaction time, block rate, combo length and super use. From Normal up it tracks the
+      player's strike/grab/guard ratio at close range and leans to the counter. It must be deterministic
+      given the seed (contract test: a CPU-vs-CPU match replays to the same hash).
+
+  - id: t-021
+    milestone: m4
+    title: "kind_robots: Arcade mode, the boss, endings, leaderboard and arcade hall tile"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-019, t-020]
+    note: >-
+      Seven CPU fights on a rising ladder (the last is the fighter's `rival` from fighters.yaml), then The
+      Thing Behind the Door (three phases, fighters.yaml `boss`), on the Thin Place. Each fighter's ending
+      is 2-3 pixelized stills plus a line or two. The score (time, combos, Perfects, READ!s, difficulty
+      multiplier) goes through the arcade store's submitScore as gameSlug `zuzu-showdown`, with
+      maxPlausibleScore registered and three-initial entry. The Arcade hall tile links to
+      /play/zuzu-showdown but stays hidden until t-025.
+
+  - id: t-022
+    milestone: m4
+    title: "kind_robots: Training mode"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-006]
+    note: >-
+      A dummy with stand/crouch/jump/block all/block after first hit/random block, a hitbox/hurtbox/pushbox
+      overlay, frame advantage on every hit and block, an input display (with the motion parser's
+      reading), infinite meter and health toggles, and a position reset (center, P1 corner, P2 corner).
+
+  - id: t-023
+    milestone: m4
+    title: "Sound: stage loops, hit/block/whiff/parry, KO sting, super stinger, the bell"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-006]
+    note: >-
+      Through utils/arcade/sound.ts (WebAudio chiptune, muted until the first interaction, remembered mute).
+      One loop per stage in a weird-west minor key, hit sounds by strength, block, whiff, parry clink,
+      throw, KO sting, the Showdown super stinger under the eye strip, and the Hollow Bell bell (one toll at
+      round start and one at the KO). No voice.
+
+  # ---------------------------------------------------------------- m5 POLISH & SHIP
+  - id: t-024
+    milestone: m5
+    title: "Balance and feel pass, plus phone/tablet/desktop check"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-015, t-016, t-017, t-021, t-022, t-023]
+    note: >-
+      Run a CPU-vs-CPU round robin at Showdown level (many seeds) and flag win rates outside 40-60%. Check
+      every fighter for an unblockable, a loop that escapes infinite protection, or a special with no
+      counterplay. Tune damage, startup and recovery, and write the changes back to fighters.yaml. Then a
+      full device pass: phone portrait and landscape (touch, Easy Specials), tablet, desktop (keyboard,
+      two gamepads), with screenshots of every screen.
+
+  - id: t-025
+    milestone: m5
+    title: "Silas plays it and gives a verdict (then list it in the hall)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-024]
+    gate_human: true
+    gate_reason: subjective-acceptance
+    note: >-
+      FOR SILAS (once all eight fighters are in): play Arcade and Versus on phone and desktop and judge the
+      feel, the look, the lines and the KO tone. Agents fold your notes into the roadmap. When you accept
+      it, an agent un-hides the Arcade hall tile and the Projects listing.
+
+  - id: t-026
+    milestone: m5
+    title: "Project art: confirm icon, card and hero landed"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      intake.py queued the icon, card and hero in projects/art-prompts.yaml (rewritten to the Krea rules:
+      physical subject first, no negations, no frame nouns). Confirm they landed and look right (Zuzu
+      short and stocky in the kasa and poncho, facing a rival); re-stage any that miss.
