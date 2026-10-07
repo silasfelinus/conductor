@@ -504,3 +504,11 @@ its scene with Kontext:
 - **s11 is 242738**, from the abbess front 242559. Her flat brown face, at the mission gate with the merry-go-round.
 
 The re-export is final ArtImage 242748: 72.0 s, 8.2 MB at CRF 24.
+
+## Music video 12: the sister's falling knife (2026-10-07)
+
+Silas: *"sister is missing the knife falling from her hand in 13. would make an ideal animation"*. Kontext added the
+dagger to 242571 in two ways. Gripped at her chest: 242997 and 242998. Hanging at her side: 242999 and 243000.
+**s13 is 243000**: the bloodied dagger hangs from her loose right hand, with tremble lines around her, which is the
+right first frame for the drop. Its LTX clip, with the motion prompt "her fingers loosen and the dagger slips and falls to
+the stone floor", is ArtJob 34765. Our jobs were raised to priority 101, ahead of the page-backdrops batch.
