@@ -2285,13 +2285,15 @@ tasks:
 - id: t-136
   milestone: m6
   title: 'Move tutorial sidebar left and add Arcade dashboard header shortcut'
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
-  updated: '2026-10-07T20:59:00Z'
+  updated: '2026-10-07T21:01:00Z'
   note: |-
     Silas-directed 2026-10-07: the tutorial/workspace sidebar should open from the left edge instead of the right. Add a fixed-width Arcade icon shortcut to the dashboard/workspace header alongside the existing Art and Memory Dungeon icon buttons, using the existing canonical Arcade route/icon and preserving the header's compact responsive geometry. Add regression coverage for both placement and shortcut behavior.
+
+    Implementation complete on worker/kind-robots-t136-tutorial-arcade-20261007T205900Z. Added the canonical Arcade shortcut to the fixed workspace header and extended the navigation-route contract to pin both the Arcade route/icon/active state and the existing left-anchored, left-entering tutorial/workspace sheet behavior.
   owner: worker
   claimed_by: 20261007T205900Z-kind-robots-t136-tutorial-arcade-x7p4
   claimed_at: '2026-10-07T20:59:00Z'
