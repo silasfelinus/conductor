@@ -205,7 +205,7 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
             if style == "pixel":
                 sc.write_previews(sc.anchor_frames(fs), out / "preview", f"{name}-pixel", rig.ANIMATIONS[name]["fps"])
             else:
-                sc.write_hd_gif(fs, out / "preview", f"{name}-hd", rig.ANIMATIONS[name]["fps"])
+                sc.write_hd_gif(fs, out / "preview", name, rig.ANIMATIONS[name]["fps"])
     print(json.dumps({
         "fighter": slug,
         "animations": {n: len(fs) for n, fs in hd.items()},
