@@ -42,6 +42,13 @@ def test_lead_projects_are_the_ones_silas_named():
     marked HIGH on 2026-09-18. Restoring its old lead would be an agent inventing an
     ordering from a stale decision, which is exactly what this test exists to prevent.
 
+    Updated 2026-10-07, same rule. Silas, in session, verbatim: "Make kind pinball in arcade its own
+    project. I want it, zuzu-lair, arcade, and the zuzu fighting game to be our high priority
+    projects." Those four now lead, in the order he named them: kind-pinball, zuzu-lair, kr-arcade,
+    zuzu-showdown. Everything that used to lead keeps its relative order directly behind them, so
+    Cthulhuquarium and Kind Economy are now fifth and sixth rather than first and second. No agent
+    invented that ordering; it is his list followed by the old list.
+
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -49,9 +56,10 @@ def test_lead_projects_are_the_ones_silas_named():
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
     order = data.get("order") or []
 
-    assert len(order) >= 2
-    assert order[0] == "cthulhuquarium"
-    assert order[1] == "kind-economy"
+    assert len(order) >= 6
+    assert order[:4] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
+    assert order[4] == "cthulhuquarium"
+    assert order[5] == "kind-economy"
     for finished in ("kapowarr", "ai-art-academy"):
         assert finished not in order
 

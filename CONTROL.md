@@ -16,8 +16,14 @@ happened. Don't edit it; edit here.
 reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
-**Priority order this week:** cthulhuquarium → kind-economy → butterfly-gallery → art-archive →
-mandarin-tutor → interface-vision → humboldt-scoop-cms → digital-storefront → kind-robots → rainbow-butterflies.
+**Priority order this week:** kind-pinball → zuzu-lair → kr-arcade → zuzu-showdown → cthulhuquarium →
+kind-economy → butterfly-gallery → art-archive → mandarin-tutor → interface-vision → humboldt-scoop-cms →
+digital-storefront → kind-robots → rainbow-butterflies.
+
+<!-- Updated 2026-10-07: Silas named four HIGH-priority projects in session, verbatim: "Make kind
+pinball in arcade its own project. I want it, zuzu-lair, arcade, and the zuzu fighting game to be our
+high priority projects." They lead in the order he named; everything behind keeps its order.
+kr-arcade went continuous -> active to be able to lead (see project-overrides.yaml). -->
 
 <!-- Updated 2026-09-19: mandarin-tutor reopened by Silas (see projects/priority.yaml) and
 reinserted here directly behind art-archive to match, repairing CONTROL_PRIORITY_DRIFT flagged
@@ -42,9 +48,9 @@ creative commitment. Immediately below it, animation-manager/t-007 gets one Paci
 attempt to ship a genuinely new screensaver before ordinary backlog pickup. Review and broken-work
 recovery still outrank it. Its other research/maintenance tasks remain continuous fallback work.
 
-**Continuous fallback order:** animation-manager, then kr-arcade (the arcade game factory,
-kr-arcade/t-009 -- Silas 2026-10-06: "make this when you don't have another task"), then
-dream-cycle. Outside the explicit
+**Continuous fallback order:** animation-manager, then dream-cycle. (kr-arcade left this tier
+2026-10-07: Silas made it a HIGH-priority active project, so its game factory kr-arcade/t-009 is
+now lead work rather than fallback.) Outside the explicit
 animation-manager/t-007 daily-commitment exception above, finite `active` work always outranks
 `continuous` programs; dream-cycle remains the final idle fallback.
 **Never idle (2026-09-29):** a run never ends on "nothing to do". When queues are empty, walk
@@ -591,3 +597,12 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
   fighters.yaml; lines: matchups.yaml. The page stays unlisted until Silas's verdict (t-025).
 - Silas, 2026-10-07: "this is a lighter game than the mature comic. More street fighter than mortal
   kombat." No blood, no gore, no fatalities. The Coyote fights without his hand. Online play later.
+
+### kind-pinball  (software)
+**Direction:** A real-quality pinball game on Kind Robots, as good as a Williams ROM: a polished, lit, art-directed table with multiple ramps and orbits, a dot-matrix display, deep mode/wizard rules, multiple tables or levels, and sound -- modelled on The Addams Family, Terminator 2, Stern's Godzilla and the Pinball FX3 tables, playable free in the Arcade.
+**Notes:**
+- Silas, 2026-10-07: split out of kr-arcade as its own project and made one of the four HIGH-priority
+  projects (with zuzu-lair, kr-arcade and zuzu-showdown). "As good as a rom for a Williams machine ...
+  a few style passes would do wonders. Different levels, multiple ramps, a REAL quality game."
+- The reference machines are models for feel, shot map, display, lights and rules depth. Their names,
+  characters, art and sounds are never used (the arcade riff rule). Brief: projects/kind-pinball/DESIGN-BRIEF.md.
