@@ -559,7 +559,7 @@ tasks:
   - id: t-023
     milestone: m4
     title: "Sound: stage loops, hit/block/whiff/parry, KO sting, super stinger, the bell"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -570,10 +570,22 @@ tasks:
       throw, KO sting, the Showdown super stinger under the eye strip, and the Hollow Bell bell (one toll at
       round start and one at the KO). No voice.
 
+      DONE 2026-10-07 (PT): sound shipped in kind_robots#3347, through utils/arcade/sound.ts.
+      The kit gained playNotes and a looping step sequencer behind a music gain, and stays
+      backward compatible. utils/zuzuShowdown/audio.ts is pure. Hits sound by strength and a
+      counter rings; there are block, parry clink, throw, READ! and whiff (once per attack)
+      sounds. The KO has a sting and the Showdown super a stinger. The Hollow Bell bell tolls
+      at round start and at the KO. Stage loops: Hollow Bell in A minor, the Watering Hole in
+      D minor, E minor for stages to come. STAGE_LOOPS is keyed by StageSlug, so each new
+      stage must bring its own loop. No voice. Fixed: audio unlocked only from touch buttons,
+      so keyboard and gamepad players heard nothing; the first key or pointer press now
+      unlocks it. Tested by test:zuzu-showdown-sound.
+
   # ---------------------------------------------------------------- m5 POLISH & SHIP
     claimed_by: 2026-10-07T13:25:00Z-zs-t023
     claimed_at: '2026-10-07T13:20:41Z'
-    updated: '2026-10-07T13:20:41Z'
+    updated: '2026-10-07T13:38:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#3347'
   - id: t-024
     milestone: m5
     title: "Balance and feel pass, plus phone/tablet/desktop check"
