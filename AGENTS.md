@@ -20,6 +20,16 @@ rather than override each other.
 
 Each project lives in `projects/<name>/` with its own `roadmap.yaml`.
 
+### Times are Pacific
+
+Silas, 2026-10-07: *"always use pacific time."* Every time a person reads (chat replies, session
+reports, roadmap `note:` prose, TALKBACK entries, PR and commit text, digest copy, check-in and
+schedule times) is US Pacific (`America/Los_Angeles`), labelled `PT` (or `PDT`/`PST`), e.g. "10:04 PM
+PT". "Today" means the Pacific calendar date, as the daily pitches and dream docket already use.
+Write cron schedules with `CRON_TZ=America/Los_Angeles`. Machine fields stay as they are: ISO-8601
+UTC timestamps with `Z` (`claimed_at`, `updated`, `claimed_by` session ids) are parsed by the
+scripts, so convert when you show them to Silas instead of rewriting them.
+
 ## Token discipline — context is the budget
 
 Every hourly Routine run and every subagent pays for what it loads. Default to the smallest read
