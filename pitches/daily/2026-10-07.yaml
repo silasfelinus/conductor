@@ -1,0 +1,56 @@
+# Daily project pitches, 2026-10-07. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-07
+pitches:
+  - slug: robot-lighthouse-signal-lab
+    title: Robot Lighthouse Signal Lab
+    hook: >-
+      A tinkering toy where players flip switches and rotate lenses to send light patterns across a
+      painted harbour, and each correct flash sequence guides a tiny paper boat home. Every pattern
+      and boat route is authored in advance, so there is no server logic and no model at runtime.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 8 harbour backdrops, 12 boat sprites and 6 lens illustrations generated ahead of time.
+    first_slice: One harbour with three switches, a flash-pattern check against a stored sequence, and one boat arriving.
+  - slug: kind-sticker-stamp-quest
+    title: Kind Sticker Stamp Quest
+    hook: >-
+      A daily passport game where each day's small kind act, written in advance, earns a hand-drawn
+      stamp for a booklet that slowly fills with places. Completed pages unlock a bonus sticker
+      sheet, and the whole year of prompts ships as a static file.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 36 stamp designs and 6 passport page backgrounds generated ahead of time; 120 act prompts pre-written.
+    first_slice: A passport with seven stamps, a date-based daily unlock, and a page-complete celebration.
+  - slug: robot-seed-swap-market
+    title: Robot Seed Swap Market
+    hook: >-
+      A cozy trading toy where a stall of pre-drawn robot gardeners offers seed packets in fixed
+      daily swaps, and players grow a window-box garden from what they collect. Swaps rotate on a
+      published schedule, so the whole economy is a lookup table.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 24 seed packet designs, 6 growth-stage plant sprites per species for 8 species, and 5 stall backdrops generated ahead of time.
+    first_slice: One stall with four swaps, a window box with two growth stages, and local save of the collection.
+  - slug: kr-cabinet-robot-dodger
+    target: kr-arcade
+    title: Robot Dodger
+    hook: >-
+      An arcade cabinet riffing on the Frogger lane-crossing mechanic, where a small robot hops
+      across belts of conveyor traffic to reach a charging dock. Speed rises each crossing and
+      the score goes to the cabinet leaderboard.
+    llm_at_runtime: none
+    effort: small
+    art_plan: Cabinet marquee, one robot sprite sheet, 4 traffic sprites and 3 backdrops generated ahead of time.
+    first_slice: Intro splash, five lanes, collision check, rising speed per crossing, and a score submit.
+  - slug: robot-star-map-puzzles
+    title: Robot Star Map Puzzles
+    hook: >-
+      Connect-the-dots constellation puzzles where each finished picture is a robot silhouette in the
+      night sky, with a short pre-written legend about the figure. A gentle hint mode highlights the
+      next star, and all puzzles are fixed coordinate lists.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 20 night-sky backdrops and 20 finished-constellation illustrations generated ahead of time; 20 legends pre-written.
+    first_slice: One twelve-star constellation with drag-to-connect, a hint pulse, and a legend reveal.
