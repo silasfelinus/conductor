@@ -1,0 +1,315 @@
+# Expression edits for the character LoRA datasets (comic-creator t-016). Silas, 2026-10-07: "go ahead with the
+# LoRA sets" (trainer: kohya sd-scripts). Each locked front pick gets six expressions so every set has more than
+# its eight angles. Kontext changes faces well and keeps the rest. Submit/refresh with
+# scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-expr
+  label: Flux Kontext dev (fp8), expression edit
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: lora-zuzu-angry
+  entity: zuzu
+  title: 'LoRA set: zuzu, angry'
+  size: 832x1216
+  source_image_id: 242395
+  prompt_prose: 'Change only his facial expression to a furious scowl, teeth bared. Keep everything else exactly
+    as it is: his face shape, pose, poncho, straw hat, the katana across his back, colours, the inked comic style
+    and the plain white background.'
+  jobs:
+    kontext-expr: 34714
+- key: lora-zuzu-sad
+  entity: zuzu
+  title: 'LoRA set: zuzu, sad'
+  size: 832x1216
+  source_image_id: 242395
+  prompt_prose: 'Change only his facial expression to sad, eyes downcast. Keep everything else exactly as it is:
+    his face shape, pose, poncho, straw hat, the katana across his back, colours, the inked comic style and the
+    plain white background.'
+  jobs:
+    kontext-expr: 34715
+- key: lora-zuzu-surprised
+  entity: zuzu
+  title: 'LoRA set: zuzu, surprised'
+  size: 832x1216
+  source_image_id: 242395
+  prompt_prose: 'Change only his facial expression to surprised, eyes wide, mouth open. Keep everything else exactly
+    as it is: his face shape, pose, poncho, straw hat, the katana across his back, colours, the inked comic style
+    and the plain white background.'
+  jobs:
+    kontext-expr: 34716
+- key: lora-zuzu-smiling
+  entity: zuzu
+  title: 'LoRA set: zuzu, smiling'
+  size: 832x1216
+  source_image_id: 242395
+  prompt_prose: 'Change only his facial expression to a small warm smile. Keep everything else exactly as it is:
+    his face shape, pose, poncho, straw hat, the katana across his back, colours, the inked comic style and the
+    plain white background.'
+  jobs:
+    kontext-expr: 34717
+- key: lora-zuzu-frightened
+  entity: zuzu
+  title: 'LoRA set: zuzu, frightened'
+  size: 832x1216
+  source_image_id: 242395
+  prompt_prose: 'Change only his facial expression to frightened, eyes wide, ears pressed back. Keep everything
+    else exactly as it is: his face shape, pose, poncho, straw hat, the katana across his back, colours, the inked
+    comic style and the plain white background.'
+  jobs:
+    kontext-expr: 34718
+- key: lora-zuzu-determined
+  entity: zuzu
+  title: 'LoRA set: zuzu, determined'
+  size: 832x1216
+  source_image_id: 242395
+  prompt_prose: 'Change only his facial expression to grim determination, narrowed eyes, set jaw. Keep everything
+    else exactly as it is: his face shape, pose, poncho, straw hat, the katana across his back, colours, the inked
+    comic style and the plain white background.'
+  jobs:
+    kontext-expr: 34719
+- key: lora-sister-angry
+  entity: sister
+  title: 'LoRA set: sister, angry'
+  size: 832x1216
+  source_image_id: 242128
+  prompt_prose: 'Change only her facial expression to a furious scowl, teeth bared. Keep everything else exactly
+    as it is: her face shape, pose, ragged dress, bandaged wrists, enormous ears, colours, the inked comic style
+    and the plain white background.'
+  jobs:
+    kontext-expr: 34720
+- key: lora-sister-sad
+  entity: sister
+  title: 'LoRA set: sister, sad'
+  size: 832x1216
+  source_image_id: 242128
+  prompt_prose: 'Change only her facial expression to sad, eyes downcast. Keep everything else exactly as it is:
+    her face shape, pose, ragged dress, bandaged wrists, enormous ears, colours, the inked comic style and the plain
+    white background.'
+  jobs:
+    kontext-expr: 34721
+- key: lora-sister-surprised
+  entity: sister
+  title: 'LoRA set: sister, surprised'
+  size: 832x1216
+  source_image_id: 242128
+  prompt_prose: 'Change only her facial expression to surprised, eyes wide, mouth open. Keep everything else exactly
+    as it is: her face shape, pose, ragged dress, bandaged wrists, enormous ears, colours, the inked comic style
+    and the plain white background.'
+  jobs:
+    kontext-expr: 34722
+- key: lora-sister-smiling
+  entity: sister
+  title: 'LoRA set: sister, smiling'
+  size: 832x1216
+  source_image_id: 242128
+  prompt_prose: 'Change only her facial expression to a small warm smile. Keep everything else exactly as it is:
+    her face shape, pose, ragged dress, bandaged wrists, enormous ears, colours, the inked comic style and the plain
+    white background.'
+  jobs:
+    kontext-expr: 34723
+- key: lora-sister-frightened
+  entity: sister
+  title: 'LoRA set: sister, frightened'
+  size: 832x1216
+  source_image_id: 242128
+  prompt_prose: 'Change only her facial expression to frightened, eyes wide, ears pressed back. Keep everything
+    else exactly as it is: her face shape, pose, ragged dress, bandaged wrists, enormous ears, colours, the inked
+    comic style and the plain white background.'
+  jobs:
+    kontext-expr: 34724
+- key: lora-sister-determined
+  entity: sister
+  title: 'LoRA set: sister, determined'
+  size: 832x1216
+  source_image_id: 242128
+  prompt_prose: 'Change only her facial expression to grim determination, narrowed eyes, set jaw. Keep everything
+    else exactly as it is: her face shape, pose, ragged dress, bandaged wrists, enormous ears, colours, the inked
+    comic style and the plain white background.'
+  jobs:
+    kontext-expr: 34725
+- key: lora-toddler-angry
+  entity: toddler
+  title: 'LoRA set: toddler, angry'
+  size: 832x1216
+  source_image_id: 242144
+  prompt_prose: 'Change only his facial expression to a furious scowl, teeth bared. Keep everything else exactly
+    as it is: his face shape, pose, checked tunic, bandaged paw, enormous ears, colours, the inked comic style and
+    the plain white background.'
+  jobs:
+    kontext-expr: 34726
+- key: lora-toddler-sad
+  entity: toddler
+  title: 'LoRA set: toddler, sad'
+  size: 832x1216
+  source_image_id: 242144
+  prompt_prose: 'Change only his facial expression to sad, eyes downcast. Keep everything else exactly as it is:
+    his face shape, pose, checked tunic, bandaged paw, enormous ears, colours, the inked comic style and the plain
+    white background.'
+  jobs:
+    kontext-expr: 34727
+- key: lora-toddler-surprised
+  entity: toddler
+  title: 'LoRA set: toddler, surprised'
+  size: 832x1216
+  source_image_id: 242144
+  prompt_prose: 'Change only his facial expression to surprised, eyes wide, mouth open. Keep everything else exactly
+    as it is: his face shape, pose, checked tunic, bandaged paw, enormous ears, colours, the inked comic style and
+    the plain white background.'
+  jobs:
+    kontext-expr: 34728
+- key: lora-toddler-smiling
+  entity: toddler
+  title: 'LoRA set: toddler, smiling'
+  size: 832x1216
+  source_image_id: 242144
+  prompt_prose: 'Change only his facial expression to a small warm smile. Keep everything else exactly as it is:
+    his face shape, pose, checked tunic, bandaged paw, enormous ears, colours, the inked comic style and the plain
+    white background.'
+  jobs:
+    kontext-expr: 34729
+- key: lora-toddler-frightened
+  entity: toddler
+  title: 'LoRA set: toddler, frightened'
+  size: 832x1216
+  source_image_id: 242144
+  prompt_prose: 'Change only his facial expression to frightened, eyes wide, ears pressed back. Keep everything
+    else exactly as it is: his face shape, pose, checked tunic, bandaged paw, enormous ears, colours, the inked
+    comic style and the plain white background.'
+  jobs:
+    kontext-expr: 34730
+- key: lora-toddler-determined
+  entity: toddler
+  title: 'LoRA set: toddler, determined'
+  size: 832x1216
+  source_image_id: 242144
+  prompt_prose: 'Change only his facial expression to grim determination, narrowed eyes, set jaw. Keep everything
+    else exactly as it is: his face shape, pose, checked tunic, bandaged paw, enormous ears, colours, the inked
+    comic style and the plain white background.'
+  jobs:
+    kontext-expr: 34731
+- key: lora-coyote-angry
+  entity: coyote
+  title: 'LoRA set: coyote, angry'
+  size: 832x1216
+  source_image_id: 242531
+  prompt_prose: 'Change only his facial expression to a furious scowl, teeth bared. Keep everything else exactly
+    as it is: his face shape, pose, eyepatch, hat, coat, holster, colours, the inked comic style and the plain white
+    background.'
+  jobs:
+    kontext-expr: 34732
+- key: lora-coyote-sad
+  entity: coyote
+  title: 'LoRA set: coyote, sad'
+  size: 832x1216
+  source_image_id: 242531
+  prompt_prose: 'Change only his facial expression to sad, eyes downcast. Keep everything else exactly as it is:
+    his face shape, pose, eyepatch, hat, coat, holster, colours, the inked comic style and the plain white background.'
+  jobs:
+    kontext-expr: 34733
+- key: lora-coyote-surprised
+  entity: coyote
+  title: 'LoRA set: coyote, surprised'
+  size: 832x1216
+  source_image_id: 242531
+  prompt_prose: 'Change only his facial expression to surprised, eyes wide, mouth open. Keep everything else exactly
+    as it is: his face shape, pose, eyepatch, hat, coat, holster, colours, the inked comic style and the plain white
+    background.'
+  jobs:
+    kontext-expr: 34734
+- key: lora-coyote-smiling
+  entity: coyote
+  title: 'LoRA set: coyote, smiling'
+  size: 832x1216
+  source_image_id: 242531
+  prompt_prose: 'Change only his facial expression to a small warm smile. Keep everything else exactly as it is:
+    his face shape, pose, eyepatch, hat, coat, holster, colours, the inked comic style and the plain white background.'
+  jobs:
+    kontext-expr: 34735
+- key: lora-coyote-frightened
+  entity: coyote
+  title: 'LoRA set: coyote, frightened'
+  size: 832x1216
+  source_image_id: 242531
+  prompt_prose: 'Change only his facial expression to frightened, eyes wide, ears pressed back. Keep everything
+    else exactly as it is: his face shape, pose, eyepatch, hat, coat, holster, colours, the inked comic style and
+    the plain white background.'
+  jobs:
+    kontext-expr: 34736
+- key: lora-coyote-determined
+  entity: coyote
+  title: 'LoRA set: coyote, determined'
+  size: 832x1216
+  source_image_id: 242531
+  prompt_prose: 'Change only his facial expression to grim determination, narrowed eyes, set jaw. Keep everything
+    else exactly as it is: his face shape, pose, eyepatch, hat, coat, holster, colours, the inked comic style and
+    the plain white background.'
+  jobs:
+    kontext-expr: 34737
+- key: lora-abbess-angry
+  entity: abbess
+  title: 'LoRA set: abbess, angry'
+  size: 832x1216
+  source_image_id: 242559
+  prompt_prose: 'Change only her facial expression to a furious scowl, teeth bared. Keep everything else exactly
+    as it is: her face shape, pose, black habit, white wimple, folded hands, colours, the inked comic style and
+    the plain white background.'
+  jobs:
+    kontext-expr: 34738
+- key: lora-abbess-sad
+  entity: abbess
+  title: 'LoRA set: abbess, sad'
+  size: 832x1216
+  source_image_id: 242559
+  prompt_prose: 'Change only her facial expression to sad, eyes downcast. Keep everything else exactly as it is:
+    her face shape, pose, black habit, white wimple, folded hands, colours, the inked comic style and the plain
+    white background.'
+  jobs:
+    kontext-expr: 34739
+- key: lora-abbess-surprised
+  entity: abbess
+  title: 'LoRA set: abbess, surprised'
+  size: 832x1216
+  source_image_id: 242559
+  prompt_prose: 'Change only her facial expression to surprised, eyes wide, mouth open. Keep everything else exactly
+    as it is: her face shape, pose, black habit, white wimple, folded hands, colours, the inked comic style and
+    the plain white background.'
+  jobs:
+    kontext-expr: 34740
+- key: lora-abbess-smiling
+  entity: abbess
+  title: 'LoRA set: abbess, smiling'
+  size: 832x1216
+  source_image_id: 242559
+  prompt_prose: 'Change only her facial expression to a small warm smile. Keep everything else exactly as it is:
+    her face shape, pose, black habit, white wimple, folded hands, colours, the inked comic style and the plain
+    white background.'
+  jobs:
+    kontext-expr: 34741
+- key: lora-abbess-frightened
+  entity: abbess
+  title: 'LoRA set: abbess, frightened'
+  size: 832x1216
+  source_image_id: 242559
+  prompt_prose: 'Change only her facial expression to frightened, eyes wide, ears pressed back. Keep everything
+    else exactly as it is: her face shape, pose, black habit, white wimple, folded hands, colours, the inked comic
+    style and the plain white background.'
+  jobs:
+    kontext-expr: 34742
+- key: lora-abbess-determined
+  entity: abbess
+  title: 'LoRA set: abbess, determined'
+  size: 832x1216
+  source_image_id: 242559
+  prompt_prose: 'Change only her facial expression to grim determination, narrowed eyes, set jaw. Keep everything
+    else exactly as it is: her face shape, pose, black habit, white wimple, folded hands, colours, the inked comic
+    style and the plain white background.'
+  jobs:
+    kontext-expr: 34743
