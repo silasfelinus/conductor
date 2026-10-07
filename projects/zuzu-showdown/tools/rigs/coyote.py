@@ -140,7 +140,7 @@ def stump_arm(canvas, offset, hand, knife=0, dy=0):
     a = math.radians(knife)
     ux, uy = math.cos(a), -math.sin(a)
     # The knife goes down first so the bandaged stump sits over its lashed handle.
-    tip = (h[0] + ux * 300, h[1] + uy * 300)
+    tip = (h[0] + ux * 220, h[1] + uy * 220)
     d.line([h, tip], fill=INK, width=30)
     d.line([h, tip], fill=STEEL, width=16)
     d.line([(h[0] - uy * 4, h[1] + ux * 4), (tip[0] - uy * 4, tip[1] + ux * 4)], fill=STEEL_EDGE, width=5)
@@ -295,7 +295,7 @@ ANIMATIONS = {
         {"body": {"angle": -4}, "front_leg": {"sy": -0.32, "angle": 4}, "back_leg": {"sy": -0.45, "angle": 10}},
         {"body": {"angle": -8}, "front_leg": {"sy": -0.4, "angle": 6}, "back_leg": {"sy": -0.55, "angle": 18}},
     ]},
-    "stand_hp": {"fps": 15, "loop": False, "frames": [
+    "stand_hp": {"fps": 15, "loop": False, "strike": ["draw"], "frames": [
         {**slouch(10, 0, -4), "draw": [stump((250, 520), knife=30, dy=10)]},
         {**slouch(6, 0, 6), "front_leg": {"angle": 12}, "draw": [stump((560, 470), knife=4, dy=6)]},
         {**slouch(4, 0, 10), "front_leg": {"angle": 16}, "draw": [stump((700, 440), knife=0, dy=4)]},
@@ -374,30 +374,33 @@ ANIMATIONS = {
         {**slouch(0, -4, -4), "draw": [gun((580, 200), dy=0, holding="button")]},
         {**slouch(0, -8, -6), "draw": [gun((580, 190), dy=0, holding="button")]},
     ]},
-    # Pocket Sand: dig in the coat pocket, wind up, fling.
-    "pocket_sand": {"fps": 14, "loop": False, "frames": [
+    # Pocket Sand (4 frames to the fling): a dig in the coat pocket, then the fistful flung short, which
+    # hangs in the air for the active frames.
+    "pocket_sand": {"fps": 20, "loop": False, "strike": ["draw"], "frames": [
         {**slouch(14, 0, 4), "draw": [stump((300, 640), knife=-70, dy=14)]},
-        {**slouch(6, 0, -4), "draw": [stump((240, 420), knife=60, dy=6)]},
         {**slouch(4, 0, 8), "draw": [stump((600, 380), knife=10, dy=4),
-                                     {"fn": "sand", "args": {"origin": (600, 380), "reach": 1.0}}]},
+                                     {"fn": "sand", "args": {"origin": (600, 380), "reach": 0.5}}]},
+        {**slouch(4, 0, 8), "draw": [stump((600, 390), knife=4, dy=4),
+                                     {"fn": "sand", "args": {"origin": (600, 380), "reach": 0.6}}]},
+        {**slouch(6, 0, 4), "draw": [stump((540, 460), knife=-20, dy=6)]},
     ]},
     # The normals (frame counts from fighters/placeholders.ts: an animation spans the move's startup +
     # active + recovery at its fps, clamping on its last frame if the move runs longer).
     # Standing LP: a short poke with the stump knife.
-    "stand_lp": {"fps": 15, "loop": False, "frames": [
+    "stand_lp": {"fps": 15, "loop": False, "strike": ["draw"], "frames": [
         {**slouch(6, 0, 2), "draw": [stump((560, 470), knife=6, dy=6)]},
         {**slouch(4, 0, 6), "draw": [stump((660, 450), knife=2, dy=4)]},
         {**slouch(6, 0, 2), "draw": [stump((560, 480), knife=-6, dy=6)]},
     ]},
     # Standing LK: a boot to the shin.
-    "stand_lk": {"fps": 15, "loop": False, "frames": [
+    "stand_lk": {"fps": 15, "loop": False, "strike": ["front_leg"], "frames": [
         {**slouch(4, 0, -2), "front_leg": {"angle": 12, "dy": -10}},
         {**slouch(4, 0, -6), "front_leg": {"angle": 30, "dy": -24}},
         {**slouch(4, 0, -6), "front_leg": {"angle": 28, "dy": -20}},
         {**slouch(4, 0, -2), "front_leg": {"angle": 10, "dy": -6}},
     ]},
     # Standing HK: a big, graceless front kick, leaning way back to get the boot up.
-    "stand_hk": {"fps": 12, "loop": False, "frames": [
+    "stand_hk": {"fps": 12, "loop": False, "strike": ["front_leg"], "frames": [
         {**slouch(10, 0, 4), "front_leg": {"angle": -6}},
         {**slouch(0, 0, -8), "front_leg": {"angle": 30, "dy": -40}},
         {**slouch(-6, 0, -14), "front_leg": {"angle": 60, "dy": -70, "sy": 0.06}, "back_leg": {"angle": -4}},
@@ -405,29 +408,29 @@ ANIMATIONS = {
         {**slouch(4, 0, -6), "front_leg": {"angle": 26, "dy": -30}},
         slouch(8),
     ]},
-    "crouch_lp": {"fps": 15, "loop": False, "frames": [
+    "crouch_lp": {"fps": 15, "loop": False, "strike": ["draw"], "frames": [
         crouched(draw=[stump((600, 660), knife=0, dy=CROUCH_DY)]),
         crouched(draw=[stump((700, 640), knife=-4, dy=CROUCH_DY)]),
         crouched(draw=[stump((600, 670), knife=-8, dy=CROUCH_DY)]),
     ]},
     # Crouching LK: a low stamp at the toes.
-    "crouch_lk": {"fps": 15, "loop": False, "frames": [
+    "crouch_lk": {"fps": 15, "loop": False, "strike": ["front_leg"], "frames": [
         crouched(front_leg={"angle": 18}),
-        crouched(front_leg={"angle": 40, "sy": -0.25}),
-        crouched(front_leg={"angle": 38, "sy": -0.25}),
+        crouched(front_leg={"angle": 6, "sy": -0.27, "dx": 20}),
+        crouched(front_leg={"angle": 4, "sy": -0.27, "dx": 20}),
         crouched(front_leg={"angle": 14}),
     ]},
-    # Crouching HP: the anti-air, the stump knife driven straight up.
-    "crouch_hp": {"fps": 13, "loop": False, "frames": [
+    # Crouching HP: the anti-air, the stump knife driven straight up on the active frames.
+    "crouch_hp": {"fps": 13, "loop": False, "strike": ["draw"], "frames": [
         crouched(draw=[stump((460, 680), knife=-40, dy=CROUCH_DY)]),
-        crouched(body={"angle": 4}, draw=[stump((560, 500), knife=60, dy=CROUCH_DY)]),
         crouched(body={"angle": 2}, draw=[stump((570, 420), knife=84, dy=CROUCH_DY)]),
         crouched(body={"angle": 2}, draw=[stump((570, 420), knife=86, dy=CROUCH_DY)]),
+        crouched(body={"angle": 4}, draw=[stump((560, 500), knife=60, dy=CROUCH_DY)]),
         crouched(draw=[stump((580, 560), knife=40, dy=CROUCH_DY)]),
         crouched(),
     ]},
     # Crouching HK: the sweep, low on the floor with the front boot swung out along it.
-    "crouch_hk": {"fps": 12, "loop": False, "frames": [
+    "crouch_hk": {"fps": 12, "loop": False, "strike": ["front_leg"], "frames": [
         crouched(),
         crouched(body={"dy": 230, "angle": 14}, back_leg={"sy": -0.62, "dy": 230},
                  front_leg={"sy": -0.2, "sx": 0, "dy": 230, "angle": 40}),
@@ -439,30 +442,31 @@ ANIMATIONS = {
                  front_leg={"sy": -0.24, "dy": 200, "angle": 36}),
         crouched(),
     ]},
-    "jump_lp": {"fps": 15, "loop": False, "frames": [
-        tucked(draw=[stump((560, 460), knife=0)]),
-        tucked(draw=[stump((660, 440), knife=-6)]),
-        tucked(draw=[stump((570, 470), knife=-10)]),
+    # Jumping LP: the stump knife jabbed down and forward at a standing opponent.
+    "jump_lp": {"fps": 15, "loop": False, "strike": ["draw"], "frames": [
+        tucked(draw=[stump((560, 500), knife=-20)]),
+        tucked(draw=[stump((620, 560), knife=-40)]),
+        tucked(draw=[stump((570, 520), knife=-30)]),
     ]},
     # Jumping HP: the stump knife driven down and forward.
-    "jump_hp": {"fps": 12, "loop": False, "frames": [
+    "jump_hp": {"fps": 12, "loop": False, "strike": ["draw"], "frames": [
         tucked(draw=[stump((520, 300), knife=50)]),
         tucked(body={"angle": 4}, draw=[stump((640, 560), knife=-50)]),
         tucked(body={"angle": 6}, draw=[stump((640, 580), knife=-56)]),
         tucked(),
     ]},
     # Jumping LK: the flying kick, boot first.
-    "jump_lk": {"fps": 12, "loop": False, "frames": [
+    "jump_lk": {"fps": 12, "loop": False, "strike": ["front_leg"], "frames": [
         tucked(),
-        tucked(body={"angle": 6}, front_leg={"sy": -0.04, "angle": 48}, back_leg={"sy": -0.6, "angle": 10}),
-        tucked(body={"angle": 6}, front_leg={"sy": -0.04, "angle": 50}, back_leg={"sy": -0.6, "angle": 10}),
+        tucked(body={"angle": 6}, front_leg={"sy": -0.04, "angle": 5}, back_leg={"sy": -0.6, "angle": 10}),
+        tucked(body={"angle": 6}, front_leg={"sy": -0.04, "angle": 7}, back_leg={"sy": -0.6, "angle": 10}),
         tucked(body={"angle": 2}, front_leg={"sy": -0.2, "angle": 30}),
     ]},
     # Jumping HK: both boots at once, a two-footed dropkick leaning right back.
-    "jump_hk": {"fps": 12, "loop": False, "frames": [
+    "jump_hk": {"fps": 12, "loop": False, "strike": ["front_leg", "back_leg"], "frames": [
         tucked(body={"angle": -12}),
-        tucked(body={"angle": -18}, front_leg={"sy": 0.04, "angle": 70}, back_leg={"sy": -0.15, "angle": 64}),
-        tucked(body={"angle": -18}, front_leg={"sy": 0.04, "angle": 72}, back_leg={"sy": -0.15, "angle": 66}),
+        tucked(body={"angle": -18}, front_leg={"sy": 0.04, "angle": 45}, back_leg={"sy": -0.15, "angle": 40}),
+        tucked(body={"angle": -18}, front_leg={"sy": 0.04, "angle": 47}, back_leg={"sy": -0.15, "angle": 42}),
         tucked(body={"angle": -10}, front_leg={"sy": -0.2, "angle": 30}),
     ]},
     "land": {"fps": 20, "loop": False, "frames": [
@@ -517,7 +521,7 @@ ANIMATIONS = {
          "front_leg": {"angle": 16, "dy": -20}, "back_leg": {"angle": -14, "dy": -20}},
     ]},
     # Stump Shiv (charge b,f+P, 38 frames, 3 hits): a lunging flurry of stabs with the knife-stump.
-    "stump_shiv": {"fps": 12, "loop": False, "frames": [
+    "stump_shiv": {"fps": 12, "loop": False, "strike": ["draw"], "frames": [
         {**slouch(10, 0, -6), "draw": [stump((300, 520), knife=10, dy=10)]},
         {**slouch(4, 0, 10), "front_leg": {"angle": 14}, "draw": [stump((720, 440), knife=0, dy=4)]},
         {**slouch(6, 0, 6), "front_leg": {"angle": 12}, "draw": [stump((520, 480), knife=6, dy=6)]},
@@ -529,7 +533,7 @@ ANIMATIONS = {
     ]},
     # Pick Pocket (HCB+K, 35 frames): the good hand darts into the opponent's coat and comes back with
     # some of their meter (the button is the joke; the meter is the theft).
-    "pick_pocket": {"fps": 10, "loop": False, "frames": [
+    "pick_pocket": {"fps": 10, "loop": False, "strike": ["draw_behind"], "frames": [
         {**slouch(8, 0, 8), "draw_behind": [gun((640, 470), dy=8, holding="open")]},
         {**slouch(6, 0, 14), "body": {"dy": 6, "angle": 14, "dx": 20}, "draw_behind": [gun((780, 480), dy=6, holding="open")]},
         {**slouch(6, 0, 10), "draw": [gun((560, 330), dy=6, holding="button")]},
@@ -537,7 +541,7 @@ ANIMATIONS = {
     ]},
     # Last Meal (Lv1, 55 frames, 4 hits): a desperate rush of kicks, a bite and a headbutt, then he
     # collapses coughing.
-    "last_meal": {"fps": 12, "loop": False, "frames": [
+    "last_meal": {"fps": 12, "loop": False, "strike": ["front_leg", "head"], "frames": [
         {**slouch(10, 0, 6)},
         {**slouch(0, 0, -8), "front_leg": {"angle": 40, "dy": -50}},
         {**slouch(4, 0, 2), "front_leg": {"angle": 10}},

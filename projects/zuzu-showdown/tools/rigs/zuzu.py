@@ -71,7 +71,7 @@ def sword_arm(canvas, offset, hand, sword=None, dy=0):
     d.line(grip, fill=WRAP, width=30)
     gx, gy = h[0] + ux * 50, h[1] + uy * 50
     d.line([(gx - uy * 46, gy + ux * 46), (gx + uy * 46, gy - ux * 46)], fill=INK, width=26)
-    tip = (h[0] + ux * 640, h[1] + uy * 640)
+    tip = (h[0] + ux * 540, h[1] + uy * 540)
     d.line([(gx, gy), tip], fill=INK, width=30)
     d.line([(gx, gy), tip], fill=STEEL, width=18)
     d.line([(gx - uy * 5, gy + ux * 5), (tip[0] - uy * 5, tip[1] + ux * 5)], fill=STEEL_EDGE, width=6)
@@ -145,7 +145,7 @@ ANIMATIONS = {
     ]},
     # Standing HP, the draw-cut: the lead arm reaches back to the hilt over his shoulder, draws, cuts
     # straight out at chest height, follows through, and re-sheathes.
-    "stand_hp": {"fps": 15, "loop": False, "frames": [
+    "stand_hp": {"fps": 15, "loop": False, "strike": ["draw"], "frames": [
         {**stance(16), "hide": ["lead_arm"], "draw": [arm((600, 330), dy=16)]},
         {**stance(10), "hide": ["lead_arm", "hilt"], "draw": [arm((700, 270), 70, 10)]},
         {**stance(4), "body": {"dy": 4, "angle": 6}, "hide": ["lead_arm", "hilt"], "draw": [arm((830, 500), 0, 4)]},
@@ -206,7 +206,7 @@ ANIMATIONS = {
         {**stance(16, 18, 90), "head": {"angle": 16, "dy": 18}},
     ]},
     # Iai Flash: the quick-draw dash cut, a deep lunge with the blade straight out.
-    "iai_flash": {"fps": 18, "loop": False, "frames": [
+    "iai_flash": {"fps": 18, "loop": False, "strike": ["draw"], "frames": [
         {**stance(20), "hide": ["lead_arm"], "draw": [arm((600, 330), dy=20)]},
         {**stance(10), "body": {"dy": 10, "angle": 10}, "front_leg": {"angle": 14}, "hide": ["lead_arm", "hilt"],
          "draw": [arm((880, 500), -2, 10)]},
@@ -215,7 +215,7 @@ ANIMATIONS = {
         {**stance(6), "hide": ["lead_arm"], "draw": [arm((610, 340), dy=6)]},
     ]},
     # Falling Leaf: the rising cut, legs tucked, blade sweeping up overhead.
-    "falling_leaf": {"fps": 16, "loop": False, "frames": [
+    "falling_leaf": {"fps": 16, "loop": False, "strike": ["draw"], "frames": [
         {**stance(30), "hide": ["lead_arm"], "draw": [arm((620, 420), dy=30)]},
         {"body": {"angle": -6}, "front_leg": {"sy": -0.3, "angle": 14}, "back_leg": {"sy": -0.3},
          "hide": ["lead_arm", "hilt"], "draw": [arm((720, 300), 60)]},
@@ -223,7 +223,7 @@ ANIMATIONS = {
          "hide": ["lead_arm", "hilt"], "draw": [arm((680, 160), 96)]},
     ]},
     # Descending Cut: in the air, the blade swung down and forward.
-    "descending_cut": {"fps": 16, "loop": False, "frames": [
+    "descending_cut": {"fps": 16, "loop": False, "strike": ["draw"], "frames": [
         {"body": {"angle": -6}, "front_leg": {"sy": -0.4, "angle": 20}, "back_leg": {"sy": -0.36},
          "hide": ["lead_arm", "hilt"], "draw": [arm((700, 260), 70)]},
         {"body": {"angle": 8}, "front_leg": {"sy": -0.4, "angle": 24}, "back_leg": {"sy": -0.36},
@@ -243,88 +243,89 @@ ANIMATIONS = {
     # The normals (frame counts from fighters/placeholders.ts and zuzu.ts: an animation spans the move's
     # startup + active + recovery at its fps, clamping on its last frame if the move runs longer).
     # Standing LP: a short jab with the lead fist, the blade left sheathed.
-    "stand_lp": {"fps": 15, "loop": False, "frames": [
+    "stand_lp": {"fps": 15, "loop": False, "strike": ["lead_arm"], "frames": [
         {**stance(6), "body": {"dy": 6, "angle": 3}, "lead_arm": {"sx": 0.1, "angle": -4}},
         {**stance(4), "body": {"dy": 4, "angle": 6}, "lead_arm": {"sx": 0.35, "angle": -8}},
         {**stance(4), "body": {"dy": 4, "angle": 3}, "lead_arm": {"sx": 0.1, "angle": -2}},
     ]},
     # Standing LK: a snap kick off the front foot.
-    "stand_lk": {"fps": 15, "loop": False, "frames": [
+    "stand_lk": {"fps": 15, "loop": False, "strike": ["front_leg"], "frames": [
         {**stance(4), "body": {"dy": 4, "angle": -3}, "front_leg": {"angle": 22, "dy": -10}},
         {**stance(4), "body": {"dy": 4, "angle": -8}, "front_leg": {"angle": 58, "dy": -24}},
         {**stance(4), "body": {"dy": 4, "angle": -7}, "front_leg": {"angle": 52, "dy": -20}},
         {**stance(4), "body": {"dy": 4, "angle": -2}, "front_leg": {"angle": 16, "dy": -6}},
     ]},
     # Standing HK: a roundhouse, the chamber, the leg swinging up to his own head height, the return.
-    "stand_hk": {"fps": 12, "loop": False, "frames": [
+    "stand_hk": {"fps": 12, "loop": False, "strike": ["front_leg"], "frames": [
         {**stance(10), "body": {"dy": 10, "angle": 6}, "front_leg": {"angle": -10}},
         {**stance(0), "body": {"dy": 0, "angle": -10}, "front_leg": {"angle": 40, "dy": -30}},
-        {**stance(0), "body": {"dy": -10, "angle": -16}, "front_leg": {"angle": 84, "dy": -50},
+        {**stance(0), "body": {"dy": -10, "angle": -16}, "front_leg": {"angle": 84, "dy": -50, "dx": 120, "sy": 0.2},
          "back_leg": {"angle": -6}, "lead_arm": {"angle": 30}},
-        {**stance(0), "body": {"dy": -10, "angle": -16}, "front_leg": {"angle": 88, "dy": -50},
+        {**stance(0), "body": {"dy": -10, "angle": -16}, "front_leg": {"angle": 88, "dy": -50, "dx": 120, "sy": 0.2},
          "back_leg": {"angle": -6}, "lead_arm": {"angle": 34}},
         {**stance(4), "body": {"dy": 4, "angle": -8}, "front_leg": {"angle": 40, "dy": -20}},
         {**stance(8)},
     ]},
-    "crouch_lp": {"fps": 15, "loop": False, "frames": [
+    "crouch_lp": {"fps": 15, "loop": False, "strike": ["lead_arm"], "frames": [
         crouched(lead_arm={"angle": -18, "sx": 0.1}),
         crouched(lead_arm={"angle": -20, "sx": 0.35}),
         crouched(lead_arm={"angle": -18, "sx": 0.1}),
     ]},
-    # Crouching LK: a low toe-poke at the shins.
-    "crouch_lk": {"fps": 15, "loop": False, "frames": [
+    # Crouching LK: a low toe-poke at the shins, the leg straightened out along the floor.
+    "crouch_lk": {"fps": 15, "loop": False, "strike": ["front_leg"], "frames": [
         crouched(front_leg={"sy": -0.35, "sx": 0.12, "dy": CROUCH_DY, "angle": 24}),
-        crouched(front_leg={"sy": -0.35, "sx": 0.12, "dy": CROUCH_DY, "angle": 52}),
-        crouched(front_leg={"sy": -0.35, "sx": 0.12, "dy": CROUCH_DY, "angle": 48}),
+        crouched(front_leg={"sy": 0.2, "sx": 0, "dy": CROUCH_DY, "angle": 42}),
+        crouched(front_leg={"sy": 0.2, "sx": 0, "dy": CROUCH_DY, "angle": 40}),
         crouched(front_leg={"sy": -0.35, "sx": 0.12, "dy": CROUCH_DY, "angle": 20}),
     ]},
-    # Crouching HP: the anti-air, drawing from the crouch straight up overhead.
-    "crouch_hp": {"fps": 13, "loop": False, "frames": [
+    # Crouching HP: the anti-air, drawing from the crouch straight up overhead (the blade is up on the
+    # active frames, then follows through forward).
+    "crouch_hp": {"fps": 13, "loop": False, "strike": ["draw"], "frames": [
         crouched(hide=["lead_arm"], draw=[arm((600, 330 + CROUCH_DY), dy=CROUCH_DY)]),
-        crouched(hide=["lead_arm", "hilt"], draw=[arm((780, 560), 40, CROUCH_DY)]),
         crouched(hide=["lead_arm", "hilt"], draw=[arm((740, 420), 80, CROUCH_DY)]),
         crouched(hide=["lead_arm", "hilt"], draw=[arm((720, 400), 96, CROUCH_DY)]),
+        crouched(hide=["lead_arm", "hilt"], draw=[arm((780, 560), 40, CROUCH_DY)]),
         crouched(hide=["lead_arm", "hilt"], draw=[arm((800, 600), 20, CROUCH_DY)]),
         crouched(hide=["lead_arm"], draw=[arm((610, 340 + CROUCH_DY), dy=CROUCH_DY)]),
     ]},
     # Crouching HK: the sweep, dropping to the floor and swinging the front leg out full length along it.
-    "crouch_hk": {"fps": 12, "loop": False, "frames": [
+    "crouch_hk": {"fps": 12, "loop": False, "strike": ["front_leg"], "frames": [
         crouched(),
         crouched(body={"dy": 230, "angle": 12}, back_leg={"sy": -0.58, "sx": 0.15, "dy": 230},
                  front_leg={"sy": -0.15, "sx": 0, "dy": 230, "angle": 50}, lead_arm={"angle": -30}),
         crouched(body={"dy": 260, "angle": 14}, back_leg={"sy": -0.62, "sx": 0.15, "dy": 260},
-                 front_leg={"sy": 0, "sx": 0, "dy": 260, "angle": 84}, lead_arm={"angle": -34}),
+                 front_leg={"sy": 0.3, "sx": 0, "dy": 260, "dx": 100, "angle": 84}, lead_arm={"angle": -34}),
         crouched(body={"dy": 260, "angle": 14}, back_leg={"sy": -0.62, "sx": 0.15, "dy": 260},
-                 front_leg={"sy": 0, "sx": 0, "dy": 260, "angle": 86}, lead_arm={"angle": -34}),
+                 front_leg={"sy": 0.3, "sx": 0, "dy": 260, "dx": 100, "angle": 86}, lead_arm={"angle": -34}),
         crouched(body={"dy": 200, "angle": 10}, back_leg={"sy": -0.52, "sx": 0.15, "dy": 200},
                  front_leg={"sy": -0.2, "dy": 200, "angle": 44}, lead_arm={"angle": -24}),
         crouched(),
     ]},
-    "jump_lp": {"fps": 15, "loop": False, "frames": [
+    "jump_lp": {"fps": 15, "loop": False, "strike": ["lead_arm"], "frames": [
         tucked(lead_arm={"angle": 0, "sx": 0.12}),
         tucked(lead_arm={"angle": -14, "sx": 0.35}),
         tucked(lead_arm={"angle": -6, "sx": 0.14}),
     ]},
     # Jumping HP: a downward slash in the air.
-    "jump_hp": {"fps": 12, "loop": False, "frames": [
+    "jump_hp": {"fps": 12, "loop": False, "strike": ["draw"], "frames": [
         tucked(hide=["lead_arm", "hilt"], draw=[arm((700, 260), 70)]),
         tucked(body={"angle": 4}, hide=["lead_arm", "hilt"], draw=[arm((860, 520), -10)]),
         tucked(body={"angle": 8}, hide=["lead_arm", "hilt"], draw=[arm((800, 640), -46)]),
         tucked(hide=["lead_arm"], draw=[arm((610, 340))]),
     ]},
-    # Jumping LK: the flying kick, the front leg shot straight out and down.
-    "jump_lk": {"fps": 12, "loop": False, "frames": [
+    # Jumping LK: the flying kick, the front leg shot out diagonally down at a standing opponent.
+    "jump_lk": {"fps": 12, "loop": False, "strike": ["front_leg"], "frames": [
         tucked(),
-        tucked(body={"angle": 8}, front_leg={"sy": 0.05, "angle": 56}, back_leg={"sy": -0.5, "angle": -12}),
-        tucked(body={"angle": 8}, front_leg={"sy": 0.05, "angle": 58}, back_leg={"sy": -0.5, "angle": -12}),
+        tucked(body={"angle": 8}, front_leg={"sy": 0.05, "angle": 15}, back_leg={"sy": -0.5, "angle": -12}),
+        tucked(body={"angle": 8}, front_leg={"sy": 0.05, "angle": 17}, back_leg={"sy": -0.5, "angle": -12}),
         tucked(body={"angle": 4}, front_leg={"sy": -0.2, "angle": 40}),
     ]},
     # Jumping HK: a bigger flying kick, leaning back behind a straight leg.
-    "jump_hk": {"fps": 12, "loop": False, "frames": [
+    "jump_hk": {"fps": 12, "loop": False, "strike": ["front_leg"], "frames": [
         tucked(body={"angle": -12}, front_leg={"sy": -0.5, "angle": 10}),
-        tucked(body={"angle": -16}, front_leg={"sy": 0.12, "angle": 80}, back_leg={"sy": -0.5, "angle": -20},
+        tucked(body={"angle": -16}, front_leg={"sy": 0.25, "angle": 20, "dx": 100}, back_leg={"sy": -0.5, "angle": -20},
                lead_arm={"angle": 50}),
-        tucked(body={"angle": -16}, front_leg={"sy": 0.12, "angle": 84}, back_leg={"sy": -0.5, "angle": -20},
+        tucked(body={"angle": -16}, front_leg={"sy": 0.25, "angle": 22, "dx": 100}, back_leg={"sy": -0.5, "angle": -20},
                lead_arm={"angle": 52}),
         tucked(body={"angle": -10}, front_leg={"sy": -0.3, "angle": 40}),
     ]},
