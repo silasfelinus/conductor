@@ -13,8 +13,11 @@ fires left-handed and badly (far side, behind it).
 from __future__ import annotations
 
 import math
+from pathlib import Path
 
-from PIL import ImageDraw
+from PIL import Image, ImageDraw
+
+import sprite_common as sc
 
 HEIGHT = 104
 PALETTE_COLOURS = 16
@@ -59,6 +62,70 @@ SAND = (214, 186, 128)
 BUTTON = (190, 160, 110)
 
 
+# The parts sheet's isolated left arm (ArtImage 242883): a horizontal coat sleeve, bandaged wrist and fist,
+# fist to the left, with a loose knife lying across the lower sleeve (left out of both cuts). The same
+# sleeve dresses both arms: whole for the gun hand, cut at the bandaged wrist for the stump.
+ARM_ART = 242883
+GUN_SLEEVE = [(36, 390), (190, 370), (270, 420), (330, 420), (700, 390), (745, 430), (745, 470), (640, 600),
+              (590, 665), (330, 680), (270, 640), (150, 670), (36, 640)]
+STUMP_SLEEVE = [(262, 430), (330, 420), (700, 390), (745, 430), (745, 470), (640, 600), (590, 665), (330, 680),
+                (262, 630)]
+SLEEVE_SHOULDER = (745, 545)
+GUN_SLEEVE_HAND = (60, 520)
+STUMP_SLEEVE_END = (262, 530)
+SLEEVE_ACROSS = 0.27  # the sleeve is drawn ~290 px thick; on the body an arm is ~80
+SOURCE_DIR: Path | None = None  # set by rig.py
+_sleeves: dict[str, Image.Image] = {}
+
+
+def _sleeve(kind: str) -> Image.Image | None:
+    if kind not in _sleeves:
+        path = SOURCE_DIR / f"{ARM_ART}.png" if SOURCE_DIR else None
+        if not path or not path.exists():
+            return None
+        keyed = sc.key_background(Image.open(path).convert("RGB"))
+        mask = Image.new("L", keyed.size, 0)
+        ImageDraw.Draw(mask).polygon(GUN_SLEEVE if kind == "gun" else STUMP_SLEEVE, fill=255)
+        part = Image.new("RGBA", keyed.size, (0, 0, 0, 0))
+        part.paste(keyed, (0, 0), Image.composite(keyed.getchannel("A"), mask, mask))
+        _sleeves[kind] = part
+    return _sleeves[kind]
+
+
+def _paste_limb(canvas, part, s_img, h_img, s_t, h_t) -> bool:
+    """Lay `part` from its shoulder point s_img to its hand point h_img onto the canvas from s_t to
+    h_t: stretched along the arm to reach, a fixed SLEEVE_ACROSS thick, mirrored when needed so the
+    top of the sleeve stays on top."""
+    if part is None:
+        return False
+    vix, viy = h_img[0] - s_img[0], h_img[1] - s_img[1]
+    vtx, vty = h_t[0] - s_t[0], h_t[1] - s_t[1]
+    li, lt = math.hypot(vix, viy), math.hypot(vtx, vty)
+    if lt < 1:
+        return False
+    uix, uiy = vix / li, viy / li
+    utx, uty = vtx / lt, vty / lt
+    nix, niy = -uiy, uix
+    ntx, nty = -uty, utx
+    if (niy < 0) != (nty < 0):
+        ntx, nty = -ntx, -nty
+    along = lt / li
+    across = SLEEVE_ACROSS
+    st_u = s_t[0] * utx + s_t[1] * uty
+    st_n = s_t[0] * ntx + s_t[1] * nty
+    coeffs = (
+        uix / along * utx + nix / across * ntx,
+        uix / along * uty + nix / across * nty,
+        s_img[0] - uix / along * st_u - nix / across * st_n,
+        uiy / along * utx + niy / across * ntx,
+        uiy / along * uty + niy / across * nty,
+        s_img[1] - uiy / along * st_u - niy / across * st_n,
+    )
+    laid = part.transform(canvas.size, Image.Transform.AFFINE, coeffs, resample=Image.Resampling.BICUBIC)
+    canvas.alpha_composite(laid)
+    return True
+
+
 def _limb(d, start, end, width, colour):
     d.line([start, end], fill=INK, width=width + 16)
     d.line([start, end], fill=colour, width=width)
@@ -67,18 +134,20 @@ def _limb(d, start, end, width, colour):
 def stump_arm(canvas, offset, hand, knife=0, dy=0):
     """His right arm: the coat sleeve, the bandaged stump, the knife lashed to it pointing `knife`
     degrees (0 = straight ahead, positive = up)."""
-    d = ImageDraw.Draw(canvas)
     s = (SHOULDER_NEAR[0] + offset[0], SHOULDER_NEAR[1] + offset[1] + dy)
     h = (hand[0] + offset[0], hand[1] + offset[1])
-    _limb(d, s, h, 66, SLEEVE)
-    d.ellipse([h[0] - 34, h[1] - 34, h[0] + 34, h[1] + 34], fill=INK)
-    d.ellipse([h[0] - 26, h[1] - 26, h[0] + 26, h[1] + 26], fill=BANDAGE)
+    d = ImageDraw.Draw(canvas)
     a = math.radians(knife)
     ux, uy = math.cos(a), -math.sin(a)
+    # The knife goes down first so the bandaged stump sits over its lashed handle.
     tip = (h[0] + ux * 300, h[1] + uy * 300)
     d.line([h, tip], fill=INK, width=30)
     d.line([h, tip], fill=STEEL, width=16)
     d.line([(h[0] - uy * 4, h[1] + ux * 4), (tip[0] - uy * 4, tip[1] + ux * 4)], fill=STEEL_EDGE, width=5)
+    if not _paste_limb(canvas, _sleeve("stump"), SLEEVE_SHOULDER, STUMP_SLEEVE_END, s, h):
+        _limb(d, s, h, 66, SLEEVE)
+        d.ellipse([h[0] - 34, h[1] - 34, h[0] + 34, h[1] + 34], fill=INK)
+        d.ellipse([h[0] - 26, h[1] - 26, h[0] + 26, h[1] + 26], fill=BANDAGE)
     for k in (-14, 0, 14):  # the bandage wraps lashing the knife on
         cx, cy = h[0] + ux * (30 + k), h[1] + uy * (30 + k)
         d.line([(cx - uy * 24, cy + ux * 24), (cx + uy * 24, cy - ux * 24)], fill=BANDAGE, width=8)
@@ -87,12 +156,14 @@ def stump_arm(canvas, offset, hand, knife=0, dy=0):
 def gun_arm(canvas, offset, hand, aim=0, flash=False, dy=0, holding="gun"):
     """His left arm on the far side, holding the revolver aimed `aim` degrees (`flash` fires it), or
     `holding="button"` (the one thing he found in the loser's pockets), or `"open"`."""
-    d = ImageDraw.Draw(canvas)
     s = (SHOULDER_FAR[0] + offset[0], SHOULDER_FAR[1] + offset[1] + dy)
     h = (hand[0] + offset[0], hand[1] + offset[1])
-    _limb(d, s, h, 58, SLEEVE_FAR)
-    d.ellipse([h[0] - 30, h[1] - 30, h[0] + 30, h[1] + 30], fill=INK)
-    d.ellipse([h[0] - 22, h[1] - 22, h[0] + 22, h[1] + 22], fill=FUR)
+    if not _paste_limb(canvas, _sleeve("gun"), SLEEVE_SHOULDER, GUN_SLEEVE_HAND, s, h):
+        d0 = ImageDraw.Draw(canvas)
+        _limb(d0, s, h, 58, SLEEVE_FAR)
+        d0.ellipse([h[0] - 30, h[1] - 30, h[0] + 30, h[1] + 30], fill=INK)
+        d0.ellipse([h[0] - 22, h[1] - 22, h[0] + 22, h[1] + 22], fill=FUR)
+    d = ImageDraw.Draw(canvas)
     if holding == "button":
         d.ellipse([h[0] - 18, h[1] - 64, h[0] + 18, h[1] - 28], fill=BUTTON, outline=INK, width=6)
         d.ellipse([h[0] - 8, h[1] - 52, h[0] - 2, h[1] - 46], fill=INK)
