@@ -250,7 +250,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -418,10 +418,16 @@ tasks:
       the way to the stairs from floor 2, a reachable key on the near side, keys carry between
       floors) shipped in silasfelinus/kind_robots#3306. Left: station-sweep critter growth +
       timer; co-op slices for both games need a second cabinet input stream.
+
+      RAN 2026-10-07: Station Sweep slice 3 (critter growth: every critter left alone grows
+      big; station clock of 45 s + 24 s per deck, lost station costs a spare Mop) shipped in
+      silasfelinus/kind_robots#3307. Every single-player slice in games.yaml is now built;
+      what remains is the same-device co-op slice for kindness-gauntlet and station-sweep,
+      which needs a second cabinet input stream first.
     claimed_by: session_01VaLqZ5kgs3HK1xxXDfFfNS
     claimed_at: '2026-10-07T03:47:05Z'
-    updated: '2026-10-07T03:47:05Z'
-    implementation_pr: 'silasfelinus/kind_robots#3306'
+    updated: '2026-10-07T03:47:12Z'
+    implementation_pr: 'silasfelinus/kind_robots#3307'
 
   - id: t-010
     milestone: m2
