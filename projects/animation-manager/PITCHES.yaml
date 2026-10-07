@@ -1994,3 +1994,36 @@ pitches:
         commit: 8c3098a
         verification:
           - 29 checks green on merge
+
+  - id: snow-globe-village
+    title: Snow Globe Village
+    status: candidate
+    priority: 36
+    surprise: >
+      A tiny lit village sits inside a glass globe while snow settles and swirls around it.
+    passive_loop: >
+      Snow drifts and settles around the village inside the globe on a seamless loop.
+    optional_interaction: >
+      Moving the pointer tilts the swirl; a rate-limited click shakes the globe.
+    technique: >
+      One canvas, particle flakes with closed-form drift, village lights as pure functions of
+      the loop clock.
+    reduced_motion: >
+      Holds a single settled frame with no swirl or shake.
+    performance_risk: >
+      Low: capped flake count and DPR, ResizeObserver sizing.
+    novelty: >
+      First contained-diorama scene in the catalog.
+    acceptance:
+      - snow drifts and settles without interaction
+      - pointer movement tilts the swirl and it eases back
+      - clicking shakes the globe at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/snow-globe-village.vue
+        pull_request: silasfelinus/kind_robots#3337
+        released_at: '2026-10-07T08:00:00Z'
+        commit: a39d061
+        verification:
+          - merged on kind_robots main; reconciled by the 2026-10-07 conductor run
