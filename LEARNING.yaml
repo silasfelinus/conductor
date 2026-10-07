@@ -17373,3 +17373,13 @@ records:
   lesson: 'A fight sim''s contract test earns its keep at once: a simultaneous-trade test caught a null
     crash (one hit''s reaction cleared the other attacker''s move) and an off-by-one in throw startup;
     write the trade and frame-count cases first.'
+- date: 2026-10-07
+  project: zuzu-showdown
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Re-seeding a fuzz test (the input change shifted the random stream) found a sim bug the old
+    seeds missed (wall back-throw overlap); run fuzz invariants over a dozen seeds, not three.
