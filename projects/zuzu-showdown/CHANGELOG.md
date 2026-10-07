@@ -1,6 +1,10 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-009 (in progress): the Lone Apple Tree (kind_robots#3348), on the noon backdrop from the daylight lane.
+  It has heat shimmer, drifting red leaves, a dust devil, and apples that drop, rest and fade. tools/stage.py
+  learned `patches`: a source box painted out by blending each column from the pixels above it to those
+  below (a stray bone). Five of the eight stages are done.
 - t-009 (in progress): the Mission and Storm Canyon (kind_robots#3348). The Mission is a moonlit church
   with a flickering candle, chimney smoke, and a portal in the bell arch between rounds. Storm Canyon has
   rain, crows, and lightning that silhouettes the canyon walls; it is rate-limited and off under reduced

@@ -19,7 +19,8 @@ so the camera travels +-144), and it sits centred: x = (480 - width) / 2.
 SOURCE_DIR holds the source art as <art_image_id>.png. A layer may set `crop` (source pixels) and
 `mirror: true` (the crop followed by its mirror image) or `mirror: "before"` (the mirror image first);
 boxes and anchors are given in the uncropped source, on the unmirrored copy, and with `mirror: true` a
-point past the crop's right edge lands in the mirrored half.
+point past the crop's right edge lands in the mirrored half. `patches` are source boxes painted out by
+blending each column from the pixels just above the box to those just below (a stray object removed).
 """
 
 from __future__ import annotations
@@ -50,6 +51,15 @@ def span(factor: float) -> int:
 
 def load(source_dir: Path, spec: dict) -> Image.Image:
     image = Image.open(source_dir / f"{spec['art']}.png").convert("RGB")
+    if spec.get("patches"):
+        # Paint out something the art shouldn't have (a stray bone): each column of the box blends from
+        # the ground just above it to the ground just below, so no seam shows.
+        arr = np.asarray(image).astype(np.float32).copy()
+        for x0, y0, x1, y1 in spec["patches"]:
+            top, bottom = arr[y0 - 1, x0:x1], arr[min(y1, arr.shape[0] - 1), x0:x1]
+            t = np.linspace(0, 1, y1 - y0)[:, None, None]
+            arr[y0:y1, x0:x1] = top[None] * (1 - t) + bottom[None] * t
+        image = Image.fromarray(arr.round().astype(np.uint8), "RGB")
     if spec.get("crop"):
         image = image.crop(spec["crop"])
     if spec.get("mirror"):
