@@ -250,7 +250,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -349,10 +349,24 @@ tasks:
       test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (city 6-12 after
       rebalancing an initially endless game), Playwright phone/desktop. Next cycle takes the
       next queued games.yaml entry: kindness-gauntlet (Gauntlet riff).
+
+      RAN 2026-10-07: Kindness Gauntlet slice 1 (Gauntlet II riff) shipped live in
+      silasfelinus/kind_robots#3289 -- Fix the repair android on procedurally built server-
+      dungeon floors (rooms + 2-wide corridors, fog of war), glitch generators with hp,
+      clinging glitches, caged bots, snacks, kindness pulses, stairs to harder floors, a
+      draining battery; hold-fire-to-turn as in the classic. Same PR fits the cabinet how-to
+      card to short screens (Repair Rampage's sixth line was clipped) with a contract test.
+      Title art requested as kr-arcade-games-kindness-gauntlet-title. Verified: test:arcade-
+      engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (floors 10-22, every run ends),
+      Playwright. kindness-gauntlet stays building: next slices are all four classes, then
+      keys + locked doors (co-op needs cabinet input work). Next cycle: build the next
+      Kindness Gauntlet slice OR the next queued quick cabinet if one is waiting; the queue
+      continues with prize-show-panic (Smash TV riff, uses Gauntlet's twin-stick-style aim)
+      and bolt-knight / station-sweep.
     claimed_by: 2026-10-07T0010Z-kr-arcade-t009-kindness-gauntlet-s1
     claimed_at: '2026-10-07T00:08:19Z'
-    updated: '2026-10-07T00:08:19Z'
-    implementation_pr: 'silasfelinus/kind_robots#3288'
+    updated: '2026-10-07T00:10:59Z'
+    implementation_pr: 'silasfelinus/kind_robots#3289'
 
   - id: t-010
     milestone: m2
