@@ -180,6 +180,28 @@ def _png(color, size):
     return "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
 
 
+def test_source_pad_centres_a_portrait_in_a_widescreen_canvas():
+    pytest = __import__("pytest")
+    pytest.importorskip("PIL")
+    images = {1: _png("red", (832, 1216))}
+    out = enq._decode_data_url(enq.compose_source({"source_image_id": 1, "source_pad": "16:9"}, images.get))
+    assert out.size == (2162, 1216)
+    left = (2162 - 832) // 2
+    assert out.getpixel((left + 10, 600)) == (255, 0, 0)
+    assert out.getpixel((10, 600)) == (255, 255, 255)
+    assert out.getpixel((2150, 600)) == (255, 255, 255)
+
+
+def test_source_pad_leaves_a_matching_image_alone_and_refuses_nonsense():
+    pytest = __import__("pytest")
+    pytest.importorskip("PIL")
+    images = {1: _png("blue", (1600, 900))}
+    out = enq._decode_data_url(enq.compose_source({"source_image_id": 1, "source_pad": "16:9"}, images.get))
+    assert out.size == (1600, 900)
+    with pytest.raises(ValueError):
+        enq.compose_source({"source_image_id": 1, "source_pad": "wide"}, images.get)
+
+
 def test_source_crop_and_reference_stitch_geometry():
     pytest = __import__("pytest")
     pytest.importorskip("PIL")
