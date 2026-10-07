@@ -250,11 +250,11 @@ tasks:
 - id: t-016
   milestone: m3
   title: Character LoRA datasets for Zuzu and the fennec siblings
-  status: ready
+  status: waiting
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-07T08:46:52Z'
+  updated: '2026-10-07T09:24:00Z'
   depends_on:
   - t-015
   note: >-
@@ -268,6 +268,10 @@ tasks:
 
     Reset stale claimed (null claimed_by/at) back to ready: lost close-out write, per
     check_recurring_claim_drift.
+
+    2026-10-07 (PT) agent: ready -> waiting. Its dependency t-015 is not done, so the roadmap audit
+    rejected "ready" (READY_WITH_UNMET_DEPS) and turned main's CI red; resolve_deps.py promotes it
+    back to ready when t-015 closes.
   approved_by_human: true
 - id: t-017
   milestone: m2
