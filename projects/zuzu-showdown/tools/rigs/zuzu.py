@@ -81,6 +81,16 @@ def arm(hand, sword=None, dy=0):
     return {"fn": "sword_arm", "args": {"hand": hand, "sword": sword, "dy": dy}}
 
 
+BACK_FOOT = (120, 1168)
+FRONT_FOOT = (700, 1168)
+
+
+def fall(angle, pivot=BACK_FOOT):
+    """The whole figure toppling about a foot: positive angles tip him over backwards (head to his
+    rear) about the back foot; negative angles about the front foot pitch him forwards."""
+    return {"whole": {"angle": angle, "pivot": pivot}}
+
+
 def stance(dy=0, head=0, arm=0):
     """The fighting stance is the source art itself, so a stance frame is just small offsets."""
     return {"body": {"dy": dy}, "head": {"dy": head}, "lead_arm": {"angle": arm}}
@@ -120,6 +130,94 @@ ANIMATIONS = {
         {**stance(4), "body": {"dy": 4, "angle": 6}, "hide": ["lead_arm", "hilt"], "draw": [arm((830, 500), 0, 4)]},
         {**stance(8), "body": {"dy": 8, "angle": 4}, "hide": ["lead_arm", "hilt"], "draw": [arm((760, 620), -40, 8)]},
         {**stance(4), "hide": ["lead_arm"], "draw": [arm((610, 340), dy=4)]},
+    ]},
+    "walk_back": {"fps": 9, "loop": True, "frames": [
+        {"front_leg": {"angle": -4}, "back_leg": {"angle": 6}, "body": {"dy": 4}},
+        {"front_leg": {"angle": -2}, "back_leg": {"angle": 2, "dy": -12}, "body": {"dy": 10}},
+        {"front_leg": {"angle": 4}, "back_leg": {"angle": -4}, "body": {"dy": 2}},
+        {"front_leg": {"angle": 6, "dy": -12}, "back_leg": {"angle": -6}, "body": {"dy": 6}},
+    ]},
+    # Blocks: the lead forearm comes up across his face (high), or he drops into the crouch (low).
+    "block_high": {"fps": 12, "loop": False, "frames": [
+        {**stance(8), "body": {"dy": 8, "angle": -4}, "lead_arm": {"angle": 64}},
+        {**stance(12), "body": {"dy": 12, "angle": -5}, "lead_arm": {"angle": 70}},
+    ]},
+    "block_low": {"fps": 12, "loop": False, "frames": [
+        {"body": {"dy": 131, "angle": 6}, "front_leg": {"sy": -0.35, "sx": 0.12, "dy": 131},
+         "back_leg": {"sy": -0.35, "sx": 0.12, "dy": 131}, "lead_arm": {"angle": -34}},
+    ]},
+    "hit_high": {"fps": 14, "loop": False, "frames": [
+        {"body": {"dy": 8, "dx": -30, "angle": -14}, "head": {"angle": -18, "dx": -40}, "lead_arm": {"angle": 30}},
+        {"body": {"dy": 6, "dx": -20, "angle": -9}, "head": {"angle": -11, "dx": -24}, "lead_arm": {"angle": 18}},
+        {"body": {"dy": 2, "dx": -8, "angle": -3}, "head": {"angle": -4, "dx": -8}},
+    ]},
+    "hit_low": {"fps": 14, "loop": False, "frames": [
+        {"body": {"dy": 50, "angle": 20}, "head": {"dy": 20, "dx": 30, "angle": 12}, "lead_arm": {"angle": -30}},
+        {"body": {"dy": 34, "angle": 13}, "head": {"dy": 12, "dx": 18, "angle": 6}, "lead_arm": {"angle": -18}},
+        {"body": {"dy": 12, "angle": 4}},
+    ]},
+    "knockdown": {"fps": 12, "loop": False, "frames": [
+        {**fall(20), "body": {"angle": -6}, "lead_arm": {"angle": 30}},
+        {**fall(48), "lead_arm": {"angle": 40}},
+        {**fall(76), "lead_arm": {"angle": 30}},
+        {**fall(90), "lead_arm": {"angle": 20}},
+    ]},
+    # KO (fighters.yaml): drops to one knee, then pitches forward.
+    "ko": {"fps": 8, "loop": False, "frames": [
+        {"body": {"dy": 131, "angle": 10}, "front_leg": {"sy": -0.35, "sx": 0.12, "dy": 131},
+         "back_leg": {"sy": -0.5, "dy": 131, "angle": -30}, "head": {"dy": 10, "angle": 10}, "lead_arm": {"angle": -50}},
+        {**fall(-40, FRONT_FOOT), "body": {"dy": 131, "angle": 10}, "front_leg": {"sy": -0.35, "dy": 131},
+         "back_leg": {"sy": -0.5, "dy": 131, "angle": -30}, "lead_arm": {"angle": -60}},
+        {**fall(-86, FRONT_FOOT), "body": {"dy": 131, "angle": 10}, "front_leg": {"sy": -0.35, "dy": 131},
+         "back_leg": {"sy": -0.5, "dy": 131, "angle": -30}, "lead_arm": {"angle": -70}},
+    ]},
+    # Taunt (fighters.yaml): slowly sets his kasa straight with one finger. Doesn't look at you.
+    "taunt": {"fps": 6, "loop": False, "frames": [
+        {**stance(0, 0, 40)},
+        {**stance(-4, -2, 84), "head": {"angle": -4}},
+        {**stance(-4, -2, 88), "head": {"angle": 0}},
+        {**stance(0, 0, 40)},
+    ]},
+    # Victory: the kasa off to the fallen, a bow.
+    "victory": {"fps": 6, "loop": False, "frames": [
+        {**stance(0, 0, 60)},
+        {**stance(10, 12, 84), "head": {"angle": 12, "dy": 12}},
+        {**stance(16, 18, 90), "head": {"angle": 16, "dy": 18}},
+    ]},
+    # Iai Flash: the quick-draw dash cut, a deep lunge with the blade straight out.
+    "iai_flash": {"fps": 18, "loop": False, "frames": [
+        {**stance(20), "hide": ["lead_arm"], "draw": [arm((600, 330), dy=20)]},
+        {**stance(10), "body": {"dy": 10, "angle": 10}, "front_leg": {"angle": 14}, "hide": ["lead_arm", "hilt"],
+         "draw": [arm((880, 500), -2, 10)]},
+        {**stance(10), "body": {"dy": 10, "angle": 12}, "front_leg": {"angle": 16}, "hide": ["lead_arm", "hilt"],
+         "draw": [arm((900, 520), -6, 10)]},
+        {**stance(6), "hide": ["lead_arm"], "draw": [arm((610, 340), dy=6)]},
+    ]},
+    # Falling Leaf: the rising cut, legs tucked, blade sweeping up overhead.
+    "falling_leaf": {"fps": 16, "loop": False, "frames": [
+        {**stance(30), "hide": ["lead_arm"], "draw": [arm((620, 420), dy=30)]},
+        {"body": {"angle": -6}, "front_leg": {"sy": -0.3, "angle": 14}, "back_leg": {"sy": -0.3},
+         "hide": ["lead_arm", "hilt"], "draw": [arm((720, 300), 60)]},
+        {"body": {"angle": -10}, "front_leg": {"sy": -0.45, "angle": 22}, "back_leg": {"sy": -0.42},
+         "hide": ["lead_arm", "hilt"], "draw": [arm((680, 160), 96)]},
+    ]},
+    # Descending Cut: in the air, the blade swung down and forward.
+    "descending_cut": {"fps": 16, "loop": False, "frames": [
+        {"body": {"angle": -6}, "front_leg": {"sy": -0.4, "angle": 20}, "back_leg": {"sy": -0.36},
+         "hide": ["lead_arm", "hilt"], "draw": [arm((700, 260), 70)]},
+        {"body": {"angle": 8}, "front_leg": {"sy": -0.4, "angle": 24}, "back_leg": {"sy": -0.36},
+         "hide": ["lead_arm", "hilt"], "draw": [arm((820, 620), -40)]},
+    ]},
+    # Poncho Veil: the parry stance, crouched behind the poncho, the lead arm tucked away.
+    "poncho_veil": {"fps": 10, "loop": False, "frames": [
+        {"body": {"dy": 50, "angle": 6}, "front_leg": {"sy": -0.13, "dy": 50}, "back_leg": {"sy": -0.13, "dy": 50},
+         "head": {"dy": 20, "angle": 8}, "hide": ["lead_arm"]},
+    ]},
+    # Kasa Toss: a sidearm throw (the game draws the kasa itself in flight).
+    "kasa_toss": {"fps": 14, "loop": False, "frames": [
+        {**stance(10), "lead_arm": {"angle": 70}},
+        {**stance(6), "body": {"dy": 6, "angle": 6}, "lead_arm": {"angle": 20}},
+        {**stance(4), "body": {"dy": 4, "angle": 8}, "lead_arm": {"angle": -10}},
     ]},
 }
 
