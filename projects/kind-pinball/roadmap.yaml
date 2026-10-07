@@ -135,7 +135,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Physics feel: cradle, post pass, flipper motors, tilt bob, kickback, spinner, drops"
-    status: waiting
+    status: ready
     depends_on: [t-018]
     owner: null
     passes: 0
@@ -230,7 +230,7 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Hidden sub-table: a discoverable secret playfield that returns the ball to the main table"
-    status: waiting
+    status: ready
     depends_on: [t-018]
     owner: null
     passes: 0
@@ -344,7 +344,7 @@ tasks:
   - id: t-018
     milestone: m2
     title: "3D greybox vertical slice: full Table 1 shot map in playable geometry"
-    status: claimed
+    status: done
     depends_on: [t-003, t-004]
     owner: reviewer
     passes: 0
@@ -356,9 +356,15 @@ tasks:
       primitive materials are fine, but ramps have real height and balls travel under/over mechanisms.
       Add directional sensor volumes that emit semantic shot events. This is the first vertical slice that
       must already feel unmistakably like physical pinball.
+
+      Merged as kind_robots#3330: full Table 1 shot map in playable 3D (orbits, U-turn ramps,
+      upper feed, lock, spinner, award saucer, shooter gate) with a pure shot recognizer;
+      Rapier lengthUnit 0.1 and seamless trimesh ramps fix ghost-edge launches; every shot
+      verified makeable across an aim fan; no reachable traps.
     claimed_by: 2026-10-07T0950-kp-t018-shotmap
     claimed_at: '2026-10-07T08:48:11Z'
-    updated: '2026-10-07T08:48:11Z'
+    updated: '2026-10-07T09:43:33Z'
+    implementation_pr: 'silasfelinus/kind_robots#3330'
 
   - id: t-019
     milestone: m2
