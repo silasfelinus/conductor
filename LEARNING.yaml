@@ -17441,3 +17441,19 @@ records:
     pose, and swapped props (sheathed sword to bare blade, a second sword) between frames. Use Kontext
     for HD art and parts sheets and drive motion with a rig, or wait for a pose ControlNet; keep HD masters
     and derive pixel art, because pixel is a render style, not the source.'
+- date: 2026-10-07
+  project: zuzu-showdown
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Hold a fighting game''s frame data to its art mechanically, not by eye: have the rig render
+    each attack''s striking layer alone, write that reach into the frame map, and test every hitbox against
+    it on the frames the game actually shows while the box is live. That check found what contact sheets
+    hid: anti-airs and Pocket Sand striking a frame before their strike pose, low kicks drawn 11-12 px
+    off the floor, and kicks shorter than their boxes. Also: cut-out source limbs are not vertical at
+    rest, so pose angles are relative to the drawn angle (rotating 65 degrees from a leg already 30 degrees
+    forward lifts the foot instead of extending it), and a smear is where the blade was, so keep it out
+    of the reach measurement.'
