@@ -665,7 +665,7 @@ tasks:
   - id: t-027
     milestone: m3
     title: "kind_robots: render styles -- pixel and HD (stage renders at device resolution, art per style)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -683,6 +683,20 @@ tasks:
       HD (from t-010): the rig's smears are already in the HD atlases; the hit sparks
       (utils/zuzuShowdown/effects.ts, drawn by render.ts drawSparks) are hand pixel and need their
       HD counterpart here, e.g. the same 13x13 shapes drawn smooth at device resolution.
+
+      Pixel and HD both ship (kind_robots#3350, conductor#5760). utils/arcade/display.ts
+      fitDisplay sizes the canvas from the logical size, the box, the DPR (capped at 3) and
+      the style. Pixel shows the 480x270 canvas at a whole number of device pixels per game
+      pixel, nearest filtering. HD supersamples at the smallest whole scale covering the box
+      (capped at 5x), with smooth filtering, the vector font and smooth sparks. The choice
+      persists in zuzuShowdownStore.renderStyle. verifyZuzuShowdownDisplay covers the fit at
+      DPR 1, 2 and 3. HD art is WebP from tools/ship_hd.py: fighters at 3x, stages at 4x. HD
+      P2 colours are recoloured in the browser from the rig's P2_RULES. Left for later: code-
+      drawn stage props (the hyenas, crows, apples) stay pixel-style in HD; parallax steps in
+      whole game pixels; the one-off P2 recolour takes 0.4-0.7 s; the hands-on phone and
+      tablet play check is t-024's. kr-arcade t-012 adopts display.ts for the cabinets and
+      pinball.
     claimed_by: 2026-10-07T14:45:00Z-zs-t027
     claimed_at: '2026-10-07T14:45:35Z'
-    updated: '2026-10-07T14:45:35Z'
+    updated: '2026-10-07T15:17:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#3350'
