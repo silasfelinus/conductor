@@ -1,6 +1,13 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-027 (in progress): Pixel and HD render styles (kind_robots#3350). A "Look" select picks one, and it
+  persists. Pixel shows the 480x270 game at a whole number of device pixels per game pixel. HD
+  supersamples at device resolution, with the HD art, a smooth vector font and soft sparks. The fit lives in
+  the shared utils/arcade/display.ts, the first piece of kr-arcade t-012. New tools/ship_hd.py turns the
+  rig's and stage.py's 4x PNG masters into WebP: fighters at 3x (Zuzu 1.5 MB, the Coyote 2.7 MB) and all
+  eight stages at 4x (1 MB). HD P2 colours are made in the browser from the rig's P2 rules, not shipped as a
+  second atlas.
 - t-009: all eight stages are in (kind_robots#3349). The last is the Bone Yard, a ruined arch over a bonfire.
   The hyena pack perches on it, cackles, and howls on a Showdown super. The brief's giant ribcage never
   rendered (a beast, then a cathedral, then walking skeletons) and code-drawn ribs looked like a tent frame,
