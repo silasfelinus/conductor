@@ -12466,3 +12466,6 @@ Reviewed the t-014 Zuzu-half sync: fighters.yaml damage/height notes now mirror 
 
 ## 2026-10-07 — Reviewer: conductor#5752 + #5749 (approved, merged)
 Reviewed two data-only PRs: #5752 closes zuzu-showdown/t-023 → done (kind_robots#3347 confirmed merged) and #5749 records the comic-creator/music-video s13 falling-knife fix (kind_robots#3343 confirmed merged; roadmap note + CAST-PICKS/MV-FIXES YAML). Reversible, scoped, CI green; squash-merged. Daily pitches docket for 2026-10-07 already present (5 undecided). Pattern: workers cite implementation PRs in notes and close out promptly; no changes suggested.
+
+## 2026-10-07 — Reviewer: conductor#5758 (approved, merged)
+Closes zuzu-showdown/t-009 → done with implementation_pr kind_robots#3349 (confirmed merged: all eight stages). Roadmap-only, reversible, CI green; squash-merged. The note correctly leaves the toddler-apples piece to t-011 and the boss-phase door to t-021. Pattern: clean close-out, nothing to improve.
