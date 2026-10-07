@@ -108,7 +108,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "3D foundation: dual-canvas Arcade lane + Three.js/Rapier pinball runtime"
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -120,9 +120,17 @@ tasks:
       disposable empty/grey table scene proving mount, resize, update, render and dispose. Keep the old
       Canvas Kind Pinball playable as the rollback path. Verify existing arcade tests/typecheck plus a
       focused lifecycle test that repeatedly enters and exits the WebGL cabinet without leaking resources.
+
+      Shipped 2026-10-07 in silasfelinus/kind_robots#3320 (all 32 checks green): WebGL arcade
+      lane (renderMode, ArcadeWebGLGameInstance, stage canvas under the 2D UI canvas, dispose
+      on every exit), unlisted kind-pinball-3d preview (maxPlausibleScore 0),
+      utils/arcade/pinball/ engine boundaries (types, Rapier physics at 1/120 s, Three.js
+      scene, rules reducer, audio boundary, runtime), real-scale greybox table. Tests: 25
+      mount/dispose cycles with zero live physics worlds and GPU resources; verified in real
+      WebGL and in the nuxi dev cabinet at desktop and phone.
     claimed_by: 2026-10-07T06:20:00Z-kp-t004
     claimed_at: '2026-10-07T06:20:51Z'
-    updated: '2026-10-07T07:09:45Z'
+    updated: '2026-10-07T08:03:55Z'
     implementation_pr: 'silasfelinus/kind_robots#3320'
   - id: t-005
     milestone: m2
