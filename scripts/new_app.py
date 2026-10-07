@@ -200,7 +200,7 @@ ART_ENTRY = """  - project: {slug}
       status: pending
       prompt: >
         Premium app icon for {title}, {art_hint}, crisp app-icon polish with a strong
-        silhouette, no text, no logo, no watermark, no collage, square composition
+        silhouette, every surface bare and unmarked, square composition
     card:
       image_path: projects/images/{slug}-card.webp
       size: "512x768"
@@ -208,8 +208,8 @@ ART_ENTRY = """  - project: {slug}
       prompt: >
         Professional portrait card illustration for {title}, {art_hint}, featuring a
         diverse cast of humans, robots, and inventive companions where figures appear,
-        cinematic key-art staging, tactile detail, no readable text, no logos,
-        no watermark, portrait composition
+        cinematic key-art staging, tactile detail, every surface bare and
+        unmarked, portrait composition
     hero:
       image_path: projects/images/{slug}-hero.webp
       size: "1280x720"
@@ -217,7 +217,7 @@ ART_ENTRY = """  - project: {slug}
       prompt: >
         Studio-quality widescreen hero illustration for {title}, {art_hint}, layered
         depth and cinematic lighting, rich but uncluttered, diverse figures where people
-        appear, no readable text, no logos, no watermark, landscape composition
+        appear, every surface bare and unmarked, landscape composition
 """
 
 

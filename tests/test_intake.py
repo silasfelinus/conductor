@@ -229,3 +229,20 @@ def test_repos_description_with_colon_stays_valid_yaml(tmp_path, monkeypatch):
     intake.main(["lantern-toy", "--kind", "software", "--desc", desc])
     entries = yaml.safe_load((root / "repos.yaml").read_text())["repos"]
     assert next(e for e in entries if e["slug"] == "lantern-toy")["description"] == desc
+
+
+def test_default_art_prompts_pass_the_negation_contract():
+    # kind_robots' prompt contract 422s "no text" (text-exclusion-pile); every project
+    # scaffolded 2026-10-03..06 sat at status: pending behind it.
+    import scripts.repair_negation_art_prompts as negation
+
+    entry = intake.default_art_entry("lantern-garden", "Tap to light lanterns in a night garden.")
+    for variant in ("icon", "card", "hero"):
+        prompt = entry[variant]["prompt"]
+        assert negation.violations(prompt) == [], prompt
+        assert intake.NO_TEXT in prompt
+
+
+def test_art_essence_drops_llm_runtime_copy():
+    assert intake.art_essence("x", "Tap to light lanterns. No LLM at runtime.") == "Tap to light lanterns"
+    assert intake.art_essence("x", "Pure client-side game, no LLM.") == "X project"

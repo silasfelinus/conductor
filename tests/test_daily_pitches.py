@@ -246,3 +246,13 @@ def test_queued_arcade_game_slug_cannot_be_pitched_again(repo):
     pitches[0]["slug"] = "battery-maze"
     write(repo, "2026-10-02", pitches)
     assert any("already exists" in e for e in errors_for())
+
+
+def test_approved_intake_command_carries_the_hook_as_desc(repo, capsys):
+    # The hook becomes the project's art subject; a boilerplate --goal did not.
+    ready(repo)
+    dp.cmd_decide("2026-10-02-idea-1", "approved")
+    capsys.readouterr()
+    dp.cmd_approved()
+    out = capsys.readouterr().out
+    assert "--desc 'A complete idea that explains what it is" in out
