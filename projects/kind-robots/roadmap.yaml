@@ -2227,5 +2227,17 @@ tasks:
   claimed_at: '2026-10-06T11:31:00Z'
 
 
+- id: t-133
+  milestone: m6
+  title: 'Default the ArtJob queue to the first non-empty status section'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  updated: '2026-10-07T05:51:00Z'
+  note: |-
+    Silas-directed 2026-10-06 from the live ArtJob queue: after a browser refresh the queue can open on an empty status section instead of showing useful jobs. On initial page load, choose the first non-empty concrete status in dashboard order (PENDING, RUNNING, FAILED, DONE, CANCELLED), then load that section. Preserve explicit user status choices after the initial default has been established. Add regression coverage for the startup selection contract.
+
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
