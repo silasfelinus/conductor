@@ -250,16 +250,22 @@ tasks:
 - id: t-016
   milestone: m3
   title: Character LoRA datasets for Zuzu and the fennec siblings
-  status: waiting
+  status: claimed
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-03T00:00:00Z'
+  updated: '2026-10-07T07:09:47Z'
   depends_on:
   - t-015
-  note: Silas, 2026-10-03, "later maybe we can make a lora". Dataset from the t-015 angles plus emotion
-    sheets (views x poses x expressions, per the PortOS character LoRA plan in docs/inspiration.md),
-    captions, trigger word; training through the lora-ingestion / model-builder path.
+  note: >-
+    Silas, 2026-10-03, "later maybe we can make a lora". Dataset from the t-015 angles plus emotion sheets (views x poses x expressions, per the PortOS character LoRA plan in docs/inspiration.md), captions, trigger word; training through the lora-ingestion / model-builder path.
+
+    Silas approved 2026-10-07 ("go ahead with the LoRA sets"; trainer: kohya sd-scripts). No
+    trainer exists in Conductor or KR, so agents build the datasets
+    (scripts/build_lora_dataset.py + LORA-SETS.yaml) and Silas runs train.ps1 on the box;
+    finished LoRAs land in Lora/import for lora_import_agent. Setup and testing:
+    projects/comic-creator/docs/lora-training.md.
+  approved_by_human: true
 - id: t-017
   milestone: m2
   title: Adversarial editor in the Comic Studio (kind_robots, admin)
