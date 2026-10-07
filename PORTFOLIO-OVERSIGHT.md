@@ -1,22 +1,21 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-10-07T13:35:08.029721+00:00`
+Generated: `2026-10-07T23:10:45.767602+00:00`
 
-Overall status: **semantic-review-due**
+Overall status: **unresolved**
 
 This is a deterministic sensor. For semantic roadmap/progress intent review, follow `projects/conductor/OVERSIGHT-AGENT.md`.
 
 ## Legacy OpenAI scheduled-agent git diagnostic
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-10-03T09:23:59+00:00` (100.19h ago; overdue at 6.0h).
+- Latest visible OpenAI scheduled-Agent activity: `2026-10-03T09:23:59+00:00` (109.78h ago; overdue at 6.0h).
 - Stale by legacy threshold: **true**
 - Authoritative for ChatGPT scheduler health: **false**
 - Note: Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness.
 
 ## Kind Robots ↔ Conductor project parity
 
-- Forward drift (KR row claims missing roadmap): **0**
-- Reverse orphans (active Conductor roadmap missing KR row): **0**
+- **UNRESOLVED:** Kind Robots project parity check failed: URLError: <urlopen error timed out>
 
 ## Roadmap/CONTROL structural audit
 
