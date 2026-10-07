@@ -473,7 +473,7 @@ tasks:
   - id: t-020
     milestone: m4
     title: "kind_robots: CPU opponent (difficulty ladder, plays the triangle, reads habits)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -484,9 +484,18 @@ tasks:
       Showdown) set reaction time, block rate, combo length and super use. From Normal up it tracks the
       player's strike/grab/guard ratio at close range and leans to the counter. It must be deterministic
       given the seed (contract test: a CPU-vs-CPU match replays to the same hash).
+
+      DONE 2026-10-07 (PT): utils/zuzuShowdown/cpu.ts, a seeded state machine that plays
+      through the player input path (motions, charges, air specials, chains); four levels
+      (Kid, Normal, Hard, Showdown) set reaction, block chance, combo length, supers, anti-air
+      and aggression; from Normal up it counts close-range strike/grab/guard habits and leans
+      to the counter; Kid never spends a Showdown super. verifyZuzuShowdownCpu (6 checks)
+      holds the specials, determinism (CPU-vs-CPU replays to the same hash), the ladder and
+      the reads (kind_robots#3339).
     claimed_by: 2026-10-07T11:10:00Z-zs-t020
     claimed_at: '2026-10-07T11:09:25Z'
-    updated: '2026-10-07T11:09:25Z'
+    updated: '2026-10-07T11:32:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#3339'
 
   - id: t-021
     milestone: m4
