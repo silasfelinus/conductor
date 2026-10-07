@@ -22,6 +22,9 @@ NECK = (420, 380)
 SHOULDER = (610, 530)
 STANCE = 242762
 
+# The fighter's spot on the ground in the source art: midway between his planted feet.
+ANCHOR = (420, 1168)
+
 PARTS = {
     "hilt": {"art": STANCE, "z": 0, "pivot": NECK, "follows": ["body", "head"],
              "polygon": [(648, 44), (714, 60), (604, 336), (612, 362), (520, 374), (528, 330), (570, 318)]},

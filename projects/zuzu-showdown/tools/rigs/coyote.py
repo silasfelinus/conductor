@@ -26,6 +26,9 @@ HIP_FRONT = (460, 620)
 SHOULDER_NEAR = (300, 340)
 SHOULDER_FAR = (440, 340)
 
+# The fighter's spot on the ground in the source art: midway between his boots.
+ANCHOR = (420, 1190)
+
 PARTS = {
     "back_leg": {"art": 242404, "z": 1, "pivot": HIP_BACK, "follows": [],
                  "polygon": [(226, 860), (372, 860), (352, 1000), (346, 1196), (210, 1196), (228, 1000)]},
@@ -51,6 +54,7 @@ GUNMETAL = (58, 60, 66)
 FLASH = (255, 236, 150)
 FLASH_CORE = (255, 255, 236)
 SAND = (214, 186, 128)
+BUTTON = (190, 160, 110)
 
 
 def _limb(d, start, end, width, colour):
@@ -78,14 +82,22 @@ def stump_arm(canvas, offset, hand, knife=0, dy=0):
         d.line([(cx - uy * 24, cy + ux * 24), (cx + uy * 24, cy - ux * 24)], fill=BANDAGE, width=8)
 
 
-def gun_arm(canvas, offset, hand, aim=0, flash=False, dy=0):
-    """His left arm on the far side, holding the revolver, aimed `aim` degrees; `flash` fires it."""
+def gun_arm(canvas, offset, hand, aim=0, flash=False, dy=0, holding="gun"):
+    """His left arm on the far side, holding the revolver aimed `aim` degrees (`flash` fires it), or
+    `holding="button"` (the one thing he found in the loser's pockets), or `"open"`."""
     d = ImageDraw.Draw(canvas)
     s = (SHOULDER_FAR[0] + offset[0], SHOULDER_FAR[1] + offset[1] + dy)
     h = (hand[0] + offset[0], hand[1] + offset[1])
     _limb(d, s, h, 58, SLEEVE_FAR)
     d.ellipse([h[0] - 30, h[1] - 30, h[0] + 30, h[1] + 30], fill=INK)
     d.ellipse([h[0] - 22, h[1] - 22, h[0] + 22, h[1] + 22], fill=FUR)
+    if holding == "button":
+        d.ellipse([h[0] - 18, h[1] - 64, h[0] + 18, h[1] - 28], fill=BUTTON, outline=INK, width=6)
+        d.ellipse([h[0] - 8, h[1] - 52, h[0] - 2, h[1] - 46], fill=INK)
+        d.ellipse([h[0] + 2, h[1] - 52, h[0] + 8, h[1] - 46], fill=INK)
+        return
+    if holding != "gun":
+        return
     a = math.radians(aim)
     ux, uy = math.cos(a), -math.sin(a)
     muzzle = (h[0] + ux * 150, h[1] + uy * 150)
@@ -118,8 +130,16 @@ def stump(hand, knife=0, dy=0):
     return {"fn": "stump_arm", "args": {"hand": hand, "knife": knife, "dy": dy}}
 
 
-def gun(hand, aim=0, flash=False, dy=0):
-    return {"fn": "gun_arm", "args": {"hand": hand, "aim": aim, "flash": flash, "dy": dy}}
+def gun(hand, aim=0, flash=False, dy=0, holding="gun"):
+    return {"fn": "gun_arm", "args": {"hand": hand, "aim": aim, "flash": flash, "dy": dy, "holding": holding}}
+
+
+BACK_BOOT = (270, 1190)
+
+
+def fall(angle):
+    """Toppling backwards about his back boot: positive angles tip the head to the left (behind him)."""
+    return {"whole": {"angle": angle, "pivot": BACK_BOOT}}
 
 
 def slouch(dy=0, head=0, sway=0):
@@ -163,6 +183,71 @@ ANIMATIONS = {
         {**slouch(2, 0, -2), "draw_behind": [gun((660, 430), aim=2, flash=True, dy=2)]},
         {**slouch(0, -4, -6), "draw_behind": [gun((620, 380), aim=24, dy=0)]},
         {**slouch(4, 0, 0), "draw_behind": [gun((560, 520), aim=-20, dy=4)]},
+    ]},
+    "walk_back": {"fps": 9, "loop": True, "frames": [
+        {"front_leg": {"angle": -6}, "back_leg": {"angle": 8}, "body": {"dy": 4, "angle": -2}},
+        {"front_leg": {"angle": -2}, "back_leg": {"angle": 4, "dy": -14}, "body": {"dy": 10, "angle": -2}},
+        {"front_leg": {"angle": 4}, "back_leg": {"angle": -4}, "body": {"dy": 0, "angle": -1}},
+        {"front_leg": {"angle": 8, "dy": -14}, "back_leg": {"angle": -8}, "body": {"dy": 6, "angle": -2}},
+    ]},
+    # Blocks: the stump arm comes up across his face (high) or down across his shins (low, crouched).
+    "block_high": {"fps": 12, "loop": False, "frames": [
+        {**slouch(8, 0, -6), "draw": [stump((460, 280), knife=80, dy=8)]},
+        {**slouch(12, 4, -8), "draw": [stump((450, 290), knife=84, dy=12)]},
+    ]},
+    "block_low": {"fps": 12, "loop": False, "frames": [
+        {"body": {"dy": 160, "angle": 10}, "front_leg": {"sy": -0.29, "sx": 0.1, "dy": 160},
+         "back_leg": {"sy": -0.5, "sx": 0.1, "dy": 160}, "draw": [stump((560, 700), knife=-24, dy=160)]},
+    ]},
+    # Hits: the head snaps back (high) or he folds over the blow (low).
+    "hit_high": {"fps": 14, "loop": False, "frames": [
+        {"body": {"dy": 10, "dx": -30, "angle": -16}, "head": {"angle": -22, "dx": -50}},
+        {"body": {"dy": 8, "dx": -20, "angle": -11}, "head": {"angle": -14, "dx": -30}},
+        {"body": {"dy": 4, "dx": -8, "angle": -4}, "head": {"angle": -5, "dx": -10}},
+    ]},
+    "hit_low": {"fps": 14, "loop": False, "frames": [
+        {"body": {"dy": 60, "angle": 26}, "head": {"dy": 24, "dx": 40, "angle": 14}},
+        {"body": {"dy": 40, "angle": 18}, "head": {"dy": 14, "dx": 26, "angle": 8}},
+        {"body": {"dy": 14, "angle": 6}},
+    ]},
+    # Knocked down: he topples over backwards about his back boot and lands flat.
+    "knockdown": {"fps": 12, "loop": False, "frames": [
+        {**fall(20), "body": {"angle": -6}, "head": {"angle": -8}},
+        {**fall(48), "body": {"angle": -4}},
+        {**fall(76)},
+        {**fall(90)},
+    ]},
+    # KO pose (fighters.yaml): flat on his back, the crushed hat over his face, one boot sole flapping.
+    "ko": {"fps": 6, "loop": True, "frames": [
+        {**fall(90), "head": {"angle": 18, "dx": 60}, "front_leg": {"angle": 4}},
+        {**fall(90), "head": {"angle": 18, "dx": 60}, "front_leg": {"angle": -4}},
+    ]},
+    # Play Dead (dd+D): a fast flop flat; the parry window is the lying frames.
+    "play_dead": {"fps": 16, "loop": False, "frames": [
+        {**fall(40), "body": {"angle": -4}},
+        {**fall(90)},
+        {**fall(90), "front_leg": {"angle": 3}},
+    ]},
+    # Reload (dd+P): the revolver up to his chest, the stump fumbling shells in, a flick shut.
+    "reload": {"fps": 10, "loop": False, "frames": [
+        {**slouch(8, 4, 4), "draw_behind": [gun((520, 470), aim=80, dy=8)], "draw": [stump((430, 560), knife=-40, dy=8)]},
+        {**slouch(10, 6, 6), "draw_behind": [gun((530, 460), aim=84, dy=10)], "draw": [stump((480, 500), knife=-20, dy=10)]},
+        {**slouch(10, 6, 6), "draw_behind": [gun((530, 460), aim=84, dy=10)], "draw": [stump((470, 520), knife=-30, dy=10)]},
+        {**slouch(4, 0, 0), "draw_behind": [gun((600, 420), aim=10, dy=4)]},
+    ]},
+    # Taunt (fighters.yaml): blows into his empty revolver chamber, frowns, pats his coat for bullets.
+    # The gun arm comes round in front of him for the taunt and the victory, where it has to be seen.
+    "taunt": {"fps": 8, "loop": False, "frames": [
+        {**slouch(0, 0, -2), "draw": [gun((500, 300), aim=150)]},
+        {**slouch(0, -4, -4), "draw": [gun((500, 290), aim=156)]},
+        {**slouch(6, 4, 2), "draw": [stump((330, 600), knife=-60, dy=6)]},
+        {**slouch(6, 4, 2), "draw": [stump((360, 520), knife=-60, dy=6)]},
+    ]},
+    # Victory (fighters.yaml): rifles the loser's pockets and holds up a single button, disgusted.
+    "victory_button": {"fps": 6, "loop": False, "frames": [
+        {**slouch(10, 6, 6), "draw": [gun((560, 640), dy=10, holding="open")]},
+        {**slouch(0, -4, -4), "draw": [gun((580, 200), dy=0, holding="button")]},
+        {**slouch(0, -8, -6), "draw": [gun((580, 190), dy=0, holding="button")]},
     ]},
     # Pocket Sand: dig in the coat pocket, wind up, fling.
     "pocket_sand": {"fps": 14, "loop": False, "frames": [
