@@ -73,7 +73,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Style pass 1 + shot map: DMD, lit inserts, rails, second ramp, orbits"
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -84,9 +84,15 @@ tasks:
       shadows, a shaded ball with a reflection and shadow, and solid flippers with rubbers. Shot map: keep
       the right ramp, add a LEFT ramp and LEFT/RIGHT orbits (loops) whose arrows light when they pay.
       Verify: npm run test:arcade-engine, typecheck, Playwright screenshots at phone/tablet/desktop.
+
+      Shipped 2026-10-07 in silasfelinus/kind_robots#3311: 128x32 DMD
+      (utils/arcade/pinball/dmd.ts), printed and lit playfield with arrow inserts for five
+      shots, GI and lamp shows, chrome rails, wireform ramps, second (left) ramp crossing the
+      right, orbits, combos, skill shot, one-way shooter-lane gate, cached render layers (~2.5
+      ms/frame). Contract tests cover DMD, both ramps, gate, orbit, skill shot.
     claimed_by: 2026-10-07T04:45:00Z-kp-t003
     claimed_at: '2026-10-07T04:39:47Z'
-    updated: '2026-10-07T05:01:34Z'
+    updated: '2026-10-07T05:08:43Z'
     implementation_pr: 'silasfelinus/kind_robots#3311'
 
   - id: t-004
