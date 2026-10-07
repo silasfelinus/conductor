@@ -131,16 +131,22 @@ def _limb(d, start, end, width, colour):
     d.line([start, end], fill=colour, width=width)
 
 
-def stump_arm(canvas, offset, hand, knife=0, dy=0):
+KNIFE = 220
+MEASURING = False  # set by rig.py while it measures reach: smears are drawn, not struck with
+
+
+def stump_arm(canvas, offset, hand, knife=0, dy=0, smear=None):
     """His right arm: the coat sleeve, the bandaged stump, the knife lashed to it pointing `knife`
-    degrees (0 = straight ahead, positive = up)."""
+    degrees (0 = straight ahead, positive = up). `smear` is the angle the knife swung from."""
     s = (SHOULDER_NEAR[0] + offset[0], SHOULDER_NEAR[1] + offset[1] + dy)
     h = (hand[0] + offset[0], hand[1] + offset[1])
+    if smear is not None and not MEASURING:
+        sc.smear(canvas, h, KNIFE * 0.3, KNIFE, smear, knife)
     d = ImageDraw.Draw(canvas)
     a = math.radians(knife)
     ux, uy = math.cos(a), -math.sin(a)
     # The knife goes down first so the bandaged stump sits over its lashed handle.
-    tip = (h[0] + ux * 220, h[1] + uy * 220)
+    tip = (h[0] + ux * KNIFE, h[1] + uy * KNIFE)
     d.line([h, tip], fill=INK, width=30)
     d.line([h, tip], fill=STEEL, width=16)
     d.line([(h[0] - uy * 4, h[1] + ux * 4), (tip[0] - uy * 4, tip[1] + ux * 4)], fill=STEEL_EDGE, width=5)
@@ -220,8 +226,8 @@ def bedroll(canvas, offset, box=None, heap=None):
         d.line([(x0 + 60, floor - 60), (x1 - 60, floor - 80)], fill=BEDROLL_STRIPE, width=18)
 
 
-def stump(hand, knife=0, dy=0):
-    return {"fn": "stump_arm", "args": {"hand": hand, "knife": knife, "dy": dy}}
+def stump(hand, knife=0, dy=0, smear=None):
+    return {"fn": "stump_arm", "args": {"hand": hand, "knife": knife, "dy": dy, "smear": smear}}
 
 
 def gun(hand, aim=0, flash=False, dy=0, holding="gun"):
@@ -423,7 +429,7 @@ ANIMATIONS = {
     # Crouching HP: the anti-air, the stump knife driven straight up on the active frames.
     "crouch_hp": {"fps": 13, "loop": False, "strike": ["draw"], "frames": [
         crouched(draw=[stump((460, 680), knife=-40, dy=CROUCH_DY)]),
-        crouched(body={"angle": 2}, draw=[stump((570, 420), knife=84, dy=CROUCH_DY)]),
+        crouched(body={"angle": 2}, draw=[stump((570, 420), knife=84, dy=CROUCH_DY, smear=-40)]),
         crouched(body={"angle": 2}, draw=[stump((570, 420), knife=86, dy=CROUCH_DY)]),
         crouched(body={"angle": 4}, draw=[stump((560, 500), knife=60, dy=CROUCH_DY)]),
         crouched(draw=[stump((580, 560), knife=40, dy=CROUCH_DY)]),
@@ -451,7 +457,7 @@ ANIMATIONS = {
     # Jumping HP: the stump knife driven down and forward.
     "jump_hp": {"fps": 12, "loop": False, "strike": ["draw"], "frames": [
         tucked(draw=[stump((520, 300), knife=50)]),
-        tucked(body={"angle": 4}, draw=[stump((640, 560), knife=-50)]),
+        tucked(body={"angle": 4}, draw=[stump((640, 560), knife=-50, smear=50)]),
         tucked(body={"angle": 6}, draw=[stump((640, 580), knife=-56)]),
         tucked(),
     ]},

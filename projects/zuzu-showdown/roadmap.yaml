@@ -308,7 +308,10 @@ tasks:
       floor). That caught both crouching anti-airs and Pocket Sand striking after their active frames,
       lows drawn off the floor, and Zuzu's kicks drawn shorter than their boxes: the art was fixed
       where it was wrong, and the kits now follow the art everywhere else.
-      Remaining: effects (smears, sparks).
+      Effects: blade and knife smears are drawn by the rig (sprite_common.smear, so both styles carry
+      them; they are not measured as reach), and the game throws hand-pixel hit sparks at the contact
+      point (kind_robots utils/zuzuShowdown/effects.ts: hit, counter, block, parry, clash). The
+      sparks' HD counterpart rides on t-027's HD style.
     claimed_by: 2026-10-07T06:10:00Z-zs-t010
     claimed_at: '2026-10-07T06:09:23Z'
     updated: '2026-10-07T06:09:23Z'
@@ -571,4 +574,7 @@ tasks:
       the HUD font and the stage layers. Boxes stay in logical units, so the sim and its contract
       tests don't change. Done when both styles play on phone, tablet and desktop with no
       blurring in pixel and no stair-stepping in HD, the choice persists through the store, and a
-      render contract test covers the logical-to-canvas transform at DPR 1, 2 and 3.
+      render contract test covers the logical-to-canvas transform at DPR 1, 2 and 3. Effects in
+      HD (from t-010): the rig's smears are already in the HD atlases; the hit sparks
+      (utils/zuzuShowdown/effects.ts, drawn by render.ts drawSparks) are hand pixel and need their
+      HD counterpart here, e.g. the same 13x13 shapes drawn smooth at device resolution.

@@ -1,6 +1,10 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-010: effects. The rig draws a pale crescent smear behind Zuzu's katana cuts and the Coyote's
+  stabs (in both styles, never counted as reach), and the game throws hand-pixel hit sparks where
+  the hitbox meets the hurtbox: yellow hits, pink counters, blue blocks, green parries, double size
+  for heavy blows.
 - t-010 (in progress): hitboxes authored against the art. rig.py measures each attack's striking layer
   (`hit` per frame), and the game's sprite test holds every kit hitbox to it on the active frames. Fixed
   in the art: both crouching anti-airs and Pocket Sand now strike on their active frames, the crouching
