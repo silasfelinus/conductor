@@ -32,8 +32,9 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import sprite_common as sc
 
-CANVAS = (2000, 1500)
-OFFSET = (300, 200)  # where a source image's (0, 0) lands on the posing canvas
+CANVAS = (2900, 1500)
+# Where a source image's (0, 0) lands on the posing canvas: room on the left for falling backwards.
+OFFSET = (1100, 200)
 
 
 def load_source(source_dir: Path, art_id: int, mirror: bool) -> Image.Image:
@@ -85,6 +86,14 @@ def pose_frame(rig, parts: dict[str, Image.Image], frame: dict) -> Image.Image:
         place(canvas, parts[name], pose, spec["pivot"])
     for draw in frame.get("draw", []):
         getattr(rig, draw["fn"])(canvas, OFFSET, **draw.get("args", {}))
+    # The whole figure at once (falls, knockdowns): rotate about a pivot in source pixels, then shift.
+    whole = frame.get("whole")
+    if whole:
+        px, py = whole.get("pivot", (0, 0))
+        centre = (OFFSET[0] + px, OFFSET[1] + py)
+        turned = canvas.rotate(whole.get("angle", 0), resample=Image.Resampling.BICUBIC, center=centre)
+        canvas = Image.new("RGBA", CANVAS, (0, 0, 0, 0))
+        canvas.alpha_composite(turned, (whole.get("dx", 0), whole.get("dy", 0)))
     return canvas
 
 
@@ -125,30 +134,32 @@ def p2_recolour(frame: Image.Image, rules: list[dict]) -> Image.Image:
     return out
 
 
-def pack(frames: dict[str, list[Image.Image]], scale: int):
-    """Shelf-pack every frame into one atlas; returns the atlas and {anim: [rect...]}."""
-    cell_w = max(f.width for fs in frames.values() for f in fs)
-    cell_h = max(f.height for fs in frames.values() for f in fs)
-    columns = max(len(fs) for fs in frames.values())
-    atlas = Image.new("RGBA", (cell_w * columns, cell_h * len(frames)), (0, 0, 0, 0))
+def pack(frames: dict[str, list[Image.Image]]):
+    """Shelf-pack: one row per animation, frames left to right; returns the atlas and {anim: [rect...]}."""
+    width = max(sum(f.width for f in fs) for fs in frames.values())
+    height = sum(max(f.height for f in fs) for fs in frames.values())
+    atlas = Image.new("RGBA", (width, height), (0, 0, 0, 0))
     rects = {}
-    for row, (name, fs) in enumerate(frames.items()):
+    y = 0
+    for name, fs in frames.items():
+        x = 0
         rects[name] = []
-        for col, f in enumerate(fs):
-            x, y = col * cell_w, row * cell_h
+        for f in fs:
             atlas.alpha_composite(f, (x, y))
             rects[name].append({"x": x, "y": y, "w": f.width, "h": f.height})
+            x += f.width
+        y += max(f.height for f in fs)
     return atlas, rects
 
 
-def hurtbox(frame: Image.Image, scale: float) -> dict:
-    """The silhouette's bounding box in game units, y up from the feet: a starting hurtbox drawn from
-    the art itself, for t-024's balance pass to tune per move."""
+def hurtbox(frame: Image.Image, anchor: tuple[int, int], scale: float) -> dict:
+    """The silhouette's bounding box in game units relative to the anchor, y up from the ground: a
+    starting hurtbox drawn from the art itself, for t-024's balance pass to tune per move."""
     b = frame.getchannel("A").getbbox() or (0, 0, 0, 0)
-    w, h = frame.size
+    ax, ay = anchor
     return {
-        "x": round((b[0] - w / 2) / scale),
-        "y": round((h - b[3]) / scale),
+        "x": round((b[0] - ax) / scale),
+        "y": round((ay - b[3]) / scale),
         "w": round((b[2] - b[0]) / scale),
         "h": round((b[3] - b[1]) / scale),
     }
@@ -171,18 +182,28 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
     figure_height = sc.crop_to_content(ref).height
 
     raw = {name: [pose_frame(rig, parts, f) for f in anim["frames"]] for name, anim in rig.ANIMATIONS.items()}
-    box = shared_box([f for fs in raw.values() for f in fs])
-    hd = {n: [sc.to_hd(f.crop(box), figure_height, rig.HEIGHT * sc.HD_SCALE) for f in fs] for n, fs in raw.items()}
-    game = {n: [sc.to_game_size(f.crop(box), figure_height, rig.HEIGHT) for f in fs] for n, fs in raw.items()}
+    hd_scale = rig.HEIGHT * sc.HD_SCALE / figure_height
+    game_scale = rig.HEIGHT / figure_height
+    hd, game, anchors = {}, {}, {}
+    for name, fs in raw.items():
+        # Each animation is cropped on its own (a knockdown lies far wider than a stance), but its
+        # frames share one box so they don't jitter, and the anchor is the fighter's spot on the ground.
+        box = shared_box(fs)
+        ax, ay = OFFSET[0] + rig.ANCHOR[0] - box[0], OFFSET[1] + rig.ANCHOR[1] - box[1]
+        hd[name] = [sc.to_hd(f.crop(box), figure_height, rig.HEIGHT * sc.HD_SCALE) for f in fs]
+        game[name] = [sc.to_game_size(f.crop(box), figure_height, rig.HEIGHT) for f in fs]
+        anchors[name] = {"hd": (round(ax * hd_scale), round(ay * hd_scale)),
+                         # outer_outline pads the pixel frames by one pixel on every side
+                         "pixel": (round(ax * game_scale) + 1, round(ay * game_scale) + 1)}
     palette = sc.shared_palette([f for fs in game.values() for f in fs], rig.PALETTE_COLOURS)
     pixel = {n: [sc.outer_outline(sc.quantize(f, palette)) for f in fs] for n, fs in game.items()}
 
     out.mkdir(parents=True, exist_ok=True)
     for style, frames, scale in (("hd", hd, sc.HD_SCALE), ("pixel", pixel, 1)):
-        atlas, rects = pack(frames, scale)
+        atlas, rects = pack(frames)
         atlas.save(out / f"{slug}-{style}.png")
         p2 = {n: [p2_recolour(f, rig.P2_RULES) for f in fs] for n, fs in frames.items()}
-        pack(p2, scale)[0].save(out / f"{slug}-p2-{style}.png")
+        pack(p2)[0].save(out / f"{slug}-p2-{style}.png")
         frame_map = {
             "fighter": slug,
             "style": style,
@@ -195,8 +216,8 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
                     "fps": rig.ANIMATIONS[name]["fps"],
                     "loop": rig.ANIMATIONS[name].get("loop", False),
                     "frames": [
-                        {**rect, "anchor": {"x": rect["w"] // 2, "y": rect["h"]},
-                         "hurt": hurtbox(frames[name][i], scale)}
+                        {**rect, "anchor": {"x": anchors[name][style][0], "y": anchors[name][style][1]},
+                         "hurt": hurtbox(frames[name][i], anchors[name][style], scale)}
                         for i, rect in enumerate(rects[name])
                     ],
                 }
