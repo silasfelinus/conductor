@@ -1,6 +1,10 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-009: all eight stages are in (kind_robots#3349). The last is the Bone Yard, a ruined arch over a bonfire.
+  The hyena pack perches on it, cackles, and howls on a Showdown super. The brief's giant ribcage never
+  rendered (a beast, then a cathedral, then walking skeletons) and code-drawn ribs looked like a tent frame,
+  so the ruin stands alone.
 - t-009 (in progress): the Dunes and the Thin Place (kind_robots#3349). The Dunes has a long golden sun,
   blowing sand, and a dune that heaves as something vast moves under it. The Thin Place has a dark column
   dropping onto a lone door, glowing tears in the sky, and light at the door that widens each round. Seven of
