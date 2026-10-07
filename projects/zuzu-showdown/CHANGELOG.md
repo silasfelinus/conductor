@@ -1,6 +1,10 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-009 (in progress): the Dunes and the Thin Place (kind_robots#3349). The Dunes has a long golden sun,
+  blowing sand, and a dune that heaves as something vast moves under it. The Thin Place has a dark column
+  dropping onto a lone door, glowing tears in the sky, and light at the door that widens each round. Seven of
+  eight stages are done. The Bone Yard's ribcage is on its third prompt (the model drew a beast, then a cathedral).
 - t-009 (in progress): the Lone Apple Tree (kind_robots#3348), on the noon backdrop from the daylight lane.
   It has heat shimmer, drifting red leaves, a dust devil, and apples that drop, rest and fade. tools/stage.py
   learned `patches`: a source box painted out by blending each column from the pixels above it to those
