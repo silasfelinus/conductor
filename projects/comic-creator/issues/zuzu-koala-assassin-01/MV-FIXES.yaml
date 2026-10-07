@@ -7,6 +7,7 @@
 # The locked cast renders (242550 stump, 242588 bandaged, 242559 abbess front) are padded to 16:9 and Kontext
 # fills the scene around them, so the stump and the abbess's flat face come straight from the cast.
 # mvfix-s13-dagger-*: Silas 2026-10-07, "sister is missing the knife falling from her hand in 13. would make an ideal animation".
+# mvfix-s13-dropped-*: LTX from 243000 alone never drops the knife (clip 243054); this end frame pins the drop.
 series: zuzu-koala-assassin
 project_slug: comic-creator
 designer: Comic Studio
@@ -332,3 +333,23 @@ subjects:
     kontext-fix:
       status: DONE
       art_image_id: 243000
+- key: mvfix-s13-dropped-1
+  entity: music-video
+  title: 'MV s13 end frame: dagger on the floor (seed 1)'
+  size: 1344x768
+  source_image_id: 243000
+  prompt_prose: 'Her right hand now hangs empty at her side with the fingers open; the small bloodied dagger lies
+    on the stone floor at her feet. Keep everything else exactly as it is: her face, enormous ears, ragged dress,
+    bandaged wrists, pose, the candles, the chapel, the pool of light, colours and the inked comic style.'
+  jobs:
+    kontext-fix: 34802
+- key: mvfix-s13-dropped-2
+  entity: music-video
+  title: 'MV s13 end frame: dagger on the floor (seed 2)'
+  size: 1344x768
+  source_image_id: 243000
+  prompt_prose: 'Her right hand now hangs empty at her side with the fingers open; the small bloodied dagger lies
+    on the stone floor at her feet. Keep everything else exactly as it is: her face, enormous ears, ragged dress,
+    bandaged wrists, pose, the candles, the chapel, the pool of light, colours and the inked comic style.'
+  jobs:
+    kontext-fix: 34803
