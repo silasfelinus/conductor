@@ -54,6 +54,7 @@ fighters:
     archetype: all-rounder -- quick-draw iai, a parry stance, a boomerang hat
     health: 1000
     height_px: 72
+    # The shortest adult: tall fighters' standing jabs whiff over him (engine-verified).
     walk_speed: medium
     home_stage: hollow-bell
     rival: coyote-vagrant
@@ -75,13 +76,13 @@ fighters:
         input: DP+P
         triangle: strike
         speed: fast
-        damage: 110
-        description: Rising cut, invulnerable on startup with HP. The anti-air reversal.
+        damage: "90 LP / 110 HP"
+        description: Rising cut, invulnerable on startup with HP (LP can be stuffed). The anti-air reversal.
       - name: Kasa Toss
         input: QCB+P
         triangle: strike
         speed: medium
-        damage: "50 out, 40 back"
+        damage: "50 each pass (out and back); combo scaling lowers a second hit that combos"
         description: Throws his straw kasa as a boomerang; it hits going out and coming back. Bareheaded until it returns (and he can't toss again).
       - name: Poncho Veil
         input: QCB+K
