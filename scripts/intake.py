@@ -92,27 +92,47 @@ def write_art_prompts(data: dict) -> None:
     )
 
 
+# Krea 2 renders at cfg 1, where the negative prompt is inert, so "no text" puts the
+# word text into positive conditioning and kind_robots' prompt contract rejects the
+# prompt with HTTP 422 (text-exclusion-pile). State the wanted result instead. Every
+# project scaffolded 2026-10-03..06 sat at status: pending behind that 422 while
+# Auto Art Generate stayed green (its consume steps are continue-on-error).
+NO_TEXT = "every surface bare and unmarked"
+# Pitch copy about runtime cost ("No LLM at runtime.") describes the product, not the
+# picture, and is itself a negation; drop any sentence that mentions an LLM.
+_LLM_SENTENCE = re.compile(r"[^.;]*\bLLM\b[^.;]*[.;]?", re.I)
+
+
+def strip_llm_copy(text: str) -> str:
+    return " ".join(_LLM_SENTENCE.sub(" ", text).split())
+
+
+def art_essence(slug: str, desc: str) -> str:
+    essence = strip_llm_copy(desc).rstrip(".;, ")
+    return essence or f"{titleize(slug)} project"
+
+
 def default_art_entry(slug: str, desc: str) -> dict:
-    essence = desc.strip() or f"{titleize(slug)} project"
+    essence = art_essence(slug, desc)
     return {
         "project": slug,
         "icon": {
             "image_path": f"projects/images/{slug}-icon.webp",
             "size": "256x256",
             "status": "pending",
-            "prompt": f"flat minimal app icon, {essence}, bold clean vector shapes, square composition, no text",
+            "prompt": f"flat minimal app icon, {essence}, bold clean vector shapes, square composition, {NO_TEXT}",
         },
         "card": {
             "image_path": f"projects/images/{slug}-card.webp",
             "size": "512x768",
             "status": "pending",
-            "prompt": f"flat minimal portrait illustration, {essence}, centered subject on soft gradient backdrop, no text, 2:3 portrait composition",
+            "prompt": f"flat minimal portrait illustration, {essence}, centered subject on soft gradient backdrop, 2:3 portrait composition, {NO_TEXT}",
         },
         "hero": {
             "image_path": f"projects/images/{slug}-hero.webp",
             "size": "1280x720",
             "status": "pending",
-            "prompt": f"flat minimal wide panoramic, {essence}, cinematic scale, no text, 16:9 landscape",
+            "prompt": f"flat minimal wide panoramic, {essence}, cinematic scale, 16:9 landscape, {NO_TEXT}",
         },
     }
 

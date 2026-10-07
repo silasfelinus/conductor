@@ -38,6 +38,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shlex
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -339,8 +340,13 @@ def cmd_approved() -> int:
             print(f"{row['stem']}  {row['title']}  -> add as a ready task in projects/{target}/roadmap.yaml "
                   f"(no intake.py)")
         else:
+            # --desc carries the hook so the project's icon/card/hero prompts describe
+            # the idea; a boilerplate --goal became the art subject of two 2026-10-03
+            # projects ("Build the approved ... pitch; see pitches/...md").
+            hook = " ".join(str(row.get("hook", "")).split())
             print(f"{row['stem']}  {row['title']}  -> python scripts/intake.py {row['slug']} --kind software "
-                  f"--title \"{row['title']}\" --goal \"...\" --repo silasfelinus/kind_robots")
+                  f"--title {shlex.quote(str(row['title']))} --goal \"...\" --desc {shlex.quote(hook)} "
+                  f"--repo silasfelinus/kind_robots")
         mods = modifications(pitch_file(row["date"], row["slug"]))
         if mods:
             print(f"    APPROVED WITH CHANGES (fold these into the project goal): {mods}")
