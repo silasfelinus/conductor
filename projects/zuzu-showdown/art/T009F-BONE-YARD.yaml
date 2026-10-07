@@ -1,0 +1,127 @@
+# zuzu-showdown t-009: the Bone Yard's midground again. All three T009D "ribcage of an ancient giant beast" renders
+# drew the whole beast (a skeletal lizard, alive-looking): naming the beast summoned it, the same lesson as the
+# first batch's cow skull. These ask for the ribs alone, as ruins, and the negative bans every creature word and
+# body part. Three seeds. Submit/refresh with scripts/enqueue_art_requests.py. Private.
+# Second try (seeds 4-6): seeds 1-3 asked for ribs "like the arches of a ruined cathedral" and drew stone
+# cathedral ruins instead (243171, an arch over a campfire, is the fallback). These ask for the bones plainly
+# and ban cathedrals, stone and architecture.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, high contrast, heavy shadows, muted earthy palette, desaturated, weathered
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: by-ribs-1
+  entity: bone-yard
+  title: 'Bone Yard midground: a ring of giant fossil ribs and a bonfire (seed 1)'
+  size: 1536x640
+  seed: 909521
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    creature, beast, monster, dinosaur, lizard, dragon, reptile, head, skull, jaw, teeth, eyes, legs, claws, tail,
+    spine, flesh, skin, scales, character, anthro, lowres, worst quality, blurry, jpeg artifacts, frame, border,
+    vignette
+  prompt_tags: scenery, no humans, side view, ruins, a row of enormous curved bleached white rib bones rising out
+    of the dirt like the arches of a ruined cathedral, ancient fossil, weathered and cracked, half buried, a small
+    campfire burning on the ground between them, two hide drums beside the fire, firelight, (simple background:1.3),
+    (white background:1.3), no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34838
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243170
+- key: by-ribs-2
+  entity: bone-yard
+  title: 'Bone Yard midground: a ring of giant fossil ribs and a bonfire (seed 2)'
+  size: 1536x640
+  seed: 909522
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    creature, beast, monster, dinosaur, lizard, dragon, reptile, head, skull, jaw, teeth, eyes, legs, claws, tail,
+    spine, flesh, skin, scales, character, anthro, lowres, worst quality, blurry, jpeg artifacts, frame, border,
+    vignette
+  prompt_tags: scenery, no humans, side view, ruins, a row of enormous curved bleached white rib bones rising out
+    of the dirt like the arches of a ruined cathedral, ancient fossil, weathered and cracked, half buried, a small
+    campfire burning on the ground between them, two hide drums beside the fire, firelight, (simple background:1.3),
+    (white background:1.3), no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34839
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243171
+- key: by-ribs-3
+  entity: bone-yard
+  title: 'Bone Yard midground: a ring of giant fossil ribs and a bonfire (seed 3)'
+  size: 1536x640
+  seed: 909523
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    creature, beast, monster, dinosaur, lizard, dragon, reptile, head, skull, jaw, teeth, eyes, legs, claws, tail,
+    spine, flesh, skin, scales, character, anthro, lowres, worst quality, blurry, jpeg artifacts, frame, border,
+    vignette
+  prompt_tags: scenery, no humans, side view, ruins, a row of enormous curved bleached white rib bones rising out
+    of the dirt like the arches of a ruined cathedral, ancient fossil, weathered and cracked, half buried, a small
+    campfire burning on the ground between them, two hide drums beside the fire, firelight, (simple background:1.3),
+    (white background:1.3), no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34840
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243172
+- key: by-ribs-4
+  entity: bone-yard
+  title: 'Bone Yard midground: giant rib bones jutting from the dirt, and a campfire (seed 4)'
+  size: 1536x640
+  seed: 909524
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    creature, beast, monster, dinosaur, lizard, dragon, reptile, head, skull, jaw, teeth, eyes, legs, claws, tail,
+    spine, flesh, skin, scales, character, anthro, lowres, worst quality, blurry, jpeg artifacts, frame, border,
+    vignette, cathedral, church, ruins, pillars, columns, stone, architecture, arch, building
+  prompt_tags: scenery, no humans, side view, a row of five enormous curved white rib bones jutting up out of the
+    dirt in a long arc, fossil, bleached ivory, cracked, half buried, a small campfire burning on the ground between
+    them, two hide drums beside the fire, firelight, (simple background:1.3), (white background:1.3), no sky, isolated,
+    wide shot
+  jobs:
+    arthemy-house: 34841
+- key: by-ribs-5
+  entity: bone-yard
+  title: 'Bone Yard midground: giant rib bones jutting from the dirt, and a campfire (seed 5)'
+  size: 1536x640
+  seed: 909525
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    creature, beast, monster, dinosaur, lizard, dragon, reptile, head, skull, jaw, teeth, eyes, legs, claws, tail,
+    spine, flesh, skin, scales, character, anthro, lowres, worst quality, blurry, jpeg artifacts, frame, border,
+    vignette, cathedral, church, ruins, pillars, columns, stone, architecture, arch, building
+  prompt_tags: scenery, no humans, side view, a row of five enormous curved white rib bones jutting up out of the
+    dirt in a long arc, fossil, bleached ivory, cracked, half buried, a small campfire burning on the ground between
+    them, two hide drums beside the fire, firelight, (simple background:1.3), (white background:1.3), no sky, isolated,
+    wide shot
+  jobs:
+    arthemy-house: 34842
+- key: by-ribs-6
+  entity: bone-yard
+  title: 'Bone Yard midground: giant rib bones jutting from the dirt, and a campfire (seed 6)'
+  size: 1536x640
+  seed: 909526
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    creature, beast, monster, dinosaur, lizard, dragon, reptile, head, skull, jaw, teeth, eyes, legs, claws, tail,
+    spine, flesh, skin, scales, character, anthro, lowres, worst quality, blurry, jpeg artifacts, frame, border,
+    vignette, cathedral, church, ruins, pillars, columns, stone, architecture, arch, building
+  prompt_tags: scenery, no humans, side view, a row of five enormous curved white rib bones jutting up out of the
+    dirt in a long arc, fossil, bleached ivory, cracked, half buried, a small campfire burning on the ground between
+    them, two hide drums beside the fire, firelight, (simple background:1.3), (white background:1.3), no sky, isolated,
+    wide shot
+  jobs:
+    arthemy-house: 34843
