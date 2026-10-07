@@ -1,6 +1,13 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-010 (in progress): Zuzu and the Coyote Vagrant now fight as their art. The fighter rig (tools/rig.py,
+  configs in tools/rigs/) poses HD parts cut from the Kontext parts sheets and derives the pixel style,
+  with P2 colours and frame maps. Zuzu has 19 animations, the Coyote 18 (conductor#5712-#5721), and the
+  game draws both from their pixel atlases (kind_robots#3321).
+- t-007 done: the sprite bake-off (docs/t-007-sprite-bakeoff.md). HD masters are the source of truth and
+  pixel is a derived style (Silas: "pixel is a style choice"); kr-arcade t-012 and zuzu-showdown t-027
+  carry the resolution and render-style work.
 - Engine milestone (kind_robots): t-003 sim core (#3291), t-004 controls + motion reader (#3294), t-005 combat
   systems (#3298), t-006 playable Admin-tab page with renderer and HUD (#3304). Screenshots in
   docs/t-006-screens/. The pre-verdict page is an Admin tab rather than an unlisted URL (Silas's

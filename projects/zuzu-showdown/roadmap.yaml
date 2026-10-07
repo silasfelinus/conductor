@@ -293,6 +293,14 @@ tasks:
       separately), animate them with a per-fighter rig (tools/method_b_rig.py is the prototype), and
       export pixel and HD atlases from the same rig with boxes authored once. Effects (smears, sparks)
       are hand pixel plus an HD counterpart.
+      PROGRESS 2026-10-07 (PT): the rig is tools/rig.py with one config per fighter in tools/rigs/
+      (conductor#5712, #5715, #5717, #5718, #5721). Zuzu has 19 animations and the Coyote 18, each in HD
+      and pixel with P2 colours and frame maps (ground anchors, art-derived hurtboxes). Both fighters
+      play as their sprites in the game (kind_robots#3321, pixel style; HD waits on t-027). Kontext
+      parts sheets (art/T010-RIG-PARTS.yaml) gave clean stances, but it will not draw the Coyote's stump
+      or remove limbs, so his arms are code-posed and wear his drawn sleeve. Remaining: the rest of each
+      list (the eight normals beyond the standing HP, crouching and jumping normals, dodges, throw and
+      thrown, wake-up, both supers, intro, the Perfect pose), boxes authored per move, and effects.
     claimed_by: 2026-10-07T06:10:00Z-zs-t010
     claimed_at: '2026-10-07T06:09:23Z'
     updated: '2026-10-07T06:09:23Z'
