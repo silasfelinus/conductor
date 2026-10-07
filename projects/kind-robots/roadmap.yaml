@@ -2281,5 +2281,17 @@ tasks:
     Fix: bound the wait, not the position. Either count consecutive bypasses of the current oldest job (persist on the job or in queue control state) and take the oldest once it reaches maxBypass, or take the oldest when it has waited longer than a limit (createdAt; e.g. 15 minutes) regardless of affinity. Add a verify script that simulates a head of 12 jobs of model A behind a deep backlog of model B and asserts A is claimed within maxBypass picks.
 
 
+
+- id: t-136
+  milestone: m6
+  title: 'Move tutorial sidebar left and add Arcade dashboard header shortcut'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  updated: '2026-10-07T20:47:00Z'
+  note: |-
+    Silas-directed 2026-10-07: the tutorial/workspace sidebar should open from the left edge instead of the right. Add a fixed-width Arcade icon shortcut to the dashboard/workspace header alongside the existing Art and Memory Dungeon icon buttons, using the existing canonical Arcade route/icon and preserving the header's compact responsive geometry. Add regression coverage for both placement and shortcut behavior.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
