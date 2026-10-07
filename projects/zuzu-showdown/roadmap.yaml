@@ -38,7 +38,7 @@ milestones:
   - id: m2
     title: "ENGINE -- deterministic fight sim, input, combat systems, renderer on placeholders"
     weight: 25
-    status: in-progress
+    status: done
 
   - id: m3
     title: "ART -- sprite pipeline, eight sprite sets, portraits, eight animated stages"
@@ -48,7 +48,7 @@ milestones:
   - id: m4
     title: "FIGHTERS & MODES -- movesets, lines, taunt screens, CPU, Arcade, Training, sound"
     weight: 30
-    status: not-started
+    status: in-progress
 
   - id: m5
     title: "POLISH & SHIP -- balance, devices, Silas's verdict, hall listing"
@@ -321,7 +321,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Movesets: Zuzu and Coyote Vagrant (frame data from fighters.yaml)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -332,14 +332,26 @@ tasks:
       until t-010's art lands, then re-fit boxes to the art. Contract-test every special's motion, its
       triangle side, and a sample combo route per fighter. If a number changes, update fighters.yaml in
       the same conductor PR.
+
+      Done 2026-10-07: both kits live on kind_robots main. Zuzu (kind_robots#3309): Iai Flash,
+      Falling Leaf, Kasa Toss boomerang, Poncho Veil, Descending Cut, Thousand-Mile Step
+      (passes through), Hat to the Dead. Coyote Vagrant (kind_robots#3310): Wild Shot with 6
+      bullets, reload and seeded spread; Pocket Sand blind (counted after the stagger); Stump
+      Shiv; Pick Pocket meter steal; Play Dead (loses to lows and grabs); Last Meal; Six Bad
+      Shots. Engine gained a seeded xorshift32 rng, ammo, blind, parry guards, stealMeter,
+      boomerang projectiles, passThrough. Contract suites verifyZuzuShowdownZuzu (13) and
+      verifyZuzuShowdownCoyote (12) in CI; fighters.yaml synced in conductor#5698. Boxes stay
+      placeholder until t-010 art; intro/taunt/victory/Perfect/KO sequences ride t-019 (needs
+      t-010 poses).
     claimed_by: 2026-10-07T04:10:00Z-zs-t014
     claimed_at: '2026-10-07T04:09:04Z'
-    updated: '2026-10-07T04:09:04Z'
+    updated: '2026-10-07T04:59:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#3310'
 
   - id: t-015
     milestone: m4
     title: "Movesets: the Abbess and the Siblings"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -353,7 +365,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Movesets: Storm Crow and River Croc"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -365,7 +377,7 @@ tasks:
   - id: t-017
     milestone: m4
     title: "Movesets: the Hyena Matriarch and Old Komodo"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
