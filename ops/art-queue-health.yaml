@@ -16,25 +16,28 @@ failures:
   kind: contract-rejected
   rules:
   - format-vocabulary
-  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [format-vocabulary]
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (2 violations): [format-vocabulary]
     "comic panel" asks for a physical format, so the model renders the format — frame, title bar, and
-    invented text included. Describe the s…'
+    invented text included. Describe the …'
   first_seen: '2026-10-07'
-- source: kr-failed-jobs
-  target: ArtJob 34375
-  kind: kr-job-failed
-  rules:
-  - frame-noun
-  detail: 'engine=COMFY; error=ArtJob validation failed before claim: Art prompt rejected by the prompt
-    contract (1 violation): [frame-noun] "The overall composition is encased in a rounded frame with a
-    thin, polished silver border, inviting a sense …'
+- source: requests
+  target: public/images/arcade/games/brick-bloom-title.webp
+  kind: timeout
+  detail: job 34770 timed out after 300s (still queued/running)
   first_seen: '2026-10-07'
-- source: kr-failed-jobs
-  target: ArtJob 34381
-  kind: kr-job-failed
-  rules:
-  - frame-noun
-  detail: 'engine=COMFY; error=ArtJob validation failed before claim: Art prompt rejected by the prompt
-    contract (1 violation): [frame-noun] "Stylish wide interface background for Tzaddik Gallery: an elegant
-    contemporary hall of portrait frames curvi…'
+- source: requests
+  target: public/images/arcade/games/pixel-hop-title.webp
+  kind: timeout
+  detail: job 34772 timed out after 300s (still queued/running)
+  first_seen: '2026-10-07'
+- source: requests
+  target: public/images/arcade/games/quilt-quest-title.webp
+  kind: timeout
+  detail: job 34774 timed out after 300s (still queued/running)
+  first_seen: '2026-10-07'
+- source: requests
+  target: public/images/arcade/games/seed-lander-title.webp
+  kind: timeout
+  detail: job 34771 timed out after 300s (still queued/running)
   first_seen: '2026-10-07'
