@@ -212,7 +212,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Sprite pipeline bake-off on Zuzu (pose-locked generation vs cutout rig vs hand pixel)"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -227,9 +227,19 @@ tasks:
       (animated GIF/WebP), the cost per frame of each method, and a recommendation (default: A for
       fighters, C for effects). Show Silas; if no answer in 7 days, the recommendation stands
       (default-recommendation rule).
+
+      Done 2026-10-06 PT: docs/t-007-sprite-bakeoff.md compares Zuzu's idle, walk and draw-cut
+      made three ways (A Kontext re-pose, B cutout rig, C hand pixel) in pixel and HD, with
+      cost per frame. Recommendation, shown to Silas 2026-10-06 PT (stands 2026-10-13 if
+      unanswered): HD masters are the source of truth and pixel is derived (Silas: pixel is a
+      style choice); fighters = Kontext parts sheets animated by a rig; full-frame Kontext
+      returns with kind-robots t-133 (pose ControlNet); effects hand pixel. Tools in
+      projects/zuzu-showdown/tools/, ledger art/T007-METHOD-A.yaml (jobs 34387-34401, seed
+      70071). Follow-ups: t-010 note updated, t-027 render styles, kr-arcade t-012 resolution
+      system.
     claimed_by: 2026-10-07T05:05:00Z-zs-t007
     claimed_at: '2026-10-07T05:01:38Z'
-    updated: '2026-10-07T05:55:31Z'
+    updated: '2026-10-07T05:55:35Z'
     implementation_pr: 'silasfelinus/conductor#5706'
 
   - id: t-008
