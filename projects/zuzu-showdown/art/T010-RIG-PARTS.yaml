@@ -1,0 +1,293 @@
+# zuzu-showdown t-010: HD parts sheets for the rig (the t-007 recommendation). Flux Kontext re-draws each
+# fighter's locked reference into parts the rig can cut cleanly: a stance with the arms held clear of the
+# body, the body with no arms, single limbs, the weapon, and key-pose references (crouch, jump,
+# knockdown) that the rig is matched against. Zuzu: A7 (242193, mirrored). The Coyote: profile right
+# (242404), post-croc (the knife lashed to his right stump, confirmed by Silas 2026-10-07). One seed.
+# Kontext decides facing for itself (t-007); tools/ mirrors per subject with post_mirror after review.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-parts
+  label: Flux Kontext dev (fp8), rig parts from the locked angle sets
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+  seed: 70072
+subjects:
+- key: zuzu-rig-stance-apart
+  entity: zuzu
+  title: 'zuzu rig part: stance-apart'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Put him in a low fighting stance facing right, knees bent and feet apart, both arms held out away
+    from his body with open hands and nothing in them, so his arms do not overlap his poncho. The sheathed katana
+    stays strapped across his back. Keep the same koala character, the same grumpy face, the same portly build and
+    short proportions, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange
+    band, the orange neckerchief, the dark brown trousers and the same western comic art style. On a plain off-white
+    background, nothing else in the picture.
+  jobs:
+    kontext-parts: 34434
+  art:
+    kontext-parts:
+      status: DONE
+      art_image_id: 242762
+- key: zuzu-rig-body-no-arms
+  entity: zuzu
+  title: 'zuzu rig part: body-no-arms'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Remove both of his arms completely, so the poncho hangs closed with no arms or hands showing. Standing,
+    seen from the side facing right. The sheathed katana stays strapped across his back. Keep the same koala character,
+    the same grumpy face, the same portly build and short proportions, the same rust-brown poncho with the orange
+    zigzag trim, the wide straw kasa with the orange band, the orange neckerchief, the dark brown trousers and the
+    same western comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 34435
+  art:
+    kontext-parts:
+      status: DONE
+      art_image_id: 242763
+- key: zuzu-rig-arm
+  entity: zuzu
+  title: 'zuzu rig part: arm'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: 'Show only one of his arms on its own: a grey furry koala arm from the shoulder to the hand, held
+    straight, the hand closed in a fist, side view. Keep the same koala character, the same grumpy face, the same
+    portly build and short proportions, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa
+    with the orange band, the orange neckerchief, the dark brown trousers and the same western comic art style.
+    On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 34436
+  art:
+    kontext-parts:
+      status: DONE
+      art_image_id: 242764
+- key: zuzu-rig-leg
+  entity: zuzu
+  title: 'zuzu rig part: leg'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: 'Show only one of his legs on its own: a dark brown baggy cloth trouser leg with a grey koala foot,
+    from the hip down to the foot, straight, side view. Keep the same koala character, the same grumpy face, the
+    same portly build and short proportions, the same rust-brown poncho with the orange zigzag trim, the wide straw
+    kasa with the orange band, the orange neckerchief, the dark brown trousers and the same western comic art style.
+    On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 34437
+  art:
+    kontext-parts:
+      status: DONE
+      art_image_id: 242765
+- key: zuzu-rig-katana
+  entity: zuzu
+  title: 'zuzu rig part: katana'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: 'Show only his katana drawn out of its scabbard, lying horizontally: the long black hilt wrapped
+    with cream diamonds on the left, a small round guard, and the long slightly curved steel blade pointing right.
+    Keep the same koala character, the same grumpy face, the same portly build and short proportions, the same rust-brown
+    poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange neckerchief, the dark
+    brown trousers and the same western comic art style. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 34438
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-rig-crouch
+  entity: zuzu
+  title: 'zuzu rig part: crouch'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Show him crouching low facing right, knees fully bent, one hand on the katana hilt above his shoulder.
+    Keep the same koala character, the same grumpy face, the same portly build and short proportions, the same rust-brown
+    poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange neckerchief, the dark
+    brown trousers and the same western comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 34439
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-rig-jump
+  entity: zuzu
+  title: 'zuzu rig part: jump'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Show him in mid-air jumping facing right, knees tucked up to his belly, the poncho flying up. Keep
+    the same koala character, the same grumpy face, the same portly build and short proportions, the same rust-brown
+    poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange neckerchief, the dark
+    brown trousers and the same western comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 34440
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-rig-knockdown
+  entity: zuzu
+  title: 'zuzu rig part: knockdown'
+  size: 832x1216
+  source_image_id: 242193
+  source_flip: true
+  prompt_prose: Show him knocked flat on his back on the ground, the kasa fallen beside his head, eyes shut. Keep
+    the same koala character, the same grumpy face, the same portly build and short proportions, the same rust-brown
+    poncho with the orange zigzag trim, the wide straw kasa with the orange band, the orange neckerchief, the dark
+    brown trousers and the same western comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 34441
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: coyote-rig-stance-apart
+  entity: coyote
+  title: 'coyote rig part: stance-apart'
+  size: 832x1216
+  source_image_id: 242404
+  source_flip: false
+  prompt_prose: 'Put him in a fighting stance facing right, knees bent and feet apart, both arms held out away from
+    his body so they do not overlap his coat: his left hand open, and the knife lashed to his right stump pointing
+    forward. Keep the same one-eyed coyote, the eyepatch over his right eye, the same tattered green long riding
+    coat, the crushed brown hat, the ragged trousers and worn boots, the revolver in its holster on his right hip,
+    and the same western comic art style. His right hand is gone: a knife is lashed with dirty bandages to the stump
+    of his right wrist. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 34442
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: coyote-rig-body-no-arms
+  entity: coyote
+  title: 'coyote rig part: body-no-arms'
+  size: 832x1216
+  source_image_id: 242404
+  source_flip: false
+  prompt_prose: 'Remove both of his arms completely, so the coat hangs with no sleeves, hands or knife showing.
+    Standing, seen from the side facing right. Keep the same one-eyed coyote, the eyepatch over his right eye, the
+    same tattered green long riding coat, the crushed brown hat, the ragged trousers and worn boots, the revolver
+    in its holster on his right hip, and the same western comic art style. His right hand is gone: a knife is lashed
+    with dirty bandages to the stump of his right wrist. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 34443
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: coyote-rig-arm-stump
+  entity: coyote
+  title: 'coyote rig part: arm-stump'
+  size: 832x1216
+  source_image_id: 242404
+  source_flip: false
+  prompt_prose: 'Show only his right arm on its own: a ragged green coat sleeve ending in a bandaged wrist stump
+    with a knife lashed to it, held straight, side view. Keep the same one-eyed coyote, the eyepatch over his right
+    eye, the same tattered green long riding coat, the crushed brown hat, the ragged trousers and worn boots, the
+    revolver in its holster on his right hip, and the same western comic art style. His right hand is gone: a knife
+    is lashed with dirty bandages to the stump of his right wrist. On a plain off-white background, nothing else
+    in the picture.'
+  jobs:
+    kontext-parts: 34444
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: coyote-rig-arm-left
+  entity: coyote
+  title: 'coyote rig part: arm-left'
+  size: 832x1216
+  source_image_id: 242404
+  source_flip: false
+  prompt_prose: 'Show only his left arm on its own: a ragged green coat sleeve and a thin furry coyote hand holding
+    an old revolver, held straight out, side view. Keep the same one-eyed coyote, the eyepatch over his right eye,
+    the same tattered green long riding coat, the crushed brown hat, the ragged trousers and worn boots, the revolver
+    in its holster on his right hip, and the same western comic art style. His right hand is gone: a knife is lashed
+    with dirty bandages to the stump of his right wrist. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 34445
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: coyote-rig-leg
+  entity: coyote
+  title: 'coyote rig part: leg'
+  size: 832x1216
+  source_image_id: 242404
+  source_flip: false
+  prompt_prose: 'Show only one of his legs on its own: a ragged trouser leg and a falling-apart boot, from the hip
+    down to the foot, straight, side view. Keep the same one-eyed coyote, the eyepatch over his right eye, the same
+    tattered green long riding coat, the crushed brown hat, the ragged trousers and worn boots, the revolver in
+    its holster on his right hip, and the same western comic art style. His right hand is gone: a knife is lashed
+    with dirty bandages to the stump of his right wrist. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 34446
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: coyote-rig-crouch
+  entity: coyote
+  title: 'coyote rig part: crouch'
+  size: 832x1216
+  source_image_id: 242404
+  source_flip: false
+  prompt_prose: 'Show him crouching low facing right, knees fully bent, the knife on his stump held ready. Keep
+    the same one-eyed coyote, the eyepatch over his right eye, the same tattered green long riding coat, the crushed
+    brown hat, the ragged trousers and worn boots, the revolver in its holster on his right hip, and the same western
+    comic art style. His right hand is gone: a knife is lashed with dirty bandages to the stump of his right wrist.
+    On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 34447
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: coyote-rig-jump
+  entity: coyote
+  title: 'coyote rig part: jump'
+  size: 832x1216
+  source_image_id: 242404
+  source_flip: false
+  prompt_prose: 'Show him in mid-air jumping facing right, knees tucked up, the long coat flying up behind him.
+    Keep the same one-eyed coyote, the eyepatch over his right eye, the same tattered green long riding coat, the
+    crushed brown hat, the ragged trousers and worn boots, the revolver in its holster on his right hip, and the
+    same western comic art style. His right hand is gone: a knife is lashed with dirty bandages to the stump of
+    his right wrist. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 34448
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: coyote-rig-knockdown
+  entity: coyote
+  title: 'coyote rig part: knockdown'
+  size: 832x1216
+  source_image_id: 242404
+  source_flip: false
+  prompt_prose: 'Show him knocked flat on his back on the ground, the crushed hat over his face, one boot sole flapping.
+    Keep the same one-eyed coyote, the eyepatch over his right eye, the same tattered green long riding coat, the
+    crushed brown hat, the ragged trousers and worn boots, the revolver in its holster on his right hip, and the
+    same western comic art style. His right hand is gone: a knife is lashed with dirty bandages to the stump of
+    his right wrist. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 34449
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
