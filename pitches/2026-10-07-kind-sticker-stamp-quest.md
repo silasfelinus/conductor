@@ -1,7 +1,7 @@
 # Pitch: Kind Sticker Stamp Quest
 date: 2026-10-07
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A daily passport game where each day's small kind act, written in advance, earns a hand-drawn stamp for a booklet that slowly fills with places. Completed pages unlock a bonus sticker sheet, and the whole year of prompts ships as a static file.
