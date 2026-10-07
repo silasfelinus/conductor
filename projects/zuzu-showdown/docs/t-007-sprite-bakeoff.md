@@ -5,7 +5,7 @@ ways from his reference build (A7, ArtImage 242193, mirrored to face right):
 
 - **A, pose-locked generation.** Flux Kontext re-poses the reference into each frame, using one
   fixed seed. The backend has no pose ControlNet, so the pose is described in each frame's prompt
-  (see kind-robots t-133).
+  (see kind-robots t-134).
 - **B, cutout rig.** Parts are cut from the reference (head and kasa, poncho, two legs, the katana
   hilt) and posed in code at full resolution. The drawn blade and the sword arm are drawn in code.
 - **C, hand pixel.** Indexed pixel maps typed by hand at game size: one body, plus a hand-drawn
@@ -108,7 +108,7 @@ The 15 raw Kontext renders, before keying and mirroring, are in
      both styles.
    - The task note's default was "A for fighters". The evidence says A's frames can't be the
      animation, only its art.
-3. **Full-frame A comes back when kind-robots t-133 (the pose ControlNet lane) lands.** The rig
+3. **Full-frame A comes back when kind-robots t-134 (the pose ControlNet lane) lands.** The rig
    already produces exact skeletons, so it can feed them to the ControlNet. Re-test A for the
    poses a rig handles badly: turns, crouches and big squash-and-stretch.
 4. **For effects, C** (as the note said): smears, hit sparks, dust and the Showdown eye strip,
