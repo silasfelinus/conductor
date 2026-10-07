@@ -96,6 +96,27 @@ def stance(dy=0, head=0, arm=0):
     return {"body": {"dy": dy}, "head": {"dy": head}, "lead_arm": {"angle": arm}}
 
 
+CROUCH_DY = 131
+
+
+def crouched(**more):
+    """The crouch's held frame (legs squashed about the hips, body dropped onto them), plus `more`."""
+    pose = {"body": {"dy": CROUCH_DY, "angle": 6}, "front_leg": {"sy": -0.35, "sx": 0.12, "dy": CROUCH_DY},
+            "back_leg": {"sy": -0.35, "sx": 0.12, "dy": CROUCH_DY}, "lead_arm": {"angle": -16}}
+    for key, value in more.items():
+        pose[key] = {**pose.get(key, {}), **value} if isinstance(value, dict) else value
+    return pose
+
+
+def tucked(**more):
+    """The top of the jump: legs tucked up under the poncho, plus `more`."""
+    pose = {"body": {"angle": -8}, "front_leg": {"sy": -0.5, "angle": 24}, "back_leg": {"sy": -0.48, "angle": -2},
+            "lead_arm": {"angle": 30}}
+    for key, value in more.items():
+        pose[key] = {**pose.get(key, {}), **value} if isinstance(value, dict) else value
+    return pose
+
+
 ANIMATIONS = {
     "idle": {"fps": 8, "loop": True, "frames": [stance(0), stance(-8, -2, 2), stance(-12, -4, 4), stance(-6, -4, 2)]},
     # A low shuffle: the stance is already wide, so the legs swing a little and the body bobs.
@@ -218,6 +239,146 @@ ANIMATIONS = {
         {**stance(10), "lead_arm": {"angle": 70}},
         {**stance(6), "body": {"dy": 6, "angle": 6}, "lead_arm": {"angle": 20}},
         {**stance(4), "body": {"dy": 4, "angle": 8}, "lead_arm": {"angle": -10}},
+    ]},
+    # The normals (frame counts from fighters/placeholders.ts and zuzu.ts: an animation spans the move's
+    # startup + active + recovery at its fps, clamping on its last frame if the move runs longer).
+    # Standing LP: a short jab with the lead fist, the blade left sheathed.
+    "stand_lp": {"fps": 15, "loop": False, "frames": [
+        {**stance(6), "body": {"dy": 6, "angle": 3}, "lead_arm": {"sx": 0.1, "angle": -4}},
+        {**stance(4), "body": {"dy": 4, "angle": 6}, "lead_arm": {"sx": 0.35, "angle": -8}},
+        {**stance(4), "body": {"dy": 4, "angle": 3}, "lead_arm": {"sx": 0.1, "angle": -2}},
+    ]},
+    # Standing LK: a snap kick off the front foot.
+    "stand_lk": {"fps": 15, "loop": False, "frames": [
+        {**stance(4), "body": {"dy": 4, "angle": -3}, "front_leg": {"angle": 22, "dy": -10}},
+        {**stance(4), "body": {"dy": 4, "angle": -8}, "front_leg": {"angle": 58, "dy": -24}},
+        {**stance(4), "body": {"dy": 4, "angle": -7}, "front_leg": {"angle": 52, "dy": -20}},
+        {**stance(4), "body": {"dy": 4, "angle": -2}, "front_leg": {"angle": 16, "dy": -6}},
+    ]},
+    # Standing HK: a roundhouse, the chamber, the leg swinging up to his own head height, the return.
+    "stand_hk": {"fps": 12, "loop": False, "frames": [
+        {**stance(10), "body": {"dy": 10, "angle": 6}, "front_leg": {"angle": -10}},
+        {**stance(0), "body": {"dy": 0, "angle": -10}, "front_leg": {"angle": 40, "dy": -30}},
+        {**stance(0), "body": {"dy": -10, "angle": -16}, "front_leg": {"angle": 84, "dy": -50},
+         "back_leg": {"angle": -6}, "lead_arm": {"angle": 30}},
+        {**stance(0), "body": {"dy": -10, "angle": -16}, "front_leg": {"angle": 88, "dy": -50},
+         "back_leg": {"angle": -6}, "lead_arm": {"angle": 34}},
+        {**stance(4), "body": {"dy": 4, "angle": -8}, "front_leg": {"angle": 40, "dy": -20}},
+        {**stance(8)},
+    ]},
+    "crouch_lp": {"fps": 15, "loop": False, "frames": [
+        crouched(lead_arm={"angle": -18, "sx": 0.1}),
+        crouched(lead_arm={"angle": -20, "sx": 0.35}),
+        crouched(lead_arm={"angle": -18, "sx": 0.1}),
+    ]},
+    # Crouching LK: a low toe-poke at the shins.
+    "crouch_lk": {"fps": 15, "loop": False, "frames": [
+        crouched(front_leg={"sy": -0.35, "sx": 0.12, "dy": CROUCH_DY, "angle": 24}),
+        crouched(front_leg={"sy": -0.35, "sx": 0.12, "dy": CROUCH_DY, "angle": 52}),
+        crouched(front_leg={"sy": -0.35, "sx": 0.12, "dy": CROUCH_DY, "angle": 48}),
+        crouched(front_leg={"sy": -0.35, "sx": 0.12, "dy": CROUCH_DY, "angle": 20}),
+    ]},
+    # Crouching HP: the anti-air, drawing from the crouch straight up overhead.
+    "crouch_hp": {"fps": 13, "loop": False, "frames": [
+        crouched(hide=["lead_arm"], draw=[arm((600, 330 + CROUCH_DY), dy=CROUCH_DY)]),
+        crouched(hide=["lead_arm", "hilt"], draw=[arm((780, 560), 40, CROUCH_DY)]),
+        crouched(hide=["lead_arm", "hilt"], draw=[arm((740, 420), 80, CROUCH_DY)]),
+        crouched(hide=["lead_arm", "hilt"], draw=[arm((720, 400), 96, CROUCH_DY)]),
+        crouched(hide=["lead_arm", "hilt"], draw=[arm((800, 600), 20, CROUCH_DY)]),
+        crouched(hide=["lead_arm"], draw=[arm((610, 340 + CROUCH_DY), dy=CROUCH_DY)]),
+    ]},
+    # Crouching HK: the sweep, dropping to the floor and swinging the front leg out full length along it.
+    "crouch_hk": {"fps": 12, "loop": False, "frames": [
+        crouched(),
+        crouched(body={"dy": 230, "angle": 12}, back_leg={"sy": -0.58, "sx": 0.15, "dy": 230},
+                 front_leg={"sy": -0.15, "sx": 0, "dy": 230, "angle": 50}, lead_arm={"angle": -30}),
+        crouched(body={"dy": 260, "angle": 14}, back_leg={"sy": -0.62, "sx": 0.15, "dy": 260},
+                 front_leg={"sy": 0, "sx": 0, "dy": 260, "angle": 84}, lead_arm={"angle": -34}),
+        crouched(body={"dy": 260, "angle": 14}, back_leg={"sy": -0.62, "sx": 0.15, "dy": 260},
+                 front_leg={"sy": 0, "sx": 0, "dy": 260, "angle": 86}, lead_arm={"angle": -34}),
+        crouched(body={"dy": 200, "angle": 10}, back_leg={"sy": -0.52, "sx": 0.15, "dy": 200},
+                 front_leg={"sy": -0.2, "dy": 200, "angle": 44}, lead_arm={"angle": -24}),
+        crouched(),
+    ]},
+    "jump_lp": {"fps": 15, "loop": False, "frames": [
+        tucked(lead_arm={"angle": 0, "sx": 0.12}),
+        tucked(lead_arm={"angle": -14, "sx": 0.35}),
+        tucked(lead_arm={"angle": -6, "sx": 0.14}),
+    ]},
+    # Jumping HP: a downward slash in the air.
+    "jump_hp": {"fps": 12, "loop": False, "frames": [
+        tucked(hide=["lead_arm", "hilt"], draw=[arm((700, 260), 70)]),
+        tucked(body={"angle": 4}, hide=["lead_arm", "hilt"], draw=[arm((860, 520), -10)]),
+        tucked(body={"angle": 8}, hide=["lead_arm", "hilt"], draw=[arm((800, 640), -46)]),
+        tucked(hide=["lead_arm"], draw=[arm((610, 340))]),
+    ]},
+    # Jumping LK: the flying kick, the front leg shot straight out and down.
+    "jump_lk": {"fps": 12, "loop": False, "frames": [
+        tucked(),
+        tucked(body={"angle": 8}, front_leg={"sy": 0.05, "angle": 56}, back_leg={"sy": -0.5, "angle": -12}),
+        tucked(body={"angle": 8}, front_leg={"sy": 0.05, "angle": 58}, back_leg={"sy": -0.5, "angle": -12}),
+        tucked(body={"angle": 4}, front_leg={"sy": -0.2, "angle": 40}),
+    ]},
+    # Jumping HK: a bigger flying kick, leaning back behind a straight leg.
+    "jump_hk": {"fps": 12, "loop": False, "frames": [
+        tucked(body={"angle": -12}, front_leg={"sy": -0.5, "angle": 10}),
+        tucked(body={"angle": -16}, front_leg={"sy": 0.12, "angle": 80}, back_leg={"sy": -0.5, "angle": -20},
+               lead_arm={"angle": 50}),
+        tucked(body={"angle": -16}, front_leg={"sy": 0.12, "angle": 84}, back_leg={"sy": -0.5, "angle": -20},
+               lead_arm={"angle": 52}),
+        tucked(body={"angle": -10}, front_leg={"sy": -0.3, "angle": 40}),
+    ]},
+    # Landing: the first frame of the crouch, absorbing the drop (the sim holds it 3 frames).
+    "land": {"fps": 20, "loop": False, "frames": [
+        {"body": {"dy": 66, "angle": 3}, "front_leg": {"sy": -0.18, "sx": 0.06, "dy": 66},
+         "back_leg": {"sy": -0.18, "sx": 0.06, "dy": 66}, "lead_arm": {"angle": -8}},
+    ]},
+    # Dodges: a forward roll through the opponent (22 frames; the sim moves him), a lean-back sidestep (18).
+    "dodge_forward": {"fps": 13, "loop": False, "frames": [
+        crouched(),
+        {**crouched(), "whole": {"angle": -90, "pivot": (420, 860), "dy": -60}},
+        {**crouched(), "whole": {"angle": -180, "pivot": (420, 860), "dy": -110}},
+        {**crouched(), "whole": {"angle": -270, "pivot": (420, 860), "dy": -60}},
+        crouched(),
+    ]},
+    "dodge_back": {"fps": 12, "loop": False, "frames": [
+        {**stance(8), "body": {"dy": 8, "dx": -20, "angle": -6}, "head": {"dx": -24}, "lead_arm": {"angle": 20}},
+        {**stance(10), "body": {"dy": 10, "dx": -60, "angle": -12}, "head": {"dx": -70, "angle": -6},
+         "back_leg": {"angle": -8}, "lead_arm": {"angle": 34}},
+        {**stance(10), "body": {"dy": 10, "dx": -60, "angle": -12}, "head": {"dx": -70, "angle": -6},
+         "back_leg": {"angle": -8}, "lead_arm": {"angle": 34}},
+        {**stance(6), "body": {"dy": 6, "dx": -20, "angle": -4}, "head": {"dx": -24}},
+    ]},
+    # Wake-up (20 frames): up off his back, through the crouch, into the stance.
+    "wakeup": {"fps": 12, "loop": False, "frames": [
+        {**fall(70), "lead_arm": {"angle": 20}},
+        {**fall(40), "lead_arm": {"angle": -20}},
+        crouched(),
+        stance(10),
+    ]},
+    # Throws: the lead hand grabs the collar (5 frames), then he flips them over his hip (30 frames);
+    # a whiffed grab overreaches and stumbles (20 frames).
+    "throw": {"fps": 15, "loop": False, "frames": [
+        {**stance(10), "body": {"dy": 10, "angle": 8}, "lead_arm": {"sx": 0.2, "angle": 6}},
+        {**stance(10), "body": {"dy": 10, "angle": 10}, "lead_arm": {"sx": 0.35, "angle": 10}},
+    ]},
+    "throw_hold": {"fps": 8, "loop": False, "frames": [
+        {**stance(10), "body": {"dy": 10, "angle": 6}, "lead_arm": {"sx": 0.3, "angle": 14}},
+        {**stance(20), "body": {"dy": 20, "angle": -14}, "lead_arm": {"angle": 76}, "front_leg": {"angle": -6}},
+        {**stance(24), "body": {"dy": 24, "angle": 10}, "lead_arm": {"sx": 0.2, "angle": -30}},
+        {**stance(10), "body": {"dy": 10, "angle": 4}},
+    ]},
+    "throw_whiff": {"fps": 10, "loop": False, "frames": [
+        {**stance(10), "body": {"dy": 10, "angle": 12, "dx": 20}, "lead_arm": {"sx": 0.45, "angle": 4}},
+        {**stance(14), "body": {"dy": 14, "angle": 14, "dx": 24}, "head": {"angle": 6}, "lead_arm": {"sx": 0.35}},
+        stance(6),
+    ]},
+    # Thrown: caught by the collar before the toss lands him (then the knockdown plays).
+    "thrown": {"fps": 15, "loop": False, "frames": [
+        {"body": {"dy": -10, "dx": 20, "angle": 10}, "head": {"angle": 14, "dx": 30}, "lead_arm": {"angle": 50},
+         "front_leg": {"angle": 10}, "back_leg": {"angle": -10}},
+        {"body": {"dy": -30, "dx": 30, "angle": 16}, "head": {"angle": 18, "dx": 40}, "lead_arm": {"angle": 60},
+         "front_leg": {"angle": 16, "dy": -20}, "back_leg": {"angle": -14, "dy": -20}},
     ]},
 }
 
