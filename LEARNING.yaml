@@ -17457,3 +17457,18 @@ records:
     rest, so pose angles are relative to the drawn angle (rotating 65 degrees from a leg already 30 degrees
     forward lifts the foot instead of extending it), and a smear is where the blade was, so keep it out
     of the reach measurement.'
+- date: '2026-10-07'
+  project: zuzu-showdown
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: in_progress
+  failure_category: null
+  lesson: 'For game backdrops made from diffusion art, two things go wrong quietly. First, any animal
+    word in a scenery prompt, even "a bleached cow skull", brings the whole animal back: all three pond
+    renders had a longhorn even though the negative prompt banned animals. Name no animal or animal part,
+    and ban them in the negative. Second, a single median-cut palette for a whole stage spends its colours
+    on the sky''s broad gradient and drops small bright features (the pond''s water, then the sun). Quantize
+    each parallax layer with its own octree palette, and look at a preview at both camera limits before
+    shipping.'
