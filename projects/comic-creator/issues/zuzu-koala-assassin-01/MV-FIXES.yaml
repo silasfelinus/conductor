@@ -3,6 +3,9 @@
 # abbess-faced nun came with a real otter at her feet. Kontext is good at removal, so these clean the r1/r2 picks.
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
 # mvfix-s08-poncho-*: both s08 removals kept the r1 black robe, so Kontext adds his poncho to 242686.
+# Round 3, Silas 2026-10-07: "Coyote should be without hand in 6 and 7, obv flaw in abbess" (the s11 face).
+# The locked cast renders (242550 stump, 242588 bandaged, 242559 abbess front) are padded to 16:9 and Kontext
+# fills the scene around them, so the stump and the abbess's flat face come straight from the cast.
 series: zuzu-koala-assassin
 project_slug: comic-creator
 designer: Comic Studio
@@ -126,3 +129,111 @@ subjects:
     kontext-fix:
       status: PENDING
       art_image_id: null
+- key: mvfix-s06-stump-1
+  entity: music-video
+  title: 'MV s06: coyote, fresh stump, at the watering hole (seed 1)'
+  size: 1344x768
+  source_image_id: 242550
+  source_pad: '16:9'
+  prompt_prose: 'Fill the whole picture with the scene: he stands at the edge of a muddy desert watering hole at
+    dusk, long shadows, drifting dust, dark still water behind him. Keep him exactly as he is: his face, eyepatch,
+    hat, coat, holster, his right arm ending in a bleeding stump with no hand, his gloved left hand, his pose, colours
+    and the inked western comic style.'
+  jobs:
+    kontext-fix: 34402
+- key: mvfix-s06-stump-2
+  entity: music-video
+  title: 'MV s06: coyote, fresh stump, at the watering hole (seed 2)'
+  size: 1344x768
+  source_image_id: 242550
+  source_pad: '16:9'
+  prompt_prose: 'Fill the whole picture with the scene: he stands at the edge of a muddy desert watering hole at
+    dusk, long shadows, drifting dust, dark still water behind him. Keep him exactly as he is: his face, eyepatch,
+    hat, coat, holster, his right arm ending in a bleeding stump with no hand, his gloved left hand, his pose, colours
+    and the inked western comic style.'
+  jobs:
+    kontext-fix: 34403
+- key: mvfix-s06-stump-3
+  entity: music-video
+  title: 'MV s06: coyote, fresh stump, at the watering hole (seed 3)'
+  size: 1344x768
+  source_image_id: 242550
+  source_pad: '16:9'
+  prompt_prose: 'Fill the whole picture with the scene: he stands at the edge of a muddy desert watering hole at
+    dusk, long shadows, drifting dust, dark still water behind him. Keep him exactly as he is: his face, eyepatch,
+    hat, coat, holster, his right arm ending in a bleeding stump with no hand, his gloved left hand, his pose, colours
+    and the inked western comic style.'
+  jobs:
+    kontext-fix: 34404
+- key: mvfix-s07-bandaged-1
+  entity: music-video
+  title: 'MV s07: coyote, bandaged stump, at the watering hole (seed 1)'
+  size: 1344x768
+  source_image_id: 242588
+  source_pad: '16:9'
+  prompt_prose: 'Fill the whole picture with the scene: he stands by a muddy desert watering hole at deep dusk,
+    the sky dark orange, long shadows. Keep him exactly as he is: his face, eyepatch, hat, coat, holster, his right
+    arm ending in a stump wrapped in a blood-stained cloth bandage, with no hand, his gloved left hand, his pose,
+    colours and the inked western comic style.'
+  jobs:
+    kontext-fix: 34405
+- key: mvfix-s07-bandaged-2
+  entity: music-video
+  title: 'MV s07: coyote, bandaged stump, at the watering hole (seed 2)'
+  size: 1344x768
+  source_image_id: 242588
+  source_pad: '16:9'
+  prompt_prose: 'Fill the whole picture with the scene: he stands by a muddy desert watering hole at deep dusk,
+    the sky dark orange, long shadows. Keep him exactly as he is: his face, eyepatch, hat, coat, holster, his right
+    arm ending in a stump wrapped in a blood-stained cloth bandage, with no hand, his gloved left hand, his pose,
+    colours and the inked western comic style.'
+  jobs:
+    kontext-fix: 34406
+- key: mvfix-s07-bandaged-3
+  entity: music-video
+  title: 'MV s07: coyote, bandaged stump, at the watering hole (seed 3)'
+  size: 1344x768
+  source_image_id: 242588
+  source_pad: '16:9'
+  prompt_prose: 'Fill the whole picture with the scene: he stands by a muddy desert watering hole at deep dusk,
+    the sky dark orange, long shadows. Keep him exactly as he is: his face, eyepatch, hat, coat, holster, his right
+    arm ending in a stump wrapped in a blood-stained cloth bandage, with no hand, his gloved left hand, his pose,
+    colours and the inked western comic style.'
+  jobs:
+    kontext-fix: 34407
+- key: mvfix-s11-abbess-1
+  entity: music-video
+  title: 'MV s11: the abbess at the mission gate (seed 1)'
+  size: 1344x768
+  source_image_id: 242559
+  source_pad: '16:9'
+  prompt_prose: 'Fill the whole picture with the scene: she stands at the open iron gate of an adobe desert mission
+    at dusk, a rusted merry-go-round wrapped in cobwebs in the yard behind her. Keep her exactly as she is: her
+    flat round face, button nose, whiskers, brown fur, black habit, white wimple, folded hands, pose, colours and
+    the inked comic style.'
+  jobs:
+    kontext-fix: 34408
+- key: mvfix-s11-abbess-2
+  entity: music-video
+  title: 'MV s11: the abbess at the mission gate (seed 2)'
+  size: 1344x768
+  source_image_id: 242559
+  source_pad: '16:9'
+  prompt_prose: 'Fill the whole picture with the scene: she stands at the open iron gate of an adobe desert mission
+    at dusk, a rusted merry-go-round wrapped in cobwebs in the yard behind her. Keep her exactly as she is: her
+    flat round face, button nose, whiskers, brown fur, black habit, white wimple, folded hands, pose, colours and
+    the inked comic style.'
+  jobs:
+    kontext-fix: 34409
+- key: mvfix-s11-abbess-3
+  entity: music-video
+  title: 'MV s11: the abbess at the mission gate (seed 3)'
+  size: 1344x768
+  source_image_id: 242559
+  source_pad: '16:9'
+  prompt_prose: 'Fill the whole picture with the scene: she stands at the open iron gate of an adobe desert mission
+    at dusk, a rusted merry-go-round wrapped in cobwebs in the yard behind her. Keep her exactly as she is: her
+    flat round face, button nose, whiskers, brown fur, black habit, white wimple, folded hands, pose, colours and
+    the inked comic style.'
+  jobs:
+    kontext-fix: 34410

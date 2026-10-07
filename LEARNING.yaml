@@ -17417,3 +17417,27 @@ records:
     20-frame can''t-block window, counted from the hit, expired exactly as the 18-frame stagger ended
     and did nothing. Count such windows from the end of hitstun, and write a test that tries the follow-up
     the effect is meant to open.'
+- date: '2026-10-07'
+  project: kind-pinball
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: The current 288x416 Canvas 2D contract is the dominant quality ceiling. Preserve the Arcade
+    shell and completed t-003 shot-map prototype, but make premium pinball a lazy-loaded WebGL/Rapier
+    specialization rather than forcing the retro renderer to imitate a physical machine.
+- date: 2026-10-06
+  project: zuzu-showdown
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Flux Kontext keeps a character on-model but cannot animate: from a single reference with one
+    fixed seed it ignored ''facing right'', gave six near-identical walk frames, never produced the slash
+    pose, and swapped props (sheathed sword to bare blade, a second sword) between frames. Use Kontext
+    for HD art and parts sheets and drive motion with a rig, or wait for a pose ControlNet; keep HD masters
+    and derive pixel art, because pixel is a render style, not the source.'
