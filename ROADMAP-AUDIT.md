@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-10-08T19:26:46.085096+00:00`
+Generated: `2026-10-08T19:31:05.641933+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **75** roadmaps, **36** active + **3** continuous projects, **1998** tasks
-- **81 ready**, **99 waiting**, **42 needs-human**, **15 claimed/review**, **1745 done**
+- **75** roadmaps, **36** active + **3** continuous projects, **1999** tasks
+- **81 ready**, **99 waiting**, **43 needs-human**, **15 claimed/review**, **1745 done**
 - Findings: **0 errors**, **19 warnings**, **54 informational**
 
 ## Project inventory
@@ -26,7 +26,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 10 | `interface-vision` | continuous | software | 3 | 1 | 0 | 0 | 137 / 141 |
 | 11 | `humboldt-scoop-cms` | active | software | 1 | 1 | 4 | 0 | 40 / 46 |
 | 12 | `digital-storefront` | active | software | 1 | 2 | 1 | 0 | 40 / 44 |
-| 13 | `kind-robots` | active | software | 4 | 0 | 0 | 3 | 131 / 138 |
+| 13 | `kind-robots` | active | software | 4 | 0 | 1 | 3 | 131 / 139 |
 | 14 | `rainbow-butterflies` | active | software | 0 | 1 | 2 | 0 | 50 / 53 |
 | 15 | `music-video` | active | software | 6 | 3 | 1 | 0 | 25 / 35 |
 | 16 | `comic-film` | active | software | 3 | 6 | 1 | 0 | 1 / 11 |
