@@ -3080,5 +3080,18 @@ tasks:
   claimed_by: 20261002T222600Z-chatgpt-conductor-t204-parity
   claimed_at: '2026-10-02T22:26:00Z'
 
+
+- id: t-205
+  milestone: m4
+  title: 'Make conductor:skip suppress issue auto-close as well as import'
+  status: ready
+  owner: null
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  updated: '2026-10-08T22:22:00Z'
+  note: |-
+    Bug discovered while using kind_robots#3379 as an umbrella checklist: a completed partial roadmap slice with source_issue caused the issue bridge to close the still-incomplete umbrella issue. conductor:skip already suppresses imports but close_done ignores the label. Make the label consistently suppress all bridge automation, including close, add regression coverage, then reopen/label #3379 so it can remain the canonical multi-slice tracker.
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
