@@ -390,7 +390,7 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Table guide (FX3-style rules card) for the table"
-    status: claimed
+    status: review
     depends_on: [t-007]
     owner: worker
     passes: 0
@@ -399,9 +399,19 @@ tasks:
       An in-cabinet guide that teaches the table: a shot map diagram with arrows, then each mode, the
       multiball, the mastery goals and the wizard mode in a few lines. The hidden sub-table stays a secret
       (at most a teasing silhouette until the player has found it once). Reachable from attract mode and the pause menu.
+
+      Merged kind_robots#3376: an in-cabinet FX3-style rules card. Pages: shot map drawn from
+      the table definition (walls, posts, pops, ramp floors, flippers) with numbered arrows to
+      all eight shots; villages (each of the 12 modes); multiball; more scoring; MALARIA-FREE
+      wizard; mastery ladder. Every number comes from the rules constants. The sub-table stays
+      secret until found once (mastery record): a lone '?' on the map, ??? on the ladder, no
+      page mentions it; once found it gets its own SECRET VILLAGE page. Reachable from the
+      attract loop and the pause screen (B, the Table guide panel switch, hints on how-to and
+      pause screens).
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-08T19:01:34Z'
-    updated: '2026-10-08T19:01:34Z'
+    updated: '2026-10-08T19:10:46Z'
+    implementation_pr: 'silasfelinus/kind_robots#3376'
 
   - id: t-016
     milestone: m4
