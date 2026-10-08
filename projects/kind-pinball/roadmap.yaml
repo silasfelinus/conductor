@@ -394,7 +394,7 @@ tasks:
   - id: t-019
     milestone: m2
     title: "3D hero render pass: PBR materials, camera, GI, inserts, flashers and quality tiers"
-    status: review
+    status: done
     depends_on: [t-005]
     owner: worker
     passes: 0
@@ -406,7 +406,15 @@ tasks:
       high/medium/low quality tiers rather than UA sniffing. Fixed-seed screenshots at desktop, landscape
       tablet and portrait phone must read as a physical pinball machine at a glance and preserve shot
       readability. Use mockups/01-fx3-table-hero.svg and 03-responsive-shell.svg as the target composition.
+
+      Done 2026-10-08 (kind_robots#3364): PBR materials over a clearcoated procedural AMI
+      Village playfield, night-cabinet env per material, lamp matrix (rules/lamps.ts) with
+      shot arrows/rainbow multiplier/attract chase/tilt blackout, flasher domes with pooled
+      lights, GI, contact shadows, ACES + restrained bloom, screen-fitted camera (steeper on
+      phones, backbox lid hides the room), measured high/medium/low tiers. Screenshots:
+      projects/kind-pinball/screenshots/t019-*.jpg. Real-device 60 FPS check still to do by
+      hand.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-08T09:36:28Z'
-    updated: '2026-10-08T10:59:05Z'
+    updated: '2026-10-08T10:59:19Z'
     implementation_pr: 'silasfelinus/kind_robots#3364'
