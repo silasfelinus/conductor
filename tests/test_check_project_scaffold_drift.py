@@ -190,3 +190,28 @@ def test_render_reports_forward_and_reverse():
     assert "cthuluquarium" in text
     assert "REVERSE orphans (1" in text
     assert "orphan-project" in text
+
+
+def test_project_parity_uses_live_api_host(monkeypatch):
+    """The public kindrobots.org domain is not the API endpoint."""
+    assert drift.API_URL == "https://kind-robots.vercel.app/api/projects"
+
+    requested = []
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return b'{"data": []}'
+
+    def fake_urlopen(req, timeout):
+        requested.append((req.full_url, timeout))
+        return Response()
+
+    monkeypatch.setattr(drift.urllib.request, "urlopen", fake_urlopen)
+    assert drift.fetch_kind_robots_projects("test-token") == []
+    assert requested == [("https://kind-robots.vercel.app/api/projects?includeInactive=true&take=250&skip=0", 20)]
