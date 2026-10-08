@@ -931,5 +931,25 @@ tasks:
     Silas explicitly approved the seven-town public Poopstakes eligibility rule and public rollout in ChatGPT on 2026-10-08. PR silasfelinus/humboldtscoopsolutions#114 merged to main as commit 84e31d57c8f9d2f69b37fa5cd003fb8f82c6cad0 after completed-success CI run 37767082591 (Poopstakes behavior tests, PHP syntax, deployment-script tests). Approval covers the code and promotional copy; self-hosted deployment still requires the Unraid site checkout to sync. Early-season drawing issue tracked separately in silasfelinus/humboldtscoopsolutions#115.
   approved_by_human: true
 
+
+- id: t-046
+  milestone: m11
+  title: Carry pre-November Poopstakes entries through the season's draws
+  status: claimed
+  owner: worker
+  claimed_by: 20261008T112000Z-hss-early115-a72e
+  claimed_at: '2026-10-08T11:20:00Z'
+  updated: '2026-10-08T11:20:00Z'
+  passes: 0
+  stakes: reversible
+  source_issue: silasfelinus/humboldtscoopsolutions#115
+  note: >-
+    Direct Silas request 2026-10-08 to fix issue #115 immediately.
+    Pre-November early entries must enter the November pool; every
+    non-winning eligible entry stays in the December/January pools of the
+    same season. Never carry stale entries into the next season. Implement
+    period-bounded SQL, local eligibility and once-ever guarantees, public
+    explanation, and regression tests before first November draw.
+
 goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads,
   operations, and brand voice.
