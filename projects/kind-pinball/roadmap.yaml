@@ -214,7 +214,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Pinball audio mixer: mechanics, ball materials, callouts and mode music"
-    status: review
+    status: done
     depends_on: [t-004]
     owner: worker
     passes: 0
@@ -225,9 +225,20 @@ tasks:
       cues for flippers, slings, pops, ramp entry/exit, metal rail, plastic, spinner, drops, scoop,
       kickback, plunger and drain; positional audio where useful; original short callouts and loopable
       mode/multiball music beds. Nothing autoplays before the first user gesture.
+
+      Reviewed 2026-10-08 against the brief and closed: kind_robots#3351 (merged 2026-10-07)
+      built the mixer: five buses (mechanical, ball, callout, music, ambience) under the
+      arcade's mute; distinct cues for flippers, slings, pops, ramp entry/exit, metal rail,
+      plastic, spinner, drops, scoop, kickback, launch and drain; stereo panning;
+      mode/multiball music beds; no AudioContext before the first gesture. Later tasks added
+      the callouts, the sub-table bed and the mastery cue. The review found no contract test,
+      so kind_robots#3377 adds one: every sound the rules and runtime name has a cue (a typo
+      would otherwise be silence), every cue sits on a bus, every bed has notes, nothing plays
+      before unlock.
     claimed_by: 2026-10-07T223047Z-kind-pinball-t008-r4n8
     claimed_at: '2026-10-07T22:30:47Z'
-    updated: '2026-10-07T22:38:00Z'
+    updated: '2026-10-08T19:26:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#3351'
   - id: t-009
     milestone: m2
     title: "FX3 material + light show pass: GI, inserts, flashers, generated playfield art"
