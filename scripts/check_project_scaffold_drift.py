@@ -37,7 +37,7 @@ project-overrides.yaml, matching check_pr_merged_drift.py and
 audit_human_gates.py. Use --include-inactive for an intentional archive sweep.
 
 Requires: KR_API_TOKEN env var (a valid kind_robots JWT for Silas's account) to
-reach GET https://kindrobots.org/api/projects. Without it, the check cannot
+reach GET https://kind-robots.vercel.app/api/projects. Without it, the check cannot
 run at all -- this is reported as unresolved, not as a clean pass.
 
 Usage:
