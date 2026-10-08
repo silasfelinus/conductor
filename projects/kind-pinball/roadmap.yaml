@@ -135,7 +135,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Physics feel: cradle, post pass, flipper motors, tilt bob, kickback, spinner, drops"
-    status: claimed
+    status: done
     depends_on: [t-018]
     owner: reviewer
     passes: 0
@@ -147,9 +147,19 @@ tasks:
       kickback, spinner, three drop targets and a tilt bob with two warnings then TILT. Acceptance:
       500 max-speed post impacts with zero tunnelling; reproducible cradle and post-pass tests; ramp
       threshold tests; and a ten-minute three-ball demo-pilot soak with no permanent stuck ball.
+
+      Merged as kind_robots#3353: motor flippers (20 ms coil stroke, partial taps) with
+      vertical-faced convex-hull bats; physics at 240 Hz on a shared clock; sling kicks on
+      real hits; left outlane kickback (lit each ball, relit by the A-M-I bank) firing through
+      one-way orbit deflectors; tilt bob with two warnings then TILT; animated drop targets;
+      per-ball ball search; ramp covers and straight inlane returns. Acceptance tests pass:
+      tap vs stroke, 5 s cradle, live catch, full flips 3.5-7 m/s on the playfield, post pass
+      across a timing window, 500 max-speed post shots with no tunnelling, ramp thresholds,
+      and a 10-minute three-ball soak with no stuck ball.
     claimed_by: 2026-10-07T1340-kp-t005-physics
     claimed_at: '2026-10-07T20:51:23Z'
-    updated: '2026-10-07T20:51:23Z'
+    updated: '2026-10-08T03:12:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#3353'
   - id: t-006
     milestone: m2
     title: "Physical DMD: 128x32 scene queue + backbox texture"
@@ -384,7 +394,7 @@ tasks:
   - id: t-019
     milestone: m2
     title: "3D hero render pass: PBR materials, camera, GI, inserts, flashers and quality tiers"
-    status: waiting
+    status: ready
     depends_on: [t-005]
     owner: null
     passes: 0
