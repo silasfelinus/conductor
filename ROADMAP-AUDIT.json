@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-10-08T19:31:05.641933+00:00",
+  "generated_at": "2026-10-08T21:38:38.106882+00:00",
   "summary": {
     "roadmaps": 75,
     "active_projects": 36,
     "continuous_projects": 3,
     "tasks": 1999,
-    "ready": 81,
-    "waiting": 99,
-    "needs_human": 43,
-    "in_progress": 15,
-    "done": 1745,
+    "ready": 82,
+    "waiting": 98,
+    "needs_human": 42,
+    "in_progress": 14,
+    "done": 1747,
     "errors": 0,
-    "warnings": 19,
+    "warnings": 20,
     "info": 54
   },
   "projects": [
@@ -23,17 +23,18 @@
       "autonomous": false,
       "task_count": 19,
       "counts": {
-        "done": 15,
-        "review": 2,
-        "waiting": 2
+        "done": 16,
+        "ready": 1,
+        "review": 1,
+        "waiting": 1
       },
-      "open_count": 4,
+      "open_count": 3,
       "human_attention": 0,
-      "ready": 0,
-      "waiting": 2,
+      "ready": 1,
+      "waiting": 1,
       "claimed": 0,
-      "review": 2,
-      "done": 15
+      "review": 1,
+      "done": 16
     },
     {
       "slug": "zuzu-lair",
@@ -266,18 +267,17 @@
       "autonomous": false,
       "task_count": 139,
       "counts": {
-        "done": 131,
-        "needs-human": 1,
+        "done": 132,
         "ready": 4,
         "review": 3
       },
-      "open_count": 8,
-      "human_attention": 1,
+      "open_count": 7,
+      "human_attention": 0,
       "ready": 4,
       "waiting": 0,
       "claimed": 0,
       "review": 3,
-      "done": 131
+      "done": 132
     },
     {
       "slug": "rainbow-butterflies",
@@ -1485,7 +1485,7 @@
       "code": "STALE_IN_PROGRESS",
       "project": "animation-manager",
       "task": "t-022",
-      "message": "Task has remained claimed for 14 days."
+      "message": "Task has remained claimed for 15 days."
     },
     {
       "severity": "warning",
@@ -1542,6 +1542,13 @@
       "project": "kind-robots",
       "task": "t-127",
       "message": "Task has remained review for 4 days."
+    },
+    {
+      "severity": "warning",
+      "code": "GATED_DONE_WITHOUT_APPROVAL",
+      "project": "kind-robots",
+      "task": "t-139",
+      "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
     },
     {
       "severity": "warning",
