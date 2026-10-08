@@ -1,7 +1,7 @@
 # Pitch: Kind Music Box Maker
 date: 2026-10-08
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A toy where players place pegs on a rotating brass cylinder to compose short tunes that play back on a painted music box, with a shelf of pre-composed songs to unlock. Notes are synthesized in the browser from fixed scales, so the whole toy is static files and local save.

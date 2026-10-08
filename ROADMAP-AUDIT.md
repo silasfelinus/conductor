@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-10-08T21:38:38.106882+00:00`
+Generated: `2026-10-08T22:30:03.103240+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **75** roadmaps, **36** active + **3** continuous projects, **1999** tasks
-- **82 ready**, **98 waiting**, **42 needs-human**, **14 claimed/review**, **1747 done**
+- **75** roadmaps, **36** active + **3** continuous projects, **2001** tasks
+- **82 ready**, **98 waiting**, **42 needs-human**, **14 claimed/review**, **1749 done**
 - Findings: **0 errors**, **20 warnings**, **54 informational**
 
 ## Project inventory
@@ -26,7 +26,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 10 | `interface-vision` | continuous | software | 3 | 1 | 0 | 0 | 137 / 141 |
 | 11 | `humboldt-scoop-cms` | active | software | 1 | 1 | 4 | 0 | 40 / 46 |
 | 12 | `digital-storefront` | active | software | 1 | 2 | 1 | 0 | 40 / 44 |
-| 13 | `kind-robots` | active | software | 4 | 0 | 0 | 3 | 132 / 139 |
+| 13 | `kind-robots` | active | software | 4 | 0 | 0 | 3 | 133 / 140 |
 | 14 | `rainbow-butterflies` | active | software | 0 | 1 | 2 | 0 | 50 / 53 |
 | 15 | `music-video` | active | software | 6 | 3 | 1 | 0 | 25 / 35 |
 | 16 | `comic-film` | active | software | 3 | 6 | 1 | 0 | 1 / 11 |
@@ -36,7 +36,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 20 | `text-generation` | finished | software | 0 | 0 | 0 | 0 | 9 / 9 |
 | 21 | `kindrobots-unraid` | paused | software | 0 | 6 | 2 | 0 | 14 / 22 |
 | 22 | `lora-ingestion` | finished | infrastructure | 1 | 0 | 0 | 0 | 16 / 17 |
-| 23 | `conductor` | active | software | 0 | 0 | 0 | 1 | 203 / 204 |
+| 23 | `conductor` | active | software | 0 | 0 | 0 | 1 | 204 / 205 |
 | 24 | `storybook` | active | software | 5 | 2 | 0 | 0 | 63 / 70 |
 | 25 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 3 / 10 |
 | 26 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |

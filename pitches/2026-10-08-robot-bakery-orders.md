@@ -1,7 +1,7 @@
 # Pitch: Robot Bakery Orders
 date: 2026-10-08
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A cozy sorting game where robot customers hand over pre-written orders and players assemble the matching pastry from layered ingredient cards before the oven timer rings. All orders and dialogue ship in a fixed file, with difficulty ramping by day number.

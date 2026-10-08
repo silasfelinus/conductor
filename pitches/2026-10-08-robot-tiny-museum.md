@@ -1,7 +1,7 @@
 # Pitch: Robot Tiny Museum
 date: 2026-10-08
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A collection game where players curate a pocket museum by finding pre-drawn artefacts hidden in painted rooms and placing them in labelled display cases. Each artefact comes with a short pre-written placard, and finished wings unlock new rooms.
