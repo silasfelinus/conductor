@@ -63,7 +63,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 PROJECTS_DIR = ROOT / "projects"
 OVERRIDES_PATH = ROOT / "project-overrides.yaml"
-API_URL = "https://kindrobots.org/api/projects"
+API_URL = "https://kind-robots.vercel.app/api/projects"
 ACTIVE_STATUS = "active"
 
 
