@@ -216,8 +216,11 @@ def build_plan(token: str | None, *, close_done: bool) -> tuple[Plan, dict]:
             continue
         for issue in issues:
             source = f"{repo}#{issue['number']}"
+            labels = label_names(issue)
+            if SKIP_LABEL in labels:
+                continue
             open_sources.add(source)
-            if source in mirrored or SKIP_LABEL in label_names(issue):
+            if source in mirrored:
                 continue
             entry = {
                 "source": source,

@@ -141,6 +141,21 @@ def test_close_done_only_for_open_issue_with_done_task(tmp_path, monkeypatch):
     assert plan.imports == []
     assert [(e["source"], e["task"]) for e in plan.close] == [("o/r#1", "t-001")]
 
+def test_skip_label_suppresses_close_done_for_mirrored_issue(tmp_path, monkeypatch):
+    projects = _fixture(
+        tmp_path,
+        monkeypatch,
+        {"o/r": [_issue(1, labels=["conductor:skip"])]},
+    )
+    path = projects / "alpha" / "roadmap.yaml"
+    path.write_text(path.read_text().replace(
+        'title: "First"\n  status: done',
+        'title: "First"\n  status: done\n  source_issue: "o/r#1"'))
+    plan, _ = bridge.build_plan(None, close_done=True)
+    assert plan.imports == []
+    assert plan.close == []
+
+
 
 def test_check_mode_exit_codes(tmp_path, monkeypatch):
     _fixture(tmp_path, monkeypatch, {})
