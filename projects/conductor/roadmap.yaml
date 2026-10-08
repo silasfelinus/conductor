@@ -3084,14 +3084,16 @@ tasks:
 - id: t-205
   milestone: m4
   title: 'Make conductor:skip suppress issue auto-close as well as import'
-  status: claimed
+  status: review
   owner: worker
   gate_human: false
   stakes: reversible
   passes: 0
-  updated: '2026-10-08T22:30:00Z'
+  updated: '2026-10-08T22:34:00Z'
   note: |-
     Bug discovered while using kind_robots#3379 as an umbrella checklist: a completed partial roadmap slice with source_issue caused the issue bridge to close the still-incomplete umbrella issue. conductor:skip already suppresses imports but close_done ignores the label. Make the label consistently suppress all bridge automation, including close, add regression coverage, then reopen/label #3379 so it can remain the canonical multi-slice tracker.
+
+    Implementation complete on worker/conductor-t205-skip-close-20261008T223000Z. The issue bridge now excludes conductor:skip issues from open_sources entirely, so the label suppresses both import and close-done automation. Added regression coverage for a mirrored done task whose issue carries conductor:skip.
   claimed_by: 20261008T223000Z-conductor-t205-skip-close-r7n2
   claimed_at: '2026-10-08T22:30:00Z'
 
