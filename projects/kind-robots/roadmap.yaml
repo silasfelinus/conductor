@@ -2321,16 +2321,17 @@ tasks:
 - id: t-138
   milestone: m6
   title: 'Move workspace sheet reserved gutter to the right'
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
-  updated: '2026-10-08T11:25:00Z'
+  updated: '2026-10-08T11:35:15Z'
   note: |-
     Silas follow-up 2026-10-08: after moving the tutorial/workspace sheet to the right, the desktop page still reserves sheet width on the LEFT. Move the content reservation to the right so the visible page yields to the right-side sheet, and mirror the workspace hand/footer reservation as well. Add regression coverage for the right-side geometry.
 
     Implementation complete on worker/kind-robots-t138-right-gutter-20261008T112300Z. app.vue now reserves --sheet-w on the right for desktop content and mirrors the workspace hand/footer offset to the right. Navigation-route regression coverage asserts the sheet anchor, right-side content gutter, absence of a left-side sheet gutter, and right-side footer geometry.
-  owner: worker
+
+    Merged silasfelinus/kind_robots#3366 at af4081d4600f7a553943288a5a41300139ee0eed after all 27 triggered PR workflows completed successfully. The desktop page now reserves --sheet-w on the right instead of the left, the workspace hand/footer mirrors that right-side reservation, and navigation-route regression coverage enforces the full right-side geometry.
   claimed_by: 20261008T112300Z-kind-robots-t138-right-gutter-k8m4
   claimed_at: '2026-10-08T11:23:00Z'
 
