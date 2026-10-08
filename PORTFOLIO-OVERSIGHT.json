@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-10-08T13:44:27.806080+00:00",
+  "generated_at": "2026-10-08T23:26:39.102710+00:00",
   "summary": {
     "status": "unresolved",
     "roadmap_errors": 0,
-    "roadmap_warnings": 19,
+    "roadmap_warnings": 20,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
-    "project_unresolved": "Kind Robots project parity check failed: URLError: <urlopen error timed out>",
+    "project_unresolved": "Kind Robots project parity check failed: HTTPError: HTTP Error 503: Service Unavailable",
     "openai_scheduled_agent_overdue": true,
     "openai_scheduled_agent_authoritative": false,
     "intent_review_due": true
@@ -14,7 +14,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 124.34,
+    "hours_since": 134.04,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -28,22 +28,22 @@
   "project_parity": {
     "forward": [],
     "reverse": [],
-    "unresolved": "Kind Robots project parity check failed: URLError: <urlopen error timed out>"
+    "unresolved": "Kind Robots project parity check failed: HTTPError: HTTP Error 503: Service Unavailable"
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-08T13:44:27.806087+00:00",
+    "generated_at": "2026-10-08T23:26:39.102714+00:00",
     "summary": {
       "roadmaps": 75,
       "active_projects": 36,
       "continuous_projects": 3,
-      "tasks": 1998,
-      "ready": 81,
-      "waiting": 104,
+      "tasks": 2001,
+      "ready": 80,
+      "waiting": 98,
       "needs_human": 42,
-      "in_progress": 16,
-      "done": 1739,
+      "in_progress": 15,
+      "done": 1750,
       "errors": 0,
-      "warnings": 19,
+      "warnings": 20,
       "info": 54
     },
     "errors": [],
@@ -60,7 +60,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "animation-manager",
         "task": "t-022",
-        "message": "Task has remained claimed for 14 days."
+        "message": "Task has remained claimed for 15 days."
       },
       {
         "severity": "warning",
@@ -81,7 +81,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "coloring-book",
         "task": "t-058",
-        "message": "Task has remained claimed for 10 days."
+        "message": "Task has remained claimed for 11 days."
       },
       {
         "severity": "warning",
@@ -95,7 +95,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "conductor",
         "task": "t-203",
-        "message": "Task has remained claimed for 6 days."
+        "message": "Task has remained claimed for 7 days."
       },
       {
         "severity": "warning",
@@ -117,6 +117,13 @@
         "project": "kind-robots",
         "task": "t-127",
         "message": "Task has remained review for 4 days."
+      },
+      {
+        "severity": "warning",
+        "code": "GATED_DONE_WITHOUT_APPROVAL",
+        "project": "kind-robots",
+        "task": "t-139",
+        "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
       },
       {
         "severity": "warning",
