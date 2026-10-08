@@ -2386,5 +2386,27 @@ tasks:
   claimed_by: 20261008T215700Z-kind-robots-t140-tutorial-modernize-q4h7
   claimed_at: '2026-10-08T21:57:00Z'
 
+- id: t-141
+  milestone: m6
+  title: 'INCIDENT: every kindrobots.org page returned 500 after #3380 (null tutorial), about 22:27-23:16 UTC on 2026-10-08'
+  status: done
+  owner: null
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  updated: '2026-10-08T23:20:00Z'
+  note: |-
+    Found and fixed in one session; no action needed from Silas. Recorded for the history.
+
+    What happened: the production container built from kind_robots#3380 (t-140, tutorial modernization; image published 22:27 UTC) made every page that resolves the channels throw "Cannot read properties of null (reading 'enabled')" during server render. That was every page, the home page included. /api/health/database stayed 200 throughout, so health checks alone would not have caught it.
+
+    Cause: resolveTabItem in stores/helpers/channelContent.ts checked `item.tutorial !== undefined` before reading `item.tutorial.enabled`. An unset tutorial arrives as null (an empty `tutorial:` key or a database row).
+
+    Fix: kind_robots#3382 (merged 23:05 UTC) checks `!= null` and types the field `TutorialContent | null`. verifyChannelResolver now resolves channels and tabs whose tutorial is null; it fails with the production error without the fix.
+
+    Recovered at 23:16 UTC, once the fixed image deployed. The home page, /play/arcade and the pinball cabinet all answer 200.
+
+    Prevention worth considering (not started): a post-deploy smoke check that fetches the home page and fails on a 500, since the database health check stayed green through the outage.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
