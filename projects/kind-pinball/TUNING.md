@@ -40,6 +40,79 @@ It records which shot each timing makes.
 - a new player reaches multiball within a few games;
 - a good player can reach the wizard mode.
 
+## 2026-10-08 — step 2: rules levers for reach
+
+Measured with kind_robots#3373 (steps 1 and 2).
+
+**What changed:**
+- **The game's first AMI multiball takes two locks;** later ones take three.
+- **Orbits count toward relighting the village saucer,** as ramps do.
+- **The Malaria-Free wizard mode lights at six villages,** half the map, not
+  all twelve.
+
+| Skill | Games | Ball time (s) | Score median (p10–p90) | Mode | Multiball | Sub-table | Wizard | Extra ball | Villages | Drains outlane/SDTM/center | Aim |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| novice | 10 | 11.1 | 95,100 (35,440–276,580) | 40% | 0% | 0% | 0% | 0% | 0.4 | 3/3/93% | – |
+| average | 10 | 15.7 | 213,660 (102,460–964,000) | 80% | 20% | 10% | 0% | 0% | 0.9 | 4/4/93% | – |
+| good | 10 | 26.2 | 917,070 (286,540–6,939,510) | 100% | 50% | 30% | 0% | 0% | 1.8 | 6/5/89% | 36% |
+
+| Skill | Down-the-middle drains came last from |
+|---|---|
+| novice | plunge 37%, award 14%, sling-right-kicker 12%, drop-m 11%, sling-left-kicker 9% |
+| average | plunge 29%, drop-m 20%, sling-right-kicker 16%, award 13%, sling-left-kicker 9% |
+| good | award 31%, plunge 15%, drop-m 11%, sling-left-kicker 11%, sling-right-kicker 11% |
+
+| Skill | Shots made per minute |
+|---|---|
+| novice | award 0.72, left-orbit 0.54, lock 0.18, right-orbit 0.36, right-ramp 0.9, spinner 2.35, upper-feed 1.63 |
+| average | award 0.58, left-orbit 0.18, left-ramp 0.09, lock 0.45, right-orbit 0.09, right-ramp 0.27, secret 0.04, spinner 1.17, upper-feed 0.36 |
+| good | award 3.72, left-orbit 0.72, left-ramp 0.86, lock 2.29, right-orbit 0.21, right-ramp 1.86, secret 0.29, spinner 5.08, upper-feed 1.86 |
+
+| Feed | Flipper | Shots it can make (timing windows, of 90 ticks) |
+|---|---|---|
+| cradle | left | spinner 5, upper-feed 2, award 2, right-ramp 2, right-orbit 1 |
+| cradle | right | award 11, spinner 5, upper-feed 3, left-ramp 2, lock 1, left-orbit 1 |
+| inlane | left | spinner 4, upper-feed 1, right-orbit 1, award 1 |
+| inlane | right | award 2, left-orbit 2, spinner 1, upper-feed 1 |
+
+### What step 2 says
+
+1. **Reach is up for the average and good players.**
+   - Multiball: average 0% → 20%, good 30% → 50%.
+   - The good player's villages per game: 1.4 → 1.8.
+   - No bot reaches the wizard mode yet: six villages at 1.8 a game is still
+     several games' work.
+2. **Nothing moved for the novice.** It rarely makes a lit lock at all, and
+   its balls last 11 s.
+3. **Ball time is the lever everything waits on.** Every feature needs time
+   on the table.
+
+### How far to trust the ball times
+
+The bots save less well than people do, so their absolute ball times
+understate a human's. The harness stays sound for comparing one change
+against another.
+
+The evidence:
+- When the good bot does flip, the ball goes back up the table 74% of the
+  time and drains within three seconds only 9% of the time.
+- Most drains come from balls it never flips at:
+  - its deliberate misses;
+  - dead-centre balls passing between the flipper tips;
+  - balls it reads too late.
+
+Silas's own play, the t-016 judgement, is the check on the absolute numbers.
+
+### Next tuning steps, in order
+
+1. Ball time, by the levers a player would feel:
+   - a longer ball save after the plunge and a short save after an early
+     drain;
+   - the inlane hand-off;
+   - the award saucer's kickout, which feeds 15–22% of centre drains.
+2. Re-measure. Then take the remaining features (the mode timers and award
+   values) against the targets.
+
 ## 2026-10-08 — step 1: bowed flipper rubber, channel roof, flipper skill shot
 
 Measured with kind_robots#3373 on top of the harness (kind_robots#3372).
