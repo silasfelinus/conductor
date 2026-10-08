@@ -330,7 +330,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Fun and balance pass: ball times, shot difficulty, mode lengths, scoring curve"
-    status: claimed
+    status: review
     depends_on: [t-007, t-005]
     owner: worker
     passes: 0
@@ -343,9 +343,20 @@ tasks:
       are reached, and the score spread. Tune ball save, outlane posts/kickback, shot geometry, mode timers
       and award values until a new player reaches multiball in a few games and a good player can reach the
       wizard mode. Check the numbers into a TUNING.md here and repeat after every rules change.
+
+      Harness + three tuning steps merged/opened (kind_robots#3372, #3373, #3374); evidence in
+      projects/kind-pinball/TUNING.md. Fixed: flat flipper hull (ramps/orbits were 1-2 tick
+      shots; bowed rubber), ramp-channel ball trap, impossible skill shot (plunge never
+      reaches bumpers; now a lit flipper shot), reach levers (first multiball 2 locks, orbits
+      relight, wizard at 6 villages, 15 s ball save). Met: every main shot makeable; hidden
+      room found in 60% of good-bot games. Not settled by bots: ball time 60-120 s, novice
+      multiball, good-player wizard -- bot ball times (good 29.8 s) are bounded by bot saving
+      (74% of its flips go back up-table; most drains are balls it never flips at). Needs
+      human play numbers (t-016) before more rules are bent toward bots.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-08T16:41:40Z'
-    updated: '2026-10-08T16:41:40Z'
+    updated: '2026-10-08T18:23:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#3374'
 
   - id: t-014
     milestone: m3
