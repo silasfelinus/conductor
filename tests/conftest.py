@@ -1,9 +1,12 @@
 """Suite-wide fixtures.
 
-The one thing in here keeps the test suite off the network. See
+Both things in here keep the test suite off the network. See
 `tests/fake_resource_registry.py` for the measurements that motivated it
 (conductor/t-124).
 """
+
+import urllib.error
+import urllib.request
 
 import pytest
 
@@ -33,3 +36,36 @@ def _stub_resource_registry(monkeypatch):
     """
     monkeypatch.setattr(consumer, "_RESOURCE_INDEX", dict(FAKE_RESOURCE_INDEX))
     yield
+
+
+_REAL_URLOPEN = urllib.request.urlopen
+
+
+@pytest.fixture(autouse=True, scope="session")
+def _offline_facet_catalog():
+    """Answer every Kind Robots /api/facets fetch with "unreachable".
+
+    `build_brief(catalog=None)` reaches `fetch_facet_catalog()`, which pages
+    through `https://kindrobots.org/api/facets` for every taxonomy with a 12 s
+    timeout each, then falls back to `FALLBACK_FACETS`. The dream tests call it
+    that way, so while the site was hanging on 2026-10-08 three test files took
+    23 of the suite's 25 minutes and CI was cancelled at its time limit with
+    every test green (conductor#5779). Refusing the request at once sends the
+    same code down the same fallback path in microseconds.
+
+    Session-scoped so it is in place before module-scoped fixtures run too
+    (test_author_dream_proposal's `_live_brief` builds its brief once per
+    module, ahead of any function-scoped fixture). Only facet URLs are refused;
+    anything else goes to the real `urlopen`, and a test that stubs `urlopen`
+    itself still wins, since its monkeypatch is applied after this one.
+    """
+
+    def urlopen(request, *args, **kwargs):
+        url = request.full_url if isinstance(request, urllib.request.Request) else str(request)
+        if "/api/facets" in url:
+            raise urllib.error.URLError("facet catalog is offline in tests")
+        return _REAL_URLOPEN(request, *args, **kwargs)
+
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(urllib.request, "urlopen", urlopen)
+        yield
