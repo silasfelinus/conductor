@@ -213,7 +213,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: "FX3 material + light show pass: GI, inserts, flashers, generated playfield art"
-    status: claimed
+    status: review
     depends_on: [t-019]
     owner: worker
     passes: 0
@@ -225,9 +225,16 @@ tasks:
       attract-mode light show. Generate a top-down AMI Village playfield albedo through durable ArtJobs
       using the geometry UV/template, with no baked lettering or fake lighting; engine assets supply crisp
       inserts and labels. Capture fixed-seed before/after screenshots at phone/tablet/desktop quality tiers.
+
+      Implementation merged (kind_robots#3365): light shows, multi-pattern attract show, baked
+      contact shade, generated-albedo loader with procedural fallback. Albedo requested
+      (conductor#5775, prompt fixed by #5782); it could not render while kindrobots.org hung
+      (2026-10-08 12:08Z onward). Remaining before done: confirm /images/pinball/ami-village-
+      playfield.webp renders on the table, take before/after screenshots.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-08T11:14:20Z'
-    updated: '2026-10-08T11:14:20Z'
+    updated: '2026-10-08T13:51:39Z'
+    implementation_pr: 'silasfelinus/kind_robots#3365'
   - id: t-010
     milestone: m2
     title: "Signature mechanisms + responsive polish: toys, motion, touch and camera"
