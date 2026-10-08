@@ -55,6 +55,7 @@ import argparse
 import json
 import os
 import sys
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -65,6 +66,8 @@ PROJECTS_DIR = ROOT / "projects"
 OVERRIDES_PATH = ROOT / "project-overrides.yaml"
 API_URL = "https://kind-robots.vercel.app/api/projects"
 ACTIVE_STATUS = "active"
+TRANSIENT_HTTP_CODES = {429, 500, 502, 503, 504}
+RETRY_DELAYS_SECONDS = (1, 2, 4)
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -113,8 +116,18 @@ def fetch_kind_robots_projects(token: str) -> list[dict[str, Any]]:
                 "Content-Type": "application/json",
             },
         )
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            body = json.loads(resp.read())
+        for attempt in range(len(RETRY_DELAYS_SECONDS) + 1):
+            try:
+                with urllib.request.urlopen(req, timeout=20) as resp:
+                    body = json.loads(resp.read())
+                break
+            except urllib.error.HTTPError as error:
+                if error.code not in TRANSIENT_HTTP_CODES or attempt == len(RETRY_DELAYS_SECONDS):
+                    raise
+            except (urllib.error.URLError, TimeoutError):
+                if attempt == len(RETRY_DELAYS_SECONDS):
+                    raise
+            time.sleep(RETRY_DELAYS_SECONDS[attempt])
         page = body.get("data", []) or []
         projects.extend(page)
         if len(page) < take:
