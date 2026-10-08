@@ -587,6 +587,14 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Notes:**
 - (your notes)
 
+### zuzu-gamebook  (software, autonomous: true)
+**Direction (2026-10-07, new project):** Create an original branching Zuzu: Koala Assassin RPG gamebook at /play/zuzu-gamebook, distinct from kr-adventures, zuzu-lair and zuzu-showdown. Pattern narrative complexity and resourceful decisions after Sorcery!, Lone Wolf, Grey Star and Fighting Fantasy without copying prose, copyrighted settings or exact mechanics. Original dice, HP, inventory, powers, combat, skill checks, a character sheet, numerous meaningful good/bad endings and pre-generated setting/consequence illustrations.
+**Notes:**
+- Adapt the atmosphere and narrative beats of the Zuzu comic, film and Lair projects without replacing BOOK-ONE.md canon. Use the locked cast and VIDEO-GUARDRAILS.md for every text and art prompt.
+- Silas expressly grants independent agents authority to generate internal art in the durable ArtJobs pipeline and evolve this project via scoped PRs, art batches and authored branches. Verify image delivery; do not present a queued job as finished.
+- An image-first, visually compelling site at /play is mandatory. Initial release is an admin preview; public publication and final visual acceptance remain explicit human gates. No play-time LLM and no paid generation without authorization.
+- Active and normal-priority while building, following comic-film in projects/priority.yaml; after the complete book is approved, switch to continuous for autonomous later chapters and polish.
+
 ### zuzu-showdown  (software)
 **Direction:** A free browser 2D pixel-art fighting game (Street Fighter / Skullgirls / MvC style) in the world of Zuzu: Koala Assassin: eight fighters with special moves, chain combos, a strike/grab/guard triangle, a super meter and unique supers, animated stages and matchup-specific pre- and post-fight lines, playable on Kind Robots.
 **Notes:**

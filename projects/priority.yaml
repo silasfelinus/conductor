@@ -85,6 +85,9 @@ order:
   # comic-film added 2026-10-04 (Silas: Zuzu issue 1 as an animated film); it builds on
   # music-video's pipeline, so it sits right behind it.
   - comic-film
+  # Zuzu gamebook is independent of kr-adventures, following comic-film's narrative pipeline.
+  # The four explicitly HIGH-priority projects remain ahead of this new normal-priority work.
+  - zuzu-gamebook
   - tzaddik-gallery
   - scene-animator
   - text-generation
