@@ -1,0 +1,9 @@
+version: 1
+project: conductor
+task: t-205
+operation: review
+owner: worker
+session: 20261008T223000Z-conductor-t205-skip-close-r7n2
+updated: '2026-10-08T22:34:00Z'
+note: >-
+  Implementation complete on worker/conductor-t205-skip-close-20261008T223000Z. The issue bridge now excludes conductor:skip issues from open_sources entirely, so the label suppresses both import and close-done automation. Added regression coverage for a mirrored done task whose issue carries conductor:skip.
