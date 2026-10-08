@@ -2361,5 +2361,19 @@ tasks:
 
     Recovery: https://kindrobots.org/api/health/database answers 200, and the next Auto Art Generate run reports the API as healthy. Close this task then, even if the root cause is still unknown, and track prevention separately.
 
+
+- id: t-140
+  milestone: m6
+  title: 'Modernize tutorial resolution and ship Projects + Arcade reference tutorials'
+  status: ready
+  owner: null
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  source_issue: silasfelinus/kind_robots#3379
+  updated: '2026-10-08T21:55:00Z'
+  note: |-
+    First implementation slice for issue #3379. Make modern content/channels metadata the primary workspace tutorial source, support authored conceptual channel tutorial sections independent of nav tabs, and ship Projects + Arcade as the reference implementation. Add regression coverage that Projects does not degrade into a catalog dump and Arcade has explicit contextual help/art. Preserve role/permission filtering and legacy tutorial fallbacks for destinations not yet migrated.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
