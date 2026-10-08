@@ -276,7 +276,7 @@ tasks:
   - id: t-010
     milestone: m2
     title: "Signature mechanisms + responsive polish: toys, motion, touch and camera"
-    status: claimed
+    status: review
     depends_on: [t-007, t-008, t-009]
     owner: worker
     passes: 0
@@ -288,9 +288,16 @@ tasks:
       pinball D-pad: lower-left/right edge zones fire flippers, the launch lane supports plunger drag,
       and a short upward swipe nudges. Hints fade after the first ball. Verify identical physics/rules on
       phone, tablet and desktop plus performance traces.
+
+      Merged in three parts.
+      (1) kind_robots#3381: three gameplay-connected toys, scenery with no colliders, driven by rules/toys.ts. A six-hut bank on the arch, one per village toward the wizard (visited glows, saved burns bright, the playing village blinks, the row flashes in the wizard mode). The AMI beacon robot head over the lock (eyes = A-M-I drops, beacon turns when the lock is lit, flashes in multiball). The net drone (carries the NET RUN nets, flies them to the village on HOME, circles in multiball). Sling rubber flex, jackpot sparks, a speed-only ball trail (tier-gated), and two restrained camera presets (plunge lean, higher multiball eye).
+      (2) kind_robots#3382: the touch layout with no d-pad: lower corners flip, a drag down the lane strip pulls the plunger to the finger's depth, a quick upward swipe nudges, and the hints fade after the first ball.
+      (3) kind_robots#3383: runPinballDevices proves the same seeded game ends on identical score, rules and ball positions on phone/low, tablet/medium, desktop/high and with no screen.
+      Performance: projects/kind-pinball/PERF.md. CPU is about 0.4 ms a tick; draw calls are 124/160/172 by tier. Real-device GPU frame times can't be measured in a GPU-less sandbox and fall to Silas's play-test (t-016). Screenshots: projects/kind-pinball/screenshots/t010-*.jpg.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-08T22:40:55Z'
-    updated: '2026-10-08T22:40:55Z'
+    updated: '2026-10-08T23:21:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#3381'
   - id: t-011
     milestone: m3
     title: "Hidden sub-table: a discoverable secret playfield that returns the ball to the main table"
