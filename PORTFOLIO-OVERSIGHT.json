@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-10-08T06:16:16.918035+00:00",
+  "generated_at": "2026-10-08T13:44:27.806080+00:00",
   "summary": {
     "status": "unresolved",
     "roadmap_errors": 0,
-    "roadmap_warnings": 18,
+    "roadmap_warnings": 19,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
-    "project_unresolved": "Kind Robots project parity check failed: URLError: <urlopen error _ssl.c:993: The handshake operation timed out>",
+    "project_unresolved": "Kind Robots project parity check failed: URLError: <urlopen error timed out>",
     "openai_scheduled_agent_overdue": true,
     "openai_scheduled_agent_authoritative": false,
     "intent_review_due": true
@@ -14,7 +14,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 116.87,
+    "hours_since": 124.34,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -28,23 +28,23 @@
   "project_parity": {
     "forward": [],
     "reverse": [],
-    "unresolved": "Kind Robots project parity check failed: URLError: <urlopen error _ssl.c:993: The handshake operation timed out>"
+    "unresolved": "Kind Robots project parity check failed: URLError: <urlopen error timed out>"
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-08T06:16:16.918041+00:00",
+    "generated_at": "2026-10-08T13:44:27.806087+00:00",
     "summary": {
       "roadmaps": 75,
       "active_projects": 36,
       "continuous_projects": 3,
-      "tasks": 1995,
-      "ready": 83,
-      "waiting": 105,
-      "needs_human": 41,
-      "in_progress": 15,
-      "done": 1735,
+      "tasks": 1998,
+      "ready": 81,
+      "waiting": 104,
+      "needs_human": 42,
+      "in_progress": 16,
+      "done": 1739,
       "errors": 0,
-      "warnings": 18,
-      "info": 52
+      "warnings": 19,
+      "info": 54
     },
     "errors": [],
     "warnings": [
@@ -74,7 +74,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "art-archive",
         "task": "t-044",
-        "message": "Task has remained claimed for 4 days."
+        "message": "Task has remained claimed for 5 days."
       },
       {
         "severity": "warning",
@@ -116,7 +116,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "kind-robots",
         "task": "t-127",
-        "message": "Task has remained review for 3 days."
+        "message": "Task has remained review for 4 days."
       },
       {
         "severity": "warning",
@@ -151,7 +151,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "mandarin-tutor",
         "task": "t-030",
-        "message": "Task has remained claimed for 4 days."
+        "message": "Task has remained claimed for 5 days."
       },
       {
         "severity": "warning",
@@ -159,6 +159,13 @@
         "project": "tzaddik-gallery",
         "task": "t-013",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+      },
+      {
+        "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "zuzu-lair",
+        "task": "t-006",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
       },
       {
         "severity": "warning",
