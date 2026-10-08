@@ -915,10 +915,10 @@ tasks:
 - id: t-045
   milestone: m11
   title: Clarify Poopstakes local eligibility and prevent out-of-area and duplicate entries
-  status: needs-human
+  status: done
   claimed_by: 20261008T105100Z-hss-poopstakes-d93c
   claimed_at: '2026-10-08T10:51:00Z'
-  updated: '2026-10-08T11:03:00Z'
+  updated: '2026-10-08T11:06:00Z'
   passes: 0
   stakes: outward-facing
   note: |-
@@ -927,7 +927,9 @@ tasks:
     Scoped HSS Poopstakes eligibility code is ready for review in worker/hss-poopstakes-eligibility-20261008-d93c. The draw excludes out-of-area legacy records; entry form and API now validate local area; one email per month suppresses duplicate-only notifications. Public-site rollout is a human gate, so leave the PR unmerged.
 
     Prepared silasfelinus/humboldtscoopsolutions#114 for the public Poopstakes service-area eligibility and duplicate notification fix. GitHub Actions HSS site security checks run 37767082591 completed SUCCESS, including Poopstakes behavior regressions and PHP syntax. Because public promotional eligibility is outward-facing, the PR is deliberately OPEN and UNMERGED; human approval of the seven advertised communities and launch is required. Legacy September/October entries excluded from November drawing are tracked independently by silasfelinus/humboldtscoopsolutions#115.
-  soft_gate: false
+
+    Silas explicitly approved the seven-town public Poopstakes eligibility rule and public rollout in ChatGPT on 2026-10-08. PR silasfelinus/humboldtscoopsolutions#114 merged to main as commit 84e31d57c8f9d2f69b37fa5cd003fb8f82c6cad0 after completed-success CI run 37767082591 (Poopstakes behavior tests, PHP syntax, deployment-script tests). Approval covers the code and promotional copy; self-hosted deployment still requires the Unraid site checkout to sync. Early-season drawing issue tracked separately in silasfelinus/humboldtscoopsolutions#115.
+  approved_by_human: true
 
 goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads,
   operations, and brand voice.
