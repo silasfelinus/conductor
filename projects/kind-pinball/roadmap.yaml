@@ -242,7 +242,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: "FX3 material + light show pass: GI, inserts, flashers, generated playfield art"
-    status: review
+    status: done
     depends_on: [t-019]
     owner: worker
     passes: 0
@@ -260,9 +260,18 @@ tasks:
       (conductor#5775, prompt fixed by #5782); it could not render while kindrobots.org hung
       (2026-10-08 12:08Z onward). Remaining before done: confirm /images/pinball/ami-village-
       playfield.webp renders on the table, take before/after screenshots.
+
+      Closed 2026-10-08 21:40Z. Once kindrobots.org recovered, the playfield albedo rendered
+      (ArtJob 34932, art-prompts status done) and is served at /images/pinball/ami-village-
+      playfield.webp (768x1504, no lettering: hillside village and windmill across the top,
+      compass rose, starry night fading to plum). Verified on the 3D table at a fixed seed on
+      phone (low), tablet (medium) and desktop (high) tiers: the loader swaps it in for the
+      procedural art (hasGeneratedArt true), placed as designed (village along the top arch,
+      compass behind the pops). Before/after: projects/kind-
+      pinball/screenshots/t009-{phone,tablet,desktop}-{before,after}.jpg.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-08T11:14:20Z'
-    updated: '2026-10-08T13:51:39Z'
+    updated: '2026-10-08T21:38:10Z'
     implementation_pr: 'silasfelinus/kind_robots#3365'
   - id: t-010
     milestone: m2
