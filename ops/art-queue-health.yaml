@@ -1,4 +1,13 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: requests
+  target: public/images/pinball/ami-village-playfield.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    free of text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE
+    conditioning on a model from the st…'
+  first_seen: '2026-10-08'
