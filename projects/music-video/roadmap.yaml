@@ -66,12 +66,12 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Confirm scope with Silas"
-    status: needs-human
-    owner: null
+    status: ready
+    owner: worker
     passes: 0
     stakes: reversible
     soft_gate: true
-    updated: 2026-10-01T00:00:00Z
+    updated: '2026-10-08T00:48:11Z'
     note: >-
       FOR SILAS: soft checkpoint, nothing is blocked on it. Read projects/music-video/DESIGN-BRIEF.md
       (what it is, the architecture diagram and the timeline schema), then confirm or redirect these
@@ -81,6 +81,8 @@ tasks:
       required. Reply in session or edit notes_from_silas. If there is no answer within 7 days the
       next gate-triage session adopts these as written under the 2026-09-30 default-recommendation
       rule. Development is already underway; a redirect is folded into the roadmap.
+      GATE-TRIAGE 2026-10-08: no answer from Silas in 7 days; the five picks are adopted as written
+      under the 2026-09-30 default-recommendation rule. Soft checkpoint closed; a later redirect still folds in.
 
   - id: t-003
     milestone: m1
