@@ -40,6 +40,48 @@ It records which shot each timing makes.
 - a new player reaches multiball within a few games;
 - a good player can reach the wizard mode.
 
+## 2026-10-08 — step 3: fifteen-second ball save, and where t-013 stands
+
+Measured with kind_robots#3374 on top of steps 1–2.
+
+**What changed:** the ball save after the plunge is 15 s, up from 10 s.
+
+| Skill | Games | Ball time (s) | Score median (p10–p90) | Mode | Multiball | Sub-table | Wizard | Extra ball | Villages | Drains outlane/SDTM/center | Aim |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| novice | 10 | 11.5 | 105,380 (85,110–276,580) | 40% | 0% | 0% | 0% | 0% | 0.4 | 3/3/93% | – |
+| average | 10 | 17.1 | 215,600 (102,460–3,482,720) | 90% | 20% | 10% | 0% | 0% | 1 | 5/2/94% | – |
+| good | 10 | 29.8 | 4,941,390 (286,540–6,371,370) | 100% | 60% | 60% | 0% | 0% | 1.8 | 6/4/90% | 37% |
+
+### Where t-013 stands against its targets
+
+| Target | Now | Verdict |
+|---|---|---|
+| A decent player's ball lasts 60–120 s | good bot 29.8 s | **Not met by the bots.** Their saving is weaker than a person's (see step 2); a human figure is needed. |
+| A new player reaches multiball within a few games | novice bot 0% | **Not met by the bot.** It rarely makes a lit lock at all. |
+| A good player can reach the wizard mode | good bot 0% (1.8 of 6 villages a game) | **Not met by the bots.** It is gated on ball time. |
+| Every main shot is makeable | 4 ramps and orbits made at 0.3–0.9 a minute by the good bot | **Met.** The bowed rubber fixed it. |
+| The hidden room is found by skilled play | 60% of good games | **Met.** |
+
+**What three tuning steps fixed:**
+1. The flipper physics. The flat bat was the cause of the unmakeable shots.
+2. A ball trap in the ramp channel.
+3. The impossible skill shot.
+4. The reach levers: the first multiball's locks, the village relight, the
+   wizard's six villages and the ball save.
+
+**What the bots can't settle:** the three ball-time-bound targets. Every
+remaining number moves with ball time, and ball time is limited by how well
+a bot saves the ball. Pushing rules further to make bots succeed (a centre
+post, a ball save on every drain) would tune the table for the bots, not for
+people.
+
+**The next evidence is human play,** as t-016's judgement requires: a few
+games on desktop and touch, against these rows. If those show the same
+shortfalls, the levers are, in order:
+1. a lit centre post as an earned save;
+2. the award kickout's landing spot;
+3. the mode timers.
+
 ## 2026-10-08 — step 2: rules levers for reach
 
 Measured with kind_robots#3373 (steps 1 and 2).
