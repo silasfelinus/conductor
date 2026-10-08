@@ -518,3 +518,30 @@ the stone floor", is ArtJob 34765. Our jobs were raised to priority 101, ahead o
 - kind_robots#3343: `motion.lastFrameImageId`, which lets a clip end on a chosen image.
 
 The re-clip (ArtJob 34804, clip 243098) runs from 243000 to 243070. The dagger slips and lands at about 58.3–59.5 s. Re-exported as final ArtImage 243105.
+
+## Music video 12: the knife drop, fixed properly (2026-10-08)
+
+Silas: *"the animation with the knife drop is clearly flawed. the knife jumps midway awkwardly on frame three and then
+sits at an odd angle on the ground for every other frame."* He was right, and the agent's own frame strip had shown it.
+Scrubbing every frame of clip 243098 showed the knife flying sideways, warping and growing over frames 19–26, then
+landing oversized at the edge of the picture. The cause: end keyframe 243070 was a whole-image Kontext edit. It put the
+knife far from her hand at a diagonal, and drift everywhere else gave LTX more to bridge than a falling knife.
+
+The fix:
+- **End frame 243214** (private upload). Three Kontext edits on 243000 (MV-FIXES `mvfix-s13-flat-*`, 243209–243211)
+  each zoomed the whole picture by about 4% and shifted it about 35 px. Each was aligned back to 243000 (ORB +
+  similarity transform). The open empty hand came from 243210, the small flat dagger from 243211, composited onto
+  243000 in two feathered boxes. Every pixel outside them matches the start frame. The dagger is the same size as the
+  one she holds, lying flat just in front of her right foot, blade pointing away.
+- **Clip 243216** (ArtJob 34883, `ltx-12gb-balanced`, `motion.lastFrameImageId` 243214). The knife slips, tumbles once in
+  a continuous arc over frames 14–20 and stays put after that. A second take (34892 → 243219) was rejected: flying
+  shards and phantom second knives.
+- **Repaired copy `mv12-s13-clip-243216-repaired.mp4`** (this folder). 243216 had a dark ghost smudge drifting over the
+  floor beside her hand (frames 61–66) and across her skirt (70–72), plus floor streaks in 12–13 and 16–17. These were
+  repaired from neighbouring static frames (frames 70–72 hold frame 69). Same 81 frames at 16 fps.
+- **Final ArtImage 243229**, 72.0 s, 8.1 MB at CRF 24. Built with `build_music_video.py --video-id 12 --max-upload-mb 10`,
+  with `KrClient.download_art` returning the repaired file for ArtImage 243216. **Any re-export must make the same
+  substitution, or the smudge comes back.**
+
+Every clip is now scrubbed at full frame rate (all frames, cropped on the action, then whole frames) before it reaches
+Silas.
