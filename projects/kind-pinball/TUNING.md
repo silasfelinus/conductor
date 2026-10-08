@@ -3,8 +3,8 @@
 Silas's finish line for AMI Village Rescue is "truly fun, complex, and quality,
 as good as any Pinball FX3 table". This file holds the numbers behind that
 judgement, so tuning rests on evidence rather than feel. Every rules or geometry
-change reruns the harness and adds a dated section here; the newest section is
-the table's current state.
+change reruns the harness and adds a dated section here, newest first; the top
+section is the table's current state.
 
 ## How the numbers are made
 
@@ -39,6 +39,80 @@ It records which shot each timing makes.
 - a decent player's ball lasts 60–120 s (FX3-like);
 - a new player reaches multiball within a few games;
 - a good player can reach the wizard mode.
+
+## 2026-10-08 — step 1: bowed flipper rubber, channel roof, flipper skill shot
+
+Measured with kind_robots#3373 on top of the harness (kind_robots#3372).
+
+**What changed:**
+- **The flipper's rubber is bowed (5 mm), not flat.** The old collider's
+  sides were flat, so a carried ball left near the same angle wherever it
+  was struck. That plateau made the ramps one- or two-tick shots. Now the
+  strike point steers the ball: on a cradled shot from the right flipper,
+  the exit angle sweeps smoothly from about +11° to −34°.
+  - The bat's physics face stands above the ball, so a hard tip strike
+    can't be pushed over it.
+  - The post pass becomes a real timing skill (about 17 ms).
+- **The channel between the left ramp and the upper feed has a clear roof.**
+  The attract soak found a ball wedging there for good.
+- **The skill shot is a lit flipper shot.** Every plunge rounds the left
+  orbit to the left flipper, so the bumpers it used to ask for were never
+  reached. Now the plunge lights the upper feed, the spinner or the right
+  ramp.
+- **The bot aims from a chart measured where its own ball rests.**
+- **The harness records what each down-the-middle drain last touched.**
+
+| Skill | Games | Ball time (s) | Score median (p10–p90) | Mode | Multiball | Sub-table | Wizard | Extra ball | Villages | Drains outlane/SDTM/center | Aim |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| novice | 10 | 11.1 | 95,100 (35,440–276,580) | 40% | 0% | 0% | 0% | 0% | 0.4 | 3/3/93% | – |
+| average | 10 | 14.8 | 213,660 (102,460–471,980) | 90% | 0% | 0% | 0% | 0% | 0.9 | 4/2/94% | – |
+| good | 10 | 30.3 | 480,860 (186,040–2,882,590) | 100% | 30% | 40% | 0% | 0% | 1.3 | 10/0/90% | 35% |
+
+| Skill | Down-the-middle drains came last from |
+|---|---|
+| novice | plunge 37%, award 14%, sling-right-kicker 12%, drop-m 11%, sling-left-kicker 9% |
+| average | plunge 35%, drop-m 17%, award 15%, sling-right-kicker 13%, sling-left-kicker 10% |
+| good | award 22%, plunge 18%, sling-right-kicker 17%, spinner 13%, drop-m 8% |
+
+| Skill | Shots made per minute |
+|---|---|
+| novice | award 0.72, left-orbit 0.54, lock 0.18, right-orbit 0.36, right-ramp 0.9, spinner 2.35, upper-feed 1.63 |
+| average | award 0.68, left-orbit 0.14, left-ramp 0.05, lock 0.27, right-orbit 0.09, right-ramp 0.14, spinner 0.91, upper-feed 0.45 |
+| good | award 3.7, left-orbit 0.86, left-ramp 0.66, lock 2.18, right-orbit 0.33, right-ramp 0.59, secret 0.46, spinner 5.95, upper-feed 1.45 |
+
+| Feed | Flipper | Shots it can make (timing windows, of 90 ticks) |
+|---|---|---|
+| cradle | left | spinner 5, upper-feed 2, award 2, right-ramp 2, right-orbit 1 |
+| cradle | right | award 11, spinner 5, upper-feed 3, left-ramp 2, lock 1, left-orbit 1 |
+| inlane | left | spinner 4, upper-feed 1, right-orbit 1, award 1 |
+| inlane | right | award 2, left-orbit 2, spinner 1, upper-feed 1 |
+
+### What step 1 says
+
+1. **The good player shoots much better.** Aimed shots hit 35% of the time,
+   up from 0% when the charts didn't match real cradles.
+   - Shots made rose from about 9 to 16 a minute.
+   - Both cross ramps and both orbits are made.
+   - The hidden room is found in 40% of good games.
+   - The left ramp has a cradle window from the right flipper for the first
+     time, and the right orbit one from the left flipper.
+2. **Ball time has not moved,** and centre drains are still around 90%.
+   What feeds them:
+   - A novice's first descent from the plunge, down the left inlane onto the
+     flipper, accounts for 35–37% of their centre drains.
+   - Then the award saucer's kickout, the slings and the centre drop target.
+3. **Multiball is still out of a newcomer's reach,** and nobody reaches the
+   wizard.
+
+### Next tuning steps, in order
+
+1. The inlane hand-off and the award kickout: where they deliver the ball
+   onto the flipper, so a ball arriving there can be controlled.
+2. Rules levers for reach:
+   - the first multiball's lock count;
+   - ball save (and a save after an early drain);
+   - the village relight cost;
+   - the wizard requirement.
 
 ## 2026-10-08 — baseline (after t-012)
 
