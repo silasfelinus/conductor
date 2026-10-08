@@ -187,7 +187,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Table 1 rules depth: skill shot, combos, lock + multiball jackpots, village map, wizard mode, match"
-    status: claimed
+    status: review
     depends_on: [t-006, t-018]
     owner: worker
     passes: 0
@@ -200,9 +200,17 @@ tasks:
       wizard mode. Include extra ball, bonus/multiplier, ball save and match. Effects request score,
       lights, DMD scenes, audio and mechanisms rather than mutating renderer objects. Contract-test rule
       sequences without loading Three.js or Rapier.
+
+      Merged kind_robots#3369: Table 1 rules depth on the pure reducer (rules/features.ts +
+      village.ts): skill shot, combos, locks to AMI multiball with growing jackpots and super
+      jackpot, 12-village map of timed modes with saucer relight, extra ball at 5 villages,
+      Malaria-Free wizard multiball at 12, ball save, bonus x multiplier, match, tilt
+      forfeits. Runtime auto-launches added balls; lamps blink lit shots; jackpot light show;
+      synthesized callouts; replay contract tests (runPinballRules).
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-08T14:42:16Z'
-    updated: '2026-10-08T14:42:16Z'
+    updated: '2026-10-08T15:18:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#3369'
   - id: t-008
     milestone: m2
     title: "Pinball audio mixer: mechanics, ball materials, callouts and mode music"
