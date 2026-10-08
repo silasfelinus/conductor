@@ -300,7 +300,7 @@ tasks:
   - id: t-012
     milestone: m3
     title: "Sub-table rules: discovery path, its own mode, rewards carried back to the main table"
-    status: claimed
+    status: done
     depends_on: [t-011, t-007]
     owner: worker
     passes: 0
@@ -313,9 +313,19 @@ tasks:
       its own short mode or hurry-up with a DMD scene and music state, and the rewards that carry back
       (e.g. a lit add-a-ball, a village lit, a jackpot multiplier). It must feed the wizard mode, so a
       skilled player plans around it. Contract-test discovery, the return path and every carried reward.
+
+      Merged kind_robots#3370: rules/subTable.ts. Discovery ladder (1/2/3 locks; door 25/20/15
+      s, min 10 s) with teases that never name the left orbit; NET RUN hurry-up (500k +250k
+      per visit, falls to 100k over 20 s) with village mode paused while in the room and a
+      sub-table music bed (musicFor); HOME pays the hurry-up, +1x and relights the saucer;
+      with all nets +1x, rescues a village toward the wizard, and doubles jackpots; add-a-ball
+      in multiball. Also capped the slings (a ramp-return ball could wedge inside) and scoped
+      the ball-search cradle exemption to balls in reach of a held flipper. Tests:
+      runPinballSubRules + sling regression.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-08T15:32:21Z'
-    updated: '2026-10-08T15:32:21Z'
+    updated: '2026-10-08T16:41:08Z'
+    implementation_pr: 'silasfelinus/kind_robots#3370'
 
   - id: t-013
     milestone: m3
