@@ -1,7 +1,7 @@
 # Pitch: Bumper Bubbles
 date: 2026-10-08
 project-target: kr-arcade
-status: awaiting-silas
+status: approved
 
 ## The idea
 An arcade cabinet riffing on the Bubble Bobble style of floating-bubble clearing, where a small robot blows bubbles to trap drifting gremlins and pop them for points. Each screen adds more gremlins and the score goes to the cabinet leaderboard.
@@ -14,3 +14,6 @@ small
 
 ## Suggested first task
 Intro splash, one platform screen, bubble shot and trap logic, rising gremlin count, and a score submit.
+
+## Silas's modifications
+approve but this should be included in the arcada collection
