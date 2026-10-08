@@ -1,0 +1,73 @@
+# zuzu-showdown t-009: the Lone Apple Tree's backdrop again, at noon. Both T009B backdrops came back dark with a
+# burning horizon: the house lane's prefix (gritty, dark atmosphere, heavy shadows, desaturated) beat the prompt's
+# "harsh noon". This lane is the same checkpoint and settings with a daylight prefix, and the negative bans night,
+# smoke and fire. Three seeds. Submit/refresh with scripts/enqueue_art_requests.py. Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-day
+  label: Arthemy Western Art v3.0, daylight (the house prefix without its dark atmosphere)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    bright daylight, high key, harsh sun, bleached palette, ochre and bone, clean flat colors
+  suffix: western, dusty, bright, sunny
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: la-day-backdrop-1
+  entity: lone-apple-tree
+  title: Lone Apple Tree backdrop at noon (seed 1)
+  size: 1536x640
+  seed: 909421
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    skull, bones, cattle, cow, bird, character, anthro, creature, night, dark, darkness, smoke, fire, explosion,
+    volcano, storm, lowres, worst quality, blurry, jpeg artifacts, frame, border, vignette
+  prompt_tags: scenery, no humans, wide panorama, side view, wide shot, landscape, empty, harsh noon, bright pale
+    bleached blue sky, white hot sun high overhead, heat haze, flat cracked wasteland to a low horizon, distant
+    pale mesas, dust, ochre and bone palette, daytime
+  jobs:
+    arthemy-day: 34820
+  art:
+    arthemy-day:
+      status: DONE
+      art_image_id: 243152
+- key: la-day-backdrop-2
+  entity: lone-apple-tree
+  title: Lone Apple Tree backdrop at noon (seed 2)
+  size: 1536x640
+  seed: 909422
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    skull, bones, cattle, cow, bird, character, anthro, creature, night, dark, darkness, smoke, fire, explosion,
+    volcano, storm, lowres, worst quality, blurry, jpeg artifacts, frame, border, vignette
+  prompt_tags: scenery, no humans, wide panorama, side view, wide shot, landscape, empty, harsh noon, bright pale
+    bleached blue sky, white hot sun high overhead, heat haze, flat cracked wasteland to a low horizon, distant
+    pale mesas, dust, ochre and bone palette, daytime
+  jobs:
+    arthemy-day: 34821
+  art:
+    arthemy-day:
+      status: DONE
+      art_image_id: 243153
+- key: la-day-backdrop-3
+  entity: lone-apple-tree
+  title: Lone Apple Tree backdrop at noon (seed 3)
+  size: 1536x640
+  seed: 909423
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    skull, bones, cattle, cow, bird, character, anthro, creature, night, dark, darkness, smoke, fire, explosion,
+    volcano, storm, lowres, worst quality, blurry, jpeg artifacts, frame, border, vignette
+  prompt_tags: scenery, no humans, wide panorama, side view, wide shot, landscape, empty, harsh noon, bright pale
+    bleached blue sky, white hot sun high overhead, heat haze, flat cracked wasteland to a low horizon, distant
+    pale mesas, dust, ochre and bone palette, daytime
+  jobs:
+    arthemy-day: 34822
+  art:
+    arthemy-day:
+      status: DONE
+      art_image_id: 243154

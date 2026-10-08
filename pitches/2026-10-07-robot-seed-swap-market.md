@@ -1,7 +1,7 @@
 # Pitch: Robot Seed Swap Market
 date: 2026-10-07
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A cozy trading toy where a stall of pre-drawn robot gardeners offers seed packets in fixed daily swaps, and players grow a window-box garden from what they collect. Swaps rotate on a published schedule, so the whole economy is a lookup table.

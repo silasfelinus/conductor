@@ -45,7 +45,7 @@ milestones:
   - id: m3
     title: "DEPTH -- hidden sub-table, rules depth, fun tuning and mastery goals"
     weight: 30
-    status: not-started
+    status: in-progress
 
   - id: m4
     title: "SHIP -- device check, table guide, Silas's verdict"
@@ -135,9 +135,9 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Physics feel: cradle, post pass, flipper motors, tilt bob, kickback, spinner, drops"
-    status: ready
+    status: done
     depends_on: [t-018]
-    owner: null
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: >-
@@ -147,6 +147,19 @@ tasks:
       kickback, spinner, three drop targets and a tilt bob with two warnings then TILT. Acceptance:
       500 max-speed post impacts with zero tunnelling; reproducible cradle and post-pass tests; ramp
       threshold tests; and a ten-minute three-ball demo-pilot soak with no permanent stuck ball.
+
+      Merged as kind_robots#3353: motor flippers (20 ms coil stroke, partial taps) with
+      vertical-faced convex-hull bats; physics at 240 Hz on a shared clock; sling kicks on
+      real hits; left outlane kickback (lit each ball, relit by the A-M-I bank) firing through
+      one-way orbit deflectors; tilt bob with two warnings then TILT; animated drop targets;
+      per-ball ball search; ramp covers and straight inlane returns. Acceptance tests pass:
+      tap vs stroke, 5 s cradle, live catch, full flips 3.5-7 m/s on the playfield, post pass
+      across a timing window, 500 max-speed post shots with no tunnelling, ramp thresholds,
+      and a 10-minute three-ball soak with no stuck ball.
+    claimed_by: 2026-10-07T1340-kp-t005-physics
+    claimed_at: '2026-10-07T20:51:23Z'
+    updated: '2026-10-08T03:12:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#3353'
   - id: t-006
     milestone: m2
     title: "Physical DMD: 128x32 scene queue + backbox texture"
@@ -200,9 +213,9 @@ tasks:
   - id: t-009
     milestone: m2
     title: "FX3 material + light show pass: GI, inserts, flashers, generated playfield art"
-    status: waiting
+    status: claimed
     depends_on: [t-019]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -212,6 +225,9 @@ tasks:
       attract-mode light show. Generate a top-down AMI Village playfield albedo through durable ArtJobs
       using the geometry UV/template, with no baked lettering or fake lighting; engine assets supply crisp
       inserts and labels. Capture fixed-seed before/after screenshots at phone/tablet/desktop quality tiers.
+    claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
+    claimed_at: '2026-10-08T11:14:20Z'
+    updated: '2026-10-08T11:14:20Z'
   - id: t-010
     milestone: m2
     title: "Signature mechanisms + responsive polish: toys, motion, touch and camera"
@@ -381,9 +397,9 @@ tasks:
   - id: t-019
     milestone: m2
     title: "3D hero render pass: PBR materials, camera, GI, inserts, flashers and quality tiers"
-    status: waiting
+    status: done
     depends_on: [t-005]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -393,3 +409,15 @@ tasks:
       high/medium/low quality tiers rather than UA sniffing. Fixed-seed screenshots at desktop, landscape
       tablet and portrait phone must read as a physical pinball machine at a glance and preserve shot
       readability. Use mockups/01-fx3-table-hero.svg and 03-responsive-shell.svg as the target composition.
+
+      Done 2026-10-08 (kind_robots#3364): PBR materials over a clearcoated procedural AMI
+      Village playfield, night-cabinet env per material, lamp matrix (rules/lamps.ts) with
+      shot arrows/rainbow multiplier/attract chase/tilt blackout, flasher domes with pooled
+      lights, GI, contact shadows, ACES + restrained bloom, screen-fitted camera (steeper on
+      phones, backbox lid hides the room), measured high/medium/low tiers. Screenshots:
+      projects/kind-pinball/screenshots/t019-*.jpg. Real-device 60 FPS check still to do by
+      hand.
+    claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
+    claimed_at: '2026-10-08T09:36:28Z'
+    updated: '2026-10-08T10:59:19Z'
+    implementation_pr: 'silasfelinus/kind_robots#3364'

@@ -1,0 +1,245 @@
+# zuzu-showdown t-009, last batch in the house lane: the Bone Yard (the Hyena Matriarch's, night: the ancient
+# ribcage over a bonfire), the Thin Place (the boss's: the sky tearing, a lone door), and the Dunes' midground (a
+# half-buried stagecoach; pale sand alone would key away against white). The Dunes' backdrop wants a long golden
+# sun, so it renders in the daylight lane (T009E-DUNES-DAY.yaml). No animal words (the first batch's lesson): the
+# hyena silhouettes and the floating debris are code. The Bone Yard's midground is the brief's fossil ribcage, so
+# only its negative allows bones. Submit/refresh with scripts/enqueue_art_requests.py. Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, high contrast, heavy shadows, muted earthy palette, desaturated, weathered
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: by-backdrop-1
+  entity: bone-yard
+  title: Bone Yard backdrop at night (seed 1)
+  size: 1536x640
+  seed: 909501
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones
+  prompt_tags: scenery, no humans, wide panorama, side view, wide shot, landscape, empty, desolate, night, deep
+    red and black sky, embers drifting, firelight glow on the horizon, dark broken badlands, a few stars, smoke
+    haze
+  jobs:
+    arthemy-house: 34823
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243155
+- key: by-backdrop-2
+  entity: bone-yard
+  title: Bone Yard backdrop at night (seed 2)
+  size: 1536x640
+  seed: 909502
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones
+  prompt_tags: scenery, no humans, wide panorama, side view, wide shot, landscape, empty, desolate, night, deep
+    red and black sky, embers drifting, firelight glow on the horizon, dark broken badlands, a few stars, smoke
+    haze
+  jobs:
+    arthemy-house: 34824
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243156
+- key: by-ribcage-1
+  entity: bone-yard
+  title: 'Bone Yard midground: the ancient ribcage and the bonfire (seed 1)'
+  size: 1536x640
+  seed: 909511
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette
+  prompt_tags: scenery, no humans, side view, the colossal fossil ribcage of an ancient giant beast arching over
+    the ground, huge curved bleached ribs half buried in dirt, a bonfire burning beneath it, a pair of hide drums
+    beside the fire, firelight, (simple background:1.3), (white background:1.3), no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34825
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243157
+- key: by-ribcage-2
+  entity: bone-yard
+  title: 'Bone Yard midground: the ancient ribcage and the bonfire (seed 2)'
+  size: 1536x640
+  seed: 909512
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette
+  prompt_tags: scenery, no humans, side view, the colossal fossil ribcage of an ancient giant beast arching over
+    the ground, huge curved bleached ribs half buried in dirt, a bonfire burning beneath it, a pair of hide drums
+    beside the fire, firelight, (simple background:1.3), (white background:1.3), no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34826
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243158
+- key: by-ribcage-3
+  entity: bone-yard
+  title: 'Bone Yard midground: the ancient ribcage and the bonfire (seed 3)'
+  size: 1536x640
+  seed: 909513
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette
+  prompt_tags: scenery, no humans, side view, the colossal fossil ribcage of an ancient giant beast arching over
+    the ground, huge curved bleached ribs half buried in dirt, a bonfire burning beneath it, a pair of hide drums
+    beside the fire, firelight, (simple background:1.3), (white background:1.3), no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34827
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243159
+- key: tp-backdrop-1
+  entity: thin-place
+  title: 'Thin Place backdrop: the sky tearing (seed 1)'
+  size: 1536x640
+  seed: 909701
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones
+  prompt_tags: scenery, no humans, wide panorama, side view, wide shot, landscape, empty, desolate, cosmic night
+    sky torn open at the seams, glowing rifts of violet and teal light splitting the sky, strange distant stars
+    and nebula through the tears, a flat dark desert below, eerie, otherworldly
+  jobs:
+    arthemy-house: 34828
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243160
+- key: tp-backdrop-2
+  entity: thin-place
+  title: 'Thin Place backdrop: the sky tearing (seed 2)'
+  size: 1536x640
+  seed: 909702
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones
+  prompt_tags: scenery, no humans, wide panorama, side view, wide shot, landscape, empty, desolate, cosmic night
+    sky torn open at the seams, glowing rifts of violet and teal light splitting the sky, strange distant stars
+    and nebula through the tears, a flat dark desert below, eerie, otherworldly
+  jobs:
+    arthemy-house: 34829
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243161
+- key: tp-door-1
+  entity: thin-place
+  title: 'Thin Place midground: the lone door (seed 1)'
+  size: 1536x640
+  seed: 909711
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones
+  prompt_tags: scenery, no humans, side view, a lone weathered wooden door frame standing upright in empty ground
+    with no walls around it, the door slightly ajar, a thin line of cold light at its edge, a few loose stones,
+    (simple background:1.3), (white background:1.3), no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34830
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243162
+- key: tp-door-2
+  entity: thin-place
+  title: 'Thin Place midground: the lone door (seed 2)'
+  size: 1536x640
+  seed: 909712
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones
+  prompt_tags: scenery, no humans, side view, a lone weathered wooden door frame standing upright in empty ground
+    with no walls around it, the door slightly ajar, a thin line of cold light at its edge, a few loose stones,
+    (simple background:1.3), (white background:1.3), no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34831
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243163
+- key: tp-door-3
+  entity: thin-place
+  title: 'Thin Place midground: the lone door (seed 3)'
+  size: 1536x640
+  seed: 909713
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones
+  prompt_tags: scenery, no humans, side view, a lone weathered wooden door frame standing upright in empty ground
+    with no walls around it, the door slightly ajar, a thin line of cold light at its edge, a few loose stones,
+    (simple background:1.3), (white background:1.3), no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34832
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243164
+- key: dn-wreck-1
+  entity: the-dunes
+  title: 'Dunes midground: the half-buried stagecoach (seed 1)'
+  size: 1536x640
+  seed: 909611
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones
+  prompt_tags: scenery, no humans, side view, an old wooden stagecoach wreck half buried in a drift of sand, broken
+    wheel, sun-bleached planks, a sand drift heaped against it, (simple background:1.3), (white background:1.3),
+    no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34833
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243165
+- key: dn-wreck-2
+  entity: the-dunes
+  title: 'Dunes midground: the half-buried stagecoach (seed 2)'
+  size: 1536x640
+  seed: 909612
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones
+  prompt_tags: scenery, no humans, side view, an old wooden stagecoach wreck half buried in a drift of sand, broken
+    wheel, sun-bleached planks, a sand drift heaped against it, (simple background:1.3), (white background:1.3),
+    no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34834
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243166
+- key: dn-wreck-3
+  entity: the-dunes
+  title: 'Dunes midground: the half-buried stagecoach (seed 3)'
+  size: 1536x640
+  seed: 909613
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones
+  prompt_tags: scenery, no humans, side view, an old wooden stagecoach wreck half buried in a drift of sand, broken
+    wheel, sun-bleached planks, a sand drift heaped against it, (simple background:1.3), (white background:1.3),
+    no sky, isolated, wide shot
+  jobs:
+    arthemy-house: 34835
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243167

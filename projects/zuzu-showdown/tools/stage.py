@@ -17,8 +17,10 @@ so the camera travels +-144), and it sits centred: x = (480 - width) / 2.
     python projects/zuzu-showdown/tools/stage.py SLUG SOURCE_DIR OUT_DIR
 
 SOURCE_DIR holds the source art as <art_image_id>.png. A layer may set `crop` (source pixels) and
-`mirror: true` (the crop followed by its mirror image); boxes and anchors are given in the uncropped
-source, and a point past the crop's right edge lands in the mirrored half.
+`mirror: true` (the crop followed by its mirror image) or `mirror: "before"` (the mirror image first);
+boxes and anchors are given in the uncropped source, on the unmirrored copy, and with `mirror: true` a
+point past the crop's right edge lands in the mirrored half. `patches` are source boxes painted out by
+blending each column from the pixels just above the box to those just below (a stray object removed).
 """
 
 from __future__ import annotations
@@ -49,13 +51,26 @@ def span(factor: float) -> int:
 
 def load(source_dir: Path, spec: dict) -> Image.Image:
     image = Image.open(source_dir / f"{spec['art']}.png").convert("RGB")
+    if spec.get("patches"):
+        # Paint out something the art shouldn't have (a stray bone): each column of the box blends from
+        # the ground just above it to the ground just below, so no seam shows.
+        arr = np.asarray(image).astype(np.float32).copy()
+        for x0, y0, x1, y1 in spec["patches"]:
+            top, bottom = arr[y0 - 1, x0:x1], arr[min(y1, arr.shape[0] - 1), x0:x1]
+            t = np.linspace(0, 1, y1 - y0)[:, None, None]
+            arr[y0:y1, x0:x1] = top[None] * (1 - t) + bottom[None] * t
+        image = Image.fromarray(arr.round().astype(np.uint8), "RGB")
     if spec.get("crop"):
         image = image.crop(spec["crop"])
     if spec.get("mirror"):
         # The crop and its mirror image side by side: closes a scene cut short (the pond without the cow).
+        # `mirror: "before"` puts the mirror image first (a ridge rising right becomes a canyon).
+        flipped = image.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+        before = spec["mirror"] == "before"
         doubled = Image.new("RGB", (image.width * 2, image.height))
-        doubled.paste(image, (0, 0))
-        doubled.paste(image.transpose(Image.Transpose.FLIP_LEFT_RIGHT), (image.width, 0))
+        doubled.paste(flipped if before else image, (0, 0))
+        doubled.paste(image if before else flipped, (image.width, 0))
+        spec["_shift"] = image.width if before else 0
         image = doubled
     spec["_box"] = (0, 0, image.width, image.height)
     if spec.get("kind") == "keyed":
@@ -192,6 +207,7 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
         x, y = point
         if spec.get("crop"):
             x, y = x - spec["crop"][0], y - spec["crop"][1]
+        x += spec.get("_shift", 0)
         if spec["kind"] == "keyed":
             x, y = x - spec["_box"][0], y - spec["_box"][1]
             return round(x * m["scale"]) + m["offset"], round(y * m["scale"])

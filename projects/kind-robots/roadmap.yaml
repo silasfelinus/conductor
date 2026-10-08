@@ -2281,5 +2281,41 @@ tasks:
     Fix: bound the wait, not the position. Either count consecutive bypasses of the current oldest job (persist on the job or in queue control state) and take the oldest once it reaches maxBypass, or take the oldest when it has waited longer than a limit (createdAt; e.g. 15 minutes) regardless of affinity. Add a verify script that simulates a head of 12 jobs of model A behind a deep backlog of model B and asserts A is claimed within maxBypass picks.
 
 
+
+- id: t-136
+  milestone: m6
+  title: 'Move tutorial sidebar left and add Arcade dashboard header shortcut'
+  status: done
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  updated: '2026-10-07T21:19:00Z'
+  note: |-
+    Silas-directed 2026-10-07: the tutorial/workspace sidebar should open from the left edge instead of the right. Add a fixed-width Arcade icon shortcut to the dashboard/workspace header alongside the existing Art and Memory Dungeon icon buttons, using the existing canonical Arcade route/icon and preserving the header's compact responsive geometry. Add regression coverage for both placement and shortcut behavior.
+
+    Implementation complete on worker/kind-robots-t136-tutorial-arcade-20261007T205900Z. Added the canonical Arcade shortcut to the fixed workspace header and extended the navigation-route contract to pin both the Arcade route/icon/active state and the existing left-anchored, left-entering tutorial/workspace sheet behavior.
+
+    Merged silasfelinus/kind_robots#3352 at f552b0ae7eeda46d4015e888209312b6d66cc358 after all 30 PR workflows completed successfully on the tested head. The workspace/tutorial sheet was already left-anchored and left-entering on main, so the change pins that behavior with a regression contract and adds the canonical /play/arcade header shortcut with kind-icon:arcade.
+  claimed_by: 20261007T205900Z-kind-robots-t136-tutorial-arcade-x7p4
+  claimed_at: '2026-10-07T20:59:00Z'
+
+
+- id: t-137
+  milestone: m6
+  title: 'Move tutorial sidebar to the right side'
+  status: done
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  updated: '2026-10-08T00:52:30Z'
+  note: |-
+    Silas correction 2026-10-07: the tutorial/workspace sidebar should open from the RIGHT, matching the header icon cluster. Preserve the Arcade header shortcut added in t-136/#3352. Change the sheet anchor and slide direction to the right and update regression coverage to enforce right-side behavior.
+
+    Implementation complete on worker/kind-robots-t137-right-sheet-20261008T004300Z. app.vue now anchors the tutorial/workspace sheet at right-0 and animates it from translateX(1rem). The navigation-route regression contract now enforces the right edge and preserves the Arcade shortcut from t-136.
+
+    Merged silasfelinus/kind_robots#3356 at 619d444879103112a78f9364db36c70dc6486dd9 after all 27 triggered PR workflows completed successfully. The tutorial/workspace sheet is now anchored to right-0 and enters from translateX(1rem); regression coverage enforces the right-side behavior. The Arcade header shortcut from t-136 remains unchanged.
+  claimed_by: 20261008T004300Z-kind-robots-t137-right-sheet-m6v2
+  claimed_at: '2026-10-08T00:43:00Z'
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.

@@ -2027,3 +2027,34 @@ pitches:
         commit: a39d061
         verification:
           - merged on kind_robots main; reconciled by the 2026-10-07 conductor run
+  - id: tidepool-ebb
+    title: Tidepool Ebb
+    status: candidate
+    priority: 37
+    surprise: |
+      A rocky tidepool drains and refills on a slow tide while anemones splay open under water and droop when exposed.
+    passive_loop: |
+      A 60-second tide clock drives the water line, anemone openness and surface ripple as pure functions of time, so the loop is exactly periodic.
+    optional_interaction: |
+      Hovering near an anemone curls its tentacles; a rate-limited click sends a surge through the pool.
+    technique: |
+      One canvas, fixed stones and anemones from a hash, tentacles as quadratic curves, translucent water layer with a sine surface.
+    reduced_motion: |
+      Holds a single static mid-tide frame with no sway, curl or surge.
+    performance_risk: |
+      Low: seven anemones of nine strokes each, capped DPR, ResizeObserver sizing.
+    novelty: |
+      First tide-driven scene; the water level itself is the animation.
+    acceptance:
+      - the water line rises and falls on a periodic tide without interaction
+      - anemones open under water and droop when exposed
+      - hovering near an anemone curls it and it relaxes afterwards
+      - clicking sends a surge at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/tidepool-ebb.vue
+        pull_request: silasfelinus/kind_robots#3363
+        released_at: '2026-10-08T08:00:00Z'
+        verification:
+          - kind_robots CI on PR 3363

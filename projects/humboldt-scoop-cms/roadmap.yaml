@@ -911,5 +911,45 @@ tasks:
   gate_reason: physical-access
   gate_rechecked: '2026-09-30'
 
+
+- id: t-045
+  milestone: m11
+  title: Clarify Poopstakes local eligibility and prevent out-of-area and duplicate entries
+  status: done
+  claimed_by: 20261008T105100Z-hss-poopstakes-d93c
+  claimed_at: '2026-10-08T10:51:00Z'
+  updated: '2026-10-08T11:06:00Z'
+  passes: 0
+  stakes: outward-facing
+  note: |-
+    Silas, 2026-10-08: Three Poopstakes notifications arrived for a Santa Clara lead despite HSS only serving named Humboldt County communities. Show explicit local eligibility on /poopstakes and quote checkbox; require/verifiably enforce supported locality at the API and drawing; prevent duplicate entry notifications without suppressing genuine quote requests. No contact with the lead or publication without human approval. Source: direct chat instruction.
+
+    Scoped HSS Poopstakes eligibility code is ready for review in worker/hss-poopstakes-eligibility-20261008-d93c. The draw excludes out-of-area legacy records; entry form and API now validate local area; one email per month suppresses duplicate-only notifications. Public-site rollout is a human gate, so leave the PR unmerged.
+
+    Prepared silasfelinus/humboldtscoopsolutions#114 for the public Poopstakes service-area eligibility and duplicate notification fix. GitHub Actions HSS site security checks run 37767082591 completed SUCCESS, including Poopstakes behavior regressions and PHP syntax. Because public promotional eligibility is outward-facing, the PR is deliberately OPEN and UNMERGED; human approval of the seven advertised communities and launch is required. Legacy September/October entries excluded from November drawing are tracked independently by silasfelinus/humboldtscoopsolutions#115.
+
+    Silas explicitly approved the seven-town public Poopstakes eligibility rule and public rollout in ChatGPT on 2026-10-08. PR silasfelinus/humboldtscoopsolutions#114 merged to main as commit 84e31d57c8f9d2f69b37fa5cd003fb8f82c6cad0 after completed-success CI run 37767082591 (Poopstakes behavior tests, PHP syntax, deployment-script tests). Approval covers the code and promotional copy; self-hosted deployment still requires the Unraid site checkout to sync. Early-season drawing issue tracked separately in silasfelinus/humboldtscoopsolutions#115.
+  approved_by_human: true
+
+
+- id: t-046
+  milestone: m11
+  title: Carry pre-November Poopstakes entries through the season's draws
+  status: claimed
+  owner: worker
+  claimed_by: 20261008T112000Z-hss-early115-a72e
+  claimed_at: '2026-10-08T11:20:00Z'
+  updated: '2026-10-08T11:20:00Z'
+  passes: 0
+  stakes: reversible
+  source_issue: silasfelinus/humboldtscoopsolutions#115
+  note: >-
+    Direct Silas request 2026-10-08 to fix issue #115 immediately.
+    Pre-November early entries must enter the November pool; every
+    non-winning eligible entry stays in the December/January pools of the
+    same season. Never carry stale entries into the next season. Implement
+    period-bounded SQL, local eligibility and once-ever guarantees, public
+    explanation, and regression tests before first November draw.
+
 goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads,
   operations, and brand voice.

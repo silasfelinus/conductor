@@ -1,0 +1,54 @@
+# zuzu-showdown t-009: the Dunes' backdrop (Old Komodo's stage), a long golden sun over rolling dunes, in the
+# daylight lane (the house lane's dark prefix turns sun into dusk; see T009C-DAY.yaml). Two seeds. Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-day
+  label: Arthemy Western Art v3.0, daylight (the house prefix without its dark atmosphere)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    bright daylight, high key, harsh sun, bleached palette, ochre and bone, clean flat colors
+  suffix: western, dusty, bright, sunny
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: dn-backdrop-1
+  entity: the-dunes
+  title: 'Dunes backdrop: the long sun (seed 1)'
+  size: 1536x640
+  seed: 909601
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones, night, darkness, smoke, fire, storm
+  prompt_tags: scenery, no humans, wide panorama, side view, wide shot, landscape, empty, desolate, late afternoon,
+    a huge low golden sun near the horizon, long shadows, endless rolling sand dunes, wind blowing sand off the
+    dune crests, warm amber and ochre sky, heat haze
+  jobs:
+    arthemy-day: 34836
+  art:
+    arthemy-day:
+      status: DONE
+      art_image_id: 243168
+- key: dn-backdrop-2
+  entity: the-dunes
+  title: 'Dunes backdrop: the long sun (seed 2)'
+  size: 1536x640
+  seed: 909602
+  negative: text, letters, words, sign text, watermark, signature, logo, humans, people, person, animals, animal,
+    hyena, dog, wolf, bird, cattle, character, anthro, creature, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, vignette, skull, bones, night, darkness, smoke, fire, storm
+  prompt_tags: scenery, no humans, wide panorama, side view, wide shot, landscape, empty, desolate, late afternoon,
+    a huge low golden sun near the horizon, long shadows, endless rolling sand dunes, wind blowing sand off the
+    dune crests, warm amber and ochre sky, heat haze
+  jobs:
+    arthemy-day: 34837
+  art:
+    arthemy-day:
+      status: DONE
+      art_image_id: 243169

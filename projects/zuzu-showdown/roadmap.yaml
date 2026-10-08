@@ -261,7 +261,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Eight animated stages (parallax layers, animated elements, stage events)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -281,9 +281,42 @@ tasks:
       pond render added a longhorn despite the negative prompt, so that midground is the pond cut short of
       it and mirrored. Six stages remain (the Mission, the Lone Apple Tree, Storm Canyon, the Bone Yard,
       the Dunes, the Thin Place) and the Showdown-super stage reaction.
+      PROGRESS 2026-10-07 later (PT): the Mission and Storm Canyon are built (art/T009B-STAGES.yaml,
+      kind_robots#3348). The Mission has a candle and chimney smoke, and a portal that flickers in the bell
+      arch between rounds. Storm Canyon has rain, crows, and lightning that silhouettes the walls; it is
+      rate-limited and off under reduced motion. Each stage has its own minor-key loop (t-023). The Lone
+      Apple Tree's midground is chosen (243119, the tree and the apple cart), but both backdrops came back
+      as a burning dusk: the house lane's dark prefix beat "harsh noon". Its backdrop is re-rendering through
+      a daylight lane (art/T009C-DAY.yaml). Left: the Bone Yard, the Dunes, the Thin Place, and the
+      Showdown-super reaction.
+      PROGRESS (same day): the Lone Apple Tree is built on the noon backdrop (243152, one stray bone painted
+      out with tools/stage.py's new `patches`). It has heat shimmer, drifting leaves, a dust devil, and apples
+      that drop, rest and fade (kind_robots#3348). The toddler grabbing them waits on the Siblings' sprites
+      (t-011). Five of eight stages are done.
+      PROGRESS (same day, later): the Dunes and the Thin Place are built (kind_robots#3349). The Dunes has a
+      long sun, sand blowing off the crests, and a heave of sand crossing behind the fighters. The Thin Place
+      has tears in the sky, floating debris, and the door's light widening each round; Arcade's boss phases
+      (t-021) will drive that. The Bone Yard's ribcage is fighting the model. "Ribcage of an ancient giant beast"
+      drew the beast, and "ribs like cathedral arches" drew a cathedral. A plain third try is rendering
+      (art/T009F-BONE-YARD.yaml), with a stone arch over a campfire (243171) as the fallback. Seven of eight
+      stages are done; then the Showdown-super stage reaction.
+      DONE (same day): the Bone Yard is built and all eight stages are in the game (kind_robots#3349). Three
+      prompts failed at the ribcage (a beast, a cathedral, walking skeletons), and code-drawn ribs read as a
+      tent frame, so the stage is the cathedral attempt's ruined arch over a bonfire (243171). The pack perches
+      on it, cackles, and howls on a Showdown super: the brief's Showdown-super stage reaction, in picture and
+      sound. Every stage has its parallax layers, moving parts, stage event and loop. Left for other tasks: the
+      Siblings' toddler grabbing the apples (needs t-011's sprites), and the boss's phases driving the door
+      (t-021).
+
+      All eight stages are on main (kind_robots#3349 adds the Dunes, the Thin Place and the
+      Bone Yard). Each stage has art layers built by tools/stage.py, its moving parts, a stage
+      event and a music loop, with reduced-motion fallbacks. Two pieces belong to other tasks:
+      the toddler grabbing apples on the Lone Apple Tree waits on t-011's sprites, and the
+      boss phases driving the Thin Place door wait on t-021.
     claimed_by: 2026-10-07T11:00:00Z-zs-t009
     claimed_at: '2026-10-07T10:57:19Z'
-    updated: '2026-10-07T10:57:19Z'
+    updated: '2026-10-07T14:38:25Z'
+    implementation_pr: 'silasfelinus/kind_robots#3349'
 
   - id: t-010
     milestone: m3
@@ -632,8 +665,8 @@ tasks:
   - id: t-027
     milestone: m3
     title: "kind_robots: render styles -- pixel and HD (stage renders at device resolution, art per style)"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-007]
@@ -650,3 +683,20 @@ tasks:
       HD (from t-010): the rig's smears are already in the HD atlases; the hit sparks
       (utils/zuzuShowdown/effects.ts, drawn by render.ts drawSparks) are hand pixel and need their
       HD counterpart here, e.g. the same 13x13 shapes drawn smooth at device resolution.
+
+      Pixel and HD both ship (kind_robots#3350, conductor#5760). utils/arcade/display.ts
+      fitDisplay sizes the canvas from the logical size, the box, the DPR (capped at 3) and
+      the style. Pixel shows the 480x270 canvas at a whole number of device pixels per game
+      pixel, nearest filtering. HD supersamples at the smallest whole scale covering the box
+      (capped at 5x), with smooth filtering, the vector font and smooth sparks. The choice
+      persists in zuzuShowdownStore.renderStyle. verifyZuzuShowdownDisplay covers the fit at
+      DPR 1, 2 and 3. HD art is WebP from tools/ship_hd.py: fighters at 3x, stages at 4x. HD
+      P2 colours are recoloured in the browser from the rig's P2_RULES. Left for later: code-
+      drawn stage props (the hyenas, crows, apples) stay pixel-style in HD; parallax steps in
+      whole game pixels; the one-off P2 recolour takes 0.4-0.7 s; the hands-on phone and
+      tablet play check is t-024's. kr-arcade t-012 adopts display.ts for the cabinets and
+      pinball.
+    claimed_by: 2026-10-07T14:45:00Z-zs-t027
+    claimed_at: '2026-10-07T14:45:35Z'
+    updated: '2026-10-07T15:17:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#3350'

@@ -1,6 +1,36 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-027 (in progress): Pixel and HD render styles (kind_robots#3350). A "Look" select picks one, and it
+  persists. Pixel shows the 480x270 game at a whole number of device pixels per game pixel. HD
+  supersamples at device resolution, with the HD art, a smooth vector font and soft sparks. The fit lives in
+  the shared utils/arcade/display.ts, the first piece of kr-arcade t-012. New tools/ship_hd.py turns the
+  rig's and stage.py's 4x PNG masters into WebP: fighters at 3x (Zuzu 1.5 MB, the Coyote 2.7 MB) and all
+  eight stages at 4x (1 MB). HD P2 colours are made in the browser from the rig's P2 rules, not shipped as a
+  second atlas.
+- t-009: all eight stages are in (kind_robots#3349). The last is the Bone Yard, a ruined arch over a bonfire.
+  The hyena pack perches on it, cackles, and howls on a Showdown super. The brief's giant ribcage never
+  rendered (a beast, then a cathedral, then walking skeletons) and code-drawn ribs looked like a tent frame,
+  so the ruin stands alone.
+- t-009 (in progress): the Dunes and the Thin Place (kind_robots#3349). The Dunes has a long golden sun,
+  blowing sand, and a dune that heaves as something vast moves under it. The Thin Place has a dark column
+  dropping onto a lone door, glowing tears in the sky, and light at the door that widens each round. Seven of
+  eight stages are done. The Bone Yard's ribcage is on its third prompt (the model drew a beast, then a cathedral).
+- t-009 (in progress): the Lone Apple Tree (kind_robots#3348), on the noon backdrop from the daylight lane.
+  It has heat shimmer, drifting red leaves, a dust devil, and apples that drop, rest and fade. tools/stage.py
+  learned `patches`: a source box painted out by blending each column from the pixels above it to those
+  below (a stray bone). Five of the eight stages are done.
+- t-009 (in progress): the Mission and Storm Canyon (kind_robots#3348). The Mission is a moonlit church
+  with a flickering candle, chimney smoke, and a portal in the bell arch between rounds. Storm Canyon has
+  rain, crows, and lightning that silhouettes the canyon walls; it is rate-limited and off under reduced
+  motion. tools/stage.py learned `mirror: "before"` (a ridge rising right, set after its mirror image,
+  becomes a canyon). The Lone Apple Tree waits on a noon backdrop (art/T009C-DAY.yaml): the house lane's
+  dark prefix turned "harsh noon" into a burning dusk.
+- t-022: Training mode (kind_robots#3345) has dummy settings, frame advantage, an input display with the
+  motion parser's read, refills and position resets.
+- t-023: sound (kind_robots#3347). Hits sound by strength, with block, whiff, parry, throw, the KO sting,
+  the Showdown stinger and the Hollow Bell bell. Each stage has a minor-key loop. Keyboard and gamepad
+  players now hear it too.
 - t-009 (in progress): the first two stages, Hollow Bell and the Watering Hole (kind_robots#3344).
   tools/stage.py builds each stage's parallax layers, cutouts (the bell, the pennant) and anchors (the arch
   beam, the lantern's smoke, the water) from house-lane art and a config in tools/stages/, with a palette per

@@ -85,6 +85,10 @@ Then report:
   never boomerangs back into a future docket once decided
 
 After the report, ask Silas what he wants to work on — or proceed directly if his first message is already a clear task.
+**Never ask Silas to choose the order of ready work.** Once a project or task is under way, pick the next
+ready task yourself (dependency order, then priority) and keep going; report what you took and why. Silas,
+2026-10-08: *"I don't need to be consulted on which to do first, that is something you can answer yourself.
+autonomous progress trumps letting me micromanage."* Asking is for genuine human gates, not sequencing.
 **In an unattended/trigger-fired run (the Conductor Agent Routine) there is no one to ask: the report is
 the preamble, not the job.** Run `python scripts/select_role.py`, act on its role, and when it says `idle`
 walk AGENTS.md "Never idle: the fallback ladder". A run that ends with only a sweep report is a failed run
