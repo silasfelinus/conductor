@@ -2317,5 +2317,17 @@ tasks:
   claimed_by: 20261008T004300Z-kind-robots-t137-right-sheet-m6v2
   claimed_at: '2026-10-08T00:43:00Z'
 
+
+- id: t-138
+  milestone: m6
+  title: 'Move workspace sheet reserved gutter to the right'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  updated: '2026-10-08T11:15:00Z'
+  note: |-
+    Silas follow-up 2026-10-08: after moving the tutorial/workspace sheet to the right, the desktop page still reserves sheet width on the LEFT. Move the content reservation to the right so the visible page yields to the right-side sheet, and mirror the workspace hand/footer reservation as well. Add regression coverage for the right-side geometry.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
