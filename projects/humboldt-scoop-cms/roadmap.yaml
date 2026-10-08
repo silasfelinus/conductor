@@ -915,20 +915,17 @@ tasks:
 - id: t-045
   milestone: m11
   title: Clarify Poopstakes local eligibility and prevent out-of-area and duplicate entries
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261008T105100Z-hss-poopstakes-d93c
   claimed_at: '2026-10-08T10:51:00Z'
-  updated: '2026-10-08T10:51:00Z'
+  updated: '2026-10-08T10:55:00Z'
   passes: 0
   stakes: outward-facing
-  note: >-
-    Silas, 2026-10-08: Three Poopstakes notifications arrived for a Santa Clara lead
-    despite HSS only serving named Humboldt County communities. Show explicit local
-    eligibility on /poopstakes and quote checkbox; require/verifiably enforce supported
-    locality at the API and drawing; prevent duplicate entry notifications without
-    suppressing genuine quote requests. No contact with the lead or publication without
-    human approval. Source: direct chat instruction.
+  note: |-
+    Silas, 2026-10-08: Three Poopstakes notifications arrived for a Santa Clara lead despite HSS only serving named Humboldt County communities. Show explicit local eligibility on /poopstakes and quote checkbox; require/verifiably enforce supported locality at the API and drawing; prevent duplicate entry notifications without suppressing genuine quote requests. No contact with the lead or publication without human approval. Source: direct chat instruction.
+
+    Scoped HSS Poopstakes eligibility code is ready for review in worker/hss-poopstakes-eligibility-20261008-d93c. The draw excludes out-of-area legacy records; entry form and API now validate local area; one email per month suppresses duplicate-only notifications. Public-site rollout is a human gate, so leave the PR unmerged.
 
 goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads,
   operations, and brand voice.
