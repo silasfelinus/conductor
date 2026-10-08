@@ -361,7 +361,7 @@ tasks:
   - id: t-014
     milestone: m3
     title: "Mastery goals and the one leaderboard (FX3-style table challenges)"
-    status: claimed
+    status: review
     depends_on: [t-007]
     owner: worker
     passes: 0
@@ -373,9 +373,19 @@ tasks:
       super jackpot in multiball, a combo chain of N), shown on the attract/rules screen and on the DMD when
       earned. Progress lives in the arcade store per player (per Kind Robots AGENTS.md: stores own
       persistence). Any ArcadeScore or schema change must be additive and called out as schema-affecting.
+
+      Merged kind_robots#3375: a 13-goal mastery ladder (skill shot, first village, village
+      saved, EVERY VILLAGE across games, 3-way combo, multiball, jackpot, secret village and
+      nets home (shown as ??? until earned), super jackpot, extra ball, MALARIA-FREE wizard,
+      ten million). Announced on the DMD with a callout the first time earned; kept per player
+      in the arcade store (localStorage kr-arcade-mastery, no schema change); ladder on the 3D
+      cabinet's how-to page. 'Light all villages' in one game is impossible since the map
+      resets after the wizard at six, so EVERY VILLAGE covers it and 'play every mode' across
+      games. The single kind-pinball board is unchanged.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-08T18:24:10Z'
-    updated: '2026-10-08T18:24:10Z'
+    updated: '2026-10-08T19:01:03Z'
+    implementation_pr: 'silasfelinus/kind_robots#3375'
 
   - id: t-015
     milestone: m4
