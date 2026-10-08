@@ -935,11 +935,10 @@ tasks:
 - id: t-046
   milestone: m11
   title: Carry pre-November Poopstakes entries through the season's draws
-  status: review
-  owner: worker
+  status: done
   claimed_by: 20261008T112000Z-hss-early115-a72e
   claimed_at: '2026-10-08T11:20:00Z'
-  updated: '2026-10-08T11:20:20.748Z'
+  updated: '2026-10-08T11:22:02.444Z'
   passes: 0
   stakes: reversible
   source_issue: silasfelinus/humboldtscoopsolutions#115
@@ -947,6 +946,8 @@ tasks:
     Direct Silas request 2026-10-08 to fix issue #115 immediately. Pre-November early entries must enter the November pool; every non-winning eligible entry stays in the December/January pools of the same season. Never carry stale entries into the next season. Implement period-bounded SQL, local eligibility and once-ever guarantees, public explanation, and regression tests before first November draw.
 
     Implemented season-to-date Poopstakes entry query and tests on branch worker/humboldt-scoop-cms-t-046-early115-a72e. Early September and October leads participate in November, eligible nonwinners carry to later draws, and entries do not spill into the next season. GitHub issue #115 will close on merge. Public description is updated. No live database or drawing touched.
+
+    Fixed early Poopstakes eligibility under direct Silas request on 2026-10-08 PT. silasfelinus/humboldtscoopsolutions#116 merged to main as b532205410463e80e1b688c091b08bf986e08068. PR CI run 37769451003 completed successfully: deployment script regressions, Poopstakes behavior and season-window tests, and PHP syntax. Issue #115 closed on merge. No live data was modified; real MariaDB dry-run requires Alexandria. The self-hosted live checkout still needs deployment sync.
 
 goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads,
   operations, and brand voice.
