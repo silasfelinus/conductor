@@ -27,7 +27,26 @@ Each set is about 17 images, or 19 for the coyote:
 
 Base model: Arthemy Western Art v3 (`Illustrious/arthemyWesternArt_v30.safetensors`), the house lane.
 
+## The short way: one paste, overnight
+
+Silas, 2026-10-08: *"am i needed to run a lora training?"* Yes, once. No agent can reach a trainer: the box agents only
+run ComfyUI jobs and register finished LoRAs. The build also writes `train_all.ps1`, which cuts his part to one paste.
+
+1. Copy the five zips and `train_all.ps1` into `D:\ai\lora-sets\`.
+2. Run `powershell -ExecutionPolicy Bypass -File D:\ai\lora-sets\train_all.ps1`.
+
+The script:
+- installs sd-scripts the first time (the setup below, done for you);
+- pauses the art relay (`pm2 stop kr-relay`), waits for ComfyUI to finish its current job and frees its VRAM;
+- unzips and trains each set in turn, stopping on the first failure;
+- always restarts the relay at the end, even after a failure.
+
+Expect 6–10 hours for all five. A set whose `<trigger>_v1.safetensors` is already in the import folder is skipped, so
+running it again resumes where it stopped. `-Only zkacoyote` trains a single set. The log is `train-all.log` next to it.
+
 ## One-time setup on the box (PowerShell)
+
+`train_all.ps1` does this itself; it is here for a manual install.
 
 ```powershell
 cd D:\ai

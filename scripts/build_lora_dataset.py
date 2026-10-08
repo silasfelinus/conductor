@@ -9,6 +9,7 @@ ArtImage ids). For every character this writes, under ``--out``:
     <trigger>/dataset.toml                               kohya dataset config (buckets, captions)
     <trigger>/train.ps1                                  SDXL LoRA run for a 12 GB card
     <trigger>.zip                                        the folder above, ready to copy to the box
+    train_all.ps1                                        one paste on the box: setup + every set, overnight
 
 Spec images:
   - ``id: 242395`` uses the render as it is; a negative id (``-242193``) mirrors it, the same
@@ -135,6 +136,67 @@ Write-Host "Done: $Out\\{name}.safetensors (every 2 epochs also saved as {name}-
 """
 
 
+def train_all_ps1(triggers):
+    """One script that trains every set in turn, so Silas's part is a single overnight paste.
+
+    It sets sd-scripts up the first time, pauses the art relay and empties ComfyUI's VRAM so training has the
+    card, unzips and trains each set, and always restarts the relay at the end, even after a failure.
+    """
+    names = ", ".join(f'"{t}"' for t in triggers)
+    return f"""# Train every Zuzu character LoRA in one go (comic-creator t-016). Put this file next to the zips, then:
+#   powershell -ExecutionPolicy Bypass -File D:\\ai\\lora-sets\\train_all.ps1
+# First run installs kohya sd-scripts into -SdScripts. The art relay (pm2 kr-relay) is paused while training holds
+# the card and restarted at the end, even on failure. A set whose .safetensors already exists in the import folder is
+# skipped, so a re-run picks up where a stopped one left off. Log: train-all.log next to this file.
+param(
+  [string]$SdScripts = "D:\\ai\\sd-scripts",
+  [string]$Comfy = "http://127.0.0.1:8188",
+  [string]$Out = "D:\\comfy\\comfy-fast\\models\\Lora\\import",
+  [string[]]$Only = @()
+)
+$ErrorActionPreference = "Stop"
+$here = $PSScriptRoot
+$triggers = @({names})
+if ($Only.Count) {{ $triggers = $triggers | Where-Object {{ $Only -contains $_ }} }}
+Start-Transcript -Path "$here\\train-all.log" -Append | Out-Null
+
+if (-not (Test-Path "$SdScripts\\venv\\Scripts\\accelerate.exe")) {{
+  Write-Host "Setting up kohya sd-scripts in $SdScripts (one time, ~10 min)"
+  if (-not (Test-Path $SdScripts)) {{ git clone https://github.com/kohya-ss/sd-scripts.git $SdScripts }}
+  Push-Location $SdScripts
+  python -m venv venv
+  & .\\venv\\Scripts\\python.exe -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+  & .\\venv\\Scripts\\python.exe -m pip install -r requirements.txt bitsandbytes
+  & .\\venv\\Scripts\\accelerate.exe config default --mixed_precision fp16
+  Pop-Location
+}}
+
+pm2 stop kr-relay | Out-Null
+try {{
+  $waited = 0
+  while ($true) {{
+    try {{ $q = Invoke-RestMethod "$Comfy/queue" -TimeoutSec 10 }} catch {{ break }}
+    if (($q.queue_running.Count + $q.queue_pending.Count) -eq 0) {{ break }}
+    if ($waited -eq 0) {{ Write-Host "ComfyUI is finishing a job; waiting before taking the card" }}
+    Start-Sleep -Seconds 30; $waited += 30
+  }}
+  try {{ Invoke-RestMethod "$Comfy/free" -Method Post -ContentType "application/json" `
+      -Body '{{"unload_models": true, "free_memory": true}}' -TimeoutSec 30 | Out-Null }} catch {{ }}
+  foreach ($t in $triggers) {{
+    if (Test-Path "$Out\\$($t)_v1.safetensors") {{ Write-Host "$t already trained; skipping"; continue }}
+    if (-not (Test-Path "$here\\$t\\train.ps1")) {{ Expand-Archive -Path "$here\\$t.zip" -DestinationPath $here -Force }}
+    Write-Host "=== $t  $(Get-Date -Format s)"
+    & "$here\\$t\\train.ps1" -SdScripts $SdScripts -Out $Out
+    if ($LASTEXITCODE) {{ throw "$t training failed (exit $LASTEXITCODE); see train-all.log" }}
+  }}
+  Write-Host "All done $(Get-Date -Format s). The LoRA import agent registers the files in Kind Robots."
+}} finally {{
+  pm2 start kr-relay | Out-Null
+  Stop-Transcript | Out-Null
+}}
+"""
+
+
 def render(image, data, crop):
     """Mirror and crop one fetched render (PIL Image)."""
     from PIL import ImageOps
@@ -154,7 +216,7 @@ def build(spec, spec_dir, out, only=None, fetch=None, dry_run=False):
     import enqueue_art_requests as enq
 
     fetch = fetch or (lambda image_id: enq._decode_data_url(enq.fetch_source_image(image_id)).convert("RGB"))
-    ledgers, written = {}, {}
+    ledgers, written, triggers = {}, {}, []
     for character in spec["characters"]:
         if only and character["key"] not in only:
             continue
@@ -171,6 +233,7 @@ def build(spec, spec_dir, out, only=None, fetch=None, dry_run=False):
             text = caption(character["trigger"], character.get("identity") or [], image.get("tags") or [])
             rows.append((n, image_id, image.get("crop"), text))
         written[character["key"]] = rows
+        triggers.append(character["trigger"])
         if dry_run:
             continue
         sub.mkdir(parents=True, exist_ok=True)
@@ -186,6 +249,8 @@ def build(spec, spec_dir, out, only=None, fetch=None, dry_run=False):
             for path in sorted(root.rglob("*")):
                 if path.is_file():
                     bundle.write(path, path.relative_to(out))
+    if triggers and not dry_run:
+        (out / "train_all.ps1").write_text(train_all_ps1(triggers), newline="\r\n")
     return written
 
 

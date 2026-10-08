@@ -785,7 +785,7 @@ tasks:
     gate_human: true
     gate_reason: subjective-acceptance
     depends_on: [t-024, t-027, t-031, t-033]
-    updated: '2026-10-07T13:12:18Z'
+    updated: '2026-10-08T11:19:41Z'
     note: >-
       Run t-028 with the t-024 brief. Song from ACE-Step if t-012 is done, otherwise ask Silas for
       an MP3 for the t-013 upload. Clips run 30-90 minutes each on the single 12 GB card, so queue
@@ -821,6 +821,12 @@ tasks:
       in 13": s13 now clips from 243000 (dagger in hand) to the end keyframe 243070 (dagger on
       the floor) via the new motion.lastFrameImageId (kind_robots#3343). Re-exported as final
       ArtImage 243105 (72 s, 8.4 MB). Waiting on Silas's verdict.
+
+      2026-10-08: s13 knife drop rebuilt after Silas flagged the jump and the odd landing
+      angle. Region-locked end frame 243214, clip 243216 repaired locally (projects/comic-
+      creator/issues/zuzu-koala-assassin-01/mv12-s13-clip-243216-repaired.mp4; re-exports must
+      substitute it), final ArtImage 243229 (72.0 s, 8.1 MB). Every frame checked before
+      sending. Awaiting Silas's verdict.
 
   - id: t-030
     milestone: m2

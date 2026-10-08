@@ -261,7 +261,7 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-07T11:50:09Z'
+  updated: '2026-10-08T11:19:44Z'
   depends_on:
   - t-015
   note: >-
@@ -290,6 +290,10 @@ tasks:
     Soft access gate (not a decision): Silas already approved; the only remaining step is
     running train.ps1 on the render box, which agents cannot reach. Nothing else waits on
     it.
+
+    2026-10-08: Silas asked whether he is needed; yes, once. build_lora_dataset.py now
+    writes train_all.ps1 (one overnight paste: setup, relay paused, all five sets, relay
+    restarted). Sent to Silas.
   approved_by_human: true
   gate_human: false
   gate_reason: physical-access
