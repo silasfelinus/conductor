@@ -1,0 +1,215 @@
+# Zuzu Gamebook: a standalone branching RPG, sibling to kr-adventures but not its preset reader.
+# Canon: projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md and VIDEO-GUARDRAILS.md.
+# Implementation: silasfelinus/kind_robots /play/zuzu-gamebook, stores/zuzuGamebookStore.ts,
+# utils/zuzuGamebook/; illustrated section art via durable ArtJobs.
+project: zuzu-gamebook
+kind: software
+autonomous: true
+goal: >-
+  An original, image-led Zuzu: Koala Assassin gamebook at /play/zuzu-gamebook.
+  Play an illustrated, complete, replayable Weird West adventure through choices,
+  authored skill challenges, turn-based combat, condition/flag branches,
+  persistent health, powers, equipment and inventory, with dice animation, a
+  detailed character sheet, at least eight meaningfully different endings,
+  save/resume and no LLM at play time. Finished only after comprehensive
+  graph/balance tests, accessible phone/tablet/desktop visual review and Silas's verdict.
+notes_from_silas: |
+  2026-10-07: "new project for conductor/kind robots. We already have a request for
+  choose your own adventure preset storylines, this is an extension, but should
+  be a new project. A Zuzu Koala Assassin branching narrative adventure, patterned
+  after Steve Jackson's Sorcery, Lone wolf, Grey Star, and the fighting fantasy
+  series. So this would be set in the Zuzu world and starring him, hitting similar
+  beats that we've discussed in the zuzu comic, videos, and zuzu's lair projects.
+  Sections should have images based on setting and consquences of adventures,
+  skill checks, a combat system, and multiple good and bad endings. Using the
+  classic books as a general guide for complexity and rules systems, but using our
+  own design, dice rolling animation, pass fail conditions, hit points, inventory,
+  special powers, a character sheet, etc.
+
+  This should appear as a new page on our /play directory, and updated as much
+  as possible by conductor agents working independently. they are given authority
+  to submit art to the generator to evolve this project, and we'll need a front
+  end website with a high quality image focused conscious design"
+
+  Agent mandate: autonomously write/refine narrative, engine, UI, prompt manifests,
+  playtests and balance; independently enqueue task-scoped images through durable
+  ArtJobs and verify actual delivered assets before listing them as complete.
+  Generated internal art is approved; publishing, external posting, expense,
+  secrets and production deployment are NOT pre-approved.
+  Separate project from kr-adventures: share stateless utilities if useful,
+  do not hijack its preset-hero stories or duplicate its routes.
+milestones:
+  - id: m1
+    title: SHAPE — original rules, book outline, visual and lore bible
+    weight: 15
+    status: in-progress
+  - id: m2
+    title: ENGINE — deterministic state, dice, battles, flags, save and tests
+    weight: 25
+    status: not-started
+  - id: m3
+    title: STORY & ART — playable branching book with delivered illustrations
+    weight: 35
+    status: not-started
+  - id: m4
+    title: EXPERIENCE — cinematic reader, inventory, animation and accessibility
+    weight: 15
+    status: not-started
+  - id: m5
+    title: POLISH & SHIP — coverage, balance, device verdict and ongoing chapters
+    weight: 10
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Intake, canonical lore survey and original design brief
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-07T00:00:00Z'
+    note: >-
+      Created DESIGN-BRIEF.md and ART-DIRECTION.md, split the gamebook from
+      kr-adventures, anchored story and costume to the canonical comic, designed
+      original dice and combat rules, and established agent autonomy and art guardrails.
+  - id: t-002
+    milestone: m2
+    title: Pure TypeScript gamebook reducer, dice/combat mechanics and contract tests
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Build types + pure seeded reducer in utils/zuzuGamebook/; no browser APIs, no
+      Math.random inside the reducer. Challenge outcomes, victory/defeat, effects,
+      inventory capacity, powers, flags, mutually exclusive conditions, dice
+      roll logs, resource caps, valid transitions, save-version migrations.
+      Add contract tests to CI for replay determinism and each combat interaction.
+  - id: t-003
+    milestone: m4
+    title: Build beautiful standalone /play/zuzu-gamebook reader and character sheet
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Build separate page, Projects tab registration and placement, image-dominant
+      scene frame, readable story and two-to-four consequence-rich actions, HUD,
+      expandable character sheet, combat choices, accessible reduced-motion 3D-like
+      dice roller, inventory, health/resolve and save/restart. Respect AGENTS.md:
+      components use a Pinia store for localStorage/state; no live LLM.
+      An admin-preview tab until explicit public-launch verdict.
+  - id: t-004
+    milestone: m1
+    title: Book One graph and all authored scenes (80-120 numbered sections)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      The Bell That Never Rang. Build original branching scenarios that echo
+      watering hole, wounded coyote, Hollow Bell, fennec siblings, apples,
+      missing-child posters and corrupted mission without rewriting BOOK-ONE.md.
+      Write 80-120 unique sections, 8-12 endings with genuinely different outcomes
+      and multiple routes through each main act. Track routes, flags and alternate
+      endings. No endless choice loops or unknowable fails. Pure static bundle.
+  - id: t-005
+    milestone: m1
+    title: Scene art inventory, cinematic layouts and repeatable ArtJob manifest
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Read ART-DIRECTION.md and comic locked cast. Make section-level art prompts,
+      portrait/splash/widescreen/aftermath plates and aspect ratios for every
+      scene/outcome. Add provenance fields (prompt, model, lane, source, ArtJob,
+      ArtImage, delivery URL, reviewed). Prefer proven comic reference images.
+      Avoid placeholder artwork presented as generated/finished.
+  - id: t-006
+    milestone: m3
+    title: Independently enqueue and review gamebook illustrations in batches
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-005]
+    note: >-
+      Art generation explicitly pre-authorized for internal project use.
+      Use the durable /api/art/enqueue ArtJob pipeline with stable idempotency
+      and canonical series/character settings; check DONE AND reachable delivered
+      URLs, verify Zuzu costume and the banned-terms guardrails. Begin with cover,
+      hero, first ten scene plates, dice/character-sheet motifs and consequence
+      plates, then continue in book-sized batches. Do not incur paid external spend.
+  - id: t-007
+    milestone: m3
+    title: Integrate authored story bundle, chapter pacing and illustration manifest
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-002, t-004]
+    note: >-
+      Validate all node ids and choice targets, all required effects/flags/items,
+      encounter termination, at least eight reachable endings, every ending
+      reachable from the start, and no no-win progression trap. Render real
+      hero/environment/aftermath images with meaningful alt text and fallbacks.
+      Add a test that explores reachable state as well as node graph shape.
+  - id: t-008
+    milestone: m4
+    title: Combat, powers, dice, inventory and save/resume UI polish
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-002, t-003]
+    note: >-
+      Interactive combat log and enemy cards, visual hit feedback, distinct
+      animated rolling dice with result readable without animation, keyboard
+      and screen reader announcements, save portability, combat outcome
+      illustrations, mobile character-sheet drawer and recovery paths.
+  - id: t-009
+    milestone: m5
+    title: QA and editorial playtest of every route, ending and device
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-006, t-007, t-008]
+    note: >-
+      Automated deterministic playthroughs, randomized seeds, fairness/softlock
+      tests, inventory abuse checks, all images delivered, WCAG-conscious
+      keyboard/touch/reduced motion, and screenshots at 375px/768px/desktop.
+      Real preview inspection before marking ready; flag public publishing
+      and Silas's creative acceptance as explicit human gates.
+  - id: t-010
+    milestone: m5
+    title: Public launch and Silas's visual/story verdict
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: subjective-acceptance
+    depends_on: [t-009]
+    note: >-
+      Present final accessible preview, art coverage, combat/rules balance,
+      endings checklist and gamebook tone for Silas's verdict. Do not expose
+      publicly or assert production deployment until approval.
+  - id: t-011
+    milestone: m5
+    title: Continuing autonomous chapter, art and balance evolution
+    status: waiting
+    owner: null
+    passes: 0
+    recurring: true
+    stakes: reversible
+    depends_on: [t-010]
+    note: >-
+      Each cycle choose one independently shippable increment: new optional
+      branch or chapter, authored encounter, alternate ending, additional
+      scene art batch, test/balance or responsive visual refinement. Update
+      the story/art indexes, prove graph and state invariants, create PR and
+      rearm with evidence. Never auto-publish or spend. After launch, consider
+      moving lifecycle active to continuous so recurring upgrades run after
+      active finite work, per AGENTS.md.
