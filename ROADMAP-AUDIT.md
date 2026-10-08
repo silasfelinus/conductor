@@ -1,20 +1,20 @@
 # Roadmap Audit
 
-Generated: `2026-10-08T19:10:54.370208+00:00`
+Generated: `2026-10-08T19:31:05.641933+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **75** roadmaps, **36** active + **3** continuous projects, **1998** tasks
-- **81 ready**, **99 waiting**, **42 needs-human**, **16 claimed/review**, **1744 done**
+- **75** roadmaps, **36** active + **3** continuous projects, **1999** tasks
+- **81 ready**, **99 waiting**, **43 needs-human**, **15 claimed/review**, **1745 done**
 - Findings: **0 errors**, **19 warnings**, **54 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `kind-pinball` | active | software | 0 | 2 | 0 | 3 | 14 / 19 |
+| 1 | `kind-pinball` | active | software | 0 | 2 | 0 | 2 | 15 / 19 |
 | 2 | `zuzu-lair` | active | software | 2 | 6 | 1 | 1 | 3 / 13 |
 | 3 | `kr-arcade` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
 | 4 | `zuzu-showdown` | active | software | 8 | 3 | 0 | 1 | 15 / 27 |
@@ -26,7 +26,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 10 | `interface-vision` | continuous | software | 3 | 1 | 0 | 0 | 137 / 141 |
 | 11 | `humboldt-scoop-cms` | active | software | 1 | 1 | 4 | 0 | 40 / 46 |
 | 12 | `digital-storefront` | active | software | 1 | 2 | 1 | 0 | 40 / 44 |
-| 13 | `kind-robots` | active | software | 4 | 0 | 0 | 3 | 131 / 138 |
+| 13 | `kind-robots` | active | software | 4 | 0 | 1 | 3 | 131 / 139 |
 | 14 | `rainbow-butterflies` | active | software | 0 | 1 | 2 | 0 | 50 / 53 |
 | 15 | `music-video` | active | software | 6 | 3 | 1 | 0 | 25 / 35 |
 | 16 | `comic-film` | active | software | 3 | 6 | 1 | 0 | 1 / 11 |
