@@ -115,3 +115,23 @@ def test_dry_run_reports_a_pending_ledger_render_but_a_real_build_refuses(tmp_pa
     assert rows["zuzu"][0][1] is None
     with pytest.raises(ValueError, match="no art_image_id"):
         lora.build(spec, tmp_path, tmp_path / "out", fetch=lambda i: None)
+
+
+def test_train_all_runs_every_set_in_order_and_always_restarts_the_relay():
+    ps1 = lora.train_all_ps1(["zuzukoala", "zkasister", "zkaabbess"])
+    assert '$triggers = @("zuzukoala", "zkasister", "zkaabbess")' in ps1
+    assert "venv\\Scripts\\accelerate.exe" in ps1 and "git clone https://github.com/kohya-ss/sd-scripts.git" in ps1
+    assert ps1.index("pm2 stop kr-relay") < ps1.index("$Comfy/queue"), "pause the relay, then let ComfyUI drain"
+    assert ps1.index("pm2 stop kr-relay") < ps1.index("} finally {") < ps1.index("pm2 start kr-relay")
+    assert "if ($LASTEXITCODE)" in ps1
+    assert "$Comfy/queue" in ps1 and "$Comfy/free" in ps1
+    assert "_v1.safetensors" in ps1, "a finished set is skipped on a re-run"
+
+
+def test_build_writes_train_all_beside_the_zips(tmp_path):
+    pytest.importorskip("PIL")
+    from PIL import Image
+
+    spec = {"base_model": "m", "output_dir": "o", "characters": [_character()]}
+    lora.build(spec, tmp_path, tmp_path / "out", fetch=lambda i: Image.new("RGB", (64, 64)))
+    assert '@("zuzukoala")' in (tmp_path / "out" / "train_all.ps1").read_text()

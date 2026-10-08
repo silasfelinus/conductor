@@ -8,6 +8,8 @@
 # fills the scene around them, so the stump and the abbess's flat face come straight from the cast.
 # mvfix-s13-dagger-*: Silas 2026-10-07, "sister is missing the knife falling from her hand in 13. would make an ideal animation".
 # mvfix-s13-dropped-*: LTX from 243000 alone never drops the knife (clip 243054); this end frame pins the drop.
+# mvfix-s13-flat-*: Silas 2026-10-08, the drop jumped and the knife lay at an odd angle. Only the hand-to-floor box of
+# these is composited onto 243000, so the end frame differs from the start frame in the knife and the hand alone.
 series: zuzu-koala-assassin
 project_slug: comic-creator
 designer: Comic Studio
@@ -361,3 +363,36 @@ subjects:
     kontext-fix:
       status: DONE
       art_image_id: 243071
+- key: mvfix-s13-flat-1
+  entity: music-video
+  title: 'MV s13 end frame: dagger flat below her hand (seed 1)'
+  size: 1344x768
+  source_image_id: 243000
+  prompt_prose: 'Her right hand hangs open and empty at her side, fingers relaxed. The small bloodied dagger lies
+    flat on the stone floor just below her hand, beside her right foot, blade pointing away from her, lying naturally
+    as if it has just fallen straight down. Change nothing else: her face, enormous ears, ragged dress, bandaged
+    wrists, pose, the chapel, the pool of light, colours and the inked comic style.'
+  jobs:
+    kontext-fix: 34877
+- key: mvfix-s13-flat-2
+  entity: music-video
+  title: 'MV s13 end frame: dagger flat below her hand (seed 2)'
+  size: 1344x768
+  source_image_id: 243000
+  prompt_prose: 'Her right hand hangs open and empty at her side, fingers relaxed. The small bloodied dagger lies
+    flat on the stone floor just below her hand, beside her right foot, blade pointing away from her, lying naturally
+    as if it has just fallen straight down. Change nothing else: her face, enormous ears, ragged dress, bandaged
+    wrists, pose, the chapel, the pool of light, colours and the inked comic style.'
+  jobs:
+    kontext-fix: 34878
+- key: mvfix-s13-flat-3
+  entity: music-video
+  title: 'MV s13 end frame: dagger flat below her hand (seed 3)'
+  size: 1344x768
+  source_image_id: 243000
+  prompt_prose: 'Her right hand hangs open and empty at her side, fingers relaxed. The small bloodied dagger lies
+    flat on the stone floor just below her hand, beside her right foot, blade pointing away from her, lying naturally
+    as if it has just fallen straight down. Change nothing else: her face, enormous ears, ragged dress, bandaged
+    wrists, pose, the chapel, the pool of light, colours and the inked comic style.'
+  jobs:
+    kontext-fix: 34879
