@@ -1,0 +1,56 @@
+# Daily project pitches, 2026-10-08. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-08
+pitches:
+  - slug: robot-cloud-cartographer
+    title: Robot Cloud Cartographer
+    hook: >-
+      A calm drawing toy where players trace the shapes of drifting pre-painted clouds and match each
+      one to a charming robot-flavoured name from a fixed field guide. Every cloud, outline and name
+      is authored in advance, so nothing needs a model or a server at runtime.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 24 cloud sky paintings and 24 outline overlays generated ahead of time; 24 field-guide entries pre-written.
+    first_slice: One sky with three clouds, trace-to-match scoring against stored outlines, and a field-guide page that fills in.
+  - slug: kind-music-box-maker
+    title: Kind Music Box Maker
+    hook: >-
+      A toy where players place pegs on a rotating brass cylinder to compose short tunes that play
+      back on a painted music box, with a shelf of pre-composed songs to unlock. Notes are synthesized
+      in the browser from fixed scales, so the whole toy is static files and local save.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 6 music box skins, 1 cylinder and comb illustration, and 10 shelf backdrops generated ahead of time.
+    first_slice: A sixteen-step cylinder with pentatonic pegs, looped playback, and one unlockable skin.
+  - slug: robot-bakery-orders
+    title: Robot Bakery Orders
+    hook: >-
+      A cozy sorting game where robot customers hand over pre-written orders and players assemble the
+      matching pastry from layered ingredient cards before the oven timer rings. All orders and
+      dialogue ship in a fixed file, with difficulty ramping by day number.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 12 customer portraits, 30 ingredient and pastry sprites, and 4 shop backdrops generated ahead of time; 60 orders pre-written.
+    first_slice: One shop day with five orders, drag-to-assemble, a timer, and a star rating at closing.
+  - slug: kr-cabinet-bumper-bubbles
+    target: kr-arcade
+    title: Bumper Bubbles
+    hook: >-
+      An arcade cabinet riffing on the Bubble Bobble style of floating-bubble clearing, where a small
+      robot blows bubbles to trap drifting gremlins and pop them for points. Each screen adds more
+      gremlins and the score goes to the cabinet leaderboard.
+    llm_at_runtime: none
+    effort: small
+    art_plan: Cabinet marquee, one robot sprite sheet, 5 gremlin sprites, bubble effects and 4 backdrops generated ahead of time.
+    first_slice: Intro splash, one platform screen, bubble shot and trap logic, rising gremlin count, and a score submit.
+  - slug: robot-tiny-museum
+    title: Robot Tiny Museum
+    hook: >-
+      A collection game where players curate a pocket museum by finding pre-drawn artefacts hidden in
+      painted rooms and placing them in labelled display cases. Each artefact comes with a short
+      pre-written placard, and finished wings unlock new rooms.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 6 room backdrops, 40 artefact illustrations and 6 display case frames generated ahead of time; 40 placards pre-written.
+    first_slice: One room with six hidden artefacts, tap-to-collect, drag into cases, and a completed-wing celebration.
