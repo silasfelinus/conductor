@@ -2338,14 +2338,14 @@ tasks:
 - id: t-139
   milestone: m6
   title: 'INCIDENT: kindrobots.org has been unreachable since about 12:08 UTC on 2026-10-08'
-  status: needs-human
+  status: done
   owner: null
   gate_human: true
   gate_reason: physical-access
   approved_by_human: false
   stakes: reversible
   passes: 0
-  updated: '2026-10-08T19:40:00Z'
+  updated: '2026-10-08T21:38:29Z'
   note: |-
     FOR SILAS: the production site, kindrobots.org, stopped answering at about 12:08 UTC on 2026-10-08 and was still down at 19:35 UTC. It hangs rather than returning an error. Only you can bring it back: it runs on Alexandria.
 
@@ -2360,6 +2360,13 @@ tasks:
     - Anything else that reads the site's API.
 
     Recovery: https://kindrobots.org/api/health/database answers 200, and the next Auto Art Generate run reports the API as healthy. Close this task then, even if the root cause is still unknown, and track prevention separately.
+
+    Recovered: recovery criteria met by 2026-10-08 21:30 UTC.
+    https://kindrobots.org/api/health/database answers 200 (0.85 s), and the 20:43 UTC Auto
+    Art Generate run reached the API and rendered queued art (including kind-pinball's
+    playfield, ArtJob 34932). Down from about 12:08 UTC to before 20:43 UTC, roughly 8
+    hours. Root cause not established from here; the outage went unnoticed because each art
+    run reports success while it skips its ArtJob work when the API is down.
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
