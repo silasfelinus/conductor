@@ -1,0 +1,154 @@
+# zuzu-showdown t-011: HD parts sheets for the Abbess's rig (as T010-RIG-PARTS did for Zuzu and the Coyote).
+# Flux Kontext re-draws her locked reference into parts the rig can cut cleanly: a fighting stance with her
+# arms held clear of the habit, the habit with no arms, each arm on its own (the rosary-wrapped fist for LP,
+# the ritual dagger for HP), a leg for the kicks that come out from under the hem, and key-pose references
+# (crouch, jump, and her canon KO: collapsed forward onto her face). Source: 242521, three-quarter view
+# facing right (fighters.yaml references). Prompts say "abbess" or "elderly head nun", never "mother", keep
+# her fur warm brown, and keep her a dressed, upright character on dry ground (no water, no feral otter).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-parts
+  label: Flux Kontext dev (fp8), rig parts from the locked reference
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+  seed: 71172
+subjects:
+- key: abbess-rig-stance-apart
+  entity: abbess
+  title: 'abbess rig part: stance-apart'
+  size: 832x1216
+  source_image_id: 242521
+  source_flip: false
+  prompt_prose: 'Put her in a fighting stance facing right, her feet planted apart under the hem of her habit, both
+    arms held out away from her body so her sleeves do not overlap the habit: her left paw closed in a fist with
+    a wooden rosary wrapped round the knuckles, and her right paw gripping a short ritual dagger pointing forward.
+    Keep the same elderly head nun, an abbess who is a sea otter with a flat round face, a button nose and warm
+    brown fur, the same black habit with the white wimple and collar, her otter tail, the same kindly smile and
+    the same comic art style. Dry ground, no water. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 35113
+  art:
+    kontext-parts:
+      status: RUNNING
+      art_image_id: null
+- key: abbess-rig-body-no-arms
+  entity: abbess
+  title: 'abbess rig part: body-no-arms'
+  size: 832x1216
+  source_image_id: 242521
+  source_flip: false
+  prompt_prose: Remove both of her arms completely, so the black habit hangs closed with no sleeves, paws, rosary
+    or dagger showing. Standing, seen from the side facing right. Keep the same elderly head nun, an abbess who
+    is a sea otter with a flat round face, a button nose and warm brown fur, the same black habit with the white
+    wimple and collar, her otter tail, the same kindly smile and the same comic art style. Dry ground, no water.
+    On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35114
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: abbess-rig-arm-rosary
+  entity: abbess
+  title: 'abbess rig part: arm-rosary'
+  size: 832x1216
+  source_image_id: 242521
+  source_flip: false
+  prompt_prose: 'Show only her left arm on its own: a wide black habit sleeve with a white cuff, and a warm brown
+    otter paw closed in a fist with a wooden rosary wrapped round the knuckles, held straight out, side view. Keep
+    the same elderly head nun, an abbess who is a sea otter with warm brown fur, the same black habit and the same
+    comic art style. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 35115
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: abbess-rig-arm-dagger
+  entity: abbess
+  title: 'abbess rig part: arm-dagger'
+  size: 832x1216
+  source_image_id: 242521
+  source_flip: false
+  prompt_prose: 'Show only her right arm on its own: a wide black habit sleeve with a white cuff, and a warm brown
+    otter paw gripping a short ritual dagger with a plain cross guard, the blade pointing forward, held straight
+    out, side view. Keep the same elderly head nun, an abbess who is a sea otter with warm brown fur, the same black
+    habit and the same comic art style. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 35116
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: abbess-rig-leg
+  entity: abbess
+  title: 'abbess rig part: leg'
+  size: 832x1216
+  source_image_id: 242521
+  source_flip: false
+  prompt_prose: 'Show only one of her legs on its own, as it kicks out from under her habit: a plain black stocking
+    from the knee down and a warm brown webbed otter foot, held straight out, side view. Keep the same elderly head
+    nun, an abbess who is a sea otter with warm brown fur and the same comic art style. On a plain off-white background,
+    nothing else in the picture.'
+  jobs:
+    kontext-parts: 35117
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: abbess-rig-crouch
+  entity: abbess
+  title: 'abbess rig part: crouch'
+  size: 832x1216
+  source_image_id: 242521
+  source_flip: false
+  prompt_prose: Show her crouching low facing right, knees fully bent so her habit pools on the ground around her,
+    the ritual dagger held ready in her right paw. Keep the same elderly head nun, an abbess who is a sea otter
+    with a flat round face, a button nose and warm brown fur, the same black habit with the white wimple and collar,
+    her otter tail and the same comic art style. Dry ground, no water. On a plain off-white background, nothing
+    else in the picture.
+  jobs:
+    kontext-parts: 35118
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: abbess-rig-jump
+  entity: abbess
+  title: 'abbess rig part: jump'
+  size: 832x1216
+  source_image_id: 242521
+  source_flip: false
+  prompt_prose: Show her in mid-air jumping facing right, knees tucked up, her black habit and veil flaring out
+    behind her. Keep the same elderly head nun, an abbess who is a sea otter with a flat round face, a button nose
+    and warm brown fur, the same black habit with the white wimple and collar, her otter tail and the same comic
+    art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35119
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null
+- key: abbess-rig-knockdown
+  entity: abbess
+  title: 'abbess rig part: knockdown'
+  size: 832x1216
+  source_image_id: 242521
+  source_flip: false
+  prompt_prose: Show her collapsed forward flat on her face on the ground, arms out, her black habit and veil spread
+    around her, seen from the side with her head to the right. Keep the same elderly head nun, an abbess who is
+    a sea otter with warm brown fur, the same black habit with the white wimple and collar, her otter tail and the
+    same comic art style. Dry ground, no water. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35120
+  art:
+    kontext-parts:
+      status: PENDING
+      art_image_id: null

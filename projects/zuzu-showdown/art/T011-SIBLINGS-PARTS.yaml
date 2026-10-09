@@ -1,0 +1,181 @@
+# zuzu-showdown t-011: HD parts sheets for the Siblings' rig. The sister animates as the fighter, so she gets
+# the same parts as Zuzu and the Coyote (T010-RIG-PARTS): a fighting stance with her arms held clear, the body
+# with no arms, an arm, a leg, and key poses. The toddler is a separate puppet layer with no hurtbox
+# (fighters.yaml children_rules), so he gets whole poses instead of parts: standing behind her, ducking, lobbing
+# an apple, holding one up proudly, waving bye-bye, and blowing a raspberry. Sources: the sister's profile
+# facing right (242140) and the toddler's (242156), from fighters.yaml's approved sets. Both are children:
+# always fully dressed in their rag clothes, never a harmed or gloating pose (VIDEO-GUARDRAILS.md).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-parts
+  label: Flux Kontext dev (fp8), rig parts from the locked reference
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+  seed: 71173
+subjects:
+- key: sister-rig-stance-apart
+  entity: sister
+  title: 'sister rig part: stance-apart'
+  size: 832x1216
+  source_image_id: 242140
+  source_flip: false
+  prompt_prose: Put her in a low scrappy fighting stance facing right, knees bent and feet apart, both arms held
+    out away from her body so they do not overlap her dress, her paws open with the claws out, her huge ears up
+    and a hard stare. Keep the same young fennec fox girl, about ten years old, gaunt, with sandy fur and very large
+    ears, the same long torn pale brown dress of ragged cloth, the bandaged wrists and ankles, her bushy tail with
+    the dark tip, and the same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35121
+- key: sister-rig-body-no-arms
+  entity: sister
+  title: 'sister rig part: body-no-arms'
+  size: 832x1216
+  source_image_id: 242140
+  source_flip: false
+  prompt_prose: Remove both of her arms completely, so the long ragged dress hangs with no arms or paws showing.
+    Standing, seen from the side facing right. Keep the same young fennec fox girl, about ten years old, gaunt,
+    with sandy fur and very large ears, the same long torn pale brown dress of ragged cloth, the bandaged ankles,
+    her bushy tail with the dark tip, and the same comic art style. On a plain off-white background, nothing else
+    in the picture.
+  jobs:
+    kontext-parts: 35122
+- key: sister-rig-arm
+  entity: sister
+  title: 'sister rig part: arm'
+  size: 832x1216
+  source_image_id: 242140
+  source_flip: false
+  prompt_prose: 'Show only one of her arms on its own: a thin sandy-furred fennec fox arm from the shoulder to the
+    paw, a frayed ragged sleeve at the shoulder and a dirty bandage round the wrist, the paw open with the claws
+    out, held straight, side view. Keep the same comic art style. On a plain off-white background, nothing else
+    in the picture.'
+  jobs:
+    kontext-parts: 35123
+- key: sister-rig-leg
+  entity: sister
+  title: 'sister rig part: leg'
+  size: 832x1216
+  source_image_id: 242140
+  source_flip: false
+  prompt_prose: 'Show only one of her legs on its own: a thin sandy-furred fennec fox leg from the knee down, a
+    dirty bandage round the ankle and a bare fox foot, held straight out, side view. Keep the same comic art style.
+    On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 35124
+- key: sister-rig-crouch
+  entity: sister
+  title: 'sister rig part: crouch'
+  size: 832x1216
+  source_image_id: 242140
+  source_flip: false
+  prompt_prose: Show her crouching low facing right, knees fully bent, one paw on the ground and the other raised
+    with the claws out, her huge ears flat back and teeth bared. Keep the same young fennec fox girl, about ten
+    years old, gaunt, with sandy fur and very large ears, the same long torn pale brown dress of ragged cloth, the
+    bandaged wrists and ankles, her bushy tail with the dark tip, and the same comic art style. On a plain off-white
+    background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35125
+- key: sister-rig-jump
+  entity: sister
+  title: 'sister rig part: jump'
+  size: 832x1216
+  source_image_id: 242140
+  source_flip: false
+  prompt_prose: Show her in mid-air leaping facing right, knees tucked up, her ragged dress and tail flying out
+    behind her, ears back. Keep the same young fennec fox girl, about ten years old, gaunt, with sandy fur and very
+    large ears, the same long torn pale brown dress of ragged cloth, the bandaged wrists and ankles, and the same
+    comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35126
+- key: sister-rig-knockdown
+  entity: sister
+  title: 'sister rig part: knockdown'
+  size: 832x1216
+  source_image_id: 242140
+  source_flip: false
+  prompt_prose: Show her sitting down hard on the ground facing right after a tumble, legs out in front, propped
+    up on her paws, dazed but unhurt, ears drooping. Keep the same young fennec fox girl, about ten years old, gaunt,
+    with sandy fur and very large ears, the same long torn pale brown dress of ragged cloth, the bandaged wrists
+    and ankles, her bushy tail, and the same comic art style. On a plain off-white background, nothing else in the
+    picture.
+  jobs:
+    kontext-parts: 35127
+- key: toddler-stand
+  entity: toddler
+  title: 'toddler puppet: stand'
+  size: 832x1216
+  source_image_id: 242156
+  source_flip: false
+  prompt_prose: Show him standing facing right, curious, holding a red apple in both paws against his tummy. Keep
+    the same toddler fennec fox boy with sandy fur, very large ears and big eyes, the same small checked blue cloth
+    tunic of rags with the rope belt, the green patched trousers, the bandaged paw, his bushy tail, and the same
+    comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35128
+- key: toddler-duck
+  entity: toddler
+  title: 'toddler puppet: duck'
+  size: 832x1216
+  source_image_id: 242156
+  source_flip: false
+  prompt_prose: Show him crouched down small facing right, both paws over his head and his big ears folded down,
+    hiding. Keep the same toddler fennec fox boy with sandy fur, very large ears and big eyes, the same small checked
+    blue cloth tunic of rags with the rope belt, the green patched trousers, the bandaged paw, his bushy tail, and
+    the same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35129
+- key: toddler-throw
+  entity: toddler
+  title: 'toddler puppet: throw'
+  size: 832x1216
+  source_image_id: 242156
+  source_flip: false
+  prompt_prose: Show him facing right mid-throw, one arm swung up over his head about to lob a red apple, his tongue
+    poking out with effort, giggling. Keep the same toddler fennec fox boy with sandy fur, very large ears and big
+    eyes, the same small checked blue cloth tunic of rags with the rope belt, the green patched trousers, the bandaged
+    paw, his bushy tail, and the same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35130
+- key: toddler-proud
+  entity: toddler
+  title: 'toddler puppet: proud'
+  size: 832x1216
+  source_image_id: 242156
+  source_flip: false
+  prompt_prose: Show him facing right holding a red apple up high in both paws, beaming proudly. Keep the same toddler
+    fennec fox boy with sandy fur, very large ears and big eyes, the same small checked blue cloth tunic of rags
+    with the rope belt, the green patched trousers, the bandaged paw, his bushy tail, and the same comic art style.
+    On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35131
+- key: toddler-wave
+  entity: toddler
+  title: 'toddler puppet: wave'
+  size: 832x1216
+  source_image_id: 242156
+  source_flip: false
+  prompt_prose: Show him facing right waving bye-bye with one paw raised, smiling. Keep the same toddler fennec
+    fox boy with sandy fur, very large ears and big eyes, the same small checked blue cloth tunic of rags with the
+    rope belt, the green patched trousers, the bandaged paw, his bushy tail, and the same comic art style. On a
+    plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35132
+- key: toddler-raspberry
+  entity: toddler
+  title: 'toddler puppet: raspberry'
+  size: 832x1216
+  source_image_id: 242156
+  source_flip: false
+  prompt_prose: Show him facing right blowing a cheeky raspberry, tongue out, eyes squeezed shut, paws on his hips.
+    Keep the same toddler fennec fox boy with sandy fur, very large ears and big eyes, the same small checked blue
+    cloth tunic of rags with the rope belt, the green patched trousers, the bandaged paw, his bushy tail, and the
+    same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 35133
