@@ -1,7 +1,7 @@
 # Pitch: Maze Muncher Garden
 date: 2026-10-09
 project-target: kr-arcade
-status: awaiting-silas
+status: rejected
 
 ## The idea
 An arcade cabinet riffing on Pac-Man's maze-chomping chase, where a little watering robot waters every seedling in a hedge maze while four wandering weed-bots patrol it. A sun-drop power-up lets it briefly scare the weeds, and each maze adds speed and a new patrol pattern.
