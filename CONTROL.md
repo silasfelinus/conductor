@@ -629,3 +629,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
   eye on quality. we want quality. this project finishes when it's a truly fun, complex, and quality table
   ... it should be as good as any pinball fx3 table, that's our standard." No Tables 2/3, no table select.
   Follow FX3-QUALITY-BLUEPRINT.md. Never call it finished by task count; only his verdict (t-016) ends it.
+
+### robot-paper-boat-regatta  (software)
+**Direction:** A calm puzzle toy: fold a paper boat from sail, hull and cargo choices, then race it down a pre-painted stream against simple rival boats using deterministic current rules; no model at runtime.
+**Notes:**
+- (your notes)
