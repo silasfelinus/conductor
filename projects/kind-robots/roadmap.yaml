@@ -2407,6 +2407,69 @@ tasks:
     Recovered at 23:16 UTC, once the fixed image deployed. The home page, /play/arcade and the pinball cabinet all answer 200.
 
     Prevention worth considering (not started): a post-deploy smoke check that fetches the home page and fails on a 500, since the database health check stayed green through the outage.
+- id: t-142
+  title: "Reconcile legacy Zuzu resource lore and import missing canon-aligned characters, rewards and scenarios"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  source_issue: "silasfelinus/kind_robots#3390"
+  updated: '2026-10-09'
+  note: |-
+    FROM GITHUB ISSUE silasfelinus/kind_robots#3390 (https://github.com/silasfelinus/kind_robots/issues/3390), opened by @silasfelinus on 2026-10-09. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3390`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+    ## Authorization and source of truth
+
+    Silas, 2026-10-09, explicitly authorized updating the earliest LLM-generated Kind Robots resource entries to reflect the later Zuzu worldbuilding. Those initial Character/Reward/Scenario/Dream entries **were filler, not canon**. New lore must draw from `BOOK-ONE.md`, later `CAST-PICKS.md`, `VIDEO-GUARDRAILS.md`, and properly labeled Showdown/game extensions.
+
+    **Ready-to-sync structured submission**: [Conductor worlds/zuzu/resource-submissions.json](https://github.com/silasfelinus/conductor/blob/main/worlds/zuzu/resource-submissions.json) (Conductor PR #5814; if still open, see [PR files](https://github.com/silasfelinus/conductor/pull/5814/files)).
+
+    ## Concrete work
+
+    1. Authenticate as Silas/admin, query existing Kind Robots Character, Scenario, Reward, Dream and Resource rows for Zuzu and other cast names. Produce a **read-first mapping** (existing IDs, owner, old text, proposed source). Do not use unverified IDs or touch unrelated users.
+    2. Idempotently PATCH the matching owned early LLM filler records with current Book One/cast/guardrail descriptions and approved image references. Preserve IDs, relations, audit history, and gallery access.
+    3. POST only missing entries from the submission. Nine candidate Character profiles include Zuzu, Coyote Vagrant, Fennec Sister, Fennec Toddler, the Abbess, River Croc, Storm Crow, Hyena Matriarch and Old Komodo, with separate continuity designations. Additional candidates: five Rewards and five Scenarios. The *user has authorized the additions*, but do not silently promote game-only mechanics into comic canon.
+    4. Audit the five trained-character LoRA dataset handoffs and actual imported `Resource` records; add existing trained Resource IDs only after verifying models exist. The datasets alone are not imported trained LoRAs.
+    5. Keep additions private `isPublic=false`; respect mature visibility. Existing public records may need a scoped explicit visibility determination rather than silently bulk-publishing. Prefer API mutations, never direct SQL.
+    6. Update the Zuzu registry's `runtime_model_discovery` with the **verified** IDs and provenance, report create/patch/skipped counts and any conflicting identities, and add regression tests for idempotence and permissions.
+
+    Reference: [Zuzu world registry](https://github.com/silasfelinus/conductor/tree/main/worlds/zuzu), [asset audit PR #5814](https://github.com/silasfelinus/conductor/pull/5814), [related live admin world explorer issue #3388](https://github.com/silasfelinus/kind_robots/issues/3388). This issue owns the *data reconciliation*; #3388 owns the visual browser.
+
+    Do not announce as applied until actual authenticated API calls and the returned rows have been verified.
+- id: t-143
+  title: "Zuzu World: admin resource explorer with live joins to shared universe registry"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  source_issue: "silasfelinus/kind_robots#3388"
+  updated: '2026-10-09'
+  note: |-
+    FROM GITHUB ISSUE silasfelinus/kind_robots#3388 (https://github.com/silasfelinus/kind_robots/issues/3388), opened by @silasfelinus on 2026-10-09. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3388`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+    ## Goal
+
+    Make the shared Zuzu universe registry accessible from Kind Robots as a genuine admin-only worldbuilding workspace. The canonical, machine-readable index now lives at [Conductor worlds/zuzu/catalog.json](https://github.com/silasfelinus/conductor/blob/main/worlds/zuzu/catalog.json) and the reading contract at [worlds/zuzu/README.md](https://github.com/silasfelinus/conductor/blob/main/worlds/zuzu/README.md).
+
+    This must be a **read-through viewer and curator**, not a second datastore or a project with a competing roadmap.
+
+    ## MVP
+
+    - Provide an **admin-only** Zuzu World entrypoint with a visual overview, linked productions, canon precedence, and resources. Follow existing admin auth at **server** API boundaries, including private/mature ArtImage permissions.
+    - Resolve current Conductor registry content through an authenticated/commit-stamped pathway. Do not hardcode a divergent copy of world lore in the Kind Robots app. Honor `SOURCE_OF_TRUTH.md`: Conductor owns coordination and canonical file references; Kind Robots owns actual Character/Scenario/Reward/Resource/ArtImage/Project rows and UI presentation.
+    - Show curated **characters, art & concept sets, LoRA/checkpoint Resources, Scenarios, Rewards, Dreams, and Projects** with existing IDs and deep links to their current resource/detail screens. Add provenance (origin project/ArtJob, accepted version, visibility, last seen). Never silently mark an unverified lookup or queued ArtJob as an available asset.
+    - Cross-link the first seven productions from the registry: comic/Book One, title trailer, animated film, Lair, Showdown, gamebook, and Ghost Trail. Show which changes are canonical vs noncanonical gameplay branches.
+    - A new production should get a stable world-catalogue link/read contract and reuse asset IDs. No duplicate model rows, no copied binary assets, no extra `worldId` on Project when `conductorSlug` already joins projects.
+    - Provide search and filter by model type, project, character, provenance, and verification status. Do not expose restricted guardrail terms or the hidden-story twist on public labels, metadata or unauthenticated routes.
+
+    ## Verification and boundaries
+
+    - Unit/integration tests for registry loading, offline/errors, missing resource IDs, authorization of private/mature assets, and no duplicate rows.
+    - Frontend review at phone/tablet/desktop on protected preview/live route before merge, per `docs/agents/frontend-verification.md`.
+    - Keep feature **admin-only** until a separate, explicit human decision authorizes broader publication.
+    - New canon, cast changes and external publication remain human-gated; art-generation rights and pipelines remain with production owners.
+
+    This issue is a follow-up to Conductor [PR #5812](https://github.com/silasfelinus/conductor/pull/5812), which delivered the repository-backed world registry and cross-production links.
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
