@@ -8,6 +8,7 @@ goal: >-
   seeded reproducible species×occupation×disposition encounter composition,
   cross-project Zuzu Character/Facet/Scenario/Reward/ArtImage reuse, interactive
   board-grid travel, consequences, companions, skills, equipment, save/resume,
+  card fronts/backs, physical draw/discard decks, deal/flip/reveal animations,
   sound and accessible mobile/tablet/desktop acceptance. Private admin preview
   first, human authorization before outward public publication.
 notes_from_silas: |
@@ -49,7 +50,7 @@ milestones:
     weight: 25
     status: not-started
   - id: m4
-    title: "EXPERIENCE — image-first card map, cinematic scenes, sound, accessibility"
+    title: "EXPERIENCE — art-heavy board, card decks/flips, sound, accessibility"
     weight: 15
     status: not-started
   - id: m5
@@ -264,6 +265,10 @@ tasks:
     stakes: reversible
     depends_on: [t-005, t-006]
     note: >-
+      Launch gate (spec: BOARD-CARD-ARCHITECTURE.md): genuine face-down stack, click-to-draw, animated
+      deal, front/back persistent reveal, discard and inspect flows.
+      Reuse existing KR visual card components without hijacking the
+      Storybook run store, global navigation hand, or flipStore.
       Main board visual dominates screen at phone/tablet/desktop. Three
       current encounter cards with routes, full art inspector, location
       state changes, selected path and discovered history; mobile
@@ -290,7 +295,9 @@ tasks:
     stakes: reversible
     depends_on: [t-009, t-011, t-016]
     note: >-
-      Multiple seeds never produce impossible tiles, dead progression,
+      Test draw/flip/deal/discard state idempotence, saved face state,
+      correct pile counts, animation independence, rapid taps and
+      source ArtImage provenance. Multiple seeds never produce impossible tiles,
       duplicate uniqueness collisions, species-based moral determinism,
       unearned hidden knowledge or unrecoverable save state. HP and reward
       progression are balanced across all five lands.
