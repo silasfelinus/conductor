@@ -43,7 +43,7 @@ their own [project briefs](#productions).
 | Zuzu's Lair | Separate QTE adventure | [Lair](../../projects/zuzu-lair/DESIGN-BRIEF.md) |
 | Zuzu Showdown | Noncanonical versus matchups | [Showdown](../../projects/zuzu-showdown/DESIGN-BRIEF.md), [fighters](../../projects/zuzu-showdown/fighters.yaml) |
 | The Bell That Never Rang | Alternate-trail RPG | [Gamebook](../../projects/zuzu-gamebook/DESIGN-BRIEF.md) |
-| Zuzu: Shifting Lands | Procedural alternate-play board-game expedition | [Brief](../../projects/zuzu-shifting-lands/DESIGN-BRIEF.md), [five-land manifest](../../projects/zuzu-shifting-lands/WORLD-DECKS.json) |
+| Zuzu: Shifting Lands | Procedural alternate-play board-game expedition | [Brief](../../projects/zuzu-shifting-lands/DESIGN-BRIEF.md), [five-land manifest](../../projects/zuzu-shifting-lands/WORLD-DECKS.json), [board/card architecture](../../projects/zuzu-shifting-lands/BOARD-CARD-ARCHITECTURE.md) |
 | Zuzu: Ghost Trail | Arcade spinoff | [Arcade game queue](../../projects/kr-arcade/games.yaml) (slug `zuzu-ghost-trail`) |
 
 Projects share *world references*, not tasks or implementation ownership. Each project
