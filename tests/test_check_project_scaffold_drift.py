@@ -193,8 +193,8 @@ def test_render_reports_forward_and_reverse():
 
 
 def test_project_parity_uses_live_api_host(monkeypatch):
-    """The public kindrobots.org domain is not the API endpoint."""
-    assert drift.API_URL == "https://kind-robots.vercel.app/api/projects"
+    """Parities use the authenticated self-hosted production endpoint."""
+    assert drift.API_URL == "https://kindrobots.org/api/conductor/project-parity"
 
     requested = []
 
@@ -206,7 +206,7 @@ def test_project_parity_uses_live_api_host(monkeypatch):
             return False
 
         def read(self):
-            return b'{"data": []}'
+            return b'{"success": true, "data": []}'
 
     def fake_urlopen(req, timeout):
         requested.append((req.full_url, timeout))
@@ -214,7 +214,7 @@ def test_project_parity_uses_live_api_host(monkeypatch):
 
     monkeypatch.setattr(drift.urllib.request, "urlopen", fake_urlopen)
     assert drift.fetch_kind_robots_projects("test-token") == []
-    assert requested == [("https://kind-robots.vercel.app/api/projects?includeInactive=true&take=25&skip=0", 20)]
+    assert requested == [("https://kindrobots.org/api/conductor/project-parity", 20)]
 
 
 def test_project_parity_retries_transient_503(monkeypatch):
@@ -232,7 +232,7 @@ def test_project_parity_retries_transient_503(monkeypatch):
             return False
 
         def read(self):
-            return b'{"data": [{"conductorSlug": "conductor"}]}'
+            return b'{"success": true, "data": [{"conductorSlug": "conductor"}]}'
 
     def fake_urlopen(req, timeout):
         attempts.append(req.full_url)
@@ -286,3 +286,21 @@ def test_project_parity_does_not_retry_auth_failure(monkeypatch):
     except urllib.error.HTTPError as error:
         assert error.code == 401
     assert len(attempts) == 1
+
+
+def test_parity_rejects_invalid_response(monkeypatch):
+    import pytest
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return b'{"success": false, "data": []}'
+
+    monkeypatch.setattr(drift.urllib.request, "urlopen", lambda req, timeout: Response())
+    with pytest.raises(ValueError, match="Invalid Kind Robots project parity response"):
+        drift.fetch_kind_robots_projects("test-token")

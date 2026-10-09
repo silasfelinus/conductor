@@ -37,7 +37,7 @@ project-overrides.yaml, matching check_pr_merged_drift.py and
 audit_human_gates.py. Use --include-inactive for an intentional archive sweep.
 
 Requires: KR_API_TOKEN env var (a valid kind_robots JWT for Silas's account) to
-reach GET https://kind-robots.vercel.app/api/projects. Without it, the check cannot
+reach GET https://kindrobots.org/api/conductor/project-parity. Without it, the check cannot
 run at all -- this is reported as unresolved, not as a clean pass.
 
 Usage:
@@ -64,7 +64,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 PROJECTS_DIR = ROOT / "projects"
 OVERRIDES_PATH = ROOT / "project-overrides.yaml"
-API_URL = "https://kind-robots.vercel.app/api/projects"
+API_URL = "https://kindrobots.org/api/conductor/project-parity"
 ACTIVE_STATUS = "active"
 TRANSIENT_HTTP_CODES = {429, 500, 502, 503, 504}
 RETRY_DELAYS_SECONDS = (1, 2, 4)
@@ -103,39 +103,31 @@ def local_project_slugs(projects_dir: Path | None = None) -> set[str]:
 
 
 def fetch_kind_robots_projects(token: str) -> list[dict[str, Any]]:
-    """GET every Kind Robots Project (active and inactive) with pagination."""
-    projects: list[dict[str, Any]] = []
-    # Keep responses small: the projects endpoint includes nested relations for every row.
-    # An oversized response can overwhelm the server even when the API is reachable.
-    take = 25
-    skip = 0
-    while True:
-        url = f"{API_URL}?includeInactive=true&take={take}&skip={skip}"
-        req = urllib.request.Request(
-            url,
-            headers={
-                "Authorization": f"Bearer {token}",
-                "Content-Type": "application/json",
-            },
-        )
-        for attempt in range(len(RETRY_DELAYS_SECONDS) + 1):
-            try:
-                with urllib.request.urlopen(req, timeout=20) as resp:
-                    body = json.loads(resp.read())
-                break
-            except urllib.error.HTTPError as error:
-                if error.code not in TRANSIENT_HTTP_CODES or attempt == len(RETRY_DELAYS_SECONDS):
-                    raise
-            except (urllib.error.URLError, TimeoutError):
-                if attempt == len(RETRY_DELAYS_SECONDS):
-                    raise
-            time.sleep(RETRY_DELAYS_SECONDS[attempt])
-        page = body.get("data", []) or []
-        projects.extend(page)
-        if len(page) < take:
+    """GET compact, admin-only project identity snapshot from production."""
+    url = API_URL
+    req = urllib.request.Request(
+        url,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+        },
+    )
+    for attempt in range(len(RETRY_DELAYS_SECONDS) + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                body = json.loads(resp.read())
             break
-        skip += take
-    return projects
+        except urllib.error.HTTPError as error:
+            if error.code not in TRANSIENT_HTTP_CODES or attempt == len(RETRY_DELAYS_SECONDS):
+                raise
+        except (urllib.error.URLError, TimeoutError):
+            if attempt == len(RETRY_DELAYS_SECONDS):
+                raise
+        time.sleep(RETRY_DELAYS_SECONDS[attempt])
+
+    if body.get("success") is not True or not isinstance(body.get("data"), list):
+        raise ValueError("Invalid Kind Robots project parity response")
+    return body["data"]
 
 
 def scan(
