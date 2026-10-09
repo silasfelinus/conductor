@@ -5,6 +5,8 @@ trailer, animated film, Lair, Showdown, arcade and gamebook, as well as concept 
 character-LoRA datasets, and Kind Robots model resources.
 
 Machine-readable index: [catalog.json](catalog.json) · Contribution rules: [CONTRIBUTING.md](CONTRIBUTING.md).
+
+**Planned admin interface:** [Zuzu Worldbuilding Studio UX and implementation specification](ADMIN-STUDIO-SPEC.md). Includes visual Library, project filters, add/edit/archive, art-edit and production suggestions, canon proposal workflow, and acceptance tests. This is a specification, **not a deployed page**.
 This world index is **not** a new Conductor project or a second Kind Robots database.
 Every production keeps its own roadmap, code, runtime assets and ownership.
 
