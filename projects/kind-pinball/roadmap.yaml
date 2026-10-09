@@ -571,7 +571,7 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Camera views: follow the ball, watch the flippers, see the whole table; the player picks"
-    status: claimed
+    status: done
     depends_on: [t-019]
     owner: worker
     passes: 0
@@ -585,9 +585,13 @@ tasks:
       a ball off screen when it matters (a ball near the flippers is always in view). The sub-table and
       plunge views keep working in every mode. Physics and rules unchanged (runPinballDevices stays
       green).
+
+      Camera views shipped: dynamic/flippers/full table, B key + touch VIEW chip, remembered
+      per player (kind_robots#3408).
     claimed_by: 01SGWMHGwnsCPRtaot4PDRAT
     claimed_at: '2026-10-09T23:44:51Z'
-    updated: '2026-10-09T23:44:51Z'
+    updated: '2026-10-09T23:58:09Z'
+    implementation_pr: 'silasfelinus/kind_robots#3408'
 
   - id: t-022
     milestone: m5
