@@ -555,3 +555,12 @@ These are not automatically queued for legacy projects. Generate them manually w
 
 ## music-video (added 2026-10-01)
 - `music-video-icon.webp` (256×256): A rounded-square badge in deep indigo holding one film strip that unspools into a waving ribbon of music staff lines, three bright squares along the strip in magenta, teal and gold, thick clean outlines, centered with wide margins, soft even studio light
+
+
+## zuzu-shifting-lands (added 2026-10-09)
+
+**Project assets; internal rendering allowed but never claim as delivered before verification.**
+
+- `zuzu-shifting-lands-icon.webp` (256×256): Square icon of a weathered samurai travel hat above a winding three-card frontier trail, ochre and midnight-blue ink, clear visual silhouette, bare unwritten surfaces.
+- `zuzu-shifting-lands-card.webp` (512×768): An Edo-era grey koala samurai in rust-brown poncho and straw kasa, a single katana on his back, standing at a haunted frontier crossroads, a homestead, old mission and stone well arranged as beautifully illustrated tabletop cards under a dust storm, original painted ink, 2:3 portrait.
+- `zuzu-shifting-lands-hero.webp` (1280×720): Cinematic panoramic illustrated tabletop trail progressing across five frontier lands with image-rich cards for farm, ford, canyons, cave and black threshold, a short grey koala ronin in kasa and rust poncho starting the journey, frontier animal travelers, dramatic twilight, premium dark fantasy card art, 16:9 landscape.
