@@ -1,5 +1,8 @@
 # Zuzu: Koala Assassin — Book One
 
+> **Shared production directory:** [Zuzu world registry](../../../../worlds/zuzu/README.md). This file, not the registry, remains the canonical Book One story.
+
+
 Silas, 2026-10-04: *"make the first issue [one where] zuzu discovers the massacre, finds the siblings,
 they follow, he gets apples but leaves for them, hits the oasis, encounter with vandal, encounter with
 croc, drops them off at the orphanage, and then the nun experience, and they follow together. I think we

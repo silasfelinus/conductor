@@ -1,5 +1,8 @@
 # Zuzu: Koala Assassin — guardrails for videos made from this comic
 
+> **Shared production directory:** [Zuzu world registry](../../../../worlds/zuzu/README.md). These guardrails remain authoritative; the index deliberately does not copy restricted prompt terms.
+
+
 Two Kind Robots video projects consume this issue (Silas, 2026-10-04):
 
 | Video | Project | Tasks |

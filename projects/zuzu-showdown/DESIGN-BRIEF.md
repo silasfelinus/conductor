@@ -1,5 +1,8 @@
 # Zuzu Showdown — Design Brief
 
+> **Shared Zuzu world registry:** [worlds/zuzu](../../worlds/zuzu/README.md) is the common canon and asset index. Match outcomes and Showdown-specific fighting mechanics do not rewrite Book One.
+
+
 date: 2026-10-06
 status: v1.2 — building; scope confirmed by Silas (2026-10-06/07, see "Decisions")
 author: Claude (from Silas's request, 2026-10-06)

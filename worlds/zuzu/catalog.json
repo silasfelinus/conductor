@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "world": {
+    "id": "zuzu",
+    "title": "Zuzu: Koala Assassin",
+    "status": "active",
+    "owner": "conductor",
+    "canon_policy": "The ordered canon_sources below govern shared story/art; production-specific gameplay is not canon by default."
+  },
+  "canon_sources": [
+    {
+      "id": "book-one",
+      "path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "authority": "story-of-record",
+      "notes": "Current Book One chronology; overrides the first issue script."
+    },
+    {
+      "id": "cast-picks",
+      "path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "authority": "locked-visuals",
+      "notes": "Latest character selections and angle screens win over earlier rounds."
+    },
+    {
+      "id": "video-guardrails",
+      "path": "projects/comic-creator/issues/zuzu-koala-assassin-01/VIDEO-GUARDRAILS.md",
+      "authority": "visual-and-content-guardrails",
+      "notes": "Read at generation time, including the confidential prompt restrictions; do not duplicate that list here."
+    },
+    {
+      "id": "brainstorm-round-3",
+      "path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BRAINSTORM-ROUND-3.md",
+      "authority": "revision-history",
+      "notes": "Supersedes the early series bible and first-issue script where they conflict."
+    },
+    {
+      "id": "series-bible",
+      "path": "projects/comic-creator/issues/zuzu-koala-assassin-01/SERIES-BIBLE.md",
+      "authority": "historical-context",
+      "notes": "Draft only; superseded elements are not current world canon."
+    },
+    {
+      "id": "issue-01-script",
+      "path": "projects/comic-creator/issues/zuzu-koala-assassin-01/ISSUE-01-SCRIPT.md",
+      "authority": "archive-only",
+      "notes": "Explicitly superseded by Book One; do not adapt as the current script."
+    }
+  ],
+  "productions": [
+    {
+      "id": "comic",
+      "project": "comic-creator",
+      "name": "Zuzu comic / Book One",
+      "role": "canonical-story",
+      "source_paths": [
+        "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+        "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md"
+      ],
+      "app_paths": []
+    },
+    {
+      "id": "intro-trailer",
+      "project": "music-video",
+      "name": "Zuzu title / trailer music video",
+      "role": "adaptation",
+      "source_paths": [
+        "projects/comic-creator/issues/zuzu-koala-assassin-01/VIDEO-GUARDRAILS.md",
+        "projects/music-video/DESIGN-BRIEF.md"
+      ],
+      "app_paths": [
+        "/admin/music-video"
+      ]
+    },
+    {
+      "id": "animated-film",
+      "project": "comic-film",
+      "name": "Zuzu animated Book One experience",
+      "role": "adaptation",
+      "source_paths": [
+        "projects/comic-film/DESIGN-BRIEF.md",
+        "projects/comic-creator/issues/zuzu-koala-assassin-01/VIDEO-GUARDRAILS.md"
+      ],
+      "app_paths": [
+        "/admin/comic-film"
+      ]
+    },
+    {
+      "id": "lair",
+      "project": "zuzu-lair",
+      "name": "Zuzu's Lair",
+      "role": "noncanonical-branch",
+      "source_paths": [
+        "projects/zuzu-lair/DESIGN-BRIEF.md"
+      ],
+      "app_paths": []
+    },
+    {
+      "id": "showdown",
+      "project": "zuzu-showdown",
+      "name": "Zuzu Showdown",
+      "role": "noncanonical-versus",
+      "source_paths": [
+        "projects/zuzu-showdown/DESIGN-BRIEF.md",
+        "projects/zuzu-showdown/fighters.yaml"
+      ],
+      "app_paths": [
+        "/play/zuzu-showdown"
+      ]
+    },
+    {
+      "id": "gamebook",
+      "project": "zuzu-gamebook",
+      "name": "The Bell That Never Rang gamebook",
+      "role": "noncanonical-alternate-trail",
+      "source_paths": [
+        "projects/zuzu-gamebook/DESIGN-BRIEF.md"
+      ],
+      "app_paths": [
+        "/play/zuzu-gamebook"
+      ]
+    },
+    {
+      "id": "ghost-trail",
+      "project": "kr-arcade",
+      "name": "Zuzu: Ghost Trail",
+      "role": "noncanonical-arcade",
+      "source_paths": [
+        "projects/kr-arcade/games.yaml"
+      ],
+      "app_paths": []
+    }
+  ],
+  "asset_references": [
+    {
+      "key": "zuzu-hero-r6",
+      "model": "ArtImage",
+      "id": 241913,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "purpose": "Selected R6 hero reference; check later locked angle/shape decisions before generating."
+    },
+    {
+      "key": "fennec-sister-s2",
+      "model": "ArtImage",
+      "id": 241879,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "purpose": "Selected sister design reference."
+    },
+    {
+      "key": "fennec-toddler-t2",
+      "model": "ArtImage",
+      "id": 241883,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "purpose": "Selected toddler design reference."
+    },
+    {
+      "key": "coyote-c1",
+      "model": "ArtImage",
+      "id": 241888,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "purpose": "Selected one-eyed coyote design reference."
+    },
+    {
+      "key": "river-croc-k2",
+      "model": "ArtImage",
+      "id": 241893,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "purpose": "Selected crocodile scene reference."
+    },
+    {
+      "key": "otter-nuns-n2",
+      "model": "ArtImage",
+      "id": 241895,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "purpose": "Selected nuns group reference."
+    }
+  ],
+  "pipeline_resources": [
+    {
+      "id": "character-lora-datasets",
+      "type": "lora-dataset-specification",
+      "path": "projects/comic-creator/issues/zuzu-koala-assassin-01/LORA-SETS.yaml",
+      "status": "source-defined",
+      "notes": "Datasets and trigger tags are specified; no claim here that trained LoRA files or DB Resource rows exist."
+    },
+    {
+      "id": "character-expressions",
+      "type": "lora-expression-source",
+      "path": "projects/comic-creator/issues/zuzu-koala-assassin-01/LORA-EXPRESSIONS.yaml",
+      "status": "source-defined",
+      "notes": "Character expression training examples."
+    },
+    {
+      "id": "art-house-lane",
+      "type": "render-contract",
+      "path": "projects/comic-creator/issues/zuzu-koala-assassin-01/VIDEO-GUARDRAILS.md",
+      "status": "source-defined",
+      "notes": "Comic Studio house model and prompting constraints. Read canonical source at use time."
+    },
+    {
+      "id": "showdown-sprites",
+      "type": "game-asset-contract",
+      "path": "projects/zuzu-showdown/fighters.yaml",
+      "status": "source-defined",
+      "notes": "Fighting-game animation/sprite definitions are project-owned derivatives, not shared character canon."
+    }
+  ],
+  "runtime_model_discovery": [
+    {
+      "model": "Character",
+      "lookup_terms": [
+        "Zuzu",
+        "Koala Assassin",
+        "Coyote",
+        "Abbess"
+      ],
+      "stable_ids": [],
+      "status": "not-audited",
+      "rule": "Search Kind Robots Character rows, verify actual identity and approved design before adding IDs."
+    },
+    {
+      "model": "Scenario",
+      "lookup_terms": [
+        "Zuzu",
+        "Koala Assassin"
+      ],
+      "stable_ids": [],
+      "status": "not-audited",
+      "rule": "May be historic seed material. Confirm relevance; not automatic canon."
+    },
+    {
+      "model": "Reward",
+      "lookup_terms": [
+        "Zuzu",
+        "Koala Assassin"
+      ],
+      "stable_ids": [],
+      "status": "not-audited",
+      "rule": "Link qualifying rewards by existing row ID; do not create duplicates to populate this registry."
+    },
+    {
+      "model": "Resource",
+      "lookup_terms": [
+        "zuzukoala",
+        "Zuzu",
+        "arthemyWesternArt"
+      ],
+      "stable_ids": [],
+      "status": "not-audited",
+      "rule": "Verify imported LoRA/checkpoint Resource rows and licenses before linking; dataset specification is not a trained asset."
+    },
+    {
+      "model": "Dream",
+      "lookup_terms": [
+        "Koala Assassin"
+      ],
+      "stable_ids": [
+        183
+      ],
+      "status": "legacy-inspiration",
+      "rule": "Historical seed reference in draft series bible, NOT current story canon."
+    },
+    {
+      "model": "Project",
+      "lookup_terms": [
+        "zuzu-gamebook",
+        "zuzu-showdown",
+        "zuzu-lair",
+        "comic-film",
+        "music-video",
+        "comic-creator",
+        "kr-arcade"
+      ],
+      "stable_ids": [],
+      "status": "join-by-conductorSlug",
+      "rule": "Use Project.conductorSlug, not duplicated IDs or separate world project records."
+    }
+  ]
+}

@@ -1,4 +1,7 @@
 # Zuzu: Koala Assassin — The Bell That Never Rang
+
+> **Shared Zuzu world registry:** [worlds/zuzu](../../worlds/zuzu/README.md) has the cross-project canon, locked art references, model lookups and other production links. Read it before introducing shared lore or assets.
+
 ## Original illustrated branching gamebook RPG
 
 **Owner:** `zuzu-gamebook` in Conductor. **Client:** `/play/zuzu-gamebook` in `kind_robots`.
