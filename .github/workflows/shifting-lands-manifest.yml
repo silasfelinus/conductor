@@ -1,0 +1,29 @@
+name: Shifting Lands Manifest Contract
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'projects/zuzu-shifting-lands/WORLD-DECKS.json'
+      - 'projects/zuzu-shifting-lands/world-decks.d.ts'
+      - 'projects/zuzu-shifting-lands/world-decks.contract.mjs'
+      - 'projects/zuzu-shifting-lands/world-decks.contract.test.mjs'
+      - '.github/workflows/shifting-lands-manifest.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'projects/zuzu-shifting-lands/WORLD-DECKS.json'
+      - 'projects/zuzu-shifting-lands/world-decks.d.ts'
+      - 'projects/zuzu-shifting-lands/world-decks.contract.mjs'
+      - 'projects/zuzu-shifting-lands/world-decks.contract.test.mjs'
+      - '.github/workflows/shifting-lands-manifest.yml'
+jobs:
+  manifest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node projects/zuzu-shifting-lands/world-decks.contract.mjs
+      - run: node --test projects/zuzu-shifting-lands/world-decks.contract.test.mjs
