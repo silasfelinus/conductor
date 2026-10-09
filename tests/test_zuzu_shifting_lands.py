@@ -48,6 +48,26 @@ class ShiftingLandsContract(unittest.TestCase):
         self.assertFalse(any("disposition" in entry or "alignment" in entry for entry in species.values()))
         self.assertFalse(any("disposition" in entry or "alignment" in entry for entry in roles.values()))
 
+    def test_board_card_reuse_is_an_mvp_contract(self):
+        spec = (GAME / "BOARD-CARD-ARCHITECTURE.md").read_text(encoding="utf-8")
+        brief = (GAME / "DESIGN-BRIEF.md").read_text(encoding="utf-8")
+        roadmap = (GAME / "roadmap.yaml").read_text(encoding="utf-8")
+        for component in (
+            "components/gallery/kr-card-flip.vue",
+            "components/gallery/kr-card-back.vue",
+            "components/navigation/flip-card.vue",
+            "components/navigation/card-picker.vue",
+            "components/storybook/storybook-table.vue",
+            "components/navigation/workspace-hand.vue",
+            "stores/flipStore.ts",
+        ):
+            self.assertIn(component, spec)
+        for interaction in ("DRAW_DECK", "FLIP_CARD", "DISCARD", "expectedRevision"):
+            self.assertIn(interaction, spec)
+        self.assertIn("BOARD-CARD-ARCHITECTURE.md", brief)
+        self.assertIn("BOARD-CARD-ARCHITECTURE.md", roadmap)
+        self.assertIn("draw/discard", roadmap)
+
     def test_setting_and_sources_have_open_fictional_spoilers(self):
         self.assertTrue((WORLD / "WORLD-GUIDE.md").is_file())
         self.assertEqual(
