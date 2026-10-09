@@ -1,0 +1,378 @@
+{
+  "schema_version": 1,
+  "kind": "Kind Robots existing-resource reconciliation and addition submission",
+  "status": "prepared-not-applied",
+  "authority": "User explicitly authorized aligning old LLM-generated records with later Zuzu worldbuilding on 2026-10-09.",
+  "legacy_canon_policy": "Original Koala Assassin/Gallowsun Dream, Character, Reward and Scenario copy was filler produced by LLMs. It has ZERO automatic canon authority. Do not cite it as canonical source or preserve conflicting lore when editing those records. New canon comes from Book One / locked Cast Picks / Guardrails; Showdown-only extensions remain labeled separately.",
+  "write_policy": [
+    "Query live scoped Character/Scenario/Reward rows first; match by owner and stable slug/name with provenance, never guess an ID.",
+    "For exact owned legacy matches, preserve IDs, user ownership, art history and unrelated links; patch only conflicting creative fields using model PATCH APIs.",
+    "Create only records with no defensible match. Do not duplicate similarly named records or overwrite unrelated users.",
+    "Resolve relationship IDs from actual records after creation; link cast/items using supported APIs. Do not assume historical Dream 183 is canonical.",
+    "Keep new or updated rows private pending authenticated live review. Respect mature/child access filters; do not publish externally.",
+    "This package is not an ArtJob request. Submit art through durable ArtJobs separately and attach only delivered reviewed images.",
+    "Source-backed character descriptions are adapted from Book One/locked cast; Showdown inventions remain explicitly noncanonical until adopted."
+  ],
+  "characters": [
+    {
+      "key": "zuzu-koala-assassin",
+      "canon_scope": "Book One canon",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "Zuzu",
+        "slug": "zuzu-koala-assassin",
+        "species": "koala",
+        "genre": "dark weird-west samurai animal fable",
+        "class": "story character",
+        "personality": "Reserved and gravely polite; acts before speaking",
+        "backstory": "A small, grave koala ronin whose silence and careful acts of mercy sit uneasily with his work as a hired sword.",
+        "presentation": "short and stocky; slight paunch; rust-brown poncho with orange zigzag trim, dark tunic, orange sash, dark brown trousers, shallow wide-brimmed straw kasa; single sheathed katana diagonal across his back, hilt above right shoulder",
+        "artPrompt": "short and stocky; slight paunch; rust-brown poncho with orange zigzag trim, dark tunic, orange sash, dark brown trousers, shallow wide-brimmed straw kasa; single sheathed katana diagonal across his back, hilt above right shoulder, mature western-comic illustration, gritty dusty frontier, Arthemy Western Art house style",
+        "isPublic": false,
+        "isMature": false,
+        "artImageId": 242395
+      }
+    },
+    {
+      "key": "coyote-vagrant",
+      "canon_scope": "Book One canon",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "Coyote Vagrant",
+        "slug": "coyote-vagrant",
+        "species": "coyote",
+        "genre": "dark weird-west samurai animal fable",
+        "class": "story character",
+        "backstory": "A hungry, battered one-eyed drifter; he initially faces Zuzu at the watering hole before their shared encounter leaves him without his right hand.",
+        "presentation": "destitute, patched olive-green riding coat, eyepatch over right eye, holster on right hip, underfed not skeletal; pre-encounter both hands, later bandaged right wrist stump",
+        "artPrompt": "anthropomorphic one-eyed coyote drifter, patched olive green long riding coat, right eyepatch, right hip revolver holster, both hands intact for pre-attack version, matte inked gritty western-comic portrait, dusty watering hole",
+        "isPublic": false,
+        "isMature": false,
+        "artImageId": 242531
+      }
+    },
+    {
+      "key": "fennec-sister",
+      "canon_scope": "Book One canon",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "The Fennec Sister",
+        "slug": "fennec-sister",
+        "species": "fennec fox",
+        "genre": "dark weird-west samurai animal fable",
+        "class": "story character",
+        "drive": "Keep her younger brother safe",
+        "backstory": "The older of two fox orphans, about ten. Fiercely protective of her toddler brother, wary of every adult and unwilling to abandon him.",
+        "presentation": "thin adolescent fennec fox with very large ears, claw-torn layered rags, bandaged wrists, hard stare; taller than Zuzu",
+        "artPrompt": "thin adolescent fennec fox with very large ears, claw-torn layered rags, bandaged wrists, hard stare; taller than Zuzu, mature western-comic illustration, gritty dusty frontier, Arthemy Western Art house style",
+        "isPublic": false,
+        "isMature": false,
+        "artImageId": 242128
+      }
+    },
+    {
+      "key": "fennec-toddler",
+      "canon_scope": "Book One canon",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "The Fennec Toddler",
+        "slug": "fennec-toddler",
+        "species": "fennec fox",
+        "genre": "dark weird-west samurai animal fable",
+        "class": "story character",
+        "backstory": "The younger orphan. Too small to understand the danger or speak fluently; his bond with his sister drives the road journey.",
+        "presentation": "tiny toddler fennec fox, oversized ears, ragged travel clothes, stays fully dressed",
+        "artPrompt": "tiny toddler fennec fox, oversized ears, ragged travel clothes, stays fully dressed, mature western-comic illustration, gritty dusty frontier, Arthemy Western Art house style",
+        "isPublic": false,
+        "isMature": false,
+        "artImageId": 242144
+      }
+    },
+    {
+      "key": "mission-abbess",
+      "canon_scope": "Book One canon",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "The Abbess",
+        "slug": "mission-abbess",
+        "species": "sea otter",
+        "genre": "dark weird-west samurai animal fable",
+        "class": "story character",
+        "backstory": "The elderly head of the mission. Her solicitous welcome makes the abbey an unsettling turning point in Book One.",
+        "presentation": "warm brown-furred anthropomorphic otter nun, round flat face and button nose, black habit and white wimple; the species is sea otter but use 'otter' only in image-generation prompts to avoid feral otter hallucinations",
+        "artPrompt": "anthropomorphic warm-brown otter abbess, flat round face, button nose, black habit, white wimple, no extra animals, matte inked western-comic portrait in a dusty mission courtyard",
+        "isPublic": false,
+        "isMature": false,
+        "artImageId": 242559
+      }
+    },
+    {
+      "key": "river-croc",
+      "canon_scope": "Book One canon",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "River Croc",
+        "slug": "river-croc",
+        "species": "crocodile",
+        "genre": "dark weird-west samurai animal fable",
+        "class": "story character",
+        "backstory": "An enormous crocodile erupts from the watering hole, interrupting Zuzu's standoff with the coyote; its attack costs the coyote his right hand.",
+        "presentation": "enormous crocodile rising from dark oasis water in the dusty frontier; maintain physical scale",
+        "artPrompt": "enormous crocodile rising from dark oasis water in the dusty frontier; maintain physical scale, mature western-comic illustration, gritty dusty frontier, Arthemy Western Art house style",
+        "isPublic": false,
+        "isMature": false
+      }
+    },
+    {
+      "key": "storm-crow",
+      "canon_scope": "Showdown/world faction, not Book One established",
+      "source_path": "projects/zuzu-showdown/fighters.yaml",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "Storm Crow",
+        "slug": "storm-crow",
+        "species": "crow",
+        "genre": "dark weird-west samurai animal fable",
+        "class": "story character",
+        "backstory": "A captain of the Storm Crows, a raiding faction in the Zuzu world. This character's unique combat abilities and speeches belong to Showdown continuity until adopted into story canon.",
+        "presentation": "black-feathered anthropomorphic crow raider, ragged long riding coat, rusted goggles, hooked blade and rifle, torn sash",
+        "artPrompt": "black-feathered anthropomorphic crow raider, ragged long riding coat, rusted goggles, hooked blade and rifle, torn sash, mature western-comic illustration, gritty dusty frontier, Arthemy Western Art house style",
+        "isPublic": false,
+        "isMature": false
+      }
+    },
+    {
+      "key": "hyena-matriarch",
+      "canon_scope": "Showdown extension, not Book One established",
+      "source_path": "projects/zuzu-showdown/fighters.yaml",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "Hyena Matriarch",
+        "slug": "hyena-matriarch",
+        "species": "hyena",
+        "genre": "dark weird-west samurai animal fable",
+        "class": "story character",
+        "backstory": "A Showdown fighter with a scavenger-crew identity. Treat her appearance and game moves as game continuity, not a retroactive Book One event.",
+        "presentation": "anthropomorphic hyena matriarch with weathered scavenger equipment and a fierce commanding presence",
+        "artPrompt": "anthropomorphic hyena matriarch with weathered scavenger equipment and a fierce commanding presence, mature western-comic illustration, gritty dusty frontier, Arthemy Western Art house style",
+        "isPublic": false,
+        "isMature": false
+      }
+    },
+    {
+      "key": "old-komodo",
+      "canon_scope": "later-book concept, excluded from Book One",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "Old Komodo",
+        "slug": "old-komodo",
+        "species": "Komodo dragon",
+        "genre": "dark weird-west samurai animal fable",
+        "class": "story character",
+        "backstory": "A character held for possible later stories. Explicitly absent from Book One.",
+        "presentation": "large anthropomorphic Komodo dragon; final character likeness not yet locked",
+        "artPrompt": "large anthropomorphic Komodo dragon; final character likeness not yet locked, mature western-comic illustration, gritty dusty frontier, Arthemy Western Art house style",
+        "isPublic": false,
+        "isMature": false
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "key": "zuzu-travel-kasa",
+      "canon_scope": "story prop, mechanical reward effect is editorial",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "Zuzu's Kasa",
+        "slug": "zuzu-travel-kasa",
+        "description": "The broad straw travel hat that shades Zuzu's eyes and conceals his gaze.",
+        "effect": "Mundane apparel, useful for travel and concealment.",
+        "flavorText": "A tool of survival on the long road.",
+        "collection": "Zuzu: Koala Assassin",
+        "isPublic": false,
+        "isMature": false
+      }
+    },
+    {
+      "key": "zuzu-katana",
+      "canon_scope": "story prop, mechanical reward effect is editorial",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/VIDEO-GUARDRAILS.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "The Back-Slung Katana",
+        "slug": "zuzu-katana",
+        "description": "Zuzu's single sword, always sheathed diagonally across his back when not drawn.",
+        "effect": "An ordinary sword with unusually strict continuity requirements.",
+        "flavorText": "A tool of survival on the long road.",
+        "collection": "Zuzu: Koala Assassin",
+        "isPublic": false,
+        "isMature": false
+      }
+    },
+    {
+      "key": "road-apples",
+      "canon_scope": "story prop, mechanical reward effect is editorial",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "Apples for the Road",
+        "slug": "road-apples",
+        "description": "A small offering of apples that quietly communicates care when words would fail.",
+        "effect": "Food and an act of trust; no supernatural effect.",
+        "flavorText": "A tool of survival on the long road.",
+        "collection": "Zuzu: Koala Assassin",
+        "isPublic": false,
+        "isMature": false
+      }
+    },
+    {
+      "key": "coyote-bandage",
+      "canon_scope": "story prop, mechanical reward effect is editorial",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "The Drifter's Bandage",
+        "slug": "coyote-bandage",
+        "description": "Cloth wrapped around the coyote's injured right wrist after the oasis fight.",
+        "effect": "A practical dressing and a symbol of an unexpected alliance.",
+        "flavorText": "A tool of survival on the long road.",
+        "collection": "Zuzu: Koala Assassin",
+        "isPublic": false,
+        "isMature": false
+      }
+    },
+    {
+      "key": "sister-dagger",
+      "canon_scope": "story prop, mechanical reward effect is editorial",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "name": "The Sister's Dagger",
+        "slug": "sister-dagger",
+        "description": "The small dagger associated with the sister's final knife-drop animation shot.",
+        "effect": "A dangerous but ordinary blade; its use and outcome are tied to the film scene.",
+        "flavorText": "A tool of survival on the long road.",
+        "collection": "Zuzu: Koala Assassin",
+        "isPublic": false,
+        "isMature": false
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "key": "zuzu-watering-hole",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "canon_scope": "Book One canonical sequence; outcome must preserve original chronology.",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "title": "The Watering Hole",
+        "slug": "zuzu-watering-hole",
+        "description": "A lone koala ronin and a desperate coyote share a tense desert watering hole until something huge rises from beneath its surface.",
+        "genres": "weird west, samurai, adventure",
+        "inspirations": "Zuzu: Koala Assassin project canon, original story world",
+        "isPublic": false,
+        "isMature": false
+      }
+    },
+    {
+      "key": "zuzu-hollow-bell-aftermath",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "canon_scope": "Book One canonical story beat.",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "title": "Aftermath at Hollow Bell",
+        "slug": "zuzu-hollow-bell-aftermath",
+        "description": "Zuzu comes upon the aftermath of violence and the orphaned fennec siblings. Make the encounter atmospheric rather than sensational.",
+        "genres": "weird west, samurai, adventure",
+        "inspirations": "Zuzu: Koala Assassin project canon, original story world",
+        "isPublic": false,
+        "isMature": false
+      }
+    },
+    {
+      "key": "zuzu-apple-tree",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "canon_scope": "Book One canonical story beat.",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "title": "The Apple Tree",
+        "slug": "zuzu-apple-tree",
+        "description": "A road-side pause turns a few apples into an unspoken choice about responsibility.",
+        "genres": "weird west, samurai, adventure",
+        "inspirations": "Zuzu: Koala Assassin project canon, original story world",
+        "isPublic": false,
+        "isMature": false
+      }
+    },
+    {
+      "key": "zuzu-the-mission",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md",
+      "canon_scope": "Book One canonical setting; keep hidden plot details out of public summaries.",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "title": "The Mission",
+        "slug": "zuzu-the-mission",
+        "description": "A strange, hungry refuge offers shelter at a cost; its unsettling abbess stands at the center of the encounter.",
+        "genres": "weird west, samurai, adventure",
+        "inspirations": "Zuzu: Koala Assassin project canon, original story world",
+        "isPublic": false,
+        "isMature": false
+      }
+    },
+    {
+      "key": "zuzu-storm-crow-ambush",
+      "source_path": "projects/zuzu-showdown/fighters.yaml",
+      "canon_scope": "Showdown/game side-story only, not established Book One chronology.",
+      "action": "upsert-by-verified-identity-only",
+      "payload": {
+        "title": "Storm Crow Ambush",
+        "slug": "zuzu-storm-crow-ambush",
+        "description": "A flying raider from the Storm Crows faction challenges travelers on a wind-beaten canyon road.",
+        "genres": "weird west, samurai, adventure",
+        "inspirations": "Zuzu: Koala Assassin project canon, original story world",
+        "isPublic": false,
+        "isMature": false
+      }
+    }
+  ],
+  "model_resources": [
+    {
+      "name": "Zuzu character LoRA",
+      "trigger": "zuzukoala",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/LORA-SETS.yaml",
+      "status": "dataset-documented; trained Resource not verified"
+    },
+    {
+      "name": "Fennec sister LoRA",
+      "trigger": "zkasister",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/LORA-SETS.yaml",
+      "status": "dataset-documented; trained Resource not verified"
+    },
+    {
+      "name": "Fennec toddler LoRA",
+      "trigger": "zkatoddler",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/LORA-SETS.yaml",
+      "status": "dataset-documented; trained Resource not verified"
+    },
+    {
+      "name": "Coyote LoRA",
+      "trigger": "zkacoyote",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/LORA-SETS.yaml",
+      "status": "dataset-documented; trained Resource not verified"
+    },
+    {
+      "name": "Abbess LoRA",
+      "trigger": "zkaabbess",
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/LORA-SETS.yaml",
+      "status": "dataset-documented; trained Resource not verified"
+    }
+  ]
+}

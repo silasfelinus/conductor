@@ -5,7 +5,7 @@
     "title": "Zuzu: Koala Assassin",
     "status": "active",
     "owner": "conductor",
-    "canon_policy": "The ordered canon_sources below govern shared story/art; production-specific gameplay is not canon by default."
+    "canon_policy": "Only post-2026-10-03 Silas-directed Book One, Cast Picks, revisions and guardrails define comic canon. Original LLM-generated Kind Robots Dream/Character/Reward/Scenario records are legacy filler with NO CANON AUTHORITY. Match and reconcile those runtime resources to newer sources; game-only alternatives do not retcon Book One."
   },
   "canon_sources": [
     {
@@ -135,42 +135,96 @@
       "model": "ArtImage",
       "id": 241913,
       "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
-      "purpose": "Selected R6 hero reference; check later locked angle/shape decisions before generating."
+      "purpose": "Historic cast-round reference; superseded by locked final angle/character sheets. Selected R6 hero reference; check later locked angle/shape decisions before generating.",
+      "selection_status": "historical-reference"
     },
     {
       "key": "fennec-sister-s2",
       "model": "ArtImage",
       "id": 241879,
       "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
-      "purpose": "Selected sister design reference."
+      "purpose": "Historic cast-round reference; superseded by locked final angle/character sheets. Selected sister design reference.",
+      "selection_status": "historical-reference"
     },
     {
       "key": "fennec-toddler-t2",
       "model": "ArtImage",
       "id": 241883,
       "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
-      "purpose": "Selected toddler design reference."
+      "purpose": "Historic cast-round reference; superseded by locked final angle/character sheets. Selected toddler design reference.",
+      "selection_status": "historical-reference"
     },
     {
       "key": "coyote-c1",
       "model": "ArtImage",
       "id": 241888,
       "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
-      "purpose": "Selected one-eyed coyote design reference."
+      "purpose": "Historic cast-round reference; superseded by locked final angle/character sheets. Selected one-eyed coyote design reference.",
+      "selection_status": "historical-reference"
     },
     {
       "key": "river-croc-k2",
       "model": "ArtImage",
       "id": 241893,
       "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
-      "purpose": "Selected crocodile scene reference."
+      "purpose": "Historic cast-round reference; superseded by locked final angle/character sheets. Selected crocodile scene reference.",
+      "selection_status": "historical-reference"
     },
     {
       "key": "otter-nuns-n2",
       "model": "ArtImage",
       "id": 241895,
       "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
-      "purpose": "Selected nuns group reference."
+      "purpose": "Historic cast-round reference; superseded by locked final angle/character sheets. Selected nuns group reference.",
+      "selection_status": "historical-reference"
+    },
+    {
+      "key": "zuzu-locked-front",
+      "model": "ArtImage",
+      "id": 242395,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "selection_status": "locked-reference",
+      "purpose": "Current locked front angle for Zuzu, not the superseded R6 hero."
+    },
+    {
+      "key": "fennec-sister-locked-front",
+      "model": "ArtImage",
+      "id": 242128,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "selection_status": "locked-reference",
+      "purpose": "Current locked fennec sister front; not old clean-dress S2."
+    },
+    {
+      "key": "fennec-toddler-locked-front",
+      "model": "ArtImage",
+      "id": 242144,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "selection_status": "locked-reference",
+      "purpose": "Current locked toddler front in tattered travel clothing."
+    },
+    {
+      "key": "coyote-locked-before-attack",
+      "model": "ArtImage",
+      "id": 242531,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "selection_status": "locked-reference",
+      "purpose": "Current coyote pre-croc front: both hands, right eyepatch and right holster."
+    },
+    {
+      "key": "coyote-locked-bandaged-stump",
+      "model": "ArtImage",
+      "id": 242588,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "selection_status": "locked-reference",
+      "purpose": "Current bandaged right-wrist stump reference; AFTER crocodile attack only."
+    },
+    {
+      "key": "abbess-locked-front",
+      "model": "ArtImage",
+      "id": 242559,
+      "source_path": "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md",
+      "selection_status": "locked-reference",
+      "purpose": "Current approved warm-brown flat-faced Abbess front."
     }
   ],
   "pipeline_resources": [
@@ -201,6 +255,20 @@
       "path": "projects/zuzu-showdown/fighters.yaml",
       "status": "source-defined",
       "notes": "Fighting-game animation/sprite definitions are project-owned derivatives, not shared character canon."
+    },
+    {
+      "id": "animation-builds",
+      "type": "finished-and-historical-media-records",
+      "path": "worlds/zuzu/assets/video-builds.json",
+      "status": "documented-ledger-ids",
+      "notes": "KR Zuzu music video #5 (early draft) and #12 (successive renders), repaired s13 clip replacement, ArtJob IDs, private exported final references."
+    },
+    {
+      "id": "resource-submission",
+      "type": "proposed-existing-model-mutations",
+      "path": "worlds/zuzu/resource-submissions.json",
+      "status": "not-applied",
+      "notes": "Private owner-scoped Character/Reward/Scenario reconciliation package; not an alternative authority to the live DB."
     }
   ],
   "runtime_model_discovery": [
@@ -213,8 +281,8 @@
         "Abbess"
       ],
       "stable_ids": [],
-      "status": "not-audited",
-      "rule": "Search Kind Robots Character rows, verify actual identity and approved design before adding IDs."
+      "status": "legacy-filler-unreconciled",
+      "rule": "Legacy LLM filler is NOT canon; inspect existing owner-scoped live rows, reconcile/patch by verified identity from worlds/zuzu/resource-submissions.json, and add missing entries via the existing Kind Robots API without duplicating or publishing."
     },
     {
       "model": "Scenario",
@@ -223,8 +291,8 @@
         "Koala Assassin"
       ],
       "stable_ids": [],
-      "status": "not-audited",
-      "rule": "May be historic seed material. Confirm relevance; not automatic canon."
+      "status": "legacy-filler-unreconciled",
+      "rule": "Legacy LLM filler is NOT canon; inspect existing owner-scoped live rows, reconcile/patch by verified identity from worlds/zuzu/resource-submissions.json, and add missing entries via the existing Kind Robots API without duplicating or publishing."
     },
     {
       "model": "Reward",
@@ -233,8 +301,8 @@
         "Koala Assassin"
       ],
       "stable_ids": [],
-      "status": "not-audited",
-      "rule": "Link qualifying rewards by existing row ID; do not create duplicates to populate this registry."
+      "status": "legacy-filler-unreconciled",
+      "rule": "Legacy LLM filler is NOT canon; inspect existing owner-scoped live rows, reconcile/patch by verified identity from worlds/zuzu/resource-submissions.json, and add missing entries via the existing Kind Robots API without duplicating or publishing."
     },
     {
       "model": "Resource",
@@ -245,7 +313,7 @@
       ],
       "stable_ids": [],
       "status": "not-audited",
-      "rule": "Verify imported LoRA/checkpoint Resource rows and licenses before linking; dataset specification is not a trained asset."
+      "rule": "The five character LoRA DATASETS are built but trained/imported Resources not verified. Query existing live Resource rows by actual trigger/checkpoint/owner; never invent Resource IDs."
     },
     {
       "model": "Dream",
@@ -256,7 +324,7 @@
         183
       ],
       "status": "legacy-inspiration",
-      "rule": "Historical seed reference in draft series bible, NOT current story canon."
+      "rule": "Legacy LLM-generated Dream reference ONLY, ZERO canonical authority. Do not import its older setting/characters as canon or use as world join authority."
     },
     {
       "model": "Project",
@@ -273,5 +341,26 @@
       "status": "join-by-conductorSlug",
       "rule": "Use Project.conductorSlug, not duplicated IDs or separate world project records."
     }
-  ]
+  ],
+  "asset_inventory": {
+    "kind": "source-ledger-art-image-and-artjob-audit",
+    "status": "static-committed-ledger-snapshot—not live production query",
+    "ledger_parts": [
+      "worlds/zuzu/assets/ledger-part-01.json",
+      "worlds/zuzu/assets/ledger-part-02.json",
+      "worlds/zuzu/assets/ledger-part-03.json",
+      "worlds/zuzu/assets/ledger-part-04.json"
+    ],
+    "source_ledger_count": 22,
+    "distinct_art_image_outputs": 657,
+    "distinct_artjob_references": 741,
+    "video_builds": "worlds/zuzu/assets/video-builds.json",
+    "git_media": "worlds/zuzu/assets/repository-media.json",
+    "notes": "Individual ArtImage outputs retain job/subject provenance and DONE-at-ledger status. Includes historical/rejected drafts; curated final picks are in CAST-PICKS.md. Clip and final-MP4 ArtImages are indexed separately; public deploy/delivery not implied."
+  },
+  "resource_submission": {
+    "path": "worlds/zuzu/resource-submissions.json",
+    "status": "ready-to-reconcile-through-live-app-apis",
+    "note": "Nine source-linked Character profiles, five Rewards, five Scenarios; preserve matched existing record IDs, no guessed IDs, no live writes made in this registry PR."
+  }
 }
