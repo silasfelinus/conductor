@@ -2058,3 +2058,36 @@ pitches:
         released_at: '2026-10-08T08:00:00Z'
         verification:
           - kind_robots CI on PR 3363
+
+  - id: aurora-curtains
+    title: Aurora Curtains
+    status: candidate
+    priority: 38
+    surprise: |
+      Three ribbons of green and violet northern light fold and shimmer over a dark ridge under a field of stars.
+    passive_loop: |
+      Every curtain parameter is a pure function of a 60-second loop clock, so the sky repeats exactly each cycle with no interaction.
+    optional_interaction: |
+      Hovering brightens the strands near the pointer; a rate-limited click sends a pulse of light across the sky.
+    technique: |
+      One canvas, 72 strands per curtain from a hash, additive glow, ridge silhouette, capped DPR, ResizeObserver sizing.
+    reduced_motion: |
+      Draws a single static frame with no hover brightening or pulse.
+    performance_risk: |
+      Low: three curtains of 72 strands, 70 stars, bounded per-frame work.
+    novelty: |
+      First aurora scene; light ribbons rather than particles or geometry.
+    acceptance:
+      - the curtains drift and shimmer on a 60-second periodic loop without interaction
+      - hovering brightens nearby strands and they relax afterwards
+      - clicking sends a pulse at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/aurora-curtains.vue
+        pull_request: silasfelinus/kind_robots#3387
+        released_at: '2026-10-09T08:00:00Z'
+        verification:
+          - kind_robots merged to main (squash 8273f87)
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
