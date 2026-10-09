@@ -1,5 +1,8 @@
 # Zuzu's Lair — Design Brief
 
+> **Shared Zuzu world registry:** [worlds/zuzu](../../worlds/zuzu/README.md) indexes the canon, cast art, LoRA dataset references and sibling productions. Lair's QTE branches remain project-owned, not comic retcons.
+
+
 date: 2026-10-06
 status: v2 -- scope confirmed by Silas, 2026-10-06 (see "Decisions")
 author: Claude (from Silas's request, 2026-10-06)
