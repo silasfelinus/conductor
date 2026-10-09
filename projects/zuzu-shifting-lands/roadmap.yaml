@@ -137,19 +137,18 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Pure seeded journey reducer, five land/three encounter traversal and boss gates"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003]
-    note: >-
-      Full board route graph with exactly five land challenges and 3 encounter
-      resolutions each; deterministic seeded draws, stable location mutations,
-      journal, game over, win/retire, stat/health checks and testable transitions.
-      No play-time untrusted LLM permitted to decide state.
+    note: |-
+      Full board route graph with exactly five land challenges and 3 encounter resolutions each; deterministic seeded draws, stable location mutations, journal, game over, win/retire, stat/health checks and testable transitions. No play-time untrusted LLM permitted to decide state.
+
+      Implemented Kind Robots five-land journey reducer on worker/zuzu-shifting-lands-t006-journey-20261009-f83c: manifest-v2 generated geography snapshot, deterministic 15 encounters, causal tile shifts, traversal history, five boss gates, full replay, terminal states and guarded restore. Homestead saves intentionally unchanged. Preparing CI-gated PR.
     claimed_by: 2026-10-09T234120Z-zuzu-shifting-t006-gpt6-f83c
     claimed_at: '2026-10-09T23:41:20Z'
-    updated: '2026-10-09T23:41:20Z'
+    updated: '2026-10-09T23:45:15Z'
 
   - id: t-007
     milestone: m2
