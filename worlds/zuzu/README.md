@@ -20,7 +20,7 @@ Read the following in order of relevance:
 5. [SERIES-BIBLE.md](../../projects/comic-creator/issues/zuzu-koala-assassin-01/SERIES-BIBLE.md) — earlier world sketch, **not authoritative** where revised.
 6. [ISSUE-01-SCRIPT.md](../../projects/comic-creator/issues/zuzu-koala-assassin-01/ISSUE-01-SCRIPT.md) — archived draft, replaced by Book One.
 
-**Important:** Early Kind Robots Dream/Scenario lore is a *springboard*, not confirmed comic canon.
+**Important:** Original Kind Robots Dream, Character, Reward and Scenario lore about Zuzu was **LLM-generated filler and has no canonical authority**. It is not merely an alternate draft. The later Silas-directed Book One, locked character designs and guardrails own the canon.
 In particular, do not quietly reinstate superseded locations, supporting characters or story
 devices from the draft series bible. Keep the concealed plot reveal out of public titles,
 metadata, prompts, descriptions and this index. Read the restricted list from the original
@@ -45,6 +45,40 @@ their own [project briefs](#productions).
 
 Projects share *world references*, not tasks or implementation ownership. Each project
 still owns its own code, assets, decisions and human publication gate.
+
+## Complete asset and animation inventory
+
+The previous six curated ArtImage anchors were **not a full inventory**. This directory
+now indexes **657 distinct completed ArtImage IDs and 741 distinct ArtJob IDs from 22
+Conductor art-generation ledgers**, with original ledger file, subject key, entity,
+job IDs and recorded output status. These are *recorded* DONE results, **not a
+live Kind Robots database/URL verification**, and include concept attempts and
+superseded images. Consult the latest CAST-PICKS decisions for the approved models.
+
+- [Art ledger part 1](assets/ledger-part-01.json) (angles, cast);
+  [part 2](assets/ledger-part-02.json) (cast rounds);
+  [part 3](assets/ledger-part-03.json) (concepts and look tests);
+  [part 4](assets/ledger-part-04.json) (expression poses and video fixes).
+- [Zuzu video builds](assets/video-builds.json): **music videos #5 and #12** are
+  separate historical productions. It preserves the #12 cut history, animation
+  ArtJob/clip IDs and the **repaired** knife-drop clip which must replace the raw
+  clip on any future re-export. The separate Kind Robots theme song does not belong
+  to the Zuzu universe.
+- [Git-tracked media](assets/repository-media.json): related gamebook illustrations,
+  Showdown sprite atlases, fighting stages, QA animations, art, and the repaired
+  video file. These are paths to existing assets, not imported duplicate ArtImages.
+- [Five LoRA training datasets](../../projects/comic-creator/issues/zuzu-koala-assassin-01/LORA-SETS.yaml)
+  and [facial-expression ledger](../../projects/comic-creator/issues/zuzu-koala-assassin-01/LORA-EXPRESSIONS.yaml)
+  provide far more detailed character-sheet material. Training handoff exists;
+  verify trained LoRA and Resource IDs separately before labeling imported.
+
+**Resource reconciliation and additions:** [resource-submissions.json](resource-submissions.json)
+contains **nine Character profiles, five Rewards, five Scenarios**, and the five
+LoRA source references. Existing LLM-generated entries may be rewritten to align
+with the new canon, explicitly authorized 2026-10-09, but must be matched to their
+real owner-scoped records rather than overwritten by guesswork. New entries remain
+private until the live import and permissions can be verified. The submission is
+ready for API reconciliation, **not yet applied to the Kind Robots database**.
 
 ## Shared characters, art and model assets
 

@@ -28,3 +28,21 @@ unreviewed game branch, a second Resource table, or secret plot details.
 
 The catalog intentionally does not reproduce the secret guardrail terms.
 Read the latest Video Guardrails source at generation time.
+
+## Authoritative legacy-content correction (2026-10-09)
+
+Silas confirms that the earliest Zuzu `Character`, `Scenario`, `Reward`, and
+`Dream` resource descriptions were generated as LLM filler. They are **not canon**,
+and must not veto later Book One, character-sheet or cast decisions.
+
+Use [resource-submissions.json](resource-submissions.json) as the reconciliation
+proposal: query the actual Kind Robots rows and owner first, preserve existing row
+IDs/history, patch stale lore via authenticated model APIs, create missing named
+characters/scenarios/rewards only after a duplicate check, and keep them private
+until verified. Showdown-specific fighters/abilities are labeled extensions rather
+than retroactive Book One chronology. A submitted resource is not a created row.
+
+Refer to [assets/video-builds.json](assets/video-builds.json) for the separate Zuzu
+music videos (#5 and #12), full animation cut provenance, and the repaired clip
+substitution required for video #12. Do not claim a raw clip or discarded concept
+as final simply because it has an ArtImage ID.
