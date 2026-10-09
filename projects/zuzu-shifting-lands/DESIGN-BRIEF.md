@@ -1,6 +1,6 @@
 # Zuzu: Shifting Lands | Experience & Gameplay Design Brief
 
-**Owner:** Conductor project `zuzu-shifting-lands`; Kind Robots implementation `/play/zuzu-shifting-lands` (admin-only while building). **Status:** authorized project, design phase; no playable production deployment asserted. **World authority:** [Zuzu world registry](../../worlds/zuzu/README.md), [setting guide](../../worlds/zuzu/WORLD-GUIDE.md), Book One, locked cast, and video guardrails. This game's generated outcomes are **alternate-play continuity**, never an automatic Book One retcon.
+**Owner:** Conductor project `zuzu-shifting-lands`; Kind Robots development preview `/admin/zuzu-shifting-lands`, linked from the Admin channel; future public release `/play/zuzu-shifting-lands` is a separate milestone. **Status:** authorized project, design phase; no playable production deployment asserted. **World authority:** [Zuzu world registry](../../worlds/zuzu/README.md), [setting guide](../../worlds/zuzu/WORLD-GUIDE.md), Book One, locked cast, and video guardrails. This game's generated outcomes are **alternate-play continuity**, never an automatic Book One retcon.
 
 ## Promise
 

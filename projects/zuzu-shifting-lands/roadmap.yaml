@@ -3,7 +3,8 @@ project: zuzu-shifting-lands
 kind: software
 autonomous: true
 goal: >-
-  Deliver an image-led, replayable Zuzu expedition at /play/zuzu-shifting-lands,
+  Deliver an image-led, replayable Zuzu expedition at /admin/zuzu-shifting-lands
+  during the private preview; the public /play route launches separately,
   with five shifting lands, three encounters per land, five major trials,
   seeded reproducible species×occupation×disposition encounter composition,
   cross-project Zuzu Character/Facet/Scenario/Reward/ArtImage reuse, interactive
@@ -127,8 +128,10 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      /play/zuzu-shifting-lands in Projects/Play with requiredRole ADMIN
-      until Silas accepts. Use store-owned state/API; root-first Nuxt
+      /admin/zuzu-shifting-lands with a visible Admin-channel tab,
+      requiredRole ADMIN, and a correct Zuzu World Studio link
+      until Silas accepts; never locate an admin-only page under /play
+      or Projects navigation. Use store-owned state/API; root-first Nuxt
       conventions. World map and three-card encounter strip are image-heavy
       with re-used locked/cross-project visuals, inspectable art provenance
       and error/placeholder handling, and navigation links to World Studio.

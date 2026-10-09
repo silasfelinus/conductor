@@ -23,7 +23,7 @@
 ## Composition hierarchy
 
 ```text
-/play/zuzu-shifting-lands (private, until public approval)
+/admin/zuzu-shifting-lands (admin-only preview; public /play route is not yet shipped)
   └─ ShiftingLandsBoard (layout shell; no authoritative game outcomes)
       ├─ JourneyMap (5 land panels; card tiles, completed trail)
       │   ├─ LandBanner (large art / current chapter / progressive weather)
