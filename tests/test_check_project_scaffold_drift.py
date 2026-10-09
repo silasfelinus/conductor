@@ -215,3 +215,74 @@ def test_project_parity_uses_live_api_host(monkeypatch):
     monkeypatch.setattr(drift.urllib.request, "urlopen", fake_urlopen)
     assert drift.fetch_kind_robots_projects("test-token") == []
     assert requested == [("https://kind-robots.vercel.app/api/projects?includeInactive=true&take=250&skip=0", 20)]
+
+
+def test_project_parity_retries_transient_503(monkeypatch):
+    import io
+    import urllib.error
+
+    attempts = []
+    sleeps = []
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return b'{"data": [{"conductorSlug": "conductor"}]}'
+
+    def fake_urlopen(req, timeout):
+        attempts.append(req.full_url)
+        if len(attempts) < 3:
+            raise urllib.error.HTTPError(req.full_url, 503, "Unavailable", {}, io.BytesIO())
+        return Response()
+
+    monkeypatch.setattr(drift.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(drift.time, "sleep", sleeps.append)
+    assert drift.fetch_kind_robots_projects("test-token") == [{"conductorSlug": "conductor"}]
+    assert len(attempts) == 3
+    assert sleeps == [1, 2]
+
+
+def test_project_parity_persistent_503_stays_unresolved(monkeypatch):
+    import io
+    import urllib.error
+
+    attempts = []
+    sleeps = []
+
+    def fake_urlopen(req, timeout):
+        attempts.append(req.full_url)
+        raise urllib.error.HTTPError(req.full_url, 503, "Unavailable", {}, io.BytesIO())
+
+    monkeypatch.setattr(drift.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(drift.time, "sleep", sleeps.append)
+    try:
+        drift.fetch_kind_robots_projects("test-token")
+        assert False, "persistent service failures must not look like successful empty project lists"
+    except urllib.error.HTTPError as error:
+        assert error.code == 503
+    assert len(attempts) == 4
+    assert sleeps == [1, 2, 4]
+
+
+def test_project_parity_does_not_retry_auth_failure(monkeypatch):
+    import io
+    import urllib.error
+
+    attempts = []
+    def fake_urlopen(req, timeout):
+        attempts.append(req.full_url)
+        raise urllib.error.HTTPError(req.full_url, 401, "Unauthorized", {}, io.BytesIO())
+
+    monkeypatch.setattr(drift.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(drift.time, "sleep", lambda delay: (_ for _ in ()).throw(AssertionError("unexpected retry")))
+    try:
+        drift.fetch_kind_robots_projects("test-token")
+        assert False, "401 must not be retried"
+    except urllib.error.HTTPError as error:
+        assert error.code == 401
+    assert len(attempts) == 1
