@@ -1,7 +1,7 @@
 # Pitch: Lamp Lighter Run
 date: 2026-10-09
 project-target: kr-arcade
-status: awaiting-silas
+status: approved
 
 ## The idea
 An arcade cabinet riffing on Donkey Kong's climb-the-girders ladder-and-barrel dodge, where a lamplighter robot hops rolling gloom-balls and climbs a scaffold to relight every street lamp. Each level adds steeper ramps, faster barrels and a bonus lantern timer.
