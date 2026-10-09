@@ -1,0 +1,668 @@
+# Zuzu Gamebook art round 3 (zuzu-gamebook t-006): rerolls of round 2's rejects, each prompt changed for its failure.
+# Human faces (crawlspace, Quiet Draw) -> object/animal-only still lifes, human/face negatives. Fluorescent store -> 1870s
+# timber store with oil lamp, electric-light negatives. Literal reads (flint, kasa and bandage drew crows and mummies) ->
+# plain descriptions without the trigger words, creature negatives. Stray ghosts in empty scenes -> "(empty room/street)"
+# plus ghost/hooded-figure negatives. Nuns with feral otters -> Kontext cleanup of 243330. Concrete bunker -> outdoors.
+# Canon: worlds/zuzu, VIDEO-GUARDRAILS.md. Prompts pre-checked against kind_robots artPromptContract.
+# Indexed in worlds/zuzu/assets/ledger-part-05.json; keep that shard in step when outputs land.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status; --lane). Private.
+round: gamebook-3
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, muted earthy palette, desaturated, weathered,
+    grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+- key: kontext-stage
+  label: Flux Kontext dev (fp8), restage an approved render
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: gb3-dormitory-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Mission: the children''s dormitory (r3) (seed 1)'
+  size: 1344x768
+  seed: 6000
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes
+  prompt_prose: two rows of small empty cots in a moonlit adobe dormitory.
+  prompt_tags: (empty room:1.3), scenery, interior, long adobe dormitory at night, (two neat rows of small empty
+    wooden cots:1.3), thin grey blankets folded square at the foot of each cot, a high barred window, cold moonlight
+    across the floorboards, too tidy, still, wide shot
+  jobs:
+    arthemy-house: 35071
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-dormitory-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Mission: the children''s dormitory (r3) (seed 2)'
+  size: 1344x768
+  seed: 6001
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes
+  prompt_prose: two rows of small empty cots in a moonlit adobe dormitory.
+  prompt_tags: (empty room:1.3), scenery, interior, long adobe dormitory at night, (two neat rows of small empty
+    wooden cots:1.3), thin grey blankets folded square at the foot of each cot, a high barred window, cold moonlight
+    across the floorboards, too tidy, still, wide shot
+  jobs:
+    arthemy-house: 35072
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-courtyard-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Mission: the courtyard by day (r3) (seed 1)'
+  size: 1344x768
+  seed: 6010
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes
+  prompt_prose: an open-air adobe mission courtyard at noon with a rusted merry-go-round.
+  prompt_tags: (outdoors:1.3), (open sky:1.2), scenery, a sunlit adobe desert mission courtyard seen from the arcade,
+    (a rusted playground merry-go-round wrapped in thick cobwebs:1.3) in the middle of the yard, white laundry on
+    a line, a stone well, smooth undisturbed dust, harsh noon sun, deep shadows, wide shot
+  jobs:
+    arthemy-house: 35073
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-courtyard-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Mission: the courtyard by day (r3) (seed 2)'
+  size: 1344x768
+  seed: 6011
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes
+  prompt_prose: an open-air adobe mission courtyard at noon with a rusted merry-go-round.
+  prompt_tags: (outdoors:1.3), (open sky:1.2), scenery, a sunlit adobe desert mission courtyard seen from the arcade,
+    (a rusted playground merry-go-round wrapped in thick cobwebs:1.3) in the middle of the yard, white laundry on
+    a line, a stone well, smooth undisturbed dust, harsh noon sun, deep shadows, wide shot
+  jobs:
+    arthemy-house: 35074
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-footprints-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Mission: tracks that only go in (r3) (seed 1)'
+  size: 1344x768
+  seed: 6020
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes, cat, dog
+  prompt_prose: small paw prints in the dust lead in through an open mission gate.
+  prompt_tags: (empty scene:1.3), scenery, high angle looking down at a dusty path before an open iron mission gate,
+    (rows of small paw prints in the dust all pointing toward the gate:1.3), smooth dust on the near side, late
+    afternoon light, long gate shadows, eerie, wide shot
+  jobs:
+    arthemy-house: 35075
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-footprints-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Mission: tracks that only go in (r3) (seed 2)'
+  size: 1344x768
+  seed: 6021
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes, cat, dog
+  prompt_prose: small paw prints in the dust lead in through an open mission gate.
+  prompt_tags: (empty scene:1.3), scenery, high angle looking down at a dusty path before an open iron mission gate,
+    (rows of small paw prints in the dust all pointing toward the gate:1.3), smooth dust on the near side, late
+    afternoon light, long gate shadows, eerie, wide shot
+  jobs:
+    arthemy-house: 35076
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-hb-noon-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Hollow Bell: the main street at noon (r3) (seed 1)'
+  size: 1344x768
+  seed: 6030
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes, sign, signboard
+  prompt_prose: the empty main street of a ruined frontier town at noon.
+  prompt_tags: (empty street:1.3), scenery, a ruined frontier town main street at noon, scorched timber storefronts
+    with doors hanging open, a tumbleweed, a tall wooden bell tower at the far end, blank weathered plank facades,
+    heat haze, wide shot
+  jobs:
+    arthemy-house: 35077
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-hb-noon-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Hollow Bell: the main street at noon (r3) (seed 2)'
+  size: 1344x768
+  seed: 6031
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes, sign, signboard
+  prompt_prose: the empty main street of a ruined frontier town at noon.
+  prompt_tags: (empty street:1.3), scenery, a ruined frontier town main street at noon, scorched timber storefronts
+    with doors hanging open, a tumbleweed, a tall wooden bell tower at the far end, blank weathered plank facades,
+    heat haze, wide shot
+  jobs:
+    arthemy-house: 35078
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-hb-eyes-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Hollow Bell: under the boardwalk (r3) (seed 1)'
+  size: 1344x768
+  seed: 6040
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, face, hair, skin, person
+  prompt_prose: two pairs of glowing fox eyes and huge ears in the dark under a burned boardwalk.
+  prompt_tags: scenery, low angle, dark crawlspace beneath a burned wooden boardwalk, charred planks, slats of light,
+    deep in the darkness (two pairs of small glowing amber fox eyes:1.3) below (the black silhouettes of two pairs
+    of huge fennec fox ears:1.2), one large and one small, ash, tense, medium shot
+  jobs:
+    arthemy-house: 35079
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-hb-eyes-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Hollow Bell: under the boardwalk (r3) (seed 2)'
+  size: 1344x768
+  seed: 6041
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, face, hair, skin, person
+  prompt_prose: two pairs of glowing fox eyes and huge ears in the dark under a burned boardwalk.
+  prompt_tags: scenery, low angle, dark crawlspace beneath a burned wooden boardwalk, charred planks, slats of light,
+    deep in the darkness (two pairs of small glowing amber fox eyes:1.3) below (the black silhouettes of two pairs
+    of huge fennec fox ears:1.2), one large and one small, ash, tense, medium shot
+  jobs:
+    arthemy-house: 35080
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-hb-store-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Hollow Bell: the looted store (r3) (seed 1)'
+  size: 1344x768
+  seed: 6050
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes, fluorescent light, ceiling light, electric light, modern
+  prompt_prose: the looted timber interior of a frontier general store lit through bullet holes.
+  prompt_tags: (empty room:1.3), scenery, interior, 1870s frontier general store, rough timber walls, empty wooden
+    shelves, smashed jars, scattered tin cans and flour sacks, a toppled counter, an unlit oil lamp hanging from
+    a hook, beams of daylight through bullet holes in the boards, dust, wide shot
+  jobs:
+    arthemy-house: 35081
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-hb-store-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Hollow Bell: the looted store (r3) (seed 2)'
+  size: 1344x768
+  seed: 6051
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes, fluorescent light, ceiling light, electric light, modern
+  prompt_prose: the looted timber interior of a frontier general store lit through bullet holes.
+  prompt_tags: (empty room:1.3), scenery, interior, 1870s frontier general store, rough timber walls, empty wooden
+    shelves, smashed jars, scattered tin cans and flour sacks, a toppled counter, an unlit oil lamp hanging from
+    a hook, beams of daylight through bullet holes in the boards, dust, wide shot
+  jobs:
+    arthemy-house: 35082
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-hb-well-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Hollow Bell: the dry well (r3) (seed 1)'
+  size: 1344x768
+  seed: 6060
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes
+  prompt_prose: a round stone well in a burned town square with a broken bucket on its rope.
+  prompt_tags: (empty scene:1.3), scenery, (a round stone well with a wooden crank and roof:1.3) in the middle of
+    a burned frontier town square, a broken wooden bucket hanging on a frayed rope, cracked earth, charred buildings
+    behind, dusk, medium shot
+  jobs:
+    arthemy-house: 35083
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-hb-well-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Hollow Bell: the dry well (r3) (seed 2)'
+  size: 1344x768
+  seed: 6061
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes
+  prompt_prose: a round stone well in a burned town square with a broken bucket on its rope.
+  prompt_tags: (empty scene:1.3), scenery, (a round stone well with a wooden crank and roof:1.3) in the middle of
+    a burned frontier town square, a broken wooden bucket hanging on a frayed rope, cracked earth, charred buildings
+    behind, dusk, medium shot
+  jobs:
+    arthemy-house: 35084
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-dust-storm-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Road: the dust storm (r3) (seed 1)'
+  size: 1344x768
+  seed: 6070
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes, moon, road
+  prompt_prose: a towering brown wall of dust rolling across empty desert flats.
+  prompt_tags: (empty landscape:1.3), scenery, (a towering brown haboob dust storm:1.4) rolling across flat desert
+    toward the viewer, dead trees bending in the wind, the sun a pale disc behind the dust, ominous, epic wide shot
+  jobs:
+    arthemy-house: 35085
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-dust-storm-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Road: the dust storm (r3) (seed 2)'
+  size: 1344x768
+  seed: 6071
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, eyes, moon, road
+  prompt_prose: a towering brown wall of dust rolling across empty desert flats.
+  prompt_tags: (empty landscape:1.3), scenery, (a towering brown haboob dust storm:1.4) rolling across flat desert
+    toward the viewer, dead trees bending in the wind, the sun a pale disc behind the dust, ominous, epic wide shot
+  jobs:
+    arthemy-house: 35086
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-zuzu-shadow-1
+  entity: scenery
+  lane: arthemy-house
+  title: Zuzu in the shadows (r3) (seed 1)
+  size: 1344x768
+  seed: 6080
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape,
+    two swords, sword on front, cigarette, smoking, concrete, bunker, room, interior
+  prompt_prose: Zuzu crouches in deep shadow outside an adobe wall under moonlight.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), standing upright, short legs, small stature,
+    slight paunch, grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim,
+    dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
+    conical straw kasa, wide brim shading the eyes, crouching low in deep shadow at the foot of an outdoor adobe
+    mission wall at night, (outdoors:1.2), moonlight on the wall above him, starry sky, desert scrub, watching,
+    stealthy, solo, full body, wide shot
+  jobs:
+    arthemy-house: 35087
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-zuzu-shadow-2
+  entity: scenery
+  lane: arthemy-house
+  title: Zuzu in the shadows (r3) (seed 2)
+  size: 1344x768
+  seed: 6081
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape,
+    two swords, sword on front, cigarette, smoking, concrete, bunker, room, interior
+  prompt_prose: Zuzu crouches in deep shadow outside an adobe wall under moonlight.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), standing upright, short legs, small stature,
+    slight paunch, grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim,
+    dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
+    conical straw kasa, wide brim shading the eyes, crouching low in deep shadow at the foot of an outdoor adobe
+    mission wall at night, (outdoors:1.2), moonlight on the wall above him, starry sky, desert scrub, watching,
+    stealthy, solo, full body, wide shot
+  jobs:
+    arthemy-house: 35088
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-item-bandage-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Item: bandage (r3) (seed 1)'
+  size: 1024x1024
+  seed: 6090
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, bird,
+    crow, mask, face, skull, mummy, eyes, creature, figure
+  prompt_prose: a rolled-up strip of clean white linen cloth, coiled like a ribbon, a still life on weathered wood.
+  prompt_tags: (still life:1.4), (object only:1.3), a rolled-up strip of clean white linen cloth, coiled like a
+    ribbon, alone on a weathered wooden plank, warm side light, dark background, centered, close-up
+  jobs:
+    arthemy-house: 35089
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-item-bandage-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Item: bandage (r3) (seed 2)'
+  size: 1024x1024
+  seed: 6091
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, bird,
+    crow, mask, face, skull, mummy, eyes, creature, figure
+  prompt_prose: a rolled-up strip of clean white linen cloth, coiled like a ribbon, a still life on weathered wood.
+  prompt_tags: (still life:1.4), (object only:1.3), a rolled-up strip of clean white linen cloth, coiled like a
+    ribbon, alone on a weathered wooden plank, warm side light, dark background, centered, close-up
+  jobs:
+    arthemy-house: 35090
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-item-flint-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Item: flint and steel (r3) (seed 1)'
+  size: 1024x1024
+  seed: 6100
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, bird,
+    crow, mask, face, skull, mummy, eyes, creature, figure
+  prompt_prose: a sharp grey stone and a curved iron fire striker side by side, three bright sparks, a still life
+    on weathered wood.
+  prompt_tags: (still life:1.4), (object only:1.3), a sharp grey stone and a curved iron fire striker side by side,
+    three bright sparks, alone on a weathered wooden plank, warm side light, dark background, centered, close-up
+  jobs:
+    arthemy-house: 35091
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-item-flint-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Item: flint and steel (r3) (seed 2)'
+  size: 1024x1024
+  seed: 6101
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, bird,
+    crow, mask, face, skull, mummy, eyes, creature, figure
+  prompt_prose: a sharp grey stone and a curved iron fire striker side by side, three bright sparks, a still life
+    on weathered wood.
+  prompt_tags: (still life:1.4), (object only:1.3), a sharp grey stone and a curved iron fire striker side by side,
+    three bright sparks, alone on a weathered wooden plank, warm side light, dark background, centered, close-up
+  jobs:
+    arthemy-house: 35092
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-item-hat-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Gear: the kasa (r3) (seed 1)'
+  size: 1024x1024
+  seed: 6110
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, bird,
+    crow, mask, face, skull, mummy, eyes, creature, figure
+  prompt_prose: a wide conical woven straw sun hat, empty, resting upside down, a still life on weathered wood.
+  prompt_tags: (still life:1.4), (object only:1.3), a wide conical woven straw sun hat, empty, resting upside down,
+    alone on a weathered wooden plank, warm side light, dark background, centered, close-up
+  jobs:
+    arthemy-house: 35093
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-item-hat-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Gear: the kasa (r3) (seed 2)'
+  size: 1024x1024
+  seed: 6111
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, bird,
+    crow, mask, face, skull, mummy, eyes, creature, figure
+  prompt_prose: a wide conical woven straw sun hat, empty, resting upside down, a still life on weathered wood.
+  prompt_tags: (still life:1.4), (object only:1.3), a wide conical woven straw sun hat, empty, resting upside down,
+    alone on a weathered wooden plank, warm side light, dark background, centered, close-up
+  jobs:
+    arthemy-house: 35094
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-item-key-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Clue: the iron key (r3) (seed 1)'
+  size: 1024x1024
+  seed: 6120
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, bird,
+    crow, mask, face, skull, mummy, eyes, creature, figure
+  prompt_prose: a large rusty old iron skeleton key lying flat, a loop of string through its bow, a still life on
+    weathered wood.
+  prompt_tags: (still life:1.4), (object only:1.3), a large rusty old iron skeleton key lying flat, a loop of string
+    through its bow, alone on a weathered wooden plank, warm side light, dark background, centered, close-up
+  jobs:
+    arthemy-house: 35095
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-item-key-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Clue: the iron key (r3) (seed 2)'
+  size: 1024x1024
+  seed: 6121
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, bird,
+    crow, mask, face, skull, mummy, eyes, creature, figure
+  prompt_prose: a large rusty old iron skeleton key lying flat, a loop of string through its bow, a still life on
+    weathered wood.
+  prompt_tags: (still life:1.4), (object only:1.3), a large rusty old iron skeleton key lying flat, a loop of string
+    through its bow, alone on a weathered wooden plank, warm side light, dark background, centered, close-up
+  jobs:
+    arthemy-house: 35096
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-power-quiet-draw-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Power: Quiet Draw (r3) (seed 1)'
+  size: 1024x1024
+  seed: 6130
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, woman,
+    face, hair, eyes, figure, hand
+  prompt_prose: a katana half drawn from its scabbard, lying on a plank, one cold gleam along the blade.
+  prompt_tags: (still life:1.4), (object only:1.3), a katana lying on a weathered wooden plank, its blade half drawn
+    from a dark wrapped scabbard, a single cold gleam of light along the exposed edge, darkness around it, centered,
+    close-up
+  jobs:
+    arthemy-house: 35097
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-power-quiet-draw-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Power: Quiet Draw (r3) (seed 2)'
+  size: 1024x1024
+  seed: 6131
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, woman,
+    face, hair, eyes, figure, hand
+  prompt_prose: a katana half drawn from its scabbard, lying on a plank, one cold gleam along the blade.
+  prompt_tags: (still life:1.4), (object only:1.3), a katana lying on a weathered wooden plank, its blade half drawn
+    from a dark wrapped scabbard, a single cold gleam of light along the exposed edge, darkness around it, centered,
+    close-up
+  jobs:
+    arthemy-house: 35098
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-nuns-tidy-1
+  entity: nuns
+  lane: kontext-stage
+  title: 'Mission: the nun at her chores (r3, Kontext cleanup) (seed 1)'
+  size: 1344x768
+  seed: 6140
+  prompt_prose: Remove the two small animals standing at her feet and replace them with plain stone floor and a
+    wicker laundry basket. Keep the nun, her face, habit, wimple and pose, the hanging laundry, the stone walls,
+    the light, the colours and the inked comic style exactly as they are.
+  source_image_id: 243330
+  jobs:
+    kontext-stage: 35101
+  art:
+    kontext-stage:
+      status: PENDING
+      art_image_id: null
+- key: gb3-nuns-tidy-2
+  entity: nuns
+  lane: kontext-stage
+  title: 'Mission: the nun at her chores (r3, Kontext cleanup) (seed 2)'
+  size: 1344x768
+  seed: 6141
+  prompt_prose: Remove the two small animals standing at her feet and replace them with plain stone floor and a
+    wicker laundry basket. Keep the nun, her face, habit, wimple and pose, the hanging laundry, the stone walls,
+    the light, the colours and the inked comic style exactly as they are.
+  source_image_id: 243330
+  jobs:
+    kontext-stage: 35102
+  art:
+    kontext-stage:
+      status: PENDING
+      art_image_id: null
+- key: gb3-zuzu-draw-1
+  entity: zuzu
+  lane: arthemy-house
+  title: Zuzu draws (r3) (seed 1)
+  size: 1216x832
+  seed: 6150
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape,
+    two swords, cigarette, smoking, second character, animal on shoulder
+  prompt_prose: Zuzu draws his katana in a burst of dust.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), standing upright, short legs, small stature,
+    slight paunch, grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim,
+    dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
+    conical straw kasa, wide brim shading the eyes, (drawing the katana from over his right shoulder:1.2), blade
+    half out of the scabbard, low stance, dust bursting around his feet, dynamic angle, dramatic, solo, full body
+  jobs:
+    arthemy-house: 35099
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb3-zuzu-draw-2
+  entity: zuzu
+  lane: arthemy-house
+  title: Zuzu draws (r3) (seed 2)
+  size: 1216x832
+  seed: 6151
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape,
+    two swords, cigarette, smoking, second character, animal on shoulder
+  prompt_prose: Zuzu draws his katana in a burst of dust.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), standing upright, short legs, small stature,
+    slight paunch, grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim,
+    dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
+    conical straw kasa, wide brim shading the eyes, (drawing the katana from over his right shoulder:1.2), blade
+    half out of the scabbard, low stance, dust bursting around his feet, dynamic angle, dramatic, solo, full body
+  jobs:
+    arthemy-house: 35100
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
