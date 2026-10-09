@@ -53,7 +53,7 @@ export function validateWorldDecks(m) {
     check(!refs.has(art.key), 'Duplicate artwork key ' + art.key)
     refs.set(art.key, art)
     check(art.status === 'repository-file' && art.source_repo === 'silasfelinus/kind_robots', 'Art has unverified source ' + art.key)
-    check(typeof art.repo_path === 'string' && /^public\\/zuzu-gamebook\\/scenes\\/[a-z0-9-]+\\.webp$/.test(art.repo_path), 'Art path does not match vetted public scenes: ' + art.key)
+    check(typeof art.repo_path === 'string' && /^public\/zuzu-gamebook\/scenes\/[a-z0-9-]+\.webp$/.test(art.repo_path), 'Art path does not match vetted public scenes: ' + art.key)
     check(art.art_image_id === null, 'Repo-file does not establish a live ArtImage ID: ' + art.key)
   }
   const checkRuntimeRefs = (items, model, name) => {
@@ -116,7 +116,7 @@ export function validateWorldDecks(m) {
 
 export function assertValidWorldDecks(manifest) {
   const errors = validateWorldDecks(manifest)
-  if (errors.length) throw new Error('Shifting Lands manifest invalid:\\n' + errors.join('\\n'))
+  if (errors.length) throw new Error('Shifting Lands manifest invalid:\n' + errors.join('\n'))
   return manifest
 }
 
@@ -125,7 +125,7 @@ export function toPlayerBoard(manifest, { activeChapter = 1, completedLocationId
   assertValidWorldDecks(manifest)
   if (!Number.isInteger(activeChapter) || activeChapter < 1 || activeChapter > 5) throw new Error('Invalid chapter')
   if (!Array.isArray(completedLocationIds) || completedLocationIds.some((id) => typeof id !== 'string')) throw new Error('Invalid resolved locations')
-  const arts = new Map(manifest.art_refs.map((ref) => [ref.key, '/' + ref.repo_path.replace(/^public\\//, '')]))
+  const arts = new Map(manifest.art_refs.map((ref) => [ref.key, '/' + ref.repo_path.replace(/^public\//, '')]))
   const image = (key) => key === null ? null : arts.get(key) ?? null
   return {
     schema_version: 2,
