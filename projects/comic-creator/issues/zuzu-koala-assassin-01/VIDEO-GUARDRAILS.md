@@ -51,9 +51,7 @@ wherever it disagrees with the v0 SERIES-BIBLE.md or ISSUE-01-SCRIPT.md.
 
 ## bannedTerms (never in any positive prompt, lyric, caption or title)
 
-This list guards one thing: the buried twist stays secret until Silas picks the issue that reveals it. Copy this list into
-`settings.bannedTerms` on every Zuzu video. The server refuses any scene prompt containing a term,
-on every engine (music-video t-025).
+This list is a **visual-generation and story-timing constraint**, not a confidentiality rule for GitHub. Silas approves documenting every fictional twist openly in source and issues; the terms remain filtered from the early video's *positive image prompts, captions and lyrics* so renders don't accidentally depict or reveal story elements before their intended scene. Copy this list into `settings.bannedTerms` on every Zuzu video for the currently approved early-story production lane. The server rejects matching scene prompts (music-video t-025). Revise the production-specific list when later scenes intentionally depict the established history.
 
 ```
 human, humans, humanity, mankind, people, pharmacy, great wall, skyscraper, highway,
