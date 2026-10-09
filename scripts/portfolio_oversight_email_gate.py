@@ -10,10 +10,39 @@ from __future__ import annotations
 
 import argparse
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 DEFAULT_INTENT_EMAIL_GRACE_DAYS = 1.0
+REPEAT_ALERT_HOURS = 24
+
+
+def incident_signature(report: dict[str, Any]) -> str:
+    """Stable actionable sensors, excluding timestamps, counts, and legacy heartbeat."""
+    summary = report.get("summary") or {}
+    payload = {
+        "status": summary.get("status"),
+        "project_unresolved": summary.get("project_unresolved"),
+        "forward": sorted(str(item.get("conductor_slug")) for item in (report.get("project_parity") or {}).get("forward", [])),
+        "reverse": sorted(str(item.get("conductor_slug")) for item in (report.get("project_parity") or {}).get("reverse", [])),
+        "roadmap_errors": sorted(str(item.get("code")) + ":" + str(item.get("project")) for item in (report.get("roadmap_audit") or {}).get("errors", [])),
+        "intent_review_due": bool(summary.get("intent_review_due")),
+    }
+    return json.dumps(payload, sort_keys=True)
+
+
+def should_notify(report: dict[str, Any], previous: dict[str, Any] | None, now: datetime) -> bool:
+    if not should_email(report):
+        return False
+    if not previous or previous.get("signature") != incident_signature(report):
+        return True
+    try:
+        sent_at = datetime.fromisoformat(previous["sent_at"].replace("Z", "+00:00"))
+        return (now - sent_at).total_seconds() >= REPEAT_ALERT_HOURS * 3600
+    except (KeyError, TypeError, ValueError):
+        return True
+
 
 
 def should_email(
@@ -48,14 +77,18 @@ def main() -> int:
         default=DEFAULT_INTENT_EMAIL_GRACE_DAYS,
         help="days after semantic review first becomes due before email escalation",
     )
+    parser.add_argument("--state", type=Path, default=Path("PORTFOLIO-OVERSIGHT-EMAIL-STATE.json"))
+    parser.add_argument("--record", action="store_true", help="record a successfully delivered alert")
     args = parser.parse_args()
 
     report = json.loads(Path(args.report).read_text(encoding="utf-8"))
-    print(
-        "true"
-        if should_email(report, intent_email_grace_days=args.intent_email_grace_days)
-        else "false"
-    )
+    now = datetime.now(timezone.utc)
+    if args.record:
+        args.state.write_text(json.dumps({"signature": incident_signature(report), "sent_at": now.isoformat()}, indent=2) + "\n", encoding="utf-8")
+        return 0
+    previous = json.loads(args.state.read_text(encoding="utf-8")) if args.state.exists() else None
+    eligible = should_email(report, intent_email_grace_days=args.intent_email_grace_days)
+    print("true" if eligible and should_notify(report, previous, now) else "false")
     return 0
 
 
