@@ -31,6 +31,19 @@ notes_from_silas: |
   kind-pinball board). FX3-QUALITY-BLUEPRINT.md is the governing plan. The bar is "as good as any Pinball
   FX3 table": fun, complex, quality -- never "it has 3D meshes" or "the tasks are done".
 
+  2026-10-09, after playing, with a screenshot of the hall's Kind Pinball beside a Pinball FX3 table,
+  verbatim: "play is fine so far, table physics feel good, but I definitely expect a more elaborate
+  visual design. pinball fx3 was listed as our gold standard, including shots from the current build and
+  from a randomly selected pinballfx3 table to highlight discrepancies. To start, we should have splash
+  background filler instead of blank screen. we should have different views to follow the ball or
+  flipper. multiple flippers. a table that isn't just 1 screen length."
+
+  What that means for agents: the screenshot was the hall's 2D cabinet; the 3D table (t-004 onward) was
+  still an unlisted preview (?game=kind-pinball-3d), so it must reach the hall (t-024). Milestone m5 is
+  his four asks on the 3D table: fill the screen (t-020), camera views that follow the ball (t-021), a
+  table longer than one screen (t-022) and more flippers (t-023). The FX3 reference he chose (a Marvel
+  table) has a lit room around the machine, sculpted toys, wire ramps everywhere and a dynamic camera.
+
 milestones:
   - id: m1
     title: "SHAPE -- design brief, reference teardown, scope"
@@ -50,6 +63,11 @@ milestones:
   - id: m4
     title: "SHIP -- device check, table guide, Silas's verdict"
     weight: 10
+    status: in-progress
+
+  - id: m5
+    title: "PRESENTATION -- FX3 staging: a full screen, following cameras, a longer table, more flippers"
+    weight: 25
     status: in-progress
 
 tasks:
@@ -447,7 +465,7 @@ tasks:
     milestone: m4
     title: "The finish line: Silas plays it and judges it as good as any Pinball FX3 table"
     status: waiting
-    depends_on: [t-010, t-012, t-013, t-014, t-015, t-019]
+    depends_on: [t-010, t-012, t-013, t-014, t-015, t-019, t-020, t-021, t-022, t-023, t-024]
     owner: null
     passes: 0
     stakes: reversible
@@ -529,3 +547,84 @@ tasks:
     claimed_at: '2026-10-08T09:36:28Z'
     updated: '2026-10-08T10:59:19Z'
     implementation_pr: 'silasfelinus/kind_robots#3364'
+
+  - id: t-020
+    milestone: m5
+    title: "Fill the screen: the machine in a lit room, and the game's splash behind every cabinet"
+    status: ready
+    depends_on: [t-019]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-09: "splash background filler instead of blank screen". In landscape the 3D table is
+      a column with black either side. Build the cabinet and the room in 3D: the cabinet body with side
+      art, lockdown bar and legs, the backbox with a backglass, and an arcade-room backdrop (floor,
+      walls, hanging lamps, neighbouring cabinets as silhouettes) lit to match, so no screen shape shows
+      empty black. Tier it (the low tier keeps a painted backdrop). Also for every cabinet: in the
+      fullscreen/locked view the page behind the screen shows the game's splash art (blurred and dimmed)
+      instead of flat navy. Fixed-seed screenshots at phone, tablet and desktop.
+
+  - id: t-021
+    milestone: m5
+    title: "Camera views: follow the ball, watch the flippers, see the whole table; the player picks"
+    status: ready
+    depends_on: [t-019]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-09: "different views to follow the ball or flipper". FX3-style views, switchable in
+      play (a key, a cabinet button, a touch chip) and remembered per player: Dynamic (default; a closer
+      camera that follows the ball up the table and settles on the flippers when the ball comes down,
+      tracks multiball by the lowest ball), Flippers (close and low over the flipper zone, follows the
+      ball only when it is high), and Full Table (today's fitted view). Smooth, never jerky, never losing
+      a ball off screen when it matters (a ball near the flippers is always in view). The sub-table and
+      plunge views keep working in every mode. Physics and rules unchanged (runPinballDevices stays
+      green).
+
+  - id: t-022
+    milestone: m5
+    title: "A table longer than one screen: extend the playfield with an upper playfield"
+    status: waiting
+    depends_on: [t-021]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-09: "a table that isn't just 1 screen length". With the Dynamic camera following the
+      ball, the table can be longer than the screen: lengthen the field and add an upper playfield above
+      the current arch (reached by the ramps or the upper feed, and returning to the main field), with
+      its own shots and lit features tied to the rules (villages, nets, multiball). Keep the hidden room
+      hidden. Re-fit art bounds and regenerate the playfield art for the new shape; rebuild the aiming
+      chart and re-run the tuning harness (TUNING.md) so ball time and reach do not regress.
+
+  - id: t-023
+    milestone: m5
+    title: "More flippers: upper flippers with shots of their own"
+    status: waiting
+    depends_on: [t-022]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-09: "multiple flippers". Add at least one upper flipper (FX3/Williams tables often
+      have a third or fourth) placed on the longer table where a ball naturally arrives, each with real
+      shots (a ramp, a lock, a mode lane) and lamps that teach them. Same buttons as the main flippers.
+      Extend the bot and aiming chart to the new flippers; re-run tuning; add the shots to the table
+      guide (t-015) and the mastery ladder if fitting.
+
+  - id: t-024
+    milestone: m5
+    title: "Put the 3D table in the hall as Kind Pinball, on the one leaderboard"
+    status: waiting
+    depends_on: [t-020, t-021]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas played the hall's 2D cabinet on 2026-10-09; every 3D improvement was still behind
+      ?game=kind-pinball-3d. Once the screen fill and the views land, make the hall's Kind Pinball
+      cabinet the 3D table: listed in the hall, scores on the existing kind-pinball board (a fresh
+      plausibility ceiling for its scoring), its title art, and the 2D table kept as the fallback for a
+      device without WebGL. Reversible by flipping the registry back.
