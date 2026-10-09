@@ -6,6 +6,8 @@
 # House lane and canon tags from comic-creator VIDEO-GUARDRAILS.md (bannedTerms and literal-word traps honoured:
 # no 'human', 'people', 'english lettering', 'mother', 'muzzle', 'duster', 'squat'). The abbess crypt plate is a
 # Kontext re-staging of her approved front (242559), the recipe that made the s11 mission-gate keyframe (242738).
+# Indexed in the shared Zuzu world registry (worlds/zuzu/assets/ledger-part-05.json); keep that shard
+# in step when this ledger gains outputs.
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status; --lane). Private.
 round: gamebook-1
 series: zuzu-koala-assassin
@@ -34,6 +36,7 @@ lanes:
   guidance: 2.5
 subjects:
 - key: gb-posters-1
+  entity: scenery
   lane: arthemy-house
   title: 'Section: The Wall of Names (seed 1)'
   size: 1344x768
@@ -55,6 +58,7 @@ subjects:
       art_image_id: 243301
   verdict: 'reject: human hands holding a blank sheet'
 - key: gb-posters-2
+  entity: scenery
   lane: arthemy-house
   title: 'Section: The Wall of Names (seed 2)'
   size: 1344x768
@@ -76,6 +80,7 @@ subjects:
       art_image_id: 243302
   verdict: 'reject: a human hand, blank sheets'
 - key: gb-ending-water-1
+  entity: scenery
   lane: arthemy-house
   title: 'Ending: Silence Beneath the Surface (seed 1)'
   size: 1344x768
@@ -95,6 +100,7 @@ subjects:
       art_image_id: 243293
   verdict: 'reject: a figure sits in a tub under the hat'
 - key: gb-ending-water-2
+  entity: scenery
   lane: arthemy-house
   title: 'Ending: Silence Beneath the Surface (seed 2)'
   size: 1344x768
@@ -114,6 +120,7 @@ subjects:
       art_image_id: 243294
   verdict: 'reject: a figure stands on the water'
 - key: gb-ending-warning-1
+  entity: zuzu
   lane: arthemy-house
   title: 'Ending: The Unheard Warning (seed 1)'
   size: 1344x768
@@ -137,6 +144,7 @@ subjects:
       art_image_id: 243295
   verdict: 'second: kasa missing'
 - key: gb-ending-warning-2
+  entity: zuzu
   lane: arthemy-house
   title: 'Ending: The Unheard Warning (seed 2)'
   size: 1344x768
@@ -159,6 +167,7 @@ subjects:
       art_image_id: 243296
   verdict: 'KEEP (shuttered-town): kasa, hilt over right shoulder, poncho, lantern-lit doorway'
 - key: gb-ending-seal-1
+  entity: zuzu
   lane: arthemy-house
   title: 'Ending: What the Desert Keeps (seed 1)'
   size: 1344x768
@@ -183,6 +192,7 @@ subjects:
       art_image_id: 243297
   verdict: 'reject: "smoking blade" drew a cigarette; cowboy-style brim'
 - key: gb-ending-seal-2
+  entity: zuzu
   lane: arthemy-house
   title: 'Ending: What the Desert Keeps (seed 2)'
   size: 1344x768
@@ -207,6 +217,7 @@ subjects:
       art_image_id: 243298
   verdict: 'reject: cigarette'
 - key: gb-ending-altar-1
+  entity: scenery
   lane: arthemy-house
   title: 'Ending: The Bell Without a Ringer (seed 1)'
   size: 1344x768
@@ -227,6 +238,7 @@ subjects:
       art_image_id: 243299
   verdict: 'KEEP (empty-gate): empty adobe arch, gate ajar, bell on an unmanned rope'
 - key: gb-ending-altar-2
+  entity: scenery
   lane: arthemy-house
   title: 'Ending: The Bell Without a Ringer (seed 2)'
   size: 1344x768
@@ -247,6 +259,7 @@ subjects:
       art_image_id: 243300
   verdict: 'second: reads as a mausoleum'
 - key: gb-posters-r2-3
+  entity: scenery
   lane: arthemy-house
   title: 'Section: The Wall of Names (round 2, seed 3)'
   size: 1344x768
@@ -267,6 +280,7 @@ subjects:
       art_image_id: 243305
   verdict: 'reject: a raccoon wrapped in a sheet (the checkpoint draws the sketched subject, not the wall)'
 - key: gb-posters-r2-4
+  entity: scenery
   lane: arthemy-house
   title: 'Section: The Wall of Names (round 2, seed 4)'
   size: 1344x768
@@ -288,6 +302,7 @@ subjects:
   verdict: 'reject: same raccoon-in-a-sheet read; poster wall stays a stand-in (next: Kontext an existing street
     plate)'
 - key: gb-ending-water-r2-3
+  entity: scenery
   lane: arthemy-house
   title: 'Ending: Silence Beneath the Surface (round 2, seed 3)'
   size: 1344x768
@@ -307,6 +322,7 @@ subjects:
       art_image_id: 243307
   verdict: 'reject: a small figure under the hat'
 - key: gb-ending-water-r2-4
+  entity: scenery
   lane: arthemy-house
   title: 'Ending: Silence Beneath the Surface (round 2, seed 4)'
   size: 1344x768
@@ -326,6 +342,7 @@ subjects:
       art_image_id: 243308
   verdict: 'KEEP (kasa-on-water): lone kasa in black ripples; one hat not two, faint stray line from the top'
 - key: gb-ending-seal-r2-3
+  entity: zuzu
   lane: arthemy-house
   title: 'Ending: What the Desert Keeps (round 2, seed 3)'
   size: 1344x768
@@ -350,6 +367,7 @@ subjects:
       art_image_id: 243309
   verdict: 'KEEP (kneeling-blade): kneeling over the planted katana, hat lost, no cigarette'
 - key: gb-ending-seal-r2-4
+  entity: zuzu
   lane: arthemy-house
   title: 'Ending: What the Desert Keeps (round 2, seed 4)'
   size: 1344x768
@@ -374,6 +392,7 @@ subjects:
       art_image_id: 243310
   verdict: 'second: sword lying flat, posture reads as crawling'
 - key: gb-abbess-crypt-1
+  entity: abbess
   lane: kontext-stage
   title: 'Section: A Knife Behind a Prayer (seed 1)'
   size: 1344x768
@@ -393,6 +412,7 @@ subjects:
       art_image_id: 243303
   verdict: 'second: very dark, figure small'
 - key: gb-abbess-crypt-2
+  entity: abbess
   lane: kontext-stage
   title: 'Section: A Knife Behind a Prayer (seed 2)'
   size: 1344x768

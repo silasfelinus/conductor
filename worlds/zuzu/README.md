@@ -51,7 +51,7 @@ still owns its own code, assets, decisions and human publication gate.
 ## Complete asset and animation inventory
 
 The previous six curated ArtImage anchors were **not a full inventory**. This directory
-now indexes **657 distinct completed ArtImage IDs and 741 distinct ArtJob IDs from 22
+now indexes **675 distinct completed ArtImage IDs and 759 distinct ArtJob IDs from 23
 Conductor art-generation ledgers**, with original ledger file, subject key, entity,
 job IDs and recorded output status. These are *recorded* DONE results, **not a
 live Kind Robots database/URL verification**, and include concept attempts and
@@ -60,7 +60,8 @@ superseded images. Consult the latest CAST-PICKS decisions for the approved mode
 - [Art ledger part 1](assets/ledger-part-01.json) (angles, cast);
   [part 2](assets/ledger-part-02.json) (cast rounds);
   [part 3](assets/ledger-part-03.json) (concepts and look tests);
-  [part 4](assets/ledger-part-04.json) (expression poses and video fixes).
+  [part 4](assets/ledger-part-04.json) (expression poses and video fixes);
+  [part 5](assets/ledger-part-05.json) (gamebook section plates).
 - [Zuzu video builds](assets/video-builds.json): **music videos #5 and #12** are
   separate historical productions. It preserves the #12 cut history, animation
   ArtJob/clip IDs and the **repaired** knife-drop clip which must replace the raw
