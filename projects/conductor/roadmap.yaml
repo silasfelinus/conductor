@@ -3097,6 +3097,30 @@ tasks:
     Merged silasfelinus/conductor#5801 at 6202d0eeb2954f661077cc8088fce8f3beaa0fa0 after all triggered PR workflows completed successfully. conductor:skip now suppresses both import and close-done automation, with regression coverage for a done mirrored task.
   claimed_by: 20261008T223000Z-conductor-t205-skip-close-r7n2
   claimed_at: '2026-10-08T22:30:00Z'
+- id: t-206
+  title: "Restore project parity audit against current self-hosted Kind Robots API"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  source_issue: "silasfelinus/conductor#5832"
+  updated: '2026-10-09'
+  note: |-
+    FROM GITHUB ISSUE silasfelinus/conductor#5832 (https://github.com/silasfelinus/conductor/issues/5832), opened by @silasfelinus on 2026-10-09. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/conductor#5832`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+    ## Incident (2026-10-09, PT)
+    Conductor oversight remains `unresolved`: `Kind Robots project parity check failed: HTTPError: HTTP Error 503: Service Unavailable`. The last generated report is `PORTFOLIO-OVERSIGHT.md` at 11:25 AM PT. Three merged fixes (#5795 hostname to Vercel, #5804 transient retries, #5811 page size 25) failed to clear the issue.
+
+    ## Likely architectural mismatch
+    Kind Robots `AGENTS.md` now declares `https://kindrobots.org` as self-hosted production and Vercel retired. Conductor `scripts/check_project_scaffold_drift.py` is hardcoded to `https://kind-robots.vercel.app/api/projects`; the earlier domain-switch PR notes the self-hosted endpoint had timed out. Do not blindly flip the hostname without authenticated service verification.
+
+    ## Required resolution
+    1. Verify actual production API ingress and auth with the `KR_API_TOKEN` available to Actions (do not log it), and identify whether a 503 is produced by a retired Vercel deployment or current infrastructure.
+    2. Use a lean authenticated project parity projection (id, slug, title, conductorSlug, status, isActive) rather than the heavyweight `projectInclude` response if necessary.
+    3. Update Conductor's parity fetch and tests for the verified current endpoint, retaining failure-as-unresolved and all drift detection.
+    4. Verify a **completed post-merge** oversight run showing parity fully checked rather than 503, and report its run link.
+
+    Alert repetition is handled separately by PR #5831; that does NOT repair the underlying 503.
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
