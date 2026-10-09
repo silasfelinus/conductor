@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "disclaimer": "Git/docs-backed references. IDs are production records, not a claim of current live access or publication. Do not assume historical cuts/clips are approved final media.",
+  "videos": [
+    {
+      "id": 5,
+      "kind": "zuzu-intro-earlier-draft",
+      "name": "Zuzu intro (early draft reviewed Oct 6)",
+      "source": "projects/music-video/docs/zuzu-intro-canon-review.md",
+      "status": "historic-review-only",
+      "notes": "Early draft reviewed for incorrect character designs and chronological issues. Preserve as provenance, do not promote its renders into canon automatically.",
+      "art_image_refs": [
+        242506,
+        242507,
+        242508,
+        242509,
+        242511
+      ],
+      "final_art_image_id": null
+    },
+    {
+      "id": 12,
+      "kind": "zuzu-intro",
+      "name": "Zuzu: Koala Assassin title/music video (subsequent builds)",
+      "source": "projects/music-video/roadmap.yaml",
+      "status": "rendered-private-awaiting-verdict",
+      "notes": "72-second cut history. Latest documented cut uses repaired s13 knife-drop clip substitution; do not re-export using raw 243216 without repair.",
+      "final_art_image_id": 243229,
+      "older_exports": [
+        242706,
+        242748,
+        243105
+      ],
+      "animation_revisions": [
+        {
+          "scene": "s13",
+          "status": "superseded",
+          "start_frame": 243000,
+          "end_frame": null,
+          "clip_art_image_id": 243054,
+          "artjob_id": 34765
+        },
+        {
+          "scene": "s13",
+          "status": "rejected-physics",
+          "start_frame": 243000,
+          "end_frame": 243070,
+          "clip_art_image_id": 243098,
+          "artjob_id": 34804
+        },
+        {
+          "scene": "s13",
+          "status": "accepted-after-local-repair",
+          "start_frame": 243000,
+          "end_frame": 243214,
+          "clip_art_image_id": 243216,
+          "artjob_id": 34883,
+          "replacement_repo_asset": "projects/comic-creator/issues/zuzu-koala-assassin-01/mv12-s13-clip-243216-repaired.mp4"
+        },
+        {
+          "scene": "s13",
+          "status": "rejected-duplicate-knife",
+          "clip_art_image_id": 243219,
+          "artjob_id": 34892
+        }
+      ],
+      "additional_animation_jobs": [
+        34359,
+        34360,
+        34361,
+        34362
+      ],
+      "keyframes_and_fixes": [
+        242684,
+        242688,
+        242686,
+        242731,
+        242735,
+        242738,
+        242997,
+        242998,
+        242999,
+        243000,
+        243070,
+        243209,
+        243210,
+        243211,
+        243214
+      ],
+      "source_ledgers": [
+        "projects/comic-creator/issues/zuzu-koala-assassin-01/MV-FIXES.yaml",
+        "projects/comic-creator/issues/zuzu-koala-assassin-01/MV-KEYFRAMES.yaml",
+        "projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md"
+      ]
+    }
+  ],
+  "related_not_zuzu_music_video": {
+    "project": "music-video",
+    "name": "Kind Robots theme song",
+    "source": "projects/music-video/docs/production-sheets.md",
+    "notes": "Separate site theme production, not Zuzu material. Do not mix outputs with either Zuzu intro."
+  },
+  "other_animated_productions": [
+    {
+      "id": "comic-film",
+      "source": "projects/comic-film/DESIGN-BRIEF.md",
+      "status": "project-specified",
+      "notes": "Book One animated adaptation; no verified finished animation IDs in this index. Project's shot list and completed media are owned by its production records."
+    },
+    {
+      "id": "zuzu-lair",
+      "source": "projects/zuzu-lair/chapters/01-dry-gulch/SCENES.yaml",
+      "status": "project-specified",
+      "notes": "Branching QTE animation contract; only completed clips verified in runtime may be marked rendered."
+    }
+  ]
+}
