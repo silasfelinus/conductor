@@ -152,7 +152,10 @@ param(
   [string]$SdScripts = "D:\\ai\\sd-scripts",
   [string]$Comfy = "http://127.0.0.1:8188",
   [string]$Out = "D:\\comfy\\comfy-fast\\models\\Lora\\import",
-  [string[]]$Only = @()
+  [string[]]$Only = @(),
+  # The base Python ComfyUI runs on (ops/home-server/ecosystem.config.js COMFY_BASE_PYTHON). A bare "python" on this
+  # box is a broken Store alias, so it is only the fallback.
+  [string]$Python = "$env:LOCALAPPDATA\\Programs\\Python\\Python310\\python.exe"
 )
 $ErrorActionPreference = "Stop"
 $here = $PSScriptRoot
@@ -164,7 +167,8 @@ if (-not (Test-Path "$SdScripts\\venv\\Scripts\\accelerate.exe")) {{
   Write-Host "Setting up kohya sd-scripts in $SdScripts (one time, ~10 min)"
   if (-not (Test-Path $SdScripts)) {{ git clone https://github.com/kohya-ss/sd-scripts.git $SdScripts }}
   Push-Location $SdScripts
-  python -m venv venv
+  if (-not (Test-Path $Python)) {{ $Python = "python" }}
+  & $Python -m venv venv
   & .\\venv\\Scripts\\python.exe -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
   & .\\venv\\Scripts\\python.exe -m pip install -r requirements.txt bitsandbytes
   & .\\venv\\Scripts\\accelerate.exe config default --mixed_precision fp16

@@ -124,6 +124,7 @@ def test_train_all_runs_every_set_in_order_and_always_restarts_the_relay():
     assert ps1.index("pm2 stop kr-relay") < ps1.index("$Comfy/queue"), "pause the relay, then let ComfyUI drain"
     assert ps1.index("pm2 stop kr-relay") < ps1.index("} finally {") < ps1.index("pm2 start kr-relay")
     assert "if ($LASTEXITCODE)" in ps1
+    assert "Python310\\python.exe" in ps1 and "& $Python -m venv venv" in ps1, "uses ComfyUI's Python 3.10, not a bare python"
     assert "$Comfy/queue" in ps1 and "$Comfy/free" in ps1
     assert "_v1.safetensors" in ps1, "a finished set is skipped on a re-run"
 
