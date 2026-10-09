@@ -112,7 +112,8 @@
       "name": "The Bell That Never Rang gamebook",
       "role": "noncanonical-alternate-trail",
       "source_paths": [
-        "projects/zuzu-gamebook/DESIGN-BRIEF.md"
+        "projects/zuzu-gamebook/DESIGN-BRIEF.md",
+        "projects/zuzu-gamebook/art/ROUND-1.yaml"
       ],
       "app_paths": [
         "/play/zuzu-gamebook"
@@ -201,6 +202,13 @@
       "path": "projects/zuzu-showdown/fighters.yaml",
       "status": "source-defined",
       "notes": "Fighting-game animation/sprite definitions are project-owned derivatives, not shared character canon."
+    },
+    {
+      "id": "gamebook-plates",
+      "type": "game-asset-contract",
+      "path": "projects/zuzu-gamebook/art/ROUND-1.yaml",
+      "status": "source-defined",
+      "notes": "Gamebook section plates: vetted intro music-video keyframes plus gamebook-rendered plates, exported as kind_robots public/zuzu-gamebook/scenes/*.webp with ArtImage provenance in kind_robots utils/zuzuGamebook/art.ts. Project-owned derivatives, not shared character canon."
     }
   ],
   "runtime_model_discovery": [
