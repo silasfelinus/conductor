@@ -9,7 +9,7 @@
     "generated_extras": "Species/occupation/faction/motive composed as run-scoped snapshot, never forced into Character rows",
     "species_morality": "No deterministic species=>alignment or occupation=>alignment mapping",
     "continuity": "Persist rolled identities, agenda, locations, hidden truth references, all consequential mutation history",
-    "secrets": "Restricted plot and hidden world-history details are stored only on a future authenticated server-side authority, not this file",
+    "secrets": "Fictional plot spoilers belong in GitHub canon and source manifests. In-game reveal timing is handled by play state; user-owned private data and credentials remain protected.",
     "faceted_reuse": "FacetProfile taxonomy already supports SPECIES, OCCUPATION, ARCHETYPE, ROLE, ALIGNMENT; each instance gets world membership via audited metadata/relation",
     "guardrails": "Source visuals from worlds/zuzu and approved production pins; no LLM filler automatically canon",
     "theme": "Weird-west animal wasteland; Edo-era samurai visitor"
@@ -292,15 +292,18 @@
         }
       ],
       "major_challenge": {
-        "id": "sanctuary-authority",
-        "label": "The Sanctuary's Keeper",
-        "boss_source": "private-editorial",
+        "id": "abbess-at-the-mission",
+        "label": "The Abbess",
+        "boss_source": "worlds/zuzu/WORLD-GUIDE.md",
         "outcome_modes": [
           "stand-ground",
           "appeal",
           "investigate",
           "escape"
-        ]
+        ],
+        "canon_motivation": "Bring a cosmic horror into the world through longstanding ritual offerings",
+        "presentation": "Kindly host until discovered; the player may investigate, confront, rescue or escape",
+        "reveal_rule": "Do not present the truth to the player before clues or an earned reveal"
       }
     },
     {
@@ -538,6 +541,20 @@
           "retreat"
         ]
       }
+    }
+  ],
+  "world_mysteries": [
+    {
+      "id": "lost-humanity",
+      "canon": "Humans inhabited the world previously; something went wrong.",
+      "resolution": "undetermined",
+      "gameplay": "Foreshadow with discoveries; do not assert a cause yet."
+    },
+    {
+      "id": "abbess-cosmic-rites",
+      "canon": "The Abbess has long preyed on children through a convent-based ritual scheme to feed a cosmic horror and bring it fully into the world.",
+      "resolution": "established-motivation",
+      "gameplay": "Lead players from hospitality and clues to recognition and confrontation."
     }
   ]
 }
