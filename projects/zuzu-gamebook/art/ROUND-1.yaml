@@ -49,7 +49,8 @@ subjects:
     with dozens of old torn yellowed paper sheets, each sheet a faded hand-drawn portrait of a small animal child,
     fennec fox kit, rabbit kit, raccoon kit, mouse child, (blank paper, no text:1.3), peeling paper, nails, a single
     hanging oil lantern casting warm amber light, deep shadows, empty street, eerie, close-up
-  note: 'First submission (jobs 34958/34959) was refused by the KR prompt contract: "poster" is format vocabulary.'
+  note: 'First submission (jobs 34958/34959) was refused by the KR prompt contract: "poster" is format vocabulary.
+    Those two job ids were later repaired in place as gb-posters-r3-1/2.'
   jobs:
     arthemy-house: 34970
   art:
@@ -71,7 +72,8 @@ subjects:
     with dozens of old torn yellowed paper sheets, each sheet a faded hand-drawn portrait of a small animal child,
     fennec fox kit, rabbit kit, raccoon kit, mouse child, (blank paper, no text:1.3), peeling paper, nails, a single
     hanging oil lantern casting warm amber light, deep shadows, empty street, eerie, close-up
-  note: 'First submission (jobs 34958/34959) was refused by the KR prompt contract: "poster" is format vocabulary.'
+  note: 'First submission (jobs 34958/34959) was refused by the KR prompt contract: "poster" is format vocabulary.
+    Those two job ids were later repaired in place as gb-posters-r3-1/2.'
   jobs:
     arthemy-house: 34971
   art:
@@ -301,6 +303,54 @@ subjects:
       art_image_id: 243306
   verdict: 'reject: same raccoon-in-a-sheet read; poster wall stays a stand-in (next: Kontext an existing street
     plate)'
+- key: gb-posters-r3-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Section: The Wall of Names (round 3, close-up)'
+  size: 1344x768
+  seed: 4103
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar, cute, kawaii, glossy, bright
+    saturated colors, person, figure, character, animal, hands, fingers, face, raccoon, fox, crowd
+  prompt_prose: a weathered boardwalk wall plastered with old yellowed paper notices under lantern light.
+  prompt_tags: (no characters:1.4), scenery, night, close-up of a weathered plank wall on a burned frontier boardwalk,
+    (plastered edge to edge with layers of old yellowed paper notices:1.3), torn and peeling sheets, rusty nails,
+    faded smudged ink, water stains, curled corners, a single hanging oil lantern casting warm amber light across
+    the paper, deep shadows, eerie, deserted
+  jobs:
+    arthemy-house: 34958
+  note: 'Repaired in place, 2026-10-09: job 34958 was refused before claim for ''poster'' (format vocabulary) on
+    its first submission; edited via /api/art/queue/{id}/edit with this prompt and returned to PENDING under the
+    same ArtJob id. No faces on the sheets: the r2 sketched-face prompts drew a raccoon in a sheet.'
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243326
+  verdict: 'second: lantern-lit wall, only one notice'
+- key: gb-posters-r3-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Section: The Wall of Names (round 3, boardwalk)'
+  size: 1344x768
+  seed: 4104
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar, cute, kawaii, glossy, bright
+    saturated colors, person, figure, character, animal, hands, fingers, face, raccoon, fox, crowd
+  prompt_prose: a weathered boardwalk wall plastered with old yellowed paper notices under lantern light.
+  prompt_tags: (no characters:1.4), scenery, night, a long burned frontier boardwalk, its wooden wall (plastered
+    with dozens of old yellowed paper notices:1.3), torn and peeling, nailed in overlapping layers, a single hanging
+    oil lantern, smoke drifting, charred posts, empty street beyond, deserted, eerie, medium shot
+  jobs:
+    arthemy-house: 34959
+  note: 'Repaired in place, 2026-10-09: job 34959 was refused before claim for ''poster'' (format vocabulary) on
+    its first submission; edited via /api/art/queue/{id}/edit with this prompt and returned to PENDING under the
+    same ArtJob id. No faces on the sheets: the r2 sketched-face prompts drew a raccoon in a sheet.'
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243327
+  verdict: 'KEEP (posters-boardwalk): covered boardwalk, walls pinned with paper notices under a lantern; replaces
+    the posters stand-in'
 - key: gb-ending-water-r2-3
   entity: scenery
   lane: arthemy-house
