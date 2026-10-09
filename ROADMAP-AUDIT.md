@@ -1,20 +1,20 @@
 # Roadmap Audit
 
-Generated: `2026-10-09T17:01:59.544669+00:00`
+Generated: `2026-10-09T23:10:47.417192+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **76** roadmaps, **37** active + **3** continuous projects, **2023** tasks
-- **85 ready**, **110 waiting**, **43 needs-human**, **14 claimed/review**, **1755 done**
+- **77** roadmaps, **38** active + **3** continuous projects, **2032** tasks
+- **87 ready**, **112 waiting**, **44 needs-human**, **16 claimed/review**, **1757 done**
 - Findings: **0 errors**, **23 warnings**, **55 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `kind-pinball` | active | software | 0 | 1 | 0 | 1 | 17 / 19 |
+| 1 | `kind-pinball` | active | software | 2 | 4 | 0 | 1 | 17 / 24 |
 | 2 | `zuzu-lair` | active | software | 2 | 6 | 1 | 1 | 4 / 14 |
 | 3 | `kr-arcade` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 4 | `zuzu-showdown` | active | software | 8 | 3 | 0 | 1 | 15 / 27 |
@@ -31,13 +31,13 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `music-video` | active | software | 6 | 3 | 1 | 0 | 25 / 35 |
 | 16 | `comic-film` | active | software | 3 | 6 | 1 | 0 | 1 / 11 |
 | 17 | `zuzu-gamebook` | active | software | 4 | 5 | 0 | 0 | 2 / 11 |
-| 18 | `zuzu-shifting-lands` | active | software | 3 | 13 | 1 | 0 | 1 / 18 |
+| 18 | `zuzu-shifting-lands` | active | software | 1 | 12 | 1 | 2 | 2 / 18 |
 | 19 | `tzaddik-gallery` | active | software | 1 | 1 | 1 | 0 | 30 / 33 |
 | 20 | `scene-animator` | finished | software | 0 | 0 | 0 | 0 | 11 / 11 |
 | 21 | `text-generation` | finished | software | 0 | 0 | 0 | 0 | 9 / 9 |
 | 22 | `kindrobots-unraid` | paused | software | 0 | 6 | 2 | 0 | 14 / 22 |
 | 23 | `lora-ingestion` | finished | infrastructure | 1 | 0 | 0 | 0 | 16 / 17 |
-| 24 | `conductor` | active | software | 0 | 0 | 0 | 1 | 204 / 205 |
+| 24 | `conductor` | active | software | 1 | 0 | 0 | 1 | 204 / 206 |
 | 25 | `storybook` | active | software | 5 | 2 | 0 | 0 | 63 / 70 |
 | 26 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 3 / 10 |
 | 27 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
@@ -58,7 +58,8 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 42 | `robot-species-sorting-quiz` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
 | 43 | `kind-daily-riddle` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
 | 44 | `kind-nonogram-gallery` | active | software | 2 | 0 | 1 | 0 | 0 / 3 |
-| 45 | `dream-cycle` | continuous | software | 2 | 0 | 1 | 0 | 33 / 36 |
+| 45 | `robot-paper-boat-regatta` | active | software | 1 | 0 | 1 | 0 | 1 / 3 |
+| 46 | `dream-cycle` | continuous | software | 2 | 0 | 1 | 0 | 33 / 36 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
@@ -100,11 +101,11 @@ _None._
 ### Warning (23)
 
 - **STALE_CLAIM_FIELDS** — `animation-manager` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 15 days.
+- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 16 days.
 - **STALE_IN_PROGRESS** — `animation-manager` / `t-026`: Task has remained review for 3 days.
 - **STALE_IN_PROGRESS** — `art-archive` / `t-033`: Task has remained claimed for 6 days.
 - **STALE_IN_PROGRESS** — `art-archive` / `t-044`: Task has remained claimed for 6 days.
-- **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 11 days.
+- **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 12 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `comic-film` / `t-009`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 8 days.
 - **STALE_IN_PROGRESS** — `kind-economy` / `t-011`: Task has remained claimed for 3 days.
