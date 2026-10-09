@@ -71,6 +71,7 @@ def test_dataset_toml_and_train_script_point_at_the_subset_and_model():
     ps1 = lora.train_ps1(character, "D:\\models\\base.safetensors", "D:\\Lora\\import")
     assert "sdxl_train_network.py" in ps1 and "zuzukoala_v1" in ps1
     assert "D:\\models\\base.safetensors" in ps1 and "--network_train_unet_only" in ps1
+    assert ps1.index("if ($LASTEXITCODE)") < ps1.index("Write-Host \"Done"), "no Done line after a failed run"
 
 
 def test_build_writes_mirrored_cropped_images_captions_and_a_zip(tmp_path):
@@ -124,6 +125,8 @@ def test_train_all_runs_every_set_in_order_and_always_restarts_the_relay():
     assert ps1.index("pm2 stop kr-relay") < ps1.index("$Comfy/queue"), "pause the relay, then let ComfyUI drain"
     assert ps1.index("pm2 stop kr-relay") < ps1.index("} finally {") < ps1.index("pm2 start kr-relay")
     assert "if ($LASTEXITCODE)" in ps1
+    assert "--no-deps" in ps1 and "comfy-fast" in ps1, "CUDA torch is copied from ComfyUI's venv, not PyPI's CPU build"
+    assert "torch.cuda.is_available()" in ps1, "training refuses to start without CUDA torch"
     assert "Python310\\python.exe" in ps1 and "& $Python -m venv venv" in ps1, "uses ComfyUI's Python 3.10, not a bare python"
     assert "$Comfy/queue" in ps1 and "$Comfy/free" in ps1
     assert "_v1.safetensors" in ps1, "a finished set is skipped on a re-run"
