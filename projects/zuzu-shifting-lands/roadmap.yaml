@@ -94,19 +94,17 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Build typed, versioned world/resource and encounter manifests"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Encode 5 lands, three location encounters each, land boss slots, source-
-      verified art refs, ecology, named exceptions, species vs occupation vs
-      disposition/secret vs scenario vs reward. Validate schema and ensure in-game player-facing data reveals
-      lore at the intended moment, not from a prematurely visible card. The source game manifest should not duplicate
-      world Book One or import LLM filler as canon.
+    note: |-
+      Encode 5 lands, three location encounters each, land boss slots, source- verified art refs, ecology, named exceptions, species vs occupation vs disposition/secret vs scenario vs reward. Validate schema and ensure in-game player-facing data reveals lore at the intended moment, not from a prematurely visible card. The source game manifest should not duplicate world Book One or import LLM filler as canon.
+
+      Implemented v2 authored five-land world contract with verified repository-art pointers, typed Facet/Scenario/Reward refs, spoiler-safe player projections and CI tests on worker/zuzu-shifting-lands-t003-world-contract-20261009-b7e9. Reviewing and running contract checks before merge.
     claimed_by: 2026-10-09T230410Z-zuzu-shifting-lands-t003-gpt6-b7e9
     claimed_at: '2026-10-09T23:04:10Z'
-    updated: '2026-10-09T23:04:10Z'
+    updated: '2026-10-09T23:07:40Z'
 
   - id: t-004
     milestone: m1
