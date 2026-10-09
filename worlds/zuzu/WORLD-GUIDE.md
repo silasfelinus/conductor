@@ -23,6 +23,14 @@ Named Characters retain stable identity, species, cast design, past deeds and re
 - **Gorilla encounters:** Gorillas are viable **high-level challenge participants**. Some may have vampirism or dark-magic conditions; others may simply be physically formidable, allies, travelers or bystanders. Vampirism is a *condition/secret*, not an attribute of gorilla biology.
 - **Raiders and settlers:** Neither “settler” nor “raider” is a biological category, and both camps can contain sympathetic, deceptive or contradictory individuals. Factions may change with player action.
 
+### Key world mysteries and the first-land antagonist
+
+The Abbess is the central antagonist of the Homestead's first-land arc. She has spent years taking children from the surrounding frontier, using dark sacrificial rites to feed a cosmic horror and attempting to bring it fully into the world. Her convent's apparent kindness is a calculated disguise. The first confrontation should be earned through signs of missing residents, misleading hospitality and discovery rather than an unexplained immediate fight.
+
+Humans once inhabited this world. Something went wrong. What actually happened is a major mystery, currently unresolved; its relationship to the unstable landscape, anthropomorphic inhabitants or the cosmic entity must not be invented as settled canon. Zuzu himself comes from another land and follows an Edo-era samurai code.
+
+The Book One comic already contains the mission, the rescue and the partly manifested cosmic being. Keep Book One's exact chronology distinct from the alternate outcomes of the board game.
+
 ### Canon and disclosure
 
 The earlier Kind Robots Character, Reward, Scenario and Dream lore was generated as **filler**, and **is not canon**. It is eligible for correction against Silas's new directions after identity-aware database matching. The Book One comic narrative remains its own canonical chronology; randomized gamebook, animation, combat and board-game routes are *possibilities*, not retroactive canon.
