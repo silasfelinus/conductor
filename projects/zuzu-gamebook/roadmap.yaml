@@ -47,6 +47,11 @@ notes_from_silas: |
   locked cast references and canonical character/item profiles, and the gamebook's art ledger is
   part of the hub's inventory (assets/ledger-part-05.json).
 
+  2026-10-09: "let's expand [the new Zuzu worldbook], then develop" the gamebook. The
+  WORLD-GUIDE gained a proposed gazetteer (Zuzu's code, survival, Land 1 places, the
+  convent's signs, relics of the lost humans, factions, motifs); Book One grew from 20
+  to 68 sections and 6 to 8 endings on top of it (kind_robots, zuzu-gamebook t-004).
+
   Agent mandate: autonomously write/refine narrative, engine, UI, prompt manifests,
   playtests and balance; independently enqueue task-scoped images through durable
   ArtJobs and verify actual delivered assets before listing them as complete.
@@ -123,6 +128,12 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
+      PROGRESS 2026-10-09: 68 sections / 8 endings across six acts that follow Book One's
+      chapters (utils/zuzuGamebook/book.ts), the mission rewritten welcome-first, clues
+      paying off as roll bonuses, flag-gated choices with disabled hints, scene effects,
+      and a 6000-walk seeded exploration test. Next increments: deepen each act toward
+      ~400 (side encounters per WORLD-GUIDE gazetteer, Dustwater, a novice ally route,
+      more consequence plates), then the later acts' plates via t-006.
       Expand the initial 20-scene, six-ending preview from kind_robots#3355 to a full book. The Bell That Never Rang. Build original branching scenarios that echo
       watering hole, wounded coyote, Hollow Bell, fennec siblings, apples,
       missing-child posters and corrupted mission without rewriting BOOK-ONE.md.
