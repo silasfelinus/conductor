@@ -105,7 +105,9 @@ def local_project_slugs(projects_dir: Path | None = None) -> set[str]:
 def fetch_kind_robots_projects(token: str) -> list[dict[str, Any]]:
     """GET every Kind Robots Project (active and inactive) with pagination."""
     projects: list[dict[str, Any]] = []
-    take = 250
+    # Keep responses small: the projects endpoint includes nested relations for every row.
+    # An oversized response can overwhelm the server even when the API is reachable.
+    take = 25
     skip = 0
     while True:
         url = f"{API_URL}?includeInactive=true&take={take}&skip={skip}"
