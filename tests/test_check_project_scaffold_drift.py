@@ -214,7 +214,7 @@ def test_project_parity_uses_live_api_host(monkeypatch):
 
     monkeypatch.setattr(drift.urllib.request, "urlopen", fake_urlopen)
     assert drift.fetch_kind_robots_projects("test-token") == []
-    assert requested == [("https://kind-robots.vercel.app/api/projects?includeInactive=true&take=250&skip=0", 20)]
+    assert requested == [("https://kind-robots.vercel.app/api/projects?includeInactive=true&take=25&skip=0", 20)]
 
 
 def test_project_parity_retries_transient_503(monkeypatch):
