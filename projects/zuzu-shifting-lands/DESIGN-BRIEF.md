@@ -38,6 +38,8 @@ Example: **The First Homestead**, with a crooked garden fence and one lantern. T
 
 Never reveal the `hiddenTruth` field until the player earns a reveal. A creature's card front may display species and profession; motive and danger level are discovered through gameplay, not spoiled by colors or icons.
 
+**Lost-world canon:** anthropomorphic animals now occupy a world where humans previously existed; *something went wrong*, but the actual event and its relation to the cosmic horror have not yet been decided. Record the mystery openly in design docs without presenting an unapproved explanation as fact.
+
 ## Five-land expedition, with meaningful evolution
 
 A run consists of 5 lands × 3 location encounters = **15 main encounters** plus a **major challenge at the end of every land**, travel stops, optional detours and epilogues. Each land has its own deck, ecology, assets, pressure meter, named anchors and at least three alternate layouts. These are **starting designs, not newly declared permanent geography**:
@@ -54,7 +56,7 @@ A **land** is a chapter container, not just a scenery texture. Encounter results
 
 ### World-one antagonist
 
-Land 1 has a **convent/abbess-centered major confrontation** as its default authored boss track. Its hidden motivation and long-term metaplot are **restricted creative spoilers**, maintained only in access-controlled story authority. **Do not encode the unrevealed motive in public Conductor files, static browser bundles, public generation prompts, public project card metadata, or shipped client-side JSON.** Publicly accessible source docs may say “a dangerous sanctuary authority” and provide an admin hook for the privately maintained boss reveal. Before a mature reveal is implemented, play a spoiler-safe challenge with no implied full explanation. Defer private data authoring/import to an authenticated Kind Robots admin workflow.
+Land 1 has a **convent/Abbess-centered major confrontation**. The Abbess has long orchestrated disappearances and dark sacrificial rites involving children; she aims to nourish a cosmic horror and ultimately bring it into the world. She can welcome Zuzu with food and lodging before evidence of her real purpose surfaces. This is canonical background, openly documented on GitHub. Players should encounter and interpret clues before the reveal, but developers and agents do not need to pretend the secret is unknown.
 
 The Abbess's appearance, abilities, and narrative consequences must match existing locked Character references and case-sensitive source guardrails. Child-harm themes should be treated as disturbing narrative stakes **without sensationalized depictions of harm to children**.
 
@@ -84,7 +86,7 @@ A player's route is **spatial** rather than merely a sequence of text screens. T
 
 **Two-layer narrative:**
 1. **Deterministic rules/state** decides what is possible, participants, species/roles, checks, inventory, casualties, permanent flags and a reversible run replay seed. The generation system can never invent a missing inventory object, move Zuzu to an unreachable tile, rewrite completed history or declare Book One canon.
-2. **Narrative renderer** writes rich dialogue, choices and aftermath from a validated *fact packet*, with preference for curated Scenario template prose and controlled Storybook text generation when enabled. Allow a complete **pre-authored offline path** with no paid inference, no API keys and no secret spoilers sent to untrusted providers.
+2. **Narrative renderer** writes rich dialogue, choices and aftermath from a validated *fact packet*, with preference for curated Scenario template prose and controlled Storybook text generation when enabled. Allow a complete **pre-authored offline path** with no paid inference or API keys. Lore can be documented in the repository; prompts still follow actual provider privacy, consent and cost settings.
 
 Character identities and hidden agendas are seeded once and persisted; so are the underlying land layout, encounter templates, and proposed location changes. AI proposes scene dialogue/content only and undergoes safety/continuity validation. Pin model version + content provenance + run seed; cache accepted text for replay/resume. Rejected model results fall back to authored text. Quota/cost/access gates follow existing Kind Robots mana rules; no unattended spend.
 
@@ -98,7 +100,7 @@ Resources should be **tagged Zuzu** so the game, Gamebook, Lair, cartoons, trail
 - **Reward**: named techniques, weapons, items and narrative tokens link to the world marker Facet/`Pack`; use `RewardFacet` where possible. Keep canonical appearance distinct from random mechanically spawned variants.
 - **ArtImage / Resource / LoRA**: use the existing Zuzu World Studio's project-art links, cast picks and provenances; dynamically resolve signed media, maturity/privacy, shot aspect and approved version. Don't copy image bytes.
 - **Project**: `conductorSlug: zuzu-shifting-lands` is the project join. A `ProjectFacet` relation can serve as a filter/selection for the new game, but does NOT automatically apply to all Zuzu-world consumers. For all-resource discovery, prefer an audited, server-side world-membership resolver.
-- **Privacy/authorization:** hidden boss truth is not in public front-end props, static files, prompt logs, anonymous API output or metadata; the mature/private setting of each underlying resource still governs disclosure.
+- **Dramatic disclosure/authorization:** full boss lore can live in this repository and source manifests. The **player UI** reveals mysteries when earned, not through an early tooltip or card front. Mature/private settings of actual user-owned resources still govern access.
 
 Seed a **world-marker** Facet on live DB after an identity/duplicate audit; do not guess its record ID or assume someone already imported the original resource-submission payload. Migrate old LLM-generated filler carefully under Silas's replacement authorization (preserve IDs and art history), only after comparing to locked story and design. World Studio needs UI to tag existing records and inspect Species/Role cards separately.
 
@@ -120,16 +122,16 @@ Seed a **world-marker** Facet on live DB after an identity/duplicate audit; do n
 }
 ```
 
-That is a **public-safe illustration**, not a preexisting live Scenario. Replace hand-authored slugs with verified entity IDs only when the resolver proves they exist and are authorized.
+That is a **design illustration**, not a preexisting live Scenario. Replace hand-authored slugs with verified entity IDs only when the resolver proves they exist and are authorized.
 
 ## Scope and gates
 
-**Milestone 1:** repo project + taxonomy/encounter manifests + engine contracts + composition test matrix + safe proof-of-concept art board (no live spoilers).
+**Milestone 1:** repo project + taxonomy/encounter manifests + engine contracts + composition test matrix + proof-of-concept art board with correct in-game mystery pacing.
 
 **Milestone 2:** robust seeded 5-land game loop, 15+ encounters, 5 authored challenges, persistent state, deterministic choices/rolls, map mutation and encounter history; data adapters for Facets, Characters, Scenarios and Rewards with strict world isolation.
 
 **Milestone 3:** imagery from existing cast and production ArtImages + deliberate variant ArtJobs, Storybook-adjacent text generator with authorial validators, companion dialogue and new encounter decks.
 
-**Milestone 4:** permissioned admin curation controls, sensitive canon reveal separated from public game assets, full playtesting, balancing, accessibility, responsive image-first visual acceptance, eventual publication **only when Silas explicitly approves**.
+**Milestone 4:** admin curation controls, clue-based in-game narrative reveal, full playtesting, balancing, accessibility, responsive image-first visual acceptance, eventual publication **only when Silas explicitly approves**.
 
 This is a **new project** with its own roadmap and app page; it must *not* replace or hijack `zuzu-gamebook` / `zuzu-lair`. Agents may autonomously implement reversible code/content drafts and internally queue scoped ArtJobs. Do not claim live row creation, paid generation, publishing or deploy without verification/authorization.

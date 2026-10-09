@@ -10,7 +10,7 @@ Machine-readable index: [catalog.json](catalog.json) · Contribution rules: [CON
 This world index is **not** a new Conductor project or a second Kind Robots database.
 Every production keeps its own roadmap, code, runtime assets and ownership.
 
-**Expanded setting and modular encounters:** [WORLD-GUIDE.md](WORLD-GUIDE.md) sets Zuzu's Edo-era outsider identity, the anthropomorphic frontier, shifting geography, and independent Species versus Occupation/Role Facets. Sensitive narrative reveals are not reproduced in this public repo.
+**Expanded setting and modular encounters:** [WORLD-GUIDE.md](WORLD-GUIDE.md) sets Zuzu's Edo-era outsider identity, the anthropomorphic frontier, shifting geography, and independent Species versus Occupation/Role Facets. Creative plot spoilers, including future reveals, may be documented openly in this GitHub world registry.
 
 ## Read the canon before creating anything
 
@@ -26,9 +26,7 @@ Read the following in order of relevance:
 
 **Important:** Original Kind Robots Dream, Character, Reward and Scenario lore about Zuzu was **LLM-generated filler and has no canonical authority**. It is not merely an alternate draft. The later Silas-directed Book One, locked character designs and guardrails own the canon.
 In particular, do not quietly reinstate superseded locations, supporting characters or story
-devices from the draft series bible. Keep the concealed plot reveal out of public titles,
-metadata, prompts, descriptions and this index. Read the restricted list from the original
-guardrails at generation time rather than replicating it into catalogues.
+devices from the draft series bible. Full fictional lore and plot revelations belong in the GitHub worldbuilding files; do not withhold them from agents because the repository is public. The original video guardrails still govern what visual prompts render and when players encounter reveals.
 
 The original graphic-novel continuity remains fixed. Branching-game outcomes, match victories,
 QTE deaths and arcade mechanics are alternate-play interpretations, **not retcons**. The comic

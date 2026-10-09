@@ -48,16 +48,21 @@ class ShiftingLandsContract(unittest.TestCase):
         self.assertFalse(any("disposition" in entry or "alignment" in entry for entry in species.values()))
         self.assertFalse(any("disposition" in entry or "alignment" in entry for entry in roles.values()))
 
-    def test_setting_and_sources_exist_and_secrets_are_server_owned(self):
+    def test_setting_and_sources_have_open_fictional_spoilers(self):
         self.assertTrue((WORLD / "WORLD-GUIDE.md").is_file())
         self.assertEqual(
             next(s for s in self.catalog["canon_sources"] if s["id"] == "world-guide")["authority"],
             "silas-directed-setting",
         )
         self.assertEqual(self.manifest["editorial_rules"]["known_named_characters"].startswith("Only"), True)
-        self.assertIn("future authenticated server-side authority",
+        self.assertIn("Fictional plot spoilers belong in GitHub",
                       self.manifest["editorial_rules"]["secrets"])
-        self.assertEqual(self.manifest["lands"][0]["major_challenge"]["boss_source"], "private-editorial")
+        self.assertEqual(self.manifest["lands"][0]["major_challenge"]["boss_source"],
+                         "worlds/zuzu/WORLD-GUIDE.md")
+        self.assertEqual(self.manifest["lands"][0]["major_challenge"]["label"], "The Abbess")
+        self.assertEqual({entry["id"] for entry in self.manifest["world_mysteries"]},
+                         {"lost-humanity", "abbess-cosmic-rites"})
+        self.assertIn("No GitHub spoiler embargo", (WORLD / "WORLD-GUIDE.md").read_text(encoding="utf-8"))
         self.assertEqual(self.manifest["status"], "design-manifest-not-imported")
         self.assertTrue((GAME / "DESIGN-BRIEF.md").is_file())
         self.assertTrue((GAME / "roadmap.yaml").is_file())
