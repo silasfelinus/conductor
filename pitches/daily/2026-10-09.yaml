@@ -1,0 +1,57 @@
+# Daily project pitches, 2026-10-09. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-09
+pitches:
+  - slug: kr-cabinet-robot-pac-garden
+    target: kr-arcade
+    title: Maze Muncher Garden
+    hook: >-
+      An arcade cabinet riffing on Pac-Man's maze-chomping chase, where a little watering robot
+      waters every seedling in a hedge maze while four wandering weed-bots patrol it. A sun-drop
+      power-up lets it briefly scare the weeds, and each maze adds speed and a new patrol pattern.
+    llm_at_runtime: none
+    effort: small
+    art_plan: Cabinet marquee, one robot sprite sheet, four weed-bot sprites, seedling and sun-drop icons and 4 hedge backdrops generated ahead of time.
+    first_slice: Intro splash, one hedge maze, four patrol patterns, sun-drop scare mode, rising speed and a score submit.
+  - slug: kr-cabinet-lamp-lighter-run
+    target: kr-arcade
+    title: Lamp Lighter Run
+    hook: >-
+      An arcade cabinet riffing on Donkey Kong's climb-the-girders ladder-and-barrel dodge, where a
+      lamplighter robot hops rolling gloom-balls and climbs a scaffold to relight every street lamp.
+      Each level adds steeper ramps, faster barrels and a bonus lantern timer.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: Cabinet marquee, lamplighter sprite sheet, gloom-ball sprites, scaffold tiles and 3 night-street backdrops generated ahead of time.
+    first_slice: Intro splash, one scaffold screen with ladders and ramps, rolling hazards, jump, a bonus timer and a score submit.
+  - slug: robot-sky-lantern-letters
+    title: Robot Sky Lantern Letters
+    hook: >-
+      A quiet writing toy where players pick words from a fixed rhyme bank to compose a short kind
+      note, then watch it rise as a glowing paper lantern over a pre-painted night festival. Every
+      word, rhyme and lantern pattern ships in a static file, so no model or server is needed.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 8 festival night backdrops and 20 lantern designs generated ahead of time; 200 words in 12 rhyme groups pre-written.
+    first_slice: One night backdrop, a twelve-word rhyme picker, a lantern that rises and fades, and a saved keepsake page.
+  - slug: kind-pocket-orchard
+    title: Kind Pocket Orchard
+    hook: >-
+      A slow idle-garden toy where players plant pre-drawn fruit trees, wait real minutes for them to
+      ripen, and trade baskets of fruit for decorations in a small orchard. Everything is a fixed
+      table of trees and rewards, saved locally in the browser with no accounts.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 12 fruit trees at 3 growth stages, 20 decorations and 4 seasonal backdrops generated ahead of time.
+    first_slice: Three tree types, plant and harvest timers, a basket counter, and a decoration shop with five items.
+  - slug: robot-paper-boat-regatta
+    title: Robot Paper Boat Regatta
+    hook: >-
+      A calm puzzle toy where players fold a paper boat by choosing its sail, hull and cargo, then
+      race it down a pre-painted stream against simple rival boats using deterministic current rules.
+      Streams unlock in order and every race is replayable, with no model at runtime.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 6 stream backdrops, 18 boat parts and 8 rival boats generated ahead of time.
+    first_slice: One stream, three sail and hull choices, a deterministic race with two rivals, and a ribbon for finishing first.
