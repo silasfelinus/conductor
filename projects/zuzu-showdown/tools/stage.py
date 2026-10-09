@@ -32,7 +32,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -137,6 +137,33 @@ def floor_layer(spec: dict, seed: int) -> Image.Image:
     return img
 
 
+def hd_floor(pixel: Image.Image, seed: int) -> Image.Image:
+    """The street at HD: the pixel street's colours and ruts softened into mottled dirt, a fine grain on
+    top, and its light pebbles as rounded stones. Upscaled pixel noise turns to blocks once the game's
+    camera zooms in on the fight (Silas, 2026-10-09 PT: fighters almost twice as large)."""
+    rgb = np.asarray(pixel.convert("RGB")).astype(np.float32)
+    light = rgb.reshape(-1, 3)[rgb.reshape(-1, 3).sum(axis=1).argmax()]
+    base = pixel.convert("RGB").resize((pixel.width * HD, pixel.height * HD), Image.Resampling.BICUBIC)
+    soft = np.asarray(base.filter(ImageFilter.GaussianBlur(HD * 0.9))).astype(np.float32)
+    rng = np.random.default_rng(seed)
+    grain = rng.normal(0.0, 7.0, soft.shape[:2])[..., None]
+    out = np.clip(soft + grain, 0, 255)
+    # The lip along the top stays a crisp dark edge.
+    sharp = np.asarray(pixel.convert("RGB").resize(base.size, Image.Resampling.NEAREST)).astype(np.float32)
+    out[:HD] = sharp[:HD]
+    img = Image.fromarray(out.astype(np.uint8), "RGB")
+    # Pebbles where the pixel street has its lightest flecks: small stones with a lit top.
+    draw = ImageDraw.Draw(img)
+    ys, xs = np.nonzero((np.abs(rgb - light).sum(axis=2) < 1) & (np.arange(rgb.shape[0])[:, None] >= 3))
+    for y, x in zip(ys.tolist(), xs.tolist()):
+        cx, cy = x * HD + HD / 2, y * HD + HD / 2
+        rx, ry = HD * 0.55, HD * 0.38
+        shade = tuple(int(c * 0.7) for c in light)
+        draw.ellipse((cx - rx, cy - ry + 1, cx + rx, cy + ry + 1), fill=shade)
+        draw.ellipse((cx - rx, cy - ry, cx + rx * 0.8, cy + ry * 0.6), fill=tuple(int(c) for c in light))
+    return img.convert("RGBA")
+
+
 def to_pixel(hd: Image.Image) -> Image.Image:
     size = (hd.width // HD, hd.height // HD)
     colour = hd.convert("RGB").filter(ImageFilter.ModeFilter(3)).resize(size, Image.Resampling.LANCZOS)
@@ -190,7 +217,7 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
         name = spec["name"]
         if spec["kind"] == "floor":
             pixel = floor_layer(spec, cfg.SEED)
-            layers_hd[name] = pixel.resize((pixel.width * HD, pixel.height * HD), Image.Resampling.NEAREST)
+            layers_hd[name] = hd_floor(pixel, cfg.SEED)
             meta[name] = {"factor": spec["factor"], "w": pixel.width, "h": pixel.height,
                           "x": (VIEW[0] - pixel.width) // 2, "y": spec["top"], "scale": None, "offset": 0}
             continue
