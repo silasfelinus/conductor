@@ -94,17 +94,18 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Build typed, versioned world/resource and encounter manifests"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Encode 5 lands, three location encounters each, land boss slots, source- verified art refs, ecology, named exceptions, species vs occupation vs disposition/secret vs scenario vs reward. Validate schema and ensure in-game player-facing data reveals lore at the intended moment, not from a prematurely visible card. The source game manifest should not duplicate world Book One or import LLM filler as canon.
 
       Implemented v2 authored five-land world contract with verified repository-art pointers, typed Facet/Scenario/Reward refs, spoiler-safe player projections and CI tests on worker/zuzu-shifting-lands-t003-world-contract-20261009-b7e9. Reviewing and running contract checks before merge.
+
+      Merged Conductor PR #5838 (438ab15) with WORLD-DECKS.json v2, typed contract, verified source-file art pointers, validated independent Facet/Scenario/Reward design refs, spoiler-safe public DTO and dedicated Node contract tests. Final head passed Shifting Lands Manifest Contract, Security Audit, Worker PR CI, process-task-events, and Worker PR handoff checks. No production deployment or live resource imports performed.
     claimed_by: 2026-10-09T230410Z-zuzu-shifting-lands-t003-gpt6-b7e9
     claimed_at: '2026-10-09T23:04:10Z'
-    updated: '2026-10-09T23:07:40Z'
+    updated: '2026-10-09T23:13:45Z'
 
   - id: t-004
     milestone: m1
@@ -136,7 +137,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Pure seeded journey reducer, five land/three encounter traversal and boss gates"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -150,7 +151,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Species × role × agenda random encounter composer with exclusion rules"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
