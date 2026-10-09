@@ -31,6 +31,16 @@ notes_from_silas: |
   to submit art to the generator to evolve this project, and we'll need a front
   end website with a high quality image focused conscious design"
 
+  2026-10-09: "our zuzu gamebook project can use a definite upgrade to the art before
+  anything else. we have a decent skeleton of a project, though the storylines could
+  be more developed (the abbess starts and immediately attacks, rather than welcoming
+  you into the mission, offering you food, etc). but the images are currently low poly
+  filler, and we already have extensively made art that could be repurposed." And:
+  "we should have many more chapters if we only have 21 scenes. what's the average
+  number of sections in a fighting fantasy book, or the ur classic sorcery?"
+  (Fighting Fantasy: 400 sections as standard; Sorcery!: 456, 515, 460 and 800;
+  Lone Wolf / Grey Star: 350. Book One's target moved from 80-120 to ~400.)
+
   Agent mandate: autonomously write/refine narrative, engine, UI, prompt manifests,
   playtests and balance; independently enqueue task-scoped images through durable
   ArtJobs and verify actual delivered assets before listing them as complete.
@@ -101,7 +111,7 @@ tasks:
       An admin-preview tab until explicit public-launch verdict.
   - id: t-004
     milestone: m1
-    title: Book One graph and all authored scenes (80-120 numbered sections)
+    title: Book One graph and all authored scenes (~400 numbered sections)
     status: ready
     owner: null
     passes: 0
@@ -110,29 +120,46 @@ tasks:
       Expand the initial 20-scene, six-ending preview from kind_robots#3355 to a full book. The Bell That Never Rang. Build original branching scenarios that echo
       watering hole, wounded coyote, Hollow Bell, fennec siblings, apples,
       missing-child posters and corrupted mission without rewriting BOOK-ONE.md.
-      Write 80-120 unique sections, 8-12 endings with genuinely different outcomes
-      and multiple routes through each main act. Track routes, flags and alternate
-      endings. No endless choice loops or unknowable fails. Pure static bundle.
+      Write ~400 unique sections (Silas 2026-10-09: "we should have many more chapters";
+      Fighting Fantasy's standard is 400, the Sorcery! books 456-800), 10-14 endings with
+      genuinely different outcomes and multiple routes through each main act. Grow it an
+      act at a time, each act a shippable PR that keeps the graph and state tests green.
+      Track routes, flags and alternate endings. No endless choice loops or unknowable
+      fails. Pure static bundle.
+      PACING (Silas 2026-10-09): the abbess must not open by attacking. The mission act
+      starts as a welcome: she greets Zuzu and the children, offers food, beds and work,
+      and the kindness is real-seeming for several sections (meals, chores, a night's
+      rest, the other nuns, the cobwebbed playground). Suspicion builds from clues
+      (posters, absent footprints, a locked door, a child who stops appearing) and Mercy
+      or Sense checks before any confrontation. Fighting her is a late consequence of
+      what Zuzu uncovers, and some routes never fight her at all.
   - id: t-005
     milestone: m1
     title: Scene art inventory, cinematic layouts and repeatable ArtJob manifest
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: >-
-      The initial 10 vector scene plates in kind_robots#3355 are placeholders, not finished generated art. Read ART-DIRECTION.md and comic locked cast. Make section-level art prompts,
+      2026-10-09: done for the 20-section preview (kind_robots#3389). Every section has
+      its own Arthemy plate: 15 vetted intro music-video keyframes and seeds, plus 5
+      gamebook renders (art/ROUND-1.yaml, editorial verdicts inline). The manifest is
+      kind_robots utils/zuzuGamebook/art.ts (ArtImage id, source, alt, fit). Only the
+      poster wall is a stand-in; Arthemy draws the sketched subject rather than the
+      wall twice over, so retry it as a Kontext edit of an existing street plate.
+      Continuing art for new sections is t-006. History: the initial 10 vector scene plates in kind_robots#3355 were placeholders, not finished generated art. Read ART-DIRECTION.md and comic locked cast. Make section-level art prompts,
       portrait/splash/widescreen/aftermath plates and aspect ratios for every
       scene/outcome. Add provenance fields (prompt, model, lane, source, ArtJob,
       ArtImage, delivery URL, reviewed). Prefer proven comic reference images.
       Avoid placeholder artwork presented as generated/finished.
     claimed_by: 2026-10-09T07:58:00Z-zuzu-gb-art
     claimed_at: '2026-10-09T07:55:33Z'
-    updated: '2026-10-09T07:55:33Z'
+    updated: '2026-10-09T08:23:03Z'
+    implementation_pr: 'silasfelinus/kind_robots#3389'
   - id: t-006
     milestone: m3
     title: Independently enqueue and review gamebook illustrations in batches
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -141,7 +168,11 @@ tasks:
       Art generation explicitly pre-authorized for internal project use.
       Use the durable /api/art/enqueue ArtJob pipeline with stable idempotency
       and canonical series/character settings; check DONE AND reachable delivered
-      URLs, verify Zuzu costume and the banned-terms guardrails. Begin with cover,
+      URLs, verify Zuzu costume and the banned-terms guardrails. Round 1 (art/ROUND-1.yaml)
+      covered the preview's gaps; each new act from t-004 gets its plates the same way,
+      reusing vetted comic/MV renders first. Lessons: "poster" is refused by the KR prompt
+      contract; "smoking blade" draws a cigarette; empty scenes need "(no characters:1.4)"
+      plus figure/person negatives. Begin with cover,
       hero, first ten scene plates, dice/character-sheet motifs and consequence
       plates, then continue in book-sized batches. Do not incur paid external spend.
   - id: t-007

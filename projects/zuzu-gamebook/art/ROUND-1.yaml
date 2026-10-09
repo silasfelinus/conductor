@@ -1,0 +1,413 @@
+# Zuzu Gamebook art round 1 (zuzu-gamebook t-005/t-006). Silas, 2026-10-09: "the images are currently low poly
+# filler, and we already have extensively made art that could be repurposed." Fifteen of the twenty-one sections
+# now use vetted Zuzu intro music-video keyframes (KR music video 12; comic-creator MV-FIXES.yaml) and the
+# abbess Kontext seed; the manifest is kind_robots utils/zuzuGamebook/art.ts. This ledger fills the six plates no
+# existing render covers: the poster wall, the abbess in the crypt, and four endings.
+# House lane and canon tags from comic-creator VIDEO-GUARDRAILS.md (bannedTerms and literal-word traps honoured:
+# no 'human', 'people', 'english lettering', 'mother', 'muzzle', 'duster', 'squat'). The abbess crypt plate is a
+# Kontext re-staging of her approved front (242559), the recipe that made the s11 mission-gate keyframe (242738).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status; --lane). Private.
+round: gamebook-1
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, muted earthy palette, desaturated, weathered,
+    grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+- key: kontext-stage
+  label: Flux Kontext dev (fp8), restage an approved cast render
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: gb-posters-1
+  lane: arthemy-house
+  title: 'Section: The Wall of Names (seed 1)'
+  size: 1344x768
+  seed: 4101
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, extra limbs, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar, cute, kawaii,
+    glossy, bright saturated colors, characters, crowd
+  prompt_prose: a weathered wooden wall pasted with old torn paper sheets of missing children, under lantern light.
+  prompt_tags: (no characters:1.3), scenery, night, a weathered wooden wall on a ruined frontier boardwalk, pasted
+    with dozens of old torn yellowed paper sheets, each sheet a faded hand-drawn portrait of a small animal child,
+    fennec fox kit, rabbit kit, raccoon kit, mouse child, (blank paper, no text:1.3), peeling paper, nails, a single
+    hanging oil lantern casting warm amber light, deep shadows, empty street, eerie, close-up
+  note: 'First submission (jobs 34958/34959) was refused by the KR prompt contract: "poster" is format vocabulary.'
+  jobs:
+    arthemy-house: 34970
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243301
+  verdict: 'reject: human hands holding a blank sheet'
+- key: gb-posters-2
+  lane: arthemy-house
+  title: 'Section: The Wall of Names (seed 2)'
+  size: 1344x768
+  seed: 4102
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, extra limbs, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar, cute, kawaii,
+    glossy, bright saturated colors, characters, crowd
+  prompt_prose: a weathered wooden wall pasted with old torn paper sheets of missing children, under lantern light.
+  prompt_tags: (no characters:1.3), scenery, night, a weathered wooden wall on a ruined frontier boardwalk, pasted
+    with dozens of old torn yellowed paper sheets, each sheet a faded hand-drawn portrait of a small animal child,
+    fennec fox kit, rabbit kit, raccoon kit, mouse child, (blank paper, no text:1.3), peeling paper, nails, a single
+    hanging oil lantern casting warm amber light, deep shadows, empty street, eerie, close-up
+  note: 'First submission (jobs 34958/34959) was refused by the KR prompt contract: "poster" is format vocabulary.'
+  jobs:
+    arthemy-house: 34971
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243302
+  verdict: 'reject: a human hand, blank sheets'
+- key: gb-ending-water-1
+  lane: arthemy-house
+  title: 'Ending: Silence Beneath the Surface (seed 1)'
+  size: 1344x768
+  seed: 4201
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy, bright saturated colors, characters,
+    animal, crocodile, palm trees, blood
+  prompt_prose: two hats drift on the black water of a desert watering hole at night.
+  prompt_tags: (no characters:1.3), scenery, a desert watering hole at night, still black water, two hats floating
+    on the water, a wide conical woven straw hat and a battered crushed brown hat, slow ripples, dead reeds, black
+    stones on the bank, pale moonlight reflection, empty, desolate, wide shot
+  jobs:
+    arthemy-house: 34960
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243293
+  verdict: 'reject: a figure sits in a tub under the hat'
+- key: gb-ending-water-2
+  lane: arthemy-house
+  title: 'Ending: Silence Beneath the Surface (seed 2)'
+  size: 1344x768
+  seed: 4202
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy, bright saturated colors, characters,
+    animal, crocodile, palm trees, blood
+  prompt_prose: two hats drift on the black water of a desert watering hole at night.
+  prompt_tags: (no characters:1.3), scenery, a desert watering hole at night, still black water, two hats floating
+    on the water, a wide conical woven straw hat and a battered crushed brown hat, slow ripples, dead reeds, black
+    stones on the bank, pale moonlight reflection, empty, desolate, wide shot
+  jobs:
+    arthemy-house: 34961
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243294
+  verdict: 'reject: a figure stands on the water'
+- key: gb-ending-warning-1
+  lane: arthemy-house
+  title: 'Ending: The Unheard Warning (seed 1)'
+  size: 1344x768
+  seed: 4301
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape, sword in hand,
+    two swords, crowd
+  prompt_prose: a small koala ronin walks away from a shuttered frontier town at dusk.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), standing upright, short legs, small stature,
+    slight paunch, grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim,
+    dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
+    conical straw kasa, wide brim shading the eyes, walking out through the gate of a small frontier town at dusk,
+    wooden shutters bolted closed, lanterns lit in every window, a lone dog barking on a porch, long shadows, solo,
+    full body, wide shot
+  jobs:
+    arthemy-house: 34962
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243295
+  verdict: 'second: kasa missing'
+- key: gb-ending-warning-2
+  lane: arthemy-house
+  title: 'Ending: The Unheard Warning (seed 2)'
+  size: 1344x768
+  seed: 4302
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape, sword in hand,
+    two swords, crowd
+  prompt_prose: a small koala ronin walks away from a shuttered frontier town at dusk.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), standing upright, short legs, small stature,
+    slight paunch, grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim,
+    dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
+    conical straw kasa, wide brim shading the eyes, walking out through the gate of a small frontier town at dusk,
+    wooden shutters bolted closed, lanterns lit in every window, long shadows, solo, full body, wide shot
+  jobs:
+    arthemy-house: 34963
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243296
+  verdict: 'KEEP (shuttered-town): kasa, hilt over right shoulder, poncho, lantern-lit doorway'
+- key: gb-ending-seal-1
+  lane: arthemy-house
+  title: 'Ending: What the Desert Keeps (seed 1)'
+  size: 1344x768
+  seed: 4401
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape, two swords,
+    blood, gore, crowd
+  prompt_prose: an exhausted koala ronin kneels at dawn in a broken chapel, his blackened katana planted before
+    him.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), short legs, small stature, grey fur, round
+    fluffy ears, broad black nose, serious, exhausted, rust-brown poncho, torn and singed, orange zigzag trim, dark
+    tunic, orange sash, dark brown cloth trousers, (fully clothed:1.3), conical straw kasa, wide brim shading the
+    eyes, (kneeling on one knee:1.2), both paws resting on the hilt of a katana planted point-down in the stone
+    floor, (blackened smoking blade:1.2), a cracked bronze bell fallen on the floor beside him, dawn light breaking
+    through a collapsed chapel wall, drifting smoke and dust, solo, full body
+  jobs:
+    arthemy-house: 34964
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243297
+  verdict: 'reject: "smoking blade" drew a cigarette; cowboy-style brim'
+- key: gb-ending-seal-2
+  lane: arthemy-house
+  title: 'Ending: What the Desert Keeps (seed 2)'
+  size: 1344x768
+  seed: 4402
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape, two swords,
+    blood, gore, crowd
+  prompt_prose: an exhausted koala ronin kneels at dawn in a broken chapel, his blackened katana planted before
+    him.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), short legs, small stature, grey fur, round
+    fluffy ears, broad black nose, serious, exhausted, rust-brown poncho, torn and singed, orange zigzag trim, dark
+    tunic, orange sash, dark brown cloth trousers, (fully clothed:1.3), conical straw kasa, wide brim shading the
+    eyes, (kneeling on one knee:1.2), both paws resting on the hilt of a katana planted point-down in the stone
+    floor, (blackened smoking blade:1.2), a cracked bronze bell fallen on the floor beside him, dawn light breaking
+    through a collapsed chapel wall, drifting smoke and dust, solo, full body
+  jobs:
+    arthemy-house: 34965
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243298
+  verdict: 'reject: cigarette'
+- key: gb-ending-altar-1
+  lane: arthemy-house
+  title: 'Ending: The Bell Without a Ringer (seed 1)'
+  size: 1344x768
+  seed: 4501
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy, bright saturated colors, characters,
+    animal, crowd
+  prompt_prose: the broken iron gate of an empty desert mission at dawn, a bell swinging with no one at its rope.
+  prompt_tags: (no characters:1.3), scenery, the broken iron gate of an abandoned adobe desert mission at grey dawn,
+    one gate hanging from a single hinge, a small bronze bell swinging in an arch above the gate, its rope swaying
+    with no one holding it, a rusted merry-go-round wrapped in cobwebs in the empty yard, drifting dust, cold light,
+    desolate, eerie, wide shot
+  jobs:
+    arthemy-house: 34966
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243299
+  verdict: 'KEEP (empty-gate): empty adobe arch, gate ajar, bell on an unmanned rope'
+- key: gb-ending-altar-2
+  lane: arthemy-house
+  title: 'Ending: The Bell Without a Ringer (seed 2)'
+  size: 1344x768
+  seed: 4502
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy, bright saturated colors, characters,
+    animal, crowd
+  prompt_prose: the broken iron gate of an empty desert mission at dawn, a bell swinging with no one at its rope.
+  prompt_tags: (no characters:1.3), scenery, the broken iron gate of an abandoned adobe desert mission at grey dawn,
+    one gate hanging from a single hinge, a small bronze bell swinging in an arch above the gate, its rope swaying
+    with no one holding it, a rusted merry-go-round wrapped in cobwebs in the empty yard, drifting dust, cold light,
+    desolate, eerie, wide shot
+  jobs:
+    arthemy-house: 34967
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243300
+  verdict: 'second: reads as a mausoleum'
+- key: gb-posters-r2-3
+  lane: arthemy-house
+  title: 'Section: The Wall of Names (round 2, seed 3)'
+  size: 1344x768
+  seed: 4103
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, extra limbs, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar, cute, kawaii,
+    glossy, bright saturated colors, characters, crowd, hands, fingers, holding, person, figure, blank paper
+  prompt_prose: a weathered wooden wall pasted with old torn paper sheets of missing children, under lantern light.
+  prompt_tags: (no characters:1.3), (no hands:1.3), scenery, night, (a weathered wooden wall:1.2) on a ruined frontier
+    boardwalk, covered edge to edge with dozens of pinned yellowed paper sheets, (each sheet shows an ink sketch
+    of a young animal face:1.3), fennec fox kit face, rabbit kit face, raccoon kit face, nails, peeling torn paper,
+    a single hanging oil lantern, warm amber light, deep shadows, empty street, eerie, medium shot
+  jobs:
+    arthemy-house: 34972
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243305
+  verdict: 'reject: a raccoon wrapped in a sheet (the checkpoint draws the sketched subject, not the wall)'
+- key: gb-posters-r2-4
+  lane: arthemy-house
+  title: 'Section: The Wall of Names (round 2, seed 4)'
+  size: 1344x768
+  seed: 4104
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, extra limbs, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar, cute, kawaii,
+    glossy, bright saturated colors, characters, crowd, hands, fingers, holding, person, figure, blank paper
+  prompt_prose: a weathered wooden wall pasted with old torn paper sheets of missing children, under lantern light.
+  prompt_tags: (no characters:1.3), (no hands:1.3), scenery, night, (a weathered wooden wall:1.2) on a ruined frontier
+    boardwalk, covered edge to edge with dozens of pinned yellowed paper sheets, (each sheet shows an ink sketch
+    of a young animal face:1.3), fennec fox kit face, rabbit kit face, raccoon kit face, nails, peeling torn paper,
+    a single hanging oil lantern, warm amber light, deep shadows, empty street, eerie, medium shot
+  jobs:
+    arthemy-house: 34973
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243306
+  verdict: 'reject: same raccoon-in-a-sheet read; poster wall stays a stand-in (next: Kontext an existing street
+    plate)'
+- key: gb-ending-water-r2-3
+  lane: arthemy-house
+  title: 'Ending: Silence Beneath the Surface (round 2, seed 3)'
+  size: 1344x768
+  seed: 4203
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy, bright saturated colors, characters,
+    animal, crocodile, palm trees, blood, person, figure, standing, sitting, boat, tub, barrel, river, road
+  prompt_prose: two hats drift on the black water of a desert watering hole at night.
+  prompt_tags: (no characters:1.4), (empty:1.2), scenery, a small desert watering hole at night, still black water,
+    (a wide woven straw hat floating on the water:1.2), a battered brown hat floating beside it, slow ripples around
+    them, dead reeds, black stones on the bank, pale moonlight reflection, desolate, high angle, wide shot
+  jobs:
+    arthemy-house: 34974
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243307
+  verdict: 'reject: a small figure under the hat'
+- key: gb-ending-water-r2-4
+  lane: arthemy-house
+  title: 'Ending: Silence Beneath the Surface (round 2, seed 4)'
+  size: 1344x768
+  seed: 4204
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy, bright saturated colors, characters,
+    animal, crocodile, palm trees, blood, person, figure, standing, sitting, boat, tub, barrel, river, road
+  prompt_prose: two hats drift on the black water of a desert watering hole at night.
+  prompt_tags: (no characters:1.4), (empty:1.2), scenery, a small desert watering hole at night, still black water,
+    (a wide woven straw hat floating on the water:1.2), a battered brown hat floating beside it, slow ripples around
+    them, dead reeds, black stones on the bank, pale moonlight reflection, desolate, high angle, wide shot
+  jobs:
+    arthemy-house: 34975
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243308
+  verdict: 'KEEP (kasa-on-water): lone kasa in black ripples; one hat not two, faint stray line from the top'
+- key: gb-ending-seal-r2-3
+  lane: arthemy-house
+  title: 'Ending: What the Desert Keeps (round 2, seed 3)'
+  size: 1344x768
+  seed: 4403
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape, two swords,
+    blood, gore, crowd, cigarette, smoking, pipe, cigar, cowboy hat, fedora
+  prompt_prose: an exhausted koala ronin kneels at dawn in a broken chapel, his blackened katana planted before
+    him.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), short legs, small stature, grey fur, round
+    fluffy ears, broad black nose, serious, exhausted, rust-brown poncho, torn and singed, orange zigzag trim, dark
+    tunic, orange sash, dark brown cloth trousers, (fully clothed:1.3), conical straw kasa, wide brim shading the
+    eyes, (kneeling on one knee:1.2), both paws resting on the hilt of a katana planted point-down in the stone
+    floor, (the katana blade scorched black:1.2), a cracked bronze bell fallen on the floor beside him, dawn light
+    breaking through a collapsed chapel wall, drifting dust motes, solo, full body
+  jobs:
+    arthemy-house: 34976
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243309
+  verdict: 'KEEP (kneeling-blade): kneeling over the planted katana, hat lost, no cigarette'
+- key: gb-ending-seal-r2-4
+  lane: arthemy-house
+  title: 'Ending: What the Desert Keeps (round 2, seed 4)'
+  size: 1344x768
+  seed: 4404
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape, two swords,
+    blood, gore, crowd, cigarette, smoking, pipe, cigar, cowboy hat, fedora
+  prompt_prose: an exhausted koala ronin kneels at dawn in a broken chapel, his blackened katana planted before
+    him.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), short legs, small stature, grey fur, round
+    fluffy ears, broad black nose, serious, exhausted, rust-brown poncho, torn and singed, orange zigzag trim, dark
+    tunic, orange sash, dark brown cloth trousers, (fully clothed:1.3), conical straw kasa, wide brim shading the
+    eyes, (kneeling on one knee:1.2), both paws resting on the hilt of a katana planted point-down in the stone
+    floor, (the katana blade scorched black:1.2), a cracked bronze bell fallen on the floor beside him, dawn light
+    breaking through a collapsed chapel wall, drifting dust motes, solo, full body
+  jobs:
+    arthemy-house: 34977
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 243310
+  verdict: 'second: sword lying flat, posture reads as crawling'
+- key: gb-abbess-crypt-1
+  lane: kontext-stage
+  title: 'Section: A Knife Behind a Prayer (seed 1)'
+  size: 1344x768
+  seed: 4601
+  source_image_id: 242559
+  source_pad: '16:9'
+  prompt_prose: 'Fill the whole picture with the scene: she stands in a dark stone crypt beneath a desert mission,
+    in front of a candlelit stone altar, holding a small curved dagger in one paw at her side, cold eyes. Tall dripping
+    candles stand on both sides, and a huge dark shadow with tentacles rises up the wall behind the altar in an
+    eerie violet glow. Keep her exactly as she is: her flat round face, button nose, whiskers, brown fur, black
+    habit, white wimple, pose, colours and the inked comic style.'
+  jobs:
+    kontext-stage: 34968
+  art:
+    kontext-stage:
+      status: DONE
+      art_image_id: 243303
+  verdict: 'second: very dark, figure small'
+- key: gb-abbess-crypt-2
+  lane: kontext-stage
+  title: 'Section: A Knife Behind a Prayer (seed 2)'
+  size: 1344x768
+  seed: 4602
+  source_image_id: 242559
+  source_pad: '16:9'
+  prompt_prose: 'Fill the whole picture with the scene: she stands in a dark stone crypt beneath a desert mission,
+    in front of a candlelit stone altar, holding a small curved dagger in one paw at her side, cold eyes. Tall dripping
+    candles stand on both sides, and a huge dark shadow with tentacles rises up the wall behind the altar in an
+    eerie violet glow. Keep her exactly as she is: her flat round face, button nose, whiskers, brown fur, black
+    habit, white wimple, pose, colours and the inked comic style.'
+  jobs:
+    kontext-stage: 34969
+  art:
+    kontext-stage:
+      status: DONE
+      art_image_id: 243304
+  verdict: 'KEEP (abbess-crypt): flat round face, dagger, candles, altar, tentacle shadow'
