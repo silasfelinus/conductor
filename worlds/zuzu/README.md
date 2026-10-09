@@ -6,9 +6,11 @@ character-LoRA datasets, and Kind Robots model resources.
 
 Machine-readable index: [catalog.json](catalog.json) · Contribution rules: [CONTRIBUTING.md](CONTRIBUTING.md).
 
-**Planned admin interface:** [Zuzu Worldbuilding Studio UX and implementation specification](ADMIN-STUDIO-SPEC.md). Includes visual Library, project filters, add/edit/archive, art-edit and production suggestions, canon proposal workflow, and acceptance tests. This is a specification, **not a deployed page**.
+**Admin studio:** [Worldbuilding Studio specification](ADMIN-STUDIO-SPEC.md) and [Kind Robots Studio implementation](https://github.com/silasfelinus/kind_robots/pull/3392). The general-purpose art gallery and cross-project links have merged; live Alexandria deployment, advanced lore authoring and special project slots remain separate verification tasks.
 This world index is **not** a new Conductor project or a second Kind Robots database.
 Every production keeps its own roadmap, code, runtime assets and ownership.
+
+**Expanded setting and modular encounters:** [WORLD-GUIDE.md](WORLD-GUIDE.md) sets Zuzu's Edo-era outsider identity, the anthropomorphic frontier, shifting geography, and independent Species versus Occupation/Role Facets. Sensitive narrative reveals are not reproduced in this public repo.
 
 ## Read the canon before creating anything
 
@@ -43,6 +45,7 @@ their own [project briefs](#productions).
 | Zuzu's Lair | Separate QTE adventure | [Lair](../../projects/zuzu-lair/DESIGN-BRIEF.md) |
 | Zuzu Showdown | Noncanonical versus matchups | [Showdown](../../projects/zuzu-showdown/DESIGN-BRIEF.md), [fighters](../../projects/zuzu-showdown/fighters.yaml) |
 | The Bell That Never Rang | Alternate-trail RPG | [Gamebook](../../projects/zuzu-gamebook/DESIGN-BRIEF.md) |
+| Zuzu: Shifting Lands | Procedural alternate-play board-game expedition | [Brief](../../projects/zuzu-shifting-lands/DESIGN-BRIEF.md), [five-land manifest](../../projects/zuzu-shifting-lands/WORLD-DECKS.json) |
 | Zuzu: Ghost Trail | Arcade spinoff | [Arcade game queue](../../projects/kr-arcade/games.yaml) (slug `zuzu-ghost-trail`) |
 
 Projects share *world references*, not tasks or implementation ownership. Each project
