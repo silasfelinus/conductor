@@ -1,7 +1,7 @@
 # Pitch: Kind Pocket Orchard
 date: 2026-10-09
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A slow idle-garden toy where players plant pre-drawn fruit trees, wait real minutes for them to ripen, and trade baskets of fruit for decorations in a small orchard. Everything is a fixed table of trees and rewards, saved locally in the browser with no accounts.
