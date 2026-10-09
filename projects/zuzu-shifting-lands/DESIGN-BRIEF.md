@@ -60,6 +60,10 @@ Land 1 has a **convent/Abbess-centered major confrontation**. The Abbess has lon
 
 The Abbess's appearance, abilities, and narrative consequences must match existing locked Character references and case-sensitive source guardrails. Child-harm themes should be treated as disturbing narrative stakes **without sensationalized depictions of harm to children**.
 
+## Art-first board and tactile deck system (MVP)
+
+**Binding implementation spec:** [BOARD-CARD-ARCHITECTURE.md](BOARD-CARD-ARCHITECTURE.md). Silas confirms that card fronts/backs, stacked draw decks, dealing, flipping and transitions must draw from **existing Kind Robots components**, not a parallel visual engine. Full persistent deck/hand/discard state is owned by Shifting Lands' tested journey reducer because the available KR card-visual components are not themselves a generic deck-state service. An illustrated game board with real interactions is a launch requirement, not a stretch goal.
+
 ## A 3 × 5 illustrated map that remembers
 
 ### Main UX composition
