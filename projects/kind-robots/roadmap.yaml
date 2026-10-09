@@ -2471,5 +2471,21 @@ tasks:
 
     This issue is a follow-up to Conductor [PR #5812](https://github.com/silasfelinus/conductor/pull/5812), which delivered the repository-backed world registry and cross-production links.
 
+- id: t-144
+  milestone: m6
+  title: 'Tutorial slice 2: route-first channel/tutorial resolution on dedicated pages + Admin tutorials'
+  status: done
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  owner: null
+  updated: '2026-10-09T23:40:00Z'
+  note: |-
+    Second slice of the umbrella issue silasfelinus/kind_robots#3379 (deliberately no source_issue: the issue is labeled conductor:skip and conductor/t-206 means the bridge could close it while later slices remain).
+
+    Silas, 2026-10-09: the channel dropdown did not show the active channel (Zuzu World read "Home"), and the tutorial fix needed the Admin tabs. Root cause: only content pages call pageStore.setPage, so dedicated pages (/admin/worlds/zuzu, /artjob, ...) left the channel picker, header room/tagline, workspace sheet card and workspace tutorial describing the last content page visited (Home Dashboard). channel-select and workspace-sheet now resolve route-first like workspace-header; the header ignores a pageStore room/tab message from another channel. Admin got an authored conceptual channel tutorial (operations, studios, care, boundaries) and explicit page help on all 19 Admin tabs (Retired stays enabled: false); verifyNavigationRouteAccess enforces both.
+
+    Merged silasfelinus/kind_robots#3404 at 8803efd078b3a67a119cfe6326a1d786c7e5b339 with all 33 checks green. Not visually verified in a browser (Admin is role-gated; no DB in the session): check /admin/worlds/zuzu shows Admin / Control Room / Zuzu World sheet with the Admin tutorial. Missing Admin tab art (artjob, projects, retired, coloring, mermaids, conductor-app, appmaker) is tracked on #3379's artwork checklist.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
