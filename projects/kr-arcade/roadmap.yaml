@@ -509,7 +509,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Resolution system + render styles for every cabinet (pixel / HD / fun extras), pinball first"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -533,3 +533,11 @@ tasks:
       two cabinets plus pinball render in Pixel and HD, a contract test covers the transform math
       (logical to canvas at DPR 1/2/3, integer pixel scale, letterboxing), and DESIGN-BRIEF.md's
       engine-kit contract documents it.
+
+      DONE 2026-10-09: shared display layer (utils/arcade/display.ts: Pixel/HD fit, MAX_DPR
+      3), cabinet style picker with per-game override in arcadeStore (kind_robots#3386,
+      #3350), pinball takes dpr 1 in Pixel and device ratio in HD, contract test
+      verifyZuzuShowdownDisplay covers fit at DPR 1/2/3, engine-kit contract documented
+      (#5808). CRT scanlines already a separate cabinet toggle.
+    updated: '2026-10-09T05:46:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#3386'
