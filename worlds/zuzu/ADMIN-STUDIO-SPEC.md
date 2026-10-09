@@ -17,6 +17,44 @@ The interface is a **world CMS + asset finder + production request desk**, not a
 - **Conductor agents:** consume accepted world identity and asset references; propose entries/edits, supply ArtJobs and outputs with provenance; never declare their own invented game details canonical.
 - **Other users:** no access to the admin studio, even for URLs or API endpoints. A future public world encyclopaedia would be a separate publication decision.
 
+## Visual-first interaction: the image is the main unit of work
+
+**Direction (Silas, 2026-10-09):** Even in Admin, Kind Robots is an image-focused website. Default to large artwork, not counts, text lists or form-heavy panels. Image selection must let a curator mark **one or several existing assets as resources for other projects**, notably the Gamebook, cartoon/animated episode, music video/trailer, and Zuzu's Lair. This is the primary daily action, not a secondary settings operation.
+
+### Asset library: gallery before data tables
+
+- The desktop primary canvas uses 3–5 *large*, edge-to-edge artwork cards per row (depending on viewport), preserving aspect ratios (comic cover versus animation frame versus sprite sheet). At least **70% of the main work area goes to art**, with an optional inspector occupying the remaining width when selected. Prefer mosaic/masonry rows or an adaptive justified-gallery approach, with a deliberate "dense" toggle for finding IDs quickly.
+- Show real previews from the authorized source media; use video posters plus play affordances, contact sheets for character angles/expressions, scrollable sprite previews, and a distinct treatment for reference documents with no hero image. **Never ship placeholder fox artwork as Zuzu canon**: the canonical Zuzu is a short, stocky, grey koala in poncho/kasa/katana, not a fennec fox. The gallery mockup's illustrative placeholder art is not production material.
+- On card: unobtrusive title, type, current selection (locked/draft/historical), source image/clip ID, small project-mark chips (Gamebook, Trailer, Comic, Lair, etc.), and a checkmark at the corner. Extra controls show on hover/tap, not permanent overlays that obscure art.
+- Clicking the image (not the checkbox) opens an **image-dominant lightbox/inspector** with full-resolution zoom and swipeable related variants; the right panel shows its status, lineage, usage, available actions and project references.
+- Multi-select uses the same gallery. The bottom sticky filmstrip of selections supports `Add to project`, `Mark as resource`, `Compare`, `Request edit`, and `Clear`. Never let a misleading global `Delete` button destroy underlying ArtImages from an incidental bulk gallery selection.
+
+### Make "Use in another project" a first-class action
+
+**Exact flow:** select one or multiple gallery cards → `Use in project` → choose one or several target productions → choose an explicit role or slot for each → decide `Add as candidate` or `Use for this slot` → save source-ID references and provenance → show them in the target production's asset board immediately. The current project filter must not stop selecting a cross-project target.
+
+Target examples: **Gamebook** (chapter illustration, encounter art, item image, ending), **Cartoon / Comic Film** (background, character reference, shot keyframe, animated clip), **Music Video #5 / #12 / Trailer** (scene still, character keyframe, clip start/end, title background), **Zuzu's Lair** (scene background, success/death branch keyframe, transition clip), **Comic Studio** (character-sheet reference, cover/panel candidate), **Showdown** (stage, portrait, sprite-reference only).
+
+An existing asset can be attached in multiple roles across multiple projects. Store a **many-to-many usage record with `worldId`, stable asset reference, `project.conductorSlug`, role, optional target scene/slot ID, selected version, assignment status, and notes**, rather than copying image bytes or cloning `ArtImage`. Shared assignments use existing owner/permission checks. A project can maintain its own approved variant/reference without changing world canon.
+
+Assignment UI should show:
+- A compact list of available target projects with image thumbnails, multi-select checkboxes, and each project's current usage of the asset; other private projects don't automatically gain access.
+- For each selected project, a contextual `Role / Destination` picker (e.g. Gamebook chapter 3 illustration, Video #12 scene 13 end-frame, Lair Chapter 1 branch success shot). Offer `General reference` when a destination doesn't exist yet.
+- A `Link existing source` default, `Generate adaptation` alternative, and `Propose replacement of existing selected asset` deliberate action with before/after comparison and impact preview.
+- A success receipt with source ArtImage/clip ID and new usage/slot links; undo **unlinks the assignment** only and never deletes media.
+- Usage chips on the gallery card and inspector with `Used in 4 projects`, clickable to navigate the source/consumer relationship.
+
+### Cross-project recomposition
+
+Allow a user to pick a locked character front, a location matte painting and an existing scene composition, then request a *new production-specific derivative* (reframe for 16:9 trailer, composite for portrait Gamebook art, keyframe for Lair motion) without altering those source assets. The output becomes a new `ArtImage`/`ArtJob` lineage node and is proposed for precisely specified roles. Show before/after and the original reference sheet side by side.
+
+### Primary navigation and adaptive layout
+
+An **artwork-led home**: large featured image/collage plus a short project filter bar, then visual groupings `Recently approved`, `Character sheets`, `Environments`, `Scenes & keyframes`, `Video & animation`, `Needs review`. Avoid an oversized dark KPI dashboard; counts are secondary.
+
+Phone uses two-up image tiles where aspect ratios permit, a full-screen preview, bottom-sheet project picker, multi-select badge and persistent `Use in project` bottom action. Tablet uses a 2–3-column gallery with slide-over inspector. Desktop image preview should be at least as wide as the metadata column; keep background art as artwork, not decorative thumbnail noise.
+
+
 ## Site map: six work areas, not fifteen top-level tabs
 
 1. **Overview (home).** Hero world art, world description, canonical status, quick search, latest accepted cast, recent changes, outstanding reviews, recent media, production links, and queue health. Show counts *with source/date*, e.g. "657 recorded ArtImage outputs in 22 committed ledgers" is not "657 accessible gallery images."
