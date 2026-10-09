@@ -1,5 +1,6 @@
 # Zuzu Gamebook: a standalone branching RPG, sibling to kr-adventures but not its preset reader.
-# Canon: projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md and VIDEO-GUARDRAILS.md.
+# Canon: start at the shared Zuzu world registry, worlds/zuzu/README.md (canon order, locked cast
+# ArtImages, canonical character/item profiles, art ledger inventory); DESIGN-BRIEF.md "Canon" says how.
 # Implementation: silasfelinus/kind_robots /play/zuzu-gamebook, stores/zuzuGamebookStore.ts,
 # utils/zuzuGamebook/; illustrated section art via durable ArtJobs.
 project: zuzu-gamebook
@@ -40,6 +41,11 @@ notes_from_silas: |
   number of sections in a fighting fantasy book, or the ur classic sorcery?"
   (Fighting Fantasy: 400 sections as standard; Sorcery!: 456, 515, 460 and 800;
   Lone Wolf / Grey Star: 350. Book One's target moved from 80-120 to ~400.)
+
+  2026-10-09: "great, now please note and align this project with our new central zuzu
+  worldbuilding hub" (worlds/zuzu). The brief and art direction now start from the hub, use its
+  locked cast references and canonical character/item profiles, and the gamebook's art ledger is
+  part of the hub's inventory (assets/ledger-part-05.json).
 
   Agent mandate: autonomously write/refine narrative, engine, UI, prompt manifests,
   playtests and balance; independently enqueue task-scoped images through durable
@@ -133,6 +139,11 @@ tasks:
       (posters, absent footprints, a locked door, a child who stops appearing) and Mercy
       or Sense checks before any confrontation. Fighting her is a late consequence of
       what Zuzu uncovers, and some routes never fight her at all.
+      WORLD HUB (2026-10-09): name characters, items and places as the worlds/zuzu canonical
+      profiles do (Coyote Vagrant, Fennec Sister and Toddler, the Abbess, River Croc; Apples for
+      the Road, the Drifter's Bandage, the Sister's Dagger; kasa and katana are worn, not carried).
+      No Showdown-only fighters, no Old Komodo, no legacy KR filler lore. A new named character or
+      place meant to outlive this book is proposed to Book One / the registry first.
   - id: t-005
     milestone: m1
     title: Scene art inventory, cinematic layouts and repeatable ArtJob manifest
@@ -170,7 +181,10 @@ tasks:
       and canonical series/character settings; check DONE AND reachable delivered
       URLs, verify Zuzu costume and the banned-terms guardrails. Round 1 (art/ROUND-1.yaml)
       covered the preview's gaps; each new act from t-004 gets its plates the same way,
-      reusing vetted comic/MV renders first. Lessons: "poster" is refused by the KR prompt
+      reusing vetted comic/MV renders first (search the worlds/zuzu ledger inventory), prompting
+      from the registry's locked cast ArtImages, and adding each new ledger to the registry's
+      inventory (assets/ledger-part-05.json or a new part) plus any exported plate to
+      assets/repository-media.json in the same PR; tests/test_zuzu_world_inventory.py enforces it. Lessons: "poster" is refused by the KR prompt
       contract; "smoking blade" draws a cigarette; empty scenes need "(no characters:1.4)"
       plus figure/person negatives. Begin with cover,
       hero, first ten scene plates, dice/character-sheet motifs and consequence
