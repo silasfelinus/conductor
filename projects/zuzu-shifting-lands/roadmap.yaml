@@ -109,20 +109,17 @@ tasks:
   - id: t-004
     milestone: m1
     title: "Audit live Zuzu Resource/Facet/Character/Scenario/Reward membership"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Read live owner-scoped rows and verify record IDs. Reconcile the
-      resource-submissions.json candidates without guessing identities.
-      Design a reversible world-membership tagging method using existing
-      FacetProfile taxonomy/metadata, Packs and relation tables. Tag species,
-      occupation, archetype, affiliation, location, scenarios and rewards;
-      separate canon authority from randomizable pool membership.
+    note: |-
+      Read live owner-scoped rows and verify record IDs. Reconcile the resource-submissions.json candidates without guessing identities. Design a reversible world-membership tagging method using existing FacetProfile taxonomy/metadata, Packs and relation tables. Tag species, occupation, archetype, affiliation, location, scenarios and rewards; separate canon authority from randomizable pool membership.
+
+      Opened read-only admin owner-ID reconciliation work and source-backed world membership audit plan for review. These source changes do not verify deployed database IDs or make tag writes; operational live confirmation remains pending.
     claimed_by: 2026-10-09T230800Z-zuzu-shifting-t004-a91c
     claimed_at: '2026-10-09T23:08:00Z'
-    updated: '2026-10-09T23:08:00Z'
+    updated: '2026-10-09T23:12:00Z'
 
   - id: t-005
     milestone: m2
