@@ -72,6 +72,12 @@ Built once in t-004 so each later game is one module plus one registry row:
 - state machine `BOOT → TITLE → ATTRACT → PLAYING → GAME_OVER → INITIALS → SCORES`;
 - HUD helpers (score, hi-score, lives, level), a pixel font renderer, and sprite-sheet helpers;
 - a difficulty curve helper (`level → params`) so the ramp is data, not scattered constants;
+- the display layer `utils/arcade/display.ts` (t-012): a game keeps its small logical world and draws under
+  `setTransform(scale, …)`; `fitDisplay()` picks the canvas size and filtering per render style. **Pixel** =
+  logical size at the largest whole device-pixel multiple, nearest filtering; **HD** = whole supersample
+  of the logical size (DPR capped at 3), smooth filtering. The player's choice lives in `arcadeStore`
+  (`renderStyle`, per-game `gameStyles` override, `styleFor(slug)`) and the cabinet's style switch flips the
+  current game. New games need no code: draw in logical units, honour `g.imageSmoothingEnabled`;
 - the game registry `utils/arcade/games.ts`: slug, title, riff, controls, `maxPlausibleScore`, art paths.
 
 ## Leaderboard (t-005)
