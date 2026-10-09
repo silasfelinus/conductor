@@ -84,7 +84,7 @@ def main() -> int:
     report = json.loads(Path(args.report).read_text(encoding="utf-8"))
     now = datetime.now(timezone.utc)
     if args.record:
-        args.state.write_text(json.dumps({"signature": incident_signature(report), "sent_at": now.isoformat()}, indent=2) + "\\n", encoding="utf-8")
+        args.state.write_text(json.dumps({"signature": incident_signature(report), "sent_at": now.isoformat()}, indent=2) + "\n", encoding="utf-8")
         return 0
     previous = json.loads(args.state.read_text(encoding="utf-8")) if args.state.exists() else None
     eligible = should_email(report, intent_email_grace_days=args.intent_email_grace_days)
