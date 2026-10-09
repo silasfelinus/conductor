@@ -1,5 +1,8 @@
 # Comic Film — Design Brief
 
+> **Zuzu-specific source index:** [worlds/zuzu](../../worlds/zuzu/README.md) contains the shared canon, character designs and art/model pointers for the first film. Comic Film's reusable engine remains production-agnostic.
+
+
 date: 2026-10-04
 status: active
 author: Claude session (Zuzu comic work), from Silas's request
