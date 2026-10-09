@@ -1,0 +1,306 @@
+# Zuzu: Shifting Lands — 5-land experiential board-game project
+project: zuzu-shifting-lands
+kind: software
+autonomous: true
+goal: >-
+  Deliver an image-led, replayable Zuzu expedition at /play/zuzu-shifting-lands,
+  with five shifting lands, three encounters per land, five major trials,
+  seeded reproducible species×occupation×disposition encounter composition,
+  cross-project Zuzu Character/Facet/Scenario/Reward/ArtImage reuse, interactive
+  board-grid travel, consequences, companions, skills, equipment, save/resume,
+  sound and accessible mobile/tablet/desktop acceptance. Private admin preview
+  first, human authorization before outward public publication.
+notes_from_silas: |
+  2026-10-09 PT: A new, independent Armello-style experiential digital board
+  game. Zuzu travels through five mutable lands starting in the wasteland;
+  roughly three location encounters per land, discovering companions,
+  enemies, rewards, skills and loot, passing or failing skill checks. Every land
+  ends in a major boss/challenge if Zuzu survives. The board uses a card-based
+  grid that shows the world and where Zuzu has traveled.
+  Species and class/occupation/role facets MUST be separate. In the first land
+  (the Homestead), rabbits and otters may be randomized into farmer,
+  caretaker, convent or other roles, with good/bad dispositions and motives
+  independent of species. Character = named individual, Facet species =
+  possible reusable participant template. Animal morphology remains readable;
+  animals may have humanoid or metaphorical features.
+  Zuzu is an outsider who behaves according to Edo-era samurai conventions
+  within a hazy-boundaried weird-west frontier. Locations can move/change
+  causally. Storm Crows are magical cave-dwelling witches; gorillas are
+  possible high-level encounters with occult conditions. Reuse and tag the
+  many existing Zuzu Characters/Scenarios/Rewards/Facet cards, LoRAs and
+  artwork. Do not duplicate image/resource records; integrate with the
+  central world registry. Restricted villain and origins plot beats from
+  this session are held for private editorial treatment, NOT public YAML.
+  Agents are authorized to build reversible code and internal art drafts
+  without another scope-confirmation wait. Internal generation must still
+  respect actual resource, mana, rights and privacy restrictions.
+milestones:
+  - id: m1
+    title: "SHAPE — design brief, world rules, resource taxonomy, encounter schema"
+    weight: 20
+    status: in-progress
+  - id: m2
+    title: "ENGINE — seeded five-land state, procedural decks, movement, checks, saves"
+    weight: 30
+    status: not-started
+  - id: m3
+    title: "WORLD & ART — content packs, scoped resources, companion and story logic"
+    weight: 25
+    status: not-started
+  - id: m4
+    title: "EXPERIENCE — image-first card map, cinematic scenes, sound, accessibility"
+    weight: 15
+    status: not-started
+  - id: m5
+    title: "POLISH & SHIP — QA, balance, visual verdict, private reveal gates"
+    weight: 10
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write source-backed design brief and establish five-land world rules"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Created DESIGN-BRIEF.md, world setting guide and initial procedural
+      composition contract from Silas's 2026-10-09 direction. No new runtime
+      DB rows, public plot spoilers or gameplay deployment claimed.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm and refine scope after playable first slice"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    note: >-
+      Soft design checkpoint. Silas already authorized this project.
+      Agents work on t-003 onward without waiting. Later ask for
+      creative reactions to first land, UI and balance; publication,
+      private plot reveal and live irreversible changes remain separate gates.
+
+  - id: t-003
+    milestone: m1
+    title: "Build typed, versioned world/resource and encounter manifests"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Encode 5 lands, three location encounters each, land boss slots, source-
+      verified art refs, ecology, named exceptions, species vs occupation vs
+      disposition/secret vs scenario vs reward. Validate schema and forbid
+      public spoiler fields. The source game manifest should not duplicate
+      world Book One or import LLM filler as canon.
+
+  - id: t-004
+    milestone: m1
+    title: "Audit live Zuzu Resource/Facet/Character/Scenario/Reward membership"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Read live owner-scoped rows and verify record IDs. Reconcile the
+      resource-submissions.json candidates without guessing identities.
+      Design a reversible world-membership tagging method using existing
+      FacetProfile taxonomy/metadata, Packs and relation tables. Tag species,
+      occupation, archetype, affiliation, location, scenarios and rewards;
+      separate canon authority from randomizable pool membership.
+
+  - id: t-005
+    milestone: m2
+    title: "Kind Robots: create private preview route, project registration and illustrated board shell"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      /play/zuzu-shifting-lands in Projects/Play with requiredRole ADMIN
+      until Silas accepts. Use store-owned state/API; root-first Nuxt
+      conventions. World map and three-card encounter strip are image-heavy
+      with re-used locked/cross-project visuals, inspectable art provenance
+      and error/placeholder handling, and navigation links to World Studio.
+
+  - id: t-006
+    milestone: m2
+    title: "Pure seeded journey reducer, five land/three encounter traversal and boss gates"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003]
+    note: >-
+      Full board route graph with exactly five land challenges and 3 encounter
+      resolutions each; deterministic seeded draws, stable location mutations,
+      journal, game over, win/retire, stat/health checks and testable transitions.
+      No play-time untrusted LLM permitted to decide state.
+
+  - id: t-007
+    milestone: m2
+    title: "Species × role × agenda random encounter composer with exclusion rules"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003]
+    note: >-
+      Independent Facet taxonomies; sample rabbits/otters against farmer/
+      convent roles, friend/hostile hidden motives. Keep cast/region
+      biological constraints, stable participant IDs and causal re-visits.
+      Assert randomized species has no hardcoded morality correlation.
+
+  - id: t-008
+    milestone: m2
+    title: "Stats, dice/skill checks, HP, item/technique Rewards and companion relationships"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-006]
+    note: >-
+      Implement original 2d6 check and consequence table with combat/noncombat
+      options, character sheet, reward gating, inventory and persistent
+      conditions; protect stat balance from infinite farming; reuse gamebook
+      pure utilities where compatible, not its state machine.
+
+  - id: t-009
+    milestone: m2
+    title: "Safe versioned save/resume, pinned run seed, history and deterministic replay tests"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-006]
+    note: >-
+      Durable, schema-versioned serialized run; preserve choices, hidden roles,
+      map events, used Rewards, companion identity and both roll dice; reject
+      corrupted saves; no re-roll by refresh.
+
+  - id: t-010
+    milestone: m3
+    title: "Author five land encounter decks, three locations each, alternate outcomes"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-007]
+    note: >-
+      Meaningful good and bad paths, rescue/bargain/stealth/combat. Land one:
+      Homestead, watering holes, roadside chapel and ambiguous hospitality.
+      Cave witches in higher lands, gorilla encounters in high-tier. Do not
+      leak the true Abbess agenda or lost-world history into public data.
+
+  - id: t-011
+    milestone: m3
+    title: "Boss encounters and alternative noncombat solutions for all five land gates"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-010]
+    note: >-
+      Every land boss has a build-up and multiple earned outcomes, plus a
+      failure state. The first land's major challenge centers on the
+      convent/Abbess authority; private motive/plot material is gated
+      behind authenticated editorial storage, never public game bundles.
+
+  - id: t-012
+    milestone: m3
+    title: "Create world-scoped live resource query, admin tagging and safe import"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004]
+    note: >-
+      Implement secure catalog APIs, bulk set/unset Zuzu world membership,
+      distinguish Facet SPECIES and OCCUPATION/ROLE cards; admin can inspect
+      candidate rows, confirm patch vs create, edit and archive; protect private
+      content, duplicate aliases and history.
+
+  - id: t-013
+    milestone: m3
+    title: "Reuse accepted Zuzu ArtImages and enqueue missing illustrated scene variants"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-005]
+    note: >-
+      Reuse image references/cast angles from worlds/zuzu ledger and World
+      Studio ProjectArtImage links; create durable scoped ArtJobs only if
+      missing; track queued vs rendered vs delivered vs verified. Observe
+      mature/private rights and locked frame requirements.
+
+  - id: t-014
+    milestone: m3
+    title: "Storybook-style optional prose generation with bounded rules state and offline fallback"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-006, t-010]
+    note: >-
+      Validated narrative fact packet, non-duplicated lore, hidden-source
+      isolation, no plot mutations by text generator; cache outputs and offer
+      curated offline text. Mana/paid model consent separately gated.
+
+  - id: t-015
+    milestone: m4
+    title: "Illustrated responsive hex/card board and current encounter reader"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-005, t-006]
+    note: >-
+      Main board visual dominates screen at phone/tablet/desktop. Three
+      current encounter cards with routes, full art inspector, location
+      state changes, selected path and discovered history; mobile
+      bottom sheet and keyboard/screen-reader usability.
+
+  - id: t-016
+    milestone: m4
+    title: "Companion rail, inventory/skills overlay, dice/motion/sound and journey log"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-008, t-015]
+    note: >-
+      Show specific named character relationships and Rewards without
+      hiding art beneath CRUD controls; reduced-motion and mute settings.
+
+  - id: t-017
+    milestone: m5
+    title: "Seed/property-based playtests, difficulty balance and safe choice outcomes"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-009, t-011, t-016]
+    note: >-
+      Multiple seeds never produce impossible tiles, dead progression,
+      duplicate uniqueness collisions, species-based moral determinism,
+      unearned hidden knowledge or unrecoverable save state. HP and reward
+      progression are balanced across all five lands.
+
+  - id: t-018
+    milestone: m5
+    title: "Phone/tablet/desktop and authenticated live UI acceptance, publication gate"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    depends_on: [t-017]
+    note: >-
+      Verify screenshots with actual image-backed cards at 375/768/1440
+      widths and Silas's visual acceptance. Check authorization, content
+      rating, production deployment and private plot data. Do NOT open
+      public play to non-admins until Silas explicitly approves.
