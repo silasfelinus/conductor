@@ -30,3 +30,30 @@ def test_clean_report_does_not_email():
 
 def test_missing_intent_baseline_is_exceptional_and_escalates():
     assert gate.should_email(report("semantic-review-due", days_since=None)) is True
+
+
+def test_repeated_identical_incident_is_suppressed_within_day():
+    from datetime import datetime, timezone, timedelta
+    now = datetime(2026, 10, 9, 18, tzinfo=timezone.utc)
+    incident = report("unresolved")
+    previous = {"signature": gate.incident_signature(incident), "sent_at": (now - timedelta(hours=6)).isoformat()}
+    assert gate.should_notify(incident, previous, now) is False
+    assert gate.should_notify(incident, previous, now + timedelta(hours=25)) is True
+
+
+def test_changed_incident_alerts_immediately():
+    from datetime import datetime, timezone
+    now = datetime(2026, 10, 9, 18, tzinfo=timezone.utc)
+    earlier = report("unresolved")
+    changed = report("unresolved")
+    changed["summary"]["project_unresolved"] = "HTTP 401"
+    previous = {"signature": gate.incident_signature(earlier), "sent_at": now.isoformat()}
+    assert gate.should_notify(changed, previous, now) is True
+
+
+def test_generated_timestamps_do_not_change_incident_signature():
+    first = report("unresolved")
+    second = report("unresolved")
+    first["generated_at"] = "2026-10-08"
+    second["generated_at"] = "2026-10-09"
+    assert gate.incident_signature(first) == gate.incident_signature(second)
