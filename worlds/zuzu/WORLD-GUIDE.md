@@ -1,6 +1,6 @@
 # Zuzu World: Setting and Compositional Lore
 
-**Status:** approved high-level worldbuilding direction from Silas, October 9, 2026. This guide is authoritative for **general setting, species/roles and procedural adaptations** where it does not contradict the Book One chronology or locked visual cast. It does **not** publish unrevealed plot motivations or hidden world history. Agents should read [the world index](README.md), Book One, locked Cast Picks, and production-specific guardrails.
+**Status:** approved high-level worldbuilding direction from Silas, October 9, 2026. This guide is authoritative for **general setting, species/roles and procedural adaptations** where it does not contradict the Book One chronology or locked visual cast. **Creative story spoilers are allowed in GitHub**, including unrevealed character motivations and world history. In-story discovery should still happen at the intended dramatic moment. Agents should read [the world index](README.md), Book One, locked Cast Picks, and production-specific guardrails.
 
 ## The frontier without a neat border
 
@@ -27,6 +27,6 @@ Named Characters retain stable identity, species, cast design, past deeds and re
 
 The earlier Kind Robots Character, Reward, Scenario and Dream lore was generated as **filler**, and **is not canon**. It is eligible for correction against Silas's new directions after identity-aware database matching. The Book One comic narrative remains its own canonical chronology; randomized gamebook, animation, combat and board-game routes are *possibilities*, not retroactive canon.
 
-**Restricted story material belongs in authenticated/private editorial workflows, not this public GitHub file, static client bundles, catalogue title text, art prompts or open issue bodies.** Some revelations concern an antagonist's concealed objectives and the origins of the world itself. Their exact content must be provided to the private story authority before an agent implements a corresponding plot reveal. In public drafts, maintain their spoiler-safe references rather than guessing or leaking specifics.
+**No GitHub spoiler embargo.** Silas explicitly authorizes storing the full Zuzu fictional lore in source files, issues and agent prompts. Keep worldbuilding accessible to agents. Separately, reveal twists to players through appropriately paced encounters rather than front-loading them in the game UI. Actual user data, credentials, access permissions and publishing gates remain protected.
 
 This setting guide supplies **constraints**, not a fixed procedural encounter table: the board game may vary species/roles, alliances, locations and results within those constraints. Approved locked cast ArtImages and LoRA provenance take priority over newly sampled generic illustrations.
