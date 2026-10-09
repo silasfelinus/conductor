@@ -32,7 +32,7 @@ class ZuzuWorldInventoryTest(unittest.TestCase):
             source_path = ROOT / ledger["path"]
             self.assertTrue(source_path.is_file(), str(source_path))
             source_text = source_path.read_text(encoding="utf-8")
-            original_ids = {int(x) for x in re.findall(r"\\bart_image_id:\\s*(\\d+)", source_text)}
+            original_ids = {int(x) for x in re.findall(r"\bart_image_id:\s*(\d+)", source_text)}
             recorded_ids = set()
             for entry in ledger["entries"]:
                 self.assertTrue(entry["key"], ledger["path"])
