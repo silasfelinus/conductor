@@ -452,6 +452,11 @@ tasks:
       the Lone Apple Tree), has no hurtbox, and the flee-on-KO sequence replaces death. Implement the
       engine-wide `fling_vs_siblings` swap (Abbess Last Rites, Croc Death Roll/Swallow/Watering Hole,
       Komodo Venom Bite/Feeding Time) and contract-test it.
+      PROGRESS 2026-10-09: the Abbess's kit is live (kind_robots#3397): all seven moves from fighters.yaml,
+      contract suite verifyZuzuShowdownAbbess (9 checks). New opt-in engine hooks: MoveData.teleport
+      (The Thin Place), MoveData.slowProjectiles with FighterState.bell (Vespers). Last Rites carries
+      `fling`. Left: the Siblings' kit (toddler puppet state, apple count and refill) and the other
+      fling_vs_siblings moves (Croc, Komodo, whose fighters are t-016/t-017).
 
   - id: t-016
     milestone: m4
