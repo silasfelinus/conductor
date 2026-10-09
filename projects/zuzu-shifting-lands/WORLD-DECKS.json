@@ -1,0 +1,543 @@
+{
+  "schema_version": 1,
+  "world_id": "zuzu",
+  "conductor_project": "zuzu-shifting-lands",
+  "world_tag": "zuzu",
+  "status": "design-manifest-not-imported",
+  "editorial_rules": {
+    "known_named_characters": "Only instantiate from verified existing Kind Robots Character IDs; preserve cast and backstory",
+    "generated_extras": "Species/occupation/faction/motive composed as run-scoped snapshot, never forced into Character rows",
+    "species_morality": "No deterministic species=>alignment or occupation=>alignment mapping",
+    "continuity": "Persist rolled identities, agenda, locations, hidden truth references, all consequential mutation history",
+    "secrets": "Restricted plot and hidden world-history details are stored only on a future authenticated server-side authority, not this file",
+    "faceted_reuse": "FacetProfile taxonomy already supports SPECIES, OCCUPATION, ARCHETYPE, ROLE, ALIGNMENT; each instance gets world membership via audited metadata/relation",
+    "guardrails": "Source visuals from worlds/zuzu and approved production pins; no LLM filler automatically canon",
+    "theme": "Weird-west animal wasteland; Edo-era samurai visitor"
+  },
+  "player": {
+    "character_ref": "zuzu-koala-assassin",
+    "start_region": "wasteland",
+    "attributes": [
+      "steel",
+      "awareness",
+      "wits",
+      "bearing",
+      "resolve",
+      "insight"
+    ],
+    "starting_hp": 8,
+    "starting_provisions": 2
+  },
+  "journey": {
+    "lands": 5,
+    "encounters_per_land": 3,
+    "major_challenges": 5,
+    "seed_persisted": true,
+    "repeatability": "Fixed seed and decisions reproduce game state",
+    "mutations": "Only prospective tiles, with journal reasons, never retroactive rewrites"
+  },
+  "facet_pools": {
+    "species": [
+      {
+        "key": "rabbit",
+        "taxonomy": "SPECIES",
+        "biomes": [
+          "homestead",
+          "dustwater",
+          "tablelands"
+        ],
+        "weight": 3,
+        "traits": [
+          "quick",
+          "keen-hearing"
+        ]
+      },
+      {
+        "key": "otter",
+        "taxonomy": "SPECIES",
+        "biomes": [
+          "homestead",
+          "dustwater"
+        ],
+        "weight": 3,
+        "traits": [
+          "swim",
+          "nimble-hands"
+        ]
+      },
+      {
+        "key": "coyote",
+        "taxonomy": "SPECIES",
+        "biomes": [
+          "homestead",
+          "dustwater",
+          "tablelands"
+        ],
+        "weight": 2,
+        "traits": [
+          "endurance",
+          "keen-scent"
+        ]
+      },
+      {
+        "key": "crow",
+        "taxonomy": "SPECIES",
+        "biomes": [
+          "tablelands",
+          "cave",
+          "verge"
+        ],
+        "weight": 2,
+        "traits": [
+          "flight",
+          "keen-sight"
+        ]
+      },
+      {
+        "key": "gorilla",
+        "taxonomy": "SPECIES",
+        "biomes": [
+          "tablelands",
+          "cave",
+          "verge"
+        ],
+        "weight": 1,
+        "traits": [
+          "strength",
+          "climb"
+        ]
+      },
+      {
+        "key": "fox",
+        "taxonomy": "SPECIES",
+        "biomes": [
+          "homestead",
+          "dustwater",
+          "tablelands"
+        ],
+        "weight": 2,
+        "traits": [
+          "keen-scent",
+          "agile"
+        ]
+      }
+    ],
+    "roles": [
+      {
+        "key": "homesteader",
+        "taxonomy": "OCCUPATION",
+        "biomes": [
+          "homestead",
+          "dustwater"
+        ],
+        "weight": 3
+      },
+      {
+        "key": "farmhand",
+        "taxonomy": "OCCUPATION",
+        "biomes": [
+          "homestead",
+          "dustwater"
+        ],
+        "weight": 2
+      },
+      {
+        "key": "ferrykeeper",
+        "taxonomy": "OCCUPATION",
+        "biomes": [
+          "dustwater"
+        ],
+        "weight": 2
+      },
+      {
+        "key": "caretaker",
+        "taxonomy": "ROLE",
+        "biomes": [
+          "homestead",
+          "cave"
+        ],
+        "weight": 2
+      },
+      {
+        "key": "outlaw",
+        "taxonomy": "ARCHETYPE",
+        "biomes": [
+          "homestead",
+          "dustwater",
+          "tablelands"
+        ],
+        "weight": 2
+      },
+      {
+        "key": "trader",
+        "taxonomy": "OCCUPATION",
+        "biomes": [
+          "homestead",
+          "dustwater",
+          "tablelands"
+        ],
+        "weight": 2
+      },
+      {
+        "key": "healer",
+        "taxonomy": "OCCUPATION",
+        "biomes": [
+          "homestead",
+          "dustwater",
+          "cave"
+        ],
+        "weight": 2
+      },
+      {
+        "key": "wandering-monk",
+        "taxonomy": "ROLE",
+        "biomes": [
+          "homestead",
+          "tablelands",
+          "cave"
+        ],
+        "weight": 1
+      },
+      {
+        "key": "witch",
+        "taxonomy": "ARCHETYPE",
+        "biomes": [
+          "cave",
+          "verge"
+        ],
+        "weight": 2
+      },
+      {
+        "key": "sentinel",
+        "taxonomy": "OCCUPATION",
+        "biomes": [
+          "tablelands",
+          "verge"
+        ],
+        "weight": 1
+      }
+    ],
+    "dispositions": [
+      "helpful",
+      "wary",
+      "desperate",
+      "mercenary",
+      "predatory",
+      "misguided",
+      "frightened"
+    ],
+    "conditions": [
+      "none",
+      "wounded",
+      "blessed",
+      "cursed",
+      "exhausted",
+      "enchanted",
+      "occult-afflicted"
+    ]
+  },
+  "lands": [
+    {
+      "id": "homestead",
+      "name": "The Homestead",
+      "chapter": 1,
+      "biome": "homestead",
+      "species": [
+        "rabbit",
+        "otter",
+        "coyote",
+        "fox"
+      ],
+      "roles": [
+        "homesteader",
+        "farmhand",
+        "caretaker",
+        "outlaw",
+        "trader",
+        "healer"
+      ],
+      "locations": [
+        {
+          "id": "border-farm",
+          "label": "Border Farm",
+          "template": "homestead-hospitality",
+          "skill": "insight",
+          "difficulty": 7,
+          "possible_rewards": [
+            "provisions",
+            "farmstead-trust"
+          ]
+        },
+        {
+          "id": "old-well",
+          "label": "The Old Well",
+          "template": "well-secrets",
+          "skill": "awareness",
+          "difficulty": 9,
+          "possible_rewards": [
+            "water",
+            "route-intel"
+          ]
+        },
+        {
+          "id": "wayside-refuge",
+          "label": "Wayside Refuge",
+          "template": "sanctuary-or-trap",
+          "skill": "bearing",
+          "difficulty": 9,
+          "possible_rewards": [
+            "shelter",
+            "witness-trust"
+          ]
+        }
+      ],
+      "major_challenge": {
+        "id": "sanctuary-authority",
+        "label": "The Sanctuary's Keeper",
+        "boss_source": "private-editorial",
+        "outcome_modes": [
+          "stand-ground",
+          "appeal",
+          "investigate",
+          "escape"
+        ]
+      }
+    },
+    {
+      "id": "dustwater",
+      "name": "Dustwater Crossing",
+      "chapter": 2,
+      "biome": "dustwater",
+      "provisional": true,
+      "species": [
+        "rabbit",
+        "otter",
+        "coyote",
+        "fox"
+      ],
+      "roles": [
+        "ferrykeeper",
+        "trader",
+        "outlaw",
+        "healer"
+      ],
+      "locations": [
+        {
+          "id": "ferry-landing",
+          "label": "Ferry Landing",
+          "template": "crossing-toll",
+          "skill": "bearing",
+          "difficulty": 7,
+          "possible_rewards": [
+            "passage"
+          ]
+        },
+        {
+          "id": "trading-post",
+          "label": "Trading Post",
+          "template": "priced-help",
+          "skill": "wits",
+          "difficulty": 9,
+          "possible_rewards": [
+            "equipment"
+          ]
+        },
+        {
+          "id": "dry-delta",
+          "label": "The Dry Delta",
+          "template": "changed-waterway",
+          "skill": "awareness",
+          "difficulty": 9,
+          "possible_rewards": [
+            "new-route"
+          ]
+        }
+      ],
+      "major_challenge": {
+        "id": "crossing-gate",
+        "label": "The Crossing Gate",
+        "outcome_modes": [
+          "bargain",
+          "duel",
+          "sneak"
+        ]
+      }
+    },
+    {
+      "id": "tablelands",
+      "name": "The Broken Tablelands",
+      "chapter": 3,
+      "biome": "tablelands",
+      "provisional": true,
+      "species": [
+        "coyote",
+        "crow",
+        "gorilla",
+        "rabbit"
+      ],
+      "roles": [
+        "outlaw",
+        "trader",
+        "sentinel",
+        "wandering-monk"
+      ],
+      "locations": [
+        {
+          "id": "quarry",
+          "label": "Abandoned Quarry",
+          "template": "quarry-contract",
+          "skill": "wits",
+          "difficulty": 9,
+          "possible_rewards": [
+            "map"
+          ]
+        },
+        {
+          "id": "canyon-trail",
+          "label": "Canyon Trail",
+          "template": "storm-and-falling-rock",
+          "skill": "awareness",
+          "difficulty": 11,
+          "possible_rewards": [
+            "shortcut"
+          ]
+        },
+        {
+          "id": "canyon-camp",
+          "label": "Canyon Camp",
+          "template": "firelight-offer",
+          "skill": "insight",
+          "difficulty": 9,
+          "possible_rewards": [
+            "ally"
+          ]
+        }
+      ],
+      "major_challenge": {
+        "id": "canyon-warden",
+        "label": "The Canyon Warden",
+        "outcome_modes": [
+          "duel",
+          "negotiate",
+          "divert"
+        ]
+      }
+    },
+    {
+      "id": "cave",
+      "name": "Storm-Crow Depths",
+      "chapter": 4,
+      "biome": "cave",
+      "provisional": true,
+      "species": [
+        "crow",
+        "gorilla"
+      ],
+      "roles": [
+        "witch",
+        "healer",
+        "caretaker",
+        "sentinel"
+      ],
+      "locations": [
+        {
+          "id": "cave-mouth",
+          "label": "The Cave Mouth",
+          "template": "witch-threshold",
+          "skill": "resolve",
+          "difficulty": 9,
+          "possible_rewards": [
+            "safe-passage"
+          ]
+        },
+        {
+          "id": "stone-hollow",
+          "label": "Stone Hollow",
+          "template": "bargain-for-truth",
+          "skill": "bearing",
+          "difficulty": 11,
+          "possible_rewards": [
+            "spell-token"
+          ]
+        },
+        {
+          "id": "underground-crossroads",
+          "label": "Crossroads Below",
+          "template": "changing-paths",
+          "skill": "wits",
+          "difficulty": 11,
+          "possible_rewards": [
+            "marked-path"
+          ]
+        }
+      ],
+      "major_challenge": {
+        "id": "storm-crow-judgement",
+        "label": "The Deep-Cave Judgement",
+        "outcome_modes": [
+          "trial",
+          "parley",
+          "flight"
+        ]
+      }
+    },
+    {
+      "id": "verge",
+      "name": "The Black Verge",
+      "chapter": 5,
+      "biome": "verge",
+      "provisional": true,
+      "species": [
+        "gorilla",
+        "crow"
+      ],
+      "roles": [
+        "sentinel",
+        "witch",
+        "wandering-monk"
+      ],
+      "locations": [
+        {
+          "id": "obsidian-road",
+          "label": "Obsidian Road",
+          "template": "night-passage",
+          "skill": "resolve",
+          "difficulty": 11,
+          "possible_rewards": [
+            "protection"
+          ]
+        },
+        {
+          "id": "fortified-camp",
+          "label": "Fortified Camp",
+          "template": "powerful-stranger",
+          "skill": "insight",
+          "difficulty": 11,
+          "possible_rewards": [
+            "ally"
+          ]
+        },
+        {
+          "id": "last-threshold",
+          "label": "The Last Threshold",
+          "template": "final-offer",
+          "skill": "bearing",
+          "difficulty": 11,
+          "possible_rewards": [
+            "ending-key"
+          ]
+        }
+      ],
+      "major_challenge": {
+        "id": "verge-antagonist",
+        "label": "Beyond the Verge",
+        "outcome_modes": [
+          "duel",
+          "renounce",
+          "bargain",
+          "retreat"
+        ]
+      }
+    }
+  ]
+}
