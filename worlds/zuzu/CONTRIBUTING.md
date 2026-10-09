@@ -2,7 +2,7 @@
 
 Scope: shared discovery, identity, provenanced asset references, canon and cross-project
 relationships. Not scope: project task queues, copies of binary art, lore invented by an
-unreviewed game branch, a second Resource table, or secret plot details.
+unreviewed game branch or a second Resource table. Story spoilers are allowed in GitHub.
 
 1. Read [README.md](README.md) and the ordered `canon_sources` in
    [catalog.json](catalog.json). Follow Book One / Cast Picks / Video Guardrails,
@@ -26,8 +26,7 @@ unreviewed game branch, a second Resource table, or secret plot details.
    catalog or relocating paths. Update consumers to point to this index,
    not hardcoded copies of conflicting lore.
 
-The catalog intentionally does not reproduce the secret guardrail terms.
-Read the latest Video Guardrails source at generation time.
+Story spoilers (including the Abbess's true aim and lost-humanity history) are welcome in source files, issue descriptions and project roadmaps. The video guardrail terms are a **generation/presentation** constraint, not a confidentiality requirement for GitHub. Read the latest Video Guardrails source at generation time.
 
 ## Authoritative legacy-content correction (2026-10-09)
 
