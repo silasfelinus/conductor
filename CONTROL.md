@@ -595,6 +595,15 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - An image-first, visually compelling site at /play is mandatory. Initial release is an admin preview; public publication and final visual acceptance remain explicit human gates. No play-time LLM and no paid generation without authorization.
 - Active and normal-priority while building, following comic-film in projects/priority.yaml; after the complete book is approved, switch to continuous for autonomous later chapters and polish.
 
+### zuzu-shifting-lands  (software, autonomous: true)
+**Direction (2026-10-09, new project):** Create a distinct Zuzu: Shifting Lands illustrated narrative board game at `/play/zuzu-shifting-lands`. Five mutable lands, three encountered locations per land, a major trial/boss at the end of each, companions, enemies, skills, Rewards, dice checks, consequence-driven branching and a visual journey map. Opening is The Homestead in Zuzu's wasteland.
+**Notes:**
+- A creature's `SPECIES` Facet is independent of their `OCCUPATION` / `ROLE`, disposition, faction and secret agenda. Rabbits and otters may both be caretakers, homesteaders, friends or monsters, subject to plausibility. Named Characters keep stable identity. Use Kind Robots' existing FacetProfile taxonomy, not a parallel schema.
+- Zuzu is an Edo-era samurai from elsewhere, crossing a hazy-boundaried weird-west anthropomorphic animal landscape. Locations may evolve for **recorded causes**, with visited history preserved. Storm-crow witches inhabit a deep cave; some dangerous high-tier gorilla encounters may involve magic or vampiric conditions, not innate species morality.
+- Reuse world Zuzu registry canon, art, existing Characters/Scenarios/Rewards, and LoRAs where verified. Earlier LLM-generated filler is not canon; distinguish source-tagged resources from actual DB records. Restricted villain and origin reveals belong to **private editorial authority**, not this public steering file or public build artifacts.
+- Active normal-priority project, immediately after the gamebook in priority.yaml; keep Silas's prior top-four priority intact. Agents may autonomously implement reversible source/code and private draft art, but not live publishing, paid generation, production deploy or spoiler disclosure. Human design checkpoint is soft.
+- Admin-only illustrated preview first; public release requires a distinct approval and responsive visual tests.
+
 ### zuzu-showdown  (software)
 **Direction:** A free browser 2D pixel-art fighting game (Street Fighter / Skullgirls / MvC style) in the world of Zuzu: Koala Assassin: eight fighters with special moves, chain combos, a strike/grab/guard triangle, a super meter and unique supers, animated stages and matchup-specific pre- and post-fight lines, playable on Kind Robots.
 **Notes:**
