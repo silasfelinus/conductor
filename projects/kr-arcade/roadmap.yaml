@@ -255,212 +255,45 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     recurring: true
     depends_on:
       - t-008
-    note: >-
-      STANDING CONTRACT (Silas, 2026-10-06): this is fallback work, picked when no finite task
-      is claimable, the same lane as animation-manager's screensavers. Each cycle ships one new
-      cabinet, or one slice of a `large` one. Take the first games.yaml entry with status
-      `queued`; approved arcade pitches (source: pitches/...) sit ahead of the catalog. Set it to
-      `building`, then build it in kind_robots on the engine kit, meeting every point of the
-      per-game checklist in DESIGN-BRIEF.md. Queue its title-card art as a kr-arcade- request in
-      projects/art-prompts.yaml, register it, verify at phone/tablet/desktop, and merge. Then set
-      it to `shipped` with the PR number. For a `large` game, ship playable slices (pinball: the
-      table and flippers first, then modes; gauntlet: one floor and one class first) and keep it
-      `building` between cycles. If the queue is empty, write one new arcade pitch with `target:
-      kr-arcade` into the next daily docket instead. Re-arm to ready with a RAN <date> line
-      after each cycle.
+    note: |-
+      STANDING CONTRACT (Silas, 2026-10-06): this is fallback work, picked when no finite task is claimable, the same lane as animation-manager's screensavers. Each cycle ships one new cabinet, or one slice of a `large` one. Take the first games.yaml entry with status `queued`; approved arcade pitches (source: pitches/...) sit ahead of the catalog. Set it to `building`, then build it in kind_robots on the engine kit, meeting every point of the per-game checklist in DESIGN-BRIEF.md. Queue its title-card art as a kr-arcade- request in projects/art-prompts.yaml, register it, verify at phone/tablet/desktop, and merge. Then set it to `shipped` with the PR number. For a `large` game, ship playable slices (pinball: the table and flippers first, then modes; gauntlet: one floor and one class first) and keep it `building` between cycles. If the queue is empty, write one new arcade pitch with `target: kr-arcade` into the next daily docket instead. Re-arm to ready with a RAN <date> line after each cycle.
+      RAN 2026-10-06: Sink Suds (Bubbles riff) shipped in silasfelinus/kind_robots#3270; title art requested. Next in games.yaml: pipe-pals.
+      RAN 2026-10-06: Pipe Pals (Mario Bros. riff) shipped in silasfelinus/kind_robots#3272; title art requested. Co-op and icy platforms deferred. Next in games.yaml: timber-bot.
+      RAN 2026-10-06: Timber Bot (logging-game riff) shipped in silasfelinus/kind_robots#3273; title art requested. Next in games.yaml: butterfly-joust.
+      RAN 2026-10-06: Butterfly Joust (Joust riff) shipped in silasfelinus/kind_robots#3274; title art requested. Next in games.yaml: kind-pinball.
+      RAN 2026-10-06: Kind Pinball slices 1-2 (table, flippers, physics, bumpers, targets, scoring) shipped in silasfelinus/kind_robots#3275; title art requested. kind-pinball stays building: the next cycle builds its slice 3 (ramp + modes) before taking a queued entry, then slice 4 (AMI multiball).
+      RAN 2026-10-06: Kind Pinball slice 3 (ramp + modes) in silasfelinus/kind_robots#3280 -- raised ramp from an upper-right mouth into the left inlane, streak scoring, four 30 s modes (Net Rush, Ramp Frenzy, Lane Lights, Saucer Rescue) started by every third ramp shot, and a 250,000 x level super jackpot once all four are played. Verified: test:arcade-engine, eslint/prettier, vue-tsc, balance probe seeds 1-8 (1-5 rides per game, no stalls), ramp exit reaches the left flipper on every seed, Playwright phone/desktop. kind-pinball stays building; next cycle builds slice 4 (AMI multiball), then the queue resumes at gloom-invaders.
+      RAN 2026-10-06: Kind Pinball slice 4 (AMI multiball) in silasfelinus/kind_robots#3282 -- the third village lights multiball at the saucer; three balls with a 10 s multiball save; ramp/saucer shots fly mosquito nets to the villages (20,000 x level), five nets pay the AMI JACKPOT (150,000 x level). Table refactored to a ball list (flippers swing once per substep). Also wrapped the cabinet's empty-board message for narrow screens. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-8, forced- multiball probe seeds 1-5 (always reaches 3 balls, always settles back to one), Playwright renders. kind-pinball is now shipped (all four slices). Next cycle takes the first queued games.yaml entry: gloom-invaders (Space Invaders riff).
+      RAN 2026-10-06: Gloom Invaders (Space Invaders riff) shipped in silasfelinus/kind_robots#3283 -- 5x9 gloom-cloud formation with a speeding march, one- beam-at-a-time sunbeams, four erodible rainbow umbrellas, a mystery-bonus rainbow kite, waves that start lower and march faster, and a garden that grows a flower per wave. Title art requested as kr-arcade-games-gloom-invaders-title. Verified: test:arcade- engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6, Playwright phone/desktop. Next cycle takes the next queued games.yaml entry: hedgehog-crossing (Frogger riff).
+      RAN 2026-10-06: Hedgehog Crossing (Frogger riff) shipped in silasfelinus/kind_robots#3284 -- robot-traffic road, creek of logs and diving turtles, five hedge burrows, snoozing fox from level 2, ladybug bonus, 30 s time bar, faster lanes/shorter logs/more divers per level. Title art requested as kr-arcade-games- hedgehog-crossing-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (3-4 homes per game after fixing hop drift), Playwright phone/desktop. Next cycle takes the next queued games.yaml entry: ribbon-riders (Tron light-cycles riff).
+      RAN 2026-10-06: Ribbon Riders (Tron light-cycles riff) shipped in silasfelinus/kind_robots#3285 -- rainbow-ribbon light-bike, 1-4 rivals with room-seeking and cut-off steering, closing arena wall with a warning flash, rationed turbo, fading ribbons on crash. Title art requested as kr-arcade-games-ribbon-riders-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (rounds 3-5 after teaching AI riders to dodge the closing wall), Playwright phone/desktop. Next cycle takes the next queued games.yaml entry: burrow-buddy (Dig Dug riff).
+      RAN 2026-10-06: Burrow Buddy (Dig Dug riff) shipped in silasfelinus/kind_robots#3287 -- tile tunnels with break-through digging, four-puff bubble pump with aim-in-place, ghosting grubs, fire-breathing beetles from garden 2, falling turnips with group bonus, veggie bonus after two turnips, last grub flees. Title art requested as kr-arcade-games- burrow-buddy-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (gardens 3-5), forced turnip-crush test, Playwright phone/desktop. Next cycle takes the next queued games.yaml entry: repair-rampage (Rampage riff).
+      RAN 2026-10-07: Repair Rampage (Rampage riff, turned around) shipped in silasfelinus/kind_robots#3288 -- climb-and-fix towers, kitten rescues, flashbulb drones that dazzle Bolt off the wall, towers whose hold time scales with broken windows and that wobble then fall, a charge meter that drains (game over at zero). Shipped single- player; the hook's two-players-on-one-device needs a second cabinet input stream (follow-up). Title art requested as kr-arcade-games-repair-rampage-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (city 6-12 after rebalancing an initially endless game), Playwright phone/desktop. Next cycle takes the next queued games.yaml entry: kindness-gauntlet (Gauntlet riff).
+      RAN 2026-10-07: Kindness Gauntlet slice 1 (Gauntlet II riff) shipped live in silasfelinus/kind_robots#3289 -- Fix the repair android on procedurally built server- dungeon floors (rooms + 2-wide corridors, fog of war), glitch generators with hp, clinging glitches, caged bots, snacks, kindness pulses, stairs to harder floors, a draining battery; hold-fire-to-turn as in the classic. Same PR fits the cabinet how-to card to short screens (Repair Rampage's sixth line was clipped) with a contract test. Title art requested as kr-arcade-games-kindness-gauntlet-title. Verified: test:arcade- engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (floors 10-22, every run ends), Playwright. kindness-gauntlet stays building: next slices are all four classes, then keys + locked doors (co-op needs cabinet input work). Next cycle: build the next Kindness Gauntlet slice OR the next queued quick cabinet if one is waiting; the queue continues with prize-show-panic (Smash TV riff, uses Gauntlet's twin-stick-style aim) and bolt-knight / station-sweep.
+      RAN 2026-10-07: Prize Show Panic (Smash TV riff) shipped in silasfelinus/kind_robots#3292 -- studio rooms flooding with party crashers (grabbers, bouncers, conga lines, streamer throwers) through four doors, confetti cannon, prize drops and power-ups, exit before the host countdown, parade float boss every fourth studio; hold B to lock aim (twin-stick stand-in). Title art requested as kr-arcade- games-prize-show-panic-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (studio 6-7 after escalating extra-life thresholds), Playwright. Next cycle: zuzu-ghost-trail slice 1 (one stage + poncho/armor rule; Zuzu canon and VIDEO-GUARDRAILS apply), then station-sweep, plus remaining kindness-gauntlet slices.
+      RAN 2026-10-07: Zuzu: Ghost Trail slice 1 (Ghosts 'n Goblins riff) shipped live in silasfelinus/kind_robots#3293 -- ghost-town trail with pits/boardwalks/tombstones, rising spirits, storm crows, bone hyenas, kunai, committed jumps, the poncho rule (first hit loses poncho+kasa, second to the checkpoint), crates with a fresh poncho, dusk timer; Zuzu drawn to canon (kasa, rust poncho with orange zigzag, katana hilt over the right shoulder, never smiling); no bannedTerms on screen or in the art prompt. Title art requested as kr-arcade-games-zuzu-ghost-trail-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (clears in 3/6 after fixing respawn camera, tombstone jump and pit-edge spawns), Playwright. zuzu-ghost-trail stays building; next slices: throwables + pickups, bosses, stage progression. Queue: station- sweep (Xenophobe) slice 1, kindness-gauntlet slices.
+      RAN 2026-10-07: Station Sweep (Xenophobe riff) slice 1 of 4 shipped in silasfelinus/kind_robots#3296 (one deck + one player); games.yaml marks it building, title art requested. Factory stays ready for the remaining slices (kindness-gauntlet, zuzu-ghost-trail, station-sweep).
+      RAN 2026-10-07: Zuzu: Ghost Trail slice 2 of 4 (throwables + pickups: shuriken, boomerang kasa, lantern fire, iai cut; carrier crows, coins) shipped in silasfelinus/kind_robots#3297. Station Sweep slice 1 landed in silasfelinus/kind_robots#3296. Factory stays ready for remaining slices.
+      RAN 2026-10-07: Kindness Gauntlet slice 2 of 4 (all four classes: Hugs power, Fix armor, Sage magic, Zip speed; choose-your-bot screen; pilot line-of-sight fix) shipped in silasfelinus/kind_robots#3299. Factory stays ready for remaining slices.
+      RAN 2026-10-07: Station Sweep slice 2 of 4 (elevators + multi-deck: stations of 2-4 decks, two lifts per deck, deck/station clean bonuses, HUD station map) shipped in silasfelinus/kind_robots#3301. Factory stays ready for remaining slices.
+      RAN 2026-10-07: Zuzu: Ghost Trail slice 3 of 4 (bosses: the Dust Devil and the Bone Bull guard the barred mission gate in a locked arena, alternating by trail) shipped in silasfelinus/kind_robots#3302. Last Zuzu slice left: stage progression.
+      RAN 2026-10-07: Zuzu: Ghost Trail slice 4 of 4 (stage progression: Ghost Town, the Bone Yard, the Drowned Watering Hole, the Bell Tower, looping harder) shipped in silasfelinus/kind_robots#3303; the game is complete and games.yaml marks it shipped. Remaining factory slices: kindness-gauntlet keys + locked doors, station-sweep critter growth + timer; both games' co-op slices need a second cabinet input stream.
+      RAN 2026-10-07: Kindness Gauntlet slice 3 (keys + locked doors: a door that truly cuts the way to the stairs from floor 2, a reachable key on the near side, keys carry between floors) shipped in silasfelinus/kind_robots#3306. Left: station-sweep critter growth + timer; co-op slices for both games need a second cabinet input stream.
+      RAN 2026-10-07: Station Sweep slice 3 (critter growth: every critter left alone grows big; station clock of 45 s + 24 s per deck, lost station costs a spare Mop) shipped in silasfelinus/kind_robots#3307. Every single-player slice in games.yaml is now built; what remains is the same-device co-op slice for kindness-gauntlet and station-sweep, which needs a second cabinet input stream first.
+      RAN 2026-10-07: same-device co-op (Silas: "go ahead with the co-op slices", then "up to four players"). The cabinet seats up to four (title-screen switch; split keyboard for 1P/2P, gamepads round, a touch cluster per player) in silasfelinus/kind_robots#3316 and #3318. Kindness Gauntlet seats four (one of each bot, one shared screen, partners share a charge to revive a flat bot); Station Sweep seats three (one split-screen strip per Mop, each on its own deck). Both are shipped: every games.yaml entry is now shipped, so the next cycle writes a new arcade pitch into the daily docket.
+      RAN 2026-10-07: batch 3 (Silas: "keep making games"), six new riffs queued and shipped: Rain Catcher (Missile Command, #3323), Brick Bloom (Breakout) and Seed Lander (Lunar Lander, #3324), Pixel Hop (Q*bert) and Glitch Garden (Centipede, #3327), Quilt Quest (Qix, #3328), all silasfelinus/kind_robots. Balance probes kept each kind for careless play (two-hit seedling beds, bumpy landings that still plant, a point per stitch); Quilt Quest's stranded-needle respawn bug was fixed with an engine-test invariant. Title art requested for all six (kr-arcade-games-<slug>-title). Every games.yaml entry is shipped again; the next cycle queues or pitches more.
+      RAN 2026-10-07: batch 4 (Silas: "keep making games" / "Continue"), six riffs queued in silasfelinus/conductor#5731 and shipped: Cocoa Counter (Tapper, #3331), Seed Burst (Bomberman, up to four gardeners, #3332), Lantern Swarm (Galaga, #3333), Rover Ramble (Moon Patrol) and Cable Crawler (Nibbler, #3334), Petal Post (Paperboy, #3336), all silasfelinus/kind_robots. Balance probes kept each kind for careless play (free mop-ups, corner hedges, a first robot that heads your way); Lantern Swarm's stuck-dive and lost-rescue bugs were fixed with an engine-test rescue check. Title art requested for all six. Every games.yaml entry is shipped again; the next cycle queues or pitches more.
+      RAN 2026-10-08: Bumper Bubbles (Bubble Bobble riff), Silas's approved daily pitch ("include in the arcade collection"), shipped in silasfelinus/kind_robots#3384; title art requested. games.yaml is all shipped again.
 
-      RAN 2026-10-06: Sink Suds (Bubbles riff) shipped in silasfelinus/kind_robots#3270; title
-      art requested. Next in games.yaml: pipe-pals.
-
-      RAN 2026-10-06: Pipe Pals (Mario Bros. riff) shipped in silasfelinus/kind_robots#3272;
-      title art requested. Co-op and icy platforms deferred. Next in games.yaml: timber-bot.
-
-      RAN 2026-10-06: Timber Bot (logging-game riff) shipped in silasfelinus/kind_robots#3273;
-      title art requested. Next in games.yaml: butterfly-joust.
-
-      RAN 2026-10-06: Butterfly Joust (Joust riff) shipped in silasfelinus/kind_robots#3274;
-      title art requested. Next in games.yaml: kind-pinball.
-
-      RAN 2026-10-06: Kind Pinball slices 1-2 (table, flippers, physics, bumpers, targets,
-      scoring) shipped in silasfelinus/kind_robots#3275; title art requested. kind-pinball
-      stays building: the next cycle builds its slice 3 (ramp + modes) before taking a queued
-      entry, then slice 4 (AMI multiball).
-
-      RAN 2026-10-06: Kind Pinball slice 3 (ramp + modes) in silasfelinus/kind_robots#3280 --
-      raised ramp from an upper-right mouth into the left inlane, streak scoring, four 30 s
-      modes (Net Rush, Ramp Frenzy, Lane Lights, Saucer Rescue) started by every third ramp
-      shot, and a 250,000 x level super jackpot once all four are played. Verified:
-      test:arcade-engine, eslint/prettier, vue-tsc, balance probe seeds 1-8 (1-5 rides per
-      game, no stalls), ramp exit reaches the left flipper on every seed, Playwright
-      phone/desktop. kind-pinball stays building; next cycle builds slice 4 (AMI multiball),
-      then the queue resumes at gloom-invaders.
-
-      RAN 2026-10-06: Kind Pinball slice 4 (AMI multiball) in silasfelinus/kind_robots#3282 --
-      the third village lights multiball at the saucer; three balls with a 10 s multiball
-      save; ramp/saucer shots fly mosquito nets to the villages (20,000 x level), five nets
-      pay the AMI JACKPOT (150,000 x level). Table refactored to a ball list (flippers swing
-      once per substep). Also wrapped the cabinet's empty-board message for narrow screens.
-      Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-8, forced-
-      multiball probe seeds 1-5 (always reaches 3 balls, always settles back to one),
-      Playwright renders. kind-pinball is now shipped (all four slices). Next cycle takes the
-      first queued games.yaml entry: gloom-invaders (Space Invaders riff).
-
-      RAN 2026-10-06: Gloom Invaders (Space Invaders riff) shipped in
-      silasfelinus/kind_robots#3283 -- 5x9 gloom-cloud formation with a speeding march, one-
-      beam-at-a-time sunbeams, four erodible rainbow umbrellas, a mystery-bonus rainbow kite,
-      waves that start lower and march faster, and a garden that grows a flower per wave.
-      Title art requested as kr-arcade-games-gloom-invaders-title. Verified: test:arcade-
-      engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6, Playwright phone/desktop. Next
-      cycle takes the next queued games.yaml entry: hedgehog-crossing (Frogger riff).
-
-      RAN 2026-10-06: Hedgehog Crossing (Frogger riff) shipped in
-      silasfelinus/kind_robots#3284 -- robot-traffic road, creek of logs and diving turtles,
-      five hedge burrows, snoozing fox from level 2, ladybug bonus, 30 s time bar, faster
-      lanes/shorter logs/more divers per level. Title art requested as kr-arcade-games-
-      hedgehog-crossing-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot
-      probe seeds 1-6 (3-4 homes per game after fixing hop drift), Playwright phone/desktop.
-      Next cycle takes the next queued games.yaml entry: ribbon-riders (Tron light-cycles
-      riff).
-
-      RAN 2026-10-06: Ribbon Riders (Tron light-cycles riff) shipped in
-      silasfelinus/kind_robots#3285 -- rainbow-ribbon light-bike, 1-4 rivals with room-seeking
-      and cut-off steering, closing arena wall with a warning flash, rationed turbo, fading
-      ribbons on crash. Title art requested as kr-arcade-games-ribbon-riders-title. Verified:
-      test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (rounds 3-5 after
-      teaching AI riders to dodge the closing wall), Playwright phone/desktop. Next cycle
-      takes the next queued games.yaml entry: burrow-buddy (Dig Dug riff).
-
-      RAN 2026-10-06: Burrow Buddy (Dig Dug riff) shipped in silasfelinus/kind_robots#3287 --
-      tile tunnels with break-through digging, four-puff bubble pump with aim-in-place,
-      ghosting grubs, fire-breathing beetles from garden 2, falling turnips with group bonus,
-      veggie bonus after two turnips, last grub flees. Title art requested as kr-arcade-games-
-      burrow-buddy-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe
-      seeds 1-6 (gardens 3-5), forced turnip-crush test, Playwright phone/desktop. Next cycle
-      takes the next queued games.yaml entry: repair-rampage (Rampage riff).
-
-      RAN 2026-10-07: Repair Rampage (Rampage riff, turned around) shipped in
-      silasfelinus/kind_robots#3288 -- climb-and-fix towers, kitten rescues, flashbulb drones
-      that dazzle Bolt off the wall, towers whose hold time scales with broken windows and
-      that wobble then fall, a charge meter that drains (game over at zero). Shipped single-
-      player; the hook's two-players-on-one-device needs a second cabinet input stream
-      (follow-up). Title art requested as kr-arcade-games-repair-rampage-title. Verified:
-      test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (city 6-12 after
-      rebalancing an initially endless game), Playwright phone/desktop. Next cycle takes the
-      next queued games.yaml entry: kindness-gauntlet (Gauntlet riff).
-
-      RAN 2026-10-07: Kindness Gauntlet slice 1 (Gauntlet II riff) shipped live in
-      silasfelinus/kind_robots#3289 -- Fix the repair android on procedurally built server-
-      dungeon floors (rooms + 2-wide corridors, fog of war), glitch generators with hp,
-      clinging glitches, caged bots, snacks, kindness pulses, stairs to harder floors, a
-      draining battery; hold-fire-to-turn as in the classic. Same PR fits the cabinet how-to
-      card to short screens (Repair Rampage's sixth line was clipped) with a contract test.
-      Title art requested as kr-arcade-games-kindness-gauntlet-title. Verified: test:arcade-
-      engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (floors 10-22, every run ends),
-      Playwright. kindness-gauntlet stays building: next slices are all four classes, then
-      keys + locked doors (co-op needs cabinet input work). Next cycle: build the next
-      Kindness Gauntlet slice OR the next queued quick cabinet if one is waiting; the queue
-      continues with prize-show-panic (Smash TV riff, uses Gauntlet's twin-stick-style aim)
-      and bolt-knight / station-sweep.
-
-      RAN 2026-10-07: Prize Show Panic (Smash TV riff) shipped in
-      silasfelinus/kind_robots#3292 -- studio rooms flooding with party crashers (grabbers,
-      bouncers, conga lines, streamer throwers) through four doors, confetti cannon, prize
-      drops and power-ups, exit before the host countdown, parade float boss every fourth
-      studio; hold B to lock aim (twin-stick stand-in). Title art requested as kr-arcade-
-      games-prize-show-panic-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc,
-      pilot probe seeds 1-6 (studio 6-7 after escalating extra-life thresholds), Playwright.
-      Next cycle: zuzu-ghost-trail slice 1 (one stage + poncho/armor rule; Zuzu canon and
-      VIDEO-GUARDRAILS apply), then station-sweep, plus remaining kindness-gauntlet slices.
-
-      RAN 2026-10-07: Zuzu: Ghost Trail slice 1 (Ghosts 'n Goblins riff) shipped live in
-      silasfelinus/kind_robots#3293 -- ghost-town trail with pits/boardwalks/tombstones,
-      rising spirits, storm crows, bone hyenas, kunai, committed jumps, the poncho rule (first
-      hit loses poncho+kasa, second to the checkpoint), crates with a fresh poncho, dusk
-      timer; Zuzu drawn to canon (kasa, rust poncho with orange zigzag, katana hilt over the
-      right shoulder, never smiling); no bannedTerms on screen or in the art prompt. Title art
-      requested as kr-arcade-games-zuzu-ghost-trail-title. Verified: test:arcade-engine,
-      eslint/prettier, vue-tsc, pilot probe seeds 1-6 (clears in 3/6 after fixing respawn
-      camera, tombstone jump and pit-edge spawns), Playwright. zuzu-ghost-trail stays
-      building; next slices: throwables + pickups, bosses, stage progression. Queue: station-
-      sweep (Xenophobe) slice 1, kindness-gauntlet slices.
-
-      RAN 2026-10-07: Station Sweep (Xenophobe riff) slice 1 of 4 shipped in
-      silasfelinus/kind_robots#3296 (one deck + one player); games.yaml marks it building,
-      title art requested. Factory stays ready for the remaining slices (kindness-gauntlet,
-      zuzu-ghost-trail, station-sweep).
-
-      RAN 2026-10-07: Zuzu: Ghost Trail slice 2 of 4 (throwables + pickups: shuriken,
-      boomerang kasa, lantern fire, iai cut; carrier crows, coins) shipped in
-      silasfelinus/kind_robots#3297. Station Sweep slice 1 landed in
-      silasfelinus/kind_robots#3296. Factory stays ready for remaining slices.
-
-      RAN 2026-10-07: Kindness Gauntlet slice 2 of 4 (all four classes: Hugs power, Fix armor,
-      Sage magic, Zip speed; choose-your-bot screen; pilot line-of-sight fix) shipped in
-      silasfelinus/kind_robots#3299. Factory stays ready for remaining slices.
-
-      RAN 2026-10-07: Station Sweep slice 2 of 4 (elevators + multi-deck: stations of 2-4
-      decks, two lifts per deck, deck/station clean bonuses, HUD station map) shipped in
-      silasfelinus/kind_robots#3301. Factory stays ready for remaining slices.
-
-      RAN 2026-10-07: Zuzu: Ghost Trail slice 3 of 4 (bosses: the Dust Devil and the Bone Bull
-      guard the barred mission gate in a locked arena, alternating by trail) shipped in
-      silasfelinus/kind_robots#3302. Last Zuzu slice left: stage progression.
-
-      RAN 2026-10-07: Zuzu: Ghost Trail slice 4 of 4 (stage progression: Ghost Town, the Bone
-      Yard, the Drowned Watering Hole, the Bell Tower, looping harder) shipped in
-      silasfelinus/kind_robots#3303; the game is complete and games.yaml marks it shipped.
-      Remaining factory slices: kindness-gauntlet keys + locked doors, station-sweep critter
-      growth + timer; both games' co-op slices need a second cabinet input stream.
-
-      RAN 2026-10-07: Kindness Gauntlet slice 3 (keys + locked doors: a door that truly cuts
-      the way to the stairs from floor 2, a reachable key on the near side, keys carry between
-      floors) shipped in silasfelinus/kind_robots#3306. Left: station-sweep critter growth +
-      timer; co-op slices for both games need a second cabinet input stream.
-
-      RAN 2026-10-07: Station Sweep slice 3 (critter growth: every critter left alone grows
-      big; station clock of 45 s + 24 s per deck, lost station costs a spare Mop) shipped in
-      silasfelinus/kind_robots#3307. Every single-player slice in games.yaml is now built;
-      what remains is the same-device co-op slice for kindness-gauntlet and station-sweep,
-      which needs a second cabinet input stream first.
-
-      RAN 2026-10-07: same-device co-op (Silas: "go ahead with the co-op slices", then "up to
-      four players"). The cabinet seats up to four (title-screen switch; split keyboard for
-      1P/2P, gamepads round, a touch cluster per player) in silasfelinus/kind_robots#3316 and
-      #3318. Kindness Gauntlet seats four (one of each bot, one shared screen, partners share
-      a charge to revive a flat bot); Station Sweep seats three (one split-screen strip per
-      Mop, each on its own deck). Both are shipped: every games.yaml entry is now shipped, so
-      the next cycle writes a new arcade pitch into the daily docket.
-
-      RAN 2026-10-07: batch 3 (Silas: "keep making games"), six new riffs queued and shipped:
-      Rain Catcher (Missile Command, #3323), Brick Bloom (Breakout) and Seed Lander (Lunar
-      Lander, #3324), Pixel Hop (Q*bert) and Glitch Garden (Centipede, #3327), Quilt Quest
-      (Qix, #3328), all silasfelinus/kind_robots. Balance probes kept each kind for careless
-      play (two-hit seedling beds, bumpy landings that still plant, a point per stitch); Quilt
-      Quest's stranded-needle respawn bug was fixed with an engine-test invariant. Title art
-      requested for all six (kr-arcade-games-<slug>-title). Every games.yaml entry is shipped
-      again; the next cycle queues or pitches more.
-
-      RAN 2026-10-07: batch 4 (Silas: "keep making games" / "Continue"), six riffs queued
-      in silasfelinus/conductor#5731 and shipped: Cocoa Counter (Tapper, #3331), Seed Burst
-      (Bomberman, up to four gardeners, #3332), Lantern Swarm (Galaga, #3333), Rover Ramble
-      (Moon Patrol) and Cable Crawler (Nibbler, #3334), Petal Post (Paperboy, #3336), all
-      silasfelinus/kind_robots. Balance probes kept each kind for careless play (free
-      mop-ups, corner hedges, a first robot that heads your way); Lantern Swarm's stuck-dive
-      and lost-rescue bugs were fixed with an engine-test rescue check. Title art requested
-      for all six. Every games.yaml entry is shipped again; the next cycle queues or pitches
-      more.
-
-      RAN 2026-10-08: Bumper Bubbles (Bubble Bobble riff), Silas's approved daily pitch
-      ("include in the arcade collection"), shipped in silasfelinus/kind_robots#3384; title art
-      requested. games.yaml is all shipped again.
-    updated: '2026-10-10T09:52:30Z'
+      Silas-directed Ghost Trail upgrade slice: progress-gated enemy spawns and a deterministic anti-farm regression; parallel visual campaign blueprint and art queue follow.
+    updated: '2026-10-10T09:57:50Z'
     implementation_pr: 'silasfelinus/kind_robots#3384'
     claimed_by: 2026-10-10T095230Z-kr-arcade-t009-ghost-trail-7f2c
     claimed_at: '2026-10-10T09:52:30Z'
