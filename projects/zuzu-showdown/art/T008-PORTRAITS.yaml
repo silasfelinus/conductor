@@ -5,7 +5,9 @@
 # always fully dressed in their rags. The Coyote's right hand is gone in the game (a knife lashed to the bandaged
 # stump), so his prompts say so. Storm Crow, River Croc and the Hyena Matriarch re-pose their picked T012 seeds
 # (243492 and 243496 mirrored to face right, 243495); Old Komodo's follow once his reroll is picked.
-# No lettering. Then pixelize them to sit with the sprites (t-008 note). Generated art is pre-approved.
+# The first Siblings round drew her brother as a boy, not a fennec kit: the rerolls stitch his own standing pose
+# (243484) in as a reference beside her. coyote-vs and coyote-victory put the knife on the wrong wrist and are shown
+# mirrored (display_mirror). No lettering. Then pixelize them to sit with the sprites (t-008 note). Generated art is pre-approved.
 # Sources: Zuzu 242395, the Coyote 242401, the Abbess 242513, the sister 242128 (fighters.yaml references),
 # Storm Crow 243492, River Croc 243495, the Hyena Matriarch 243496 (T012-REFERENCES picks).
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
@@ -35,8 +37,8 @@ subjects:
     kontext-portraits: 35753
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244321
 - key: zuzu-vs
   entity: zuzu
   title: 'Zuzu portrait: VS slam'
@@ -49,8 +51,8 @@ subjects:
     kontext-portraits: 35755
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244328
 - key: zuzu-victory
   entity: zuzu
   title: 'Zuzu portrait: victory'
@@ -63,8 +65,8 @@ subjects:
     kontext-portraits: 35757
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244329
 - key: zuzu-beaten
   entity: zuzu
   title: 'Zuzu portrait: beaten'
@@ -77,8 +79,8 @@ subjects:
     kontext-portraits: 35758
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244330
 - key: coyote-bust
   entity: coyote-vagrant
   title: 'the Coyote portrait: select bust'
@@ -91,8 +93,8 @@ subjects:
     kontext-portraits: 35761
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244331
 - key: coyote-vs
   entity: coyote-vagrant
   title: 'the Coyote portrait: VS slam'
@@ -106,8 +108,9 @@ subjects:
     kontext-portraits: 35763
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244332
+  display_mirror: true
 - key: coyote-victory
   entity: coyote-vagrant
   title: 'the Coyote portrait: victory'
@@ -121,8 +124,9 @@ subjects:
     kontext-portraits: 35765
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244333
+  display_mirror: true
 - key: coyote-beaten
   entity: coyote-vagrant
   title: 'the Coyote portrait: beaten'
@@ -135,8 +139,8 @@ subjects:
     kontext-portraits: 35766
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244334
 - key: abbess-bust
   entity: the-abbess
   title: 'the Abbess portrait: select bust'
@@ -150,8 +154,8 @@ subjects:
     kontext-portraits: 35769
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244335
 - key: abbess-vs
   entity: the-abbess
   title: 'the Abbess portrait: VS slam'
@@ -165,8 +169,8 @@ subjects:
     kontext-portraits: 35770
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244336
 - key: abbess-victory
   entity: the-abbess
   title: 'the Abbess portrait: victory'
@@ -179,8 +183,8 @@ subjects:
     kontext-portraits: 35772
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244337
 - key: abbess-beaten
   entity: the-abbess
   title: 'the Abbess portrait: beaten'
@@ -193,87 +197,107 @@ subjects:
     kontext-portraits: 35774
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244338
 - key: siblings-bust
   entity: the-siblings
   title: 'the Siblings portrait: select bust'
   size: 1024x1024
   source_image_id: 242128
-  prompt_prose: Show only her head and shoulders, close up, turned three-quarters toward the viewer, her huge ears
-    up and a hard wary stare, with her toddler brother peeking over her shoulder from behind her, a tiny fennec
-    fox boy in a small checked blue cloth tunic of rags. Keep the same young fennec fox girl, about ten years old,
-    in the same torn pale brown dress of rags, and the same comic art style. Both fully dressed. On a plain dark
-    background, every surface bare and unmarked.
-  jobs:
-    kontext-portraits: 35777
+  prompt_prose: 'Show only her head and shoulders, close up, turned three-quarters toward the viewer, her huge ears
+    up and a hard wary stare, with her toddler brother peeking over her shoulder from behind her. Her toddler brother
+    is the small fennec fox kit in the left picture: a baby fox with huge pointed ears, sandy fur, a little black
+    snout and a tail, in a small checked blue cloth tunic of rags. He is a fox, like her. Keep the same young fennec
+    fox girl from the right picture, about ten years old, in the same torn pale brown dress of rags, and the same
+    comic art style. Both fully dressed and unhurt. On a plain dark background, every surface bare and unmarked.'
   art:
     kontext-portraits:
       status: PENDING
       art_image_id: null
+  rerolled_from:
+  - 244339
+  reference_image_id: 243484
+  jobs:
+    kontext-portraits: 36399
 - key: siblings-vs
   entity: the-siblings
   title: 'the Siblings portrait: VS slam'
   size: 832x1216
   source_image_id: 242128
-  prompt_prose: Show her from the knees up in a low scrappy fighting crouch toward the viewer, claws out and teeth
-    bared, with her toddler brother standing behind her legs holding a red apple, a tiny fennec fox boy in a small
-    checked blue cloth tunic of rags. Keep the same young fennec fox girl, about ten years old, in the same torn
-    pale brown dress of rags, and the same comic art style. Both fully dressed. On a plain dark background, every
-    surface bare and unmarked.
-  jobs:
-    kontext-portraits: 35779
+  prompt_prose: 'Show her from the knees up in a low scrappy fighting crouch toward the viewer, claws out and teeth
+    bared, with her toddler brother standing behind her legs holding a red apple. Her toddler brother is the small
+    fennec fox kit in the left picture: a baby fox with huge pointed ears, sandy fur, a little black snout and a
+    tail, in a small checked blue cloth tunic of rags. He is a fox, like her. Keep the same young fennec fox girl
+    from the right picture, about ten years old, in the same torn pale brown dress of rags, and the same comic art
+    style. Both fully dressed and unhurt. On a plain dark background, every surface bare and unmarked.'
   art:
     kontext-portraits:
       status: PENDING
       art_image_id: null
+  rerolled_from:
+  - 244340
+  reference_image_id: 243484
+  jobs:
+    kontext-portraits: 36400
 - key: siblings-victory
   entity: the-siblings
   title: 'the Siblings portrait: victory'
   size: 832x1216
   source_image_id: 242128
-  prompt_prose: Show her kneeling and hugging her toddler brother tight, staring past the viewer, while he holds
-    up a red apple, a tiny fennec fox boy in a small checked blue cloth tunic of rags. Keep the same young fennec
-    fox girl, about ten years old, in the same torn pale brown dress of rags, and the same comic art style. Both
-    fully dressed and unhurt. On a plain dark background, every surface bare and unmarked.
-  jobs:
-    kontext-portraits: 35780
+  prompt_prose: 'Show her kneeling and hugging her toddler brother tight, staring past the viewer, while he holds
+    up a red apple. Her toddler brother is the small fennec fox kit in the left picture: a baby fox with huge pointed
+    ears, sandy fur, a little black snout and a tail, in a small checked blue cloth tunic of rags. He is a fox,
+    like her. Keep the same young fennec fox girl from the right picture, about ten years old, in the same torn
+    pale brown dress of rags, and the same comic art style. Both fully dressed and unhurt. On a plain dark background,
+    every surface bare and unmarked.'
   art:
     kontext-portraits:
       status: PENDING
       art_image_id: null
+  rerolled_from:
+  - 244341
+  reference_image_id: 243484
+  jobs:
+    kontext-portraits: 36401
 - key: siblings-beaten
   entity: the-siblings
   title: 'the Siblings portrait: beaten (she shields her brother)'
   size: 832x1216
   source_image_id: 242128
-  prompt_prose: Show her crouched protectively over her toddler brother, shielding him with her body and arms and
-    glaring defiantly at the viewer, unhurt, a tiny fennec fox boy in a small checked blue cloth tunic of rags tucked
-    safe against her. Keep the same young fennec fox girl, about ten years old, in the same torn pale brown dress
-    of rags, and the same comic art style. Both fully dressed and unhurt. On a plain dark background, every surface
-    bare and unmarked.
-  jobs:
-    kontext-portraits: 35782
+  prompt_prose: 'Show her crouched protectively over her toddler brother, shielding him with her body and arms and
+    glaring defiantly at the viewer, him tucked safe against her. Her toddler brother is the small fennec fox kit
+    in the left picture: a baby fox with huge pointed ears, sandy fur, a little black snout and a tail, in a small
+    checked blue cloth tunic of rags. He is a fox, like her. Keep the same young fennec fox girl from the right
+    picture, about ten years old, in the same torn pale brown dress of rags, and the same comic art style. Both
+    fully dressed and unhurt. On a plain dark background, every surface bare and unmarked.'
   art:
     kontext-portraits:
       status: PENDING
       art_image_id: null
+  rerolled_from:
+  - 244342
+  reference_image_id: 243484
+  jobs:
+    kontext-portraits: 36402
 - key: crow-bust
   entity: storm-crow
   title: 'Storm Crow portrait: select bust'
   size: 1024x1024
   source_image_id: 243492
   source_flip: true
-  prompt_prose: Show only his head and shoulders, close up, turned three-quarters toward the viewer, a cocky sneer
-    under the goggles, rain dripping from his feathers. Keep the same storm crow raider, an anthropomorphic black
-    crow with rain-slick feathers, rusted brass goggles, a ragged grey long riding coat and a torn red captain's
-    sash, and the same comic art style. On a plain dark background, every surface bare and unmarked.
+  prompt_prose: Show only his head and shoulders, close up, his face turned three-quarters toward the viewer so
+    both goggle lenses and his beak show, a cocky sneer, rain dripping from his feathers. Keep the same storm crow
+    raider, an anthropomorphic black crow with rain-slick feathers, rusted brass goggles, a ragged grey long riding
+    coat and a torn red captain's sash, and the same comic art style. On a plain dark background, every surface
+    bare and unmarked.
   art:
     kontext-portraits:
       status: PENDING
       art_image_id: null
+  rerolled_from:
+  - 244374
   jobs:
-    kontext-portraits: 36052
+    kontext-portraits: 36403
 - key: crow-vs
   entity: storm-crow
   title: 'Storm Crow portrait: VS slam'
@@ -286,8 +310,8 @@ subjects:
     sash, and the same comic art style. On a plain dark background, every surface bare and unmarked.
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244375
   jobs:
     kontext-portraits: 36053
 - key: crow-victory
@@ -302,8 +326,8 @@ subjects:
     dark background, every surface bare and unmarked.
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244376
   jobs:
     kontext-portraits: 36054
 - key: crow-beaten
@@ -318,8 +342,8 @@ subjects:
     dark background, every surface bare and unmarked.
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244377
   jobs:
     kontext-portraits: 36055
 - key: croc-bust
@@ -335,8 +359,8 @@ subjects:
     bare and unmarked.
   art:
     kontext-portraits:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 244378
   jobs:
     kontext-portraits: 36056
 - key: croc-vs
@@ -351,7 +375,7 @@ subjects:
     style. On a plain dark background, every surface bare and unmarked.
   art:
     kontext-portraits:
-      status: PENDING
+      status: RUNNING
       art_image_id: null
   jobs:
     kontext-portraits: 36057
