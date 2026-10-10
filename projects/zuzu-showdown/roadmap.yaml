@@ -398,7 +398,7 @@ tasks:
   - id: t-012
     milestone: m3
     title: "Sprite sets: Storm Crow and River Croc"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -406,6 +406,19 @@ tasks:
     note: >-
       As t-010. Storm Crow needs flight animations and a feather/flock effect set. River Croc is 140 px or
       more and quadrupedal with rear-up poses, plus submerge/erupt water effects.
+
+      DONE 2026-10-10: Storm Crow and River Croc play as their art
+      (silasfelinus/kind_robots#3462; rigs tools/rigs/crow.py and croc.py in conductor#5914,
+      parts art/T012-CROW-PARTS.yaml and T012-CROC-PARTS.yaml from the picked T012 seeds
+      243492 and 243495). The crow's LP is the wing buffet, HP the hooked blade; his wings
+      beat for Take Wing and the hover. The croc is a quadruped rig mirrored from left-facing
+      art: head, near forefoot and tail move, and whole poses (crouch, leap, rear-up, rolled)
+      cover the crouch, jump, Bellow, Erupt, The Watering Hole and the KO. Both kits' normal
+      hitboxes are fitted to the art (verifyZuzuShowdownSprites). Left for later: the
+      flock/feather and water effects are still the game's code-drawn ones; two crow parts
+      (arm-blade, leg) were rerolled and the rig still cuts the stance's own arm and leg.
+    updated: '2026-10-10T19:41:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#3462'
 
   - id: t-013
     milestone: m3
