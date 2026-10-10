@@ -1,0 +1,142 @@
+# zuzu-showdown t-013: HD parts sheets for Old Komodo's rig (as T013-HYENA-PARTS did for the Hyena Matriarch): a
+# fighting stance with his arms held clear of his body, the body with no arms, the staff arm (LP staff jab, HP
+# overhead smash), the free clawed arm, a leg, his tail on its own, and key poses (crouch, jump, and his canon KO:
+# slumped into the sand). Source: T012-REFERENCES komodo-profile-right-5 (ArtImage 244404), the reroll that kept
+# him old and heavy. Prompts lead with "komodo dragon, giant monitor lizard, scaled reptile" (fighters.yaml; the
+# models drew him as a koala before, and the first seeds read "monitor" as computer screens). Generated art is
+# pre-approved (t-008 note). Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live).
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-parts
+  label: Flux Kontext dev (fp8), rig parts from the picked reference
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+  seed: 71172
+subjects:
+- key: old-komodo-rig-stance-apart
+  entity: old-komodo
+  title: 'old-komodo rig part: stance-apart'
+  size: 832x1216
+  source_image_id: 244404
+  source_flip: false
+  prompt_prose: 'Put him in a fighting stance seen from the side facing right, rearing on his hind legs with his
+    feet planted apart, both arms held out away from his body so they do not overlap it: his right claw gripping
+    the gnarled walking staff held forward like a spear, and his left claw open. Keep the same komodo dragon, an
+    ancient enormous giant monitor lizard, a scaled reptile standing on his hind legs, old and heavy with a pot
+    belly, grey-brown scales cracked like desert stone, a dewlap, a long forked tongue, cloudy pale eyes, a long
+    thick tail, a tattered cloth sash, the gnarled wooden walking staff, and the same comic art style. On a plain
+    off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 36406
+- key: old-komodo-rig-body-no-arms
+  entity: old-komodo
+  title: 'old-komodo rig part: body-no-arms'
+  size: 832x1216
+  source_image_id: 244404
+  source_flip: false
+  prompt_prose: Remove both of his arms and the staff completely, leaving his scaled body with no arms showing.
+    Standing on his hind legs, seen from the side facing right. Keep the same komodo dragon, an ancient enormous
+    giant monitor lizard, a scaled reptile standing on his hind legs, old and heavy with a pot belly, grey-brown
+    scales cracked like desert stone, a dewlap, a long forked tongue, cloudy pale eyes, a long thick tail, a tattered
+    cloth sash, the gnarled wooden walking staff, and the same comic art style. On a plain off-white background,
+    nothing else in the picture.
+  jobs:
+    kontext-parts: 36407
+- key: old-komodo-rig-arm-staff
+  entity: old-komodo
+  title: 'old-komodo rig part: arm-staff'
+  size: 832x1216
+  source_image_id: 244404
+  source_flip: false
+  prompt_prose: 'Show only his right arm on its own: a scaled grey-brown reptile arm with a clawed hand gripping
+    the gnarled wooden walking staff, held straight out, side view. Keep the same komodo dragon, an ancient enormous
+    giant monitor lizard, a scaled reptile standing on his hind legs, old and heavy with a pot belly, grey-brown
+    scales cracked like desert stone, a dewlap, a long forked tongue, cloudy pale eyes, a long thick tail, a tattered
+    cloth sash, the gnarled wooden walking staff, and the same comic art style. On a plain off-white background,
+    nothing else in the picture.'
+  jobs:
+    kontext-parts: 36408
+- key: old-komodo-rig-arm-claw
+  entity: old-komodo
+  title: 'old-komodo rig part: arm-claw'
+  size: 832x1216
+  source_image_id: 244404
+  source_flip: false
+  prompt_prose: 'Show only his left arm on its own: a scaled grey-brown reptile arm with an open clawed hand, held
+    straight out, side view. Keep the same komodo dragon, an ancient enormous giant monitor lizard, a scaled reptile
+    standing on his hind legs, old and heavy with a pot belly, grey-brown scales cracked like desert stone, a dewlap,
+    a long forked tongue, cloudy pale eyes, a long thick tail, a tattered cloth sash, the gnarled wooden walking
+    staff, and the same comic art style. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 36409
+- key: old-komodo-rig-leg
+  entity: old-komodo
+  title: 'old-komodo rig part: leg'
+  size: 832x1216
+  source_image_id: 244404
+  source_flip: false
+  prompt_prose: 'Show only one of his hind legs on its own, kicking straight out: a thick scaled reptile leg with
+    a clawed foot, side view. Keep the same komodo dragon, an ancient enormous giant monitor lizard, a scaled reptile
+    standing on his hind legs, old and heavy with a pot belly, grey-brown scales cracked like desert stone, a dewlap,
+    a long forked tongue, cloudy pale eyes, a long thick tail, a tattered cloth sash, the gnarled wooden walking
+    staff, and the same comic art style. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 36410
+- key: old-komodo-rig-tail
+  entity: old-komodo
+  title: 'old-komodo rig part: tail'
+  size: 832x1216
+  source_image_id: 244404
+  source_flip: false
+  prompt_prose: Show only his long thick scaled tail on its own, swept in a wide arc, side view. Keep the same komodo
+    dragon, an ancient enormous giant monitor lizard, a scaled reptile standing on his hind legs, old and heavy
+    with a pot belly, grey-brown scales cracked like desert stone, a dewlap, a long forked tongue, cloudy pale eyes,
+    a long thick tail, a tattered cloth sash, the gnarled wooden walking staff, and the same comic art style. On
+    a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36411
+- key: old-komodo-rig-crouch
+  entity: old-komodo
+  title: 'old-komodo rig part: crouch'
+  size: 832x1216
+  source_image_id: 244404
+  source_flip: false
+  prompt_prose: Show him crouching low facing right, belly near the ground, the staff held ready. Keep the same
+    komodo dragon, an ancient enormous giant monitor lizard, a scaled reptile standing on his hind legs, old and
+    heavy with a pot belly, grey-brown scales cracked like desert stone, a dewlap, a long forked tongue, cloudy
+    pale eyes, a long thick tail, a tattered cloth sash, the gnarled wooden walking staff, and the same comic art
+    style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36412
+- key: old-komodo-rig-jump
+  entity: old-komodo
+  title: 'old-komodo rig part: jump'
+  size: 832x1216
+  source_image_id: 244404
+  source_flip: false
+  prompt_prose: Show him in mid-air jumping facing right, his legs drawn up, his tail swinging behind him. Keep
+    the same komodo dragon, an ancient enormous giant monitor lizard, a scaled reptile standing on his hind legs,
+    old and heavy with a pot belly, grey-brown scales cracked like desert stone, a dewlap, a long forked tongue,
+    cloudy pale eyes, a long thick tail, a tattered cloth sash, the gnarled wooden walking staff, and the same comic
+    art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36413
+- key: old-komodo-rig-knockdown
+  entity: old-komodo
+  title: 'old-komodo rig part: knockdown'
+  size: 832x1216
+  source_image_id: 244404
+  source_flip: false
+  prompt_prose: Show him slumped down on his belly in a heap on the ground with a long sigh, eyes closed, seen from
+    the side with his head to the right. Keep the same komodo dragon, an ancient enormous giant monitor lizard,
+    a scaled reptile standing on his hind legs, old and heavy with a pot belly, grey-brown scales cracked like desert
+    stone, a dewlap, a long forked tongue, cloudy pale eyes, a long thick tail, a tattered cloth sash, the gnarled
+    wooden walking staff, and the same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36414

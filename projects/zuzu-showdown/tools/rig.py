@@ -227,6 +227,9 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
     # scale from the standing build), so load it on its own when it isn't.
     ref_key = (rig.REFERENCE["art"], rig.REFERENCE.get("mirror", False))
     ref = sources.get(ref_key) or load_source(src, *ref_key)
+    # A reference whose ground clutter (a cast shadow, pebbles) sits below the feet is cropped above it.
+    if rig.REFERENCE.get("crop"):
+        ref = ref.crop(tuple(rig.REFERENCE["crop"]))
     figure_height = sc.crop_to_content(ref).height
 
     raw = {name: [pose_frame(rig, parts, f) for f in anim["frames"]] for name, anim in rig.ANIMATIONS.items()}
