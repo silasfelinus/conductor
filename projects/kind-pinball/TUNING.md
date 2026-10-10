@@ -40,6 +40,44 @@ It records which shot each timing makes.
 - a new player reaches multiball within a few games;
 - a good player can reach the wizard mode.
 
+## 2026-10-10 — t-022: the Ridge (kind_robots#3415)
+
+The table now runs on 0.42 m past the arch, onto the Ridge. The upper feed
+(shot 3) used to be a subway to the award saucer, whose kickout fed the left
+flipper. Now it lifts the ball up there, and the ball comes back into the
+village through a one-way gate in the arch's crown, above the pops.
+
+Thirty games per skill level, the same seeds, with main measured alongside
+from its own worktree:
+
+| Skill | Build | Ball time (s) | Score median | Mode | Multiball | Sub-table | Villages | Drains outlane/SDTM/centre |
+|---|---|---|---|---|---|---|---|---|
+| average | main | 17.7 | 182,440 | 77% | 20% | 17% | 0.9 | 5/2/93% |
+| average | Ridge | 18.8 | 293,880 | 80% | 10% | 10% | 0.9 | 5/1/94% |
+| good | main | 29.7 | 1,323,340 | 97% | 50% | 50% | 1.7 | 9/3/88% |
+| good | Ridge | 33.0 | 1,074,440 | 100% | 47% | 40% | 1.7 | 12/3/85% |
+
+### What the Ridge run says
+
+- **Ball time** is up for both bots, by 1.1 s and 3.3 s. A trip up the Ridge
+  takes 2 to 8 s and never drains.
+- **Reach** is level for the good bot's multiball (47% against 50%). It is
+  lower for the hidden room (40% against 50%), and for the average bot's
+  multiball and room (3 and 3 games of 30, against 6 and 5). The cause: the
+  upper feed's return is now the gate above the pops, not the controlled
+  award-saucer kickout to the left flipper. The first ten-game run showed a
+  much bigger drop; at thirty games most of it was noise.
+- **Up there**, balls kicked in at 0.6 to 1.2 m/s make the S-K-Y lanes and
+  the pops on every trip, and the cloud standups on some.
+
+### Next tuning steps, in order
+
+1. The Ridge's flippers (t-023): a flipper pair at the funnel's foot keeps
+   the ball up there for shots of its own. Re-run these numbers after they
+   land.
+2. If the room's reach stays lower after t-023: send the gate's ball down a
+   guided path to an inlane, rather than through the pops.
+
 ## 2026-10-08 — step 3: fifteen-second ball save, and where t-013 stands
 
 Measured with kind_robots#3374 on top of steps 1–2.
