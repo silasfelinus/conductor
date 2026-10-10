@@ -122,19 +122,18 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Build three physically distinct elevated ramps, two orbits and shot sensors"
-    status: claimed
+    status: review
     depends_on: t-004
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Fabricate Village left switchback returning right, Abbey right crossover
-      returning left, and central Bell spiral rising to the Abbey. Add orbit
-      returns, safe sensors, ball collision sweeps and target animations.
-      Prove each shot with captured trajectory and repeatable test scenario.
+    note: |-
+      Fabricate Village left switchback returning right, Abbey right crossover returning left, and central Bell spiral rising to the Abbey. Add orbit returns, safe sensors, ball collision sweeps and target animations. Prove each shot with captured trajectory and repeatable test scenario.
+
+      Prepared a dimensioned mechanical pass in kind_robots branch worker/zuzu-pinball-t005-elevated-shots-20261010-f81d: three genuine mesh floor/rail/roof ramps with independent paths, two physically guided orbit returns, shot switch chains and dedicated Rapier rolling/ball-conservation/shot-order regression tests. Typecheck, CI and target-preview validation remain pending.
     claimed_by: 2026-10-10T230630Z-zuzu-pinball-t005-f81d
     claimed_at: '2026-10-10T23:06:30Z'
-    updated: '2026-10-10T23:06:30Z'
+    updated: '2026-10-10T23:11:00Z'
   - id: t-006
     milestone: m2
     title: "Build raised Abbey upper deck with two independent flippers"
