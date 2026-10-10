@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-10-10T12:12:06.767632+00:00`
+Generated: `2026-10-10T15:53:57.185343+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **78** roadmaps, **39** active + **3** continuous projects, **2086** tasks
-- **92 ready**, **126 waiting**, **36 needs-human**, **17 claimed/review**, **1799 done**
+- **78** roadmaps, **39** active + **3** continuous projects, **2088** tasks
+- **92 ready**, **126 waiting**, **36 needs-human**, **17 claimed/review**, **1801 done**
 - Findings: **0 errors**, **27 warnings**, **63 informational**
 
 ## Project inventory
@@ -16,9 +16,9 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `kind-pinball` | active | software | 0 | 2 | 0 | 1 | 28 / 31 |
 | 2 | `zuzu-lair` | active | software | 1 | 6 | 1 | 2 | 4 / 14 |
-| 3 | `kr-arcade` | active | software | 4 | 6 | 0 | 0 | 11 / 21 |
+| 3 | `kr-arcade` | active | software | 4 | 6 | 0 | 0 | 12 / 22 |
 | 4 | `zuzu-showdown` | active | software | 5 | 3 | 0 | 1 | 19 / 28 |
-| 5 | `cthulhuquarium` | active | software | 2 | 0 | 1 | 0 | 82 / 85 |
+| 5 | `cthulhuquarium` | active | software | 2 | 0 | 1 | 0 | 83 / 86 |
 | 6 | `kind-economy` | active | software | 0 | 4 | 1 | 1 | 22 / 28 |
 | 7 | `butterfly-gallery` | active | software | 1 | 0 | 0 | 0 | 34 / 35 |
 | 8 | `art-archive` | active | software | 0 | 2 | 0 | 2 | 40 / 44 |
@@ -108,7 +108,7 @@ _None._
 - **STALE_IN_PROGRESS** — `art-archive` / `t-044`: Task has remained claimed for 7 days.
 - **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 12 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `comic-film` / `t-009`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
-- **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 8 days.
+- **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 9 days.
 - **STALE_IN_PROGRESS** — `kind-economy` / `t-011`: Task has remained claimed for 4 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-economy` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **POSSIBLY_UNNECESSARY_GATE** — `kind-pinball` / `t-016`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
