@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: conductor-main-writers
@@ -34,6 +35,7 @@ jobs:
         run: python scripts/build_portfolio_oversight.py
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Decide whether external email escalation is due
         id: email_gate
@@ -77,8 +79,15 @@ jobs:
           fi
 
       # Deterministic failures/unresolved parity retain their existing policy.
-      # Semantic staleness dispatches the scheduled ChatGPT review, not an email.
-      # Escalation requires a validated failed attempt newer than the last audit.
+      # The due sensor dispatches the GitHub-hosted LLM job if no recent
+      # attempt exists. It does not email Silas merely for missing a deadline.
+      - name: Ensure due semantic review was attempted
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/ensure_semantic_intent_review.py
+
+      # Only an actual failed review run recorded by GitHub (or an explicit
+      # failure marker) is an incident eligible for semantic email escalation.
       - name: Email explained oversight action
         if: ${{ steps.email_gate.outputs.needed == 'true' }}
         shell: bash
