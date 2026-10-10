@@ -96,8 +96,53 @@ written into notes, and each music-video task says what to release here when it 
 - **Generation:** ArtJob is the only generation queue. Renders are private. Prompts follow the contract of the engine that renders them.
 - **Publishing is a gate:** placing a film anywhere public parks at needs-human (`gate_reason: publish`).
 
-## Open questions (for Silas, non-blocking)
+## Decisions (Silas, 2026-10-10)
 
-- **Score:** an ACE-Step instrumental (needs music-video t-012 staged on the box) or a track he supplies?
-- **Old Komodo:** settled 2026-10-04. He is out of Book One, so he is out of the film.
-- **Title card wording,** and whether to end on the optional stinger (a third set of sandal prints at the arch).
+Scope confirmed (t-002). The three open questions are answered:
+
+- **Score:** an ACE-Step instrumental rendered on our own box. No supplied track.
+- **Old Komodo:** not in issue 1.
+- **Title card:** a generated art asset (a rendered still, not just burned-in text). Silas left the wording
+  to us: *"not sure what i can say"*. The stinger is not required.
+
+## Issue 1 beats (Silas, 2026-10-10)
+
+This is the authoritative beat order for the issue 1 film and supersedes the "massacre to the road" framing
+above. The apple tree moment is cut. Each beat is a shot or a short run of shots in `SHOT-LIST.yaml`.
+
+1. Zuzu and the vagrant (the coyote) meet at the water.
+2. The croc appears.
+3. The croc bites off the vagrant's hand.
+4. They kill the croc together.
+5. Zuzu bandages the hand.
+6. They part, walking away back to back.
+7. Zuzu finds the village massacre.
+8. He discovers the children; they follow him.
+9. He gives them an apple (the apple tree scene itself is cut).
+10. They follow him to the convent; he leaves them with the abbess.
+11. At the convent the boy eats while the abbess eats the apple.
+12. Zuzu reaches the next town and sees the walls of posters of missing children.
+13. He runs back.
+14. The abbess has tied up the children while the other nuns chant.
+15. Zuzu appears and cuts the children free.
+16. The abbess attacks; Zuzu is caught by the tentacle thing.
+17. The abbess approaches the trapped Zuzu.
+18. The abbess dies: reveal the sister holding the knife, which she drops.
+19. Zuzu struggles; she picks the knife back up and hands it to him.
+20. He throws it and kills the last chanting nun.
+21. The tentacle thing is caught half in the portal and dies, segmented.
+22. The three of them walk away together.
+
+Silas's words, verbatim: *"zuzu and vagrant meet at the water, croc appears, croc bites off vagrants hand,
+they kill croc together, zuzu bandages hand, they leave back to back, zuzu finds village massacre, discovers
+children, they follow him, he gives them apple (we are going to cut the apple tree moment), they follow him to
+convent, he leaves them with abbess, the boy eats while she eats apple, he gets to next town and sees all the
+posters of children, he runs back, the abbess has tied up the children, other nuns are chanting, he appears and
+cuts them free, abbess attacks, zuzu gets caught by tentable thing. abbess approaches while zuzu is trapped,
+abbess dies and we see the daughter holding knife which she drops. zuzu struggles, she picks it back up and
+hands to him, he throws it and kills the last chanting nun, the tentacle thing is caught half in portal and dies
+segmented, the three walk together leaving."*
+
+The VIDEO-GUARDRAILS.md rules still apply: the children's injuries stay implied and the buried-ruins secret
+never appears. Beats 1-5 overlap the music-video intro (music-video t-029), so its vetted keyframes can be reused
+once Silas's fidelity notes on that video are fixed.

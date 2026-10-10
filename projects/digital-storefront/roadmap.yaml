@@ -702,10 +702,16 @@ tasks:
     GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
     session): Legitimate: live money. Stays with Silas. Needs a real Printful account and
     keys.
+
+    Silas 2026-10-10 in session: creating the Printful account now. Next: PRINTFUL_API_KEY
+    (Printful private token) and PRINTFUL_STORE_ID go in the Kind Robots server env_file
+    (podVendorClient.ts reads them from process.env), then restart the container. After that
+    an agent replaces podCatalog.ts placeholder variant ids, wires submitPodOrder() into
+    PrintJob creation, and submits a draft (unconfirmed) order to prove the path.
   claimed_by:
   claimed_at:
   implementation_pr: silasfelinus/kind_robots#1658
-  updated: '2026-09-30T06:00:00Z'
+  updated: '2026-10-10T09:34:19Z'
   gate_reason: money
   gate_rechecked: '2026-09-30'
 

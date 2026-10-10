@@ -130,7 +130,7 @@ tasks:
 - id: t-004
   milestone: m2
   title: "Write section-by-section creative treatment"
-  status: needs-human
+  status: waiting
   owner: worker
   passes: 0
   stakes: reversible
@@ -138,7 +138,8 @@ tasks:
   approved_by_human: false
   depends_on:
   - t-003
-  updated: '2026-09-30T06:00:00Z'
+  - t-014
+  updated: '2026-10-10T09:38:41Z'
   note: >-
     Propose a music-video structure that remixes the dance in sections: faithful
     reconstruction moments, animated transformations, impossible perspective shifts,
@@ -177,6 +178,13 @@ tasks:
 
     GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
     session): Legitimate: creative or editorial sign-off.
+
+    Silas 2026-10-10 in session: not approved yet, deferred rather than rejected. His order
+    is: (1) a straight animated version at the original angle with the footage as mocap
+    (t-011, verdict t-012), (2) animation style changes (t-013), (3) magical backgrounds
+    (t-014), and only THEN angle and camera changes, which is where section-plan.md's
+    perspective-shift sections come back in. Parked as waiting on t-014; re-present the
+    treatment then, updated for whatever the earlier stages taught.
   gate_reason: creative-approval
   gate_rechecked: '2026-09-30'
 
@@ -305,5 +313,71 @@ tasks:
     scope exists on this task until Silas approves t-004's creative treatment. Re-armed to
     ready; will stay a genuine no-op until t-004 clears.
   updated: '2026-09-26T16:57:42Z'
+- id: t-011
+  milestone: m3
+  title: 'Straight animated version: same angle, original footage as mocap, Illustrious checkpoint'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Silas, 2026-10-10, on t-004's treatment: "before we do anything with odd angles or creative camera work with the coat dance, I want a version where we just turn it into an animated movie. same angle as original, keep the original as mocap, and just make it into an animation. use one of the illustrious checkpoints. then once that comes out done, we can work on changing animation style, creating magical backgrounds, and THEN change angles."
+
+    Turn the whole 5:32 performance (coat dance_x264.mp4, 720x480, synced audio) into an animated film
+    with NO camera, angle, framing or timing changes: the original footage is the motion source, frame for
+    frame. Render through our own ComfyUI box as ArtJobs, in an Illustrious checkpoint lane (the comic
+    house lane il-arthemy / arthemyWesternArt is the default; note the choice and why). Suggested path:
+    extract pose + depth (or lineart) per frame from the source, stylize anchor keyframes with the
+    Illustrious checkpoint under ControlNet, then carry them through the clip with a pose/depth-controlled
+    video model (e.g. WAN VACE) in overlapping chunks, keeping the performer and the coat consistent.
+    Prove it on a 20-30 s excerpt including the row-16/17 coat-flourish climax first, then do the full
+    length. Keep the original audio. Deliver one MP4 as a private ArtImage, plus a side-by-side excerpt
+    against the source, and park t-012 for Silas's verdict.
+  updated: '2026-10-10T10:00:00Z'
+- id: t-012
+  milestone: m3
+  title: 'FOR SILAS: verdict on the straight animated version'
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  gate_reason: subjective-acceptance
+  depends_on:
+    - t-011
+  note: >-
+    FOR SILAS: watch the t-011 animated version (and the side-by-side excerpt) and say whether the
+    motion reads as the original performance and whether the look is right for a base layer. Approval
+    starts the style stage (t-013); notes send t-011 back for another round.
+  updated: '2026-10-10T10:00:00Z'
+- id: t-013
+  milestone: m3
+  title: 'Animation style variations on the approved base'
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on:
+    - t-012
+  note: >-
+    Stage 2 of Silas's order: keeping the approved base motion and the original angle, try a small set of
+    alternative animation styles (different checkpoints or LoRAs, line and colour treatments) on the same
+    excerpt, then render the chosen one at full length. Present the options side by side for Silas to pick.
+  updated: '2026-10-10T10:00:00Z'
+- id: t-014
+  milestone: m3
+  title: 'Magical backgrounds behind the performer'
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on:
+    - t-013
+  note: >-
+    Stage 3: replace the stage background with generated magical environments while the performer and the
+    coat stay as animated in t-013 (segmentation/matte of the performer + generated plates or video
+    backgrounds), still at the original angle. Section changes can follow source/beatmap.md. Only after
+    this lands does the camera/angle treatment (t-004 section-plan.md) start.
+  updated: '2026-10-10T10:00:00Z'
 goal: Develop Coat Dance into its intended polished creative work, with the roadmap’s authored concept, assets, and 
   delivery package complete.

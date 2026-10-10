@@ -89,6 +89,11 @@ milestones:
   weight: 25
   status: in-progress
 
+- id: m4
+  title: "FUN LOOP FIRST — Insaniquarium-style coin drops, a crowded tank, no breeding or secret stats"
+  weight: 25
+  status: not-started
+
 tasks:
   # ---------------------------------------------------------------- m1 SHAPE
 - id: t-001
@@ -1176,12 +1181,19 @@ tasks:
 - id: t-065
   milestone: m3
   title: Deliver the 136 stranded Cthulhuquarium art files to the live game
-  status: needs-human
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
-  note: 'FOR SILAS: Root cause of the ''stuck on Looking for /'' report found and reproduced live 2026-09-30 (not a rendering bug). /play/aquarium is ADMIN-only by design: kind_robots content/channels/admin/aquarium.md has requiredRole: ADMIN (''an admin-only project surface kept in Plan while the aquarium grows teeth''). middleware/navigation-access.global.ts therefore sends every non-admin (signed-out -> /login; fresh signed-in cypress user -> /?access=denied), and the catch-all page then sits on ''Loading page... Looking for /''. Same fresh user never loaded a single cthulhuquarium image. The 139 bundled assets are live (200) but only an admin can see them. TO APPROVE: decide one of (a) keep admin-only for now: visit /play/aquarium as admin, confirm fish/egg/parlour art, then set approved_by_human: true and status: done; or (b) open the game to players: remove requiredRole from that tab file (tell an agent and it becomes a ready task). Minor adjacent bug: denied non-admins land on a spinner-looking ''/'' page instead of a clear message (agent work, not gated).'
-  updated: '2026-09-30T19:49:53Z'
+  note: >-
+    FOR SILAS: Root cause of the 'stuck on Looking for /' report found and reproduced live 2026-09-30 (not a rendering bug). /play/aquarium is ADMIN-only by design: kind_robots content/channels/admin/aquarium.md has requiredRole: ADMIN ('an admin-only project surface kept in Plan while the aquarium grows teeth'). middleware/navigation-access.global.ts therefore sends every non-admin (signed-out -> /login; fresh signed-in cypress user -> /?access=denied), and the catch-all page then sits on 'Loading page... Looking for /'. Same fresh user never loaded a single cthulhuquarium image. The 139 bundled assets are live (200) but only an admin can see them. TO APPROVE: decide one of (a) keep admin-only for now: visit /play/aquarium as admin, confirm fish/egg/parlour art, then set approved_by_human: true and status: done; or (b) open the game to players: remove requiredRole from that tab file (tell an agent and it becomes a ready task). Minor adjacent bug: denied non-admins land on a spinner-looking '/' page instead of a clear message (agent work, not gated).
+
+    Silas 2026-10-10 in session: NOT approved as a game. The art and animation work landed
+    and he likes it ('like the work done with the characters and fish animations'), and he
+    did not ask to open it to players, so /play/aquarium stays admin-only. The loop is the
+    problem: closed as delivered, redesign moved to m4 (t-079 to t-083). t-069's re-audit
+    now waits on that redesign.
+  updated: '2026-10-10T09:37:55Z'
   claimed_by: 20260930-agent
   claimed_at: '2026-09-30T19:49:42Z'
   implementation_pr: 'silasfelinus/kind_robots#2622'
@@ -1558,6 +1570,7 @@ tasks:
     - t-065
     - t-066
     - t-067
+    - t-083
   note: >-
     FOR SILAS: Cthulhuquarium failed your 2026-09-11 audit, and your verdict stands: "this is
     nothing like the pitched experience except in the barest of bones", "we need a much better
@@ -1575,6 +1588,9 @@ tasks:
     the game is still hollow beyond the art, t-068's gap audit is the place that gets recorded.
     What unblocks: nothing else is gated on this; it is the honest exit gate for the project, and
     Cthulhuquarium must not be marked finished before it.
+
+    2026-10-10: Silas's next look is at the m4 fun loop (coin drops, crowded tank, no
+    breeding or stats, tighter page), so this re-audit now also waits on t-083.
   updated: '2026-09-11T10:30:00Z'
 
 - id: t-078
@@ -1596,3 +1612,105 @@ tasks:
 
     Reconciled 2026-10-02: implementation PR kind_robots#3112 merged 2026-09-30.
   updated: '2026-10-02T05:48:50Z'
+
+- id: t-079
+  milestone: m4
+  title: 'Fun-loop spec: fish drop clickable coins, coins buy more fish, the tank fills up'
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-10-10, declining t-065's acceptance: "cthulhuquarium not approved, the gameplay loop is still lackluster. we can get about four or five fish out, there is nothing really to do, and the general page needs tightening. like the work done with the characters and fish animations though. what we need is an actually fun loop. in the inspiration game insaniquarium, fish spawned coins which allowed making more fish. we need some sort of clickable thing, that doesn't seem to be happening, and we aren't allowing enough fish in a tank. I think we should ditch the breeding and secret stats part of the game as well, simplify. we want a fun gameplay loop first."
+
+    Write projects/cthulhuquarium/LOOP.md (and update ECONOMY.md and economy.yaml to match) for the
+    simplified loop, then file any implementation step the four sibling tasks miss. It is a spec of
+    numbers and rules, not a rewrite of the canon; keep the fish roster, sprites, animations, Charlotte
+    and Wilbur. Required shape:
+    - Every fish visibly drops coins on its own timer (rarer fish drop more or bigger coins), so coin
+      rate grows with fish count. Coins drift down and vanish if not clicked. Clicking is the main verb.
+      Today the tank sheds ONE scale per 15 s regardless of fish count (server/utils/aquariumCollect.ts
+      :39), about 4.5 coins a minute with a perfect clicker; that is the core of "nothing to do".
+    - Target pacing: the second fish within about a minute of starting, a dozen fish inside the first
+      session, a full tank of 25-40 fish as the medium-term goal. Passive/offline income stays small.
+    - Feeding is a cheap click (drop food) or is removed; it is not 20% of the fish's price
+      (aquariumEconomy.ts:168-182).
+    - No breeding, eggs, hidden stats, sell-for-stats. Rarer fish are bought with coins, unlocked by
+      milestones, or appear as rewards.
+    - The server stays authoritative (coins are credited through a server allowance, as collect is
+      today). Prefer additive schema changes; no destructive drops in this milestone.
+  updated: '2026-10-10T10:00:00Z'
+
+- id: t-080
+  milestone: m4
+  title: 'Every fish drops clickable coins (replace the single shed-scale timer)'
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-079
+  note: >-
+    kind_robots. Per LOOP.md: each fish drops coins on its own timer, sized by rarity, drawn as big,
+    obvious coins that drift down and fade; tap/click to collect with a satisfying sound and number pop.
+    Server allowance (server/utils/aquariumCollect.ts collectAllowance) scales with fish count and rarity
+    so the client still cannot mint coins. Update verifyAquariumCollect.test.ts to the new contract.
+    Mobile tap targets at least 44 px.
+  updated: '2026-10-10T10:00:00Z'
+
+- id: t-081
+  milestone: m4
+  title: 'Let the tank hold many more fish: copies allowed, bigger room, buyable expansion'
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-079
+  note: >-
+    kind_robots. Today a player tops out at ~4-5 fish: Aquarium.sizeCap defaults to 10
+    (prisma/schema.prisma:2522), the shop allows one of each species (server/utils/aquarium.ts:1328-1333),
+    and nothing but one +1 set piece ever raises room (milestones only raise setSlotsCap). Per LOOP.md:
+    allow copies of a species, raise the starting room (additive default change plus a data backfill for
+    existing tanks), and add a coin-bought tank expansion track. Keep the canvas readable at 30-40 fish
+    (sprite scaling, culling if needed) and check mobile performance.
+  updated: '2026-10-10T10:00:00Z'
+
+- id: t-082
+  milestone: m4
+  title: 'Remove breeding, eggs and hidden stats from the game'
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-079
+  note: >-
+    kind_robots. Silas: "ditch the breeding and secret stats part of the game as well, simplify." Remove
+    from the player-facing game: the breed and sell-for-stats buttons and dialogs, the egg panel, stat
+    displays (game.vue :263-345, :729-848, :1064-1195, :1678-1790; Ichthyonomicon "best seen" stats),
+    the breed/egg/hatch routes (server/api/aquarium/breed.post.ts, eggs/*), and their store actions; make
+    "sell" (if kept) a flat price. Retire verifyAquariumGenetics.test.ts with the feature it tested (not a
+    skipped test). Leave the Prisma columns and AquariumEgg table in place (AGENTS.md: no destructive
+    drop in the auto-deploy window); file a separate staged schema-cleanup task once this is live.
+  updated: '2026-10-10T10:00:00Z'
+
+- id: t-083
+  milestone: m4
+  title: 'Tighten the play page around the tank'
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-080
+    - t-081
+    - t-082
+  note: >-
+    kind_robots. Silas: "the general page needs tightening." The game page today stacks 14 panels under
+    the tank (game.vue: dialogue, toasts, per-fish card grid, background strip, upgrades, rotating shop,
+    Ichthyonomicon, set pieces, decorate, eggs, finale, visibility). Make the tank the page: tank first and
+    large, one compact HUD for coins, buy-a-fish and the next upgrade, and everything else (decorate,
+    backgrounds, Ichthyonomicon, set pieces) behind one drawer or tab row. Phone, tablet and desktop
+    screenshots in the PR. Keep the character dialogue and fish animations Silas liked.
+  updated: '2026-10-10T10:00:00Z'

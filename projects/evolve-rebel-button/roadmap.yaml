@@ -67,9 +67,15 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       FOR SILAS: open the Rebel Button on kindrobots.org after the next deploy, with an account
       at 100+ clicks. Check phone, tablet and desktop widths and whether the stars, labels and
       comment box feel right.
       TO APPROVE: set approved_by_human: true and status: done here, or leave a note with
       changes. Nothing is blocked on this.
+
+      Silas 2026-10-10 in session: the stars overlap each other on small/mobile screens. Fixed
+      in silasfelinus/kind_robots#3429 (narrower button padding and smaller, wrapping stars
+      below sm; verified at 320/375/640/1024 px). Re-check on a phone after that deploys;
+      stays a soft gate until then.
+    updated: '2026-10-10T09:38:49Z'
