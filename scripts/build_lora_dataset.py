@@ -119,10 +119,14 @@ $ErrorActionPreference = "Stop"
 $here = $PSScriptRoot
 if (-not (Test-Path $Model)) {{ throw "Base model not found: $Model" }}
 New-Item -ItemType Directory -Force -Path $Out | Out-Null
+# image_dir in dataset.toml is relative to this folder, but kohya resolves it against the working directory (the
+# sd-scripts checkout). Write a copy with the absolute path (2026-10-09: the relative one found no images).
+$abs = ($here -replace "\\\\", "/") + "/img/"
+(Get-Content "$here\\dataset.toml") -replace "image_dir = 'img/", "image_dir = '$abs" | Set-Content "$here\\dataset.abs.toml"
 Set-Location $SdScripts
 & .\\venv\\Scripts\\accelerate.exe launch --num_cpu_threads_per_process 1 sdxl_train_network.py `
   --pretrained_model_name_or_path "$Model" `
-  --dataset_config "$here\\dataset.toml" `
+  --dataset_config "$here\\dataset.abs.toml" `
   --output_dir "$Out" --output_name "{name}" --save_model_as safetensors `
   --network_module networks.lora --network_dim 16 --network_alpha 8 `
   --network_train_unet_only --cache_text_encoder_outputs `
@@ -133,6 +137,8 @@ Set-Location $SdScripts
   --gradient_checkpointing --cache_latents --cache_latents_to_disk --sdpa `
   --max_data_loader_n_workers 1 --seed 42
 if ($LASTEXITCODE) {{ exit $LASTEXITCODE }}
+# kohya exits 0 on "No data found", so a run that wrote no LoRA is a failure too.
+if (-not (Test-Path "$Out\\{name}.safetensors")) {{ Write-Host "No {name}.safetensors was written; see the log above"; exit 2 }}
 Write-Host "Done: $Out\\{name}.safetensors (every 2 epochs also saved as {name}-0000NN)"
 """
 

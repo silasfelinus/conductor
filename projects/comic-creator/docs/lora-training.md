@@ -58,6 +58,21 @@ D:\ai\sd-scripts\venv\Scripts\python.exe -c "import torch, torchvision; print(to
 
 The last line must print `True`. Then run `train_all.ps1` again.
 
+### If every set logs "No data found" in a few seconds
+
+Also from 2026-10-09. kohya resolves `image_dir` against its working directory (the sd-scripts checkout), not the
+folder `dataset.toml` sits in, so the relative `img/...` path found nothing. kohya exits 0 when this happens.
+`train.ps1` now writes `dataset.abs.toml` with the full path, and fails when no `.safetensors` was written. To fix
+sets unzipped before that change, rewrite each `dataset.toml` in place:
+
+```powershell
+Get-ChildItem D:\ai\lora-sets -Directory | ForEach-Object {
+  $toml = Join-Path $_.FullName 'dataset.toml'
+  $abs  = ($_.FullName -replace '\\','/') + '/img/'
+  (Get-Content $toml) -replace "image_dir = 'img/", "image_dir = '$abs" | Set-Content $toml
+}
+```
+
 ## One-time setup on the box (PowerShell)
 
 `train_all.ps1` does this itself; it is here for a manual install.

@@ -72,6 +72,8 @@ def test_dataset_toml_and_train_script_point_at_the_subset_and_model():
     assert "sdxl_train_network.py" in ps1 and "zuzukoala_v1" in ps1
     assert "D:\\models\\base.safetensors" in ps1 and "--network_train_unet_only" in ps1
     assert ps1.index("if ($LASTEXITCODE)") < ps1.index("Write-Host \"Done"), "no Done line after a failed run"
+    assert '--dataset_config "$here\\dataset.abs.toml"' in ps1, "kohya gets an absolute image_dir"
+    assert "zuzukoala_v1.safetensors\")) { Write-Host" in ps1 and "exit 2" in ps1, "no output file means failure"
 
 
 def test_build_writes_mirrored_cropped_images_captions_and_a_zip(tmp_path):
