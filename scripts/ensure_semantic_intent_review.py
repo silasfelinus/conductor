@@ -6,7 +6,8 @@ import sys
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
-import semantic_intent_actions as actions
+# Support both module imports in pytest and execution as scripts/foo.py in Actions.
+from scripts import semantic_intent_actions as actions
 
 
 def ensure(report, token, repo, now):
