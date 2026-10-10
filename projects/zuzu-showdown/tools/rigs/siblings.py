@@ -165,9 +165,9 @@ STRIKES = {
     # Bared Teeth: the leaping snap upward, jaws first (the anti-air special).
     "bared_teeth": ("head", timed(5, 8, 24, crouched(head={"angle": -10}),
                                   [stance(-60, -24, 40, body={"angle": -10, "dx": 160}, head={"dy": -60, "dx": 60},
-                                          front_leg={"angle": 20, "dy": -40}, back_leg={"angle": -14, "dy": -40}),
+                                          front_leg={"angle": 20, "dx": 150, "dy": -40}, back_leg={"angle": -14, "dx": 170, "dy": -50}),
                                    stance(-140, -30, 50, body={"angle": -14, "dx": 160}, head={"dy": -110, "dx": 60},
-                                          front_leg={"angle": 24, "dy": -110}, back_leg={"angle": -18, "dy": -110})],
+                                          front_leg={"angle": 24, "dx": 150, "dy": -110}, back_leg={"angle": -18, "dx": 175, "dy": -125})],
                                   stance(-40, -10, 20, front_leg={"dy": -30}, back_leg={"dy": -30}), stance(0))),
     # Scramble: a low skid, then the scrappy two-hit claw at the end of it.
     "scramble": ("near_arm", timed(8, 12, 18, crouched(),
