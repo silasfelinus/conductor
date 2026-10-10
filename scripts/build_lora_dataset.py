@@ -167,6 +167,7 @@ param(
 )
 $ErrorActionPreference = "Stop"
 $here = $PSScriptRoot
+$AccelerateConfig = "$env:USERPROFILE\\.cache\\huggingface\\accelerate\\default_config.yaml"
 $triggers = @({names})
 if ($Only.Count) {{ $triggers = $triggers | Where-Object {{ $Only -contains $_ }} }}
 Start-Transcript -Path "$here\\train-all.log" -Append | Out-Null
@@ -187,11 +188,18 @@ if (-not (Test-Path "$SdScripts\\venv\\Scripts\\accelerate.exe")) {{
   $cu = $tv.Split("+")[1]
   & .\\venv\\Scripts\\python.exe -m pip install --force-reinstall --no-deps "torch==$tv" "torchvision==$vv" --index-url "https://download.pytorch.org/whl/$cu"
   if ($LASTEXITCODE) {{ throw "CUDA torch $tv install failed" }}
+  Remove-Item $AccelerateConfig -ErrorAction SilentlyContinue  # "config default" never overwrites an old one
   & .\\venv\\Scripts\\accelerate.exe config default --mixed_precision fp16
   Pop-Location
 }}
 & "$SdScripts\\venv\\Scripts\\python.exe" -c "import torch, torchvision, sys; sys.exit(0 if torch.cuda.is_available() else 1)"
 if ($LASTEXITCODE) {{ throw "sd-scripts venv has no CUDA torch/torchvision; see docs/lora-training.md" }}
+# A config written while torch was CPU-only pins accelerate to the CPU (2026-10-10: 8 hours for 1 of 17 latents).
+if ((Test-Path $AccelerateConfig) -and (Select-String -Path $AccelerateConfig -Pattern "use_cpu: true" -Quiet)) {{
+  Write-Host "accelerate config pins the CPU; regenerating it for the GPU"
+  Remove-Item $AccelerateConfig
+  & "$SdScripts\\venv\\Scripts\\accelerate.exe" config default --mixed_precision fp16
+}}
 
 pm2 stop kr-relay | Out-Null
 try {{

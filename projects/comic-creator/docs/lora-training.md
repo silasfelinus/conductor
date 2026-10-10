@@ -73,6 +73,19 @@ Get-ChildItem D:\ai\lora-sets -Directory | ForEach-Object {
 }
 ```
 
+### If the log says `accelerator device: cpu`
+
+From 2026-10-10. `accelerate config default` had run while the venv still had CPU torch, so it saved a config with
+`use_cpu: true`, and it never overwrites that file. Training then crawled on the CPU: 8 hours for 1 of 17 latents.
+`train_all.ps1` now regenerates a CPU-pinned config before training. To fix it by hand:
+
+```powershell
+Remove-Item "$env:USERPROFILE\.cache\huggingface\accelerate\default_config.yaml"
+D:\ai\sd-scripts\venv\Scripts\accelerate.exe config default --mixed_precision fp16
+```
+
+A healthy run logs `accelerator device: cuda` and caches all latents in under a minute.
+
 ## One-time setup on the box (PowerShell)
 
 `train_all.ps1` does this itself; it is here for a manual install.
