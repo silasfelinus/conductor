@@ -1600,6 +1600,12 @@ tasks:
     and release a common to trade up. Breeding, eggs and hidden stats are gone. TO APPROVE:
     say whether the loop is fun now; if not, say what still feels flat (pace, coin feel,
     tank size, page) and it becomes the next round.
+
+    2026-10-10 play-test: Silas: "ok, much better version. speedier, the loop is starting to
+    make sense ... it's funner, definitely!" Not yet an approval: he asked for a one-screen
+    layout, fullscreen, readable prices, and reported the First Demand re-order bug, all
+    handled in t-086 (kind_robots #3448). The gate stays open for his look after that
+    deploy.
   updated: '2026-10-10T11:15:55Z'
   gate_reason: subjective-acceptance
   gate_rechecked: '2026-10-10'
@@ -1828,3 +1834,28 @@ tasks:
     first_full_tank, and restore a picker hint that names the new trigger. Keep the milestone id stable so
     tanks that already fired it keep the background.
   updated: '2026-10-10T11:00:00Z'
+- id: t-086
+  milestone: m4
+  title: 'One-screen play page, fullscreen toggle, readable prices, re-order fix'
+  status: done
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-083
+  note: >-
+    kind_robots #3448. Silas, play-testing the fun loop on 2026-10-10: "much better version. speedier,
+    the loop is starting to make sense. we should be able to select fullscreen mode and toggle it.
+    costs of fish we can't afford are a little hard to read. we aren't using space well enough. in
+    general this is a one screen display that is taking up two screens." Then: "i sold the first
+    demand, but i can never seem to readd it to the tank. it tells me that i don't have enough money
+    after the proper amount had been spent."
+
+    Done in #3448: two-column container-query layout (tank and roster beside a shop and upgrades
+    side panel; phones stay one column), compact shop and upgrade rows, a fullscreen toggle in the
+    tank HUD, opaque disabled price buttons. The re-order bug was client-side: tankStore.error was
+    only cleared on page load, so a failed attempt's "not enough coins" stayed on screen after a
+    later re-order succeeded. Each action now clears it, errors are a 7 s dismissible toast, and the
+    book's Re-order button prints the price (bestiary entries now carry cost). Merged 2026-10-10 as
+    kind_robots c154e89; reaches Alexandria with the next deploy (no schema change).
+  updated: '2026-10-10T12:30:00Z'
