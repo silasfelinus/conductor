@@ -1,7 +1,7 @@
 # Pitch: Robot Pocket Seed Catalog
 date: 2026-10-10
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A collectible browsing toy where players flip through a pre-illustrated seed catalog, tick off the packets they have sown in a real garden, and unlock bonus pages for each season finished. All entries, tips and blurbs are written ahead of time and saved locally with no accounts.
