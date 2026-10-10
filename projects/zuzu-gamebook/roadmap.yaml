@@ -240,6 +240,13 @@ tasks:
       REVIEW 4 (15:35): round 7 next 111 sections kept 65 (59%): 186 per-section plates live. Alone, Zuzu now
       renders well; non-Zuzu cast (Vane, Mags, Pell, Hollis, the nuns) is reliable. New fusion seen: the fennec
       sister merging with the nuns (a fennec in a habit), so the rerolls separate her from the otters too.
+      REVIEW 5 (16:10): round 7 next 13 sections kept 6: 192 per-section plates live (198 of 375 sections with
+      their own art, counting the 6 exact round 4-5 plates). ROUND-8 queued (294 jobs, ids 36071-36370) for the 147
+      sections rounds 6-7 left without a plate: Zuzu scenes get one Kontext restage of 242395 padded to the plate
+      shape plus one fresh house seed, the rest two fresh house seeds with the fusion / sister-not-a-nun /
+      human-faced-nun / mouse-faced-Zuzu fixes. enqueue_art_requests now honours a subject's `lane`, and its
+      pre-submit gate refuses negated parentheticals: '(no characters:1.3)' is now '(empty scene:1.3), uninhabited'.
+      Round 7 still has ~56 jobs pending (30 sections); review those and round 8 as they land.
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
