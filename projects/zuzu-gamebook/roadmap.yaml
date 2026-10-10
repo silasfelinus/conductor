@@ -244,7 +244,7 @@ tasks:
   - id: t-010
     milestone: m5
     title: Public launch and Silas's visual/story verdict
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: outward-facing
@@ -255,6 +255,14 @@ tasks:
       Present final accessible preview, art coverage, combat/rules balance,
       endings checklist and gamebook tone for Silas's verdict. Do not expose
       publicly or assert production deployment until approval.
+
+      2026-10-10: Silas, verbatim: "cool, this is good enough for public facing, move the
+      gamebook out of admin". Public-launch verdict given ahead of the t-009 QA pass;
+      kind_robots#3413 drops the admin gate (page + Play tab requiredRole). Merged is not
+      deployed: live once Alexandria's deploy picks up main. t-009 QA continues post-launch.
+    updated: '2026-10-10T00:38:30Z'
+    approved_by_human: true
+    implementation_pr: 'silasfelinus/kind_robots#3413'
   - id: t-011
     milestone: m5
     title: Continuing autonomous chapter, art and balance evolution
