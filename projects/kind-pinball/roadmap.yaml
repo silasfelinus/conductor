@@ -44,6 +44,21 @@ notes_from_silas: |
   table longer than one screen (t-022) and more flippers (t-023). The FX3 reference he chose (a Marvel
   table) has a lit room around the machine, sculpted toys, wire ramps everywhere and a dynamic camera.
 
+  2026-10-10, after playing the 3D table in the hall, verbatim: "the game "works" but the ball following
+  animation is awkward and bad, let's stick to a singular from the flippers perspective, unless the user
+  hits a bonus area, and then it's a single pan to or from the location. following the ball all the time
+  is nauseating. i appreciate the improvements to design, and the table is much more complex, great, but
+  we can still move beyond the windows 3.1 graphic quality. I'm including mockups for our other planned
+  pinball game, so you can see where we are aiming for quality."
+
+  What that means for agents: the camera is one fixed view from the flippers, never following the ball;
+  the only moves are one eased pan to a bonus area (the Ridge, the hidden room) when the ball gets there
+  and one pan back. t-021's view modes go. The quality bar is his mockups for the next table
+  (mockups/quality-bar-2026-10-10-*.webp): a densely painted, illustrated playfield; sculpted, lit
+  toys and scenery everywhere; chrome wireform ramps; warm practical lighting (lanterns, candles, GI);
+  a carved, painted cabinet. Milestone m6 is that look. Judge every screenshot against those images,
+  not against the previous build.
+
 milestones:
   - id: m1
     title: "SHAPE -- design brief, reference teardown, scope"
@@ -69,6 +84,11 @@ milestones:
     title: "PRESENTATION -- FX3 staging: a full screen, following cameras, a longer table, more flippers"
     weight: 25
     status: done
+
+  - id: m6
+    title: "LOOK -- one calm camera, and the mockups' visual quality"
+    weight: 30
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -464,8 +484,8 @@ tasks:
   - id: t-016
     milestone: m4
     title: "The finish line: Silas plays it and judges it as good as any Pinball FX3 table"
-    status: ready
-    depends_on: [t-010, t-012, t-013, t-014, t-015, t-019, t-020, t-021, t-022, t-023, t-024, t-025]
+    status: waiting
+    depends_on: [t-010, t-012, t-013, t-014, t-015, t-019, t-020, t-021, t-022, t-023, t-024, t-025, t-026, t-027, t-028, t-029, t-030]
     owner: null
     passes: 0
     stakes: reversible
@@ -722,3 +742,82 @@ tasks:
     claimed_at: '2026-10-10T02:45:40Z'
     updated: '2026-10-10T02:57:23Z'
     implementation_pr: 'silasfelinus/kind_robots#3421'
+
+  - id: t-026
+    milestone: m6
+    title: "One camera from the flippers; a single pan to a bonus area and back, never following the ball"
+    status: ready
+    depends_on: [t-025]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-10: "let's stick to a singular from the flippers perspective, unless the user hits a
+      bonus area, and then it's a single pan to or from the location. following the ball all the time is
+      nauseating." One fixed view from behind the flippers framing the main field, at any screen shape.
+      When every ball is in a bonus area (the Ridge, the hidden room) the camera makes one smooth, timed
+      pan there, holds still, and one pan back when a ball returns. No ball following, no plunge or
+      multiball leans, no view modes (remove t-021's Dynamic/Flippers/Full Table, the B cycle and the
+      VIEW chip). The score stays readable when the backbox is out of frame (a DMD on screen). Tests:
+      the camera never moves while the ball moves on the main field; each bonus visit is exactly one pan
+      in and one pan out.
+
+  - id: t-027
+    milestone: m6
+    title: "A painted playfield in the mockups' quality, for the main field and the Ridge"
+    status: waiting
+    depends_on: [t-026]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      The quality bar is mockups/quality-bar-2026-10-10-*.webp. Today's playfield is a soft generated image
+      under procedural paint. Make a densely illustrated, top-down AMI Village playfield (night village,
+      lit windows and lanterns, the rainbow, nets and the drone, AMI) at print resolution, with the shot
+      lanes, inserts and arrows designed into the art, plus its own art for the Ridge (the hilltop above
+      the village). Generate through the durable art pipeline, map each region exactly (art bounds per
+      region), and keep the engine's inserts crisp over it. Screenshot against the mockups.
+
+  - id: t-028
+    milestone: m6
+    title: "Sculpted, lit toys and scenery in place of primitives"
+    status: waiting
+    depends_on: [t-026]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Replace boxes and cylinders with modeled pieces in the mockups' spirit: the village huts as real
+      little houses with lit windows, lanterns on posts, pop bumpers as lit lantern caps, the windmill, the
+      AMI robot and the drone sculpted, slingshot plastics printed with art, metal posts with caps and
+      screws, the Ridge's hilltop scenery. Procedural geometry with PBR and emissive materials (or
+      generated meshes where that pipeline exists), tiered so phones stay smooth; collision stays the
+      physics shapes.
+
+  - id: t-029
+    milestone: m6
+    title: "Chrome wireform ramps, clear plastics and metalwork"
+    status: waiting
+    depends_on: [t-026]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      The mockups' ramps are chrome wireforms and clear plastic with light strips; ours are solid blue
+      channels. Build the ramps and the Ridge feed as wireforms (tube rails, cross ties, mounting posts)
+      or clear plastic with lit edges, chrome lane guides and habitrails, metal rails and lockdown
+      hardware, all reflecting the room. Physics colliders unchanged (tests stay green).
+
+  - id: t-030
+    milestone: m6
+    title: "Warm practical lighting and a carved, painted cabinet; the whole look against the mockups"
+    status: waiting
+    depends_on: [t-027, t-028, t-029]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Light the table like the mockups: warm point lights at lanterns and GI bulbs, candle flicker,
+      insert glow, tuned bloom and tone mapping, shadows and reflections on the ball and chrome. The
+      cabinet: painted side art and backglass at the same quality, metal trim and a carved apron. Finish
+      with side-by-side screenshots (phone, desktop, ultrawide) next to the mockups for Silas.
