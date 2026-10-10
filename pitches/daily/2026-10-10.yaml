@@ -1,0 +1,57 @@
+# Daily project pitches, 2026-10-10. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-10
+pitches:
+  - slug: kr-cabinet-moth-lamp-mayhem
+    target: kr-arcade
+    title: Moth Lamp Mayhem
+    hook: >-
+      An arcade cabinet riffing on Galaga's swooping formation shooter, where a small lantern robot
+      beams back waves of dive-bombing moths that peel off from a glowing formation. Each wave adds
+      faster dives and tighter formations, and a captured-lantern rescue doubles the beam.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: Cabinet marquee, lantern robot sprite, five moth types, beam effects and 3 night-sky backdrops generated ahead of time.
+    first_slice: Intro splash, one formation wave with dive patterns, a single beam, lives, rising wave speed and a score submit.
+  - slug: kr-cabinet-robot-frogger-creek
+    target: kr-arcade
+    title: Creek Crossing Cadet
+    hook: >-
+      An arcade cabinet riffing on Frogger's lane-hopping road and river crossing, where a tiny
+      robot hops across rolling carts and then drifting lily-pad rafts to reach a home dock. Each
+      round adds faster lanes, diving turtles and a bonus firefly for extra points.
+    llm_at_runtime: none
+    effort: small
+    art_plan: Cabinet marquee, robot hop sprite sheet, cart and raft sprites, dock icons and 3 creek backdrops generated ahead of time.
+    first_slice: Intro splash, four road lanes and four river lanes, five home docks, a timer, rising speed and a score submit.
+  - slug: robot-pocket-seed-catalog
+    title: Robot Pocket Seed Catalog
+    hook: >-
+      A collectible browsing toy where players flip through a pre-illustrated seed catalog, tick off
+      the packets they have sown in a real garden, and unlock bonus pages for each season finished.
+      All entries, tips and blurbs are written ahead of time and saved locally with no accounts.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 40 seed packet illustrations, 4 seasonal cover pages and 12 plant portraits generated ahead of time.
+    first_slice: A twelve-packet catalog with page flips, a sown checklist saved in the browser and one seasonal bonus page.
+  - slug: kind-tiny-tower-stacker
+    title: Kind Tiny Tower Stacker
+    hook: >-
+      A one-button stacking game where players drop swinging robot-built blocks onto a growing
+      tower, trimming any overhang each time, and a pre-painted skyline scrolls by as the tower
+      climbs. Daily seeds change the block shapes so friends can compare floors reached.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 12 block styles, 6 skyline backdrops and a milestone banner set generated ahead of time.
+    first_slice: One swinging block loop with overhang trimming, a floor counter, a game-over card and a local best score.
+  - slug: robot-night-market-stories
+    title: Robot Night Market Stories
+    hook: >-
+      A pre-written branching reader where players wander a lantern-lit night market, visit stalls
+      run by quirky robots, and collect small tokens that change which ending their evening takes.
+      Every scene and choice ships in a static file, so no model is needed at runtime.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 10 stall scenes, 8 robot vendor portraits and 12 token icons generated ahead of time; around 40 story nodes pre-written.
+    first_slice: A six-node market walk with three vendors, a token tray and two distinct endings.
