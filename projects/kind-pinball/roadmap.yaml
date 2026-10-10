@@ -465,7 +465,7 @@ tasks:
     milestone: m4
     title: "The finish line: Silas plays it and judges it as good as any Pinball FX3 table"
     status: waiting
-    depends_on: [t-010, t-012, t-013, t-014, t-015, t-019, t-020, t-021, t-022, t-023, t-024]
+    depends_on: [t-010, t-012, t-013, t-014, t-015, t-019, t-020, t-021, t-022, t-023, t-024, t-025]
     owner: null
     passes: 0
     stakes: reversible
@@ -693,3 +693,20 @@ tasks:
     claimed_at: '2026-10-10T01:55:29Z'
     updated: '2026-10-10T02:28:30Z'
     implementation_pr: 'silasfelinus/kind_robots#3418'
+
+  - id: t-025
+    milestone: m5
+    title: "The 3D cabinet fills the screen: the room around the machine, not a portrait column"
+    status: ready
+    depends_on: [t-024]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Found closing t-024: the hall's 3D cabinet keeps the meta's 360x640 portrait screen, so in landscape
+      (and fullscreen) the table is a column between splash art, and the lit arcade room from t-020 shows
+      only inside it. Silas's FX3 reference fills a wide screen with the machine and its room. Let a WebGL
+      cabinet's stage take the whole screen area it is given (any aspect), with the camera fit (render/
+      camera.ts) framing the table and the room filling the sides; the cabinet's 2D overlay (attract,
+      pause, initials, guide) stays legible at the meta's size, centred. Phone portrait must look as it
+      does now. Screenshots at phone, tablet, desktop and ultrawide, and runPinballDevices stays green.
