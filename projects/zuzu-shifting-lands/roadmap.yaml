@@ -158,8 +158,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Authored fixed-cast encounter pack schema and first-land sample content"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-003]
@@ -174,9 +173,11 @@ tasks:
       Applying Silas's newer authored-encounter direction: replace independently rolled species and jobs with predetermined illustrated cast per encounter; design the schema, twelve Homestead cards, and Conductor-ready implementation plan.
 
       Authored 12 fixed-cast Homestead encounter cards (four per canonical location), each with a flavor paragraph, two checked choices and distinct success/failure text. Added Draft 2020-12 schema, deterministic seeded pool selection design validator/tests, ArtImage provenance guards, implementation order, current CONTROL override, and six source-owned Conductor follow-up tasks. Preparing reviewed PR and CI.
+
+      Merged Conductor PR #5865 (184e73f) after seven green head workflows including full Python suite, Roadmap Audit, Worker PR CI, Security Audit, and Shifting Lands Manifest Contract. Shipped authored encounter schema v1, 12 draft Homestead scenes (four per existing location), 24 distinct dice-checked choices and 48 written success/failure outcomes, fixed casting/art briefs with no invented live ArtImage references, deterministic pool contract/tests, project steering override and task-ready implementation plan. Source-only: no runtime migration, generation, deployment or publication. New t-019 through t-024 track gameplay/UI/art work, and t-018 human public-release gate remains intact.
     claimed_by: 2026-10-10T040800Z-zuzu-shifting-t007-gpt6-e2c9
     claimed_at: '2026-10-10T04:08:00Z'
-    updated: '2026-10-10T04:18:00Z'
+    updated: '2026-10-10T04:28:00Z'
 
   - id: t-008
     milestone: m2
@@ -351,7 +352,7 @@ tasks:
   - id: t-020
     milestone: m2
     title: "Integrate seeded fixed-cast encounter pools into pure journey reducer"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
