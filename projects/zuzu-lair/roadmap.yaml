@@ -281,14 +281,13 @@ tasks:
   - id: t-014
     milestone: m2
     title: "Clip-model bake-off: why the lair/MV animations feel lackluster"
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
       Silas, 2026-10-09: "zuzu lair animations that we turned into a music video project are quite lackluster, we probably need a different checkpoint." The keyframes come from the image checkpoint Silas picked in a seven-way bake-off (Arthemy Western Art v3.0, comic-creator t-018: "arthemy is the winner"). The motion comes from LTX-2.3 22B dev fp8 on the `ltx-12gb-balanced` preset (kind_robots utils/videoPresets.ts), which diffuses at half resolution, 4 s at 16 fps, with the distilled LoRA at 0.5. No video-model comparison has ever been run, so the weak link is most likely the clip model and preset, not the still checkpoint. Bake-off: take 4 existing lair/MV keyframes (one walk, one action burst, one close-up acting beat, one wide), hold each motion prompt fixed, and render them on LTX balanced (control), `ltx-full-quality`, WAN 2.2 I2V A14B (WAN_I2V_MODE=a14b; add a 16:9 preset first) and WAN 2.2 TI2V 5B. Also run one rewrite pass on the motion prompts: Scene Animator's "lackluster" fix (2026-09-11) was a prompt change, not a model change. Put a side-by-side sheet in front of Silas and let him pick the lane. Only if every clip model looks weak should the keyframe checkpoint be retested (runners-up from t-018: furrytoonmix V3B, Nova Comic). Internal renders only; no paid spend.
 
       Partial: private clip comparison sheet and protocol prepared; renders not yet run.
-    claimed_by: 2026-10-10T074708Z-zuzu-lair-t014-f6b2c9e4
-    claimed_at: '2026-10-10T07:47:08Z'
-    updated: '2026-10-10T07:52:52.116Z'
+
+      Partial: four files on kind_robots branch worker/zuzu-lair-t014-wan-bakeoff-20261010-f6b2; PR creation unavailable, rescue branch before further work.
+    updated: '2026-10-10T07:58:00Z'
