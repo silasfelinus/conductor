@@ -80,6 +80,32 @@ Built once in t-004 so each later game is one module plus one registry row:
   current game. New games need no code: draw in logical units, honour `g.imageSmoothingEnabled`;
 - the game registry `utils/arcade/games.ts`: slug, title, riff, controls, `maxPlausibleScore`, art paths.
 
+## 16-bit style bar (Silas, 2026-10-10)
+
+Silas, 2026-10-10: *"Right now they all look like they could have come from an atari, and I want Super
+nes."* The early cabinets draw with flat single-colour rectangles. A cabinet meets the bar when its render
+pass is built on the shared kit `utils/arcade/snes.ts` (kind_robots#3438; Sink Suds is the reference) and
+shows all of the following:
+
+- **Shaded colour.** Every surface uses a five-step ramp (`RAMPS`) with a lit edge and a shadow edge, and
+  colours snap to 15-bit (`mix`). No flat single-colour actors.
+- **Outlined pixel sprites.** Actors are `pixelSprite` art with a dark ink outline (`INK`, never pure
+  black) and at least two animation frames where they move. Sprites flip to face their heading. They are
+  never rotated, because rotation smears the pixels.
+- **A layered backdrop.** Use a banded HDMA-style sky or floor (`bandedGradient`) and at least one more
+  layer: parallax ridges, clouds or stars for scenes, glazed or bevelled tiles and props for interiors.
+  Static layers go through `cachedLayer`.
+- **Depth cues.** Grounded actors get drop shadows. Lights and pickups get additive glows (`glow`).
+- **Juice.** A sparkle burst (`Sparkles`) or similar effect when something good happens. Cosmetic effects
+  roll their own dice (`backdropRng`), never the game's seeded rng.
+- **A boxed HUD.** Score, lives and level sit in framed panels (`hudPanel`, `gauge`) in outlined or
+  shadowed lettering (font `outline`/`shadow`).
+- **Crisp in both render styles.** Sprites are always drawn nearest-filtered, so they stay crisp in HD as
+  well as Pixel.
+
+The upgrade is render-only. Gameplay, difficulty curves, scores and the seeded rng do not change. t-021
+upgrades one cabinet per cycle, ahead of new games (t-009). New cabinets ship at this bar.
+
 ## Leaderboard (t-005)
 
 - Additive Prisma model `ArcadeScore`: id, gameSlug, initials (3), score, level, optional userId,
@@ -107,7 +133,7 @@ riffs borrow *mechanics* from the classics, never names, sprites, sounds or leve
 | 2 | Rescue Rally | Robotron: 2084 | medium | launch |
 | 3 | Sink Suds | Bubbles (Williams, 1982) | small | factory |
 | 4 | Pipe Pals | Mario Bros. (1983) | medium | factory |
-| 5 | Timber Bot | Timber (Bally Midway, 1984) — "the logging game" | small | factory |
+| 5 | ~~Timber Bot~~ (retired 2026-10-10) | Timber (Bally Midway, 1984) — "the logging game" | small | factory |
 | 6 | Butterfly Joust | Joust | medium | factory |
 | 7 | Kind Pinball | pinball | large (sliced) | factory |
 | 8 | Kindness Gauntlet | Gauntlet II | large (sliced) | factory |
