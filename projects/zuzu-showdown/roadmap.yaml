@@ -467,7 +467,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Movesets: Storm Crow and River Croc"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -475,9 +475,18 @@ tasks:
     note: >-
       As t-014. Storm Crow: flight mode (free movement, timer, ends on hit). River Croc: armor on heavies,
       no air throw against him, submerge/erupt state, 360/720 grabs.
+
+      DONE 2026-10-09 PT (kind_robots#3419): Storm Crow (flight mode, bouncing dive, reel-in
+      grab, lightning at the opponent's spot, rifle, both supers) and River Croc (light-only
+      armor on heavies, Death Roll 360, Submerge/Erupt, Tail Sweep, Bellow red-freeze, Swallow
+      720, The Watering Hole) with suites verifyZuzuShowdownStormCrow (14) and
+      verifyZuzuShowdownRiverCroc (12). Engine: flight, bounce, grabStun, strikeAt, hurtbox,
+      invuln.exceptLow, armor extras, freezeRed, followUp; spinning grabs get 20 jump frames
+      of leniency. fighters.yaml values unchanged (the kits use its damage numbers).
     claimed_by: 2026-10-10T01:30:00Z-zs-t016
     claimed_at: '2026-10-10T02:11:02Z'
-    updated: '2026-10-10T02:11:03Z'
+    updated: '2026-10-10T02:44:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#3419'
 
   - id: t-017
     milestone: m4
