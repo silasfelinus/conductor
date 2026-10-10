@@ -1,0 +1,709 @@
+# Zuzu Gamebook art round 4 (zuzu-gamebook t-006): the planned plates for Acts I-IV of BOOK-ONE-OUTLINE.md (8, Art plan).
+# Silas, 2026-10-10: "keep expanding the gamebook, submit artjob requests as needed." 17 plates x 2 seeds, house lane.
+# Each plate already has a stand-in key in kind_robots utils/zuzuGamebook/art.ts; keepers replace the stand-ins.
+# Words that misfired before are avoided (poster, kasa in still lifes, flint, bandage, smoking, duster). Children are
+# endangered, never harmed on the page. Prompts pre-checked against kind_robots artPromptContract.
+# Indexed in worlds/zuzu/assets/ledger-part-05.json; keep that shard in step when outputs land.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status; --lane). Private.
+round: gamebook-4
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, muted earthy palette, desaturated, weathered,
+    grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+- key: kontext-stage
+  label: Flux Kontext dev (fp8), restage an approved render
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: gb4-gun-shallows-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act I: the gun in the shallows (seed 1)'
+  size: 1344x768
+  seed: 7000
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: a revolver lying in the shallows of a desert watering hole at dusk.
+  prompt_tags: (no characters:1.3), still life, scenery, an old revolver lying half submerged in shallow muddy water
+    at the edge of a desert watering hole, black stones, dead reeds, the ridged tail of a dead crocodile floating
+    in the background, dusk light, ripples, close-up
+  jobs:
+    arthemy-house: 35193
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-gun-shallows-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act I: the gun in the shallows (seed 2)'
+  size: 1344x768
+  seed: 7001
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: a revolver lying in the shallows of a desert watering hole at dusk.
+  prompt_tags: (no characters:1.3), still life, scenery, an old revolver lying half submerged in shallow muddy water
+    at the edge of a desert watering hole, black stones, dead reeds, the ridged tail of a dead crocodile floating
+    in the background, dusk light, ripples, close-up
+  jobs:
+    arthemy-house: 35194
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-croc-eggs-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act I: the nest (seed 1)'
+  size: 1344x768
+  seed: 7010
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, bird, nest of twigs
+  prompt_prose: a clutch of large pale eggs in a sandy hollow on a riverbank at dusk.
+  prompt_tags: (no characters:1.3), scenery, a clutch of large pale leathery eggs in a hollow scraped into wet sand
+    on the bank of a desert watering hole, dead reeds, black stones, dusk, warm light, close-up
+  jobs:
+    arthemy-house: 35195
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-croc-eggs-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act I: the nest (seed 2)'
+  size: 1344x768
+  seed: 7011
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, bird, nest of twigs
+  prompt_prose: a clutch of large pale eggs in a sandy hollow on a riverbank at dusk.
+  prompt_tags: (no characters:1.3), scenery, a clutch of large pale leathery eggs in a hollow scraped into wet sand
+    on the bank of a desert watering hole, dead reeds, black stones, dusk, warm light, close-up
+  jobs:
+    arthemy-house: 35196
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-bowl-bones-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act I: the bowl in the shallows (seed 1)'
+  size: 1344x768
+  seed: 7020
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, skull
+  prompt_prose: a cracked clay bowl half sunk among black stones and old bleached bones in clear shallow water.
+  prompt_tags: (no characters:1.3), still life, a cracked small clay bowl half sunk in clear shallow water among
+    black stones and old bleached animal bones, scratch marks on the bowl rim, reflections, sunlight, close-up
+  jobs:
+    arthemy-house: 35197
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-bowl-bones-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act I: the bowl in the shallows (seed 2)'
+  size: 1344x768
+  seed: 7021
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, skull
+  prompt_prose: a cracked clay bowl half sunk among black stones and old bleached bones in clear shallow water.
+  prompt_tags: (no characters:1.3), still life, a cracked small clay bowl half sunk in clear shallow water among
+    black stones and old bleached animal bones, scratch marks on the bowl rim, reflections, sunlight, close-up
+  jobs:
+    arthemy-house: 35198
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-dying-badger-1
+  entity: badger
+  lane: arthemy-house
+  title: 'Act II: the dying shopkeeper (seed 1)'
+  size: 1344x768
+  seed: 7030
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, human, person
+  prompt_prose: an old badger shopkeeper slumped against the counter of a burned store.
+  prompt_tags: anthro, badger, male, elderly, grey snout, shopkeeper apron over a patched shirt, (fully clothed:1.3),
+    slumped sitting against the counter of a burned frontier general store, exhausted, eyes half closed, smoke drifting,
+    dim orange light through broken boards, solo, medium shot
+  jobs:
+    arthemy-house: 35199
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-dying-badger-2
+  entity: badger
+  lane: arthemy-house
+  title: 'Act II: the dying shopkeeper (seed 2)'
+  size: 1344x768
+  seed: 7031
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, human, person
+  prompt_prose: an old badger shopkeeper slumped against the counter of a burned store.
+  prompt_tags: anthro, badger, male, elderly, grey snout, shopkeeper apron over a patched shirt, (fully clothed:1.3),
+    slumped sitting against the counter of a burned frontier general store, exhausted, eyes half closed, smoke drifting,
+    dim orange light through broken boards, solo, medium shot
+  jobs:
+    arthemy-house: 35200
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-looter-1
+  entity: raccoon
+  lane: arthemy-house
+  title: 'Act II: the looter (seed 1)'
+  size: 1344x768
+  seed: 7040
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, human, person
+  prompt_prose: a young raccoon crouched among rows of boots in a smoky ruined street, startled.
+  prompt_tags: anthro, raccoon, male, young teen, thin, ragged clothes, (fully clothed:1.3), crouched in a smoky
+    ruined frontier street holding a pair of worn boots, a sack over his shoulder, startled guilty look, embers
+    drifting, dusk, solo, full body
+  jobs:
+    arthemy-house: 35201
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-looter-2
+  entity: raccoon
+  lane: arthemy-house
+  title: 'Act II: the looter (seed 2)'
+  size: 1344x768
+  seed: 7041
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, human, person
+  prompt_prose: a young raccoon crouched among rows of boots in a smoky ruined street, startled.
+  prompt_tags: anthro, raccoon, male, young teen, thin, ragged clothes, (fully clothed:1.3), crouched in a smoky
+    ruined frontier street holding a pair of worn boots, a sack over his shoulder, startled guilty look, embers
+    drifting, dusk, solo, full body
+  jobs:
+    arthemy-house: 35202
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-candle-wax-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act II: black wax on the threshold (seed 1)'
+  size: 1024x1024
+  seed: 7050
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, candle
+    flame, face, figure
+  prompt_prose: drips of black candle wax on a scorched wooden doorstep.
+  prompt_tags: (still life:1.4), (object only:1.3), close-up of drips and puddles of black candle wax on a scorched
+    wooden doorstep, ash, a few glowing embers, charred wood grain, dim light, eerie
+  jobs:
+    arthemy-house: 35203
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-candle-wax-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act II: black wax on the threshold (seed 2)'
+  size: 1024x1024
+  seed: 7051
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, candle
+    flame, face, figure
+  prompt_prose: drips of black candle wax on a scorched wooden doorstep.
+  prompt_tags: (still life:1.4), (object only:1.3), close-up of drips and puddles of black candle wax on a scorched
+    wooden doorstep, ash, a few glowing embers, charred wood grain, dim light, eerie
+  jobs:
+    arthemy-house: 35204
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-bell-view-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act II: from the bell tower (seed 1)'
+  size: 1344x768
+  seed: 7060
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: the view from a bell tower over a burning town to a far mission tower on the horizon.
+  prompt_tags: (no characters:1.3), scenery, high angle view from the top of a wooden bell tower, a bronze bell
+    in the foreground, below a burning frontier town with smoke rising, beyond it endless desert at dusk and on
+    the far horizon a tiny lone mission bell tower, epic wide shot
+  jobs:
+    arthemy-house: 35205
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-bell-view-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act II: from the bell tower (seed 2)'
+  size: 1344x768
+  seed: 7061
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: the view from a bell tower over a burning town to a far mission tower on the horizon.
+  prompt_tags: (no characters:1.3), scenery, high angle view from the top of a wooden bell tower, a bronze bell
+    in the foreground, below a burning frontier town with smoke rising, beyond it endless desert at dusk and on
+    the far horizon a tiny lone mission bell tower, epic wide shot
+  jobs:
+    arthemy-house: 35206
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-stolen-bread-1
+  entity: sister
+  lane: arthemy-house
+  title: 'Act III: the theft (seed 1)'
+  size: 1344x768
+  seed: 7070
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature
+  prompt_prose: a fennec girl asleep by a small fire, clutching a piece of bread, her little brother beside her.
+  prompt_tags: anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty
+    fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), curled asleep on the ground beside a
+    small dying campfire at night, clutching a piece of bread to her chest, anthro, fennec fox, toddler, tiny, enormous
+    ears, sand-colored fur, ragged checked cloth tunic, wide eyes asleep against her, desert night, stars, firelight,
+    wide shot
+  jobs:
+    arthemy-house: 35207
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-stolen-bread-2
+  entity: sister
+  lane: arthemy-house
+  title: 'Act III: the theft (seed 2)'
+  size: 1344x768
+  seed: 7071
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature
+  prompt_prose: a fennec girl asleep by a small fire, clutching a piece of bread, her little brother beside her.
+  prompt_tags: anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty
+    fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), curled asleep on the ground beside a
+    small dying campfire at night, clutching a piece of bread to her chest, anthro, fennec fox, toddler, tiny, enormous
+    ears, sand-colored fur, ragged checked cloth tunic, wide eyes asleep against her, desert night, stars, firelight,
+    wide shot
+  jobs:
+    arthemy-house: 35208
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-fever-1
+  entity: sister
+  lane: arthemy-house
+  title: 'Act III: the fever (seed 1)'
+  size: 1344x768
+  seed: 7080
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature
+  prompt_prose: a fennec girl holds a wet cloth to her sleeping little brother's forehead by a campfire.
+  prompt_tags: anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty
+    fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), kneeling by a campfire at night holding
+    a wet cloth to the forehead of anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, ragged checked
+    cloth tunic, wide eyes, who sleeps wrapped in a rust-brown poncho, flushed cheeks, worried, desert night, warm
+    firelight, medium shot
+  jobs:
+    arthemy-house: 35209
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-fever-2
+  entity: sister
+  lane: arthemy-house
+  title: 'Act III: the fever (seed 2)'
+  size: 1344x768
+  seed: 7081
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature
+  prompt_prose: a fennec girl holds a wet cloth to her sleeping little brother's forehead by a campfire.
+  prompt_tags: anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty
+    fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), kneeling by a campfire at night holding
+    a wet cloth to the forehead of anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, ragged checked
+    cloth tunic, wide eyes, who sleeps wrapped in a rust-brown poncho, flushed cheeks, worried, desert night, warm
+    firelight, medium shot
+  jobs:
+    arthemy-house: 35210
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-apples-sister-1
+  entity: sister
+  lane: arthemy-house
+  title: 'Act III: apples on the rock (seed 1)'
+  size: 1344x768
+  seed: 7090
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature
+  prompt_prose: a thin fennec girl reaches for red apples left on a flat rock beside a desert road, her brother
+    watching.
+  prompt_tags: anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty
+    fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), reaching for red apples piled on a flat
+    rock beside a dusty desert road, anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, ragged
+    checked cloth tunic, wide eyes holding her dress, a single apple tree in the background, golden evening light,
+    medium shot
+  jobs:
+    arthemy-house: 35211
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-apples-sister-2
+  entity: sister
+  lane: arthemy-house
+  title: 'Act III: apples on the rock (seed 2)'
+  size: 1344x768
+  seed: 7091
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature
+  prompt_prose: a thin fennec girl reaches for red apples left on a flat rock beside a desert road, her brother
+    watching.
+  prompt_tags: anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty
+    fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), reaching for red apples piled on a flat
+    rock beside a dusty desert road, anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, ragged
+    checked cloth tunic, wide eyes holding her dress, a single apple tree in the background, golden evening light,
+    medium shot
+  jobs:
+    arthemy-house: 35212
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-stone-face-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act IV: the whispering stone (seed 1)'
+  size: 1344x768
+  seed: 7100
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, animal face, skull
+  prompt_prose: a colossal cracked stone face half buried in desert sand at dusk.
+  prompt_tags: (no characters:1.3), scenery, a colossal weathered stone face of an ancient statue half buried in
+    desert sand, cracked and eroded, sand pouring from the cracks, wind, low sun, long shadows, eerie, epic wide
+    shot
+  jobs:
+    arthemy-house: 35213
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-stone-face-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act IV: the whispering stone (seed 2)'
+  size: 1344x768
+  seed: 7101
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, animal face, skull
+  prompt_prose: a colossal cracked stone face half buried in desert sand at dusk.
+  prompt_tags: (no characters:1.3), scenery, a colossal weathered stone face of an ancient statue half buried in
+    desert sand, cracked and eroded, sand pouring from the cracks, wind, low sun, long shadows, eerie, epic wide
+    shot
+  jobs:
+    arthemy-house: 35214
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-dry-well-1
+  entity: jackal
+  lane: arthemy-house
+  title: 'Act IV: the raiders at the dry well (seed 1)'
+  size: 1344x768
+  seed: 7110
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person, blood
+  prompt_prose: gaunt jackal raiders in ragged coats guard a stone well in a desert hollow.
+  prompt_tags: anthro, jackals, (group of four:1.2), gaunt, thin, ragged long coats, patched clothes, rifles, (fully
+    clothed:1.3), standing guard around an old stone well in a dusty desert hollow, hard eyes, hungry, dusk, long
+    shadows, wide shot
+  jobs:
+    arthemy-house: 35215
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-dry-well-2
+  entity: jackal
+  lane: arthemy-house
+  title: 'Act IV: the raiders at the dry well (seed 2)'
+  size: 1344x768
+  seed: 7111
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person, blood
+  prompt_prose: gaunt jackal raiders in ragged coats guard a stone well in a desert hollow.
+  prompt_tags: anthro, jackals, (group of four:1.2), gaunt, thin, ragged long coats, patched clothes, rifles, (fully
+    clothed:1.3), standing guard around an old stone well in a dusty desert hollow, hard eyes, hungry, dusk, long
+    shadows, wide shot
+  jobs:
+    arthemy-house: 35216
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-raider-kits-1
+  entity: jackal
+  lane: arthemy-house
+  title: 'Act IV: the hidden kits (seed 1)'
+  size: 1344x768
+  seed: 7120
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature,
+    human, person
+  prompt_prose: two tiny jackal pups hiding in a crack between red rocks, wide-eyed.
+  prompt_tags: anthro, jackal, two tiny pups, wide eyes, ragged cloth wraps, (fully clothed:1.2), hiding in a narrow
+    crack between red desert rocks, peeking out, frightened, dusk light, close-up
+  jobs:
+    arthemy-house: 35217
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-raider-kits-2
+  entity: jackal
+  lane: arthemy-house
+  title: 'Act IV: the hidden kits (seed 2)'
+  size: 1344x768
+  seed: 7121
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature,
+    human, person
+  prompt_prose: two tiny jackal pups hiding in a crack between red rocks, wide-eyed.
+  prompt_tags: anthro, jackal, two tiny pups, wide eyes, ragged cloth wraps, (fully clothed:1.2), hiding in a narrow
+    crack between red desert rocks, peeking out, frightened, dusk light, close-up
+  jobs:
+    arthemy-house: 35218
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-peddler-1
+  entity: hare
+  lane: arthemy-house
+  title: 'Act IV: Brother Peddler (seed 1)'
+  size: 1344x768
+  seed: 7130
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person
+  prompt_prose: a lanky hare in a battered top hat sells bottles of water from a handcart at a desert waystation.
+  prompt_tags: anthro, hare, male, lanky, long ears, battered top hat, threadbare frock coat, (fully clothed:1.3),
+    standing beside a wooden handcart loaded with glass bottles of water at a dusty desert waystation, holding one
+    bottle up to the light, sly hopeful smile, afternoon, solo, full body
+  jobs:
+    arthemy-house: 35219
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-peddler-2
+  entity: hare
+  lane: arthemy-house
+  title: 'Act IV: Brother Peddler (seed 2)'
+  size: 1344x768
+  seed: 7131
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person
+  prompt_prose: a lanky hare in a battered top hat sells bottles of water from a handcart at a desert waystation.
+  prompt_tags: anthro, hare, male, lanky, long ears, battered top hat, threadbare frock coat, (fully clothed:1.3),
+    standing beside a wooden handcart loaded with glass bottles of water at a dusty desert waystation, holding one
+    bottle up to the light, sly hopeful smile, afternoon, solo, full body
+  jobs:
+    arthemy-house: 35220
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-crow-witch-1
+  entity: crow
+  lane: arthemy-house
+  title: 'Act IV: the crow witch at the crossroads (seed 1)'
+  size: 1344x768
+  seed: 7140
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person, hat
+  prompt_prose: an old crow witch in a black feather shawl perched in a dead tree at a desert crossroads at dusk.
+  prompt_tags: anthro, crow, female, elderly, witch, black feather shawl, beads and bones on cords, (fully clothed:1.3),
+    perched on a branch of a dead tree at a desert crossroads at dusk, holding a single black feather, pale glowing
+    eyes, mysterious, solo, full body
+  jobs:
+    arthemy-house: 35221
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-crow-witch-2
+  entity: crow
+  lane: arthemy-house
+  title: 'Act IV: the crow witch at the crossroads (seed 2)'
+  size: 1344x768
+  seed: 7141
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person, hat
+  prompt_prose: an old crow witch in a black feather shawl perched in a dead tree at a desert crossroads at dusk.
+  prompt_tags: anthro, crow, female, elderly, witch, black feather shawl, beads and bones on cords, (fully clothed:1.3),
+    perched on a branch of a dead tree at a desert crossroads at dusk, holding a single black feather, pale glowing
+    eyes, mysterious, solo, full body
+  jobs:
+    arthemy-house: 35222
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-storm-shrine-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IV: shelter from the storm (seed 1)'
+  size: 1344x768
+  seed: 7150
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape,
+    two swords, sword on front, cigarette, smoking, blood
+  prompt_prose: Zuzu shelters in a ruined stone shrine during a dust storm, two small fennecs asleep against him.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), short legs, small stature, slight paunch,
+    grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim, dark tunic, orange
+    sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical
+    straw kasa, wide brim shading the eyes, sitting against the wall inside a ruined stone shelter during a dust
+    storm, two small fennec fox children asleep leaning against him, a tiny fire, dust howling past the doorway,
+    warm firelight, quiet, medium shot
+  jobs:
+    arthemy-house: 35223
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-storm-shrine-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IV: shelter from the storm (seed 2)'
+  size: 1344x768
+  seed: 7151
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, straw boater, cowboy hat, cloak, cape,
+    two swords, sword on front, cigarette, smoking, blood
+  prompt_prose: Zuzu shelters in a ruined stone shrine during a dust storm, two small fennecs asleep against him.
+  prompt_tags: anthro, koala, male, adult, (short:1.2), (stocky:1.2), short legs, small stature, slight paunch,
+    grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim, dark tunic, orange
+    sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical
+    straw kasa, wide brim shading the eyes, sitting against the wall inside a ruined stone shelter during a dust
+    storm, two small fennec fox children asleep leaning against him, a tiny fire, dust howling past the doorway,
+    warm firelight, quiet, medium shot
+  jobs:
+    arthemy-house: 35224
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-desert-bloom-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act IV: the bloom after rain (seed 1)'
+  size: 1344x768
+  seed: 7160
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: a desert carpeted with small wildflowers at dawn after rain.
+  prompt_tags: (no characters:1.3), scenery, a red desert at dawn after rain, a carpet of small yellow, white and
+    violet wildflowers stretching to the horizon, puddles reflecting a pink sky, a ruined stone shelter in the distance,
+    peaceful, beautiful, epic wide shot
+  jobs:
+    arthemy-house: 35225
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb4-desert-bloom-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act IV: the bloom after rain (seed 2)'
+  size: 1344x768
+  seed: 7161
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: a desert carpeted with small wildflowers at dawn after rain.
+  prompt_tags: (no characters:1.3), scenery, a red desert at dawn after rain, a carpet of small yellow, white and
+    violet wildflowers stretching to the horizon, puddles reflecting a pink sky, a ruined stone shelter in the distance,
+    peaceful, beautiful, epic wide shot
+  jobs:
+    arthemy-house: 35226
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
