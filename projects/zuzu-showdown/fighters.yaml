@@ -688,14 +688,16 @@ fighters:
         speed: fast
         damage: 140
         description: A command grab. The coil wraps the opponent and squeezes, then flings them across the stage.
+        fling_vs_siblings: true
       - name: Bargain
         input: dd+P
         triangle: guard
         speed: slow
         damage: 0
         description: >-
-          She holds out a little bottle. A strike that lands on it is caught (one-hit armor, no damage): the
-          attacker is staggered and she gains half a bar. A grab or a projectile beats it.
+          She holds out a little bottle. A strike that lands on it is caught (a parry, no damage): the
+          attacker is staggered and she gains half a bar. A projectile fizzles against it and staggers no
+          one; a command grab goes straight through it.
     supers:
       - level: 1
         name: Drowning Pool
@@ -710,6 +712,7 @@ fighters:
           Eye-strip cutaway of her yellow eye, and the door's eye opening behind it. The mud under the
           opponent opens onto the starry dark of the Thin Place; a vast tentacle coils up, drags them under
           to the chin, and spits them back onto the bank, soaked.
+        fling_vs_siblings: true
     intro: Rises out of a puddle that wasn't there, wringing out her hair.
     taunt: Rattles her bottle charms and croaks, "Bargain?"
     victory_poses:
