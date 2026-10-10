@@ -491,7 +491,7 @@ tasks:
   - id: t-017
     milestone: m4
     title: "Movesets: the Hyena Matriarch and Old Komodo"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -499,9 +499,18 @@ tasks:
     note: >-
       As t-014. Hyena: Hook Lash into Drag follow-up, Cackle meter build. Komodo: armor on heavies, poison
       (3/s for 6 s, as red health), burrow/rise state.
+
+      DONE 2026-10-09 PT (kind_robots#3420): the Hyena Matriarch (Hook Lash into Drag on QCF+P
+      during a hit, Cackle +1/3 bar, Scavenger's Rush under highs, Bone Crusher HCB, Chain
+      Gang, Last Laugh) and Old Komodo (armor on every heavy, venom 3/s for 6 s as red, Venom
+      Bite, Sand Burrow LK/HK with Rise from the Dune, Tongue Taste, armored Old Staff, Slow
+      Hunger, Feeding Time); suites verifyZuzuShowdownHyena (10) and verifyZuzuShowdownKomodo
+      (12). Engine: followUp onHit/motion, pull, meterGain, teleport under. Every
+      fling_vs_siblings move now carries fling. All eight fighters are in the roster.
     claimed_by: 2026-10-10T02:20:00Z-zs-t017
     claimed_at: '2026-10-10T02:30:12Z'
-    updated: '2026-10-10T02:30:12Z'
+    updated: '2026-10-10T02:56:48Z'
+    implementation_pr: 'silasfelinus/kind_robots#3420'
 
   - id: t-018
     milestone: m4
