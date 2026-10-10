@@ -137,8 +137,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Pure seeded journey reducer, five land/three encounter traversal and boss gates"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-003]
@@ -146,9 +145,11 @@ tasks:
       Full board route graph with exactly five land challenges and 3 encounter resolutions each; deterministic seeded draws, stable location mutations, journal, game over, win/retire, stat/health checks and testable transitions. No play-time untrusted LLM permitted to decide state.
 
       Implemented Kind Robots five-land journey reducer on worker/zuzu-shifting-lands-t006-journey-20261009-f83c: manifest-v2 generated geography snapshot, deterministic 15 encounters, causal tile shifts, traversal history, five boss gates, full replay, terminal states and guarded restore. Homestead saves intentionally unchanged. Preparing CI-gated PR.
+
+      Merged Kind Robots PR #3406 as b2723c4 after 28/28 completed passing GitHub workflows. Pure deterministic five-land reducer: 15 encounter locations, independent seeded map layouts, replayable dice/skill outcomes, causal prospective shifts with history preservation, five boss trials, win/fallen/retired endings, source-blob-pinned safe geography snapshot, strict restore validation and multi-seed balance regression tests. Existing Homestead v2 saves and admin UI are unchanged. Clean scoped formatting pass applied and temporary workflow removed; no production deployment claimed.
     claimed_by: 2026-10-09T234120Z-zuzu-shifting-t006-gpt6-f83c
     claimed_at: '2026-10-09T23:41:20Z'
-    updated: '2026-10-09T23:45:15Z'
+    updated: '2026-10-09T23:59:50Z'
 
   - id: t-007
     milestone: m2
@@ -167,7 +168,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Stats, dice/skill checks, HP, item/technique Rewards and companion relationships"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -181,7 +182,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Safe versioned save/resume, pinned run seed, history and deterministic replay tests"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -264,7 +265,7 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Illustrated responsive hex/card board and current encounter reader"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
