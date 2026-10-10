@@ -2091,3 +2091,36 @@ pitches:
           - kind_robots merged to main (squash 8273f87)
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+
+  - id: lava-lamp-drift
+    title: Lava Lamp Drift
+    status: candidate
+    priority: 39
+    surprise: |
+      Glowing wax blobs rise, stretch and sink through a dark lamp, pooling at a warm base.
+    passive_loop: |
+      Every blob follows a closed vertical cycle that is a pure function of a 48-second loop clock, so the lamp repeats exactly with no interaction.
+    optional_interaction: |
+      Hovering makes nearby blobs glow; a rate-limited click turns up the heat.
+    technique: |
+      One canvas, nine radial-gradient blobs with additive blending, squash/stretch, capped DPR, ResizeObserver sizing.
+    reduced_motion: |
+      Draws a single static frame with no hover glow or heat.
+    performance_risk: |
+      Low: nine gradient blobs per frame.
+    novelty: |
+      First lava-lamp scene; soft blobs in a vertical convection cycle.
+    acceptance:
+      - the blobs rise and sink on a 48-second periodic loop without interaction
+      - hovering brightens nearby blobs and they relax afterwards
+      - clicking turns up the heat at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/lava-lamp-drift.vue
+        pull_request: silasfelinus/kind_robots#3425
+        released_at: '2026-10-10T08:00:00Z'
+        verification:
+          - kind_robots CI 29/29 green; merged to main (squash 4fc28ec)
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
