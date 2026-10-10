@@ -1,7 +1,7 @@
 # Pitch: Moth Lamp Mayhem
 date: 2026-10-10
 project-target: kr-arcade
-status: awaiting-silas
+status: rejected
 
 ## The idea
 An arcade cabinet riffing on Galaga's swooping formation shooter, where a small lantern robot beams back waves of dive-bombing moths that peel off from a glowing formation. Each wave adds faster dives and tighter formations, and a captured-lantern rescue doubles the beam.
