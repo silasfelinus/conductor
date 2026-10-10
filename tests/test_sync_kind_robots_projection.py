@@ -173,3 +173,36 @@ def test_agent_entrypoints_name_the_authority_contract():
     assert "SOURCE_OF_TRUTH.md" in claude_hook
     assert 'overrides.get("overrides", [])' in claude_hook
     assert "if proj not in active_projects" in claude_hook
+
+
+def test_production_api_hosts_never_fall_back_to_retired_vercel(monkeypatch):
+    """Old environment overrides must fail before any outbound network request."""
+    from scripts import check_project_scaffold_drift, complete_todo, fetch_todos
+
+    assert projection.DEFAULT_API_BASE == "https://kindrobots.org"
+    assert check_project_scaffold_drift.API_URL == (
+        "https://kindrobots.org/api/conductor/project-parity"
+    )
+    assert fetch_todos.API_URL == "https://kindrobots.org/api/todos"
+    assert complete_todo.API_BASE == "https://kindrobots.org/api/todos"
+
+    def should_not_contact_network(*args, **kwargs):
+        pytest.fail("attempted an outbound request to a retired host")
+
+    monkeypatch.setattr(projection.urllib.request, "urlopen", should_not_contact_network)
+    for old_url in ("https://kind-robots.vercel.app", "https://kindrobots.vercel.app"):
+        with pytest.raises(ValueError, match="retired Vercel"):
+            projection.post_snapshot(old_url, "token", b"{}")
+
+
+def test_operational_scripts_and_workflows_have_no_retired_vercel_urls():
+    """Fail CI if an old hardcoded endpoint sneaks back into a scheduled job."""
+    roots = (projection.ROOT / "scripts", projection.ROOT / ".github" / "workflows")
+    obsolete_host = "kind-robots" + ".vercel.app"
+    matches = []
+    for root in roots:
+        for path in root.rglob("*"):
+            if path.is_file() and path.suffix in {".py", ".sh", ".yml", ".yaml", ".js", ".ts", ".ps1"}:
+                if obsolete_host in path.read_text(encoding="utf-8", errors="replace"):
+                    matches.append(str(path.relative_to(projection.ROOT)))
+    assert not matches, f"Retired Vercel endpoint in runnable files: {matches}"

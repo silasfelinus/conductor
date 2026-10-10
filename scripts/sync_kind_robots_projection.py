@@ -17,6 +17,7 @@ import subprocess
 import time
 import urllib.error
 import urllib.request
+from urllib.parse import urlsplit
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -113,6 +114,11 @@ def encoded_snapshot(snapshot: dict[str, Any]) -> bytes:
 
 
 def post_snapshot(api_base: str, token: str, payload: bytes) -> dict[str, Any]:
+    # A stale KR_API_BASE environment override must not silently post production
+    # coordination data to the retired Vercel deployment.
+    hostname = (urlsplit(api_base).hostname or "").lower()
+    if hostname == "vercel.app" or hostname.endswith(".vercel.app"):
+        raise ValueError("Kind Robots projection cannot use a retired Vercel hostname")
     endpoint = f"{api_base.rstrip('/')}/api/conductor/sync"
     request = urllib.request.Request(
         endpoint,

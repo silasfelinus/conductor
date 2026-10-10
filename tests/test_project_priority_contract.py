@@ -102,3 +102,16 @@ def test_butterfly_gallery_leads_art_archive_and_both_are_high():
     }
     assert overrides["butterfly-gallery"]["priority"] == "high"
     assert overrides["art-archive"]["priority"] == "high"
+
+
+def test_silas_october_high_priority_projects_have_high_registry_priority():
+    """Queue order alone is insufficient: UI/projection also reads the priority field."""
+    overrides_raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
+    entries = {
+        item.get("slug"): item
+        for item in (overrides_raw.get("overrides") or [])
+        if isinstance(item, dict) and item.get("slug")
+    }
+    for slug in ("kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"):
+        assert entries[slug]["status"] == "active"
+        assert entries[slug]["priority"] == "high"
