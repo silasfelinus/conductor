@@ -352,7 +352,7 @@ tasks:
   - id: t-020
     milestone: m2
     title: "Integrate seeded fixed-cast encounter pools into pure journey reducer"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -361,9 +361,11 @@ tasks:
       Import validated authored encounter pack with frozen species and occupation per card. Persist chosen encounterId, revision, seeded roll, choice, flags and outcome on explicit versioned save; preserve 15 location slots, five bosses and no reroll farming.
 
       Implement seeded authored fixed-cast Homestead encounter pools, persistent meaningful choice rolls/outcomes and five-land private Admin preview integration. Preserve existing Homestead saves and public launch gate.
+
+      Integrated authored Homestead v2 source pack into an isolated playable five-land private Admin board: deterministic 12-card selection, fixed cast, full flavor and two checked choices, persisted roll/outcome/history and map effects, 2:3 custom card backs and stable face-up flip. Rebased green but conflicted prior t-015 PR into a fresh integration branch. CI/review ongoing; no public release or deployment asserted.
     claimed_by: 2026-10-10T043000Z-zuzu-shifting-t020-gpt6-f8a7
     claimed_at: '2026-10-10T04:30:00Z'
-    updated: '2026-10-10T04:30:00Z'
+    updated: '2026-10-10T04:55:00Z'
 
   - id: t-021
     milestone: m4
