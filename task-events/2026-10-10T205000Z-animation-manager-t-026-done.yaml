@@ -1,0 +1,7 @@
+version: 1
+project: animation-manager
+task: t-026
+operation: done
+updated: '2026-10-10T20:50:00+00:00'
+note: |-
+  Silas added DIGEST_SMTP_USER / DIGEST_SMTP_PASSWORD (Gmail app password for silasfelinus@gmail.com) on 2026-10-10; he chose to send from his Gmail rather than a kindrobots.org Send-mail-as alias, since kindrobots.org mail is Cloudflare Email Routing (receive-only, no outbound SMTP). Verified with daily-digest run 38084897291 (workflow_dispatch, send_email=true, success): Gmail message 1a12790c000c6d95 "Conductor Dream Digest 2026-10-10" was sent over SMTP from silasfelinus@gmail.com, every href is direct (kindrobots.org pitch-inbox with signed exp/sig and per-pitch picks, kindrobots.org/build/animation-manager, github.com), no sendibt link, and no Brevo copy was sent. Implementation: conductor#5917. Brevo remains the automatic fallback if SMTP fails.
