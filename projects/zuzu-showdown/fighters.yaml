@@ -636,8 +636,95 @@ fighters:
     perfect_pose: Falls asleep standing up.
     ko_pose: Slumps down into the sand with a long, rumbling sigh; the dune half buries him.
 
+  - slug: swamp-witch
+    name: The Swamp Witch
+    species: the Thing's avatar
+    title: The Hand Through the Door
+    archetype: "zoner and trapper: tentacles from the mud at range, a draining hex, a gliding coil; weak up close"
+    new_character: true
+    boss_avatar: thing-behind-the-door
+    health: 950
+    height_px: 120
+    walk_speed: slow (she glides on her coil)
+    home_stage: watering-hole
+    rival: the-abbess
+    look: >-
+      A happy accident made canon (Silas, 2026-10-10): the boss's tentacle and eye seeds (T012-REFERENCES
+      243510-243513) came out as a figure with a coil of tentacles for legs and a grey, wet face with the
+      door's own yellow slit eye. So the Thing Behind the Door has an avatar: the only figure shaped like
+      a person in a world of animals, which is what makes her wrong. Gaunt, grey-violet wet skin, yellow
+      slit-pupil eyes, long stringy black hair that drips, and from the waist down a coil of dark violet
+      tentacles with pale suckers. Always fully robed in a ragged hooded shawl of moss, reeds and fishing
+      net, with bone and bottle charms. Eerie and a little funny, never glamorous. Prompts never say
+      "human" or "people" (bannedTerms): say witch, avatar, or describe her.
+    voice: >-
+      Croaking and sing-song, always bargaining; offers deals mid-fight and keeps the change. Speaks of
+      the Thing as "we" and "us", and of the world as somewhere she is visiting.
+    punch_buttons: "LP = gnarled-hand slap; HP = tentacle lash"
+    specials:
+      - name: Bog Grasp
+        input: QCF+P
+        triangle: strike
+        speed: medium
+        damage: 80
+        description: >-
+          A tentacle bursts from the mud under the opponent (strikeAt opponent): close with LP, mid-screen
+          with HP. A jumping opponent is over it; it whiffs.
+      - name: Leech Hex
+        input: QCB+P
+        triangle: strike
+        speed: slow
+        damage: 40
+        description: She flicks a glob of swamp water; a leech clings on hit and drains 60 more over five seconds (Old Komodo's venom rule).
+      - name: Sink
+        input: dd+K
+        triangle: guard
+        speed: medium
+        damage: 0
+        description: She melts into the mud and surfaces under the opponent (teleport under); invulnerable while sunk, open as she rises.
+      - name: Coil Snare
+        input: HCB+P
+        triangle: grab
+        speed: fast
+        damage: 140
+        description: A command grab. The coil wraps the opponent and squeezes, then flings them across the stage.
+      - name: Bargain
+        input: dd+P
+        triangle: guard
+        speed: slow
+        damage: 0
+        description: >-
+          She holds out a little bottle. A strike that lands on it is caught (one-hit armor, no damage): the
+          attacker is staggered and she gains half a bar. A grab or a projectile beats it.
+    supers:
+      - level: 1
+        name: Drowning Pool
+        input: QCF QCF+P
+        damage: 260
+        description: Three tentacles rise one after another in a line across the floor toward the opponent.
+      - level: 3
+        name: The Door Below
+        input: QCB QCB+HP
+        damage: 430
+        description: >-
+          Eye-strip cutaway of her yellow eye, and the door's eye opening behind it. The mud under the
+          opponent opens onto the starry dark of the Thin Place; a vast tentacle coils up, drags them under
+          to the chin, and spits them back onto the bank, soaked.
+    intro: Rises out of a puddle that wasn't there, wringing out her hair.
+    taunt: Rattles her bottle charms and croaks, "Bargain?"
+    victory_poses:
+      - Corks a little bottle with something glowing inside and tucks it into her shawl.
+      - Sinks back into the mud, waving, until only her yellow eyes remain.
+    perfect_pose: Doesn't speak. Just holds out a bottle, patiently.
+    ko_pose: Melts into a puddle with a long bubbling croak; one tentacle waves a scrap of white rag.
+    vs_siblings_win: She offers the sister an apple. The sister won't take it and bolts with her brother; the witch nods, approving.
+    arcade: >-
+      The last fight before the door. When she falls she sinks into the mud, the puddle spreads into the
+      starry dark, and the Thin Place opens: the boss fight is the rest of her.
+
 boss:
   slug: thing-behind-the-door
+  avatar: swamp-witch
   name: The Thing Behind the Door
   playable: false
   stage: the-thin-place

@@ -1,0 +1,139 @@
+# zuzu-showdown t-012: HD parts sheets for Storm Crow's rig (as T011-ABBESS-PARTS did for the Abbess).
+# Flux Kontext re-draws the picked reference into parts the rig can cut cleanly: a fighting stance with his arms
+# held clear of the coat, the coat with no arms, each arm on its own (the feathered wing-hand for the LP buffet,
+# the hooked blade for HP), a leg for the talon kicks, and key poses (crouch, jump, his flight hover, and his canon
+# KO: a heap of loose feathers, goggles cracked). Source: T012-REFERENCES crow-profile-right-3 (ArtImage 243492),
+# picked for its clean silhouette on a plain ground; it faces left, so it is mirrored to face right. Never
+# "duster": his coat is a long riding coat (fighters.yaml look). Generated art is pre-approved (t-008 note).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-parts
+  label: Flux Kontext dev (fp8), rig parts from the picked reference
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+  seed: 71172
+subjects:
+- key: storm-crow-rig-stance-apart
+  entity: storm-crow
+  title: 'storm-crow rig part: stance-apart'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: 'Put him in a fighting stance facing right, feet planted apart, both arms held out away from his
+    body so his sleeves do not overlap the coat: his left arm raised with long black flight feathers fanned out
+    from the sleeve like a wing, and his right gloved hand gripping a hooked blade, a curved sickle-like hook pointing
+    forward. His rifle stays slung across his back. Keep the same storm crow raider, an anthropomorphic black crow
+    with rain-slick feathers, rusted brass goggles, a ragged grey long riding coat, a torn red captain''s sash at
+    the waist and worn brown boots, and the same comic art style. On a plain off-white background, nothing else
+    in the picture.'
+  jobs:
+    kontext-parts: 36018
+- key: storm-crow-rig-body-no-arms
+  entity: storm-crow
+  title: 'storm-crow rig part: body-no-arms'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: Remove both of his arms completely, so the long riding coat hangs closed with no sleeves, hands,
+    feathers or blade showing. His rifle stays slung across his back. Standing, seen from the side facing right.
+    Keep the same storm crow raider, an anthropomorphic black crow with rain-slick feathers, rusted brass goggles,
+    a ragged grey long riding coat, a torn red captain's sash at the waist and worn brown boots, and the same comic
+    art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36019
+- key: storm-crow-rig-arm-wing
+  entity: storm-crow
+  title: 'storm-crow rig part: arm-wing'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: 'Show only his left arm on its own: a ragged grey coat sleeve with long black flight feathers fanned
+    out from it like a wing and a gloved hand at the end, held straight out, side view. Keep the same storm crow
+    raider, an anthropomorphic black crow with rain-slick feathers, rusted brass goggles, a ragged grey long riding
+    coat, a torn red captain''s sash at the waist and worn brown boots, and the same comic art style. On a plain
+    off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 36020
+- key: storm-crow-rig-arm-blade
+  entity: storm-crow
+  title: 'storm-crow rig part: arm-blade'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: 'Show only his right arm on its own: a ragged grey coat sleeve and a gloved hand gripping a hooked
+    blade, a curved sickle-like hook of rusted steel, held straight out with the hook pointing forward, side view.
+    Keep the same storm crow raider, an anthropomorphic black crow with rain-slick feathers, rusted brass goggles,
+    a ragged grey long riding coat, a torn red captain''s sash at the waist and worn brown boots, and the same comic
+    art style. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 36021
+- key: storm-crow-rig-leg
+  entity: storm-crow
+  title: 'storm-crow rig part: leg'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: 'Show only one of his legs on its own, kicking straight out: a thin black scaly crow leg in a worn
+    brown boot with hooked talons poking through the toe, side view. Keep the same storm crow raider, an anthropomorphic
+    black crow with rain-slick feathers, rusted brass goggles, a ragged grey long riding coat, a torn red captain''s
+    sash at the waist and worn brown boots, and the same comic art style. On a plain off-white background, nothing
+    else in the picture.'
+  jobs:
+    kontext-parts: 36022
+- key: storm-crow-rig-crouch
+  entity: storm-crow
+  title: 'storm-crow rig part: crouch'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: Show him crouching low facing right, knees fully bent, the coat pooling on the ground, the hooked
+    blade held ready. Keep the same storm crow raider, an anthropomorphic black crow with rain-slick feathers, rusted
+    brass goggles, a ragged grey long riding coat, a torn red captain's sash at the waist and worn brown boots,
+    and the same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36023
+- key: storm-crow-rig-jump
+  entity: storm-crow
+  title: 'storm-crow rig part: jump'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: Show him in mid-air jumping facing right, knees tucked up, the long riding coat flaring out behind
+    him. Keep the same storm crow raider, an anthropomorphic black crow with rain-slick feathers, rusted brass goggles,
+    a ragged grey long riding coat, a torn red captain's sash at the waist and worn brown boots, and the same comic
+    art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36024
+- key: storm-crow-rig-fly
+  entity: storm-crow
+  title: 'storm-crow rig part: fly'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: Show him hovering in the air facing right, both arms spread wide as great black feathered wings,
+    the long riding coat streaming behind him, his feet dangling. Keep the same storm crow raider, an anthropomorphic
+    black crow with rain-slick feathers, rusted brass goggles, a ragged grey long riding coat, a torn red captain's
+    sash at the waist and worn brown boots, and the same comic art style. On a plain off-white background, nothing
+    else in the picture.
+  jobs:
+    kontext-parts: 36025
+- key: storm-crow-rig-knockdown
+  entity: storm-crow
+  title: 'storm-crow rig part: knockdown'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: Show him knocked flat on his back on the ground in a heap of loose black feathers, dazed, his goggles
+    cracked, seen from the side with his head to the left. Keep the same storm crow raider, an anthropomorphic black
+    crow with rain-slick feathers, rusted brass goggles, a ragged grey long riding coat, a torn red captain's sash
+    at the waist and worn brown boots, and the same comic art style. On a plain off-white background, nothing else
+    in the picture.
+  jobs:
+    kontext-parts: 36026

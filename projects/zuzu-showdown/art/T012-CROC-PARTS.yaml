@@ -1,0 +1,144 @@
+# zuzu-showdown t-012: HD parts sheets for River Croc's rig. He is an animal on all fours (fighters.yaml look),
+# so his parts are a quadruped's, not a biped's: the body on its own, the head with its jaws open (LP snap, HP jaw
+# lunge), the tail (tail sweeps) and a front leg (claw swipes), plus key poses: crouched flat in the mud, the
+# lunge in the air, reared up on his hind legs for his big moves, and his canon KO, rolled belly-up. Source:
+# T012-REFERENCES croc-profile-right-3 (ArtImage 243495), already facing right and low on all fours, with the
+# harpoon and rope. Generated art is pre-approved (t-008 note).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-parts
+  label: Flux Kontext dev (fp8), rig parts from the picked reference
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+  seed: 71172
+subjects:
+- key: river-croc-rig-stance-apart
+  entity: river-croc
+  title: 'river-croc rig part: stance-apart'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show him low on all fours facing right, legs planted wide apart so none of them overlaps his body,
+    the tail held straight out behind him, the jaws just parted. Keep the same giant crocodile, a real animal on
+    all fours with olive-green scarred armoured hide, patches of green algae, a frayed rope tied round his body
+    and a broken old harpoon stuck in his back, and the same comic art style. On a plain off-white background, nothing
+    else in the picture.
+  jobs:
+    kontext-parts: 36027
+- key: river-croc-rig-body-no-limbs
+  entity: river-croc
+  title: 'river-croc rig part: body-no-limbs'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Remove his head, his tail and all four of his legs, leaving only the thick armoured body with the
+    rope and the broken harpoon, seen from the side facing right. Keep the same giant crocodile, a real animal on
+    all fours with olive-green scarred armoured hide, patches of green algae, a frayed rope tied round his body
+    and a broken old harpoon stuck in his back, and the same comic art style. On a plain off-white background, nothing
+    else in the picture.
+  jobs:
+    kontext-parts: 36028
+- key: river-croc-rig-head-snap
+  entity: river-croc
+  title: 'river-croc rig part: head-snap'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show only his head and neck on its own, the jaws gaping wide open full of teeth, seen from the side
+    facing right. Keep the same giant crocodile, a real animal on all fours with olive-green scarred armoured hide,
+    patches of green algae, a frayed rope tied round his body and a broken old harpoon stuck in his back, and the
+    same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36029
+- key: river-croc-rig-tail
+  entity: river-croc
+  title: 'river-croc rig part: tail'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show only his tail on its own, long and thick with a ridge of scutes, swept in a wide arc, side
+    view. Keep the same giant crocodile, a real animal on all fours with olive-green scarred armoured hide, patches
+    of green algae, a frayed rope tied round his body and a broken old harpoon stuck in his back, and the same comic
+    art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36030
+- key: river-croc-rig-foreleg
+  entity: river-croc
+  title: 'river-croc rig part: foreleg'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show only one of his front legs on its own, the clawed foot raised and swiping forward, side view.
+    Keep the same giant crocodile, a real animal on all fours with olive-green scarred armoured hide, patches of
+    green algae, a frayed rope tied round his body and a broken old harpoon stuck in his back, and the same comic
+    art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36031
+- key: river-croc-rig-hindleg
+  entity: river-croc
+  title: 'river-croc rig part: hindleg'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show only one of his hind legs on its own, planted, with the clawed foot flat on the ground, side
+    view. Keep the same giant crocodile, a real animal on all fours with olive-green scarred armoured hide, patches
+    of green algae, a frayed rope tied round his body and a broken old harpoon stuck in his back, and the same comic
+    art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36032
+- key: river-croc-rig-crouch
+  entity: river-croc
+  title: 'river-croc rig part: crouch'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show him flattened low against the ground facing right, belly down, legs splayed, only his eyes
+    and snout raised, ready to lunge. Keep the same giant crocodile, a real animal on all fours with olive-green
+    scarred armoured hide, patches of green algae, a frayed rope tied round his body and a broken old harpoon stuck
+    in his back, and the same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36033
+- key: river-croc-rig-jump
+  entity: river-croc
+  title: 'river-croc rig part: jump'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show him leaping forward through the air facing right, jaws wide open, all four legs stretched out.
+    Keep the same giant crocodile, a real animal on all fours with olive-green scarred armoured hide, patches of
+    green algae, a frayed rope tied round his body and a broken old harpoon stuck in his back, and the same comic
+    art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36034
+- key: river-croc-rig-rear-up
+  entity: river-croc
+  title: 'river-croc rig part: rear-up'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show him reared up on his hind legs facing right, his front claws raised, his jaws open in a bellow,
+    his tail on the ground for balance. Keep the same giant crocodile, a real animal on all fours with olive-green
+    scarred armoured hide, patches of green algae, a frayed rope tied round his body and a broken old harpoon stuck
+    in his back, and the same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36035
+- key: river-croc-rig-knockdown
+  entity: river-croc
+  title: 'river-croc rig part: knockdown'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show him rolled over belly-up on the ground, his pale belly scales showing, all four legs in the
+    air, seen from the side with his head to the right. Keep the same giant crocodile, a real animal on all fours
+    with olive-green scarred armoured hide, patches of green algae, a frayed rope tied round his body and a broken
+    old harpoon stuck in his back, and the same comic art style. On a plain off-white background, nothing else in
+    the picture.
+  jobs:
+    kontext-parts: 36036

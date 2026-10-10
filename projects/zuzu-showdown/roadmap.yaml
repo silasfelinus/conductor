@@ -707,6 +707,26 @@ tasks:
       physical subject first, no negations, no frame nouns). Confirm they landed and look right (Zuzu
       short and stocky in the kasa and poncho, facing a rival); re-stage any that miss.
 
+  - id: t-028
+    milestone: m4
+    title: "New fighter: the Swamp Witch, the Thing's avatar (moveset, references, rig, portraits)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    approved_by_human: true
+    depends_on: [t-016]
+    note: >-
+      Silas, 2026-10-10 PT, seeing the boss seeds that drifted into figures (T012-REFERENCES 243508-243513):
+      "happy accident. i hate to lose interesting progress. let's turn some of this into a new character.
+      A swamp witch?" and then "oh great, yes, so the tentacle boss has a humanoid avatar, which is a
+      novelty in this world." fighters.yaml swamp-witch holds the kit, look and arcade role (the last fight
+      before the door; the boss is the rest of her); matchups.yaml has her 9 matchups and boss line. Steps:
+      (1) references re-posed by Kontext from the seeds (art/T014-WITCH-REFERENCES.yaml), pick one; (2) the
+      kit in kind_robots (fighters/swamp-witch.ts with a contract suite, as t-016/t-017); (3) a parts sheet
+      and rig (her coil is one cut part that bends, not legs); (4) her four portraits in T008. She is always
+      fully robed, never glamorous; prompts never say "human" or "people" (bannedTerms).
+
   - id: t-027
     milestone: m3
     title: "kind_robots: render styles -- pixel and HD (stage renders at device resolution, art per style)"

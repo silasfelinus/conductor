@@ -1,0 +1,123 @@
+# zuzu-showdown t-013: HD parts sheets for the Hyena Matriarch's rig (as T011-ABBESS-PARTS did for the Abbess):
+# a fighting stance with her arms held clear of her armour, the body with no arms, each arm on its own (the open
+# paw for the LP backhand, the chain-wrapped fist for HP), a leg for the kicks, and key poses (crouch, jump, and
+# her canon KO: toppled backward, the chain over her). Source: T012-REFERENCES hyena-profile-right-1 (ArtImage
+# 243496), picked for the chain and hook and the stitched leather; it faces left, so it is mirrored to face right.
+# Generated art is pre-approved (t-008 note).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-parts
+  label: Flux Kontext dev (fp8), rig parts from the picked reference
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+  seed: 71172
+subjects:
+- key: hyena-matriarch-rig-stance-apart
+  entity: hyena-matriarch
+  title: 'hyena-matriarch rig part: stance-apart'
+  size: 832x1216
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: 'Put her in a fighting stance facing right, feet planted apart, both arms held out away from her
+    body so they do not overlap her armour: her left paw open with the claws out for a backhand, and her right fist
+    wrapped in heavy iron chain with the meat hook hanging from it. Keep the same big broad spotted hyena matriarch
+    with a ragged dark mane and a grin too wide for her face, the same black leather armour stitched from many hides,
+    fully dressed, bandaged forearms, a heavy iron chain with a meat hook, and the same comic art style. On a plain
+    off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 36037
+- key: hyena-matriarch-rig-body-no-arms
+  entity: hyena-matriarch
+  title: 'hyena-matriarch rig part: body-no-arms'
+  size: 832x1216
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: Remove both of her arms completely, leaving her armoured body with no arms, paws or chain showing.
+    Standing, seen from the side facing right. Keep the same big broad spotted hyena matriarch with a ragged dark
+    mane and a grin too wide for her face, the same black leather armour stitched from many hides, fully dressed,
+    bandaged forearms, a heavy iron chain with a meat hook, and the same comic art style. On a plain off-white background,
+    nothing else in the picture.
+  jobs:
+    kontext-parts: 36038
+- key: hyena-matriarch-rig-arm-backhand
+  entity: hyena-matriarch
+  title: 'hyena-matriarch rig part: arm-backhand'
+  size: 832x1216
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: 'Show only her left arm on its own: a bandaged spotted forearm and an open clawed paw swinging in
+    a backhand, held straight out, side view. Keep the same big broad spotted hyena matriarch with a ragged dark
+    mane and a grin too wide for her face, the same black leather armour stitched from many hides, fully dressed,
+    bandaged forearms, a heavy iron chain with a meat hook, and the same comic art style. On a plain off-white background,
+    nothing else in the picture.'
+  jobs:
+    kontext-parts: 36039
+- key: hyena-matriarch-rig-arm-chain
+  entity: hyena-matriarch
+  title: 'hyena-matriarch rig part: arm-chain'
+  size: 832x1216
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: 'Show only her right arm on its own: a bandaged spotted forearm and a fist wrapped in heavy iron
+    chain, with the meat hook dangling from the chain, held straight out, side view. Keep the same big broad spotted
+    hyena matriarch with a ragged dark mane and a grin too wide for her face, the same black leather armour stitched
+    from many hides, fully dressed, bandaged forearms, a heavy iron chain with a meat hook, and the same comic art
+    style. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 36040
+- key: hyena-matriarch-rig-leg
+  entity: hyena-matriarch
+  title: 'hyena-matriarch rig part: leg'
+  size: 832x1216
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: 'Show only one of her legs on its own, kicking straight out: a spotted leg in a heavy black boot,
+    side view. Keep the same big broad spotted hyena matriarch with a ragged dark mane and a grin too wide for her
+    face, the same black leather armour stitched from many hides, fully dressed, bandaged forearms, a heavy iron
+    chain with a meat hook, and the same comic art style. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 36041
+- key: hyena-matriarch-rig-crouch
+  entity: hyena-matriarch
+  title: 'hyena-matriarch rig part: crouch'
+  size: 832x1216
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: Show her crouching low facing right, knees fully bent, grinning, the chain coiled ready in her right
+    fist. Keep the same big broad spotted hyena matriarch with a ragged dark mane and a grin too wide for her face,
+    the same black leather armour stitched from many hides, fully dressed, bandaged forearms, a heavy iron chain
+    with a meat hook, and the same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36042
+- key: hyena-matriarch-rig-jump
+  entity: hyena-matriarch
+  title: 'hyena-matriarch rig part: jump'
+  size: 832x1216
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: Show her in mid-air jumping facing right, knees tucked up, the chain trailing behind her. Keep the
+    same big broad spotted hyena matriarch with a ragged dark mane and a grin too wide for her face, the same black
+    leather armour stitched from many hides, fully dressed, bandaged forearms, a heavy iron chain with a meat hook,
+    and the same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36043
+- key: hyena-matriarch-rig-knockdown
+  entity: hyena-matriarch
+  title: 'hyena-matriarch rig part: knockdown'
+  size: 832x1216
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: Show her toppled flat on her back on the ground, still grinning, the iron chain lying across her,
+    seen from the side with her head to the left. Keep the same big broad spotted hyena matriarch with a ragged
+    dark mane and a grin too wide for her face, the same black leather armour stitched from many hides, fully dressed,
+    bandaged forearms, a heavy iron chain with a meat hook, and the same comic art style. On a plain off-white background,
+    nothing else in the picture.
+  jobs:
+    kontext-parts: 36044
