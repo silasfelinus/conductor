@@ -44,7 +44,7 @@ PUPPETS = {
             "throw": 243486,
             "proud": 243487,
             "wave": 243488,
-            "raspberry": None,
+            "raspberry": 243489,
         },
         # His fur takes the same P2 turn as his sister's (rigs/siblings.py P2_RULES), so they match.
         "p2_rules": [{"hue": (18, 44), "sat_min": 0.3, "val_min": 0.35, "shift": -14, "sat": 1.35}],
