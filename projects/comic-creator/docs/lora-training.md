@@ -44,6 +44,20 @@ The script:
 Expect 6–10 hours for all five. A set whose `<trigger>_v1.safetensors` is already in the import folder is skipped, so
 running it again resumes where it stopped. `-Only zkacoyote` trains a single set. The log is `train-all.log` next to it.
 
+### If training stops on "No module named 'torchvision'" or "no CUDA torch"
+
+First run on Ferngrotto, 2026-10-09: `requirements.txt` installs torch from PyPI, which on Windows is the CPU-only build
+without torchvision. `train_all.ps1` now replaces it with ComfyUI's own CUDA build during setup. To repair a venv
+created before that change, copy ComfyUI's build into it:
+
+```powershell
+$tv, $vv = (& D:\comfy\comfy-fast\venv\Scripts\python.exe -c "import torch, torchvision; print(torch.__version__, torchvision.__version__)").Split(" ")
+D:\ai\sd-scripts\venv\Scripts\python.exe -m pip install --force-reinstall --no-deps "torch==$tv" "torchvision==$vv" --index-url "https://download.pytorch.org/whl/$($tv.Split('+')[1])"
+D:\ai\sd-scripts\venv\Scripts\python.exe -c "import torch, torchvision; print(torch.__version__, torch.cuda.is_available())"
+```
+
+The last line must print `True`. Then run `train_all.ps1` again.
+
 ## One-time setup on the box (PowerShell)
 
 `train_all.ps1` does this itself; it is here for a manual install.

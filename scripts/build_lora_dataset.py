@@ -132,6 +132,7 @@ Set-Location $SdScripts
   --mixed_precision fp16 --save_precision fp16 `
   --gradient_checkpointing --cache_latents --cache_latents_to_disk --sdpa `
   --max_data_loader_n_workers 1 --seed 42
+if ($LASTEXITCODE) {{ exit $LASTEXITCODE }}
 Write-Host "Done: $Out\\{name}.safetensors (every 2 epochs also saved as {name}-0000NN)"
 """
 
@@ -151,6 +152,7 @@ def train_all_ps1(triggers):
 param(
   [string]$SdScripts = "D:\\ai\\sd-scripts",
   [string]$Comfy = "http://127.0.0.1:8188",
+  [string]$ComfyDir = "D:\\comfy\\comfy-fast",
   [string]$Out = "D:\\comfy\\comfy-fast\\models\\Lora\\import",
   [string[]]$Only = @(),
   # The base Python ComfyUI runs on (ops/home-server/ecosystem.config.js COMFY_BASE_PYTHON). A bare "python" on this
@@ -169,11 +171,21 @@ if (-not (Test-Path "$SdScripts\\venv\\Scripts\\accelerate.exe")) {{
   Push-Location $SdScripts
   if (-not (Test-Path $Python)) {{ $Python = "python" }}
   & $Python -m venv venv
-  & .\\venv\\Scripts\\python.exe -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+  if ($LASTEXITCODE) {{ throw "venv creation failed" }}
   & .\\venv\\Scripts\\python.exe -m pip install -r requirements.txt bitsandbytes
+  if ($LASTEXITCODE) {{ throw "pip install -r requirements.txt failed" }}
+  # requirements.txt pulls torch from PyPI, which on Windows is CPU-only. Replace it with the exact CUDA build
+  # ComfyUI already runs on this card (2026-10-09: the cu124 index alone failed on typing_extensions, and the CPU
+  # torch then crashed on a missing torchvision).
+  $tv, $vv = (& "$ComfyDir\\venv\\Scripts\\python.exe" -c "import torch, torchvision; print(torch.__version__, torchvision.__version__)").Split(" ")
+  $cu = $tv.Split("+")[1]
+  & .\\venv\\Scripts\\python.exe -m pip install --force-reinstall --no-deps "torch==$tv" "torchvision==$vv" --index-url "https://download.pytorch.org/whl/$cu"
+  if ($LASTEXITCODE) {{ throw "CUDA torch $tv install failed" }}
   & .\\venv\\Scripts\\accelerate.exe config default --mixed_precision fp16
   Pop-Location
 }}
+& "$SdScripts\\venv\\Scripts\\python.exe" -c "import torch, torchvision, sys; sys.exit(0 if torch.cuda.is_available() else 1)"
+if ($LASTEXITCODE) {{ throw "sd-scripts venv has no CUDA torch/torchvision; see docs/lora-training.md" }}
 
 pm2 stop kr-relay | Out-Null
 try {{
