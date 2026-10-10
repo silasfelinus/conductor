@@ -1561,7 +1561,7 @@ tasks:
 - id: t-069
   milestone: m3
   title: 'FOR SILAS: re-audit Cthulhuquarium once art is delivered and the layout bugs are fixed'
-  status: waiting
+  status: needs-human
   gate_human: true
   owner: worker
   stakes: reversible
@@ -1591,7 +1591,18 @@ tasks:
 
     2026-10-10: Silas's next look is at the m4 fun loop (coin drops, crowded tank, no
     breeding or stats, tighter page), so this re-audit now also waits on t-083.
-  updated: '2026-09-11T10:30:00Z'
+
+    FOR SILAS (2026-10-10): the fun loop you asked for is live on main (kind_robots #3434,
+    #3435, #3436, #3442; spec in projects/cthulhuquarium/LOOP.md). After the next Alexandria
+    deploy (#3435 carries an additive migration), play a fresh tank at /play/aquarium on
+    your phone and on desktop: every fed fish drops coins every 15 s -- tap them before they
+    fade; buy a second fish (about a minute in); fill the 12 slots, buy +4 room, buy copies,
+    and release a common to trade up. Breeding, eggs and hidden stats are gone. TO APPROVE:
+    say whether the loop is fun now; if not, say what still feels flat (pace, coin feel,
+    tank size, page) and it becomes the next round.
+  updated: '2026-10-10T11:15:55Z'
+  gate_reason: subjective-acceptance
+  gate_rechecked: '2026-10-10'
 
 - id: t-078
   milestone: m3
@@ -1742,8 +1753,8 @@ tasks:
 - id: t-083
   milestone: m4
   title: 'Tighten the play page around the tank'
-  status: review
-  owner: worker
+  status: done
+  owner: null
   stakes: reversible
   passes: 0
   depends_on:
@@ -1773,8 +1784,14 @@ tasks:
     with Feed hungry (n) / Buy fish / +4 room, the shop as an art-led strip right under the
     tank, one roster tile per species, extras folded into one collapsed section, refreshed
     copy. Verified in a local browser run at 390 and 1280 px.
-  updated: '2026-10-10T11:06:06Z'
+
+    Done 2026-10-10: silasfelinus/kind_robots#3442 merged (6048901). Known, not changed: the
+    character dialogue sheet covers the bottom strip of the tank while open, so resting
+    coins can't be tapped until it is dismissed.
+  updated: '2026-10-10T11:15:35Z'
   implementation_pr: 'silasfelinus/kind_robots#3442'
+  claimed_by: null
+  claimed_at: null
 
 - id: t-084
   milestone: m4
