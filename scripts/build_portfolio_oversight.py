@@ -39,6 +39,7 @@ import audit_roadmaps  # noqa: E402
 import check_project_scaffold_drift as scaffold_drift  # noqa: E402
 
 INTENT_DIR = ROOT / "projects" / "conductor"
+INTENT_FAILURE_FILE = INTENT_DIR / "INTENT-REVIEW-FAILURE.json"
 INTENT_REPORT_RE = re.compile(r"^INTENT-AUDIT-(\d{4}-\d{2}-\d{2})\.md$")
 DEFAULT_INTENT_STALE_DAYS = 3.0
 DEFAULT_AGENT_HEARTBEAT_HOURS = 6.0
@@ -92,6 +93,33 @@ def intent_review_status(
         "days_since": days_since,
         "stale_days": stale_days,
     }
+
+
+def failed_intent_attempt(
+    *, directory: Path = INTENT_DIR, today: date | None = None,
+) -> dict[str, str] | None:
+    """Read an explicit failed review attempt, not an inferred missed deadline.
+
+    A successful dated audit supersedes older failures. Bad/missing records never
+    manufacture an email-worthy incident.
+    """
+    path = directory / "INTENT-REVIEW-FAILURE.json"
+    if not path.is_file():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if payload.get("status") != "failed":
+            return None
+        when = _parse_iso_datetime(str(payload.get("attempted_at") or ""))
+        reason = str(payload.get("reason") or "").strip()
+        if when is None or not reason or when.date() > (today or datetime.now(timezone.utc).date()):
+            return None
+        latest = latest_intent_report(directory)
+        if latest and when.date() <= latest[1]:
+            return None
+        return {"status": "failed", "attempted_at": when.isoformat(), "reason": reason}
+    except (OSError, ValueError, TypeError, AttributeError):
+        return None
 
 
 def _git_log_date(*filters: str) -> str:
@@ -217,6 +245,7 @@ def build_report(
     roadmap_report = audit_roadmaps.audit()
     heartbeat = scheduled_agent_status(stale_hours=agent_heartbeat_hours, now=generated_at)
     intent = intent_review_status(stale_days=intent_stale_days, today=generated_at.date())
+    intent["failed_attempt"] = failed_intent_attempt(today=generated_at.date())
 
     project_scan: dict[str, list[dict[str, Any]]] | None = None
     project_unresolved: str | None = None
@@ -333,6 +362,11 @@ def render_markdown(report: dict[str, Any]) -> str:
     else:
         lines.append("- No completed `INTENT-AUDIT-YYYY-MM-DD.md` report exists yet.")
     lines.append(f"- Due: **{str(bool(intent['due'])).lower()}**")
+    if intent.get("failed_attempt"):
+        failure = intent["failed_attempt"]
+        lines.append(f"- **Failed attempt:** `{failure['attempted_at']}` — {failure['reason']}")
+    elif intent["due"]:
+        lines.append("- No failed review attempt has been recorded; overdue alone does not email.")
 
     lines.extend(
         [
