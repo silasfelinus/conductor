@@ -12,7 +12,7 @@ Use these oversight roles when the report says they are needed, in this order:
 
 1. **project-sync-auditor** — Kind Robots ↔ Conductor project parity has forward drift, reverse orphan(s), or could not be verified. Run `scripts/check_project_scaffold_drift.py` with the production-safe token path. Verify every Kind Robots `conductorSlug` resolves to one Conductor roadmap and every active Conductor project has the intended Kind Robots row. Where live Project settings are available, also verify the Conductor-owned coordination fields projected into Kind Robots still agree with `project-overrides.yaml` and `projects/priority.yaml`; presentation-only fields remain Kind Robots-owned per `SOURCE_OF_TRUTH.md`.
 2. **roadmap-auditor** — `audit_roadmaps.py` reports deterministic errors. Repair unambiguous bookkeeping/state defects immediately. Never paper over a source-of-truth conflict by changing whichever side is easiest.
-3. **roadmap-intent-auditor** — the semantic intent review is due. This is deliberately model/human-judgment work rather than another regex. Perform the review described below and write a dated report only after actually completing it.
+3. **roadmap-intent-auditor** — the semantic intent review is within its one-day advance notice window, or already due. This is deliberately model/human-judgment work rather than another regex. Prioritize the actual review before its deadline and write a dated report only after completing it.
 
 Broken/reviewable code already in flight can still outrank a soft semantic review when delaying it is clearly higher leverage, but deterministic project/roadmap drift should not sit indefinitely behind ordinary ready-task churn.
 
@@ -29,12 +29,23 @@ The existing `scripts/check_project_scaffold_drift.py` is the minimum mechanical
 
 Run this at least every **3 days**, and sooner after a substantial priority or direction change.
 
-**Scheduled owner:** the recurring ChatGPT task **Conductor Semantic Review** (enabled
-2026-10-10 PT, first run 2026-10-13 around 8 AM PT, every three days) attempts this
-review with connected GitHub. That scheduled task, not the email watchdog, owns
-performing the LLM judgment and landing the report/repairs through PRs. A due
-sensor alone never emails Silas. A failed attempt is escalation-worthy only after
-it has actually been tried and explicitly recorded, not inferred from elapsed time.
+**Scheduling and dispatch are owned by Conductor, not a personal ChatGPT routine.**
+The built-in `.github/workflows/conductor-oversight.yml` runs every six hours and
+persists `PORTFOLIO-OVERSIGHT.md/json`. On day two of a three-day cycle the
+sensor raises `semantic-review-upcoming`; when due it raises
+`semantic-review-due`. `scripts/select_role.py` independently reads the
+latest completed audit date and assigns `roadmap-intent-auditor` at either
+point, ahead of ordinary work (but behind urgent PR/workflow repair).
+Agents reading `AGENTS.md` must act on that role; a paused personal ChatGPT
+agent cycle must not hide the assignment. The separate ChatGPT Semantic Review
+task may also execute the work, but Conductor's notice/routing does not depend
+on its enabled state.
+
+The six-hour GitHub workflow is a deterministic dispatcher, **not** an LLM:
+it cannot replace the actual judgment and source review. An available agent
+must read the current sources, repair unambiguous drift and land a real dated
+review. A due sensor alone never emails Silas; only an actual, recorded failed
+review attempt warrants semantic escalation.
 
 If a scheduled attempt fails before a valid audit is completed, write
 `projects/conductor/INTENT-REVIEW-FAILURE.json` on a branch and open a PR with
