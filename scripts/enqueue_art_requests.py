@@ -115,6 +115,10 @@ def iter_cells(ledger, lane_filter=None, subject_filter=None):
         for lane in lanes:
             if lane_filter and lane.get("key") not in lane_filter:
                 continue
+            # A subject that names its lane renders there only, so one ledger can mix lanes
+            # (the zuzu-gamebook rerolls: house txt2img and Kontext restages side by side).
+            if subject.get("lane") and subject["lane"] != lane.get("key"):
+                continue
             yield subject, lane
 
 

@@ -76,6 +76,12 @@ def test_round4_ledger_is_a_fair_bakeoff():
     assert not any(k in lane for lane in ledger["lanes"] for k in ("steps", "cfg", "sampler", "scheduler"))
 
 
+def test_subject_that_names_a_lane_renders_only_there():
+    ledger = dict(LEDGER, subjects=[dict(LEDGER["subjects"][0], key="a", lane="il"), dict(LEDGER["subjects"][0], key="b")])
+    cells = [(s["key"], lane["key"]) for s, lane in enq.iter_cells(ledger)]
+    assert cells == [("a", "il"), ("b", "zimage-turbo"), ("b", "il")]
+
+
 def test_submit_writes_job_ids_back_and_skips_existing(tmp_path):
     path = _ledger(tmp_path)
     header, ledger = enq.load_ledger(path)
