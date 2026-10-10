@@ -29,6 +29,32 @@ The existing `scripts/check_project_scaffold_drift.py` is the minimum mechanical
 
 Run this at least every **3 days**, and sooner after a substantial priority or direction change.
 
+**Scheduled owner:** the recurring ChatGPT task **Conductor Semantic Review** (enabled
+2026-10-10 PT, first run 2026-10-13 around 8 AM PT, every three days) attempts this
+review with connected GitHub. That scheduled task, not the email watchdog, owns
+performing the LLM judgment and landing the report/repairs through PRs. A due
+sensor alone never emails Silas. A failed attempt is escalation-worthy only after
+it has actually been tried and explicitly recorded, not inferred from elapsed time.
+
+If a scheduled attempt fails before a valid audit is completed, write
+`projects/conductor/INTENT-REVIEW-FAILURE.json` on a branch and open a PR with
+this small record (do not silently suppress the original error):
+
+```json
+{
+  "status": "failed",
+  "attempted_at": "2026-10-13T15:00:00Z",
+  "reason": "Specific failed operation and what was attempted"
+}
+```
+
+Use the actual timestamp and error, never the example values. Merge a safe failure
+record once verified so oversight can see it. The watchdog ignores absent,
+malformed, future-dated, or superseded failure markers. A later successful dated
+`INTENT-AUDIT-YYYY-MM-DD.md` supersedes the failed record without rewriting
+history. If GitHub itself is unavailable, the reviewer may not be able to persist
+the record; do not claim that absence proves the scheduled attempt succeeded.
+
 Read, in order:
 
 1. `CONTROL.md`.
