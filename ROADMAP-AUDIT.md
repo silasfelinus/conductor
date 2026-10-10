@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-10-10T23:36:50.487812+00:00`
+Generated: `2026-10-10T23:45:31.482597+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **78** roadmaps, **39** active + **3** continuous projects, **2089** tasks
-- **90 ready**, **122 waiting**, **36 needs-human**, **17 claimed/review**, **1808 done**
+- **89 ready**, **122 waiting**, **36 needs-human**, **18 claimed/review**, **1808 done**
 - Findings: **0 errors**, **26 warnings**, **63 informational**
 
 ## Project inventory
@@ -32,7 +32,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 16 | `comic-film` | active | software | 3 | 6 | 0 | 0 | 2 / 11 |
 | 17 | `zuzu-gamebook` | active | software | 5 | 4 | 0 | 0 | 3 / 12 |
 | 18 | `zuzu-shifting-lands` | active | software | 4 | 8 | 1 | 1 | 10 / 24 |
-| 19 | `zuzu-pinball` | active | software | 1 | 10 | 1 | 1 | 3 / 16 |
+| 19 | `zuzu-pinball` | active | software | 0 | 10 | 1 | 2 | 3 / 16 |
 | 20 | `tzaddik-gallery` | active | software | 1 | 1 | 1 | 0 | 30 / 33 |
 | 21 | `scene-animator` | finished | software | 0 | 0 | 0 | 0 | 11 / 11 |
 | 22 | `text-generation` | finished | software | 0 | 0 | 0 | 0 | 9 / 9 |
