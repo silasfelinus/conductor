@@ -1,5 +1,7 @@
 # Shifting Lands: source manifest contract (v2)
 
+> **Authored encounters v1 overlay (2026-10-09):** [ENCOUNTER-PACK.schema.json](encounters/ENCOUNTER-PACK.schema.json) and [HOMESTEAD-12.json](encounters/HOMESTEAD-12.json) define multiple *fully authored* cards per location, each with fixed species/job cast and original art brief, flavor prose and 2+ checked choices. The independent Facet pools in `WORLD-DECKS.json` v2 are **legacy design/catalog references only**, no longer a runtime card-combination rule for Shifting Lands. Do not modify the v2 manifest or source-pinned Kind Robots snapshot as if this overlay were already imported; t-020 owns the versioned transform and save migration. [Implementation order](encounters/IMPLEMENTATION-ORDER.md) documents the handoff. The historical v2 composition text below describes original context but is superseded for the gameplay path.
+
 The **single authored design catalogue** is [WORLD-DECKS.json](WORLD-DECKS.json).
 It is an alternate-play game design, not Book One canon, and not a Kind Robots
 database export. For authoritative history, read
