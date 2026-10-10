@@ -1,20 +1,20 @@
 # Roadmap Audit
 
-Generated: `2026-10-10T11:08:24.565494+00:00`
+Generated: `2026-10-10T11:47:28.964849+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **78** roadmaps, **39** active + **3** continuous projects, **2082** tasks
-- **90 ready**, **128 waiting**, **35 needs-human**, **21 claimed/review**, **1792 done**
-- Findings: **0 errors**, **27 warnings**, **61 informational**
+- **89 ready**, **128 waiting**, **35 needs-human**, **21 claimed/review**, **1793 done**
+- Findings: **0 errors**, **28 warnings**, **61 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `kind-pinball` | active | software | 1 | 2 | 0 | 2 | 26 / 31 |
+| 1 | `kind-pinball` | active | software | 0 | 2 | 0 | 2 | 27 / 31 |
 | 2 | `zuzu-lair` | active | software | 2 | 6 | 1 | 1 | 4 / 14 |
 | 3 | `kr-arcade` | active | software | 3 | 6 | 0 | 0 | 11 / 20 |
 | 4 | `zuzu-showdown` | active | software | 4 | 3 | 0 | 2 | 18 / 27 |
@@ -99,7 +99,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (27)
+### Warning (28)
 
 - **STALE_CLAIM_FIELDS** — `animation-manager` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 16 days.
@@ -113,7 +113,7 @@ _None._
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-economy` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **POSSIBLY_UNNECESSARY_GATE** — `kind-pinball` / `t-016`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `kind-pinball` / `t-027`: Claimed/review task has no parseable updated timestamp.
-- **IN_PROGRESS_WITHOUT_TIMESTAMP** — `kind-pinball` / `t-029`: Claimed/review task has no parseable updated timestamp.
+- **IN_PROGRESS_WITHOUT_TIMESTAMP** — `kind-pinball` / `t-031`: Claimed/review task has no parseable updated timestamp.
 - **STALE_IN_PROGRESS** — `kind-robots` / `t-127`: Task has remained review for 6 days.
 - **STALE_IN_PROGRESS** — `kind-robots` / `t-131`: Task has remained review for 4 days.
 - **STALE_IN_PROGRESS** — `kind-robots` / `t-133`: Task has remained review for 3 days.
@@ -127,6 +127,7 @@ _None._
 - **STALE_IN_PROGRESS** — `zuzu-lair` / `t-004`: Task has remained claimed for 3 days.
 - **SOFT_NEEDS_HUMAN** — `zuzu-lair` / `t-006`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-lair` / `t-010`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
+- **STALE_IN_PROGRESS** — `zuzu-showdown` / `t-019`: Task has remained claimed for 3 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-showdown` / `t-025`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 
 ### Info (61)

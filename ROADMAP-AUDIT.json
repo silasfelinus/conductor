@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-10-10T11:08:24.565494+00:00",
+  "generated_at": "2026-10-10T11:47:28.964849+00:00",
   "summary": {
     "roadmaps": 78,
     "active_projects": 39,
     "continuous_projects": 3,
     "tasks": 2082,
-    "ready": 90,
+    "ready": 89,
     "waiting": 128,
     "needs_human": 35,
     "in_progress": 21,
-    "done": 1792,
+    "done": 1793,
     "errors": 0,
-    "warnings": 27,
+    "warnings": 28,
     "info": 61
   },
   "projects": [
@@ -24,17 +24,16 @@
       "task_count": 31,
       "counts": {
         "claimed": 2,
-        "done": 26,
-        "ready": 1,
+        "done": 27,
         "waiting": 2
       },
-      "open_count": 5,
+      "open_count": 4,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 2,
       "claimed": 2,
       "review": 0,
-      "done": 26
+      "done": 27
     },
     {
       "slug": "zuzu-lair",
@@ -1622,7 +1621,7 @@
       "severity": "warning",
       "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
       "project": "kind-pinball",
-      "task": "t-029",
+      "task": "t-031",
       "message": "Claimed/review task has no parseable updated timestamp."
     },
     {
@@ -1715,6 +1714,13 @@
       "project": "zuzu-lair",
       "task": "t-010",
       "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+    },
+    {
+      "severity": "warning",
+      "code": "STALE_IN_PROGRESS",
+      "project": "zuzu-showdown",
+      "task": "t-019",
+      "message": "Task has remained claimed for 3 days."
     },
     {
       "severity": "warning",
