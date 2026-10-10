@@ -209,7 +209,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Author five land encounter decks, three locations each, alternate outcomes"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -352,8 +352,7 @@ tasks:
   - id: t-020
     milestone: m2
     title: "Integrate seeded fixed-cast encounter pools into pure journey reducer"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-006, t-007]
@@ -363,9 +362,11 @@ tasks:
       Implement seeded authored fixed-cast Homestead encounter pools, persistent meaningful choice rolls/outcomes and five-land private Admin preview integration. Preserve existing Homestead saves and public launch gate.
 
       Integrated authored Homestead v2 source pack into an isolated playable five-land private Admin board: deterministic 12-card selection, fixed cast, full flavor and two checked choices, persisted roll/outcome/history and map effects, 2:3 custom card backs and stable face-up flip. Rebased green but conflicted prior t-015 PR into a fresh integration branch. CI/review ongoing; no public release or deployment asserted.
+
+      Merged Kind Robots PR #3424 at 428d6b685186ee1d37cb4038727326f0cc05a30e after 33 green checks. Playable private Admin five-land board with twelve deterministic authored Homestead cards, two checked decisions per card, persisted dice/flags/journal and isolated source-pinned v2 saves. Included Zuzu encounter and trial backs plus persistent readable reveal. Source merged; Alexandria container deploy not yet independently verified. Later lands retain prototype rules and encounter-specific face art pending.
     claimed_by: 2026-10-10T043000Z-zuzu-shifting-t020-gpt6-f8a7
     claimed_at: '2026-10-10T04:30:00Z'
-    updated: '2026-10-10T04:55:00Z'
+    updated: '2026-10-10T08:30:00Z'
 
   - id: t-021
     milestone: m4
