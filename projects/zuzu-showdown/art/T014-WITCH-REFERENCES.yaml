@@ -1,0 +1,94 @@
+# zuzu-showdown t-028: design references for the Swamp Witch, the Thing Behind the Door's avatar (fighters.yaml
+# swamp-witch). She began as a happy accident: the house-lane boss seeds drifted into a figure on a coil of
+# tentacles (243510, 243511) and a grey wet face with the door's yellow slit eye (243512, 243513), and Silas
+# (2026-10-10) made her a fighter. Flux Kontext re-poses those seeds into a full-body profile facing right, the
+# view the rigs are cut from, and robes her: she is always fully covered by the ragged shawl, gaunt and eerie,
+# never glamorous. Seed 243508 is not used. Prompts never say "human" or "people" (bannedTerms). Pick one and cut
+# her parts sheet from it (next). Generated art is pre-approved (t-008 note).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-refs
+  label: Flux Kontext dev (fp8), references re-posed from the accidental seeds
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: witch-from-coil-1
+  entity: swamp-witch
+  title: The Swamp Witch reference (from the coiled figure, 243511)
+  size: 832x1216
+  source_image_id: 243511
+  source_flip: false
+  prompt_prose: Turn this figure into a swamp witch rising tall on her coil, seen from the side facing right, her
+    gnarled hands raised as if casting. Keep the coil of dark violet tentacles with pale suckers as her lower body,
+    her grey-violet wet skin and her glowing yellow slit-pupil eyes, and give her long stringy black hair that drips.
+    Dress her in a ragged hooded shawl of green moss, reeds and old fishing net that covers her from the neck down
+    to the coil, with little bone charms and corked bottles hanging from it. Gaunt and eerie, a little funny. Keep
+    the same comic art style. On a plain off-white background, nothing else in the picture.
+  art:
+    kontext-refs:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-refs: 36064
+- key: witch-from-coil-2
+  entity: swamp-witch
+  title: The Swamp Witch reference (from the reaching figure, 243510)
+  size: 832x1216
+  source_image_id: 243510
+  source_flip: false
+  prompt_prose: Turn this figure into a swamp witch gliding forward on her coil, seen from the side facing right,
+    one gnarled hand reaching out. Keep the coil of dark violet tentacles with pale suckers as her lower body, the
+    tendrils curling around her, her grey-violet wet skin and her glowing yellow slit-pupil eyes, and give her long
+    stringy black hair that drips. Dress her in a ragged hooded shawl of green moss, reeds and old fishing net that
+    covers her from the neck down to the coil, with little bone charms and corked bottles hanging from it. Gaunt
+    and eerie, a little funny. Keep the same comic art style. On a plain off-white background, nothing else in the
+    picture.
+  art:
+    kontext-refs:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-refs: 36065
+- key: witch-from-face-1
+  entity: swamp-witch
+  title: The Swamp Witch reference (from the face, 243513)
+  size: 832x1216
+  source_image_id: 243513
+  source_flip: false
+  prompt_prose: Show her whole figure, seen from the side facing right, from the top of her head down to the tips
+    of her tentacles. Keep her face, her grey wet skin, her glowing yellow slit-pupil eyes and her long stringy
+    black hair that drips. From the waist down she is a coil of dark violet tentacles with pale suckers that she
+    rises on. Dress her in a ragged hooded shawl of green moss, reeds and old fishing net that covers her from the
+    neck down to the coil, with little bone charms and corked bottles hanging from it. Gaunt and eerie, a little
+    funny. Keep the same comic art style. On a plain off-white background, nothing else in the picture.
+  art:
+    kontext-refs:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-refs: 36066
+- key: witch-from-face-2
+  entity: swamp-witch
+  title: The Swamp Witch reference (from the cracked face, 243512)
+  size: 832x1216
+  source_image_id: 243512
+  source_flip: false
+  prompt_prose: Show her whole figure, seen from the side facing right, from the top of her head down to the tips
+    of her tentacles. Keep her cracked grey face, her glowing yellow slit-pupil eyes and her dark hair. From the
+    waist down she is a coil of dark violet tentacles with pale suckers that she rises on. Dress her in a ragged
+    hooded shawl of green moss, reeds and old fishing net that covers her from the neck down to the coil, with little
+    bone charms and corked bottles hanging from it. Gaunt and eerie, a little funny. Keep the same comic art style.
+    On a plain off-white background, nothing else in the picture.
+  art:
+    kontext-refs:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-refs: 36067
