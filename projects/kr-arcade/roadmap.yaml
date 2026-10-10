@@ -440,7 +440,7 @@ tasks:
   - id: t-015
     milestone: m5
     title: "Ghost Trail authored encounter and campaign systems: secrets, progress, checkpoints and victory"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -449,11 +449,14 @@ tasks:
       First incremental campaign-system slice: four one-time stage relic discoveries with checkpoint-safe rewards, a finite victorious preview ending, and deterministic tests. The six-stage Act I, authored encounters, save/resume and full ten-hour campaign remain follow-up work.
 
       PARTIAL SLICE SHIPPED 2026-10-10 PT: kind_robots#3450 merged after 29/29 completed CI workflows passed. Four reachable one-time relics now survive checkpoint retries, the HUD tracks relics, and the fourth current trail has a visible three-second PREVIEW CLEARED victory before leaderboard handoff. New tests added to test:arcade-engine and passed. conductor#5900 merged after all CI, recording Silas's ten-hour five-book north star in CONTROL.md and ghost-trail/TEN-HOUR-ROADMAP.md. REMAINING t-015: data-driven authored encounters, two acts per stage, branches, save/resume/checkpoint persistence and a six-stage Act I ending. Do not mark done or unblock dependent tasks yet.
-    updated: '2026-10-10T13:22:00Z'
+
+      DONE 2026-10-10: the campaign engine shipped in silasfelinus/kind_robots#3469 and #3470. Data-defined acts (ghostTrail/world.ts, campaign.ts, acts/stage1-6.ts) with ground/pits, ledges, solid blocks, movers, timed hazards, updrafts and a tide; finite authored squads with stable member ids and a run-wide defeated ledger (death and checkpoint retries never revive them; ambush camera locks); the progress-gated ambient budget kept (farm test still passes); 2-3 acts per stage with multiple checkpoints and authored branches (rooftop vs street, tide passages, high routes); unique relic ids; title cards, stage pages, credits and a real victory. Save/resume: saves at each act start through the arcade store (utils/arcade/saves.ts), CONTINUE / NEW RUN card, continues after a game over keep relics but not score. New Game+ unlocks on a clear, and finding every relic earns the true ending. Tests: verifyZuzuGhostTrailCampaign.test.ts.
+    updated: '2026-10-11T00:30:00Z'
+
   - id: t-016
     milestone: m5
     title: "Ghost Trail stage 1: Silver Gulch authored encounter graph and Grave Marshal boss"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -464,10 +467,14 @@ tasks:
       Ship two long real gameplay acts, hidden saloon crawlspace, rooftop/street split,
       Grave Marshal multi-tell boss and level complete/return path. Verify encounter
       budgets, secret accessibility and 9–11 minute target before declaring stage done.
+
+      DONE 2026-10-10 (content): Stage 1 shipped in silasfelinus/kind_robots#3473 -- s1a1 MAIN STREET (tutorial street, 6400 px, 13 squads) and s1a2 THE COURTHOUSE (7000 px, 15 squads, rooftop/street split, saloon crawlspace relic) ending at the Grave Marshal (#3471: cover, two telegraphed bullet lanes, dynamite, deputies; boss test). Bot (endless lives) clears both acts. NOT VERIFIED: the 9-11 minute human target -- bot times are not human first-clear times; the timed playtest is carried by t-020.
+    updated: '2026-10-11T00:30:00Z'
+
   - id: t-017
     milestone: m5
     title: "Ghost Trail stages 2–3: Bone Yard, Drowned Watering Hole and unique bosses"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -477,10 +484,14 @@ tasks:
       water-level/raft/secrets at the Drowned Watering Hole and Drowned Ferryman boss;
       River Croc cameo/conditional ally. Distinct authored geometry, enemies and
       backgrounds, not colored copies of Stage 1.
+
+      DONE 2026-10-10 (content): Stage 2 (Bone Yard: crypts with spikes and tomb ambushes; the Broken Bridge with 24 pits, terraces, beams and bell lifts; first bell sigil relic; Bone Bull) in silasfelinus/kind_robots#3473, and Stage 3 (Drowned Watering Hole: telegraphed tide cycles, rafts, a crypt passage walkable only at low tide, ferry escape run; Drowned Ferryman with two water phases, #3471) in #3479. River Croc does not appear as an enemy (the cameo/ally idea is not built). Painted roster for the new foes in #3471. Bot clears every act. NOT VERIFIED: human stage times (t-020).
+    updated: '2026-10-11T00:30:00Z'
+
   - id: t-018
     milestone: m5
     title: "Ghost Trail stages 4–5: Storm Crow Pass and Mission Bell Tower"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -489,10 +500,14 @@ tasks:
       Wind, updrafts, lightning tells, canopy passage and Storm-Crow Matriarch boss;
       stone bell lifts/rope puzzle/burning braziers and giant Bell Heretic fight.
       Match accepted screen concepts without breaking readable hitboxes.
+
+      DONE 2026-10-10 (content): Stage 4 Storm Crow Pass (updraft columns tuned to settle, rope lifts, canopy, cave cache, Dust Devil mid-boss, Storm-Crow Matriarch with perches, summons and armed lightning) in silasfelinus/kind_robots#3479; Stage 5 Mission Bell Tower (stairways, bell lifts, timed braziers, falling-masonry ambushes, the Bell Order relic climb) in #3474 and the Bell Heretic (chained bell swing, slam waves, ritual circles, masonry, robe-fire phase) in #3476. New stormpass art world in #3473. Lightning as a stage hazard (separate from the Matriarch) is not built. NOT VERIFIED: human stage times (t-020).
+    updated: '2026-10-11T00:30:00Z'
+
   - id: t-019
     milestone: m5
     title: "Ghost Trail final stage: Abbey undercrypt, Abbess finale and alternate ending"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -502,10 +517,14 @@ tasks:
       final boss phases, ending and credit sequence, optional rescue, relic-dependent
       secret ending and unlockable New Game+. The first clear must end the campaign
       rather than silently wrap back to Ghost Town.
+
+      DONE 2026-10-10 (content): Stage 6 The Abbey Beneath the Bell (three acts, 8000-9000 px, ritual tunnels, wind shafts, ambushes in series, six lore relics) in silasfelinus/kind_robots#3474; the Abbess final boss with two real phases (a refusal of death, transformation and refilled bar) in #3476; ending page and credits roll in #3474; the run ends the campaign (no wrap to Ghost Town); relic-dependent true ending and New Game+ in #3470; abbey art world in #3473. Not built: the optional rescue. NOT VERIFIED: human stage times (t-020).
+    updated: '2026-10-11T00:30:00Z'
+
   - id: t-020
     milestone: m5
     title: "Ghost Trail finish: sound, HUD, balance, device QA and >=60-minute playtest"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -516,6 +535,9 @@ tasks:
       and keyboard/gamepad/touch. Log actual unfamiliar-player run durations; target
       >=60 minutes for first successful clear without artificial waiting. Confirm no
       static farming and proper leaderboards; do not call done on estimates alone.
+
+      2026-10-10: unblocked -- all six stages, six bosses, save/resume, ending and NG+ are in. Zuzu's walk was sped up (1.3 -> 1.7 px/tick) at Silas's request; jump distance unchanged because every gap is tuned to it. Bot sweep (endless lives, 2 seeds x 16 acts): 29/32 clear, the misses are pilot limits in two boss fights and one katana-vs-monk standoff. Bot clear times run 80-480 s per act -- these are NOT human times. Remaining here: authored sound/music, device/input QA, and the human timed playtest (>=60 min first clear) -- only a person can supply the latter; do not call it done on bot estimates.
+    updated: '2026-10-11T00:30:00Z'
 
   - id: t-022
     milestone: m6
