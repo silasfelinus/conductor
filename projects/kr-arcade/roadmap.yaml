@@ -433,17 +433,16 @@ tasks:
   - id: t-015
     milestone: m5
     title: "Ghost Trail authored encounter and campaign systems: secrets, progress, checkpoints and victory"
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
       Implement data-defined finite encounters (no idle score farming), two acts per stage, authored branches, unique loot/secret keys, checkpoint semantics, saved/resumable progress and real credits/victory instead of endless loops. Preserve seed-deterministic updates, input abstraction, hit/poncho mechanic and score API.
 
       First incremental campaign-system slice: four one-time stage relic discoveries with checkpoint-safe rewards, a finite victorious preview ending, and deterministic tests. The six-stage Act I, authored encounters, save/resume and full ten-hour campaign remain follow-up work.
-    claimed_by: 2026-10-10T124800Z-kr-arcade-t015-3e91
-    claimed_at: '2026-10-10T12:48:00Z'
-    updated: '2026-10-10T13:02:00Z'
+
+      PARTIAL SLICE SHIPPED 2026-10-10 PT: kind_robots#3450 merged after 29/29 completed CI workflows passed. Four reachable one-time relics now survive checkpoint retries, the HUD tracks relics, and the fourth current trail has a visible three-second PREVIEW CLEARED victory before leaderboard handoff. New tests added to test:arcade-engine and passed. conductor#5900 merged after all CI, recording Silas's ten-hour five-book north star in CONTROL.md and ghost-trail/TEN-HOUR-ROADMAP.md. REMAINING t-015: data-driven authored encounters, two acts per stage, branches, save/resume/checkpoint persistence and a six-stage Act I ending. Do not mark done or unblock dependent tasks yet.
+    updated: '2026-10-10T13:22:00Z'
   - id: t-016
     milestone: m5
     title: "Ghost Trail stage 1: Silver Gulch authored encounter graph and Grave Marshal boss"
