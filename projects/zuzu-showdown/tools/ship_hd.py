@@ -76,12 +76,15 @@ def ship_sprites(slug: str, rig_out: Path, game_dir: Path, scale: int) -> dict:
         anchor = fr["anchor"]
         fr.update(rect)
         fr["anchor"] = {"x": round(anchor["x"] * ratio), "y": round(anchor["y"] * ratio)}
-    rig = importlib.import_module(f"rigs.{slug}")
+    # A rig's P2 rules live in its config; a puppet sheet (puppet.py) carries its own.
+    rules = sheet.get("p2_rules")
+    if rules is None:
+        rules = importlib.import_module(f"rigs.{slug}").P2_RULES
     sheet.update({
         "scale": scale,
         "atlas": f"{slug}-hd.webp",
         "atlas_p2": None,
-        "p2_rules": [{**rule, "hue": list(rule["hue"])} for rule in rig.P2_RULES],
+        "p2_rules": [{**rule, "hue": list(rule["hue"])} for rule in rules],
     })
     game_dir.mkdir(parents=True, exist_ok=True)
     size = save_webp(atlas, game_dir / sheet["atlas"])
