@@ -844,7 +844,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Chrome wireform ramps, clear plastics and metalwork"
-    status: claimed
+    status: review
     depends_on: [t-026]
     owner: worker
     passes: 0
@@ -854,6 +854,18 @@ tasks:
       channels. Build the ramps and the Ridge feed as wireforms (tube rails, cross ties, mounting posts)
       or clear plastic with lit edges, chrome lane guides and habitrails, metal rails and lockdown
       hardware, all reflecting the room. Physics colliders unchanged (tests stay green).
+
+      Shipped in kind_robots#3443 (merged). New render/wireforms.ts, scenery only: the
+      colliders are unchanged, and a test checks every wired rail is still a collider. Every
+      ramp with a floor (left ramp, right ramp, upper feed) is a chrome wireform: two polished
+      wires per rail on uprights, cross ties under the clear floor, and a lit cyan strip along
+      each floor edge that dims with the GI. The sheet rails are no longer drawn. Chrome lane
+      guides get a rounded chrome bead along the top, and those taller than 3 cm are drawn as
+      clear plastic shields, which opens the middle of the table. The phone low tier renders
+      at about 6 ms per frame in SwiftShader. Screenshots: screenshots/t029-desk.jpg,
+      t029-ramp.jpg, t029-phone.jpg.
+    updated: '2026-10-10T11:47:20Z'
+    implementation_pr: 'silasfelinus/kind_robots#3443'
 
   - id: t-030
     milestone: m6
