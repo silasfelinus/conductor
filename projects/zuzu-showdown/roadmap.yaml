@@ -372,7 +372,7 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Sprite sets: the Abbess and the Siblings"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -382,9 +382,18 @@ tasks:
       "mother"; tentacle and portal effects through method C. The Siblings: the sister animates as the
       fighter, and the toddler is a separate puppet layer (rides her back, toddles behind, ducks, throws
       apples, is scooped up on KO) with no hurtbox. Follow the children rules in fighters.yaml exactly.
+
+      DONE 2026-10-10: the Abbess (rigs/abbess.py from art/T011-ABBESS-PARTS.yaml) and the
+      Siblings (rigs/siblings.py, the sister as the fighter) ship as HD and pixel atlases with
+      P2 colours; the toddler is a puppet (tools/puppet.py, six whole poses: stand, duck,
+      throw, proud, wave, raspberry) drawn by sprites.ts puppetPlace beside his sister, never
+      a hurtbox, and on her KO she scoops him up and flees (FLEE_DELAY 45, fleeShift). Shipped
+      in silasfelinus/kind_robots#3409 (the Abbess), #3410 and #3414 (the sister), #3422 (the
+      KO scoop) and #3431 (the toddler); the art ledgers in conductor#5880.
     claimed_by: 2026-10-09T12:00:00Z-zs-t011
     claimed_at: '2026-10-09T23:11:24Z'
-    updated: '2026-10-09T23:11:24Z'
+    updated: '2026-10-10T11:43:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#3431'
 
   - id: t-012
     milestone: m3
