@@ -1,0 +1,237 @@
+# Zuzu Pinball — The Last Bell. New standalone Arcade table (Silas, 2026-10-09 PT).
+# Creative deliverables: DESIGN-BRIEF.md, CONCEPT-ART.svg, PLAYFIELD-MOCKUP.svg.
+project: zuzu-pinball
+kind: software
+goal: >-
+  Ship Zuzu: The Last Bell as a visually arresting, mechanically deep, original
+  single-table pinball game inside the Kind Robots Arcade. FX3-class aspiration:
+  a 3D rendered and physically calibrated weird-west samurai cabinet with at least
+  three ramps, two orbits, upper dual-flipper mini playfield, lower dual flippers,
+  independent nudge and tilt, three multiball variants (3, 4, 6 balls), multiple
+  narrative modes, rich addressable LED and cabinet splash treatment, DMD, sound,
+  and a physically playable hidden undercrypt that returns to the main deck.
+  Initial preview is admin only. Definition of done requires device QA and
+  Silas's hands-on judgment that the table is genuinely FX3-quality.
+notes_from_silas: |
+  2026-10-09 PT: "I want a new project, a zuzu pinball game ... This should aim
+  to be at the level of a pinball fx3 table in terms of quality and complexity:
+  mulltiball, multiple flipper levels, tilt, multiple ramps, led, designed table
+  layout, splash borders, etc. add it to conductor as a new project, and give
+  an outline, realistic mockup, and concept art. Probably in reverse order."
+  The design begins with authored cabinet concept art, then a physical shot-map
+  mockup, then a thorough design brief. All are in this directory.
+  This is a distinct Zuzu game, not an extension or replacement of the
+  AMI Village Rescue table owned by kind-pinball. Share the engine;
+  separately author level geometry, game rules, art, audio, achievements and scores.
+  Treat Pinball FX3 as a bar for physical feel and quality, never as copied IP.
+  Preserve Zuzu's Edo-era ronin outsider persona and haunted-weird-west canon.
+  The Abbess feeds children to a cosmic horror; prior human world is a mystery.
+  Internal concept assets and reversible development may proceed without another
+  scope approval. Admin previews require /admin routes plus admin nav tabs.
+  A public /play game is outward-facing and requires explicit approval.
+  Do not mark the project complete until Silas judges a playable desktop/touch
+  build as good as a serious FX3 table. First make the table *fun*, then lavish it.
+
+milestones:
+  - id: m1
+    title: "SHAPE — cabinet concept, mechanical shot map, detailed design brief"
+    weight: 15
+    status: done
+  - id: m2
+    title: "PHYSICAL FOUNDATION — isolated Arcade entry, colliders, ramps, flippers"
+    weight: 30
+    status: not-started
+  - id: m3
+    title: "DEPTH — modes, multiball, hidden crypt, DMD and game progression"
+    weight: 30
+    status: not-started
+  - id: m4
+    title: "PRESENTATION — PBR cabinet, LEDs, music, cinematic camera and art"
+    weight: 15
+    status: not-started
+  - id: m5
+    title: "POLISH & GATE — performance, device QA, balancing and human verdict"
+    weight: 10
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Deliver Zuzu concept art, annotated multi-level shot mockup and design brief"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      2026-10-09 PT: CONCEPT-ART.svg, PLAYFIELD-MOCKUP.svg and DESIGN-BRIEF.md
+      are authored project deliverables. SVGs are design illustrations, not
+      generated production art, physically validated shots or gameplay.
+  - id: t-002
+    milestone: m1
+    title: "Optional creative scope response after first playable graybox"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    note: >-
+      FOR SILAS: this is a NON-BLOCKING creative check after the first playable
+      prototype exists. You have already authorized the game. Agents proceed
+      with reversible design, preview and implementation tasks immediately.
+  - id: t-003
+    milestone: m2
+    title: "Register isolated Zuzu Arcade cabinet, admin preview and discoverable admin nav"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Reuse the existing Arcade webgl engine and shell; create separate game id
+      zuzu-pinball, game-specific state, assets, score namespace and lazy loader.
+      Initial playable surface must live under /admin/zuzu-pinball, with a
+      content/channels/admin tab requiredRole ADMIN. Keep /play unpublished until
+      explicitly authorized. Audit sibling game registration and tests.
+  - id: t-004
+    milestone: m2
+    title: "Implement dimensioned Zuzu physical graybox, shooter lane and lower flippers"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Calibrate units, slope, gravity, ball radius, restitution, rubber materials,
+      flipper torque, cradle and catch control, shooter-lane gate, one-way trough
+      and ball serve. Unit/integration tests for all ball transitions. The SVG
+      mockup is a design guide, not a tested geometry mesh.
+  - id: t-005
+    milestone: m2
+    title: "Build three physically distinct elevated ramps, two orbits and shot sensors"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Fabricate Village left switchback returning right, Abbey right crossover
+      returning left, and central Bell spiral rising to the Abbey. Add orbit
+      returns, safe sensors, ball collision sweeps and target animations.
+      Prove each shot with captured trajectory and repeatable test scenario.
+  - id: t-006
+    milestone: m2
+    title: "Build raised Abbey upper deck with two independent flippers"
+    status: waiting
+    depends_on: t-005
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      A visible, physically elevated mini-playfield and upper left/right player
+      controls (plus mirrored accessibility mode); ramp entry, deck targets,
+      protected exits, and controlled ball returns to lower playfield.
+  - id: t-007
+    milestone: m2
+    title: "Implement sling, pop bumper, drop bank, scoop, captive ball and tilt"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Three pops, four resetting drops, capture-and-eject scoop, trapped relic
+      ball, calibrated slings, ball save and kickback. Implement nudge with
+      warnings, bob threshold, temporary disables, tilt termination, and
+      repeatable no-ball-trap/physics regression tests.
+  - id: t-008
+    milestone: m3
+    title: "Implement mode director, five story chapters, shot awards and DMD contracts"
+    status: waiting
+    depends_on: t-005
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Mode-state engine with Homestead, Storm Crow, Abbey, Children's Names
+      and Last Bell. Lamp and DMD bindings, ball-to-ball chapter retention,
+      skill shots, combo ladder, multiplier, extra ball, match and game over.
+      Narrative readability never blocks the player from flipping.
+  - id: t-009
+    milestone: m3
+    title: "Add physical lock and 3/4/6 ball multiballs with jackpots"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Real ball trough/serve count and Citadel lock, virtual lock fallback,
+      Harvest Moon 3-ball, Storm Crow 4-ball, Last Bell 6-ball, bonus and
+      super-jackpot escalation. Soak test multi-contact collisions and cleanup.
+  - id: t-010
+    milestone: m3
+    title: "Build and balance unlockable hidden undercrypt mini-table"
+    status: waiting
+    depends_on: t-006
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Crypt trapdoor and isolated 3D mini-table with two mini flippers, skill
+      targets and a valid mechanical kicker back to primary playfield. Prevent
+      multiball leaks and unfair drains when transitioning scenes.
+  - id: t-011
+    milestone: m4
+    title: "Build production art assets, 3D cabinet, ramps, ball, plastics and themed toys"
+    status: waiting
+    depends_on: t-005
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Concept-art.svg is NOT final shipped 3D art. Use verified generated art
+      jobs or original authored assets: Zuzu backglass and cabinet sides,
+      moonlit village decals, 3D monastery, physical bell, figures, props,
+      glass/chrome reflections and raised mechanical ramp model.
+      Log prompts, seeds, sources, rights, destinations and asset state.
+  - id: t-012
+    milestone: m4
+    title: "Addressable LED rail and bezel splash shows, sound, DMD animations, camera"
+    status: waiting
+    depends_on: t-008
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      LED strip and insert light-map editor, GI, restrained strobes, mode cues,
+      cabinet border art, animated high-score and callout scenes, layered sound
+      mixing and camera sweeps that never impair flipper response.
+      Provide static camera and reduced-motion settings.
+  - id: t-013
+    milestone: m5
+    title: "Run physics/rules soaks, input accessibility and cross-device performance QA"
+    status: waiting
+    depends_on: t-009
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      After t-010 through t-012 complete, run no-stuck-ball scenarios, repeated
+      setup/dispose, six-ball stress, representative desktop/touch playtests,
+      mobile/desktop screenshots, camera/input layouts, frame timing and
+      accessible table guide. Add missing remediation tasks rather than
+      declaring completion by count.
+  - id: t-014
+    milestone: m5
+    title: "Silas visual/play acceptance and authorization for any public /play launch"
+    status: waiting
+    depends_on: t-013
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    note: >-
+      FOR SILAS: hands-on verdict that the actual playable table matches the
+      chosen FX3-grade feel and complexity, not just screenshots. Separately
+      authorize public route/Arcade exposure before publication. Agents may
+      polish and create private preview builds; no public game release or
+      project-finished declaration without this explicit approval.
