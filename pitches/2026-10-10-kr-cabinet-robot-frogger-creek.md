@@ -1,7 +1,7 @@
 # Pitch: Creek Crossing Cadet
 date: 2026-10-10
 project-target: kr-arcade
-status: awaiting-silas
+status: rejected
 
 ## The idea
 An arcade cabinet riffing on Frogger's lane-hopping road and river crossing, where a tiny robot hops across rolling carts and then drifting lily-pad rafts to reach a home dock. Each round adds faster lanes, diving turtles and a bonus firefly for extra points.
