@@ -1,0 +1,517 @@
+# Zuzu Gamebook art round 5 (zuzu-gamebook t-006): the planned plates for Acts V-IX of BOOK-ONE-OUTLINE.md (8, Art plan).
+# Silas, 2026-10-10: "keep expanding the gamebook, submit artjob requests as needed." 15 plates x 2 seeds (one Kontext restaging of the locked Abbess front).
+# Each plate already has a stand-in key in kind_robots utils/zuzuGamebook/art.ts; keepers replace the stand-ins.
+# Words that misfired before are avoided (poster, kasa in still lifes, flint, bandage, smoking, duster). Children are
+# endangered, never harmed on the page. Prompts pre-checked against kind_robots artPromptContract.
+# Indexed in worlds/zuzu/assets/ledger-part-05.json; keep that shard in step when outputs land.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status; --lane). Private.
+round: gamebook-5
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, muted earthy palette, desaturated, weathered,
+    grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+- key: kontext-stage
+  label: Flux Kontext dev (fp8), restage an approved render
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: gb5-wren-1
+  entity: otter
+  lane: arthemy-house
+  title: 'Act V: Sister Wren (seed 1)'
+  size: 1344x768
+  seed: 8000
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, child, baby, weasel, ferret, mink,
+    long snout, pointed face, water, purple fur
+  prompt_prose: a young otter novice in a grey habit glances over her shoulder in a dim mission corridor, holding
+    a folded scrap of paper.
+  prompt_tags: anthro otter, female, young adult, novice nun, grey habit, white veil, brown fur, (flat face:1.3),
+    (round face:1.2), button nose, whiskers, (fully clothed:1.3), standing in a dim whitewashed adobe mission corridor,
+    glancing nervously over her shoulder, holding a small folded scrap of paper against her chest, candlelight,
+    frightened eyes, solo, medium shot
+  jobs:
+    arthemy-house: 35230
+- key: gb5-wren-2
+  entity: otter
+  lane: arthemy-house
+  title: 'Act V: Sister Wren (seed 2)'
+  size: 1344x768
+  seed: 8001
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, child, baby, weasel, ferret, mink,
+    long snout, pointed face, water, purple fur
+  prompt_prose: a young otter novice in a grey habit glances over her shoulder in a dim mission corridor, holding
+    a folded scrap of paper.
+  prompt_tags: anthro otter, female, young adult, novice nun, grey habit, white veil, brown fur, (flat face:1.3),
+    (round face:1.2), button nose, whiskers, (fully clothed:1.3), standing in a dim whitewashed adobe mission corridor,
+    glancing nervously over her shoulder, holding a small folded scrap of paper against her chest, candlelight,
+    frightened eyes, solo, medium shot
+  jobs:
+    arthemy-house: 35231
+- key: gb5-rabbit-kit-1
+  entity: rabbit
+  lane: arthemy-house
+  title: 'Act V: the silent kit (seed 1)'
+  size: 1344x768
+  seed: 8010
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature,
+    human, person
+  prompt_prose: a small silent rabbit child sits on a neatly made cot in a whitewashed dormitory, staring at the
+    door.
+  prompt_tags: anthro, rabbit, child, small, long ears, clean plain grey smock, (fully clothed:1.3), sitting very
+    still on a neatly made narrow cot in a whitewashed adobe dormitory, empty cots in a row behind, staring at the
+    door with blank tired eyes, pale morning light, solo, medium shot
+  jobs:
+    arthemy-house: 35232
+- key: gb5-rabbit-kit-2
+  entity: rabbit
+  lane: arthemy-house
+  title: 'Act V: the silent kit (seed 2)'
+  size: 1344x768
+  seed: 8011
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature,
+    human, person
+  prompt_prose: a small silent rabbit child sits on a neatly made cot in a whitewashed dormitory, staring at the
+    door.
+  prompt_tags: anthro, rabbit, child, small, long ears, clean plain grey smock, (fully clothed:1.3), sitting very
+    still on a neatly made narrow cot in a whitewashed adobe dormitory, empty cots in a row behind, staring at the
+    door with blank tired eyes, pale morning light, solo, medium shot
+  jobs:
+    arthemy-house: 35233
+- key: gb5-pilgrim-wagon-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act V: the pilgrim wagon (seed 1)'
+  size: 1344x768
+  seed: 8020
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, horse rider
+  prompt_prose: a covered wagon with a small brass bell at its front waits at the gate of a desert mission at dawn.
+  prompt_tags: (no characters:1.3), scenery, a canvas-covered wagon with a small brass bell hanging from the front
+    hoop of the canopy, standing ready at the open wooden gate of an adobe desert mission at dawn, water barrels
+    lashed to its side, a small empty bench inside the canvas, long shadows, quiet, wide shot
+  jobs:
+    arthemy-house: 35234
+- key: gb5-pilgrim-wagon-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act V: the pilgrim wagon (seed 2)'
+  size: 1344x768
+  seed: 8021
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, horse rider
+  prompt_prose: a covered wagon with a small brass bell at its front waits at the gate of a desert mission at dawn.
+  prompt_tags: (no characters:1.3), scenery, a canvas-covered wagon with a small brass bell hanging from the front
+    hoop of the canopy, standing ready at the open wooden gate of an adobe desert mission at dawn, water barrels
+    lashed to its side, a small empty bench inside the canvas, long shadows, quiet, wide shot
+  jobs:
+    arthemy-house: 35235
+- key: gb5-the-dream-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act V: the dream (seed 1)'
+  size: 1344x768
+  seed: 8030
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, snake head, dragon
+  prompt_prose: a road of golden light runs across black emptiness toward a far lit window, while coils of darkness
+    wrap its edges.
+  prompt_tags: (no characters:1.3), surreal, dreamlike, a narrow road of soft golden light stretching across a black
+    starless void toward a tiny distant house with one warm lit window, huge coils of smoky darkness wrapping around
+    both edges of the road, faint eyes of light in the darkness, eerie, beautiful, epic wide shot
+  jobs:
+    arthemy-house: 35236
+- key: gb5-the-dream-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act V: the dream (seed 2)'
+  size: 1344x768
+  seed: 8031
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face, snake head, dragon
+  prompt_prose: a road of golden light runs across black emptiness toward a far lit window, while coils of darkness
+    wrap its edges.
+  prompt_tags: (no characters:1.3), surreal, dreamlike, a narrow road of soft golden light stretching across a black
+    starless void toward a tiny distant house with one warm lit window, huge coils of smoky darkness wrapping around
+    both edges of the road, faint eyes of light in the darkness, eerie, beautiful, epic wide shot
+  jobs:
+    arthemy-house: 35237
+- key: gb5-mags-bar-1
+  entity: rabbit
+  lane: arthemy-house
+  title: 'Act VI: Mags behind the bar (seed 1)'
+  size: 1344x768
+  seed: 8040
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person
+  prompt_prose: a weathered rabbit barkeep leans on the counter of a dim frontier saloon, a scattergun on the shelf
+    behind her.
+  prompt_tags: anthro, rabbit, female, middle-aged, weathered, one ear notched, rolled sleeves, dark vest, apron,
+    (fully clothed:1.3), leaning both paws on the counter of a dim frontier saloon, a double-barrel shotgun on the
+    shelf behind her, bottles, lamp light, tired grieving eyes, solo, medium shot
+  jobs:
+    arthemy-house: 35238
+- key: gb5-mags-bar-2
+  entity: rabbit
+  lane: arthemy-house
+  title: 'Act VI: Mags behind the bar (seed 2)'
+  size: 1344x768
+  seed: 8041
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person
+  prompt_prose: a weathered rabbit barkeep leans on the counter of a dim frontier saloon, a scattergun on the shelf
+    behind her.
+  prompt_tags: anthro, rabbit, female, middle-aged, weathered, one ear notched, rolled sleeves, dark vest, apron,
+    (fully clothed:1.3), leaning both paws on the counter of a dim frontier saloon, a double-barrel shotgun on the
+    shelf behind her, bottles, lamp light, tired grieving eyes, solo, medium shot
+  jobs:
+    arthemy-house: 35239
+- key: gb5-baron-office-1
+  entity: pronghorn
+  lane: arthemy-house
+  title: 'Act VI: the water baron''s office (seed 1)'
+  size: 1344x768
+  seed: 8050
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person, deer antlers
+  prompt_prose: a pronghorn in a fine suit sits behind a desk in a lamplit office, a map of wells on the wall and
+    a water jug before him.
+  prompt_tags: anthro, pronghorn, male, curved horns, sleek, fine dark suit, waistcoat, watch chain, (fully clothed:1.3),
+    sitting behind a heavy desk in a lamplit frontier office, a hand-drawn map of wells pinned on the wall, a crystal
+    water jug and a ledger on the desk, calm cold smile, solo, medium shot
+  jobs:
+    arthemy-house: 35240
+- key: gb5-baron-office-2
+  entity: pronghorn
+  lane: arthemy-house
+  title: 'Act VI: the water baron''s office (seed 2)'
+  size: 1344x768
+  seed: 8051
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person, deer antlers
+  prompt_prose: a pronghorn in a fine suit sits behind a desk in a lamplit office, a map of wells on the wall and
+    a water jug before him.
+  prompt_tags: anthro, pronghorn, male, curved horns, sleek, fine dark suit, waistcoat, watch chain, (fully clothed:1.3),
+    sitting behind a heavy desk in a lamplit frontier office, a hand-drawn map of wells pinned on the wall, a crystal
+    water jug and a ledger on the desk, calm cold smile, solo, medium shot
+  jobs:
+    arthemy-house: 35241
+- key: gb5-torch-mob-1
+  entity: townsfolk
+  lane: arthemy-house
+  title: 'Act VI: the torch mob (seed 1)'
+  size: 1344x768
+  seed: 8060
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person, blood
+  prompt_prose: a crowd of townsfolk animals with torches and rifles gathers in a dusty frontier street at night.
+  prompt_tags: anthro, crowd of animal townsfolk, rabbits, dogs, goats, hares, (fully clothed:1.3), ragged frontier
+    clothes, holding burning torches and rifles, gathered in a dusty frontier street at night, angry grieving faces,
+    firelight, sparks, smoke, wooden storefronts, wide shot
+  jobs:
+    arthemy-house: 35242
+- key: gb5-torch-mob-2
+  entity: townsfolk
+  lane: arthemy-house
+  title: 'Act VI: the torch mob (seed 2)'
+  size: 1344x768
+  seed: 8061
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person, blood
+  prompt_prose: a crowd of townsfolk animals with torches and rifles gathers in a dusty frontier street at night.
+  prompt_tags: anthro, crowd of animal townsfolk, rabbits, dogs, goats, hares, (fully clothed:1.3), ragged frontier
+    clothes, holding burning torches and rifles, gathered in a dusty frontier street at night, angry grieving faces,
+    firelight, sparks, smoke, wooden storefronts, wide shot
+  jobs:
+    arthemy-house: 35243
+- key: gb5-bounty-badger-1
+  entity: badger
+  lane: arthemy-house
+  title: 'Act VI: the bounty hunter (seed 1)'
+  size: 1344x768
+  seed: 8070
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person
+  prompt_prose: a broad grizzled badger bounty hunter in a long coat rests a rifle on his shoulder by a hitching
+    rail.
+  prompt_tags: anthro, badger, male, broad, grizzled, scarred grey snout, wide-brimmed hat, long canvas coat, bandolier,
+    (fully clothed:1.3), rifle resting on his shoulder, standing by a hitching rail in a dusty frontier street,
+    honest steady eyes, afternoon, solo, full body
+  jobs:
+    arthemy-house: 35244
+- key: gb5-bounty-badger-2
+  entity: badger
+  lane: arthemy-house
+  title: 'Act VI: the bounty hunter (seed 2)'
+  size: 1344x768
+  seed: 8071
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, human, person
+  prompt_prose: a broad grizzled badger bounty hunter in a long coat rests a rifle on his shoulder by a hitching
+    rail.
+  prompt_tags: anthro, badger, male, broad, grizzled, scarred grey snout, wide-brimmed hat, long canvas coat, bandolier,
+    (fully clothed:1.3), rifle resting on his shoulder, standing by a hitching rail in a dusty frontier street,
+    honest steady eyes, afternoon, solo, full body
+  jobs:
+    arthemy-house: 35245
+- key: gb5-shifting-road-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act VII: the shifting road (seed 1)'
+  size: 1344x768
+  seed: 8080
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: a pale road winds among tall black rocks under the moon, splitting where it should not.
+  prompt_tags: (no characters:1.3), scenery, a pale dusty road winding at night between towering jagged black rocks
+    under a full moon, the road splitting into three paths that bend impossibly, faint shimmer in the air, eerie,
+    uncanny, epic wide shot
+  jobs:
+    arthemy-house: 35246
+- key: gb5-shifting-road-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act VII: the shifting road (seed 2)'
+  size: 1344x768
+  seed: 8081
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: a pale road winds among tall black rocks under the moon, splitting where it should not.
+  prompt_tags: (no characters:1.3), scenery, a pale dusty road winding at night between towering jagged black rocks
+    under a full moon, the road splitting into three paths that bend impossibly, faint shimmer in the air, eerie,
+    uncanny, epic wide shot
+  jobs:
+    arthemy-house: 35247
+- key: gb5-mob-fire-gate-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act VIII: fire at the mission gate (seed 1)'
+  size: 1344x768
+  seed: 8090
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: the wooden gate of an adobe mission burns at night, torches massed beyond it and the bell tower
+    black against the flames.
+  prompt_tags: (no characters:1.3), scenery, the heavy wooden gate of an adobe desert mission burning at night,
+    flames climbing the wall, many torches glowing in the dark beyond the gate, the bell tower silhouetted against
+    smoke and fire, sparks, wide shot
+  jobs:
+    arthemy-house: 35248
+- key: gb5-mob-fire-gate-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act VIII: fire at the mission gate (seed 2)'
+  size: 1344x768
+  seed: 8091
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: the wooden gate of an adobe mission burns at night, torches massed beyond it and the bell tower
+    black against the flames.
+  prompt_tags: (no characters:1.3), scenery, the heavy wooden gate of an adobe desert mission burning at night,
+    flames climbing the wall, many torches glowing in the dark beyond the gate, the bell tower silhouetted against
+    smoke and fire, sparks, wide shot
+  jobs:
+    arthemy-house: 35249
+- key: gb5-cellar-cells-1
+  entity: children
+  lane: arthemy-house
+  title: 'Act VIII: the cellar cells (seed 1)'
+  size: 1344x768
+  seed: 8100
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature,
+    human, person
+  prompt_prose: barred cells along a candlelit cellar passage, small frightened animal children peering out.
+  prompt_tags: anthro, small animal children, rabbit child, mouse child, fox child, (fully clothed:1.3), plain grey
+    smocks, peering out from behind iron bars of small cells along a low stone cellar passage, a single candle on
+    the floor, frightened wide eyes, dark, wide shot
+  jobs:
+    arthemy-house: 35250
+- key: gb5-cellar-cells-2
+  entity: children
+  lane: arthemy-house
+  title: 'Act VIII: the cellar cells (seed 2)'
+  size: 1344x768
+  seed: 8101
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature,
+    human, person
+  prompt_prose: barred cells along a candlelit cellar passage, small frightened animal children peering out.
+  prompt_tags: anthro, small animal children, rabbit child, mouse child, fox child, (fully clothed:1.3), plain grey
+    smocks, peering out from behind iron bars of small cells along a low stone cellar passage, a single candle on
+    the floor, frightened wide eyes, dark, wide shot
+  jobs:
+    arthemy-house: 35251
+- key: gb5-abbess-knife-1
+  entity: abbess
+  lane: kontext-stage
+  title: 'Act VIII: the Abbess at knifepoint (seed 1)'
+  size: 1344x768
+  seed: 8110
+  prompt_prose: 'Fill the whole picture with the scene: she stands in a dark candlelit crypt before a cracked stone
+    wall, holding a long curved knife low at her side, calm and patient, black candles burning around her feet,
+    a faint coil of shadow behind the wall cracks. Keep her exactly as she is: her flat round face, button nose,
+    whiskers, brown fur, black habit, white wimple, colours and the inked comic style.'
+  source_image_id: 242559
+  source_pad: '16:9'
+  jobs:
+    kontext-stage: 35258
+- key: gb5-abbess-knife-2
+  entity: abbess
+  lane: kontext-stage
+  title: 'Act VIII: the Abbess at knifepoint (seed 2)'
+  size: 1344x768
+  seed: 8111
+  prompt_prose: 'Fill the whole picture with the scene: she stands in a dark candlelit crypt before a cracked stone
+    wall, holding a long curved knife low at her side, calm and patient, black candles burning around her feet,
+    a faint coil of shadow behind the wall cracks. Keep her exactly as she is: her flat round face, button nose,
+    whiskers, brown fur, black habit, white wimple, colours and the inked comic style.'
+  source_image_id: 242559
+  source_pad: '16:9'
+  jobs:
+    kontext-stage: 35259
+- key: gb5-nuns-kneel-1
+  entity: nuns
+  lane: arthemy-house
+  title: 'Act IX: the nuns on their knees (seed 1)'
+  size: 1344x768
+  seed: 8120
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, child, baby, weasel, ferret, mink,
+    long snout, pointed face, water, purple fur, blood
+  prompt_prose: three otter nuns kneel in the dust of a mission courtyard at dawn, heads bowed, begging.
+  prompt_tags: three anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
+    (round face:1.2), button nose, whiskers, kneeling in the dust of an adobe mission courtyard at dawn, heads bowed,
+    paws clasped, begging, smoke drifting from a burned door behind them, grey light, wide shot
+  jobs:
+    arthemy-house: 35252
+- key: gb5-nuns-kneel-2
+  entity: nuns
+  lane: arthemy-house
+  title: 'Act IX: the nuns on their knees (seed 2)'
+  size: 1344x768
+  seed: 8121
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, child, baby, weasel, ferret, mink,
+    long snout, pointed face, water, purple fur, blood
+  prompt_prose: three otter nuns kneel in the dust of a mission courtyard at dawn, heads bowed, begging.
+  prompt_tags: three anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
+    (round face:1.2), button nose, whiskers, kneeling in the dust of an adobe mission courtyard at dawn, heads bowed,
+    paws clasped, begging, smoke drifting from a burned door behind them, grey light, wide shot
+  jobs:
+    arthemy-house: 35253
+- key: gb5-children-leaving-1
+  entity: children
+  lane: arthemy-house
+  title: 'Act IX: the children leaving (seed 1)'
+  size: 1344x768
+  seed: 8130
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature,
+    human, person
+  prompt_prose: a line of small animal children walks out of a mission gate into the morning desert, holding paws.
+  prompt_tags: anthro, small animal children, rabbit, mouse, fox, (fully clothed:1.3), plain grey smocks, a line
+    of them walking hand in hand out of the open gate of an adobe desert mission into a bright morning desert, seen
+    from behind, long shadows, hopeful, wide shot
+  jobs:
+    arthemy-house: 35254
+- key: gb5-children-leaving-2
+  entity: children
+  lane: arthemy-house
+  title: 'Act IX: the children leaving (seed 2)'
+  size: 1344x768
+  seed: 8131
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, nude, revealing clothes, adult female body, mature,
+    human, person
+  prompt_prose: a line of small animal children walks out of a mission gate into the morning desert, holding paws.
+  prompt_tags: anthro, small animal children, rabbit, mouse, fox, (fully clothed:1.3), plain grey smocks, a line
+    of them walking hand in hand out of the open gate of an adobe desert mission into a bright morning desert, seen
+    from behind, long shadows, hopeful, wide shot
+  jobs:
+    arthemy-house: 35255
+- key: gb5-bell-dawn-1
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act IX: the bell rings at dawn (seed 1)'
+  size: 1344x768
+  seed: 8140
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: a bronze bell swings in a mission tower at sunrise, light breaking across the desert.
+  prompt_tags: (no characters:1.3), scenery, a bronze bell swinging in the open arch of an adobe mission bell tower
+    at sunrise, motion, golden light breaking across a vast desert behind it, birds rising, dust in the light, triumphant,
+    beautiful, low angle
+  jobs:
+    arthemy-house: 35256
+- key: gb5-bell-dawn-2
+  entity: scenery
+  lane: arthemy-house
+  title: 'Act IX: the bell rings at dawn (seed 2)'
+  size: 1344x768
+  seed: 8141
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: a bronze bell swings in a mission tower at sunrise, light breaking across the desert.
+  prompt_tags: (no characters:1.3), scenery, a bronze bell swinging in the open arch of an adobe mission bell tower
+    at sunrise, motion, golden light breaking across a vast desert behind it, birds rising, dust in the light, triumphant,
+    beautiful, low angle
+  jobs:
+    arthemy-house: 35257
