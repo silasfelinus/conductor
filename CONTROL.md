@@ -640,6 +640,7 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Work may proceed through internal assets and reversible implementation without waiting for optional design scope feedback. A visually beautiful mockup is not a verified pinball collider mesh; don't skip sim tests, responsiveness and measured performance.
 - Final project acceptance requires Silas's hands-on FX3-grade verdict after device checks. Nothing is called finished on the strength of a task count or static screenshots.
 
+- **2026-10-10, accepted art direction:** Silas endorsed the three cinematic/tabletop pinball mockups as the layout goal and explicitly requested implementation. See projects/zuzu-pinball/VISUAL-TARGET.md for the durable geometry/art translation. Treat the mockups as compositional guidance, not physically validated shots; enforce real ball paths, clear Croc mouth access, visible upper dual flippers, distinct ramp feeds and game-grade rendering.
 - **2026-10-09 follow-up, mandatory:** River Croc from Zuzu's watering-hole canon must appear as a large animatronic table toy. Players must be able to aim a steel ball into his open mouth. Replace the former left Mortuary scoop (#07) with a crocodile jaw capture, Death Roll event, and controlled safe spit-back, as specified in projects/zuzu-pinball/RIVER-CROC-TOY-CONCEPT.svg and the updated mockups. Physical mechanism task t-015 and Watering Hole mini-mode t-016 are required before final acceptance.
 
 ### robot-paper-boat-regatta  (software)
