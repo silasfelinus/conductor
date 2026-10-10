@@ -137,9 +137,10 @@ STRIKES = {
     "stand_lk": timed(5, 3, 8, stance(4, front_leg={"angle": 20}),
                       stance(2, body={"angle": -6}, front_leg={"angle": 60, "dy": -30, "dx": 30}),
                       stance(4, front_leg={"angle": 24}), stance(0)),
-    # Standing HK: a high swinging kick, the habit hitched up.
+    # Standing HK: a long stamping kick out from under the hem, leaning back behind it (the habit
+    # keeps her kicks low: there is no thigh to lift).
     "stand_hk": timed(10, 4, 18, stance(8, front_leg={"angle": 24}),
-                      stance(-6, body={"angle": -12}, front_leg={"angle": 92, "dy": -110, "dx": 70, "sy": 0.25},
+                      stance(-4, body={"angle": -10, "dx": -10}, front_leg={"angle": 78, "dy": -16, "dx": 24, "sy": 0.2},
                              arm=20),
                       stance(4, front_leg={"angle": 40, "dy": -20}), stance(0)),
     "crouch_lp": timed(4, 2, 6, crouched(dagger_arm={"angle": 20}),
@@ -154,8 +155,8 @@ STRIKES = {
                        crouched(dagger_arm={"angle": 10})),
     # Crouching HK: the sweep, low along the floor.
     "crouch_hk": timed(9, 4, 20, crouched(),
-                       crouched(body={"dy": 210, "angle": 8}, back_leg={"sy": -0.6, "sx": 0.12, "dy": 210},
-                                front_leg={"sy": 0.15, "sx": 0, "dy": 210, "dx": 90, "angle": 82}),
+                       crouched(body={"dy": 190, "angle": 8}, back_leg={"sy": -0.6, "sx": 0.12, "dy": 190},
+                                front_leg={"sy": 0.2, "sx": 0, "dy": 190, "dx": 10, "angle": 86}),
                        crouched(front_leg={"sy": -0.3, "dy": CROUCH_DY, "angle": 40})),
     "jump_lp": timed(4, 6, 4, tucked(), tucked(dagger_arm={"angle": -96, "dx": -40, "dy": 150}), tucked()),
     # Jumping HP: a downward stab.
