@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-10-09T18:25:11.781493+00:00",
+  "generated_at": "2026-10-10T06:01:25.676214+00:00",
   "summary": {
-    "status": "unresolved",
+    "status": "semantic-review-due",
     "roadmap_errors": 0,
-    "roadmap_warnings": 23,
+    "roadmap_warnings": 25,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
-    "project_unresolved": "Kind Robots project parity check failed: HTTPError: HTTP Error 503: Service Unavailable",
+    "project_unresolved": null,
     "openai_scheduled_agent_overdue": true,
     "openai_scheduled_agent_authoritative": false,
     "intent_review_due": true
@@ -14,7 +14,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 153.02,
+    "hours_since": 164.62,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -22,28 +22,28 @@
   "intent_review": {
     "due": true,
     "last_report": "INTENT-AUDIT-2026-10-03.md",
-    "days_since": 6,
+    "days_since": 7,
     "stale_days": 3.0
   },
   "project_parity": {
     "forward": [],
     "reverse": [],
-    "unresolved": "Kind Robots project parity check failed: HTTPError: HTTP Error 503: Service Unavailable"
+    "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-09T18:25:11.781500+00:00",
+    "generated_at": "2026-10-10T06:01:25.676219+00:00",
     "summary": {
-      "roadmaps": 77,
-      "active_projects": 38,
+      "roadmaps": 78,
+      "active_projects": 39,
       "continuous_projects": 3,
-      "tasks": 2025,
-      "ready": 86,
-      "waiting": 110,
-      "needs_human": 44,
-      "in_progress": 14,
-      "done": 1755,
+      "tasks": 2058,
+      "ready": 87,
+      "waiting": 118,
+      "needs_human": 45,
+      "in_progress": 17,
+      "done": 1775,
       "errors": 0,
-      "warnings": 23,
+      "warnings": 25,
       "info": 55
     },
     "errors": [],
@@ -60,7 +60,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "animation-manager",
         "task": "t-022",
-        "message": "Task has remained claimed for 15 days."
+        "message": "Task has remained claimed for 16 days."
       },
       {
         "severity": "warning",
@@ -74,7 +74,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "art-archive",
         "task": "t-033",
-        "message": "Task has remained claimed for 6 days."
+        "message": "Task has remained claimed for 7 days."
       },
       {
         "severity": "warning",
@@ -109,7 +109,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "kind-economy",
         "task": "t-011",
-        "message": "Task has remained claimed for 3 days."
+        "message": "Task has remained claimed for 4 days."
       },
       {
         "severity": "warning",
@@ -137,6 +137,13 @@
         "code": "STALE_IN_PROGRESS",
         "project": "kind-robots",
         "task": "t-131",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "kind-robots",
+        "task": "t-133",
         "message": "Task has remained review for 3 days."
       },
       {
@@ -187,6 +194,13 @@
         "project": "tzaddik-gallery",
         "task": "t-013",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "zuzu-lair",
+        "task": "t-004",
+        "message": "Task has remained claimed for 3 days."
       },
       {
         "severity": "warning",
