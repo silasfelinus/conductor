@@ -1,0 +1,255 @@
+# zuzu-showdown t-008: portraits for the four fighters with locked canon art, re-posed with Flux Kontext from
+# each one's approved front reference so they stay on model: a select-screen bust (square), a VS-screen
+# half-body slam (tall), a victory portrait (fighters.yaml victory_poses) and a beaten portrait. The Siblings'
+# beaten portrait is the sister shielding her brother, never hurt (fighters.yaml children_rules); every child is
+# always fully dressed in their rags. The Coyote's right hand is gone in the game (a knife lashed to the bandaged
+# stump), so his prompts say so. The other four fighters get theirs once T012-REFERENCES.yaml's seeds are picked.
+# No lettering. Then pixelize them to sit with the sprites (t-008 note). Generated art is pre-approved.
+# Sources: Zuzu 242395, the Coyote 242401, the Abbess 242513, the sister 242128 (fighters.yaml references).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-portraits
+  label: Flux Kontext dev (fp8), portraits from the locked reference
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: zuzu-bust
+  entity: zuzu
+  title: 'Zuzu portrait: select bust'
+  size: 1024x1024
+  source_image_id: 242395
+  prompt_prose: Show only his head and shoulders, close up, turned three-quarters toward the viewer, his eyes in
+    the shadow of the straw hat, serious and silent, the katana hilt over his right shoulder. Keep the same short
+    stocky koala, the same poncho, scarf and straw hat, and the same comic art style. On a plain dark background,
+    no text.
+  jobs:
+    kontext-portraits: 35176
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-vs
+  entity: zuzu
+  title: 'Zuzu portrait: VS slam'
+  size: 832x1216
+  source_image_id: 242395
+  prompt_prose: Show him from the knees up, drawing the katana from over his right shoulder as he steps toward the
+    viewer, ready to duel, wind pulling at the poncho. Keep the same short stocky koala, the same poncho, scarf
+    and straw hat, and the same comic art style. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35177
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-victory
+  entity: zuzu
+  title: 'Zuzu portrait: victory'
+  size: 832x1216
+  source_image_id: 242395
+  prompt_prose: Show him sheathing the katana over his shoulder and lifting the straw hat from his head in a quiet
+    salute to a fallen opponent, eyes lowered. Keep the same short stocky koala, the same poncho and scarf, and
+    the same comic art style. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35178
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-beaten
+  entity: zuzu
+  title: 'Zuzu portrait: beaten'
+  size: 832x1216
+  source_image_id: 242395
+  prompt_prose: Show him down on one knee, dusty and exhausted, leaning on his sheathed katana, the straw hat fallen
+    beside him, catching his breath. Keep the same short stocky koala, the same poncho and scarf, and the same comic
+    art style. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35179
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: coyote-bust
+  entity: coyote-vagrant
+  title: 'the Coyote portrait: select bust'
+  size: 1024x1024
+  source_image_id: 242401
+  prompt_prose: Show only his head and shoulders, close up, turned three-quarters toward the viewer, a crooked bitter
+    grin, the eyepatch over his right eye, the crushed hat. Keep the same mangy one-eyed coyote in the same tattered
+    long riding coat, and the same comic art style. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35180
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: coyote-vs
+  entity: coyote-vagrant
+  title: 'the Coyote portrait: VS slam'
+  size: 832x1216
+  source_image_id: 242401
+  prompt_prose: Show him from the knees up, lunging toward the viewer with a revolver raised in his left hand; his
+    right hand is gone, and a knife is lashed to the bandaged stump of his right wrist. Keep the same mangy one-eyed
+    coyote with the eyepatch, the same tattered long riding coat and crushed hat, and the same comic art style.
+    On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35181
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: coyote-victory
+  entity: coyote-vagrant
+  title: 'the Coyote portrait: victory'
+  size: 832x1216
+  source_image_id: 242401
+  prompt_prose: Show him holding up a single small button between the fingers of his left hand, looking at it with
+    disgust; his right hand is gone, and a knife is lashed to the bandaged stump of his right wrist. Keep the same
+    mangy one-eyed coyote with the eyepatch, the same tattered long riding coat and crushed hat, and the same comic
+    art style. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35182
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: coyote-beaten
+  entity: coyote-vagrant
+  title: 'the Coyote portrait: beaten'
+  size: 832x1216
+  source_image_id: 242401
+  prompt_prose: Show him sitting slumped in the dust, worn out, the crushed hat tipped down over his face, his bandaged
+    right stump resting on his knee with the knife lashed to it. Keep the same mangy one-eyed coyote, the same tattered
+    long riding coat, and the same comic art style. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35183
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: abbess-bust
+  entity: the-abbess
+  title: 'the Abbess portrait: select bust'
+  size: 1024x1024
+  source_image_id: 242513
+  prompt_prose: Show only her head and shoulders, close up, turned three-quarters toward the viewer, a sweet thin
+    smile and cold eyes. Keep the same elderly head nun, a sea otter with a flat round face, warm brown fur, the
+    same black habit and white wimple, and the same comic art style. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35184
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: abbess-vs
+  entity: the-abbess
+  title: 'the Abbess portrait: VS slam'
+  size: 832x1216
+  source_image_id: 242513
+  prompt_prose: Show her from the knees up, stepping toward the viewer with a ritual dagger held low in one paw
+    and a rosary wound around the other, smiling kindly. Keep the same elderly head nun, a sea otter with a flat
+    round face, warm brown fur, the same black habit and white wimple, and the same comic art style. On a plain
+    dark background, no text.
+  jobs:
+    kontext-portraits: 35185
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: abbess-victory
+  entity: the-abbess
+  title: 'the Abbess portrait: victory'
+  size: 832x1216
+  source_image_id: 242513
+  prompt_prose: Show her standing with her paws folded in prayer, her eyes open and cold above a gentle smile. Keep
+    the same elderly head nun, a sea otter with a flat round face, warm brown fur, the same black habit and white
+    wimple, and the same comic art style. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35186
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: abbess-beaten
+  entity: the-abbess
+  title: 'the Abbess portrait: beaten'
+  size: 832x1216
+  source_image_id: 242513
+  prompt_prose: Show her kneeling, her habit dusty and askew, one paw on the ground, glaring up with cold fury.
+    Keep the same elderly head nun, a sea otter with a flat round face, warm brown fur, the same black habit and
+    white wimple, and the same comic art style. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35187
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: siblings-bust
+  entity: the-siblings
+  title: 'the Siblings portrait: select bust'
+  size: 1024x1024
+  source_image_id: 242128
+  prompt_prose: Show only her head and shoulders, close up, turned three-quarters toward the viewer, her huge ears
+    up and a hard wary stare, with her toddler brother peeking over her shoulder from behind her, a tiny fennec
+    fox boy in a small checked blue cloth tunic of rags. Keep the same young fennec fox girl, about ten years old,
+    in the same torn pale brown dress of rags, and the same comic art style. Both fully dressed. On a plain dark
+    background, no text.
+  jobs:
+    kontext-portraits: 35188
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: siblings-vs
+  entity: the-siblings
+  title: 'the Siblings portrait: VS slam'
+  size: 832x1216
+  source_image_id: 242128
+  prompt_prose: Show her from the knees up in a low scrappy fighting crouch toward the viewer, claws out and teeth
+    bared, with her toddler brother standing behind her legs holding a red apple, a tiny fennec fox boy in a small
+    checked blue cloth tunic of rags. Keep the same young fennec fox girl, about ten years old, in the same torn
+    pale brown dress of rags, and the same comic art style. Both fully dressed. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35189
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: siblings-victory
+  entity: the-siblings
+  title: 'the Siblings portrait: victory'
+  size: 832x1216
+  source_image_id: 242128
+  prompt_prose: Show her kneeling and hugging her toddler brother tight, staring past the viewer, while he holds
+    up a red apple, a tiny fennec fox boy in a small checked blue cloth tunic of rags. Keep the same young fennec
+    fox girl, about ten years old, in the same torn pale brown dress of rags, and the same comic art style. Both
+    fully dressed and unhurt. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35190
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+- key: siblings-beaten
+  entity: the-siblings
+  title: 'the Siblings portrait: beaten (she shields her brother)'
+  size: 832x1216
+  source_image_id: 242128
+  prompt_prose: Show her crouched protectively over her toddler brother, shielding him with her body and arms and
+    glaring defiantly at the viewer, unhurt, a tiny fennec fox boy in a small checked blue cloth tunic of rags tucked
+    safe against her. Keep the same young fennec fox girl, about ten years old, in the same torn pale brown dress
+    of rags, and the same comic art style. Both fully dressed and unhurt. On a plain dark background, no text.
+  jobs:
+    kontext-portraits: 35191
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
