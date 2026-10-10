@@ -40,6 +40,36 @@ It records which shot each timing makes.
 - a new player reaches multiball within a few games;
 - a good player can reach the wizard mode.
 
+## 2026-10-10 — t-023: the Ridge's flippers and the Lookout (kind_robots#3417)
+
+A small flipper pair above the Ridge's gate, and the Lookout saucer up its
+right side (each one this ball worth more, and each spots an S-K-Y lane).
+The bot now plays every zone's flippers: it had never flipped the hidden
+room's. Thirty games per skill level; in brackets, the t-022 Ridge without
+these flippers.
+
+| Skill | Ball time (s) | Score median | Mode | Multiball | Sub-table | Villages | Lookouts / min |
+|---|---|---|---|---|---|---|---|
+| average | 21.5 (18.8) | 441,550 (293,880) | 80% | 17% (10%) | 13% (10%) | 1.0 (0.9) | 1.05 |
+| good | 43.6 (33.0) | 3,411,180 (1,074,440) | 100% | 47% (47%) | 27% (40%) | 2.2 (1.7) | 2.53 |
+
+### What it says
+
+- **Ball time** is up a third for the good bot and by 2.7 s for the average
+  one. The Ridge flippers hold a ball up there long enough to play it.
+- **Reach** is up for the average bot. The good bot's multiball is level, and
+  it finds the hidden room less often (27% against 40%): its ball spends
+  more time on the Ridge, away from the locks that open the door.
+- **The Lookout** is made from both Ridge flippers. In a 90-timing cradle
+  sweep, the left makes it at 3 timings and the right at 2, about what a
+  main ramp gets.
+
+### Next tuning steps, in order
+
+1. The hidden room's reach for good players: one fewer lock to open the
+   door on the first visit, or a Ridge feature that counts as a key.
+2. Silas's play-test numbers (t-013) on the full table.
+
 ## 2026-10-10 — t-022: the Ridge (kind_robots#3415)
 
 The table now runs on 0.42 m past the arch, onto the Ridge. The upper feed
