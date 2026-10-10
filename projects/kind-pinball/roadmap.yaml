@@ -59,6 +59,25 @@ notes_from_silas: |
   a carved, painted cabinet. Milestone m6 is that look. Judge every screenshot against those images,
   not against the previous build.
 
+  2026-10-10, later, with the "Kind Pinball Visual Studies" zip and two ornate full-table mockups, verbatim:
+  "here's the new mockup and info for kind robots pinball, with one caveat. we don't want the croc, that's
+  obviously a bleed from the zuzu pinball game, it should be replaced with some sort of multiball collector
+  that sends packages to needy families"
+
+  What that means for agents: the studies are saved as mockups/visual-study-2026-10-10-0*.png (the two
+  ornate mockups came inline only). They set the direction for m6: "a miniature living world, not a
+  diagram of pinball"; a sculpted AMI toy with butterfly wings; two elevated ramp systems in clear
+  plastic on curved chrome rails, with posts, shadows and visible returns; the Ridge as a real upper
+  flipper platform; tiny lit houses, the delivery drone and lantern bumpers (HOPE, CARE, AMI); bright
+  inserts and distinct shot mouths that stay legible over rich art ("spectacle must never hide the ball
+  or the shot mouths"); one flipper-facing camera that moves only at a secured ball transfer. The
+  ornate mockups' palette: a night village in warm amber and violet, wooden boardwalks and bridges,
+  waterfalls and a river, blossom trees, a central butterfly medallion ringed by inserts. NEVER a
+  crocodile or any other Zuzu-table creature: in its place is a multiball collector that ships care
+  packages to families in need (t-031). Per-task acceptance detail and the review matrix are in
+  AMI-VISUAL-DIRECTION-2026-10-10.md (conductor#5887); Silas sending the studies, with only the
+  crocodile caveat, settles that they are the direction.
+
 milestones:
   - id: m1
     title: "SHAPE -- design brief, reference teardown, scope"
@@ -485,7 +504,7 @@ tasks:
     milestone: m4
     title: "The finish line: Silas plays it and judges it as good as any Pinball FX3 table"
     status: waiting
-    depends_on: [t-010, t-012, t-013, t-014, t-015, t-019, t-020, t-021, t-022, t-023, t-024, t-025, t-026, t-027, t-028, t-029, t-030]
+    depends_on: [t-010, t-012, t-013, t-014, t-015, t-019, t-020, t-021, t-022, t-023, t-024, t-025, t-026, t-027, t-028, t-029, t-030, t-031]
     owner: null
     passes: 0
     stakes: reversible
@@ -746,7 +765,7 @@ tasks:
   - id: t-026
     milestone: m6
     title: "One camera from the flippers; a single pan to a bonus area and back, never following the ball"
-    status: claimed
+    status: done
     depends_on: [t-025]
     owner: worker
     passes: 0
@@ -761,16 +780,27 @@ tasks:
       VIEW chip). The score stays readable when the backbox is out of frame (a DMD on screen). Tests:
       the camera never moves while the ball moves on the main field; each bonus visit is exactly one pan
       in and one pan out.
+
+      Shipped in kind_robots#3432 (merged): one fixed camera from behind the flippers framing
+      the main field at any screen shape; it never follows the ball (a test checks the camera
+      position is exactly constant over 300 frames of a ball racing round). When every ball is
+      in a bonus area (the Ridge, the hidden room) it makes one smoothstep pan of 54 frames
+      there and holds still, and one pan back when a ball returns (tested: one pan in, none on
+      a repeat, one pan exactly home). Removed the plunge and multiball leans and t-021's view
+      modes (B cycle, VIEW chip, how-to line, cameraMode.ts). The backbox is out of the main
+      frame, so the DMD now also shows on screen at the top whenever the backbox one is not
+      visible. Screenshots: screenshots/t026-desk.jpg, t026-phone.jpg, t026-ridge-desk.jpg.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-10T10:09:21Z'
-    updated: '2026-10-10T10:09:21Z'
+    updated: '2026-10-10T10:25:50Z'
+    implementation_pr: 'silasfelinus/kind_robots#3432'
 
   - id: t-027
     milestone: m6
     title: "A painted playfield in the mockups' quality, for the main field and the Ridge"
-    status: waiting
+    status: claimed
     depends_on: [t-026]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -784,9 +814,9 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Sculpted, lit toys and scenery in place of primitives"
-    status: waiting
+    status: done
     depends_on: [t-026]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -797,12 +827,26 @@ tasks:
       generated meshes where that pipeline exists), tiered so phones stay smooth; collision stays the
       physics shapes.
 
+      Shipped in kind_robots#3439 (merged). New render/dressing.ts, scenery only (a test
+      checks the colliders are unchanged). Pop bumpers are lathe-turned paper-lantern caps: a
+      chrome foot, a coloured lit body and cap, gold ribs and a gold star. They flash on a hit
+      and settle exactly; this fixed a pre-existing stuck-lit cap. Rubber posts get chrome
+      star-post nuts and screws. Wooden walls get gold trim and painted lacquer. The slings
+      get printed plastics on chrome standoffs. Ten paper lanterns on iron poles line the
+      rails and the Ridge (TableDef.lanterns); they flicker and dim with the GI. The huts are
+      round and thatched, with doors and lit windows. AMI has a rounded head, a visor, ear
+      pods, and butterfly wings from Silas's studies that flutter. The drone has a shell, a
+      dome, pods, blades and skids. Screenshots: screenshots/t028-desk.jpg, t028-phone.jpg,
+      t028-pops.jpg, t028-huts.jpg, t028-ami.jpg.
+    updated: '2026-10-10T11:08:22Z'
+    implementation_pr: 'silasfelinus/kind_robots#3439'
+
   - id: t-029
     milestone: m6
     title: "Chrome wireform ramps, clear plastics and metalwork"
-    status: waiting
+    status: done
     depends_on: [t-026]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -811,11 +855,23 @@ tasks:
       or clear plastic with lit edges, chrome lane guides and habitrails, metal rails and lockdown
       hardware, all reflecting the room. Physics colliders unchanged (tests stay green).
 
+      Shipped in kind_robots#3443 (merged). New render/wireforms.ts, scenery only: the
+      colliders are unchanged, and a test checks every wired rail is still a collider. Every
+      ramp with a floor (left ramp, right ramp, upper feed) is a chrome wireform: two polished
+      wires per rail on uprights, cross ties under the clear floor, and a lit cyan strip along
+      each floor edge that dims with the GI. The sheet rails are no longer drawn. Chrome lane
+      guides get a rounded chrome bead along the top, and those taller than 3 cm are drawn as
+      clear plastic shields, which opens the middle of the table. The phone low tier renders
+      at about 6 ms per frame in SwiftShader. Screenshots: screenshots/t029-desk.jpg,
+      t029-ramp.jpg, t029-phone.jpg.
+    updated: '2026-10-10T11:47:23Z'
+    implementation_pr: 'silasfelinus/kind_robots#3443'
+
   - id: t-030
     milestone: m6
     title: "Warm practical lighting and a carved, painted cabinet; the whole look against the mockups"
     status: waiting
-    depends_on: [t-027, t-028, t-029]
+    depends_on: [t-027, t-028, t-029, t-031]
     owner: null
     passes: 0
     stakes: reversible
@@ -824,3 +880,22 @@ tasks:
       insert glow, tuned bloom and tone mapping, shadows and reflections on the ball and chrome. The
       cabinet: painted side art and backglass at the same quality, metal trim and a carved apron. Finish
       with side-by-side screenshots (phone, desktop, ultrawide) next to the mockups for Silas.
+
+  - id: t-031
+    milestone: m6
+    title: "The Care Package Depot: a multiball collector that ships packages to families in need"
+    status: claimed
+    depends_on: [t-026]
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-10: the mockups' crocodile is "obviously a bleed from the zuzu pinball game, it should be
+      replaced with some sort of multiball collector that sends packages to needy families." Build a
+      sculpted, lit depot toy (a village post house with a parcel chute or conveyor) where the mockup's
+      crocodile mouth sits, as a distinct, legible shot mouth. Each ball it collects is packed as a care
+      package (a parcel appears on the toy and the DMD counts it); filling it starts multiball, and the
+      packages go out to the village (parcels fly or roll to the huts, which light up) with a delivery
+      jackpot. Rules, lamps, DMD copy, sound, the attract show and the guide all name it; tests cover the
+      collect, the multiball start and the delivery. No crocodile, alligator or other Zuzu-table creature
+      anywhere on this table.
