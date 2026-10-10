@@ -608,7 +608,7 @@ tasks:
   - id: t-022
     milestone: m5
     title: "A table longer than one screen: extend the playfield with an upper playfield"
-    status: claimed
+    status: review
     depends_on: [t-021]
     owner: worker
     passes: 0
@@ -620,9 +620,21 @@ tasks:
       its own shots and lit features tied to the rules (villages, nets, multiball). Keep the hidden room
       hidden. Re-fit art bounds and regenerate the playfield art for the new shape; rebuild the aiming
       chart and re-run the tuning harness (TUNING.md) so ball time and reach do not regress.
+
+      Merged kind_robots#3415. The table runs on 0.42 m past the arch onto the Ridge, an upper
+      playfield; the backbox and hidden room moved back. The upper feed's subway lifts the
+      ball to the Ridge's kicker: three S-K-Y lanes, three pops, three cloud standups, and a
+      funnel to a one-way gate in the arch's crown (the arch's own segments, so orbits are
+      unchanged). Rules (rules/ridge.ts): SKY HIGH (+1x, saucer relit), CLOUD BURST (kickback
+      relit or points), RIDGE RUN on the way down. Lamps, a guide page, and the whole-table
+      cameras reach the Ridge so Dynamic follows a ball up there. Tuning (30 games, vs main):
+      ball time up for both bots; good-bot multiball level, room reach lower (see TUNING.md
+      2026-10-10). Ridge generated art is still to come. Screenshots:
+      screenshots/t022-ridge-{full-desk,full-phone,dynamic-desk}.jpg.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-10T00:05:30Z'
-    updated: '2026-10-10T00:05:30Z'
+    updated: '2026-10-10T01:37:16Z'
+    implementation_pr: 'silasfelinus/kind_robots#3415'
 
   - id: t-023
     milestone: m5
