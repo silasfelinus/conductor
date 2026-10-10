@@ -432,18 +432,17 @@ tasks:
   - id: t-015
     milestone: m5
     title: "Ghost Trail authored encounter and campaign systems: secrets, progress, checkpoints and victory"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Implement data-defined finite encounters (no idle score farming), two acts per stage,
-      authored branches, unique loot/secret keys, checkpoint semantics, saved/resumable
-      progress and real credits/victory instead of endless loops. Preserve seed-deterministic
-      updates, input abstraction, hit/poncho mechanic and score API.
+    note: |-
+      Implement data-defined finite encounters (no idle score farming), two acts per stage, authored branches, unique loot/secret keys, checkpoint semantics, saved/resumable progress and real credits/victory instead of endless loops. Preserve seed-deterministic updates, input abstraction, hit/poncho mechanic and score API.
+
+      First incremental campaign-system slice: four one-time stage relic discoveries with checkpoint-safe rewards, a finite victorious preview ending, and deterministic tests. The six-stage Act I, authored encounters, save/resume and full ten-hour campaign remain follow-up work.
     claimed_by: 2026-10-10T124800Z-kr-arcade-t015-3e91
     claimed_at: '2026-10-10T12:48:00Z'
-    updated: '2026-10-10T12:48:00Z'
+    updated: '2026-10-10T13:02:00Z'
   - id: t-016
     milestone: m5
     title: "Ghost Trail stage 1: Silver Gulch authored encounter graph and Grave Marshal boss"
