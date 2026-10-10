@@ -1,7 +1,7 @@
 # Pitch: Kind Tiny Tower Stacker
 date: 2026-10-10
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A one-button stacking game where players drop swinging robot-built blocks onto a growing tower, trimming any overhang each time, and a pre-painted skyline scrolls by as the tower climbs. Daily seeds change the block shapes so friends can compare floors reached.
