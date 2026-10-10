@@ -1,0 +1,131 @@
+name: Scheduled Semantic Intent Review
+
+# GitHub, not ChatGPT, owns cadence. A Python date guard invokes the model only
+# when the previous merged review is at least three days old.
+on:
+  schedule:
+    - cron: '23 16 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Run despite a recent completed audit'
+        type: boolean
+        required: false
+        default: false
+
+concurrency:
+  group: semantic-intent-review
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: write
+      pull-requests: write
+      models: read
+    outputs:
+      status: ${{ steps.review.outputs.status }}
+      branch: ${{ steps.review.outputs.branch }}
+      pr: ${{ steps.review.outputs.pr }}
+      sha: ${{ steps.review.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - name: Verify review inputs
+        run: python scripts/run_semantic_intent_review.py --check
+      - name: Perform LLM semantic intent review
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          args=()
+          if [[ "$FORCE" == 'true' ]]; then args+=(--force); fi
+          python scripts/run_semantic_intent_review.py "${args[@]}"
+      - name: Upload attempted review, including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: semantic-intent-attempt
+          path: |
+            semantic-intent-attempt.json
+            projects/conductor/INTENT-AUDIT-20??-??-??.md
+          retention-days: 30
+      - name: Open report PR
+        id: review
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          status="$(python -c 'import json; print(json.load(open("semantic-intent-attempt.json"))["status"])')"
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          if [[ "$status" == 'skipped' ]]; then exit 0; fi
+          if [[ "$status" != 'completed' ]]; then exit 1; fi
+          report="$(python -c 'import json; print(json.load(open("semantic-intent-attempt.json"))["report"])')"
+          branch="bot/semantic-intent-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git config user.name 'conductor-bot'
+          git config user.email 'conductor-bot@users.noreply.github.com'
+          git switch -c "$branch"
+          git add -- "$report"
+          git diff --cached --exit-code --quiet && exit 1
+          git commit -m 'audit: completed scheduled semantic intent review'
+          git push origin "HEAD:$branch"
+          pr="$(gh pr create --base main --head "$branch" --title "audit: scheduled semantic intent review" --body "GitHub Models review of roadmap intent. Evidence is in the dated report; no coordination records changed. The separate validation job tests this exact branch before merge.")"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+          echo "pr=$(gh pr view "$pr" --json number --jq '.number')" >> "$GITHUB_OUTPUT"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  validate:
+    needs: review
+    if: needs.review.outputs.status == 'completed'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.review.outputs.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml pytest
+      - name: Assert PR contains only the dated review report
+        run: |
+          changed="$(git diff --name-only origin/main...HEAD)"
+          echo "$changed" | grep -Eq '^projects/conductor/INTENT-AUDIT-[0-9]{4}-[0-9]{2}-[0-9]{2}\.md$'
+          test "$(echo "$changed" | wc -l)" -eq 1
+      - name: Validate audit and portfolio tests
+        run: |
+          python scripts/run_semantic_intent_review.py --check
+          python -m pytest -q tests/test_semantic_intent_review.py tests/test_project_priority_contract.py tests/test_portfolio_oversight_email_gate.py
+
+  merge:
+    needs: [review, validate]
+    if: needs.review.outputs.status == 'completed' && needs.validate.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Merge only the validated report commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ needs.review.outputs.pr }}
+          SHA: ${{ needs.review.outputs.sha }}
+        run: |
+          actual="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.head.sha')"
+          test "$SHA" = "$actual"
+          # Branch protection always applies; do not override required checks.
+          gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch
