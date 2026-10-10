@@ -814,7 +814,7 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Sculpted, lit toys and scenery in place of primitives"
-    status: claimed
+    status: review
     depends_on: [t-026]
     owner: worker
     passes: 0
@@ -826,6 +826,20 @@ tasks:
       screws, the Ridge's hilltop scenery. Procedural geometry with PBR and emissive materials (or
       generated meshes where that pipeline exists), tiered so phones stay smooth; collision stays the
       physics shapes.
+
+      Shipped in kind_robots#3439 (merged). New render/dressing.ts, scenery only (a test
+      checks the colliders are unchanged). Pop bumpers are lathe-turned paper-lantern caps: a
+      chrome foot, a coloured lit body and cap, gold ribs and a gold star. They flash on a hit
+      and settle exactly; this fixed a pre-existing stuck-lit cap. Rubber posts get chrome
+      star-post nuts and screws. Wooden walls get gold trim and painted lacquer. The slings
+      get printed plastics on chrome standoffs. Ten paper lanterns on iron poles line the
+      rails and the Ridge (TableDef.lanterns); they flicker and dim with the GI. The huts are
+      round and thatched, with doors and lit windows. AMI has a rounded head, a visor, ear
+      pods, and butterfly wings from Silas's studies that flutter. The drone has a shell, a
+      dome, pods, blades and skids. Screenshots: screenshots/t028-desk.jpg, t028-phone.jpg,
+      t028-pops.jpg, t028-huts.jpg, t028-ami.jpg.
+    updated: '2026-10-10T11:08:09Z'
+    implementation_pr: 'silasfelinus/kind_robots#3439'
 
   - id: t-029
     milestone: m6
