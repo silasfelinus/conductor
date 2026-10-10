@@ -59,6 +59,23 @@ notes_from_silas: |
   a carved, painted cabinet. Milestone m6 is that look. Judge every screenshot against those images,
   not against the previous build.
 
+  2026-10-10, later, with the "Kind Pinball Visual Studies" zip and two ornate full-table mockups, verbatim:
+  "here's the new mockup and info for kind robots pinball, with one caveat. we don't want the croc, that's
+  obviously a bleed from the zuzu pinball game, it should be replaced with some sort of multiball collector
+  that sends packages to needy families"
+
+  What that means for agents: the studies are saved as mockups/visual-study-2026-10-10-0*.png (the two
+  ornate mockups came inline only). They set the direction for m6: "a miniature living world, not a
+  diagram of pinball"; a sculpted AMI toy with butterfly wings; two elevated ramp systems in clear
+  plastic on curved chrome rails, with posts, shadows and visible returns; the Ridge as a real upper
+  flipper platform; tiny lit houses, the delivery drone and lantern bumpers (HOPE, CARE, AMI); bright
+  inserts and distinct shot mouths that stay legible over rich art ("spectacle must never hide the ball
+  or the shot mouths"); one flipper-facing camera that moves only at a secured ball transfer. The
+  ornate mockups' palette: a night village in warm amber and violet, wooden boardwalks and bridges,
+  waterfalls and a river, blossom trees, a central butterfly medallion ringed by inserts. NEVER a
+  crocodile or any other Zuzu-table creature: in its place is a multiball collector that ships care
+  packages to families in need (t-031).
+
 milestones:
   - id: m1
     title: "SHAPE -- design brief, reference teardown, scope"
@@ -485,7 +502,7 @@ tasks:
     milestone: m4
     title: "The finish line: Silas plays it and judges it as good as any Pinball FX3 table"
     status: waiting
-    depends_on: [t-010, t-012, t-013, t-014, t-015, t-019, t-020, t-021, t-022, t-023, t-024, t-025, t-026, t-027, t-028, t-029, t-030]
+    depends_on: [t-010, t-012, t-013, t-014, t-015, t-019, t-020, t-021, t-022, t-023, t-024, t-025, t-026, t-027, t-028, t-029, t-030, t-031]
     owner: null
     passes: 0
     stakes: reversible
@@ -826,7 +843,7 @@ tasks:
     milestone: m6
     title: "Warm practical lighting and a carved, painted cabinet; the whole look against the mockups"
     status: waiting
-    depends_on: [t-027, t-028, t-029]
+    depends_on: [t-027, t-028, t-029, t-031]
     owner: null
     passes: 0
     stakes: reversible
@@ -835,3 +852,22 @@ tasks:
       insert glow, tuned bloom and tone mapping, shadows and reflections on the ball and chrome. The
       cabinet: painted side art and backglass at the same quality, metal trim and a carved apron. Finish
       with side-by-side screenshots (phone, desktop, ultrawide) next to the mockups for Silas.
+
+  - id: t-031
+    milestone: m6
+    title: "The Care Package Depot: a multiball collector that ships packages to families in need"
+    status: ready
+    depends_on: [t-026]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-10: the mockups' crocodile is "obviously a bleed from the zuzu pinball game, it should be
+      replaced with some sort of multiball collector that sends packages to needy families." Build a
+      sculpted, lit depot toy (a village post house with a parcel chute or conveyor) where the mockup's
+      crocodile mouth sits, as a distinct, legible shot mouth. Each ball it collects is packed as a care
+      package (a parcel appears on the toy and the DMD counts it); filling it starts multiball, and the
+      packages go out to the village (parcels fly or roll to the huts, which light up) with a delivery
+      jackpot. Rules, lamps, DMD copy, sound, the attract show and the guide all name it; tests cover the
+      collect, the multiball start and the delivery. No crocodile, alligator or other Zuzu-table creature
+      anywhere on this table.
