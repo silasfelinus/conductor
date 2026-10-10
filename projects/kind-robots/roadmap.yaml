@@ -2521,5 +2521,20 @@ tasks:
 
     silasfelinus/conductor#5856 (merged f69ccf9): 21 force: true re-renders at existing media paths with Krea 2-safe prompts (concrete scenes, no screens/signs/labels); Auto Art Generate run 739 started on merge. Follow-up: review the renders and re-queue misses; Mandarin cards with wrong subjects are a separate pipeline.
 
+- id: t-147
+  milestone: m6
+  title: 'Tutorial slice 2e: tutorial and tab picker follow tab changes within a channel; ArtJob cards show forced re-renders'
+  status: done
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  owner: null
+  updated: '2026-10-10T10:30:00Z'
+  note: |-
+    Under umbrella issue silasfelinus/kind_robots#3379 (deliberately no source_issue, as t-144..t-146).
+
+    Silas, 2026-10-10: "when i change to a new tab in a channel, the tutorial doesn't change" (ArtJob -> Butterfly Gallery kept the ArtJob tutorial), and the re-rendered art looked "text heavy and not what was requested".
+
+    silasfelinus/kind_robots#3433 (merged 4587a57, 35/35 checks): staleness is now pageStore.describesPath(route.path) instead of a channel comparison in channel-select, workspace-header and workspace-sheet (contract added to verifyNavigationRouteAccess); /api/art/images/[id]/file redirects to imagePath?v=<updatedAt> so forced re-renders at the same media path bypass the browser's max-age=3600 copy. The "text heavy" cards were that stale cache, not the prompts: all 21 t-146 re-renders (ArtJobs 35135-35155) landed 09:09-09:33 UTC after the render box came back and were reviewed clean.
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.

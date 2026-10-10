@@ -46,8 +46,10 @@ import yaml
 
 try:
     from scripts import consume_art_queue_core as core
+    from scripts.repair_negation_art_prompts import violations
 except ImportError:  # pragma: no cover - direct script execution
     import consume_art_queue_core as core
+    from repair_negation_art_prompts import violations
 
 TERMINAL_STATUSES = {"DONE", "FAILED", "CANCELLED"}
 
@@ -319,6 +321,15 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None):
     for subject, lane in cells:
         if job_id_of(subject, lane["key"]):
             continue
+        # Kind Robots validates the prompt contract at claim time, so a rejected
+        # prompt still gets a job id and the cell is never resubmitted: on
+        # 2026-10-10 all 16 zuzu-showdown portraits (ArtJobs 35176-35191) failed
+        # on ", no text." Refuse it here, where the ledger can still be fixed.
+        rules = violations(compose_prompt(lane, subject))
+        if rules:
+            failures += 1
+            print(f"  FAILED {subject['key']} [{lane['key']}]: prompt contract {rules}", file=sys.stderr)
+            continue
         source = None
         if lane["engine"] == "kontext" and subject.get("source_image_id"):
             source = compose_source(subject, fetch)
@@ -391,6 +402,9 @@ def main(argv=None):
                 crop += f", masked {subject['mask_box']} via /api/comfy/kontext/enqueue" if subject.get("mask_box") else ""
                 print(f"    source: ArtImage {subject.get('source_image_id')}{crop}{extra}")
             print(f"  {subject['key']} [{lane['key']}] {body['width']}x{body['height']} \"{body['promptString'][:70]}\"")
+            rules = violations(body["promptString"])
+            if rules:
+                print(f"    REJECTED by the prompt contract {rules}: --live will skip this cell")
         return 0
 
     submitted, failures = submit(args.ledger, header, ledger, cells)

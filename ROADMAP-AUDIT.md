@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-10-10T10:43:33.040989+00:00`
+Generated: `2026-10-10T10:57:52.411773+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **78** roadmaps, **39** active + **3** continuous projects, **2081** tasks
-- **92 ready**, **128 waiting**, **35 needs-human**, **20 claimed/review**, **1790 done**
+- **78** roadmaps, **39** active + **3** continuous projects, **2082** tasks
+- **91 ready**, **128 waiting**, **35 needs-human**, **21 claimed/review**, **1791 done**
 - Findings: **0 errors**, **27 warnings**, **61 informational**
 
 ## Project inventory
@@ -18,7 +18,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 2 | `zuzu-lair` | active | software | 2 | 6 | 1 | 1 | 4 / 14 |
 | 3 | `kr-arcade` | active | software | 3 | 6 | 0 | 0 | 11 / 20 |
 | 4 | `zuzu-showdown` | active | software | 4 | 3 | 0 | 2 | 18 / 27 |
-| 5 | `cthulhuquarium` | active | software | 1 | 2 | 0 | 2 | 78 / 83 |
+| 5 | `cthulhuquarium` | active | software | 0 | 2 | 0 | 3 | 78 / 83 |
 | 6 | `kind-economy` | active | software | 0 | 4 | 1 | 1 | 22 / 28 |
 | 7 | `butterfly-gallery` | active | software | 1 | 0 | 0 | 0 | 34 / 35 |
 | 8 | `art-archive` | active | software | 0 | 2 | 0 | 2 | 40 / 44 |
@@ -26,7 +26,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 10 | `interface-vision` | continuous | software | 3 | 1 | 0 | 0 | 137 / 141 |
 | 11 | `humboldt-scoop-cms` | active | software | 1 | 1 | 4 | 0 | 40 / 46 |
 | 12 | `digital-storefront` | active | software | 1 | 2 | 1 | 0 | 40 / 44 |
-| 13 | `kind-robots` | active | software | 6 | 0 | 0 | 3 | 137 / 146 |
+| 13 | `kind-robots` | active | software | 6 | 0 | 0 | 3 | 138 / 147 |
 | 14 | `rainbow-butterflies` | active | software | 0 | 1 | 2 | 0 | 50 / 53 |
 | 15 | `music-video` | active | software | 7 | 3 | 0 | 0 | 25 / 35 |
 | 16 | `comic-film` | active | software | 3 | 6 | 0 | 0 | 2 / 11 |
@@ -115,7 +115,7 @@ _None._
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `kind-pinball` / `t-027`: Claimed/review task has no parseable updated timestamp.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `kind-pinball` / `t-028`: Claimed/review task has no parseable updated timestamp.
 - **STALE_IN_PROGRESS** — `kind-robots` / `t-127`: Task has remained review for 6 days.
-- **STALE_IN_PROGRESS** — `kind-robots` / `t-131`: Task has remained review for 3 days.
+- **STALE_IN_PROGRESS** — `kind-robots` / `t-131`: Task has remained review for 4 days.
 - **STALE_IN_PROGRESS** — `kind-robots` / `t-133`: Task has remained review for 3 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-robots` / `t-139`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-014`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
