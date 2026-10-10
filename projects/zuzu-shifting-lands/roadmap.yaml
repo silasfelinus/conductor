@@ -342,8 +342,7 @@ tasks:
   - id: t-019
     milestone: m4
     title: "Make Shifting Lands persistent encounter flip readable"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-015]
@@ -353,9 +352,11 @@ tasks:
       After PR #3424 merged, harden the persistent Zuzu encounter reveal with predictable narrative reading focus, live-result announcement, reduced-motion support and no double transition from animation events. Keep Admin-only board, v2 saves and other KR flips intact.
 
       Added keyboard/screen-reader reading focus to authored scene title after a newly drawn/traveled card and to saved result passage after a checked choice. Existing opt-in back-to-front animation still settles face-up; reduced-motion CSS and animation-only contract verified. Dedicated source guard tests; preparing PR and full CI. Public launch remains separate.
+
+      Merged Kind Robots PR #3427 at faa79a8f6bf9fc7615dff9d8a5e0bb3e0ae573b9 after 30/30 green checks. Authoritative read focus now moves to encounter title after a user-initiated card draw/travel, and to the persisted consequence paragraph after a committed authored dice choice. Existing stable face-up flip and reduced-motion CSS remain; invalid/double rolls do not refocus, animation events do not mutate state. Admin-only preview, saved games, and public release gate unchanged; Alexandria production deploy still unverified.
     claimed_by: 2026-10-10T085000Z-zuzu-shifting-t019-gpt6-a91e
     claimed_at: '2026-10-10T08:50:00Z'
-    updated: '2026-10-10T09:00:00Z'
+    updated: '2026-10-10T09:23:00Z'
 
   - id: t-020
     milestone: m2
@@ -379,7 +380,7 @@ tasks:
   - id: t-021
     milestone: m4
     title: "Render authored flavor, two or more checked choices and outcomes"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
