@@ -342,13 +342,18 @@ tasks:
   - id: t-019
     milestone: m4
     title: "Make Shifting Lands persistent encounter flip readable"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-015]
-    note: >-
+    note: |-
       Use KR kr-card-flip or scoped persistent face adapter, not NavigationFlipCard full 360 spin for reading. Reveal must rest face-up with legible prose, keyboard/touch, focus and reduced motion; animation callbacks never mutate game state.
+
+      After PR #3424 merged, harden the persistent Zuzu encounter reveal with predictable narrative reading focus, live-result announcement, reduced-motion support and no double transition from animation events. Keep Admin-only board, v2 saves and other KR flips intact.
+    claimed_by: 2026-10-10T085000Z-zuzu-shifting-t019-gpt6-a91e
+    claimed_at: '2026-10-10T08:50:00Z'
+    updated: '2026-10-10T08:50:00Z'
 
   - id: t-020
     milestone: m2
