@@ -3,9 +3,11 @@
 # half-body slam (tall), a victory portrait (fighters.yaml victory_poses) and a beaten portrait. The Siblings'
 # beaten portrait is the sister shielding her brother, never hurt (fighters.yaml children_rules); every child is
 # always fully dressed in their rags. The Coyote's right hand is gone in the game (a knife lashed to the bandaged
-# stump), so his prompts say so. The other four fighters get theirs once T012-REFERENCES.yaml's seeds are picked.
+# stump), so his prompts say so. Storm Crow, River Croc and the Hyena Matriarch re-pose their picked T012 seeds
+# (243492 and 243496 mirrored to face right, 243495); Old Komodo's follow once his reroll is picked.
 # No lettering. Then pixelize them to sit with the sprites (t-008 note). Generated art is pre-approved.
-# Sources: Zuzu 242395, the Coyote 242401, the Abbess 242513, the sister 242128 (fighters.yaml references).
+# Sources: Zuzu 242395, the Coyote 242401, the Abbess 242513, the sister 242128 (fighters.yaml references),
+# Storm Crow 243492, River Croc 243495, the Hyena Matriarch 243496 (T012-REFERENCES picks).
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
 series: zuzu-showdown
 project_slug: zuzu-showdown
@@ -256,3 +258,196 @@ subjects:
     kontext-portraits:
       status: PENDING
       art_image_id: null
+- key: crow-bust
+  entity: storm-crow
+  title: 'Storm Crow portrait: select bust'
+  size: 1024x1024
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: Show only his head and shoulders, close up, turned three-quarters toward the viewer, a cocky sneer
+    under the goggles, rain dripping from his feathers. Keep the same storm crow raider, an anthropomorphic black
+    crow with rain-slick feathers, rusted brass goggles, a ragged grey long riding coat and a torn red captain's
+    sash, and the same comic art style. On a plain dark background, every surface bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36052
+- key: crow-vs
+  entity: storm-crow
+  title: 'Storm Crow portrait: VS slam'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: Show him from the knees up, lunging toward the viewer with his hooked blade raised, his black wings
+    spread wide behind him, lightning in the storm clouds. Keep the same storm crow raider, an anthropomorphic black
+    crow with rain-slick feathers, rusted brass goggles, a ragged grey long riding coat and a torn red captain's
+    sash, and the same comic art style. On a plain dark background, every surface bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36053
+- key: crow-victory
+  entity: storm-crow
+  title: 'Storm Crow portrait: victory'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: Show him perched on a rock with his rifle across his knees, preening a wing feather, pleased with
+    himself. Keep the same storm crow raider, an anthropomorphic black crow with rain-slick feathers, rusted brass
+    goggles, a ragged grey long riding coat and a torn red captain's sash, and the same comic art style. On a plain
+    dark background, every surface bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36054
+- key: crow-beaten
+  entity: storm-crow
+  title: 'Storm Crow portrait: beaten'
+  size: 832x1216
+  source_image_id: 243492
+  source_flip: true
+  prompt_prose: Show him sitting dazed in a heap of loose black feathers, his goggles cracked, his coat soaked and
+    torn. Keep the same storm crow raider, an anthropomorphic black crow with rain-slick feathers, rusted brass
+    goggles, a ragged grey long riding coat and a torn red captain's sash, and the same comic art style. On a plain
+    dark background, every surface bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36055
+- key: croc-bust
+  entity: river-croc
+  title: 'River Croc portrait: select bust'
+  size: 1024x1024
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show only his head close up, turned three-quarters toward the viewer, one cold yellow eye watching,
+    the jaws just parted over jagged teeth, water dripping from his snout. Keep the same giant crocodile, a real
+    animal with olive-green scarred armoured hide, patches of green algae, a frayed rope tied round his body and
+    a broken old harpoon stuck in his back, and the same comic art style. On a plain dark background, every surface
+    bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36056
+- key: croc-vs
+  entity: river-croc
+  title: 'River Croc portrait: VS slam'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show him reared up on his hind legs toward the viewer, jaws gaping wide in a bellow, front claws
+    raised. Keep the same giant crocodile, a real animal with olive-green scarred armoured hide, patches of green
+    algae, a frayed rope tied round his body and a broken old harpoon stuck in his back, and the same comic art
+    style. On a plain dark background, every surface bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36057
+- key: croc-victory
+  entity: river-croc
+  title: 'River Croc portrait: victory'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show him basking on a rock with his jaws wide open in the sun while a small bird picks his teeth.
+    Keep the same giant crocodile, a real animal with olive-green scarred armoured hide, patches of green algae,
+    a frayed rope tied round his body and a broken old harpoon stuck in his back, and the same comic art style.
+    On a plain dark background, every surface bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36058
+- key: croc-beaten
+  entity: river-croc
+  title: 'River Croc portrait: beaten'
+  size: 832x1216
+  source_image_id: 243495
+  source_flip: false
+  prompt_prose: Show him rolled over belly-up in the shallows, legs in the air, eyes rolled back, a vulture landing
+    on his belly. Keep the same giant crocodile, a real animal with olive-green scarred armoured hide, patches of
+    green algae, a frayed rope tied round his body and a broken old harpoon stuck in his back, and the same comic
+    art style. On a plain dark background, every surface bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36059
+- key: hyena-bust
+  entity: hyena-matriarch
+  title: 'the Hyena Matriarch portrait: select bust'
+  size: 1024x1024
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: Show only her head and shoulders, close up, turned three-quarters toward the viewer, her too-wide
+    grin full of teeth, the iron chain over one shoulder. Keep the same big broad spotted hyena matriarch with a
+    ragged dark mane, a grin too wide for her face, the same black leather armour stitched from many hides, fully
+    dressed, and the same comic art style. On a plain dark background, every surface bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36060
+- key: hyena-vs
+  entity: hyena-matriarch
+  title: 'the Hyena Matriarch portrait: VS slam'
+  size: 832x1216
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: Show her from the knees up, swinging the heavy iron chain over her head with the meat hook flying,
+    cackling toward the viewer. Keep the same big broad spotted hyena matriarch with a ragged dark mane, a grin
+    too wide for her face, the same black leather armour stitched from many hides, fully dressed, and the same comic
+    art style. On a plain dark background, every surface bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36061
+- key: hyena-victory
+  entity: hyena-matriarch
+  title: 'the Hyena Matriarch portrait: victory'
+  size: 832x1216
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: Show her sitting down on the ground, laughing so hard she is wiping tears from her eyes, the chain
+    coiled in her lap. Keep the same big broad spotted hyena matriarch with a ragged dark mane, a grin too wide
+    for her face, the same black leather armour stitched from many hides, fully dressed, and the same comic art
+    style. On a plain dark background, every surface bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36062
+- key: hyena-beaten
+  entity: hyena-matriarch
+  title: 'the Hyena Matriarch portrait: beaten'
+  size: 832x1216
+  source_image_id: 243496
+  source_flip: true
+  prompt_prose: Show her slumped back against a rock, worn out, the iron chain lying across her, still giggling
+    weakly. Keep the same big broad spotted hyena matriarch with a ragged dark mane, a grin too wide for her face,
+    the same black leather armour stitched from many hides, fully dressed, and the same comic art style. On a plain
+    dark background, every surface bare and unmarked.
+  art:
+    kontext-portraits:
+      status: PENDING
+      art_image_id: null
+  jobs:
+    kontext-portraits: 36063

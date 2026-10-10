@@ -1,0 +1,67 @@
+# zuzu-showdown t-021: cut-out layers for The Thing Behind the Door, re-drawn by Flux Kontext from the picked
+# door (T012-REFERENCES boss-door-1, ArtImage 243506). The house-lane tentacle, grasp and eye seeds (243508-243513)
+# drifted into humanoid figures and are not used; Kontext keeps to the door's own tentacles and eye instead. The
+# Thin Place stage draws the door from 243506 and these layers over it: a rising tentacle, a sweeping tentacle,
+# a grasping tentacle and the eye close up. Generated art is pre-approved (t-008 note).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-parts
+  label: Flux Kontext dev (fp8), cut-out layers from the picked door
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+  seed: 71172
+subjects:
+- key: boss-tentacle-rise
+  entity: thing-behind-the-door
+  title: 'The Thing Behind the Door: tentacle-rise'
+  size: 832x1216
+  source_image_id: 243506
+  source_flip: false
+  prompt_prose: Show only one of the dark tentacles from the doorway on its own, huge, rising straight upward from
+    the bottom of the picture and curling at the tip, side view. Keep the same dark violet slick hide with pale
+    suckers and faint starry speckles, and the same comic art style. On a plain off-white background, nothing else
+    in the picture.
+  jobs:
+    kontext-parts: 36045
+- key: boss-tentacle-sweep
+  entity: thing-behind-the-door
+  title: 'The Thing Behind the Door: tentacle-sweep'
+  size: 1216x832
+  source_image_id: 243506
+  source_flip: false
+  prompt_prose: Show only one of the dark tentacles from the doorway on its own, huge, lying along the bottom of
+    the picture from left to right as it sweeps across the ground, the tip curled up. Keep the same dark violet
+    slick hide with pale suckers and faint starry speckles, and the same comic art style. On a plain off-white background,
+    nothing else in the picture.
+  jobs:
+    kontext-parts: 36046
+- key: boss-tentacle-grasp
+  entity: thing-behind-the-door
+  title: 'The Thing Behind the Door: tentacle-grasp'
+  size: 832x1216
+  source_image_id: 243506
+  source_flip: false
+  prompt_prose: Show only one of the dark tentacles from the doorway on its own, reaching forward to the right,
+    its tip split into three curling grasping tendrils like fingers, coiled ready to grab. Keep the same dark violet
+    slick hide with pale suckers and faint starry speckles, and the same comic art style. On a plain off-white background,
+    nothing else in the picture.
+  jobs:
+    kontext-parts: 36047
+- key: boss-eye
+  entity: thing-behind-the-door
+  title: 'The Thing Behind the Door: eye'
+  size: 1216x832
+  source_image_id: 243506
+  source_flip: false
+  prompt_prose: 'Zoom in on the glowing yellow eye alone, filling the picture: the slit pupil, the heavy wrinkled
+    dark violet lids around it, wet and gleaming. Keep the same dark violet slick hide with pale suckers and faint
+    starry speckles, and the same comic art style. On a plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 36048
