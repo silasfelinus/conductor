@@ -667,7 +667,7 @@ tasks:
   - id: t-024
     milestone: m5
     title: "Put the 3D table in the hall as Kind Pinball, on the one leaderboard"
-    status: claimed
+    status: review
     depends_on: [t-020, t-021]
     owner: worker
     passes: 0
@@ -678,6 +678,18 @@ tasks:
       cabinet the 3D table: listed in the hall, scores on the existing kind-pinball board (a fresh
       plausibility ceiling for its scoring), its title art, and the 2D table kept as the fallback for a
       device without WebGL. Reversible by flipping the registry back.
+
+      Merged kind_robots#3418. The hall's Kind Pinball is now the 3D table (the Ridge, the
+      hidden room, camera views, the lit room, the 13-goal mastery ladder, the table guide) on
+      the one kind-pinball board, with a 100M plausibility ceiling (the Canvas table's was
+      50M). A device without WebGL plays the Canvas 2D table: ArcadeGameMeta.fallback, chosen
+      once in findArcadeGame and the loader. The ?game=kind-pinball-3d preview is gone.
+      Verified in Chromium against Nuxt dev: /play/arcade?game=kind-pinball opens the 3D
+      cabinet and plays its attract demo. Reversible by moving the 3D meta back to
+      PREVIEW_GAMES. Screenshots: screenshots/t024-hall.jpg, t024-hall-demo.jpg. Follow-up
+      worth doing: in landscape the cabinet keeps a 360x640 portrait screen, so the t-020 room
+      shows only in that column.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-10T01:55:29Z'
-    updated: '2026-10-10T01:55:29Z'
+    updated: '2026-10-10T02:28:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#3418'
