@@ -1,29 +1,33 @@
 {
-  "generated_at": "2026-10-10T06:01:25.676214+00:00",
+  "generated_at": "2026-10-10T12:42:09.994852+00:00",
   "summary": {
-    "status": "semantic-review-due",
+    "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 25,
+    "roadmap_warnings": 27,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
     "openai_scheduled_agent_overdue": true,
     "openai_scheduled_agent_authoritative": false,
-    "intent_review_due": true
+    "intent_review_due": false,
+    "intent_review_upcoming": false
   },
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 164.62,
+    "hours_since": 171.3,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
   },
   "intent_review": {
-    "due": true,
-    "last_report": "INTENT-AUDIT-2026-10-03.md",
-    "days_since": 7,
-    "stale_days": 3.0
+    "due": false,
+    "upcoming": false,
+    "last_report": "INTENT-AUDIT-2026-10-10.md",
+    "days_since": 0,
+    "days_until_due": 3.0,
+    "stale_days": 3.0,
+    "failed_attempt": null
   },
   "project_parity": {
     "forward": [],
@@ -31,20 +35,20 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-10T06:01:25.676219+00:00",
+    "generated_at": "2026-10-10T12:42:09.994856+00:00",
     "summary": {
       "roadmaps": 78,
       "active_projects": 39,
       "continuous_projects": 3,
-      "tasks": 2058,
-      "ready": 87,
-      "waiting": 118,
-      "needs_human": 45,
+      "tasks": 2087,
+      "ready": 92,
+      "waiting": 126,
+      "needs_human": 36,
       "in_progress": 17,
-      "done": 1775,
+      "done": 1800,
       "errors": 0,
-      "warnings": 25,
-      "info": 55
+      "warnings": 27,
+      "info": 63
     },
     "errors": [],
     "warnings": [
@@ -81,7 +85,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "art-archive",
         "task": "t-044",
-        "message": "Task has remained claimed for 6 days."
+        "message": "Task has remained claimed for 7 days."
       },
       {
         "severity": "warning",
@@ -127,17 +131,24 @@
       },
       {
         "severity": "warning",
+        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
+        "project": "kind-pinball",
+        "task": "t-027",
+        "message": "Claimed/review task has no parseable updated timestamp."
+      },
+      {
+        "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "kind-robots",
         "task": "t-127",
-        "message": "Task has remained review for 5 days."
+        "message": "Task has remained review for 6 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "kind-robots",
         "task": "t-131",
-        "message": "Task has remained review for 3 days."
+        "message": "Task has remained review for 4 days."
       },
       {
         "severity": "warning",
@@ -186,7 +197,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "mandarin-tutor",
         "task": "t-030",
-        "message": "Task has remained claimed for 6 days."
+        "message": "Task has remained claimed for 7 days."
       },
       {
         "severity": "warning",
@@ -215,6 +226,13 @@
         "project": "zuzu-lair",
         "task": "t-010",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "zuzu-showdown",
+        "task": "t-019",
+        "message": "Task has remained claimed for 3 days."
       },
       {
         "severity": "warning",
