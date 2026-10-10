@@ -29,3 +29,8 @@
   Super nes"). New milestone m6 and recurring task t-021: style upgrades come ahead of new games. The
   shared kit `utils/arcade/snes.ts` and the DESIGN-BRIEF "16-bit style bar" set the target. Sink Suds is
   the first cabinet upgraded (kind_robots#3438). games.yaml tracks `style: classic | snes` per cabinet.
+- **16-bit glow-up complete** (Silas: "keep going, upgrade each until completed"). All 26 remaining
+  2D cabinets were given the 16-bit render pass in five batches (silasfelinus/kind_robots#3451,
+  #3453, #3454, #3455, #3456), render only, with tick-for-tick parity runs on eight of them. t-021
+  done. Carry-outs: Ghost Trail's visual rebuild stays in m5 (t-013/t-014), and Kind Pinball's 2D
+  no-WebGL fallback is follow-up t-022.
