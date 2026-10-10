@@ -45,6 +45,11 @@ milestones:
     weight: 10
     status: done
 
+  - id: m5
+    title: "GHOST TRAIL — 60–90 minute cinematic action campaign"
+    weight: 50
+    status: not-started
+
 tasks:
   - id: t-001
     milestone: m1
@@ -376,3 +381,110 @@ tasks:
       (#5808). CRT scanlines already a separate cabinet toggle.
     updated: '2026-10-09T05:46:32Z'
     implementation_pr: 'silasfelinus/kind_robots#3386'
+
+  - id: t-013
+    milestone: m5
+    title: "Ghost Trail art references: inspect nine ArtJobs and produce playable Zuzu/enemy sprite atlases"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      2026-10-10: Silas accepted the moonlit town, haunted ravine, and Bell Heretic mockups
+      as the new finish line. Use ghost-trail/CAMPAIGN-BLUEPRINT.md. Nine reference requests
+      queued in projects/art-prompts.yaml (kr-arcade-ghost-trail-*). Check actual ArtJob IDs,
+      delivered URLs and visual quality, repair bad art, create Zuzu and bone-coyote animation
+      atlases with pivots and the intact/exposed poncho states using the Zuzu Showdown rig
+      pipeline. Keep vector fallback until assets work in-game.
+  - id: t-014
+    milestone: m5
+    title: "Ghost Trail visual vertical slice: large sprites, parallax town and detailed HUD"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-013
+    note: >-
+      Replace tiny vector hero/enemies and repetitive color blocks in stage 1 with 40–48px
+      readable Zuzu, real sprite animation, three-layer parallax, hand-built gameplay tiles,
+      clear collision silhouettes, boss telegraph animations, coordinated Pixel/HD masters
+      and HUD. Keep the accepted title splash, cabinet and leaderboard. Verify real
+      screenshot renders at phone/tablet/desktop widths and pixel/HD modes.
+  - id: t-015
+    milestone: m5
+    title: "Ghost Trail authored encounter and campaign systems: secrets, progress, checkpoints and victory"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Implement data-defined finite encounters (no idle score farming), two acts per stage,
+      authored branches, unique loot/secret keys, checkpoint semantics, saved/resumable
+      progress and real credits/victory instead of endless loops. Preserve seed-deterministic
+      updates, input abstraction, hit/poncho mechanic and score API.
+  - id: t-016
+    milestone: m5
+    title: "Ghost Trail stage 1: Silver Gulch authored encounter graph and Grave Marshal boss"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-014
+      - t-015
+    note: >-
+      Ship two long real gameplay acts, hidden saloon crawlspace, rooftop/street split,
+      Grave Marshal multi-tell boss and level complete/return path. Verify encounter
+      budgets, secret accessibility and 9–11 minute target before declaring stage done.
+  - id: t-017
+    milestone: m5
+    title: "Ghost Trail stages 2–3: Bone Yard, Drowned Watering Hole and unique bosses"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-016
+    note: >-
+      Bone Yard vertical haunted ravine/crypts with Bone Bull and bell sigil;
+      water-level/raft/secrets at the Drowned Watering Hole and Drowned Ferryman boss;
+      River Croc cameo/conditional ally. Distinct authored geometry, enemies and
+      backgrounds, not colored copies of Stage 1.
+  - id: t-018
+    milestone: m5
+    title: "Ghost Trail stages 4–5: Storm Crow Pass and Mission Bell Tower"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-017
+    note: >-
+      Wind, updrafts, lightning tells, canopy passage and Storm-Crow Matriarch boss;
+      stone bell lifts/rope puzzle/burning braziers and giant Bell Heretic fight.
+      Match accepted screen concepts without breaking readable hitboxes.
+  - id: t-019
+    milestone: m5
+    title: "Ghost Trail final stage: Abbey undercrypt, Abbess finale and alternate ending"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-018
+    note: >-
+      Connect the cosmic-horror ritual plot to the established Zuzu canon. Build two
+      final boss phases, ending and credit sequence, optional rescue, relic-dependent
+      secret ending and unlockable New Game+. The first clear must end the campaign
+      rather than silently wrap back to Ghost Town.
+  - id: t-020
+    milestone: m5
+    title: "Ghost Trail finish: sound, HUD, balance, device QA and >=60-minute playtest"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-019
+    note: >-
+      Replace placeholder sounds with authored ambience/combat/music; playtest boss tells,
+      attack cooldown, save/resume and secrets, verify DPR/pixel/HD, phone/tablet/desktop
+      and keyboard/gamepad/touch. Log actual unfamiliar-player run durations; target
+      >=60 minutes for first successful clear without artificial waiting. Confirm no
+      static farming and proper leaderboards; do not call done on estimates alone.
