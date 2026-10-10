@@ -1,0 +1,1115 @@
+{
+  "schema_version": 1,
+  "project": "zuzu-shifting-lands",
+  "source_world_manifest": {
+    "path": "projects/zuzu-shifting-lands/WORLD-DECKS.json",
+    "schema_version": 2
+  },
+  "status": "draft-not-imported",
+  "rules": {
+    "encounters_per_location_min": 2,
+    "selection": "seeded-weighted-eligible-without-replacement",
+    "seed_persisted": true,
+    "revisit_policy": "same-recorded-encounter-no-free-reroll",
+    "dice": "2d6+skill+modifier-vs-difficulty"
+  },
+  "locations": [
+    {
+      "location_id": "border-farm",
+      "encounter_ids": [
+        "family-at-the-fence",
+        "the-orchard-debt",
+        "scarecrows-lantern",
+        "the-last-seed"
+      ]
+    },
+    {
+      "location_id": "old-well",
+      "encounter_ids": [
+        "rope-at-dawn",
+        "a-cup-offered",
+        "marks-below-water",
+        "two-empty-buckets"
+      ]
+    },
+    {
+      "location_id": "wayside-refuge",
+      "encounter_ids": [
+        "gate-still-open",
+        "the-locked-dormitory",
+        "a-crust-for-the-road",
+        "the-silent-bell"
+      ]
+    }
+  ],
+  "encounters": [
+    {
+      "id": "family-at-the-fence",
+      "location_id": "border-farm",
+      "title": "A Family at the Fence",
+      "flavor_text": "An orchard fence bows beneath apples too small to harvest. Behind it, a family watches Zuzu approach, hands motionless over a patch of stubborn vegetables. One child has placed a bowl of water outside the gate. No one seems certain whether it is an invitation.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Cinematic weathered weird-west frontier orchard with a rabbit homesteader family behind a leaning split-rail fence, one shallow water bowl at the gate, late gold light, Zuzu only as a distant silhouette, no lettering or logos",
+        "cast": [
+          {
+            "identity": "family-at-the-fence-cast",
+            "species": "rabbit",
+            "occupation": "homesteaders",
+            "visual_description": "Two adult rabbit homesteaders and a young rabbit among crooked vegetable beds; weathered work clothes, alert ears, guarded posture",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "honor-guest",
+          "label": "Bow and request shelter",
+          "intent": "Honor the household boundary before asking for a roof.",
+          "risk_hint": "Low physical risk; a social check may earn supplies.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 7
+          },
+          "success": {
+            "text": "The eldest returns his bow. There is room beside their hearth, and a small parcel for the road.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "orchard-family-trust"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Their courtesy is strained. They shut the gate, and Zuzu loses precious daylight finding another way.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "orchard-family-wary"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "guard-the-gate",
+          "label": "Study the fence before approaching",
+          "intent": "Look for signs of a hurried defense before trusting the welcome.",
+          "risk_hint": "Moderate risk; an insight check can expose a warning.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The broken latch is wired from the inside. Zuzu repairs it before speaking, earning a cautious nod.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "orchard-latch-repaired"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "His hesitation reads as a threat. The family retreats indoors and leaves him outside in the cold.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "orchard-family-wary"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "These rabbit characters are authored for this illustration, not chosen by an independent species/occupation roll. The family's motives must be inferred through player action."
+    },
+    {
+      "id": "the-orchard-debt",
+      "location_id": "border-farm",
+      "title": "The Orchard Debt",
+      "flavor_text": "A farmer struggles to raise a water barrel onto a cart. One wheel sits crooked in the dust, and a storm is forming beyond the hills. She has enough food to trade but not enough strength to move her harvest alone. Zuzu remembers debts better than prices.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Illustrated amber frontier orchard edge; otter farmer with crooked handcart and heavy barrel under gathering storm clouds, Zuzu's straw kasa visible in foreground, realistic animal features, storybook ink-shadow treatment, no text",
+        "cast": [
+          {
+            "identity": "the-orchard-debt-cast",
+            "species": "otter",
+            "occupation": "orchard farmer",
+            "visual_description": "An adult otter orchard farmer with rolled sleeves, dust-stained work apron, sturdy cart and tilted water barrel",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "lift-together",
+          "label": "Help lift the barrel",
+          "intent": "Spend effort to straighten the cart and save the load.",
+          "risk_hint": "Physical risk; success secures a generous meal.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 7
+          },
+          "success": {
+            "text": "With a grunt and a crack of timber, the wheel settles. She presses dried fruit into Zuzu's hands.",
+            "hp_delta": 0,
+            "provisions_delta": 2,
+            "add_flags": [
+              "orchard-debt-owed"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The barrel slips against his ribs. The cart rolls free, but he leaves the farm bruised.",
+            "hp_delta": -1,
+            "provisions_delta": 1,
+            "add_flags": [
+              "orchard-debt-owed"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "brace-axle",
+          "label": "Repair the axle first",
+          "intent": "Find a safer repair before attempting the lift.",
+          "risk_hint": "Thinking check; failure wastes time in the approaching storm.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "Zuzu wedges the axle with a scavenged pin. The farmer quietly offers food and dry cloth.",
+            "hp_delta": 0,
+            "provisions_delta": 2,
+            "add_flags": [
+              "orchard-cart-mended"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The improvised pin snaps. He saves the crop but cuts his palm catching the axle.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "orchard-cart-mended"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "A benevolent encounter can still have risk. The species and work role are intentionally fixed so the custom illustration reads precisely."
+    },
+    {
+      "id": "scarecrows-lantern",
+      "location_id": "border-farm",
+      "title": "The Scarecrow's Lantern",
+      "flavor_text": "By the grain shed, a lantern sways from a wooden figure although there is no wind. A thin trail of footprints leads behind the barn, where someone has laid fishing line across the approach. The light is less a miracle than an invitation.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Nighttime weird-west field with patched scarecrow bearing a swinging lantern, covert coyote grain thief concealed near the barn and fine tripwire in foreground, high contrast, cinematic horror without gore, no written signs",
+        "cast": [
+          {
+            "identity": "scarecrows-lantern-cast",
+            "species": "coyote",
+            "occupation": "grain thief",
+            "visual_description": "A lean coyote grain thief behind a patched scarecrow, finger on a fishing-line tripwire, dusty frontier jacket",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "cut-the-line",
+          "label": "Cut the hidden line",
+          "intent": "Disable the snare and confront whoever set it.",
+          "risk_hint": "Awareness check; a failed move may spring the trap.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The wire parts cleanly. A startled thief flees, leaving a pouch of stolen rations behind.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "farm-snare-disarmed"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A board snaps up from the dirt. Zuzu staggers backward as the thief vanishes.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "farm-thief-escaped"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "follow-footsteps",
+          "label": "Circle around the grain shed",
+          "intent": "Avoid the snare and intercept the intruder at the back fence.",
+          "risk_hint": "Riskier stealth approach; the land may shift afterward.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "He appears where the thief least expects him. In the chase, the nearby shortcut collapses into the ditch.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "farm-shortcut-collapsed"
+            ],
+            "map_effect": "recorded-prospective-shift"
+          },
+          "failure": {
+            "text": "The thief doubles back through the brush. Zuzu loses the trail and the last of the light.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "farm-thief-escaped"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "The thief is dangerous because of this authored incident, never because coyotes are inherently untrustworthy."
+    },
+    {
+      "id": "the-last-seed",
+      "location_id": "border-farm",
+      "title": "The Last Seed",
+      "flavor_text": "A lone gardener kneels over an improbable green shoot in cracked soil. She holds a tin of seeds as carefully as a relic. The well beside her is nearly dry. She asks for no gift, only for Zuzu not to trample what little survives.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Wide low-angle shot in sunburnt western homestead yard, mouse seed keeper protecting a single green sprout and carrying a rusted seed tin, Zuzu kneeling respectfully nearby, quiet resilient mood, painted old-paper palette",
+        "cast": [
+          {
+            "identity": "the-last-seed-cast",
+            "species": "mouse",
+            "occupation": "seed keeper",
+            "visual_description": "A small adult mouse gardener with a worn apron and a tin of seeds, kneeling over one bright sprout in cracked soil",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "share-water",
+          "label": "Offer a measure of water",
+          "intent": "Exchange precious provisions for the keeper's trust.",
+          "risk_hint": "Social check; mercy may return more than it costs.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 7
+          },
+          "success": {
+            "text": "She waters the sprout, then insists Zuzu take a handful of preserved fruit from her cellar.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "seed-keeper-trust"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "He fumbles the measure and spills most of it. She thanks him, but there is little to spare.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "seed-keeper-trust"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "shield-shoot",
+          "label": "Build a shelter for the sprout",
+          "intent": "Use fieldcraft to protect the fragile plant from wind.",
+          "risk_hint": "Wits check; success discovers a small cache beneath the soil.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "A stone windbreak holds. Beneath its foundation lies a sealed jar of old provisions.",
+            "hp_delta": 0,
+            "provisions_delta": 2,
+            "add_flags": [
+              "sprout-sheltered"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The wind returns before he finishes. He takes a cut across the knuckles rescuing the seed tin.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "sprout-sheltered"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Represents hope without explaining the world's broken ecology; do not turn the sprout into proof about the lost-human mystery."
+    },
+    {
+      "id": "rope-at-dawn",
+      "location_id": "old-well",
+      "title": "Rope at Dawn",
+      "flavor_text": "A bucket hangs halfway down a stone well, swinging over water black with reflected sky. Its keeper kneels by a fraying rope and will not let anyone pull alone. A second traveler waits with an empty cup, too tired to argue.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Dawn on the frontier, narrow ancient stone well, otter well keeper testing a badly frayed pulley rope, weary traveler in soft silhouette, bucket reflected in the dark water, weathered painterly detail, no lettering",
+        "cast": [
+          {
+            "identity": "rope-at-dawn-cast",
+            "species": "otter",
+            "occupation": "well keeper",
+            "visual_description": "Adult otter well keeper with wet cuffs and braided rope at a stone well, careful practical demeanor",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "take-the-rope",
+          "label": "Take the strain on the rope",
+          "intent": "Anchor the pulley with strength while the keeper repairs it.",
+          "risk_hint": "Steel check; the rope may injure Zuzu if it breaks.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The bucket rises safely. The keeper fills Zuzu's flask and shares the morning's small breakfast.",
+            "hp_delta": 0,
+            "provisions_delta": 2,
+            "add_flags": [
+              "well-pulley-secured"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The rope burns through his palm. Water is saved, but the wound throbs beneath his bandage.",
+            "hp_delta": -1,
+            "provisions_delta": 1,
+            "add_flags": [
+              "well-pulley-secured"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "tie-new-knot",
+          "label": "Teach the keeper a safer knot",
+          "intent": "Repair the rigging without risking the bucket.",
+          "risk_hint": "Wits check; a misstep could foul the well.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 7
+          },
+          "success": {
+            "text": "The knot settles under tension. Soon the line moves as smoothly as a song without words.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "well-line-repaired"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The new line snags against the stone. Zuzu buys a replacement rope with his remaining provisions.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "well-line-repaired"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Keeper is an authored otter identity, not a role slot to be assigned another species mid-run."
+    },
+    {
+      "id": "a-cup-offered",
+      "location_id": "old-well",
+      "title": "A Cup Offered",
+      "flavor_text": "A traveler offers Zuzu the first drink from a polished tin cup. Her kindness is almost ceremonious, yet the cup smells faintly of something bitter. She keeps watching his face instead of the water.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Close intimate scene at a dusty communal well, rabbit traveling herbalist extending a dented bright tin cup to a grey koala ronin, pouch of dried herbs visible, eyes unreadable, old-west watercolor chiaroscuro, no text",
+        "cast": [
+          {
+            "identity": "a-cup-offered-cast",
+            "species": "rabbit",
+            "occupation": "traveling herbalist",
+            "visual_description": "Adult rabbit herbalist with a stained tin cup, herbal satchel, patient wary expression under broad desert sky",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "ask-ingredients",
+          "label": "Ask what has been added",
+          "intent": "Politely insist on knowing what is in the drink.",
+          "risk_hint": "Insight check; truth may reveal practical medicine.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 7
+          },
+          "success": {
+            "text": "The bitter note is willow bark. She explains its use and gives Zuzu a wrapped medicinal dose.",
+            "hp_delta": 1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "well-herbalist-trust"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "His question sounds like an accusation. She tips the cup into the sand, and the exchange ends coldly.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "well-herbalist-offended"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "drink-first",
+          "label": "Accept the offered cup",
+          "intent": "Honor hospitality despite uncertainty.",
+          "risk_hint": "Resolve check; a mistake risks a painful night.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The bitterness passes, leaving a welcome calm in his aching limbs. The traveler offers a second dose.",
+            "hp_delta": 1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "well-herbalist-trust"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The herbs are too strong on an empty stomach. Zuzu retreats behind the well to recover.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "well-herbalist-offended"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Herbalist is not a poisoner by species; ambiguity is personal and can resolve into kindness."
+    },
+    {
+      "id": "marks-below-water",
+      "location_id": "old-well",
+      "title": "Marks Below the Water",
+      "flavor_text": "At the waterline are fresh scratches beneath older carved circles. A solitary watcher insists the marks were not there yesterday. The well stones tremble when carts pass nearby, yet the marks seem to move on their own.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Moody midday stone well in arid settlement, goat stonemason tracing strange scratches in wet masonry with a small lantern, unsettling geometry down the shaft, suspense not gore, faded earth pigments, no written glyphs",
+        "cast": [
+          {
+            "identity": "marks-below-water-cast",
+            "species": "goat",
+            "occupation": "stone mason",
+            "visual_description": "Adult goat stone mason with blunt horns, leather tools, chalk-dusted gloves, staring down a well shaft",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "measure-stone",
+          "label": "Measure the altered stones",
+          "intent": "Look for structural danger before drawing water.",
+          "risk_hint": "Awareness check; uncovering the flaw can alter the future route.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "One foundation block has slipped. Zuzu helps mark a safe detour before the passage gives way.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "well-stones-slipping"
+            ],
+            "map_effect": "recorded-prospective-shift"
+          },
+          "failure": {
+            "text": "His boot loosens a cracked step. Stones spill into the shaft and bruising dust blinds him.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "well-unsafe"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "sound-depth",
+          "label": "Lower a weighted line",
+          "intent": "Probe the well without entering its unstable throat.",
+          "risk_hint": "Wits check; the line might be lost.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "The weight touches a shelf where none should be. He pockets a small brass fitting and backs away.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "well-hidden-shelf"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The rope snaps against sharp stone. Whatever moved below remains unseen, and Zuzu is left soaked and shivering.",
+            "hp_delta": -1,
+            "provisions_delta": -1,
+            "add_flags": [
+              "well-unsafe"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Do not imply the mason or markings explain the missing-human world. The unstable masonry may justify a local map effect."
+    },
+    {
+      "id": "two-empty-buckets",
+      "location_id": "old-well",
+      "title": "The Two Empty Buckets",
+      "flavor_text": "Two buckets stand beside the well, each painted with a different household mark. The second owner has not returned for three days. An exhausted courier has been carrying water to both homes rather than let the other family go without.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Weird-west communal well at sunset with fox water courier holding two mismatched buckets, dry path stretching toward distant adobe homes, exhausted but stubborn expression, atmospheric sun-dust and warm shadow, no text",
+        "cast": [
+          {
+            "identity": "two-empty-buckets-cast",
+            "species": "fox",
+            "occupation": "water courier",
+            "visual_description": "An adult fox courier with patched satchel and wet bandages carrying two mismatched wooden buckets between homesteads",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "carry-buckets",
+          "label": "Carry the water for the courier",
+          "intent": "Honor the absent neighbor's claim as well as the courier's.",
+          "risk_hint": "Steel check; helping may improve both households' supplies.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 7
+          },
+          "success": {
+            "text": "Both doors open to receive the water. One household quietly repays the journey with bread.",
+            "hp_delta": 0,
+            "provisions_delta": 2,
+            "add_flags": [
+              "well-households-helped"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Zuzu trips on loose stone and spills a bucket. He uses his own water to make the delivery whole.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "well-households-helped"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "follow-missing",
+          "label": "Follow the unclaimed bucket's mark",
+          "intent": "Investigate the absent neighbor instead of simply delivering water.",
+          "risk_hint": "Awareness check; clues may become useful at the mission.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The trail leads toward the refuge road, where a small ribbon is tied to a marker stone.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "mission-road-clue"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The marks lead in circles after dusk. Zuzu returns to the well with bleeding feet and few answers.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "missing-household-unfound"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Missing person clue is optional foreshadowing, not definitive proof of the Abbess's full agenda."
+    },
+    {
+      "id": "gate-still-open",
+      "location_id": "wayside-refuge",
+      "title": "The Gate Still Open",
+      "flavor_text": "The refuge gate is open despite the hour. A smiling sister holds a lantern beneath the adobe arch, offering stew and a place to rest. From inside comes the steady rhythm of plates being stacked, but no children's laughter.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Twilight adobe roadside mission gate, adult otter sister in dark practical convent habit holding lantern and inviting traveler's entry, long shadows and warm distant refectory light, subtle unease, painterly dramatic western atmosphere",
+        "cast": [
+          {
+            "identity": "gate-still-open-cast",
+            "species": "otter",
+            "occupation": "convent sister",
+            "visual_description": "Adult otter convent sister in worn dark habit with warm expression and oil lantern in adobe mission gateway",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "accept-stew",
+          "label": "Enter with formal thanks",
+          "intent": "Accept food while maintaining Zuzu's customary courtesy.",
+          "risk_hint": "Bearing check; care may come with strings attached.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 7
+          },
+          "success": {
+            "text": "The stew warms his hands. A novice brings extra bread and the names of nearby roads.",
+            "hp_delta": 1,
+            "provisions_delta": 1,
+            "add_flags": [
+              "refuge-welcomed"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A bell sounds before he can finish eating. He leaves uneasy, with his pack lighter than before.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "refuge-watchful"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "inspect-arch",
+          "label": "Observe the gate before entering",
+          "intent": "Look for traffic patterns that contradict the welcome.",
+          "risk_hint": "Insight check; danger is social rather than immediate.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "Tracks enter under the arch more often than they leave. Zuzu commits the detail to memory.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "gate-one-way-tracks"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "His scrutiny is noticed. The sister's smile thins, and Zuzu sleeps beyond the wall instead.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "refuge-watchful"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "This sister's visual species is authored, but kindness or complicity must arise from the encounter and discovered evidence, not species."
+    },
+    {
+      "id": "the-locked-dormitory",
+      "location_id": "wayside-refuge",
+      "title": "The Locked Dormitory",
+      "flavor_text": "A narrow corridor smells of soap and polished wood. Behind a locked door, a small wooden toy rests beneath an empty coat hook. A nervous novice insists the room is being cleaned and asks Zuzu to return to the refectory.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Dim adobe mission hallway with locked wooden dormitory door, little wooden toy below an empty peg, anxious adult mouse novice clutching a set of keys, tension without violence, cinematic lantern light, no readable writing",
+        "cast": [
+          {
+            "identity": "the-locked-dormitory-cast",
+            "species": "mouse",
+            "occupation": "novice attendant",
+            "visual_description": "Young adult mouse novice attendant in plain travel-stained novice clothing, holding keys in a mission corridor, worried expression",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "question-novice",
+          "label": "Question the novice gently",
+          "intent": "Give the attendant room to speak without public confrontation.",
+          "risk_hint": "Bearing check; the wrong tone closes the conversation.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The novice whispers of a missing roster and slips Zuzu a room number before hurrying away.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "dormitory-room-number"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Footsteps approach. The novice retreats behind a practiced smile, and Zuzu is sent outside.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "novice-silenced"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "search-lock",
+          "label": "Examine the old lock",
+          "intent": "Find evidence without forcing an accusation.",
+          "risk_hint": "Wits check; an alarm could turn the mission against him.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "A splinter of ribbon caught in the hinge matches one seen on the refuge road. Zuzu keeps it.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "dormitory-ribbon-evidence"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The lock catches his tool. A caretaker arrives before he can retrieve it, and Zuzu flees wounded.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "refuge-watchful"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Keep threatened children offscreen. This clue foreshadows the Abbess without revealing her rituals on the initial card."
+    },
+    {
+      "id": "a-crust-for-the-road",
+      "location_id": "wayside-refuge",
+      "title": "A Crust for the Road",
+      "flavor_text": "Near the kitchen door, a tired sister presses a small parcel of bread into Zuzu's palm. She says it is excess from supper, then glances back toward the convent windows. She may simply be kind, or frightened of being seen.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Rain-washed mission kitchen threshold in the western frontier, adult otter kitchen novice secretly handing a small wrapped bread parcel to a grey koala ronin, side-lit wary gratitude, warm palette with dark adobe windows",
+        "cast": [
+          {
+            "identity": "a-crust-for-the-road-cast",
+            "species": "otter",
+            "occupation": "kitchen novice",
+            "visual_description": "Adult otter kitchen novice in plain dark habit with flour on forearms and small bread parcel, watching mission windows",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "thank-with-bow",
+          "label": "Accept the bread with a bow",
+          "intent": "Take the kindness without asking for more.",
+          "risk_hint": "Bearing check; success may earn a trusted messenger.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 7
+          },
+          "success": {
+            "text": "The sister relaxes at his measured thanks and includes a note about the safer road east.",
+            "hp_delta": 0,
+            "provisions_delta": 2,
+            "add_flags": [
+              "kitchen-novice-trust"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A superior calls from within. She retreats before he can thank her, leaving only a crust.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "kitchen-novice-wary"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "offer-help",
+          "label": "Offer to help at the kitchen",
+          "intent": "Repay hospitality through work rather than inquiry.",
+          "risk_hint": "Resolve check; lingering may draw unwelcome attention.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "He washes the last pans and hears a whispered warning about a door that stays locked.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "refuge-locked-door-clue"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "He stays too long under watchful eyes. A sleepless night in the cold costs him strength.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "kitchen-novice-wary"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Do not assume every sister is malicious; a trusting novice may be a genuine ally in this alternate route."
+    },
+    {
+      "id": "the-silent-bell",
+      "location_id": "wayside-refuge",
+      "title": "The Silent Bell",
+      "flavor_text": "The bell tower rope hangs motionless above a swept courtyard. A caretaker tells Zuzu not to touch it, saying the bell has not been used for years. Through the open stairwell he can see where a part of the mechanism should be.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Looming adobe mission bell tower with motionless rope, older badger grounds caretaker confronting a lone ronin at foot of worn stairs, empty bronze assembly suggested in shadows, dusty sunset, ominous quiet, no glyphs or text",
+        "cast": [
+          {
+            "identity": "the-silent-bell-cast",
+            "species": "badger",
+            "occupation": "grounds caretaker",
+            "visual_description": "Older adult badger grounds caretaker in patched work tunic under mission bell tower with missing bell mechanism",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "ask-about-bell",
+          "label": "Ask why the bell never rings",
+          "intent": "Seek the caretaker's explanation without trespassing.",
+          "risk_hint": "Insight check; silence may conceal a deliberate choice.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The caretaker lets slip that the clapper was removed on orders from above, then refuses to say more.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "bell-clapper-removed"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "He calls the question impertinent and sends Zuzu down the wrong lane outside the gate.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "bell-caretaker-hostile"
+            ],
+            "map_effect": "recorded-prospective-shift"
+          }
+        },
+        {
+          "id": "climb-stairs",
+          "label": "Climb and inspect the bell",
+          "intent": "Risk discovery to examine the mechanism directly.",
+          "risk_hint": "Awareness check; a fall or confrontation could follow.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "The bronze bell is intact but mute by design. Zuzu marks the tower as a place to return.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "bell-physical-evidence"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A loose stair gives beneath him. Zuzu catches the rail but limps away as watchers assemble below.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "bell-caretaker-hostile"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "The missing clapper is provisional world-guide lore; if upstream lore changes, retain mystery without claiming a canonical discovery too early."
+    }
+  ]
+}
