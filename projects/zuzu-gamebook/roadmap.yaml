@@ -261,6 +261,15 @@ tasks:
       (ground, sky, light) so it fills the frame. The 6 house seeds made redundant by Kontext keepers were
       cancelled (ArtJobs 36091, 36093, 36095, 36099, 36101, 36103). Queue is healthy, not stalled (no stale RUNNING), but slow: ~40
       renders/hour, so round 8's last ~290 jobs land over the next ~7 hours.
+      KONTEXT PROMPT FIX (20:00, Silas: "why start with 'place this exact koala in a new scene'? That means a lot
+      to krea in ways we don't want"). The lane is Flux Kontext dev, but it shares the T5 encoder, which reads the
+      prompt as a picture description: "white background" and "replace ... background" drew black voids,
+      "dark atmosphere, heavy shadows" muddied the colour, "only one koala" and "she never wears his hat, poncho or
+      sword" put koalas and his costume into the frame. Rule for every Kontext prompt from here on: describe only
+      what is in the picture (the scene, the koala's outfit, each other character, light matched to the scene,
+      "Western comic book illustration with clean ink lines, rich natural color and a fully drawn setting"), with
+      no instructions, meta words or negations. The 87 still-pending round-8 Kontext jobs were edited in place to
+      this wording; 10 had already been claimed and render with the old prompt.
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
