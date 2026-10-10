@@ -1616,7 +1616,7 @@ tasks:
 - id: t-079
   milestone: m4
   title: 'Fun-loop spec: fish drop clickable coins, coins buy more fish, the tank fills up'
-  status: ready
+  status: done
   owner: null
   stakes: reversible
   passes: 0
@@ -1639,12 +1639,24 @@ tasks:
       milestones, or appear as rewards.
     - The server stays authoritative (coins are credited through a server allowance, as collect is
       today). Prefer additive schema changes; no destructive drops in this milestone.
-  updated: '2026-10-10T10:00:00Z'
+
+    Done 2026-10-10: projects/cthulhuquarium/LOOP.md (rules), data/economy.yaml fun_loop
+    block (numbers), data/simulate_fun_loop.py (pace check: second fish 1:03, a dozen fish
+    11:35, first expansion 24:07, 25 fish ~79 min). ECONOMY.md points to it as superseding
+    the v1 loop. Decisions beyond the task note: coin value by tier (3/8/20/50/125/300 every
+    15 s per fish), server credits clicked VALUE against the existing collectAnchorAt (no
+    migration); hunger only gates drops (starving fish drop nothing), debris and rivalry no
+    longer touch coin drops; room counts fish (12 slots, +4 per coin-bought expansion to
+    40), copies allowed, flat 50% release refund; feeding 2% of unlock cost. No new
+    implementation tasks were needed beyond t-080 to t-083.
+  updated: '2026-10-10T10:05:29Z'
+  claimed_by: null
+  claimed_at: null
 
 - id: t-080
   milestone: m4
   title: 'Every fish drops clickable coins (replace the single shed-scale timer)'
-  status: waiting
+  status: ready
   owner: null
   stakes: reversible
   passes: 0
@@ -1661,7 +1673,7 @@ tasks:
 - id: t-081
   milestone: m4
   title: 'Let the tank hold many more fish: copies allowed, bigger room, buyable expansion'
-  status: waiting
+  status: ready
   owner: null
   stakes: reversible
   passes: 0
@@ -1679,7 +1691,7 @@ tasks:
 - id: t-082
   milestone: m4
   title: 'Remove breeding, eggs and hidden stats from the game'
-  status: waiting
+  status: ready
   owner: null
   stakes: reversible
   passes: 0

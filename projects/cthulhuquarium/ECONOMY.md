@@ -1,5 +1,12 @@
 # Cthulhuquarium — Economy and Progression Spec (t-004)
 
+> **Superseded for the live loop, 2026-10-10 (t-079).** Silas declined the game as "lackluster" and asked
+> for an Insaniquarium-style loop: every fish drops clickable coins, copies are allowed, room counts fish
+> and is bought with coins, feeding is cheap, and breeding and hidden stats are gone. The numbers are in
+> `data/economy.yaml` under `fun_loop`, the rules in [LOOP.md](LOOP.md), and the pace check in
+> `data/simulate_fun_loop.py`. This document stays as the history of the v1 economy.
+
+
 date: 2026-08-24
 status: draft v1 — confirm-or-tune with Silas before t-009 (server API) builds against it
 companion to: `DESIGN-BRIEF.md` (tone, scope, decided questions) and `SYSTEMS.md`

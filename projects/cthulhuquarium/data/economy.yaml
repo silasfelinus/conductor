@@ -379,3 +379,50 @@ last_aquarium:
     The only cosmetic purchase in the game. Backgrounds are milestone rewards
     and everything else coins buy is capability, which is part of why this
     stands out on the shelf at all.
+
+# ---------------------------------------------------------------------------
+# fun_loop — the m4 "fun loop first" economy (cthulhuquarium/t-079, LOOP.md).
+#
+# Silas, 2026-10-10: "in the inspiration game insaniquarium, fish spawned coins
+# which allowed making more fish. we need some sort of clickable thing ... and
+# we aren't allowing enough fish in a tank. ... ditch the breeding and secret
+# stats ... we want a fun gameplay loop first."
+#
+# This block SUPERSEDES, for the live game: fish.collection_not_copies (copies
+# are allowed), slots (room is counted in fish and bought with coins),
+# hunger.feed.cost_factor_of_unlock_cost (0.2 -> feed_cost_factor below),
+# currency.starting_coins (25 -> 40) and the single tank-wide shed-scale timer
+# in kind_robots server/utils/aquariumCollect.ts. The older blocks stay above
+# as history. Pace check: data/simulate_fun_loop.py.
+# ---------------------------------------------------------------------------
+fun_loop:
+  starting_coins: 40 # with COMMON at 50, the second fish is ~1 minute of clicking away
+  # Every fish drops its own coin on its own timer. Rate grows with fish count,
+  # which is the whole loop: more fish -> more coins -> more fish.
+  coin_drop_seconds_per_fish: 15
+  coin_value_by_tier: # coins per dropped coin; 4 drops/min -> 12, 32, 80, 200, 500, 1200 per fish-minute
+    COMMON: 3
+    UNCOMMON: 8
+    RARE: 20
+    EPIC: 50
+    LEGENDARY: 125
+    MYTHIC: 300
+  coin_visible_seconds: 12 # drift down ~8 s, rest on the gravel ~4 s, then fade; unclicked coins are lost
+  copies_allowed: true # buy the same species again at its normal unlock cost
+  starting_fish_slots: 12 # room counts fish, not size: every fish takes one slot
+  tank_expansions: # bought with coins, in order
+    - { slots: 4, cost: 400 }
+    - { slots: 4, cost: 1200 }
+    - { slots: 4, cost: 3000 }
+    - { slots: 4, cost: 7500 }
+    - { slots: 4, cost: 18000 }
+    - { slots: 4, cost: 40000 }
+    - { slots: 4, cost: 90000 }
+  # 12 + 7 x 4 = 40 fish at the top.
+  feed_cost_factor_of_unlock_cost: 0.02 # COMMON 1, UNCOMMON 4, RARE 15; a cheap click, not a tax
+  release_refund_factor_of_unlock_cost: 0.5 # flat; no stat-based sell price
+  passive_income: settle_tick_unchanged # the 0.5x offline/idle path stays as is -- small next to clicking
+  # Simulation-only knobs: a human clicks about this share of coins, and no
+  # faster than this many per second.
+  sim_click_share: 0.8
+  sim_max_clicks_per_second: 1.5
