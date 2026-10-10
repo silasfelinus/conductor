@@ -778,14 +778,14 @@ tasks:
   - id: t-029
     milestone: m2
     title: "Render the Zuzu: Koala Assassin intro and get Silas's verdict"
-    status: needs-human
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
     gate_human: true
     gate_reason: subjective-acceptance
     depends_on: [t-024, t-027, t-031, t-033]
-    updated: '2026-10-08T11:19:41Z'
+    updated: '2026-10-10T09:35:07Z'
     note: >-
       Run t-028 with the t-024 brief. Song from ACE-Step if t-012 is done, otherwise ask Silas for
       an MP3 for the t-013 upload. Clips run 30-90 minutes each on the single 12 GB card, so queue
@@ -827,6 +827,18 @@ tasks:
       creator/issues/zuzu-koala-assassin-01/mv12-s13-clip-243216-repaired.mp4; re-exports must
       substitute it), final ArtImage 243229 (72.0 s, 8.1 MB). Every frame checked before
       sending. Awaiting Silas's verdict.
+
+      Silas verdict 2026-10-10 on ArtImage 243229: NOT approved. 'music video for zuzu has
+      some significant issues with some of the art and animations that are just inferior, such
+      as zuzu removing his hat and there's another hat on his head.' Next round: (1) fix the
+      hat-removal clip: when Zuzu takes the kasa off there must be no second hat on his head;
+      re-render that clip or replace it with a cut or Ken Burns on a clean keyframe; (2) audit
+      every one of the 15 scenes frame by frame for the same class of defect (duplicated
+      props, extra limbs or hands, warped faces, canon breaks such as kasa, katana over the
+      right shoulder, poncho, never denim) and for weak art next to the best shots; re-render
+      or swap the inferior ones rather than shipping them; (3) list each fixed scene and the
+      before/after ids in the re-park note. Back to needs-human with the new final ArtImage
+      once every shot passes.
 
   - id: t-030
     milestone: m2

@@ -823,11 +823,11 @@ tasks:
 - id: t-036
   milestone: m4
   title: 'Set PITCH_LINK_SECRET so digest pitch links work (Silas only)'
-  status: needs-human
+  status: done
   owner: null
   passes: 0
   stakes: irreversible
-  updated: '2026-10-02T00:00:00Z'
+  updated: '2026-10-10T09:34:18Z'
   note: |-
     FOR SILAS: the digest's one-click pitch Approve/Pass links need ONE shared secret in two
     places, which sessions cannot set. (1) Pick any long random string (for example
@@ -838,3 +838,7 @@ tasks:
     project page" button per pitch instead of Approve/Pass, and the endpoint answers 503, so
     nothing breaks. kind_robots PR #3176 carries the endpoint. TO APPROVE: reply "done" or set
     the status to done once both secrets exist.
+
+    Silas 2026-10-10 in session: PITCH_LINK_SECRET was added in both places days ago; the
+    roadmap was never updated. Closed on his word.
+  approved_by_human: true
