@@ -11,9 +11,15 @@ goal: >-
   independent nudge and tilt, three multiball variants (3, 4, 6 balls), multiple
   narrative modes, rich addressable LED and cabinet splash treatment, DMD, sound,
   and a physically playable hidden undercrypt that returns to the main deck.
+  River Croc is a signature animatronic toy with a shootable opening jaw,
+  captured-ball hold, Death Roll, and a safe return to the right inlane.
   Initial preview is admin only. Definition of done requires device QA and
   Silas's hands-on judgment that the table is genuinely FX3-quality.
 notes_from_silas: |
+  2026-10-09 PT follow-up: "I want the river croc to make an appearance,
+  you should be able to shoot the ball into its mouth." The established
+  Zuzu River Croc is now the mandatory #07 physical shot and animatronic,
+  not a decorative decal. See RIVER-CROC-TOY-CONCEPT.svg and revised mockups.
   2026-10-09 PT: "I want a new project, a zuzu pinball game ... This should aim
   to be at the level of a pinball fx3 table in terms of quality and complexity:
   mulltiball, multiple flipper levels, tilt, multiple ramps, led, designed table
@@ -143,7 +149,8 @@ tasks:
       Three pops, four resetting drops, capture-and-eject scoop, trapped relic
       ball, calibrated slings, ball save and kickback. Implement nudge with
       warnings, bob threshold, temporary disables, tilt termination, and
-      repeatable no-ball-trap/physics regression tests.
+      repeatable no-ball-trap/physics regression tests. Expose capture,
+      switch debouncing and ball ledger hooks for River Croc (t-015).
   - id: t-008
     milestone: m3
     title: "Implement mode director, five story chapters, shot awards and DMD contracts"
@@ -193,7 +200,8 @@ tasks:
       Concept-art.svg is NOT final shipped 3D art. Use verified generated art
       jobs or original authored assets: Zuzu backglass and cabinet sides,
       moonlit village decals, 3D monastery, physical bell, figures, props,
-      glass/chrome reflections and raised mechanical ramp model.
+      glass/chrome reflections and raised mechanical ramp model. Include the
+      canonical scarred, giant River Croc as a rigged waterline jaw toy.
       Log prompts, seeds, sources, rights, destinations and asset state.
   - id: t-012
     milestone: m4
@@ -207,7 +215,8 @@ tasks:
       LED strip and insert light-map editor, GI, restrained strobes, mode cues,
       cabinet border art, animated high-score and callout scenes, layered sound
       mixing and camera sweeps that never impair flipper response.
-      Provide static camera and reduced-motion settings.
+      Provide static camera and reduced-motion settings. Add Croc mouth
+      arming/capture/death-roll/spit cues, DMD and multiball callouts.
   - id: t-013
     milestone: m5
     title: "Run physics/rules soaks, input accessibility and cross-device performance QA"
@@ -220,7 +229,8 @@ tasks:
       After t-010 through t-012 complete, run no-stuck-ball scenarios, repeated
       setup/dispose, six-ball stress, representative desktop/touch playtests,
       mobile/desktop screenshots, camera/input layouts, frame timing and
-      accessible table guide. Add missing remediation tasks rather than
+      accessible table guide. Soak-test 1,000 Croc swallow and safe-eject
+      cycles including multi-ball and tilt. Add missing remediation tasks rather than
       declaring completion by count.
   - id: t-014
     milestone: m5
@@ -237,3 +247,37 @@ tasks:
       authorize public route/Arcade exposure before publication. Agents may
       polish and create private preview builds; no public game release or
       project-finished declaration without this explicit approval.
+  - id: t-015
+    milestone: m2
+    title: "Build River Croc waterline mouth capture, jaw rig and safe spit"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Explicit Silas requirement 2026-10-09: actual River Croc, a giant scarred
+      watering-hole predator from the existing Zuzu gamebook and Showdown.
+      The steel ball must be shootable into the open jaws at #07 (left-side
+      Mortuary scoop replaced; right-hand story selector scoop remains).
+      Build colliders, hit sensor, readable waterline aim cue, mechanical jaw,
+      one-ball capture and deterministic Submerge/Rise/Open/Swallow/Death Roll/
+      Spit/Reset sequence. Spit to right inlane; ball ledger conservation,
+      busy-mouth reject, timeout eject, safe tilt, multiball stress and
+      unobstructed ramp clearance verified with repeatable trajectory tests.
+  - id: t-016
+    milestone: m3
+    title: "Author River Croc Watering Hole mini-mode and Death Roll jackpot"
+    status: waiting
+    depends_on: t-015
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Add a Watering Hole mini-mode in Homestead chapter using River Croc's
+      existing Zuzu canon, including coyote encounter reference; qualifying
+      orbit-to-mouth combo awards Death Roll jackpot, unlit successful mouth
+      shot earns spit-back consolation award. Waterline LEDs, DMD mouth closeup,
+      water-spray and jaw-snap sound, accessible reduced-motion cues and
+      trajectory-skill progression. Do not make the mouth an instant drain;
+      every legitimate swallow safely ejects and awards something.
