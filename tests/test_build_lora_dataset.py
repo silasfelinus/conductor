@@ -129,6 +129,8 @@ def test_train_all_runs_every_set_in_order_and_always_restarts_the_relay():
     assert "if ($LASTEXITCODE)" in ps1
     assert "--no-deps" in ps1 and "comfy-fast" in ps1, "CUDA torch is copied from ComfyUI's venv, not PyPI's CPU build"
     assert "torch.cuda.is_available()" in ps1, "training refuses to start without CUDA torch"
+    assert 'Pattern "use_cpu: true"' in ps1, "a CPU-pinned accelerate config is regenerated"
+    assert ps1.index("Remove-Item $AccelerateConfig") < ps1.index("accelerate.exe config default")
     assert "Python310\\python.exe" in ps1 and "& $Python -m venv venv" in ps1, "uses ComfyUI's Python 3.10, not a bare python"
     assert "$Comfy/queue" in ps1 and "$Comfy/free" in ps1
     assert "_v1.safetensors" in ps1, "a finished set is skipped on a re-run"
