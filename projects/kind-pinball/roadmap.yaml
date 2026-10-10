@@ -746,7 +746,7 @@ tasks:
   - id: t-026
     milestone: m6
     title: "One camera from the flippers; a single pan to a bonus area and back, never following the ball"
-    status: claimed
+    status: review
     depends_on: [t-025]
     owner: worker
     passes: 0
@@ -761,9 +761,20 @@ tasks:
       VIEW chip). The score stays readable when the backbox is out of frame (a DMD on screen). Tests:
       the camera never moves while the ball moves on the main field; each bonus visit is exactly one pan
       in and one pan out.
+
+      Shipped in kind_robots#3432 (merged): one fixed camera from behind the flippers framing
+      the main field at any screen shape; it never follows the ball (a test checks the camera
+      position is exactly constant over 300 frames of a ball racing round). When every ball is
+      in a bonus area (the Ridge, the hidden room) it makes one smoothstep pan of 54 frames
+      there and holds still, and one pan back when a ball returns (tested: one pan in, none on
+      a repeat, one pan exactly home). Removed the plunge and multiball leans and t-021's view
+      modes (B cycle, VIEW chip, how-to line, cameraMode.ts). The backbox is out of the main
+      frame, so the DMD now also shows on screen at the top whenever the backbox one is not
+      visible. Screenshots: screenshots/t026-desk.jpg, t026-phone.jpg, t026-ridge-desk.jpg.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-10T10:09:21Z'
-    updated: '2026-10-10T10:09:21Z'
+    updated: '2026-10-10T10:25:40Z'
+    implementation_pr: 'silasfelinus/kind_robots#3432'
 
   - id: t-027
     milestone: m6
