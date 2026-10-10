@@ -39,11 +39,11 @@ PUPPETS = {
         "reference": 242156,
         # Pose name -> art image id (T011-SIBLINGS-PARTS.yaml's toddler-<pose> subjects).
         "poses": {
-            "stand": None,
-            "duck": None,
-            "throw": None,
-            "proud": None,
-            "wave": None,
+            "stand": 243484,
+            "duck": 243485,
+            "throw": 243486,
+            "proud": 243487,
+            "wave": 243488,
             "raspberry": None,
         },
         # His fur takes the same P2 turn as his sister's (rigs/siblings.py P2_RULES), so they match.
@@ -68,16 +68,20 @@ def feet(image: Image.Image) -> tuple[int, int]:
 def main(slug: str, source_dir: str, out_dir: str) -> None:
     spec = PUPPETS[slug]
     src, out = Path(source_dir), Path(out_dir)
+    # A pose whose art hasn't rendered yet is left out: the game draws the standing pose in its place.
     missing = [name for name, art in spec["poses"].items() if not art]
+    if "stand" in missing:
+        raise SystemExit(f"{slug}: no standing pose yet")
     if missing:
-        raise SystemExit(f"{slug}: no art yet for {', '.join(missing)}")
+        print(f"{slug}: no art yet for {', '.join(missing)}; the game stands in with 'stand'", file=sys.stderr)
+    poses = {name: art for name, art in spec["poses"].items() if art}
     figure_height = sc.crop_to_content(rig.load_source(src, spec["reference"], False)).height
     height = spec["height"]
     hd_scale = height * sc.HD_SCALE / figure_height
     game_scale = height / figure_height
 
     hd, game, anchors = {}, {}, {}
-    for name, art in spec["poses"].items():
+    for name, art in poses.items():
         source = rig.load_source(src, art, False)
         box = source.getchannel("A").getbbox()
         pose = source.crop(box)
