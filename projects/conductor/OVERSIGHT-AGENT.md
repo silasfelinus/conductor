@@ -29,31 +29,36 @@ The existing `scripts/check_project_scaffold_drift.py` is the minimum mechanical
 
 Run this at least every **3 days**, and sooner after a substantial priority or direction change.
 
-**Scheduled owner:** the recurring ChatGPT task **Conductor Semantic Review** (enabled
-2026-10-10 PT, first run 2026-10-13 around 8 AM PT, every three days) attempts this
-review with connected GitHub. That scheduled task, not the email watchdog, owns
-performing the LLM judgment and landing the report/repairs through PRs. A due
-sensor alone never emails Silas. A failed attempt is escalation-worthy only after
-it has actually been tried and explicitly recorded, not inferred from elapsed time.
+**Scheduled owner:** GitHub Actions workflow `.github/workflows/semantic-intent-review.yml`
+runs daily and performs an actual semantic review **only when the last merged
+`INTENT-AUDIT-YYYY-MM-DD.md` is at least three Pacific-calendar days old**.
+It invokes GitHub Models with the workflow's ephemeral `GITHUB_TOKEN`
+(`models: read`), not an independent ChatGPT scheduler or paid API key.
+The six-hour Conductor Oversight workflow is its fallback dispatcher if GitHub
+has not attempted a due review in 18 hours.
 
-If a scheduled attempt fails before a valid audit is completed, write
-`projects/conductor/INTENT-REVIEW-FAILURE.json` on a branch and open a PR with
-this small record (do not silently suppress the original error):
+`scripts/run_semantic_intent_review.py` packs current human steering, lifecycle,
+project priorities, high-priority roadmap goals and tasks, recent commits, and
+structural audit warnings into a bounded review input. GitHub Models performs the
+semantic judgment; deterministic validation rejects empty, malformed, or
+missing-lead responses. Only a successful actual inference can create a dated
+report; errors never advance freshness. A dedicated Actions validation job checks
+that the generated PR changes only a dated report, then runs Python regression
+checks on the exact commit before the merge job attempts a standard (non-bypass)
+PR merge. All workflow steps and attempted results are visible in GitHub Actions.
 
-```json
-{
-  "status": "failed",
-  "attempted_at": "2026-10-13T15:00:00Z",
-  "reason": "Specific failed operation and what was attempted"
-}
-```
+The email watchdog **never emails for age alone**. It reads GitHub's run history:
+only a real completed failed semantic-review run newer than the last successful
+report, or a separately verified `INTENT-REVIEW-FAILURE.json`, is a semantic
+email incident. Running/queued attempts and clean semantic staleness are not
+incidents. Production parity and deterministic roadmap errors retain their
+separate immediate escalation rules.
 
-Use the actual timestamp and error, never the example values. Merge a safe failure
-record once verified so oversight can see it. The watchdog ignores absent,
-malformed, future-dated, or superseded failure markers. A later successful dated
-`INTENT-AUDIT-YYYY-MM-DD.md` supersedes the failed record without rewriting
-history. If GitHub itself is unavailable, the reviewer may not be able to persist
-the record; do not claim that absence proves the scheduled attempt succeeded.
+If GitHub Models inference, PR permissions, CI, or merge protection blocks an
+attempt, the failed Actions run is the durable evidence. Its artifact includes
+`semantic-intent-attempt.json`; oversight will re-dispatch after its retry window
+and escalate based on the failed run. Do not manufacture a completed report or
+manually set a marker for ordinary staleness.
 
 Read, in order:
 
