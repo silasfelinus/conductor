@@ -664,6 +664,14 @@ role from live state on arrival:**
      commits, old enough (`--branch-stale-hours`, default 12h) that nobody's actively
      pushing to it. `branch_janitor.py` itself deliberately never auto-acts on this
      tier — see `docs/agents/roles/branch-medic.md`.
+   - **`role: roadmap-intent-auditor`** — the portfolio semantic review is
+     within a day of its three-day deadline, or overdue. The six-hour
+     Conductor Oversight GitHub workflow flags this early without a personal
+     ChatGPT routine; `select_role.py` independently checks the report date
+     and assigns this role before ordinary backlog work. Read
+     `projects/conductor/OVERSIGHT-AGENT.md` and produce a genuine evidence-
+     backed review, not a new date with no judgment. Do not email Silas for
+     calendar staleness alone.
    - **`role: daily-creative`** — a ready recurring task explicitly marked
      `daily_commitment: true` has not yet been checked on today's Pacific calendar date.
      This lane exists for human-designated daily creative output, initially
@@ -700,7 +708,7 @@ role from live state on arrival:**
      JSON) and ship at least one unit of work before the session ends.
 2. Follow the matching playbook (table below). A session isn't locked to one role for its
    whole run: if you finish reviewing everything open, re-run `select_role.py` — it
-   may now recommend `workflow-medic`, `pr-medic`, `art-medic`, `branch-medic`, `site-auditor`,
+   may now recommend `workflow-medic`, `pr-medic`, `art-medic`, `branch-medic`, `roadmap-intent-auditor`, `site-auditor`,
    `worker`, or `stale-recurring` — and keep going in the same session rather than
    stopping. This is what "agents disperse and work as needed" means in practice: the
    role is a live recommendation you re-check, not a label stamped on you before you
@@ -803,6 +811,7 @@ you re-run `select_role.py` and the role changes.
 | `role: pr-medic` | [`docs/agents/roles/pr-medic.md`](docs/agents/roles/pr-medic.md) |
 | `role: art-medic` | [`docs/agents/roles/art-medic.md`](docs/agents/roles/art-medic.md) |
 | `role: branch-medic` | [`docs/agents/roles/branch-medic.md`](docs/agents/roles/branch-medic.md) |
+| `role: roadmap-intent-auditor` | [`projects/conductor/OVERSIGHT-AGENT.md`](projects/conductor/OVERSIGHT-AGENT.md) |
 | `role: site-auditor` | [`docs/agents/roles/site-auditor.md`](docs/agents/roles/site-auditor.md) |
 | `idle` | "Never idle: the fallback ladder" above (no separate file) |
 

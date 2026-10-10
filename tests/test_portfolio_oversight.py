@@ -65,6 +65,30 @@ def test_invalid_or_future_semantic_failure_does_not_page(tmp_path):
         assert oversight.failed_intent_attempt(directory=tmp_path, today=date(2026, 10, 13)) is None
 
 
+def test_semantic_review_one_day_notice_before_deadline(tmp_path):
+    (tmp_path / "INTENT-AUDIT-2026-10-10.md").write_text("reviewed", encoding="utf-8")
+    first = oversight.intent_review_status(directory=tmp_path, today=date(2026, 10, 11))
+    approaching = oversight.intent_review_status(directory=tmp_path, today=date(2026, 10, 12))
+    due = oversight.intent_review_status(directory=tmp_path, today=date(2026, 10, 13))
+    assert first["upcoming"] is False and first["due"] is False
+    assert approaching["upcoming"] is True and approaching["due"] is False
+    assert approaching["days_until_due"] == 1
+    assert due["upcoming"] is False and due["due"] is True
+
+
+def test_semantic_review_upcoming_classifies_as_agent_work_not_failure():
+    result = oversight.classify_report(
+        roadmap_report={"summary": {"errors": 0, "warnings": 0}},
+        project_scan={"forward": [], "reverse": []},
+        project_unresolved=None,
+        heartbeat={"overdue": False},
+        intent={"due": False, "upcoming": True},
+    )
+    assert result["status"] == "semantic-review-upcoming"
+    assert result["intent_review_due"] is False
+    assert result["intent_review_upcoming"] is True
+
+
 def test_scheduled_agent_heartbeat_fresh_and_overdue():
     now = datetime(2026, 8, 29, 3, 30, tzinfo=timezone.utc)
 

@@ -12,7 +12,7 @@ Use these oversight roles when the report says they are needed, in this order:
 
 1. **project-sync-auditor** — Kind Robots ↔ Conductor project parity has forward drift, reverse orphan(s), or could not be verified. Run `scripts/check_project_scaffold_drift.py` with the production-safe token path. Verify every Kind Robots `conductorSlug` resolves to one Conductor roadmap and every active Conductor project has the intended Kind Robots row. Where live Project settings are available, also verify the Conductor-owned coordination fields projected into Kind Robots still agree with `project-overrides.yaml` and `projects/priority.yaml`; presentation-only fields remain Kind Robots-owned per `SOURCE_OF_TRUTH.md`.
 2. **roadmap-auditor** — `audit_roadmaps.py` reports deterministic errors. Repair unambiguous bookkeeping/state defects immediately. Never paper over a source-of-truth conflict by changing whichever side is easiest.
-3. **roadmap-intent-auditor** — the semantic intent review is due. This is deliberately model/human-judgment work rather than another regex. Perform the review described below and write a dated report only after actually completing it.
+3. **roadmap-intent-auditor** — the semantic intent review is within one day of its deadline, or already due. An agent should complete the substantive review before the due date if available; never write an empty dated report merely to clear the sensor.
 
 Broken/reviewable code already in flight can still outrank a soft semantic review when delaying it is clearly higher leverage, but deterministic project/roadmap drift should not sit indefinitely behind ordinary ready-task churn.
 
@@ -28,6 +28,15 @@ The existing `scripts/check_project_scaffold_drift.py` is the minimum mechanical
 ## Roadmap-intent audit
 
 Run this at least every **3 days**, and sooner after a substantial priority or direction change.
+
+**Advance agent notice:** Every six hours, Conductor Oversight marks the review
+as `semantic-review-upcoming` when there is one day left in the three-day
+window, even while the separate GitHub Models review is still scheduled for
+its due date. `scripts/select_role.py` also reads the latest completed audit
+date directly and assigns `roadmap-intent-auditor` ahead of normal backlog.
+Neither mechanism depends on the disabled personal Conductor Hourly Run;
+both are supplemental to the native daily reviewer below. Upcoming alone
+never triggers a semantic email.
 
 **Scheduled owner:** GitHub Actions workflow `.github/workflows/semantic-intent-review.yml`
 runs daily and performs an actual semantic review **only when the last merged

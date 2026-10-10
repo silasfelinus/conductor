@@ -98,6 +98,10 @@ def _patched(
         mock.patch.object(
             select_role, "find_art_queue_failures", return_value=list(art_queue_failures)
         ),
+        mock.patch.object(
+            select_role, "semantic_intent_review_status",
+            return_value={"due": False, "upcoming": False, "last_report": "INTENT-AUDIT-2026-10-10.md"},
+        ),
     )
 
 
@@ -126,6 +130,41 @@ def test_default_repos_include_kind_robots():
     aren't conductor-only by default."""
     assert "silasfelinus/conductor" in select_role.DEFAULT_REPOS
     assert "silasfelinus/kind_robots" in select_role.DEFAULT_REPOS
+
+
+def test_semantic_review_approaching_takes_agent_role_before_regular_backlog():
+    with _apply(_patched(queue_summary=SOME_READY_TASK, daily_commitments=[
+        {"project": "animation-manager", "task_id": "t-007"},
+    ])):
+        with mock.patch.object(select_role, "semantic_intent_review_status", return_value={
+            "due": False, "upcoming": True, "last_report": "INTENT-AUDIT-2026-10-10.md",
+        }):
+            result = select_role.select_role()
+
+    assert result["role"] == "roadmap-intent-auditor"
+    assert result["playbook"] == "projects/conductor/OVERSIGHT-AGENT.md"
+    assert result["semantic_intent_review_upcoming"] is True
+    assert result["semantic_intent_review_last_report"] == "INTENT-AUDIT-2026-10-10.md"
+
+
+def test_due_semantic_review_remains_agent_work_not_ordinary_worker():
+    with _apply(_patched(queue_summary=SOME_READY_TASK)):
+        with mock.patch.object(select_role, "semantic_intent_review_status", return_value={
+            "due": True, "upcoming": False, "last_report": "INTENT-AUDIT-2026-10-07.md",
+        }):
+            result = select_role.select_role()
+    assert result["role"] == "roadmap-intent-auditor"
+    assert result["semantic_intent_review_due"] is True
+
+
+def test_active_pr_repair_preempts_semantic_review_approaching():
+    with _apply(_patched(remote_worker_branches=[{"branch": "worker/inflight"}])):
+        with mock.patch.object(select_role, "semantic_intent_review_status", return_value={
+            "due": False, "upcoming": True, "last_report": "INTENT-AUDIT-2026-10-10.md",
+        }):
+            result = select_role.select_role()
+    assert result["role"] == "reviewer"
+    assert result["semantic_intent_review_upcoming"] is True
 
 
 def test_reviewer_outranks_everything():

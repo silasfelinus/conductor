@@ -43,6 +43,7 @@ INTENT_DIR = ROOT / "projects" / "conductor"
 INTENT_FAILURE_FILE = INTENT_DIR / "INTENT-REVIEW-FAILURE.json"
 INTENT_REPORT_RE = re.compile(r"^INTENT-AUDIT-(\d{4}-\d{2}-\d{2})\.md$")
 DEFAULT_INTENT_STALE_DAYS = 3.0
+DEFAULT_INTENT_NOTICE_DAYS = 1.0
 DEFAULT_AGENT_HEARTBEAT_HOURS = 6.0
 OPENAI_SESSION_MARKER = "openai-scheduled-"
 OPENAI_HEARTBEAT_FILE = "OPENAI-SCHEDULED-HEARTBEAT.json"
@@ -85,13 +86,19 @@ def intent_review_status(
     today = today or datetime.now(timezone.utc).date()
     latest = latest_intent_report(directory)
     if latest is None:
-        return {"due": True, "last_report": None, "days_since": None, "stale_days": stale_days}
+        return {
+            "due": True, "upcoming": False, "last_report": None,
+            "days_since": None, "days_until_due": None, "stale_days": stale_days,
+        }
     name, report_date = latest
     days_since = (today - report_date).days
+    days_until_due = stale_days - days_since
     return {
-        "due": days_since >= stale_days,
+        "due": days_until_due <= 0,
+        "upcoming": 0 < days_until_due <= DEFAULT_INTENT_NOTICE_DAYS,
         "last_report": name,
         "days_since": days_since,
+        "days_until_due": days_until_due,
         "stale_days": stale_days,
     }
 
@@ -220,6 +227,8 @@ def classify_report(
         status = "unresolved"
     elif intent.get("due"):
         status = "semantic-review-due"
+    elif intent.get("upcoming"):
+        status = "semantic-review-upcoming"
     else:
         status = "clean"
 
@@ -233,6 +242,7 @@ def classify_report(
         "openai_scheduled_agent_overdue": bool(heartbeat.get("overdue")),
         "openai_scheduled_agent_authoritative": False,
         "intent_review_due": bool(intent.get("due")),
+        "intent_review_upcoming": bool(intent.get("upcoming")),
     }
 
 
@@ -381,6 +391,11 @@ def render_markdown(report: dict[str, Any]) -> str:
     else:
         lines.append("- No completed `INTENT-AUDIT-YYYY-MM-DD.md` report exists yet.")
     lines.append(f"- Due: **{str(bool(intent['due'])).lower()}**")
+    if intent.get("upcoming"):
+        lines.append(
+            f"- **Agent assignment opens now**: review due in {intent['days_until_due']:g} day(s). "
+            "Route an agent before the deadline; no email for the calendar alone."
+        )
     if intent.get("failed_attempt"):
         failure = intent["failed_attempt"]
         lines.append(f"- **Failed attempt:** `{failure['attempted_at']}` — {failure['reason']}")

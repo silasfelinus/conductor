@@ -33,6 +33,12 @@ def test_deterministic_action_and_unresolved_still_email_immediately():
     assert gate.should_email(report("unresolved")) is True
 
 
+def test_early_semantic_review_assignment_never_emails():
+    upcoming = report("semantic-review-upcoming", days_since=2)
+    upcoming["intent_review"]["upcoming"] = True
+    assert gate.should_email(upcoming) is False
+
+
 def test_clean_report_does_not_email():
     assert gate.should_email(report("clean")) is False
 
