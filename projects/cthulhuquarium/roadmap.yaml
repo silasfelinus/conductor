@@ -1695,8 +1695,8 @@ tasks:
 - id: t-082
   milestone: m4
   title: 'Remove breeding, eggs and hidden stats from the game'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   stakes: reversible
   passes: 0
   depends_on:
@@ -1709,7 +1709,9 @@ tasks:
     "sell" (if kept) a flat price. Retire verifyAquariumGenetics.test.ts with the feature it tested (not a
     skipped test). Leave the Prisma columns and AquariumEgg table in place (AGENTS.md: no destructive
     drop in the auto-deploy window); file a separate staged schema-cleanup task once this is live.
-  updated: '2026-10-10T10:00:00Z'
+  updated: '2026-10-10T10:27:36Z'
+  claimed_by: 20261010T1045Z-cthq-t082-simplify
+  claimed_at: '2026-10-10T10:27:36Z'
 
 - id: t-083
   milestone: m4
