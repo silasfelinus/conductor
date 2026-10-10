@@ -1656,8 +1656,8 @@ tasks:
 - id: t-080
   milestone: m4
   title: 'Every fish drops clickable coins (replace the single shed-scale timer)'
-  status: claimed
-  owner: worker
+  status: done
+  owner: null
   stakes: reversible
   passes: 0
   depends_on:
@@ -1668,15 +1668,24 @@ tasks:
     Server allowance (server/utils/aquariumCollect.ts collectAllowance) scales with fish count and rarity
     so the client still cannot mint coins. Update verifyAquariumCollect.test.ts to the new contract.
     Mobile tap targets at least 44 px.
-  updated: '2026-10-10T10:14:06Z'
-  claimed_by: 20261010T1015Z-cthq-t080-coindrops
-  claimed_at: '2026-10-10T10:14:06Z'
+
+    Done 2026-10-10: silasfelinus/kind_robots#3434 (merged 5ac90f9). Every fed fish drops a
+    coin every 15 s worth 3/8/20/50/125/300 by rarity; coins sink, rest on the gravel and
+    fade at 12 s; tap pops +N. Server credits clicked VALUE via coinAllowance against
+    collectAnchorAt (27 s bank, no migration). Starting coins 40, feeding 2% of unlock cost.
+    Verified in a local browser run (MariaDB + seeded bestiary): clicking a sinking coin
+    POSTs {value: 8} and the server credits 8; a 20-fish tank's full bank credits exactly
+    288; the old {count} body is rejected 400.
+  updated: '2026-10-10T10:54:35Z'
+  claimed_by: null
+  claimed_at: null
+  implementation_pr: 'silasfelinus/kind_robots#3434'
 
 - id: t-081
   milestone: m4
   title: 'Let the tank hold many more fish: copies allowed, bigger room, buyable expansion'
-  status: claimed
-  owner: worker
+  status: done
+  owner: null
   stakes: reversible
   passes: 0
   depends_on:
@@ -1688,15 +1697,24 @@ tasks:
     allow copies of a species, raise the starting room (additive default change plus a data backfill for
     existing tanks), and add a coin-bought tank expansion track. Keep the canvas readable at 30-40 fish
     (sprite scaling, culling if needed) and check mobile performance.
-  updated: '2026-10-10T10:18:58Z'
-  claimed_by: 20261010T1035Z-cthq-t081-room
-  claimed_at: '2026-10-10T10:18:58Z'
+
+    Done 2026-10-10: silasfelinus/kind_robots#3435 (merged ce2d9b0). Room counts fish (12
+    slots), a 'room' upgrade track sells +4-fish expansions at
+    400/1200/3000/7500/18000/40000/90000 (40 at the top), copies allowed (Another button,
+    Ichthyonomicon Buy another; bestiary still counts distinct species), sprites shrink as
+    the tank fills. Schema-affecting, additive: Aquarium.tankExpansions (migration
+    20261010110000_aquarium_tank_expansions; CI replayed it on MariaDB). Verified locally:
+    two expansions took a tank to 20/20 fish with copies.
+  updated: '2026-10-10T10:54:36Z'
+  claimed_by: null
+  claimed_at: null
+  implementation_pr: 'silasfelinus/kind_robots#3435'
 
 - id: t-082
   milestone: m4
   title: 'Remove breeding, eggs and hidden stats from the game'
-  status: claimed
-  owner: worker
+  status: done
+  owner: null
   stakes: reversible
   passes: 0
   depends_on:
@@ -1709,15 +1727,23 @@ tasks:
     "sell" (if kept) a flat price. Retire verifyAquariumGenetics.test.ts with the feature it tested (not a
     skipped test). Leave the Prisma columns and AquariumEgg table in place (AGENTS.md: no destructive
     drop in the auto-deploy window); file a separate staged schema-cleanup task once this is live.
-  updated: '2026-10-10T10:27:36Z'
-  claimed_by: 20261010T1045Z-cthq-t082-simplify
-  claimed_at: '2026-10-10T10:27:36Z'
+
+    Done 2026-10-10: silasfelinus/kind_robots#3436 (merged 78a2b50, -2801/+105). Breed and
+    egg routes, breeding/egg/hatch server code, hidden stat rolls, codex best stats, their
+    pure math, UI, store actions and the genetics test are gone; Sell is now a flat Release
+    (half the unlock cost, releasePrice). No schema change -- the staged column/table drop
+    is t-084. The first_evolution background became unreachable (only breeding fired it) --
+    re-homing it is t-085.
+  updated: '2026-10-10T11:06:06Z'
+  claimed_by: null
+  claimed_at: null
+  implementation_pr: 'silasfelinus/kind_robots#3436'
 
 - id: t-083
   milestone: m4
   title: 'Tighten the play page around the tank'
-  status: waiting
-  owner: null
+  status: review
+  owner: worker
   stakes: reversible
   passes: 0
   depends_on:
@@ -1731,4 +1757,57 @@ tasks:
     large, one compact HUD for coins, buy-a-fish and the next upgrade, and everything else (decorate,
     backgrounds, Ichthyonomicon, set pieces) behind one drawer or tab row. Phone, tablet and desktop
     screenshots in the PR. Keep the character dialogue and fish animations Silas liked.
-  updated: '2026-10-10T10:00:00Z'
+
+    Findings from the 2026-10-10 local browser run (t-080 to t-082 merged state): on a phone
+    (390 px) the tank renders about 180 px tall and the HUD overlay (coin pill plus
+    Sound/Clean/Feed hungriest) covers its top half; a stale description card above the tank
+    still says 'Feed the occupants to keep them paying you' (components/conductor/aquarium-
+    page.vue and content/play/aquarium.md); coins resting on the gravel sit under the
+    character dialogue sheet while it is open, so they cannot be tapped; and the per-fish
+    cards are tall (three stacked buttons each), so a 20-fish tank is a very long list.
+    AGENTS.md's art-first rule prefers one visual surface over tab proliferation: tighten
+    with the HUD under the tank on phones, an art-led buy strip, a compact grouped roster,
+    and collapsed secondary sections, rather than a tab row.
+
+    Implementation PR silasfelinus/kind_robots#3442 (open): HUD under the tank on phones
+    with Feed hungry (n) / Buy fish / +4 room, the shop as an art-led strip right under the
+    tank, one roster tile per species, extras folded into one collapsed section, refreshed
+    copy. Verified in a local browser run at 390 and 1280 px.
+  updated: '2026-10-10T11:06:06Z'
+  implementation_pr: 'silasfelinus/kind_robots#3442'
+
+- id: t-084
+  milestone: m4
+  title: 'Staged schema cleanup: drop the breeding, egg and hidden-stat columns once t-082 is live'
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-082
+  note: >-
+    kind_robots. t-082 removed breeding, eggs and hidden stats from the game but deliberately left the
+    schema in place (AGENTS.md: no destructive drop inside the auto-deploy window, because the old build
+    still selects these columns during the handoff). Once the t-082 build is deployed and verified on
+    Alexandria, ship a separate migration that drops AquariumStock.stat{Charm,Empathy,Grace,Luck,Might,Wits}
+    and parentAId/parentBId (and their indexes), AquariumCodexEntry.bestStat*, and the AquariumEgg table,
+    plus any Monster evolution rows that only breeding could reach if Silas agrees. Check first that no
+    deployed build still reads them (grep the running image's server bundle), call it out as
+    schema-affecting, and confirm merged -> image published -> deployed -> schema verified.
+  updated: '2026-10-10T11:00:00Z'
+
+- id: t-085
+  milestone: m4
+  title: 'Give the first_evolution background a new way to unlock'
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    kind_robots. The first_evolution landmark (aquariumEconomy.ts FIRST_EVOLUTION_MILESTONE) unlocked a tank
+    background, but it only ever fired from a breeding evolution, which t-082 removed -- so that background
+    is unreachable and its picker hint was dropped. Re-home it on a fun-loop moment, e.g. the first tank
+    expansion or the first 25-fish tank, firing once through the same milestone-event guard as
+    first_full_tank, and restore a picker hint that names the new trigger. Keep the milestone id stable so
+    tanks that already fired it keep the background.
+  updated: '2026-10-10T11:00:00Z'
