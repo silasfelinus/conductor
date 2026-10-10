@@ -2487,5 +2487,21 @@ tasks:
 
     Merged silasfelinus/kind_robots#3404 at 8803efd078b3a67a119cfe6326a1d786c7e5b339 with all 33 checks green. Not visually verified in a browser (Admin is role-gated; no DB in the session): check /admin/worlds/zuzu shows Admin / Control Room / Zuzu World sheet with the Admin tutorial. Missing Admin tab art (artjob, projects, retired, coloring, mermaids, conductor-app, appmaker) is tracked on #3379's artwork checklist.
 
+- id: t-145
+  milestone: m6
+  title: 'Tutorial slice 2b: page-first workspace sheet + tab menu that uses available width'
+  status: done
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  owner: null
+  updated: '2026-10-10T00:35:00Z'
+  note: |-
+    Follow-up to t-144 under the umbrella issue silasfelinus/kind_robots#3379 (deliberately no source_issue, same reason as t-144).
+
+    Silas, 2026-10-09: the tab menu was "condensing the list of tabs on nav even when there's plenty of room", and on single-tab pages the sheet should "just show the tutorial image and then info for that page" instead of an intro card plus a Show tutorial toggle. tab-select now measures the room right of and below itself on open and lays tabs out in up to three 288px columns at the available height (Play's 15 tabs: one 880x214 panel at 1440px, two columns at 900px). workspace-sheet leads with the active tab's tutorial image, title and copy; the channel tutorial moved behind "About <channel>". Builders, deliberate sheet overrides and disabled tutorials keep the old card.
+
+    Merged silasfelinus/kind_robots#3412 at 42c25c91752e23c6f9e88226cfc16d711580e23b with all 30 checks green; Playwright-checked locally on /play/arcade and /dashboard. Also confirmed production at 8803efd renders "Navigate Play" on /play/arcade — Silas's "Home" screenshot predated that deploy. Next on the umbrella: generalize the help contract to every channel, then the Home/Storybook audit (About Home still lists tabs).
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
