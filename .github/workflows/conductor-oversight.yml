@@ -76,9 +76,9 @@ jobs:
             done
           fi
 
-      # The report is an agent-routing signal first. Deterministic failures and
-      # unresolved parity still email immediately. Routine semantic intent review
-      # gets a one-day grace so scheduled agents can complete it before Silas is paged.
+      # Deterministic failures/unresolved parity retain their existing policy.
+      # Semantic staleness dispatches the scheduled ChatGPT review, not an email.
+      # Escalation requires a validated failed attempt newer than the last audit.
       - name: Email explained oversight action
         if: ${{ steps.email_gate.outputs.needed == 'true' }}
         shell: bash

@@ -79,3 +79,24 @@ def test_oversight_workflow_emails_actionable_sensor_results_instead_of_failing_
     assert "send_alert_brevo.py" in workflow
     assert 'exit "${{ steps.oversight.outputs.exit_code }}"' not in workflow
     assert "Surface oversight action" not in workflow
+
+
+def test_failed_semantic_review_email_names_actual_attempt():
+    report = report_fixture()
+    report["summary"]["status"] = "semantic-review-due"
+    report["roadmap_audit"]["summary"]["errors"] = 0
+    report["roadmap_audit"]["errors"] = []
+    report["intent_review"] = {
+        "due": True,
+        "last_report": "INTENT-AUDIT-2026-10-10.md",
+        "failed_attempt": {
+            "status": "failed",
+            "attempted_at": "2026-10-13T15:00:00Z",
+            "reason": "GitHub source fetch failed twice",
+        },
+    }
+    assert alert_subject(report) == "Conductor Oversight: semantic intent review attempt failed"
+    body = alert_body(report)
+    assert "was attempted and failed" in body
+    assert "GitHub source fetch failed twice" in body
+    assert "INTENT-AUDIT-2026-10-10.md" in body

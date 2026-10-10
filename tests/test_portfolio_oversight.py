@@ -29,6 +29,42 @@ def test_intent_review_becomes_due_at_threshold(tmp_path):
     assert result["days_since"] == 3
 
 
+def test_semantic_failure_requires_explicit_recent_failed_attempt(tmp_path):
+    import json
+
+    (tmp_path / "INTENT-AUDIT-2026-10-10.md").write_text("review completed", encoding="utf-8")
+    marker = tmp_path / "INTENT-REVIEW-FAILURE.json"
+
+    assert oversight.failed_intent_attempt(directory=tmp_path, today=date(2026, 10, 13)) is None
+
+    marker.write_text(
+        json.dumps({"status": "failed", "attempted_at": "2026-10-13T15:00:00Z",
+                    "reason": "reviewer could not fetch the current roadmap"}),
+        encoding="utf-8",
+    )
+    failed = oversight.failed_intent_attempt(directory=tmp_path, today=date(2026, 10, 13))
+    assert failed["status"] == "failed"
+    assert "could not fetch" in failed["reason"]
+
+    # Once a successful report supersedes the attempt, it is not an incident.
+    (tmp_path / "INTENT-AUDIT-2026-10-13.md").write_text("review complete", encoding="utf-8")
+    assert oversight.failed_intent_attempt(directory=tmp_path, today=date(2026, 10, 13)) is None
+
+
+def test_invalid_or_future_semantic_failure_does_not_page(tmp_path):
+    import json
+
+    marker = tmp_path / "INTENT-REVIEW-FAILURE.json"
+    for payload in (
+        {"status": "running", "attempted_at": "2026-10-13T15:00:00Z", "reason": "x"},
+        {"status": "failed", "attempted_at": "not-a-date", "reason": "x"},
+        {"status": "failed", "attempted_at": "2026-10-13T15:00:00Z", "reason": ""},
+        {"status": "failed", "attempted_at": "2026-11-13T15:00:00Z", "reason": "x"},
+    ):
+        marker.write_text(json.dumps(payload), encoding="utf-8")
+        assert oversight.failed_intent_attempt(directory=tmp_path, today=date(2026, 10, 13)) is None
+
+
 def test_scheduled_agent_heartbeat_fresh_and_overdue():
     now = datetime(2026, 8, 29, 3, 30, tzinfo=timezone.utc)
 
