@@ -798,7 +798,7 @@ tasks:
   - id: t-027
     milestone: m6
     title: "A painted playfield in the mockups' quality, for the main field and the Ridge"
-    status: ready
+    status: done
     depends_on: [t-026]
     owner: worker
     passes: 0
@@ -810,6 +810,22 @@ tasks:
       lanes, inserts and arrows designed into the art, plus its own art for the Ridge (the hilltop above
       the village). Generate through the durable art pipeline, map each region exactly (art bounds per
       region), and keep the engine's inserts crisp over it. Screenshot against the mockups.
+
+      Shipped in kind_robots#3467 (merged). Both krea2 renders were delivered: ArtJob 36069
+      (main playfield, 1024x2000) and 36070 (the Ridge, 1280x1024). They had sat at priority 0
+      behind 269 Zuzu jobs until they were moved to priority 110 (conductor#5920). The main
+      field is a dense night village with a waterfall and river, boardwalks, blossom trees and
+      a butterfly medallion ringed by lights. The Ridge is a moonlit hilltop with a stream, a
+      bridge, a lookout tower and three lantern clearings. Neither has a crocodile.
+      TableDef.art gains a ridge region over the Ridge floor that meets the main art.
+      paintPlayfield crops each image to its region, never stretching it, and keeps the
+      inserts crisp on top. The canvas goes from 1240 to 1750 px/m, capped to the device's
+      texture limit (artScale). The same PR restored the test suites a027022 (#3428) had
+      dropped: dressing, metalwork, depot and snes-kit. Follow-ups for t-030: the lower field
+      reads bright under the key light, and the backglass art (a cat among mushrooms) may be a
+      Zuzu bleed. Screenshots: screenshots/t027-desk.jpg, t027-phone.jpg.
+    updated: '2026-10-10T23:36:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#3467'
 
   - id: t-028
     milestone: m6
@@ -870,9 +886,9 @@ tasks:
   - id: t-030
     milestone: m6
     title: "Warm practical lighting and a carved, painted cabinet; the whole look against the mockups"
-    status: waiting
+    status: claimed
     depends_on: [t-027, t-028, t-029, t-031]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
