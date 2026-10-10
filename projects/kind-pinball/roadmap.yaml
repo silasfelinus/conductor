@@ -884,7 +884,7 @@ tasks:
   - id: t-031
     milestone: m6
     title: "The Care Package Depot: a multiball collector that ships packages to families in need"
-    status: claimed
+    status: review
     depends_on: [t-026]
     owner: worker
     passes: 0
@@ -899,3 +899,19 @@ tasks:
       jackpot. Rules, lamps, DMD copy, sound, the attract show and the guide all name it; tests cover the
       collect, the multiball start and the delivery. No crocodile, alligator or other Zuzu-table creature
       anywhere on this table.
+
+      Shipped in kind_robots#3446 (merged). The table's multiball collector is the lock (shot
+      4), so the lock is now the Care Package Depot. The shot map, colliders and physics are
+      unchanged, which differs from this note's first sketch of a new mouth where the mockup's
+      crocodile sat. It is a little post house over the lock pocket: a teal roof on wooden
+      posts over the pocket's back half, so the mouth stays open, with AMI standing on top.
+      Each ball locked packs a kraft parcel with a coloured ribbon on the pocket's walls; the
+      DMD reads PACKAGE n / k MORE TO SEND. The lock that starts multiball sends every
+      package: they fly in turn to a village hut, whose window flares as each lands, and the
+      DMD reads AMI MULTIBALL / CARE PACKAGES OUT. toyPose gains depot {packed, needed,
+      sending}, and the guide's multiball page tells the story. There is no crocodile on the
+      table. Tests cover the pose, the packing, a flight for every needed package, and every
+      landing; they caught a first-parcel launch bug, now fixed. Screenshots:
+      screenshots/t031-depot.jpg, t031-depot-wide.jpg.
+    updated: '2026-10-10T12:11:58Z'
+    implementation_pr: 'silasfelinus/kind_robots#3446'
