@@ -630,6 +630,15 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
   ... it should be as good as any pinball fx3 table, that's our standard." No Tables 2/3, no table select.
   Follow FX3-QUALITY-BLUEPRINT.md. Never call it finished by task count; only his verdict (t-016) ends it.
 
+### zuzu-pinball  (software)
+**Direction (2026-10-09, new project):** Build **Zuzu: The Last Bell** as a separate original pinball table in the Kind Robots Arcade, aiming for the mechanical fidelity, visual finish and replayable complexity of Pinball FX3. Theme: moonlit haunted weird-west and Edo ronin Zuzu, with the Abbess, her bell and a hidden undercrypt. **First deliver visual concept, then mechanically annotated mockup, then outline:** all three are in `projects/zuzu-pinball/`. Minimum three genuine elevated ramps, two orbits, two lower and two upper independently controlled flippers, a raised mini-playfield, tilt/nudge, multiball, animated DMD, addressable LED and cabinet splash border artwork, sound and deep modes. Share existing Kind Pinball physics/Arcade internals but keep Zuzu level, gameplay, art, leaderboard and presentation independent.
+**Notes:**
+- Silas's FX3 target is an acceptance bar, not permission to claim equal quality before gameplay verification or to copy proprietary pinball table art/mechanics verbatim.
+- Admin development preview at `/admin/zuzu-pinball` with discoverable Admin nav; public `/play/zuzu-pinball` is a distinct outward-facing release gate requiring Silas approval.
+- This is a **new active, normal-priority project** following `zuzu-shifting-lands`; preserve the existing explicitly ordered top four (kind-pinball, zuzu-lair, kr-arcade, zuzu-showdown).
+- Work may proceed through internal assets and reversible implementation without waiting for optional design scope feedback. A visually beautiful mockup is not a verified pinball collider mesh; don't skip sim tests, responsiveness and measured performance.
+- Final project acceptance requires Silas's hands-on FX3-grade verdict after device checks. Nothing is called finished on the strength of a task count or static screenshots.
+
 ### robot-paper-boat-regatta  (software)
 **Direction:** A calm puzzle toy: fold a paper boat from sail, hull and cargo choices, then race it down a pre-painted stream against simple rival boats using deterministic current rules; no model at runtime.
 **Notes:**
