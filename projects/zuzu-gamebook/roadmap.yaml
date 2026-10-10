@@ -299,6 +299,12 @@ tasks:
       that now have keepers were cancelled; "bright desert sun, pale blue sky" (pastel, over-bright) became "harsh
       desert sun, dusty haze, long hard shadows". Still recurring: human-faced nuns, the fennec in a nun's habit.
       Proposal put to Silas: compose two-character sections around one figure (or a detail) so the house lane can draw them.
+      ROUND 9 (23:55, Silas: "go ahead for workarounds. We can fix things later when we have the LoRAs built"): 85
+      pending round-8 jobs for sections that pair characters cancelled; ROUND-9.yaml queues 230 house jobs (ArtJobs
+      36548-36777) for 115 sections recomposed around one figure, a detail or a place (36 Zuzu alone, 45 other single
+      figures, 34 places/objects; 52 wide, 39 tall, 24 square). Four prompt writers worked from ART-PROMPT-BRIEF-R9;
+      sectionart check now refuses more than one figure. 15 single-figure round-8 jobs still pending. t-012 redraws the
+      paired moments with the LoRAs.
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
@@ -379,3 +385,19 @@ tasks:
       rearm with evidence. Never auto-publish or spend. After launch, consider
       moving lifecycle active to continuous so recurring upgrades run after
       active finite work, per AGENTS.md.
+  - id: t-012
+    milestone: m5
+    title: Redraw the two-character plates once the character LoRAs exist
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-006]
+    note: >-
+      Silas, 2026-10-10: "go ahead for workarounds. We can fix things later when we have the LoRAs built, that
+      task got moved to later because we had too much art that was going to be made...ironically, since by this
+      point it would have helped to have them." Waits on comic-creator/t-016 (character LoRAs for Zuzu and the
+      fennec siblings). Round 9 recomposed every section that pairs characters around one figure, a detail or a
+      place, because the Arthemy house lane fuses Zuzu with whoever shares the frame or leaks his costume onto
+      them. When the LoRAs land, redraw those sections (ROUND-9.yaml subjects whose original act*.json entry had
+      two or more figures) as the two-character scenes the text describes, in the house lane with the LoRAs.
