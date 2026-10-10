@@ -106,19 +106,18 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Implement dimensioned Zuzu physical graybox, shooter lane and lower flippers"
-    status: claimed
+    status: review
     depends_on: t-003
     owner: worker
     claimed_by: 20261010T213248985Z-zuzu-pinball-t004-q7k9
     claimed_at: '2026-10-10T21:32:48.985Z'
-    updated: '2026-10-10T21:32:48.985Z'
+    updated: '2026-10-10T21:35:07.375Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Calibrate units, slope, gravity, ball radius, restitution, rubber materials,
-      flipper torque, cradle and catch control, shooter-lane gate, one-way trough
-      and ball serve. Unit/integration tests for all ball transitions. The SVG
-      mockup is a design guide, not a tested geometry mesh.
+    note: |-
+      Calibrate units, slope, gravity, ball radius, restitution, rubber materials, flipper torque, cradle and catch control, shooter-lane gate, one-way trough and ball serve. Unit/integration tests for all ball transitions. The SVG mockup is a design guide, not a tested geometry mesh.
+
+      Kind Robots physical starter graybox adds a one-way shooter gate and a real plunger trough stop, calibrates rest position to the 27 mm ball, and adds direct Rapier integration tests for held plunger, two launch powers feeding the main field, independently moving lower bats, and River Croc conservation. Changes are on worker/zuzu-pinball-t004-physical-lanes-20261010-q7k9. CI tests are pending; only merge verified trajectories and preserve public Arcade isolation. Art and elevated ramps remain subsequent roadmap tasks.
   - id: t-005
     milestone: m2
     title: "Build three physically distinct elevated ramps, two orbits and shot sensors"
