@@ -105,6 +105,19 @@ def test_failed_submit_leaves_cell_empty(tmp_path):
     assert yaml.safe_load(path.read_text())["subjects"][0]["jobs"]["il"] is None
 
 
+def test_contract_violating_prompt_is_never_posted(tmp_path):
+    # Kind Robots only checks the contract at claim time, so a ", no text." prompt got
+    # a job id, failed, and was never resubmitted (zuzu-showdown T008, 2026-10-10).
+    path = _ledger(tmp_path)
+    header, ledger = enq.load_ledger(path)
+    ledger["subjects"][0]["prompt_prose"] = "a koala ronin on a dune, no text."
+    calls = []
+    cells = list(enq.iter_cells(ledger, ["zimage-turbo"]))
+    result = enq.submit(path, header, ledger, cells, post=lambda b: calls.append(b) or (200, {"data": {"jobId": 1}}))
+    assert result == (0, 1) and calls == []
+    assert not (ledger["subjects"][0].get("jobs") or {}).get("zimage-turbo")
+
+
 def test_refresh_status_records_art_image(tmp_path):
     path = _ledger(tmp_path)
     header, ledger = enq.load_ledger(path)
