@@ -6,7 +6,7 @@ goal: >-
   Deliver an image-led, replayable Zuzu expedition at /admin/zuzu-shifting-lands
   during the private preview; the public /play route launches separately,
   with five shifting lands, three encounters per land, five major trials,
-  seeded reproducible species×occupation×disposition encounter composition,
+  seeded selection from fixed-cast illustrated authored encounter pools,
   cross-project Zuzu Character/Facet/Scenario/Reward/ArtImage reuse, interactive
   board-grid travel, consequences, companions, skills, equipment, save/resume,
   card fronts/backs, physical draw/discard decks, deal/flip/reveal animations,
@@ -19,12 +19,16 @@ notes_from_silas: |
   enemies, rewards, skills and loot, passing or failing skill checks. Every land
   ends in a major boss/challenge if Zuzu survives. The board uses a card-based
   grid that shows the world and where Zuzu has traveled.
-  Species and class/occupation/role facets MUST be separate. In the first land
-  (the Homestead), rabbits and otters may be randomized into farmer,
-  caretaker, convent or other roles, with good/bad dispositions and motives
-  independent of species. Character = named individual, Facet species =
-  possible reusable participant template. Animal morphology remains readable;
-  animals may have humanoid or metaphorical features.
+  LATEST 2026-10-09 CREATIVE OVERRIDE: Each Shifting Lands encounter card
+  pre-authors its species, occupation, cast, scene, choices and specific art.
+  No separate species x job random draw in gameplay. Titles remain evocative,
+  with species communicated by illustration. Locations hold 2+ good/bad/mixed
+  authored possibilities; a seeded run persists the chosen card and rolls
+  two-dice outcomes for 2+ meaningful player choices. Flip must rest in a
+  readable face-up state using KR effects. Add custom Zuzu encounter and
+  boss backs. See encounters/IMPLEMENTATION-ORDER.md. Other projects may
+  still use FacetProfile taxonomies, and species never implies morality.
+
   Zuzu is an outsider who behaves according to Edo-era samurai conventions
   within a hazy-boundaried weird-west frontier. Locations can move/change
   causally. Storm Crows are magical cave-dwelling witches; gorillas are
@@ -153,14 +157,19 @@ tasks:
 
   - id: t-007
     milestone: m2
-    title: "Species × role × agenda random encounter composer with exclusion rules"
+    title: "Authored fixed-cast encounter pack schema and first-land sample content"
     status: claimed
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003]
     note: |-
-      Independent Facet taxonomies; sample rabbits/otters against farmer/ convent roles, friend/hostile hidden motives. Keep cast/region biological constraints, stable participant IDs and causal re-visits. Assert randomized species has no hardcoded morality correlation.
+      Versioned authored encounter schema and 12 Homestead sample scenes:
+      four good/bad/mixed options per each of three canonical locations,
+      fixed illustrative cast, flavor text, 2+ dice choices and written
+      outcomes, deterministic pool selection and CI tests. Revise old
+      species x role direction and hand off integration tasks for the board,
+      card backs, save/replay, art and visual acceptance.
 
       Applying Silas's newer authored-encounter direction: replace independently rolled species and jobs with predetermined illustrated cast per encounter; design the schema, twelve Homestead cards, and Conductor-ready implementation plan.
     claimed_by: 2026-10-10T040800Z-zuzu-shifting-t007-gpt6-e2c9
@@ -201,9 +210,11 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: [t-007]
+    depends_on: [t-020]
     note: >-
-      Meaningful good and bad paths, rescue/bargain/stealth/combat. Land one:
+      Author three or more whole fixed-cast illustrated scene identities
+      per location with at least two checked choices and good/bad/mixed
+      possibilities, including rescue/bargain/stealth/combat. Land one:
       Homestead, watering holes, roadside chapel and ambiguous hospitality.
       Cave witches in higher lands, gorilla encounters in high-tier. Do not
       misstate the Abbess agenda or invent causes for the lost-humanity
@@ -246,7 +257,8 @@ tasks:
     stakes: reversible
     depends_on: [t-005]
     note: >-
-      Reuse image references/cast angles from worlds/zuzu ledger and World
+      Prioritize custom Zuzu encounter/boss card backs from t-022;
+      reuse image references/cast angles from worlds/zuzu ledger and World
       Studio ProjectArtImage links; create durable scoped ArtJobs only if
       missing; track queued vs rendered vs delivered vs verified. Observe
       mature/private rights and locked frame requirements.
@@ -304,7 +316,7 @@ tasks:
       Test draw/flip/deal/discard state idempotence, saved face state,
       correct pile counts, animation independence, rapid taps and
       source ArtImage provenance. Multiple seeds never produce impossible tiles,
-      duplicate uniqueness collisions, species-based moral determinism,
+      duplicate uniqueness collisions, independently rolled species/job pairs,
       unearned hidden knowledge or unrecoverable save state. HP and reward
       progression are balanced across all five lands.
 
