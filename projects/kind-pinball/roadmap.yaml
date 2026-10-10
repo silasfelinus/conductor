@@ -551,7 +551,7 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Fill the screen: the machine in a lit room, and the game's splash behind every cabinet"
-    status: claimed
+    status: review
     depends_on: [t-019]
     owner: worker
     passes: 0
@@ -564,9 +564,21 @@ tasks:
       empty black. Tier it (the low tier keeps a painted backdrop). Also for every cabinet: in the
       fullscreen/locked view the page behind the screen shows the game's splash art (blurred and dimmed)
       instead of flat navy. Fixed-seed screenshots at phone, tablet and desktop.
+
+      Merged kind_robots#3407. The 3D machine now stands in a lit arcade room
+      (render/room.ts): cabinet body with side art, chrome rails, lockdown bar, coin door and
+      legs; the Kind Pinball backglass over the DMD; a tiled floor, neon back wall, posters of
+      the other games, pendant lamps, and four neighbouring cabinets with lit playfields.
+      Neighbour spotlights are high tier only; the backglass hides with the backbox in the
+      hidden-room view. Every cabinet in fullscreen or locked play shows its own title art,
+      blurred and dimmed, around the screen instead of flat navy. runPinballStage covers the
+      room, legs, tier gating, backglass fade and resource freeing. Screenshots:
+      screenshots/t020-room-{phone,desk,wide}.jpg and t020-splash-{kind-pinball,kind-
+      pinball-3d,butterfly-blaster}.jpg.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-09T23:36:34Z'
-    updated: '2026-10-09T23:36:34Z'
+    updated: '2026-10-10T00:04:33Z'
+    implementation_pr: 'silasfelinus/kind_robots#3407'
 
   - id: t-021
     milestone: m5
