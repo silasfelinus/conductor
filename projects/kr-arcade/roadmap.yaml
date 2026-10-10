@@ -408,7 +408,7 @@ tasks:
   - id: t-013
     milestone: m5
     title: "Ghost Trail art references: inspect nine ArtJobs and produce playable Zuzu/enemy sprite atlases"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -419,10 +419,12 @@ tasks:
       delivered URLs and visual quality, repair bad art, create Zuzu and bone-coyote animation
       atlases with pivots and the intact/exposed poncho states using the Zuzu Showdown rig
       pipeline. Keep vector fallback until assets work in-game.
+
+      DONE 2026-10-10: all nine ArtJobs verified delivered at their final URLs (6 plates 1280x960, 3 concepts 1024x1024; inspected, quality good). Instead of rigging atlases from the single-pose concepts, Zuzu, the foes and bosses are drawn by code at high density (utils/arcade/ghostTrail/heroArt.ts, foeArt.ts) via bake.ts, with full animation sets incl. intact/exposed poncho states; the plates are used directly as the far layer (stageArt.ts). The Zuzu Showdown rig was inspected and not reused: its fighter stance and headband do not match Ghost Trail's kasa/poncho canon. silasfelinus/kind_robots#3466.
   - id: t-014
     milestone: m5
     title: "Ghost Trail visual vertical slice: large sprites, parallax town and detailed HUD"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -433,6 +435,8 @@ tasks:
       clear collision silhouettes, boss telegraph animations, coordinated Pixel/HD masters
       and HUD. Keep the accepted title splash, cabinet and leaderboard. Verify real
       screenshot renders at phone/tablet/desktop widths and pixel/HD modes.
+
+      2026-10-10: vertical slice in silasfelinus/kind_robots#3466 -- delivered plates as panned far layers + procedural parallax midground, fog and animated lights; hand-built terrain matching collision per stage; canon Zuzu with idle/walk/jump/fall/throw/iai-cut in both poncho states (~30 px, matching mockup scale and hurtboxes); bone coyotes, ghosts, storm crows, Dust Devil and Bone Bull with clear telegraphs; mockup HUD with bottom boss bar and banners. Render only. Verified engine/farm/campaign tests, vue-tsc, HD 4x and Pixel renders. Device widths: the cabinet's display layer only changes the whole-number scale, and renders were checked at 1x/2x Pixel and 4x HD; a hands-on phone pass in the live cabinet is still worth doing in t-020. The Bell Heretic itself is a t-018 boss.
   - id: t-015
     milestone: m5
     title: "Ghost Trail authored encounter and campaign systems: secrets, progress, checkpoints and victory"
