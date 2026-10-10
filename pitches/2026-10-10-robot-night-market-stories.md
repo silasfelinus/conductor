@@ -1,7 +1,7 @@
 # Pitch: Robot Night Market Stories
 date: 2026-10-10
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A pre-written branching reader where players wander a lantern-lit night market, visit stalls run by quirky robots, and collect small tokens that change which ending their evening takes. Every scene and choice ships in a static file, so no model is needed at runtime.
