@@ -282,8 +282,7 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Illustrated responsive hex/card board and current encounter reader"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-005, t-006]
@@ -291,9 +290,11 @@ tasks:
       Launch gate (spec: BOARD-CARD-ARCHITECTURE.md): genuine face-down stack, click-to-draw, animated deal, front/back persistent reveal, discard and inspect flows. Reuse existing KR visual card components without hijacking the Storybook run store, global navigation hand, or flipStore. Main board visual dominates screen at phone/tablet/desktop. Three current encounter cards with routes, full art inspector, location state changes, selected path and discovered history; mobile bottom sheet and keyboard/screen-reader usability.
 
       Built private five-land illustrated board with state-owned travel/draw/discard, real NavigationFlipCard deals and kr-card-flip inspection, guarded boss and skill choices, browseable past-land history, responsive route cards and provisional source-backed Zuzu art. Separate Pinia store/local save preserves old Homestead. Opening CI-gated implementation PR for review; live visual acceptance and public route remain separate.
+
+      Responsive illustrated private Admin five-land board from superseded PR #3411 was fully integrated into merged Kind Robots PR #3424 (428d6b6). Preserved travel/deck/discard, prior visit inspection, playable location and boss controls, state-owned save, source-backed provisional scenery, keyboard-accessible choices, and Admin tab. Former PR #3411 closed as superseded. Dedicated flip polish, custom encounter faces, authenticated visual approval and public publishing remain separate tasks. All 33 source PR checks green; production deployment not independently verified.
     claimed_by: 2026-10-10T001330Z-zuzu-shifting-t015-gpt6-c8f4
     claimed_at: '2026-10-10T00:13:30Z'
-    updated: '2026-10-10T00:21:00Z'
+    updated: '2026-10-10T08:33:00Z'
 
   - id: t-016
     milestone: m4
@@ -341,7 +342,7 @@ tasks:
   - id: t-019
     milestone: m4
     title: "Make Shifting Lands persistent encounter flip readable"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
