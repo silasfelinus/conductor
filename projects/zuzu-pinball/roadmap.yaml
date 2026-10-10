@@ -106,22 +106,23 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Implement dimensioned Zuzu physical graybox, shooter lane and lower flippers"
-    status: review
+    status: done
     depends_on: t-003
-    owner: worker
     claimed_by: 20261010T213248985Z-zuzu-pinball-t004-q7k9
     claimed_at: '2026-10-10T21:32:48.985Z'
-    updated: '2026-10-10T21:35:07.375Z'
+    updated: '2026-10-10T23:05:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Calibrate units, slope, gravity, ball radius, restitution, rubber materials, flipper torque, cradle and catch control, shooter-lane gate, one-way trough and ball serve. Unit/integration tests for all ball transitions. The SVG mockup is a design guide, not a tested geometry mesh.
 
       Kind Robots physical starter graybox adds a one-way shooter gate and a real plunger trough stop, calibrates rest position to the 27 mm ball, and adds direct Rapier integration tests for held plunger, two launch powers feeding the main field, independently moving lower bats, and River Croc conservation. Changes are on worker/zuzu-pinball-t004-physical-lanes-20261010-q7k9. CI tests are pending; only merge verified trajectories and preserve public Arcade isolation. Art and elevated ramps remain subsequent roadmap tasks.
+
+      Reconciled completed physical graybox: Kind Robots PR #3468 merged at b0e204924613129cdd0c36367820c562659113e2. Physics trajectory, trough, flipper, and Croc regression test contracts landed with successful TypeScript and Contract Tests workflow checks. This clears t-005's dependency. Production deploy status unverified.
   - id: t-005
     milestone: m2
     title: "Build three physically distinct elevated ramps, two orbits and shot sensors"
-    status: waiting
+    status: ready
     depends_on: t-004
     owner: null
     passes: 0
@@ -146,7 +147,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Implement sling, pop bumper, drop bank, scoop, captive ball and tilt"
-    status: waiting
+    status: ready
     depends_on: t-004
     owner: null
     passes: 0
