@@ -6,6 +6,8 @@
 
 ![Annotated playfield](./PLAYFIELD-MOCKUP.svg)
 
+![Gameplay screen mockup](./GAMEPLAY-SCREEN-MOCKUP.svg)
+
 ## The pitch
 
 A premium, physically credible **single original pinball table** set in the Zuzu universe. A wandering Edo-era koala ronin enters a dying weird-west frontier village. An abbey's bell keeps ringing even though nobody pulls the rope. The Abbess is harvesting children to feed an ancient hunger. A hidden undercrypt reveals hints of the world that preceded the animal civilizations.
@@ -67,10 +69,11 @@ A casual player should manage lower flippers with only two buttons; advanced pla
 ## Visual deliverables and technical workflow
 
 1. **Concept art**: `CONCEPT-ART.svg` is an authored vector **directional illustration** of mood and cabinet, not a claimed final photoreal render. Replace with 3D rendered key art and true project icon/card/hero assets via durable art pipeline.
-2. **Mechanical layout mockup**: `PLAYFIELD-MOCKUP.svg` shows labeled shots, ramp routes, mini deck, flippers and ball serve. **It is not a tested physical layout.** Convert it into measured world coordinates, then prove all lanes with simulation before art-lock.
-3. **Playable graybox**: use a fresh Arcade game id (proposed `zuzu-pinball`), under an **admin-only preview** `/admin/zuzu-pinball` with visible Admin nav entry, while keeping `/play/zuzu-pinball` unpublished until explicit approval. Share engine APIs with Kind Pinball; do not fork simulation logic gratuitously.
-4. **Game-grade scene**: calibrated camera perspective, dynamic contact lights, quality shadow budgets, PBR materials, layered cabinet side/border splash art, full DMD animation, callouts/music, coherent shootable targets with correct geometry.
-5. **Production handoff**: documented model scale, collider spec, lamp IDs, switch IDs, mechanism state machine, artwork atlas, sound map, audio credit/licensing register, table guide, test plan and screenshot set.
+2. **Player-facing screen mockup**: `GAMEPLAY-SCREEN-MOCKUP.svg` illustrates the LED splash border, separate DMD, lit shot callouts, progress HUD and visible double-level playfield; this is *not* a real screenshot or playable scene.
+3. **Mechanical layout mockup**: `PLAYFIELD-MOCKUP.svg` shows labeled shots, ramp routes, mini deck, flippers and ball serve. **It is not a tested physical layout.** Convert it into measured world coordinates, then prove all lanes with simulation before art-lock.
+4. **Playable graybox**: use a fresh Arcade game id (proposed `zuzu-pinball`), under an **admin-only preview** `/admin/zuzu-pinball` with visible Admin nav entry, while keeping `/play/zuzu-pinball` unpublished until explicit approval. Share engine APIs with Kind Pinball; do not fork simulation logic gratuitously.
+5. **Game-grade scene**: calibrated camera perspective, dynamic contact lights, quality shadow budgets, PBR materials, layered cabinet side/border splash art, full DMD animation, callouts/music, coherent shootable targets with correct geometry.
+6. **Production handoff**: documented model scale, collider spec, lamp IDs, switch IDs, mechanism state machine, artwork atlas, sound map, audio credit/licensing register, table guide, test plan and screenshot set.
 
 ## Acceptance criteria: an FX3-class *target*, not an unearned claim
 
