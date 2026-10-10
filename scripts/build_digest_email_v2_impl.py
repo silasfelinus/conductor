@@ -69,11 +69,11 @@ def _facet_target_rows(targets: list[dict[str, Any]]) -> str:
 
     return (
         '<div style="background:#fbfbfe;border:1px solid #e6e6f0;border-radius:8px;'
-        'padding:8px 12px;margin:0 0 8px;max-width:660px">' + "".join(rows) + "</div>"
+        'padding:8px 12px;margin:0 0 8px;max-width:100%">' + "".join(rows) + "</div>"
     )
 
 
-def asset_card(asset: dict[str, Any], *, show_art: bool) -> str:
+def _asset_card_parts(asset: dict[str, Any], *, show_art: bool) -> tuple[str, str]:
     key = str(asset.get("key") or "vibe")
     accent, paper, icon = TYPE_THEME.get(key, TYPE_THEME["vibe"])
     title = esc(asset.get("title"))
@@ -105,12 +105,13 @@ def asset_card(asset: dict[str, Any], *, show_art: bool) -> str:
         queue_text = f"ArtJob {job_id}" if job_id else str(asset.get("request_id"))
         request = f'<div style="font-size:9px;color:#777;margin-top:7px">Queue: {esc(queue_text)}</div>'
 
-    min_height = "410px" if show_art else "220px"
     no_facets_html = '<span style="font-size:11px;color:#777">Legacy proposal, no structured Facets recorded.</span>'
     facet_chips_html = _facet_chips([str(value) for value in facets]) or no_facets_html
-    return (
-        f'<div style="width:300px;min-height:{min_height};border:1px solid {accent};border-radius:12px;'
-        f'background:{paper};padding:12px;font-family:Arial,sans-serif;box-sizing:border-box">'
+    cell_style = (
+        f"border:1px solid {accent};border-radius:12px;background:{paper};padding:12px;"
+        "font-family:Arial,sans-serif;vertical-align:top"
+    )
+    inner = (
         f'{visual}'
         f'<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:{accent};font-weight:700">'
         f'{icon} {label}</div>'
@@ -120,24 +121,34 @@ def asset_card(asset: dict[str, Any], *, show_art: bool) -> str:
         f'<div style="border-top:1px dashed {accent}66;margin-top:10px;padding-top:7px">'
         f'<div style="font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:{accent};font-weight:700">Seed Facets</div>'
         f'{facet_chips_html}'
-        f'{request}</div></div>'
+        f'{request}</div>'
     )
+    return cell_style, inner
+
+
+def asset_card(asset: dict[str, Any], *, show_art: bool) -> str:
+    cell_style, inner = _asset_card_parts(asset, show_art=show_art)
+    return f'<div style="{cell_style}">{inner}</div>'
 
 
 def asset_grid(assets: list[dict[str, Any]], *, show_art: bool) -> str:
+    # The card's border and paper sit on the table cell itself, so the two cards
+    # in a row always share one height instead of ending at ragged depths.
     rows: list[str] = []
     for index in range(0, len(assets), 2):
         pair = assets[index:index + 2]
-        cells = "".join(
-            f'<td width="50%" valign="top" style="padding:6px">{asset_card(asset, show_art=show_art)}</td>'
-            for asset in pair
-        )
+        cells: list[str] = []
+        for asset in pair:
+            cell_style, inner = _asset_card_parts(asset, show_art=show_art)
+            cells.append(
+                f'<td class="dg-card" width="50%" valign="top" style="{cell_style}">{inner}</td>'
+            )
         if len(pair) == 1:
-            cells += '<td width="50%" style="padding:6px"></td>'
-        rows.append(f"<tr>{cells}</tr>")
+            cells.append('<td width="50%"></td>')
+        rows.append(f"<tr>{''.join(cells)}</tr>")
     return (
-        '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
-        'style="max-width:660px">' + "".join(rows) + "</table>"
+        '<table class="dg-grid" role="presentation" width="100%" cellspacing="8" cellpadding="0" '
+        'style="table-layout:fixed;margin:0 0 6px">' + "".join(rows) + "</table>"
     )
 
 
@@ -275,7 +286,7 @@ def proposal_section(
     return (
         f'<h2 style="margin-bottom:2px">{heading}</h2>'
         f'<p style="font-size:1.15em;color:#2e1065;margin:2px 0"><strong>{title}</strong></p>'
-        f'<p style="color:#444;line-height:1.5;margin-top:4px;max-width:660px">{idea}</p>'
+        f'<p style="color:#444;line-height:1.5;margin-top:4px;max-width:100%">{idea}</p>'
         f'{calendar_line}{art_line}{facet_line}{buttons}'
         f'{asset_grid(assets, show_art=show_art)}'
     )
@@ -299,7 +310,7 @@ def next_pitch_section(proposal: dict[str, Any] | None) -> str:
     )
     return (
         '<div style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:10px;'
-        'padding:12px 14px;margin:14px 0 18px;max-width:660px">'
+        'padding:12px 14px;margin:14px 0 18px;max-width:100%">'
         '<h2 style="margin:0 0 4px">🔮 Tomorrow’s pitch</h2>'
         f'{date_line}'
         f'<p style="font-size:1.08em;color:#581c87;margin:3px 0"><strong>{title}</strong></p>'
@@ -361,7 +372,7 @@ def daily_pitches_section(daily: dict[str, Any] | None, links_for=None, fallback
     ) if carried else ""
     return (
         '<div style="background:#ecfeff;border:1px solid #a5f3fc;border-radius:10px;'
-        'padding:12px 14px;margin:14px 0 18px;max-width:660px">'
+        'padding:12px 14px;margin:14px 0 18px;max-width:100%">'
         '<h2 style="margin:0 0 4px">💡 Today’s five pitches</h2>'
         '<p style="color:#64748b;font-size:12px;margin:2px 0 8px">Any button opens one page with every undecided '
         'pitch: Approve, Approve with changes, Pass or Decide later, then save once. '
@@ -383,7 +394,7 @@ def animation_release_section(digest: dict[str, Any]) -> str:
         reason = esc(release.get("reason") or "Release status unavailable.")
         return (
             '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:10px;'
-            'padding:12px 14px;margin:14px 0 18px;max-width:660px">'
+            'padding:12px 14px;margin:14px 0 18px;max-width:100%">'
             '<h2 style="margin:0 0 4px">🎞️ Animation Manager</h2>'
             f'<p style="color:#92400e;margin:4px 0">{reason}</p></div>'
         )
@@ -406,7 +417,7 @@ def animation_release_section(digest: dict[str, Any]) -> str:
     )
     return (
         f'<div style="background:{paper};border:1px solid {rule};border-radius:10px;'
-        'padding:12px 14px;margin:14px 0 18px;max-width:660px">'
+        'padding:12px 14px;margin:14px 0 18px;max-width:100%">'
         f'<h2 style="margin:0 0 4px">{headline}</h2>'
         f'<p style="color:{ink};font-size:13px;margin:4px 0 7px">{cadence}</p>'
         f'<p style="font-size:1.08em;color:#2e1065;margin:3px 0"><strong>{title}</strong></p>'
@@ -569,7 +580,44 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
         payload["htmlContent"] = payload["htmlContent"].replace(
             title_end, title_end + middle, 1
         )
+    payload["htmlContent"] = page_shell(payload["htmlContent"])
     return payload
+
+
+PAGE_WIDTH_PX = 680
+
+
+def page_shell(body: str) -> str:
+    """One centred column, so every section shares the same edges.
+
+    Without it the status banners and log box stretched across the whole mail
+    window while the text, cards and pitch boxes stopped at 660px, which read as
+    a ragged left-hand strip beside a wall of white. The width is capped rather
+    than fixed, so the same column shrinks to fit a phone, where the head style
+    (honoured by Gmail; ignored harmlessly elsewhere) stacks the cards.
+    """
+    return (
+        '<!doctype html><html><head><meta charset="utf-8">'
+        '<meta name="viewport" content="width=device-width,initial-scale=1">'
+        f"<style>{MOBILE_CSS}</style></head><body style=\"margin:0;padding:0\">"
+        '<div class="dg-outer" style="background:#f4f3f8;padding:18px 8px;margin:0">'
+        f'<table role="presentation" align="center" width="100%" cellspacing="0" cellpadding="0" '
+        f'style="max-width:{PAGE_WIDTH_PX}px;margin:0 auto;background:#ffffff;border-radius:14px;'
+        'border:1px solid #e7e5ef;border-collapse:separate">'
+        '<tr><td class="dg-page" style="padding:22px 24px;font-family:Arial,Helvetica,sans-serif;'
+        'color:#24212f;font-size:14px;line-height:1.5;word-wrap:break-word;overflow-wrap:anywhere">'
+        f"{body}</td></tr></table></div></body></html>"
+    )
+
+
+MOBILE_CSS = (
+    "@media only screen and (max-width:560px){"
+    ".dg-outer{padding:6px 0 !important}"
+    ".dg-page{padding:16px 12px !important}"
+    ".dg-grid,.dg-grid tbody,.dg-grid tr{display:block !important;width:100% !important}"
+    ".dg-card{display:block !important;width:auto !important;margin:0 0 10px !important}"
+    "}"
+)
 
 
 def main(argv: list[str] | None = None) -> int:

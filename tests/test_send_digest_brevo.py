@@ -291,3 +291,18 @@ def test_main_uses_brevo_when_smtp_unconfigured(monkeypatch, tmp_path):
 
     assert digest_sender.main() == 0
     assert calls == ["brevo-key"]
+
+
+def test_direct_links_notice_goes_inside_body_of_full_document():
+    payload = {
+        "htmlContent": (
+            '<!doctype html><html><head></head><body style="margin:0">'
+            '<a href="https://kindrobots.org/x">x</a></body></html>'
+        )
+    }
+    digest_sender.attach_direct_links_backup(payload)
+    html_content = payload["htmlContent"]
+    assert html_content.startswith("<!doctype html>")
+    assert html_content.index('<body style="margin:0">') < html_content.index(
+        digest_sender.DIRECT_LINKS_NOTICE_MARKER
+    )
