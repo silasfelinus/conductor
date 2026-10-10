@@ -2503,5 +2503,23 @@ tasks:
 
     Merged silasfelinus/kind_robots#3412 at 42c25c91752e23c6f9e88226cfc16d711580e23b with all 30 checks green; Playwright-checked locally on /play/arcade and /dashboard. Also confirmed production at 8803efd renders "Navigate Play" on /play/arcade — Silas's "Home" screenshot predated that deploy. Next on the umbrella: generalize the help contract to every channel, then the Home/Storybook audit (About Home still lists tabs).
 
+- id: t-146
+  milestone: m6
+  title: 'Tutorial slice 2c/2d: Home, Play and Admin help rewritten from the actual pages; privacy defaults; 21 bad images re-queued'
+  status: done
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  owner: null
+  updated: '2026-10-10T02:50:00Z'
+  note: |-
+    Under umbrella issue silasfelinus/kind_robots#3379 (deliberately no source_issue, as t-144/t-145).
+
+    Silas, 2026-10-10: the Home Dashboard text "doesn't match what is actually on the dashboard", Play had "obviously bad art and a complete mismatch between content", and "have no idea what's going on in the admin descriptions"; then "Privacy policy should say that it is configurable. Our actual default is public for none mature, private for mature. Bad art should be reenqueued with better prompts."
+
+    silasfelinus/kind_robots#3416 (merged b2879e9, 34/34 checks): all 54 Home/Play/Admin tabs traced from route to rendering component and their help/description/summary rewritten to match; every tutorial image viewed; new channel sections (Home today/account/people/jellybeans/support, Play make/learn/games/toys, Admin art/projects/studios/people/shelf); privacy policy, Account toggle and help now state public-by-default for non-mature, private for mature, configurable (confirmed: schema isPublic default true, artStore forces isPublic false on mature); art audit covers tutorial images; verifyNavigationConsolidation repaired after #3412 slipped past its path filter.
+
+    silasfelinus/conductor#5856 (merged f69ccf9): 21 force: true re-renders at existing media paths with Krea 2-safe prompts (concrete scenes, no screens/signs/labels); Auto Art Generate run 739 started on merge. Follow-up: review the renders and re-queue misses; Mandarin cards with wrong subjects are a separate pipeline.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
