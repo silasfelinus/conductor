@@ -697,7 +697,7 @@ tasks:
   - id: t-025
     milestone: m5
     title: "The 3D cabinet fills the screen: the room around the machine, not a portrait column"
-    status: claimed
+    status: review
     depends_on: [t-024]
     owner: worker
     passes: 0
@@ -710,6 +710,15 @@ tasks:
       camera.ts) framing the table and the room filling the sides; the cabinet's 2D overlay (attract,
       pause, initials, guide) stays legible at the meta's size, centred. Phone portrait must look as it
       does now. Screenshots at phone, tablet, desktop and ultrawide, and runPinballDevices stays green.
+
+      Merged kind_robots#3421. Fullscreen or pinned for touch, a WebGL cabinet's screen takes
+      the whole play area at any shape: the camera fits the playfield and the t-020 room and
+      neighbouring cabinets fill the sides, as in the FX3 reference. The 2D layer (attract,
+      pause, initials, guide) keeps the meta's shape, centred, over the game's splash.
+      Verified in Chromium against Nuxt dev at 1440x900 fullscreen and a 390x844 touch phone
+      (pinball pad, launch, VIEW chip). Screenshots: screenshots/t025-fill-desk-demo.jpg,
+      t025-fill-desk-attract.jpg, t025-fill-phone-play.jpg.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-10T02:45:40Z'
-    updated: '2026-10-10T02:45:40Z'
+    updated: '2026-10-10T02:57:21Z'
+    implementation_pr: 'silasfelinus/kind_robots#3421'
