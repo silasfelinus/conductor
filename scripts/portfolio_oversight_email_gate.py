@@ -2,9 +2,9 @@
 """Decide whether a portfolio-oversight result should escalate to email.
 
 The oversight report is an agent-routing signal first. Deterministic failures and
-unresolved parity still escalate immediately, but a routine semantic intent review
-gets a grace window so the next scheduled agents can perform the audit before Silas
-is emailed.
+unresolved parity retain their existing escalation rules. A due semantic intent
+review is *work to dispatch*, not an incident: only an explicit failed attempt,
+recorded after the most recent successful audit, justifies a semantic email.
 """
 from __future__ import annotations
 
@@ -14,7 +14,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-DEFAULT_INTENT_EMAIL_GRACE_DAYS = 1.0
 REPEAT_ALERT_HOURS = 24
 
 
@@ -27,7 +26,7 @@ def incident_signature(report: dict[str, Any]) -> str:
         "forward": sorted(str(item.get("conductor_slug")) for item in (report.get("project_parity") or {}).get("forward", [])),
         "reverse": sorted(str(item.get("conductor_slug")) for item in (report.get("project_parity") or {}).get("reverse", [])),
         "roadmap_errors": sorted(str(item.get("code")) + ":" + str(item.get("project")) for item in (report.get("roadmap_audit") or {}).get("errors", [])),
-        "intent_review_due": bool(summary.get("intent_review_due")),
+        "intent_review_failure": (report.get("intent_review") or {}).get("failed_attempt"),
     }
     return json.dumps(payload, sort_keys=True)
 
@@ -45,38 +44,25 @@ def should_notify(report: dict[str, Any], previous: dict[str, Any] | None, now: 
 
 
 
-def should_email(
-    report: dict[str, Any],
-    *,
-    intent_email_grace_days: float = DEFAULT_INTENT_EMAIL_GRACE_DAYS,
-) -> bool:
+def should_email(report: dict[str, Any]) -> bool:
     status = str((report.get("summary") or {}).get("status") or "")
     if status in {"action-needed", "unresolved"}:
         return True
     if status != "semantic-review-due":
         return False
 
-    intent = report.get("intent_review") or {}
-    days_since = intent.get("days_since")
-    stale_days = float(intent.get("stale_days") or 0.0)
-
-    # No baseline audit is exceptional rather than routine staleness, so do not
-    # suppress the only external signal indefinitely.
-    if days_since is None:
-        return True
-
-    return float(days_since) >= stale_days + intent_email_grace_days
+    # The overdue signal routes scheduled agents. It does not page a human
+    # until at least one actual review attempt failed and that failure is
+    # newer than the last successful review (validated by the report builder).
+    failure = (report.get("intent_review") or {}).get("failed_attempt")
+    return isinstance(failure, dict) and failure.get("status") == "failed" and bool(
+        failure.get("attempted_at") and failure.get("reason")
+    )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("report", nargs="?", default="PORTFOLIO-OVERSIGHT.json")
-    parser.add_argument(
-        "--intent-email-grace-days",
-        type=float,
-        default=DEFAULT_INTENT_EMAIL_GRACE_DAYS,
-        help="days after semantic review first becomes due before email escalation",
-    )
     parser.add_argument("--state", type=Path, default=Path("PORTFOLIO-OVERSIGHT-EMAIL-STATE.json"))
     parser.add_argument("--record", action="store_true", help="record a successfully delivered alert")
     args = parser.parse_args()
@@ -87,7 +73,7 @@ def main() -> int:
         args.state.write_text(json.dumps({"signature": incident_signature(report), "sent_at": now.isoformat()}, indent=2) + "\n", encoding="utf-8")
         return 0
     previous = json.loads(args.state.read_text(encoding="utf-8")) if args.state.exists() else None
-    eligible = should_email(report, intent_email_grace_days=args.intent_email_grace_days)
+    eligible = should_email(report)
     print("true" if eligible and should_notify(report, previous, now) else "false")
     return 0
 
