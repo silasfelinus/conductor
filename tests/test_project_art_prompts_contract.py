@@ -30,6 +30,20 @@ def test_project_image_prompts_pass_contract():
 ACTIVE_QUEUE_STATUSES = {"pending", "queued", "running", "processing"}
 
 
+def test_pending_request_prompts_pass_contract():
+    """Hand-written `requests:` rows are checked too: on 2026-10-10 five Ghost Trail
+    plates (#5881) 422'd on "No people" / "no other figures" and sat pending."""
+    data = yaml.safe_load((ROOT / "projects" / "art-prompts.yaml").read_text())
+    bad = {
+        row.get("id") or row.get("image_path"): violations(row["prompt"])
+        for row in data.get("requests") or []
+        if str(row.get("status", "pending")).strip().lower() in ACTIVE_QUEUE_STATUSES
+        and isinstance(row.get("prompt"), str)
+        and violations(row["prompt"])
+    }
+    assert not bad, bad
+
+
 def test_pending_queue_prompts_match_catalog():
     """A prompt fix in art-prompts.yaml must reach its pending copy in art-generate.yaml.
 

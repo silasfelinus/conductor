@@ -20,3 +20,12 @@
 - Touch play locks the cabinet to the viewport (silasfelinus/kind_robots#3276).
 - Global leaderboard for every game (t-011, silasfelinus/kind_robots#3277): hall of fame API and hall
   section, pending-upload queue so no score stays stuck in one browser; per-game checklist updated.
+
+## 2026-10-10
+- **Timber Bot retired** (Silas: "the request timber falling game is questionable ethics, and I think we
+  should kill it"). Removed from the arcade in silasfelinus/kind_robots#3438; games.yaml marks it
+  `retired`, never to be rebuilt or re-pitched.
+- **16-bit glow-up** (Silas: "Right now they all look like they could have come from an atari, and I want
+  Super nes"). New milestone m6 and recurring task t-021: style upgrades come ahead of new games. The
+  shared kit `utils/arcade/snes.ts` and the DESIGN-BRIEF "16-bit style bar" set the target. Sink Suds is
+  the first cabinet upgraded (kind_robots#3438). games.yaml tracks `style: classic | snes` per cabinet.

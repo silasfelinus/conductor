@@ -50,6 +50,11 @@ milestones:
     weight: 50
     status: not-started
 
+  - id: m6
+    title: "16-BIT GLOW-UP — every cabinet upgraded from the Atari look to the Super NES bar"
+    weight: 40
+    status: in-progress
+
 tasks:
   - id: t-001
     milestone: m1
@@ -257,6 +262,21 @@ tasks:
     claimed_at: '2026-10-06T12:31:00Z'
     updated: '2026-10-06T12:31:45Z'
 
+  - id: t-021
+    milestone: m6
+    title: "Upgrade the next cabinet to the 16-bit (Super NES) style (recurring, ahead of new games)"
+    status: ready
+    passes: 0
+    stakes: reversible
+    recurring: true
+    approved_by_human: true
+    note: |-
+      Silas, 2026-10-10 (verbatim): "for now, we have a lot of arcade games, and I appreciate the variety. I want to make one excision. the request timber falling game is questionable ethics, and I think we should kill it. beyond that, rather than focusing on building new games (though I do want knew games to come in, I want games to get style upgrades. Right now they all look like they could have come from an atari, and I want Super nes."
+      STANDING CONTRACT: fallback work for kr-arcade, taken BEFORE t-009's new-game cycles. Each cycle upgrades one shipped cabinet whose games.yaml row has no `style: snes`, in games.yaml order (skip `retired` rows and the WebGL pinball table). Rebuild its render pass on kind_robots utils/arcade/snes.ts to meet every point of DESIGN-BRIEF.md "16-bit style bar"; extend the kit when a cabinet needs something shared (parallax for a scroller, Mode-7 floors) rather than drawing a one-off. Render only: gameplay, the seeded rng, scores and difficulty curves stay as they are (cosmetic effects roll their own dice, as Sink Suds' sparkles do). Verify with test:arcade-engine, eslint/prettier, vue-tsc, and before/after screenshots of the attract demo, checking both Pixel and HD styles; attach them to the PR. Then set the row's `style: snes` and `style_in: <PR>` and re-arm here with a RAN <date> line. Big cabinets (Kindness Gauntlet, Station Sweep, Zuzu Ghost Trail) may take two cycles; Ghost Trail's visual work lives in m5 (t-013/t-014), so it counts as upgraded when t-014 lands. Done when every non-retired 2D cabinet is `style: snes`; then flip to done and close m6.
+      RAN 2026-10-10: kit built (snes.ts: 15-bit ramps, HDMA bands, outlined pixel sprites, orbs, bevels, glows, sparkles, parallax, HUD panels, cached layers; font outline) and Sink Suds upgraded first, in silasfelinus/kind_robots#3438, which also retires Timber Bot. Next in order: butterfly-blaster.
+    updated: '2026-10-10T20:00:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3438'
+
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
@@ -267,6 +287,7 @@ tasks:
     depends_on:
       - t-008
     note: |-
+      PRIORITY (Silas, 2026-10-10): 16-bit style upgrades (t-021) come first. Build a new cabinet here only for an approved arcade pitch (source: pitches/...), and ship it at the DESIGN-BRIEF.md "16-bit style bar" (`style: snes`). While any cabinet is still `classic`, do not queue catalog games or write new arcade pitches from this task. Never rebuild a `retired` game (Timber Bot was retired 2026-10-10 on ethics grounds).
       STANDING CONTRACT (Silas, 2026-10-06): this is fallback work, picked when no finite task is claimable, the same lane as animation-manager's screensavers. Each cycle ships one new cabinet, or one slice of a `large` one. Take the first games.yaml entry with status `queued`; approved arcade pitches (source: pitches/...) sit ahead of the catalog. Set it to `building`, then build it in kind_robots on the engine kit, meeting every point of the per-game checklist in DESIGN-BRIEF.md. Queue its title-card art as a kr-arcade- request in projects/art-prompts.yaml, register it, verify at phone/tablet/desktop, and merge. Then set it to `shipped` with the PR number. For a `large` game, ship playable slices (pinball: the table and flippers first, then modes; gauntlet: one floor and one class first) and keep it `building` between cycles. If the queue is empty, write one new arcade pitch with `target: kr-arcade` into the next daily docket instead. Re-arm to ready with a RAN <date> line after each cycle.
       RAN 2026-10-06: Sink Suds (Bubbles riff) shipped in silasfelinus/kind_robots#3270; title art requested. Next in games.yaml: pipe-pals.
       RAN 2026-10-06: Pipe Pals (Mario Bros. riff) shipped in silasfelinus/kind_robots#3272; title art requested. Co-op and icy platforms deferred. Next in games.yaml: timber-bot.
