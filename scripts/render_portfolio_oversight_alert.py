@@ -32,6 +32,8 @@ def alert_subject(report: dict[str, Any]) -> str:
     drift = len(parity.get("forward") or []) + len(parity.get("reverse") or [])
     if drift:
         return f"Conductor Oversight: {drift} project parity {_plural(drift, 'mismatch', 'mismatches')}"
+    if intent.get("due") and intent.get("failed_attempt"):
+        return "Conductor Oversight: semantic intent review attempt failed"
     if intent.get("due"):
         return "Conductor Oversight: semantic intent review due"
     return f"Conductor Oversight: {summary.get('status') or 'attention needed'}"
@@ -66,11 +68,13 @@ def alert_body(report: dict[str, Any], *, run_url: str = "") -> str:
             f"{item.get('conductor_slug') or 'unknown slug'} has a Conductor roadmap but no matching Kind Robots row."
         )
 
-    if intent.get("due"):
+    if intent.get("due") and intent.get("failed_attempt"):
+        failure = intent["failed_attempt"]
         latest = intent.get("last_report") or "no completed intent audit"
         reasons.append(
-            "Semantic roadmap intent review is due: "
-            f"latest report is {latest}; review interval is {intent.get('stale_days')} day(s)."
+            "Scheduled semantic roadmap review was attempted and failed: "
+            f"{failure.get('reason')} (attempted {failure.get('attempted_at')}; "
+            f"latest successful report: {latest})."
         )
 
     if not reasons:
