@@ -67,14 +67,12 @@ def test_invalid_or_future_semantic_failure_does_not_page(tmp_path):
 
 def test_semantic_review_one_day_notice_before_deadline(tmp_path):
     (tmp_path / "INTENT-AUDIT-2026-10-10.md").write_text("reviewed", encoding="utf-8")
-
-    day_one = oversight.intent_review_status(directory=tmp_path, today=date(2026, 10, 11))
-    notice = oversight.intent_review_status(directory=tmp_path, today=date(2026, 10, 12))
+    first = oversight.intent_review_status(directory=tmp_path, today=date(2026, 10, 11))
+    approaching = oversight.intent_review_status(directory=tmp_path, today=date(2026, 10, 12))
     due = oversight.intent_review_status(directory=tmp_path, today=date(2026, 10, 13))
-
-    assert day_one["upcoming"] is False and day_one["due"] is False
-    assert notice["upcoming"] is True and notice["due"] is False
-    assert notice["days_until_due"] == 1
+    assert first["upcoming"] is False and first["due"] is False
+    assert approaching["upcoming"] is True and approaching["due"] is False
+    assert approaching["days_until_due"] == 1
     assert due["upcoming"] is False and due["due"] is True
 
 

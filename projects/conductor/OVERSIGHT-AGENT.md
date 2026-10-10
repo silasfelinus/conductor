@@ -12,7 +12,7 @@ Use these oversight roles when the report says they are needed, in this order:
 
 1. **project-sync-auditor** — Kind Robots ↔ Conductor project parity has forward drift, reverse orphan(s), or could not be verified. Run `scripts/check_project_scaffold_drift.py` with the production-safe token path. Verify every Kind Robots `conductorSlug` resolves to one Conductor roadmap and every active Conductor project has the intended Kind Robots row. Where live Project settings are available, also verify the Conductor-owned coordination fields projected into Kind Robots still agree with `project-overrides.yaml` and `projects/priority.yaml`; presentation-only fields remain Kind Robots-owned per `SOURCE_OF_TRUTH.md`.
 2. **roadmap-auditor** — `audit_roadmaps.py` reports deterministic errors. Repair unambiguous bookkeeping/state defects immediately. Never paper over a source-of-truth conflict by changing whichever side is easiest.
-3. **roadmap-intent-auditor** — the semantic intent review is within its one-day advance notice window, or already due. This is deliberately model/human-judgment work rather than another regex. Prioritize the actual review before its deadline and write a dated report only after completing it.
+3. **roadmap-intent-auditor** — the semantic intent review is within one day of its deadline, or already due. An agent should complete the substantive review before the due date if available; never write an empty dated report merely to clear the sensor.
 
 Broken/reviewable code already in flight can still outrank a soft semantic review when delaying it is clearly higher leverage, but deterministic project/roadmap drift should not sit indefinitely behind ordinary ready-task churn.
 
@@ -29,42 +29,45 @@ The existing `scripts/check_project_scaffold_drift.py` is the minimum mechanical
 
 Run this at least every **3 days**, and sooner after a substantial priority or direction change.
 
-**Scheduling and dispatch are owned by Conductor, not a personal ChatGPT routine.**
-The built-in `.github/workflows/conductor-oversight.yml` runs every six hours and
-persists `PORTFOLIO-OVERSIGHT.md/json`. On day two of a three-day cycle the
-sensor raises `semantic-review-upcoming`; when due it raises
-`semantic-review-due`. `scripts/select_role.py` independently reads the
-latest completed audit date and assigns `roadmap-intent-auditor` at either
-point, ahead of ordinary work (but behind urgent PR/workflow repair).
-Agents reading `AGENTS.md` must act on that role; a paused personal ChatGPT
-agent cycle must not hide the assignment. The separate ChatGPT Semantic Review
-task may also execute the work, but Conductor's notice/routing does not depend
-on its enabled state.
+**Advance agent notice:** Every six hours, Conductor Oversight marks the review
+as `semantic-review-upcoming` when there is one day left in the three-day
+window, even while the separate GitHub Models review is still scheduled for
+its due date. `scripts/select_role.py` also reads the latest completed audit
+date directly and assigns `roadmap-intent-auditor` ahead of normal backlog.
+Neither mechanism depends on the disabled personal Conductor Hourly Run;
+both are supplemental to the native daily reviewer below. Upcoming alone
+never triggers a semantic email.
 
-The six-hour GitHub workflow is a deterministic dispatcher, **not** an LLM:
-it cannot replace the actual judgment and source review. An available agent
-must read the current sources, repair unambiguous drift and land a real dated
-review. A due sensor alone never emails Silas; only an actual, recorded failed
-review attempt warrants semantic escalation.
+**Scheduled owner:** GitHub Actions workflow `.github/workflows/semantic-intent-review.yml`
+runs daily and performs an actual semantic review **only when the last merged
+`INTENT-AUDIT-YYYY-MM-DD.md` is at least three Pacific-calendar days old**.
+It invokes GitHub Models with the workflow's ephemeral `GITHUB_TOKEN`
+(`models: read`), not an independent ChatGPT scheduler or paid API key.
+The six-hour Conductor Oversight workflow is its fallback dispatcher if GitHub
+has not attempted a due review in 18 hours.
 
-If a scheduled attempt fails before a valid audit is completed, write
-`projects/conductor/INTENT-REVIEW-FAILURE.json` on a branch and open a PR with
-this small record (do not silently suppress the original error):
+`scripts/run_semantic_intent_review.py` packs current human steering, lifecycle,
+project priorities, high-priority roadmap goals and tasks, recent commits, and
+structural audit warnings into a bounded review input. GitHub Models performs the
+semantic judgment; deterministic validation rejects empty, malformed, or
+missing-lead responses. Only a successful actual inference can create a dated
+report; errors never advance freshness. A dedicated Actions validation job checks
+that the generated PR changes only a dated report, then runs Python regression
+checks on the exact commit before the merge job attempts a standard (non-bypass)
+PR merge. All workflow steps and attempted results are visible in GitHub Actions.
 
-```json
-{
-  "status": "failed",
-  "attempted_at": "2026-10-13T15:00:00Z",
-  "reason": "Specific failed operation and what was attempted"
-}
-```
+The email watchdog **never emails for age alone**. It reads GitHub's run history:
+only a real completed failed semantic-review run newer than the last successful
+report, or a separately verified `INTENT-REVIEW-FAILURE.json`, is a semantic
+email incident. Running/queued attempts and clean semantic staleness are not
+incidents. Production parity and deterministic roadmap errors retain their
+separate immediate escalation rules.
 
-Use the actual timestamp and error, never the example values. Merge a safe failure
-record once verified so oversight can see it. The watchdog ignores absent,
-malformed, future-dated, or superseded failure markers. A later successful dated
-`INTENT-AUDIT-YYYY-MM-DD.md` supersedes the failed record without rewriting
-history. If GitHub itself is unavailable, the reviewer may not be able to persist
-the record; do not claim that absence proves the scheduled attempt succeeded.
+If GitHub Models inference, PR permissions, CI, or merge protection blocks an
+attempt, the failed Actions run is the durable evidence. Its artifact includes
+`semantic-intent-attempt.json`; oversight will re-dispatch after its retry window
+and escalate based on the failed run. Do not manufacture a completed report or
+manually set a marker for ordinary staleness.
 
 Read, in order:
 
