@@ -445,7 +445,7 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Movesets: the Abbess and the Siblings"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -463,9 +463,16 @@ tasks:
       hook, suite verifyZuzuShowdownSiblings (11 checks). Left: Shield Him's half-damage and meter
       gain, the toddler puppet's rendering/flee-on-KO (with t-019 art), and the other
       fling_vs_siblings moves (Croc, Komodo, whose fighters are t-016/t-017).
+
+      DONE 2026-10-09 PT: the leftovers landed. Shield Him takes half damage and builds meter
+      (kind_robots#3419); every fling_vs_siblings move carries fling (Croc #3419, Komodo
+      #3420); the toddler puppet draws from his own pose sheet keyed to her state with no
+      hurtbox (#3414; his pose art ships under t-011); at a KO she scoops him up and runs off-
+      screen (#3422). Siblings suite: 13 checks.
     claimed_by: 2026-10-10T03:10:00Z-zs-t015
     claimed_at: '2026-10-10T03:08:54Z'
-    updated: '2026-10-10T03:08:54Z'
+    updated: '2026-10-10T03:09:04Z'
+    implementation_pr: 'silasfelinus/kind_robots#3422'
 
   - id: t-016
     milestone: m4
