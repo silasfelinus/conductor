@@ -7,6 +7,10 @@
 # lane (enqueue_art_requests honours it). Keepers go to kind_robots sectionArt.ts and
 # public/zuzu-gamebook/scenes/sections/<section>.webp. Indexed in worlds/zuzu/assets/ledger-part-05.json.
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# 20:25 (Silas: keep the grindhouse look, but "muted earthy palette" may kill tonal variety): pending house
+# jobs were edited in place without "muted earthy palette, desaturated" and with a scene-matched light/colour tag
+# (house_light.py). Renders finished before 20:25 used the old prefix:
+# masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style), gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, muted earthy palette, desaturated, weathered, grimy
 round: gamebook-8
 series: zuzu-koala-assassin
 project_slug: zuzu-gamebook
@@ -20,8 +24,7 @@ lanes:
   checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
   prompt: tags
   prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
-    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, muted earthy palette, desaturated, weathered,
-    grimy
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, weathered, grimy
   suffix: western, dusty, dramatic lighting, gritty
   steps: 30
   cfg: 5
@@ -885,7 +888,7 @@ subjects:
   prompt_prose: A smooth mound of sand under a red rock, with small paw prints leading away along the bank.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a smooth low mound of warm sand at the foot of a tall red
     rock on a riverbank, small paw prints leading away along the bank toward the sunset, faint tiny dimple in the
-    sand, dead reeds, quiet, dusk, tall rock rising overhead, wide shot
+    sand, dead reeds, quiet, dusk, tall rock rising overhead, wide shot, orange sunset light, red and violet sky
   jobs:
     arthemy-house: 36332
   art:
@@ -907,7 +910,7 @@ subjects:
   prompt_prose: A smooth mound of sand under a red rock, with small paw prints leading away along the bank.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a smooth low mound of warm sand at the foot of a tall red
     rock on a riverbank, small paw prints leading away along the bank toward the sunset, faint tiny dimple in the
-    sand, dead reeds, quiet, dusk, tall rock rising overhead, wide shot
+    sand, dead reeds, quiet, dusk, tall rock rising overhead, wide shot, orange sunset light, red and violet sky
   jobs:
     arthemy-house: 36333
   art:
@@ -1510,7 +1513,8 @@ subjects:
     a doorway, with no one holding it.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a dark ruined street before dawn, a single small candle
     flame hovering low in the air before a closed doorway at the far end, at the height of a child's head, warm
-    halo on scorched boards, black wax dripping on the threshold, cold blue shadows, eerie, wide shot
+    halo on scorched boards, black wax dripping on the threshold, cold blue shadows, eerie, wide shot, warm amber
+    firelight, orange glow
   jobs:
     arthemy-house: 36334
   art:
@@ -1533,7 +1537,8 @@ subjects:
     a doorway, with no one holding it.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a dark ruined street before dawn, a single small candle
     flame hovering low in the air before a closed doorway at the far end, at the height of a child's head, warm
-    halo on scorched boards, black wax dripping on the threshold, cold blue shadows, eerie, wide shot
+    halo on scorched boards, black wax dripping on the threshold, cold blue shadows, eerie, wide shot, warm amber
+    firelight, orange glow
   jobs:
     arthemy-house: 36335
   art:
@@ -1762,7 +1767,7 @@ subjects:
   prompt_tags: (empty scene:1.3), uninhabited, scenery, interior of a long low dormitory, two rows of small wooden
     cots, every one empty and neatly made, blankets folded back, pillows plumped, small shoes paired under each
     cot, a stitched cloth doll lying face up on one pillow, dusty light through shutters, unsettling stillness,
-    wide shot
+    wide shot, warm window light, shafts of sunlight
   jobs:
     arthemy-house: 36336
   art:
@@ -1786,7 +1791,7 @@ subjects:
   prompt_tags: (empty scene:1.3), uninhabited, scenery, interior of a long low dormitory, two rows of small wooden
     cots, every one empty and neatly made, blankets folded back, pillows plumped, small shoes paired under each
     cot, a stitched cloth doll lying face up on one pillow, dusty light through shutters, unsettling stillness,
-    wide shot
+    wide shot, warm window light, shafts of sunlight
   jobs:
     arthemy-house: 36337
   art:
@@ -2579,7 +2584,7 @@ subjects:
   prompt_prose: Two campfires burn close together on flat ground at night beneath dark red canyon walls.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, two small campfires burning a short distance apart on flat
     ground at night, the gap between them narrow, dark red canyon walls rising behind, stars, two bedrolls by the
-    fires, warm light, wide shot
+    fires, warm light, wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36338
   art:
@@ -2601,7 +2606,7 @@ subjects:
   prompt_prose: Two campfires burn close together on flat ground at night beneath dark red canyon walls.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, two small campfires burning a short distance apart on flat
     ground at night, the gap between them narrow, dark red canyon walls rising behind, stars, two bedrolls by the
-    fires, warm light, wide shot
+    fires, warm light, wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36339
   art:
@@ -2735,7 +2740,7 @@ subjects:
   prompt_tags: anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty
     fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), standing very still and staring at a
     huge bleached skull of no known shape resting on a smooth buried stone causeway, worn grooves in the old stone,
-    white dust, cracked riverbed, uneasy silence, side view, medium shot
+    white dust, cracked riverbed, uneasy silence, side view, medium shot, bright desert sun, pale blue sky
   jobs:
     arthemy-house: 36165
   art:
@@ -2759,7 +2764,7 @@ subjects:
   prompt_tags: anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty
     fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), standing very still and staring at a
     huge bleached skull of no known shape resting on a smooth buried stone causeway, worn grooves in the old stone,
-    white dust, cracked riverbed, uneasy silence, side view, medium shot
+    white dust, cracked riverbed, uneasy silence, side view, medium shot, bright desert sun, pale blue sky
   jobs:
     arthemy-house: 36166
   art:
@@ -2783,7 +2788,7 @@ subjects:
   prompt_tags: a colossal carved grey stone face looking out of a collapsed sandy riverbank, flat brow, narrow ridge
     of nose, closed lips, a long crack from brow to chin, anthro, fennec fox, toddler, tiny, enormous ears, sand-colored
     fur, ragged checked cloth tunic, wide eyes, tiny, taking one step toward it, dust drifting from the crack, low
-    sun, uncanny, epic wide shot
+    sun, uncanny, epic wide shot, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36167
   art:
@@ -2807,7 +2812,7 @@ subjects:
   prompt_tags: a colossal carved grey stone face looking out of a collapsed sandy riverbank, flat brow, narrow ridge
     of nose, closed lips, a long crack from brow to chin, anthro, fennec fox, toddler, tiny, enormous ears, sand-colored
     fur, ragged checked cloth tunic, wide eyes, tiny, taking one step toward it, dust drifting from the crack, low
-    sun, uncanny, epic wide shot
+    sun, uncanny, epic wide shot, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36168
   art:
@@ -2839,7 +2844,7 @@ subjects:
     tiny, enormous ears, sand-colored fur, ragged checked cloth tunic, wide eyes, who rides in front of him, anthro,
     fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn
     ragged pale dress, bandaged wrists, (fully clothed:1.3), covering her own enormous ears and frowning, a giant
-    stone face behind them in the bank, protective, medium shot
+    stone face behind them in the bank, protective, medium shot, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36169
   art:
@@ -2890,7 +2895,7 @@ subjects:
     sandal prints in the sand.
   prompt_tags: (still life:1.4), (object only:1.3), a row of black candle stubs melted onto the foot of a huge grey
     stone chin, small clay cups with dry dark rings inside, soft sand full of sandal prints and small bare footprints
-    leading toward the stone, sheltered shadow, ominous, close-up
+    leading toward the stone, sheltered shadow, ominous, close-up, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36171
   art:
@@ -2912,7 +2917,7 @@ subjects:
     sandal prints in the sand.
   prompt_tags: (still life:1.4), (object only:1.3), a row of black candle stubs melted onto the foot of a huge grey
     stone chin, small clay cups with dry dark rings inside, soft sand full of sandal prints and small bare footprints
-    leading toward the stone, sheltered shadow, ominous, close-up
+    leading toward the stone, sheltered shadow, ominous, close-up, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36172
   art:
@@ -2938,7 +2943,7 @@ subjects:
     sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical
     straw kasa, wide brim shading the eyes, sitting fallen backward in the sand, recoiling, one paw raised, the
     dark crack of a giant stone face looming above him, warm haze pouring out of the crack, faint candle haze, low
-    angle, dread, full body
+    angle, dread, full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36173
   art:
@@ -2993,7 +2998,8 @@ subjects:
     eyes, standing calm and still, facing four anthro, jackals, gaunt, thin, ragged shirts, patched trousers, old
     knives, (fully clothed:1.3), rising around an old stone well, anthro, fennec fox, female, young, about ten years
     old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists, (fully
-    clothed:1.3), hiding behind him gripping the back of his sash, tense standoff, dust, hard noon light, wide shot
+    clothed:1.3), hiding behind him gripping the back of his sash, tense standoff, dust, hard noon light, wide shot,
+    bright desert sun, pale blue sky
   jobs:
     arthemy-house: 36175
   art:
@@ -3053,7 +3059,7 @@ subjects:
     eyes, reaching up over his right shoulder for the katana hilt, eyes hard under the brim, gaunt jackals lunging
     in from both sides, anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored
     fur, dusty fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), fierce and baring her teeth
-    behind him, sudden violence, dust flying, close-up
+    behind him, sudden violence, dust flying, close-up, bright desert sun, pale blue sky
   jobs:
     arthemy-house: 36177
   art:
@@ -3106,7 +3112,8 @@ subjects:
     dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
     conical straw kasa, wide brim shading the eyes, katana drawn, low stance, facing anthro, jackals, gaunt, thin,
     ragged shirts, patched trousers, old knives, (fully clothed:1.3), attacking together, one leaping from a rock
-    above, one low, one circling behind, broken red rocks, dust storming up, action, dynamic angle, wide shot
+    above, one low, one circling behind, broken red rocks, dust storming up, action, dynamic angle, wide shot, bright
+    desert sun, pale blue sky
   jobs:
     arthemy-house: 36179
   art:
@@ -3162,7 +3169,7 @@ subjects:
     years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists, (fully
     clothed:1.3), sitting beside him with a rock gripped in her fist, anthro, fennec fox, toddler, tiny, enormous
     ears, sand-colored fur, ragged checked cloth tunic, wide eyes, asleep leaning against her back, scattered empty
-    ground, dusk, purple sky, quiet, wide shot
+    ground, dusk, purple sky, quiet, wide shot, orange sunset light, red and violet sky
   jobs:
     arthemy-house: 36181
   art:
@@ -3222,7 +3229,7 @@ subjects:
     black nose, serious, rust-brown poncho, orange zigzag trim, dark tunic, orange sash, dark brown cloth trousers,
     (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical straw kasa, wide brim shading the
     eyes, beside her, solemn, gaunt jackals in ragged shirts stepping back in alarm around an old stone well, one
-    curling her lip, (fully clothed:1.3), dust, noon light, wide shot
+    curling her lip, (fully clothed:1.3), dust, noon light, wide shot, bright desert sun, pale blue sky
   jobs:
     arthemy-house: 36183
   art:
@@ -3279,7 +3286,7 @@ subjects:
     conical straw kasa, wide brim shading the eyes, walking down out of broken rocks holding a tiny anthro jackal
     kit against his chest with one arm, his other paw resting on the hilt over his shoulder, facing anthro, jackal,
     female, middle-aged, gaunt, thin, grey snout, patched shirt, ragged trousers, (fully clothed:1.3), rigid, tense,
-    the old stone well between them, cold stillness, wide shot
+    the old stone well between them, cold stillness, wide shot, bright desert sun, pale blue sky
   jobs:
     arthemy-house: 36185
   art:
@@ -3329,7 +3336,7 @@ subjects:
     sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical
     straw kasa, wide brim shading the eyes, kneeling in a narrow crack in red rocks, pouring water from a canteen
     into its cap, anthro, jackal, three tiny kits, enormous ears, thin, wide eyes, ragged cloth wraps, (fully clothed:1.2),
-    drinking one by one, gentle, soft shade, warm light, medium shot
+    drinking one by one, gentle, soft shade, warm light, medium shot, bright desert sun, pale blue sky
   jobs:
     arthemy-house: 36187
   art:
@@ -3385,7 +3392,7 @@ subjects:
     thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3),
     carrying anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, ragged checked cloth tunic, wide
     eyes, following, a cut barrel cactus, heat shimmer, on the far flat a ruined waystation with half a roof and
-    a thin smudge of smoke, evening, wide shot
+    a thin smudge of smoke, evening, wide shot, orange sunset light, red and violet sky
   jobs:
     arthemy-house: 36189
   art:
@@ -3437,7 +3444,7 @@ subjects:
   prompt_tags: anthro, crow, female, elderly, witch, coat of black rags, string of bones and bottle-glass beads
     around her neck, milky pale eyes, (fully clothed:1.3), perched on the lowest branch of an ancient dead tree
     where two desert trails cross, holding up a single black feather, knowing look, bare twisted branches, dusk
-    sky, low angle, mysterious, full body
+    sky, low angle, mysterious, full body, orange sunset light, red and violet sky
   jobs:
     arthemy-house: 36191
   art:
@@ -3460,7 +3467,7 @@ subjects:
   prompt_tags: anthro, crow, female, elderly, witch, coat of black rags, string of bones and bottle-glass beads
     around her neck, milky pale eyes, (fully clothed:1.3), perched on the lowest branch of an ancient dead tree
     where two desert trails cross, holding up a single black feather, knowing look, bare twisted branches, dusk
-    sky, low angle, mysterious, full body
+    sky, low angle, mysterious, full body, orange sunset light, red and violet sky
   jobs:
     arthemy-house: 36192
   art:
@@ -3492,7 +3499,7 @@ subjects:
     ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists,
     (fully clothed:1.3), snatching up anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, ragged
     checked cloth tunic, wide eyes, wind whipping their clothes, on a far rise the square walls of an ancient ruin,
-    ominous brown sky, epic wide shot
+    ominous brown sky, epic wide shot, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36193
   art:
@@ -3551,7 +3558,7 @@ subjects:
     eyes, bent into a howling brown dust storm, anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur,
     ragged checked cloth tunic, wide eyes, clinging to his back, a small fennec paw reaching out of the dust to
     grip his sleeve, almost no visibility, grit streaming, the faint looming edge of old stone walls ahead, full
-    body
+    body, slate grey storm light, rain
   jobs:
     arthemy-house: 36195
   art:
@@ -3611,7 +3618,7 @@ subjects:
     enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3),
     asleep leaning on his side, her open paw resting on his sleeve, anthro, fennec fox, toddler, tiny, enormous
     ears, sand-colored fur, ragged checked cloth tunic, wide eyes, asleep in her lap, darkness, faint rain beyond
-    the tall doorway, tender, medium shot
+    the tall doorway, tender, medium shot, slate grey storm light, rain
   jobs:
     arthemy-house: 36197
   art:
@@ -3672,7 +3679,8 @@ subjects:
     sand-colored fur, ragged checked cloth tunic, wide eyes, riding on his back pointing ahead, anthro, fennec fox,
     female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale
     dress, bandaged wrists, (fully clothed:1.3), stopped beside him, three long shadows close together on the road,
-    at the foot of the hills a bell tower over adobe walls, a thread of cooking haze, afternoon, epic wide shot
+    at the foot of the hills a bell tower over adobe walls, a thread of cooking haze, afternoon, epic wide shot,
+    bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36199
   art:
@@ -3737,7 +3745,7 @@ subjects:
     in the foreground, anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored
     fur, dusty fur, claw-torn ragged pale dress, (bare head, big bare ears:1.2), bandaged wrists, (fully clothed:1.3),
     holding anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, ragged checked cloth tunic, wide
-    eyes, beside him, iron gate, blue dusk sky, welcoming, cozy, full body
+    eyes, beside him, iron gate, blue dusk sky, welcoming, cozy, full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36340
   art:
@@ -3798,7 +3806,7 @@ subjects:
     eating beside him, glancing toward the door, a long scrubbed wooden table, fresh round loaves of bread, many
     warm candles, anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, refilling cups in the background, steam curling, cozy golden lamplight,
-    wide shot
+    wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36341
   art:
@@ -3828,7 +3836,7 @@ subjects:
     eating beside him, glancing toward the door, a long scrubbed wooden table, fresh round loaves of bread, many
     warm candles, anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, refilling cups in the background, steam curling, cozy golden lamplight,
-    wide shot
+    wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36342
   art:
@@ -3854,7 +3862,8 @@ subjects:
     dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
     conical straw kasa, wide brim shading the eyes, standing at the top of an adobe bell tower at night, looking
     up into the open mouth of a fine old bronze bell, the bell hollow and empty inside, (empty bell, clapper missing:1.3),
-    a cleanly cut iron stub where the clapper hung, moonlight, stars, desert far below, low angle, full body
+    a cleanly cut iron stub where the clapper hung, moonlight, stars, desert far below, low angle, full body, blue
+    moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36343
   art:
@@ -3906,7 +3915,8 @@ subjects:
     straw kasa, wide brim shading the eyes, crouched at a heavy locked door with a small knife at the lock, freezing,
     anthro otter, female, elderly, abbess, black habit, white wimple, long black robes, greying brown fur, (flat
     face:1.3), (round face:1.2), button nose, whiskers, standing right behind him holding a lantern, one paw resting
-    lightly on his shoulder, calm smile, lantern light from behind, long shadows on the wall, tense, medium shot
+    lightly on his shoulder, calm smile, lantern light from behind, long shadows on the wall, tense, medium shot,
+    warm amber firelight, orange glow
   jobs:
     arthemy-house: 36203
   art:
@@ -3966,7 +3976,7 @@ subjects:
     adobe walls, warm golden morning light, the long road beyond, anthro, fennec fox, female, young, about ten years
     old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, (bare head, big bare ears:1.2),
     bandaged wrists, (fully clothed:1.3), watching from a shadowed doorway in the background, swallows overhead,
-    peaceful yet uneasy, wide shot
+    peaceful yet uneasy, wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36344
   art:
@@ -4025,7 +4035,7 @@ subjects:
     at an adobe mission, through the open gate a rusted merry-go-round wrapped in cobwebs, anthro otter, female,
     elderly, abbess, black habit, white wimple, long black robes, greying brown fur, (flat face:1.3), (round face:1.2),
     button nose, whiskers, standing at the gate with paws folded, smiling, bell tower, heat haze, bright sun, long
-    lonely road, wide shot
+    lonely road, wide shot, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36206
   art:
@@ -4083,7 +4093,8 @@ subjects:
     sand-colored fur, ragged checked cloth tunic, wide eyes, asleep tied to his back, anthro, fennec fox, female,
     young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged
     wrists, (fully clothed:1.3), dropping down into the desert ahead of him, starry sky, a single candlelit window
-    behind in the mission, urgent escape, moonlight, low angle, full body
+    behind in the mission, urgent escape, moonlight, low angle, full body, blue moonlight, deep blue night sky,
+    silver highlights
   jobs:
     arthemy-house: 36208
   art:
@@ -4137,7 +4148,7 @@ subjects:
   prompt_tags: anthro, rabbit, male, child, small, thin, long ears lying flat down his back, clean grey smock, (fully
     clothed:1.3), sitting on a wooden bench, sliding his full bowl of stew along the table toward anthro, fennec
     fox, toddler, tiny, enormous ears, sand-colored fur, ragged checked cloth tunic, wide eyes, eating, candlelight,
-    bread, warm refectory, tender, medium shot
+    bread, warm refectory, tender, medium shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36210
   art:
@@ -4161,7 +4172,7 @@ subjects:
   prompt_tags: anthro, rabbit, male, child, small, thin, long ears lying flat down his back, clean grey smock, (fully
     clothed:1.3), sitting on a wooden bench, sliding his full bowl of stew along the table toward anthro, fennec
     fox, toddler, tiny, enormous ears, sand-colored fur, ragged checked cloth tunic, wide eyes, eating, candlelight,
-    bread, warm refectory, tender, medium shot
+    bread, warm refectory, tender, medium shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36211
   art:
@@ -4189,7 +4200,8 @@ subjects:
     conical straw kasa, wide brim shading the eyes, treading mud and straw in a shallow pit beside a wide breach
     in an adobe wall, anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, very old, bent, shaping a brick, rows of fresh mud bricks drying in
-    wooden molds in the sun, straw scattered, bright noon heat, honest labor, wide shot
+    wooden molds in the sun, straw scattered, bright noon heat, honest labor, wide shot, bright desert sun, pale
+    blue sky, ochre sand
   jobs:
     arthemy-house: 36212
   art:
@@ -4243,7 +4255,7 @@ subjects:
     face:1.3), (round face:1.2), button nose, whiskers, following with a folded white dress over her arm, anthro,
     fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn
     ragged pale dress, (bare head, big bare ears:1.2), bandaged wrists, (fully clothed:1.3), behind her, wet ears,
-    still in her own torn dress, hot bright afternoon, full body
+    still in her own torn dress, hot bright afternoon, full body, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36345
   art:
@@ -4271,7 +4283,7 @@ subjects:
     face:1.3), (round face:1.2), button nose, whiskers, following with a folded white dress over her arm, anthro,
     fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn
     ragged pale dress, (bare head, big bare ears:1.2), bandaged wrists, (fully clothed:1.3), behind her, wet ears,
-    still in her own torn dress, hot bright afternoon, full body
+    still in her own torn dress, hot bright afternoon, full body, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36346
   art:
@@ -4302,7 +4314,7 @@ subjects:
     fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim, dark tunic, orange
     sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical
     straw kasa, wide brim shading the eyes, sitting on the woodpile close beside her, both quiet, a water trough
-    nearby, warm late afternoon light, long shadows, companionable, wide shot
+    nearby, warm late afternoon light, long shadows, companionable, wide shot, bright desert sun, pale blue sky
   jobs:
     arthemy-house: 36214
   art:
@@ -4353,7 +4365,7 @@ subjects:
     a slightly larger paw print set beside it.
   prompt_tags: (still life:1.4), (object only:1.3), close-up of a fresh wet adobe brick in a mended wall, a tiny
     paw print with five round toes pressed into it, a slightly larger paw print pressed beside it, straw in the
-    mud, drying pale edges, warm late afternoon sun, tender, close-up
+    mud, drying pale edges, warm late afternoon sun, tender, close-up, bright desert sun, pale blue sky
   jobs:
     arthemy-house: 36216
   art:
@@ -4375,7 +4387,7 @@ subjects:
     a slightly larger paw print set beside it.
   prompt_tags: (still life:1.4), (object only:1.3), close-up of a fresh wet adobe brick in a mended wall, a tiny
     paw print with five round toes pressed into it, a slightly larger paw print pressed beside it, straw in the
-    mud, drying pale edges, warm late afternoon sun, tender, close-up
+    mud, drying pale edges, warm late afternoon sun, tender, close-up, bright desert sun, pale blue sky
   jobs:
     arthemy-house: 36217
   art:
@@ -4397,7 +4409,8 @@ subjects:
     doll's shoe, with an old iron key black with grease under its lifted false bottom.
   prompt_tags: (still life:1.4), (object only:1.3), an open dented tin box on dusty ground beside a loose adobe
     brick, laid out neatly inside a faded hair ribbon, a small wooden whistle, a tiny bent spoon, a stitched doll
-    shoe, a lifted false bottom revealing an old iron key black with candle grease, long shadow, close-up
+    shoe, a lifted false bottom revealing an old iron key black with candle grease, long shadow, close-up, warm
+    amber firelight, orange glow
   jobs:
     arthemy-house: 36218
   art:
@@ -4419,7 +4432,8 @@ subjects:
     doll's shoe, with an old iron key black with grease under its lifted false bottom.
   prompt_tags: (still life:1.4), (object only:1.3), an open dented tin box on dusty ground beside a loose adobe
     brick, laid out neatly inside a faded hair ribbon, a small wooden whistle, a tiny bent spoon, a stitched doll
-    shoe, a lifted false bottom revealing an old iron key black with candle grease, long shadow, close-up
+    shoe, a lifted false bottom revealing an old iron key black with candle grease, long shadow, close-up, warm
+    amber firelight, orange glow
   jobs:
     arthemy-house: 36219
   art:
@@ -4448,7 +4462,7 @@ subjects:
     zigzag trim, dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder,
     (fully clothed:1.3), conical straw kasa, wide brim shading the eyes, holding a dripping wooden bucket, a small
     folded scrap of paper floating on the water, deep well shaft, orange and violet sky, long shadows, secretive,
-    full body
+    full body, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36220
   art:
@@ -4503,7 +4517,7 @@ subjects:
     fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim, dark tunic, orange sash, dark
     brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical straw kasa,
     wide brim shading the eyes, standing a few paces away watching her closely, rows of candles, stone floor, cold
-    tension, wide shot
+    tension, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36222
   art:
@@ -4562,7 +4576,7 @@ subjects:
     cloth tunic, wide eyes, asleep on a blanket against his legs, anthro, fennec fox, female, young, about ten years
     old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists, (fully
     clothed:1.3), lying awake, fist knotted in his poncho, looking up at him, a thin line of light under the door,
-    night, listening, wide shot
+    night, listening, wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36224
   art:
@@ -4621,7 +4635,7 @@ subjects:
     stature, slight paunch, grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag
     trim, dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully
     clothed:1.3), conical straw kasa, wide brim shading the eyes, listening, warm candlelight, deep shadows above,
-    full body
+    full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36226
   art:
@@ -4671,7 +4685,7 @@ subjects:
   prompt_tags: anthro otter, female, young adult, novice nun, grey habit, white veil, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, (fully clothed:1.3), backed against a wooden altar rail in a candlelit
     chapel, eyes wide with fear like a hare, paws raised, wick scissors dropped on the stone floor, rows of candles,
-    long shadows, about to flee, wide shot
+    long shadows, about to flee, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36228
   art:
@@ -4695,7 +4709,7 @@ subjects:
   prompt_tags: anthro otter, female, young adult, novice nun, grey habit, white veil, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, (fully clothed:1.3), backed against a wooden altar rail in a candlelit
     chapel, eyes wide with fear like a hare, paws raised, wick scissors dropped on the stone floor, rows of candles,
-    long shadows, about to flee, wide shot
+    long shadows, about to flee, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36229
   art:
@@ -4727,7 +4741,7 @@ subjects:
     thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3),
     asleep curled around anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, ragged checked cloth
     tunic, wide eyes, on a cot, across the room a small anthro rabbit kit in a grey smock lying in his cot with
-    eyes wide open, deep heavy darkness, faint moonlight, wide shot
+    eyes wide open, deep heavy darkness, faint moonlight, wide shot, warm window light, shafts of sunlight
   jobs:
     arthemy-house: 36230
   art:
@@ -4785,7 +4799,7 @@ subjects:
     ears, sand-colored fur, ragged checked cloth tunic, wide eyes, asleep on the cot, anthro, fennec fox, female,
     young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, (bare
     head, big bare ears:1.2), bandaged wrists, (fully clothed:1.3), asleep beside him, long shadows climbing the
-    wall, quiet menace, full body
+    wall, quiet menace, full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36347
   art:
@@ -4813,7 +4827,7 @@ subjects:
     ears, sand-colored fur, ragged checked cloth tunic, wide eyes, asleep on the cot, anthro, fennec fox, female,
     young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, (bare
     head, big bare ears:1.2), bandaged wrists, (fully clothed:1.3), asleep beside him, long shadows climbing the
-    wall, quiet menace, full body
+    wall, quiet menace, full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36348
   art:
@@ -4841,7 +4855,8 @@ subjects:
     stature, slight paunch, grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag
     trim, dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully
     clothed:1.3), conical straw kasa, wide brim shading the eyes, facing her, holding an old iron key, beside an
-    open stair door, dark corridor, warm lantern light against cold shadow, quiet standoff, medium shot
+    open stair door, dark corridor, warm lantern light against cold shadow, quiet standoff, medium shot, warm amber
+    firelight, orange glow
   jobs:
     arthemy-house: 36232
   art:
@@ -4895,7 +4910,7 @@ subjects:
     thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, (bare head, big bare ears:1.2),
     bandaged wrists, (fully clothed:1.3), sitting on a dormitory windowsill above with anthro, fennec fox, toddler,
     tiny, enormous ears, sand-colored fur, ragged checked cloth tunic, wide eyes, asleep in her lap, watching, cool
-    grey light, wide shot
+    grey light, wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36349
   art:
@@ -4923,7 +4938,7 @@ subjects:
     thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, (bare head, big bare ears:1.2),
     bandaged wrists, (fully clothed:1.3), sitting on a dormitory windowsill above with anthro, fennec fox, toddler,
     tiny, enormous ears, sand-colored fur, ragged checked cloth tunic, wide eyes, asleep in her lap, watching, cool
-    grey light, wide shot
+    grey light, wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36350
   art:
@@ -4949,7 +4964,8 @@ subjects:
     sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical
     straw kasa, wide brim shading the eyes, sitting on the seat of a small closed canvas wagon, holding the reins
     of a mule, a white cloth snapping on the wagon hoop, a long straight desert road, harsh noon sun, heat shimmer,
-    far behind a tiny mission bell tower on the horizon, epic wide shot
+    far behind a tiny mission bell tower on the horizon, epic wide shot, bright desert sun, pale blue sky, ochre
+    sand
   jobs:
     arthemy-house: 36234
   art:
@@ -5001,7 +5017,8 @@ subjects:
     dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
     conical straw kasa, wide brim shading the eyes, walking a dusty desert road in hot afternoon, carrying on his
     back anthro, field mouse, female, small child, white smock, (fully clothed:1.3), peacefully asleep, roofs of
-    a frontier town rising out of the heat haze ahead, a dry wash behind, hopeful, wide shot
+    a frontier town rising out of the heat haze ahead, a dry wash behind, hopeful, wide shot, bright desert sun,
+    pale blue sky, ochre sand
   jobs:
     arthemy-house: 36236
   art:
@@ -5054,7 +5071,7 @@ subjects:
     conical straw kasa, wide brim shading the eyes, standing still in the middle of a dusty night street, blocking
     the road north, facing anthro, badger, male, middle-aged, heavyset, grey-striped face, long dusty brown coat,
     flat-brimmed hat, pistol on his hip, coil of rope at his belt, (fully clothed:1.3), looking down at him, lanterns
-    on boardwalks, tense quiet standoff, wide shot
+    on boardwalks, tense quiet standoff, wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36238
   art:
@@ -5104,7 +5121,7 @@ subjects:
     legs, small stature, slight paunch, grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho,
     orange zigzag trim, dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right
     shoulder, (fully clothed:1.3), conical straw kasa, wide brim shading the eyes, standing beside the post, face
-    shadowed, night boardwalk, lanterns, medium shot
+    shadowed, night boardwalk, lanterns, medium shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36240
   art:
@@ -5155,7 +5172,8 @@ subjects:
     conical straw kasa, wide brim shading the eyes, standing on a boardwalk holding a heavy full canteen, seen from
     behind, watching anthro, badger, male, middle-aged, heavyset, grey-striped face, long dusty brown coat, flat-brimmed
     hat, pistol on his hip, coil of rope at his belt, (fully clothed:1.3), riding a mule away at a walk toward a
-    dark north ridge, dusk, a thin thread of campfire haze on the ridge, wide shot
+    dark north ridge, dusk, a thin thread of campfire haze on the ridge, wide shot, orange sunset light, red and
+    violet sky
   jobs:
     arthemy-house: 36242
   art:
@@ -5201,7 +5219,7 @@ subjects:
     drawing of a young rabbit with one ear bent over.
   prompt_tags: (still life:1.4), (object only:1.3), a single weathered paper notice pinned high above shelves of
     dusty bottles behind a saloon bar, bordered with knotted string, a careful charcoal drawing of a young rabbit
-    kit with one ear bent over, warm lamplight, shadows, medium shot
+    kit with one ear bent over, warm lamplight, shadows, medium shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36244
   art:
@@ -5223,7 +5241,7 @@ subjects:
     drawing of a young rabbit with one ear bent over.
   prompt_tags: (still life:1.4), (object only:1.3), a single weathered paper notice pinned high above shelves of
     dusty bottles behind a saloon bar, bordered with knotted string, a careful charcoal drawing of a young rabbit
-    kit with one ear bent over, warm lamplight, shadows, medium shot
+    kit with one ear bent over, warm lamplight, shadows, medium shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36245
   art:
@@ -5250,7 +5268,8 @@ subjects:
     straw kasa, wide brim shading the eyes, sitting at a saloon bar, silent, anthro, rabbit, female, middle-aged,
     lean, grey-brown fur, long ears, one ear notched, hard eyes, faded blue work shirt, leather vest, stained apron,
     red kerchief at her throat, (fully clothed:1.3), polishing an already clean glass, looking away, a lone paper
-    notice of a young rabbit pinned above the bottles behind her, lamplight, medium shot
+    notice of a young rabbit pinned above the bottles behind her, lamplight, medium shot, warm amber firelight,
+    orange glow
   jobs:
     arthemy-house: 36246
   art:
@@ -5297,7 +5316,7 @@ subjects:
     stoppered jars hung with tin bells.
   prompt_tags: anthro, lizard, male, thin, leather apron over a work shirt, (fully clothed:1.3), emptying a wooden
     cask into a dark tar-lined cistern cut into rock, oil lamp on a stool, rows of small stoppered jars with tiny
-    tin bells on cords along the wall, cool damp darkness, full body
+    tin bells on cords along the wall, cool damp darkness, full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36248
   art:
@@ -5319,7 +5338,7 @@ subjects:
     stoppered jars hung with tin bells.
   prompt_tags: anthro, lizard, male, thin, leather apron over a work shirt, (fully clothed:1.3), emptying a wooden
     cask into a dark tar-lined cistern cut into rock, oil lamp on a stool, rows of small stoppered jars with tiny
-    tin bells on cords along the wall, cool damp darkness, full body
+    tin bells on cords along the wall, cool damp darkness, full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36249
   art:
@@ -5345,7 +5364,7 @@ subjects:
     fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim, dark tunic, orange
     sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical
     straw kasa, wide brim shading the eyes, drawing his katana from his back, blade catching the lamplight, low
-    angle, tense, full body
+    angle, tense, full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36250
   art:
@@ -5396,7 +5415,7 @@ subjects:
     small stature, slight paunch, grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho, orange
     zigzag trim, dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder,
     (fully clothed:1.3), conical straw kasa, wide brim shading the eyes, in the foreground reaching over his shoulder
-    for his katana hilt, lamplight, low angle, full body
+    for his katana hilt, lamplight, low angle, full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36252
   art:
@@ -5447,7 +5466,8 @@ subjects:
     fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim, dark tunic, orange sash, dark
     brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical straw kasa,
     wide brim shading the eyes, dazed, slumped in a dry wooden horse trough, up by his poncho, holding a burning
-    torch in her other fist, dark boarded house behind, night street, wide shot
+    torch in her other fist, dark boarded house behind, night street, wide shot, blue moonlight, deep blue night
+    sky, silver highlights
   jobs:
     arthemy-house: 36254
   art:
@@ -5494,7 +5514,7 @@ subjects:
     into the dust, as a stone shatters a lit window.
   prompt_tags: an angry crowd of anthro townsfolk, (fully clothed:1.3), tearing down a stack of wooden casks in
     a lamplit street at night, staves splitting, water spilling into the dust, a stone crashing through a glowing
-    glass window, chaos, epic wide shot
+    glass window, chaos, epic wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36256
   art:
@@ -5516,7 +5536,7 @@ subjects:
     into the dust, as a stone shatters a lit window.
   prompt_tags: an angry crowd of anthro townsfolk, (fully clothed:1.3), tearing down a stack of wooden casks in
     a lamplit street at night, staves splitting, water spilling into the dust, a stone crashing through a glowing
-    glass window, chaos, epic wide shot
+    glass window, chaos, epic wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36257
   art:
@@ -5543,7 +5563,7 @@ subjects:
     conical straw kasa, wide brim shading the eyes, standing firm with empty paws, sword sheathed, between an angry
     torchlit crowd and anthro, pronghorn, male, elderly, tan and white fur, silver-capped horn tips, black frock
     coat, grey waistcoat, string tie, (fully clothed:1.3), lying in the dust behind him, silver horn caps scattered,
-    cups and a shoe flying, night, full body
+    cups and a shoe flying, night, full body, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36258
   art:
@@ -5590,7 +5610,7 @@ subjects:
     sheet.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a long boardwalk wall papered with weathered paper notices
     of young animals, burning torches set in iron brackets beneath them, every sheet glowing warm gold, quiet night
-    street, peaceful, hopeful, wide shot
+    street, peaceful, hopeful, wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36351
   art:
@@ -5613,7 +5633,7 @@ subjects:
     sheet.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a long boardwalk wall papered with weathered paper notices
     of young animals, burning torches set in iron brackets beneath them, every sheet glowing warm gold, quiet night
-    street, peaceful, hopeful, wide shot
+    street, peaceful, hopeful, wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36352
   art:
@@ -5640,7 +5660,7 @@ subjects:
     conical straw kasa, wide brim shading the eyes, standing alone on wooden steps, a torchlit crowd flowing around
     him like a flood around a post, anthro, rabbit, female, middle-aged, lean, grey-brown fur, long ears, one ear
     notched, hard eyes, faded blue work shirt, leather vest, stained apron, red kerchief at her throat, (fully clothed:1.3),
-    passing close holding a torch, not looking at him, high angle, full body
+    passing close holding a torch, not looking at him, high angle, full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36260
   art:
@@ -5694,7 +5714,7 @@ subjects:
     dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical straw
     kasa, wide brim shading the eyes, along a narrow moonlit ridge path, the coyote pointing ahead with his good
     left paw toward a shortcut down a dark gully, black rocks, silver moonlight, high moon, quiet companionship,
-    wide shot
+    wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36262
   art:
@@ -5749,7 +5769,7 @@ subjects:
     fur, long ears, one ear notched, hard eyes, faded blue work shirt, leather vest, stained apron, red kerchief
     at her throat, (fully clothed:1.3), lowering a double-barrel shotgun, behind her anthro, crowd of animal townsfolk,
     rabbits, dogs, goats, hares, (fully clothed:1.3), ragged frontier clothes, holding burning torches, wall of
-    firelight, tense stillness, wide shot
+    firelight, tense stillness, wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36264
   art:
@@ -5801,7 +5821,7 @@ subjects:
     straw kasa, wide brim shading the eyes, on his knees in the dust of a night road, head bowed, anthro, crowd
     of animal townsfolk, rabbits, dogs, goats, hares, (fully clothed:1.3), ragged frontier clothes, striding past
     him on both sides without stopping, boots and coat hems, burning torches held high, sparks falling around him,
-    firelight, low angle, full body
+    firelight, low angle, full body, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36266
   art:
@@ -5851,7 +5871,8 @@ subjects:
     dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
     conical straw kasa, wide brim shading the eyes, near the mission wall, looking back over his shoulder, an empty
     pale road stretching away across the moonlit plain, a line of small round footprints pressing into the dust
-    one by one toward him, nothing standing in them, dust lying perfectly still, high moon, dread, wide shot
+    one by one toward him, nothing standing in them, dust lying perfectly still, high moon, dread, wide shot, blue
+    moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36268
   art:
@@ -5898,7 +5919,8 @@ subjects:
   prompt_tags: anthro, crow, female, elderly, witch, coat of black rags, string of bones and bottle-glass beads
     around her neck, milky pale eyes, (fully clothed:1.3), perched on a lone fence post with no fence beside a straight
     white road, lifting one ragged wing to point up the road, grey moonlit plain, a faint oily shimmer wrinkling
-    over the land, head turned to watch, knowing, low angle, full body
+    over the land, head turned to watch, knowing, low angle, full body, blue moonlight, deep blue night sky, silver
+    highlights
   jobs:
     arthemy-house: 36270
   art:
@@ -5921,7 +5943,8 @@ subjects:
   prompt_tags: anthro, crow, female, elderly, witch, coat of black rags, string of bones and bottle-glass beads
     around her neck, milky pale eyes, (fully clothed:1.3), perched on a lone fence post with no fence beside a straight
     white road, lifting one ragged wing to point up the road, grey moonlit plain, a faint oily shimmer wrinkling
-    over the land, head turned to watch, knowing, low angle, full body
+    over the land, head turned to watch, knowing, low angle, full body, blue moonlight, deep blue night sky, silver
+    highlights
   jobs:
     arthemy-house: 36271
   art:
@@ -5948,7 +5971,8 @@ subjects:
     conical straw kasa, wide brim shading the eyes, turning sharply, beside him anthro, crow, female, elderly, witch,
     coat of black rags, string of bones and bottle-glass beads around her neck, milky pale eyes, (fully clothed:1.3),
     perched on a lone fence post at his shoulder, rags stirring in no wind, lifting one wing to point, behind them
-    the glassy black rocks folding back from the road like a curtain, moonlight, eerie, full body
+    the glassy black rocks folding back from the road like a curtain, moonlight, eerie, full body, bright desert
+    sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36272
   art:
@@ -6000,7 +6024,7 @@ subjects:
     female, middle-aged, gaunt, thin, grey snout, patched shirt, ragged trousers, (fully clothed:1.3), panting,
     pulling up a sword length away, behind her anthro, jackals, gaunt, thin, ragged shirts, patched trousers, old
     knives, (fully clothed:1.3), a dozen running low out of the dark, moonlit night road, dust, black rocks, wide
-    shot
+    shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36274
   art:
@@ -6052,7 +6076,8 @@ subjects:
     trousers, old knives, (fully clothed:1.3), flowing in a line around shining black glassy rocks on their left,
     one anthro, jackal, male, young adult, thin, ragged shirt, (fully clothed:1.3), stopped at the glassy edge staring
     into the rocks with ears flat, anthro, jackal, female, middle-aged, gaunt, thin, grey snout, patched shirt,
-    ragged trousers, (fully clothed:1.3), reaching back for him, moonlight, wide shot
+    ragged trousers, (fully clothed:1.3), reaching back for him, moonlight, wide shot, bright desert sun, pale blue
+    sky, ochre sand
   jobs:
     arthemy-house: 36276
   art:
@@ -6099,7 +6124,8 @@ subjects:
     and a spoon on the floor.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, interior of an empty adobe mission refectory at night, a
     long wooden table with supper still laid, a small clay bowl overturned, a spoon lying on the stone floor, guttering
-    candles, a dark stairway in the background, eerie stillness, wide shot
+    candles, a dark stairway in the background, eerie stillness, wide shot, blue moonlight, deep blue night sky,
+    silver highlights
   jobs:
     arthemy-house: 36353
   art:
@@ -6122,7 +6148,8 @@ subjects:
     and a spoon on the floor.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, interior of an empty adobe mission refectory at night, a
     long wooden table with supper still laid, a small clay bowl overturned, a spoon lying on the stone floor, guttering
-    candles, a dark stairway in the background, eerie stillness, wide shot
+    candles, a dark stairway in the background, eerie stillness, wide shot, blue moonlight, deep blue night sky,
+    silver highlights
   jobs:
     arthemy-house: 36354
   art:
@@ -6150,7 +6177,7 @@ subjects:
     ragged pale dress, (bare head, big bare ears:1.2), bandaged wrists, (fully clothed:1.3), tied on the altar struggling
     against her ropes, anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, ragged checked cloth
     tunic, wide eyes, lying still beside her asleep, behind the altar the darkness folds open, enormous coils of
-    shadow leaning toward the candlelight, faint glinting eyes, crypt, wide shot
+    shadow leaning toward the candlelight, faint glinting eyes, crypt, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36355
   art:
@@ -6178,7 +6205,7 @@ subjects:
     ragged pale dress, (bare head, big bare ears:1.2), bandaged wrists, (fully clothed:1.3), tied on the altar struggling
     against her ropes, anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, ragged checked cloth
     tunic, wide eyes, lying still beside her asleep, behind the altar the darkness folds open, enormous coils of
-    shadow leaning toward the candlelight, faint glinting eyes, crypt, wide shot
+    shadow leaning toward the candlelight, faint glinting eyes, crypt, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36356
   art:
@@ -6202,7 +6229,7 @@ subjects:
   prompt_tags: anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, (group of three:1.2), stepping out of a dark stone archway in a candlelit
     crypt, small knives held low in soft paws, gentle kind smiles, calm eyes, black robes melting into shadow, candle
-    glow from below, unsettling, view from below, full body
+    glow from below, unsettling, view from below, full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36278
   art:
@@ -6226,7 +6253,7 @@ subjects:
   prompt_tags: anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, (group of three:1.2), stepping out of a dark stone archway in a candlelit
     crypt, small knives held low in soft paws, gentle kind smiles, calm eyes, black robes melting into shadow, candle
-    glow from below, unsettling, view from below, full body
+    glow from below, unsettling, view from below, full body, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36279
   art:
@@ -6255,7 +6282,7 @@ subjects:
     black habit, white wimple, long black robes, greying brown fur, (flat face:1.3), (round face:1.2), button nose,
     whiskers, lunging with a small curved dagger, robes swirling, fighting before a shaking stone altar, candelabra
     toppling, behind the altar a vast dark shape pressing against the air, glints in the darkness, dust falling,
-    dynamic, wide shot
+    dynamic, wide shot, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36280
   art:
@@ -6313,7 +6340,7 @@ subjects:
     fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim, dark tunic, orange sash, dark
     brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical straw kasa,
     wide brim shading the eyes, half sitting on crypt flagstones, reaching one paw out to her, candlelight, black
-    robes crumpled in the shadows, quiet aftermath, medium shot
+    robes crumpled in the shadows, quiet aftermath, medium shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36282
   art:
@@ -6377,7 +6404,7 @@ subjects:
     conical straw kasa, wide brim shading the eyes, beside them with katana drawn, cut ropes on the altar, anthro
     otter, female, elderly, abbess, black habit, white wimple, long black robes, greying brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, standing at the foot of a stone stair in shadow, serene smile, candlelight,
-    standoff, wide shot
+    standoff, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36357
   art:
@@ -6435,7 +6462,8 @@ subjects:
     legs, small stature, slight paunch, grey fur, round fluffy ears, broad black nose, serious, rust-brown poncho,
     orange zigzag trim, dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right
     shoulder, (fully clothed:1.3), conical straw kasa, wide brim shading the eyes, crouched beside him, an overturned
-    bowl and a spoon on the floor, a stair rising into darkness, moonlight through a high window, tense, wide shot
+    bowl and a spoon on the floor, a stair rising into darkness, moonlight through a high window, tense, wide shot,
+    warm window light, shafts of sunlight
   jobs:
     arthemy-house: 36285
   art:
@@ -6487,7 +6515,7 @@ subjects:
     dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
     conical straw kasa, wide brim shading the eyes, back view, standing alone in an open adobe gateway with both
     arms spread wide, katana on his back, beyond him a mission chapel roof burning against the night sky, embers
-    drifting, firelight outlining him, defiant, full body
+    drifting, firelight outlining him, defiant, full body, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36287
   art:
@@ -6537,7 +6565,7 @@ subjects:
     dark tunic, orange sash, dark brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3),
     conical straw kasa, wide brim shading the eyes, standing below an open coal hatch in a smoky cellar, lifting
     small children up through it one after another, young foxes and a raccoon girl climbing out into an orange-lit
-    yard, smoke curling, eyes streaming, view from below, full body
+    yard, smoke curling, eyes streaming, view from below, full body, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36289
   art:
@@ -6586,7 +6614,7 @@ subjects:
   prompt_tags: anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, kneeling alone before a stone altar still chanting, eyes closed, around
     her other otter nuns in black habits fleeing with sleeves over their faces, the room full of orange firelight
-    and drifting smoke, cut ropes on the altar, falling cinders, wide shot
+    and drifting smoke, cut ropes on the altar, falling cinders, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36291
   art:
@@ -6610,7 +6638,7 @@ subjects:
   prompt_tags: anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, kneeling alone before a stone altar still chanting, eyes closed, around
     her other otter nuns in black habits fleeing with sleeves over their faces, the room full of orange firelight
-    and drifting smoke, cut ropes on the altar, falling cinders, wide shot
+    and drifting smoke, cut ropes on the altar, falling cinders, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36292
   art:
@@ -6633,7 +6661,8 @@ subjects:
     slip away into the dark.
   prompt_tags: small anthro children in ragged tunics, (fully clothed:1.3), at a low gap in an adobe wall at night,
     a tiny porcupine child pointing up in wonder, above them an enormous clear sky full of stars, a black ridge
-    line, the others slipping into the dark, view from below, full body
+    line, the others slipping into the dark, view from below, full body, blue moonlight, deep blue night sky, silver
+    highlights
   jobs:
     arthemy-house: 36293
   art:
@@ -6656,7 +6685,8 @@ subjects:
     slip away into the dark.
   prompt_tags: small anthro children in ragged tunics, (fully clothed:1.3), at a low gap in an adobe wall at night,
     a tiny porcupine child pointing up in wonder, above them an enormous clear sky full of stars, a black ridge
-    line, the others slipping into the dark, view from below, full body
+    line, the others slipping into the dark, view from below, full body, blue moonlight, deep blue night sky, silver
+    highlights
   jobs:
     arthemy-house: 36294
   art:
@@ -6679,7 +6709,8 @@ subjects:
     end a stretch of wall that is only rippling darkness.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a long low crypt cut into old stone, walls of niches each
     holding a bundle wrapped in an old black habit, stubs of black candles burned out before them, a low arch glowing
-    with candlelight at the far end, beside it a section of wall that is deep rippling darkness, wide shot
+    with candlelight at the far end, beside it a section of wall that is deep rippling darkness, wide shot, warm
+    amber firelight, orange glow
   jobs:
     arthemy-house: 36358
   art:
@@ -6702,7 +6733,8 @@ subjects:
     end a stretch of wall that is only rippling darkness.
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a long low crypt cut into old stone, walls of niches each
     holding a bundle wrapped in an old black habit, stubs of black candles burned out before them, a low arch glowing
-    with candlelight at the far end, beside it a section of wall that is deep rippling darkness, wide shot
+    with candlelight at the far end, beside it a section of wall that is deep rippling darkness, wide shot, warm
+    amber firelight, orange glow
   jobs:
     arthemy-house: 36359
   art:
@@ -6730,7 +6762,7 @@ subjects:
     conical straw kasa, wide brim shading the eyes, face to face with anthro otter, female, nun, black habit, white
     wimple, long black robes, brown fur, (flat face:1.3), (round face:1.2), button nose, whiskers, young, in a narrow
     crypt passage between niches, she holds a trembling lamp and a basin of dark water, eyes wide, mouth opening
-    to scream, frozen moment, lamplight on both faces, deep shadows, close-up
+    to scream, frozen moment, lamplight on both faces, deep shadows, close-up, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36295
   art:
@@ -6780,7 +6812,8 @@ subjects:
   prompt_tags: view through a narrow gap of a heavy door left slightly open, beyond it anthro otter, female, nun,
     black habit, white wimple, long black robes, brown fur, (flat face:1.3), (round face:1.2), button nose, whiskers,
     (group:1.2), kneeling in a ring with their backs turned, tall candelabra, a stone altar with two small bound
-    shapes, behind the altar the air warped and folded like a curtain, darkness, full body
+    shapes, behind the altar the air warped and folded like a curtain, darkness, full body, warm amber firelight,
+    orange glow
   jobs:
     arthemy-house: 36297
   art:
@@ -6804,7 +6837,8 @@ subjects:
   prompt_tags: view through a narrow gap of a heavy door left slightly open, beyond it anthro otter, female, nun,
     black habit, white wimple, long black robes, brown fur, (flat face:1.3), (round face:1.2), button nose, whiskers,
     (group:1.2), kneeling in a ring with their backs turned, tall candelabra, a stone altar with two small bound
-    shapes, behind the altar the air warped and folded like a curtain, darkness, full body
+    shapes, behind the altar the air warped and folded like a curtain, darkness, full body, warm amber firelight,
+    orange glow
   jobs:
     arthemy-house: 36298
   art:
@@ -6828,7 +6862,8 @@ subjects:
   prompt_tags: anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, young, small, in a habit too big for her, setting a small knife down
     on the flagstones and stepping back, frightened, beside her a ring of kneeling otter nuns with hollow blank
-    faces, a gap opening toward a candlelit altar, the abbess turning in the background, wide shot
+    faces, a gap opening toward a candlelit altar, the abbess turning in the background, wide shot, warm amber firelight,
+    orange glow
   jobs:
     arthemy-house: 36299
   art:
@@ -6852,7 +6887,8 @@ subjects:
   prompt_tags: anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, young, small, in a habit too big for her, setting a small knife down
     on the flagstones and stepping back, frightened, beside her a ring of kneeling otter nuns with hollow blank
-    faces, a gap opening toward a candlelit altar, the abbess turning in the background, wide shot
+    faces, a gap opening toward a candlelit altar, the abbess turning in the background, wide shot, warm amber firelight,
+    orange glow
   jobs:
     arthemy-house: 36300
   art:
@@ -6880,7 +6916,7 @@ subjects:
     years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, (bare head, big bare
     ears:1.2), bandaged wrists, (fully clothed:1.3), bound on the altar, glaring defiant, anthro, fennec fox, toddler,
     tiny, enormous ears, sand-colored fur, ragged checked cloth tunic, wide eyes, asleep beside her, behind them
-    folded darkness, every candle flame bending toward it, wide shot
+    folded darkness, every candle flame bending toward it, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36360
   art:
@@ -6908,7 +6944,7 @@ subjects:
     years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, (bare head, big bare
     ears:1.2), bandaged wrists, (fully clothed:1.3), bound on the altar, glaring defiant, anthro, fennec fox, toddler,
     tiny, enormous ears, sand-colored fur, ragged checked cloth tunic, wide eyes, asleep beside her, behind them
-    folded darkness, every candle flame bending toward it, wide shot
+    folded darkness, every candle flame bending toward it, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36361
   art:
@@ -6935,7 +6971,7 @@ subjects:
     fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn
     ragged pale dress, (bare head, big bare ears:1.2), bandaged wrists, (fully clothed:1.3), the girl staring straight
     at the viewer with urgent warning eyes, candlelight, in the dark doorway behind the viewer a nun's shadow lifting
-    an arm, ominous, close-up
+    an arm, ominous, close-up, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36362
   art:
@@ -6962,7 +6998,7 @@ subjects:
     fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn
     ragged pale dress, (bare head, big bare ears:1.2), bandaged wrists, (fully clothed:1.3), the girl staring straight
     at the viewer with urgent warning eyes, candlelight, in the dark doorway behind the viewer a nun's shadow lifting
-    an arm, ominous, close-up
+    an arm, ominous, close-up, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36363
   art:
@@ -6989,7 +7025,7 @@ subjects:
     second small dagger drawn from her sleeve, calm, almost respectful gaze, a first dagger skidding across the
     altar stone, anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur,
     dusty fur, claw-torn ragged pale dress, (bare head, big bare ears:1.2), bandaged wrists, (fully clothed:1.3),
-    freed wrist, kicking out, candlelight, dynamic, wide shot
+    freed wrist, kicking out, candlelight, dynamic, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36364
   art:
@@ -7016,7 +7052,7 @@ subjects:
     second small dagger drawn from her sleeve, calm, almost respectful gaze, a first dagger skidding across the
     altar stone, anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur,
     dusty fur, claw-torn ragged pale dress, (bare head, big bare ears:1.2), bandaged wrists, (fully clothed:1.3),
-    freed wrist, kicking out, candlelight, dynamic, wide shot
+    freed wrist, kicking out, candlelight, dynamic, wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36365
   art:
@@ -7049,7 +7085,8 @@ subjects:
     robes, greying brown fur, (flat face:1.3), (round face:1.2), button nose, whiskers, kneeling on the flagstones,
     stunned, a dropped dagger spinning on the stone, anthro, fennec fox, female, young, about ten years old, thin,
     enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, (bare head, big bare ears:1.2), bandaged
-    wrists, (fully clothed:1.3), crouched fierce and shaking on the altar, candlelight, decisive moment, wide shot
+    wrists, (fully clothed:1.3), crouched fierce and shaking on the altar, candlelight, decisive moment, wide shot,
+    warm amber firelight, orange glow
   jobs:
     arthemy-house: 36366
   art:
@@ -7102,7 +7139,7 @@ subjects:
     the candles above still burning.
   prompt_tags: (still life:1.4), (object only:1.3), a fallen guttering candle and a small curved dagger lying on
     worn stone altar steps, spilled wax, the hem of a crumpled black cloth, tall candles still burning above, darkness
-    behind, stillness, close-up
+    behind, stillness, close-up, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36302
   art:
@@ -7124,7 +7161,7 @@ subjects:
     the candles above still burning.
   prompt_tags: (still life:1.4), (object only:1.3), a fallen guttering candle and a small curved dagger lying on
     worn stone altar steps, spilled wax, the hem of a crumpled black cloth, tall candles still burning above, darkness
-    behind, stillness, close-up
+    behind, stillness, close-up, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36303
   art:
@@ -7152,7 +7189,7 @@ subjects:
     enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, (bare head, big bare ears:1.2), bandaged
     wrists, (fully clothed:1.3), kneeling by the altar gathering anthro, fennec fox, toddler, tiny, enormous ears,
     sand-colored fur, ragged checked cloth tunic, wide eyes, into her lap, cut ropes, candlelight, uneasy calm,
-    wide shot
+    wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36367
   art:
@@ -7180,7 +7217,7 @@ subjects:
     enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, (bare head, big bare ears:1.2), bandaged
     wrists, (fully clothed:1.3), kneeling by the altar gathering anthro, fennec fox, toddler, tiny, enormous ears,
     sand-colored fur, ragged checked cloth tunic, wide eyes, into her lap, cut ropes, candlelight, uneasy calm,
-    wide shot
+    wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36368
   art:
@@ -7208,7 +7245,8 @@ subjects:
     straw kasa, wide brim shading the eyes, kneeling on one knee on crypt flagstones, one paw pressed to his shoulder,
     staring at a faint golden road glimmering in the darkness ahead, a distant temple bell, behind him anthro otter,
     female, elderly, abbess, black habit, white wimple, long black robes, greying brown fur, (flat face:1.3), (round
-    face:1.2), button nose, whiskers, waiting in shadow, patient, candlelight, full body
+    face:1.2), button nose, whiskers, waiting in shadow, patient, candlelight, full body, warm amber firelight,
+    orange glow
   jobs:
     arthemy-house: 36304
   art:
@@ -7264,7 +7302,8 @@ subjects:
     (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical straw kasa, wide brim shading the
     eyes, standing between a wall of darkness and a stone altar, katana held low, silent and steady, the last golden
     glow fading in the dark, anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, ragged checked
-    cloth tunic, wide eyes, asleep on the altar behind him, cold stone room, candle glow, resolve, medium shot
+    cloth tunic, wide eyes, asleep on the altar behind him, cold stone room, candle glow, resolve, medium shot,
+    warm amber firelight, orange glow
   jobs:
     arthemy-house: 36306
   art:
@@ -7322,7 +7361,7 @@ subjects:
     hilt over right shoulder, (fully clothed:1.3), conical straw kasa, wide brim shading the eyes, kneeling at a
     narrow doorway of warm golden light opening behind a stone altar, gently setting down anthro, fennec fox, toddler,
     tiny, enormous ears, sand-colored fur, ragged checked cloth tunic, wide eyes, asleep, where the light begins,
-    back view, rain-scented glow, dark crypt around them, sorrowful, full body
+    back view, rain-scented glow, dark crypt around them, sorrowful, full body, slate grey storm light, rain
   jobs:
     arthemy-house: 36308
   art:
@@ -7382,7 +7421,8 @@ subjects:
     ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists,
     (fully clothed:1.3), clutching the edge of his poncho, in a low stone crypt lit by dozens of guttering candles,
     at the altar an anthro otter nun in a black habit chanting with raised paws, behind her a jagged tear of living
-    darkness in the stone wall, coils of shadow, faint glints of eyes, dripping wax, dread, wide shot
+    darkness in the stone wall, coils of shadow, faint glints of eyes, dripping wax, dread, wide shot, warm amber
+    firelight, orange glow
   jobs:
     arthemy-house: 36310
   art:
@@ -7444,7 +7484,7 @@ subjects:
     tunic, wide eyes, clinging to his neck, anthro, fennec fox, female, young, about ten years old, thin, enormous
     ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), gripping
     his poncho behind him, candle flames streaming sideways, dark altar ahead, frozen instant, dynamic angle, medium
-    shot
+    shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36312
   art:
@@ -7508,7 +7548,8 @@ subjects:
     straw kasa, wide brim shading the eyes, carrying anthro, fennec fox, toddler, tiny, enormous ears, sand-colored
     fur, ragged checked cloth tunic, wide eyes and looking down after him, anthro, fennec fox, female, young, about
     ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists,
-    (fully clothed:1.3), at his side, high angle, vertical composition, full body
+    (fully clothed:1.3), at his side, high angle, vertical composition, full body, warm amber firelight, orange
+    glow
   jobs:
     arthemy-house: 36314
   art:
@@ -7563,7 +7604,8 @@ subjects:
   prompt_tags: anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, kneeling in a row with three other otter nuns on bare wooden floorboards,
     one old and trembling, one very young, torn habits, heads bowed, knives laid on the floor in front of them,
-    a long refectory table behind with a cold untouched supper, grey first light through high windows, wide shot
+    a long refectory table behind with a cold untouched supper, grey first light through high windows, wide shot,
+    bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36316
   art:
@@ -7587,7 +7629,8 @@ subjects:
   prompt_tags: anthro otter, female, nun, black habit, white wimple, long black robes, brown fur, (flat face:1.3),
     (round face:1.2), button nose, whiskers, kneeling in a row with three other otter nuns on bare wooden floorboards,
     one old and trembling, one very young, torn habits, heads bowed, knives laid on the floor in front of them,
-    a long refectory table behind with a cold untouched supper, grey first light through high windows, wide shot
+    a long refectory table behind with a cold untouched supper, grey first light through high windows, wide shot,
+    bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36317
   art:
@@ -7610,7 +7653,7 @@ subjects:
     toward the edge of the world.
   prompt_tags: view through an open wrought iron mission gate in an adobe arch, beyond it a vast white salt flat,
     four tiny black-robed anthro otter nuns walking away into the distance carrying water skins, long morning shadows,
-    empty sky, quiet, lonely, vertical composition, wide shot
+    empty sky, quiet, lonely, vertical composition, wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36318
   art:
@@ -7633,7 +7676,7 @@ subjects:
     toward the edge of the world.
   prompt_tags: view through an open wrought iron mission gate in an adobe arch, beyond it a vast white salt flat,
     four tiny black-robed anthro otter nuns walking away into the distance carrying water skins, long morning shadows,
-    empty sky, quiet, lonely, vertical composition, wide shot
+    empty sky, quiet, lonely, vertical composition, wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36319
   art:
@@ -7660,7 +7703,8 @@ subjects:
     straw kasa, wide brim shading the eyes, sitting in the shade of an adobe mission gate arch, drawn katana resting
     across his knees, otter nuns in black habits bound with rope to the gate posts, down the dusty road a crowd
     of anthro townsfolk with hoes and lanterns, led by anthro, rabbit, female, middle-aged, patched shirt, long
-    skirt, (fully clothed:1.3), holding a scattergun, hard eyes, rising dust, early morning, wide shot
+    skirt, (fully clothed:1.3), holding a scattergun, hard eyes, rising dust, early morning, wide shot, warm amber
+    firelight, orange glow
   jobs:
     arthemy-house: 36320
   art:
@@ -7709,7 +7753,7 @@ subjects:
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a heavy wooden bar dropped across a closed iron mission
     gate seen from inside, a full leather water skin hanging untouched on an iron hook beside it, over the adobe
     wall a blinding white salt flat, far off a few dark birds circling slowly over the eastern flat, harsh noon
-    glare, wide shot
+    glare, wide shot, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36369
   art:
@@ -7733,7 +7777,7 @@ subjects:
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a heavy wooden bar dropped across a closed iron mission
     gate seen from inside, a full leather water skin hanging untouched on an iron hook beside it, over the adobe
     wall a blinding white salt flat, far off a few dark birds circling slowly over the eastern flat, harsh noon
-    glare, wide shot
+    glare, wide shot, bright desert sun, pale blue sky, ochre sand
   jobs:
     arthemy-house: 36370
   art:
@@ -7765,7 +7809,8 @@ subjects:
     faint glowing vision of a pale road running over the sea to a distant green valley and a temple roof, wisps
     of shadow around his paw, behind him on the cellar steps anthro, fennec fox, female, young, about ten years
     old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists, (fully
-    clothed:1.3), standing very still, candlelight, tempting, eerie, vertical composition, full body
+    clothed:1.3), standing very still, candlelight, tempting, eerie, vertical composition, full body, warm amber
+    firelight, orange glow
   jobs:
     arthemy-house: 36322
   art:
@@ -7826,7 +7871,7 @@ subjects:
     enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3),
     standing beside him with eyes closed, humming, before them a row of small earth mounds marked with pebbles,
     the shadow of a merry-go-round, first sunlight breaking over an adobe wall, drifting dust glowing, solemn, tender,
-    medium shot
+    medium shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36324
   art:
@@ -7884,7 +7929,8 @@ subjects:
     an adobe courtyard, anthro otter, female, young adult, novice nun, grey habit, white veil, brown fur, (flat
     face:1.3), (round face:1.2), button nose, whiskers, (fully clothed:1.3), standing nearby with a few small anthro
     animal children around her skirts, an anthro, rabbit, male, child, ragged shirt, (fully clothed:1.3), at her
-    side lifting one paw in a shy wave, garden gone to seed, morning light, wide shot
+    side lifting one paw in a shy wave, garden gone to seed, morning light, wide shot, golden dawn light, pink and
+    gold sky
   jobs:
     arthemy-house: 36371
   art:
@@ -7934,7 +7980,7 @@ subjects:
   prompt_tags: a long straight desert road receding toward a distant adobe mission gate, a cluster of tiny children
     standing still by the gate, closer on the road an anthro, rabbit, male, child, thin, ragged shirt, (fully clothed:1.3),
     walking alone with a stick for a staff, small and determined, heat shimmer, long morning shadows, vertical composition,
-    wide shot
+    wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36373
   art:
@@ -7958,7 +8004,7 @@ subjects:
   prompt_tags: a long straight desert road receding toward a distant adobe mission gate, a cluster of tiny children
     standing still by the gate, closer on the road an anthro, rabbit, male, child, thin, ragged shirt, (fully clothed:1.3),
     walking alone with a stick for a staff, small and determined, heat shimmer, long morning shadows, vertical composition,
-    wide shot
+    wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36374
   art:
@@ -7988,7 +8034,8 @@ subjects:
     fluffy ears, broad black nose, serious, rust-brown poncho, orange zigzag trim, dark tunic, orange sash, dark
     brown cloth trousers, (katana on back:1.3), hilt over right shoulder, (fully clothed:1.3), conical straw kasa,
     wide brim shading the eyes, her paws shaking, the blade catching candlelight, their faces close above, her eyes
-    wide and wet, his eyes steady under the brim, warm dim light, intimate, close-up
+    wide and wet, his eyes steady under the brim, warm dim light, intimate, close-up, warm amber firelight, orange
+    glow
   jobs:
     arthemy-house: 36375
   art:
@@ -8049,7 +8096,7 @@ subjects:
     ragged pale dress, bandaged wrists, (fully clothed:1.3), carrying anthro, fennec fox, toddler, tiny, enormous
     ears, sand-colored fur, ragged checked cloth tunic, wide eyes on her hip, a long knife held low against her
     dress, wary, keeping her distance, dawn light from the doorway above, deep shadow below, low angle, vertical
-    composition, full body
+    composition, full body, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36377
   art:
@@ -8103,7 +8150,7 @@ subjects:
   prompt_tags: (empty scene:1.3), uninhabited, scenery, inside the top of an adobe mission bell tower before dawn,
     a large old bronze bell with a green verdigris lip hanging in the foreground, its open mouth empty and hollow,
     beyond the arches a vast grey silent desert, a white salt flat, a thin road, tiny red canyons on the horizon,
-    a bell rope dropping through a hole in the boards, epic wide shot
+    a bell rope dropping through a hole in the boards, epic wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36379
   art:
@@ -8127,7 +8174,7 @@ subjects:
   prompt_tags: (empty scene:1.3), uninhabited, scenery, inside the top of an adobe mission bell tower before dawn,
     a large old bronze bell with a green verdigris lip hanging in the foreground, its open mouth empty and hollow,
     beyond the arches a vast grey silent desert, a white salt flat, a thin road, tiny red canyons on the horizon,
-    a bell rope dropping through a hole in the boards, epic wide shot
+    a bell rope dropping through a hole in the boards, epic wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36380
   art:
@@ -8154,7 +8201,7 @@ subjects:
     conical straw kasa, wide brim shading the eyes, standing on the bell tower boards, reaching up into the mouth
     of a large bronze bell with both paws, hooking a long dark pitted iron bell clapper into its crown, straining,
     verdigris on the bronze, the first blue light of dawn through the tower arches, low angle from below, vertical
-    composition, full body
+    composition, full body, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36381
   art:
@@ -8201,7 +8248,8 @@ subjects:
     of rust-brown cloth, its heavy butt just above the lip.
   prompt_tags: (still life:1.4), (object only:1.3), view up into the mouth of an old bronze bell, an old revolver
     hanging upside down inside it, lashed by its trigger guard to the crown with a strip of rust-brown cloth with
-    orange zigzag trim, its heavy wooden grip hanging just above the green verdigris lip, dawn light, close-up
+    orange zigzag trim, its heavy wooden grip hanging just above the green verdigris lip, dawn light, close-up,
+    golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36383
   art:
@@ -8223,7 +8271,8 @@ subjects:
     of rust-brown cloth, its heavy butt just above the lip.
   prompt_tags: (still life:1.4), (object only:1.3), view up into the mouth of an old bronze bell, an old revolver
     hanging upside down inside it, lashed by its trigger guard to the crown with a strip of rust-brown cloth with
-    orange zigzag trim, its heavy wooden grip hanging just above the green verdigris lip, dawn light, close-up
+    orange zigzag trim, its heavy wooden grip hanging just above the green verdigris lip, dawn light, close-up,
+    golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36384
   art:
@@ -8255,7 +8304,7 @@ subjects:
     roaring kitchen hearth fire with an iron pot glowing on its hook, anthro, fennec fox, female, young, about ten
     years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists, (fully
     clothed:1.3), pumping a leather bellows beside the fire, sparks flying, orange firelight, deep shadows, night
-    turning to dawn, wide shot
+    turning to dawn, wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36385
   art:
@@ -8308,7 +8357,7 @@ subjects:
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a lone broken adobe gate arch standing in empty desert at
     dawn, its iron gate torn half off the hinges, a bronze bell with an empty hollow mouth swinging in the arch,
     a frayed rope hanging loose, nothing behind it but bare sand where buildings once stood, faint coil of shadow
-    on the ground, cold pale sky, desolate, vertical composition, wide shot
+    on the ground, cold pale sky, desolate, vertical composition, wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36387
   art:
@@ -8332,7 +8381,7 @@ subjects:
   prompt_tags: (empty scene:1.3), uninhabited, scenery, a lone broken adobe gate arch standing in empty desert at
     dawn, its iron gate torn half off the hinges, a bronze bell with an empty hollow mouth swinging in the arch,
     a frayed rope hanging loose, nothing behind it but bare sand where buildings once stood, faint coil of shadow
-    on the ground, cold pale sky, desolate, vertical composition, wide shot
+    on the ground, cold pale sky, desolate, vertical composition, wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36388
   art:
@@ -8365,7 +8414,7 @@ subjects:
     (fully clothed:1.3), holding the paw of anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur,
     ragged checked cloth tunic, wide eyes, walking at his side, three long shadows falling together on the road,
     behind a low ridge a tall column of grey smoke rising into a rose and gold sky, hopeful, open land ahead, epic
-    wide shot
+    wide shot, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36389
   art:
@@ -8428,7 +8477,7 @@ subjects:
     fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), holding anthro, fennec fox, toddler,
     tiny, enormous ears, sand-colored fur, ragged checked cloth tunic, wide eyes, standing a little way ahead on
     the road, looking back at him, a long road rising into the desert, golden light, vertical composition, full
-    body
+    body, golden dawn light, pink and gold sky
   jobs:
     arthemy-house: 36391
   art:
@@ -8485,7 +8534,7 @@ subjects:
     straw kasa, wide brim shading the eyes, sitting alone at a low wooden table in the open doorway of a thatched
     farmhouse at dusk, a steaming bowl of rice before him, his arms folded around empty air as if holding something
     small that is not there, distant gaze, beyond him green terraced rice fields and a temple roof on the hill,
-    paper lantern glow, wistful, hollow, medium shot
+    paper lantern glow, wistful, hollow, medium shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36393
   art:
@@ -8534,7 +8583,7 @@ subjects:
   prompt_tags: (empty scene:1.3), uninhabited, scenery, the blackened burned-out shell of an adobe mission at dawn,
     collapsed bell tower, a great bronze bell lying cracked through in grey smoldering coals, thin smoke rising,
     burned-down torches stuck in the ground along the outer wall, grey ash blowing east on the wind across the desert,
-    cold pale light, mournful, epic wide shot
+    cold pale light, mournful, epic wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36395
   art:
@@ -8558,7 +8607,7 @@ subjects:
   prompt_tags: (empty scene:1.3), uninhabited, scenery, the blackened burned-out shell of an adobe mission at dawn,
     collapsed bell tower, a great bronze bell lying cracked through in grey smoldering coals, thin smoke rising,
     burned-down torches stuck in the ground along the outer wall, grey ash blowing east on the wind across the desert,
-    cold pale light, mournful, epic wide shot
+    cold pale light, mournful, epic wide shot, warm amber firelight, orange glow
   jobs:
     arthemy-house: 36396
   art:
@@ -8592,7 +8641,7 @@ subjects:
     ten years old, thin, enormous ears, sand-colored fur, dusty fur, claw-torn ragged pale dress, bandaged wrists,
     (fully clothed:1.3), sitting up awake with a knife across her knees, anthro, fennec fox, toddler, tiny, enormous
     ears, sand-colored fur, ragged checked cloth tunic, wide eyes, asleep at her back, other small children sleeping
-    far from the fire, cold blue night, unsettling, wide shot
+    far from the fire, cold blue night, unsettling, wide shot, blue moonlight, deep blue night sky, silver highlights
   jobs:
     arthemy-house: 36397
   art:
