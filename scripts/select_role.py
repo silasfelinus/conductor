@@ -121,11 +121,12 @@ reviewable; idle falls through last:
   2. failing_scheduled_workflow_count > 0     -> workflow-medic
   3. red_stale_pr_count > 0                   -> pr-medic
   4. stranded_branch_count > 0                -> branch-medic
-  5. due_daily_commitment_count > 0           -> daily-creative
-  6. site_audit_overdue                       -> site-auditor
-  7. ready_task exists                        -> worker
-  8. stale_recurring_task_count > 0           -> stale-recurring
-  9. none of the above                        -> idle
+  5. semantic review due within one day      -> roadmap-intent-auditor
+  6. due_daily_commitment_count > 0           -> daily-creative
+  7. site_audit_overdue                       -> site-auditor
+  8. ready_task exists                        -> worker
+  9. stale_recurring_task_count > 0           -> stale-recurring
+  10. none of the above                       -> idle
   Then (conductor/t-115, extended by t-118/t-020): if the winner is daily-creative/
   worker/idle/stale-recurring AND github_api_unreachable is true, downgrade that result to
   reviewer-uncertain — steps 1-4 above never got real GitHub-backed signal, so
@@ -972,6 +973,17 @@ IDLE_LADDER = [
 ]
 
 
+def semantic_intent_review_status() -> dict[str, object]:
+    """Read the current committed audit date, not a potentially stale watchdog report.
+
+    Agent-role selection is the automatic handoff: this never contacts a model
+    or requires a personal ChatGPT task to keep running.
+    """
+    from scripts.build_portfolio_oversight import intent_review_status
+
+    return intent_review_status()
+
+
 def select_role(
     *,
     repos: list[str] | None = None,
@@ -1005,6 +1017,7 @@ def select_role(
     red_prs = find_red_stale_prs(repos, github_token, stale_hours=pr_stale_hours)
     stranded = find_stranded_branches(repos, github_token, stale_hours=branch_stale_hours)
     audit = site_audit_status(stale_days=audit_stale_days)
+    semantic_intent = semantic_intent_review_status()
     queue = run_worker.build_queue_summary()
     ready_task = queue.get('ready_task')
     roadmaps = run_worker.load_roadmaps()
@@ -1052,6 +1065,14 @@ def select_role(
         role = 'branch-medic'
         by_repo = ', '.join(sorted({b['repo'] for b in stranded}))
         reason = f'{len(stranded)} stranded branch(es) with unmerged work older than {branch_stale_hours}h ({by_repo})'
+    elif semantic_intent.get('due') or semantic_intent.get('upcoming'):
+        role = 'roadmap-intent-auditor'
+        last = semantic_intent.get('last_report') or 'no prior completed review'
+        when = 'overdue' if semantic_intent.get('due') else 'due within one day'
+        reason = (
+            f'semantic portfolio intent review {when}; latest: {last}. '
+            'Read projects/conductor/OVERSIGHT-AGENT.md and perform the real review.'
+        )
     elif due_daily:
         role = 'daily-creative'
         task = due_daily[0]
@@ -1157,6 +1178,9 @@ def select_role(
         'art_queue_failures': art_failures,
         'stranded_branch_count': len(stranded),
         'stranded_branches': stranded,
+        'semantic_intent_review_due': bool(semantic_intent.get('due')),
+        'semantic_intent_review_upcoming': bool(semantic_intent.get('upcoming')),
+        'semantic_intent_review_last_report': semantic_intent.get('last_report'),
         'site_audit_overdue': audit['overdue'],
         'site_audit_last_report': audit['last_report'],
         'site_audit_days_since': audit['days_since'],
@@ -1190,6 +1214,7 @@ ROLE_PLAYBOOKS = {
     'art-medic': 'docs/agents/roles/art-medic.md',
     'branch-medic': 'docs/agents/roles/branch-medic.md',
     'site-auditor': 'docs/agents/roles/site-auditor.md',
+    'roadmap-intent-auditor': 'projects/conductor/OVERSIGHT-AGENT.md',
     'gate-triage': 'docs/agents/roles/gate-triage.md',
     'idle': None,
 }
