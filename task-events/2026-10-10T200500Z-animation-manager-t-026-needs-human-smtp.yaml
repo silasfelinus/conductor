@@ -1,0 +1,9 @@
+version: 1
+project: animation-manager
+task: t-026
+operation: needs-human
+updated: '2026-10-10T20:05:00+00:00'
+note: |-
+  Silas, 2026-10-10: the Daily Dream digest is back to Brevo tracking links instead of direct kindrobots.org links; it was fixed for a day or two, then broke for most of the week. Gmail evidence: direct-link resends from silasfelinus@gmail.com went out 2026-10-03 to 2026-10-07 (the external ChatGPT delivery guard), then stopped; the Brevo digests of 10-08, 10-09 and 10-10 rewrite every href through sendibt3.com. So the fix that "worked" was never in this repo's send path, and it died when the outside guard did. Brevo has no self-serve setting to turn off transactional click tracking (support/Enterprise only), which is why #5411, #5544 and #5567 could not succeed from the sender side.
+  Durable fix shipped in this PR: scripts/send_digest_smtp.py sends the digest (and the creative-reset digest) over Gmail SMTP when DIGEST_SMTP_USER and DIGEST_SMTP_PASSWORD are set, with the HTML relayed byte-for-byte; Brevo stays as the fallback if SMTP fails. With the secrets unset, nothing changes.
+  GATE (only Silas can do this): create a Gmail app password (https://myaccount.google.com/apppasswords, needs 2-Step Verification) and add two GitHub Actions secrets on silasfelinus/conductor: DIGEST_SMTP_USER = the Gmail address, DIGEST_SMTP_PASSWORD = the 16-character app password. Optional: DIGEST_SMTP_FROM if mail should come from a verified Send-mail-as alias. Then the next digest arrives with direct links; close t-026 once one delivered digest shows a kindrobots.org href and no sendibt.

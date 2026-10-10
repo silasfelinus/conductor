@@ -347,10 +347,16 @@ jobs:
           path: digest-email.json
           if-no-files-found: error
 
+      # Step name kept for check_daily_dream_pipeline.py and the contract tests.
+      # Sends over Gmail SMTP when DIGEST_SMTP_* is set, so links stay direct
+      # (Brevo rewrites every href through its tracker); Brevo is the fallback.
       - name: Email via Brevo
         if: ${{ env.SHOULD_SEND_EMAIL == 'true' }}
         run: python scripts/send_digest_brevo.py digest-email.json
         env:
+          DIGEST_SMTP_USER: ${{ secrets.DIGEST_SMTP_USER }}
+          DIGEST_SMTP_PASSWORD: ${{ secrets.DIGEST_SMTP_PASSWORD }}
+          DIGEST_SMTP_FROM: ${{ secrets.DIGEST_SMTP_FROM || vars.DIGEST_SMTP_FROM }}
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
           DIGEST_TO: ${{ secrets.DIGEST_TO || vars.DIGEST_TO }}
           DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
@@ -441,6 +447,9 @@ jobs:
       - name: Send creative-reset digest through Brevo
         if: steps.pending.outputs.found == 'true'
         env:
+          DIGEST_SMTP_USER: ${{ secrets.DIGEST_SMTP_USER }}
+          DIGEST_SMTP_PASSWORD: ${{ secrets.DIGEST_SMTP_PASSWORD }}
+          DIGEST_SMTP_FROM: ${{ secrets.DIGEST_SMTP_FROM || vars.DIGEST_SMTP_FROM }}
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
           DIGEST_TO: ${{ secrets.DIGEST_TO || vars.DIGEST_TO }}
           DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
