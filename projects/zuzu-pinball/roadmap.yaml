@@ -91,21 +91,22 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Register isolated Zuzu Arcade cabinet, admin preview and discoverable admin nav"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Reuse the existing Arcade webgl engine and shell; create separate game id zuzu-pinball, game-specific state, assets, score namespace and lazy loader. Initial playable surface must live under /admin/zuzu-pinball, with a content/channels/admin tab requiredRole ADMIN. Keep /play unpublished until explicitly authorized. Audit sibling game registration and tests.
 
       Scoped admin WebGL prototype implementation and verification test are on worker/zuzu-pinball-t003-admin-webgl-20261010-v5j8 in kind_robots. Separate game id and TableDef; preview inaccessible from public Arcade and score submissions disabled. Full geometry, modes and Croc sculpt belong to the dependent future tasks. CI and PR review are pending.
+
+      Merged kind_robots PR #3428 to main at a027022b51e71aab843908887aafdca1945bf054. Private /admin/zuzu-pinball with requiredRole ADMIN and discoverable Admin tab; distinct WebGL/Rapier table and River Croc scoop, new score namespace isolated from public Arcade scores, plus dedicated regression coverage. Reconciled newer main changes without force pushing; 33 check runs successful when merged. Production container image publication and Alexandria deployment are separate from merge; public /play launch remains gated under t-014. Next work t-004 must calibrate full physical geometry and shot paths; this is a starter greybox, not the final FX3-quality table.
     claimed_by: 20261010T091048648Z-zuzu-pinball-t003-v5j8
     claimed_at: '2026-10-10T09:10:48.648Z'
-    updated: '2026-10-10T09:19:09.758Z'
+    updated: '2026-10-10T21:26:23.320Z'
   - id: t-004
     milestone: m2
     title: "Implement dimensioned Zuzu physical graybox, shooter lane and lower flippers"
-    status: waiting
+    status: ready
     depends_on: t-003
     owner: null
     passes: 0
