@@ -89,7 +89,14 @@ def attach_direct_links_backup(payload: dict[str, Any]) -> dict[str, Any]:
             f'broken tracking URL, open <code>{DIRECT_LINKS_ATTACHMENT}</code> for the original '
             'destinations.</p>'
         )
-        payload["htmlContent"] = notice + html_content
+        # The digest is a full document with a centred page shell; the notice
+        # belongs inside <body>, not in front of the doctype.
+        body_open = re.search(r"<body[^>]*>", html_content, re.IGNORECASE)
+        if body_open:
+            cut = body_open.end()
+            payload["htmlContent"] = html_content[:cut] + notice + html_content[cut:]
+        else:
+            payload["htmlContent"] = notice + html_content
 
     return payload
 

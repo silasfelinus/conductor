@@ -263,3 +263,22 @@ def test_animation_release_section_calls_out_stale_daily_cadence():
     assert "Animation Manager cadence" in html
     assert "No new screensaver shipped in the last 24 hours" in html
     assert "Try Geode Bloom" in html
+
+
+def test_page_shell_centres_one_capped_column_with_mobile_stacking():
+    digest_email = load_module()
+    shell = digest_email.page_shell("<p>hello</p>")
+    assert shell.startswith("<!doctype html>")
+    assert f"max-width:{digest_email.PAGE_WIDTH_PX}px" in shell
+    assert "margin:0 auto" in shell
+    assert "@media only screen and (max-width:560px)" in shell
+    assert "<p>hello</p>" in shell
+
+
+def test_asset_grid_puts_card_paper_on_cells_so_rows_share_a_height():
+    digest_email = load_module()
+    grid = digest_email.asset_grid(
+        [{"key": "vibe", "title": "A"}, {"key": "location", "title": "B"}], show_art=False
+    )
+    assert grid.count('<td class="dg-card"') == 2
+    assert "width:300px" not in grid
