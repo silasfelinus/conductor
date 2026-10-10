@@ -1,6 +1,9 @@
 # Kind Robots Arcade -- game queue. The build order is the list order.
 #
-# status: queued | building | shipped
+# status: queued | building | shipped | retired (removed from the arcade; never re-pitch it)
+# style: classic (flat early-80s look, the default when absent) | snes (upgraded to the 16-bit
+#        bar in DESIGN-BRIEF.md "16-bit style bar"). Silas, 2026-10-10: style upgrades come
+#        ahead of new games; t-021 upgrades the next `classic` cabinet each cycle.
 # source: catalog (Silas's 2026-10-06 favourites) or pitches/<stem>.md (an approved
 #         daily pitch with `target: kr-arcade` -- insert those ahead of the first
 #         queued catalog game).
@@ -56,6 +59,8 @@ games:
     riffs_on: Bubbles (Williams, 1982) -- "that bubble in the sink game"
     status: shipped
     shipped_in: silasfelinus/kind_robots#3270
+    style: snes
+    style_in: silasfelinus/kind_robots#3438
     task: t-009
     phase: factory
     effort: small
@@ -84,8 +89,13 @@ games:
   - slug: timber-bot
     title: Timber Bot
     riffs_on: Timber (Bally Midway, 1984) -- "the logging game"
-    status: shipped
+    status: retired
     shipped_in: silasfelinus/kind_robots#3273
+    retired_in: silasfelinus/kind_robots#3438
+    retired: >-
+      Silas, 2026-10-10 (verbatim): "the request timber falling game is questionable ethics, and
+      I think we should kill it." Removed from the arcade. Do not rebuild or re-pitch a
+      tree-felling or logging game.
     task: t-009
     phase: factory
     effort: small
