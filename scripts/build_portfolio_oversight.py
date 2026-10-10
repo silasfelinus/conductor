@@ -37,6 +37,7 @@ if str(ROOT / "scripts") not in sys.path:
 
 import audit_roadmaps  # noqa: E402
 import check_project_scaffold_drift as scaffold_drift  # noqa: E402
+import semantic_intent_actions  # noqa: E402
 
 INTENT_DIR = ROOT / "projects" / "conductor"
 INTENT_FAILURE_FILE = INTENT_DIR / "INTENT-REVIEW-FAILURE.json"
@@ -246,6 +247,24 @@ def build_report(
     heartbeat = scheduled_agent_status(stale_hours=agent_heartbeat_hours, now=generated_at)
     intent = intent_review_status(stale_days=intent_stale_days, today=generated_at.date())
     intent["failed_attempt"] = failed_intent_attempt(today=generated_at.date())
+
+    # The GitHub-runner-owned semantic reviewer is authoritative for failed
+    # *attempts*. Age alone never establishes that an agent tried to review.
+    github_token = os.environ.get("GITHUB_TOKEN", "").strip()
+    github_repo = os.environ.get("GITHUB_REPOSITORY", "").strip()
+    if intent["due"] and github_token and github_repo:
+        try:
+            runs = semantic_intent_actions.fetch_runs(github_token, github_repo)
+            latest = latest_intent_report()
+            failed = semantic_intent_actions.failed_attempt(
+                runs, latest[1] if latest else None
+            )
+            if failed:
+                intent["failed_attempt"] = failed
+        except (OSError, ValueError, KeyError) as error:
+            # An unavailable GitHub runs API is NOT evidence of an attempted
+            # semantic failure; the oversight job also invokes the dispatcher.
+            print(f"::warning::Semantic run history could not be verified: {type(error).__name__}", file=sys.stderr)
 
     project_scan: dict[str, list[dict[str, Any]]] | None = None
     project_unresolved: str | None = None
