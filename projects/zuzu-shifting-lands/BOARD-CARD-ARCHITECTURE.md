@@ -1,5 +1,7 @@
 # Shifting Lands — Illustrated Board, Decks & Card Interaction Architecture
 
+> **Current encounter-card UI addendum, 2026-10-09:** The original full-turn `navigation/flip-card.vue` is a deal flourish, not a persistent readable encounter face. Use the KR persistent `gallery/kr-card-flip.vue` behavior (or a narrowly compatible adapter) for the reading state and honor reduced motion. New encounter and boss backs must be Zuzu-specific. Location cards choose **fixed-cast authored encounter identities** from a seeded pool; no independent species×job assembly, no generic universal `test/withdraw` choice buttons. Show authored flavor prose, 2+ distinct choices and clear persisted roll/result. [Integration order and acceptance](encounters/IMPLEMENTATION-ORDER.md) overrides older composition/asset statements below.
+
 **Implementation-grade addendum to [DESIGN-BRIEF.md](DESIGN-BRIEF.md).** Requested by Silas, 2026-10-09: an art-heavy premium game board with **real front/back cards, physical-feeling draw decks, dealing, flip/reveal animations, discards, and visible travel history**, all using existing Kind Robots systems first. This is now **MVP**, not postlaunch polish. No playable UI is claimed by writing this document.
 
 ## Verified components in Kind Robots main (2026-10-09)

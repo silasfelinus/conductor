@@ -1,0 +1,369 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/silasfelinus/conductor/blob/main/projects/zuzu-shifting-lands/encounters/ENCOUNTER-PACK.schema.json",
+  "title": "Shifting Lands authored encounter pack v1",
+  "description": "Draft, not imported: authored cast, flavor, 2+ dice choices, deterministic seeded location pools",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project",
+    "source_world_manifest",
+    "status",
+    "rules",
+    "locations",
+    "encounters"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "project": {
+      "const": "zuzu-shifting-lands"
+    },
+    "source_world_manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "schema_version"
+      ],
+      "properties": {
+        "path": {
+          "const": "projects/zuzu-shifting-lands/WORLD-DECKS.json"
+        },
+        "schema_version": {
+          "const": 2
+        }
+      }
+    },
+    "status": {
+      "const": "draft-not-imported"
+    },
+    "rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "encounters_per_location_min",
+        "selection",
+        "seed_persisted",
+        "revisit_policy",
+        "dice"
+      ],
+      "properties": {
+        "encounters_per_location_min": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "selection": {
+          "const": "seeded-weighted-eligible-without-replacement"
+        },
+        "seed_persisted": {
+          "const": true
+        },
+        "revisit_policy": {
+          "const": "same-recorded-encounter-no-free-reroll"
+        },
+        "dice": {
+          "const": "2d6+skill+modifier-vs-difficulty"
+        }
+      }
+    },
+    "locations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/location"
+      }
+    },
+    "encounters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/encounter"
+      }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "species",
+        "occupation",
+        "visual_description"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/slug"
+        },
+        "species": {
+          "$ref": "#/$defs/slug"
+        },
+        "occupation": {
+          "type": "string",
+          "minLength": 3
+        },
+        "visual_description": {
+          "type": "string",
+          "minLength": 20
+        },
+        "locked_character_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        }
+      }
+    },
+    "art": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "art_ref",
+        "brief",
+        "cast"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "design-only",
+            "verified-repository-art",
+            "approved-ArtImage"
+          ]
+        },
+        "art_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "brief": {
+          "type": "string",
+          "minLength": 50
+        },
+        "cast": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/actor"
+          }
+        }
+      }
+    },
+    "roll": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dice_count",
+        "die_sides",
+        "skill",
+        "modifier",
+        "target"
+      ],
+      "properties": {
+        "dice_count": {
+          "const": 2
+        },
+        "die_sides": {
+          "const": 6
+        },
+        "skill": {
+          "enum": [
+            "steel",
+            "awareness",
+            "wits",
+            "bearing",
+            "resolve",
+            "insight"
+          ]
+        },
+        "modifier": {
+          "type": "integer",
+          "minimum": -3,
+          "maximum": 3
+        },
+        "target": {
+          "type": "integer",
+          "minimum": 4,
+          "maximum": 15
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "hp_delta",
+        "provisions_delta",
+        "add_flags",
+        "map_effect"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 30
+        },
+        "hp_delta": {
+          "type": "integer",
+          "minimum": -4,
+          "maximum": 4
+        },
+        "provisions_delta": {
+          "type": "integer",
+          "minimum": -3,
+          "maximum": 4
+        },
+        "add_flags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/slug"
+          }
+        },
+        "map_effect": {
+          "enum": [
+            "none",
+            "recorded-prospective-shift"
+          ]
+        }
+      }
+    },
+    "choice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "intent",
+        "risk_hint",
+        "roll",
+        "success",
+        "failure"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/slug"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 8
+        },
+        "intent": {
+          "type": "string",
+          "minLength": 20
+        },
+        "risk_hint": {
+          "type": "string",
+          "minLength": 15
+        },
+        "roll": {
+          "$ref": "#/$defs/roll"
+        },
+        "success": {
+          "$ref": "#/$defs/outcome"
+        },
+        "failure": {
+          "$ref": "#/$defs/outcome"
+        }
+      }
+    },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "location_id",
+        "encounter_ids"
+      ],
+      "properties": {
+        "location_id": {
+          "$ref": "#/$defs/slug"
+        },
+        "encounter_ids": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/slug"
+          }
+        }
+      }
+    },
+    "encounter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "location_id",
+        "title",
+        "flavor_text",
+        "polarity",
+        "weight",
+        "unique_per_run",
+        "first_visit_only",
+        "art",
+        "choices",
+        "developer_note"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/slug"
+        },
+        "location_id": {
+          "$ref": "#/$defs/slug"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 64
+        },
+        "flavor_text": {
+          "type": "string",
+          "minLength": 90,
+          "maxLength": 700
+        },
+        "polarity": {
+          "enum": [
+            "good",
+            "bad",
+            "mixed"
+          ]
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9
+        },
+        "unique_per_run": {
+          "const": true
+        },
+        "first_visit_only": {
+          "const": true
+        },
+        "art": {
+          "$ref": "#/$defs/art"
+        },
+        "choices": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/choice"
+          }
+        },
+        "developer_note": {
+          "type": "string",
+          "minLength": 20
+        }
+      }
+    }
+  }
+}
