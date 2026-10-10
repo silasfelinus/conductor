@@ -265,7 +265,7 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Upgrade the next cabinet to the 16-bit (Super NES) style (recurring, ahead of new games)"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     recurring: true
@@ -276,6 +276,8 @@ tasks:
       RAN 2026-10-10: kit built (snes.ts: 15-bit ramps, HDMA bands, outlined pixel sprites, orbs, bevels, glows, sparkles, parallax, HUD panels, cached layers; font outline) and Sink Suds upgraded first, in silasfelinus/kind_robots#3438, which also retires Timber Bot. Next in order: butterfly-blaster.
       RAN 2026-10-10: batch 1 (Silas: "keep going, upgrade each until completed") -- Butterfly Blaster, Battery Maze, Rescue Rally, Pipe Pals, Butterfly Joust, Gloom Invaders, Hedgehog Crossing upgraded in silasfelinus/kind_robots#3451 (render only; seeded play verified unchanged). Batches 2-4 in flight in the same session.
       RAN 2026-10-10: batch 2 -- Ribbon Riders, Burrow Buddy, Repair Rampage, Prize Show Panic, Rain Catcher, Brick Bloom, Seed Lander upgraded in silasfelinus/kind_robots#3453 (render only; three verified tick-for-tick against origin/main).
+      RAN 2026-10-10: batches 3-5 -- Pixel Hop, Glitch Garden, Quilt Quest, Cocoa Counter, Seed Burst, Lantern Swarm (silasfelinus/kind_robots#3454); Rover Ramble, Cable Crawler, Petal Post, Bumper Bubbles (#3455); Kindness Gauntlet, Station Sweep (#3456). Render only, with tick-for-tick parity runs against origin/main on eight cabinets.
+      DONE 2026-10-10: every 2D cabinet the contract covers is `style: snes` (27 of them, Sink Suds included). Two carry-outs, per the contract: Zuzu: Ghost Trail's visual upgrade is m5 t-013/t-014; Kind Pinball's WebGL table was never in scope, and its rarely seen 2D no-WebGL fallback is follow-up t-022. New cabinets (t-009) ship at the 16-bit bar.
     updated: '2026-10-10T20:00:00Z'
     implementation_pr: 'silasfelinus/kind_robots#3438'
 
@@ -510,3 +512,18 @@ tasks:
       and keyboard/gamepad/touch. Log actual unfamiliar-player run durations; target
       >=60 minutes for first successful clear without artificial waiting. Confirm no
       static farming and proper leaderboards; do not call done on estimates alone.
+
+  - id: t-022
+    milestone: m6
+    title: "16-bit pass for Kind Pinball's 2D fallback table (devices without WebGL)"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Follow-up from t-021 (2026-10-10). The hall plays Kind Pinball as the WebGL 3D table;
+      utils/arcade/games/kindPinball.ts (Canvas 2D, ~2300 lines) is only served where WebGL is
+      missing, and still has the flat early look. Give it the DESIGN-BRIEF.md "16-bit style bar"
+      render pass on utils/arcade/snes.ts, render only, the same way the other 26 cabinets were
+      done (the session's brief and screenshot harness are described in t-021's notes). Low
+      priority: few players ever see this table. Then set kind-pinball's games.yaml row
+      `style: snes` and close m6.
