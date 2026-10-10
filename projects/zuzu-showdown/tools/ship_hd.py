@@ -31,6 +31,10 @@ from pathlib import Path
 
 from PIL import Image
 
+# The HD masters are rig.py's own output, not untrusted uploads; a big fighter's (Old Komodo, 213 Mpx)
+# is past Pillow's decompression-bomb guard.
+Image.MAX_IMAGE_PIXELS = None
+
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
