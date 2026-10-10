@@ -567,6 +567,9 @@ These are not automatically queued for legacy projects. Generate them manually w
 
 ## zuzu-pinball (added 2026-10-09)
 
+- `zuzu-pinball-croc-toy.webp` (inspiration, 3:2): Extreme realistic close-up of a giant scarred crocodile toy integrated in the left-hand watering hole bank of a premium 3D pinball table. Gaping green-grey jaws physically hold a reflective chrome pinball in the black throat, upper jaw visibly articulated, glowing teal waterline light inserts, brass linkage and ball kicker behind teeth, warm/cool pinball stage lighting, wet rough reptilian hide, immaculate machined steel, readable shootable opening. This is River Croc from the Zuzu world, a singular ferocious giant predator, miniature mechanical sculpture within a haunted arcade cabinet, bare label surfaces.
+
+
 **Project visual references:** `projects/zuzu-pinball/CONCEPT-ART.svg` (cabinet atmosphere) and `projects/zuzu-pinball/PLAYFIELD-MOCKUP.svg` (mechanical layout, not final art). Preserve distinct shapes for the three different ramps, raised upper flipper area, swinging monastery bell, and the weird-west/Edo contrast.
 
 - `zuzu-pinball-icon.webp` (256×256): Premium square game icon featuring the side profile of a weathered Edo-era koala ronin's straw kasa reflected in a single polished steel pinball, a bronze monastery bell behind it against deep oxblood lacquer and moonlit teal, hand-painted realistic metal and ink, clear centered silhouette for small icon scale, bare unwritten surfaces, no collage.
