@@ -573,6 +573,12 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Notes:**
 - Silas, 2026-10-06: "our ghosts and goblin game should also be zuzu themed" -- the Ghosts 'n Goblins
   riff is Zuzu: Ghost Trail (games.yaml `zuzu-ghost-trail`), in Zuzu's comic canon, not the logo style.
+- Silas, 2026-10-10 PT: Ghost Trail is eventually to become a full TEN-HOUR authored game.
+  The current 60–90-minute six-stage campaign is **Act I**, the first complete layer,
+  not the end goal. Build rich authored progression and secrets rather than endless
+  wave-loop padding. Follow projects/kr-arcade/ghost-trail/TEN-HOUR-ROADMAP.md for
+  five-book scope, but keep every slice independently playable and properly tested.
+  Do not claim the ten-hour target until measured playtests substantiate it.
 
 ### zuzu-lair  (software)
 **Direction:** A Dragon's Lair-style quick-time adventure starring Zuzu the koala ronin, built from branching animations: press the right button in time to reach the next scene, miss and watch a death scene, playable free in the browser on Kind Robots.
