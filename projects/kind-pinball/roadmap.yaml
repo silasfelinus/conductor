@@ -639,7 +639,7 @@ tasks:
   - id: t-023
     milestone: m5
     title: "More flippers: upper flippers with shots of their own"
-    status: claimed
+    status: review
     depends_on: [t-022]
     owner: worker
     passes: 0
@@ -650,9 +650,19 @@ tasks:
       shots (a ramp, a lock, a mode lane) and lamps that teach them. Same buttons as the main flippers.
       Extend the bot and aiming chart to the new flippers; re-run tuning; add the shots to the table
       guide (t-015) and the mastery ladder if fitting.
+
+      Merged kind_robots#3417. A flipper pair above the Ridge's gate, on the same buttons as
+      the rest, and the Lookout saucer up its right side: the left Ridge flipper's cross shot,
+      worth more each time this ball, each one spotting an S-K-Y lane (three in a row is a SKY
+      HIGH). Flippers now carry their zone; the tuning bot and the attract pilot play each
+      ball on its own zone's pair (the bot had never flipped the hidden room's, and the
+      pilot's room position was stale since t-022). Tuning (30 games, vs t-022): ball time
+      21.5 s average / 43.6 s good, average-bot reach up, good-bot room reach down to 27%
+      (TUNING.md 2026-10-10, t-023). Screenshot: screenshots/t023-ridge-flippers-desk.jpg.
     claimed_by: session_012MRebU6GEXWnQ91cfMqmEe
     claimed_at: '2026-10-10T01:46:29Z'
-    updated: '2026-10-10T01:46:29Z'
+    updated: '2026-10-10T02:04:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#3417'
 
   - id: t-024
     milestone: m5
