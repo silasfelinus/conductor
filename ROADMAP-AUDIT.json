@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-10-10T11:47:28.964849+00:00",
+  "generated_at": "2026-10-10T12:12:06.767632+00:00",
   "summary": {
     "roadmaps": 78,
     "active_projects": 39,
     "continuous_projects": 3,
-    "tasks": 2082,
-    "ready": 89,
-    "waiting": 128,
-    "needs_human": 35,
-    "in_progress": 21,
-    "done": 1793,
+    "tasks": 2086,
+    "ready": 92,
+    "waiting": 126,
+    "needs_human": 36,
+    "in_progress": 17,
+    "done": 1799,
     "errors": 0,
-    "warnings": 28,
-    "info": 61
+    "warnings": 27,
+    "info": 63
   },
   "projects": [
     {
@@ -23,17 +23,17 @@
       "autonomous": false,
       "task_count": 31,
       "counts": {
-        "claimed": 2,
-        "done": 27,
+        "claimed": 1,
+        "done": 28,
         "waiting": 2
       },
-      "open_count": 4,
+      "open_count": 3,
       "human_attention": 0,
       "ready": 0,
       "waiting": 2,
-      "claimed": 2,
+      "claimed": 1,
       "review": 0,
-      "done": 27
+      "done": 28
     },
     {
       "slug": "zuzu-lair",
@@ -46,15 +46,16 @@
         "claimed": 1,
         "done": 4,
         "needs-human": 1,
-        "ready": 2,
+        "ready": 1,
+        "review": 1,
         "waiting": 6
       },
       "open_count": 10,
       "human_attention": 1,
-      "ready": 2,
+      "ready": 1,
       "waiting": 6,
       "claimed": 1,
-      "review": 0,
+      "review": 1,
       "done": 4
     },
     {
@@ -63,15 +64,15 @@
       "override_status": "active",
       "priority_index": 3,
       "autonomous": false,
-      "task_count": 20,
+      "task_count": 21,
       "counts": {
         "done": 11,
-        "ready": 3,
+        "ready": 4,
         "waiting": 6
       },
-      "open_count": 9,
+      "open_count": 10,
       "human_attention": 0,
-      "ready": 3,
+      "ready": 4,
       "waiting": 6,
       "claimed": 0,
       "review": 0,
@@ -83,20 +84,20 @@
       "override_status": "active",
       "priority_index": 4,
       "autonomous": false,
-      "task_count": 27,
+      "task_count": 28,
       "counts": {
-        "claimed": 2,
-        "done": 18,
-        "ready": 4,
+        "claimed": 1,
+        "done": 19,
+        "ready": 5,
         "waiting": 3
       },
       "open_count": 9,
       "human_attention": 0,
-      "ready": 4,
+      "ready": 5,
       "waiting": 3,
-      "claimed": 2,
+      "claimed": 1,
       "review": 0,
-      "done": 18
+      "done": 19
     },
     {
       "slug": "cthulhuquarium",
@@ -104,19 +105,19 @@
       "override_status": "active",
       "priority_index": 5,
       "autonomous": false,
-      "task_count": 83,
+      "task_count": 85,
       "counts": {
-        "claimed": 3,
-        "done": 78,
-        "waiting": 2
+        "done": 82,
+        "needs-human": 1,
+        "ready": 2
       },
-      "open_count": 5,
-      "human_attention": 0,
-      "ready": 0,
-      "waiting": 2,
-      "claimed": 3,
+      "open_count": 3,
+      "human_attention": 1,
+      "ready": 2,
+      "waiting": 0,
+      "claimed": 0,
       "review": 0,
-      "done": 78
+      "done": 82
     },
     {
       "slug": "kind-economy",
@@ -1619,13 +1620,6 @@
     },
     {
       "severity": "warning",
-      "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-      "project": "kind-pinball",
-      "task": "t-031",
-      "message": "Claimed/review task has no parseable updated timestamp."
-    },
-    {
-      "severity": "warning",
       "code": "STALE_IN_PROGRESS",
       "project": "kind-robots",
       "task": "t-127",
@@ -1685,7 +1679,7 @@
       "code": "STALE_IN_PROGRESS",
       "project": "mandarin-tutor",
       "task": "t-030",
-      "message": "Task has remained claimed for 6 days."
+      "message": "Task has remained claimed for 7 days."
     },
     {
       "severity": "warning",
@@ -1997,6 +1991,13 @@
     },
     {
       "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "kr-arcade",
+      "task": "t-021",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
       "code": "INACTIVE_PROJECT_HAS_READY_TASKS",
       "project": "lora-ingestion",
       "task": null,
@@ -2154,6 +2155,13 @@
       "code": "APPROVAL_WITHOUT_GATE",
       "project": "zuzu-showdown",
       "task": "t-002",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "zuzu-showdown",
+      "task": "t-028",
       "message": "approved_by_human is set on a task that is not human-gated."
     }
   ]
