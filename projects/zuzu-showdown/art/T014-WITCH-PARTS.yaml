@@ -1,0 +1,132 @@
+# zuzu-showdown t-028: HD parts sheets for the Swamp Witch's rig, from her picked reference (T014-WITCH-REFERENCES
+# witch-from-coil-1, ArtImage 244386: robed, hands raised, on her coil). Her coil is one part that bends, not legs:
+# the stance side-on facing right with her arms held clear of the shawl, the body with no arms, the slapping hand
+# (LP), a tentacle on its own (HP lash, Bog Grasp), and key poses: sunk low into the coil (crouch), rising (jump),
+# half-melted into the mud (Sink), and her canon KO: melted into a puddle, one tentacle waving a white rag. Always
+# fully robed, never glamorous; prompts never say "human" or "people" (bannedTerms). Generated art is pre-approved.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-parts
+  label: Flux Kontext dev (fp8), rig parts from the picked reference
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+  seed: 71172
+subjects:
+- key: swamp-witch-rig-stance-apart
+  entity: swamp-witch
+  title: 'swamp-witch rig part: stance-apart'
+  size: 832x1216
+  source_image_id: 244386
+  source_flip: false
+  prompt_prose: 'Show her whole figure seen from the side facing right, rising on her coil, both arms held out away
+    from her body so her sleeves do not overlap the shawl: her right hand open and gnarled, ready to slap, and her
+    left hand curled as if holding a little bottle. Keep the same swamp witch, gaunt, with grey-violet wet skin,
+    glowing yellow slit-pupil eyes and long stringy black hair, rising on a coil of dark violet tentacles with pale
+    suckers instead of legs, fully robed in the ragged hooded shawl of green moss, reeds and fishing net with bone
+    charms and corked bottles, and the same comic art style. On a plain off-white background, nothing else in the
+    picture.'
+  jobs:
+    kontext-parts: 36415
+- key: swamp-witch-rig-body-no-arms
+  entity: swamp-witch
+  title: 'swamp-witch rig part: body-no-arms'
+  size: 832x1216
+  source_image_id: 244386
+  source_flip: false
+  prompt_prose: Remove both of her arms completely, so the shawl hangs closed with no sleeves or hands showing.
+    Rising on her coil, seen from the side facing right. Keep the same swamp witch, gaunt, with grey-violet wet
+    skin, glowing yellow slit-pupil eyes and long stringy black hair, rising on a coil of dark violet tentacles
+    with pale suckers instead of legs, fully robed in the ragged hooded shawl of green moss, reeds and fishing net
+    with bone charms and corked bottles, and the same comic art style. On a plain off-white background, nothing
+    else in the picture.
+  jobs:
+    kontext-parts: 36416
+- key: swamp-witch-rig-arm-slap
+  entity: swamp-witch
+  title: 'swamp-witch rig part: arm-slap'
+  size: 832x1216
+  source_image_id: 244386
+  source_flip: false
+  prompt_prose: 'Show only her right arm on its own: a ragged mossy shawl sleeve and a gnarled grey-violet hand
+    with long nails, open, held straight out, side view. Keep the same swamp witch, gaunt, with grey-violet wet
+    skin, glowing yellow slit-pupil eyes and long stringy black hair, rising on a coil of dark violet tentacles
+    with pale suckers instead of legs, fully robed in the ragged hooded shawl of green moss, reeds and fishing net
+    with bone charms and corked bottles, and the same comic art style. On a plain off-white background, nothing
+    else in the picture.'
+  jobs:
+    kontext-parts: 36417
+- key: swamp-witch-rig-tentacle
+  entity: swamp-witch
+  title: 'swamp-witch rig part: tentacle'
+  size: 832x1216
+  source_image_id: 244386
+  source_flip: false
+  prompt_prose: Show only one of her dark violet tentacles on its own, long, reaching out to the right with the
+    tip curled, pale suckers along its underside, side view. Keep the same swamp witch, gaunt, with grey-violet
+    wet skin, glowing yellow slit-pupil eyes and long stringy black hair, rising on a coil of dark violet tentacles
+    with pale suckers instead of legs, fully robed in the ragged hooded shawl of green moss, reeds and fishing net
+    with bone charms and corked bottles, and the same comic art style. On a plain off-white background, nothing
+    else in the picture.
+  jobs:
+    kontext-parts: 36418
+- key: swamp-witch-rig-crouch
+  entity: swamp-witch
+  title: 'swamp-witch rig part: crouch'
+  size: 832x1216
+  source_image_id: 244386
+  source_flip: false
+  prompt_prose: Show her sunk low into her coil facing right, the shawl pooling over the tentacles, hands ready.
+    Keep the same swamp witch, gaunt, with grey-violet wet skin, glowing yellow slit-pupil eyes and long stringy
+    black hair, rising on a coil of dark violet tentacles with pale suckers instead of legs, fully robed in the
+    ragged hooded shawl of green moss, reeds and fishing net with bone charms and corked bottles, and the same comic
+    art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36419
+- key: swamp-witch-rig-jump
+  entity: swamp-witch
+  title: 'swamp-witch rig part: jump'
+  size: 832x1216
+  source_image_id: 244386
+  source_flip: false
+  prompt_prose: Show her rising high into the air facing right, the tentacles trailing below her and the shawl flaring.
+    Keep the same swamp witch, gaunt, with grey-violet wet skin, glowing yellow slit-pupil eyes and long stringy
+    black hair, rising on a coil of dark violet tentacles with pale suckers instead of legs, fully robed in the
+    ragged hooded shawl of green moss, reeds and fishing net with bone charms and corked bottles, and the same comic
+    art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 36420
+- key: swamp-witch-rig-sink
+  entity: swamp-witch
+  title: 'swamp-witch rig part: sink'
+  size: 832x1216
+  source_image_id: 244386
+  source_flip: false
+  prompt_prose: Show her half sunk into a dark puddle of mud facing right, only her shoulders, her hood and her
+    glowing eyes above it, two tentacles curling up out of the mud. Keep the same swamp witch, gaunt, with grey-violet
+    wet skin, glowing yellow slit-pupil eyes and long stringy black hair, rising on a coil of dark violet tentacles
+    with pale suckers instead of legs, fully robed in the ragged hooded shawl of green moss, reeds and fishing net
+    with bone charms and corked bottles, and the same comic art style. On a plain off-white background, nothing
+    else in the picture.
+  jobs:
+    kontext-parts: 36421
+- key: swamp-witch-rig-knockdown
+  entity: swamp-witch
+  title: 'swamp-witch rig part: knockdown'
+  size: 832x1216
+  source_image_id: 244386
+  source_flip: false
+  prompt_prose: Show her melted down into a puddle of mud and moss with only her hood and eyes showing, one tentacle
+    raised from the puddle waving a small white rag, seen from the side. Keep the same swamp witch, gaunt, with
+    grey-violet wet skin, glowing yellow slit-pupil eyes and long stringy black hair, rising on a coil of dark violet
+    tentacles with pale suckers instead of legs, fully robed in the ragged hooded shawl of green moss, reeds and
+    fishing net with bone charms and corked bottles, and the same comic art style. On a plain off-white background,
+    nothing else in the picture.
+  jobs:
+    kontext-parts: 36422
