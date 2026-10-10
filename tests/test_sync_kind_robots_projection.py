@@ -193,3 +193,16 @@ def test_production_api_hosts_never_fall_back_to_retired_vercel(monkeypatch):
     for old_url in ("https://kind-robots.vercel.app", "https://kindrobots.vercel.app"):
         with pytest.raises(ValueError, match="retired Vercel"):
             projection.post_snapshot(old_url, "token", b"{}")
+
+
+def test_operational_scripts_and_workflows_have_no_retired_vercel_urls():
+    """Fail CI if an old hardcoded endpoint sneaks back into a scheduled job."""
+    roots = (projection.ROOT / "scripts", projection.ROOT / ".github" / "workflows")
+    obsolete_host = "kind-robots" + ".vercel.app"
+    matches = []
+    for root in roots:
+        for path in root.rglob("*"):
+            if path.is_file() and path.suffix in {".py", ".sh", ".yml", ".yaml", ".js", ".ts", ".ps1"}:
+                if obsolete_host in path.read_text(encoding="utf-8", errors="replace"):
+                    matches.append(str(path.relative_to(projection.ROOT)))
+    assert not matches, f"Retired Vercel endpoint in runnable files: {matches}"
