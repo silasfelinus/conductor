@@ -122,18 +122,17 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Build three physically distinct elevated ramps, two orbits and shot sensors"
-    status: review
+    status: ready
     depends_on: t-004
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Fabricate Village left switchback returning right, Abbey right crossover returning left, and central Bell spiral rising to the Abbey. Add orbit returns, safe sensors, ball collision sweeps and target animations. Prove each shot with captured trajectory and repeatable test scenario.
 
       Prepared a dimensioned mechanical pass in kind_robots branch worker/zuzu-pinball-t005-elevated-shots-20261010-f81d: three genuine mesh floor/rail/roof ramps with independent paths, two physically guided orbit returns, shot switch chains and dedicated Rapier rolling/ball-conservation/shot-order regression tests. Typecheck, CI and target-preview validation remain pending.
-    claimed_by: 2026-10-10T230630Z-zuzu-pinball-t005-f81d
-    claimed_at: '2026-10-10T23:06:30Z'
-    updated: '2026-10-10T23:11:00Z'
+
+      2026-10-10 PT: Merged the first genuine 3D ramp engineering slice to kind_robots main in PR #3475 at 9366670948f6b05a9440a991f37fd967279ce968. Three physically distinct raised Rapier mesh ramp floor/rail/cover paths, two outer orbit return guides, ramp entry/crest/return sensor chains, Croc approach and crossover clearance tests, and seeded 24-tick ball conservation/shot-order checks are committed. 29/29 PR checks completed successful, including TypeScript, all contract tests, Prettier and production-image build. Follow-up required before marking t-005 done: demonstrate actual flipper-origin trajectories that enter, crest and exit EACH ramp at calibrated shot speeds, capture trajectory evidence, verify safe returns and no stuck balls in repeatable physics replay, then tune any competing Croc shot geometry. Admin preview only. Self-hosted Alexandria runtime deployment not verified; public release still gated.
+    updated: '2026-10-10T23:44:00Z'
   - id: t-006
     milestone: m2
     title: "Build raised Abbey upper deck with two independent flippers"
