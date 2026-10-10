@@ -25,12 +25,17 @@ Configure these under **Settings → Secrets and variables → Actions → Repos
 | `DIGEST_FROM` | yes for scheduled digest email | Sender email address allowed by Brevo. May also be a repository variable. |
 | `DIGEST_TO_NAME` | no | Defaults to `Silas`. May also be a repository variable. |
 | `DIGEST_FROM_NAME` | no | Defaults to `AI_Networker`. May also be a repository variable. |
+| `DIGEST_SMTP_USER` | recommended | Gmail address the digest is sent from over SMTP. With `DIGEST_SMTP_PASSWORD` set, the digest goes out through Gmail with its links untouched; Brevo becomes the fallback. |
+| `DIGEST_SMTP_PASSWORD` | recommended | A Gmail [app password](https://myaccount.google.com/apppasswords) for `DIGEST_SMTP_USER` (needs 2-Step Verification). Not the account password. |
+| `DIGEST_SMTP_FROM` | no | From address if it differs from `DIGEST_SMTP_USER` (must be a verified Gmail "Send mail as" alias). May also be a repository variable. |
 
 Do not add a model-provider API key to this repo for routine worker or digest operation. If a future task genuinely needs one, make that a separate human-approved design change instead of quietly adding it to Actions.
 
 ## Daily digest email
 
 The `daily-digest` GitHub Actions workflow builds `digest.json` with `scripts/build_digest.py`, validates the JSON shape, renders a Brevo payload preview, and sends scheduled runs through Brevo transactional email.
+
+When `DIGEST_SMTP_USER` and `DIGEST_SMTP_PASSWORD` are set, the send step uses Gmail SMTP first and only falls back to Brevo if that fails. Brevo rewrites every link in transactional mail through its `sendibt*.com` click tracker and offers no self-serve way to turn that off, so SMTP is the only path that delivers direct Kind Robots links (animation-manager t-026).
 
 Each run uploads `daily-digest-artifacts` containing `digest.json` and `digest-email.json`. The generated `digest-email.json` preview omits recipient, sender, and API key values. The workflow also prints which required and optional configuration names are present or missing without printing any secret values. Scheduled runs still require `BREVO_API_KEY`, `DIGEST_TO`, and `DIGEST_FROM` before sending.
 

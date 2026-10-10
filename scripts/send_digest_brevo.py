@@ -16,6 +16,11 @@ from collections.abc import Callable, Sequence
 from pathlib import Path
 from typing import Any
 
+try:
+    from scripts import send_digest_smtp
+except ImportError:  # run as `python scripts/send_digest_brevo.py`
+    import send_digest_smtp  # type: ignore[no-redef]
+
 
 BREVO_URL = "https://api.brevo.com/v3/smtp/email"
 DIRECT_LINKS_ATTACHMENT = "conductor-direct-links.html"
@@ -247,6 +252,14 @@ def main() -> int:
 
     with payload_path.open(encoding="utf-8") as payload_file:
         payload = json.load(payload_file)
+
+    # SMTP first: it is the only path whose links reach Silas unrewritten (see
+    # send_digest_smtp.py). Brevo stays as the fallback so a Gmail outage or a
+    # revoked app password costs tracked links for a day, never the digest.
+    if send_digest_smtp.is_configured():
+        if send_digest_smtp.send_payload(payload) == 0:
+            return 0
+        print("Falling back to Brevo; today's links will be click-tracked.", file=sys.stderr)
 
     configure_payload(payload)
     return send_payload(payload, os.environ["BREVO_API_KEY"])

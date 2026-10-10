@@ -182,3 +182,112 @@ def test_idempotency_key_is_stable_for_identical_payloads():
     second = base_payload()
 
     assert digest_sender.ensure_idempotency_key(first) == digest_sender.ensure_idempotency_key(second)
+
+
+class FakeSMTP:
+    instances = []
+
+    def __init__(self, host, port, timeout=None):
+        self.host, self.port = host, port
+        self.sent = []
+        FakeSMTP.instances.append(self)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, traceback):
+        return False
+
+    def login(self, user, password):
+        self.login_args = (user, password)
+
+    def send_message(self, message):
+        self.sent.append(message)
+
+
+def smtp_env(monkeypatch):
+    monkeypatch.setenv("DIGEST_SMTP_USER", "sender@example.com")
+    monkeypatch.setenv("DIGEST_SMTP_PASSWORD", "app-password")
+    monkeypatch.setenv("DIGEST_TO", "silas@example.com")
+    monkeypatch.setenv("DIGEST_FROM", "conductor@example.com")
+
+
+def test_smtp_send_keeps_hrefs_byte_for_byte(monkeypatch):
+    import scripts.send_digest_smtp as smtp_sender
+
+    smtp_env(monkeypatch)
+    FakeSMTP.instances = []
+    direct = "https://kindrobots.org/api/conductor/pitch-inbox?exp=1792348892&amp;sig=deadbeef"
+    payload = {"subject": "Daily Dream", "htmlContent": f'<a href="{direct}">Decide all 5</a>'}
+
+    assert smtp_sender.send_payload(payload, smtp_factory=FakeSMTP) == 0
+
+    message = FakeSMTP.instances[0].sent[0]
+    assert message["To"] == "Silas <silas@example.com>"
+    assert message["From"] == "Conductor <sender@example.com>"
+    body = message.get_body(("html",)).get_content()
+    assert direct in body
+    assert "sendibt" not in body
+    assert "Direct-link backup" not in body
+    assert not list(message.iter_attachments())
+
+
+def test_smtp_drops_brevo_only_backup_but_keeps_real_attachments(monkeypatch):
+    import scripts.send_digest_smtp as smtp_sender
+
+    smtp_env(monkeypatch)
+    payload = {
+        "subject": "Daily Dream",
+        "htmlContent": "<p>hi</p>",
+        "attachment": [
+            {"name": "conductor-direct-links.html", "content": base64.b64encode(b"x").decode()},
+            {"name": "notes.txt", "content": base64.b64encode(b"keep me").decode()},
+        ],
+    }
+    names = [part.get_filename() for part in smtp_sender.build_message(payload).iter_attachments()]
+    assert names == ["notes.txt"]
+
+
+def test_main_prefers_smtp_and_skips_brevo(monkeypatch, tmp_path):
+    smtp_env(monkeypatch)
+    monkeypatch.setenv("BREVO_API_KEY", "brevo-key")
+    payload_path = tmp_path / "digest-email.json"
+    payload_path.write_text(json.dumps(base_payload()), encoding="utf-8")
+    monkeypatch.setattr("sys.argv", ["send_digest_brevo.py", str(payload_path)])
+    monkeypatch.setattr(digest_sender.send_digest_smtp, "send_payload", lambda payload: 0)
+
+    def brevo_must_not_send(*args, **kwargs):
+        raise AssertionError("Brevo was called although SMTP succeeded")
+
+    monkeypatch.setattr(digest_sender, "send_payload", brevo_must_not_send)
+    assert digest_sender.main() == 0
+
+
+def test_main_falls_back_to_brevo_when_smtp_fails(monkeypatch, tmp_path):
+    smtp_env(monkeypatch)
+    monkeypatch.setenv("BREVO_API_KEY", "brevo-key")
+    payload_path = tmp_path / "digest-email.json"
+    payload_path.write_text(json.dumps(base_payload()), encoding="utf-8")
+    monkeypatch.setattr("sys.argv", ["send_digest_brevo.py", str(payload_path)])
+    monkeypatch.setattr(digest_sender.send_digest_smtp, "send_payload", lambda payload: 1)
+    calls = []
+    monkeypatch.setattr(digest_sender, "send_payload", lambda payload, key: calls.append(key) or 0)
+
+    assert digest_sender.main() == 0
+    assert calls == ["brevo-key"]
+
+
+def test_main_uses_brevo_when_smtp_unconfigured(monkeypatch, tmp_path):
+    monkeypatch.delenv("DIGEST_SMTP_USER", raising=False)
+    monkeypatch.delenv("DIGEST_SMTP_PASSWORD", raising=False)
+    monkeypatch.setenv("BREVO_API_KEY", "brevo-key")
+    monkeypatch.setenv("DIGEST_TO", "silas@example.com")
+    monkeypatch.setenv("DIGEST_FROM", "conductor@example.com")
+    payload_path = tmp_path / "digest-email.json"
+    payload_path.write_text(json.dumps(base_payload()), encoding="utf-8")
+    monkeypatch.setattr("sys.argv", ["send_digest_brevo.py", str(payload_path)])
+    calls = []
+    monkeypatch.setattr(digest_sender, "send_payload", lambda payload, key: calls.append(key) or 0)
+
+    assert digest_sender.main() == 0
+    assert calls == ["brevo-key"]
