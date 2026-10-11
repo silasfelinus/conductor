@@ -12483,3 +12483,7 @@ Worker pattern: good — each reroll records `rerolled_from` and the reference i
 shows `claimed` with owner worker (claim fields look lost, per check_recurring_claim_drift) but the task is hours
 old, so a live worker may hold it; left for the next sweep. Daily pitches docket for 10-10 is ok (5 undecided);
 both approved arcade cabinets are already in kr-arcade/games.yaml.
+
+## 2026-10-11 — Reviewer: conductor#5937 + #5935 (zuzu art)
+Approved and squash-merged both. #5937 (zuzu-gamebook rounds 8-9: ROUND-8/9 verdicts, hub shard, README count, t-006 note) and #5935 (zuzu-showdown portraits tool, T008/T021 art YAMLs, t-008/t-019/t-026/t-028 closed via close_task.py, CHANGELOG catch-up). Reversible art/bookkeeping, all 25 checks green on head, no review claim from another session.
+Worker pattern: good — #5937 states keep rates honestly (77% single-figure vs 23% paired) and names the failure mode (shadow/second presence prompts draw a second figure); round 10 should drop those phrases. #5935 closes tasks through the helper. Not done: kaizen task creation skipped this run; no fresh weakness in LEARNING-REPORT beyond the round-10 prompt rule above.
