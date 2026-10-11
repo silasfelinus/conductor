@@ -656,7 +656,7 @@ tasks:
   - id: t-021
     milestone: m4
     title: "kind_robots: Arcade mode, the boss, endings, leaderboard and arcade hall tile"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -668,6 +668,11 @@ tasks:
       multiplier) goes through the arcade store's submitScore as gameSlug `zuzu-showdown`, with
       maxPlausibleScore registered and three-initial entry. The Arcade hall tile links to
       /play/zuzu-showdown but stays out of the hall until t-025.
+
+      READY 2026-10-10 (PT): t-019 and t-020 are done (t-019 closed in this PR), so the
+      resolver's promotion is applied here. The ending stills are queued
+      (art/T021-ENDINGS.yaml).
+    updated: '2026-10-11T03:38:40Z'
 
   - id: t-022
     milestone: m4
