@@ -3099,12 +3099,12 @@ tasks:
   claimed_at: '2026-10-08T22:30:00Z'
 - id: t-206
   title: "Restore project parity audit against current self-hosted Kind Robots API"
-  status: ready
+  status: done
   stakes: reversible
   owner: null
   passes: 0
   source_issue: "silasfelinus/conductor#5832"
-  updated: '2026-10-09'
+  updated: '2026-10-11T16:48:45Z'
   note: |-
     FROM GITHUB ISSUE silasfelinus/conductor#5832 (https://github.com/silasfelinus/conductor/issues/5832), opened by @silasfelinus on 2026-10-09. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/conductor#5832`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -3121,6 +3121,12 @@ tasks:
     4. Verify a **completed post-merge** oversight run showing parity fully checked rather than 503, and report its run link.
 
     Alert repetition is handled separately by PR #5831; that does NOT repair the underlying 503.
+
+    2026-10-11 verified: #5833 moved parity to https://kindrobots.org/api/conductor/project-
+    parity (authenticated 200, lean projection). check_project_scaffold_drift.py reports no
+    drift; post-merge conductor-oversight refresh (76374961, 2026-10-11 13:03Z) shows parity
+    checked with 0 forward/0 reverse drift, overall clean.
+  implementation_pr: 'silasfelinus/conductor#5833'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
