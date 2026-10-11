@@ -12491,3 +12491,7 @@ Worker pattern: good — #5937 states keep rates honestly (77% single-figure vs 
 ## 2026-10-11 — Reviewer: conductor#5961 (comic-creator t-016 LoRAs trained and tested)
 Approved and squash-merged. Adds `loras:` support to enqueue_art_requests.py (subject over lane, comfy only, with a test), LORA-TEST.yaml (34 private renders), CAST-PICKS/lora-training results, t-016 → done and new ready t-023 (coyote v2 stump set). Reversible, private renders, CI green on head, no review claim from another session.
 Worker pattern: good — the coyote stump failure is reported honestly (prompt weighting made it worse) and turned into a concrete follow-up task rather than papered over. t-023 serves as this merge's kaizen task.
+
+## 2026-10-11 — Reviewer: conductor#5975 (zuzu-lair/t-005 close-out)
+Approved and squash-merged. Roadmap-only close for t-005 (kind_robots#3521 verified merged), t-009 waiting → ready. Reversible bookkeeping, CI green on head, no review-claim marker from another session.
+Worker pattern: good — completion note names the PR and Playwright verification. Not done: kaizen task skipped (bookkeeping-only close; zuzu-lair already has ready t-006/t-009 follow-ons).
