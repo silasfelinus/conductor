@@ -417,11 +417,11 @@ tasks:
   - id: t-012
     milestone: m5
     title: Redraw the two-character plates once the character LoRAs exist
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: [t-006]
+    depends_on: []
     note: >-
       Silas, 2026-10-10: "go ahead for workarounds. We can fix things later when we have the LoRAs built, that
       task got moved to later because we had too much art that was going to be made...ironically, since by this
@@ -430,3 +430,15 @@ tasks:
       place, because the Arthemy house lane fuses Zuzu with whoever shares the frame or leaks his costume onto
       them. When the LoRAs land, redraw those sections (ROUND-9.yaml subjects whose original act*.json entry had
       two or more figures) as the two-character scenes the text describes, in the house lane with the LoRAs.
+
+      2026-10-11 Silas: "Loras now exist. Time to do a pass, correct bad art, and give this an overall polish."
+      (comic-creator/t-016 done: zuzukoala 4593, zkasister 4583, zkatoddler 4588, zkacoyote 4578, zkaabbess 4595.)
+      ROUND-12 (ArtJobs 37005-37024) tested ten paired scenes with every present character's LoRA: the sister and the
+      toddler together render cleanly (survivors and a3-shade kept), but Zuzu still fuses with any second LoRA (two
+      koalas, his hat on the fennec, fennec ears on him) and the abbess beside anyone gets a human face. So paired Zuzu
+      moments stay single-figure, now drawn on-model. A plate audit of all 365 live plates flagged 95: 79 of the 102
+      Zuzu plates off-model (bear or dog face, two swords, no hat or poncho) and 16 others (blood, a hanging, human
+      faces, a modern pistol). ROUND-13 (170 jobs from 37025) redraws the 85 Zuzu-alone compositions with his LoRA;
+      ROUND-14 recomposes the 17 Zuzu ensembles, the 16 other flags and the 4 stand-ins; ROUND-15 (94 jobs from 37195)
+      redraws the 47 sister/toddler/coyote/abbess plates with their LoRAs, kept only where better. The
+      t-006 dependency is dropped: t-006's last four stand-ins are now redrawn here (ROUND-14), so t-012 no longer waits on it.

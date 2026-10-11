@@ -2404,3 +2404,18 @@ tasks:
   owner: worker
   claimed_by: 20260930T0930Z-iv140
   claimed_at: '2026-09-30T04:45:13Z'
+
+- id: t-141
+  milestone: m6
+  title: Align tablet navigation audit with the approved adaptive menu
+  status: review
+  owner: worker
+  claimed_by: 2026-10-11T212600Z-iv-t141-a82e
+  claimed_at: '2026-10-11T21:26:00Z'
+  updated: '2026-10-11T21:26:46Z'
+  passes: 0
+  stakes: reversible
+  note: |-
+    Operational alert triage 2026-10-11: Responsive Layout Audit run 38172739938 fails tablet navigation because the fixture still caps menus at 288px, although tab-select.vue intentionally uses up to three columns under Silas's 2026-10-09 direction to use available room. The /conductor guest route has no tab menu. Update the fixture to validate adaptive width, viewport bounds, actual visible navigation rows and an appropriate public route. Preserve real failures and add executable regression coverage; do not change product navigation or hide broken art.
+
+    Scoped tablet navigation audit repair implemented on worker/interface-vision-t141-tablet-audit-20261011-a82e. Six executable geometry regression tests passed locally. Full CI and live audit verification follow before merge.
