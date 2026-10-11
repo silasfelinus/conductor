@@ -1,7 +1,7 @@
 # Pitch: Kind Sliding Tile Gallery
 date: 2026-10-11
 project-target: new
-status: awaiting-silas
+status: approved
 
 ## The idea
 A sliding-tile puzzle toy where each solved board reveals one piece from a pre-generated gallery of Kind Robots art, with captions written ahead of time. Boards grow from three-by-three to five-by-five, and every solve fills a keepsake wall saved locally, with a daily seeded board for a shared challenge.
