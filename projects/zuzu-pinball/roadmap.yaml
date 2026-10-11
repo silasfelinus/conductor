@@ -231,7 +231,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Add physical lock and 3/4/6 ball multiballs with jackpots"
-    status: claimed
+    status: review
     depends_on: t-007
     owner: worker
     passes: 0
@@ -240,9 +240,17 @@ tasks:
       Real ball trough/serve count and Citadel lock, virtual lock fallback,
       Harvest Moon 3-ball, Storm Crow 4-ball, Last Bell 6-ball, bonus and
       super-jackpot escalation. Soak test multi-contact collisions and cleanup.
+
+      kind_robots#3553: Citadel physical lock at the bell-lane head (shelf slots, subway
+      kickout to the left inlane), 6-ball ledger with self-healing virtual fallback, Harvest
+      Moon 3-ball (staggered ramp jackpots, orbit-combo super), Storm Crow 4-ball (seals +
+      both orbits, per-lane 3-rung ladders, bell-lane super), The Last Bell 6-ball wizard on
+      the fifth seal (releases locks; six jackpots light the Bell spiral super), escalating
+      supers, 10 s multiball ball save; soaks check the ledger every physics step.
     claimed_by: 20261011T234500Z-zuzu-t009-multiball-q5m1
     claimed_at: '2026-10-11T21:32:24Z'
-    updated: '2026-10-11T21:32:24Z'
+    updated: '2026-10-11T22:34:36Z'
+    implementation_pr: 'silasfelinus/kind_robots#3553'
   - id: t-010
     milestone: m3
     title: "Build and balance unlockable hidden undercrypt mini-table"
