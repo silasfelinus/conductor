@@ -644,7 +644,7 @@ tasks:
   - id: t-025
     milestone: m7
     title: "Pipe Pals depth slice 3: Swing Shift -- Cold Storage, Boiler Works, Clockwork Water Tower and the Thermostat"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-024
@@ -662,15 +662,23 @@ tasks:
       (district/episode/room definitions), not branches in the update loop. Verify: test:arcade-engine
       plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR,
       and a pilot probe that shows runs still end.
+
+      DONE 2026-10-11: silasfelinus/kind_robots#3515 merged after all CI passed. Swing Shift:
+      Cold Storage (ice ledges, icicles, frost bots, snowballs, Thaw Run), Boiler Works (steam
+      vents, crumble ledge, thicker embers, Pressure Valves), Clockwork Water Tower
+      (conveyors, gear ledges, gear bugs, the cuckoo, Valve Routing); ice/steam/gear bonus
+      twists; the Thermostat boss. Difficulty now keyed to district+phase; walker speed capped
+      at 2.5 px/tick.
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3
     claimed_at: '2026-10-11T12:53:51Z'
-    updated: '2026-10-11T12:53:51Z'
+    updated: '2026-10-11T13:13:24Z'
+    implementation_pr: 'silasfelinus/kind_robots#3515'
 
   - id: t-030
     milestone: m7
     title: "Pipe Pals depth slice 4: Night Shift -- Flooded Mains, Storm Drain, the Clog King and the flush, the Golden Main, endings, save/resume"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-025
@@ -717,7 +725,7 @@ tasks:
   - id: t-026
     milestone: m7
     title: "Prize Show Panic depth slice 1: season map engine, authored rooms and modifiers, Episode 1 Opening Night, golden tickets"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -736,15 +744,24 @@ tasks:
       Content is data (district/episode/room definitions), not branches in the update loop. Verify:
       test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD
       screenshots on the PR, and a pilot probe that shows runs still end.
+
+      DONE 2026-10-11: silasfelinus/kind_robots#3516 merged after all CI passed. Data-defined
+      season (utils/arcade/prizeShow/season.ts) with Episode 1 Opening Night: 13 rooms on a
+      5x3 grid with safe/rich forks and an off-map Backstage secret; map screen between rooms
+      (prizeShow/mapScreen.ts); all ten authored room types incl. mine sets, light rig, camera
+      wall, vault, sponsor challenge; six modifiers; golden tickets (12 in the season, 10 open
+      the vault later); Parade Float second phase; Encore loops so runs end. New
+      verifyPrizeShowPanic.test.ts.
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T12:04:36Z'
-    updated: '2026-10-11T12:04:36Z'
+    updated: '2026-10-11T13:13:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#3516'
 
   - id: t-027
     milestone: m7
     title: "Prize Show Panic depth slice 2: the 19-crasher roster, the 10-item arsenal and true twin-stick aim"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-026
@@ -767,7 +784,7 @@ tasks:
   - id: t-028
     milestone: m7
     title: "Prize Show Panic depth slice 3: the host and co-host, the ratings meter, cheer chains, prize tally, Prize Swap and the studio audience"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-026
