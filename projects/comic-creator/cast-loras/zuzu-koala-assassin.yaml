@@ -1,0 +1,41 @@
+# Character LoRAs for the Zuzu, Koala Assassin series (comic-creator t-016). Silas, 2026-10-11: "These Loras should
+# be the default, not just for the comic render but for any of our projects that use Zuzu (well, not the 2d video
+# game, fighting game, or pinball ...): shifting lands, gamebook, comic, musical trailer, and intro video".
+#
+# scripts/enqueue_art_requests.py reads this for any ledger with `series: zuzu-koala-assassin`. Kind Robots keeps
+# the same list on the series' Arthemy lane (`castLoras`), which covers the Comic Studio, music videos and comic-film.
+# Keep the two in step when a LoRA is retrained (t-023, coyote v2).
+#
+# A LoRA rides on a render only when the subject's own prompt names its character (its trigger, or a `match` term as
+# a whole word). One character gets `strength`; two or more each get 0.75 of it. Only SDXL-family lanes (comfy
+# engine, Illustrious/NoobAI checkpoints) use them. A ledger opts out with `cast_loras: false`, and a subject or lane
+# with its own `loras:` keeps them.
+lane_checkpoint_prefixes: [Illustrious/, NoobAI/]
+shared_scale: 0.75
+max_per_render: 4
+cast:
+- key: zuzu
+  resource_id: 4593
+  trigger: zuzukoala
+  strength: 0.8
+  match: [zuzu, koala]
+- key: sister
+  resource_id: 4583
+  trigger: zkasister
+  strength: 0.8
+  match: [sister, older sister, fennec girl, 'fennec fox, female']
+- key: toddler
+  resource_id: 4588
+  trigger: zkatoddler
+  strength: 0.8
+  match: [toddler, little brother, baby brother]
+- key: coyote
+  resource_id: 4578
+  trigger: zkacoyote
+  strength: 0.8
+  match: [coyote]
+- key: abbess
+  resource_id: 4595
+  trigger: zkaabbess
+  strength: 0.8
+  match: [abbess, mother superior, head nun]
