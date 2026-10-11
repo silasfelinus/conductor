@@ -345,7 +345,7 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Build River Croc waterline mouth capture, jaw rig and safe spit"
-    status: claimed
+    status: review
     depends_on: t-007
     owner: worker
     passes: 0
@@ -360,9 +360,17 @@ tasks:
       Spit/Reset sequence. Spit to right inlane; ball ledger conservation,
       busy-mouth reject, timeout eject, safe tilt, multiball stress and
       unobstructed ramp clearance verified with repeatable trajectory tests.
+
+      2026-10-11 PT: kind_robots PR #3535 adds the River Croc's jaw gate (door croc-jaw,
+      starts open, shuts on capture) and his cycle: open, captured, Death Roll, spit,
+      submerged, rising, open. It also adds the sculpted animatronic toy (engine animatronics
+      plus render/croc.ts) and the lamp aim cue. test:zuzu-pinball-croc covers busy-mouth
+      reject, two-ball conservation and 200 rounds; 1,000 rounds passed locally with no drain
+      during a hold.
     claimed_by: 20261011T220500Z-zuzu-t015-croc-j4n8
     claimed_at: '2026-10-11T20:44:00Z'
-    updated: '2026-10-11T20:44:00Z'
+    updated: '2026-10-11T21:02:44Z'
+    implementation_pr: 'silasfelinus/kind_robots#3535'
   - id: t-016
     milestone: m3
     title: "Author River Croc Watering Hole mini-mode and Death Roll jackpot"
