@@ -915,3 +915,25 @@ tasks:
     claimed_by: 2026-10-11T05:10:00Z-zs-t029
     claimed_at: '2026-10-11T05:10:00Z'
     updated: '2026-10-11T05:10:00Z'
+
+  - id: t-030
+    milestone: m4
+    title: "The Coyote's two ending stills: his right hand gone, the knife lashed to the stump"
+    status: ready
+    owner: worker
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    note: >-
+      Split from t-021 (2026-10-11): 16 of the 18 ending stills shipped (kind_robots#3505); the Coyote's
+      two did not, because Flux Kontext would not draw his right hand missing. Four rounds failed, each
+      with the hand drawn whole (art/T021-ENDINGS.yaml `rejected`): the original prompts; stump-first
+      prompts; a re-pose from the post-croc reference (242404) framed from his left side; and a masked
+      edit of only the knee hand. Root cause: the reference these stills re-pose (242401) shows two
+      fists, and Kontext follows a hand that is anywhere in frame. Until this ships, his ending shows
+      his victory portrait (the fallback in drawEndingScreen). Try a method that does not ask the model
+      to remove a hand: composite the stump from the rig's parts sheet (T010-RIG-PARTS, the knife
+      lashed to the stump, confirmed by Silas 2026-10-07) over a kept still, or compose stills with
+      both arms out of frame (a back view walking away, a close-up of the face), then ship with
+      tools/endings.py.
+    updated: '2026-10-11T09:40:00Z'
