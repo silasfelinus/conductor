@@ -199,8 +199,8 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Safe versioned save/resume, pinned run seed, history and deterministic replay tests"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-006]
@@ -208,6 +208,9 @@ tasks:
       Durable, schema-versioned serialized run; preserve choices, hidden roles,
       map events, used Rewards, companion identity and both roll dice; reject
       corrupted saves; no re-roll by refresh.
+    claimed_by: 2026-10-11T051600Z-zuzu-shifting-lands-t009-9c42
+    claimed_at: '2026-10-11T05:16:00Z'
+    updated: '2026-10-11T05:16:00Z'
 
   - id: t-010
     milestone: m3
