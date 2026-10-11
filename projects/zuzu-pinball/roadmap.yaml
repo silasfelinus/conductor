@@ -241,7 +241,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build production art assets, 3D cabinet, ramps, ball, plastics and themed toys"
-    status: claimed
+    status: ready
     depends_on: t-005
     owner: worker
     passes: 0
@@ -253,9 +253,19 @@ tasks:
       glass/chrome reflections and raised mechanical ramp model. Include the
       canonical scarred, giant River Croc as a rigged waterline jaw toy.
       Log prompts, seeds, sources, rights, destinations and asset state.
+
+      2026-10-11 PT (Silas: queue the final table art and the croc animation overnight):
+      queued 11 krea2 ArtJob requests in projects/art-prompts.yaml (project zuzu-pinball,
+      priority 110): the painted playfield (1024x2000), backglass (1536x640), raised Abbey
+      deck (1280x1024), undercrypt (1024x1280), cabinet side (2048x1024), and six River Croc
+      animation keyframes on seed 731731 (submerged, rising, mouth-open, captured, death-roll,
+      spit), all to kind_robots public/images/pinball/zuzu-*.webp. Next: once delivered,
+      verify each URL, then wire the playfield and backglass into ZUZU_LAST_BELL_GREYBOX.art
+      (playfield region over the table rectangle, room.backglass) and hand the Croc frames to
+      t-015's jaw rig. Queued is not delivered.
     claimed_by: 20261011T191500Z-zuzu-t011-art-p5x3
     claimed_at: '2026-10-11T12:09:19Z'
-    updated: '2026-10-11T12:09:19Z'
+    updated: '2026-10-11T12:11:47Z'
   - id: t-012
     milestone: m4
     title: "Addressable LED rail and bezel splash shows, sound, DMD animations, camera"
