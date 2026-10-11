@@ -989,7 +989,7 @@ tasks:
   - id: t-033
     milestone: m7
     title: "More inserts and metal lane guides: chevron arrow runs into every shot, steel guide hardware"
-    status: claimed
+    status: review
     depends_on: [t-030]
     owner: worker
     passes: 0
@@ -1002,7 +1002,20 @@ tasks:
       chrome bolts and screw heads. The shot map, colliders and physics stay unchanged: new
       inserts are flat lamps under the playfield clear coat, and guides only dress existing walls.
       Tests cover a chevron run per shot, and that each run follows its shot's rule state.
-    updated: '2026-10-11T03:41:28Z'
+
+      Shipped in kind_robots#3491 (merged). A run of three chevrons sits behind each main shot
+      arrow, in the shot's colour. rules/lamps.ts drives it from the arrow: dark while the
+      arrow is unlit, filling one chevron per time the shot has been made, and chasing toward
+      the arrow while the shot is worth going for (the village shots, the multiball jackpots,
+      the wizard mode). A made shot ripples its run. The award saucer sits in the right ramp's
+      lane, so that shot has no run; chevronRun drops any run that would cross a saucer. Hex
+      stand-offs with domed chrome screw heads hold down both ends of every chrome lane guide,
+      with more along the long guides. Both are scenery only: the colliders are unchanged, and
+      the tests assert it. Tests cover placement and clearance from saucers, posts and
+      inserts, every rule state, the chase order, and the stand-off count. The overlap test
+      caught the right-ramp run sitting on the award lamp before it shipped. Screenshots:
+      screenshots/t033-desk.jpg, t033-chevrons.jpg, t033-standoffs.jpg.
+    updated: '2026-10-11T04:09:10Z'
     implementation_pr: 'silasfelinus/kind_robots#3491'
 
   - id: t-034
