@@ -416,21 +416,17 @@ tasks:
   - id: t-022
     milestone: m6
     title: "16-bit pass for Kind Pinball's 2D fallback table (devices without WebGL)"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261011T211248Z-kr-arcade-t-022-3m8n
     claimed_at: '2026-10-11T21:12:48.791Z'
-    updated: '2026-10-11T21:12:48.791Z'
+    updated: '2026-10-11T21:16:21.760Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Follow-up from t-021 (2026-10-10). The hall plays Kind Pinball as the WebGL 3D table;
-      utils/arcade/games/kindPinball.ts (Canvas 2D, ~2300 lines) is only served where WebGL is
-      missing, and still has the flat early look. Give it the DESIGN-BRIEF.md "16-bit style bar"
-      render pass on utils/arcade/snes.ts, render only, the same way the other 26 cabinets were
-      done (the session's brief and screenshot harness are described in t-021's notes). Low
-      priority: few players ever see this table. Then set kind-pinball's games.yaml row
-      `style: snes` and close m6.
+    note: |-
+      Follow-up from t-021 (2026-10-10). The hall plays Kind Pinball as the WebGL 3D table; utils/arcade/games/kindPinball.ts (Canvas 2D, ~2300 lines) is only served where WebGL is missing, and still has the flat early look. Give it the DESIGN-BRIEF.md "16-bit style bar" render pass on utils/arcade/snes.ts, render only, the same way the other 26 cabinets were done (the session's brief and screenshot harness are described in t-021's notes). Low priority: few players ever see this table. Then set kind-pinball's games.yaml row `style: snes` and close m6.
+
+      2026-10-11 PT: SNES render-only pass for the Canvas pinball fallback is committed on worker/kr-arcade-t-022-20261011T211248Z-3m8n, alongside the games.yaml style marker. Companion PRs will follow after this review transition is verified.
 
   - id: t-023
     milestone: m7
