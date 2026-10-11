@@ -989,9 +989,9 @@ tasks:
   - id: t-033
     milestone: m7
     title: "More inserts and metal lane guides: chevron arrow runs into every shot, steel guide hardware"
-    status: ready
+    status: claimed
     depends_on: [t-030]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -1002,6 +1002,8 @@ tasks:
       chrome bolts and screw heads. The shot map, colliders and physics stay unchanged: new
       inserts are flat lamps under the playfield clear coat, and guides only dress existing walls.
       Tests cover a chevron run per shot, and that each run follows its shot's rule state.
+    updated: '2026-10-11T03:41:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#3491'
 
   - id: t-034
     milestone: m7
