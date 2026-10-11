@@ -439,7 +439,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Sprite sets: the Hyena Matriarch, Old Komodo, and the boss"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -461,10 +461,21 @@ tasks:
       tools/rigs/komodo.py from art/T013-KOMODO-PARTS.yaml; normals fitted to the art; his staff smash
       reaches 45 px). Left: the boss (its layers are rendered; building it is t-021's).
 
+      DONE 2026-10-10 (PT): all three sets are in the game. The Hyena Matriarch
+      (kind_robots#3462, tools/rigs/hyena.py) and Old Komodo (kind_robots#3483,
+      tools/rigs/komodo.py, the 'komodo dragon, giant monitor lizard, scaled reptile' lead
+      held) play as their art with normals fitted to it. The boss is never drawn whole, as the
+      note asks: tools/boss_layers.py keys and crops the T021 layers (the door 243506, the
+      rising, sweeping and grasping tentacles, the eye) and kind_robots#3493's bossArt.ts
+      animates them by the sim's boss phases: the door widens per phase, the striking tentacle
+      rises from the floor under its target or slides out along it, the eye glows before its
+      beam and hangs out of the door in phase 3.
+
   # ---------------------------------------------------------------- m4 FIGHTERS & MODES
     claimed_by: 2026-10-11T04:15:00Z-zs-t013
     claimed_at: '2026-10-11T04:12:26Z'
-    updated: '2026-10-11T04:12:26Z'
+    updated: '2026-10-11T04:12:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#3493'
   - id: t-014
     milestone: m4
     title: "Movesets: Zuzu and Coyote Vagrant (frame data from fighters.yaml)"
