@@ -122,7 +122,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Build three physically distinct elevated ramps, two orbits and shot sensors"
-    status: review
+    status: done
     depends_on: t-004
     passes: 0
     stakes: reversible
@@ -143,7 +143,11 @@ tasks:
       flip, checks that the ramps return to their inlanes and the Croc spit reaches the right
       flipper, and runs bot games with no stranded ball. 50-game soak: 0 stuck balls. Coverage
       is now 9/9.
-    updated: '2026-10-11T10:05:16Z'
+
+      Merged kind_robots PR #3509 to main at 30b29bbb59551f5155a33eb07ee10853afd5a40f with all
+      33 checks green, including the new test:zuzu-pinball-shots. This clears t-006 and t-008.
+      Production container deploy not verified (manual Unraid Force Update).
+    updated: '2026-10-11T10:17:38Z'
     owner: worker
     claimed_by: 20261011T162500Z-zuzu-t005-lowerfield-k3p2
     claimed_at: '2026-10-11T09:22:40Z'
