@@ -670,7 +670,7 @@ tasks:
   - id: t-021
     milestone: m4
     title: "kind_robots: Arcade mode, the boss, endings, leaderboard and arcade hall tile"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -697,9 +697,17 @@ tasks:
       inside the clock) are on main. Left: the 18 ending stills (art/T021-ENDINGS.yaml,
       queued) ship with tools/endings.py; until then each ending shows the victory portrait.
       The hall tile's metadata waits in UNLISTED_SCORED_GAMES for t-025.
-    updated: '2026-10-11T04:12:33Z'
+
+      DONE 2026-10-11 (PT): the 16 painted ending stills shipped (kind_robots#3505, reviewed
+      against the character rules). The Coyote's two would not render with his right hand gone
+      (four rounds, art/T021-ENDINGS.yaml rejected); they moved to t-030 and his ending keeps
+      the victory-portrait fallback meanwhile. With Arcade/Story mode (#3492), the boss
+      (#3493) and the leaderboard on main, t-021 is complete; the hall tile waits on t-025 as
+      planned.
+    updated: '2026-10-11T09:36:55Z'
     claimed_by: 2026-10-11T04:10:00Z-zs-t021
     claimed_at: '2026-10-11T03:59:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#3505'
 
   - id: t-022
     milestone: m4
