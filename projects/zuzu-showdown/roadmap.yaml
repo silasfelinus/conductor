@@ -904,7 +904,7 @@ tasks:
   - id: t-029
     milestone: m4
     title: "The wasteland map: select-screen locator and Story mode travel between fights"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -924,9 +924,15 @@ tasks:
       drawing itself in red with the challenger's token riding it and beaten opponents crossed off. The map
       draws in ink until the painted one ships: art/T029-WORLD-MAP.yaml (three house-lane seeds), shipped
       with tools/world_map.py after picking a seed and tuning PLACES to its landmarks.
+
+      DONE 2026-10-11 (PT): the painted wasteland map shipped (kind_robots#3507): wasteland-
+      map-3 from a krea2 lane (the house-lane seeds painted a scene, not a map), with PLACES
+      and HOMES pinned to its landmarks. The select-screen locator (kind_robots#3500) and
+      Story mode's travel between fights now draw on it in both render styles.
     claimed_by: 2026-10-11T05:10:00Z-zs-t029
     claimed_at: '2026-10-11T05:10:00Z'
-    updated: '2026-10-11T05:10:00Z'
+    updated: '2026-10-11T09:42:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#3507'
 
   - id: t-030
     milestone: m4
