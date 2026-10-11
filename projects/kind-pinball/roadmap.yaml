@@ -107,7 +107,7 @@ milestones:
   - id: m6
     title: "LOOK -- one calm camera, and the mockups' visual quality"
     weight: 30
-    status: in-progress
+    status: done
 
 tasks:
   - id: t-001
@@ -503,7 +503,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "The finish line: Silas plays it and judges it as good as any Pinball FX3 table"
-    status: waiting
+    status: needs-human
     depends_on: [t-010, t-012, t-013, t-014, t-015, t-019, t-020, t-021, t-022, t-023, t-024, t-025, t-026, t-027, t-028, t-029, t-030, t-031]
     owner: null
     passes: 0
@@ -886,7 +886,7 @@ tasks:
   - id: t-030
     milestone: m6
     title: "Warm practical lighting and a carved, painted cabinet; the whole look against the mockups"
-    status: ready
+    status: done
     depends_on: [t-027, t-028, t-029, t-031]
     owner: worker
     passes: 0
@@ -899,7 +899,24 @@ tasks:
 
       Re-armed: status was claimed with null claimed_by/claimed_at (lost close-out write,
       flagged by check_recurring_claim_drift).
-    updated: '2026-10-11T02:47:10Z'
+
+      Shipped in kind_robots #3481 (lighting) and #3484 (cabinet), both merged. Lighting: a
+      softer, warmer key light (1.15, 0xffe6c4), lower ambient, exposure 1.0; the main field's
+      lanterns throw real flickering warm light, 6 on high, 3 on medium, 0 on low
+      (TierSettings.practicalLights). Cabinet: the backglass shows its own painting, rendered
+      by ArtJob for /images/pinball/ami-village-backglass.webp (1536x640): AMI with butterfly
+      wings over the lantern-lit village, the drone carrying a net of care packages, villagers
+      waving, no lettering, no crocodile. The title art stands in only if that image is
+      missing. The side art takes a crop of the backglass painting; chrome corner armour sits
+      on the side rails; the apron carries a painted plate with a gold scroll frame and a
+      butterfly medallion. Screenshots: screenshots/t030-desk.jpg, t030-phone.jpg,
+      t030-ultrawide.jpg, plus side by side with the quality bar: t030-vs-mockup-playfield.jpg
+      and t030-vs-mockup-overview.jpg. Honest comparison: the mockup is still ahead on density
+      of sculpted 3D props, darker and more dramatic contrast, and the number of inserts,
+      arrows and metal lane guides. Those are candidates for after Silas's verdict (t-016),
+      not blockers on this task.
+    updated: '2026-10-11T02:58:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#3484'
 
   - id: t-031
     milestone: m6
