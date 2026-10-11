@@ -182,16 +182,19 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Stats, dice/skill checks, HP, item/technique Rewards and companion relationships"
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-006]
-    note: >-
-      Implement original 2d6 check and consequence table with combat/noncombat
-      options, character sheet, reward gating, inventory and persistent
-      conditions; protect stat balance from infinite farming; reuse gamebook
-      pure utilities where compatible, not its state machine.
+    note: |-
+      Implement original 2d6 check and consequence table with combat/noncombat options, character sheet, reward gating, inventory and persistent conditions; protect stat balance from infinite farming; reuse gamebook pure utilities where compatible, not its state machine.
+
+      Pure provenance-checked character progression and store projection are committed with a dedicated anti-farming/skill-check test. Existing v2 authored encounter dice and saved games remain unchanged; reward spending and applying earned techniques to live checks require the t-009 replay/save migration.
+
+      Merged Kind Robots PR #3486 at 95e0968 after all 29 implementation workflows completed successfully, including TypeScript, dedicated Shifting Lands progression contract and the repository-wide contract suite. Pure character sheet derives bounded learned skills, item Rewards, persistent authored injuries and named NPC bonds from verified saved outcomes, with anti-farming and eligible-use guards. No existing v2 roll was rescored and no save migration or production deploy was performed. Applying new perks to live rolls and persisting item spending is deferred to t-009; inventory overlay is t-016.
+    claimed_by: 2026-10-11T025500Z-zuzu-shifting-lands-t008-c52b91
+    claimed_at: '2026-10-11T02:55:00Z'
+    updated: '2026-10-11T03:19:00Z'
 
   - id: t-009
     milestone: m2
@@ -299,7 +302,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Companion rail, inventory/skills overlay, dice/motion/sound and journey log"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible

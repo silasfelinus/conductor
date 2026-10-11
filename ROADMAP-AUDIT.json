@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-10-10T23:45:31.482597+00:00",
+  "generated_at": "2026-10-11T02:59:00.101938+00:00",
   "summary": {
     "roadmaps": 78,
     "active_projects": 39,
     "continuous_projects": 3,
     "tasks": 2089,
     "ready": 89,
-    "waiting": 122,
-    "needs_human": 36,
-    "in_progress": 18,
-    "done": 1808,
+    "waiting": 116,
+    "needs_human": 37,
+    "in_progress": 17,
+    "done": 1814,
     "errors": 0,
-    "warnings": 26,
-    "info": 63
+    "warnings": 25,
+    "info": 64
   },
   "projects": [
     {
@@ -23,17 +23,16 @@
       "autonomous": false,
       "task_count": 31,
       "counts": {
-        "claimed": 1,
-        "done": 29,
-        "waiting": 1
+        "done": 30,
+        "needs-human": 1
       },
-      "open_count": 2,
-      "human_attention": 0,
+      "open_count": 1,
+      "human_attention": 1,
       "ready": 0,
-      "waiting": 1,
-      "claimed": 1,
+      "waiting": 0,
+      "claimed": 0,
       "review": 0,
-      "done": 29
+      "done": 30
     },
     {
       "slug": "zuzu-lair",
@@ -66,17 +65,16 @@
       "autonomous": false,
       "task_count": 22,
       "counts": {
-        "done": 14,
-        "ready": 3,
-        "waiting": 5
+        "done": 19,
+        "ready": 3
       },
-      "open_count": 8,
+      "open_count": 3,
       "human_attention": 0,
       "ready": 3,
-      "waiting": 5,
+      "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 14
+      "done": 19
     },
     {
       "slug": "zuzu-showdown",
@@ -86,16 +84,16 @@
       "autonomous": false,
       "task_count": 28,
       "counts": {
-        "claimed": 2,
+        "claimed": 3,
         "done": 20,
-        "ready": 3,
+        "ready": 2,
         "waiting": 3
       },
       "open_count": 8,
       "human_attention": 0,
-      "ready": 3,
+      "ready": 2,
       "waiting": 3,
-      "claimed": 2,
+      "claimed": 3,
       "review": 0,
       "done": 20
     },
@@ -368,17 +366,18 @@
       "autonomous": true,
       "task_count": 24,
       "counts": {
+        "claimed": 1,
         "done": 10,
         "needs-human": 1,
-        "ready": 4,
+        "ready": 3,
         "review": 1,
         "waiting": 8
       },
       "open_count": 14,
       "human_attention": 1,
-      "ready": 4,
+      "ready": 3,
       "waiting": 8,
-      "claimed": 0,
+      "claimed": 1,
       "review": 1,
       "done": 10
     },
@@ -390,18 +389,17 @@
       "autonomous": false,
       "task_count": 16,
       "counts": {
-        "claimed": 1,
         "done": 3,
         "needs-human": 1,
-        "review": 1,
+        "ready": 2,
         "waiting": 10
       },
       "open_count": 13,
       "human_attention": 1,
-      "ready": 0,
+      "ready": 2,
       "waiting": 10,
-      "claimed": 1,
-      "review": 1,
+      "claimed": 0,
+      "review": 0,
       "done": 3
     },
     {
@@ -1553,7 +1551,7 @@
       "code": "STALE_IN_PROGRESS",
       "project": "art-archive",
       "task": "t-033",
-      "message": "Task has remained claimed for 7 days."
+      "message": "Task has remained claimed for 8 days."
     },
     {
       "severity": "warning",
@@ -1603,13 +1601,6 @@
       "project": "kind-pinball",
       "task": "t-016",
       "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-    },
-    {
-      "severity": "warning",
-      "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-      "project": "kind-pinball",
-      "task": "t-030",
-      "message": "Claimed/review task has no parseable updated timestamp."
     },
     {
       "severity": "warning",
@@ -1925,6 +1916,13 @@
       "project": "kind-oracle",
       "task": "t-002",
       "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "kind-pinball",
+      "task": "t-016",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",
