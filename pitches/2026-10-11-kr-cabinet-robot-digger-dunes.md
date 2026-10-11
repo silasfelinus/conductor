@@ -1,7 +1,7 @@
 # Pitch: Dune Digger Dash
 date: 2026-10-11
 project-target: kr-arcade
-status: awaiting-silas
+status: approved
 
 ## The idea
 An arcade cabinet riffing on Dig Dug's tunnel-digging chases, where a small robot burrows through layered sand to inflate wandering sand-sprites with a pump until they pop. Each round adds more sprites, loose boulders to drop on them, and faster pursuit through the tunnels.
