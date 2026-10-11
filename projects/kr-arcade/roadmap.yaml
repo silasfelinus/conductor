@@ -88,20 +88,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      The scaffolding session queued the launch art as `requests:` in projects/art-prompts.yaml
-      (ids prefixed `kr-arcade-`), targeting kind_robots public/images/arcade/. auto-art-generate.yml
-      drains them on push and every 6 hours. This task: confirm each request reached status done
-      and its file landed in kind_robots; view every image; re-stage (status: pending, force: true,
-      corrected prompt) any that carry lettering, a garbled cabinet, the wrong palette, or a
-      collage. If a request is still pending, close as a no-op re-arm rather than waiting.
-      Generated art is pre-approved (AGENTS.md "Project art"). Also check the project
-      icon/card/hero in projects/images/.
+      The scaffolding session queued the launch art as `requests:` in projects/art-prompts.yaml (ids prefixed `kr-arcade-`), targeting kind_robots public/images/arcade/.
 
-      DONE 2026-10-06: reviewed all launch art on kindrobots.org (hall backdrop, marquee,
-      bezel, control panel, side art, attract splash, three game title pieces) -- on-palette,
-      lettering-free, logo androids recognisable. Re-staged two: butterfly-blaster-title (AMI
-      rendered as the Android mascot lookalike) and cabinet-hero (garbled marquee lettering;
-      image not yet used by the UI). Future cabinets' art is curated inside t-009 cycles.
+      Full history: projects/kr-arcade/HISTORY.md#t-002
     updated: '2026-10-06T12:14:00Z'
 
   - id: t-003
@@ -112,26 +101,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      kind_robots. Add the Arcade tab to the Projects channel: a content/channels/projects tab
-      document, a PROJECT_PLACEMENTS entry 'kr-arcade' -> { channelKey: 'projects', tabKey:
-      'arcade', route: '/play/arcade' }, and the page. The page is the arcade hall (art:
-      /images/arcade/arcade-hall-backdrop.webp) with a row of cabinets; picking one opens it in a
-      shared <arcade-cabinet> frame (marquee, bezel around the canvas, control panel, FREE PLAY
-      coin door) built from /images/arcade/cabinet-*.webp with a CSS fallback when art is missing.
-      All text rendered in a pixel font over the art. Show "coming soon" cabinets for queued
-      games. Optional CRT scanline overlay (off under prefers-reduced-motion). Then set liveUrl /
-      channelKey / tabKey on kr-arcade in project-overrides.yaml to match. Read
-      docs/agents/frontend-verification.md: verify phone (portrait, touch), tablet and desktop
-      before merging. Can land before any game exists.
+      kind_robots.
 
-      DONE 2026-10-06 (kind_robots#3265, merged, all 40 checks green incl. Replay migrations
-      on MariaDB): Arcade tab (content/channels/projects/arcade.md, route /play/arcade, sort
-      115), cabinet + hall components, kr-arcade placement in kind_robots
-      utils/projectPlacements.ts. Cabinets open at /play/arcade?game=<slug> because the shell
-      header matches tabs by exact route. Correction to the original note: per kind_robots
-      AGENTS.md, presentation fields (liveUrl/channelKey/tabKey) live in kind_robots, NOT in
-      conductor project-overrides.yaml -- none were added there. Verified with nuxi dev +
-      Playwright at 390/820/1440 widths.
+      Full history: projects/kr-arcade/HISTORY.md#t-003
     claimed_by: 2026-10-06T1040Z-kr-arcade-launch
     claimed_at: '2026-10-06T10:47:55Z'
     updated: '2026-10-06T11:50:37Z'
@@ -145,17 +117,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      kind_robots utils/arcade/ per DESIGN-BRIEF.md "Engine kit contract": fixed-timestep loop,
-      integer canvas scaling, unified keyboard/gamepad/touch input, BOOT->TITLE->ATTRACT->PLAYING->
-      GAME_OVER->INITIALS->SCORES state machine, pixel font + sprite helpers, difficulty-curve
-      helper, WebAudio chiptune helper (muted until first interaction, persisted mute), and the
-      games.ts registry. Unit-test the pure parts (curve, state machine, input mapping). Pure
-      client-side; no LLM. Independent of t-003 -- either can land first.
+      kind_robots utils/arcade/ per DESIGN-BRIEF.md "Engine kit contract": fixed-timestep loop, integer canvas scaling, unified keyboard/gamepad/touch input, BOOT->TITLE->ATTRACT->PLAYING-> GAME_OVER->INITIALS->SCORES state machine, pixel font + sprite helpers, difficulty-curve helper,
 
-      DONE 2026-10-06 in kind_robots#3265 alongside t-003: utils/arcade/ engine kit (fixed-
-      timestep loop, keyboard/gamepad/touch input, flow reducer, curves, 5x7 bitmap font,
-      WebAudio sound, initials filter, registry) + utils/scripts/verifyArcadeEngine.test.ts
-      wired into Contract verifiers.
+      Full history: projects/kr-arcade/HISTORY.md#t-004
     updated: '2026-10-06T11:50:58Z'
     implementation_pr: 'silasfelinus/kind_robots#3265'
 
@@ -167,19 +131,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      kind_robots. Additive Prisma model ArcadeScore (id, gameSlug, initials char(3), score,
-      level, userId optional FK, createdAt; index gameSlug+score desc). GET
-      /api/arcade/scores/[game]?range=all|today (top 10) and POST /api/arcade/scores with
-      validation: initials A-Z0-9 x3 plus a small blocklist, gameSlug in the registry, score <=
-      maxPlausibleScore, per-IP rate limit, userId attached when signed in. Local-storage
-      fallback board when the API fails. The migration must be CREATE TABLE / CREATE INDEX only
-      -- Reviewer audits migration.sql line by line before merge (AGENTS.md Reviewer CAN). If
-      the registry from t-004 has not landed yet, stub the slug list for the two launch games.
+      kind_robots.
 
-      DONE 2026-10-06 in kind_robots#3265: ArcadeScore model + additive migration
-      20261006120000_add_arcade_scores (schema-affecting; live after the normal Alexandria
-      deploy), GET /api/arcade/scores/:game, POST /api/arcade/scores, store-owned per-browser
-      fallback board.
+      Full history: projects/kr-arcade/HISTORY.md#t-005
     updated: '2026-10-06T11:51:02Z'
     implementation_pr: 'silasfelinus/kind_robots#3265'
 
@@ -193,20 +147,9 @@ tasks:
     depends_on:
       - t-004
     note: >-
-      See games.yaml battery-maze. A small kind robot gathers energy sparks through a maze while
-      four glitch gremlins with distinct personalities (chaser, ambusher, patroller, wanderer)
-      hunt it; a power cell turns them sleepy-blue and bumping one "reboots" it back to the
-      charging dock. Levels raise speed and shorten power time, with a bonus item per level and an
-      intermission every few levels. Original maze layouts. Must meet the per-game checklist in
-      DESIGN-BRIEF.md (splash, attract, ramp, leaderboard, touch/gamepad/keyboard, sound,
-      cabinet frame). Title-card art: /images/arcade/games/battery-maze-title.webp.
+      See games.yaml battery-maze.
 
-      REVIEW 2026-10-06: Battery Maze built in kind_robots#3268 (maze chase, four gremlin
-      personalities, power cells, bonus items, coffee-break intermission, maze-integrity
-      test).
-
-      DONE 2026-10-06: kind_robots#3268 merged (all 28 checks green). Battery Maze is live at
-      /play/arcade?game=battery-maze after the next deploy.
+      Full history: projects/kr-arcade/HISTORY.md#t-006
     updated: '2026-10-06T11:55:32Z'
     implementation_pr: 'silasfelinus/kind_robots#3268'
 
@@ -220,16 +163,9 @@ tasks:
     depends_on:
       - t-004
     note: >-
-      See games.yaml rescue-rally. Move with one stick and fire a kindness beam with the other.
-      The beam reboots glitched drones into friendly ones. Rescue wandering humans, pets and
-      little bots for a rising multiplier. Waves add spawners, seekers and slow tanks on the
-      difficulty curve. Touch gets dual virtual sticks. Keyboard is WASD to move and arrows to
-      fire. Must meet the per-game checklist in DESIGN-BRIEF.md. Title-card art:
-      /images/arcade/games/rescue-rally-title.webp.
+      See games.yaml rescue-rally.
 
-      DONE 2026-10-06: kind_robots#3269 merged (all checks green). Rescue Rally live at
-      /play/arcade?game=rescue-rally after the next deploy. One-stick adaptation: move aims, A
-      fires, hold B strafes; curves tuned so a perfect-aim pilot dies on wave 4-5.
+      Full history: projects/kr-arcade/HISTORY.md#t-007
     claimed_by: 2026-10-06T1205Z-kr-arcade-t007
     claimed_at: '2026-10-06T12:02:11Z'
     updated: '2026-10-06T12:12:39Z'
@@ -249,25 +185,9 @@ tasks:
       - t-007
       - t-010
     note: >-
-      Verify the whole launch on main at phone, tablet and desktop widths. Check: the hall, both
-      cabinets, attract loops, a full game to the initials screen, the score appearing on the
-      board, gamepad, and mute. Fix what breaks. Then carry out Silas's 2026-10-06 instruction:
-      once the front end, leaderboard and two games exist, the arcade becomes standing "make this
-      when you have no other task" work. Flip kr-arcade to `status: continuous` in
-      project-overrides.yaml and add it to CONTROL.md's continuous fallback order
-      (animation-manager, then kr-arcade, then dream-cycle). Set milestone m2 done; t-009 then
-      unblocks through resolve_deps.py.
+      Verify the whole launch on main at phone, tablet and desktop widths.
 
-      DONE 2026-10-06. Launch check on kind_robots main (local nuxi dev + Playwright;
-      production deploy is still pending, so the live-site check rides the first t-009 cycle):
-      hall shows 3 live cabinets at 390/820/1440 widths; Butterfly Blaster, Battery Maze and
-      Rescue Rally each start and play by keyboard and by the on-screen touch controls; full
-      loop played Butterfly Blaster to game over with 1680 points, entered initials,
-      submitted, and (no DB in the sandbox) the score landed on the per-browser fallback board
-      with initials remembered; the initials filter rejected XXX; no page errors, no
-      horizontal overflow. Gamepad not exercised (no device). Flipped kr-arcade to continuous
-      and added it to CONTROL.md's fallback order after animation-manager, per Silas's
-      2026-10-06 instruction.
+      Full history: projects/kr-arcade/HISTORY.md#t-008
     claimed_by: 2026-10-06T1232Z-kr-arcade-t008
     claimed_at: '2026-10-06T12:31:00Z'
     updated: '2026-10-06T12:31:45Z'
@@ -280,14 +200,10 @@ tasks:
     stakes: reversible
     recurring: true
     approved_by_human: true
-    note: |-
-      Silas, 2026-10-10 (verbatim): "for now, we have a lot of arcade games, and I appreciate the variety. I want to make one excision. the request timber falling game is questionable ethics, and I think we should kill it. beyond that, rather than focusing on building new games (though I do want knew games to come in, I want games to get style upgrades. Right now they all look like they could have come from an atari, and I want Super nes."
-      STANDING CONTRACT: fallback work for kr-arcade, taken BEFORE t-009's new-game cycles. Each cycle upgrades one shipped cabinet whose games.yaml row has no `style: snes`, in games.yaml order (skip `retired` rows and the WebGL pinball table). Rebuild its render pass on kind_robots utils/arcade/snes.ts to meet every point of DESIGN-BRIEF.md "16-bit style bar"; extend the kit when a cabinet needs something shared (parallax for a scroller, Mode-7 floors) rather than drawing a one-off. Render only: gameplay, the seeded rng, scores and difficulty curves stay as they are (cosmetic effects roll their own dice, as Sink Suds' sparkles do). Verify with test:arcade-engine, eslint/prettier, vue-tsc, and before/after screenshots of the attract demo, checking both Pixel and HD styles; attach them to the PR. Then set the row's `style: snes` and `style_in: <PR>` and re-arm here with a RAN <date> line. Big cabinets (Kindness Gauntlet, Station Sweep, Zuzu Ghost Trail) may take two cycles; Ghost Trail's visual work lives in m5 (t-013/t-014), so it counts as upgraded when t-014 lands. Done when every non-retired 2D cabinet is `style: snes`; then flip to done and close m6.
-      RAN 2026-10-10: kit built (snes.ts: 15-bit ramps, HDMA bands, outlined pixel sprites, orbs, bevels, glows, sparkles, parallax, HUD panels, cached layers; font outline) and Sink Suds upgraded first, in silasfelinus/kind_robots#3438, which also retires Timber Bot. Next in order: butterfly-blaster.
-      RAN 2026-10-10: batch 1 (Silas: "keep going, upgrade each until completed") -- Butterfly Blaster, Battery Maze, Rescue Rally, Pipe Pals, Butterfly Joust, Gloom Invaders, Hedgehog Crossing upgraded in silasfelinus/kind_robots#3451 (render only; seeded play verified unchanged). Batches 2-4 in flight in the same session.
-      RAN 2026-10-10: batch 2 -- Ribbon Riders, Burrow Buddy, Repair Rampage, Prize Show Panic, Rain Catcher, Brick Bloom, Seed Lander upgraded in silasfelinus/kind_robots#3453 (render only; three verified tick-for-tick against origin/main).
-      RAN 2026-10-10: batches 3-5 -- Pixel Hop, Glitch Garden, Quilt Quest, Cocoa Counter, Seed Burst, Lantern Swarm (silasfelinus/kind_robots#3454); Rover Ramble, Cable Crawler, Petal Post, Bumper Bubbles (#3455); Kindness Gauntlet, Station Sweep (#3456). Render only, with tick-for-tick parity runs against origin/main on eight cabinets.
-      DONE 2026-10-10: every 2D cabinet the contract covers is `style: snes` (27 of them, Sink Suds included). Two carry-outs, per the contract: Zuzu: Ghost Trail's visual upgrade is m5 t-013/t-014; Kind Pinball's WebGL table was never in scope, and its rarely seen 2D no-WebGL fallback is follow-up t-022. New cabinets (t-009) ship at the 16-bit bar.
+    note: >-
+      Silas, 2026-10-10 (verbatim): "for now, we have a lot of arcade games, and I appreciate the variety.
+
+      Full history: projects/kr-arcade/HISTORY.md#t-021
     updated: '2026-10-10T20:00:00Z'
     implementation_pr: 'silasfelinus/kind_robots#3438'
 
@@ -347,16 +263,9 @@ tasks:
     depends_on:
       - t-004
     note: >-
-      Silas, 2026-10-06 (verbatim): "add one more: an Asteroids riff, but using rainbow butterflies
-      to kill mosquitoes, a la our malaria project". See games.yaml butterfly-blaster. A rainbow
-      butterfly rotates, flutters (thrust), drifts and wraps the screen and fires sparkles; mosquito
-      swarms split large -> small -> single. AMI drops a bed net that works as a shield. A malaria
-      cloud hunts the player from wave 3. Each cleared wave counts as a village protected, and game
-      over links to https://againstmalaria.com/amibot. Must meet the per-game checklist in
-      DESIGN-BRIEF.md. Art: /images/arcade/games/butterfly-blaster-title.webp.
+      Silas, 2026-10-06 (verbatim): "add one more: an Asteroids riff, but using rainbow butterflies to kill mosquitoes, a la our malaria project".
 
-      DONE 2026-10-06 in kind_robots#3265: Butterfly Blaster shipped as the first live cabinet
-      (/play/arcade?game=butterfly-blaster). Title art request queued via conductor#5638.
+      Full history: projects/kr-arcade/HISTORY.md#t-010
     updated: '2026-10-06T11:51:05Z'
     implementation_pr: 'silasfelinus/kind_robots#3265'
 
@@ -369,14 +278,9 @@ tasks:
     stakes: reversible
     approved_by_human: true
     note: >-
-      Silas, 2026-10-06 (verbatim): "global leaderboard is a high priority for all games". The
-      per-game boards were already global and live (ArcadeScore + /api/arcade/scores, checked in
-      production). DONE in kind_robots#3277: GET /api/arcade/leaderboard (hall of fame for every
-      registered cabinet: top 3, today's best, scores on the board; new cabinets join automatically),
-      a Hall of Fame section in the hall, and a pending-upload queue so a score that fails to post
-      retries until it reaches the global board instead of staying in one browser. The per-game
-      checklist in DESIGN-BRIEF.md now requires every cabinet to post through the arcade store.
-      zuzu-lair/t-009 reuses the same board.
+      Silas, 2026-10-06 (verbatim): "global leaderboard is a high priority for all games".
+
+      Full history: projects/kr-arcade/HISTORY.md#t-011
     updated: '2026-10-06T19:00:00Z'
     implementation_pr: 'silasfelinus/kind_robots#3277'
 
@@ -389,30 +293,9 @@ tasks:
     stakes: reversible
     approved_by_human: true
     note: >-
-      Silas, 2026-10-06 PT (verbatim): "as a note: our original arcade uses a very slimmed down resolution...we should both be able to upgrade that anyway (pixel is a style choice, users should be able to select pixel or hd or others if they are fun), but after working with pinball, it's clear we also need a much better resolution system for the higher quality games".
-      Today: each game declares a small logical size (320x240 is the most common; the largest are
-      480x360 and 288x488), arcade-cabinet.vue sizes the canvas to its box at up to 2x DPR and scales
-      the logical drawing up. Vector drawing is sharp, but art, pixel fonts and pre-rendered layers
-      are authored at the logical size, so nothing can gain detail, and a game cannot be "HD".
-      Build one display layer the cabinet (and the stand-alone games: Zuzu Showdown, pinball) share:
-      (1) logical world size stays per game, separate from the render target; (2) render styles
-      chosen by the player -- Pixel (logical size x the largest integer scale that fits, nearest
-      filtering, pixel font), HD (device resolution, smooth filtering, HD art, a vector font), and
-      room for fun extras (CRT scanlines, the pinball DMD look); (3) assets keyed by style, so a
-      game ships HD masters and a derived pixel set (zuzu-showdown t-007's pipeline does the
-      derivation); (4) one arcade display preference in a Pinia store (the store owns
-      localStorage), with a per-game override; (5) DPR cap raised or made per-style so HD is crisp
-      on 3x phones without melting low-end ones. Pinball is the motivating case and the first heavy
-      consumer; port two existing cabinets as proof. Done when the cabinet shows the style picker,
-      two cabinets plus pinball render in Pixel and HD, a contract test covers the transform math
-      (logical to canvas at DPR 1/2/3, integer pixel scale, letterboxing), and DESIGN-BRIEF.md's
-      engine-kit contract documents it.
+      Silas, 2026-10-06 PT (verbatim): "as a note: our original arcade uses a very slimmed down resolution...we should both be able to upgrade that anyway (pixel is a style choice, users should be able to select pixel or hd or others if they are fun), but after working with pinball, it
 
-      DONE 2026-10-09: shared display layer (utils/arcade/display.ts: Pixel/HD fit, MAX_DPR
-      3), cabinet style picker with per-game override in arcadeStore (kind_robots#3386,
-      #3350), pinball takes dpr 1 in Pixel and device ratio in HD, contract test
-      verifyZuzuShowdownDisplay covers fit at DPR 1/2/3, engine-kit contract documented
-      (#5808). CRT scanlines already a separate cabinet toggle.
+      Full history: projects/kr-arcade/HISTORY.md#t-012
     updated: '2026-10-09T05:46:32Z'
     implementation_pr: 'silasfelinus/kind_robots#3386'
   - id: t-013
@@ -423,14 +306,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      2026-10-10: Silas accepted the moonlit town, haunted ravine, and Bell Heretic mockups
-      as the new finish line. Use ghost-trail/CAMPAIGN-BLUEPRINT.md. Nine reference requests
-      queued in projects/art-prompts.yaml (kr-arcade-ghost-trail-*). Check actual ArtJob IDs,
-      delivered URLs and visual quality, repair bad art, create Zuzu and bone-coyote animation
-      atlases with pivots and the intact/exposed poncho states using the Zuzu Showdown rig
-      pipeline. Keep vector fallback until assets work in-game.
+      2026-10-10: Silas accepted the moonlit town, haunted ravine, and Bell Heretic mockups as the new finish line.
 
-      DONE 2026-10-10: all nine ArtJobs verified delivered at their final URLs (6 plates 1280x960, 3 concepts 1024x1024; inspected, quality good). Instead of rigging atlases from the single-pose concepts, Zuzu, the foes and bosses are drawn by code at high density (utils/arcade/ghostTrail/heroArt.ts, foeArt.ts) via bake.ts, with full animation sets incl. intact/exposed poncho states; the plates are used directly as the far layer (stageArt.ts). The Zuzu Showdown rig was inspected and not reused: its fighter stance and headband do not match Ghost Trail's kasa/poncho canon. silasfelinus/kind_robots#3466.
+      Full history: projects/kr-arcade/HISTORY.md#t-013
   - id: t-014
     milestone: m5
     title: "Ghost Trail visual vertical slice: large sprites, parallax town and detailed HUD"
@@ -440,27 +318,19 @@ tasks:
     stakes: reversible
     depends_on: t-013
     note: >-
-      Replace tiny vector hero/enemies and repetitive color blocks in stage 1 with 40–48px
-      readable Zuzu, real sprite animation, three-layer parallax, hand-built gameplay tiles,
-      clear collision silhouettes, boss telegraph animations, coordinated Pixel/HD masters
-      and HUD. Keep the accepted title splash, cabinet and leaderboard. Verify real
-      screenshot renders at phone/tablet/desktop widths and pixel/HD modes.
+      Replace tiny vector hero/enemies and repetitive color blocks in stage 1 with 40–48px readable Zuzu, real sprite animation, three-layer parallax, hand-built gameplay tiles, clear collision silhouettes, boss telegraph animations, coordinated Pixel/HD masters and HUD.
 
-      2026-10-10: vertical slice in silasfelinus/kind_robots#3466 -- delivered plates as panned far layers + procedural parallax midground, fog and animated lights; hand-built terrain matching collision per stage; canon Zuzu with idle/walk/jump/fall/throw/iai-cut in both poncho states (~30 px, matching mockup scale and hurtboxes); bone coyotes, ghosts, storm crows, Dust Devil and Bone Bull with clear telegraphs; mockup HUD with bottom boss bar and banners. Render only. Verified engine/farm/campaign tests, vue-tsc, HD 4x and Pixel renders. Device widths: the cabinet's display layer only changes the whole-number scale, and renders were checked at 1x/2x Pixel and 4x HD; a hands-on phone pass in the live cabinet is still worth doing in t-020. The Bell Heretic itself is a t-018 boss.
+      Full history: projects/kr-arcade/HISTORY.md#t-014
   - id: t-015
     milestone: m5
     title: "Ghost Trail authored encounter and campaign systems: secrets, progress, checkpoints and victory"
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Implement data-defined finite encounters (no idle score farming), two acts per stage, authored branches, unique loot/secret keys, checkpoint semantics, saved/resumable progress and real credits/victory instead of endless loops. Preserve seed-deterministic updates, input abstraction, hit/poncho mechanic and score API.
+    note: >-
+      Implement data-defined finite encounters (no idle score farming), two acts per stage, authored branches, unique loot/secret keys, checkpoint semantics, saved/resumable progress and real credits/victory instead of endless loops.
 
-      First incremental campaign-system slice: four one-time stage relic discoveries with checkpoint-safe rewards, a finite victorious preview ending, and deterministic tests. The six-stage Act I, authored encounters, save/resume and full ten-hour campaign remain follow-up work.
-
-      PARTIAL SLICE SHIPPED 2026-10-10 PT: kind_robots#3450 merged after 29/29 completed CI workflows passed. Four reachable one-time relics now survive checkpoint retries, the HUD tracks relics, and the fourth current trail has a visible three-second PREVIEW CLEARED victory before leaderboard handoff. New tests added to test:arcade-engine and passed. conductor#5900 merged after all CI, recording Silas's ten-hour five-book north star in CONTROL.md and ghost-trail/TEN-HOUR-ROADMAP.md. REMAINING t-015: data-driven authored encounters, two acts per stage, branches, save/resume/checkpoint persistence and a six-stage Act I ending. Do not mark done or unblock dependent tasks yet.
-
-      DONE 2026-10-10: the campaign engine shipped in silasfelinus/kind_robots#3469 and #3470. Data-defined acts (ghostTrail/world.ts, campaign.ts, acts/stage1-6.ts) with ground/pits, ledges, solid blocks, movers, timed hazards, updrafts and a tide; finite authored squads with stable member ids and a run-wide defeated ledger (death and checkpoint retries never revive them; ambush camera locks); the progress-gated ambient budget kept (farm test still passes); 2-3 acts per stage with multiple checkpoints and authored branches (rooftop vs street, tide passages, high routes); unique relic ids; title cards, stage pages, credits and a real victory. Save/resume: saves at each act start through the arcade store (utils/arcade/saves.ts), CONTINUE / NEW RUN card, continues after a game over keep relics but not score. New Game+ unlocks on a clear, and finding every relic earns the true ending. Tests: verifyZuzuGhostTrailCampaign.test.ts.
+      Full history: projects/kr-arcade/HISTORY.md#t-015
     updated: '2026-10-11T00:30:00Z'
 
   - id: t-016
@@ -474,11 +344,9 @@ tasks:
       - t-014
       - t-015
     note: >-
-      Ship two long real gameplay acts, hidden saloon crawlspace, rooftop/street split,
-      Grave Marshal multi-tell boss and level complete/return path. Verify encounter
-      budgets, secret accessibility and 9–11 minute target before declaring stage done.
+      Ship two long real gameplay acts, hidden saloon crawlspace, rooftop/street split, Grave Marshal multi-tell boss and level complete/return path.
 
-      DONE 2026-10-10 (content): Stage 1 shipped in silasfelinus/kind_robots#3473 -- s1a1 MAIN STREET (tutorial street, 6400 px, 13 squads) and s1a2 THE COURTHOUSE (7000 px, 15 squads, rooftop/street split, saloon crawlspace relic) ending at the Grave Marshal (#3471: cover, two telegraphed bullet lanes, dynamite, deputies; boss test). Bot (endless lives) clears both acts. NOT VERIFIED: the 9-11 minute human target -- bot times are not human first-clear times; the timed playtest is carried by t-020.
+      Full history: projects/kr-arcade/HISTORY.md#t-016
     updated: '2026-10-11T00:30:00Z'
 
   - id: t-017
@@ -490,14 +358,9 @@ tasks:
     stakes: reversible
     depends_on: t-016
     note: >-
-      Bone Yard vertical haunted ravine/crypts with Bone Bull and bell sigil;
-      water-level/raft/secrets at the Drowned Watering Hole and Drowned Ferryman boss;
-      River Croc cameo/conditional ally. Distinct authored geometry, enemies and
-      backgrounds, not colored copies of Stage 1.
+      Bone Yard vertical haunted ravine/crypts with Bone Bull and bell sigil; water-level/raft/secrets at the Drowned Watering Hole and Drowned Ferryman boss; River Croc cameo/conditional ally.
 
-      DONE 2026-10-10 (content): Stage 2 (Bone Yard: crypts with spikes and tomb ambushes; the Broken Bridge with 24 pits, terraces, beams and bell lifts; first bell sigil relic; Bone Bull) in silasfelinus/kind_robots#3473, and Stage 3 (Drowned Watering Hole: telegraphed tide cycles, rafts, a crypt passage walkable only at low tide, ferry escape run; Drowned Ferryman with two water phases, #3471) in #3479. River Croc does not appear as an enemy (the cameo/ally idea is not built). Painted roster for the new foes in #3471. Bot clears every act. NOT VERIFIED: human stage times (t-020).
-
-      2026-10-11: River Croc built as the blueprint's conditional ally (silasfelinus/kind_robots#3496): in s3a2 he surfaces only once the squad bothering him is down and ferries Zuzu across a pool too wide to jump; he never hurts Zuzu.
+      Full history: projects/kr-arcade/HISTORY.md#t-017
     updated: '2026-10-11T05:00:00Z'
 
   - id: t-018
@@ -509,13 +372,9 @@ tasks:
     stakes: reversible
     depends_on: t-017
     note: >-
-      Wind, updrafts, lightning tells, canopy passage and Storm-Crow Matriarch boss;
-      stone bell lifts/rope puzzle/burning braziers and giant Bell Heretic fight.
-      Match accepted screen concepts without breaking readable hitboxes.
+      Wind, updrafts, lightning tells, canopy passage and Storm-Crow Matriarch boss; stone bell lifts/rope puzzle/burning braziers and giant Bell Heretic fight.
 
-      DONE 2026-10-10 (content): Stage 4 Storm Crow Pass (updraft columns tuned to settle, rope lifts, canopy, cave cache, Dust Devil mid-boss, Storm-Crow Matriarch with perches, summons and armed lightning) in silasfelinus/kind_robots#3479; Stage 5 Mission Bell Tower (stairways, bell lifts, timed braziers, falling-masonry ambushes, the Bell Order relic climb) in #3474 and the Bell Heretic (chained bell swing, slam waves, ritual circles, masonry, robe-fire phase) in #3476. New stormpass art world in #3473. Lightning as a stage hazard (separate from the Matriarch) is not built. NOT VERIFIED: human stage times (t-020).
-
-      2026-10-11: lightning as a Storm Crow Pass stage hazard with a 40-tick tell, and a second vertical act, THE CLIFF ROAD (Stage 4 act 3, ~956 px of climb), in silasfelinus/kind_robots#3497. Stage 5 also gained the vertical act THE BELL STAIR (#3488).
+      Full history: projects/kr-arcade/HISTORY.md#t-018
     updated: '2026-10-11T05:00:00Z'
 
   - id: t-019
@@ -527,14 +386,9 @@ tasks:
     stakes: reversible
     depends_on: t-018
     note: >-
-      Connect the cosmic-horror ritual plot to the established Zuzu canon. Build two
-      final boss phases, ending and credit sequence, optional rescue, relic-dependent
-      secret ending and unlockable New Game+. The first clear must end the campaign
-      rather than silently wrap back to Ghost Town.
+      Connect the cosmic-horror ritual plot to the established Zuzu canon.
 
-      DONE 2026-10-10 (content): Stage 6 The Abbey Beneath the Bell (three acts, 8000-9000 px, ritual tunnels, wind shafts, ambushes in series, six lore relics) in silasfelinus/kind_robots#3474; the Abbess final boss with two real phases (a refusal of death, transformation and refilled bar) in #3476; ending page and credits roll in #3474; the run ends the campaign (no wrap to Ghost Town); relic-dependent true ending and New Game+ in #3470; abbey art world in #3473. Not built: the optional rescue. NOT VERIFIED: human stage times (t-020).
-
-      2026-10-11: the optional rescue is built (silasfelinus/kind_robots#3496): a caged novice in s6a1 freed by breaking the lock and clearing the ambush it springs; a freed novice adds lines to the ending and is saved with the run.
+      Full history: projects/kr-arcade/HISTORY.md#t-019
     updated: '2026-10-11T05:00:00Z'
 
   - id: t-020
@@ -582,29 +436,8 @@ tasks:
     stakes: reversible
     note: >-
       ASSESSMENT.md section 1, "Systems that run through the whole campaign" plus the first new threats.
-      Bigger actors (hero ~24-28 px, critters ~18-22 px, 3+ walk frames, flip/kick squash);
-      calm/cross/furious recovery tiers and a last-critter rush; walkers turn round when they meet; kick
-      chains 800/1600/2400/3200/5000; kick bowling; a coin out of a pipe on every kick; the Tool Belt
-      pickups (Wide Wrench, Kick Boots, Bubble Wand, Magnet Cap); the spring flea, shell knight and the
-      ember spark / lurker ember pair, used in the current board until t-024 brings districts. Pipe Pals
-      goes first: Silas called it the weaker riff. Silas, 2026-10-11: "We don't need to be 1:1 copies of
-      these games, but we should be equally complex or more so", then on the plan: "expand both pitches to
-      add even more to each, so we really are homages with even more inspired levels and gameplay depth."
-      Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's section first). Riff on mechanics
-      only; original layouts, names and lines; cartoon bonk/cheer only; no real money, no runtime LLM.
-      Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded simulation, the score API
-      and the attract pilot working (update the pilot for new mechanics). Content is data
-      (district/episode/room definitions), not branches in the update loop. Verify: test:arcade-engine
-      plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR,
-      and a pilot probe that shows runs still end.
 
-      DONE 2026-10-11: silasfelinus/kind_robots#3512 merged after all 30 CI checks passed.
-      Bigger actors (pal ~24 px, critters ~20 px, 3 walk frames + squash), calm/cross/furious
-      tiers and last-critter rush, walker turnaround, kick chains 800..5000, kick bowling, a
-      coin on every kick, spring flea and shell knight, ember sparks and lurker embers snuffed
-      from below, the tool belt (Wide Wrench, Kick Boots, Bubble Wand on B, Magnet Cap), KIND
-      block refills, new utils/scripts/verifyPipePals.test.ts in test:arcade-engine. Pilot
-      probe with endless lives: phases 11-16 in 20 min, every mechanic exercised.
+      Full history: projects/kr-arcade/HISTORY.md#t-023
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3
     claimed_at: '2026-10-11T11:42:10Z'
@@ -619,30 +452,9 @@ tasks:
     stakes: reversible
     depends_on: t-023
     note: >-
-      ASSESSMENT.md section 1, Shift 1. The data-defined district engine (board segments incl.
-      vine/sagging and soapy ledges, lifts, backdrop, tiles, roster, curves, special phase, bonus twist,
-      title card); 5 phases + bonus per district; the special phases First Fix, Seedling Rescue and Lost
-      Socks; lint moth, sock puppet and bubble traps; the Big Shell boss (tip-and-kick, shed crawlers,
-      rolling final phase); the Workshop between districts (coin-priced extra pal, KIND charge, starting
-      tool, Lucky Pipe, valve hint); golden valve handles placed for districts 1-3. Silas, 2026-10-11: "We
-      don't need to be 1:1 copies of these games, but we should be equally complex or more so", then on
-      the plan: "expand both pitches to add even more to each, so we really are homages with even more
-      inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the
-      game's section first). Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer
-      only; no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60
-      Hz seeded simulation, the score API and the attract pilot working (update the pilot for new
-      mechanics). Content is data (district/episode/room definitions), not branches in the update loop.
-      Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and
-      HD screenshots on the PR, and a pilot probe that shows runs still end.
+      ASSESSMENT.md section 1, Shift 1.
 
-      DONE 2026-10-11: silasfelinus/kind_robots#3514 merged after all CI passed. Data-defined
-      districts (utils/arcade/pipePals/districts.ts, scenes.ts): Rooftop Reservoir, Greenhouse
-      Mains (sagging vines, top-gap trolley lift), Suds Works (soapy ledges blow trapping
-      bubbles); First Fix, Seedling Rescue and Lost Socks special phases earning golden
-      valves; static/sprinkler/bubble bonus twists; lint moth and sock puppet; the Big Shell
-      boss; the Workshop (coin-priced extra pal, KIND charge, starting tool, Lucky Pipe, valve
-      hint); district title cards. Probes fixed an unbumpable leak, a greenhouse layout that
-      dropped critters to the bottom floor, and fleas that never left the bottom floor.
+      Full history: projects/kr-arcade/HISTORY.md#t-024
     updated: '2026-10-11T12:45:16Z'
     implementation_pr: 'silasfelinus/kind_robots#3514'
 
@@ -654,26 +466,9 @@ tasks:
     stakes: reversible
     depends_on: t-024
     note: >-
-      ASSESSMENT.md section 1, Shift 2. Icy low-friction ledges, icicles, frost bot, snowball roller, Thaw
-      Run; steam vents, crumble ledge, Pressure Valves; gear and conveyor ledges, gear bug, cuckoo, Valve
-      Routing (switchable pipe routes); the Thermostat boss (FREEZE/HEAT dial, bump the lit ledge, three
-      phases); golden valves for districts 4-6. Silas, 2026-10-11: "We don't need to be 1:1 copies of
-      these games, but we should be equally complex or more so", then on the plan: "expand both pitches to
-      add even more to each, so we really are homages with even more inspired levels and gameplay depth."
-      Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's section first). Riff on mechanics
-      only; original layouts, names and lines; cartoon bonk/cheer only; no real money, no runtime LLM.
-      Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded simulation, the score API
-      and the attract pilot working (update the pilot for new mechanics). Content is data
-      (district/episode/room definitions), not branches in the update loop. Verify: test:arcade-engine
-      plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR,
-      and a pilot probe that shows runs still end.
+      ASSESSMENT.md section 1, Shift 2.
 
-      DONE 2026-10-11: silasfelinus/kind_robots#3515 merged after all CI passed. Swing Shift:
-      Cold Storage (ice ledges, icicles, frost bots, snowballs, Thaw Run), Boiler Works (steam
-      vents, crumble ledge, thicker embers, Pressure Valves), Clockwork Water Tower
-      (conveyors, gear ledges, gear bugs, the cuckoo, Valve Routing); ice/steam/gear bonus
-      twists; the Thermostat boss. Difficulty now keyed to district+phase; walker speed capped
-      at 2.5 px/tick.
+      Full history: projects/kr-arcade/HISTORY.md#t-025
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3
     claimed_at: '2026-10-11T12:53:51Z'
@@ -688,26 +483,9 @@ tasks:
     stakes: reversible
     depends_on: t-025
     note: >-
-      ASSESSMENT.md section 1, Shift 3, finale and secret district. Rising/draining water with underwater
-      movement and bobbing flipped critters, pipe eel, bubble jelly, Pump Station; the dim board with lamp
-      pools and lightning tells, grease beetle, mimic coin, Lights Out; the Clog King in three phases plus
-      the rooftop escape climb; golden valves 7-8 and the Golden Main secret district with the true
-      ending; credits and Overtime NG+; saves at each district start via utils/arcade/saves.ts (Ghost
-      Trail is the reference). Target: first clear 45-60 minutes. Silas, 2026-10-11: "We don't need to be
-      1:1 copies of these games, but we should be equally complex or more so", then on the plan: "expand
-      both pitches to add even more to each, so we really are homages with even more inspired levels and
-      gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's section first).
-      Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer only; no real money,
-      no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded simulation,
-      the score API and the attract pilot working (update the pilot for new mechanics). Content is data
-      (district/episode/room definitions), not branches in the update loop. Verify: test:arcade-engine
-      plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR,
-      and a pilot probe that shows runs still end.
+      ASSESSMENT.md section 1, Shift 3, finale and secret district.
 
-      Merged as kind_robots#3517: Flooded Mains and Storm Drain at Midnight (tide, eels,
-      jellies, dark board, lamps, beetles, mimics), Pump Station and Lights Out, the three-
-      phase Clog King and the flush, endings, the Golden Main and true ending, and district-
-      start saves with CONTINUE/NEW RUN.
+      Full history: projects/kr-arcade/HISTORY.md#t-030
     updated: '2026-10-11T13:39:07Z'
     implementation_pr: 'silasfelinus/kind_robots#3517'
 
@@ -719,27 +497,9 @@ tasks:
     stakes: reversible
     depends_on: t-030
     note: >-
-      ASSESSMENT.md section 1, last bullets of "Systems". Teal pal (longer bump reach) and pink pal
-      (higher, floatier jump), selectable solo; same-device co-op through the cabinet players frames;
-      Versus with playful bump-steals; Overtime endless score attack as the leaderboard main event; per-
-      district Time Trial; Clean Sweep / Chain Master / Swift Fix medals with a medal board. Then update
-      games.yaml (drop the old co-op/icy-platform follow-up comment) and the registry howTo. Silas,
-      2026-10-11: "We don't need to be 1:1 copies of these games, but we should be equally complex or more
-      so", then on the plan: "expand both pitches to add even more to each, so we really are homages with
-      even more inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md
-      (read the game's section first). Riff on mechanics only; original layouts, names and lines; cartoon
-      bonk/cheer only; no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021).
-      Keep the 60 Hz seeded simulation, the score API and the attract pilot working (update the pilot for
-      new mechanics). Content is data (district/episode/room definitions), not branches in the update
-      loop. Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel
-      and HD screenshots on the PR, and a pilot probe that shows runs still end.
+      ASSESSMENT.md section 1, last bullets of "Systems".
 
-      Merged as kind_robots#3519: teal (longer bump reach) and pink (higher, floatier jump)
-      pals chosen on a mode menu; same-device co-op (maxPlayers 2, shared pool of 6, partner
-      bonks); Versus (one district, own tallies, STEAL!, fall costs points, winner card);
-      Overtime endless score attack; per-district Time Trial with saved best times; Clean
-      Sweep / Chain Master / Swift Fix medals (135) with a medal board, all kept in the save.
-      Completes the Pipe Pals depth pass.
+      Full history: projects/kr-arcade/HISTORY.md#t-031
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3
     claimed_at: '2026-10-11T13:42:56Z'
@@ -753,29 +513,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      ASSESSMENT.md section 2, "Structure", room types and modifiers, and episode 1. Data-defined episodes
-      of 12-14 rooms on a grid; the map screen (visited rooms, what each door leads to, danger rating and
-      reward icons, chosen route; a safe and a rich branch side by side); room scripts replacing the
-      random spawn stream; all ten room types incl. sponsor challenges and secret rooms; the six
-      modifiers; golden ticket placement. Episode 1 Opening Night fully authored with the Parade Float
-      (now two phases) as its mid-boss; the Big Wobble lands in t-029. Silas, 2026-10-11: "We don't need
-      to be 1:1 copies of these games, but we should be equally complex or more so", then on the plan:
-      "expand both pitches to add even more to each, so we really are homages with even more inspired
-      levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's
-      section first). Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer only;
-      no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz
-      seeded simulation, the score API and the attract pilot working (update the pilot for new mechanics).
-      Content is data (district/episode/room definitions), not branches in the update loop. Verify:
-      test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD
-      screenshots on the PR, and a pilot probe that shows runs still end.
+      ASSESSMENT.md section 2, "Structure", room types and modifiers, and episode 1.
 
-      DONE 2026-10-11: silasfelinus/kind_robots#3516 merged after all CI passed. Data-defined
-      season (utils/arcade/prizeShow/season.ts) with Episode 1 Opening Night: 13 rooms on a
-      5x3 grid with safe/rich forks and an off-map Backstage secret; map screen between rooms
-      (prizeShow/mapScreen.ts); all ten authored room types incl. mine sets, light rig, camera
-      wall, vault, sponsor challenge; six modifiers; golden tickets (12 in the season, 10 open
-      the vault later); Parade Float second phase; Encore loops so runs end. New
-      verifyPrizeShowPanic.test.ts.
+      Full history: projects/kr-arcade/HISTORY.md#t-026
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T12:04:36Z'
@@ -791,25 +531,8 @@ tasks:
     depends_on: t-026
     note: >-
       ASSESSMENT.md section 2, roster and arsenal tables, the boom mic hazard and the twin-stick bullet.
-      All new crashers with their tells, the seven new power-ups with stacking HUD timers. Engine: an
-      optional aim vector on InputFrame (gamepad right stick axes 2/3, a second touch stick, split
-      keyboard), shared through utils/arcade/input.ts so Kindness Gauntlet and Rescue Rally can adopt it;
-      hold-B lock stays for single-stick players; input contract tests. Silas, 2026-10-11: "We don't need
-      to be 1:1 copies of these games, but we should be equally complex or more so", then on the plan:
-      "expand both pitches to add even more to each, so we really are homages with even more inspired
-      levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's
-      section first). Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer only;
-      no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz
-      seeded simulation, the score API and the attract pilot working (update the pilot for new mechanics).
-      Content is data (district/episode/room definitions), not branches in the update loop. Verify:
-      test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD
-      screenshots on the PR, and a pilot probe that shows runs still end.
 
-      Merged as kind_robots#3518: the 19-crasher roster with tells and answers (poppers
-      through fluffballs, mascot mini-boss, camera cranes unified with the camera wall), the
-      boom mic, the 10-item arsenal with stacking timed powers, and opt-in twin-stick aim
-      (InputFrame.aim, right stick, on-screen aim stick, WASD+arrows). Touch aim stick still
-      needs an on-device look.
+      Full history: projects/kr-arcade/HISTORY.md#t-027
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T13:38:48Z'
@@ -824,26 +547,9 @@ tasks:
     stakes: reversible
     depends_on: t-026
     note: >-
-      ASSESSMENT.md section 2, "The show". Host portrait with original speech-panel lines and style
-      reactions, the dry co-host from episode 3, WebAudio bleep-speak (no speech synthesis, no LLM); the
-      four-tier ratings meter with multiplier, sponsor care packages and plot twists; cheer chains; the
-      end-of-episode prize tally screen and the season haul on game over; the Prize Swap (in-game prizes
-      only); APPLAUSE sign, audience band and camera-flash juice. Host art can be a pixelSprite portrait;
-      if generated art is used, queue it as a kr-arcade- request and verify the delivered URL. Silas,
-      2026-10-11: "We don't need to be 1:1 copies of these games, but we should be equally complex or more
-      so", then on the plan: "expand both pitches to add even more to each, so we really are homages with
-      even more inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md
-      (read the game's section first). Riff on mechanics only; original layouts, names and lines; cartoon
-      bonk/cheer only; no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021).
-      Keep the 60 Hz seeded simulation, the score API and the attract pilot working (update the pilot for
-      new mechanics). Content is data (district/episode/room definitions), not branches in the update
-      loop. Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel
-      and HD screenshots on the PR, and a pilot probe that shows runs still end.
+      ASSESSMENT.md section 2, "The show".
 
-      Merged as kind_robots#3520: host TINSEL and co-host LENS cut-ins (15 cues, original
-      lines, bleep-speak, own cosmetic rng), the four-tier ratings meter with care packages
-      and Off Air plot twists, cheer chains to x4 with the APPLAUSE sign, the studio audience,
-      the between-episode prize tally and Prize Swap, and the game-over season haul.
+      Full history: projects/kr-arcade/HISTORY.md#t-028
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T13:38:51Z'
@@ -860,25 +566,9 @@ tasks:
       - t-027
       - t-028
     note: >-
-      ASSESSMENT.md section 2, episodes 2-3 and bosses 2-6. Hot-plate tiles, flour clouds, conveyor
-      counters; beat-synced speaker bass rings, strobes and mosh pits; the Big Wobble (episode 1 boss),
-      the Pie Cart, the Soufflé Supreme (rise/fall, cupcake split), the Mosh Mascot and the Jumbotron.
-      Each set with its own palette, props and music loop. Silas, 2026-10-11: "We don't need to be 1:1
-      copies of these games, but we should be equally complex or more so", then on the plan: "expand both
-      pitches to add even more to each, so we really are homages with even more inspired levels and
-      gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's section first).
-      Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer only; no real money,
-      no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded simulation,
-      the score API and the attract pilot working (update the pilot for new mechanics). Content is data
-      (district/episode/room definitions), not branches in the update loop. Verify: test:arcade-engine
-      plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR,
-      and a pilot probe that shows runs still end.
+      ASSESSMENT.md section 2, episodes 2-3 and bosses 2-6.
 
-      Merged as kind_robots#3522: Episode 2 Cooking Showdown and Episode 3 Countdown Concert
-      with their sets, hazards (hot plates, flour clouds, conveyors; bass rings, strobes, mosh
-      pits) and music loops; bosses the Big Wobble, the Pie Cart, the Souffle Supreme, the
-      Mosh Mascot and the Jumbotron; LENS now joins on Episode 3. Real-run bound raised to 75
-      min for three episodes.
+      Full history: projects/kr-arcade/HISTORY.md#t-029
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T14:20:56Z'
@@ -893,27 +583,9 @@ tasks:
     stakes: reversible
     depends_on: t-029
     note: >-
-      ASSESSMENT.md section 2, episode 4, the Live Finale and bosses 7-9. Low-gravity momentum rooms, the
-      rotating ring room, teleport doors; the Saucer Cam Mothership and the Conga Dragon; the Live Finale
-      run with the Host's Prize Machine (wheel-chosen attack sets, telegraphed next spin, the host's
-      dance-off last phase); the Grand Prize Vault for ten golden tickets and the true ending; credits,
-      Rerun unlock, saves at each episode start. Target: first clear 60-75 minutes. Silas, 2026-10-11: "We
-      don't need to be 1:1 copies of these games, but we should be equally complex or more so", then on
-      the plan: "expand both pitches to add even more to each, so we really are homages with even more
-      inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the
-      game's section first). Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer
-      only; no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60
-      Hz seeded simulation, the score API and the attract pilot working (update the pilot for new
-      mechanics). Content is data (district/episode/room definitions), not branches in the update loop.
-      Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and
-      HD screenshots on the PR, and a pilot probe that shows runs still end.
+      ASSESSMENT.md section 2, episode 4, the Live Finale and bosses 7-9.
 
-      Merged as kind_robots#3523: Episode 4 Galaxy Parade (low-gravity rooms, the turning
-      ring, teleport doors), the Saucer Cam Mothership and the Conga Dragon, the Live Finale
-      with the Host's Prize Machine (wheel of attack sets, dance-off), the Grand Prize Vault
-      for ten golden tickets, both endings and credits, the Rerun loop, and saves at each
-      episode start with a continue card. Commercials! is a placeholder prize room until
-      t-033.
+      Full history: projects/kr-arcade/HISTORY.md#t-032
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T15:07:04Z'
@@ -928,23 +600,9 @@ tasks:
     stakes: reversible
     depends_on: t-032
     note: >-
-      ASSESSMENT.md section 2, commercial breaks and contestants. Spin the Wheel, Catch the Prizes, Pie
-      Dodge and Higher or Lower between episodes; Sparkle, Zippy, Boomer and Glimmer with their own
-      sprites and feel; up to four contestants through the cabinet players frames. Silas, 2026-10-11: "We
-      don't need to be 1:1 copies of these games, but we should be equally complex or more so", then on
-      the plan: "expand both pitches to add even more to each, so we really are homages with even more
-      inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the
-      game's section first). Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer
-      only; no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60
-      Hz seeded simulation, the score API and the attract pilot working (update the pilot for new
-      mechanics). Content is data (district/episode/room definitions), not branches in the update loop.
-      Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and
-      HD screenshots on the PR, and a pilot probe that shows runs still end.
+      ASSESSMENT.md section 2, commercial breaks and contestants.
 
-      Merged as kind_robots#3525: four contestants (Sparkle, Zippy, Boomer, Glimmer) with a
-      pick card; co-op for up to four seats (maxPlayers 4; twin-stick stays solo, co-op seats
-      aim where they move or B-lock); four commercial-break mini-games between episodes and
-      mid-finale; team scaling with a 250M clamp; the season ends after its third rerun.
+      Full history: projects/kr-arcade/HISTORY.md#t-033
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T15:45:07Z'
@@ -959,25 +617,9 @@ tasks:
     stakes: reversible
     depends_on: t-033
     note: >-
-      ASSESSMENT.md section 2, modes. Rerun NG+ with remixed scripts and modifiers; Marathon endless rooms
-      as the leaderboard main event; episode select after a clear; Flawless / Full Haul / Prime Time room
-      medals with a medal board. Then update games.yaml and the registry howTo for the finished season.
-      Silas, 2026-10-11: "We don't need to be 1:1 copies of these games, but we should be equally complex
-      or more so", then on the plan: "expand both pitches to add even more to each, so we really are
-      homages with even more inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-
-      pass/ASSESSMENT.md (read the game's section first). Riff on mechanics only; original layouts, names
-      and lines; cartoon bonk/cheer only; no real money, no runtime LLM. Gameplay changes ARE in scope
-      here (unlike t-021). Keep the 60 Hz seeded simulation, the score API and the attract pilot working
-      (update the pilot for new mechanics). Content is data (district/episode/room definitions), not
-      branches in the update loop. Verify: test:arcade-engine plus a deterministic campaign test,
-      eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR, and a pilot probe that shows runs
-      still end.
+      ASSESSMENT.md section 2, modes.
 
-      Merged as kind_robots#3526: the mode card (Season, Rerun, Marathon, Episode select,
-      Medal board); Rerun NG+ with deterministic per-room remixes; Marathon endless legs as
-      the leaderboard main event; episode select after a clear; Flawless / Full Haul / Prime
-      Time medals in every room (201) with a medal board; save v2 (v1 still reads); registry
-      blurb and howTo for the finished season. Completes the Prize Show Panic depth pass.
+      Full history: projects/kr-arcade/HISTORY.md#t-034
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T16:31:57Z'
