@@ -167,8 +167,8 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Implement sling, pop bumper, drop bank, scoop, captive ball and tilt"
-    status: claimed
-    updated: '2026-10-11T11:51:30Z'
+    status: done
+    updated: '2026-10-11T12:17:10Z'
     depends_on: t-004
     passes: 0
     stakes: reversible
@@ -178,9 +178,23 @@ tasks:
       Partial mechanical hardware implementation in Kind Robots PR #3480: a four-target Abbey seal drop bank, physical spinner, left-outlane kickback coil and targeted Rapier lifecycle test. Reconciled with the separately merged three-ramp layout without overwriting it. CI is pending. After merging, return t-007 to ready (not done): rules-driven reset, captive relic ball, Zuzu tilt and kickback arming, and performance/ trajectory QA remain required before dependent River Croc task t-015.
 
       Completed a bounded hardware slice: Kind Robots PR #3480 merged as 7318576f39df4108f1a054b3faf923c0ec94e2d4, with four physical Abbey seal drops, a relic spinner, left-outlane kickback and passing Rapier lifecycle hardware tests. Preserved t-005's previously merged ramps. Formatting-only follow-up PR #3482 removes a one-time CI diagnostic and applies the exact Prettier output; merge-when-green is enabled. Re-arm this one-off task as ready, not done. Remaining work includes Zuzu-specific automatic bank reset, physically captive relic ball, tilt logic and warning rules, coil arming/ball save, robust geometry and multiball conservation tests. Do not unblock River Croc t-015 yet.
+
+      2026-10-11 PT: Kind Robots PR #3513 finishes the remainder. The engine gains captive
+      balls: a real Rapier ball in a lane of its own that never drains or counts. Zuzu's relic
+      sits in line behind the Abbey seals; with the seals down each strike raises the bonus
+      multiplier, and three strikes wake the crypt (the key for t-010). Fixes a trap where an
+      immediate seal reset could raise a drop target under a ball: seals now stay down until
+      the next ball. Tilt warnings and termination, kickback arming and ball save landed with
+      the t-008 rules (PR #3511). Hardware test: 20 relic strikes stay in the lane. 50-game
+      bot soak: 0 stuck balls.
+
+      Merged kind_robots PR #3513 at 5a47ecea29469fe63d8511b0df1c792a4c75f69b with all 31
+      checks green. Unblocks t-009 (multiball) and t-015 (River Croc jaw rig). Production
+      deploy not verified (manual Unraid Force Update).
     owner: worker
     claimed_by: 20261011T185500Z-zuzu-t007-relic-m2w8
     claimed_at: '2026-10-11T11:51:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#3513'
   - id: t-008
     milestone: m3
     title: "Implement mode director, five story chapters, shot awards and DMD contracts"
@@ -217,7 +231,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Add physical lock and 3/4/6 ball multiballs with jackpots"
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     passes: 0
@@ -313,7 +327,7 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Build River Croc waterline mouth capture, jaw rig and safe spit"
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     passes: 0
