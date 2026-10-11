@@ -1,0 +1,2286 @@
+# Zuzu: Shifting Lands art round 1 (zuzu-shifting-lands t-023 + t-026). Silas, 2026-10-11: "keep working on
+# future upgrades, 23 and 26." One bespoke card illustration per authored encounter (12 Homestead for t-023, 36
+# later-land for t-026) plus the four later major trials, two seeds each, in the Zuzu Gamebook house lane so the
+# cards sit beside the gamebook plates the board already reuses. Prompts follow each card's fixed cast in
+# encounters/*.json (species, occupation, costume, props; never reassigned) and its authored pronouns.
+# One figure per card where the cast allows: the house lane draws single figures best (zuzu-gamebook rounds 9-11),
+# and Zuzu stays out of frame (no LoRAs; his LoRA fuses with any second character, gamebook ROUND-12): each card is
+# what Zuzu sees. Picks are recorded under `verdict`; a keeper is exported to kind_robots
+# public/shifting-lands/cards/<card>.webp (never under /images, which Alexandria mounts over) and listed in
+# utils/shiftingLands/sceneArt.ts BESPOKE_ART.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: shifting-lands-1
+project_slug: zuzu-shifting-lands
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, weathered, grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: sl1-family-at-the-fence-1
+  entity: scenery
+  lane: arthemy-house
+  title: A Family at the Fence (seed 1)
+  size: 1344x768
+  seed: 31001
+  shape: wide
+  card: family-at-the-fence
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana
+  prompt_prose: Cinematic weathered weird-west frontier orchard with a rabbit homesteader family behind a leaning
+    split-rail fence, one shallow water bowl at the gate, late gold light, Zuzu only as a distant silhouette, no
+    lettering or logos
+  prompt_tags: (three characters:1.1), anthro rabbit family, two adult rabbit homesteaders and one small rabbit
+    child, weathered work clothes, alert ears, guarded posture, standing close together behind a leaning split-rail
+    fence, crooked vegetable beds, small sour apple trees, one shallow water bowl set outside the gate, frontier
+    orchard, late golden light, wide shot
+  jobs:
+    arthemy-house: 37401
+- key: sl1-family-at-the-fence-2
+  entity: scenery
+  lane: arthemy-house
+  title: A Family at the Fence (seed 2)
+  size: 1344x768
+  seed: 31002
+  shape: wide
+  card: family-at-the-fence
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana
+  prompt_prose: Cinematic weathered weird-west frontier orchard with a rabbit homesteader family behind a leaning
+    split-rail fence, one shallow water bowl at the gate, late gold light, Zuzu only as a distant silhouette, no
+    lettering or logos
+  prompt_tags: (three characters:1.1), anthro rabbit family, two adult rabbit homesteaders and one small rabbit
+    child, weathered work clothes, alert ears, guarded posture, standing close together behind a leaning split-rail
+    fence, crooked vegetable beds, small sour apple trees, one shallow water bowl set outside the gate, frontier
+    orchard, late golden light, wide shot
+  jobs:
+    arthemy-house: 37402
+- key: sl1-the-orchard-debt-1
+  entity: creature
+  lane: arthemy-house
+  title: The Orchard Debt (seed 1)
+  size: 1344x768
+  seed: 31003
+  shape: wide
+  card: the-orchard-debt
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Illustrated amber frontier orchard edge; otter farmer with crooked handcart and heavy barrel under
+    gathering storm clouds, Zuzu's straw kasa visible in foreground, realistic animal features, storybook ink-shadow
+    treatment, no text
+  prompt_tags: solo, anthro otter, female, orchard farmer, rolled sleeves, dust-stained work apron, straining to
+    lift a heavy wooden water barrel onto a crooked handcart with one broken wheel, edge of a dry frontier orchard,
+    storm clouds gathering over the hills, amber light, medium shot
+  jobs:
+    arthemy-house: 37403
+- key: sl1-the-orchard-debt-2
+  entity: creature
+  lane: arthemy-house
+  title: The Orchard Debt (seed 2)
+  size: 1344x768
+  seed: 31004
+  shape: wide
+  card: the-orchard-debt
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Illustrated amber frontier orchard edge; otter farmer with crooked handcart and heavy barrel under
+    gathering storm clouds, Zuzu's straw kasa visible in foreground, realistic animal features, storybook ink-shadow
+    treatment, no text
+  prompt_tags: solo, anthro otter, female, orchard farmer, rolled sleeves, dust-stained work apron, straining to
+    lift a heavy wooden water barrel onto a crooked handcart with one broken wheel, edge of a dry frontier orchard,
+    storm clouds gathering over the hills, amber light, medium shot
+  jobs:
+    arthemy-house: 37404
+- key: sl1-scarecrows-lantern-1
+  entity: creature
+  lane: arthemy-house
+  title: The Scarecrow's Lantern (seed 1)
+  size: 1344x768
+  seed: 31005
+  shape: wide
+  card: scarecrows-lantern
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Nighttime weird-west field with patched scarecrow bearing a swinging lantern, covert coyote grain
+    thief concealed near the barn and fine tripwire in foreground, high contrast, cinematic horror without gore,
+    no written signs
+  prompt_tags: solo, anthro coyote, lean grain thief, dusty frontier jacket, crouching half-hidden behind a patched
+    scarecrow, the scarecrow holding a swinging oil lantern, a thin fishing-line tripwire stretched across the dirt
+    in the foreground, grain shed and barn, night field, high contrast, eerie, medium shot
+  jobs:
+    arthemy-house: 37405
+- key: sl1-scarecrows-lantern-2
+  entity: creature
+  lane: arthemy-house
+  title: The Scarecrow's Lantern (seed 2)
+  size: 1344x768
+  seed: 31006
+  shape: wide
+  card: scarecrows-lantern
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Nighttime weird-west field with patched scarecrow bearing a swinging lantern, covert coyote grain
+    thief concealed near the barn and fine tripwire in foreground, high contrast, cinematic horror without gore,
+    no written signs
+  prompt_tags: solo, anthro coyote, lean grain thief, dusty frontier jacket, crouching half-hidden behind a patched
+    scarecrow, the scarecrow holding a swinging oil lantern, a thin fishing-line tripwire stretched across the dirt
+    in the foreground, grain shed and barn, night field, high contrast, eerie, medium shot
+  jobs:
+    arthemy-house: 37406
+- key: sl1-the-last-seed-1
+  entity: creature
+  lane: arthemy-house
+  title: The Last Seed (seed 1)
+  size: 1344x768
+  seed: 31007
+  shape: wide
+  card: the-last-seed
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Wide low-angle shot in sunburnt western homestead yard, mouse seed keeper protecting a single green
+    sprout and carrying a rusted seed tin, Zuzu kneeling respectfully nearby, quiet resilient mood, painted old-paper
+    palette
+  prompt_tags: solo, anthro mouse, female, small gardener, worn apron, kneeling in cracked dry soil over one bright
+    green sprout, holding a rusted seed tin close like a relic, nearly dry stone well beside her, sunburnt homestead
+    yard, low angle, quiet, hopeful
+  jobs:
+    arthemy-house: 37407
+- key: sl1-the-last-seed-2
+  entity: creature
+  lane: arthemy-house
+  title: The Last Seed (seed 2)
+  size: 1344x768
+  seed: 31008
+  shape: wide
+  card: the-last-seed
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Wide low-angle shot in sunburnt western homestead yard, mouse seed keeper protecting a single green
+    sprout and carrying a rusted seed tin, Zuzu kneeling respectfully nearby, quiet resilient mood, painted old-paper
+    palette
+  prompt_tags: solo, anthro mouse, female, small gardener, worn apron, kneeling in cracked dry soil over one bright
+    green sprout, holding a rusted seed tin close like a relic, nearly dry stone well beside her, sunburnt homestead
+    yard, low angle, quiet, hopeful
+  jobs:
+    arthemy-house: 37408
+- key: sl1-rope-at-dawn-1
+  entity: creature
+  lane: arthemy-house
+  title: Rope at Dawn (seed 1)
+  size: 1344x768
+  seed: 31009
+  shape: wide
+  card: rope-at-dawn
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Dawn on the frontier, narrow ancient stone well, otter well keeper testing a badly frayed pulley
+    rope, weary traveler in soft silhouette, bucket reflected in the dark water, weathered painterly detail, no
+    lettering
+  prompt_tags: solo, anthro otter, well keeper, wet cuffs, kneeling at an ancient narrow stone well, inspecting
+    a badly frayed rope running over a wooden pulley, wooden bucket hanging halfway down the dark shaft, first light
+    of dawn, misty frontier, medium shot
+  jobs:
+    arthemy-house: 37409
+- key: sl1-rope-at-dawn-2
+  entity: creature
+  lane: arthemy-house
+  title: Rope at Dawn (seed 2)
+  size: 1344x768
+  seed: 31010
+  shape: wide
+  card: rope-at-dawn
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Dawn on the frontier, narrow ancient stone well, otter well keeper testing a badly frayed pulley
+    rope, weary traveler in soft silhouette, bucket reflected in the dark water, weathered painterly detail, no
+    lettering
+  prompt_tags: solo, anthro otter, well keeper, wet cuffs, kneeling at an ancient narrow stone well, inspecting
+    a badly frayed rope running over a wooden pulley, wooden bucket hanging halfway down the dark shaft, first light
+    of dawn, misty frontier, medium shot
+  jobs:
+    arthemy-house: 37410
+- key: sl1-a-cup-offered-1
+  entity: creature
+  lane: arthemy-house
+  title: A Cup Offered (seed 1)
+  size: 1344x768
+  seed: 31011
+  shape: wide
+  card: a-cup-offered
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Close intimate scene at a dusty communal well, rabbit traveling herbalist extending a dented bright
+    tin cup to a grey koala ronin, pouch of dried herbs visible, eyes unreadable, old-west watercolor chiaroscuro,
+    no text
+  prompt_tags: solo, anthro rabbit, female, traveling herbalist, herbal satchel, pouch of dried herbs, holding out
+    a dented polished tin cup of water toward the viewer, unreadable watchful eyes, dusty communal stone well, wide
+    desert sky, close-up, chiaroscuro
+  jobs:
+    arthemy-house: 37411
+- key: sl1-a-cup-offered-2
+  entity: creature
+  lane: arthemy-house
+  title: A Cup Offered (seed 2)
+  size: 1344x768
+  seed: 31012
+  shape: wide
+  card: a-cup-offered
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Close intimate scene at a dusty communal well, rabbit traveling herbalist extending a dented bright
+    tin cup to a grey koala ronin, pouch of dried herbs visible, eyes unreadable, old-west watercolor chiaroscuro,
+    no text
+  prompt_tags: solo, anthro rabbit, female, traveling herbalist, herbal satchel, pouch of dried herbs, holding out
+    a dented polished tin cup of water toward the viewer, unreadable watchful eyes, dusty communal stone well, wide
+    desert sky, close-up, chiaroscuro
+  jobs:
+    arthemy-house: 37412
+- key: sl1-marks-below-water-1
+  entity: creature
+  lane: arthemy-house
+  title: Marks Below the Water (seed 1)
+  size: 1344x768
+  seed: 31013
+  shape: wide
+  card: marks-below-water
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Moody midday stone well in arid settlement, goat stonemason tracing strange scratches in wet masonry
+    with a small lantern, unsettling geometry down the shaft, suspense not gore, faded earth pigments, no written
+    glyphs
+  prompt_tags: solo, anthro goat, stonemason, blunt horns, leather tool belt, chalk-dusted gloves, holding a small
+    lantern down into a stone well shaft, strange circular scratches carved into the wet stones at the waterline,
+    arid settlement, harsh midday light, unsettling, from above
+  jobs:
+    arthemy-house: 37413
+- key: sl1-marks-below-water-2
+  entity: creature
+  lane: arthemy-house
+  title: Marks Below the Water (seed 2)
+  size: 1344x768
+  seed: 31014
+  shape: wide
+  card: marks-below-water
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Moody midday stone well in arid settlement, goat stonemason tracing strange scratches in wet masonry
+    with a small lantern, unsettling geometry down the shaft, suspense not gore, faded earth pigments, no written
+    glyphs
+  prompt_tags: solo, anthro goat, stonemason, blunt horns, leather tool belt, chalk-dusted gloves, holding a small
+    lantern down into a stone well shaft, strange circular scratches carved into the wet stones at the waterline,
+    arid settlement, harsh midday light, unsettling, from above
+  jobs:
+    arthemy-house: 37414
+- key: sl1-two-empty-buckets-1
+  entity: creature
+  lane: arthemy-house
+  title: The Two Empty Buckets (seed 1)
+  size: 1344x768
+  seed: 31015
+  shape: wide
+  card: two-empty-buckets
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Weird-west communal well at sunset with fox water courier holding two mismatched buckets, dry path
+    stretching toward distant adobe homes, exhausted but stubborn expression, atmospheric sun-dust and warm shadow,
+    no text
+  prompt_tags: solo, anthro fox, water courier, patched satchel, bandaged paws, exhausted but stubborn, carrying
+    two mismatched wooden buckets on a yoke, dry footpath stretching toward distant adobe homes, communal well behind,
+    sunset, dust in the air, long shadows
+  jobs:
+    arthemy-house: 37415
+- key: sl1-two-empty-buckets-2
+  entity: creature
+  lane: arthemy-house
+  title: The Two Empty Buckets (seed 2)
+  size: 1344x768
+  seed: 31016
+  shape: wide
+  card: two-empty-buckets
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Weird-west communal well at sunset with fox water courier holding two mismatched buckets, dry path
+    stretching toward distant adobe homes, exhausted but stubborn expression, atmospheric sun-dust and warm shadow,
+    no text
+  prompt_tags: solo, anthro fox, water courier, patched satchel, bandaged paws, exhausted but stubborn, carrying
+    two mismatched wooden buckets on a yoke, dry footpath stretching toward distant adobe homes, communal well behind,
+    sunset, dust in the air, long shadows
+  jobs:
+    arthemy-house: 37416
+- key: sl1-gate-still-open-1
+  entity: creature
+  lane: arthemy-house
+  title: The Gate Still Open (seed 1)
+  size: 1344x768
+  seed: 31017
+  shape: wide
+  card: gate-still-open
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Twilight adobe roadside mission gate, adult otter sister in dark practical convent habit holding
+    lantern and inviting traveler's entry, long shadows and warm distant refectory light, subtle unease, painterly
+    dramatic western atmosphere
+  prompt_tags: solo, anthro otter, female, convent sister, worn dark nun habit, warm smile, holding up an oil lantern
+    beneath an open adobe mission archway, inviting, warm refectory light glowing far behind her, twilight, long
+    shadows, subtle unease
+  jobs:
+    arthemy-house: 37417
+- key: sl1-gate-still-open-2
+  entity: creature
+  lane: arthemy-house
+  title: The Gate Still Open (seed 2)
+  size: 1344x768
+  seed: 31018
+  shape: wide
+  card: gate-still-open
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Twilight adobe roadside mission gate, adult otter sister in dark practical convent habit holding
+    lantern and inviting traveler's entry, long shadows and warm distant refectory light, subtle unease, painterly
+    dramatic western atmosphere
+  prompt_tags: solo, anthro otter, female, convent sister, worn dark nun habit, warm smile, holding up an oil lantern
+    beneath an open adobe mission archway, inviting, warm refectory light glowing far behind her, twilight, long
+    shadows, subtle unease
+  jobs:
+    arthemy-house: 37418
+- key: sl1-the-locked-dormitory-1
+  entity: creature
+  lane: arthemy-house
+  title: The Locked Dormitory (seed 1)
+  size: 1344x768
+  seed: 31019
+  shape: wide
+  card: the-locked-dormitory
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Dim adobe mission hallway with locked wooden dormitory door, little wooden toy below an empty peg,
+    anxious adult mouse novice clutching a set of keys, tension without violence, cinematic lantern light, no readable
+    writing
+  prompt_tags: solo, anthro mouse, young novice, plain travel-stained novice robe, worried eyes, clutching a ring
+    of iron keys, standing before a locked wooden dormitory door in a dim adobe mission corridor, a small wooden
+    toy horse lying beneath an empty coat peg, lantern light, tense
+  jobs:
+    arthemy-house: 37419
+- key: sl1-the-locked-dormitory-2
+  entity: creature
+  lane: arthemy-house
+  title: The Locked Dormitory (seed 2)
+  size: 1344x768
+  seed: 31020
+  shape: wide
+  card: the-locked-dormitory
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Dim adobe mission hallway with locked wooden dormitory door, little wooden toy below an empty peg,
+    anxious adult mouse novice clutching a set of keys, tension without violence, cinematic lantern light, no readable
+    writing
+  prompt_tags: solo, anthro mouse, young novice, plain travel-stained novice robe, worried eyes, clutching a ring
+    of iron keys, standing before a locked wooden dormitory door in a dim adobe mission corridor, a small wooden
+    toy horse lying beneath an empty coat peg, lantern light, tense
+  jobs:
+    arthemy-house: 37420
+- key: sl1-a-crust-for-the-road-1
+  entity: creature
+  lane: arthemy-house
+  title: A Crust for the Road (seed 1)
+  size: 1344x768
+  seed: 31021
+  shape: wide
+  card: a-crust-for-the-road
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Rain-washed mission kitchen threshold in the western frontier, adult otter kitchen novice secretly
+    handing a small wrapped bread parcel to a grey koala ronin, side-lit wary gratitude, warm palette with dark
+    adobe windows
+  prompt_tags: solo, anthro otter, female, kitchen novice, plain dark habit, flour on her forearms, holding out
+    a small wrapped bread parcel toward the viewer, glancing back over her shoulder at dark mission windows, rain-washed
+    kitchen doorway, side light, wary
+  jobs:
+    arthemy-house: 37421
+- key: sl1-a-crust-for-the-road-2
+  entity: creature
+  lane: arthemy-house
+  title: A Crust for the Road (seed 2)
+  size: 1344x768
+  seed: 31022
+  shape: wide
+  card: a-crust-for-the-road
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Rain-washed mission kitchen threshold in the western frontier, adult otter kitchen novice secretly
+    handing a small wrapped bread parcel to a grey koala ronin, side-lit wary gratitude, warm palette with dark
+    adobe windows
+  prompt_tags: solo, anthro otter, female, kitchen novice, plain dark habit, flour on her forearms, holding out
+    a small wrapped bread parcel toward the viewer, glancing back over her shoulder at dark mission windows, rain-washed
+    kitchen doorway, side light, wary
+  jobs:
+    arthemy-house: 37422
+- key: sl1-the-silent-bell-1
+  entity: creature
+  lane: arthemy-house
+  title: The Silent Bell (seed 1)
+  size: 1344x768
+  seed: 31023
+  shape: wide
+  card: the-silent-bell
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Looming adobe mission bell tower with motionless rope, older badger grounds caretaker confronting
+    a lone ronin at foot of worn stairs, empty bronze assembly suggested in shadows, dusty sunset, ominous quiet,
+    no glyphs or text
+  prompt_tags: solo, anthro badger, older grounds caretaker, patched work tunic, grey muzzle fur, standing guard
+    at the foot of worn adobe tower stairs, one raised paw warning the viewer away, bell rope hanging motionless
+    above, empty gap where the bell mechanism should be, dusty sunset, ominous
+  jobs:
+    arthemy-house: 37423
+- key: sl1-the-silent-bell-2
+  entity: creature
+  lane: arthemy-house
+  title: The Silent Bell (seed 2)
+  size: 1344x768
+  seed: 31024
+  shape: wide
+  card: the-silent-bell
+  land: homestead
+  task: t-023
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: Looming adobe mission bell tower with motionless rope, older badger grounds caretaker confronting
+    a lone ronin at foot of worn stairs, empty bronze assembly suggested in shadows, dusty sunset, ominous quiet,
+    no glyphs or text
+  prompt_tags: solo, anthro badger, older grounds caretaker, patched work tunic, grey muzzle fur, standing guard
+    at the foot of worn adobe tower stairs, one raised paw warning the viewer away, bell rope hanging motionless
+    above, empty gap where the bell mechanism should be, dusty sunset, ominous
+  jobs:
+    arthemy-house: 37424
+- key: sl1-lanterns-on-the-raft-1
+  entity: creature
+  lane: arthemy-house
+  title: Lanterns on the Raft (seed 1)
+  size: 1344x768
+  seed: 31025
+  shape: wide
+  card: lanterns-on-the-raft
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at ferry landing: An elderly otter ferryman
+    with a red patchwork coat and brass pole; At the landing, a flat raft circles without touching shore. Atmospheric
+    composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro otter, elderly ferryman, red patchwork coat, long brass pole, standing on a flat wooden
+    raft drifting in circles on a slow brown river, oil lantern lit in broad daylight, ferry landing with weathered
+    posts, reeds, hazy river light, wide shot
+  jobs:
+    arthemy-house: 37425
+- key: sl1-lanterns-on-the-raft-2
+  entity: creature
+  lane: arthemy-house
+  title: Lanterns on the Raft (seed 2)
+  size: 1344x768
+  seed: 31026
+  shape: wide
+  card: lanterns-on-the-raft
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at ferry landing: An elderly otter ferryman
+    with a red patchwork coat and brass pole; At the landing, a flat raft circles without touching shore. Atmospheric
+    composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro otter, elderly ferryman, red patchwork coat, long brass pole, standing on a flat wooden
+    raft drifting in circles on a slow brown river, oil lantern lit in broad daylight, ferry landing with weathered
+    posts, reeds, hazy river light, wide shot
+  jobs:
+    arthemy-house: 37426
+- key: sl1-toll-of-two-names-1
+  entity: creature
+  lane: arthemy-house
+  title: The Toll of Two Names (seed 1)
+  size: 1344x768
+  seed: 31027
+  shape: wide
+  card: toll-of-two-names
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at ferry landing: A stern goat registrar
+    with ivory tally sticks and a wax-sealed ledger; A registrar stops every traveler and writes down a name before
+    permitting passage. Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro goat, stern registrar, ivory tally sticks, open wax-sealed ledger book with blank pages,
+    seated at a weathered toll table at a river ferry landing, blocking the way, river behind, harsh afternoon light,
+    medium shot
+  jobs:
+    arthemy-house: 37427
+- key: sl1-toll-of-two-names-2
+  entity: creature
+  lane: arthemy-house
+  title: The Toll of Two Names (seed 2)
+  size: 1344x768
+  seed: 31028
+  shape: wide
+  card: toll-of-two-names
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at ferry landing: A stern goat registrar
+    with ivory tally sticks and a wax-sealed ledger; A registrar stops every traveler and writes down a name before
+    permitting passage. Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro goat, stern registrar, ivory tally sticks, open wax-sealed ledger book with blank pages,
+    seated at a weathered toll table at a river ferry landing, blocking the way, river behind, harsh afternoon light,
+    medium shot
+  jobs:
+    arthemy-house: 37428
+- key: sl1-the-boat-that-waits-1
+  entity: creature
+  lane: arthemy-house
+  title: The Boat That Waits (seed 1)
+  size: 1344x768
+  seed: 31029
+  shape: wide
+  card: the-boat-that-waits
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at ferry landing: A tall heron boatwright
+    in indigo workwear carrying a cracked rudder; An empty skiff sits tied to a post long after the boats have departed.
+    Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro heron, tall boatwright, indigo workwear, carrying a cracked wooden rudder, standing
+    beside an empty skiff tied to a lone post, the river fallen low around it, exposed mud banks, ferry landing,
+    evening, melancholy
+  jobs:
+    arthemy-house: 37429
+- key: sl1-the-boat-that-waits-2
+  entity: creature
+  lane: arthemy-house
+  title: The Boat That Waits (seed 2)
+  size: 1344x768
+  seed: 31030
+  shape: wide
+  card: the-boat-that-waits
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at ferry landing: A tall heron boatwright
+    in indigo workwear carrying a cracked rudder; An empty skiff sits tied to a post long after the boats have departed.
+    Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro heron, tall boatwright, indigo workwear, carrying a cracked wooden rudder, standing
+    beside an empty skiff tied to a lone post, the river fallen low around it, exposed mud banks, ferry landing,
+    evening, melancholy
+  jobs:
+    arthemy-house: 37430
+- key: sl1-weighed-in-salt-1
+  entity: creature
+  lane: arthemy-house
+  title: Weighed in Salt (seed 1)
+  size: 1344x768
+  seed: 31031
+  shape: wide
+  card: weighed-in-salt
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at trading post: A broad badger merchant
+    in layered aprons beside a crooked balance scale; A trader''s scale measures salt by the spoon while a queue
+    of hungry travelers looks on. Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro badger, broad salt merchant, layered aprons, measuring salt by the spoon onto a crooked
+    brass balance scale, sacks of salt, trading post counter, dusty light through plank walls, medium shot
+  jobs:
+    arthemy-house: 37431
+- key: sl1-weighed-in-salt-2
+  entity: creature
+  lane: arthemy-house
+  title: Weighed in Salt (seed 2)
+  size: 1344x768
+  seed: 31032
+  shape: wide
+  card: weighed-in-salt
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at trading post: A broad badger merchant
+    in layered aprons beside a crooked balance scale; A trader''s scale measures salt by the spoon while a queue
+    of hungry travelers looks on. Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro badger, broad salt merchant, layered aprons, measuring salt by the spoon onto a crooked
+    brass balance scale, sacks of salt, trading post counter, dusty light through plank walls, medium shot
+  jobs:
+    arthemy-house: 37432
+- key: sl1-the-mended-compass-1
+  entity: creature
+  lane: arthemy-house
+  title: The Mended Compass (seed 1)
+  size: 1344x768
+  seed: 31033
+  shape: wide
+  card: the-mended-compass
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at trading post: A copper-furred fox cartographer
+    with a leather hood and ink-stained fingers; A cartographer offers to exchange a repaired compass for a map
+    that no longer matches the delta. Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro fox, female, cartographer, copper fur, leather hood, ink-stained fingers, holding out
+    a repaired brass compass toward the viewer, rolled maps with blank paper, trading post table, lamplight, close-up
+  jobs:
+    arthemy-house: 37433
+- key: sl1-the-mended-compass-2
+  entity: creature
+  lane: arthemy-house
+  title: The Mended Compass (seed 2)
+  size: 1344x768
+  seed: 31034
+  shape: wide
+  card: the-mended-compass
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at trading post: A copper-furred fox cartographer
+    with a leather hood and ink-stained fingers; A cartographer offers to exchange a repaired compass for a map
+    that no longer matches the delta. Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro fox, female, cartographer, copper fur, leather hood, ink-stained fingers, holding out
+    a repaired brass compass toward the viewer, rolled maps with blank paper, trading post table, lamplight, close-up
+  jobs:
+    arthemy-house: 37434
+- key: sl1-three-cups-on-the-table-1
+  entity: creature
+  lane: arthemy-house
+  title: Three Cups on the Table (seed 1)
+  size: 1344x768
+  seed: 31035
+  shape: wide
+  card: three-cups-on-the-table
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at trading post: A gray mouse cook with
+    a patched apron and three enamel cups; A cook serves three cups of broth: one for the buyer, one for an absent
+    traveler, and one for whoever asks no questions. Atmospheric composition, clear face silhouettes, no typography
+    or logos.'
+  prompt_tags: solo, anthro mouse, female, traveling cook, grey fur, patched apron, setting three chipped enamel
+    cups of steaming broth on a rough plank table, trading post kitchen, lantern light, warm and wary, medium shot
+  jobs:
+    arthemy-house: 37435
+- key: sl1-three-cups-on-the-table-2
+  entity: creature
+  lane: arthemy-house
+  title: Three Cups on the Table (seed 2)
+  size: 1344x768
+  seed: 31036
+  shape: wide
+  card: three-cups-on-the-table
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at trading post: A gray mouse cook with
+    a patched apron and three enamel cups; A cook serves three cups of broth: one for the buyer, one for an absent
+    traveler, and one for whoever asks no questions. Atmospheric composition, clear face silhouettes, no typography
+    or logos.'
+  prompt_tags: solo, anthro mouse, female, traveling cook, grey fur, patched apron, setting three chipped enamel
+    cups of steaming broth on a rough plank table, trading post kitchen, lantern light, warm and wary, medium shot
+  jobs:
+    arthemy-house: 37436
+- key: sl1-footprints-in-the-silt-1
+  entity: creature
+  lane: arthemy-house
+  title: Footprints in the Silt (seed 1)
+  size: 1344x768
+  seed: 31037
+  shape: wide
+  card: footprints-in-the-silt
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at dry delta: An old tortoise surveyor marked
+    with chalk dust and carrying a hooked measuring staff; A surveyor crouches beside footprints that begin in a
+    dry channel and stop at an empty bank. Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro tortoise, male, old river surveyor, chalk dust on his shell, hooked measuring staff,
+    crouching beside a line of footprints that end at an empty riverbank, row of wooden stakes, dry cracked channel,
+    fresh mud above the old waterline, harsh light
+  jobs:
+    arthemy-house: 37437
+- key: sl1-footprints-in-the-silt-2
+  entity: creature
+  lane: arthemy-house
+  title: Footprints in the Silt (seed 2)
+  size: 1344x768
+  seed: 31038
+  shape: wide
+  card: footprints-in-the-silt
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at dry delta: An old tortoise surveyor marked
+    with chalk dust and carrying a hooked measuring staff; A surveyor crouches beside footprints that begin in a
+    dry channel and stop at an empty bank. Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro tortoise, male, old river surveyor, chalk dust on his shell, hooked measuring staff,
+    crouching beside a line of footprints that end at an empty riverbank, row of wooden stakes, dry cracked channel,
+    fresh mud above the old waterline, harsh light
+  jobs:
+    arthemy-house: 37438
+- key: sl1-a-road-of-bones-1
+  entity: creature
+  lane: arthemy-house
+  title: A Road of Bones (seed 1)
+  size: 1344x768
+  seed: 31039
+  shape: wide
+  card: a-road-of-bones
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at dry delta: A lean jackal salvage guide
+    with woven rope gloves and sun-bleached goggles; White ribs of ancient driftwood cross a dry inlet in a pattern
+    too deliberate for a flood. Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro jackal, female, lean salvage guide, woven rope gloves, sun-bleached goggles pushed up,
+    standing among huge white ribs of ancient driftwood arching across a dry river inlet in an unnaturally regular
+    pattern, bleached delta, wide shot, eerie
+  jobs:
+    arthemy-house: 37439
+- key: sl1-a-road-of-bones-2
+  entity: creature
+  lane: arthemy-house
+  title: A Road of Bones (seed 2)
+  size: 1344x768
+  seed: 31040
+  shape: wide
+  card: a-road-of-bones
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at dry delta: A lean jackal salvage guide
+    with woven rope gloves and sun-bleached goggles; White ribs of ancient driftwood cross a dry inlet in a pattern
+    too deliberate for a flood. Atmospheric composition, clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro jackal, female, lean salvage guide, woven rope gloves, sun-bleached goggles pushed up,
+    standing among huge white ribs of ancient driftwood arching across a dry river inlet in an unnaturally regular
+    pattern, bleached delta, wide shot, eerie
+  jobs:
+    arthemy-house: 37440
+- key: sl1-the-reed-music-1
+  entity: creature
+  lane: arthemy-house
+  title: The Reed Music (seed 1)
+  size: 1344x768
+  seed: 31041
+  shape: wide
+  card: the-reed-music
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at dry delta: A green frog musician in a
+    weathered waistcoat playing a long hollow reed; Music rises from a place the map labels empty. Atmospheric composition,
+    clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro frog, male, musician, green skin, weathered waistcoat, playing a long hollow reed flute,
+    sitting by a thin trickle of fresh water in a dry empty delta, cracked mud, dusk, dreamy, medium shot
+  jobs:
+    arthemy-house: 37441
+- key: sl1-the-reed-music-2
+  entity: creature
+  lane: arthemy-house
+  title: The Reed Music (seed 2)
+  size: 1344x768
+  seed: 31042
+  shape: wide
+  card: the-reed-music
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo ink illustration at dry delta: A green frog musician in a
+    weathered waistcoat playing a long hollow reed; Music rises from a place the map labels empty. Atmospheric composition,
+    clear face silhouettes, no typography or logos.'
+  prompt_tags: solo, anthro frog, male, musician, green skin, weathered waistcoat, playing a long hollow reed flute,
+    sitting by a thin trickle of fresh water in a dry empty delta, cracked mud, dusk, dreamy, medium shot
+  jobs:
+    arthemy-house: 37442
+- key: sl1-hammer-under-the-stone-1
+  entity: creature
+  lane: arthemy-house
+  title: Hammer Under Stone (seed 1)
+  size: 1344x768
+  seed: 31043
+  shape: wide
+  card: hammer-under-the-stone
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at quarry: A muscular mole mason in a dusty
+    vest carrying an iron hammer; The abandoned quarry is not entirely abandoned. Strong silhouettes and believable
+    canyon geology, no text or logos.'
+  prompt_tags: solo, anthro mole, male, muscular quarry mason, dusty vest, iron hammer raised, sounding the rock
+    face, freshly cut seam glowing faintly in the stone, abandoned red rock quarry, scaffolding, harsh sun, wide
+    shot
+  jobs:
+    arthemy-house: 37443
+- key: sl1-hammer-under-the-stone-2
+  entity: creature
+  lane: arthemy-house
+  title: Hammer Under Stone (seed 2)
+  size: 1344x768
+  seed: 31044
+  shape: wide
+  card: hammer-under-the-stone
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at quarry: A muscular mole mason in a dusty
+    vest carrying an iron hammer; The abandoned quarry is not entirely abandoned. Strong silhouettes and believable
+    canyon geology, no text or logos.'
+  prompt_tags: solo, anthro mole, male, muscular quarry mason, dusty vest, iron hammer raised, sounding the rock
+    face, freshly cut seam glowing faintly in the stone, abandoned red rock quarry, scaffolding, harsh sun, wide
+    shot
+  jobs:
+    arthemy-house: 37444
+- key: sl1-the-empty-pay-cart-1
+  entity: creature
+  lane: arthemy-house
+  title: The Empty Pay Cart (seed 1)
+  size: 1344x768
+  seed: 31045
+  shape: wide
+  card: the-empty-pay-cart
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at quarry: A tusked boar accountant in a striped
+    waistcoat holding a cracked abacus; An accountant counts pebbles into an empty ore cart where wages should have
+    been. Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro boar, male, quarry accountant, tusks, striped waistcoat, cracked abacus, counting pebbles
+    into an empty iron ore cart, blank pay sheet pinned under his hoof, deserted quarry, red canyon walls, afternoon
+    light
+  jobs:
+    arthemy-house: 37445
+- key: sl1-the-empty-pay-cart-2
+  entity: creature
+  lane: arthemy-house
+  title: The Empty Pay Cart (seed 2)
+  size: 1344x768
+  seed: 31046
+  shape: wide
+  card: the-empty-pay-cart
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at quarry: A tusked boar accountant in a striped
+    waistcoat holding a cracked abacus; An accountant counts pebbles into an empty ore cart where wages should have
+    been. Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro boar, male, quarry accountant, tusks, striped waistcoat, cracked abacus, counting pebbles
+    into an empty iron ore cart, blank pay sheet pinned under his hoof, deserted quarry, red canyon walls, afternoon
+    light
+  jobs:
+    arthemy-house: 37446
+- key: sl1-the-glass-vein-1
+  entity: creature
+  lane: arthemy-house
+  title: The Glass Vein (seed 1)
+  size: 1344x768
+  seed: 31047
+  shape: wide
+  card: the-glass-vein
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at quarry: A desert lizard collector in patched
+    gloves carrying a padded tray of black glass; A collector works alone at a seam of black glass that sings when
+    struck. Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro lizard, female, desert stone collector, patched leather gloves, padded tray of black
+    volcanic glass shards, working at a gleaming seam of black glass in a red canyon wall, careful, harsh sun, close-up
+  jobs:
+    arthemy-house: 37447
+- key: sl1-the-glass-vein-2
+  entity: creature
+  lane: arthemy-house
+  title: The Glass Vein (seed 2)
+  size: 1344x768
+  seed: 31048
+  shape: wide
+  card: the-glass-vein
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at quarry: A desert lizard collector in patched
+    gloves carrying a padded tray of black glass; A collector works alone at a seam of black glass that sings when
+    struck. Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro lizard, female, desert stone collector, patched leather gloves, padded tray of black
+    volcanic glass shards, working at a gleaming seam of black glass in a red canyon wall, careful, harsh sun, close-up
+  jobs:
+    arthemy-house: 37448
+- key: sl1-the-watchful-overhang-1
+  entity: creature
+  lane: arthemy-house
+  title: The Watchful Overhang (seed 1)
+  size: 1344x768
+  seed: 31049
+  shape: wide
+  card: the-watchful-overhang
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon trail: A sure-footed ibex scout
+    with a bandaged horn and a braided rope; An ibex scout watches an overhang shed dust with every breeze. Strong
+    silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro ibex, female, trail scout, bandaged horn, coiled braided rope, standing on a narrow
+    canyon ledge watching a huge rock overhang shed dust in the wind, deep red canyon, vertigo, wide shot
+  jobs:
+    arthemy-house: 37449
+- key: sl1-the-watchful-overhang-2
+  entity: creature
+  lane: arthemy-house
+  title: The Watchful Overhang (seed 2)
+  size: 1344x768
+  seed: 31050
+  shape: wide
+  card: the-watchful-overhang
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon trail: A sure-footed ibex scout
+    with a bandaged horn and a braided rope; An ibex scout watches an overhang shed dust with every breeze. Strong
+    silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro ibex, female, trail scout, bandaged horn, coiled braided rope, standing on a narrow
+    canyon ledge watching a huge rock overhang shed dust in the wind, deep red canyon, vertigo, wide shot
+  jobs:
+    arthemy-house: 37450
+- key: sl1-the-banner-in-the-wind-1
+  entity: creature
+  lane: arthemy-house
+  title: The Banner in the Wind (seed 1)
+  size: 1344x768
+  seed: 31051
+  shape: wide
+  card: the-banner-in-the-wind
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon trail: A weathered eagle courier
+    captain holding a torn signaling banner; A torn banner hangs above a narrow bridge, tied where no courier would
+    willingly stop. Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro eagle, female, courier captain, weathered feathers, worn courier coat, holding a torn
+    plain signal banner snapping in the wind, narrow rope bridge across a deep canyon behind her, storm light
+  jobs:
+    arthemy-house: 37451
+- key: sl1-the-banner-in-the-wind-2
+  entity: creature
+  lane: arthemy-house
+  title: The Banner in the Wind (seed 2)
+  size: 1344x768
+  seed: 31052
+  shape: wide
+  card: the-banner-in-the-wind
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon trail: A weathered eagle courier
+    captain holding a torn signaling banner; A torn banner hangs above a narrow bridge, tied where no courier would
+    willingly stop. Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro eagle, female, courier captain, weathered feathers, worn courier coat, holding a torn
+    plain signal banner snapping in the wind, narrow rope bridge across a deep canyon behind her, storm light
+  jobs:
+    arthemy-house: 37452
+- key: sl1-the-toll-without-a-keeper-1
+  entity: creature
+  lane: arthemy-house
+  title: The Toll Without a Keeper (seed 1)
+  size: 1344x768
+  seed: 31053
+  shape: wide
+  card: the-toll-without-a-keeper
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon trail: A scarred hyena road enforcer
+    with a wooden tally board and a broken spear; A toll rope hangs across the canyon trail, though no guard stands
+    behind it. Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro hyena, female, scarred road enforcer, wooden tally board, broken spear, watching from
+    the rocks above a toll rope stretched across a canyon trail, unattended wooden toll box, harsh shadows, menacing,
+    wide shot
+  jobs:
+    arthemy-house: 37453
+- key: sl1-the-toll-without-a-keeper-2
+  entity: creature
+  lane: arthemy-house
+  title: The Toll Without a Keeper (seed 2)
+  size: 1344x768
+  seed: 31054
+  shape: wide
+  card: the-toll-without-a-keeper
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon trail: A scarred hyena road enforcer
+    with a wooden tally board and a broken spear; A toll rope hangs across the canyon trail, though no guard stands
+    behind it. Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro hyena, female, scarred road enforcer, wooden tally board, broken spear, watching from
+    the rocks above a toll rope stretched across a canyon trail, unattended wooden toll box, harsh shadows, menacing,
+    wide shot
+  jobs:
+    arthemy-house: 37454
+- key: sl1-one-place-by-the-fire-1
+  entity: creature
+  lane: arthemy-house
+  title: One Place by the Fire (seed 1)
+  size: 1344x768
+  seed: 31055
+  shape: wide
+  card: one-place-by-the-fire
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon camp: An elk camp host in a woven
+    cloak stirring stew beside a small fire; A camp has one empty place by its fire and a rule against asking why.
+    Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro elk, camp host, antlers, woven cloak, stirring a pot of stew over a small campfire,
+    one empty place set by the fire, canyon camp at night, mesa silhouettes, warm firelight, medium shot
+  jobs:
+    arthemy-house: 37455
+- key: sl1-one-place-by-the-fire-2
+  entity: creature
+  lane: arthemy-house
+  title: One Place by the Fire (seed 2)
+  size: 1344x768
+  seed: 31056
+  shape: wide
+  card: one-place-by-the-fire
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon camp: An elk camp host in a woven
+    cloak stirring stew beside a small fire; A camp has one empty place by its fire and a rule against asking why.
+    Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro elk, camp host, antlers, woven cloak, stirring a pot of stew over a small campfire,
+    one empty place set by the fire, canyon camp at night, mesa silhouettes, warm firelight, medium shot
+  jobs:
+    arthemy-house: 37456
+- key: sl1-the-map-in-ashes-1
+  entity: creature
+  lane: arthemy-house
+  title: The Map in Ashes (seed 1)
+  size: 1344x768
+  seed: 31057
+  shape: wide
+  card: the-map-in-ashes
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon camp: A raccoon archivist with ink-stained
+    gloves guarding a half-burned map; An archivist feeds torn maps into the fire one corner at a time. Strong silhouettes
+    and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro raccoon, female, wandering archivist, ink-stained gloves, feeding torn blank maps one
+    corner at a time into a campfire, clutching a half-burned map to her chest, canyon camp at night, embers, close-up
+  jobs:
+    arthemy-house: 37457
+- key: sl1-the-map-in-ashes-2
+  entity: creature
+  lane: arthemy-house
+  title: The Map in Ashes (seed 2)
+  size: 1344x768
+  seed: 31058
+  shape: wide
+  card: the-map-in-ashes
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon camp: A raccoon archivist with ink-stained
+    gloves guarding a half-burned map; An archivist feeds torn maps into the fire one corner at a time. Strong silhouettes
+    and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro raccoon, female, wandering archivist, ink-stained gloves, feeding torn blank maps one
+    corner at a time into a campfire, clutching a half-burned map to her chest, canyon camp at night, embers, close-up
+  jobs:
+    arthemy-house: 37458
+- key: sl1-the-night-watch-debt-1
+  entity: creature
+  lane: arthemy-house
+  title: The Night Watch Debt (seed 1)
+  size: 1344x768
+  seed: 31059
+  shape: wide
+  card: the-night-watch-debt
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon camp: An older wolf sentry with
+    a patched uniform and a lantern missing its lens; A retired sentry offers to watch the camp in exchange for
+    one night''s sleep. Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro wolf, male, older retired sentry, patched faded uniform, carrying a lantern with no
+    glass lens, walking the edge of a canyon camp at night, grey muzzle, tired eyes, moonlight, medium shot
+  jobs:
+    arthemy-house: 37459
+- key: sl1-the-night-watch-debt-2
+  entity: creature
+  lane: arthemy-house
+  title: The Night Watch Debt (seed 2)
+  size: 1344x768
+  seed: 31060
+  shape: wide
+  card: the-night-watch-debt
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic ink-wash Weird West and Edo scene at canyon camp: An older wolf sentry with
+    a patched uniform and a lantern missing its lens; A retired sentry offers to watch the camp in exchange for
+    one night''s sleep. Strong silhouettes and believable canyon geology, no text or logos.'
+  prompt_tags: solo, anthro wolf, male, older retired sentry, patched faded uniform, carrying a lantern with no
+    glass lens, walking the edge of a canyon camp at night, grey muzzle, tired eyes, moonlight, medium shot
+  jobs:
+    arthemy-house: 37460
+- key: sl1-feathers-in-the-draft-1
+  entity: creature
+  lane: arthemy-house
+  title: Feathers in the Draft (seed 1)
+  size: 1344x768
+  seed: 31061
+  shape: wide
+  card: feathers-in-the-draft
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in cave mouth: A crow storm-reader in indigo paper
+    charms holding a tiny brass wind bell; At the cave mouth, a crow storm-reader sets paper charms into the wind
+    without letting one blow away. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering
+    or logos.'
+  prompt_tags: solo, anthro crow, female, storm-reader witch, indigo robes hung with blank paper charms, tiny brass
+    wind bell, letting the charms flutter in a cold wind at a cave mouth, wet rock, storm sky behind, lantern light,
+    eerie
+  jobs:
+    arthemy-house: 37461
+- key: sl1-feathers-in-the-draft-2
+  entity: creature
+  lane: arthemy-house
+  title: Feathers in the Draft (seed 2)
+  size: 1344x768
+  seed: 31062
+  shape: wide
+  card: feathers-in-the-draft
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in cave mouth: A crow storm-reader in indigo paper
+    charms holding a tiny brass wind bell; At the cave mouth, a crow storm-reader sets paper charms into the wind
+    without letting one blow away. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering
+    or logos.'
+  prompt_tags: solo, anthro crow, female, storm-reader witch, indigo robes hung with blank paper charms, tiny brass
+    wind bell, letting the charms flutter in a cold wind at a cave mouth, wet rock, storm sky behind, lantern light,
+    eerie
+  jobs:
+    arthemy-house: 37462
+- key: sl1-the-third-shadow-1
+  entity: creature
+  lane: arthemy-house
+  title: The Third Shadow (seed 1)
+  size: 1344x768
+  seed: 31063
+  shape: wide
+  card: the-third-shadow
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in cave mouth: A pale bat cave guide with a braided
+    cord and polished stone spectacles; A guide offers to lead Zuzu underground, but three shadows fall behind her
+    from only two lanterns. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.'
+  prompt_tags: solo, anthro bat, female, pale cave guide, polished stone spectacles, braided cord, holding two lanterns
+    at a cave entrance, three shadows stretching behind her on the rock wall, wet rock, unsettling, medium shot
+  jobs:
+    arthemy-house: 37463
+- key: sl1-the-third-shadow-2
+  entity: creature
+  lane: arthemy-house
+  title: The Third Shadow (seed 2)
+  size: 1344x768
+  seed: 31064
+  shape: wide
+  card: the-third-shadow
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in cave mouth: A pale bat cave guide with a braided
+    cord and polished stone spectacles; A guide offers to lead Zuzu underground, but three shadows fall behind her
+    from only two lanterns. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.'
+  prompt_tags: solo, anthro bat, female, pale cave guide, polished stone spectacles, braided cord, holding two lanterns
+    at a cave entrance, three shadows stretching behind her on the rock wall, wet rock, unsettling, medium shot
+  jobs:
+    arthemy-house: 37464
+- key: sl1-shelter-for-the-storm-1
+  entity: creature
+  lane: arthemy-house
+  title: Shelter for the Storm (seed 1)
+  size: 1344x768
+  seed: 31065
+  shape: wide
+  card: shelter-for-the-storm
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in cave mouth: A cloaked pangolin healer carrying
+    herb satchels and a rain-wet lantern; Rain lashes the ridge where a healer struggles to carry supplies into
+    the cave. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.'
+  prompt_tags: solo, anthro pangolin, female, itinerant healer, hooded rain-soaked cloak, herb satchels, struggling
+    to carry supplies toward a cave mouth through lashing rain, guttering lantern, mountain ridge, night storm
+  jobs:
+    arthemy-house: 37465
+- key: sl1-shelter-for-the-storm-2
+  entity: creature
+  lane: arthemy-house
+  title: Shelter for the Storm (seed 2)
+  size: 1344x768
+  seed: 31066
+  shape: wide
+  card: shelter-for-the-storm
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in cave mouth: A cloaked pangolin healer carrying
+    herb satchels and a rain-wet lantern; Rain lashes the ridge where a healer struggles to carry supplies into
+    the cave. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.'
+  prompt_tags: solo, anthro pangolin, female, itinerant healer, hooded rain-soaked cloak, herb satchels, struggling
+    to carry supplies toward a cave mouth through lashing rain, guttering lantern, mountain ridge, night storm
+  jobs:
+    arthemy-house: 37466
+- key: sl1-the-candle-court-1
+  entity: creature
+  lane: arthemy-house
+  title: The Candle Court (seed 1)
+  size: 1344x768
+  seed: 31067
+  shape: wide
+  card: the-candle-court
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in stone hollow: A crow adjudicator seated beneath
+    blue candle flames with slate tablets; Deep in the hollow, an adjudicator hears disputes by candlelight. Atmospheric
+    lantern light, wet rock detail, readable silhouette, no lettering or logos.'
+  prompt_tags: solo, anthro crow, cave adjudicator, black robes, seated on a stone seat beneath blue candle flames,
+    holding blank slate tablets, a small pouch of pale salt on a stone table, deep cave hollow, blue light, solemn,
+    medium shot
+  jobs:
+    arthemy-house: 37467
+- key: sl1-the-candle-court-2
+  entity: creature
+  lane: arthemy-house
+  title: The Candle Court (seed 2)
+  size: 1344x768
+  seed: 31068
+  shape: wide
+  card: the-candle-court
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in stone hollow: A crow adjudicator seated beneath
+    blue candle flames with slate tablets; Deep in the hollow, an adjudicator hears disputes by candlelight. Atmospheric
+    lantern light, wet rock detail, readable silhouette, no lettering or logos.'
+  prompt_tags: solo, anthro crow, cave adjudicator, black robes, seated on a stone seat beneath blue candle flames,
+    holding blank slate tablets, a small pouch of pale salt on a stone table, deep cave hollow, blue light, solemn,
+    medium shot
+  jobs:
+    arthemy-house: 37468
+- key: sl1-salt-on-the-threshold-1
+  entity: creature
+  lane: arthemy-house
+  title: Salt on the Threshold (seed 1)
+  size: 1344x768
+  seed: 31069
+  shape: wide
+  card: salt-on-the-threshold
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in stone hollow: A charcoal-speckled salamander
+    mason with a white salt line across her gloves; A mason has painted a thick salt line before a narrow doorway,
+    though the stones behind it appear ordinary. Atmospheric lantern light, wet rock detail, readable silhouette,
+    no lettering or logos.'
+  prompt_tags: solo, anthro salamander, female, cave mason, charcoal-speckled skin, white salt dust on her gloves,
+    painting a thick white salt line across the floor before a narrow stone doorway, cave, lantern light, wet rock
+  jobs:
+    arthemy-house: 37469
+- key: sl1-salt-on-the-threshold-2
+  entity: creature
+  lane: arthemy-house
+  title: Salt on the Threshold (seed 2)
+  size: 1344x768
+  seed: 31070
+  shape: wide
+  card: salt-on-the-threshold
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in stone hollow: A charcoal-speckled salamander
+    mason with a white salt line across her gloves; A mason has painted a thick salt line before a narrow doorway,
+    though the stones behind it appear ordinary. Atmospheric lantern light, wet rock detail, readable silhouette,
+    no lettering or logos.'
+  prompt_tags: solo, anthro salamander, female, cave mason, charcoal-speckled skin, white salt dust on her gloves,
+    painting a thick white salt line across the floor before a narrow stone doorway, cave, lantern light, wet rock
+  jobs:
+    arthemy-house: 37470
+- key: sl1-the-forgotten-pledge-1
+  entity: creature
+  lane: arthemy-house
+  title: The Forgotten Pledge (seed 1)
+  size: 1344x768
+  seed: 31071
+  shape: wide
+  card: the-forgotten-pledge
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in stone hollow: A massive gorilla guardian in frayed
+    travel robes with an iron charm around one wrist; A guardian stands before a sealed chamber, repeating an oath
+    in a voice he no longer recognizes. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering
+    or logos.'
+  prompt_tags: solo, anthro gorilla, male, massive oathbound guardian, frayed travel robes, faintly glowing iron
+    charm on one wrist, standing before a sealed stone chamber door, cave, sorrowful, lantern light, low angle
+  jobs:
+    arthemy-house: 37471
+- key: sl1-the-forgotten-pledge-2
+  entity: creature
+  lane: arthemy-house
+  title: The Forgotten Pledge (seed 2)
+  size: 1344x768
+  seed: 31072
+  shape: wide
+  card: the-forgotten-pledge
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in stone hollow: A massive gorilla guardian in frayed
+    travel robes with an iron charm around one wrist; A guardian stands before a sealed chamber, repeating an oath
+    in a voice he no longer recognizes. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering
+    or logos.'
+  prompt_tags: solo, anthro gorilla, male, massive oathbound guardian, frayed travel robes, faintly glowing iron
+    charm on one wrist, standing before a sealed stone chamber door, cave, sorrowful, lantern light, low angle
+  jobs:
+    arthemy-house: 37472
+- key: sl1-three-doors-no-hinges-1
+  entity: creature
+  lane: arthemy-house
+  title: Three Doors Without Hinges (seed 1)
+  size: 1344x768
+  seed: 31073
+  shape: wide
+  card: three-doors-no-hinges
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in underground crossroads: An elder crow tunnel
+    architect with folded diagrams and a silver measuring chain; Three stone arches stand where four tunnels ought
+    to meet. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.'
+  prompt_tags: solo, anthro crow, female, elder tunnel architect, folded blank diagrams, silver measuring chain,
+    standing before three stone archways where tunnels meet, underground crossroads, lantern light, deep shadows,
+    wide shot
+  jobs:
+    arthemy-house: 37473
+- key: sl1-three-doors-no-hinges-2
+  entity: creature
+  lane: arthemy-house
+  title: Three Doors Without Hinges (seed 2)
+  size: 1344x768
+  seed: 31074
+  shape: wide
+  card: three-doors-no-hinges
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in underground crossroads: An elder crow tunnel
+    architect with folded diagrams and a silver measuring chain; Three stone arches stand where four tunnels ought
+    to meet. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.'
+  prompt_tags: solo, anthro crow, female, elder tunnel architect, folded blank diagrams, silver measuring chain,
+    standing before three stone archways where tunnels meet, underground crossroads, lantern light, deep shadows,
+    wide shot
+  jobs:
+    arthemy-house: 37474
+- key: sl1-voices-across-the-rock-1
+  entity: creature
+  lane: arthemy-house
+  title: Voices Across the Rock (seed 1)
+  size: 1344x768
+  seed: 31075
+  shape: wide
+  card: voices-across-the-rock
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in underground crossroads: A small shrew courier
+    in dust-stained leathers holding a sealed message tube; A courier calls from behind a sheet of stone, though
+    his voice reaches the wrong tunnel. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering
+    or logos.'
+  prompt_tags: solo, anthro shrew, male, small lost courier, dust-stained leathers, sealed message tube, pressing
+    his ear against a sheet of stone in a narrow tunnel, underground crossroads, single lantern, claustrophobic
+  jobs:
+    arthemy-house: 37475
+- key: sl1-voices-across-the-rock-2
+  entity: creature
+  lane: arthemy-house
+  title: Voices Across the Rock (seed 2)
+  size: 1344x768
+  seed: 31076
+  shape: wide
+  card: voices-across-the-rock
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in underground crossroads: A small shrew courier
+    in dust-stained leathers holding a sealed message tube; A courier calls from behind a sheet of stone, though
+    his voice reaches the wrong tunnel. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering
+    or logos.'
+  prompt_tags: solo, anthro shrew, male, small lost courier, dust-stained leathers, sealed message tube, pressing
+    his ear against a sheet of stone in a narrow tunnel, underground crossroads, single lantern, claustrophobic
+  jobs:
+    arthemy-house: 37476
+- key: sl1-the-red-vial-1
+  entity: creature
+  lane: arthemy-house
+  title: The Red Vial (seed 1)
+  size: 1344x768
+  seed: 31077
+  shape: wide
+  card: the-red-vial
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in underground crossroads: A weary gorilla pilgrim
+    with a stained physician''s sash and a sealed red vial; An exhausted pilgrim guards a red vial while asking
+    strangers not to come too close. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering
+    or logos.'
+  prompt_tags: solo, anthro gorilla, male, weary pilgrim, stained physician's sash, clutching a sealed red glass
+    vial, trembling, one hand raised to keep the viewer back, underground tunnel crossroads, lantern light, haunted
+    eyes
+  jobs:
+    arthemy-house: 37477
+- key: sl1-the-red-vial-2
+  entity: creature
+  lane: arthemy-house
+  title: The Red Vial (seed 2)
+  size: 1344x768
+  seed: 31078
+  shape: wide
+  card: the-red-vial
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original dark-fantasy Weird West and Edo scene in underground crossroads: A weary gorilla pilgrim
+    with a stained physician''s sash and a sealed red vial; An exhausted pilgrim guards a red vial while asking
+    strangers not to come too close. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering
+    or logos.'
+  prompt_tags: solo, anthro gorilla, male, weary pilgrim, stained physician's sash, clutching a sealed red glass
+    vial, trembling, one hand raised to keep the viewer back, underground tunnel crossroads, lantern light, haunted
+    eyes
+  jobs:
+    arthemy-house: 37478
+- key: sl1-the-cooling-stones-1
+  entity: creature
+  lane: arthemy-house
+  title: The Cooling Stones (seed 1)
+  size: 1344x768
+  seed: 31079
+  shape: wide
+  card: the-cooling-stones
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at obsidian road: An armadillo road mender
+    in quilted leather carrying an obsidian-handled pick; The black road retains warmth long after sunset. Burnished
+    obsidian palette, restrained detail and clear figures, no lettering or logos.'
+  prompt_tags: solo, anthro armadillo, female, road mender, quilted leather, obsidian-handled pick, tapping a line
+    of faintly glowing stones in a black glass road, fissure of orange heat beneath, night after sunset, ash in
+    the air, wide shot
+  jobs:
+    arthemy-house: 37479
+- key: sl1-the-cooling-stones-2
+  entity: creature
+  lane: arthemy-house
+  title: The Cooling Stones (seed 2)
+  size: 1344x768
+  seed: 31080
+  shape: wide
+  card: the-cooling-stones
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at obsidian road: An armadillo road mender
+    in quilted leather carrying an obsidian-handled pick; The black road retains warmth long after sunset. Burnished
+    obsidian palette, restrained detail and clear figures, no lettering or logos.'
+  prompt_tags: solo, anthro armadillo, female, road mender, quilted leather, obsidian-handled pick, tapping a line
+    of faintly glowing stones in a black glass road, fissure of orange heat beneath, night after sunset, ash in
+    the air, wide shot
+  jobs:
+    arthemy-house: 37480
+- key: sl1-mirror-in-the-ash-1
+  entity: creature
+  lane: arthemy-house
+  title: A Mirror in the Ash (seed 1)
+  size: 1344x768
+  seed: 31081
+  shape: wide
+  card: mirror-in-the-ash
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at obsidian road: A lynx ruin scavenger
+    wearing smoked-glass goggles and carrying a blackened mirror; A scavenger turns a mirror toward the empty road
+    and watches dust gather on its surface. Burnished obsidian palette, restrained detail and clear figures, no
+    lettering or logos.'
+  prompt_tags: solo, anthro lynx, female, ruin scavenger, smoked-glass goggles, holding up a blackened hand mirror
+    toward an empty black road, ash drifting, ruined landscape, dim orange sky, eerie, medium shot
+  jobs:
+    arthemy-house: 37481
+- key: sl1-mirror-in-the-ash-2
+  entity: creature
+  lane: arthemy-house
+  title: A Mirror in the Ash (seed 2)
+  size: 1344x768
+  seed: 31082
+  shape: wide
+  card: mirror-in-the-ash
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at obsidian road: A lynx ruin scavenger
+    wearing smoked-glass goggles and carrying a blackened mirror; A scavenger turns a mirror toward the empty road
+    and watches dust gather on its surface. Burnished obsidian palette, restrained detail and clear figures, no
+    lettering or logos.'
+  prompt_tags: solo, anthro lynx, female, ruin scavenger, smoked-glass goggles, holding up a blackened hand mirror
+    toward an empty black road, ash drifting, ruined landscape, dim orange sky, eerie, medium shot
+  jobs:
+    arthemy-house: 37482
+- key: sl1-ashes-at-the-border-1
+  entity: creature
+  lane: arthemy-house
+  title: Ashes at the Border (seed 1)
+  size: 1344x768
+  seed: 31083
+  shape: wide
+  card: ashes-at-the-border
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at obsidian road: A vulture border ranger
+    with a sun-bleached cloak, a signal horn and a ledger; A ranger stops Zuzu where ash drifts across the road
+    like snow. Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.'
+  prompt_tags: solo, anthro vulture, female, border ranger, sun-bleached cloak, signal horn, ledger book, blocking
+    a black road where ash drifts like snow, damaged watchtower behind her, grey sky, stern, wide shot
+  jobs:
+    arthemy-house: 37483
+- key: sl1-ashes-at-the-border-2
+  entity: creature
+  lane: arthemy-house
+  title: Ashes at the Border (seed 2)
+  size: 1344x768
+  seed: 31084
+  shape: wide
+  card: ashes-at-the-border
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at obsidian road: A vulture border ranger
+    with a sun-bleached cloak, a signal horn and a ledger; A ranger stops Zuzu where ash drifts across the road
+    like snow. Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.'
+  prompt_tags: solo, anthro vulture, female, border ranger, sun-bleached cloak, signal horn, ledger book, blocking
+    a black road where ash drifts like snow, damaged watchtower behind her, grey sky, stern, wide shot
+  jobs:
+    arthemy-house: 37484
+- key: sl1-the-last-watchfire-1
+  entity: creature
+  lane: arthemy-house
+  title: The Last Watchfire (seed 1)
+  size: 1344x768
+  seed: 31085
+  shape: wide
+  card: the-last-watchfire
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at fortified camp: A gray wolf camp commander
+    with a wooden leg and a worn ceremonial sabre; The camp''s final watchfire burns low despite plenty of wood.
+    Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.'
+  prompt_tags: solo, anthro wolf, female, grey fur, camp commander, wooden peg leg, worn ceremonial sabre, standing
+    beside a single low watchfire on a palisade wall of a fortified camp, plenty of stacked firewood, night, ash,
+    grim
+  jobs:
+    arthemy-house: 37485
+- key: sl1-the-last-watchfire-2
+  entity: creature
+  lane: arthemy-house
+  title: The Last Watchfire (seed 2)
+  size: 1344x768
+  seed: 31086
+  shape: wide
+  card: the-last-watchfire
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at fortified camp: A gray wolf camp commander
+    with a wooden leg and a worn ceremonial sabre; The camp''s final watchfire burns low despite plenty of wood.
+    Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.'
+  prompt_tags: solo, anthro wolf, female, grey fur, camp commander, wooden peg leg, worn ceremonial sabre, standing
+    beside a single low watchfire on a palisade wall of a fortified camp, plenty of stacked firewood, night, ash,
+    grim
+  jobs:
+    arthemy-house: 37486
+- key: sl1-the-closed-infirmary-1
+  entity: creature
+  lane: arthemy-house
+  title: The Closed Infirmary (seed 1)
+  size: 1344x768
+  seed: 31087
+  shape: wide
+  card: the-closed-infirmary
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at fortified camp: A deer physician in ink-stained
+    sleeves barricaded behind a supply wagon; A field physician keeps wounded travelers outside an infirmary whose
+    door has been nailed shut. Burnished obsidian palette, restrained detail and clear figures, no lettering or
+    logos.'
+  prompt_tags: solo, anthro deer, female, field physician, ink-stained sleeves, standing barricaded behind a supply
+    wagon before an infirmary door nailed shut with planks, wounded travelers waiting outside as dark shapes, fortified
+    camp, dusk
+  jobs:
+    arthemy-house: 37487
+- key: sl1-the-closed-infirmary-2
+  entity: creature
+  lane: arthemy-house
+  title: The Closed Infirmary (seed 2)
+  size: 1344x768
+  seed: 31088
+  shape: wide
+  card: the-closed-infirmary
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at fortified camp: A deer physician in ink-stained
+    sleeves barricaded behind a supply wagon; A field physician keeps wounded travelers outside an infirmary whose
+    door has been nailed shut. Burnished obsidian palette, restrained detail and clear figures, no lettering or
+    logos.'
+  prompt_tags: solo, anthro deer, female, field physician, ink-stained sleeves, standing barricaded behind a supply
+    wagon before an infirmary door nailed shut with planks, wounded travelers waiting outside as dark shapes, fortified
+    camp, dusk
+  jobs:
+    arthemy-house: 37488
+- key: sl1-the-prisoner-of-dusk-1
+  entity: creature
+  lane: arthemy-house
+  title: The Prisoner of Dusk (seed 1)
+  size: 1344x768
+  seed: 31089
+  shape: wide
+  card: the-prisoner-of-dusk
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at fortified camp: A gorilla scout in torn
+    frontier cloth restrained by bright copper wire; Guards hold a scout whose eyes flash red whenever the sun touches
+    the copper wire on his wrists. Burnished obsidian palette, restrained detail and clear figures, no lettering
+    or logos.'
+  prompt_tags: solo, anthro gorilla, male, scout, torn frontier cloth, wrists bound with bright copper wire, eyes
+    glowing red in the low sun, kneeling, fortified camp, palisade, dusk light, ominous
+  jobs:
+    arthemy-house: 37489
+- key: sl1-the-prisoner-of-dusk-2
+  entity: creature
+  lane: arthemy-house
+  title: The Prisoner of Dusk (seed 2)
+  size: 1344x768
+  seed: 31090
+  shape: wide
+  card: the-prisoner-of-dusk
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at fortified camp: A gorilla scout in torn
+    frontier cloth restrained by bright copper wire; Guards hold a scout whose eyes flash red whenever the sun touches
+    the copper wire on his wrists. Burnished obsidian palette, restrained detail and clear figures, no lettering
+    or logos.'
+  prompt_tags: solo, anthro gorilla, male, scout, torn frontier cloth, wrists bound with bright copper wire, eyes
+    glowing red in the low sun, kneeling, fortified camp, palisade, dusk light, ominous
+  jobs:
+    arthemy-house: 37490
+- key: sl1-the-key-with-no-door-1
+  entity: creature
+  lane: arthemy-house
+  title: The Key Without a Door (seed 1)
+  size: 1344x768
+  seed: 31091
+  shape: wide
+  card: the-key-with-no-door
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at last threshold: A raven archivist in
+    austere traveling robes holding a key cut from dull stone; An archivist waits beside an unmarked gate and holds
+    out a key carved from stone. Burnished obsidian palette, restrained detail and clear figures, no lettering or
+    logos.'
+  prompt_tags: solo, anthro raven, female, threshold archivist, austere traveling robes, holding out a key carved
+    from dull grey stone toward the viewer, unmarked stone gate with faded carvings behind her, black desert, cold
+    light
+  jobs:
+    arthemy-house: 37491
+- key: sl1-the-key-with-no-door-2
+  entity: creature
+  lane: arthemy-house
+  title: The Key Without a Door (seed 2)
+  size: 1344x768
+  seed: 31092
+  shape: wide
+  card: the-key-with-no-door
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at last threshold: A raven archivist in
+    austere traveling robes holding a key cut from dull stone; An archivist waits beside an unmarked gate and holds
+    out a key carved from stone. Burnished obsidian palette, restrained detail and clear figures, no lettering or
+    logos.'
+  prompt_tags: solo, anthro raven, female, threshold archivist, austere traveling robes, holding out a key carved
+    from dull grey stone toward the viewer, unmarked stone gate with faded carvings behind her, black desert, cold
+    light
+  jobs:
+    arthemy-house: 37492
+- key: sl1-a-promise-kept-1
+  entity: creature
+  lane: arthemy-house
+  title: A Promise Kept (seed 1)
+  size: 1344x768
+  seed: 31093
+  shape: wide
+  card: a-promise-kept
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at last threshold: A silver fox messenger
+    with a knotted blue sash and a sealed letter; A messenger rests just short of the final gate, guarding a letter
+    that has crossed several kingdoms. Burnished obsidian palette, restrained detail and clear figures, no lettering
+    or logos.'
+  prompt_tags: solo, anthro fox, female, silver fur, weary messenger, knotted blue sash, resting against a stone
+    just short of a towering final gate, guarding a sealed letter on her lap, dusty road, last light, quiet
+  jobs:
+    arthemy-house: 37493
+- key: sl1-a-promise-kept-2
+  entity: creature
+  lane: arthemy-house
+  title: A Promise Kept (seed 2)
+  size: 1344x768
+  seed: 31094
+  shape: wide
+  card: a-promise-kept
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at last threshold: A silver fox messenger
+    with a knotted blue sash and a sealed letter; A messenger rests just short of the final gate, guarding a letter
+    that has crossed several kingdoms. Burnished obsidian palette, restrained detail and clear figures, no lettering
+    or logos.'
+  prompt_tags: solo, anthro fox, female, silver fur, weary messenger, knotted blue sash, resting against a stone
+    just short of a towering final gate, guarding a sealed letter on her lap, dusty road, last light, quiet
+  jobs:
+    arthemy-house: 37494
+- key: sl1-the-price-of-silence-1
+  entity: creature
+  lane: arthemy-house
+  title: The Price of Silence (seed 1)
+  size: 1344x768
+  seed: 31095
+  shape: wide
+  card: the-price-of-silence
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at last threshold: A pale owl negotiator
+    wearing a cracked bronze mask and a plain travel cloak; A negotiator offers passage on one condition: Zuzu must
+    promise never to speak of what he sees beyond the gate. Burnished obsidian palette, restrained detail and clear
+    figures, no lettering or logos.'
+  prompt_tags: solo, anthro owl, female, pale feathers, gate negotiator, cracked bronze mask, plain travel cloak,
+    standing before a great stone gate, one wing extended in an offer, black desert, dim violet sky, ominous, medium
+    shot
+  jobs:
+    arthemy-house: 37495
+- key: sl1-the-price-of-silence-2
+  entity: creature
+  lane: arthemy-house
+  title: The Price of Silence (seed 2)
+  size: 1344x768
+  seed: 31096
+  shape: wide
+  card: the-price-of-silence
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Original cinematic Weird West and Edo illustration set at last threshold: A pale owl negotiator
+    wearing a cracked bronze mask and a plain travel cloak; A negotiator offers passage on one condition: Zuzu must
+    promise never to speak of what he sees beyond the gate. Burnished obsidian palette, restrained detail and clear
+    figures, no lettering or logos.'
+  prompt_tags: solo, anthro owl, female, pale feathers, gate negotiator, cracked bronze mask, plain travel cloak,
+    standing before a great stone gate, one wing extended in an offer, black desert, dim violet sky, ominous, medium
+    shot
+  jobs:
+    arthemy-house: 37496
+- key: sl1-trial-dustwater-1
+  entity: creature
+  lane: arthemy-house
+  title: The Crossing Gate (seed 1)
+  size: 1344x768
+  seed: 31097
+  shape: wide
+  card: trial-dustwater
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'The Crossing Gate: the land''s major trial, from the authored trial text in kind_robots utils/shiftingLands/authoredTrials.json.'
+  prompt_tags: solo, anthro goat, male, flood gate keeper, heavy toll book chained to his belt, standing on a stone
+    dam walkway beneath a massive iron flood gate hung on salt-darkened chains, churning river below, trapped boats
+    beyond, shuddering mechanism, dramatic, wide shot
+  jobs:
+    arthemy-house: 37497
+- key: sl1-trial-dustwater-2
+  entity: creature
+  lane: arthemy-house
+  title: The Crossing Gate (seed 2)
+  size: 1344x768
+  seed: 31098
+  shape: wide
+  card: trial-dustwater
+  land: dustwater
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'The Crossing Gate: the land''s major trial, from the authored trial text in kind_robots utils/shiftingLands/authoredTrials.json.'
+  prompt_tags: solo, anthro goat, male, flood gate keeper, heavy toll book chained to his belt, standing on a stone
+    dam walkway beneath a massive iron flood gate hung on salt-darkened chains, churning river below, trapped boats
+    beyond, shuddering mechanism, dramatic, wide shot
+  jobs:
+    arthemy-house: 37498
+- key: sl1-trial-tablelands-1
+  entity: creature
+  lane: arthemy-house
+  title: The Canyon Warden (seed 1)
+  size: 1344x768
+  seed: 31099
+  shape: wide
+  card: trial-tablelands
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'The Canyon Warden: the land''s major trial, from the authored trial text in kind_robots utils/shiftingLands/authoredTrials.json.'
+  prompt_tags: solo, anthro bighorn ram, masked canyon warden, carved wooden mask, long weathered coat, standing
+    before the last narrow bridge where two canyon roads meet, watchfires burning on stone parapets behind, storm
+    rolling in, lightning, imposing, low angle
+  jobs:
+    arthemy-house: 37499
+- key: sl1-trial-tablelands-2
+  entity: creature
+  lane: arthemy-house
+  title: The Canyon Warden (seed 2)
+  size: 1344x768
+  seed: 31100
+  shape: wide
+  card: trial-tablelands
+  land: tablelands
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'The Canyon Warden: the land''s major trial, from the authored trial text in kind_robots utils/shiftingLands/authoredTrials.json.'
+  prompt_tags: solo, anthro bighorn ram, masked canyon warden, carved wooden mask, long weathered coat, standing
+    before the last narrow bridge where two canyon roads meet, watchfires burning on stone parapets behind, storm
+    rolling in, lightning, imposing, low angle
+  jobs:
+    arthemy-house: 37500
+- key: sl1-trial-cave-1
+  entity: scenery
+  lane: arthemy-house
+  title: The Deep-Cave Judgement (seed 1)
+  size: 1344x768
+  seed: 31101
+  shape: wide
+  card: trial-cave
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana
+  prompt_prose: 'The Deep-Cave Judgement: the land''s major trial, from the authored trial text in kind_robots utils/shiftingLands/authoredTrials.json.'
+  prompt_tags: anthro crow adjudicators in black robes standing in a silent ring, ring of blue candle flames around
+    a stone court, a massive anthro gorilla guardian kneeling bound in the threshold, deep cave, blue light, solemn,
+    wide shot
+  jobs:
+    arthemy-house: 37501
+- key: sl1-trial-cave-2
+  entity: scenery
+  lane: arthemy-house
+  title: The Deep-Cave Judgement (seed 2)
+  size: 1344x768
+  seed: 31102
+  shape: wide
+  card: trial-cave
+  land: cave
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana
+  prompt_prose: 'The Deep-Cave Judgement: the land''s major trial, from the authored trial text in kind_robots utils/shiftingLands/authoredTrials.json.'
+  prompt_tags: anthro crow adjudicators in black robes standing in a silent ring, ring of blue candle flames around
+    a stone court, a massive anthro gorilla guardian kneeling bound in the threshold, deep cave, blue light, solemn,
+    wide shot
+  jobs:
+    arthemy-house: 37502
+- key: sl1-trial-verge-1
+  entity: creature
+  lane: arthemy-house
+  title: Beyond the Verge (seed 1)
+  size: 1344x768
+  seed: 31103
+  shape: wide
+  card: trial-verge
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Beyond the Verge: the land''s major trial, from the authored trial text in kind_robots utils/shiftingLands/authoredTrials.json.'
+  prompt_tags: solo, anthro owl, female, pale feathers, silent negotiator, cracked bronze mask, plain travel cloak,
+    holding a stone key against a huge door with no hinges set in a black cliff, crowd of faint ghostly figures
+    on the road behind, dim violet sky, ominous, low angle
+  jobs:
+    arthemy-house: 37503
+- key: sl1-trial-verge-2
+  entity: creature
+  lane: arthemy-house
+  title: Beyond the Verge (seed 2)
+  size: 1344x768
+  seed: 31104
+  shape: wide
+  card: trial-verge
+  land: verge
+  task: t-026
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, extra characters,
+    crowd
+  prompt_prose: 'Beyond the Verge: the land''s major trial, from the authored trial text in kind_robots utils/shiftingLands/authoredTrials.json.'
+  prompt_tags: solo, anthro owl, female, pale feathers, silent negotiator, cracked bronze mask, plain travel cloak,
+    holding a stone key against a huge door with no hinges set in a black cliff, crowd of faint ghostly figures
+    on the road behind, dim violet sky, ominous, low angle
+  jobs:
+    arthemy-house: 37504
