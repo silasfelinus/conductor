@@ -447,8 +447,7 @@ tasks:
   - id: t-025
     milestone: m2
     title: "Integrate four later-land authored packs with V4-safe replay into private board"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-009, t-010, t-020]
@@ -456,6 +455,8 @@ tasks:
       Import the 36 design-only fixed-cast encounter identities from encounters/DUSTWATER-9.json, TABLELANDS-9.json, STORM-CROW-9.json, and BLACK-VERGE-9.json into typed, validated player-safe Kind Robots manifests while preserving exact canonical location IDs, encounter identities, weighted seeded draw and source provenance. Upgrade the pure authored journey reducer to provide two distinct 2d6-checked choices with result prose/effects at each of the remaining twelve locations; remove prototype RESOLVE only for new-version runs. Introduce an explicit V4 saved-run/replay compatibility boundary: existing V2 and V3 checkpoints and later-land prototype rolls must remain reconstructible without rescore or surprise re-draw. Revisit cannot reroll or farm. Shift only unvisited places for source-authored reasons. Wire the existing private Admin board and persistent flip reader/journal to new fixed-cast cards with visibly pending art slots; no invented ArtImage references, public /play route, or paid art generation. Test all 15 location paths and five boss transitions, malformed-save rejection, old-run migrations and balanced seed distributions. Source packs are documented in encounters/LATER-LANDS-IMPLEMENTATION.md. Coordinate with t-011 for final named boss-story alternatives and t-016 for character/inventory UI; do not silently make those tasks complete.
 
       Imported 36 source-pinned, player-safe later-land encounter cards and implemented separate V4 rules/replay, fixed draws, checked decisions, journaled outcomes and causal prospective shifts. Existing V3/V2 saves remain on original keys and reducers. Private Admin board gains V4 play, old V3 runs retain prototype later-land rules. Seed/property contract suite and all repo CI pending before reversible merge.
+
+      Merged Kind Robots PR #3506 as 3aea16a after all 30 head workflows completed successfully, including dedicated Shifting Lands Gameplay, TypeScript, Prettier/ESLint and repository-wide Contract Tests (473 steps). Imported 36 player-safe, source-pinned later-land authored cards to the private Admin board with seeded whole-card draws, 2d6 checked choices, recorded consequences and prospective causal shifts. V4 new journeys replay exact dice/card/flags/Rewards; existing V3 and V2 saves retain their previous reducer, results and localStorage keys. No public play route, ArtJobs, production deploy or boss-variant/companion UI claimed.
     claimed_by: 2026-10-11T092100Z-zuzu-shifting-lands-t025-d41e
     claimed_at: '2026-10-11T09:21:00Z'
-    updated: '2026-10-11T09:50:00Z'
+    updated: '2026-10-11T10:09:00Z'
