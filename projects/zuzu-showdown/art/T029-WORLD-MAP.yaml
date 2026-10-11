@@ -9,6 +9,9 @@
 # so the map itself carries no lettering. Pick the seed whose landmarks sit closest, then tune PLACES to
 # it. House lane, three seeds. Submit/refresh with scripts/enqueue_art_requests.py (dry run by default;
 # --live; --status). Private. Generated art is pre-approved.
+# 2026-10-11: all three house-lane seeds (245002-245004) came back as a landscape scene with a figure
+# lying on a parchment, not a map seen from above, so none shipped. The krea2-map lane re-renders them
+# from a literal overhead prose prompt; tools/world_map.py ships from that lane.
 series: zuzu-showdown
 project_slug: zuzu-showdown
 designer: Zuzu Showdown
@@ -26,6 +29,10 @@ lanes:
   steps: 30
   cfg: 5
   sampler: euler_ancestral
+- key: krea2-map
+  label: Krea2 (literal layout; the house checkpoint painted a scene, not a map)
+  engine: krea2
+  prompt: prose
 subjects:
 - key: wasteland-map-1
   entity: wasteland
@@ -43,10 +50,20 @@ subjects:
     worn edges
   art:
     arthemy-house:
-      status: null
-      art_image_id: null
+      status: DONE
+      art_image_id: 245002
   jobs:
     arthemy-house: 36872
+    krea2-map: 36900
+  prompt_prose: An antique hand-drawn treasure map of a weird west wasteland, seen straight down from above, the
+    aged parchment filling the whole frame edge to edge. Ink and sepia watercolor cartography in a flat, even light.
+    A winding blue river runs from the top edge to the bottom edge, left of center. A round watering hole sits in
+    the middle of the plain with a small green swamp just beside it. A red rock canyon cuts through mountains in
+    the upper right. Rolling sand dunes fill the lower right. A ruined stone arch ringed with bleached bones stands
+    in the right-hand badlands. A tiny frontier town with a bell tower sits on the left. An adobe mission crowns
+    a hill in the lower left. A single apple tree stands alone in the upper left. At the far right edge the parchment
+    darkens into a starry violet rift. Dotted trails link every place. Coffee stains and worn, torn edges. Every
+    surface bare and unmarked.
 - key: wasteland-map-2
   entity: wasteland
   title: The wasteland map (seed 2)
@@ -63,10 +80,20 @@ subjects:
     worn edges
   art:
     arthemy-house:
-      status: null
-      art_image_id: null
+      status: DONE
+      art_image_id: 245003
   jobs:
     arthemy-house: 36873
+    krea2-map: 36901
+  prompt_prose: An antique hand-drawn treasure map of a weird west wasteland, seen straight down from above, the
+    aged parchment filling the whole frame edge to edge. Ink and sepia watercolor cartography in a flat, even light.
+    A winding blue river runs from the top edge to the bottom edge, left of center. A round watering hole sits in
+    the middle of the plain with a small green swamp just beside it. A red rock canyon cuts through mountains in
+    the upper right. Rolling sand dunes fill the lower right. A ruined stone arch ringed with bleached bones stands
+    in the right-hand badlands. A tiny frontier town with a bell tower sits on the left. An adobe mission crowns
+    a hill in the lower left. A single apple tree stands alone in the upper left. At the far right edge the parchment
+    darkens into a starry violet rift. Dotted trails link every place. Coffee stains and worn, torn edges. Every
+    surface bare and unmarked.
 - key: wasteland-map-3
   entity: wasteland
   title: The wasteland map (seed 3)
@@ -83,7 +110,17 @@ subjects:
     worn edges
   art:
     arthemy-house:
-      status: null
-      art_image_id: null
+      status: DONE
+      art_image_id: 245004
   jobs:
     arthemy-house: 36874
+    krea2-map: 36902
+  prompt_prose: An antique hand-drawn treasure map of a weird west wasteland, seen straight down from above, the
+    aged parchment filling the whole frame edge to edge. Ink and sepia watercolor cartography in a flat, even light.
+    A winding blue river runs from the top edge to the bottom edge, left of center. A round watering hole sits in
+    the middle of the plain with a small green swamp just beside it. A red rock canyon cuts through mountains in
+    the upper right. Rolling sand dunes fill the lower right. A ruined stone arch ringed with bleached bones stands
+    in the right-hand badlands. A tiny frontier town with a bell tower sits on the left. An adobe mission crowns
+    a hill in the lower left. A single apple tree stands alone in the upper left. At the far right edge the parchment
+    darkens into a starry violet rift. Dotted trails link every place. Coffee stains and worn, torn edges. Every
+    surface bare and unmarked.
