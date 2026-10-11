@@ -18,7 +18,7 @@ const unique = (ids) => new Set(ids).size === ids.length
  * authored-art, runtime-safety, and identity invariants JSON Schema alone
  * cannot enforce.
  */
-export function validatePack(pack, world, schema) {
+export function validatePack(pack, world, schema, expectedLand = 'homestead') {
   const errors = []
   const bad = (condition, message) => { if (condition) errors.push(message) }
   bad(!schema || schema.$schema !== 'https://json-schema.org/draft/2020-12/schema', 'JSON Schema version missing')
@@ -38,7 +38,7 @@ export function validatePack(pack, world, schema) {
   const listed = pack.locations.flatMap((location) => location.encounter_ids)
   bad(!unique(listed), 'Encounter pool membership must be unique across locations')
   bad(!unique(pack.locations.map((location) => location.location_id)), 'Location IDs must be unique')
-  bad(pack.locations.length !== 3 || !pack.locations.every((l) => known.get(l.location_id) === 'homestead'), 'Homestead pack must have exactly three canonical locations')
+  bad(pack.locations.length !== 3 || !pack.locations.every((l) => known.get(l.location_id) === expectedLand), expectedLand + ': pack must have exactly three canonical locations')
   bad(pack.locations.some((location) => !Array.isArray(location.encounter_ids) || location.encounter_ids.length < 2), 'Each location must offer multiple encounters')
   bad(listed.length !== ids.length || ids.some((id) => !listed.includes(id)), 'Every encounter must appear once in a location pool')
   for (const location of pack.locations) {
