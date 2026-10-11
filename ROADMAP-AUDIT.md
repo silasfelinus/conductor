@@ -1,23 +1,23 @@
 # Roadmap Audit
 
-Generated: `2026-10-11T03:41:39.161406+00:00`
+Generated: `2026-10-11T04:09:31.612612+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **78** roadmaps, **39** active + **3** continuous projects, **2092** tasks
-- **90 ready**, **115 waiting**, **37 needs-human**, **18 claimed/review**, **1816 done**
-- Findings: **0 errors**, **25 warnings**, **64 informational**
+- **89 ready**, **114 waiting**, **37 needs-human**, **15 claimed/review**, **1821 done**
+- Findings: **0 errors**, **24 warnings**, **64 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `kind-pinball` | active | software | 1 | 0 | 1 | 1 | 31 / 34 |
+| 1 | `kind-pinball` | active | software | 0 | 0 | 1 | 1 | 32 / 34 |
 | 2 | `zuzu-lair` | active | software | 1 | 6 | 1 | 2 | 4 / 14 |
 | 3 | `kr-arcade` | active | software | 3 | 0 | 0 | 0 | 19 / 22 |
-| 4 | `zuzu-showdown` | active | software | 1 | 3 | 0 | 4 | 20 / 28 |
+| 4 | `zuzu-showdown` | active | software | 1 | 2 | 0 | 1 | 24 / 28 |
 | 5 | `cthulhuquarium` | active | software | 2 | 0 | 1 | 0 | 83 / 86 |
 | 6 | `kind-economy` | active | software | 0 | 4 | 1 | 1 | 22 / 28 |
 | 7 | `butterfly-gallery` | active | software | 1 | 0 | 0 | 0 | 34 / 35 |
@@ -99,7 +99,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (25)
+### Warning (24)
 
 - **STALE_CLAIM_FIELDS** — `animation-manager` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 17 days.
@@ -124,7 +124,6 @@ _None._
 - **STALE_IN_PROGRESS** — `zuzu-lair` / `t-004`: Task has remained claimed for 3 days.
 - **SOFT_NEEDS_HUMAN** — `zuzu-lair` / `t-006`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-lair` / `t-010`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
-- **STALE_IN_PROGRESS** — `zuzu-showdown` / `t-019`: Task has remained claimed for 3 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-showdown` / `t-025`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 
 ### Info (64)
