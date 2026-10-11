@@ -196,22 +196,18 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Chapter 1 sound: score and stingers"
-    status: claimed
-    owner: worker
+    status: needs-human
     passes: 0
     stakes: reversible
     depends_on: [t-003]
-    note: >-
-      A short instrumental weird-west score via ACE-Step (the music-video song route: vocal
-      instrumental, genre spaghetti-western, mood tense, about 60-90 s, looping). The player ducks it
-      under clip audio. Success and death stingers are procedural WebAudio presets added beside the
-      arcade's (utils/arcade/sound.ts), so they need no rendering. Sound is muted until the first tap
-      or keypress (browser autoplay rules).
-      PROGRESS 2026-10-08: stingers done (zuzuSuccess/zuzuDeath presets, kind_robots#3378). Still open:
-      queue the ACE-Step score (admin POST /api/music-video/<id>/song needs a live session).
+    note: |-
+      A short instrumental weird-west score via ACE-Step (the music-video song route: vocal instrumental, genre spaghetti-western, mood tense, about 60-90 s, looping). The player ducks it under clip audio. Success and death stingers are procedural WebAudio presets added beside the arcade's (utils/arcade/sound.ts), so they need no rendering. Sound is muted until the first tap or keypress (browser autoplay rules). PROGRESS 2026-10-08: stingers done (zuzuSuccess/zuzuDeath presets, kind_robots#3378). Still open: queue the ACE-Step score (admin POST /api/music-video/<id>/song needs a live session).
+
+      Stingers are already merged (kind_robots#3378). The remaining ACE-Step score must be queued by authenticated live admin POST /api/music-video/<id>/song; this connector-only session has no authenticated Kind Robots admin path. Physical-access human gate: queue the instrumental score from the music-video UI, then set this task ready or done after the score is attached and playable.
     claimed_by: 2026-10-11T213852Z-zuzu-lair-t008-gpt6-7f3a
     claimed_at: '2026-10-11T21:38:52Z'
-    updated: '2026-10-11T21:38:52Z'
+    updated: '2026-10-11T21:40:20Z'
+    soft_gate: false
 
   - id: t-009
     milestone: m2
