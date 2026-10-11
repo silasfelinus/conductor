@@ -957,3 +957,19 @@ tasks:
       both arms out of frame (a back view walking away, a close-up of the face), then ship with
       tools/endings.py.
     updated: '2026-10-11T09:40:00Z'
+
+  - id: t-031
+    milestone: m5
+    title: "Make the Showdown balance round robin reproducible with a committed runner"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from conductor#5998 review, 2026-10-11 PT: commit a CLI in kind_robots
+      that runs the existing deterministic CPU/sim over all nine fighters, both sides
+      and a configurable seed range, emits per-fighter and per-matchup wins/draws,
+      and includes the exact source SHA, seeds and match count. Preserve the tuning
+      baseline from kind_robots#3541; do not tune fighters in this task. A small
+      replay/determinism contract and a documented invocation make future balance
+      claims independently repeatable rather than relying on PR prose.
