@@ -1,0 +1,845 @@
+{
+  "schema_version": 1,
+  "project": "zuzu-shifting-lands",
+  "source_world_manifest": {
+    "path": "projects/zuzu-shifting-lands/WORLD-DECKS.json",
+    "schema_version": 2
+  },
+  "status": "draft-not-imported",
+  "rules": {
+    "encounters_per_location_min": 3,
+    "selection": "seeded-weighted-eligible-without-replacement",
+    "seed_persisted": true,
+    "revisit_policy": "same-recorded-encounter-no-free-reroll",
+    "dice": "2d6+skill+modifier-vs-difficulty"
+  },
+  "locations": [
+    {
+      "location_id": "ferry-landing",
+      "encounter_ids": [
+        "lanterns-on-the-raft",
+        "toll-of-two-names",
+        "the-boat-that-waits"
+      ]
+    },
+    {
+      "location_id": "trading-post",
+      "encounter_ids": [
+        "weighed-in-salt",
+        "the-mended-compass",
+        "three-cups-on-the-table"
+      ]
+    },
+    {
+      "location_id": "dry-delta",
+      "encounter_ids": [
+        "footprints-in-the-silt",
+        "a-road-of-bones",
+        "the-reed-music"
+      ]
+    }
+  ],
+  "encounters": [
+    {
+      "id": "lanterns-on-the-raft",
+      "location_id": "ferry-landing",
+      "title": "Lanterns on the Raft",
+      "flavor_text": "At the landing, a flat raft circles without touching shore. Its ferryman keeps a lantern lit in broad daylight, watching the current as though it might change its mind. A stranded family waits behind Zuzu, too frightened to call across the water.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo ink illustration at ferry landing: An elderly otter ferryman with a red patchwork coat and brass pole; At the landing, a flat raft circles without touching shore. Atmospheric composition, clear face silhouettes, no typography or logos.",
+        "cast": [
+          {
+            "identity": "lanterns-on-the-raft-cast",
+            "species": "otter",
+            "occupation": "night ferryman",
+            "visual_description": "An elderly otter ferryman with a red patchwork coat and brass pole",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "offer-to-steady-the-mooring",
+          "label": "Offer to steady the mooring",
+          "intent": "Zuzu chooses to offer to steady the mooring while respecting the consequences of this meeting.",
+          "risk_hint": "steel check against 8; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 8
+          },
+          "success": {
+            "text": "Zuzu anchors the rope and brings the passengers across in order, earning a packet of river cakes.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "lanterns-on-the-raft-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The rope slips and scalds his palms; the family reaches shore, but Zuzu must cross alone in darkness.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "lanterns-on-the-raft-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "ask-why-the-lantern-burns",
+          "label": "Ask why the lantern burns",
+          "intent": "Zuzu chooses to ask why the lantern burns while respecting the consequences of this meeting.",
+          "risk_hint": "insight check against 9; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The ferryman explains that a submerged channel opens only when the current stills; Zuzu remembers the safer approach.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "lanterns-on-the-raft-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The ferryman mistakes the question for mockery and pushes off, leaving Zuzu on the wrong bank.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "lanterns-on-the-raft-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "This otter night ferryman is fixed to this single authored encounter and illustration; never randomize a separate species or occupation or imply innate morality."
+    },
+    {
+      "id": "toll-of-two-names",
+      "location_id": "ferry-landing",
+      "title": "The Toll of Two Names",
+      "flavor_text": "A registrar stops every traveler and writes down a name before permitting passage. On the open page, Zuzu sees the same pair of names repeated years apart, each in a different hand. No coin is requested, which makes the queue more uneasy.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo ink illustration at ferry landing: A stern goat registrar with ivory tally sticks and a wax-sealed ledger; A registrar stops every traveler and writes down a name before permitting passage. Atmospheric composition, clear face silhouettes, no typography or logos.",
+        "cast": [
+          {
+            "identity": "toll-of-two-names-cast",
+            "species": "goat",
+            "occupation": "ferry registrar",
+            "visual_description": "A stern goat registrar with ivory tally sticks and a wax-sealed ledger",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "demand-an-honest-account",
+          "label": "Demand an honest account",
+          "intent": "Zuzu chooses to demand an honest account while respecting the consequences of this meeting.",
+          "risk_hint": "bearing check against 10; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "The registrar shows the crossed-out entries: lost crossings were recorded as debts, and she erases Zuzu's name.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "toll-of-two-names-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The registrar summons guards; Zuzu backs away before they can close the gate, battered by the crush.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "toll-of-two-names-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "copy-the-ledger-quietly",
+          "label": "Copy the ledger quietly",
+          "intent": "Zuzu chooses to copy the ledger quietly while respecting the consequences of this meeting.",
+          "risk_hint": "awareness check against 10; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Zuzu memorizes the altered dates and slips through the line with an answer to one old disappearance.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "toll-of-two-names-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "His sleeve catches a wax seal, alerting the guards; the crowd scatters and Zuzu loses his rations.",
+            "hp_delta": -1,
+            "provisions_delta": -1,
+            "add_flags": [
+              "toll-of-two-names-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "This goat ferry registrar is fixed to this single authored encounter and illustration; never randomize a separate species or occupation or imply innate morality."
+    },
+    {
+      "id": "the-boat-that-waits",
+      "location_id": "ferry-landing",
+      "title": "The Boat That Waits",
+      "flavor_text": "An empty skiff sits tied to a post long after the boats have departed. A boatwright says its owner promised to return before the flood, yet the water has fallen twice since. Every plank is sound except a splintered rudder.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo ink illustration at ferry landing: A tall heron boatwright in indigo workwear carrying a cracked rudder; An empty skiff sits tied to a post long after the boats have departed. Atmospheric composition, clear face silhouettes, no typography or logos.",
+        "cast": [
+          {
+            "identity": "the-boat-that-waits-cast",
+            "species": "heron",
+            "occupation": "boatwright",
+            "visual_description": "A tall heron boatwright in indigo workwear carrying a cracked rudder",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "repair-the-rudder",
+          "label": "Repair the rudder",
+          "intent": "Zuzu chooses to repair the rudder while respecting the consequences of this meeting.",
+          "risk_hint": "wits check against 8; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 8
+          },
+          "success": {
+            "text": "The skiff takes the current cleanly and the boatwright gives Zuzu a reliable route through the shallows.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-boat-that-waits-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A hidden crack splits the timber under strain, striking Zuzu's ankle as the skiff drifts away.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-boat-that-waits-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "wait-for-its-owner",
+          "label": "Wait for its owner",
+          "intent": "Zuzu chooses to wait for its owner while respecting the consequences of this meeting.",
+          "risk_hint": "resolve check against 9; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The absent owner's sister arrives and offers testimony about the missing river patrol instead of a fare.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-boat-that-waits-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Night falls without an answer; Zuzu's vigil costs a meal and reveals only a second unused rope.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "the-boat-that-waits-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "This heron boatwright is fixed to this single authored encounter and illustration; never randomize a separate species or occupation or imply innate morality."
+    },
+    {
+      "id": "weighed-in-salt",
+      "location_id": "trading-post",
+      "title": "Weighed in Salt",
+      "flavor_text": "A trader's scale measures salt by the spoon while a queue of hungry travelers looks on. Each new customer receives less than the last. The merchant insists the fault lies in the shifting floorboards.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo ink illustration at trading post: A broad badger merchant in layered aprons beside a crooked balance scale; A trader's scale measures salt by the spoon while a queue of hungry travelers looks on. Atmospheric composition, clear face silhouettes, no typography or logos.",
+        "cast": [
+          {
+            "identity": "weighed-in-salt-cast",
+            "species": "badger",
+            "occupation": "salt merchant",
+            "visual_description": "A broad badger merchant in layered aprons beside a crooked balance scale",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "test-the-counterweights",
+          "label": "Test the counterweights",
+          "intent": "Zuzu chooses to test the counterweights while respecting the consequences of this meeting.",
+          "risk_hint": "wits check against 8; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 8
+          },
+          "success": {
+            "text": "Zuzu finds a stone hidden inside the brass weight; the merchant restores the fair measure to everyone.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "weighed-in-salt-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The merchant's hired hands throw Zuzu into a stack of crates before the cheating can be proved.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "weighed-in-salt-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "trade-supplies-for-passage",
+          "label": "Trade supplies for passage",
+          "intent": "Zuzu chooses to trade supplies for passage while respecting the consequences of this meeting.",
+          "risk_hint": "bearing check against 8; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 8
+          },
+          "success": {
+            "text": "A calm bargain earns a sealed crossing voucher without surrendering the last provisions.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "weighed-in-salt-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The merchant takes a double measure and leaves Zuzu short of food for the coming trail.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "weighed-in-salt-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "This badger salt merchant is fixed to this single authored encounter and illustration; never randomize a separate species or occupation or imply innate morality."
+    },
+    {
+      "id": "the-mended-compass",
+      "location_id": "trading-post",
+      "title": "The Mended Compass",
+      "flavor_text": "A cartographer offers to exchange a repaired compass for a map that no longer matches the delta. She admits she has redrawn the river six times and erased only five versions. The sixth is folded beneath her stool.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo ink illustration at trading post: A copper-furred fox cartographer with a leather hood and ink-stained fingers; A cartographer offers to exchange a repaired compass for a map that no longer matches the delta. Atmospheric composition, clear face silhouettes, no typography or logos.",
+        "cast": [
+          {
+            "identity": "the-mended-compass-cast",
+            "species": "fox",
+            "occupation": "cartographer",
+            "visual_description": "A copper-furred fox cartographer with a leather hood and ink-stained fingers",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "compare-the-two-charts",
+          "label": "Compare the two charts",
+          "intent": "Zuzu chooses to compare the two charts while respecting the consequences of this meeting.",
+          "risk_hint": "insight check against 8; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 8
+          },
+          "success": {
+            "text": "The erased riverbend lines up with a surviving stone marker, giving Zuzu a safer trail.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-mended-compass-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Zuzu trusts the neat chart, only to discover its bridge washed away; the detour costs daylight and strength.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-mended-compass-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "help-reset-the-compass",
+          "label": "Help reset the compass",
+          "intent": "Zuzu chooses to help reset the compass while respecting the consequences of this meeting.",
+          "risk_hint": "wits check against 9; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The needle steadies, and the cartographer shares a packet of trail markers with her thanks.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-mended-compass-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A magnet hidden in the table skews the reading; Zuzu leaves with an unreliable bearing.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "the-mended-compass-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "This fox cartographer is fixed to this single authored encounter and illustration; never randomize a separate species or occupation or imply innate morality."
+    },
+    {
+      "id": "three-cups-on-the-table",
+      "location_id": "trading-post",
+      "title": "Three Cups on the Table",
+      "flavor_text": "A cook serves three cups of broth: one for the buyer, one for an absent traveler, and one for whoever asks no questions. A pair of armed patrons watch which cup Zuzu chooses. The cook has not touched her own meal.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo ink illustration at trading post: A gray mouse cook with a patched apron and three enamel cups; A cook serves three cups of broth: one for the buyer, one for an absent traveler, and one for whoever asks no questions. Atmospheric composition, clear face silhouettes, no typography or logos.",
+        "cast": [
+          {
+            "identity": "three-cups-on-the-table-cast",
+            "species": "mouse",
+            "occupation": "traveling cook",
+            "visual_description": "A gray mouse cook with a patched apron and three enamel cups",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "share-the-untouched-meal",
+          "label": "Share the untouched meal",
+          "intent": "Zuzu chooses to share the untouched meal while respecting the consequences of this meeting.",
+          "risk_hint": "bearing check against 7; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 7
+          },
+          "success": {
+            "text": "The cook reveals an honest back route and sends Zuzu onward with bread wrapped in cloth.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "three-cups-on-the-table-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The armed patrons take offense and overturn the table, leaving a bruised Zuzu to gather the scraps.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "three-cups-on-the-table-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "question-the-armed-patrons",
+          "label": "Question the armed patrons",
+          "intent": "Zuzu chooses to question the armed patrons while respecting the consequences of this meeting.",
+          "risk_hint": "insight check against 9; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "Their account of a vanished caravan contradicts the cook's, exposing a false checkpoint downriver.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "three-cups-on-the-table-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A patron spits a warning and draws a knife; Zuzu escapes but loses precious time.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "three-cups-on-the-table-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "This mouse traveling cook is fixed to this single authored encounter and illustration; never randomize a separate species or occupation or imply innate morality."
+    },
+    {
+      "id": "footprints-in-the-silt",
+      "location_id": "dry-delta",
+      "title": "Footprints in the Silt",
+      "flavor_text": "A surveyor crouches beside footprints that begin in a dry channel and stop at an empty bank. A row of stakes records last season's waterline, but fresh mud lies higher than any of them. He wants help checking the next marker.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo ink illustration at dry delta: An old tortoise surveyor marked with chalk dust and carrying a hooked measuring staff; A surveyor crouches beside footprints that begin in a dry channel and stop at an empty bank. Atmospheric composition, clear face silhouettes, no typography or logos.",
+        "cast": [
+          {
+            "identity": "footprints-in-the-silt-cast",
+            "species": "tortoise",
+            "occupation": "river surveyor",
+            "visual_description": "An old tortoise surveyor marked with chalk dust and carrying a hooked measuring staff",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "follow-the-wet-prints",
+          "label": "Follow the wet prints",
+          "intent": "Zuzu chooses to follow the wet prints while respecting the consequences of this meeting.",
+          "risk_hint": "awareness check against 9; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The prints lead to a concealed spillway, and Zuzu marks the safe stone route before the water returns.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "footprints-in-the-silt-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The ground gives way under a salt crust; Zuzu claws clear with a scraped shoulder.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "footprints-in-the-silt-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "help-set-new-markers",
+          "label": "Help set new markers",
+          "intent": "Zuzu chooses to help set new markers while respecting the consequences of this meeting.",
+          "risk_hint": "steel check against 8; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 8
+          },
+          "success": {
+            "text": "Together they anchor the stakes, and the surveyor shares a water skin and a practical warning.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "footprints-in-the-silt-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A sudden current tears away the rope; the tools are lost and Zuzu leaves soaked and aching.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "footprints-in-the-silt-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "This tortoise river surveyor is fixed to this single authored encounter and illustration; never randomize a separate species or occupation or imply innate morality."
+    },
+    {
+      "id": "a-road-of-bones",
+      "location_id": "dry-delta",
+      "title": "A Road of Bones",
+      "flavor_text": "White ribs of ancient driftwood cross a dry inlet in a pattern too deliberate for a flood. A salvage guide says the structure predates her grandparents, though she refuses to name its makers. Sand rattles beneath the timber.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo ink illustration at dry delta: A lean jackal salvage guide with woven rope gloves and sun-bleached goggles; White ribs of ancient driftwood cross a dry inlet in a pattern too deliberate for a flood. Atmospheric composition, clear face silhouettes, no typography or logos.",
+        "cast": [
+          {
+            "identity": "a-road-of-bones-cast",
+            "species": "jackal",
+            "occupation": "salvage guide",
+            "visual_description": "A lean jackal salvage guide with woven rope gloves and sun-bleached goggles",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "cross-on-the-old-timbers",
+          "label": "Cross on the old timbers",
+          "intent": "Zuzu chooses to cross on the old timbers while respecting the consequences of this meeting.",
+          "risk_hint": "steel check against 10; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Zuzu finds stable braces beneath the bleached beams and reaches the opposite bank before dusk.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "a-road-of-bones-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A rotten beam splits; his fall leaves him bruised and forces a longer approach through the salt flats.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "a-road-of-bones-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "ask-the-guide-to-lead",
+          "label": "Ask the guide to lead",
+          "intent": "Zuzu chooses to ask the guide to lead while respecting the consequences of this meeting.",
+          "risk_hint": "bearing check against 8; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 8
+          },
+          "success": {
+            "text": "The guide admits which sections she reinforced and leads Zuzu safely across for a modest exchange.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "a-road-of-bones-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "She vanishes with the advance provisions, leaving Zuzu to find his own difficult route.",
+            "hp_delta": -1,
+            "provisions_delta": -1,
+            "add_flags": [
+              "a-road-of-bones-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "This jackal salvage guide is fixed to this single authored encounter and illustration; never randomize a separate species or occupation or imply innate morality."
+    },
+    {
+      "id": "the-reed-music",
+      "location_id": "dry-delta",
+      "title": "The Reed Music",
+      "flavor_text": "Music rises from a place the map labels empty. A lone reed player sits by a trickle of fresh water, claiming the melody helps travelers hear when the buried river is moving. His feet never leave the dry ground.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo ink illustration at dry delta: A green frog musician in a weathered waistcoat playing a long hollow reed; Music rises from a place the map labels empty. Atmospheric composition, clear face silhouettes, no typography or logos.",
+        "cast": [
+          {
+            "identity": "the-reed-music-cast",
+            "species": "frog",
+            "occupation": "reed musician",
+            "visual_description": "A green frog musician in a weathered waistcoat playing a long hollow reed",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "listen-between-the-notes",
+          "label": "Listen between the notes",
+          "intent": "Zuzu chooses to listen between the notes while respecting the consequences of this meeting.",
+          "risk_hint": "awareness check against 8; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 8
+          },
+          "success": {
+            "text": "Zuzu hears water beneath the sand and finds a shallow drinking pool beyond the musician's stone.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-reed-music-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The rising wind drowns the warning notes; he wanders into a gritty gust that steals his breath.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-reed-music-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "offer-an-old-traveling-song",
+          "label": "Offer an old traveling song",
+          "intent": "Zuzu chooses to offer an old traveling song while respecting the consequences of this meeting.",
+          "risk_hint": "resolve check against 7; a poor outcome can cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 7
+          },
+          "success": {
+            "text": "The musician answers with a second melody and shows a path that avoids the worst of the crossing.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-reed-music-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The song attracts a patrol; Zuzu is forced to hide until the heat drains his remaining strength.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-reed-music-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "This frog reed musician is fixed to this single authored encounter and illustration; never randomize a separate species or occupation or imply innate morality."
+    }
+  ]
+}
