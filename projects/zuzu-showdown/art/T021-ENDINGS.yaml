@@ -55,42 +55,62 @@ subjects:
   entity: coyote-vagrant
   title: 'the Coyote ending: still 1'
   size: 1216x832
-  source_image_id: 242404
-  prompt_prose: Show him slumped by a small campfire at night in the desert, talking with his mouth open and waving
-    his left hand for emphasis, alone by the fire with only a lizard on a rock for an audience. Wide shot under
-    the stars. He is seen from his left side, his right arm turned away from us and tucked into his coat, out of
-    sight. His left hand is his only visible hand. Keep the same mangy one-eyed coyote with the eyepatch, the same
-    tattered long riding coat and crushed hat, and the same comic art style. Every surface bare and unmarked.
-  art: {}
+  source_image_id: 245028
+  prompt_prose: 'Replace the hand resting on his knee with his right wrist ending in a bandaged stump, a knife strapped
+    onto the stump with leather cord, its blade pointing forward. Keep everything else exactly the same: the same
+    coyote, coat, pose, lighting and comic art style. Every surface bare and unmarked.'
+  art:
+    kontext-endings:
+      status: REJECTED
+      art_image_id: null
   jobs:
-    kontext-endings: 36905
+    kontext-endings: 36907
   rejected:
   - art_image_id: 245007
     why: 'right hand drawn whole (rule: gone, knife lashed to the stump)'
   - art_image_id: 245023
     why: 'hand drawn whole again: the 242401 reference shows two fists; reroll from the post-croc reference with
       the right arm out of view'
-  seed: 210311
+  - art_image_id: 245028
+    why: right hand drawn whole a third time; kept as the base for a masked edit of that hand
+  - art_image_id: 245032
+    why: masked edit of the knee hand still drew fingers gripping the knife
+  seed: 210321
+  mask_box:
+  - 0.45
+  - 0.64
+  - 0.59
+  - 0.82
 - key: coyote-ending-2
   entity: coyote-vagrant
   title: 'the Coyote ending: still 2'
   size: 1216x832
-  source_image_id: 242404
-  prompt_prose: Show him at dawn crouched at the edge of a muddy watering hole, lifting a dripping crushed hat out
-    of the reeds with his left hand and grinning with his crooked teeth. Reeds, cracked mud and a pale sky. He is
-    seen from his left side, his right arm turned away from us and tucked into his coat, out of sight. His left
-    hand is his only visible hand. Keep the same mangy one-eyed coyote with the eyepatch, the same tattered long
-    riding coat and crushed hat, and the same comic art style. Every surface bare and unmarked.
-  art: {}
+  source_image_id: 245029
+  prompt_prose: 'Replace the hand resting on his knee with his right wrist ending in a bandaged stump, a knife strapped
+    onto the stump with leather cord, its blade pointing forward. Keep everything else exactly the same: the same
+    coyote, coat, pose, lighting and comic art style. Every surface bare and unmarked.'
+  art:
+    kontext-endings:
+      status: REJECTED
+      art_image_id: null
   jobs:
-    kontext-endings: 36906
+    kontext-endings: 36908
   rejected:
   - art_image_id: 245008
     why: 'right hand drawn whole (rule: gone, knife lashed to the stump)'
   - art_image_id: 245024
     why: 'hand drawn whole again: the 242401 reference shows two fists; reroll from the post-croc reference with
       the right arm out of view'
-  seed: 210312
+  - art_image_id: 245029
+    why: right hand drawn whole a third time; kept as the base for a masked edit of that hand
+  - art_image_id: 245033
+    why: masked edit of the knee hand still drew fingers gripping the knife
+  seed: 210322
+  mask_box:
+  - 0.51
+  - 0.44
+  - 0.65
+  - 0.63
 - key: abbess-ending-1
   entity: the-abbess
   title: 'the Abbess ending: still 1'
