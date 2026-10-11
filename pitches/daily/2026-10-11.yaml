@@ -1,0 +1,57 @@
+# Daily project pitches, 2026-10-11. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-11
+pitches:
+  - slug: kr-cabinet-robot-digger-dunes
+    target: kr-arcade
+    title: Dune Digger Dash
+    hook: >-
+      An arcade cabinet riffing on Dig Dug's tunnel-digging chases, where a small robot burrows through
+      layered sand to inflate wandering sand-sprites with a pump until they pop. Each round adds more
+      sprites, loose boulders to drop on them, and faster pursuit through the tunnels.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: Cabinet marquee, digger robot sprite sheet, four sprite enemies, boulder and sand-layer tiles and 3 dune backdrops generated ahead of time.
+    first_slice: Intro splash, one tunnel grid with digging, a pump attack, boulder drops, lives, rising round speed and a score submit.
+  - slug: kr-cabinet-robot-breakout-bubbles
+    target: kr-arcade
+    title: Bubble Wall Breaker
+    hook: >-
+      An arcade cabinet riffing on Breakout's paddle-and-ball brick clearing, where a bouncy glow-orb
+      smashes a wall of soap-bubble bricks above a robot-held paddle. Each level adds tougher multi-hit
+      bubbles, falling power-up drops and a faster orb with a score multiplier for long rallies.
+    llm_at_runtime: none
+    effort: small
+    art_plan: Cabinet marquee, paddle robot sprite, six bubble brick types, power-up icons and 3 backdrops generated ahead of time.
+    first_slice: Intro splash, one brick wall, paddle and ball physics, lives, rising ball speed and a score submit.
+  - slug: robot-tiny-moon-calendar
+    title: Robot Tiny Moon Calendar
+    hook: >-
+      A calm collectible toy where each real-world moon phase unlocks a pre-illustrated robot stargazer
+      scene with a short pre-written night story. Players tick off the nights they looked up, and a
+      full lunar cycle unlocks a bonus constellation page, all saved locally with no accounts.
+    llm_at_runtime: none
+    effort: small
+    art_plan: Eight moon-phase scenes, a bonus constellation page and a robot stargazer character sheet generated ahead of time.
+    first_slice: A phase-aware calendar page showing today's pre-written scene, a nights-looked-up checklist saved in the browser and one bonus page.
+  - slug: kind-sliding-tile-gallery
+    title: Kind Sliding Tile Gallery
+    hook: >-
+      A sliding-tile puzzle toy where each solved board reveals one piece from a pre-generated gallery of
+      Kind Robots art, with captions written ahead of time. Boards grow from three-by-three to five-by-five,
+      and every solve fills a keepsake wall saved locally, with a daily seeded board for a shared challenge.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 24 gallery illustrations with caption cards and a wooden tile-frame skin generated ahead of time.
+    first_slice: One three-by-three board with a move counter, a solved-reveal screen, a keepsake wall and a daily seeded shuffle.
+  - slug: robot-recipe-for-rain-storybook
+    title: Rainy Day Robot Storybook
+    hook: >-
+      A pre-written, pre-illustrated branching storybook for rainy afternoons, where a small robot
+      collects puddle-colored ribbons across several short chapters. Readers choose between two paths
+      per page, unlock alternate endings, and keep a ribbon tally saved locally in the browser.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: A cover, ten scene illustrations, a ribbon icon set and a robot character sheet generated ahead of time.
+    first_slice: A three-chapter branching story with two endings, page-turn transitions and a saved ribbon tally.
