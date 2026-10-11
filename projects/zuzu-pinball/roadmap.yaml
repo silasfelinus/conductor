@@ -122,7 +122,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Build three physically distinct elevated ramps, two orbits and shot sensors"
-    status: claimed
+    status: review
     depends_on: t-004
     passes: 0
     stakes: reversible
@@ -132,10 +132,22 @@ tasks:
       Prepared a dimensioned mechanical pass in kind_robots branch worker/zuzu-pinball-t005-elevated-shots-20261010-f81d: three genuine mesh floor/rail/roof ramps with independent paths, two physically guided orbit returns, shot switch chains and dedicated Rapier rolling/ball-conservation/shot-order regression tests. Typecheck, CI and target-preview validation remain pending.
 
       2026-10-10 PT: Merged the first genuine 3D ramp engineering slice to kind_robots main in PR #3475 at 9366670948f6b05a9440a991f37fd967279ce968. Three physically distinct raised Rapier mesh ramp floor/rail/cover paths, two outer orbit return guides, ramp entry/crest/return sensor chains, Croc approach and crossover clearance tests, and seeded 24-tick ball conservation/shot-order checks are committed. 29/29 PR checks completed successful, including TypeScript, all contract tests, Prettier and production-image build. Follow-up required before marking t-005 done: demonstrate actual flipper-origin trajectories that enter, crest and exit EACH ramp at calibrated shot speeds, capture trajectory evidence, verify safe returns and no stuck balls in repeatable physics replay, then tune any competing Croc shot geometry. Admin preview only. Self-hosted Alexandria runtime deployment not verified; public release still gated.
-    updated: '2026-10-11T09:22:40Z'
+
+      2026-10-11 PT: Measured on real Rapier physics, the table made 0 of 9 shots from either
+      flipper: the inlane guides sloped the wrong way and balls drained past the flippers.
+      Kind Robots PR #3509 rebuilds the lower field (inlanes, outlanes, slings with caps, tip
+      gap wider than the ball), moves the Abbey seals into an in-line bank between the Village
+      and Bell mouths, gives the River Croc its own mouth beside a one-ball left orbit with
+      its spit landing on the right inlane, and fixes a shared ramp-cover pinch that held
+      balls on the Bell spiral. New test:zuzu-pinball-shots proves every shot from a measured
+      flip, checks that the ramps return to their inlanes and the Croc spit reaches the right
+      flipper, and runs bot games with no stranded ball. 50-game soak: 0 stuck balls. Coverage
+      is now 9/9.
+    updated: '2026-10-11T10:05:16Z'
     owner: worker
     claimed_by: 20261011T162500Z-zuzu-t005-lowerfield-k3p2
     claimed_at: '2026-10-11T09:22:40Z'
+    implementation_pr: 'silasfelinus/kind_robots#3509'
   - id: t-006
     milestone: m2
     title: "Build raised Abbey upper deck with two independent flippers"
