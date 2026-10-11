@@ -1,20 +1,20 @@
 # Roadmap Audit
 
-Generated: `2026-10-11T02:59:00.101938+00:00`
+Generated: `2026-10-11T03:12:05.427191+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **78** roadmaps, **39** active + **3** continuous projects, **2089** tasks
-- **89 ready**, **116 waiting**, **37 needs-human**, **17 claimed/review**, **1814 done**
+- **78** roadmaps, **39** active + **3** continuous projects, **2092** tasks
+- **91 ready**, **116 waiting**, **37 needs-human**, **18 claimed/review**, **1814 done**
 - Findings: **0 errors**, **25 warnings**, **64 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `kind-pinball` | active | software | 0 | 0 | 1 | 0 | 30 / 31 |
+| 1 | `kind-pinball` | active | software | 2 | 0 | 1 | 1 | 30 / 34 |
 | 2 | `zuzu-lair` | active | software | 1 | 6 | 1 | 2 | 4 / 14 |
 | 3 | `kr-arcade` | active | software | 3 | 0 | 0 | 0 | 19 / 22 |
 | 4 | `zuzu-showdown` | active | software | 2 | 3 | 0 | 3 | 20 / 28 |
