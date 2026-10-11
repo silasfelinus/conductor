@@ -1,7 +1,7 @@
 # Pitch: Robot Tiny Moon Calendar
 date: 2026-10-11
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A calm collectible toy where each real-world moon phase unlocks a pre-illustrated robot stargazer scene with a short pre-written night story. Players tick off the nights they looked up, and a full lunar cycle unlocks a bonus constellation page, all saved locally with no accounts.
