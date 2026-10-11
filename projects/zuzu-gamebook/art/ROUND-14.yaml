@@ -1,0 +1,2990 @@
+# Zuzu Gamebook art round 14 (zuzu-gamebook t-012): recomposed plates with character LoRAs.
+# The 17 Zuzu ensembles (Zuzu still fuses with any second LoRA, ROUND-12), the 16 other plates the audit flagged
+# (blood, a hanging, human faces, a modern pistol, a duplicate sister) and the 4 sections still on stand-ins,
+# recomposed around Zuzu alone, the sister and toddler together, one other LoRA figure, or an object or place.
+# LoRA strength 0.75, three seeds each. Keepers replace the live plate in kind_robots sectionArt.ts.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: gamebook-14
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, weathered, grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: gb14-a2-sister-water-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: at the foot of the wall (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25001
+  section: a2-sister-water
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl crouches at the foot of a plank wall of paper notices, holding a tin canteen to
+    her little brother's lips while her wary eyes slide toward a distant water trough.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, crouching at the foot of a scorched plank wall hung
+    with curled weathered paper notices, holding a tin canteen to the lips of zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, drinking with both tiny paws on it, a cork
+    in her other paw, her wary eyes turned sideways toward a water trough far down the dusty street, harsh noon
+    sun, short hard shadows, wide shot, harsh desert sun, dusty haze, long hard shadows
+  loras: &id001
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37289
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a2-sister-water-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: at the foot of the wall (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25002
+  section: a2-sister-water
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl crouches at the foot of a plank wall of paper notices, holding a tin canteen to
+    her little brother's lips while her wary eyes slide toward a distant water trough.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, crouching at the foot of a scorched plank wall hung
+    with curled weathered paper notices, holding a tin canteen to the lips of zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, drinking with both tiny paws on it, a cork
+    in her other paw, her wary eyes turned sideways toward a water trough far down the dusty street, harsh noon
+    sun, short hard shadows, wide shot, harsh desert sun, dusty haze, long hard shadows
+  loras: *id001
+  jobs:
+    arthemy-house: 37290
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a2-sister-water-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: at the foot of the wall (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25003
+  section: a2-sister-water
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl crouches at the foot of a plank wall of paper notices, holding a tin canteen to
+    her little brother's lips while her wary eyes slide toward a distant water trough.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, crouching at the foot of a scorched plank wall hung
+    with curled weathered paper notices, holding a tin canteen to the lips of zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, drinking with both tiny paws on it, a cork
+    in her other paw, her wary eyes turned sideways toward a water trough far down the dusty street, harsh noon
+    sun, short hard shadows, wide shot, harsh desert sun, dusty haze, long hard shadows
+  loras: *id001
+  jobs:
+    arthemy-house: 37291
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-fever-long-night-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: the long night (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25011
+  section: a3-fever-long-night
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: By a campfire at night the fennec girl sits with her eyes shut, rocking her little brother, who
+    sleeps in her arms wrapped in a rust-brown poncho with orange zigzag trim.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, sitting by a low campfire at night, eyes shut, rocking
+    slowly, cradling zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic,
+    bandaged paw, asleep in her arms, wrapped in a rust-brown poncho with orange zigzag trim, her cheek pressed
+    to his head, grieving, sparks rising into a black sky, the far side of the fire lost in darkness, long night,
+    vertical composition, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: &id002
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37292
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-fever-long-night-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: the long night (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25012
+  section: a3-fever-long-night
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: By a campfire at night the fennec girl sits with her eyes shut, rocking her little brother, who
+    sleeps in her arms wrapped in a rust-brown poncho with orange zigzag trim.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, sitting by a low campfire at night, eyes shut, rocking
+    slowly, cradling zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic,
+    bandaged paw, asleep in her arms, wrapped in a rust-brown poncho with orange zigzag trim, her cheek pressed
+    to his head, grieving, sparks rising into a black sky, the far side of the fire lost in darkness, long night,
+    vertical composition, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: *id002
+  jobs:
+    arthemy-house: 37293
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-fever-long-night-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: the long night (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25013
+  section: a3-fever-long-night
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: By a campfire at night the fennec girl sits with her eyes shut, rocking her little brother, who
+    sleeps in her arms wrapped in a rust-brown poncho with orange zigzag trim.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, sitting by a low campfire at night, eyes shut, rocking
+    slowly, cradling zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic,
+    bandaged paw, asleep in her arms, wrapped in a rust-brown poncho with orange zigzag trim, her cheek pressed
+    to his head, grieving, sparks rising into a black sky, the far side of the fire lost in darkness, long night,
+    vertical composition, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: *id002
+  jobs:
+    arthemy-house: 37294
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-first-day-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act III: the distance of a thrown stone (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25021
+  section: a3-first-day
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: At noon Zuzu sits in the thin shade of a lone dead tree beside a white desert road, glancing back
+    down it into the glare.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting in the narrow shade
+    of a lone dead tree beside a white desert road at noon, glancing back over his shoulder down the long road into
+    the blazing glare, a canteen at his side, heat shimmer, bleached sky, harsh sun, wide shot, harsh desert sun,
+    dusty haze, long hard shadows, ochre sand
+  loras: &id003
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37295
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-first-day-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act III: the distance of a thrown stone (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25022
+  section: a3-first-day
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: At noon Zuzu sits in the thin shade of a lone dead tree beside a white desert road, glancing back
+    down it into the glare.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting in the narrow shade
+    of a lone dead tree beside a white desert road at noon, glancing back over his shoulder down the long road into
+    the blazing glare, a canteen at his side, heat shimmer, bleached sky, harsh sun, wide shot, harsh desert sun,
+    dusty haze, long hard shadows, ochre sand
+  loras: *id003
+  jobs:
+    arthemy-house: 37296
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-first-day-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act III: the distance of a thrown stone (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25023
+  section: a3-first-day
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: At noon Zuzu sits in the thin shade of a lone dead tree beside a white desert road, glancing back
+    down it into the glare.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting in the narrow shade
+    of a lone dead tree beside a white desert road at noon, glancing back over his shoulder down the long road into
+    the blazing glare, a canteen at his side, heat shimmer, bleached sky, harsh sun, wide shot, harsh desert sun,
+    dusty haze, long hard shadows, ochre sand
+  loras: *id003
+  jobs:
+    arthemy-house: 37297
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-one-fire-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: one fire (LoRA r14, seed 1)'
+  size: 1024x1024
+  seed: 25031
+  section: a3-one-fire
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Beside a campfire at night the fennec toddler sleeps curled on a blanket, one tiny paw resting on
+    the brim of a wide woven straw hat lying on the ground.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, asleep curled up on a folded blanket beside a single campfire at night,
+    one tiny paw resting on the brim of a wide woven straw hat lying on the ground beside him, peaceful, an armful
+    of thorn branches by the fire, red canyon walls in warm firelight, starry sky, medium shot, blue moonlight,
+    deep blue night sky, silver highlights
+  loras: &id004
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37298
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-one-fire-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: one fire (LoRA r14, seed 2)'
+  size: 1024x1024
+  seed: 25032
+  section: a3-one-fire
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Beside a campfire at night the fennec toddler sleeps curled on a blanket, one tiny paw resting on
+    the brim of a wide woven straw hat lying on the ground.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, asleep curled up on a folded blanket beside a single campfire at night,
+    one tiny paw resting on the brim of a wide woven straw hat lying on the ground beside him, peaceful, an armful
+    of thorn branches by the fire, red canyon walls in warm firelight, starry sky, medium shot, blue moonlight,
+    deep blue night sky, silver highlights
+  loras: *id004
+  jobs:
+    arthemy-house: 37299
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-one-fire-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: one fire (LoRA r14, seed 3)'
+  size: 1024x1024
+  seed: 25033
+  section: a3-one-fire
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Beside a campfire at night the fennec toddler sleeps curled on a blanket, one tiny paw resting on
+    the brim of a wide woven straw hat lying on the ground.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, asleep curled up on a folded blanket beside a single campfire at night,
+    one tiny paw resting on the brim of a wide woven straw hat lying on the ground beside him, peaceful, an armful
+    of thorn branches by the fire, red canyon walls in warm firelight, starry sky, medium shot, blue moonlight,
+    deep blue night sky, silver highlights
+  loras: *id004
+  jobs:
+    arthemy-house: 37300
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-canyon-floor-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: the long way down (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25041
+  section: a4-canyon-floor
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: On a hot switchback trail down a red canyon wall the fennec toddler sits exhausted in the dust while
+    his sister crouches beside him holding his paw.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, crouching on a narrow switchback goat trail cut
+    across a red canyon wall, holding the paw of zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw in both of hers, coaxing him, the toddler sitting exhausted in the dust
+    gazing down at the canyon floor, blazing noon heat, shimmering air, far below a white glittering dry riverbed,
+    wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id005
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37301
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-canyon-floor-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: the long way down (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25042
+  section: a4-canyon-floor
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: On a hot switchback trail down a red canyon wall the fennec toddler sits exhausted in the dust while
+    his sister crouches beside him holding his paw.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, crouching on a narrow switchback goat trail cut
+    across a red canyon wall, holding the paw of zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw in both of hers, coaxing him, the toddler sitting exhausted in the dust
+    gazing down at the canyon floor, blazing noon heat, shimmering air, far below a white glittering dry riverbed,
+    wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id005
+  jobs:
+    arthemy-house: 37302
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-canyon-floor-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: the long way down (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25043
+  section: a4-canyon-floor
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: On a hot switchback trail down a red canyon wall the fennec toddler sits exhausted in the dust while
+    his sister crouches beside him holding his paw.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, crouching on a narrow switchback goat trail cut
+    across a red canyon wall, holding the paw of zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw in both of hers, coaxing him, the toddler sitting exhausted in the dust
+    gazing down at the canyon floor, blazing noon heat, shimmering air, far below a white glittering dry riverbed,
+    wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id005
+  jobs:
+    arthemy-house: 37303
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-shrine-song-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IV: a song for rain (LoRA r14, seed 1)'
+  size: 1024x1024
+  seed: 25051
+  section: a4-shrine-song
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu sits against the stone wall of a dark storm shrine with his head bowed and eyes closed, humming,
+    while rain sheets past the tall doorway.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting with his back against
+    an old stone wall inside a dark storm shrine, head bowed, eyes closed, humming softly, tender, a single candle
+    stub glowing on the floor, rain sheeting past a tall open doorway, lightning flickering on wet stone, medium
+    shot, warm amber firelight, orange glow
+  loras: &id006
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37304
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-shrine-song-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IV: a song for rain (LoRA r14, seed 2)'
+  size: 1024x1024
+  seed: 25052
+  section: a4-shrine-song
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu sits against the stone wall of a dark storm shrine with his head bowed and eyes closed, humming,
+    while rain sheets past the tall doorway.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting with his back against
+    an old stone wall inside a dark storm shrine, head bowed, eyes closed, humming softly, tender, a single candle
+    stub glowing on the floor, rain sheeting past a tall open doorway, lightning flickering on wet stone, medium
+    shot, warm amber firelight, orange glow
+  loras: *id006
+  jobs:
+    arthemy-house: 37305
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-shrine-song-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IV: a song for rain (LoRA r14, seed 3)'
+  size: 1024x1024
+  seed: 25053
+  section: a4-shrine-song
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu sits against the stone wall of a dark storm shrine with his head bowed and eyes closed, humming,
+    while rain sheets past the tall doorway.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting with his back against
+    an old stone wall inside a dark storm shrine, head bowed, eyes closed, humming softly, tender, a single candle
+    stub glowing on the floor, rain sheeting past a tall open doorway, lightning flickering on wet stone, medium
+    shot, warm amber firelight, orange glow
+  loras: *id006
+  jobs:
+    arthemy-house: 37306
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a5-night-two-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act V: the second night (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25061
+  section: a5-night-two
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu sits wide awake with his back to the wall of a dark dormitory, faint moonlight from a high
+    window falling across the bare floor.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting on the floor with his
+    back to a whitewashed adobe wall in a dark dormitory at night, wide awake, watchful eyes, paws resting on his
+    knees, faint moonlight falling from a high narrow window across bare floorboards, deep warm darkness gathering
+    around him, wide shot, blue moonlight, deep blue night sky, silver highlights
+  loras: &id007
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37307
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a5-night-two-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act V: the second night (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25062
+  section: a5-night-two
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu sits wide awake with his back to the wall of a dark dormitory, faint moonlight from a high
+    window falling across the bare floor.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting on the floor with his
+    back to a whitewashed adobe wall in a dark dormitory at night, wide awake, watchful eyes, paws resting on his
+    knees, faint moonlight falling from a high narrow window across bare floorboards, deep warm darkness gathering
+    around him, wide shot, blue moonlight, deep blue night sky, silver highlights
+  loras: *id007
+  jobs:
+    arthemy-house: 37308
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a5-night-two-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act V: the second night (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25063
+  section: a5-night-two
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu sits wide awake with his back to the wall of a dark dormitory, faint moonlight from a high
+    window falling across the bare floor.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting on the floor with his
+    back to a whitewashed adobe wall in a dark dormitory at night, wide awake, watchful eyes, paws resting on his
+    knees, faint moonlight falling from a high narrow window across bare floorboards, deep warm darkness gathering
+    around him, wide shot, blue moonlight, deep blue night sky, silver highlights
+  loras: *id007
+  jobs:
+    arthemy-house: 37309
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a5-rags-kept-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: her own clothes (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25071
+  section: a5-rags-kept
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl sits on a woodpile beside a freshly mended adobe wall in the late afternoon, her
+    washed rags retied on her wrists, glancing sideways with a shy, trusting look.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, sitting on a woodpile beside a freshly mended adobe wall, damp washed
+    cloth strips retied around her wrists, paws in her lap, a small shy trusting glance to one side, a water trough
+    nearby with wet stones around it, warm late afternoon light, long shadows, quiet, vertical composition, full
+    body, harsh desert sun, dusty haze, long hard shadows
+  loras: &id008
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37310
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a5-rags-kept-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: her own clothes (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25072
+  section: a5-rags-kept
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl sits on a woodpile beside a freshly mended adobe wall in the late afternoon, her
+    washed rags retied on her wrists, glancing sideways with a shy, trusting look.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, sitting on a woodpile beside a freshly mended adobe wall, damp washed
+    cloth strips retied around her wrists, paws in her lap, a small shy trusting glance to one side, a water trough
+    nearby with wet stones around it, warm late afternoon light, long shadows, quiet, vertical composition, full
+    body, harsh desert sun, dusty haze, long hard shadows
+  loras: *id008
+  jobs:
+    arthemy-house: 37311
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a5-rags-kept-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: her own clothes (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25073
+  section: a5-rags-kept
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl sits on a woodpile beside a freshly mended adobe wall in the late afternoon, her
+    washed rags retied on her wrists, glancing sideways with a shy, trusting look.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, sitting on a woodpile beside a freshly mended adobe wall, damp washed
+    cloth strips retied around her wrists, paws in her lap, a small shy trusting glance to one side, a water trough
+    nearby with wet stones around it, warm late afternoon light, long shadows, quiet, vertical composition, full
+    body, harsh desert sun, dusty haze, long hard shadows
+  loras: *id008
+  jobs:
+    arthemy-house: 37312
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-bury-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: the gravedigger (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25081
+  section: a9-bury
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu stands in a hard dry mission courtyard in the early morning, both paws on the handle of a wooden
+    spade, looking toward the open gate and the road beyond.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, standing in a hard dry adobe mission
+    courtyard in early morning, both paws resting on the handle of a wooden spade, looking toward an open gate and
+    the long road beyond it, steady and quiet, long shadows, pale gold light, parting, wide shot, golden dawn light,
+    pink and gold sky
+  loras: &id009
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37313
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-bury-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: the gravedigger (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25082
+  section: a9-bury
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu stands in a hard dry mission courtyard in the early morning, both paws on the handle of a wooden
+    spade, looking toward the open gate and the road beyond.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, standing in a hard dry adobe mission
+    courtyard in early morning, both paws resting on the handle of a wooden spade, looking toward an open gate and
+    the long road beyond it, steady and quiet, long shadows, pale gold light, parting, wide shot, golden dawn light,
+    pink and gold sky
+  loras: *id009
+  jobs:
+    arthemy-house: 37314
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-bury-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: the gravedigger (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25083
+  section: a9-bury
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu stands in a hard dry mission courtyard in the early morning, both paws on the handle of a wooden
+    spade, looking toward the open gate and the road beyond.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, standing in a hard dry adobe mission
+    courtyard in early morning, both paws resting on the handle of a wooden spade, looking toward an open gate and
+    the long road beyond it, steady and quiet, long shadows, pale gold light, parting, wide shot, golden dawn light,
+    pink and gold sky
+  loras: *id009
+  jobs:
+    arthemy-house: 37315
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-forge-crack-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: bad iron (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25091
+  section: a9-forge-crack
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu sits back on his heels beside a small hearth fire with one paw cradled in his lap, a cracked
+    lump of iron chain glowing in the coals.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting back on his heels beside
+    a small stone hearth fire at night, one paw cradled in his lap, weary, a cracked dark lump of iron chain glowing
+    in the coals, a smith's hammer on the hearth stones, a few sticks of firewood stacked nearby, dim orange glow,
+    vertical composition, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: &id010
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37316
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-forge-crack-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: bad iron (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25092
+  section: a9-forge-crack
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu sits back on his heels beside a small hearth fire with one paw cradled in his lap, a cracked
+    lump of iron chain glowing in the coals.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting back on his heels beside
+    a small stone hearth fire at night, one paw cradled in his lap, weary, a cracked dark lump of iron chain glowing
+    in the coals, a smith's hammer on the hearth stones, a few sticks of firewood stacked nearby, dim orange glow,
+    vertical composition, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: *id010
+  jobs:
+    arthemy-house: 37317
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-forge-crack-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: bad iron (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25093
+  section: a9-forge-crack
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu sits back on his heels beside a small hearth fire with one paw cradled in his lap, a cracked
+    lump of iron chain glowing in the coals.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting back on his heels beside
+    a small stone hearth fire at night, one paw cradled in his lap, weary, a cracked dark lump of iron chain glowing
+    in the coals, a smith's hammer on the hearth stones, a few sticks of firewood stacked nearby, dim orange glow,
+    vertical composition, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: *id010
+  jobs:
+    arthemy-house: 37318
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-graves-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IX: small graves (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25101
+  section: a9-graves
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: At dawn the fennec girl kneels in soft courtyard earth under a rusted, cobwebbed merry-go-round,
+    digging with a wooden ladle beside a row of small earth mounds.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, kneeling in soft earth in an adobe mission courtyard, digging with
+    a wooden refectory ladle, solemn, a row of small fresh earth mounds beside her, an old rusted merry-go-round
+    above with cobwebs stirring in the wind, pale gold dawn, quiet grief, wide shot, golden dawn light, pink and
+    gold sky
+  loras: &id011
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37319
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-graves-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IX: small graves (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25102
+  section: a9-graves
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: At dawn the fennec girl kneels in soft courtyard earth under a rusted, cobwebbed merry-go-round,
+    digging with a wooden ladle beside a row of small earth mounds.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, kneeling in soft earth in an adobe mission courtyard, digging with
+    a wooden refectory ladle, solemn, a row of small fresh earth mounds beside her, an old rusted merry-go-round
+    above with cobwebs stirring in the wind, pale gold dawn, quiet grief, wide shot, golden dawn light, pink and
+    gold sky
+  loras: *id011
+  jobs:
+    arthemy-house: 37320
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-graves-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IX: small graves (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25103
+  section: a9-graves
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: At dawn the fennec girl kneels in soft courtyard earth under a rusted, cobwebbed merry-go-round,
+    digging with a wooden ladle beside a row of small earth mounds.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, kneeling in soft earth in an adobe mission courtyard, digging with
+    a wooden refectory ladle, solemn, a row of small fresh earth mounds beside her, an old rusted merry-go-round
+    above with cobwebs stirring in the wind, pale gold dawn, quiet grief, wide shot, golden dawn light, pink and
+    gold sky
+  loras: *id011
+  jobs:
+    arthemy-house: 37321
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-many-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: a long tail of children (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25111
+  section: a9-many
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu walks down a long white desert road in the morning with bulging water skins slung over both
+    shoulders, looking back over his shoulder with patient eyes.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, walking down a long dusty white desert
+    road in the morning, bulging water skins slung over both shoulders, looking back over his shoulder with patient
+    eyes, a white salt flat and low red hills ahead, the road running far into the distance, clear sky, epic wide
+    shot, golden dawn light, pink and gold sky
+  loras: &id012
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37322
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-many-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: a long tail of children (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25112
+  section: a9-many
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu walks down a long white desert road in the morning with bulging water skins slung over both
+    shoulders, looking back over his shoulder with patient eyes.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, walking down a long dusty white desert
+    road in the morning, bulging water skins slung over both shoulders, looking back over his shoulder with patient
+    eyes, a white salt flat and low red hills ahead, the road running far into the distance, clear sky, epic wide
+    shot, golden dawn light, pink and gold sky
+  loras: *id012
+  jobs:
+    arthemy-house: 37323
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-many-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: a long tail of children (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25113
+  section: a9-many
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu walks down a long white desert road in the morning with bulging water skins slung over both
+    shoulders, looking back over his shoulder with patient eyes.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, walking down a long dusty white desert
+    road in the morning, bulging water skins slung over both shoulders, looking back over his shoulder with patient
+    eyes, a white salt flat and low red hills ahead, the road running far into the distance, clear sky, epic wide
+    shot, golden dawn light, pink and gold sky
+  loras: *id012
+  jobs:
+    arthemy-house: 37324
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-sealed-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: into the fold (LoRA r14, seed 1)'
+  size: 1024x1024
+  seed: 25121
+  section: a9-sealed
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu kneels gripping the hilt of his katana, driven to the guard into a fold of darkness in a crypt
+    wall, with white frost creeping up the blackening steel.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, kneeling, both paws gripping
+    the hilt of his katana, the blade driven up to the guard into a twisting fold of darkness in a stone crypt wall,
+    the steel turning black, white frost creeping up toward his paws, empty scabbard on his back, coils of shadow
+    closing like a mouth, candles blown flat, straining, medium shot, warm amber firelight, orange glow
+  loras: &id013
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37325
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-sealed-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: into the fold (LoRA r14, seed 2)'
+  size: 1024x1024
+  seed: 25122
+  section: a9-sealed
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu kneels gripping the hilt of his katana, driven to the guard into a fold of darkness in a crypt
+    wall, with white frost creeping up the blackening steel.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, kneeling, both paws gripping
+    the hilt of his katana, the blade driven up to the guard into a twisting fold of darkness in a stone crypt wall,
+    the steel turning black, white frost creeping up toward his paws, empty scabbard on his back, coils of shadow
+    closing like a mouth, candles blown flat, straining, medium shot, warm amber firelight, orange glow
+  loras: *id013
+  jobs:
+    arthemy-house: 37326
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-sealed-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IX: into the fold (LoRA r14, seed 3)'
+  size: 1024x1024
+  seed: 25123
+  section: a9-sealed
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu kneels gripping the hilt of his katana, driven to the guard into a fold of darkness in a crypt
+    wall, with white frost creeping up the blackening steel.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, kneeling, both paws gripping
+    the hilt of his katana, the blade driven up to the guard into a twisting fold of darkness in a stone crypt wall,
+    the steel turning black, white frost creeping up toward his paws, empty scabbard on his back, coils of shadow
+    closing like a mouth, candles blown flat, straining, medium shot, warm amber firelight, orange glow
+  loras: *id013
+  jobs:
+    arthemy-house: 37327
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-ending-bell-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Ending: the bell rings (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25131
+  section: ending-bell
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Inside the base of a bell tower at sunrise the fennec girl hauls on a thick bell rope just below
+    a grey paw, her little brother laughing up from the floor as the bronze bell swings high above.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, hauling down on a thick bell rope with both paws,
+    a grey paw gripping the rope just above hers, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw, sitting on the plank floor a little apart, laughing up with his mouth
+    open, low angle inside the base of an adobe bell tower at sunrise, high above through an open hatch a great
+    bronze bell swinging mid toll, golden dawn light pouring down, glowing dust, triumphant, vertical composition,
+    full body, golden dawn light, pink and gold sky
+  loras: &id014
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37328
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-ending-bell-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Ending: the bell rings (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25132
+  section: ending-bell
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Inside the base of a bell tower at sunrise the fennec girl hauls on a thick bell rope just below
+    a grey paw, her little brother laughing up from the floor as the bronze bell swings high above.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, hauling down on a thick bell rope with both paws,
+    a grey paw gripping the rope just above hers, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw, sitting on the plank floor a little apart, laughing up with his mouth
+    open, low angle inside the base of an adobe bell tower at sunrise, high above through an open hatch a great
+    bronze bell swinging mid toll, golden dawn light pouring down, glowing dust, triumphant, vertical composition,
+    full body, golden dawn light, pink and gold sky
+  loras: *id014
+  jobs:
+    arthemy-house: 37329
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-ending-bell-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Ending: the bell rings (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25133
+  section: ending-bell
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Inside the base of a bell tower at sunrise the fennec girl hauls on a thick bell rope just below
+    a grey paw, her little brother laughing up from the floor as the bronze bell swings high above.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, hauling down on a thick bell rope with both paws,
+    a grey paw gripping the rope just above hers, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw, sitting on the plank floor a little apart, laughing up with his mouth
+    open, low angle inside the base of an adobe bell tower at sunrise, high above through an open hatch a great
+    bronze bell swinging mid toll, golden dawn light pouring down, glowing dust, triumphant, vertical composition,
+    full body, golden dawn light, pink and gold sky
+  loras: *id014
+  jobs:
+    arthemy-house: 37330
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-ending-four-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Ending: one fire (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25141
+  section: ending-four
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: By a campfire under a sky full of stars the one-eyed coyote sits with his coat pulled close and
+    his hat tipped low, fumbling a scrap of paper in his left paw with a rueful grin.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, sitting cross-legged by a single campfire
+    in the desert at night, coat pulled close around him, his right arm tucked out of sight inside it, hat tipped
+    low, fumbling a scrap of paper in his left paw, rueful grin, a battered pack on the far side of the fire, sky
+    full of stars over the flats, warm glow, peace, wide shot, blue moonlight, deep blue night sky, silver highlights
+  loras: &id015
+  - resource_id: 4578
+    strength: 0.75
+  jobs:
+    arthemy-house: 37331
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-ending-four-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Ending: one fire (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25142
+  section: ending-four
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: By a campfire under a sky full of stars the one-eyed coyote sits with his coat pulled close and
+    his hat tipped low, fumbling a scrap of paper in his left paw with a rueful grin.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, sitting cross-legged by a single campfire
+    in the desert at night, coat pulled close around him, his right arm tucked out of sight inside it, hat tipped
+    low, fumbling a scrap of paper in his left paw, rueful grin, a battered pack on the far side of the fire, sky
+    full of stars over the flats, warm glow, peace, wide shot, blue moonlight, deep blue night sky, silver highlights
+  loras: *id015
+  jobs:
+    arthemy-house: 37332
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-ending-four-3
+  entity: creature
+  lane: arthemy-house
+  title: 'Ending: one fire (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25143
+  section: ending-four
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: By a campfire under a sky full of stars the one-eyed coyote sits with his coat pulled close and
+    his hat tipped low, fumbling a scrap of paper in his left paw with a rueful grin.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, sitting cross-legged by a single campfire
+    in the desert at night, coat pulled close around him, his right arm tucked out of sight inside it, hat tipped
+    low, fumbling a scrap of paper in his left paw, rueful grin, a battered pack on the far side of the fire, sky
+    full of stars over the flats, warm glow, peace, wide shot, blue moonlight, deep blue night sky, silver highlights
+  loras: *id015
+  jobs:
+    arthemy-house: 37333
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-ending-hunted-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Ending: hunted (LoRA r14, seed 1)'
+  size: 1024x1024
+  seed: 25151
+  section: ending-hunted
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In a cold moonlit canyon camp the fennec girl sits awake against a red rock wall keeping watch with
+    a small dagger in her paw, her little brother asleep in her lap.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, sitting awake with her back to a red rock wall in
+    a cold canyon camp at night, keeping watch, a small dagger held in her paw, zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, asleep curled in her lap, a dead fire ring
+    of stones, a dark trail winding down into the canyon, cold blue moonlight, vigilant, medium shot, blue moonlight,
+    deep blue night sky, silver highlights
+  loras: &id016
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37334
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-ending-hunted-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Ending: hunted (LoRA r14, seed 2)'
+  size: 1024x1024
+  seed: 25152
+  section: ending-hunted
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In a cold moonlit canyon camp the fennec girl sits awake against a red rock wall keeping watch with
+    a small dagger in her paw, her little brother asleep in her lap.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, sitting awake with her back to a red rock wall in
+    a cold canyon camp at night, keeping watch, a small dagger held in her paw, zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, asleep curled in her lap, a dead fire ring
+    of stones, a dark trail winding down into the canyon, cold blue moonlight, vigilant, medium shot, blue moonlight,
+    deep blue night sky, silver highlights
+  loras: *id016
+  jobs:
+    arthemy-house: 37335
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-ending-hunted-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Ending: hunted (LoRA r14, seed 3)'
+  size: 1024x1024
+  seed: 25153
+  section: ending-hunted
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In a cold moonlit canyon camp the fennec girl sits awake against a red rock wall keeping watch with
+    a small dagger in her paw, her little brother asleep in her lap.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, sitting awake with her back to a red rock wall in
+    a cold canyon camp at night, keeping watch, a small dagger held in her paw, zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, asleep curled in her lap, a dead fire ring
+    of stones, a dark trail winding down into the canyon, cold blue moonlight, vigilant, medium shot, blue moonlight,
+    deep blue night sky, silver highlights
+  loras: *id016
+  jobs:
+    arthemy-house: 37336
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-sister-trust-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: her eyes on your hands (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25161
+  section: sister-trust
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: At dusk the fennec toddler sits in grey ash at the edge of a burned boardwalk, reaching a tiny paw
+    toward the round shadow of a wide hat brim.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, sitting in grey ash at the edge of a burned boardwalk, reaching a tiny paw
+    toward the round shadow of a wide hat brim lying across the ash, curious, babbling, mouth open, charred planks,
+    drifting ash, dusk light, low angle, vertical composition, full body, orange sunset light, red and violet sky
+  loras: &id017
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37337
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-sister-trust-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: her eyes on your hands (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25162
+  section: sister-trust
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: At dusk the fennec toddler sits in grey ash at the edge of a burned boardwalk, reaching a tiny paw
+    toward the round shadow of a wide hat brim.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, sitting in grey ash at the edge of a burned boardwalk, reaching a tiny paw
+    toward the round shadow of a wide hat brim lying across the ash, curious, babbling, mouth open, charred planks,
+    drifting ash, dusk light, low angle, vertical composition, full body, orange sunset light, red and violet sky
+  loras: *id017
+  jobs:
+    arthemy-house: 37338
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-sister-trust-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: her eyes on your hands (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25163
+  section: sister-trust
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: At dusk the fennec toddler sits in grey ash at the edge of a burned boardwalk, reaching a tiny paw
+    toward the round shadow of a wide hat brim.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, sitting in grey ash at the edge of a burned boardwalk, reaching a tiny paw
+    toward the round shadow of a wide hat brim lying across the ash, curious, babbling, mouth open, charred planks,
+    drifting ash, dusk light, low angle, vertical composition, full body, orange sunset light, red and violet sky
+  loras: *id017
+  jobs:
+    arthemy-house: 37339
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-fever-bandage-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act III: clean linen (LoRA r14, seed 1)'
+  size: 1024x1024
+  seed: 25171
+  section: a3-fever-bandage
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: By a small campfire at night Zuzu sits warming the point of a long thorn in the flame, a roll of
+    clean white linen resting on his knee.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting cross-legged by a small
+    campfire at night, holding the point of a long thorn in the flame, intent and careful, a roll of clean white
+    linen resting on his knee, a tin cup of water on a stone, warm firelight on his face, desert stones, medium
+    shot, blue moonlight, deep blue night sky, silver highlights
+  loras: &id018
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37340
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-fever-bandage-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act III: clean linen (LoRA r14, seed 2)'
+  size: 1024x1024
+  seed: 25172
+  section: a3-fever-bandage
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: By a small campfire at night Zuzu sits warming the point of a long thorn in the flame, a roll of
+    clean white linen resting on his knee.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting cross-legged by a small
+    campfire at night, holding the point of a long thorn in the flame, intent and careful, a roll of clean white
+    linen resting on his knee, a tin cup of water on a stone, warm firelight on his face, desert stones, medium
+    shot, blue moonlight, deep blue night sky, silver highlights
+  loras: *id018
+  jobs:
+    arthemy-house: 37341
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a3-fever-bandage-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act III: clean linen (LoRA r14, seed 3)'
+  size: 1024x1024
+  seed: 25173
+  section: a3-fever-bandage
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: By a small campfire at night Zuzu sits warming the point of a long thorn in the flame, a roll of
+    clean white linen resting on his knee.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting cross-legged by a small
+    campfire at night, holding the point of a long thorn in the flame, intent and careful, a roll of clean white
+    linen resting on his knee, a tin cup of water on a stone, warm firelight on his face, desert stones, medium
+    shot, blue moonlight, deep blue night sky, silver highlights
+  loras: *id018
+  jobs:
+    arthemy-house: 37342
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-feather-look-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: true faces (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25181
+  section: a4-feather-look
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Seen past a black feather held up by a grey paw, the thin fennec girl stands on a desert road in
+    a grey, sharp world, frightened and defiant.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, standing on a desert road seen past a black feather held up in the
+    blurred foreground by a grey paw, too thin and too tall, ears up, frightened yet defiant gaze, desaturated grey
+    world, sharp detail, the long road stretching behind her, overcast light, wide shot, harsh desert sun, dusty
+    haze, long hard shadows, ochre sand
+  loras: &id019
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37343
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-feather-look-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: true faces (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25182
+  section: a4-feather-look
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Seen past a black feather held up by a grey paw, the thin fennec girl stands on a desert road in
+    a grey, sharp world, frightened and defiant.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, standing on a desert road seen past a black feather held up in the
+    blurred foreground by a grey paw, too thin and too tall, ears up, frightened yet defiant gaze, desaturated grey
+    world, sharp detail, the long road stretching behind her, overcast light, wide shot, harsh desert sun, dusty
+    haze, long hard shadows, ochre sand
+  loras: *id019
+  jobs:
+    arthemy-house: 37344
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-feather-look-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: true faces (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25183
+  section: a4-feather-look
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Seen past a black feather held up by a grey paw, the thin fennec girl stands on a desert road in
+    a grey, sharp world, frightened and defiant.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, standing on a desert road seen past a black feather held up in the
+    blurred foreground by a grey paw, too thin and too tall, ears up, frightened yet defiant gaze, desaturated grey
+    world, sharp detail, the long road stretching behind her, overcast light, wide shot, harsh desert sun, dusty
+    haze, long hard shadows, ochre sand
+  loras: *id019
+  jobs:
+    arthemy-house: 37345
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-mission-road-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IV: a tower in the distance (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25191
+  section: a4-mission-road
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: A hard-packed dirt wagon road with deep wheel ruts winds toward a bell tower over adobe walls at
+    the foot of the hills, a thread of cooking haze rising straight up.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a hard-packed dirt wagon road with two deep wheel ruts and
+    a grassy hump between them, winding toward a bell tower over adobe walls at the foot of brown hills, a thread
+    of cooking haze rising straight up into still air, small desert flowers closing along the verge, warm afternoon
+    sun, epic wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id020 []
+  jobs:
+    arthemy-house: 37346
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-mission-road-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IV: a tower in the distance (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25192
+  section: a4-mission-road
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: A hard-packed dirt wagon road with deep wheel ruts winds toward a bell tower over adobe walls at
+    the foot of the hills, a thread of cooking haze rising straight up.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a hard-packed dirt wagon road with two deep wheel ruts and
+    a grassy hump between them, winding toward a bell tower over adobe walls at the foot of brown hills, a thread
+    of cooking haze rising straight up into still air, small desert flowers closing along the verge, warm afternoon
+    sun, epic wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id020
+  jobs:
+    arthemy-house: 37347
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-mission-road-3
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IV: a tower in the distance (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25193
+  section: a4-mission-road
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: A hard-packed dirt wagon road with deep wheel ruts winds toward a bell tower over adobe walls at
+    the foot of the hills, a thread of cooking haze rising straight up.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a hard-packed dirt wagon road with two deep wheel ruts and
+    a grassy hump between them, winding toward a bell tower over adobe walls at the foot of brown hills, a thread
+    of cooking haze rising straight up into still air, small desert flowers closing along the verge, warm afternoon
+    sun, epic wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id020
+  jobs:
+    arthemy-house: 37348
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a5-well-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act V: a word in the bucket (LoRA r14, seed 1)'
+  size: 1024x1024
+  seed: 25201
+  section: a5-well
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Looking down into a wooden bucket of water on the stone rim of a well at sundown, a small folded
+    scrap of paper floats among reflections of the sky.
+  prompt_tags: (still life:1.4), (object only:1.3), top-down view into a wooden bucket of water resting on the worn
+    stone rim of an old well, a small folded scrap of paper floating on the surface, iron hoops on the bucket, the
+    water reflecting an orange and violet sundown sky, droplets on the wood, secretive, close-up, harsh desert sun,
+    dusty haze, long hard shadows
+  loras: &id021 []
+  jobs:
+    arthemy-house: 37349
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a5-well-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act V: a word in the bucket (LoRA r14, seed 2)'
+  size: 1024x1024
+  seed: 25202
+  section: a5-well
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Looking down into a wooden bucket of water on the stone rim of a well at sundown, a small folded
+    scrap of paper floats among reflections of the sky.
+  prompt_tags: (still life:1.4), (object only:1.3), top-down view into a wooden bucket of water resting on the worn
+    stone rim of an old well, a small folded scrap of paper floating on the surface, iron hoops on the bucket, the
+    water reflecting an orange and violet sundown sky, droplets on the wood, secretive, close-up, harsh desert sun,
+    dusty haze, long hard shadows
+  loras: *id021
+  jobs:
+    arthemy-house: 37350
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a5-well-3
+  entity: still
+  lane: arthemy-house
+  title: 'Act V: a word in the bucket (LoRA r14, seed 3)'
+  size: 1024x1024
+  seed: 25203
+  section: a5-well
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Looking down into a wooden bucket of water on the stone rim of a well at sundown, a small folded
+    scrap of paper floats among reflections of the sky.
+  prompt_tags: (still life:1.4), (object only:1.3), top-down view into a wooden bucket of water resting on the worn
+    stone rim of an old well, a small folded scrap of paper floating on the surface, iron hoops on the bucket, the
+    water reflecting an orange and violet sundown sky, droplets on the wood, secretive, close-up, harsh desert sun,
+    dusty haze, long hard shadows
+  loras: *id021
+  jobs:
+    arthemy-house: 37351
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a6-coyote-roped-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act VI: fair trade (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25211
+  section: a6-coyote-roped
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: In lantern light the one-eyed coyote, lying belly-down across the back of a dusty mule with rope
+    across his shoulders, lifts his head and stares straight out with his single eye.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, lying belly-down across the back of
+    a dusty mule, lifting his head, his single eye staring straight at the viewer, coils of rope across his shoulders,
+    hat askew, the mule's shaggy mane in the foreground, lantern-lit night street behind, warm lantern glow, grim,
+    close-up, blue moonlight, deep blue night sky, silver highlights
+  loras: &id022
+  - resource_id: 4578
+    strength: 0.75
+  jobs:
+    arthemy-house: 37352
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a6-coyote-roped-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act VI: fair trade (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25212
+  section: a6-coyote-roped
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: In lantern light the one-eyed coyote, lying belly-down across the back of a dusty mule with rope
+    across his shoulders, lifts his head and stares straight out with his single eye.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, lying belly-down across the back of
+    a dusty mule, lifting his head, his single eye staring straight at the viewer, coils of rope across his shoulders,
+    hat askew, the mule's shaggy mane in the foreground, lantern-lit night street behind, warm lantern glow, grim,
+    close-up, blue moonlight, deep blue night sky, silver highlights
+  loras: *id022
+  jobs:
+    arthemy-house: 37353
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a6-coyote-roped-3
+  entity: creature
+  lane: arthemy-house
+  title: 'Act VI: fair trade (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25213
+  section: a6-coyote-roped
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: In lantern light the one-eyed coyote, lying belly-down across the back of a dusty mule with rope
+    across his shoulders, lifts his head and stares straight out with his single eye.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, lying belly-down across the back of
+    a dusty mule, lifting his head, his single eye staring straight at the viewer, coils of rope across his shoulders,
+    hat askew, the mule's shaggy mane in the foreground, lantern-lit night street behind, warm lantern glow, grim,
+    close-up, blue moonlight, deep blue night sky, silver highlights
+  loras: *id022
+  jobs:
+    arthemy-house: 37354
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a6-vane-killed-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act VI: what the blade is for (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25221
+  section: a6-vane-killed
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: In a dim office doorway at night Zuzu slides his katana back into the scabbard on his back with
+    steady paws, an oil lamp guttering on a desk behind him.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, standing in a dim office doorway at
+    night, sliding his katana back into the scabbard on his back with steady paws, grim still face, a guttering
+    oil lamp on a cluttered desk behind him, an open ledger, deep shadows, cold quiet, vertical composition, full
+    body, blue moonlight, deep blue night sky, silver highlights
+  loras: &id023
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37355
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a6-vane-killed-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act VI: what the blade is for (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25222
+  section: a6-vane-killed
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: In a dim office doorway at night Zuzu slides his katana back into the scabbard on his back with
+    steady paws, an oil lamp guttering on a desk behind him.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, standing in a dim office doorway at
+    night, sliding his katana back into the scabbard on his back with steady paws, grim still face, a guttering
+    oil lamp on a cluttered desk behind him, an open ledger, deep shadows, cold quiet, vertical composition, full
+    body, blue moonlight, deep blue night sky, silver highlights
+  loras: *id023
+  jobs:
+    arthemy-house: 37356
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a6-vane-killed-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act VI: what the blade is for (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25223
+  section: a6-vane-killed
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: In a dim office doorway at night Zuzu slides his katana back into the scabbard on his back with
+    steady paws, an oil lamp guttering on a desk behind him.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, standing in a dim office doorway at
+    night, sliding his katana back into the scabbard on his back with steady paws, grim still face, a guttering
+    oil lamp on a cluttered desk behind him, an open ledger, deep shadows, cold quiet, vertical composition, full
+    body, blue moonlight, deep blue night sky, silver highlights
+  loras: *id023
+  jobs:
+    arthemy-house: 37357
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-abbess-killed-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: quick (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25231
+  section: a8-abbess-killed
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: On worn stone altar steps under burning candles, the fennec girl draws her little brother close
+    and edges away along the stone, watching warily.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, kneeling on worn stone altar steps, drawing zkatoddler,
+    anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw close against
+    her side and edging away along the stone, wary staring eyes, tall candles still burning above, pale wax on the
+    steps, deep darkness behind the altar, candlelight, wide shot, warm amber firelight, orange glow
+  loras: &id024
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37358
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-abbess-killed-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: quick (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25232
+  section: a8-abbess-killed
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: On worn stone altar steps under burning candles, the fennec girl draws her little brother close
+    and edges away along the stone, watching warily.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, kneeling on worn stone altar steps, drawing zkatoddler,
+    anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw close against
+    her side and edging away along the stone, wary staring eyes, tall candles still burning above, pale wax on the
+    steps, deep darkness behind the altar, candlelight, wide shot, warm amber firelight, orange glow
+  loras: *id024
+  jobs:
+    arthemy-house: 37359
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-abbess-killed-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: quick (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25233
+  section: a8-abbess-killed
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: On worn stone altar steps under burning candles, the fennec girl draws her little brother close
+    and edges away along the stone, watching warily.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, kneeling on worn stone altar steps, drawing zkatoddler,
+    anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw close against
+    her side and edging away along the stone, wary staring eyes, tall candles still burning above, pale wax on the
+    steps, deep darkness behind the altar, candlelight, wide shot, warm amber firelight, orange glow
+  loras: *id024
+  jobs:
+    arthemy-house: 37360
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-children-run-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act VIII: under the stars (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25241
+  section: a8-children-run
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: At a low gap in an adobe wall at night, many small footprints lead through the dust toward a black
+    ridge under an enormous sky full of stars.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a low crumbling gap in an adobe mission wall at night, many
+    small footprints in the dust leading through it toward a black ridge line, an enormous clear sky full of stars
+    and the milky way above, cool starlight, view from below, vertical composition, blue moonlight, deep blue night
+    sky, silver highlights
+  loras: &id025 []
+  jobs:
+    arthemy-house: 37361
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-children-run-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act VIII: under the stars (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25242
+  section: a8-children-run
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: At a low gap in an adobe wall at night, many small footprints lead through the dust toward a black
+    ridge under an enormous sky full of stars.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a low crumbling gap in an adobe mission wall at night, many
+    small footprints in the dust leading through it toward a black ridge line, an enormous clear sky full of stars
+    and the milky way above, cool starlight, view from below, vertical composition, blue moonlight, deep blue night
+    sky, silver highlights
+  loras: *id025
+  jobs:
+    arthemy-house: 37362
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-children-run-3
+  entity: empty
+  lane: arthemy-house
+  title: 'Act VIII: under the stars (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25243
+  section: a8-children-run
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: At a low gap in an adobe wall at night, many small footprints lead through the dust toward a black
+    ridge under an enormous sky full of stars.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a low crumbling gap in an adobe mission wall at night, many
+    small footprints in the dust leading through it toward a black ridge line, an enormous clear sky full of stars
+    and the milky way above, cool starlight, view from below, vertical composition, blue moonlight, deep blue night
+    sky, silver highlights
+  loras: *id025
+  jobs:
+    arthemy-house: 37363
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-sacristy-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: the sacristy stair (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25251
+  section: a8-sacristy
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur
+  prompt_prose: An otter's paw in a grey sleeve holds an oil lamp in a narrow doorway, its flame leaning sideways,
+    and beyond it dark silhouettes in black habits kneel with their backs turned behind a stone altar.
+  prompt_tags: a small furry brown otter paw in a grey wool sleeve holding an oil lamp in a narrow wooden doorway,
+    the flame leaning sideways toward the darkness, beyond the door the back of a stone altar and a ring of dark
+    silhouettes in black habits kneeling with their backs turned, candlelight, deep gloom, close-up, warm amber
+    firelight, orange glow
+  loras: &id026 []
+  jobs:
+    arthemy-house: 37364
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-sacristy-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: the sacristy stair (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25252
+  section: a8-sacristy
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur
+  prompt_prose: An otter's paw in a grey sleeve holds an oil lamp in a narrow doorway, its flame leaning sideways,
+    and beyond it dark silhouettes in black habits kneel with their backs turned behind a stone altar.
+  prompt_tags: a small furry brown otter paw in a grey wool sleeve holding an oil lamp in a narrow wooden doorway,
+    the flame leaning sideways toward the darkness, beyond the door the back of a stone altar and a ring of dark
+    silhouettes in black habits kneeling with their backs turned, candlelight, deep gloom, close-up, warm amber
+    firelight, orange glow
+  loras: *id026
+  jobs:
+    arthemy-house: 37365
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-sacristy-3
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: the sacristy stair (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25253
+  section: a8-sacristy
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur
+  prompt_prose: An otter's paw in a grey sleeve holds an oil lamp in a narrow doorway, its flame leaning sideways,
+    and beyond it dark silhouettes in black habits kneel with their backs turned behind a stone altar.
+  prompt_tags: a small furry brown otter paw in a grey wool sleeve holding an oil lamp in a narrow wooden doorway,
+    the flame leaning sideways toward the darkness, beyond the door the back of a stone altar and a ring of dark
+    silhouettes in black habits kneeling with their backs turned, candlelight, deep gloom, close-up, warm amber
+    firelight, orange glow
+  loras: *id026
+  jobs:
+    arthemy-house: 37366
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-flight-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IX: do not look back (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25261
+  section: a9-flight
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: From the top of a steep cellar stair, a ribbon of black shadow slides across pale flagstones behind
+    a stone altar into bottomless darkness where eyes faintly glint.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, view from the top of a steep stone cellar stair looking
+    down into a crypt, a long ribbon of black shadow sliding across pale flagstones and behind a stone altar into
+    a wall of bottomless darkness, faint glint of eyes in the dark, toppled white candles, cold blue light, dread,
+    high angle, vertical composition, warm amber firelight, orange glow
+  loras: &id027 []
+  jobs:
+    arthemy-house: 37367
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-flight-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IX: do not look back (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25262
+  section: a9-flight
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: From the top of a steep cellar stair, a ribbon of black shadow slides across pale flagstones behind
+    a stone altar into bottomless darkness where eyes faintly glint.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, view from the top of a steep stone cellar stair looking
+    down into a crypt, a long ribbon of black shadow sliding across pale flagstones and behind a stone altar into
+    a wall of bottomless darkness, faint glint of eyes in the dark, toppled white candles, cold blue light, dread,
+    high angle, vertical composition, warm amber firelight, orange glow
+  loras: *id027
+  jobs:
+    arthemy-house: 37368
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a9-flight-3
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IX: do not look back (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25263
+  section: a9-flight
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: From the top of a steep cellar stair, a ribbon of black shadow slides across pale flagstones behind
+    a stone altar into bottomless darkness where eyes faintly glint.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, view from the top of a steep stone cellar stair looking
+    down into a crypt, a long ribbon of black shadow sliding across pale flagstones and behind a stone altar into
+    a wall of bottomless darkness, faint glint of eyes in the dark, toppled white candles, cold blue light, dread,
+    high angle, vertical composition, warm amber firelight, orange glow
+  loras: *id027
+  jobs:
+    arthemy-house: 37369
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-aftermath-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: what mercy costs (LoRA r14, seed 1)'
+  size: 1024x1024
+  seed: 25271
+  section: aftermath
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: The one-eyed coyote sits hunched in the dust by a still watering hole, his right arm held inside
+    his coat against his chest, a roll of clean white linen lying before him.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, sitting hunched in the dust at the edge
+    of a desert watering hole, right arm held out of sight inside his coat against his chest, exhausted, wary single
+    eye, a roll of clean white linen lying in the dust before him, the pool behind him flat and still, dry reeds,
+    late afternoon light, quiet, medium shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id028
+  - resource_id: 4578
+    strength: 0.75
+  jobs:
+    arthemy-house: 37370
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-aftermath-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: what mercy costs (LoRA r14, seed 2)'
+  size: 1024x1024
+  seed: 25272
+  section: aftermath
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: The one-eyed coyote sits hunched in the dust by a still watering hole, his right arm held inside
+    his coat against his chest, a roll of clean white linen lying before him.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, sitting hunched in the dust at the edge
+    of a desert watering hole, right arm held out of sight inside his coat against his chest, exhausted, wary single
+    eye, a roll of clean white linen lying in the dust before him, the pool behind him flat and still, dry reeds,
+    late afternoon light, quiet, medium shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id028
+  jobs:
+    arthemy-house: 37371
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-aftermath-3
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: what mercy costs (LoRA r14, seed 3)'
+  size: 1024x1024
+  seed: 25273
+  section: aftermath
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: The one-eyed coyote sits hunched in the dust by a still watering hole, his right arm held inside
+    his coat against his chest, a roll of clean white linen lying before him.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, sitting hunched in the dust at the edge
+    of a desert watering hole, right arm held out of sight inside his coat against his chest, exhausted, wary single
+    eye, a roll of clean white linen lying in the dust before him, the pool behind him flat and still, dry reeds,
+    late afternoon light, quiet, medium shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id028
+  jobs:
+    arthemy-house: 37372
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-chapel-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act V: the quiet chapel (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25281
+  section: chapel
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Moonlight falls through a high window into a plain adobe chapel, where a white cloth covers a tall
+    boxy shape on the altar and a thick bell rope rises from a loose coil on the floor into a dark hole in the ceiling.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, interior of a plain adobe mission chapel at night, simple
+    wooden pews, moonlight through a high narrow window, a white cloth draped over a tall boxy shape on the altar,
+    a thick bell rope lying in a loose coil on the floor and rising straight up into a dark hole in the ceiling,
+    still air, silent, low angle, vertical composition, blue moonlight, deep blue night sky, silver highlights
+  loras: &id029 []
+  jobs:
+    arthemy-house: 37373
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-chapel-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act V: the quiet chapel (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25282
+  section: chapel
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Moonlight falls through a high window into a plain adobe chapel, where a white cloth covers a tall
+    boxy shape on the altar and a thick bell rope rises from a loose coil on the floor into a dark hole in the ceiling.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, interior of a plain adobe mission chapel at night, simple
+    wooden pews, moonlight through a high narrow window, a white cloth draped over a tall boxy shape on the altar,
+    a thick bell rope lying in a loose coil on the floor and rising straight up into a dark hole in the ceiling,
+    still air, silent, low angle, vertical composition, blue moonlight, deep blue night sky, silver highlights
+  loras: *id029
+  jobs:
+    arthemy-house: 37374
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-chapel-3
+  entity: empty
+  lane: arthemy-house
+  title: 'Act V: the quiet chapel (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25283
+  section: chapel
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Moonlight falls through a high window into a plain adobe chapel, where a white cloth covers a tall
+    boxy shape on the altar and a thick bell rope rises from a loose coil on the floor into a dark hole in the ceiling.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, interior of a plain adobe mission chapel at night, simple
+    wooden pews, moonlight through a high narrow window, a white cloth draped over a tall boxy shape on the altar,
+    a thick bell rope lying in a loose coil on the floor and rising straight up into a dark hole in the ceiling,
+    still air, silent, low angle, vertical composition, blue moonlight, deep blue night sky, silver highlights
+  loras: *id029
+  jobs:
+    arthemy-house: 37375
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-hb-notices-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act II: old paper (LoRA r14, seed 1)'
+  size: 1024x1024
+  seed: 25291
+  section: hb-notices
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Curled, sun-bleached paper notices are nailed over one another on a scorched plank wall, their faded
+    ink sketches worn almost blank by the sun.
+  prompt_tags: (still life:1.4), (object only:1.3), curled sun-bleached paper notices nailed one over another on
+    a scorched plank wall, faded brown ink sketches worn almost blank by the sun, faint traces of long animal ears,
+    torn corners lifting in the hot wind, rusty nails, harsh afternoon light, close-up, harsh desert sun, dusty
+    haze, long hard shadows
+  loras: &id030 []
+  jobs:
+    arthemy-house: 37376
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-hb-notices-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act II: old paper (LoRA r14, seed 2)'
+  size: 1024x1024
+  seed: 25292
+  section: hb-notices
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Curled, sun-bleached paper notices are nailed over one another on a scorched plank wall, their faded
+    ink sketches worn almost blank by the sun.
+  prompt_tags: (still life:1.4), (object only:1.3), curled sun-bleached paper notices nailed one over another on
+    a scorched plank wall, faded brown ink sketches worn almost blank by the sun, faint traces of long animal ears,
+    torn corners lifting in the hot wind, rusty nails, harsh afternoon light, close-up, harsh desert sun, dusty
+    haze, long hard shadows
+  loras: *id030
+  jobs:
+    arthemy-house: 37377
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-hb-notices-3
+  entity: still
+  lane: arthemy-house
+  title: 'Act II: old paper (LoRA r14, seed 3)'
+  size: 1024x1024
+  seed: 25293
+  section: hb-notices
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Curled, sun-bleached paper notices are nailed over one another on a scorched plank wall, their faded
+    ink sketches worn almost blank by the sun.
+  prompt_tags: (still life:1.4), (object only:1.3), curled sun-bleached paper notices nailed one over another on
+    a scorched plank wall, faded brown ink sketches worn almost blank by the sun, faint traces of long animal ears,
+    torn corners lifting in the hot wind, rusty nails, harsh afternoon light, close-up, harsh desert sun, dusty
+    haze, long hard shadows
+  loras: *id030
+  jobs:
+    arthemy-house: 37378
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-night-flight-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act V: out before the bell (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25301
+  section: night-flight
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu crouches on top of a tall dark adobe wall at night, looking back over his shoulder at a single
+    candlelit window under a starry sky.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, crouching on top of a tall dark adobe
+    mission wall at night, one paw on the coping, looking back over his shoulder at a single candlelit window glowing
+    far behind, open moonlit desert below, starry sky, moonlight, low angle, vertical composition, full body, blue
+    moonlight, deep blue night sky, silver highlights
+  loras: &id031
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37379
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-night-flight-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act V: out before the bell (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25302
+  section: night-flight
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu crouches on top of a tall dark adobe wall at night, looking back over his shoulder at a single
+    candlelit window under a starry sky.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, crouching on top of a tall dark adobe
+    mission wall at night, one paw on the coping, looking back over his shoulder at a single candlelit window glowing
+    far behind, open moonlit desert below, starry sky, moonlight, low angle, vertical composition, full body, blue
+    moonlight, deep blue night sky, silver highlights
+  loras: *id031
+  jobs:
+    arthemy-house: 37380
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-night-flight-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act V: out before the bell (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25303
+  section: night-flight
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu crouches on top of a tall dark adobe wall at night, looking back over his shoulder at a single
+    candlelit window under a starry sky.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, crouching on top of a tall dark adobe
+    mission wall at night, one paw on the coping, looking back over his shoulder at a single candlelit window glowing
+    far behind, open moonlit desert below, starry sky, moonlight, low angle, vertical composition, full body, blue
+    moonlight, deep blue night sky, silver highlights
+  loras: *id031
+  jobs:
+    arthemy-house: 37381
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-nuns-attack-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: black habits (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25311
+  section: nuns-attack
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur
+  prompt_prose: Dark silhouettes in long black habits step out of the shadows under a stone arch, small knives glinting
+    low in their soft paws, their faces lost in shadow.
+  prompt_tags: a row of dark silhouettes in long black habits stepping out of deep shadow beneath a stone archway,
+    small knives glinting low in their soft furry paws, faces lost in shadow, pale candle glow behind them, cold
+    blue shadows, unsettling, vertical composition, wide shot, warm amber firelight, orange glow
+  loras: &id032 []
+  jobs:
+    arthemy-house: 37382
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-nuns-attack-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: black habits (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25312
+  section: nuns-attack
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur
+  prompt_prose: Dark silhouettes in long black habits step out of the shadows under a stone arch, small knives glinting
+    low in their soft paws, their faces lost in shadow.
+  prompt_tags: a row of dark silhouettes in long black habits stepping out of deep shadow beneath a stone archway,
+    small knives glinting low in their soft furry paws, faces lost in shadow, pale candle glow behind them, cold
+    blue shadows, unsettling, vertical composition, wide shot, warm amber firelight, orange glow
+  loras: *id032
+  jobs:
+    arthemy-house: 37383
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-nuns-attack-3
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: black habits (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25313
+  section: nuns-attack
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur
+  prompt_prose: Dark silhouettes in long black habits step out of the shadows under a stone arch, small knives glinting
+    low in their soft paws, their faces lost in shadow.
+  prompt_tags: a row of dark silhouettes in long black habits stepping out of deep shadow beneath a stone archway,
+    small knives glinting low in their soft furry paws, faces lost in shadow, pale candle glow behind them, cold
+    blue shadows, unsettling, vertical composition, wide shot, warm amber firelight, orange glow
+  loras: *id032
+  jobs:
+    arthemy-house: 37384
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-saloon-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act VI: the barkeep (LoRA r14, seed 1)'
+  size: 1024x1024
+  seed: 25321
+  section: saloon
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: A furry rabbit paw rests flat on a double-barrel scattergun lying across a battered saloon bar,
+    dusty bottles glinting in amber lamplight behind it.
+  prompt_tags: close-up of a furry grey-brown rabbit paw with blunt claws resting flat on a double-barrel scattergun
+    lying across a battered scrubbed saloon bar, shelves of dusty bottles behind, a single oil lamp, dim amber light,
+    heavy shadows, the bright doorway reflected in the scratched wood, tense stillness, close-up, warm amber firelight,
+    orange glow
+  loras: &id033 []
+  jobs:
+    arthemy-house: 37385
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-saloon-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act VI: the barkeep (LoRA r14, seed 2)'
+  size: 1024x1024
+  seed: 25322
+  section: saloon
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: A furry rabbit paw rests flat on a double-barrel scattergun lying across a battered saloon bar,
+    dusty bottles glinting in amber lamplight behind it.
+  prompt_tags: close-up of a furry grey-brown rabbit paw with blunt claws resting flat on a double-barrel scattergun
+    lying across a battered scrubbed saloon bar, shelves of dusty bottles behind, a single oil lamp, dim amber light,
+    heavy shadows, the bright doorway reflected in the scratched wood, tense stillness, close-up, warm amber firelight,
+    orange glow
+  loras: *id033
+  jobs:
+    arthemy-house: 37386
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-saloon-3
+  entity: creature
+  lane: arthemy-house
+  title: 'Act VI: the barkeep (LoRA r14, seed 3)'
+  size: 1024x1024
+  seed: 25323
+  section: saloon
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: A furry rabbit paw rests flat on a double-barrel scattergun lying across a battered saloon bar,
+    dusty bottles glinting in amber lamplight behind it.
+  prompt_tags: close-up of a furry grey-brown rabbit paw with blunt claws resting flat on a double-barrel scattergun
+    lying across a battered scrubbed saloon bar, shelves of dusty bottles behind, a single oil lamp, dim amber light,
+    heavy shadows, the bright doorway reflected in the scratched wood, tense stillness, close-up, warm amber firelight,
+    orange glow
+  loras: *id033
+  jobs:
+    arthemy-house: 37387
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a1-two-shadows-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act I: two shadows (LoRA r14, seed 1)'
+  size: 1344x768
+  seed: 25331
+  section: a1-two-shadows
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Seen from behind, Zuzu stands at the top of a low rise at sunset while his long, thin shadow stretches
+    far ahead across a vast white salt pan.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, standing at the top of a low rise, seen
+    from behind, looking out over a vast cracked white salt pan at sunset, the low red sun at his back, his long
+    thin shadow stretching far ahead across the salt, bare flat horizon, red and violet sky, orange light, wide
+    shot, orange sunset light, red and violet sky
+  loras: &id034
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37388
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a1-two-shadows-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act I: two shadows (LoRA r14, seed 2)'
+  size: 1344x768
+  seed: 25332
+  section: a1-two-shadows
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Seen from behind, Zuzu stands at the top of a low rise at sunset while his long, thin shadow stretches
+    far ahead across a vast white salt pan.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, standing at the top of a low rise, seen
+    from behind, looking out over a vast cracked white salt pan at sunset, the low red sun at his back, his long
+    thin shadow stretching far ahead across the salt, bare flat horizon, red and violet sky, orange light, wide
+    shot, orange sunset light, red and violet sky
+  loras: *id034
+  jobs:
+    arthemy-house: 37389
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a1-two-shadows-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act I: two shadows (LoRA r14, seed 3)'
+  size: 1344x768
+  seed: 25333
+  section: a1-two-shadows
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Seen from behind, Zuzu stands at the top of a low rise at sunset while his long, thin shadow stretches
+    far ahead across a vast white salt pan.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, standing at the top of a low rise, seen
+    from behind, looking out over a vast cracked white salt pan at sunset, the low red sun at his back, his long
+    thin shadow stretching far ahead across the salt, bare flat horizon, red and violet sky, orange light, wide
+    shot, orange sunset light, red and violet sky
+  loras: *id034
+  jobs:
+    arthemy-house: 37390
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-well-battle-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IV: five jackals (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25341
+  section: a4-well-battle
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu stands in a low ready stance with his katana drawn, guarding a narrow cleft between sandstone
+    rocks as dust blows around him in the harsh sun.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, his katana drawn in both paws, low ready
+    stance, empty scabbard on his back, guarding a narrow dark cleft between broken sandstone rocks behind him,
+    eyes narrowed toward a rock ledge above, dust blowing around him, harsh white desert sun, long hard shadows,
+    low angle, action, vertical composition, full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id035
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37391
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-well-battle-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IV: five jackals (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25342
+  section: a4-well-battle
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu stands in a low ready stance with his katana drawn, guarding a narrow cleft between sandstone
+    rocks as dust blows around him in the harsh sun.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, his katana drawn in both paws, low ready
+    stance, empty scabbard on his back, guarding a narrow dark cleft between broken sandstone rocks behind him,
+    eyes narrowed toward a rock ledge above, dust blowing around him, harsh white desert sun, long hard shadows,
+    low angle, action, vertical composition, full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id035
+  jobs:
+    arthemy-house: 37392
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a4-well-battle-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IV: five jackals (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25343
+  section: a4-well-battle
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu stands in a low ready stance with his katana drawn, guarding a narrow cleft between sandstone
+    rocks as dust blows around him in the harsh sun.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, his katana drawn in both paws, low ready
+    stance, empty scabbard on his back, guarding a narrow dark cleft between broken sandstone rocks behind him,
+    eyes narrowed toward a rock ledge above, dust blowing around him, harsh white desert sun, long hard shadows,
+    low angle, action, vertical composition, full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id035
+  jobs:
+    arthemy-house: 37393
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-fire-cells-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act VIII: through the smoke (LoRA r14, seed 1)'
+  size: 896x1152
+  seed: 25351
+  section: a8-fire-cells
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu crouches low under thick smoke in a narrow cellar corridor, a sleeve pressed over his nose,
+    drawing back the iron bolt of a plank door in orange firelight.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, crouching low under thick rolling smoke
+    in a narrow stone cellar corridor, one sleeve pressed over his nose, squinting, drawing back a heavy iron bolt
+    on a plank door, a row of bolted doors beyond, orange firelight glare, heat haze, falling sparks, vertical composition,
+    full body, warm amber firelight, orange glow
+  loras: &id036
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 37394
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-fire-cells-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act VIII: through the smoke (LoRA r14, seed 2)'
+  size: 896x1152
+  seed: 25352
+  section: a8-fire-cells
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu crouches low under thick smoke in a narrow cellar corridor, a sleeve pressed over his nose,
+    drawing back the iron bolt of a plank door in orange firelight.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, crouching low under thick rolling smoke
+    in a narrow stone cellar corridor, one sleeve pressed over his nose, squinting, drawing back a heavy iron bolt
+    on a plank door, a row of bolted doors beyond, orange firelight glare, heat haze, falling sparks, vertical composition,
+    full body, warm amber firelight, orange glow
+  loras: *id036
+  jobs:
+    arthemy-house: 37395
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-fire-cells-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act VIII: through the smoke (LoRA r14, seed 3)'
+  size: 896x1152
+  seed: 25353
+  section: a8-fire-cells
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu crouches low under thick smoke in a narrow cellar corridor, a sleeve pressed over his nose,
+    drawing back the iron bolt of a plank door in orange firelight.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag
+    trim, orange sash, dark brown trousers, wide straw hat, katana on back, crouching low under thick rolling smoke
+    in a narrow stone cellar corridor, one sleeve pressed over his nose, squinting, drawing back a heavy iron bolt
+    on a plank door, a row of bolted doors beyond, orange firelight glare, heat haze, falling sparks, vertical composition,
+    full body, warm amber firelight, orange glow
+  loras: *id036
+  jobs:
+    arthemy-house: 37396
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-fire-altar-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: smoke at the altar (LoRA r14, seed 1)'
+  size: 1024x1024
+  seed: 25361
+  section: a8-fire-altar
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In a firelit altar room full of drifting cinders, the fennec girl kneels on the stone floor holding
+    her little brother tight in her arms.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, kneeling on the stone floor of a firelit altar room,
+    holding zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged
+    paw tight in her arms, his face buried against her shoulder, wide alert eyes, drifting smoke and glowing cinders,
+    toppled candlesticks, an empty stone altar behind, orange firelight, warm amber glow, medium shot, warm amber
+    firelight, orange glow
+  loras: &id037
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37397
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-fire-altar-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: smoke at the altar (LoRA r14, seed 2)'
+  size: 1024x1024
+  seed: 25362
+  section: a8-fire-altar
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In a firelit altar room full of drifting cinders, the fennec girl kneels on the stone floor holding
+    her little brother tight in her arms.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, kneeling on the stone floor of a firelit altar room,
+    holding zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged
+    paw tight in her arms, his face buried against her shoulder, wide alert eyes, drifting smoke and glowing cinders,
+    toppled candlesticks, an empty stone altar behind, orange firelight, warm amber glow, medium shot, warm amber
+    firelight, orange glow
+  loras: *id037
+  jobs:
+    arthemy-house: 37398
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: gb14-a8-fire-altar-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: smoke at the altar (LoRA r14, seed 3)'
+  size: 1024x1024
+  seed: 25363
+  section: a8-fire-altar
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In a firelit altar room full of drifting cinders, the fennec girl kneels on the stone floor holding
+    her little brother tight in her arms.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, kneeling on the stone floor of a firelit altar room,
+    holding zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged
+    paw tight in her arms, his face buried against her shoulder, wide alert eyes, drifting smoke and glowing cinders,
+    toppled candlesticks, an empty stone altar behind, orange firelight, warm amber glow, medium shot, warm amber
+    firelight, orange glow
+  loras: *id037
+  jobs:
+    arthemy-house: 37399
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null

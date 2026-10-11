@@ -141,5 +141,8 @@ game, which have their own stylized looks.
 | Conductor art ledgers | comic issue ledgers, gamebook, Shifting Lands | `projects/comic-creator/cast-loras/zuzu-koala-assassin.yaml`, read by `scripts/enqueue_art_requests.py` for any ledger with `series: zuzu-koala-assassin` |
 
 A LoRA rides only on renders whose own prompt names its character, by trigger or match word. One character gets
-0.8; two or more get 0.6 each. A ledger opts out with `cast_loras: false`, and an explicit `loras:` wins. When a LoRA
+0.8; two or more get 0.6 each, except that Zuzu and the abbess are `stacks: false`. The gamebook's ROUND-12 test
+(2026-10-11) found that Zuzu fuses with any second LoRA (two koalas, his hat on the fennec) and that the abbess gets a
+human face beside anyone. A render naming either of them with another character therefore gets no default LoRAs; give
+it an explicit list, or keep the frame to one figure. A ledger opts out with `cast_loras: false`, and an explicit `loras:` wins. When a LoRA
 is retrained, update both lists.

@@ -7,7 +7,10 @@
 # Keep the two in step when a LoRA is retrained (t-023, coyote v2).
 #
 # A LoRA rides on a render only when the subject's own prompt names its character (its trigger, or a `match` term as
-# a whole word). One character gets `strength`; two or more each get 0.75 of it. Only SDXL-family lanes (comfy
+# a whole word). One character gets `strength`; two or more each get 0.75 of it. `stacks: false` marks a character
+# whose LoRA fuses with any second one: zuzu-gamebook ROUND-12 (2026-10-11, ArtJobs 37005-37024) drew two koalas, his
+# hat on the fennec and fennec ears on him whenever Zuzu shared a render, and gave the abbess a human face beside
+# anyone. A render naming such a character with anyone else gets no LoRAs at all. Only SDXL-family lanes (comfy
 # engine, Illustrious/NoobAI checkpoints) use them. A ledger opts out with `cast_loras: false`, and a subject or lane
 # with its own `loras:` keeps them.
 lane_checkpoint_prefixes: [Illustrious/, NoobAI/]
@@ -18,6 +21,7 @@ cast:
   resource_id: 4593
   trigger: zuzukoala
   strength: 0.8
+  stacks: false
   match: [zuzu, koala]
 - key: sister
   resource_id: 4583
@@ -38,4 +42,5 @@ cast:
   resource_id: 4595
   trigger: zkaabbess
   strength: 0.8
+  stacks: false
   match: [abbess, mother superior, head nun]

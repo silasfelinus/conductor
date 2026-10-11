@@ -416,17 +416,17 @@ tasks:
   - id: t-022
     milestone: m6
     title: "16-bit pass for Kind Pinball's 2D fallback table (devices without WebGL)"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 20261011T211248Z-kr-arcade-t-022-3m8n
+    claimed_at: '2026-10-11T21:12:48.791Z'
+    updated: '2026-10-11T21:16:21.760Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Follow-up from t-021 (2026-10-10). The hall plays Kind Pinball as the WebGL 3D table;
-      utils/arcade/games/kindPinball.ts (Canvas 2D, ~2300 lines) is only served where WebGL is
-      missing, and still has the flat early look. Give it the DESIGN-BRIEF.md "16-bit style bar"
-      render pass on utils/arcade/snes.ts, render only, the same way the other 26 cabinets were
-      done (the session's brief and screenshot harness are described in t-021's notes). Low
-      priority: few players ever see this table. Then set kind-pinball's games.yaml row
-      `style: snes` and close m6.
+    note: |-
+      Follow-up from t-021 (2026-10-10). The hall plays Kind Pinball as the WebGL 3D table; utils/arcade/games/kindPinball.ts (Canvas 2D, ~2300 lines) is only served where WebGL is missing, and still has the flat early look. Give it the DESIGN-BRIEF.md "16-bit style bar" render pass on utils/arcade/snes.ts, render only, the same way the other 26 cabinets were done (the session's brief and screenshot harness are described in t-021's notes). Low priority: few players ever see this table. Then set kind-pinball's games.yaml row `style: snes` and close m6.
+
+      2026-10-11 PT: SNES render-only pass for the Canvas pinball fallback is committed on worker/kr-arcade-t-022-20261011T211248Z-3m8n, alongside the games.yaml style marker. Companion PRs will follow after this review transition is verified.
 
   - id: t-023
     milestone: m7
@@ -629,7 +629,7 @@ tasks:
   - id: t-035
     milestone: m8
     title: "Rescue Rally depth slice 1: Twin-stick and teeth"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: >-
@@ -639,6 +639,10 @@ tasks:
       Code: kind_robots utils/arcade/games/ (registry slug rescue-rally). Silas, 2026-10-11: "I need an
       assessment done of the other arcade games. I want the same level of quality improvements, they should
       not just be thin veneers of the old games. But newer, better, even more awesome."
+    owner: worker
+    claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
+    claimed_at: '2026-10-11T20:41:16Z'
+    updated: '2026-10-11T20:41:16Z'
 
   - id: t-036
     milestone: m8
@@ -690,7 +694,7 @@ tasks:
   - id: t-039
     milestone: m8
     title: "Battery Maze depth slice 1: The rules engine and the Friend Train"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: >-
@@ -701,6 +705,10 @@ tasks:
       2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
       improvements, they should not just be thin veneers of the old games. But newer, better, even more
       awesome."
+    owner: worker
+    claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
+    claimed_at: '2026-10-11T20:41:19Z'
+    updated: '2026-10-11T20:41:19Z'
 
   - id: t-040
     milestone: m8
@@ -752,7 +760,7 @@ tasks:
   - id: t-043
     milestone: m8
     title: "Sink Suds depth slice 1: The basin engine and size-as-ammunition"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: >-
@@ -762,6 +770,10 @@ tasks:
       top applies. Code: kind_robots utils/arcade/games/ (registry slug sink-suds). Silas, 2026-10-11: "I need
       an assessment done of the other arcade games. I want the same level of quality improvements, they should
       not just be thin veneers of the old games. But newer, better, even more awesome."
+    owner: worker
+    claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
+    claimed_at: '2026-10-11T20:41:22Z'
+    updated: '2026-10-11T20:41:22Z'
 
   - id: t-044
     milestone: m8
@@ -812,7 +824,7 @@ tasks:
   - id: t-047
     milestone: m8
     title: "Butterfly Joust depth slice 1: Party and pond"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: >-
@@ -822,6 +834,10 @@ tasks:
       Code: kind_robots utils/arcade/games/ (registry slug butterfly-joust). Silas, 2026-10-11: "I need an
       assessment done of the other arcade games. I want the same level of quality improvements, they should
       not just be thin veneers of the old games. But newer, better, even more awesome."
+    owner: worker
+    claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
+    claimed_at: '2026-10-11T20:41:24Z'
+    updated: '2026-10-11T20:41:24Z'
 
   - id: t-048
     milestone: m8
@@ -874,7 +890,7 @@ tasks:
   - id: t-051
     milestone: m8
     title: "Kindness Gauntlet depth slice 1: A menagerie"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: >-
@@ -884,6 +900,10 @@ tasks:
       Code: kind_robots utils/arcade/games/ (registry slug kindness-gauntlet). Silas, 2026-10-11: "I need an
       assessment done of the other arcade games. I want the same level of quality improvements, they should
       not just be thin veneers of the old games. But newer, better, even more awesome."
+    owner: worker
+    claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
+    claimed_at: '2026-10-11T20:41:26Z'
+    updated: '2026-10-11T20:41:26Z'
 
   - id: t-052
     milestone: m8

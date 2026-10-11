@@ -370,10 +370,16 @@ def test_series_cast_loras_ride_only_on_subjects_that_name_the_character():
     lane = {"key": "a", "engine": "comfy", "prompt": "tags", "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors"}
     zuzu = {"key": "z", "size": "832x1216", "prompt_tags": "anthro koala, straw hat"}
     assert enq.build_request(ledger, lane, zuzu)["loras"] == [{"resourceId": 4593, "strength": 0.8}]
-    pair = {**zuzu, "prompt_tags": "the koala bandages the coyote"}
-    assert enq.build_request(ledger, lane, pair)["loras"] == [
-        {"resourceId": 4593, "strength": 0.6},
-        {"resourceId": 4578, "strength": 0.6},
+    siblings = {**zuzu, "prompt_tags": "the older sister carries the toddler"}
+    assert enq.build_request(ledger, lane, siblings)["loras"] == [
+        {"resourceId": 4583, "strength": 0.6},
+        {"resourceId": 4588, "strength": 0.6},
+    ]
+    # Zuzu and the abbess fuse with any second LoRA (stacks: false), so a shared frame gets none.
+    assert "loras" not in enq.build_request(ledger, lane, {**zuzu, "prompt_tags": "the koala bandages the coyote"})
+    assert "loras" not in enq.build_request(ledger, lane, {**zuzu, "prompt_tags": "the abbess grips the sister"})
+    assert enq.build_request(ledger, lane, {**zuzu, "prompt_tags": "the abbess at the gate"})["loras"] == [
+        {"resourceId": 4595, "strength": 0.8}
     ]
     assert "loras" not in enq.build_request(ledger, lane, {**zuzu, "prompt_tags": "empty desert, coyotes"})
     assert "loras" not in enq.build_request(ledger, lane, {**zuzu, "prompt_tags": "a crowd of otter nuns"})

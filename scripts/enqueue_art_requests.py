@@ -88,6 +88,8 @@ def select_cast_loras(cast, text):
 
     Mirrors Kind Robots' selectComicCastLoras (utils/comicLanes.ts): a whole-word hit on the trigger or a match
     term; one character at its strength, two or more at ``shared_scale`` of theirs, at most ``max_per_render``.
+    A character marked ``stacks: false`` fuses with any second LoRA (zuzu-gamebook ROUND-12), so a render that names
+    it alongside another character gets none: the prompt carries the scene, as it did before the LoRAs.
     """
     haystack = str(text or "").lower()
     if not cast or not haystack.strip():
@@ -97,6 +99,8 @@ def select_cast_loras(cast, text):
         for entry in cast.get("cast") or []
         if any(_mentions(haystack, term) for term in [entry.get("trigger"), *(entry.get("match") or [])] if term)
     ][: int(cast.get("max_per_render", 4))]
+    if len(hits) > 1 and any(entry.get("stacks") is False for entry in hits):
+        return []
     scale = float(cast.get("shared_scale", 0.75)) if len(hits) > 1 else 1.0
     return [
         {"resource_id": int(entry["resource_id"]), "strength": round(float(entry.get("strength", 0.8)) * scale, 2)}
