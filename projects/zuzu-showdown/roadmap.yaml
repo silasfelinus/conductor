@@ -768,7 +768,7 @@ tasks:
   - id: t-024
     milestone: m5
     title: "Balance and feel pass, plus phone/tablet/desktop check"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -782,9 +782,19 @@ tasks:
 
       READY 2026-10-11 (PT): t-021 is done (closed in this PR), so every dependency is
       satisfied and the resolver's promotion is applied here.
-    updated: '2026-10-11T20:45:49Z'
+
+      DONE 2026-10-11 (PT): balance (kind_robots#3541, fighters.yaml via conductor#5998): a
+      720-match Showdown CPU round robin went from 16-79% to 43-59% for every fighter, half of
+      it a CPU fix (no command grabs out of reach, no taunts up close, reloads when empty).
+      Still lopsided, for a later pass: Storm Crow vs the Abbess, the Coyote vs Old Komodo,
+      River Croc vs the Abbess. Device pass (kind_robots#3549): phone portrait and landscape,
+      tablet and desktop render with no overflow and touch controls on touch screens; the one
+      blocker, a sideways phone mid-fight running off the screen, is fixed. Gamepads were not
+      tested on hardware.
+    updated: '2026-10-11T22:07:59Z'
     claimed_by: 2026-10-11T10:20:00Z-zs-t024
     claimed_at: '2026-10-11T20:45:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#3541'
 
   - id: t-025
     milestone: m5
