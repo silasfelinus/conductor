@@ -853,7 +853,7 @@ tasks:
   - id: t-029
     milestone: m7
     title: "Prize Show Panic depth slice 4: Episodes 2-3 -- Cooking Showdown and Countdown Concert, their sets, mid-bosses and bosses"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on:
@@ -873,15 +873,22 @@ tasks:
       (district/episode/room definitions), not branches in the update loop. Verify: test:arcade-engine
       plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR,
       and a pilot probe that shows runs still end.
+
+      Merged as kind_robots#3522: Episode 2 Cooking Showdown and Episode 3 Countdown Concert
+      with their sets, hazards (hot plates, flour clouds, conveyors; bass rings, strobes, mosh
+      pits) and music loops; bosses the Big Wobble, the Pie Cart, the Souffle Supreme, the
+      Mosh Mascot and the Jumbotron; LENS now joins on Episode 3. Real-run bound raised to 75
+      min for three episodes.
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T14:20:56Z'
-    updated: '2026-10-11T14:20:56Z'
+    updated: '2026-10-11T15:03:25Z'
+    implementation_pr: 'silasfelinus/kind_robots#3522'
 
   - id: t-032
     milestone: m7
     title: "Prize Show Panic depth slice 5: Episode 4 Galaxy Parade, the Live Finale, the Grand Prize Vault, endings and save/resume"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-029
