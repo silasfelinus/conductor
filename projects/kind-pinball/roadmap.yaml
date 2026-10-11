@@ -961,7 +961,7 @@ tasks:
   - id: t-032
     milestone: m7
     title: "A darker, more dramatic grade: the lamps and lanterns carry the light, as under glass"
-    status: claimed
+    status: done
     depends_on: [t-030]
     owner: worker
     claimed_by: 2026-10-11T0300-kp-t032-grade
@@ -975,15 +975,23 @@ tasks:
       dim and a radial falloff to the rails), keep the inserts and engine marks crisp on top, and
       tint the cabinet's side art so it frames the table rather than outshining it. Visual only:
       no physics or rules change. Screenshot against t030-desk.jpg.
-    updated: '2026-10-11T03:10:00Z'
+
+      Shipped in kind_robots#3489 (merged). The generated playfield and Ridge art are graded
+      once they load: a multiply dim (#d6cde2) over each region, then a radial falloff toward
+      the rails (#5a4a72 at the edge). The inserts and engine marks paint on top, ungraded.
+      The cabinet's side art (the backglass painting) is tinted #8f86a3 once it loads, so the
+      sides frame the table. The lamps, lanterns and flashers now carry the light the way the
+      mockup's do. Visual only; physics and rules are unchanged. Screenshot:
+      screenshots/t032-desk.jpg.
+    updated: '2026-10-11T03:41:25Z'
     implementation_pr: 'silasfelinus/kind_robots#3489'
 
   - id: t-033
     milestone: m7
     title: "More inserts and metal lane guides: chevron arrow runs into every shot, steel guide hardware"
-    status: ready
+    status: claimed
     depends_on: [t-030]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -994,6 +1002,8 @@ tasks:
       chrome bolts and screw heads. The shot map, colliders and physics stay unchanged: new
       inserts are flat lamps under the playfield clear coat, and guides only dress existing walls.
       Tests cover a chevron run per shot, and that each run follows its shot's rule state.
+    updated: '2026-10-11T03:41:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#3491'
 
   - id: t-034
     milestone: m7
