@@ -1,7 +1,7 @@
 # Pitch: Bubble Wall Breaker
 date: 2026-10-11
 project-target: kr-arcade
-status: awaiting-silas
+status: rejected
 
 ## The idea
 An arcade cabinet riffing on Breakout's paddle-and-ball brick clearing, where a bouncy glow-orb smashes a wall of soap-bubble bricks above a robot-held paddle. Each level adds tougher multi-hit bubbles, falling power-up drops and a faster orb with a score multiplier for long rallies.
