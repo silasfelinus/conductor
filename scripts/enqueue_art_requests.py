@@ -94,6 +94,13 @@ def build_request(ledger, lane, subject, source_image=None):
         for field in ("steps", "guidance"):
             if lane.get(field):
                 body[field] = lane[field]
+    # Kind Robots LoRA resources (comic-creator t-016): subject first, then lane. The enqueue route resolves the
+    # resource ids to files and appends each LoRA's trigger words itself.
+    loras = subject.get("loras", lane.get("loras"))
+    if lane["engine"] == "comfy" and loras:
+        body["loras"] = [
+            {"resourceId": int(lora["resource_id"]), "strength": float(lora.get("strength", 0.8))} for lora in loras
+        ]
     if lane["engine"] == "comfy" and subject.get("negative"):
         body["negativePrompt"] = " ".join(str(subject["negative"]).split())
     for field, key in (("projectSlug", "project_slug"), ("designer", "designer")):

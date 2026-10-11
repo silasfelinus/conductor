@@ -257,11 +257,11 @@ tasks:
 - id: t-016
   milestone: m3
   title: Character LoRA datasets for Zuzu and the fennec siblings
-  status: needs-human
+  status: done
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-10T09:34:18Z'
+  updated: '2026-10-11T11:19:22Z'
   depends_on:
   - t-015
   note: >-
@@ -297,6 +297,12 @@ tasks:
 
     Silas 2026-10-10 in session: train_all.ps1 is on his todo for tonight (runs overnight
     when he goes to bed). Stays needs-human until the LoRAs land in Lora/import.
+
+    2026-10-11: done. Silas trained all five sets on Ferngrotto (train_all.ps1, CUDA, ~1 h
+    each); registered as private KR LoRA resources 4571-4595. Tested (LORA-TEST.yaml, jobs
+    36909-36942): final epoch is the pick for all five and four hold their locked design;
+    the coyote LoRA ignores the stump, follow-up t-023. Picks and verdicts in issues/zuzu-
+    koala-assassin-01/CAST-PICKS.md.
   approved_by_human: true
   gate_human: false
   gate_reason: physical-access
@@ -496,3 +502,21 @@ tasks:
     (scripts/import_comic_studio.py) has never run. Add an Arthemy lane to utils/comicLanes.ts as the
     default primary (FurryToonMix stays as a lane), then run the import so the series exists with
     Arthemy as its house lane and BOOK-ONE.md as the issue notes.
+- id: t-023
+  milestone: m3
+  title: 'Coyote LoRA v2: the stump at every angle'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-11T11:30:00Z'
+  depends_on:
+  - t-016
+  note: >-
+    The v1 coyote LoRA (zkacoyote, resource 4578) is on-model, but it always draws his right hand. Only 2 of its 19
+    training images showed the stump, and prompt weighting breaks his colours instead
+    (CAST-PICKS.md, 2026-10-11). Make stump versions of the eight locked coyote angles with the masked Kontext
+    bandage edit (ANGLES-COYOTE r18 -d recipe), screen them, and caption them "missing right hand, bandaged stump".
+    Add them to LORA-SETS.yaml as a zkacoyote v2 set, rebuild with build_lora_dataset.py, and send the zip.
+    Silas trains it with train_all.ps1 -Only zkacoyote.
+
