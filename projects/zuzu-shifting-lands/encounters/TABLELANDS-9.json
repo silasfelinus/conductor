@@ -1,0 +1,845 @@
+{
+  "schema_version": 1,
+  "project": "zuzu-shifting-lands",
+  "source_world_manifest": {
+    "path": "projects/zuzu-shifting-lands/WORLD-DECKS.json",
+    "schema_version": 2
+  },
+  "status": "draft-not-imported",
+  "rules": {
+    "encounters_per_location_min": 3,
+    "selection": "seeded-weighted-eligible-without-replacement",
+    "seed_persisted": true,
+    "revisit_policy": "same-recorded-encounter-no-free-reroll",
+    "dice": "2d6+skill+modifier-vs-difficulty"
+  },
+  "locations": [
+    {
+      "location_id": "quarry",
+      "encounter_ids": [
+        "hammer-under-the-stone",
+        "the-empty-pay-cart",
+        "the-glass-vein"
+      ]
+    },
+    {
+      "location_id": "canyon-trail",
+      "encounter_ids": [
+        "the-watchful-overhang",
+        "the-banner-in-the-wind",
+        "the-toll-without-a-keeper"
+      ]
+    },
+    {
+      "location_id": "canyon-camp",
+      "encounter_ids": [
+        "one-place-by-the-fire",
+        "the-map-in-ashes",
+        "the-night-watch-debt"
+      ]
+    }
+  ],
+  "encounters": [
+    {
+      "id": "hammer-under-the-stone",
+      "location_id": "quarry",
+      "title": "Hammer Under Stone",
+      "flavor_text": "The abandoned quarry is not entirely abandoned. A lone mason sounds the rock with an iron hammer and refuses to work near a freshly cut seam. He says someone reopened the quarry at night without marking the supports.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic ink-wash Weird West and Edo scene at quarry: A muscular mole mason in a dusty vest carrying an iron hammer; The abandoned quarry is not entirely abandoned. Strong silhouettes and believable canyon geology, no text or logos.",
+        "cast": [
+          {
+            "identity": "hammer-under-the-stone-cast",
+            "species": "mole",
+            "occupation": "quarry mason",
+            "visual_description": "A muscular mole mason in a dusty vest carrying an iron hammer",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "brace-the-loosened-wall",
+          "label": "Brace the loosened wall",
+          "intent": "Zuzu chooses to brace the loosened wall rather than ignore the situation and its people.",
+          "risk_hint": "Risk a steel check against 9; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "Zuzu wedges a support beneath the cracked shelf and earns a safe passage and a mason's flask.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "hammer-under-the-stone-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The stone slips before the brace holds, bruising Zuzu's ribs and burying the easy road.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "hammer-under-the-stone-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "inspect-the-fresh-cuts",
+          "label": "Inspect the fresh cuts",
+          "intent": "Zuzu chooses to inspect the fresh cuts rather than ignore the situation and its people.",
+          "risk_hint": "Risk a insight check against 10; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Chisel marks point toward a hidden side tunnel, revealing that the recent work was deliberate.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "hammer-under-the-stone-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Loose shale gives away Zuzu's position to unseen miners, forcing a painful retreat.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "hammer-under-the-stone-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Fixed visual cast: mole quarry mason. This original scene is never constructed by independently rolling species and job; moral alignment comes from actions, not species."
+    },
+    {
+      "id": "the-empty-pay-cart",
+      "location_id": "quarry",
+      "title": "The Empty Pay Cart",
+      "flavor_text": "An accountant counts pebbles into an empty ore cart where wages should have been. Workers have vanished, but their names remain on a pay sheet pinned beneath his hoof. He offers Zuzu a share to stay quiet.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic ink-wash Weird West and Edo scene at quarry: A tusked boar accountant in a striped waistcoat holding a cracked abacus; An accountant counts pebbles into an empty ore cart where wages should have been. Strong silhouettes and believable canyon geology, no text or logos.",
+        "cast": [
+          {
+            "identity": "the-empty-pay-cart-cast",
+            "species": "boar",
+            "occupation": "quarry accountant",
+            "visual_description": "A tusked boar accountant in a striped waistcoat holding a cracked abacus",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "refuse-the-crooked-bargain",
+          "label": "Refuse the crooked bargain",
+          "intent": "Zuzu chooses to refuse the crooked bargain rather than ignore the situation and its people.",
+          "risk_hint": "Risk a resolve check against 9; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The accountant relents and shows Zuzu the tunnel where the missing workers last reported.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-empty-pay-cart-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The accountant signals unseen guards; Zuzu escapes through falling stone at the cost of strength.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-empty-pay-cart-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "read-the-pay-sheet-aloud",
+          "label": "Read the pay sheet aloud",
+          "intent": "Zuzu chooses to read the pay sheet aloud rather than ignore the situation and its people.",
+          "risk_hint": "Risk a bearing check against 10; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Surviving workers gather, recognize their names, and reclaim the cart and its supplies.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-empty-pay-cart-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The ledger is snatched away and Zuzu is driven into a narrow, dangerous cut.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-empty-pay-cart-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Fixed visual cast: boar quarry accountant. This original scene is never constructed by independently rolling species and job; moral alignment comes from actions, not species."
+    },
+    {
+      "id": "the-glass-vein",
+      "location_id": "quarry",
+      "title": "The Glass Vein",
+      "flavor_text": "A collector works alone at a seam of black glass that sings when struck. She knows the material can cut skin without drawing blood at first. She asks for a steady hand to remove a fragment for the road.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic ink-wash Weird West and Edo scene at quarry: A desert lizard collector in patched gloves carrying a padded tray of black glass; A collector works alone at a seam of black glass that sings when struck. Strong silhouettes and believable canyon geology, no text or logos.",
+        "cast": [
+          {
+            "identity": "the-glass-vein-cast",
+            "species": "lizard",
+            "occupation": "stone collector",
+            "visual_description": "A desert lizard collector in patched gloves carrying a padded tray of black glass",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "cut-a-safe-sample",
+          "label": "Cut a safe sample",
+          "intent": "Zuzu chooses to cut a safe sample rather than ignore the situation and its people.",
+          "risk_hint": "Risk a wits check against 9; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "Zuzu eases a blunt shard free, and the collector marks a sheltered exit in gratitude.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-glass-vein-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The brittle seam fractures; shards scatter against Zuzu's forearms before he can withdraw.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-glass-vein-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "carry-the-collector-s-load",
+          "label": "Carry the collector's load",
+          "intent": "Zuzu chooses to carry the collector's load rather than ignore the situation and its people.",
+          "risk_hint": "Risk a steel check against 8; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 8
+          },
+          "success": {
+            "text": "They move the tray without breaking a piece and share a meal beyond the quarry rim.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-glass-vein-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A strap snaps on the climb, leaving Zuzu sore from saving the heavy tray.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-glass-vein-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Fixed visual cast: lizard stone collector. This original scene is never constructed by independently rolling species and job; moral alignment comes from actions, not species."
+    },
+    {
+      "id": "the-watchful-overhang",
+      "location_id": "canyon-trail",
+      "title": "The Watchful Overhang",
+      "flavor_text": "An ibex scout watches an overhang shed dust with every breeze. She warns that the canyon wall is moving faster than the weather can explain. Travelers behind Zuzu are already entering the shadow.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic ink-wash Weird West and Edo scene at canyon trail: A sure-footed ibex scout with a bandaged horn and a braided rope; An ibex scout watches an overhang shed dust with every breeze. Strong silhouettes and believable canyon geology, no text or logos.",
+        "cast": [
+          {
+            "identity": "the-watchful-overhang-cast",
+            "species": "ibex",
+            "occupation": "trail scout",
+            "visual_description": "A sure-footed ibex scout with a bandaged horn and a braided rope",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "call-the-travelers-back",
+          "label": "Call the travelers back",
+          "intent": "Zuzu chooses to call the travelers back rather than ignore the situation and its people.",
+          "risk_hint": "Risk a bearing check against 9; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The caravan heeds Zuzu, and the scout leads everyone around the crumbling shelf.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-watchful-overhang-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "His warning comes too late; flying gravel bruises him as he shields the last traveler.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-watchful-overhang-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "test-the-ledge-alone",
+          "label": "Test the ledge alone",
+          "intent": "Zuzu chooses to test the ledge alone rather than ignore the situation and its people.",
+          "risk_hint": "Risk a awareness check against 11; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu spots the hollow stone beneath the path and marks each safe foothold for those behind.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-watchful-overhang-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A loose slab pitches him toward the ravine; the rope catches him but tears his hands.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-watchful-overhang-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Fixed visual cast: ibex trail scout. This original scene is never constructed by independently rolling species and job; moral alignment comes from actions, not species."
+    },
+    {
+      "id": "the-banner-in-the-wind",
+      "location_id": "canyon-trail",
+      "title": "The Banner in the Wind",
+      "flavor_text": "A torn banner hangs above a narrow bridge, tied where no courier would willingly stop. A captain searches for her missing rider and insists the pattern is a distress signal, not a territorial warning.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic ink-wash Weird West and Edo scene at canyon trail: A weathered eagle courier captain holding a torn signaling banner; A torn banner hangs above a narrow bridge, tied where no courier would willingly stop. Strong silhouettes and believable canyon geology, no text or logos.",
+        "cast": [
+          {
+            "identity": "the-banner-in-the-wind-cast",
+            "species": "eagle",
+            "occupation": "courier captain",
+            "visual_description": "A weathered eagle courier captain holding a torn signaling banner",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "decode-the-banner-knots",
+          "label": "Decode the banner knots",
+          "intent": "Zuzu chooses to decode the banner knots rather than ignore the situation and its people.",
+          "risk_hint": "Risk a wits check against 10; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "The knots describe an alternate bridge, and the captain shares her last trail ration.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-banner-in-the-wind-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The wind twists the fabric into nonsense and Zuzu takes a long, exhausting detour.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-banner-in-the-wind-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "search-below-the-bridge",
+          "label": "Search below the bridge",
+          "intent": "Zuzu chooses to search below the bridge rather than ignore the situation and its people.",
+          "risk_hint": "Risk a awareness check against 11; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu finds the missing courier alive beneath the span and helps her climb to safety.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-banner-in-the-wind-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A false foothold sends Zuzu sliding into a thicket of thorns above the riverbed.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-banner-in-the-wind-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Fixed visual cast: eagle courier captain. This original scene is never constructed by independently rolling species and job; moral alignment comes from actions, not species."
+    },
+    {
+      "id": "the-toll-without-a-keeper",
+      "location_id": "canyon-trail",
+      "title": "The Toll Without a Keeper",
+      "flavor_text": "A toll rope hangs across the canyon trail, though no guard stands behind it. The enforcer watches from the rocks, waiting to see who pays into an unattended box. Her spear has been deliberately blunted.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic ink-wash Weird West and Edo scene at canyon trail: A scarred hyena road enforcer with a wooden tally board and a broken spear; A toll rope hangs across the canyon trail, though no guard stands behind it. Strong silhouettes and believable canyon geology, no text or logos.",
+        "cast": [
+          {
+            "identity": "the-toll-without-a-keeper-cast",
+            "species": "hyena",
+            "occupation": "road enforcer",
+            "visual_description": "A scarred hyena road enforcer with a wooden tally board and a broken spear",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "challenge-the-false-toll",
+          "label": "Challenge the false toll",
+          "intent": "Zuzu chooses to challenge the false toll rather than ignore the situation and its people.",
+          "risk_hint": "Risk a steel check against 10; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Zuzu cuts the rope without striking her, and the shaken enforcer abandons the extortion.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-toll-without-a-keeper-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The enforcer's hidden partner catches Zuzu off guard, and he retreats bruised.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-toll-without-a-keeper-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "offer-a-fair-trade",
+          "label": "Offer a fair trade",
+          "intent": "Zuzu chooses to offer a fair trade rather than ignore the situation and its people.",
+          "risk_hint": "Risk a bearing check against 9; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "She accepts provisions for a reliable warning about the trail ahead and lets the party pass.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "the-toll-without-a-keeper-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "She takes the payment and sends Zuzu toward a dead-end ledge.",
+            "hp_delta": -1,
+            "provisions_delta": -1,
+            "add_flags": [
+              "the-toll-without-a-keeper-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Fixed visual cast: hyena road enforcer. This original scene is never constructed by independently rolling species and job; moral alignment comes from actions, not species."
+    },
+    {
+      "id": "one-place-by-the-fire",
+      "location_id": "canyon-camp",
+      "title": "One Place by the Fire",
+      "flavor_text": "A camp has one empty place by its fire and a rule against asking why. The host invites Zuzu to sit, while two exhausted travelers stare into their bowls. Somebody has scraped a name off the signboard.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic ink-wash Weird West and Edo scene at canyon camp: An elk camp host in a woven cloak stirring stew beside a small fire; A camp has one empty place by its fire and a rule against asking why. Strong silhouettes and believable canyon geology, no text or logos.",
+        "cast": [
+          {
+            "identity": "one-place-by-the-fire-cast",
+            "species": "elk",
+            "occupation": "camp host",
+            "visual_description": "An elk camp host in a woven cloak stirring stew beside a small fire",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "accept-the-offered-place",
+          "label": "Accept the offered place",
+          "intent": "Zuzu chooses to accept the offered place rather than ignore the situation and its people.",
+          "risk_hint": "Risk a insight check against 9; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "Zuzu notices the missing traveler left by choice, and the host shares a quiet meal and the safer road.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "one-place-by-the-fire-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "An argument erupts over the unspoken rule, and Zuzu loses sleep keeping watch.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "one-place-by-the-fire-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "ask-about-the-missing-name",
+          "label": "Ask about the missing name",
+          "intent": "Zuzu chooses to ask about the missing name rather than ignore the situation and its people.",
+          "risk_hint": "Risk a bearing check against 10; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "The host tells the truth about a vanished guide and gives Zuzu a route around the gorge.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "one-place-by-the-fire-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The question divides the camp; Zuzu leaves hungry under hostile stares.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "one-place-by-the-fire-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Fixed visual cast: elk camp host. This original scene is never constructed by independently rolling species and job; moral alignment comes from actions, not species."
+    },
+    {
+      "id": "the-map-in-ashes",
+      "location_id": "canyon-camp",
+      "title": "The Map in Ashes",
+      "flavor_text": "An archivist feeds torn maps into the fire one corner at a time. She claims every version led a traveler into a trap, but one fragment still bears a recognizable canyon notch. Zuzu has only moments before it burns.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic ink-wash Weird West and Edo scene at canyon camp: A raccoon archivist with ink-stained gloves guarding a half-burned map; An archivist feeds torn maps into the fire one corner at a time. Strong silhouettes and believable canyon geology, no text or logos.",
+        "cast": [
+          {
+            "identity": "the-map-in-ashes-cast",
+            "species": "raccoon",
+            "occupation": "wandering archivist",
+            "visual_description": "A raccoon archivist with ink-stained gloves guarding a half-burned map",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "rescue-the-marked-fragment",
+          "label": "Rescue the marked fragment",
+          "intent": "Zuzu chooses to rescue the marked fragment rather than ignore the situation and its people.",
+          "risk_hint": "Risk a awareness check against 9; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "Zuzu lifts the fragment intact and learns which canyon path was deliberately mislabeled.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-map-in-ashes-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Hot embers burn his wrist, and the important corner collapses into ash.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-map-in-ashes-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "persuade-her-to-stop",
+          "label": "Persuade her to stop",
+          "intent": "Zuzu chooses to persuade her to stop rather than ignore the situation and its people.",
+          "risk_hint": "Risk a bearing check against 9; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The archivist admits her fear and shares an untouched chart with the safe camp marked.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-map-in-ashes-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "She refuses and throws the rest into the fire, leaving Zuzu without guidance.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-map-in-ashes-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Fixed visual cast: raccoon wandering archivist. This original scene is never constructed by independently rolling species and job; moral alignment comes from actions, not species."
+    },
+    {
+      "id": "the-night-watch-debt",
+      "location_id": "canyon-camp",
+      "title": "The Night Watch Debt",
+      "flavor_text": "A retired sentry offers to watch the camp in exchange for one night's sleep. His lantern has no lens, yet he walks the perimeter with practiced care. At each circuit he stops to count unfamiliar footsteps.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic ink-wash Weird West and Edo scene at canyon camp: An older wolf sentry with a patched uniform and a lantern missing its lens; A retired sentry offers to watch the camp in exchange for one night's sleep. Strong silhouettes and believable canyon geology, no text or logos.",
+        "cast": [
+          {
+            "identity": "the-night-watch-debt-cast",
+            "species": "wolf",
+            "occupation": "retired sentry",
+            "visual_description": "An older wolf sentry with a patched uniform and a lantern missing its lens",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "take-the-first-watch",
+          "label": "Take the first watch",
+          "intent": "Zuzu chooses to take the first watch rather than ignore the situation and its people.",
+          "risk_hint": "Risk a resolve check against 10; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Zuzu catches a creeping thief before the supplies vanish and earns the sentry's respect.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-night-watch-debt-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Exhaustion blurs the darkness; thieves steal the camp's food while Zuzu fights to stay upright.",
+            "hp_delta": -1,
+            "provisions_delta": -1,
+            "add_flags": [
+              "the-night-watch-debt-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "follow-the-counted-footsteps",
+          "label": "Follow the counted footsteps",
+          "intent": "Zuzu chooses to follow the counted footsteps rather than ignore the situation and its people.",
+          "risk_hint": "Risk a awareness check against 10; failure may cost provisions or health.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "The tracks reveal a harmless lost pilgrim, whom Zuzu guides back before panic spreads.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-night-watch-debt-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Zuzu mistakes echoes for steps, wandering into a cold gully until morning.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-night-watch-debt-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Fixed visual cast: wolf retired sentry. This original scene is never constructed by independently rolling species and job; moral alignment comes from actions, not species."
+    }
+  ]
+}
