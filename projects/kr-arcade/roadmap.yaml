@@ -923,7 +923,7 @@ tasks:
   - id: t-033
     milestone: m7
     title: "Prize Show Panic depth slice 6: commercial-break mini-games, four contestants and co-op for up to four"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-032
@@ -940,10 +940,16 @@ tasks:
       mechanics). Content is data (district/episode/room definitions), not branches in the update loop.
       Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and
       HD screenshots on the PR, and a pilot probe that shows runs still end.
+
+      Merged as kind_robots#3525: four contestants (Sparkle, Zippy, Boomer, Glimmer) with a
+      pick card; co-op for up to four seats (maxPlayers 4; twin-stick stays solo, co-op seats
+      aim where they move or B-lock); four commercial-break mini-games between episodes and
+      mid-finale; team scaling with a 250M clamp; the season ends after its third rerun.
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T15:45:07Z'
-    updated: '2026-10-11T15:45:07Z'
+    updated: '2026-10-11T16:28:16Z'
+    implementation_pr: 'silasfelinus/kind_robots#3525'
 
   - id: t-034
     milestone: m7
