@@ -1,0 +1,89 @@
+# zuzu-showdown t-029: the wasteland map. One painted map of the Shifting Lands for the character select
+# (each side's home pinned on it) and Story mode's travel between fights (a red route drawn across it,
+# Indiana Jones style). Silas, 2026-10-10: "a map of the wasteland and their location ... a lot can be
+# extrapolated or create what is needed." The geography is extrapolated in kind_robots
+# utils/zuzuShowdown/worldMap.ts (PLACES): Hollow Bell and the Lone Apple Tree in the west, the Mission on
+# its hill to the south-west, the Watering Hole mid-plain with the mire beside it, Storm Canyon in the
+# north-east, the Bone Yard in the eastern badlands, the Dunes to the south-east, the Thin Place at the
+# eastern edge. The prompt asks for those landmarks in those places; the game draws the labels and pins,
+# so the map itself carries no lettering. Pick the seed whose landmarks sit closest, then tune PLACES to
+# it. House lane, three seeds. Submit/refresh with scripts/enqueue_art_requests.py (dry run by default;
+# --live; --status). Private. Generated art is pre-approved.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, high contrast, heavy shadows, muted earthy palette, desaturated, weathered
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: wasteland-map-1
+  entity: wasteland
+  title: The wasteland map (seed 1)
+  size: 1344x768
+  seed: 290101
+  negative: text, letters, words, labels, numbers, compass rose, legend, title, watermark, signature, logo, humans,
+    people, person, character, creature, animals, lowres, worst quality, blurry, jpeg artifacts
+  prompt_tags: scenery, old treasure map, hand-drawn map on aged parchment, top-down view, cartography, ink and
+    watercolor, sepia, weird west wasteland seen from above, a winding river running from north to south, a round
+    watering hole in the center of the plain, a green swamp beside it, a mountain range and a red rock canyon in
+    the north east, rolling sand dunes in the south east, a ruined stone arch with bones in the eastern badlands,
+    a small frontier town with a bell tower in the west, an adobe mission on a hill in the south west, a lone apple
+    tree in the north west, a dark starry rift at the far east edge, dotted trails between the places, coffee stains,
+    worn edges
+  art:
+    arthemy-house:
+      status: null
+      art_image_id: null
+  jobs:
+    arthemy-house: 36872
+- key: wasteland-map-2
+  entity: wasteland
+  title: The wasteland map (seed 2)
+  size: 1344x768
+  seed: 290202
+  negative: text, letters, words, labels, numbers, compass rose, legend, title, watermark, signature, logo, humans,
+    people, person, character, creature, animals, lowres, worst quality, blurry, jpeg artifacts
+  prompt_tags: scenery, old treasure map, hand-drawn map on aged parchment, top-down view, cartography, ink and
+    watercolor, sepia, weird west wasteland seen from above, a winding river running from north to south, a round
+    watering hole in the center of the plain, a green swamp beside it, a mountain range and a red rock canyon in
+    the north east, rolling sand dunes in the south east, a ruined stone arch with bones in the eastern badlands,
+    a small frontier town with a bell tower in the west, an adobe mission on a hill in the south west, a lone apple
+    tree in the north west, a dark starry rift at the far east edge, dotted trails between the places, coffee stains,
+    worn edges
+  art:
+    arthemy-house:
+      status: null
+      art_image_id: null
+  jobs:
+    arthemy-house: 36873
+- key: wasteland-map-3
+  entity: wasteland
+  title: The wasteland map (seed 3)
+  size: 1344x768
+  seed: 290303
+  negative: text, letters, words, labels, numbers, compass rose, legend, title, watermark, signature, logo, humans,
+    people, person, character, creature, animals, lowres, worst quality, blurry, jpeg artifacts
+  prompt_tags: scenery, old treasure map, hand-drawn map on aged parchment, top-down view, cartography, ink and
+    watercolor, sepia, weird west wasteland seen from above, a winding river running from north to south, a round
+    watering hole in the center of the plain, a green swamp beside it, a mountain range and a red rock canyon in
+    the north east, rolling sand dunes in the south east, a ruined stone arch with bones in the eastern badlands,
+    a small frontier town with a bell tower in the west, an adobe mission on a hill in the south west, a lone apple
+    tree in the north west, a dark starry rift at the far east edge, dotted trails between the places, coffee stains,
+    worn edges
+  art:
+    arthemy-house:
+      status: null
+      art_image_id: null
+  jobs:
+    arthemy-house: 36874

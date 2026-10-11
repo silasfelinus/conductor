@@ -888,3 +888,30 @@ tasks:
     claimed_at: '2026-10-07T14:45:35Z'
     updated: '2026-10-07T15:17:35Z'
     implementation_pr: 'silasfelinus/kind_robots#3350'
+
+  - id: t-029
+    milestone: m4
+    title: "The wasteland map: select-screen locator and Story mode travel between fights"
+    status: claimed
+    owner: worker
+    passes: 0
+    stakes: reversible
+    approved_by_human: true
+    depends_on: [t-021]
+    note: >-
+      Silas, 2026-10-10 PT: "Do we have a character select screen yet? I'm envisioning squares with the
+      characters faces, then seeing their character stance facing each other, with a map of the wasteland
+      and their location. We haven't made this map yet, but a lot can be extrapolated or create what is
+      needed. Then we should have story mode showing the character traveling to each match a la an Indiana
+      jones map traversal moment. Do we have continues to continue story mode?" Answer: the faces grid and
+      the stances facing each other existed (t-019, t-008); continues existed (t-021: nine seconds, keeps the
+      climb, starts the score over). Build: kind_robots utils/zuzuShowdown/worldMap.ts with the geography
+      extrapolated from the eight stages and Shifting Lands' five lands (PLACES, HOMES); the select grid as
+      a 3x3 of faces with the map under it pinning each side's home (Story: the road to the Thin Place);
+      Story mode (the Arcade climb, renamed in the menu) travels the map between fights, the next leg
+      drawing itself in red with the challenger's token riding it and beaten opponents crossed off. The map
+      draws in ink until the painted one ships: art/T029-WORLD-MAP.yaml (three house-lane seeds), shipped
+      with tools/world_map.py after picking a seed and tuning PLACES to its landmarks.
+    claimed_by: 2026-10-11T05:10:00Z-zs-t029
+    claimed_at: '2026-10-11T05:10:00Z'
+    updated: '2026-10-11T05:10:00Z'
