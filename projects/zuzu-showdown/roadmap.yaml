@@ -779,7 +779,7 @@ tasks:
   - id: t-028
     milestone: m4
     title: "New fighter: the Swamp Witch, the Thing's avatar (moveset, references, rig, portraits)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -804,9 +804,19 @@ tasks:
       LATER: (3) done, she plays as her art (silasfelinus/kind_robots#3483, tools/rigs/witch.py; her
       normals fitted to the art). Left: (4) her portraits are rendered; wiring every fighter's portraits
       into the select, VS and win screens is t-008's.
+
+      DONE 2026-10-10 (PT): the Swamp Witch is a full fighter. (1) References re-posed by
+      Kontext from the drifted boss seeds (art/T014-WITCH-REFERENCES.yaml), 244386 picked; (2)
+      kit fighters/swamp-witch.ts with its contract suite (kind_robots#3463; the parry learned
+      to bank meter for Bargain); (3) parts sheet art/T014-WITCH-PARTS.yaml and rig
+      tools/rigs/witch.py, the coil one bending cut part, normals fitted to the art
+      (kind_robots#3483); (4) her four portraits in T008 (kind_robots#3485). fighters.yaml
+      carries her and the boss's avatar link; matchups.yaml her 9 matchups and boss line. Her
+      arcade role (last fight before the door) lands with t-021.
     claimed_by: 2026-10-10T20:30:00Z-zs-t028
     claimed_at: '2026-10-10T20:28:42Z'
-    updated: '2026-10-10T20:28:42Z'
+    updated: '2026-10-11T03:26:29Z'
+    implementation_pr: 'silasfelinus/kind_robots#3483'
 
   - id: t-027
     milestone: m3
