@@ -886,7 +886,7 @@ tasks:
   - id: t-030
     milestone: m6
     title: "Warm practical lighting and a carved, painted cabinet; the whole look against the mockups"
-    status: claimed
+    status: ready
     depends_on: [t-027, t-028, t-029, t-031]
     owner: worker
     passes: 0
@@ -896,6 +896,10 @@ tasks:
       insert glow, tuned bloom and tone mapping, shadows and reflections on the ball and chrome. The
       cabinet: painted side art and backglass at the same quality, metal trim and a carved apron. Finish
       with side-by-side screenshots (phone, desktop, ultrawide) next to the mockups for Silas.
+
+      Re-armed: status was claimed with null claimed_by/claimed_at (lost close-out write,
+      flagged by check_recurring_claim_drift).
+    updated: '2026-10-11T02:47:10Z'
 
   - id: t-031
     milestone: m6
