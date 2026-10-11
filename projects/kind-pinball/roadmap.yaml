@@ -1021,7 +1021,7 @@ tasks:
   - id: t-034
     milestone: m7
     title: "Denser sculpted scenery: blossom trees, more village houses and props on the safe edges"
-    status: claimed
+    status: review
     depends_on: [t-030]
     owner: worker
     passes: 0
@@ -1034,5 +1034,21 @@ tasks:
       play is unchanged. Merge geometry and instance it so the medium and low tiers keep their
       frame budget, with the density set per quality tier. Tests check that no prop's footprint
       overlaps a ball path, and that each tier's prop count holds.
-    updated: '2026-10-11T04:09:16Z'
+
+      Shipped in kind_robots#3495 (merged). 24 sculpted props: cottages (timber frames, gabled
+      roofs, chimneys, lit windows that follow the GI), blossom trees, fences, barrels, crates
+      and flower bushes. They stand in two clusters behind the arch at the Ridge's foot beside
+      the huts, with a tree in each Ridge lower corner and a bush on each sling plastic.
+      pinball/reach.ts flood-fills where a ball's centre can reach (2 mm grid, from the
+      plunger and every eject; walls and posts block, ramps, doors and gates never do). The
+      tests prove every prop's footprint, and any crown low enough to meet a ball, is out of
+      play, and that no ramp or cover passes over a prop. They also check the map against the
+      shooter lane, the shot arrows, the saucers and the flippers. Rendering merges per-
+      vertex-coloured solids and windows per tier, six draw calls at most. Low keeps the
+      cottages and main trees, medium adds trees and fences, high adds the small props. No
+      colliders are added. Honest limit: there is little out-of-play ground on the main field,
+      so from the default desk camera the village shows mostly at the top edge near the DMD.
+      It reads fully on the phone view and the Ridge camera. Screenshots:
+      screenshots/t034-desk.jpg, t034-phone.jpg, t034-village.jpg.
+    updated: '2026-10-11T04:18:53Z'
     implementation_pr: 'silasfelinus/kind_robots#3495'
