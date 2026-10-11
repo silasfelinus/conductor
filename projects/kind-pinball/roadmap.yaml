@@ -1021,9 +1021,9 @@ tasks:
   - id: t-034
     milestone: m7
     title: "Denser sculpted scenery: blossom trees, more village houses and props on the safe edges"
-    status: ready
+    status: claimed
     depends_on: [t-030]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -1034,3 +1034,5 @@ tasks:
       play is unchanged. Merge geometry and instance it so the medium and low tiers keep their
       frame budget, with the density set per quality tier. Tests check that no prop's footprint
       overlaps a ball path, and that each tier's prop count holds.
+    updated: '2026-10-11T04:09:16Z'
+    implementation_pr: 'silasfelinus/kind_robots#3495'
