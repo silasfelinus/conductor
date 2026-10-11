@@ -167,8 +167,8 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Implement sling, pop bumper, drop bank, scoop, captive ball and tilt"
-    status: ready
-    updated: '2026-10-11T00:01:35.986Z'
+    status: claimed
+    updated: '2026-10-11T11:51:30Z'
     depends_on: t-004
     passes: 0
     stakes: reversible
@@ -178,6 +178,9 @@ tasks:
       Partial mechanical hardware implementation in Kind Robots PR #3480: a four-target Abbey seal drop bank, physical spinner, left-outlane kickback coil and targeted Rapier lifecycle test. Reconciled with the separately merged three-ramp layout without overwriting it. CI is pending. After merging, return t-007 to ready (not done): rules-driven reset, captive relic ball, Zuzu tilt and kickback arming, and performance/ trajectory QA remain required before dependent River Croc task t-015.
 
       Completed a bounded hardware slice: Kind Robots PR #3480 merged as 7318576f39df4108f1a054b3faf923c0ec94e2d4, with four physical Abbey seal drops, a relic spinner, left-outlane kickback and passing Rapier lifecycle hardware tests. Preserved t-005's previously merged ramps. Formatting-only follow-up PR #3482 removes a one-time CI diagnostic and applies the exact Prettier output; merge-when-green is enabled. Re-arm this one-off task as ready, not done. Remaining work includes Zuzu-specific automatic bank reset, physically captive relic ball, tilt logic and warning rules, coil arming/ball save, robust geometry and multiball conservation tests. Do not unblock River Croc t-015 yet.
+    owner: worker
+    claimed_by: 20261011T185500Z-zuzu-t007-relic-m2w8
+    claimed_at: '2026-10-11T11:51:30Z'
   - id: t-008
     milestone: m3
     title: "Implement mode director, five story chapters, shot awards and DMD contracts"
