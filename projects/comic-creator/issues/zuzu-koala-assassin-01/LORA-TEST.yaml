@@ -1,0 +1,526 @@
+# LoRA test renders (comic-creator t-016). Silas trained the five character LoRAs on Ferngrotto on 2026-10-10/11
+# (train_all.ps1, kohya sd-scripts, 10 epochs). Each character gets three shots (front, in a scene, a close-up
+# expression), each rendered with the final LoRA and with the epoch-6 checkpoint at strength 0.8 and the same seed,
+# on the house Arthemy lane. Screened against the locked cast sheets (CAST-PICKS.md) to pick an epoch per character.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, muted earthy palette, desaturated, weathered,
+    grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: loratest-zuzu-front-final
+  entity: zuzu
+  title: LoRA test zuzukoala front (final)
+  size: 832x1216
+  seed: 4242
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, front view, facing viewer, standing, simple background, grey
+    background, zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag trim, orange sash, dark
+    brown trousers, wide straw hat, katana on back
+  loras:
+  - resource_id: 4593
+    strength: 0.8
+  jobs:
+    arthemy-house: 36909
+- key: loratest-zuzu-front-e6
+  entity: zuzu
+  title: LoRA test zuzukoala front (epoch 6)
+  size: 832x1216
+  seed: 4242
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, front view, facing viewer, standing, simple background, grey
+    background, zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag trim, orange sash, dark
+    brown trousers, wide straw hat, katana on back
+  loras:
+  - resource_id: 4591
+    strength: 0.8
+  jobs:
+    arthemy-house: 36910
+- key: loratest-zuzu-scene-final
+  entity: zuzu
+  title: LoRA test zuzukoala scene (final)
+  size: 1216x832
+  seed: 4243
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, standing on a dusty desert road at dusk, three-quarter view,
+    zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag trim, orange sash, dark brown trousers,
+    wide straw hat, katana on back
+  loras:
+  - resource_id: 4593
+    strength: 0.8
+  jobs:
+    arthemy-house: 36911
+- key: loratest-zuzu-scene-e6
+  entity: zuzu
+  title: LoRA test zuzukoala scene (epoch 6)
+  size: 1216x832
+  seed: 4243
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, standing on a dusty desert road at dusk, three-quarter view,
+    zuzukoala, anthro koala, male, grey fur, rust-brown poncho, orange zigzag trim, orange sash, dark brown trousers,
+    wide straw hat, katana on back
+  loras:
+  - resource_id: 4591
+    strength: 0.8
+  jobs:
+    arthemy-house: 36912
+- key: loratest-zuzu-face-final
+  entity: zuzu
+  title: LoRA test zuzukoala face (final)
+  size: 832x1216
+  seed: 4244
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, upper body, three-quarter view, close-up, stern squint, zuzukoala, anthro
+    koala, male, grey fur, rust-brown poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat,
+    katana on back
+  loras:
+  - resource_id: 4593
+    strength: 0.8
+  jobs:
+    arthemy-house: 36913
+- key: loratest-zuzu-face-e6
+  entity: zuzu
+  title: LoRA test zuzukoala face (epoch 6)
+  size: 832x1216
+  seed: 4244
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, upper body, three-quarter view, close-up, stern squint, zuzukoala, anthro
+    koala, male, grey fur, rust-brown poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat,
+    katana on back
+  loras:
+  - resource_id: 4591
+    strength: 0.8
+  jobs:
+    arthemy-house: 36914
+- key: loratest-sister-front-final
+  entity: sister
+  title: LoRA test zkasister front (final)
+  size: 832x1216
+  seed: 4245
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, front view, facing viewer, standing, simple background, grey
+    background, zkasister, anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress,
+    bandaged wrists
+  loras:
+  - resource_id: 4583
+    strength: 0.8
+  jobs:
+    arthemy-house: 36915
+- key: loratest-sister-front-e6
+  entity: sister
+  title: LoRA test zkasister front (epoch 6)
+  size: 832x1216
+  seed: 4245
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, front view, facing viewer, standing, simple background, grey
+    background, zkasister, anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress,
+    bandaged wrists
+  loras:
+  - resource_id: 4581
+    strength: 0.8
+  jobs:
+    arthemy-house: 36916
+- key: loratest-sister-scene-final
+  entity: sister
+  title: LoRA test zkasister scene (final)
+  size: 1216x832
+  seed: 4246
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, standing in a dark candlelit chapel, three-quarter view, zkasister,
+    anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists
+  loras:
+  - resource_id: 4583
+    strength: 0.8
+  jobs:
+    arthemy-house: 36917
+- key: loratest-sister-scene-e6
+  entity: sister
+  title: LoRA test zkasister scene (epoch 6)
+  size: 1216x832
+  seed: 4246
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, standing in a dark candlelit chapel, three-quarter view, zkasister,
+    anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists
+  loras:
+  - resource_id: 4581
+    strength: 0.8
+  jobs:
+    arthemy-house: 36918
+- key: loratest-sister-face-final
+  entity: sister
+  title: LoRA test zkasister face (final)
+  size: 832x1216
+  seed: 4247
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, upper body, three-quarter view, close-up, hard stare, trembling, zkasister,
+    anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists
+  loras:
+  - resource_id: 4583
+    strength: 0.8
+  jobs:
+    arthemy-house: 36919
+- key: loratest-sister-face-e6
+  entity: sister
+  title: LoRA test zkasister face (epoch 6)
+  size: 832x1216
+  seed: 4247
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, upper body, three-quarter view, close-up, hard stare, trembling, zkasister,
+    anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists
+  loras:
+  - resource_id: 4581
+    strength: 0.8
+  jobs:
+    arthemy-house: 36920
+- key: loratest-toddler-front-final
+  entity: toddler
+  title: LoRA test zkatoddler front (final)
+  size: 832x1216
+  seed: 4248
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, front view, facing viewer, standing, simple background, grey
+    background, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged
+    paw
+  loras:
+  - resource_id: 4588
+    strength: 0.8
+  jobs:
+    arthemy-house: 36921
+- key: loratest-toddler-front-e6
+  entity: toddler
+  title: LoRA test zkatoddler front (epoch 6)
+  size: 832x1216
+  seed: 4248
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, front view, facing viewer, standing, simple background, grey
+    background, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged
+    paw
+  loras:
+  - resource_id: 4586
+    strength: 0.8
+  jobs:
+    arthemy-house: 36922
+- key: loratest-toddler-scene-final
+  entity: toddler
+  title: LoRA test zkatoddler scene (final)
+  size: 1216x832
+  seed: 4249
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, sitting in the dust of a ruined desert town, three-quarter
+    view, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged
+    paw
+  loras:
+  - resource_id: 4588
+    strength: 0.8
+  jobs:
+    arthemy-house: 36923
+- key: loratest-toddler-scene-e6
+  entity: toddler
+  title: LoRA test zkatoddler scene (epoch 6)
+  size: 1216x832
+  seed: 4249
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, sitting in the dust of a ruined desert town, three-quarter
+    view, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged
+    paw
+  loras:
+  - resource_id: 4586
+    strength: 0.8
+  jobs:
+    arthemy-house: 36924
+- key: loratest-toddler-face-final
+  entity: toddler
+  title: LoRA test zkatoddler face (final)
+  size: 832x1216
+  seed: 4250
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, upper body, three-quarter view, close-up, wide-eyed, frightened, zkatoddler,
+    anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw
+  loras:
+  - resource_id: 4588
+    strength: 0.8
+  jobs:
+    arthemy-house: 36925
+- key: loratest-toddler-face-e6
+  entity: toddler
+  title: LoRA test zkatoddler face (epoch 6)
+  size: 832x1216
+  seed: 4250
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, upper body, three-quarter view, close-up, wide-eyed, frightened, zkatoddler,
+    anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw
+  loras:
+  - resource_id: 4586
+    strength: 0.8
+  jobs:
+    arthemy-house: 36926
+- key: loratest-coyote-front-final
+  entity: coyote
+  title: LoRA test zkacoyote front (final)
+  size: 832x1216
+  seed: 4251
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, front view, facing viewer, standing, simple background, grey
+    background, zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown hat, tattered olive riding
+    coat, revolver holstered on right hip, thin, missing right hand, bandaged stump
+  loras:
+  - resource_id: 4578
+    strength: 0.8
+  jobs:
+    arthemy-house: 36927
+- key: loratest-coyote-front-e6
+  entity: coyote
+  title: LoRA test zkacoyote front (epoch 6)
+  size: 832x1216
+  seed: 4251
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, front view, facing viewer, standing, simple background, grey
+    background, zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown hat, tattered olive riding
+    coat, revolver holstered on right hip, thin, missing right hand, bandaged stump
+  loras:
+  - resource_id: 4576
+    strength: 0.8
+  jobs:
+    arthemy-house: 36928
+- key: loratest-coyote-scene-final
+  entity: coyote
+  title: LoRA test zkacoyote scene (final)
+  size: 1216x832
+  seed: 4252
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, standing at a muddy desert watering hole at dusk, three-quarter
+    view, zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown hat, tattered olive riding coat,
+    revolver holstered on right hip, thin, missing right hand, bandaged stump
+  loras:
+  - resource_id: 4578
+    strength: 0.8
+  jobs:
+    arthemy-house: 36929
+- key: loratest-coyote-scene-e6
+  entity: coyote
+  title: LoRA test zkacoyote scene (epoch 6)
+  size: 1216x832
+  seed: 4252
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, standing at a muddy desert watering hole at dusk, three-quarter
+    view, zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown hat, tattered olive riding coat,
+    revolver holstered on right hip, thin, missing right hand, bandaged stump
+  loras:
+  - resource_id: 4576
+    strength: 0.8
+  jobs:
+    arthemy-house: 36930
+- key: loratest-coyote-face-final
+  entity: coyote
+  title: LoRA test zkacoyote face (final)
+  size: 832x1216
+  seed: 4253
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, upper body, three-quarter view, close-up, wary, pained grimace, zkacoyote,
+    anthro coyote, male, eyepatch over right eye, battered brown hat, tattered olive riding coat, revolver holstered
+    on right hip, thin, missing right hand, bandaged stump
+  loras:
+  - resource_id: 4578
+    strength: 0.8
+  jobs:
+    arthemy-house: 36931
+- key: loratest-coyote-face-e6
+  entity: coyote
+  title: LoRA test zkacoyote face (epoch 6)
+  size: 832x1216
+  seed: 4253
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, upper body, three-quarter view, close-up, wary, pained grimace, zkacoyote,
+    anthro coyote, male, eyepatch over right eye, battered brown hat, tattered olive riding coat, revolver holstered
+    on right hip, thin, missing right hand, bandaged stump
+  loras:
+  - resource_id: 4576
+    strength: 0.8
+  jobs:
+    arthemy-house: 36932
+- key: loratest-abbess-front-final
+  entity: abbess
+  title: LoRA test zkaabbess front (final)
+  size: 832x1216
+  seed: 4254
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, front view, facing viewer, standing, simple background, grey
+    background, zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple, flat round face, brown
+    fur
+  loras:
+  - resource_id: 4595
+    strength: 0.8
+  jobs:
+    arthemy-house: 36933
+- key: loratest-abbess-front-e6
+  entity: abbess
+  title: LoRA test zkaabbess front (epoch 6)
+  size: 832x1216
+  seed: 4254
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, front view, facing viewer, standing, simple background, grey
+    background, zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple, flat round face, brown
+    fur
+  loras:
+  - resource_id: 4573
+    strength: 0.8
+  jobs:
+    arthemy-house: 36934
+- key: loratest-abbess-scene-final
+  entity: abbess
+  title: LoRA test zkaabbess scene (final)
+  size: 1216x832
+  seed: 4255
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, standing at the iron gate of an adobe desert mission at dusk,
+    three-quarter view, zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple, flat round face,
+    brown fur
+  loras:
+  - resource_id: 4595
+    strength: 0.8
+  jobs:
+    arthemy-house: 36935
+- key: loratest-abbess-scene-e6
+  entity: abbess
+  title: LoRA test zkaabbess scene (epoch 6)
+  size: 1216x832
+  seed: 4255
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, full body, standing at the iron gate of an adobe desert mission at dusk,
+    three-quarter view, zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple, flat round face,
+    brown fur
+  loras:
+  - resource_id: 4573
+    strength: 0.8
+  jobs:
+    arthemy-house: 36936
+- key: loratest-abbess-face-final
+  entity: abbess
+  title: LoRA test zkaabbess face (final)
+  size: 832x1216
+  seed: 4256
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, upper body, three-quarter view, close-up, cold smile, zkaabbess, anthro
+    otter, female, elderly, nun, black habit, white wimple, flat round face, brown fur
+  loras:
+  - resource_id: 4595
+    strength: 0.8
+  jobs:
+    arthemy-house: 36937
+- key: loratest-abbess-face-e6
+  entity: abbess
+  title: LoRA test zkaabbess face (epoch 6)
+  size: 832x1216
+  seed: 4256
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, undressing, nsfw, suggestive, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    text, multiple views, character sheet, turnaround, multiple persons, 2girls, 2boys, human, chibi, ribs, ribcage,
+    skeleton
+  prompt_tags: (fully clothed:1.3), solo, upper body, three-quarter view, close-up, cold smile, zkaabbess, anthro
+    otter, female, elderly, nun, black habit, white wimple, flat round face, brown fur
+  loras:
+  - resource_id: 4573
+    strength: 0.8
+  jobs:
+    arthemy-house: 36938

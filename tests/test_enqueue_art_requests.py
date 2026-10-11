@@ -353,3 +353,13 @@ def test_source_image_fetch_sends_the_token(monkeypatch):
     assert enq.fetch_source_image(1) == "data:image/webp;base64,aW1n"
     assert seen["url"].endswith("/images/generated/a.webp")
     assert seen["auth"] == "Bearer tok"
+
+
+def test_loras_ride_on_comfy_requests_subject_first():
+    ledger = {"is_public": False}
+    lane = {"key": "a", "engine": "comfy", "prompt": "tags", "loras": [{"resource_id": 7}]}
+    subject = {"key": "s", "size": "832x1216", "prompt_tags": "zuzukoala, front view"}
+    assert enq.build_request(ledger, lane, subject)["loras"] == [{"resourceId": 7, "strength": 0.8}]
+    subject["loras"] = [{"resource_id": "4593", "strength": 0.6}]
+    assert enq.build_request(ledger, lane, subject)["loras"] == [{"resourceId": 4593, "strength": 0.6}]
+    assert "loras" not in enq.build_request(ledger, {**lane, "loras": None}, {**subject, "loras": []})
