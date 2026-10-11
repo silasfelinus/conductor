@@ -52,3 +52,7 @@
   checkpoint; the iai cut became a lunging crescent that cuts shots from the air; a vertical camera and
   THE BELL STAIR tower climb (silasfelinus/kind_robots#3488). Ghost Trail now has music -- a theme per
   world, boss and finale themes, an ending -- and its own sound effects (#3490).
+- **Ghost Trail blueprint gaps closed**: River Croc ferries Zuzu across a flooded pool once the squad
+  bothering him is down; the abbey's caged novice can be freed for an extra ending
+  (silasfelinus/kind_robots#3496); Storm Crow Pass gets telegraphed lightning and a second vertical act,
+  THE CLIFF ROAD (#3497). The campaign is now 18 acts and 21 relics.
