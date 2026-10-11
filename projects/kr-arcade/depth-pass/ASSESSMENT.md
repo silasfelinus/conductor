@@ -1,6 +1,6 @@
 # Depth Pass — Pipe Pals and Prize Show Panic
 
-**Owner:** `kr-arcade`, milestone m7 (tasks t-023..t-029), code in kind_robots `utils/arcade/games/`.
+**Owner:** `kr-arcade`, milestone m7 (tasks t-023..t-025, t-030, t-031 for Pipe Pals; t-026..t-029, t-032..t-034 for Prize Show Panic), code in kind_robots `utils/arcade/games/`.
 **Direction:** Silas, 2026-10-11 (verbatim): *"Our kind robot arcade can still use some visual and gameplay
 improvements. The first targets are our riffs on Mario bros and smash tv, as those we both favorites of mine
 as a child. I want and assessment of levels. Smash tv had an extensive level system, an announcer, prize
@@ -9,6 +9,10 @@ levels, coin pickup challenges, and various enemies. We don't need to be 1:1 cop
 should be equally complex or more so. For now especially the Mario riff looks just like a smaller formed
 version, including to the point of toned down limited turtles. We should have more complex enemies,
 variety, etc"*
+
+Silas, 2026-10-11, on the first draft of this plan: *"Love the improvement suggestions, now I want you to
+expand both pitches to add even more to each, so we really are homages with even more inspired levels and
+gameplay depth."* The upgrade sections below are that expanded version.
 
 **The bar:** each game has at least as much level variety, enemy variety and structure as the classic it
 riffs on, then goes past it. The guardrails still hold: mechanics only, never the originals' names,
@@ -59,43 +63,134 @@ The 1983 game it riffs on runs on one board too, but it keeps changing what happ
 no hazards, no ice, no chains, no enemy-enemy collisions, one fixed bonus round, a single room and a
 difficulty curve that goes flat at phase 13. It is below the bar on every axis Silas named.
 
-### The upgrade: Pipe Pals — a five-district campaign
+### The upgrade: Pipe Pals — Three Shifts in the Plumbing City
 
-Keep the single-screen bump-and-kick core. Grow everything around it.
+Keep the single-screen bump-and-kick core that makes the classic great. Build a whole city of plumbing
+around it, so every district asks something new of the same two verbs.
 
-**Structure.** Five **districts** of the plumbing city, each with its own board layout (original layouts:
-ledge shapes, gaps, a moving lift or a crumble ledge where it fits), its own backdrop and tiles, its own
-music, and a short roster ramp. Each district is **5 phases + 1 bonus round**, then a district card. After
-district 5, a finale boss. A clear rolls credits and unlocks a harder Night Shift loop (New Game+). Progress
-saves at each district start through `utils/arcade/saves.ts`, like Ghost Trail.
+**Target length:** a first clear in roughly 45–60 minutes, with the difficulty coming from new threats,
+new boards and new objectives, never from padding.
 
-| District | Board idea | New threat | Bonus round twist |
-| --- | --- | --- | --- |
-| 1. **Rooftop Reservoir** (today's dusk city) | Today's layout, tightened | Shell crawler, crab bot | Static coins (today's round) |
-| 2. **Greenhouse Mains** | Vine ledges, one moving lift | **Spring flea** (hops; only flippable while landed) | Coins that drift down from the pipes |
-| 3. **Cold Storage** (the ice district) | Icy ledges: low friction, long stops | **Frost bot** (freezes the ledge it walks; one bump clears it, no kick) and **icicles** that grow under ledges and drop | Coins on all-ice floors |
-| 4. **Boiler Works** | Steam vents that puff on a beat; a crumble ledge | **Ember spark** (bounces diagonally; bump the ledge under it to snuff it) and **lurker ember** (slides in along a floor if a phase drags; anti-camping) | Coins inside steam bursts, timed |
-| 5. **Storm Drain at Midnight** | Dim board; lamps light pools around the pals | Everything, remixed; armoured **grease beetle** (needs a bump, a kick and leaves a slick) | "Test of skill": coins hung under ledges, bump to collect |
-| Finale: **The Great Clog** | The whole board | **Clog King**: a big multi-segment clog creature that crawls through the pipes, surfaces on a ledge, and sheds smaller critters. Bump the ledge segments under it to crack its plates; kick the loose plates back into it. Three phases. | — |
+#### Structure
 
-**Enemy roster: 2 → 8** (crawler, crab bot, spring flea, frost bot, ember spark, lurker ember, grease beetle,
-and the Clog King with its shed critters), plus icicles as a hazard.
+- The campaign has **three Shifts** (acts) with **eight districts**, plus a **boss at the end of each Shift**
+  and a **secret ninth district**.
+- Each district has **5 phases**:
+  - phases 1–2 introduce the district's new threat;
+  - phase 3 is the district's **special objective phase**;
+  - phases 4–5 remix the district's threat with everything learned so far.
+- Then come the district's own **bonus round** and a visit to **the Workshop**.
+- Every district has its own board layout (original layouts), backdrop, tiles, music loop and title card.
+- A clear rolls credits and unlocks the **Night Shift Overtime** New Game+.
+- Progress saves at each district start through `utils/arcade/saves.ts`, as Ghost Trail does.
 
-**Systems every district uses:**
-- Readable **recovery tiers**: calm → cross → furious colours with a speed step each, and a **last-critter
+#### The districts
+
+**Shift 1: Day Shift**
+
+| # | District | Board and mechanic | New threats | Special phase | Bonus round |
+| --- | --- | --- | --- | --- | --- |
+| 1 | **Rooftop Reservoir** | Today's board, tightened; water tanks and the dusk city behind | Shell crawler, crab bot | **First Fix**: three leaky joints spray across a ledge until a pal bumps them shut | Static coins (today's round) |
+| 2 | **Greenhouse Mains** | **Vine ledges** that sag under weight and drop you a floor if you stand too long; a moving lift; sprinkler rain | **Spring flea** (hops; can only be flipped while landed), **shell knight** (first bump knocks its armour off and the bare crawler sprints; a second bump flips it) | **Seedling Rescue**: potted sprouts sit on the ledges and critters trample them; save at least four | Coins drift down from the sprinkler heads |
+| 3 | **Suds Works** (laundry basement) | **Soapy ledges** (slight slide); bumping a sudsy ledge blows a **bubble** up that can trap a walker. A trapped critter floats, and touching it pops it out for a kick. | **Lint moth** (flutters in a wave; flippable only while it rests on a ledge), **sock puppet** (flipping splits it into two small socks; kick both) | **Lost Socks**: matching-colour sock pairs tumble from the pipes; collect pairs, not singles | Coins ride rising bubbles |
+
+**Boss 1: The Big Shell.** A shell crawler as wide as a ledge. It climbs the board floor by floor:
+- bump the ledge under each of its feet to tip it over, then kick its soft underside;
+- it takes three tip-and-kick cycles, and it sheds small crawlers from its shell between them;
+- in its final phase it curls up and rolls along the bottom floor, and pals dodge it from the ledges.
+
+**Shift 2: Swing Shift**
+
+| # | District | Board and mechanic | New threats | Special phase | Bonus round |
+| --- | --- | --- | --- | --- | --- |
+| 4 | **Cold Storage** (the ice district) | **Icy ledges**: low friction and long stops. **Icicles** grow under ledges and drop on a visible tell. | **Frost bot** (freezes the ledge it walks; one bump clears it, no kick needed), **snowball roller** (grows as it rolls; bump it while small) | **Thaw Run**: spare robots frozen in ice blocks; bump each block three times to free them before the freezers re-ice them | Coins on all-ice floors |
+| 5 | **Boiler Works** | **Steam vents** puff on a beat; a **crumble ledge** that breaks after two crossings and rebuilds next phase | **Ember spark** (bounces diagonally; bump the ledge under it to snuff it), **lurker ember** (slides in along a floor if a phase drags; anti-camping) | **Pressure Valves**: four gauges on the ledges creep toward red; bump each to vent it before it bursts and steams a floor shut | Coins inside timed steam bursts |
+| 6 | **Clockwork Water Tower** | **Gear ledges** slide left and right on the clock; a **conveyor** ledge | **Gear bug** (winds up, pauses, dashes; flippable only when wound down), **cuckoo** (pops from a clock pipe on the hour and swoops one floor) | **Valve Routing**: bump the valve wheels to switch which pipes critters use. Route them all to one floor and bowl them for a giant chain. | Coins on moving gears |
+
+**Boss 2: The Thermostat.** A great dial machine on the back wall that flips the board between
+**FREEZE** (ice ledges, frost bots) and **HEAT** (embers, steam).
+- Its needle points at one ledge at a time. Bump that ledge while the needle glows to send a shock up the
+  pipe.
+- Three phases, each with a faster dial and more of both elements at once.
+- At the end both halves fight over the board in a half-frozen, half-boiling arena.
+
+**Shift 3: Night Shift**
+
+| # | District | Board and mechanic | New threats | Special phase | Bonus round |
+| --- | --- | --- | --- | --- | --- |
+| 7 | **Flooded Mains** | **Water rises and drains** on a telegraphed cycle. Underwater the pals move slower and jump floatier, and flipped critters bob upward, so kick them before they float off. | **Pipe eel** (strikes from the side pipes on a tell; bump the ledge by the pipe to send it back), **bubble jelly** (drifts up; bump it to pop it into a short-lived bubble platform) | **Pump Station**: bump three pump buttons in the right order to drain the board before it floods the top floor | Underwater coins, with air bubbles to grab |
+| 8 | **Storm Drain at Midnight** | A **dim board**. Lamps light pools around the pals; lightning flashes light the whole board on a beat (the tell). | **Grease beetle** (bump, kick, and it leaves a slick), **mimic coin** (looks like a coin but blinks first; grab one and it bites), and remixes of every earlier threat | **Lights Out**: relight every lamp by bumping it from below while critters hunt in the dark | **Test of skill**: coins hung under ledges, bump to collect |
+
+**Finale: The Great Clog.** The Clog King, a huge creature of tangled junk living in the city's main
+drain.
+- **Phase 1:** it surfaces from different pipes. Bump the ledges it rests on to crack its plates.
+- **Phase 2:** it sheds critters from every district while the water rises.
+- **Phase 3:** it wraps the central pipe. Kick the loose plates back into its glowing core.
+- **The flush:** the city's water finally runs free and the pals **climb for the rooftop** ahead of the
+  rising flood, a vertical escape that tops the campaign.
+
+**Secret district: The Golden Main.** One **golden valve handle** is hidden in each district, earned by
+completing that district's special phase perfectly.
+- With all eight, a ninth district opens: mirrored boards, the fastest critters and coins everywhere.
+- Clearing it gives the **true ending**: every fountain in the city runs rainbow water.
+
+#### The roster: 2 → 15 critters, 3 bosses
+
+| Critter | Answer it asks for |
+| --- | --- |
+| Shell crawler, crab bot | Bump, kick (crab: two bumps) |
+| Shell knight | Bump off the armour, then deal with a sprinter |
+| Spring flea, lint moth, gear bug | Timing: flip only while landed, resting or wound down |
+| Sock puppet | Kick both halves; a chain opportunity |
+| Frost bot, snowball roller | Clear the ice; catch it small |
+| Ember spark, lurker ember | Snuff from below; don't camp |
+| Cuckoo, pipe eel | Read the clock or the pipe tell |
+| Bubble jelly | Turn it into a platform |
+| Grease beetle | Three-step answer, mind the slick |
+| Mimic coin | Read the blink before you grab |
+
+Hazards: leaky joints, vine and crumble ledges, icicles, steam vents, gear and conveyor ledges, flood
+water and the dark. Bosses: the Big Shell, the Thermostat and the Clog King.
+
+#### Systems that run through the whole campaign
+
+- **Readable recovery tiers:** calm, cross and furious colours, a speed step each, and a **last-critter
   rush**.
-- **Enemy-enemy turnaround** when two walkers meet.
-- **Kick chains**: 800 → 1,600 → 2,400 → 3,200 within a short window, shown as a growing floater.
-- A coin out of a pipe on every kick (not 35%), so the board keeps feeding the player.
-- The KIND block **refills at each district start**; its charge studs stay as today.
-- **Two-pal co-op** on the shared board, teal and pink pals from the logo, through the cabinet's `players`
-  frames. Pals can bump each other from below (a playful stun, never a kill).
-- **Bigger actors**: hero ~24–28 px tall and critters ~18–22 px, either by drawing at double density or
-  by moving the logical world down toward 320 x 240 (the Ghost Trail blueprint used a 40–48 px hero on a
-  240-high screen). Three-plus animation frames for every walker, a flip/kick squash, and recovery colours.
+- **Turnaround:** walkers turn round when they meet.
+- **Kick chains:** 800 → 1,600 → 2,400 → 3,200 → 5,000 inside a short window, shown as a growing floater.
+- **Kick bowling:** a kicked critter slides along its ledge. It knocks any flipped critter in its path off
+  with it, and that counts toward the chain. It flips an upright critter it hits.
+- **Coins:** every kick sends a coin out of a pipe, so the board keeps feeding the player.
+- **The KIND block** refills each district. The Workshop can give it a fourth charge and a **KIND burst**
+  that also pulls every coin on the board to you.
+- **Tool Belt pickups** now and then roll out of the top pipes, short and readable:
+  - **Wide Wrench:** triple bump reach.
+  - **Kick Boots:** kicks bowl the whole ledge.
+  - **Bubble Wand:** blow a bubble that traps a walker.
+  - **Magnet Cap:** coins come to you.
+- **The Workshop** opens between districts. Spend coins earned in play (never real money) on:
+  - an extra pal;
+  - a KIND charge;
+  - a starting tool;
+  - **Lucky Pipe** (more coins next district);
+  - a **valve hint** that shows where the district's golden valve is.
 
-**Target length:** a first clear of all five districts plus the finale in roughly 25–35 minutes, with the
-difficulty coming from new threats and board changes, never from padding.
+  Prices rise each Shift.
+- **Medals:** each phase can earn Clean Sweep (no hit), Chain Master (a 4-chain) and Swift Fix (under par
+  time). A medal board per district rewards replays.
+- **Two pals with their own feel:** the teal pal has a longer bump reach; the pink pal jumps higher and
+  floats a little. Solo players pick one; co-op seats both.
+- **Modes:**
+  - **Campaign.**
+  - **Overtime:** endless score attack across random districts; this is the leaderboard's main event.
+  - **Time Trial:** per district, unlocked on a clear.
+  - **Versus:** two pals race to kick the most. They can bump each other from below to steal a flip; it's a
+    playful stun, never a knockout.
+- **Bigger actors:**
+  - Hero ~24–28 px tall and critters ~18–22 px. Get there by drawing at double density, or by moving the
+    logical world toward 320 × 240 (the Ghost Trail blueprint used a 40–48 px hero on a 240-high screen).
+  - At least three walk frames per critter, a flip/kick squash, and recovery colours.
+  - Every boss is drawn as its own large sprite with telegraph animations.
 
 ---
 
@@ -140,81 +235,202 @@ The 1990 game it riffs on is built as a **TV season**:
 studio repeated with three palettes, four enemies, one boss on repeat, no map, no host, no prize screen, no
 ending. It is short of the classic on every structural axis Silas named.
 
-### The upgrade: Prize Show Panic — a three-episode season
+### The upgrade: Prize Show Panic — a full broadcast season
 
-**Structure.** A **season of three episodes**, each a **map of 10–12 rooms** on a grid. Between rooms the map
-screen shows where you have been, what each neighbouring door leads to (swarm, prize vault, trap, boss),
-and the route you choose. Each episode ends in its own boss; episode 3 ends in the **Grand Finale**. Collect
-**golden tickets** across the season; enough of them opens the secret **Grand Prize Vault** before the
-finale (the true ending). A clear rolls credits and unlocks a Rerun season (New Game+). Progress saves at
-each episode start.
+The classic is a single show. Prize Show Panic becomes a whole **network season**. Each episode is a
+different kind of TV show on its own soundstage, with its own floor hazards, crashers and bosses. The host
+holds it all together, and a ratings meter rewards style.
 
-**Rooms are data, not dice.** Each room is a script: which doors open when, which kinds and how many, floor
-props, and a room type:
+**Target length:** a first clear of the season in roughly 60–75 minutes.
 
-- **Swarm** (today's room, scripted), **Mine set** (whoopee-cushion and banana-peel mines on the floor),
-  **Light rig** (spotlight beams sweep the floor on a beat), **Camera wall** (turret cameras along one wall),
-  **Speed round** (short timer, double prize drops), **Prize vault** (no enemies, prizes on pedestals,
-  closes fast), **Ambush** (all four doors at once), **Conga ballroom** (lines only, long and fast).
+#### Structure
 
-**Enemy roster: 4 → 10:**
+- The season has **four episodes and a Live Finale**.
+- Each episode is a **map of 12–14 rooms** on a grid, with a mid-boss partway through and a boss at the
+  end.
+- Between rooms, a **map screen** shows:
+  - where you have been;
+  - what each neighbouring door leads to: swarm, prize vault, trap, sponsor challenge or boss;
+  - a **danger rating** and a reward icon for each room;
+  - the route you choose.
+
+  Branches matter: a safe route and a rich route always exist side by side.
+- Between episodes come the **prize tally screen**, the **Prize Swap** and a **commercial break** (all
+  below).
+- Hidden across the season are **twelve golden tickets**. Ten of them open the **Grand Prize Vault**.
+- A clear rolls credits and unlocks **Rerun** (New Game+ with remixed room scripts) and episode select.
+- Progress saves at each episode start.
+
+#### The episodes
+
+| Episode | Set and hazards | New crashers | Mid-boss | Boss |
+| --- | --- | --- | --- | --- |
+| 1. **Opening Night** (the game show) | Today's studio with marquee bulbs. Mine sets, spotlight rigs, the camera wall. | Grabber, bouncer, conga line, thrower, popper, stagehand, camera crane | **The Parade Float** (today's cake float, now with a second phase) | **The Big Wobble** |
+| 2. **Cooking Showdown** (the kitchen) | **Hot-plate tiles** glow, then sizzle; **flour clouds** hide crashers; **conveyor counters** carry everyone | **Pie chef** (lobs arcing pies whose splats leave slippery cream), **egg-timer bot** (ticks down, then hatches a clutch of tiny crashers), **meatball roller** | **The Pie Cart** | **The Soufflé Supreme** |
+| 3. **Countdown Concert** (the music show) | **Beat-synced rooms**: speaker stacks thump **bass rings** on the beat; strobes; mosh-pit circles that shove you | **Roadie** (pushes flight cases that are moving cover and moving walls), **stage diver** (leaps across the room and lands in a shockwave), **heckler** (pumps up nearby crashers until you cheer it) | **The Mosh Mascot** | **The Jumbotron** |
+| 4. **Galaxy Parade** (the sci-fi soundstage) | **Low-gravity rooms** where Sparkle drifts on momentum; a **rotating ring room**; **teleport doors** | **Saucer cam**, **mirror clone** (copies your moves a beat late), **fluffball** (multiplies if left alone), **spotlight drone** | **The Saucer Cam Mothership** | **The Conga Dragon** |
+| **Live Finale** | One long run of rooms that remixes every set, a commercial break mid-run, then the main stage | All of them | — | **The Host's Prize Machine** |
+
+**Room types** (all data-defined scripts):
+- **Swarm** (today's room, scripted).
+- **Mine set**: whoopee-cushion and banana-peel mines on the floor.
+- **Light rig**: spotlight beams sweep the floor on a beat.
+- **Camera wall**: turret cameras along one wall.
+- **Speed round**: short timer, double prize drops.
+- **Prize vault**: no enemies, prizes on pedestals, closes fast.
+- **Ambush**: all four doors at once.
+- **Conga ballroom**: lines only, long and fast.
+- **Sponsor challenge**: clear without a hit, or grab every prize, for a golden ticket.
+- **Secret room**: off the map, behind a cracked wall the host hints at.
+
+**Room modifiers**, rolled from data on later visits and in Rerun:
+- **Lights Out**: only spotlights.
+- **Foam Party**: slippery for everyone.
+- **Confetti Storm**: low visibility.
+- **Double Time**: everything faster, prizes doubled.
+- **Audience Participation**: the crowd throws helpful items.
+- **Sudden Death**: one hit, but a huge prize.
+
+#### The roster: 4 → 19 crashers
 
 | Crasher | Behaviour | Answer |
 | --- | --- | --- |
 | Grabber, bouncer, conga line, thrower | As today, scripted | As today |
-| **Popper** | A balloon bot that bursts into a ring of streamer shards when confettied | Pop it at range |
+| **Popper** | A balloon bot that bursts into a ring of streamer shards | Pop it at range |
 | **Sweeper tank** | Slow, armoured front, fires a bubble burst | Flank it |
 | **Stagehand** | Lays floor mines as it walks | Catch it early |
-| **Spotlight drone** | Orbits, then locks a beam onto you for a charge | Break line or out-pace |
-| **Mascot** | A big costumed mini-boss with a charge and a belly-bounce | Dodge the charge, hit its back |
-| **Camera crane** | Wall turret (Camera wall rooms) | Out-angle it |
+| **Spotlight drone** | Orbits, then locks a beam on for a charge | Break line or out-pace |
+| **Mascot** | A big costume with a charge and a belly-bounce | Dodge the charge, hit its back |
+| **Camera crane** | Wall turret | Out-angle it |
+| **Pie chef** | Arcing pies, slippery cream splats | Keep moving, mind the floor |
+| **Egg-timer bot** | Counts down, then hatches a clutch | Cheer it before zero |
+| **Meatball roller** | Rolls in long straight lines and ricochets | Sidestep, then spray |
+| **Roadie** | Shoves flight cases around | Use the cases as cover |
+| **Stage diver** | Leaps and lands in a ring | Read the shadow |
+| **Heckler** | Pumps up the crashers around it | Cheer it first |
+| **Saucer cam** | Hovers and beams prizes away | Save the prize, then the saucer |
+| **Mirror clone** | Copies your moves a beat late | Move so it walks into your spray |
+| **Fluffball** | Multiplies if left alone | Clear them early |
 
-**Arsenal: 3 → 7.** Keep spread, rapid and shield; add **party poppers** (lobbed area blast), **bubble
-rockets** (slow, heavy, pierce), **streamer orbiters** (two spinning ribbons that guard you) and **roller
-skates** (speed). Short durations, stacking timers, all shown in the HUD.
+There is also a **boom mic** hazard that drops from the ceiling on a tell and lifts you away for a moment.
 
-**Bosses: 1 → 4, every one a different fight:**
+#### The arsenal: 3 → 10
 
-1. **Episode 1 — The Big Wobble.** A giant inflatable mascot. Each arm and leg is a separate target;
-   popping one changes its attack (arm gone: no slam; leg gone: it hops). Three phases.
-2. **Episode 2 — The Jumbotron.** A wall of video screens with a face. Screens flip open to reveal
-   turrets; the face moves screen to screen; crack the screens to corner it.
-3. **Episode 3 — The Conga Dragon.** A long segmented parade dragon that weaves the studio. Segments drop
-   off as you confetti them and each one becomes a small dancer; the head speeds up as it shortens.
-4. **Grand Finale — The Host's Prize Machine.** The host rides a giant prize wheel machine that spins up
-   different attack sets (the wheel shows the next one), with a last phase where the host jumps out.
+- Kept from today: spread, rapid and shield.
+- New:
+  - **Party poppers:** a lobbed area blast.
+  - **Bubble rockets:** slow, heavy and piercing.
+  - **Streamer orbiters:** two spinning ribbons that guard you.
+  - **Roller skates:** speed.
+  - **Glitter laser:** a piercing beam.
+  - **Foam cannon:** slows crashers and foams the floor under them.
+  - **Cardboard cutout:** a decoy of you that crashers chase.
+- Short durations and stacking timers, all shown in the HUD.
 
-The parade float stays as an episode-1 mid-boss.
+#### The bosses: 1 → 9
 
-**The show itself:**
-- **The host and announcer.** A host robot portrait cuts in at the edge of the screen with short original
-  lines in a speech panel: room start, a big prize, a near miss, low time, a boss intro, a death, a clear.
-  A small bleep-speak voice (WebAudio pitch patterns, no speech synthesis needed). Lines are original
-  writing; no catchphrases from the source.
-- **The prize screen.** After each episode, a tally screen: each prize kind counts up with its sprite and a
-  tick sound, then the totals, golden tickets and an episode bonus. The game-over screen lists the season
+Every boss is a different fight with real phases and telegraphs, not an HP sponge.
+
+1. **The Parade Float** (episode 1 mid-boss): today's float, plus a second phase where the cake's candles
+   light and fire volleys.
+2. **The Big Wobble** (episode 1): a giant inflatable mascot. Each arm and leg is its own target, and
+   popping one changes its attacks (arm gone: no slam; leg gone: it hops).
+3. **The Pie Cart** (episode 2 mid-boss): a runaway dessert trolley that circles the room firing pies and
+   dropping cream slicks.
+4. **The Soufflé Supreme** (episode 2): it rises (untouchable, raining steam rings) and falls (open to
+   attack). At half health it splits into a swarm of cupcakes that re-form if you leave them.
+5. **The Mosh Mascot** (episode 3 mid-boss): a giant costume that crowd-surfs across the room on a sea of
+   crashers. Clear the crowd and it falls.
+6. **The Jumbotron** (episode 3): a wall of video screens with a face. Screens flip open to turrets, and the
+   face jumps from screen to screen in time with the music. Crack the screens to corner it.
+7. **The Saucer Cam Mothership** (episode 4 mid-boss): it beams prizes up from the floor. Win them back by
+   breaking its tractor beam.
+8. **The Conga Dragon** (episode 4): a long segmented parade dragon in low gravity. Segments drop off as
+   you confetti them and become dancers; the head speeds up as it shortens.
+9. **The Host's Prize Machine** (Live Finale): the host rides a giant prize wheel. Each spin lands on a
+   different attack set, and the wheel shows the next one. In a last phase the host jumps out and it's a
+   one-on-one dance-off duel.
+
+The **Grand Prize Vault** opens after the finale for anyone holding ten golden tickets. It is a gauntlet of
+every set, the host cheering *for* you this time, and the **true ending**: the party crashers all join the
+studio audience.
+
+#### The show: what makes it a broadcast
+
+- **The host and the announcer.**
+  - A host robot portrait cuts in at the edge of the screen with short original lines in a speech panel.
+    Lines trigger on: room start, a big prize, a near miss, low time, a boss intro, a death and a clear.
+  - From episode 3 a dry **co-host** camera bot joins in.
+  - The host reacts to your style: a long cheer chain, a no-damage room, a risky route.
+  - Voice is WebAudio bleep-speak (pitch patterns; no speech synthesis needed).
+  - All lines are original writing; no catchphrases from the source.
+- **The ratings meter**, the signature system. It fills with style: cheer chains, near misses, prize grabs
+  and no-damage rooms. It drains when you're idle or hit. Four tiers, from **Off Air** to **Prime Time**:
+  - Each tier raises the score multiplier.
+  - At Prime Time a **sponsor care package** drops.
+  - Down at Off Air, the producer throws in a **plot twist**: an extra hazard, to win the viewers back.
+- **Cheer chains:** cheering crashers in quick succession builds a multiplier that the announcer counts
+  out.
+- **The prize tally screen:** after each episode, each prize kind counts up with its sprite and a tick
+  sound, followed by golden tickets, ratings and an episode bonus. The game-over screen shows the season
   haul the same way.
-- **The studio.** An APPLAUSE sign that lights on kills, an audience band along the bottom wall that cheers
-  on big moments, camera-flash juice on boss hits.
-- **True twin-stick.** Extend the engine input with an optional aim vector (the way `plunger` is optional
-  on `InputFrame`): the gamepad's right stick, a second on-screen stick on touch, and a split keyboard
-  (move on WASD, aim on the arrows). Hold-B aim lock stays for single-stick players.
-- **Two-contestant co-op** through the cabinet's `players` frames.
+- **The Prize Swap:** after the tally, trade prizes for upgrades. A car buys an extra contestant, a toaster
+  a starting power-up, cash extra seconds on the clock; a golden ticket can reveal one secret room. It is
+  in-game prizes only, never real money.
+- **Commercial breaks:** a short mini-game between episodes, each a TV homage:
+  - **Spin the Wheel:** a timing game.
+  - **Catch the Prizes:** run under falling prizes.
+  - **Pie Dodge.**
+  - **Higher or Lower:** guess whether the next prize is worth more.
+- **The studio:** an APPLAUSE sign that lights on kills, an audience band along the bottom wall that cheers
+  big moments, and camera-flash juice on boss hits.
 
-**Target length:** a first clear of the season in roughly 30–45 minutes.
+#### The contestants and the modes
+
+- **Four contestants**, each with their own sprite and feel:
+  - **Sparkle:** balanced.
+  - **Zippy:** fast, with a narrow spray.
+  - **Boomer:** slow, with a wide heavy cannon.
+  - **Glimmer:** a shield that recharges.
+
+  Up to four play at once, through the cabinet's `players` frames.
+- **True twin-stick aim:** extend the engine input with an optional aim vector (the way `plunger` is
+  optional on `InputFrame`). It comes from the gamepad's right stick, a second on-screen stick on touch, or
+  a split keyboard (move on WASD, aim on the arrows). Hold-B aim lock stays for single-stick players.
+- **Modes:**
+  - **Season.**
+  - **Rerun:** NG+ with remixed scripts and modifiers.
+  - **Marathon:** endless rooms, the leaderboard's main event.
+  - **Episode select:** after a clear.
+- **Medals per room:** Flawless, Full Haul, Prime Time. A medal board per episode.
 
 ---
 
 ## 3. Order of work
 
-Both are `large` games under the factory rules: ship them in playable slices, each one merged, each one
-verified with `test:arcade-engine`, eslint/prettier and vue-tsc plus a deterministic campaign test, and
-Pixel/HD screenshots.
+Both are `large` games under the factory rules, so they ship in playable slices. Each slice is merged and
+verified with `test:arcade-engine`, eslint/prettier and vue-tsc, plus a deterministic campaign test, a pilot
+probe showing runs still end, and Pixel/HD screenshots. Pipe Pals goes first, because Silas called it out as
+the weaker of the two.
 
-- **Pipe Pals:** t-023 (scale, systems and the first new enemies), then t-024 (the five districts, ice and
-  bonus variety), then t-025 (Clog King, campaign end, save/resume, co-op).
-- **Prize Show Panic:** t-026 (the season map and authored rooms), then t-027 (roster, arsenal, twin-stick),
-  then t-028 (host, announcer, prize screen), then t-029 (four bosses, the vault, ending, save/resume,
-  co-op).
+**Pipe Pals**
 
-Pipe Pals goes first: Silas called it out as the weaker of the two.
+| Slice | Task | Scope |
+| --- | --- | --- |
+| 1 | t-023 | Bigger actors, recovery tiers, chains, kick bowling, turnaround, first new threats, tool belt |
+| 2 | t-024 | Day Shift: districts 1–3, special phases, the Big Shell, the Workshop |
+| 3 | t-025 | Swing Shift: districts 4–6 (ice, steam, clockwork), the Thermostat |
+| 4 | t-030 | Night Shift: districts 7–8, the Clog King and the flush, the Golden Main, endings, save/resume |
+| 5 | t-031 | Two pals (co-op and Versus), Overtime, Time Trial, medals |
+
+**Prize Show Panic**
+
+| Slice | Task | Scope |
+| --- | --- | --- |
+| 1 | t-026 | Season map engine, authored rooms and modifiers, episode 1 Opening Night, golden tickets |
+| 2 | t-027 | Crasher roster and arsenal, true twin-stick aim |
+| 3 | t-028 | Host, co-host, ratings meter, cheer chains, prize tally, Prize Swap, studio audience |
+| 4 | t-029 | Episodes 2–3 (Cooking Showdown, Countdown Concert), their mid-bosses and bosses |
+| 5 | t-032 | Episode 4 Galaxy Parade, the Live Finale, the Grand Prize Vault, endings, save/resume |
+| 6 | t-033 | Commercial-break mini-games, four contestants, co-op for up to four |
+| 7 | t-034 | Rerun, Marathon, episode select, medals |
