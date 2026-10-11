@@ -686,7 +686,18 @@ tasks:
       READY 2026-10-10 (PT): t-019 and t-020 are done (t-019 closed in this PR), so the
       resolver's promotion is applied here. The ending stills are queued
       (art/T021-ENDINGS.yaml).
-    updated: '2026-10-11T03:59:13Z'
+
+      PROGRESS 2026-10-10 (PT): Arcade mode (kind_robots#3492: a seeded ladder of every other
+      fighter ending on the rival then the Swamp Witch, the CPU climbing two levels,
+      ladder/continue/ending/initials screens, a score from the match's own events times the
+      starting level, posted to the arcade leaderboard as an unlisted scored game so it stays
+      out of the hall until t-025) and The Thing Behind the Door (kind_robots#3493: three
+      phases on the Thin Place, one round, immovable, its own AI; engine hooks
+      immovable/startX/phases/singleRound and render painters; every fighter can bring it down
+      inside the clock) are on main. Left: the 18 ending stills (art/T021-ENDINGS.yaml,
+      queued) ship with tools/endings.py; until then each ending shows the victory portrait.
+      The hall tile's metadata waits in UNLISTED_SCORED_GAMES for t-025.
+    updated: '2026-10-11T04:12:33Z'
     claimed_by: 2026-10-11T04:10:00Z-zs-t021
     claimed_at: '2026-10-11T03:59:13Z'
 
