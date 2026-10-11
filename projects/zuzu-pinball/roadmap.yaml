@@ -155,7 +155,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Build raised Abbey upper deck with two independent flippers"
-    status: claimed
+    status: done
     depends_on: t-005
     owner: worker
     passes: 0
@@ -164,9 +164,16 @@ tasks:
       A visible, physically elevated mini-playfield and upper left/right player
       controls (plus mirrored accessibility mode); ramp entry, deck targets,
       protected exits, and controlled ball returns to lower playfield.
+
+      Merged kind_robots#3557 (squash 64cf7bd): clear raised Abbey deck at the Bell spiral's
+      end (fixes made spirals leaving the cabinet), upper flipper tier (mirrored by default,
+      alone while B/Shift is held), three hollow-bell standups (toll opens the Mortuary),
+      protected exit subway to the right inlane; verifier proves deck landing, each bell,
+      nothing stranded or fallen.
     claimed_by: 20261011T224500Z-zuzu-t006-abbey-r3p8
     claimed_at: '2026-10-11T22:35:25Z'
-    updated: '2026-10-11T22:35:25Z'
+    updated: '2026-10-11T23:18:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#3557'
   - id: t-007
     milestone: m2
     title: "Implement sling, pop bumper, drop bank, scoop, captive ball and tilt"
