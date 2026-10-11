@@ -199,18 +199,18 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Safe versioned save/resume, pinned run seed, history and deterministic replay tests"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-006]
-    note: >-
-      Durable, schema-versioned serialized run; preserve choices, hidden roles,
-      map events, used Rewards, companion identity and both roll dice; reject
-      corrupted saves; no re-roll by refresh.
+    note: |-
+      Durable, schema-versioned serialized run; preserve choices, hidden roles, map events, used Rewards, companion identity and both roll dice; reject corrupted saves; no re-roll by refresh.
+
+      Implemented isolated V3 event replay ledger, source-pinned seed and deterministic validation of card identity, dice, map shifts and spent Rewards, plus V2 save migration as an explicit legacy checkpoint. Private preview store now persists only V3 after migration and refuses rollback from invalid V3. Dedicated replay and board contract tests added; implementation PR and CI pending.
     claimed_by: 2026-10-11T051600Z-zuzu-shifting-lands-t009-9c42
     claimed_at: '2026-10-11T05:16:00Z'
-    updated: '2026-10-11T05:16:00Z'
+    updated: '2026-10-11T05:32:00Z'
 
   - id: t-010
     milestone: m3
