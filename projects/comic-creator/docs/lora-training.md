@@ -118,3 +118,13 @@ accelerate config   # this machine, no distributed training, fp16
 Prompt the house lane with the trigger word and the identity tags at LoRA weight 0.7–0.9. Then compare against
 the locked sheet (the facing convention, the eyepatch and holster on the coyote's right side, Zuzu's single
 katana). If the character comes out too stiff, try an earlier epoch file (`-000006`, `-000008`).
+
+## Results (2026-10-11)
+
+All five trained on Ferngrotto: about 1 hour each on the 12 GB card, at 2.1 s/step. All are registered as private
+Kind Robots resources. The final epoch is the pick for every character, and four of the five hold their locked
+design. The coyote's LoRA ignores his stump: only 2 of his 19 images had it. Ids, verdicts and the stump workaround
+are in `issues/zuzu-koala-assassin-01/CAST-PICKS.md`. Test renders are in `LORA-TEST.yaml`.
+
+To use one in an art ledger, add `loras: [{resource_id: 4593, strength: 0.8}]` to a lane or subject, and put the
+trigger word in the prompt. `/api/art/enqueue` resolves the file.
