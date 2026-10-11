@@ -14,6 +14,8 @@ Silas, 2026-10-11, on the first draft of this plan: *"Love the improvement sugge
 expand both pitches to add even more to each, so we really are homages with even more inspired levels and
 gameplay depth."* The upgrade sections below are that expanded version.
 
+**Every other cabinet:** the same bar applied to the remaining 25 cabinets is [`CABINETS.md`](CABINETS.md) (milestone m8).
+
 **The bar:** each game has at least as much level variety, enemy variety and structure as the classic it
 riffs on, then goes past it. The guardrails still hold: mechanics only, never the originals' names,
 characters, sprites, sounds or level layouts; cartoon bonk/reboot only; no runtime LLM.
