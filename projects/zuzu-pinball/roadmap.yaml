@@ -258,7 +258,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build production art assets, 3D cabinet, ramps, ball, plastics and themed toys"
-    status: claimed
+    status: done
     depends_on: t-005
     owner: worker
     passes: 0
@@ -289,9 +289,18 @@ tasks:
       (36955; closed jaws without a visible ball, usable because the renderer draws the real
       ball; a v3 asking for the ball is queued), 5 Death Roll (strong), 6 spit. The originals
       3 and 4 came back closed-mouthed, because the shared seed pinned the pose; ignore them.
+
+      2026-10-11 PT: kind_robots PR #3531 merged at 7a2517a with all 31 checks green. The
+      painted playfield is now the table's art.playfield over the whole table rectangle, and
+      the backglass is room.backglass (Ghost Trail title as fallback). The admin banner shows
+      the backglass. Rendered in headless Chromium at desktop and phone sizes; the art lines
+      up under the mechanisms. The Abbey deck art goes to t-006 and the undercrypt art to
+      t-010. The cabinet side render needs a crop, and there is no side-art slot in the
+      renderer yet.
     claimed_by: 20261011T214000Z-zuzu-t011-wire-h6d2
     claimed_at: '2026-10-11T20:37:30Z'
-    updated: '2026-10-11T20:37:30Z'
+    updated: '2026-10-11T21:02:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#3531'
   - id: t-012
     milestone: m4
     title: "Addressable LED rail and bezel splash shows, sound, DMD animations, camera"
@@ -339,7 +348,7 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Build River Croc waterline mouth capture, jaw rig and safe spit"
-    status: claimed
+    status: done
     depends_on: t-007
     owner: worker
     passes: 0
@@ -354,13 +363,25 @@ tasks:
       Spit/Reset sequence. Spit to right inlane; ball ledger conservation,
       busy-mouth reject, timeout eject, safe tilt, multiball stress and
       unobstructed ramp clearance verified with repeatable trajectory tests.
+
+      2026-10-11 PT: kind_robots PR #3535 adds the River Croc's jaw gate (door croc-jaw,
+      starts open, shuts on capture) and his cycle: open, captured, Death Roll, spit,
+      submerged, rising, open. It also adds the sculpted animatronic toy (engine animatronics
+      plus render/croc.ts) and the lamp aim cue. test:zuzu-pinball-croc covers busy-mouth
+      reject, two-ball conservation and 200 rounds; 1,000 rounds passed locally with no drain
+      during a hold.
+
+      Merged kind_robots#3535 (squash fbca13a): jaw gate, timed cycle, sculpted toy; a follow-
+      up commit in the same PR fixed the jaws staying shut after a mid-chapter swallow (quiet
+      ticks dropped the open effect).
     claimed_by: 20261011T220500Z-zuzu-t015-croc-j4n8
     claimed_at: '2026-10-11T20:44:00Z'
-    updated: '2026-10-11T20:44:00Z'
+    updated: '2026-10-11T21:31:09Z'
+    implementation_pr: 'silasfelinus/kind_robots#3535'
   - id: t-016
     milestone: m3
     title: "Author River Croc Watering Hole mini-mode and Death Roll jackpot"
-    status: waiting
+    status: review
     depends_on: t-015
     owner: null
     passes: 0
@@ -373,3 +394,10 @@ tasks:
       water-spray and jaw-snap sound, accessible reduced-motion cues and
       trajectory-skill progression. Do not make the mouth an instant drain;
       every legitimate swallow safely ejects and awards something.
+
+      kind_robots#3545: Watering Hole opens on a Homestead swallow (30 s, gamebook coyote
+      canon); orbit lights the mouth for the Death Roll (1M +500k each, window 6/5/4/3.5 s);
+      unlit swallow pays spit-back; waterline LEDs, death-roll DMD close-up, jaw-snap/water-
+      spray cues, reduced-motion toy; physics soak spits every swallow back.
+    updated: '2026-10-11T21:31:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#3545'
