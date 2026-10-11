@@ -2124,3 +2124,35 @@ pitches:
           - kind_robots CI 29/29 green; merged to main (squash 4fc28ec)
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+  - id: jellyfish-drift-bloom
+    title: Jellyfish Drift Bloom
+    status: candidate
+    priority: 40
+    surprise: |
+      Bioluminescent jellyfish pulse upward and sink back through dark water, tentacles trailing a beat behind.
+    passive_loop: |
+      Each jelly squeezes on its own 3.2-5.2 second period, thrusting upward on the squeeze and sinking between pulses, wrapping at the edges, so the bloom drifts forever with no interaction.
+    optional_interaction: |
+      Hovering near a jelly makes it glow; a rate-limited click sends the whole bloom into a quick swim that decays.
+    technique: |
+      One canvas, nine seeded jellies with radial-gradient halos, polyline tentacles and a drifting mote layer, capped DPR, ResizeObserver sizing.
+    reduced_motion: |
+      Draws a single static frame with no drift, hover glow or swim.
+    performance_risk: |
+      Low: nine jellies with seven short tentacles each per frame.
+    novelty: |
+      First deep-sea scene; pulse-and-sink locomotion with lagging tentacles.
+    acceptance:
+      - jellies pulse, rise and sink on their own periods without interaction
+      - hovering brightens a nearby jelly and it relaxes afterwards
+      - clicking triggers a swim burst at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/jellyfish-drift-bloom.vue
+        pull_request: silasfelinus/kind_robots#3533
+        released_at: '2026-10-11T08:00:00Z'
+        verification:
+          - kind_robots CI 29/29 green; merged to main (squash b535876)
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
