@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-11T13:03:50.588049+00:00",
+  "generated_at": "2026-10-11T22:06:37.541935+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 24,
+    "roadmap_warnings": 23,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 195.66,
+    "hours_since": 204.71,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,19 +35,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-11T13:03:50.588053+00:00",
+    "generated_at": "2026-10-11T22:06:37.541943+00:00",
     "summary": {
       "roadmaps": 78,
       "active_projects": 39,
       "continuous_projects": 3,
-      "tasks": 2108,
-      "ready": 94,
-      "waiting": 112,
+      "tasks": 2221,
+      "ready": 107,
+      "waiting": 187,
       "needs_human": 36,
-      "in_progress": 14,
-      "done": 1836,
+      "in_progress": 22,
+      "done": 1853,
       "errors": 0,
-      "warnings": 24,
+      "warnings": 23,
       "info": 64
     },
     "errors": [],
@@ -64,7 +64,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "animation-manager",
         "task": "t-022",
-        "message": "Task has remained claimed for 17 days."
+        "message": "Task has remained claimed for 18 days."
       },
       {
         "severity": "warning",
@@ -85,7 +85,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "coloring-book",
         "task": "t-058",
-        "message": "Task has remained claimed for 13 days."
+        "message": "Task has remained claimed for 14 days."
       },
       {
         "severity": "warning",
@@ -99,7 +99,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "conductor",
         "task": "t-203",
-        "message": "Task has remained claimed for 9 days."
+        "message": "Task has remained claimed for 10 days."
       },
       {
         "severity": "warning",
@@ -205,13 +205,6 @@
         "project": "zuzu-lair",
         "task": "t-010",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "zuzu-pinball",
-        "task": "t-011",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
