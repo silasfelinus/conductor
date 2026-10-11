@@ -245,7 +245,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Portraits: character select, VS screen and win/defeat art for all eight"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -257,9 +257,22 @@ tasks:
       VIDEO-GUARDRAILS.md word traps and bannedTerms; no lettering. Then pixelize them (downscale and
       quantize to the fighter's palette) so they sit with the sprites. Commit to kind_robots
       public/images/zuzu-showdown/portraits/ with a metadata JSON per image.
+
+      DONE 2026-10-10 (PT): all 36 portraits (9 fighters x 4: select bust, VS half-body slam,
+      victory, beaten) are in the game (silasfelinus/kind_robots#3485). Kontext re-posed each
+      from its canon source (art/T008-PORTRAITS.yaml; the Siblings rerolled with the toddler's
+      own pose stitched in, siblings-vs on its third draw, 244925). New tools/portraits.py
+      ships them as pixel PNGs at screen size (40-colour) and 4x HD WebP (~1 MB in all) plus
+      portraits.json. They live at kind_robots public/zuzu-showdown-portraits/, not
+      public/images/ as this note said, because /public/images/** is gitignored. The select
+      cards show busts, the VS screen slams in the half-bodies, the win screen shows the
+      winner's victory portrait with the loser's beaten one small in the corner; in a mirror
+      match P2's portrait is hue-shifted for its alternate palette; a missing portrait falls
+      back to the sprite.
     claimed_by: 2026-10-11T00:15:00Z-zs-t008
     claimed_at: '2026-10-11T00:10:26Z'
-    updated: '2026-10-11T00:10:26Z'
+    updated: '2026-10-11T03:26:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#3485'
 
   - id: t-009
     milestone: m3
