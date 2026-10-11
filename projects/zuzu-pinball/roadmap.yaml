@@ -345,7 +345,7 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Build River Croc waterline mouth capture, jaw rig and safe spit"
-    status: review
+    status: done
     depends_on: t-007
     owner: worker
     passes: 0
@@ -367,9 +367,13 @@ tasks:
       plus render/croc.ts) and the lamp aim cue. test:zuzu-pinball-croc covers busy-mouth
       reject, two-ball conservation and 200 rounds; 1,000 rounds passed locally with no drain
       during a hold.
+
+      Merged kind_robots#3535 (squash fbca13a): jaw gate, timed cycle, sculpted toy; a follow-
+      up commit in the same PR fixed the jaws staying shut after a mid-chapter swallow (quiet
+      ticks dropped the open effect).
     claimed_by: 20261011T220500Z-zuzu-t015-croc-j4n8
     claimed_at: '2026-10-11T20:44:00Z'
-    updated: '2026-10-11T21:02:44Z'
+    updated: '2026-10-11T21:31:09Z'
     implementation_pr: 'silasfelinus/kind_robots#3535'
   - id: t-016
     milestone: m3
