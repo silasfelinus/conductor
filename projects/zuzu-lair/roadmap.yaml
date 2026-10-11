@@ -90,7 +90,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "kind_robots: pure QTE engine + contract test (utils/zuzuLair/)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -105,9 +105,14 @@ tasks:
       verifyArcadeEngine.test.ts: walks a full perfect run, a run with every death, timeout and wrong
       button, continue after game over, and validates the graph (every target id exists, no orphan nodes,
       windows inside clip length).
+
+      DONE 2026-10-11: engine + chapter1 graph + validator + contract test (npm run test:zuzu-
+      lair, wired into contract-tests.yml) merged in kind_robots#3508. Unblocks t-005 (player
+      page).
     claimed_by: 2026-10-11T094717Z-zuzu-t004-q1
     claimed_at: '2026-10-11T09:47:17Z'
-    updated: '2026-10-11T09:47:17Z'
+    updated: '2026-10-11T10:17:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#3508'
 
   - id: t-005
     milestone: m2
