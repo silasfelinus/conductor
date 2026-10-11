@@ -1,0 +1,13 @@
+version: 1
+project: zuzu-shifting-lands
+task: t-009
+operation: review
+owner: worker
+session: 2026-10-11T051600Z-zuzu-shifting-lands-t009-9c42
+updated: '2026-10-11T05:32:00Z'
+note: >-
+  Implemented isolated V3 event replay ledger, source-pinned seed and deterministic
+  validation of card identity, dice, map shifts and spent Rewards, plus V2
+  save migration as an explicit legacy checkpoint. Private preview store now
+  persists only V3 after migration and refuses rollback from invalid V3.
+  Dedicated replay and board contract tests added; implementation PR and CI pending.
