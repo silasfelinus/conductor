@@ -572,7 +572,7 @@ tasks:
   - id: t-023
     milestone: m7
     title: "Pipe Pals depth slice 1: bigger actors, recovery tiers, chains, kick bowling, turnaround and the tool belt"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -592,10 +592,19 @@ tasks:
       (district/episode/room definitions), not branches in the update loop. Verify: test:arcade-engine
       plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR,
       and a pilot probe that shows runs still end.
+
+      DONE 2026-10-11: silasfelinus/kind_robots#3512 merged after all 30 CI checks passed.
+      Bigger actors (pal ~24 px, critters ~20 px, 3 walk frames + squash), calm/cross/furious
+      tiers and last-critter rush, walker turnaround, kick chains 800..5000, kick bowling, a
+      coin on every kick, spring flea and shell knight, ember sparks and lurker embers snuffed
+      from below, the tool belt (Wide Wrench, Kick Boots, Bubble Wand on B, Magnet Cap), KIND
+      block refills, new utils/scripts/verifyPipePals.test.ts in test:arcade-engine. Pilot
+      probe with endless lives: phases 11-16 in 20 min, every mechanic exercised.
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3
     claimed_at: '2026-10-11T11:42:10Z'
-    updated: '2026-10-11T11:42:10Z'
+    updated: '2026-10-11T12:28:25Z'
+    implementation_pr: 'silasfelinus/kind_robots#3512'
 
   - id: t-024
     milestone: m7
