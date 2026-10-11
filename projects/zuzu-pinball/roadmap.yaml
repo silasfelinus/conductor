@@ -181,7 +181,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Implement mode director, five story chapters, shot awards and DMD contracts"
-    status: review
+    status: done
     depends_on: t-005
     owner: worker
     passes: 0
@@ -203,9 +203,13 @@ tasks:
       lights an extra ball. Also included: soft-plunge Mortuary skill shot, combos, ball save,
       bonus, tilt, match and game over, plus seal-track, multiplier and shoot-again lamps. New
       test:zuzu-pinball-rules covers every rule and plays bot games to game over.
+
+      Merged kind_robots PR #3511 at 6be257193188bc201c33a6fbaed63cabadcb3569 with all 33
+      checks green, including test:zuzu-pinball-rules. Production deploy not verified (manual
+      Unraid Force Update).
     claimed_by: 20261011T171000Z-zuzu-t008-modes-r7q4
     claimed_at: '2026-10-11T11:17:47Z'
-    updated: '2026-10-11T11:38:15Z'
+    updated: '2026-10-11T11:50:54Z'
     implementation_pr: 'silasfelinus/kind_robots#3511'
   - id: t-009
     milestone: m3
