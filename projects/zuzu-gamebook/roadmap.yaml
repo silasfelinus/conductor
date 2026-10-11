@@ -421,7 +421,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: [t-006]
+    depends_on: []
     note: >-
       Silas, 2026-10-10: "go ahead for workarounds. We can fix things later when we have the LoRAs built, that
       task got moved to later because we had too much art that was going to be made...ironically, since by this
@@ -440,4 +440,5 @@ tasks:
       Zuzu plates off-model (bear or dog face, two swords, no hat or poncho) and 16 others (blood, a hanging, human
       faces, a modern pistol). ROUND-13 (170 jobs from 37025) redraws the 85 Zuzu-alone compositions with his LoRA;
       ROUND-14 recomposes the 17 Zuzu ensembles, the 16 other flags and the 4 stand-ins; ROUND-15 (94 jobs from 37195)
-      redraws the 47 sister/toddler/coyote/abbess plates with their LoRAs, kept only where better.
+      redraws the 47 sister/toddler/coyote/abbess plates with their LoRAs, kept only where better. The
+      t-006 dependency is dropped: t-006's last four stand-ins are now redrawn here (ROUND-14), so t-012 no longer waits on it.
