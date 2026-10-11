@@ -181,7 +181,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Implement mode director, five story chapters, shot awards and DMD contracts"
-    status: claimed
+    status: review
     depends_on: t-005
     owner: worker
     passes: 0
@@ -191,9 +191,22 @@ tasks:
       and Last Bell. Lamp and DMD bindings, ball-to-ball chapter retention,
       skill shots, combo ladder, multiplier, extra ball, match and game over.
       Narrative readability never blocks the player from flipping.
+
+      2026-10-11 PT: Kind Robots PR #3511 gives the Zuzu table its own ruleset; until now it
+      ran AMI Village Rescue's rules. The runtime now takes a PinballRuleset, with AMI's as
+      the default and its reducer unchanged. The Mortuary tells five chapters in order:
+      Homestead in Ash, Storm Crow Canyon, Abbey of Hollow Bells, The Children's Names and The
+      Last Bell. Each is timed, and finishing it breaks one of five seals. Chapter progress is
+      kept across balls, and after the Last Bell the story starts again at double value. The
+      bell lane or all four Abbey seals reopen the Mortuary, and the seals also raise the
+      bonus multiplier and relight the kickback. The Croc always pays, and his fifth swallow
+      lights an extra ball. Also included: soft-plunge Mortuary skill shot, combos, ball save,
+      bonus, tilt, match and game over, plus seal-track, multiplier and shoot-again lamps. New
+      test:zuzu-pinball-rules covers every rule and plays bot games to game over.
     claimed_by: 20261011T171000Z-zuzu-t008-modes-r7q4
     claimed_at: '2026-10-11T11:17:47Z'
-    updated: '2026-10-11T11:17:47Z'
+    updated: '2026-10-11T11:38:15Z'
+    implementation_pr: 'silasfelinus/kind_robots#3511'
   - id: t-009
     milestone: m3
     title: "Add physical lock and 3/4/6 ball multiballs with jackpots"
