@@ -117,7 +117,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "kind_robots: the player page (video branches, input, flash assist, on-screen buttons, sound)"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -136,6 +136,12 @@ tasks:
       - Sound: clip audio plus WebAudio stingers (utils/arcade/sound.ts presets).
       - Flow: title card, then the opening animation; at the end, score, initials and the leaderboard.
       Verify at phone, tablet and desktop with Playwright, and screenshot every state.
+
+      DONE 2026-10-11: player page /play/zuzu-lair merged in kind_robots#3521 (placeholder
+      stills until t-006 clips, flash assist at 2 Hz, d-pad, Pinia options, leaderboard slug
+      zuzu-lair). Verified at phone and desktop with Playwright.
+    updated: '2026-10-11T14:12:29Z'
+    implementation_pr: 'silasfelinus/kind_robots#3521'
 
   - id: t-006
     milestone: m2
@@ -207,7 +213,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Leaderboard and arcade hall tile"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
