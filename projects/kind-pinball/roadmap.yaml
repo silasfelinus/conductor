@@ -112,7 +112,7 @@ milestones:
   - id: m7
     title: "DEPTH -- close the gaps t-030's side-by-side found against the mockups"
     weight: 15
-    status: in-progress
+    status: done
 
 tasks:
   - id: t-001
@@ -989,7 +989,7 @@ tasks:
   - id: t-033
     milestone: m7
     title: "More inserts and metal lane guides: chevron arrow runs into every shot, steel guide hardware"
-    status: claimed
+    status: done
     depends_on: [t-030]
     owner: worker
     passes: 0
@@ -1002,15 +1002,28 @@ tasks:
       chrome bolts and screw heads. The shot map, colliders and physics stay unchanged: new
       inserts are flat lamps under the playfield clear coat, and guides only dress existing walls.
       Tests cover a chevron run per shot, and that each run follows its shot's rule state.
-    updated: '2026-10-11T03:41:28Z'
+
+      Shipped in kind_robots#3491 (merged). A run of three chevrons sits behind each main shot
+      arrow, in the shot's colour. rules/lamps.ts drives it from the arrow: dark while the
+      arrow is unlit, filling one chevron per time the shot has been made, and chasing toward
+      the arrow while the shot is worth going for (the village shots, the multiball jackpots,
+      the wizard mode). A made shot ripples its run. The award saucer sits in the right ramp's
+      lane, so that shot has no run; chevronRun drops any run that would cross a saucer. Hex
+      stand-offs with domed chrome screw heads hold down both ends of every chrome lane guide,
+      with more along the long guides. Both are scenery only: the colliders are unchanged, and
+      the tests assert it. Tests cover placement and clearance from saucers, posts and
+      inserts, every rule state, the chase order, and the stand-off count. The overlap test
+      caught the right-ramp run sitting on the award lamp before it shipped. Screenshots:
+      screenshots/t033-desk.jpg, t033-chevrons.jpg, t033-standoffs.jpg.
+    updated: '2026-10-11T04:09:13Z'
     implementation_pr: 'silasfelinus/kind_robots#3491'
 
   - id: t-034
     milestone: m7
     title: "Denser sculpted scenery: blossom trees, more village houses and props on the safe edges"
-    status: ready
+    status: done
     depends_on: [t-030]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -1021,3 +1034,21 @@ tasks:
       play is unchanged. Merge geometry and instance it so the medium and low tiers keep their
       frame budget, with the density set per quality tier. Tests check that no prop's footprint
       overlaps a ball path, and that each tier's prop count holds.
+
+      Shipped in kind_robots#3495 (merged). 24 sculpted props: cottages (timber frames, gabled
+      roofs, chimneys, lit windows that follow the GI), blossom trees, fences, barrels, crates
+      and flower bushes. They stand in two clusters behind the arch at the Ridge's foot beside
+      the huts, with a tree in each Ridge lower corner and a bush on each sling plastic.
+      pinball/reach.ts flood-fills where a ball's centre can reach (2 mm grid, from the
+      plunger and every eject; walls and posts block, ramps, doors and gates never do). The
+      tests prove every prop's footprint, and any crown low enough to meet a ball, is out of
+      play, and that no ramp or cover passes over a prop. They also check the map against the
+      shooter lane, the shot arrows, the saucers and the flippers. Rendering merges per-
+      vertex-coloured solids and windows per tier, six draw calls at most. Low keeps the
+      cottages and main trees, medium adds trees and fences, high adds the small props. No
+      colliders are added. Honest limit: there is little out-of-play ground on the main field,
+      so from the default desk camera the village shows mostly at the top edge near the DMD.
+      It reads fully on the phone view and the Ridge camera. Screenshots:
+      screenshots/t034-desk.jpg, t034-phone.jpg, t034-village.jpg.
+    updated: '2026-10-11T04:19:06Z'
+    implementation_pr: 'silasfelinus/kind_robots#3495'
