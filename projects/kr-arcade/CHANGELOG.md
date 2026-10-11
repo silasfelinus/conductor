@@ -44,3 +44,11 @@
   t-015..t-019 done; Zuzu's walk sped up at Silas's request ("zuzu play speed is a bit slow").
   The >=60-minute target is NOT verified: bot clear times are not human times, and the timed
   playtest stays open in t-020.
+
+## 2026-10-11
+- **Ghost Trail playtest notes** (Silas: "We should have checkpoints that don't send the player back to
+  the beginning of the stage"; "The non-projectile sword is a bit lackluster"; "do we have a vertical
+  level yet?"): close checkpoints, a boss-gate checkpoint and an in-game CONTINUE; saves resume at the
+  checkpoint; the iai cut became a lunging crescent that cuts shots from the air; a vertical camera and
+  THE BELL STAIR tower climb (silasfelinus/kind_robots#3488). Ghost Trail now has music -- a theme per
+  world, boss and finale themes, an ending -- and its own sound effects (#3490).
