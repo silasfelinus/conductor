@@ -1,23 +1,23 @@
 # Roadmap Audit
 
-Generated: `2026-10-11T03:12:05.427191+00:00`
+Generated: `2026-10-11T03:41:39.161406+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **78** roadmaps, **39** active + **3** continuous projects, **2092** tasks
-- **91 ready**, **116 waiting**, **37 needs-human**, **18 claimed/review**, **1814 done**
+- **90 ready**, **115 waiting**, **37 needs-human**, **18 claimed/review**, **1816 done**
 - Findings: **0 errors**, **25 warnings**, **64 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `kind-pinball` | active | software | 2 | 0 | 1 | 1 | 30 / 34 |
+| 1 | `kind-pinball` | active | software | 1 | 0 | 1 | 1 | 31 / 34 |
 | 2 | `zuzu-lair` | active | software | 1 | 6 | 1 | 2 | 4 / 14 |
 | 3 | `kr-arcade` | active | software | 3 | 0 | 0 | 0 | 19 / 22 |
-| 4 | `zuzu-showdown` | active | software | 2 | 3 | 0 | 3 | 20 / 28 |
+| 4 | `zuzu-showdown` | active | software | 1 | 3 | 0 | 4 | 20 / 28 |
 | 5 | `cthulhuquarium` | active | software | 2 | 0 | 1 | 0 | 83 / 86 |
 | 6 | `kind-economy` | active | software | 0 | 4 | 1 | 1 | 22 / 28 |
 | 7 | `butterfly-gallery` | active | software | 1 | 0 | 0 | 0 | 34 / 35 |
@@ -31,7 +31,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `music-video` | active | software | 7 | 3 | 0 | 0 | 25 / 35 |
 | 16 | `comic-film` | active | software | 3 | 6 | 0 | 0 | 2 / 11 |
 | 17 | `zuzu-gamebook` | active | software | 5 | 4 | 0 | 0 | 3 / 12 |
-| 18 | `zuzu-shifting-lands` | active | software | 3 | 8 | 1 | 2 | 10 / 24 |
+| 18 | `zuzu-shifting-lands` | active | software | 4 | 7 | 1 | 1 | 11 / 24 |
 | 19 | `zuzu-pinball` | active | software | 2 | 10 | 1 | 0 | 3 / 16 |
 | 20 | `tzaddik-gallery` | active | software | 1 | 1 | 1 | 0 | 30 / 33 |
 | 21 | `scene-animator` | finished | software | 0 | 0 | 0 | 0 | 11 / 11 |
