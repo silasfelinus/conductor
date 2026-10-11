@@ -1,0 +1,845 @@
+{
+  "schema_version": 1,
+  "project": "zuzu-shifting-lands",
+  "source_world_manifest": {
+    "path": "projects/zuzu-shifting-lands/WORLD-DECKS.json",
+    "schema_version": 2
+  },
+  "status": "draft-not-imported",
+  "rules": {
+    "encounters_per_location_min": 3,
+    "selection": "seeded-weighted-eligible-without-replacement",
+    "seed_persisted": true,
+    "revisit_policy": "same-recorded-encounter-no-free-reroll",
+    "dice": "2d6+skill+modifier-vs-difficulty"
+  },
+  "locations": [
+    {
+      "location_id": "cave-mouth",
+      "encounter_ids": [
+        "feathers-in-the-draft",
+        "the-third-shadow",
+        "shelter-for-the-storm"
+      ]
+    },
+    {
+      "location_id": "stone-hollow",
+      "encounter_ids": [
+        "the-candle-court",
+        "salt-on-the-threshold",
+        "the-forgotten-pledge"
+      ]
+    },
+    {
+      "location_id": "underground-crossroads",
+      "encounter_ids": [
+        "three-doors-no-hinges",
+        "voices-across-the-rock",
+        "the-red-vial"
+      ]
+    }
+  ],
+  "encounters": [
+    {
+      "id": "feathers-in-the-draft",
+      "location_id": "cave-mouth",
+      "title": "Feathers in the Draft",
+      "flavor_text": "At the cave mouth, a crow storm-reader sets paper charms into the wind without letting one blow away. She tells Zuzu the cavern remembers spoken bargains more clearly than faces. A cold current keeps returning from the wrong direction.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original dark-fantasy Weird West and Edo scene in cave mouth: A crow storm-reader in indigo paper charms holding a tiny brass wind bell; At the cave mouth, a crow storm-reader sets paper charms into the wind without letting one blow away. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "feathers-in-the-draft-cast",
+            "species": "crow",
+            "occupation": "storm-reader",
+            "visual_description": "A crow storm-reader in indigo paper charms holding a tiny brass wind bell",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "answer-her-question-plainly",
+          "label": "Answer her question plainly",
+          "intent": "Zuzu chooses to answer her question plainly rather than leave this encounter unanswered.",
+          "risk_hint": "bearing check against 9; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The storm-reader accepts Zuzu's name and gives him a chalk sign for a safe entrance.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "feathers-in-the-draft-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "His answer echoes from three passages at once, drawing him into a cold pocket where he loses strength.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "feathers-in-the-draft-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "study-the-returning-draft",
+          "label": "Study the returning draft",
+          "intent": "Zuzu chooses to study the returning draft rather than leave this encounter unanswered.",
+          "risk_hint": "insight check against 10; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Zuzu locates a narrow vent that explains the echo and marks a practical route below.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "feathers-in-the-draft-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The draft blows out his lantern, and sharp stone punishes his hurried descent.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "feathers-in-the-draft-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Pre-authored crow storm-reader; neither supernatural conditions nor disposition arise from species. Preserve the cave's mysteries until earned through play."
+    },
+    {
+      "id": "the-third-shadow",
+      "location_id": "cave-mouth",
+      "title": "The Third Shadow",
+      "flavor_text": "A guide offers to lead Zuzu underground, but three shadows fall behind her from only two lanterns. She insists the third belongs to a traveler who turned back. At the entrance, a line of stones has been rearranged since sunrise.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original dark-fantasy Weird West and Edo scene in cave mouth: A pale bat cave guide with a braided cord and polished stone spectacles; A guide offers to lead Zuzu underground, but three shadows fall behind her from only two lanterns. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "the-third-shadow-cast",
+            "species": "bat",
+            "occupation": "cave guide",
+            "visual_description": "A pale bat cave guide with a braided cord and polished stone spectacles",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "count-the-lantern-positions",
+          "label": "Count the lantern positions",
+          "intent": "Zuzu chooses to count the lantern positions rather than leave this encounter unanswered.",
+          "risk_hint": "awareness check against 10; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Zuzu finds the hidden third lamp and exposes a staged ambush without drawing his blade.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-third-shadow-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "He looks toward the wrong shadow, and a trapper's cord cuts his shoulder as he escapes.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-third-shadow-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "demand-a-safer-passage",
+          "label": "Demand a safer passage",
+          "intent": "Zuzu chooses to demand a safer passage rather than leave this encounter unanswered.",
+          "risk_hint": "resolve check against 9; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The guide abandons the trick and reveals a genuine lower corridor in exchange for mercy.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-third-shadow-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Her accomplices block the gate; Zuzu fights free and loses his spare food.",
+            "hp_delta": -1,
+            "provisions_delta": -1,
+            "add_flags": [
+              "the-third-shadow-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Pre-authored bat cave guide; neither supernatural conditions nor disposition arise from species. Preserve the cave's mysteries until earned through play."
+    },
+    {
+      "id": "shelter-for-the-storm",
+      "location_id": "cave-mouth",
+      "title": "Shelter for the Storm",
+      "flavor_text": "Rain lashes the ridge where a healer struggles to carry supplies into the cave. She is treating travelers stranded by sudden wind, and her lamp gutters with each gust. Beyond her lies a ledge where the water is already rising.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original dark-fantasy Weird West and Edo scene in cave mouth: A cloaked pangolin healer carrying herb satchels and a rain-wet lantern; Rain lashes the ridge where a healer struggles to carry supplies into the cave. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "shelter-for-the-storm-cast",
+            "species": "pangolin",
+            "occupation": "itinerant healer",
+            "visual_description": "A cloaked pangolin healer carrying herb satchels and a rain-wet lantern",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "carry-the-medicine-chest",
+          "label": "Carry the medicine chest",
+          "intent": "Zuzu chooses to carry the medicine chest rather than leave this encounter unanswered.",
+          "risk_hint": "steel check against 8; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 8
+          },
+          "success": {
+            "text": "Zuzu bears the chest into shelter and receives a bandage and a careful map of the dry passage.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "shelter-for-the-storm-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The chest slips on wet stone, bruising his knee before he can lift it again.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "shelter-for-the-storm-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "guide-the-stranded-travelers",
+          "label": "Guide the stranded travelers",
+          "intent": "Zuzu chooses to guide the stranded travelers rather than leave this encounter unanswered.",
+          "risk_hint": "bearing check against 9; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 9
+          },
+          "success": {
+            "text": "The travelers follow his calm directions into shelter and share provisions in thanks.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "shelter-for-the-storm-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Panic scatters the group; Zuzu spends a cold hour searching the slope and loses a meal.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "shelter-for-the-storm-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Pre-authored pangolin itinerant healer; neither supernatural conditions nor disposition arise from species. Preserve the cave's mysteries until earned through play."
+    },
+    {
+      "id": "the-candle-court",
+      "location_id": "stone-hollow",
+      "title": "The Candle Court",
+      "flavor_text": "Deep in the hollow, an adjudicator hears disputes by candlelight. Two miners each claim the same pouch of pale salt, and the witness is missing. The adjudicator asks Zuzu to judge the evidence before either party may leave.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original dark-fantasy Weird West and Edo scene in stone hollow: A crow adjudicator seated beneath blue candle flames with slate tablets; Deep in the hollow, an adjudicator hears disputes by candlelight. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "the-candle-court-cast",
+            "species": "crow",
+            "occupation": "cave adjudicator",
+            "visual_description": "A crow adjudicator seated beneath blue candle flames with slate tablets",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "hear-both-testimonies",
+          "label": "Hear both testimonies",
+          "intent": "Zuzu chooses to hear both testimonies rather than leave this encounter unanswered.",
+          "risk_hint": "insight check against 10; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Zuzu notices an identical tear in the pouch and one miner's sleeve, securing a fair division.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-candle-court-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "He mistakes rehearsed testimony for fact and earns the wrath of the wronged miner.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-candle-court-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "offer-a-shared-judgment",
+          "label": "Offer a shared judgment",
+          "intent": "Zuzu chooses to offer a shared judgment rather than leave this encounter unanswered.",
+          "risk_hint": "bearing check against 10; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Both miners accept a witnessed bargain, and the adjudicator grants passage without a debt.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-candle-court-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The miners refuse compromise and the hearing drags through the night, costing Zuzu food.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "the-candle-court-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Pre-authored crow cave adjudicator; neither supernatural conditions nor disposition arise from species. Preserve the cave's mysteries until earned through play."
+    },
+    {
+      "id": "salt-on-the-threshold",
+      "location_id": "stone-hollow",
+      "title": "Salt on the Threshold",
+      "flavor_text": "A mason has painted a thick salt line before a narrow doorway, though the stones behind it appear ordinary. She insists the mark keeps the cavern air from turning poisonous during a pressure shift. Her measurements are scratched into slate.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original dark-fantasy Weird West and Edo scene in stone hollow: A charcoal-speckled salamander mason with a white salt line across her gloves; A mason has painted a thick salt line before a narrow doorway, though the stones behind it appear ordinary. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "salt-on-the-threshold-cast",
+            "species": "salamander",
+            "occupation": "cave mason",
+            "visual_description": "A charcoal-speckled salamander mason with a white salt line across her gloves",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "reinforce-the-vent-above",
+          "label": "Reinforce the vent above",
+          "intent": "Zuzu chooses to reinforce the vent above rather than leave this encounter unanswered.",
+          "risk_hint": "wits check against 10; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Zuzu opens the vent without disturbing the seal, and the mason offers a useful route onward.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "salt-on-the-threshold-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The seal breaks under the chisel, filling the room with stinging dust before he can withdraw.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "salt-on-the-threshold-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "test-the-air-carefully",
+          "label": "Test the air carefully",
+          "intent": "Zuzu chooses to test the air carefully rather than leave this encounter unanswered.",
+          "risk_hint": "awareness check against 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "A faint mineral odor confirms the warning, and Zuzu finds a clean bypass along the upper shelf.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "salt-on-the-threshold-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "His test is too slow and the chalked passage floods with dust, leaving him coughing.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "salt-on-the-threshold-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Pre-authored salamander cave mason; neither supernatural conditions nor disposition arise from species. Preserve the cave's mysteries until earned through play."
+    },
+    {
+      "id": "the-forgotten-pledge",
+      "location_id": "stone-hollow",
+      "title": "The Forgotten Pledge",
+      "flavor_text": "A guardian stands before a sealed chamber, repeating an oath in a voice he no longer recognizes. The iron charm on his wrist glows only when he tries to leave. Whatever grips him was imposed by a ritual, not his ancestry.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original dark-fantasy Weird West and Edo scene in stone hollow: A massive gorilla guardian in frayed travel robes with an iron charm around one wrist; A guardian stands before a sealed chamber, repeating an oath in a voice he no longer recognizes. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "the-forgotten-pledge-cast",
+            "species": "gorilla",
+            "occupation": "oathbound guardian",
+            "visual_description": "A massive gorilla guardian in frayed travel robes with an iron charm around one wrist",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "speak-the-oath-back-to-him",
+          "label": "Speak the oath back to him",
+          "intent": "Zuzu chooses to speak the oath back to him rather than leave this encounter unanswered.",
+          "risk_hint": "resolve check against 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu steadies the guardian long enough for him to remember who bound the charm and open the safe way.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-forgotten-pledge-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The binding surges through the chamber; Zuzu survives the guardian's involuntary blow but limps onward.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-forgotten-pledge-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "examine-the-iron-charm",
+          "label": "Examine the iron charm",
+          "intent": "Zuzu chooses to examine the iron charm rather than leave this encounter unanswered.",
+          "risk_hint": "wits check against 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu spots a removable fastening and frees the guardian without demanding payment.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-forgotten-pledge-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "A false clasp snaps shut, and Zuzu takes a painful shock before breaking away.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-forgotten-pledge-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Pre-authored gorilla oathbound guardian; neither supernatural conditions nor disposition arise from species. Preserve the cave's mysteries until earned through play."
+    },
+    {
+      "id": "three-doors-no-hinges",
+      "location_id": "underground-crossroads",
+      "title": "Three Doors Without Hinges",
+      "flavor_text": "Three stone arches stand where four tunnels ought to meet. An architect traces the missing route with her chain, explaining that earthquakes shift the intersections while their destinations remain. Her diagram is accurate only for this hour.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original dark-fantasy Weird West and Edo scene in underground crossroads: An elder crow tunnel architect with folded diagrams and a silver measuring chain; Three stone arches stand where four tunnels ought to meet. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "three-doors-no-hinges-cast",
+            "species": "crow",
+            "occupation": "tunnel architect",
+            "visual_description": "An elder crow tunnel architect with folded diagrams and a silver measuring chain",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "compare-the-chain-marks",
+          "label": "Compare the chain marks",
+          "intent": "Zuzu chooses to compare the chain marks rather than leave this encounter unanswered.",
+          "risk_hint": "wits check against 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu identifies the stable arch by its old fracture and records the new arrangement for return.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "three-doors-no-hinges-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The chain snags beneath a moving slab, and Zuzu escapes the narrowing corridor with bruises.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "three-doors-no-hinges-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "ask-for-a-witness-to-the-path",
+          "label": "Ask for a witness to the path",
+          "intent": "Zuzu chooses to ask for a witness to the path rather than leave this encounter unanswered.",
+          "risk_hint": "bearing check against 10; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "The architect sends a novice with Zuzu, ensuring neither can later deny which passage was chosen.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "three-doors-no-hinges-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Her apprentice refuses; Zuzu must choose alone and sacrifices a night's rest to the maze.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "three-doors-no-hinges-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Pre-authored crow tunnel architect; neither supernatural conditions nor disposition arise from species. Preserve the cave's mysteries until earned through play."
+    },
+    {
+      "id": "voices-across-the-rock",
+      "location_id": "underground-crossroads",
+      "title": "Voices Across the Rock",
+      "flavor_text": "A courier calls from behind a sheet of stone, though his voice reaches the wrong tunnel. He claims to have a letter for a village beyond the cave, and a second voice repeats his words a moment later. The sheet vibrates with underground thunder.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original dark-fantasy Weird West and Edo scene in underground crossroads: A small shrew courier in dust-stained leathers holding a sealed message tube; A courier calls from behind a sheet of stone, though his voice reaches the wrong tunnel. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "voices-across-the-rock-cast",
+            "species": "shrew",
+            "occupation": "lost courier",
+            "visual_description": "A small shrew courier in dust-stained leathers holding a sealed message tube",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "trace-the-true-echo",
+          "label": "Trace the true echo",
+          "intent": "Zuzu chooses to trace the true echo rather than leave this encounter unanswered.",
+          "risk_hint": "awareness check against 10; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "Zuzu finds the thin rock at the real source and leads the courier into open air.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "voices-across-the-rock-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The false echo draws him into falling grit and leaves him with a painful scrape.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "voices-across-the-rock-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "signal-a-safe-meeting-point",
+          "label": "Signal a safe meeting point",
+          "intent": "Zuzu chooses to signal a safe meeting point rather than leave this encounter unanswered.",
+          "risk_hint": "resolve check against 10; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "The courier follows deliberate taps through the branching corridors and shares a spare meal.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "voices-across-the-rock-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The signal is drowned by thunder, and Zuzu spends his provisions keeping the search alive.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "voices-across-the-rock-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Pre-authored shrew lost courier; neither supernatural conditions nor disposition arise from species. Preserve the cave's mysteries until earned through play."
+    },
+    {
+      "id": "the-red-vial",
+      "location_id": "underground-crossroads",
+      "title": "The Red Vial",
+      "flavor_text": "An exhausted pilgrim guards a red vial while asking strangers not to come too close. He says the liquid holds back a hunger placed upon him by a sorcerer. His trembling hands make the flask seem more dangerous than his size.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original dark-fantasy Weird West and Edo scene in underground crossroads: A weary gorilla pilgrim with a stained physician's sash and a sealed red vial; An exhausted pilgrim guards a red vial while asking strangers not to come too close. Atmospheric lantern light, wet rock detail, readable silhouette, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "the-red-vial-cast",
+            "species": "gorilla",
+            "occupation": "afflicted pilgrim",
+            "visual_description": "A weary gorilla pilgrim with a stained physician's sash and a sealed red vial",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "help-secure-the-vial",
+          "label": "Help secure the vial",
+          "intent": "Zuzu chooses to help secure the vial rather than leave this encounter unanswered.",
+          "risk_hint": "steel check against 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu braces the flask in a leather cradle; the pilgrim recovers and points out an unguarded tunnel.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-red-vial-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The vial nearly shatters, and the pilgrim shoves Zuzu away in panicked self-defense.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-red-vial-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "ask-about-the-binding-spell",
+          "label": "Ask about the binding spell",
+          "intent": "Zuzu chooses to ask about the binding spell rather than leave this encounter unanswered.",
+          "risk_hint": "insight check against 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu recognizes a practical counter-sign among the scratches and gives the pilgrim a safer ritual to attempt.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-red-vial-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The pilgrim mistakes the question for an accusation, and the encounter ends in a desperate struggle.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-red-vial-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "Pre-authored gorilla afflicted pilgrim; neither supernatural conditions nor disposition arise from species. Preserve the cave's mysteries until earned through play."
+    }
+  ]
+}
