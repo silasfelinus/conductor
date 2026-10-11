@@ -17534,3 +17534,13 @@ records:
   lesson: Validate the rendered adaptive column geometry instead of a stale single-column width cap. Workflow
     path guards require explicit existing script filenames; use a focused live browser job to verify the
     repaired fixture before merge.
+- date: '2026-10-11'
+  project: zuzu-pinball
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A spiral-shot proof must verify the ball's safe deck landing and return, not only the shot sensor;
+    verify Actions check runs rather than interpreting empty legacy statuses as missing CI.
