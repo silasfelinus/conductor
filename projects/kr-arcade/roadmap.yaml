@@ -57,7 +57,7 @@ milestones:
 
   - id: m7
     title: "DEPTH PASS — Pipe Pals and Prize Show Panic grow into full campaigns"
-    weight: 40
+    weight: 60
     status: in-progress
 
 tasks:
@@ -571,134 +571,194 @@ tasks:
 
   - id: t-023
     milestone: m7
-    title: "Pipe Pals depth slice 1: bigger actors, recovery tiers, chains, enemy turnaround, spring flea and ember sparks"
+    title: "Pipe Pals depth slice 1: bigger actors, recovery tiers, chains, kick bowling, turnaround and the tool belt"
     status: ready
     passes: 0
     stakes: reversible
     note: >-
-      Assessment section 1, "Systems every district uses", plus the first two new threats. Bigger actors
-      (hero ~24-28 px, critters ~18-22 px, 3+ walk frames, flip/kick squash); readable calm/cross/furious
-      recovery tiers and a last-critter rush; walkers turn round when they meet; kick chains
-      800/1600/2400/3200; a coin out of a pipe on every kick; KIND block refills (per district once t-024
-      lands, every 5 phases until then); the spring flea (only flippable while landed) and the ember spark
-      / lurker ember pair (anti-camping). Pipe Pals goes first: Silas called it the weaker riff. Silas,
-      2026-10-11: "We don't need to be 1:1 copies of these games, but we should be equally complex or more
-      so ... We should have more complex enemies, variety, etc". Spec: projects/kr-arcade/depth-
-      pass/ASSESSMENT.md (read it first). Riff on mechanics only; original layouts, names and lines.
+      ASSESSMENT.md section 1, "Systems that run through the whole campaign" plus the first new threats.
+      Bigger actors (hero ~24-28 px, critters ~18-22 px, 3+ walk frames, flip/kick squash);
+      calm/cross/furious recovery tiers and a last-critter rush; walkers turn round when they meet; kick
+      chains 800/1600/2400/3200/5000; kick bowling; a coin out of a pipe on every kick; the Tool Belt
+      pickups (Wide Wrench, Kick Boots, Bubble Wand, Magnet Cap); the spring flea, shell knight and the
+      ember spark / lurker ember pair, used in the current board until t-024 brings districts. Pipe Pals
+      goes first: Silas called it the weaker riff. Silas, 2026-10-11: "We don't need to be 1:1 copies of
+      these games, but we should be equally complex or more so", then on the plan: "expand both pitches to
+      add even more to each, so we really are homages with even more inspired levels and gameplay depth."
+      Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's section first). Riff on mechanics
+      only; original layouts, names and lines; cartoon bonk/cheer only; no real money, no runtime LLM.
       Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded simulation, the score API
-      and the attract pilot working (update the pilot for new mechanics). Verify: test:arcade-engine plus
-      a new deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR, and
-      a pilot probe that shows runs still end.
+      and the attract pilot working (update the pilot for new mechanics). Content is data
+      (district/episode/room definitions), not branches in the update loop. Verify: test:arcade-engine
+      plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR,
+      and a pilot probe that shows runs still end.
 
   - id: t-024
     milestone: m7
-    title: "Pipe Pals depth slice 2: five districts with their own boards, backdrops, ice and bonus rounds"
+    title: "Pipe Pals depth slice 2: Day Shift -- Rooftop Reservoir, Greenhouse Mains, Suds Works, the Big Shell and the Workshop"
     status: waiting
     passes: 0
     stakes: reversible
     depends_on: t-023
     note: >-
-      Assessment section 1, district table. Data-defined districts (board segments, lifts/crumble ledges,
-      backdrop, tiles, roster, curves), 5 phases + 1 bonus round each, district title cards. Cold Storage
-      brings icy ledges (low-friction physics), the frost bot (freezes a ledge; one bump clears it) and
-      growing/dropping icicles; Boiler Works brings steam vents; Storm Drain brings the dim board and the
-      grease beetle. Each district bonus round has its own twist. Original layouts only. Silas,
-      2026-10-11: "We don't need to be 1:1 copies of these games, but we should be equally complex or more
-      so ... We should have more complex enemies, variety, etc". Spec: projects/kr-arcade/depth-
-      pass/ASSESSMENT.md (read it first). Riff on mechanics only; original layouts, names and lines.
-      Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded simulation, the score API
-      and the attract pilot working (update the pilot for new mechanics). Verify: test:arcade-engine plus
-      a new deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR, and
-      a pilot probe that shows runs still end.
+      ASSESSMENT.md section 1, Shift 1. The data-defined district engine (board segments incl.
+      vine/sagging and soapy ledges, lifts, backdrop, tiles, roster, curves, special phase, bonus twist,
+      title card); 5 phases + bonus per district; the special phases First Fix, Seedling Rescue and Lost
+      Socks; lint moth, sock puppet and bubble traps; the Big Shell boss (tip-and-kick, shed crawlers,
+      rolling final phase); the Workshop between districts (coin-priced extra pal, KIND charge, starting
+      tool, Lucky Pipe, valve hint); golden valve handles placed for districts 1-3. Silas, 2026-10-11: "We
+      don't need to be 1:1 copies of these games, but we should be equally complex or more so", then on
+      the plan: "expand both pitches to add even more to each, so we really are homages with even more
+      inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the
+      game's section first). Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer
+      only; no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60
+      Hz seeded simulation, the score API and the attract pilot working (update the pilot for new
+      mechanics). Content is data (district/episode/room definitions), not branches in the update loop.
+      Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and
+      HD screenshots on the PR, and a pilot probe that shows runs still end.
 
   - id: t-025
     milestone: m7
-    title: "Pipe Pals depth slice 3: the Clog King finale, campaign ending, save/resume and two-pal co-op"
+    title: "Pipe Pals depth slice 3: Swing Shift -- Cold Storage, Boiler Works, Clockwork Water Tower and the Thermostat"
     status: waiting
     passes: 0
     stakes: reversible
     depends_on: t-024
     note: >-
-      Assessment section 1, finale row and co-op bullet. Three-phase Clog King boss (bump ledge segments
-      under it to crack plates, kick loose plates back). Credits and a Night Shift New Game+ loop instead
-      of an endless loop; save at each district start via utils/arcade/saves.ts (Ghost Trail is the
-      reference). Two-pal co-op through the cabinet players frames (teal and pink pals; pals bump each
-      other for a playful stun). Then update games.yaml (drop the co-op/icy-platform follow-up comment)
-      and the registry howTo. Target: first clear 25-35 minutes. Silas, 2026-10-11: "We don't need to be
-      1:1 copies of these games, but we should be equally complex or more so ... We should have more
-      complex enemies, variety, etc". Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read it first).
-      Riff on mechanics only; original layouts, names and lines. Gameplay changes ARE in scope here
-      (unlike t-021). Keep the 60 Hz seeded simulation, the score API and the attract pilot working
-      (update the pilot for new mechanics). Verify: test:arcade-engine plus a new deterministic campaign
-      test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR, and a pilot probe that shows
-      runs still end.
+      ASSESSMENT.md section 1, Shift 2. Icy low-friction ledges, icicles, frost bot, snowball roller, Thaw
+      Run; steam vents, crumble ledge, Pressure Valves; gear and conveyor ledges, gear bug, cuckoo, Valve
+      Routing (switchable pipe routes); the Thermostat boss (FREEZE/HEAT dial, bump the lit ledge, three
+      phases); golden valves for districts 4-6. Silas, 2026-10-11: "We don't need to be 1:1 copies of
+      these games, but we should be equally complex or more so", then on the plan: "expand both pitches to
+      add even more to each, so we really are homages with even more inspired levels and gameplay depth."
+      Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's section first). Riff on mechanics
+      only; original layouts, names and lines; cartoon bonk/cheer only; no real money, no runtime LLM.
+      Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded simulation, the score API
+      and the attract pilot working (update the pilot for new mechanics). Content is data
+      (district/episode/room definitions), not branches in the update loop. Verify: test:arcade-engine
+      plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR,
+      and a pilot probe that shows runs still end.
+
+  - id: t-030
+    milestone: m7
+    title: "Pipe Pals depth slice 4: Night Shift -- Flooded Mains, Storm Drain, the Clog King and the flush, the Golden Main, endings, save/resume"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: t-025
+    note: >-
+      ASSESSMENT.md section 1, Shift 3, finale and secret district. Rising/draining water with underwater
+      movement and bobbing flipped critters, pipe eel, bubble jelly, Pump Station; the dim board with lamp
+      pools and lightning tells, grease beetle, mimic coin, Lights Out; the Clog King in three phases plus
+      the rooftop escape climb; golden valves 7-8 and the Golden Main secret district with the true
+      ending; credits and Overtime NG+; saves at each district start via utils/arcade/saves.ts (Ghost
+      Trail is the reference). Target: first clear 45-60 minutes. Silas, 2026-10-11: "We don't need to be
+      1:1 copies of these games, but we should be equally complex or more so", then on the plan: "expand
+      both pitches to add even more to each, so we really are homages with even more inspired levels and
+      gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's section first).
+      Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer only; no real money,
+      no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded simulation,
+      the score API and the attract pilot working (update the pilot for new mechanics). Content is data
+      (district/episode/room definitions), not branches in the update loop. Verify: test:arcade-engine
+      plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR,
+      and a pilot probe that shows runs still end.
+
+  - id: t-031
+    milestone: m7
+    title: "Pipe Pals depth slice 5: two pals with their own feel, co-op and Versus, Overtime and Time Trial modes, medals"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: t-030
+    note: >-
+      ASSESSMENT.md section 1, last bullets of "Systems". Teal pal (longer bump reach) and pink pal
+      (higher, floatier jump), selectable solo; same-device co-op through the cabinet players frames;
+      Versus with playful bump-steals; Overtime endless score attack as the leaderboard main event; per-
+      district Time Trial; Clean Sweep / Chain Master / Swift Fix medals with a medal board. Then update
+      games.yaml (drop the old co-op/icy-platform follow-up comment) and the registry howTo. Silas,
+      2026-10-11: "We don't need to be 1:1 copies of these games, but we should be equally complex or more
+      so", then on the plan: "expand both pitches to add even more to each, so we really are homages with
+      even more inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md
+      (read the game's section first). Riff on mechanics only; original layouts, names and lines; cartoon
+      bonk/cheer only; no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021).
+      Keep the 60 Hz seeded simulation, the score API and the attract pilot working (update the pilot for
+      new mechanics). Content is data (district/episode/room definitions), not branches in the update
+      loop. Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel
+      and HD screenshots on the PR, and a pilot probe that shows runs still end.
 
   - id: t-026
     milestone: m7
-    title: "Prize Show Panic depth slice 1: three-episode season map with authored rooms and route choice"
+    title: "Prize Show Panic depth slice 1: season map engine, authored rooms and modifiers, Episode 1 Opening Night, golden tickets"
     status: ready
     passes: 0
     stakes: reversible
     note: >-
-      Assessment section 2, "Structure" and "Rooms are data, not dice". Three episodes of 10-12 rooms on a
-      grid; a map screen between rooms showing visited rooms, what each neighbouring door leads to, and
-      the chosen route; room scripts (door timings, kinds, counts, props) replacing the random spawn
-      stream; room types Swarm, Mine set, Light rig, Camera wall, Speed round, Prize vault, Ambush, Conga
-      ballroom; golden tickets placed in rooms. The parade float stays as the episode-1 mid-boss until
-      t-029. Silas, 2026-10-11: "We don't need to be 1:1 copies of these games, but we should be equally
-      complex or more so ... We should have more complex enemies, variety, etc". Spec: projects/kr-
-      arcade/depth-pass/ASSESSMENT.md (read it first). Riff on mechanics only; original layouts, names and
-      lines. Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded simulation, the
-      score API and the attract pilot working (update the pilot for new mechanics). Verify: test:arcade-
-      engine plus a new deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on
-      the PR, and a pilot probe that shows runs still end.
+      ASSESSMENT.md section 2, "Structure", room types and modifiers, and episode 1. Data-defined episodes
+      of 12-14 rooms on a grid; the map screen (visited rooms, what each door leads to, danger rating and
+      reward icons, chosen route; a safe and a rich branch side by side); room scripts replacing the
+      random spawn stream; all ten room types incl. sponsor challenges and secret rooms; the six
+      modifiers; golden ticket placement. Episode 1 Opening Night fully authored with the Parade Float
+      (now two phases) as its mid-boss; the Big Wobble lands in t-029. Silas, 2026-10-11: "We don't need
+      to be 1:1 copies of these games, but we should be equally complex or more so", then on the plan:
+      "expand both pitches to add even more to each, so we really are homages with even more inspired
+      levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's
+      section first). Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer only;
+      no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz
+      seeded simulation, the score API and the attract pilot working (update the pilot for new mechanics).
+      Content is data (district/episode/room definitions), not branches in the update loop. Verify:
+      test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD
+      screenshots on the PR, and a pilot probe that shows runs still end.
 
   - id: t-027
     milestone: m7
-    title: "Prize Show Panic depth slice 2: six new crashers, four new power-ups and true twin-stick aim"
+    title: "Prize Show Panic depth slice 2: the 19-crasher roster, the 10-item arsenal and true twin-stick aim"
     status: waiting
     passes: 0
     stakes: reversible
     depends_on: t-026
     note: >-
-      Assessment section 2, roster and arsenal tables and the twin-stick bullet. Popper, sweeper tank,
-      stagehand (mine layer), spotlight drone, mascot mini-boss, camera crane. Party poppers, bubble
-      rockets, streamer orbiters, roller skates with stacking timers in the HUD. Engine: an optional aim
-      vector on InputFrame (gamepad right stick axes 2/3, a second touch stick, split keyboard), shared
-      through utils/arcade/input.ts so Kindness Gauntlet and Rescue Rally can adopt it; hold-B lock stays
-      for single-stick players. Add input contract tests. Silas, 2026-10-11: "We don't need to be 1:1
-      copies of these games, but we should be equally complex or more so ... We should have more complex
-      enemies, variety, etc". Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read it first). Riff on
-      mechanics only; original layouts, names and lines. Gameplay changes ARE in scope here (unlike
-      t-021). Keep the 60 Hz seeded simulation, the score API and the attract pilot working (update the
-      pilot for new mechanics). Verify: test:arcade-engine plus a new deterministic campaign test,
-      eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR, and a pilot probe that shows runs
-      still end.
+      ASSESSMENT.md section 2, roster and arsenal tables, the boom mic hazard and the twin-stick bullet.
+      All new crashers with their tells, the seven new power-ups with stacking HUD timers. Engine: an
+      optional aim vector on InputFrame (gamepad right stick axes 2/3, a second touch stick, split
+      keyboard), shared through utils/arcade/input.ts so Kindness Gauntlet and Rescue Rally can adopt it;
+      hold-B lock stays for single-stick players; input contract tests. Silas, 2026-10-11: "We don't need
+      to be 1:1 copies of these games, but we should be equally complex or more so", then on the plan:
+      "expand both pitches to add even more to each, so we really are homages with even more inspired
+      levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's
+      section first). Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer only;
+      no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz
+      seeded simulation, the score API and the attract pilot working (update the pilot for new mechanics).
+      Content is data (district/episode/room definitions), not branches in the update loop. Verify:
+      test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD
+      screenshots on the PR, and a pilot probe that shows runs still end.
 
   - id: t-028
     milestone: m7
-    title: "Prize Show Panic depth slice 3: the host, announcer cut-ins, prize tally screen and studio audience"
+    title: "Prize Show Panic depth slice 3: the host and co-host, the ratings meter, cheer chains, prize tally, Prize Swap and the studio audience"
     status: waiting
     passes: 0
     stakes: reversible
     depends_on: t-026
     note: >-
-      Assessment section 2, "The show itself". A host robot portrait with original speech-panel lines on
-      show events and WebAudio bleep-speak (no speech synthesis, no LLM); an end-of-episode prize tally
-      screen that counts each prize kind up with sprites and ticks, golden tickets and an episode bonus;
-      the season haul on game over; APPLAUSE sign, audience band and camera-flash juice. The host can be a
-      pixelSprite portrait; if generated art is used, queue it as a kr-arcade- request and verify the
-      delivered URL. Silas, 2026-10-11: "We don't need to be 1:1 copies of these games, but we should be
-      equally complex or more so ... We should have more complex enemies, variety, etc". Spec:
-      projects/kr-arcade/depth-pass/ASSESSMENT.md (read it first). Riff on mechanics only; original
-      layouts, names and lines. Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded
-      simulation, the score API and the attract pilot working (update the pilot for new mechanics).
-      Verify: test:arcade-engine plus a new deterministic campaign test, eslint/prettier, vue-tsc, Pixel
+      ASSESSMENT.md section 2, "The show". Host portrait with original speech-panel lines and style
+      reactions, the dry co-host from episode 3, WebAudio bleep-speak (no speech synthesis, no LLM); the
+      four-tier ratings meter with multiplier, sponsor care packages and plot twists; cheer chains; the
+      end-of-episode prize tally screen and the season haul on game over; the Prize Swap (in-game prizes
+      only); APPLAUSE sign, audience band and camera-flash juice. Host art can be a pixelSprite portrait;
+      if generated art is used, queue it as a kr-arcade- request and verify the delivered URL. Silas,
+      2026-10-11: "We don't need to be 1:1 copies of these games, but we should be equally complex or more
+      so", then on the plan: "expand both pitches to add even more to each, so we really are homages with
+      even more inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md
+      (read the game's section first). Riff on mechanics only; original layouts, names and lines; cartoon
+      bonk/cheer only; no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021).
+      Keep the 60 Hz seeded simulation, the score API and the attract pilot working (update the pilot for
+      new mechanics). Content is data (district/episode/room definitions), not branches in the update
+      loop. Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel
       and HD screenshots on the PR, and a pilot probe that shows runs still end.
 
   - id: t-029
     milestone: m7
-    title: "Prize Show Panic depth slice 4: four distinct bosses, the Grand Prize Vault, ending, save/resume and co-op"
+    title: "Prize Show Panic depth slice 4: Episodes 2-3 -- Cooking Showdown and Countdown Concert, their sets, mid-bosses and bosses"
     status: waiting
     passes: 0
     stakes: reversible
@@ -706,15 +766,82 @@ tasks:
       - t-027
       - t-028
     note: >-
-      Assessment section 2, bosses list. The Big Wobble (detachable limbs change its attacks), the
-      Jumbotron (screens flip to turrets, the face moves), the Conga Dragon (segments drop off and become
-      dancers, the head speeds up), and the Grand Finale prize machine with the host. Golden tickets open
-      the secret Grand Prize Vault (true ending). Credits, Rerun New Game+, save at each episode start,
-      two-contestant co-op through the players frames. Target: first clear 30-45 minutes. Silas,
-      2026-10-11: "We don't need to be 1:1 copies of these games, but we should be equally complex or more
-      so ... We should have more complex enemies, variety, etc". Spec: projects/kr-arcade/depth-
-      pass/ASSESSMENT.md (read it first). Riff on mechanics only; original layouts, names and lines.
-      Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded simulation, the score API
-      and the attract pilot working (update the pilot for new mechanics). Verify: test:arcade-engine plus
-      a new deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR, and
-      a pilot probe that shows runs still end.
+      ASSESSMENT.md section 2, episodes 2-3 and bosses 2-6. Hot-plate tiles, flour clouds, conveyor
+      counters; beat-synced speaker bass rings, strobes and mosh pits; the Big Wobble (episode 1 boss),
+      the Pie Cart, the Soufflé Supreme (rise/fall, cupcake split), the Mosh Mascot and the Jumbotron.
+      Each set with its own palette, props and music loop. Silas, 2026-10-11: "We don't need to be 1:1
+      copies of these games, but we should be equally complex or more so", then on the plan: "expand both
+      pitches to add even more to each, so we really are homages with even more inspired levels and
+      gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the game's section first).
+      Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer only; no real money,
+      no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60 Hz seeded simulation,
+      the score API and the attract pilot working (update the pilot for new mechanics). Content is data
+      (district/episode/room definitions), not branches in the update loop. Verify: test:arcade-engine
+      plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR,
+      and a pilot probe that shows runs still end.
+
+  - id: t-032
+    milestone: m7
+    title: "Prize Show Panic depth slice 5: Episode 4 Galaxy Parade, the Live Finale, the Grand Prize Vault, endings and save/resume"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: t-029
+    note: >-
+      ASSESSMENT.md section 2, episode 4, the Live Finale and bosses 7-9. Low-gravity momentum rooms, the
+      rotating ring room, teleport doors; the Saucer Cam Mothership and the Conga Dragon; the Live Finale
+      run with the Host's Prize Machine (wheel-chosen attack sets, telegraphed next spin, the host's
+      dance-off last phase); the Grand Prize Vault for ten golden tickets and the true ending; credits,
+      Rerun unlock, saves at each episode start. Target: first clear 60-75 minutes. Silas, 2026-10-11: "We
+      don't need to be 1:1 copies of these games, but we should be equally complex or more so", then on
+      the plan: "expand both pitches to add even more to each, so we really are homages with even more
+      inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the
+      game's section first). Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer
+      only; no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60
+      Hz seeded simulation, the score API and the attract pilot working (update the pilot for new
+      mechanics). Content is data (district/episode/room definitions), not branches in the update loop.
+      Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and
+      HD screenshots on the PR, and a pilot probe that shows runs still end.
+
+  - id: t-033
+    milestone: m7
+    title: "Prize Show Panic depth slice 6: commercial-break mini-games, four contestants and co-op for up to four"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: t-032
+    note: >-
+      ASSESSMENT.md section 2, commercial breaks and contestants. Spin the Wheel, Catch the Prizes, Pie
+      Dodge and Higher or Lower between episodes; Sparkle, Zippy, Boomer and Glimmer with their own
+      sprites and feel; up to four contestants through the cabinet players frames. Silas, 2026-10-11: "We
+      don't need to be 1:1 copies of these games, but we should be equally complex or more so", then on
+      the plan: "expand both pitches to add even more to each, so we really are homages with even more
+      inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-pass/ASSESSMENT.md (read the
+      game's section first). Riff on mechanics only; original layouts, names and lines; cartoon bonk/cheer
+      only; no real money, no runtime LLM. Gameplay changes ARE in scope here (unlike t-021). Keep the 60
+      Hz seeded simulation, the score API and the attract pilot working (update the pilot for new
+      mechanics). Content is data (district/episode/room definitions), not branches in the update loop.
+      Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and
+      HD screenshots on the PR, and a pilot probe that shows runs still end.
+
+  - id: t-034
+    milestone: m7
+    title: "Prize Show Panic depth slice 7: Rerun and Marathon modes, episode select and medals"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: t-033
+    note: >-
+      ASSESSMENT.md section 2, modes. Rerun NG+ with remixed scripts and modifiers; Marathon endless rooms
+      as the leaderboard main event; episode select after a clear; Flawless / Full Haul / Prime Time room
+      medals with a medal board. Then update games.yaml and the registry howTo for the finished season.
+      Silas, 2026-10-11: "We don't need to be 1:1 copies of these games, but we should be equally complex
+      or more so", then on the plan: "expand both pitches to add even more to each, so we really are
+      homages with even more inspired levels and gameplay depth." Spec: projects/kr-arcade/depth-
+      pass/ASSESSMENT.md (read the game's section first). Riff on mechanics only; original layouts, names
+      and lines; cartoon bonk/cheer only; no real money, no runtime LLM. Gameplay changes ARE in scope
+      here (unlike t-021). Keep the 60 Hz seeded simulation, the score API and the attract pilot working
+      (update the pilot for new mechanics). Content is data (district/episode/room definitions), not
+      branches in the update loop. Verify: test:arcade-engine plus a deterministic campaign test,
+      eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR, and a pilot probe that shows runs
+      still end.
