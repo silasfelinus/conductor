@@ -12487,3 +12487,7 @@ both approved arcade cabinets are already in kr-arcade/games.yaml.
 ## 2026-10-11 — Reviewer: conductor#5937 + #5935 (zuzu art)
 Approved and squash-merged both. #5937 (zuzu-gamebook rounds 8-9: ROUND-8/9 verdicts, hub shard, README count, t-006 note) and #5935 (zuzu-showdown portraits tool, T008/T021 art YAMLs, t-008/t-019/t-026/t-028 closed via close_task.py, CHANGELOG catch-up). Reversible art/bookkeeping, all 25 checks green on head, no review claim from another session.
 Worker pattern: good — #5937 states keep rates honestly (77% single-figure vs 23% paired) and names the failure mode (shadow/second presence prompts draw a second figure); round 10 should drop those phrases. #5935 closes tasks through the helper. Not done: kaizen task creation skipped this run; no fresh weakness in LEARNING-REPORT beyond the round-10 prompt rule above.
+
+## 2026-10-11 — Reviewer: conductor#5961 (comic-creator t-016 LoRAs trained and tested)
+Approved and squash-merged. Adds `loras:` support to enqueue_art_requests.py (subject over lane, comfy only, with a test), LORA-TEST.yaml (34 private renders), CAST-PICKS/lora-training results, t-016 → done and new ready t-023 (coyote v2 stump set). Reversible, private renders, CI green on head, no review claim from another session.
+Worker pattern: good — the coyote stump failure is reported honestly (prompt weighting made it worse) and turned into a concrete follow-up task rather than papered over. t-023 serves as this merge's kaizen task.
