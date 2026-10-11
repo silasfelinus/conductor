@@ -257,11 +257,11 @@ tasks:
 - id: t-016
   milestone: m3
   title: Character LoRA datasets for Zuzu and the fennec siblings
-  status: needs-human
+  status: done
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-10T09:34:18Z'
+  updated: '2026-10-11T11:19:22Z'
   depends_on:
   - t-015
   note: >-
@@ -297,6 +297,12 @@ tasks:
 
     Silas 2026-10-10 in session: train_all.ps1 is on his todo for tonight (runs overnight
     when he goes to bed). Stays needs-human until the LoRAs land in Lora/import.
+
+    2026-10-11: done. Silas trained all five sets on Ferngrotto (train_all.ps1, CUDA, ~1 h
+    each); registered as private KR LoRA resources 4571-4595. Tested (LORA-TEST.yaml, jobs
+    36909-36942): final epoch is the pick for all five and four hold their locked design;
+    the coyote LoRA ignores the stump, follow-up t-023. Picks and verdicts in issues/zuzu-
+    koala-assassin-01/CAST-PICKS.md.
   approved_by_human: true
   gate_human: false
   gate_reason: physical-access
