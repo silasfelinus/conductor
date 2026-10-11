@@ -245,7 +245,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Portraits: character select, VS screen and win/defeat art for all eight"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -257,9 +257,22 @@ tasks:
       VIDEO-GUARDRAILS.md word traps and bannedTerms; no lettering. Then pixelize them (downscale and
       quantize to the fighter's palette) so they sit with the sprites. Commit to kind_robots
       public/images/zuzu-showdown/portraits/ with a metadata JSON per image.
+
+      DONE 2026-10-10 (PT): all 36 portraits (9 fighters x 4: select bust, VS half-body slam,
+      victory, beaten) are in the game (silasfelinus/kind_robots#3485). Kontext re-posed each
+      from its canon source (art/T008-PORTRAITS.yaml; the Siblings rerolled with the toddler's
+      own pose stitched in, siblings-vs on its third draw, 244925). New tools/portraits.py
+      ships them as pixel PNGs at screen size (40-colour) and 4x HD WebP (~1 MB in all) plus
+      portraits.json. They live at kind_robots public/zuzu-showdown-portraits/, not
+      public/images/ as this note said, because /public/images/** is gitignored. The select
+      cards show busts, the VS screen slams in the half-bodies, the win screen shows the
+      winner's victory portrait with the loser's beaten one small in the corner; in a mirror
+      match P2's portrait is hue-shifted for its alternate palette; a missing portrait falls
+      back to the sprite.
     claimed_by: 2026-10-11T00:15:00Z-zs-t008
     claimed_at: '2026-10-11T00:10:26Z'
-    updated: '2026-10-11T00:10:26Z'
+    updated: '2026-10-11T03:26:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#3485'
 
   - id: t-009
     milestone: m3
@@ -587,7 +600,7 @@ tasks:
   - id: t-019
     milestone: m4
     title: "kind_robots: taunt screens -- VS intro, in-match taunt, KO/victory sequence, win screen"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -598,9 +611,20 @@ tasks:
       TS module), stage entrance intros, ROUND/FIGHT, the in-match taunt, the slow-mo KO and flash
       (reduced-motion safe), victory/Perfect/KO poses, and the post-fight win screen with the winner's
       matchup quote. Playwright screenshots of every screen at three widths.
+
+      DONE 2026-10-10 (PT): every piece of the note is on main. VS screen and win screen with
+      every matchup's lines (kind_robots#3341, matchups.json ported by
+      tools/matchups_to_ts.py); slow-mo KO and flash, reduced-motion safe (#3342); round intro
+      with each fighter's intro animation, ROUND/FIGHT callouts, the in-match taunt and
+      victory/Perfect/KO poses as sprites (t-010, #3329); arcade character select with the P2
+      alternate palette (#3423); portraits on all three screens (#3485, t-008). Playwright
+      screen tour at 390, 768 and 1366 px in projects/zuzu-showdown/docs/screens/ (the win
+      screen through a Chromium harness of the same draw code, since headless rendering runs
+      the game too slowly to finish a match).
     claimed_by: 2026-10-07T11:45:00Z-zs-t019
     claimed_at: '2026-10-07T11:44:57Z'
-    updated: '2026-10-07T11:44:57Z'
+    updated: '2026-10-11T03:26:26Z'
+    implementation_pr: 'silasfelinus/kind_robots#3485'
 
   - id: t-020
     milestone: m4
@@ -632,7 +656,7 @@ tasks:
   - id: t-021
     milestone: m4
     title: "kind_robots: Arcade mode, the boss, endings, leaderboard and arcade hall tile"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -644,6 +668,11 @@ tasks:
       multiplier) goes through the arcade store's submitScore as gameSlug `zuzu-showdown`, with
       maxPlausibleScore registered and three-initial entry. The Arcade hall tile links to
       /play/zuzu-showdown but stays out of the hall until t-025.
+
+      READY 2026-10-10 (PT): t-019 and t-020 are done (t-019 closed in this PR), so the
+      resolver's promotion is applied here. The ending stills are queued
+      (art/T021-ENDINGS.yaml).
+    updated: '2026-10-11T03:38:40Z'
 
   - id: t-022
     milestone: m4
@@ -735,22 +764,27 @@ tasks:
   - id: t-026
     milestone: m5
     title: "Project art: confirm icon, card and hero landed"
-    status: claimed
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     note: >-
       intake.py queued the icon, card and hero in projects/art-prompts.yaml (rewritten to the Krea rules:
       physical subject first, no negations, no frame nouns). Confirm they landed and look right (Zuzu
       short and stocky in the kasa and poncho, facing a rival); re-stage any that miss.
-    claimed_by: 2026-10-11T03:30:00Z-zs-t026
-    claimed_at: '2026-10-11T03:19:53Z'
-    updated: '2026-10-11T03:19:53Z'
+
+      DONE 2026-10-10 (PT): all three landed in projects/images/ (zuzu-showdown-icon.webp
+      256x256, -card.webp 512x768, -hero.webp 1280x720) and the queue entries were pruned.
+      Checked by eye: Zuzu is short and stocky in the kasa and poncho in all three; the card
+      has him leaping at the Coyote over the Mission's bell tower, the hero has him facing the
+      River Croc with the Abbess, the Coyote, the Hyena and the Crow looking on; no lettering.
+      Nothing to re-stage.
+    updated: '2026-10-11T03:20:03Z'
 
   - id: t-028
     milestone: m4
     title: "New fighter: the Swamp Witch, the Thing's avatar (moveset, references, rig, portraits)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -775,9 +809,19 @@ tasks:
       LATER: (3) done, she plays as her art (silasfelinus/kind_robots#3483, tools/rigs/witch.py; her
       normals fitted to the art). Left: (4) her portraits are rendered; wiring every fighter's portraits
       into the select, VS and win screens is t-008's.
+
+      DONE 2026-10-10 (PT): the Swamp Witch is a full fighter. (1) References re-posed by
+      Kontext from the drifted boss seeds (art/T014-WITCH-REFERENCES.yaml), 244386 picked; (2)
+      kit fighters/swamp-witch.ts with its contract suite (kind_robots#3463; the parry learned
+      to bank meter for Bargain); (3) parts sheet art/T014-WITCH-PARTS.yaml and rig
+      tools/rigs/witch.py, the coil one bending cut part, normals fitted to the art
+      (kind_robots#3483); (4) her four portraits in T008 (kind_robots#3485). fighters.yaml
+      carries her and the boss's avatar link; matchups.yaml her 9 matchups and boss line. Her
+      arcade role (last fight before the door) lands with t-021.
     claimed_by: 2026-10-10T20:30:00Z-zs-t028
     claimed_at: '2026-10-10T20:28:42Z'
-    updated: '2026-10-10T20:28:42Z'
+    updated: '2026-10-11T03:26:29Z'
+    implementation_pr: 'silasfelinus/kind_robots#3483'
 
   - id: t-027
     milestone: m3
