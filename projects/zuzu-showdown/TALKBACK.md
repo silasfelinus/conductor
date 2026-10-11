@@ -15,3 +15,5 @@
 **Kaizen task:** t-031 — add a deterministic, documented balance runner. LEARNING-REPORT.md reviewed; no Showdown-specific systematic weakness overrides this follow-up.
 
 **Ledger:** no task outcome appended because t-024 remains in flight. No claim or completion event was emitted by this review.
+
+**Timestamp correction:** GitHub's merged_at confirms #5998 merged at 3:05:37 PM PDT, rather than the 3:07 PM PT estimate above.
