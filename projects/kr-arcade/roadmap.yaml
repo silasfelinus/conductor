@@ -709,7 +709,7 @@ tasks:
   - id: t-031
     milestone: m7
     title: "Pipe Pals depth slice 5: two pals with their own feel, co-op and Versus, Overtime and Time Trial modes, medals"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-030
@@ -728,10 +728,18 @@ tasks:
       new mechanics). Content is data (district/episode/room definitions), not branches in the update
       loop. Verify: test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel
       and HD screenshots on the PR, and a pilot probe that shows runs still end.
+
+      Merged as kind_robots#3519: teal (longer bump reach) and pink (higher, floatier jump)
+      pals chosen on a mode menu; same-device co-op (maxPlayers 2, shared pool of 6, partner
+      bonks); Versus (one district, own tallies, STEAL!, fall costs points, winner card);
+      Overtime endless score attack; per-district Time Trial with saved best times; Clean
+      Sweep / Chain Master / Swift Fix medals (135) with a medal board, all kept in the save.
+      Completes the Pipe Pals depth pass.
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3
     claimed_at: '2026-10-11T13:42:56Z'
-    updated: '2026-10-11T13:42:56Z'
+    updated: '2026-10-11T13:51:22Z'
+    implementation_pr: 'silasfelinus/kind_robots#3519'
 
   - id: t-026
     milestone: m7
@@ -772,7 +780,7 @@ tasks:
   - id: t-027
     milestone: m7
     title: "Prize Show Panic depth slice 2: the 19-crasher roster, the 10-item arsenal and true twin-stick aim"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-026
@@ -791,10 +799,17 @@ tasks:
       Content is data (district/episode/room definitions), not branches in the update loop. Verify:
       test:arcade-engine plus a deterministic campaign test, eslint/prettier, vue-tsc, Pixel and HD
       screenshots on the PR, and a pilot probe that shows runs still end.
+
+      Merged as kind_robots#3518: the 19-crasher roster with tells and answers (poppers
+      through fluffballs, mascot mini-boss, camera cranes unified with the camera wall), the
+      boom mic, the 10-item arsenal with stacking timed powers, and opt-in twin-stick aim
+      (InputFrame.aim, right stick, on-screen aim stick, WASD+arrows). Touch aim stick still
+      needs an on-device look.
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T13:38:48Z'
-    updated: '2026-10-11T13:38:48Z'
+    updated: '2026-10-11T13:46:36Z'
+    implementation_pr: 'silasfelinus/kind_robots#3518'
 
   - id: t-028
     milestone: m7
