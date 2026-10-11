@@ -264,7 +264,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Reuse accepted Zuzu ArtImages and enqueue missing illustrated scene variants"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -279,6 +279,16 @@ tasks:
       2026-10-11 (Silas): the Zuzu character LoRAs are the default for Shifting Lands art. Give each new art ledger
       `series: zuzu-koala-assassin` and the Arthemy house lane; enqueue_art_requests.py then adds the right character
       LoRAs per subject (projects/comic-creator/cast-loras/zuzu-koala-assassin.yaml).
+
+      Done 2026-10-11 (kind_robots#3546): every one of 48 encounters, 15 roads and 5 trials
+      now resolves to a hand-picked, git-tracked Zuzu Gamebook/Showdown illustration via
+      utils/shiftingLands/sceneArt.ts (presentation only; authored packs keep art: null for
+      t-023). Card backs moved out of /images (Alexandria mounts the media share over it,
+      which hid them). Also fixed the unresolved NavigationFlipCard (components use
+      pathPrefix: false) that left every drawn encounter blank. No ArtJobs enqueued; bespoke
+      later-land paintings tracked as t-026.
+    updated: '2026-10-11T22:13:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#3546'
 
   - id: t-014
     milestone: m3
@@ -313,7 +323,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Companion rail, inventory/skills overlay, dice/motion/sound and journey log"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -322,9 +332,14 @@ tasks:
       Show specific named character relationships and Rewards without hiding art beneath CRUD controls; reduced-motion and mute settings.
 
       Implemented illustrated character sheet rail, actual earned one-use inventory, history-grounded skills and injuries, named nontravelling relationships, journal filters and optional accessible dice cues. Presentation preferences are separate from versioned V5 ledger; no existing dice or save rules change. Kind Robots PR #3530 awaits all repository checks after successful scoped formatting. No public publishing, paid art or live production deployment claimed.
+
+      Merged 2026-10-11 via kind_robots#3546, which carried #3530 and repaired its two stale
+      contract regexes (attemptTrialWithCue rename; Prettier trailing comma in matchMedia).
+      Gameplay contract CI green. Merged != deployed: live after the next Alexandria deploy.
     claimed_by: 2026-10-11T203500Z-zuzu-shifting-lands-t016-a71c
     claimed_at: '2026-10-11T20:35:00Z'
-    updated: '2026-10-11T21:10:00Z'
+    updated: '2026-10-11T22:13:48Z'
+    implementation_pr: 'silasfelinus/kind_robots#3530'
 
   - id: t-017
     milestone: m5
@@ -436,7 +451,7 @@ tasks:
   - id: t-023
     milestone: m3
     title: "Map twelve bespoke authored Homestead card illustrations"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -471,3 +486,13 @@ tasks:
     claimed_by: 2026-10-11T092100Z-zuzu-shifting-lands-t025-d41e
     claimed_at: '2026-10-11T09:21:00Z'
     updated: '2026-10-11T10:09:00Z'
+  - id: t-026
+    milestone: m3
+    title: "Bespoke illustrations for the 36 later-land encounters and four later trials"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-022, t-023]
+    note: |-
+      Opened 2026-10-11 after t-013's reuse pass (kind_robots#3546). Every later-land card currently shows a hand-picked existing Zuzu Gamebook/Showdown scene from utils/shiftingLands/sceneArt.ts; the authored packs keep art: null so this task can see what it owes. Paint one fixed-cast illustration per encounter in DUSTWATER-9, TABLELANDS-9, STORM-CROW-9 and BLACK-VERGE-9 plus the Crossing Gate, Canyon Warden, Deep-Cave Judgement and Beyond the Verge trials, following the t-023 Homestead pattern once it lands (same frame, LoRA and rights rules). Durable ArtJobs only; queued != rendered != delivered != verified. Ship delivered art from a path the image serves (never under /images, which Alexandria mounts over), then swap the sceneArt entries and keep verifyShiftingSceneArt.test.ts green.
