@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-10-11T21:50:11Z
+Generated: 2026-10-11T21:54:31Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1245**
-- Outcomes: blocked: 19, cancelled: 2, done: 1224
+- Closed tasks recorded: **1246**
+- Outcomes: blocked: 19, cancelled: 2, done: 1225
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -39,7 +39,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 22 | 95% |
-| interface-vision | 140 | 100% |
+| interface-vision | 141 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 11 | 100% |
 | kind-oracle | 1 | 100% |
@@ -80,13 +80,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 18 | 50% |
-| software | 1227 | 99% |
+| software | 1228 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 47 |
+| quality | 48 |
 | actionable | 21 |
 | transient | 18 |
 | scope | 3 |
@@ -95,13 +95,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 50% success over 18 closed tasks; aim the next kaizen task here
-- failure category `quality` — 47 occurrences; look for the shared cause across its records
+- failure category `quality` — 48 occurrences; look for the shared cause across its records
 - failure category `actionable` — 21 occurrences; look for the shared cause across its records
 - failure category `transient` — 18 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-10-11 `interface-vision/t-141` — Validate the rendered adaptive column geometry instead of a stale single-column width cap. Workflow path guards require explicit existing script filenames; use a focused live browser job to verify the repaired fixture before merge.
 - 2026-10-11 `kr-arcade/t-022` — Prettier ratchet validates changed file identity, not just net counts; format new render-only edits before awaiting the full contract suite.
 - 2026-10-10 `zuzu-pinball/t-004` — Gate elevated-ramp development on real shooter trajectory tests, not a decorative shot map.
 - 2026-10-10 `zuzu-pinball/t-003` — Unlisted arcade preview registrations are not private by themselves. Guard public /play/arcade resolution and public score plausibility explicitly. After a Care Package Depot rules rename, update all corresponding DMD contract assertions as one scoped regression correction.
@@ -111,7 +112,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-10-07 `zuzu-showdown/t-010` — Hold a fighting game's frame data to its art mechanically, not by eye: have the rig render each attack's striking layer alone, write that reach into the frame map, and test every hitbox against it on the frames the game actually shows while the box is live. That check found what contact sheets hid: anti-airs and Pocket Sand striking a frame before their strike pose, low kicks drawn 11-12 px off the floor, and kicks shorter than their boxes. Also: cut-out source limbs are not vertical at rest, so pose angles are relative to the drawn angle (rotating 65 degrees from a leg already 30 degrees forward lifts the foot instead of extending it), and a smear is where the blade was, so keep it out of the reach measurement.
 - 2026-10-06 `zuzu-showdown/t-007` — Flux Kontext keeps a character on-model but cannot animate: from a single reference with one fixed seed it ignored 'facing right', gave six near-identical walk frames, never produced the slash pose, and swapped props (sheathed sword to bare blade, a second sword) between frames. Use Kontext for HD art and parts sheets and drive motion with a rig, or wait for a pose ControlNet; keep HD masters and derive pixel art, because pixel is a render style, not the source.
 - 2026-10-07 `kind-pinball/t-017` — The current 288x416 Canvas 2D contract is the dominant quality ceiling. Preserve the Arcade shell and completed t-003 shot-map prototype, but make premium pinball a lazy-loaded WebGL/Rapier specialization rather than forcing the retro renderer to imitate a physical machine.
-- 2026-10-07 `zuzu-showdown/t-014` — A status effect that starts on hit must be timed against the hitstun it rides on: Pocket Sand's 20-frame can't-block window, counted from the hit, expired exactly as the 18-frame stagger ended and did nothing. Count such windows from the end of hitstun, and write a test that tries the follow-up the effect is meant to open.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-11T21:50:11Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-11T21:54:31Z_
