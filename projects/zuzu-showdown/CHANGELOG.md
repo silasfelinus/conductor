@@ -1,5 +1,30 @@
 # zuzu-showdown CHANGELOG
 
+## 2026-10-10
+- t-008: every fighter's portraits are in the game (kind_robots#3485). The select cards show busts, the VS
+  screen slams in half-body portraits, and the win screen shows the winner's victory portrait with the
+  loser's beaten one small in the corner. The Siblings' beaten portrait is the sister shielding her brother.
+  New tools/portraits.py ships all 36 (9 fighters x 4) as pixel PNGs and 4x HD WebP, about 1 MB. In a mirror
+  match P2's portrait is hue-shifted to stand in for the alternate palette. A portrait still being drawn
+  falls back to the sprite. Along the way, the select prompt moved below the third row that the Swamp Witch
+  started.
+- t-028: the Swamp Witch, the Thing Behind the Door's avatar and the only figure shaped like a person in a
+  world of animals (kind_robots#3463, #3483). She grew out of the boss's tentacle seeds that drifted into
+  figures. A zoner and trapper on a coil of tentacles: Bog Grasp, Leech Hex (a five-second drain), Sink,
+  Coil Snare, and Bargain (a parry that banks half a bar), plus the Drowning Pool and The Door Below supers.
+  Her rig (tools/rigs/witch.py) bends the coil as one cut part.
+- t-012, t-013: Storm Crow, River Croc, the Hyena Matriarch and Old Komodo play as their art
+  (kind_robots#3462, #3483). Each has a rig in tools/rigs/ with normals fitted to the drawn reach. rig.py
+  learned a REFERENCE crop, so a shadow no longer inflates the scale. The boss's door, eye and tentacle
+  layers are rendered (art/T021-BOSS-PARTS.yaml).
+- t-016, t-017: Storm Crow, River Croc, the Hyena Matriarch and Old Komodo joined the roster with full kits
+  and contract suites (kind_robots#3419, #3420).
+- t-011, t-015: the Abbess and the Siblings play as their art (kind_robots#3409, #3410, #3414). At a KO the
+  sister scoops her brother up and runs (kind_robots#3422).
+- t-019: an arcade character select between the title and the VS screen (kind_robots#3423).
+- Silas's feedback: bigger fighters, HD and sound on by default, fullscreen, a calm camera that pans up on
+  jumps, and stand-ins gone from the picker (kind_robots#3396, #3401).
+
 ## 2026-10-07
 - t-027 (in progress): Pixel and HD render styles (kind_robots#3350). A "Look" select picks one, and it
   persists. Pixel shows the 480x270 game at a whole number of device pixels per game pixel. HD
