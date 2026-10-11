@@ -58,7 +58,7 @@ milestones:
   - id: m7
     title: "DEPTH PASS — Pipe Pals and Prize Show Panic grow into full campaigns"
     weight: 60
-    status: in-progress
+    status: done
 
   - id: m8
     title: "CABINET DEPTH PASS — every other cabinet grows from a thin riff into a full campaign"
@@ -954,7 +954,7 @@ tasks:
   - id: t-034
     milestone: m7
     title: "Prize Show Panic depth slice 7: Rerun and Marathon modes, episode select and medals"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-033
@@ -972,10 +972,17 @@ tasks:
       branches in the update loop. Verify: test:arcade-engine plus a deterministic campaign test,
       eslint/prettier, vue-tsc, Pixel and HD screenshots on the PR, and a pilot probe that shows runs
       still end.
+
+      Merged as kind_robots#3526: the mode card (Season, Rerun, Marathon, Episode select,
+      Medal board); Rerun NG+ with deterministic per-room remixes; Marathon endless legs as
+      the leaderboard main event; episode select after a clear; Flawless / Full Haul / Prime
+      Time medals in every room (201) with a medal board; save v2 (v1 still reads); registry
+      blurb and howTo for the finished season. Completes the Prize Show Panic depth pass.
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-psp
     claimed_at: '2026-10-11T16:31:57Z'
-    updated: '2026-10-11T16:31:57Z'
+    updated: '2026-10-11T17:12:09Z'
+    implementation_pr: 'silasfelinus/kind_robots#3526'
 
   - id: t-035
     milestone: m8
