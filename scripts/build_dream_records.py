@@ -40,6 +40,7 @@ from typing import Any, Optional
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from art_prompt_conditional_check import conditional_instruction_violations  # noqa: E402
 from dream_sdxl_checkpoint_art import CHECKPOINT_LANES  # noqa: E402
+from daily_dream_v3_contract import validate_v3  # noqa: E402
 from dream_art_prompts import (  # noqa: E402
     character_prompt,
     location_prompt,
@@ -145,10 +146,10 @@ def _canonical_proposal_errors(proposal: Optional[dict]) -> list[str]:
     if not isinstance(proposal, dict):
         return ["missing or invalid proposal-data block"]
     if proposal.get("bundle_version") == 3:
-        # Fail CLOSED until the nine-record transaction, Facet assignment and
-        # ArtJob handoff ship together. The old writer would silently attach
-        # eight Zuzu-world entities to an unrelated independent vibe.
-        return ["v3 fourteen-asset proposals require the upgraded single writer and author; no live writes permitted"]
+        # One validated transaction, not an independent Zuzu REST writer.
+        return validate_v3(proposal)
+    if proposal.get("zuzu_assets"):
+        return ["unversioned Zuzu assets are forbidden; bundle_version 3 is required"]
     errors: list[str] = []
     facets = proposal.get("seed_facets")
     if not isinstance(facets, dict) or int(facets.get("version") or 0) < 2:
@@ -616,6 +617,10 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
 
 def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple[dict, list, list[str]]:
     """Create rows + sheets; original six plus optional versioned Zuzu extras."""
+    if proposal.get("bundle_version") == 3:
+        errors = validate_v3(proposal)
+        if errors:
+            raise ValueError("invalid v3 bundle before any writes: " + "; ".join(errors))
     results: list = []
     art_entries: list[str] = []
     built: dict[str, Any] = {
@@ -1193,6 +1198,26 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     if contract_errors:
         message = f"{path.name}: invalid canonical proposal — " + "; ".join(contract_errors)
         return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
+    if proposal.get("bundle_version") == 3 and not dry_run:
+        # Resolve BOTH real checkpoint resources before creating any DB objects.
+        # A missing resource cannot become a silently substituted Krea job;
+        # failures pin the proposal for explicit correction/retry.
+        try:
+            from consume_art_queue_core import _load_resource_index
+            from dream_sdxl_checkpoint_art import resolve_registered_checkpoint
+            catalog = _load_resource_index()
+            families = {
+                str(row.get("checkpoint_family") or "").lower()
+                for kind in ("locations", "characters", "rewards", "scenarios")
+                for row in proposal["zuzu_assets"][kind]
+            }
+            for family in families:
+                resolve_registered_checkpoint(family, catalog)
+        except Exception as error:  # noqa: BLE001 - preflight, zero mutations
+            return _fail_and_pin(
+                path, f"Zuzu checkpoint preflight failed BEFORE DB writes: {error}",
+                dry_run, already_pinned=already_pinned,
+            )
     slug = str(fm.get("slug") or slugify(proposal.get("title", "dream")))
     pdate = str(fm.get("proposal_date") or fm.get("created") or "")
     print(f"Building {path.name} (slug={slug}, proposal_date={pdate})"
@@ -1203,6 +1228,16 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     except Exception as error:  # noqa: BLE001 - persist the retry before surfacing it
         message = f"{slug}: object creation crashed before the bundle could be recorded: {error}"
         return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
+    expected_requests = 14 if proposal.get("bundle_version") == 3 else 6
+    if len(art_entries) != expected_requests or len({
+        _art_request_id(entry) for entry in art_entries
+    }) != expected_requests or len(built.get("art") or []) != expected_requests:
+        results.append({
+            "endpoint": "art-ledger", "status": 0, "ok": False,
+            "label": "complete Daily Dream art inventory",
+            "message": f"expected {expected_requests} distinct art requests, got {len(art_entries)}",
+            "created": False, "id": None, "delete_base": None,
+        })
     failures = [r for r in results if not r["ok"]]
     if not dry_run and failures:
         # Atomic build: never mark a partially-built proposal `built`. Roll back any
