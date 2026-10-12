@@ -224,7 +224,7 @@ def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[
                     "zuzu_reward_" + str(row.get("reward_type") or "").lower()
                     if kind == "rewards" else f"zuzu_{kind_label}_{index}"
                 )
-                element = ("zuzu-" + builder_slugify(title_value)
+                element = ("zuzu-" + project + "-" + builder_slugify(title_value)
                            + ("-scenario" if kind == "scenarios" else ""))
                 details = (
                     (row.get("known_for"), row.get("local_rule"))
