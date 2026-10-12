@@ -84,20 +84,17 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Build private /admin Arcade shell and original platforming physics"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Inspect existing Arcade platformer and its adapters before adding
-      code. Create requiredRole ADMIN discoverable tab at
-      /admin/save-the-plumber, isolated game state/score namespace,
-      fixed-step jump/fall/coyote-time and buffered input, adjustable
-      acceleration, camera/colliders, debug replay and mobile/gamepad
-      control maps. No premature public /play route.
+    note: |-
+      Inspect existing Arcade platformer and its adapters before adding code. Create requiredRole ADMIN discoverable tab at /admin/save-the-plumber, isolated game state/score namespace, fixed-step jump/fall/coyote-time and buffered input, adjustable acceleration, camera/colliders, debug replay and mobile/gamepad control maps. No premature public /play route.
+
+      Private art-forward eight-world map and Bluebell movement lab wired to the shared Arcade cabinet, local input and private unlisted game registry; admin tutorial/sidebar, project placement and regression tests implemented. The 32-stage campaign and heroine generator remain subsequent roadmap tasks.
     claimed_by: 2026-10-12T010840Z-plumber-t003-k9qm
     claimed_at: '2026-10-12T01:08:40Z'
-    updated: '2026-10-12T01:08:40Z'
+    updated: '2026-10-12T01:12:30Z'
   - id: t-004
     milestone: m2
     title: "Implement run-stable heroine generator, animations and opening"
