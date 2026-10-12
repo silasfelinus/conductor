@@ -4,6 +4,20 @@
 
 Polished hand-painted 2.5D space opera: candy pink, lilac, peach, powder cyan, soft butter-yellow and opalescent turquoise with rich deep navy negative space. Premium animation on gently iridescent metal and translucent jellyfish glass. Everything glows, floats and refracts, yet the world stays friendly and readable. **The world is soft; the combat is precise.** Aim for richly composed high-definition illustrations, not a coarse early-80s arcade reskin.
 
+## Cast-first character direction
+
+The character art **must** follow [CAST-BIBLE.md](CAST-BIBLE.md). Four adult princesses with deliberately distinct body silhouettes and culturally grounded identities: compact Irish/Norwegian-influenced short-haired tomboy **Maribel** in rose-pink; tall Vietnamese-heritage trans woman **Azure** in cyan; powerfully muscular Black/Nigerian-heritage **Solenne** in butter-yellow; curvy Mexican-heritage queer punk **Vivi** in lilac. These identities add dimensionality; they do not predetermine personality, ability or costumes. Use individualized expressions, motivations, posture, wardrobe, interests, relationships and dialogue. Honor already-strong designs by reconciling instead of discarding them. No anatomical stereotypes, skin-lightening, uniform slender bodies, fetishized presentation, token costume motifs or tragic-queer default endings.
+
+**All four get equivalent production treatment:** front/side/back turnaround, expression atlas, cockpit portrait, off-duty portrait, interaction beat and group scene. Reference character face/silhouette via named ID, never infer their appearance from ship colors alone. Match their ships with P1–P4 identifiers and retain non-color HUD glyphs.
+
+## Seamless Act transitions
+
+Art direction follows [ACT-STRUCTURE.md](ACT-STRUCTURE.md): eight visually distinct Acts that blend into one continuous scrolling journey. Produce environment-to-environment parallax morphs, safe boss-aftermath rescue vignettes, Act title treatments and optional quiet tableau backgrounds after Acts III and V. Every Act has OPEN, TURN and AFTER story moments with flexible holographic portraits, not mandatory full-screen blocking dialogue. Preserve combat readability and keep all UI text separate from painted images.
+
+## Mission control portraits and cinematics
+
+The always-present mothership liaison **Lilt-7** is an original pearl-glass alien-influenced synthetic person with a calm androgynous silhouette, luminous filaments, warm gold eyes and expressive crack across one cheek. Build a reusable comms hologram and six distinct expression/gesture states; no generic voice-assistant icon. Preserve Captain Purl as the training mentor and Professor Opal as engineer. The art system must support a single-pilot exchange with Lilt and up to four individual princess portraits without shrinking combat visibility. Plan conditional ending illustration layers for all 15 pilot sets rather than an identical ending with swapped names. See COMMS-AND-ENDINGS-BIBLE.md.
+
 ## Ship families
 
 Four player princess ships, each unique in outline: **Petal Wing** (rose-gold swallowtail, spread), **Prism Lance** (long needle fin, piercing beam), **Halo Fin** (round ringed nacelles, defense drones), **Comet Crown** (triangular three-prong geometry, charge). Names describe ships, not preselected human appearance. Princess characters are original and have agency; cutscene portraits need continuity across all frames.
