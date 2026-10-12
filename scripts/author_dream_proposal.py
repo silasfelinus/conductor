@@ -29,6 +29,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 import build_dream_proposal as dreams  # noqa: E402
+from daily_dream_v3_authoring import assign_zuzu_provenance  # noqa: E402
 import dream_creative_ruts as ruts  # noqa: E402
 import dream_prose_quality as prose  # noqa: E402
 import dream_theme_diversity as themes  # noqa: E402
@@ -266,6 +267,57 @@ exclusions; say nothing about text at all.
 
 Author the scenario LAST, and its `setup` must name the vibe title, location title,
 and character name literally."""
+
+
+
+V3_SYSTEM_ADDENDUM = """
+CRITICAL: FROM THIS DAILY CYCLE, PRODUCE FOURTEEN ASSETS TOTAL.
+Keep the entire original Daily Dream JSON shape, all six original records and
+their one cohesive world. Additionally add "bundle_version": 3 and a SEPARATE
+"zuzu_assets" object. The original six outputs stay unchanged in shape.
+
+"zuzu_assets": {
+  "locations": [TWO dictionaries, EACH with title, known_for, local_rule,
+                 best_scene, art_direction, project_target, checkpoint_family],
+  "characters": [TWO dictionaries, EACH with name, role_drive, carries,
+                  complication, look, project_target, checkpoint_family],
+  "rewards": [TWO dictionaries, one ITEM, one SKILL, EACH with name,
+              reward_type, rarity, grants, best_used_when, catch, look,
+              project_target, checkpoint_family],
+  "scenarios": [TWO dictionaries, EACH with title, setup, project_target,
+                checkpoint_family, choices: [
+                   {label, tradeoff, immediate_consequence, later_consequence},
+                   {label, tradeoff, immediate_consequence, later_consequence}
+                ]]
+}
+Each four categories must have ONE zuzu-gamebook asset and ONE emperor-of-dust
+asset. Give the Gamebook ITEM and the Emperor SKILL. The Gamebook slot is
+listed first for locations/characters/scenarios; the Emperor slot is second.
+Gamebook checkpoint_family is arthemy, Emperor is illustrious. Both names
+refer to real SDXL checkpoint models, not prose styling suggestions.
+
+Zuzu Gamebook: weird-west animal-folk, Zuzu Koala as an Edo samurai wanderer,
+branching encounters, concrete flags and physical consequences. The Abbess
+steals children and feeds an ancient cosmic entity; no invented generic Zuzu
+lore replaces this canon. Gamebook scenarios must offer two costly paths,
+one with a specific skill/flag impact and a later narrative branch.
+
+Emperor of Dust: an earlier historical period, "Ash, Brass & the Last Hundred
+Days"; ash-grey roads, brass salvage, animal-folk follower leaders, patched
+leather, limited prosperity, a numerical Horde, faction bargains. Followers
+are people, not the count of the Horde. Common injuries sidelining a follower
+for days; death rare. Emperor scenarios need at least two dispatch approaches
+and specific Horde/faction/resource and later-day consequences.
+
+The original Daily Dream is a totally different world. NONE of the Zuzu rows
+may inherit it, mention its title, reuse its stylistic Facets, or attach to
+its Dream ID. Its six cards retain their own independent random visual style.
+
+Write complete, readable sentences in every Zuzu copy field. Every Zuzu
+choice is an actionable moral dilemma with genuinely defensible alternatives
+and meaningful immediate and longer-term outcomes. Never invent fake Resource
+IDs. Return ONLY the complete JSON proposal, including the extra object.
+"""
 
 
 def _proposal_data(text: str) -> dict:
@@ -782,12 +834,20 @@ def author(day: str, api_key: str, verbose: bool = True) -> dict:
             print(f"authoring {day} (attempt {attempt}/{MAX_ATTEMPTS})", file=sys.stderr)
 
         try:
-            proposal = parse_json_object(call_claude(ask, SYSTEM_PROMPT, api_key))
+            proposal = parse_json_object(call_claude(
+                ask,
+                SYSTEM_PROMPT + (V3_SYSTEM_ADDENDUM if brief.get("bundle_version") == 3 else ""),
+                api_key,
+            ))
         except (ValueError, json.JSONDecodeError) as error:
             complaints = [f"completion was not valid JSON: {error}"]
             if verbose:
                 print("  rejected: " + complaints[0], file=sys.stderr)
             continue
+
+        if brief.get("bundle_version") == 3:
+            proposal["bundle_version"] = 3
+            assign_zuzu_provenance(proposal)
 
         proposal["seed_facets"] = merge_invented_facets(
             brief["seed_facets"], proposal.get("seed_facets")
