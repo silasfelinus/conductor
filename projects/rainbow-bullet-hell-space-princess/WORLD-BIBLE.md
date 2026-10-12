@@ -54,6 +54,8 @@ The following 24 variants are **mechanically** distinct; variants are authored p
 
 Tier design for production art: scout / veteran / guardian is 3 silhouette evolutions per **family** only when new mechanics justify an atlas. Enemy colors do not communicate threat alone: danger outline, pulse frequency and sound distinguish attacks. Never label E01–E24 implemented until a corresponding tested enemy state machine is merged.
 
+**Campaign structure:** [ACT-STRUCTURE.md](ACT-STRUCTURE.md) governs the eight **Acts** and S09 finale as one continuous playable journey. Each Act has three mandatory conversation slots (OPEN, TURN, AFTER) and an authored boss aftermath. Most boss defeats blend directly into the next region; Acts III and V have optional deliberate tableau checkpoints. Preserve the eight authored regions and nine bosses below; do not convert the campaign into eight isolated arcade stages.
+
 ## Stage score: eight authored chapters and finale
 Every stage has four beats: reveal, learn, remix and boss approach. Target a measured **10–15 min first clear per chapter**, excluding retries; prototype timing is not evidence. Each includes optional loot pockets with accessible alternatives and actual checkpoints.
 
