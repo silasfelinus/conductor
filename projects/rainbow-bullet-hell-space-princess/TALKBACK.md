@@ -35,3 +35,15 @@ Kaizen t-018 commits durable event replay through the real consumer, reusing the
 Reviewed kind_robots #3598 at f152fc4bb41cdd32a9a152bc1bf051aa2061e7e2. All 32 current-head checks are green; independent complete branch arcade command passes core/preview/Pinkwake and 29 cabinet suites. A focused deterministic boundary probe nevertheless exposes an untelegraphed seven-shot volley: HP51 through boss frame269 gives no warning for frames253–269; ordinary shot damage2 after step269 makes step270 switch phase2 to phase3 and fire immediately because period126 changes to90. The real engine applies shot collisions after the boss step, so this timing is valid. Existing global-any-warning assertion misses per-volley transition fairness.
 
 Quality pass1; precise reproduction and phase-safe scheduling/regression request in [review comment](https://github.com/silasfelinus/kind_robots/pull/3598#issuecomment-6128502143). Keep the original PR for repair, preserve finite Act progression, pod cleanup and ship state. This is focused failing-path evidence, not full native device/product acceptance. After this metadata reaches main, queue a session-matched ready event to release t-007 correctly. No done learning or kaizen for a rejection; full Acts I–II remain incomplete, and dependent co-op #3599 still needs reconciliation. No deployment or publication.
+
+## 2026-10-12 PT | Reviewer → Worker | rainbow-bullet-hell-space-princess/t-005 | critique
+
+**Decision:** rejected (pass1); existing kind_robots #3599 retained for repair.
+
+**Failure category:** quality. On head5a54c49ac8c8a7b21a27c1b70826bb2a32a8edde, the pickup consumer still scans every retained ship. All33 current-head checks are successful, but a normal-input/rng0.5 probe proves invisible benched P2 acquires a power module: move both seats down8ticks, bench P2 at65,132.8/power1, P1 earns pickup at222 then flies up34; pickup disappears718, and P2 rejoins with power2. No state/snapshot mutation. The mismatch is in the actual consumer, not the pure active-target helper. Independent full branch arcade command also passed.
+
+**What was good:** bounded seat API preserves timer and benched pilot state; explicit partial scope and Pinkwake reconciliation prerequisite are honest.
+
+**What to improve:** limit pickup consumers to active living seats; commit actual-engine bench/pickup/rejoin evidence and preserve active collection/no-free-life rules. [Precise review](https://github.com/silasfelinus/kind_robots/pull/3599#issuecomment-6129288307). Reconcile/retest with repaired merged Pinkwake #3598 before merging, retaining authored Act state. This focused failing-path probe does not establish native shared-cabinet/device acceptance or complete t-005.
+
+**Kaizen task:** deferred — quality rejection, no implementation merge or task closure. No completion learning. After this metadata reaches main, queue and verify original-session ready event/projection, preserving PR provenance and avoiding duplicate implementation. No deployment/publication.

@@ -128,7 +128,9 @@ tasks:
     claimed_by: 2026-10-12T112819Z-rainbow-t005-coop-p4kx
     claimed_at: '2026-10-12T11:28:19Z'
     updated: '2026-10-12T11:44:00Z'
-    passes: 0
+    passes: 1
+    retry_context: >-
+      Quality pass1 on kind_robots#3599 head5a54c49ac8c8a7b21a27c1b70826bb2a32a8edde: pickup collector uses ships.find over retained benched roster. Normal inputs/rng0.5: players2 move down8ticks, bench P2 at65,132.8/power1, P1 earns first power pickup at222 then moves up34; pickup disappears718 and rejoining P2 shows unearned power2. Limit collectors to active living seats and add actual-engine bench/pickup/rejoin regression without mutating snapshots. Preserve active collection and no-refill/life rules; repair the existing PR. Also reconcile/retest on repaired merged Pinkwake#3598 as the original handoff requires; retain authored Act state. Green33 checks do not prove this consumer boundary; complete shared-cabinet/device acceptance remains unverified.
     stakes: reversible
     note: |-
       Join/leave without resetting campaign, 1–4 input slots, keyboard/gamepad assignments, readable colored/shape-coded ship markers and projectiles, independent lives, shield/revive rules, adaptive enemy pressure without hidden damage spikes, shared continues and per-player HUD. Test same-frame collisions, simultaneous supers and full four-player bullet load.
