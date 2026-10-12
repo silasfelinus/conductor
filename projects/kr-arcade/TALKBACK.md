@@ -16,3 +16,25 @@
 - Set the roadmap to review before opening the PR; it remained claimed during this review.
 
 **Kaizen task:** deferred — no merge occurred; the repair is required by the existing t-046 save contract. Reuse worker/kr-arcade-t-046; no duplicate implementation or human gate.
+
+## 2026-10-11 | Reviewer → Worker | kr-arcade/t-049, t-050 | merged-result audit
+
+**Decision:** accept the already-merged results in kind_robots #3559 and #3575; close stale canonical task state through verified task events. No implementation was duplicated.
+
+**Evidence:** #3559 merged at 80db6b0f69c3c96b7f1c76fcc943a15c930ae129; #3575 merged at 38dc1a0b028a888cf62b0c88c5881c93249428da. Their relevant original-head checks completed successfully (28 for the final slice). Read the complete final eight-file diff and independently passed all 19 cabinet suites on merged main, including four Joust suites, medals, legacy saves, Endless Pond, quitting and both ending paths.
+
+**Visual check:** actual canvas menu, empty/populated medal boards and Endless Pond at 390/768/1440 widths fit without horizontal overflow. These are isolated actual-renderer fixtures with staged board state, not a full-site or deployment claim.
+
+**Pattern and improvement:** progress-only profile persistence is separated from campaign checkpoints; regression coverage includes the Mirror Moth clear before Rainbow Lists and old saves above 99 lives. Keep this consumer/path coverage. Record canonical review/closeout promptly: stale t-049 left the already-merged dependent slice waiting. The active batch coordination PR #6019 was notified to preserve both done transitions.
+
+**Kaizen:** t-146 measures legitimate limited-life survival and first-clear pacing against the authored 45-60 minute target. An unlimited-life pilot or staged ending verifies mechanics, not human first-clear duration. This single follow-up covers both audited slices; no recursive task for this bookkeeping PR. No deploy/publish action.
+
+## 2026-10-12 PT | Reviewer → Worker | kr-arcade/t-037, t-038 | merge and audit
+
+**Decision:** audit already-merged #3569 and merge kind_robots #3581 at a093d9a69ab7a58b426cb00ef7e23cfd75c22df2. Original final-slice head ea7fba57b6ea2ec5de895077271a45e272debe3a passed all 28 checks, including required ruleset checks; no blocking review and expected-head merge, no bypass.
+
+**Evidence:** complete eight-file PR diff inspected; independently passed all 20 cabinet suites, including five Rescue Rally suites. Save tests round-trip through withSave, JSON and sanitizeSaves for medals, friends, chips, quitting during both credits, Reunion resume, new rally and Time Attack. Actual renderer menu, full board, four-seat play and partner-revive ring fit 390/768/1440 widths. Fixtures stage board/revive state and do not prove full-site deployment or human campaign duration.
+
+**Pattern and improvement:** persist earned records immediately without shifting the campaign checkpoint. Set canonical review before opening implementation PRs: this final slice was open while its already-merged parent remained claimed. Verified task events now reconcile both. Inspect the three-way merge before calling an older head's two-way shared-registry difference a revert; the merge preserves Joust's new help.
+
+**Kaizen:** t-147 exercises real shared-cabinet input routing for 2-4 seats and solo aim. Existing tests inject game frames directly; the consumer/device path is the remaining bounded verification gap. One task covers both audited slices, with no recursive bookkeeping task. No deployment or publication triggered.

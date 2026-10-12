@@ -680,46 +680,31 @@ tasks:
     milestone: m8
     title: "Rescue Rally depth slice 3: Districts 3–5, the Glitch Core and the endings"
     status: done
-    owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-11T22:38:07Z'
-    updated: '2026-10-12T04:59:23Z'
+    updated: '2026-10-12T06:52:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-036
-    note: >-
-      CABINETS.md section 1, Rescue Rally (Robotron riff), slice 3 of 4: Districts 3–5, the Glitch Core and
-      the endings. The upgrade is "Citywide Reboot". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read
-      the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every
-      slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rescue-rally). Silas,
-      2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
-      improvements, they should not just be thin veneers of the old games. But newer, better, even more
-      awesome."
+    note: |-
+      CABINETS.md section 1, Rescue Rally (Robotron riff), slice 3 of 4: Districts 3–5, the Glitch Core and the endings. The upgrade is "Citywide Reboot". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rescue-rally). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
-      Merged as kind_robots#3569: the Botanic Dome, Data Docks and Storm Rooftops districts
-      with their floor mechanics, 7 new foes, Overgrowth, the Static Twins and the Glitch
-      Core, golden chips with a Shelter hint, the Reunion, the true ending and credits, and a
-      150 s fade-out net so no wave can soft-lock.
-    implementation_pr: 'silasfelinus/kind_robots#3569'
+      Reconciled merged kind_robots#3569 at 4641ea14c26bef88b3b2841e5410a389d68e0025. Authoritative merge and all 29 completed original-head checks verified at 3e3efa4a6b0605b9367f349c6c69fbadad81b42d. Current code includes the three later districts, Glitch Core, golden chips, Reunion and endings. The dependent t-038 PR #3581 is receiving a separate complete-diff, save-path and rendered-controls review. This closes stale bookkeeping without claiming or duplicating implementation.
 
   - id: t-038
     milestone: m8
     title: "Rescue Rally depth slice 4: Co-op and the long rally"
-    status: claimed
-    owner: worker
-    claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
-    claimed_at: '2026-10-12T04:59:29Z'
-    updated: '2026-10-12T04:59:29Z'
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-037
-    note: >-
-      CABINETS.md section 1, Rescue Rally (Robotron riff), slice 4 of 4: Co-op and the long rally. The upgrade
-      is "Citywide Reboot". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first;
-      this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies.
-      Code: kind_robots utils/arcade/games/ (registry slug rescue-rally). Silas, 2026-10-11: "I need an
-      assessment done of the other arcade games. I want the same level of quality improvements, they should
-      not just be thin veneers of the old games. But newer, better, even more awesome."
+    note: |-
+      CABINETS.md section 1, Rescue Rally (Robotron riff), slice 4 of 4: Co-op and the long rally. The upgrade is "Citywide Reboot". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rescue-rally). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Reviewer reserved kind_robots#3581 with marker conductor-cycle-20261012T065000Z-rally-r9k2. Current head ea7fba57b6ea2ec5de895077271a45e272debe3a has all 28 checks completed green. Complete eight-file PR diff inspected, independently passed 20 cabinet suites including all five Rescue Rally suites, and actual menu/medal-board/co-op/revive renders fit 390/768/1440 widths. Parent t-037 was verified done through the task-event processor; no duplicate implementation. Await final fresh reviews/comments/head and merge using expected head SHA.
+
+      Merged kind_robots#3581 at a093d9a69ab7a58b426cb00ef7e23cfd75c22df2 using expected head ea7fba57b6ea2ec5de895077271a45e272debe3a after all 28 head checks completed green, required ruleset checks passed, and no blocking review remained. Full eight-file diff inspected; independent 20-cabinet suite and save round trips passed. Actual menu, full medal board, co-op and revive renders fit 390/768/1440 widths. Merge preserves Joust's separately merged registry. Catalog/TALKBACK and one bounded consumer-control kaizen follow. Fixture state is staged; full-site, deployment and human campaign duration are not claimed.
+    updated: '2026-10-12T07:50:12Z'
 
   - id: t-039
     milestone: m8
@@ -775,36 +760,21 @@ tasks:
     milestone: m8
     title: "Battery Maze depth slice 3: Power Phases 2 and 3, the Overload and the endings"
     status: done
-    owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-11T22:41:19Z'
-    updated: '2026-10-12T04:45:28Z'
+    updated: '2026-10-12T08:31:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-040
-    note: >-
-      CABINETS.md section 2, Battery Maze (Pac-Man riff), slice 3 of 4: Power Phases 2 and 3, the Overload and
-      the endings. The upgrade is "The Charging Network". Spec: projects/kr-arcade/depth-pass/CABINETS.md --
-      read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for
-      every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug battery-maze).
-      Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of
-      quality improvements, they should not just be thin veneers of the old games. But newer, better, even
-      more awesome."
+    note: |-
+      CABINETS.md section 2, Battery Maze (Pac-Man riff), slice 3 of 4: Power Phases 2 and 3, the Overload and the endings. The upgrade is "The Charging Network". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug battery-maze). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
-      Merged as kind_robots#3560: Power Phases 2 and 3 (Greenhouse, Cold Storage, Arcade After
-      Hours, Solar Farm) with 12 new layouts and specials, 7 new gremlins, the Glitch Train
-      and the Overload, four story breaks, credits, golden bolts opening the Battery Garden
-      true ending, and Overclocked; the pilot clears the campaign in about 45 minutes.
-    implementation_pr: 'silasfelinus/kind_robots#3560'
+      Reconciled already-merged kind_robots#3560 at c7cc4c1a26478ea2788c649b58ddce9d7cfdbb87. Verified authoritative merge and all 29 completed original-head checks at bc254854c78eb3fbd4861268e8e2d5bc33c80549. Code includes all six boards, three bosses, golden bolts, Battery Garden, both endings and Overclocked. This closes stale bookkeeping and unblocks t-042, whose open #3579 receives a separate full diff/save/input review. Unlimited-life pilot estimates are not evidence of human first-clear duration.
 
   - id: t-042
     milestone: m8
     title: "Battery Maze depth slice 4: Together and versus"
-    status: claimed
-    owner: worker
-    claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
-    claimed_at: '2026-10-12T04:45:33Z'
-    updated: '2026-10-12T04:45:33Z'
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-041
@@ -973,54 +943,29 @@ tasks:
     milestone: m8
     title: "Butterfly Joust depth slice 3: Heights, Orchard, Snowfield and the Moon Garden"
     status: done
-    owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-11T22:33:47Z'
-    updated: '2026-10-12T04:45:24Z'
+    updated: '2026-10-12T05:32:21Z'
     passes: 0
     stakes: reversible
     depends_on: t-048
-    note: >-
-      CABINETS.md section 4, Butterfly Joust (Joust riff), slice 3 of 4: Heights, Orchard, Snowfield and the
-      Moon Garden. The upgrade is "The Four Gardens Tourney". Spec: projects/kr-arcade/depth-pass/CABINETS.md
-      -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for
-      every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug butterfly-joust).
-      Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of
-      quality improvements, they should not just be thin veneers of the old games. But newer, better, even
-      more awesome."
+    note: |-
+      CABINETS.md section 4, Butterfly Joust (Joust riff), slice 3 of 4: Heights, Orchard, Snowfield and the Moon Garden. The upgrade is "The Four Gardens Tourney". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug butterfly-joust). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
-      Merged as kind_robots#3559: Heights, Orchard, Snowfield and the Moon Garden arenas, four
-      champions, petals, Rainbow Lists, the endings and the Champion's Circuit; JoustSave
-      gains petals and cleared with defaults for older saves.
-    implementation_pr: 'silasfelinus/kind_robots#3559'
+      Reconciled already-merged kind_robots#3559 at 80db6b0f69c3c96b7f1c76fcc943a15c930ae129. Authoritative merge and all relevant original-head checks at de8d7a945aa6d63f8ad0f18d9021d8ec09fb756f verified. Current main includes Heights, Orchard, Snowfield, Moon Garden, champions, petals/endings and Circuit. This closes stale bookkeeping, not new work or a deployment. Unblock t-050, whose implementation is also already merged and is receiving a separate complete-diff/current-main audit.
 
   - id: t-050
     milestone: m8
     title: "Butterfly Joust depth slice 4: Medals and the endless pond"
     status: done
-    owner: worker
-    claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
-    claimed_at: '2026-10-12T04:45:33Z'
-    updated: '2026-10-12T05:28:10Z'
     passes: 0
     stakes: reversible
     depends_on: t-049
-    note: >-
-      CABINETS.md section 4, Butterfly Joust (Joust riff), slice 4 of 4: Medals and the endless pond. The
-      upgrade is "The Four Gardens Tourney". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the
-      game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice'
-      at the top applies. Code: kind_robots utils/arcade/games/ (registry slug butterfly-joust). Silas,
-      2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
-      improvements, they should not just be thin veneers of the old games. But newer, better, even more
-      awesome."
+    note: |-
+      CABINETS.md section 4, Butterfly Joust (Joust riff), slice 4 of 4: Medals and the endless pond. The upgrade is "The Four Gardens Tourney". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug butterfly-joust). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
-      Merged as kind_robots#3575: three medals per tourney wave (Unbonked, Air Ace, Quick
-      Lance), a medal board, the Endless Pond leaderboard run and the new registry blurb and
-      howTo. A save review before merge found the clear was lost when all five petals sent the
-      run into the Rainbow Lists (a slice-3 bug), and lives above 99 made the reader reject
-      the whole profile; both are fixed with round-trip tests. Butterfly Joust's m8 depth pass
-      is complete.
-    implementation_pr: 'silasfelinus/kind_robots#3575'
+      Reviewer audited already-merged kind_robots#3575 at 38dc1a0b028a888cf62b0c88c5881c93249428da after reconciling dependency t-049. Complete eight-file diff inspected; all 28 original PR-head checks completed successfully at 2639814ee0a7acf75716b55707d4ab2431078cd5. Independently passed all 19 cabinet suites on current main, including medal/save/endless and both ending paths. Actual canvas menu, empty/populated medal boards and Endless Pond rendered at 390/768/1440 widths without horizontal overflow. Isolated renderer fixtures are not full-site or deployed-runtime verification. Catalog and TALKBACK closeout follows in a focused Conductor PR. No deployment performed; full-campaign pacing remains separately measurable.
+    updated: '2026-10-12T05:38:53Z'
 
   - id: t-051
     milestone: m8
@@ -2536,3 +2481,38 @@ tasks:
       kind_robots utils/arcade/games/ (registry slug station-sweep). Silas, 2026-10-11: "I need an assessment
       done of the other arcade games. I want the same level of quality improvements, they should not just be
       thin veneers of the old games. But newer, better, even more awesome."
+
+  - id: t-146
+    milestone: m8
+    title: "Measure Butterfly Joust limited-life survival and first-clear pacing against the authored campaign target."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-050
+    note: >-
+      Reviewer kaizen from the merged t-049/t-050 audit (kind_robots#3559 and #3575).
+      Read CABINETS.md section 4 and current Kind Robots instructions. The authored first-clear target
+      is 45-60 minutes; the existing unlimited-life pilot and staged ending checks do not establish
+      human pacing. Add or reuse a bounded deterministic limited-life playtest harness, run multiple
+      seeds, record early-death/survival and clear-time distributions and separate bot estimates from
+      human evidence. Preserve the original difficulty and campaign rules while measuring; do not
+      inflate elapsed time, weaken assertions or label the target met without evidence. Make a focused
+      balance fix only if the measurements reproduce a scoped problem, with before/after evidence.
+      Attach actual renderer evidence for any visible change and document remaining human-play limits.
+
+  - id: t-147
+    milestone: m8
+    title: "Verify Rescue Rally co-op and solo aim through the actual shared-cabinet input consumer."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-038
+    note: >-
+      Reviewer kaizen after kind_robots#3581: existing deterministic game tests inject frames directly.
+      Exercise the real ArcadeCabinet input routing for 2-4 seats, keyboard/gamepad/touch as supported,
+      and the solo twin-stick versus multi-seat aim contract. Verify menu selection, distinct seat
+      motion and partner revival with consumer-generated frames, including disconnect/reconnect or
+      absent secondary input. Use a bounded browser fixture with actual consumers and game renderer
+      at phone/tablet/desktop widths. Keep staged scenarios explicit and avoid claiming live deployment
+      or human pacing from fixtures. Fix only a reproduced scoped consumer problem; preserve tests,
+      auth and score ceilings.

@@ -104,7 +104,7 @@ tasks:
   - id: t-002
     milestone: m2
     title: Pure TypeScript gamebook reducer, dice/combat mechanics and contract tests
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -114,10 +114,16 @@ tasks:
       inventory capacity, powers, flags, mutually exclusive conditions, dice
       roll logs, resource caps, valid transitions, save-version migrations.
       Add contract tests to CI for replay determinism and each combat interaction.
+
+      2026-10-12 reconciliation: built and live. utils/zuzuGamebook/adventure.ts is the pure
+      reducer (no browser APIs or Math.random inside it; dice from the run's seed), and
+      verifyZuzuGamebook.test.ts checks replay determinism, combat, saves, power costs and the
+      375-section graph; the book launched under t-010. The status stayed ready by oversight.
+    updated: '2026-10-12T05:13:01Z'
   - id: t-003
     milestone: m4
     title: Build beautiful standalone /play/zuzu-gamebook reader and character sheet
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -128,10 +134,18 @@ tasks:
       dice roller, inventory, health/resolve and save/restart. Respect AGENTS.md:
       components use a Pinia store for localStorage/state; no live LLM.
       An admin-preview tab until explicit public-launch verdict.
+
+      2026-10-12 reconciliation: built and live at /play/zuzu-gamebook (launched under t-010):
+      illustrated reader with plate-above or portrait-right layouts, HUD, character sheet,
+      dice roller with reduced-motion fallback, combat moves, inventory, health/resolve and
+      save/restart through the Pinia store. Polished on 2026-10-11/12: italics for spoken
+      words, keyboard play (1-9), focus and scroll reset on each new section. The status
+      stayed ready by oversight.
+    updated: '2026-10-12T05:13:17Z'
   - id: t-004
     milestone: m1
     title: Book One graph and all authored scenes (~400 numbered sections)
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -170,6 +184,13 @@ tasks:
       the Road, the Drifter's Bandage, the Sister's Dagger; kasa and katana are worn, not carried).
       No Showdown-only fighters, no Old Komodo, no legacy KR filler lore. A new named character or
       place meant to outlive this book is proposed to Book One / the registry first.
+
+      2026-10-12 reconciliation: done. Book One ships 375 sections and 13 endings across nine
+      acts (utils/zuzuGamebook/book.ts and acts/), within the canon rules above;
+      verifyZuzuGamebook.test.ts proves the graph acyclic, every ending reachable and no
+      softlock. On 2026-10-11/12 the eight short original endings were rewritten to full
+      length and duplicate section titles made unique. The status stayed ready by oversight.
+    updated: '2026-10-12T05:13:21Z'
   - id: t-005
     milestone: m1
     title: Scene art inventory, cinematic layouts and repeatable ArtJob manifest
@@ -337,7 +358,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -351,7 +372,7 @@ tasks:
   - id: t-008
     milestone: m4
     title: Combat, powers, dice, inventory and save/resume UI polish
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -442,6 +463,14 @@ tasks:
       ROUND-14 recomposes the 17 Zuzu ensembles, the 16 other flags and the 4 stand-ins; ROUND-15 (94 jobs from 37195)
       redraws the 47 sister/toddler/coyote/abbess plates with their LoRAs, kept only where better. The
       t-006 dependency is dropped: t-006's last four stand-ins are now redrawn here (ROUND-14), so t-012 no longer waits on it.
+      REVIEW 13-15 (12 Oct): every redraw judged against the live plate. ROUND-13 kept 77 of 85 Zuzu-alone redraws
+      (the zuzukoala LoRA puts him on-model: koala face, kasa, zigzag poncho, one katana); ROUND-14 kept 29 of 37
+      recompositions, including the last four stand-ins (a1-two-shadows, a4-well-battle, a8-fire-cells, a8-fire-altar);
+      ROUND-15 kept 1 of 47 (the abbess LoRA gives human faces even alone in a scene, and the sister/toddler pair swaps
+      outfits, so those live plates stay). 107 plates replaced. Rejects: tails and high heels on Zuzu, a modern paved
+      road, fusion with a second figure, drowned-body and urination reads. ROUND-16 takes the 18 still left (two
+      stand-ins found by the sweep, a2-bell-view and a4-bloom, plus the live plates whose candidates all failed); the
+      LoRA negative now carries tail, high heels and asphalt road.
 
       2026-10-11: the character LoRAs exist (comic-creator/t-016 done). Any ledger with `series: zuzu-koala-assassin`
       (every art/ROUND-*.yaml here) now gets them by default from enqueue_art_requests.py: each subject carries the
