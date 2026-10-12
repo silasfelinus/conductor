@@ -135,5 +135,44 @@ def remote_proposal_for(day: str) -> str | None:
     return None
 
 
+# The old six-slot Facet planner is retained verbatim for historical proposals.
+# Newly authored Pacific dates get eight INDEPENDENT project Facet assignments.
+try:
+    from daily_dream_v3_authoring import (
+        extend_brief as _extend_zuzu_brief,
+        is_v3_day as _v3_day,
+    )
+    from daily_dream_v3_contract import validate_v3 as _validate_v3_bundle
+except ModuleNotFoundError:
+    from scripts.daily_dream_v3_authoring import (
+        extend_brief as _extend_zuzu_brief,
+        is_v3_day as _v3_day,
+    )
+    from scripts.daily_dream_v3_contract import validate_v3 as _validate_v3_bundle
+
+_six_asset_build_brief = build_brief
+_six_asset_validate_proposal = validate_proposal
+
+
+def build_brief(day: str | None = None, catalog=None) -> dict[str, Any]:
+    brief = _six_asset_build_brief(day, catalog)
+    if not _v3_day(str(brief["proposal_date"])):
+        return brief
+    # Reuse the supplied catalog when available, otherwise fetch the same
+    # registered taxonomy data the original planner already consults.
+    zuzu_catalog = catalog if catalog is not None else fetch_facet_catalog()[0]
+    return _extend_zuzu_brief(brief, zuzu_catalog)
+
+
+def validate_proposal(proposal: Any) -> list[str]:
+    errors = _six_asset_validate_proposal(proposal)
+    if isinstance(proposal, dict):
+        if proposal.get("bundle_version") == 3:
+            errors.extend(_validate_v3_bundle(proposal))
+        elif proposal.get("zuzu_assets"):
+            errors.append("zuzu_assets require bundle_version 3")
+    return errors
+
+
 if _WRAPPER_NAME == "__main__":
     raise SystemExit(main())
