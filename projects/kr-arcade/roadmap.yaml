@@ -2601,3 +2601,21 @@ tasks:
       scoped browser fixtures and storage boundary; fix only a reproduced integration gap.
       Preserve auth, alerts, validators, required checks and score ceilings. Keep staged fixture
       evidence distinct from deployment or human campaign timing.
+
+  - id: t-150
+    milestone: m8
+    title: "Verify Ribbon Riders wrap topology at arena seams and the capture-size boundary."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-074
+    note: >-
+      Reviewer kaizen after merged kind_robots#3592: existing first-slice coverage checks one
+      ring and a simple open seam. Add a bounded deterministic matrix of independently
+      specified shapes for horizontal/vertical toroidal seams, wall/pillar sides, the
+      road-ahead and teammate exclusions, and exact 160-cell versus Bow-doubled limits.
+      Expected captured cells must be constructed from the authored shape, not copied
+      from the implementation flood fill. Include public-steering captures for representative
+      shapes and native renderer evidence for one seam case. Preserve the first-slice
+      wrap rule and later campaign scope; fix only a reproduced scoped topology defect.
+      Keep staged fixtures distinct from live deployment and human pacing evidence.
