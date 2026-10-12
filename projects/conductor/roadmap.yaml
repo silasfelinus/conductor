@@ -3127,6 +3127,28 @@ tasks:
     drift; post-merge conductor-oversight refresh (76374961, 2026-10-11 13:03Z) shows parity
     checked with 0 forward/0 reverse drift, overall clean.
   implementation_pr: 'silasfelinus/conductor#5833'
+- id: t-207
+  title: "Approved daily pitches need automatic intake, admin playable previews, and explicit Play promotion"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  source_issue: "silasfelinus/conductor#6013"
+  updated: '2026-10-12'
+  note: |-
+    FROM GITHUB ISSUE silasfelinus/conductor#6013 (https://github.com/silasfelinus/conductor/issues/6013), opened by @silasfelinus on 2026-10-12. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/conductor#6013`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+    Observed on 2026-10-11 PT: approved daily pitches have Conductor records and some scaffold roadmaps, but many have only the initial design/scope tasks and no discoverable frontend. The vote updates pitch markdown; the intake.py step is separate and dependent on the next agent session. The normal priority queue leaves many new projects indefinitely waiting.
+
+    Acceptance criteria:
+    1. A regular reliable GitHub/Conductor workflow discovers newly approved daily pitches and idempotently creates/links the right Conductor project or attaches arcade-targeted pitches to their existing project, with clear failure handling. Do not rely on a paused ChatGPT routine.
+    2. Each newly approved standalone software pitch gets an admin-only development preview route and navigation entry (and a tutorial entry), beyond its status page, as its first executable build slice. Link the preview URL to the Kind Robots Project display record. Never claim that a scaffold, job, or URL is already a deployed feature.
+    3. Every approved idea is actively scheduled for implementation, with follow-up tasks for art, gameplay, and polish, rather than stopping at the scaffold's initial scope confirmation.
+    4. Promote to Play only after a functioning build and appropriate visual approval. Publishing must obey human gates.
+    5. Backfill historical approved October 2026 daily pitches without creating duplicate projects or disrupting existing Arcade work.
+    6. The new Admin Approved Pitches dashboard in kind_robots PR #3565 reports the canonical intake/build/link state. Validate the projection sync and surface stalled items.
+
+    This issue is follow-up implementation, not permission to skip required deployment or human gates.
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
