@@ -249,6 +249,24 @@ def _record_targets(proposal: dict[str, Any], built: dict[str, Any]) -> list[dic
             add("reward_skill", "Reward", reward)
     if scenarios:
         add("scenario", "Scenario", scenarios[0])
+
+    # V3 keeps the six original targets, then adds eight independent Zuzu
+    # targets by their own IDs. No Facet for an unrelated random daily world
+    # is copied onto a Zuzu production asset.
+    if proposal.get("bundle_version") == 3:
+        zuzu = records.get("zuzu") if isinstance(records.get("zuzu"), dict) else {}
+        for kind, model, singular in (
+            ("locations", "Dream", "location"),
+            ("characters", "Character", "character"),
+            ("scenarios", "Scenario", "scenario"),
+        ):
+            rows = zuzu.get(kind) if isinstance(zuzu.get(kind), list) else []
+            for index, row in enumerate(rows, 1):
+                add(f"zuzu_{singular}_{index}", model, row)
+        for reward in zuzu.get("rewards", []):
+            kind = str(reward.get("reward_type") or "").lower() if isinstance(reward, dict) else ""
+            if kind in ("item", "skill"):
+                add(f"zuzu_reward_{kind}", "Reward", reward)
     return targets
 
 
@@ -269,8 +287,9 @@ def apply_file(path: Path, token: str, *, dry_run: bool = False, force: bool = F
         return False, "already complete", False
 
     targets = _record_targets(proposal, built)
-    if len(targets) != 6:  # world + location + character + two rewards + scenario
-        return False, f"waiting for complete records ({len(targets)}/6 Facet targets)", False
+    expected = 14 if proposal.get("bundle_version") == 3 else 6
+    if len(targets) != expected:
+        return False, f"waiting for complete records ({len(targets)}/{expected} Facet targets)", False
 
     applied: list[dict[str, Any]] = []
     errors: list[str] = []
