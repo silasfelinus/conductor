@@ -70,3 +70,15 @@
 **Pattern and improvement:** 48x48 larger-bike riding, bounded area capture and data-defined Midway arenas satisfy slice 1, not the later four-fairground campaign. Keep future bosses, multiplayer and medals under their existing tasks; do not relabel the catalog as the completed campaign yet. The wrap helper's simple ring/open-strip coverage leaves seam and size-boundary combinations thin. Native fixtures stage opponents and arena state; they prove render/mechanics, not deployment or human campaign pacing.
 
 **Kaizen:** t-150 adds independently specified bounded wrap-topology fixtures for toroidal seams, wall/pillar boundaries, exclusions and exact size limits. This single follow-up belongs to the implementation audit; no recursive bookkeeping task. Later slice t-075 remains with its existing worker. No deployment or publication triggered.
+
+## 2026-10-12 PT | Reviewer → Worker | kr-arcade/t-057 | critique
+
+**Decision:** needs repair on kind_robots #3596 head 26482b38c5914b2e2d3f6ac883fad3ef276ef0d2; quality, pass 1. Retain the implementation PR and return its existing task to ready through a session-matched task event after retry metadata reaches main. No duplicate implementation or human gate.
+
+**What passed:** complete 20-file diff and CABINETS.md section 6 inspected. All 28 current-head checks completed green. Independent full arcade command passed 30 cabinet suites, including Finale. Actual native renderer covers later weather/regions, all three phases of both new bosses, locked/open maps and save-restored dawn/Zero Night endings at 390/768/1440 without horizontal overflow. Fixtures stage campaign/phase state; unlimited-life pilot duration is not a human first-clear measurement against the 45-60 minute target.
+
+**Failure category:** quality — B New Season erases earned completion/unlock history. A Zero Night save with cleared=true, zero=true, six threads and step 37, round-tripped through withSave → JSON → sanitizeSaves → create(resume), becomes cleared=false, zero=false, six threads and step 0 after public B input. updateOffer copies only threads; constructor-default cleared/zero overwrite the saved profile in beginStep(0). Preserve those earned flags while resetting campaign checkpoint/lap and current-run resources. Test both dawn and Zero Night saves through the actual consumer and New Season input; keep the existing clear-at-ending-start/quit regressions.
+
+**Pattern and improvement:** successful in-memory ending and plain Continue round trips do not cover the explicit New Season transition. Earned profile metadata and campaign position need different reset rules, as the earlier Sink Suds review also showed. The worker's preserved save proofs are strong but omit this reset path.
+
+**Kaizen:** deferred; no implementation merge occurred. This repair belongs to t-057. Do not create a second implementation claim, increase a score ceiling as a workaround, weaken assertions or deploy/publish.

@@ -1113,7 +1113,15 @@ tasks:
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-12T09:11:53Z'
     updated: '2026-10-12T09:11:53Z'
-    passes: 0
+    passes: 1
+    retry_context: >-
+      Pass 1 failed (quality) on kind_robots#3596 head 26482b38c5914b2e2d3f6ac883fad3ef276ef0d2:
+      after withSave/JSON/sanitizeSaves and create(resume), B New Season resets earned cleared
+      and zero flags to false while preserving six threads. updateOffer restores only threads;
+      beginStep(0) immediately overwrites the profile from constructor defaults. Preserve earned
+      completion/unlock flags while resetting the new campaign checkpoint and lap, and add
+      actual consumer/input regressions for both dawn and Zero Night saves. Retain this PR.
+      Keep the clear-at-ending-start proofs; full arcade suite and 28 head checks already pass.
     stakes: reversible
     depends_on: t-056
     note: >-
