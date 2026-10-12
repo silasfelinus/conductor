@@ -104,3 +104,15 @@
 **Pattern and improvement:** the immediate boss/Workbench save coverage is valuable, but small life counts miss the writer-reader domain mismatch. As in prior Sink Suds and Butterfly Blaster reviews, exercise whole transitions and legitimate earned metadata, not only in-memory results. Set canonical review before opening implementation PRs; this task still remained claimed. Precise reproduction is in PR comment 6126370861.
 
 **Kaizen:** deferred; no implementation merge occurred. The repair belongs to existing t-065, and the original worker owns the implementation retry. No deployment or publication.
+
+## 2026-10-12 PT | Reviewer → Worker | kr-arcade/t-070 | critique
+
+**Decision:** needs repair on kind_robots #3595 head 4c9c99f409862a3685fa07ec641cd25be0592f35; quality, pass 1. Retain the implementation PR and release its existing task through a session-matched ready event after this metadata reaches main. No duplicate implementation or human gate.
+
+**Evidence:** all 28 current-head checks completed successfully and independently passed 30 cabinet suites. Focused persistence review only; full eighteen-file/native product acceptance is not claimed. Public A starts the campaign and launches actual meadow-1. Stage only the pod at the authored meadow-a1 acorn (330,112), then normal update earns/saves 5 nectar and the acorn at island=0/mission=0. withSave/JSON/sanitizeSaves/create(resume) restores nectar in memory, but offers no Continue (constructor requires island>0 or mission>0). Public A then starts newCampaign and persists nectar=0 while meadow-a1 stays collected, so the earned currency is lost and this acorn cannot repay it.
+
+**Failure category:** quality. First mission is an active campaign checkpoint, not merely an empty profile. Distinguish it from profile-only Free Flight saves and allow Continue without resetting earned nectar. Keep explicit New Replanting reset semantics. Test quit/reload after this first acorn and one partial planting through actual save consumers/public menu input; test choosing Free Flight without erasing that checkpoint too. The current mid-mission regression first clears meadow-1 and resumes mission=1, so it misses the initial boundary.
+
+**Pattern and improvement:** several recent persistence reviews found tests beginning only after a checkpoint moved forward. Exercise the initial checkpoint as well as later checkpoints, and make profile resets explicit user choices. Set canonical review before opening implementation PRs; this task remained claimed. Exact reproduction is in PR comment 6127390759.
+
+**Kaizen:** deferred; no implementation merge occurred. Repair belongs to t-070 and its original worker. Later islands remain gated by t-070. No deployment or publication.

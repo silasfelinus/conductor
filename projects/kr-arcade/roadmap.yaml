@@ -1361,7 +1361,9 @@ tasks:
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-12T09:12:45Z'
     updated: '2026-10-12T09:12:45Z'
-    passes: 0
+    passes: 1
+    retry_context: >-
+      Pass 1 failed (quality) on kind_robots#3595 head 4c9c99f409862a3685fa07ec641cd25be0592f35: collecting the authored meadow-a1 acorn in the first mission saves nectar=5 and island=0/mission=0, but after withSave/JSON/sanitizeSaves/create(resume) the constructor offers Continue only for island>0 or mission>0. The menu forces a new campaign, resetting nectar to 0 while keeping that acorn collected. Provide a Continue path for an active first-mission checkpoint distinct from profile-only Free Flight saves; retain explicit new-campaign reset semantics. Add actual consumer/public-input regressions for quit after the first authored acorn and a partial planting, plus choosing Free Flight without losing the checkpoint. The existing mid-mission test starts at mission 1 after meadow-1 cleared, missing this boundary. Retain this PR for the original worker; do not duplicate implementation or weaken validation.
     stakes: reversible
     depends_on: t-069
     note: >-
