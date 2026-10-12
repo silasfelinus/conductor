@@ -42,7 +42,8 @@ import json
 import re
 import shlex
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 from typing import Any
 
@@ -68,7 +69,7 @@ PENDING_STATUS = "awaiting-silas"
 
 
 def pacific_today() -> str:
-    return (datetime.now(timezone.utc) - timedelta(hours=8)).strftime("%Y-%m-%d")
+    return datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%Y-%m-%d")
 
 
 def docket_path(date: str) -> Path:
