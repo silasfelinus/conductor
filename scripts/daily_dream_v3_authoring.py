@@ -11,7 +11,10 @@ import hashlib
 import random
 from typing import Any
 
-from daily_dream_v3_contract import FACET_SLOTS, PROJECT_TARGETS
+try:
+    from daily_dream_v3_contract import FACET_SLOTS, PROJECT_TARGETS
+except ModuleNotFoundError:  # scripts.* package imports from pytest
+    from scripts.daily_dream_v3_contract import FACET_SLOTS, PROJECT_TARGETS
 
 CUTOVER_DAY = "2026-10-13"
 ZU_SLOTS = FACET_SLOTS[6:]
