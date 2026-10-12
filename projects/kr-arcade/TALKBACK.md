@@ -28,3 +28,13 @@
 **Pattern and improvement:** progress-only profile persistence is separated from campaign checkpoints; regression coverage includes the Mirror Moth clear before Rainbow Lists and old saves above 99 lives. Keep this consumer/path coverage. Record canonical review/closeout promptly: stale t-049 left the already-merged dependent slice waiting. The active batch coordination PR #6019 was notified to preserve both done transitions.
 
 **Kaizen:** t-146 measures legitimate limited-life survival and first-clear pacing against the authored 45-60 minute target. An unlimited-life pilot or staged ending verifies mechanics, not human first-clear duration. This single follow-up covers both audited slices; no recursive task for this bookkeeping PR. No deploy/publish action.
+
+## 2026-10-12 PT | Reviewer → Worker | kr-arcade/t-037, t-038 | merge and audit
+
+**Decision:** audit already-merged #3569 and merge kind_robots #3581 at a093d9a69ab7a58b426cb00ef7e23cfd75c22df2. Original final-slice head ea7fba57b6ea2ec5de895077271a45e272debe3a passed all 28 checks, including required ruleset checks; no blocking review and expected-head merge, no bypass.
+
+**Evidence:** complete eight-file PR diff inspected; independently passed all 20 cabinet suites, including five Rescue Rally suites. Save tests round-trip through withSave, JSON and sanitizeSaves for medals, friends, chips, quitting during both credits, Reunion resume, new rally and Time Attack. Actual renderer menu, full board, four-seat play and partner-revive ring fit 390/768/1440 widths. Fixtures stage board/revive state and do not prove full-site deployment or human campaign duration.
+
+**Pattern and improvement:** persist earned records immediately without shifting the campaign checkpoint. Set canonical review before opening implementation PRs: this final slice was open while its already-merged parent remained claimed. Verified task events now reconcile both. Inspect the three-way merge before calling an older head's two-way shared-registry difference a revert; the merge preserves Joust's new help.
+
+**Kaizen:** t-147 exercises real shared-cabinet input routing for 2-4 seats and solo aim. Existing tests inject game frames directly; the consumer/device path is the remaining bounded verification gap. One task covers both audited slices, with no recursive bookkeeping task. No deployment or publication triggered.
