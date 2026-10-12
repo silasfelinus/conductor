@@ -145,7 +145,7 @@ tasks:
   - id: t-004
     milestone: m1
     title: Book One graph and all authored scenes (~400 numbered sections)
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -184,6 +184,13 @@ tasks:
       the Road, the Drifter's Bandage, the Sister's Dagger; kasa and katana are worn, not carried).
       No Showdown-only fighters, no Old Komodo, no legacy KR filler lore. A new named character or
       place meant to outlive this book is proposed to Book One / the registry first.
+
+      2026-10-12 reconciliation: done. Book One ships 375 sections and 13 endings across nine
+      acts (utils/zuzuGamebook/book.ts and acts/), within the canon rules above;
+      verifyZuzuGamebook.test.ts proves the graph acyclic, every ending reachable and no
+      softlock. On 2026-10-11/12 the eight short original endings were rewritten to full
+      length and duplicate section titles made unique. The status stayed ready by oversight.
+    updated: '2026-10-12T05:13:21Z'
   - id: t-005
     milestone: m1
     title: Scene art inventory, cinematic layouts and repeatable ArtJob manifest
