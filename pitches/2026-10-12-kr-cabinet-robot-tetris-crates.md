@@ -1,7 +1,8 @@
 # Pitch: Crate Stack Shuffle
 date: 2026-10-12
 project-target: kr-arcade
-status: awaiting-silas
+status: approved
+public-ready: false
 
 ## The idea
 An arcade cabinet riffing on Tetris's falling-block line clearing, where a warehouse robot rotates and drops odd-shaped crates to complete rows. Each level drops the crates faster and adds sticky or heavy crate types, with lines cleared counting toward the leaderboard score.
