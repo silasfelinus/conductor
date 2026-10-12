@@ -85,25 +85,27 @@ tasks:
   - id: t-003
     milestone: m3
     title: "Build deterministic timed dispatch schema, leader/Horde allocation and resolver"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    owner: worker
     claimed_by: 2026-10-12T120500Z-emperor-t003-c8f2
     claimed_at: '2026-10-12T12:05:00Z'
-    updated: '2026-10-12T12:12:00Z'
-    note: 'Proposed Kind Robots pure TypeScript dispatch engine, serializable schemas, seeded 2d6 odds, Horde troop reservations, travel and full return ETAs, authored moral outcomes, recoverable injury days and deterministic tests. Implementation branch worker/emperor-of-dust-t003-dispatch-20261012-c8f2.'
+    updated: '2026-10-12T12:32:00Z'
+    note: |-
+      Proposed Kind Robots pure TypeScript dispatch engine, serializable schemas, seeded 2d6 odds, Horde troop reservations, travel and full return ETAs, authored moral outcomes, recoverable injury days and deterministic tests. Implementation branch worker/emperor-of-dust-t003-dispatch-20261012-c8f2.
+
+      Implemented the pure, deterministic in-game clock and dispatch foundation in Kind Robots PR #3600, merged at 689bf59e7fc839d26983c8f6a17a16f742f80eeb. Verified all 28 GitHub Actions workflows completed successfully on head 264251c0dcf29956053730e90b477be8b6408d1a, including Emperor of Dust Dispatch Contract, Contract Tests and TypeScript Type Check. Supports Horde troop reservations, 1-5h outward travel plus return, up to 3 unique leaders, chance odds, independent moral effects and multi-day injury downtime. No public Play route or live deploy.
   - id: t-004
     milestone: m3
     title: "Implement recruitable followers, multi-day injuries, rare death and saved campaigns"
-    status: waiting
+    status: ready
     depends_on: t-003
     passes: 0
     stakes: reversible
   - id: t-005
     milestone: m4
     title: "Script full incident graphs Days 001–025"
-    status: waiting
+    status: ready
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -172,7 +174,7 @@ tasks:
   - id: t-013
     milestone: m4
     title: "Write all 100 three-report briefings with Young Komodo clues"
-    status: waiting
+    status: ready
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -184,7 +186,7 @@ tasks:
   - id: t-014
     milestone: m3
     title: "Implement persistent Items of Power with one or two run slots"
-    status: waiting
+    status: ready
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -194,7 +196,7 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Build pausable day clock and mostly radial tower travel routes"
-    status: waiting
+    status: ready
     depends_on: t-003
     passes: 0
     stakes: reversible
