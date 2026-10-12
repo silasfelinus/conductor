@@ -1820,33 +1820,28 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
   depends_on: null
-  note: >-
+  note: |-
     This is the deliberately subjective third phase that prior work mostly skipped. Apply the chosen Storybook design language where appropriate: clean hierarchy, generous useful art, friendly controls, minimal container nesting, calm spacing, readable narrative/text areas, and intentional empty/loading/error states. Produce reviewable screenshots rather than closing from source inspection alone. Polish the Coloring Book curation surface from the live screenshot: use the available workspace width and present Color and B&W candidates as equal-size, equal-height comparison peers instead of a primary image with a small inset. Preserve production actions and responsive behavior. Coloring Book curation polish is ready for CI review. The curation studio now uses the full workspace width, proposal cards use a 540px responsive minimum, and Color/B&W candidates render as permanent 50/50 peers in matching 17:22 frames with object-contain rather than a large primary plus B&W inset. Missing variants retain an equal-size placeholder. Production actions and data behavior are unchanged. Merged silasfelinus/kind_robots#2091 as 75eb077e0d423528b4470808f1a41b6aa546409c from exact head c79bb189bc4e2c2abc3570cfc31cc4d023771f7d after every returned exact-head workflow completed successfully, including TypeScript, Layout Contract, Facet Catalog, Schema Migration Parity, and all 298 Contract Tests stages. Coloring Book curation now uses the full workspace width and presents Color and B&W candidates as equal 17:22 comparison peers with object-contain. Screenshot-driven Coloring Book curation polish is complete and merged as silasfelinus/kind_robots#2091. Return the reusable page-polish task to ready for the next visual review slice. Slice: polished Build Bench (/build-bench, admin-only A/B image-generation build comparison tool). Prior state was hand-rolled relative to established precedent: an emoji h1 with no header hierarchy, an ad-hoc kr-note-warning missing the base kr-note class, and a corner-radius scale drifting between rounded-3xl/2xl/xl/lg across sibling elements with no visual reason; the idle result slot was bare 50%-opacity text with no visual weight. [...]
-
     [Earlier history (43,562 chars) archived verbatim to projects/interface-vision/T105-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
-
     Screenshot-directed Art Generator density and SDXL image-to-image repair. Root cause: the art LoRA picker removed its height cap when expanded, so LoRAs grew the whole page; the generator also spent permanent height on a full-width maturity band, Destination controls, and an empty Latest Result panel. Separately, the front-end LoRA compatibility helper returned zero for every sdxl-img2img LoRA even though the server-side resolver explicitly supports SDXL/COMFY/GENERIC LoRAs, and artStore omitted sdxl-img2img from both Comfy routing requirement and serverCanUseEngine, producing the false "Comfy cannot run SDXL from an image" warning and allowing engine fallback. Changes: LoRAs now scroll within a 14rem compact / 24rem taller bounded panel, with a visible compact Mature toggle in its header; SDXL img2img now mirrors server LoRA compatibility and is preserved/routed as a Comfy engine; automatic routing no longer emits a false preferred-server incompatibility warning, while an explicitly pinned incompatible server disables Generate and explains the conflict; Destination is collapsed by default, prompt/settings/panel spacing is tighter, Facets use compact copy, and the empty Latest Result placeholder no longer consumes a viewport before any render exists. Added regression coverage for maturity placement, bounded LoRA scrolling, img2img compatibility/routing, progressive Destination, and no empty result slab. No API shape, database, mana, generation preset values, or production data changed.
-
     Reviewer merged silasfelinus/kind_robots#2910 at exact head 837c4c2d09da5f9ecca379b5c423351b9e27f602 after all exact-head Actions completed successfully. Art Generator density was reduced, LoRA browsing is bounded, and SDXL image-to-image now stays on the compatible Comfy lane. Re-arm this recurring page-polish task for the next screenshot-directed slice. kind-economy/t-028 (2026-09-23): the Mission Accrual polish slice recorded above (icon-badge header, merged as kind_robots#2114) predates Silas's deliberate retirement of the whole Mission Accrual admin surface in kind_robots#2669 (2026-09-12) -- not an accident, and not a page-polish regression. mission-accrual-page.vue no longer exists; do not treat its historical mentions above as describing a currently-live page.
-
     Screenshot-directed tablet navigation slice: align the tab dropdown beneath its own trigger, cap tablet width at 18rem while retaining 22rem on xl desktops, and hide secondary row descriptions only at tablet breakpoints to reduce menu height and clutter. Added source-contract coverage for the responsive menu behavior.
-
     Screenshot-directed tablet navigation slice merged as silasfelinus/kind_robots#3073 (merge 69224c46c3b4539246c9bf845785bff68615e865). The non-phone tab dropdown had desktop-sized 22rem geometry, end-alignment that hung the panel left across the channel picker, and full two-line rows at tablet widths. It now opens from the tab trigger's leading edge, caps at 18rem below xl, and hides row summaries only from sm through xl. Phone keeps the unified picker and xl desktop keeps the 22rem descriptive menu. All 31 exact-head PR workflows completed successfully. Kaizen follow-up filed as t-140.
+    CAPPED 2026-09-30 by Silas (in session: "cap them"): min_rest_hours: 24 -- at most one cycle per day, even after a cycle that did real work (this task ran up to 35 times a day in early September). Every picker honors it via roadmap_claims.task_is_resting; re-arm with close_task.py as usual (add --noop when the cycle found nothing, which lengthens the rest up to 48h).
 
-    CAPPED 2026-09-30 by Silas (in session: "cap them"): min_rest_hours: 24 -- at most one
-    cycle per day, even after a cycle that did real work (this task ran up to 35 times a day
-    in early September). Every picker honors it via roadmap_claims.task_is_resting; re-arm
-    with close_task.py as usual (add --noop when the cycle found nothing, which lengthens
-    the rest up to 48h).
-  updated: '2026-09-28T06:57:00Z'
+    Resume scoped Gmail incident diagnosis: responsive audit 38186259818 reports visible source-less deferred gallery images as broken art. Reproduce browser behavior and repair waiting image presentation without changing alert criteria, preserving viewport loading and real failed-image/error detection.
+  updated: '2026-10-12T04:39:50Z'
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
+  owner: worker
+  claimed_by: 2026-10-12T043950Z-gallery-deferred-gm8q
+  claimed_at: '2026-10-12T04:39:50Z'
 
 - id: t-106
   milestone: m6

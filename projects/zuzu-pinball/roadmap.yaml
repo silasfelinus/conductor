@@ -47,7 +47,7 @@ milestones:
   - id: m2
     title: "PHYSICAL FOUNDATION — isolated Arcade entry, colliders, ramps, flippers"
     weight: 30
-    status: in-progress
+    status: done
   - id: m3
     title: "DEPTH — modes, multiball, hidden crypt, DMD and game progression"
     weight: 30
@@ -55,7 +55,7 @@ milestones:
   - id: m4
     title: "PRESENTATION — PBR cabinet, LEDs, music, cinematic camera and art"
     weight: 15
-    status: not-started
+    status: in-progress
   - id: m5
     title: "POLISH & GATE — performance, device QA, balancing and human verdict"
     weight: 10
@@ -155,18 +155,24 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Build raised Abbey upper deck with two independent flippers"
-    status: claimed
+    status: done
     depends_on: t-005
-    owner: worker
     passes: 0
     stakes: reversible
     note: >-
       A visible, physically elevated mini-playfield and upper left/right player
       controls (plus mirrored accessibility mode); ramp entry, deck targets,
       protected exits, and controlled ball returns to lower playfield.
+
+      Merged kind_robots#3557 (squash 64cf7bd): clear raised Abbey deck at the Bell spiral's
+      end (fixes made spirals leaving the cabinet), upper flipper tier (mirrored by default,
+      alone while B/Shift is held), three hollow-bell standups (toll opens the Mortuary),
+      protected exit subway to the right inlane; verifier proves deck landing, each bell,
+      nothing stranded or fallen.
     claimed_by: 20261011T224500Z-zuzu-t006-abbey-r3p8
     claimed_at: '2026-10-11T22:35:25Z'
-    updated: '2026-10-11T22:35:25Z'
+    updated: '2026-10-11T23:30:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3557'
   - id: t-007
     milestone: m2
     title: "Implement sling, pop bumper, drop bank, scoop, captive ball and tilt"
@@ -259,15 +265,25 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Build and balance unlockable hidden undercrypt mini-table"
-    status: waiting
+    status: done
     depends_on: t-006
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
       Crypt trapdoor and isolated 3D mini-table with two mini flippers, skill
       targets and a valid mechanical kicker back to primary playfield. Prevent
       multiball leaks and unfair drains when transitioning scenes.
+
+      Merged kind_robots#3566 (squash 00e67b2): undercrypt behind the backbox (zone sub-table,
+      camera, fading backbox), lit every third relic strike, entered by Mortuary subway only
+      with one ball and no chapter/multiball, crypt flippers, three skull standups, HOME
+      saucer, drain subway back to the Mortuary kicker. Also raised the contract-tests job
+      timeout to 15 min (it was cancelled at 10 min after finishing every step).
+    claimed_by: 20261012T030500Z-zuzu-t010-crypt-m2v6
+    claimed_at: '2026-10-12T03:02:03Z'
+    updated: '2026-10-12T03:51:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#3566'
   - id: t-011
     milestone: m4
     title: "Build production art assets, 3D cabinet, ramps, ball, plastics and themed toys"
@@ -317,9 +333,9 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Addressable LED rail and bezel splash shows, sound, DMD animations, camera"
-    status: ready
+    status: claimed
     depends_on: t-008
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -328,12 +344,15 @@ tasks:
       mixing and camera sweeps that never impair flipper response.
       Provide static camera and reduced-motion settings. Add Croc mouth
       arming/capture/death-roll/spit cues, DMD and multiball callouts.
+    claimed_by: 20261012T041500Z-zuzu-t012-show-p4n7
+    claimed_at: '2026-10-12T04:10:56Z'
+    updated: '2026-10-12T04:10:56Z'
   - id: t-013
     milestone: m5
     title: "Run physics/rules soaks, input accessibility and cross-device performance QA"
-    status: ready
+    status: claimed
     depends_on: t-009
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -343,6 +362,13 @@ tasks:
       accessible table guide. Soak-test 1,000 Croc swallow and safe-eject
       cycles including multi-ball and tilt. Add missing remediation tasks rather than
       declaring completion by count.
+
+      Found by the t-010 multiball soak: a ball can wedge at rest near (-0.082, y 0.036,
+      -0.415), between the Village ramp's right rail and the Abbey seal channel; the runtime's
+      ball-search nudge frees it, but the crevice should be closed in geometry.
+    claimed_by: 20261012T040000Z-zuzu-t013-qa-k8w2
+    claimed_at: '2026-10-12T03:51:43Z'
+    updated: '2026-10-12T03:51:43Z'
   - id: t-014
     milestone: m5
     title: "Silas visual/play acceptance and authorization for any public /play launch"
