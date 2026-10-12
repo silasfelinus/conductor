@@ -872,12 +872,12 @@ tasks:
   - id: t-046
     milestone: m8
     title: "Sink Suds depth slice 4: Bubble Buddies and Suds Sumo"
-    status: claimed
-    owner: worker
-    claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
-    claimed_at: '2026-10-11T22:53:51Z'
-    updated: '2026-10-11T22:53:51Z'
-    passes: 0
+    status: ready
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-10-11T23:36:00Z'
+    passes: 1
     stakes: reversible
     depends_on: t-045
     note: >-
@@ -887,6 +887,16 @@ tasks:
       applies. Code: kind_robots utils/arcade/games/ (registry slug sink-suds). Silas, 2026-10-11: "I need an
       assessment done of the other arcade games. I want the same level of quality improvements, they should
       not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      2026-10-11 PT review: kind_robots#3558 remains unmerged. All 28 head checks
+      passed/allowed skips and npm run test:arcade-engine passed (14 cabinet suites), but a
+      direct behavior probe reproduced lost best-time persistence after New Wash from a valid
+      saved room checkpoint. See PR comment
+      https://github.com/silasfelinus/kind_robots/pull/3558#issuecomment-6115161917. Quality
+      rejection, pass 1; reuse the existing implementation branch, repair persistence and
+      verify reload. No human action required.
+    implementation_pr: 'silasfelinus/kind_robots#3558'
+    retry_context: 'pass 1 failed (quality): kind_robots#3558 New Wash clears saveData; Squeaky Clean completes and records an in-memory best time but returns null save. Preserve/initialize progress outside campaign and add New Wash -> Squeaky Clean -> finish -> reload regression coverage before merging. Reuse worker/kr-arcade-t-046.'
 
   - id: t-047
     milestone: m8
