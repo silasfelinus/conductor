@@ -952,27 +952,22 @@ tasks:
   - id: t-049
     milestone: m8
     title: "Butterfly Joust depth slice 3: Heights, Orchard, Snowfield and the Moon Garden"
-    status: claimed
-    owner: worker
+    status: done
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-11T22:33:47Z'
-    updated: '2026-10-11T22:33:47Z'
+    updated: '2026-10-12T05:32:21Z'
     passes: 0
     stakes: reversible
     depends_on: t-048
-    note: >-
-      CABINETS.md section 4, Butterfly Joust (Joust riff), slice 3 of 4: Heights, Orchard, Snowfield and the
-      Moon Garden. The upgrade is "The Four Gardens Tourney". Spec: projects/kr-arcade/depth-pass/CABINETS.md
-      -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for
-      every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug butterfly-joust).
-      Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of
-      quality improvements, they should not just be thin veneers of the old games. But newer, better, even
-      more awesome."
+    note: |-
+      CABINETS.md section 4, Butterfly Joust (Joust riff), slice 3 of 4: Heights, Orchard, Snowfield and the Moon Garden. The upgrade is "The Four Gardens Tourney". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug butterfly-joust). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Reconciled already-merged kind_robots#3559 at 80db6b0f69c3c96b7f1c76fcc943a15c930ae129. Authoritative merge and all relevant original-head checks at de8d7a945aa6d63f8ad0f18d9021d8ec09fb756f verified. Current main includes Heights, Orchard, Snowfield, Moon Garden, champions, petals/endings and Circuit. This closes stale bookkeeping, not new work or a deployment. Unblock t-050, whose implementation is also already merged and is receiving a separate complete-diff/current-main audit.
 
   - id: t-050
     milestone: m8
     title: "Butterfly Joust depth slice 4: Medals and the endless pond"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-049
