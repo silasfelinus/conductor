@@ -151,12 +151,9 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Author and integrate stages 1–2 with complete tutorial and bosses"
-    status: review
+    status: ready
     depends_on: [t-004]
-    owner: worker
-    claimed_by: 2026-10-12T110200Z-rainbow-t007-act1-h7rp
-    claimed_at: '2026-10-12T11:02:00Z'
-    updated: '2026-10-12T11:07:00Z'
+    updated: '2026-10-12T16:42:55Z'
     passes: 1
     retry_context: >-
       Quality review on PR3598 head f152fc4bb41cdd32a9a152bc1bf051aa2061e7e2: phase2→3 changes volley period126→90 without resetting/arming warning. HP51 through frame269 has no warning at frames253–269; ordinary shot damage2 after step269 makes step270 emit seven bullets immediately with no charge pulse. Guarantee a phase-safe telegraph interval before every volley and add boundary regressions, including real engine collision ordering. Existing test only ORs any warning across the run, so 32 green head checks/full 29-cabinet suite miss this. Precise review: https://github.com/silasfelinus/kind_robots/pull/3598#issuecomment-6128502143. Repair the existing focused PR, preserving finite Act/pod/state mechanics, then rerun checks and independent review; do not duplicate implementation. Full-length Acts I–II still remain, and complete native product acceptance is not established.
@@ -165,6 +162,9 @@ tasks:
       Make two polished 10–15 minute authored scroll stages with wave scores, destructible cover, two distinct multi-phase bosses, collectable upgrades, checkpoint/continue and intentional difficulty curve. End each stage, not an endless swarm. Test 1-player and 4-player clears.
 
       Submitted Act I Pinkwake vertical slice in Kind Robots with authored E01-E04 wave sequence, SOS-station rescue and shield award, B01 Pearl Seahorse three-phase boss, three low-threat Lilt-7 dialogue scenes, four parallax planes, deterministic fixture tests and private-admin tutorial. This is a shortened prototype, not t-007's two full 10-15-minute Acts; after a green merge return task to ready for the remaining full-length Act I and Act II work.
+
+      Reviewer quality pass1 recorded in merged conductor#6050 (4a76cf11c22a8210fe0c35d1c2e79b1bd0c30dc9), after all25 checks completed without failure on61eededd6f35f902e6f5bdd28b66a4ede23bcc5d. Retain existing kind_robots#3598 for its original worker to repair phase-boundary telegraph fairness; precise reproduction and retry_context preserved. The current implementation remains open despite greenCI; no gameplay merge or completion claimed. Release ownership for focused repair, avoid duplicate implementation, and preserve unfinished full ActsI–II scope and dependent co-op reconciliation. No deployment or publication.
+    implementation_pr: 'silasfelinus/kind_robots#3598'
   - id: t-008
     milestone: m3
     title: "Author branching stages 3–5 and three distinct bosses"
