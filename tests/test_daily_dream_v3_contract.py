@@ -1,5 +1,6 @@
-"""Versioned future Daily Dream contract. No live API or ArtJob calls."""
+"""The Daily Dream remains a complete original mini-world, PLUS eight Zuzu assets."""
 from copy import deepcopy
+import json
 import sys
 from pathlib import Path
 
@@ -17,14 +18,12 @@ def example_v3():
         local_rule="The watch accepts safe passage only after a pledge.",
         best_scene="A refuge caravan waits under two rival banners.",
         art_direction="A dusty rift lined by splintered saltstone.",
-        checkpoint_family="arthemy",
     )
     ch = dict(
         name="Vesper Trail", role_drive="She protects strays others abandoned.",
         carries="She wears a carved horn at her hip.",
         complication="Her patron commands the rival faction.",
         look="Older female fennec, scarred armor, dull indigo cloak.",
-        checkpoint_family="illustrious",
     )
     reward = dict(
         name="The Red Thread", reward_type="ITEM", rarity="RARE",
@@ -32,7 +31,6 @@ def example_v3():
         best_used_when="A caravan crosses contested ground.",
         catch="Its owner leaves a trace in the dust.",
         look="Red braided cord on an old brass hook.",
-        checkpoint_family="arthemy",
     )
     sc = dict(
         title="The Borrowed Crossing", setup="The caravan offers food to cross land held by an enemy.",
@@ -44,114 +42,133 @@ def example_v3():
              "immediate_consequence": "The granary stays secure.",
              "later_consequence": "The faction remembers the refusal."},
         ],
-        checkpoint_family="illustrious",
     )
     result = dict(
         bundle_version=3, title="A Lantern for Nobody",
         slug="a-lantern-for-nobody",
-        idea="An independent dream about an unexpected home.",
+        idea="An original daily Dream about a strange new home.",
         vibe={"title": "Tomorrow's Elsewhere", "line": "A home appears only when needed.",
               "art_direction": "Bright prismatic towers and sharp clear sunlight."},
-        locations=[], characters=[], rewards=[], scenarios=[],
-        seed_facets={
-            "version": 3,
-            "elements": {slot: [_facet(slot)] for slot in v3.FACET_SLOTS},
-        },
+        locations=[dict(loc, title="Mirror Orchard")],
+        characters=[dict(ch, name="The Faceted Gardener")],
+        rewards=[
+            dict(reward, name="Daylight Lantern", reward_type="ITEM"),
+            dict(reward, name="Prism Step", reward_type="SKILL"),
+        ],
+        scenarios=[
+            dict(sc, title="The Orchard Gate",
+                 setup="In Tomorrow's Elsewhere, the Faceted Gardener waits at Mirror Orchard.")
+        ],
+        zuzu_assets={"locations": [], "characters": [], "rewards": [], "scenarios": []},
+        seed_facets={"version": 3, "elements": {
+            slot: [_facet(slot)] for slot in v3.FACET_SLOTS
+        }},
     )
     for target in v3.PROJECT_TARGETS:
-        for key, base in (("locations", loc), ("characters", ch), ("rewards", reward), ("scenarios", sc)):
-            row = deepcopy(base)
+        for kind, sample in (
+            ("locations", loc), ("characters", ch), ("rewards", reward), ("scenarios", sc)
+        ):
+            row = deepcopy(sample)
             row["project_target"] = target
-            if key == "rewards" and target == "emperor-of-dust":
-                row["reward_type"] = "SKILL"
-            if key == "locations" and target == "emperor-of-dust":
+            row["checkpoint_family"] = (
+                "arthemy" if target == "zuzu-gamebook" else "illustrious"
+            )
+            if kind == "rewards":
+                row["reward_type"] = "ITEM" if target == "zuzu-gamebook" else "SKILL"
+            if kind == "locations" and target == "emperor-of-dust":
                 row["title"] = "Hollow Bell Outskirts"
-            if key == "characters" and target == "emperor-of-dust":
+            if kind == "characters" and target == "emperor-of-dust":
                 row["name"] = "Young Komodo's Scout"
-            if key == "scenarios" and target == "emperor-of-dust":
+            if kind == "scenarios" and target == "emperor-of-dust":
                 row["title"] = "The Winter Claim"
-            result[key].append(row)
+            result["zuzu_assets"][kind].append(row)
     return result
 
 
-def test_valid_v3_has_nine_distinct_slots_with_one_independent_vibe():
-    p = example_v3()
-    assert v3.validate_v3(p) == []
-    assets = v3.asset_manifest(p)
-    assert len(assets) == 9
-    assert len({a.slot for a in assets}) == 9
-    assert assets[0].is_independent and assets[0].checkpoint_family is None
-    assert not any(a.is_independent for a in assets[1:])
-    for kind in ("locations", "characters", "rewards", "scenarios"):
-        assert {a.project_target for a in assets if a.kind == kind} == set(v3.PROJECT_TARGETS)
+def test_fourteen_assets_include_original_six_linked_dream_and_eight_separate_zuzu():
+    proposal = example_v3()
+    assert v3.validate_v3(proposal) == []
+    assets = v3.asset_manifest(proposal)
+    assert len(assets) == 14
+    assert len({a.slot for a in assets}) == 14
+    assert sum(a.lane == "dream" for a in assets) == 6
+    assert sum(a.lane == "zuzu" for a in assets) == 8
+    assert assets[0].slot == "vibe" and not assets[0].linked_to_vibe
+    assert all(a.linked_to_vibe for a in assets if a.lane == "dream" and a.slot != "vibe")
+    assert all(not a.linked_to_vibe and a.project_target for a in assets if a.lane == "zuzu")
+    assert all(a.checkpoint_family is None for a in assets if a.lane == "dream")
+    assert {a.checkpoint_family for a in assets if a.lane == "zuzu"} == {"arthemy", "illustrious"}
+    for kind in v3.ZUZU_COUNTS:
+        assert {a.project_target for a in assets if a.kind == kind and a.lane == "zuzu"} == set(v3.PROJECT_TARGETS)
 
 
-def test_v3_rejects_six_asset_legacy_and_vibe_as_fake_parent():
+def test_missing_dream_location_does_not_get_replaced_by_zuzu_location():
     p = example_v3()
-    p["locations"].pop()
-    p["characters"].pop()
-    p["scenarios"].pop()
-    p["vibe"]["project_target"] = "zuzu-gamebook"
+    p["locations"] = []
+    errors = " ".join(v3.validate_v3(p))
+    assert "dream.locations has 0" in errors
+
+
+def test_zuzu_extras_may_not_reparent_to_the_original_vibe():
+    p = example_v3()
+    p["zuzu_assets"]["characters"][0]["linked_to_vibe"] = True
+    p["zuzu_assets"]["scenarios"][0]["dreamIds"] = [25]
     p["seed_facets"]["link_zuzu_to_vibe"] = True
     errors = " ".join(v3.validate_v3(p))
-    assert "locations has 1" in errors
-    assert "characters has 1" in errors
-    assert "scenarios has 1" in errors
-    assert "independent vibe" in errors
-    assert "must not be linked" in errors
+    assert "must not link to the daily vibe" in errors
+    assert "Zuzu extras must not be linked" in errors
 
 
-def test_choices_must_be_meaningfully_structured_and_nonduplicative():
+def test_original_dream_mini_world_keeps_its_links_and_shared_art_style():
     p = example_v3()
-    p["scenarios"][0]["choices"][1]["label"] = p["scenarios"][0]["choices"][0]["label"]
-    p["scenarios"][1]["choices"] = [{"label": "Only choice"}]
+    p["characters"][0]["linked_to_vibe"] = False
+    p["locations"][0]["checkpoint_family"] = "arthemy"
     errors = " ".join(v3.validate_v3(p))
-    assert "labels must be distinct" in errors
+    assert "must link to the daily vibe" in errors
+    assert "must inherit the daily vibe" in errors
+
+
+def test_zuzu_scenarios_need_substantive_moral_choices():
+    p = example_v3()
+    p["zuzu_assets"]["scenarios"][0]["choices"][1]["label"] = "Give sanctuary"
+    p["zuzu_assets"]["scenarios"][1]["choices"] = [{"label": "Only choice"}]
+    errors = " ".join(v3.validate_v3(p))
+    assert "choice labels must be distinct" in errors
     assert "at least two moral choices" in errors
 
 
-def test_checkpoint_family_is_named_not_guessed_id():
+def test_zuzu_project_and_checkpoint_constraints():
     p = example_v3()
-    p["characters"][0]["checkpoint_family"] = "flux"
-    p["characters"][1].pop("checkpoint_family")
-    errors = v3.validate_v3(p)
-    assert sum("Illustrious or Arthemy" in error for error in errors) == 2
+    p["zuzu_assets"]["locations"][1]["project_target"] = "zuzu-gamebook"
+    p["zuzu_assets"]["characters"][0]["checkpoint_family"] = "flux"
+    errors = " ".join(v3.validate_v3(p))
+    assert "exactly one asset to each project" in errors
+    assert "Arthemy or Illustrious" in errors
 
 
-def test_each_category_must_give_both_projects_material():
-    p = example_v3()
-    p["locations"][1]["project_target"] = "zuzu-gamebook"
-    assert any("exactly one asset per Zuzu project" in x for x in v3.validate_v3(p))
-
-
-def test_offline_outline_validator_accepts_v3_and_catches_invalid_v3(tmp_path):
-    import json
+def test_offline_outline_validation_accepts_revised_v3(tmp_path):
     import scripts.check_dream_outlines as preflight
 
     p = example_v3()
-    outline = tmp_path / "draft.md"
-    outline.write_text(
-        "---\\nslug: test\\ntitle: Test\\ntype: dream\\nstatus: outline\\n"
-        "proposal: true\\n---\\n"
-        + "<!-- proposal-data\\n" + json.dumps(p) + "\\n-->\\n"
-    )
-    assert preflight.check_outline(outline) == []
-    p["scenarios"][0]["choices"] = []
-    outline.write_text(
-        "---\\nslug: test\\ntitle: Test\\ntype: dream\\nstatus: outline\\n"
-        "proposal: true\\n---\\n"
-        + "<!-- proposal-data\\n" + json.dumps(p) + "\\n-->\\n"
-    )
-    assert any("moral choices" in f.detail for f in preflight.check_outline(outline))
+    path = tmp_path / "new-daily-dream.md"
+
+    def write():
+        path.write_text(
+            "---\nslug: test\ntitle: Test\ntype: dream\nstatus: outline\n"
+            "proposal: true\n---\n"
+            + "<!-- proposal-data\n" + json.dumps(p) + "\n-->\n",
+            encoding="utf-8",
+        )
+
+    write()
+    assert preflight.check_outline(path) == []
+    p["zuzu_assets"]["scenarios"][0]["choices"] = []
+    write()
+    assert any("moral choices" in f.detail for f in preflight.check_outline(path))
 
 
-def test_old_builder_refuses_v3_without_any_api_writes(monkeypatch):
+def test_old_live_writer_fails_closed_on_unimplemented_v3():
     import scripts.build_dream_records as builder
 
-    def unexpected_api(*args, **kwargs):
-        raise AssertionError("legacy transaction must never create v3 records")
-
-    monkeypatch.setattr(builder, "http_json", unexpected_api)
     errors = builder._canonical_proposal_errors(example_v3())
     assert any("upgraded single writer" in error for error in errors)
-    assert not builder._canonical_proposal_errors(example_v3()) == []
