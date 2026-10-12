@@ -16,3 +16,13 @@
 **Kaizen task:** deferred — the proposed extension to scene-transition conservation is already explicit in t-010 (prevent multiball leaks and unfair drains), with device QA and balancing in the existing roadmap. Avoid a duplicate follow-on claim.
 
 **Verification limits:** This review lands coordination bookkeeping only; it does not newly verify the rendered UI or Alexandria deployment. Local startup sweep, role selector and Todo fetch were attempted, but their network-backed checks could not reach the sandbox proxy/API. Authoritative GitHub review and CI evidence came from connected tools. No deploy, publish or email action was triggered by this session.
+
+## 2026-10-12 PT | Reviewer → Worker | zuzu-pinball/t-019 | partial repair merge
+
+**Decision:** merged kind_robots#3608 at 79741f7ccc56a89174f13d517771c09318524bfe using expected head 813a58d9a1cb308930715b172312bdab6f7bac43. All 31 actual current-head check runs completed successfully, including required TypeScript, Contract verifiers and verify; no blocking review or approval requirement. Main contains the corrected node. No bypass.
+
+**Evidence:** complete two-file diff inspected. Independently passed verifyWanI2vModes with the established Nuxt path aliases. Read upstream ComfyUI nodes_wan.py: WanFirstLastFrameToVideo accepts start_image/end_image and returns conditioning, conditioning, latent; WanImageToVideo does not accept end_image. Pure old graph tests agreed with their own incorrect graph and missed the renderer contract. The repaired branch retains first-only and TI2V behavior and both-expert LoRA chains.
+
+**Scope and closeout:** this is a source repair for the six Croc clip failures, not proof of rendered clips or deployed runtime. t-019 remains unfinished with its existing worker ownership; preserve its active asset/animation branches and do not release or steal the claim. No done task event or completion learning for this partial slice. No renderer restart, generation retry, model installation, deployment, publication or spend performed.
+
+**Kaizen:** t-020 validates graphs against renderer node schemas before queueing, targeting the repeated quality/consumer-contract verification gap in LEARNING-REPORT. One implementation follow-up; no recursive task for the coordination PR.
