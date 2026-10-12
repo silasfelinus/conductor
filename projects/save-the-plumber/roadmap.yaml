@@ -245,3 +245,18 @@ tasks:
       Arcade cabinet placement and publication require Silas's
       explicit decision; separate aesthetic/gameplay acceptance
       follows hands-on play. Merge is not a production deploy.
+
+  - id: t-015
+    milestone: m2
+    title: "Prove the movement lab replay and real shared-cabinet controls"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Reviewer kaizen after kind_robots#3564: add deterministic input replays
+      asserting coyote time, buffered jumps, landing/camera bounds and respawn;
+      exercise real shared ArcadeCabinet keyboard/gamepad/touch controls and
+      visible Admin help at phone/tablet/desktop widths. Use browser fixtures
+      with actual consumers rather than source-field matches. Keep public
+      registry and score exclusions. Initial isolated engine pixels are not
+      shared-cabinet/auth integration or full campaign acceptance.
