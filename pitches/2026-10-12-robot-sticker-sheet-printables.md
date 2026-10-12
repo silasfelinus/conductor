@@ -1,7 +1,8 @@
 # Pitch: Robot Printable Sticker Sheets
 date: 2026-10-12
 project-target: new
-status: awaiting-silas
+status: rejected
+public-ready: false
 
 ## The idea
 A gallery of pre-generated printable sticker sheets of Kind Robots characters and garden scenes, each laid out on a print-ready page with cut lines. Visitors pick a sheet, preview it and print or save it as a PDF, all in the browser with no accounts.
