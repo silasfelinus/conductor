@@ -122,12 +122,9 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Deliver local 1–4 player simultaneous co-op with fair rules"
-    status: review
+    status: ready
     depends_on: [t-004]
-    owner: worker
-    claimed_by: 2026-10-12T112819Z-rainbow-t005-coop-p4kx
-    claimed_at: '2026-10-12T11:28:19Z'
-    updated: '2026-10-12T11:44:00Z'
+    updated: '2026-10-12T17:34:03Z'
     passes: 1
     retry_context: >-
       Quality pass1 on kind_robots#3599 head5a54c49ac8c8a7b21a27c1b70826bb2a32a8edde: pickup collector uses ships.find over retained benched roster. Normal inputs/rng0.5: players2 move down8ticks, bench P2 at65,132.8/power1, P1 earns first power pickup at222 then moves up34; pickup disappears718 and rejoining P2 shows unearned power2. Limit collectors to active living seats and add actual-engine bench/pickup/rejoin regression without mutating snapshots. Preserve active collection and no-refill/life rules; repair the existing PR. Also reconcile/retest on repaired merged Pinkwake#3598 as the original handoff requires; retain authored Act state. Green33 checks do not prove this consumer boundary; complete shared-cabinet/device acceptance remains unverified.
@@ -136,6 +133,9 @@ tasks:
       Join/leave without resetting campaign, 1–4 input slots, keyboard/gamepad assignments, readable colored/shape-coded ship markers and projectiles, independent lives, shield/revive rules, adaptive enemy pressure without hidden damage spikes, shared continues and per-player HUD. Test same-frame collisions, simultaneous supers and full four-player bullet load.
 
       Partial local co-op integration drafted: Rainbow-only pause-time player switching in shared Arcade cabinet, optional live seat API, persistent benched ship positions/lives/upgrades, independent controls, bounded four-seat targeting/pressure, and earned Solenne Halo revive. Pure helper and real engine regression fixtures committed. Other 1-4 player acceptance and full in-run join/leave quality checks still remain. Reconcile with t-007 Pinkwake branch before final merge and return t-005 to ready after the scoped slice lands.
+
+      Quality pass 1 handoff merged in conductor#6052 at fb3d24a999224a7e7e777059b68449557a3403f1 after all 25 checks completed without failure on a4e7c9ff905cad1dc6ea7057a80fad7753216e3f. Release ownership and retain existing kind_robots#3599 for original-worker repair of inactive pilot pickup collection. Normal-input reproduction and scoped retry_context/TALKBACK are preserved; full branch arcade suite passes 29 cabinet suites but misses the consumer boundary. Reconcile/retest with repaired merged Pinkwake#3598 as required by the existing handoff. No gameplay merge, task completion, deployment or public publication claimed; full t-005 acceptance remains open. Avoid duplicate implementation and repeat rejection of unchanged heads.
+    implementation_pr: 'silasfelinus/kind_robots#3599'
   - id: t-006
     milestone: m2
     title: "Add online 1–4 player co-op rooms with deterministic synchronization"
