@@ -1,0 +1,138 @@
+# zuzu-pinball t-019: the River Croc toy, second take. Silas, 2026-10-12, on the procedural
+# 3D Croc (t-018): "I want something closer to an animation style. Something that looks like
+# our concept art ... We should start with an image of that quality, built in arthemy or
+# something like that, then generated out. None of this nintendo 64 quality graphic."
+# Step 1 (this ledger): the key image, the Croc as the player sees him on the table: front on
+# from above, rising out of the watering hole with his jaws open at the camera, in the house
+# Arthemy lane that drew the croc-and-coyote plate (ArtImage 243624) and the canonical croc
+# (243495, zuzu-showdown T012-REFERENCES). Plain white background so the picked seed can be
+# keyed out. Silas picks a seed; step 2 animates it (LTX/WAN first-to-last-frame clips per
+# phase) and the table plays them as the toy.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-pinball
+project_slug: zuzu-pinball
+designer: Zuzu Pinball
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, muted earthy palette, desaturated, weathered,
+    grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: croc-front-open-1
+  entity: river-croc
+  title: River Croc front on from above, jaws open, rising from the pool (seed 1)
+  size: 1024x1024
+  seed: 719101
+  negative: anthro, (clothes:1.3), human, (standing upright:1.3), bipedal, text, skull, emblem, logo, multiple crocodiles,
+    second animal, gore, blood, lowres, worst quality, bad anatomy, extra limbs, extra jaws, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, multiple views, character sheet, turnaround, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (from side:1.2), (profile:1.2), landscape, scenery, sky, horizon
+  prompt_prose: river croc alone, front on from above, jaws open, rising from a pool.
+  prompt_tags: (giant nile crocodile:1.4), (crocodile:1.3), feral, (front view:1.3), (from above:1.2), high angle,
+    (facing viewer:1.3), (head and shoulders rising out of dark water:1.3), (jaws wide open:1.4), roaring, jagged
+    yellowed teeth, pink mouth, (glowing amber eyes:1.2), (scarred hide:1.3), (dark olive green scales:1.2), green
+    algae on his back, mossy ridges, (broken old harpoon stuck in his back:1.2), frayed rope, front claws gripping
+    the bank, water streaming off his head, splash, (small round pool of murky water:1.2), ripples, (solo:1.5),
+    only one animal, simple background, white background
+  jobs:
+    arthemy-house: 37624
+- key: croc-front-open-2
+  entity: river-croc
+  title: River Croc front on from above, jaws open, rising from the pool (seed 2)
+  size: 1024x1024
+  seed: 719102
+  negative: anthro, (clothes:1.3), human, (standing upright:1.3), bipedal, text, skull, emblem, logo, multiple crocodiles,
+    second animal, gore, blood, lowres, worst quality, bad anatomy, extra limbs, extra jaws, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, multiple views, character sheet, turnaround, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (from side:1.2), (profile:1.2), landscape, scenery, sky, horizon
+  prompt_prose: river croc alone, front on from above, jaws open, rising from a pool.
+  prompt_tags: (giant nile crocodile:1.4), (crocodile:1.3), feral, (front view:1.3), (from above:1.2), high angle,
+    (facing viewer:1.3), (head and shoulders rising out of dark water:1.3), (jaws wide open:1.4), roaring, jagged
+    yellowed teeth, pink mouth, (glowing amber eyes:1.2), (scarred hide:1.3), (dark olive green scales:1.2), green
+    algae on his back, mossy ridges, (broken old harpoon stuck in his back:1.2), frayed rope, front claws gripping
+    the bank, water streaming off his head, splash, (small round pool of murky water:1.2), ripples, (solo:1.5),
+    only one animal, simple background, white background
+  jobs:
+    arthemy-house: 37625
+- key: croc-front-open-3
+  entity: river-croc
+  title: River Croc front on from above, jaws open, rising from the pool (seed 3)
+  size: 1024x1024
+  seed: 719103
+  negative: anthro, (clothes:1.3), human, (standing upright:1.3), bipedal, text, skull, emblem, logo, multiple crocodiles,
+    second animal, gore, blood, lowres, worst quality, bad anatomy, extra limbs, extra jaws, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, multiple views, character sheet, turnaround, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (from side:1.2), (profile:1.2), landscape, scenery, sky, horizon
+  prompt_prose: river croc alone, front on from above, jaws open, rising from a pool.
+  prompt_tags: (giant nile crocodile:1.4), (crocodile:1.3), feral, (front view:1.3), (from above:1.2), high angle,
+    (facing viewer:1.3), (head and shoulders rising out of dark water:1.3), (jaws wide open:1.4), roaring, jagged
+    yellowed teeth, pink mouth, (glowing amber eyes:1.2), (scarred hide:1.3), (dark olive green scales:1.2), green
+    algae on his back, mossy ridges, (broken old harpoon stuck in his back:1.2), frayed rope, front claws gripping
+    the bank, water streaming off his head, splash, (small round pool of murky water:1.2), ripples, (solo:1.5),
+    only one animal, simple background, white background
+  jobs:
+    arthemy-house: 37626
+- key: croc-three-quarter-open-1
+  entity: river-croc
+  title: River Croc three-quarter from above, facing right, jaws open (seed 1)
+  size: 1024x1024
+  seed: 719111
+  negative: anthro, (clothes:1.3), human, (standing upright:1.3), bipedal, text, skull, emblem, logo, multiple crocodiles,
+    second animal, gore, blood, lowres, worst quality, bad anatomy, extra limbs, extra jaws, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, multiple views, character sheet, turnaround, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (from side:1.2), (profile:1.2), landscape, scenery, sky, horizon
+  prompt_prose: river croc alone, three-quarter view from above, jaws open, rising from a pool.
+  prompt_tags: (giant nile crocodile:1.4), (crocodile:1.3), feral, (three-quarter view:1.3), (from above:1.2), high
+    angle, facing right, (head and shoulders rising out of dark water:1.3), (jaws wide open:1.4), roaring, jagged
+    yellowed teeth, pink mouth, (glowing amber eyes:1.2), (scarred hide:1.3), (dark olive green scales:1.2), green
+    algae on his back, mossy ridges, (broken old harpoon stuck in his back:1.2), frayed rope, front claws gripping
+    the bank, long tail curling behind him in the water, water streaming off his head, splash, (small pool of murky
+    water:1.2), ripples, (solo:1.5), only one animal, simple background, white background
+  jobs:
+    arthemy-house: 37627
+- key: croc-three-quarter-open-2
+  entity: river-croc
+  title: River Croc three-quarter from above, facing right, jaws open (seed 2)
+  size: 1024x1024
+  seed: 719112
+  negative: anthro, (clothes:1.3), human, (standing upright:1.3), bipedal, text, skull, emblem, logo, multiple crocodiles,
+    second animal, gore, blood, lowres, worst quality, bad anatomy, extra limbs, extra jaws, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, multiple views, character sheet, turnaround, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (from side:1.2), (profile:1.2), landscape, scenery, sky, horizon
+  prompt_prose: river croc alone, three-quarter view from above, jaws open, rising from a pool.
+  prompt_tags: (giant nile crocodile:1.4), (crocodile:1.3), feral, (three-quarter view:1.3), (from above:1.2), high
+    angle, facing right, (head and shoulders rising out of dark water:1.3), (jaws wide open:1.4), roaring, jagged
+    yellowed teeth, pink mouth, (glowing amber eyes:1.2), (scarred hide:1.3), (dark olive green scales:1.2), green
+    algae on his back, mossy ridges, (broken old harpoon stuck in his back:1.2), frayed rope, front claws gripping
+    the bank, long tail curling behind him in the water, water streaming off his head, splash, (small pool of murky
+    water:1.2), ripples, (solo:1.5), only one animal, simple background, white background
+  jobs:
+    arthemy-house: 37628
+- key: croc-three-quarter-open-3
+  entity: river-croc
+  title: River Croc three-quarter from above, facing right, jaws open (seed 3)
+  size: 1024x1024
+  seed: 719113
+  negative: anthro, (clothes:1.3), human, (standing upright:1.3), bipedal, text, skull, emblem, logo, multiple crocodiles,
+    second animal, gore, blood, lowres, worst quality, bad anatomy, extra limbs, extra jaws, deformed, watermark,
+    signature, blurry, jpeg artifacts, chibi, multiple views, character sheet, turnaround, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (from side:1.2), (profile:1.2), landscape, scenery, sky, horizon
+  prompt_prose: river croc alone, three-quarter view from above, jaws open, rising from a pool.
+  prompt_tags: (giant nile crocodile:1.4), (crocodile:1.3), feral, (three-quarter view:1.3), (from above:1.2), high
+    angle, facing right, (head and shoulders rising out of dark water:1.3), (jaws wide open:1.4), roaring, jagged
+    yellowed teeth, pink mouth, (glowing amber eyes:1.2), (scarred hide:1.3), (dark olive green scales:1.2), green
+    algae on his back, mossy ridges, (broken old harpoon stuck in his back:1.2), frayed rope, front claws gripping
+    the bank, long tail curling behind him in the water, water streaming off his head, splash, (small pool of murky
+    water:1.2), ripples, (solo:1.5), only one animal, simple background, white background
+  jobs:
+    arthemy-house: 37629
