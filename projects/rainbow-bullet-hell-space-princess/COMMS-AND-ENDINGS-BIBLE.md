@@ -45,6 +45,17 @@ These are **distinct writing briefs**, not yet 15 implemented scripts or cinemat
 - **Lilt:** "It is a statistic. I'm still working on the other part."
 - **Solo fallback (no P1):** Lilt asks the selected pilot a personality-specific question and receives a unique reply; do not use a missing character's line.
 
+**Solo banter: one player still gets a real relationship**
+- **Maribel / Lilt:** "Can you patch the distress channel?" / "I can. I cannot patch your definition of a safe landing."
+- **Azure / Lilt:** "Your star map is off by point-zero-two degrees." / "It was off by point-zero-three yesterday. I am improving."
+- **Solenne / Lilt:** "Are the cadets accounted for?" / "All of them. Including the one who taught me to hum off-key."
+- **Vivi / Lilt:** "Be honest. Does my entrance music sound heroic?" / "It has caused three enemy ships to hesitate. That seems tactically valuable."
+
+**Group banter: an exchange, not a shuffled list**
+- **Maribel + Vivi, S03:** Vivi calls an old rescue radio "vintage." Maribel insists it is "operational history." Lilt reveals that the device still carries the very first signal they ever heard.
+- **Azure + Solenne + Vivi, S07:** Azure traces a route through mirrored glass, Solenne calls out a missing civilian convoy, Vivi recognizes the convoy's distress tone as a musical inversion. Lilt quietly admits they hid that tone because the Crown used it as a lure.
+- **All four, S09:** Maribel asks who is still out there, Azure maps the answer, Solenne assigns escort sectors, Vivi broadcasts the names, and Lilt chooses to let the pilots lead rather than optimize them into silence.
+
 **S02 rescue: Maribel + Azure**
 - **Azure:** "The fastest route is the empty corridor."
 - **Maribel:** "There's a distress signal in the *full* corridor."
