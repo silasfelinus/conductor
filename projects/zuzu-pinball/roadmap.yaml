@@ -463,7 +463,7 @@ tasks:
   - id: t-017
     milestone: m4
     title: "Insert light-map editor and cabinet border art"
-    status: claimed
+    status: done
     depends_on: t-012
     owner: worker
     passes: 0
@@ -478,6 +478,17 @@ tasks:
       side rails, apron and backbox trim art for the Last Bell cabinet,
       requested through the art queue, then drawn by the renderer's room and
       cabinet (render/room.ts), which has no side-art slot yet.
+
+      2026-10-12 PT: both halves merged. kind_robots#3583 (squash 28e10fa): the insert light-
+      map editor on /admin/zuzu-pinball (admin only), the painted playfield with all 29
+      inserts, both flashers and the 96-LED rail as SVG; drag or arrow-nudge (1 mm, 5 with
+      Shift) an insert and copy the moves back as table data; pure model in
+      utils/arcade/pinball/lightMap.ts, verifier test:zuzu-pinball-light-map. kind_robots#3584
+      (squash 1d85d32): cabinet side art, a new art.room.cabinetSide slot painting both side
+      panels with the weird-west panorama the art queue rendered in t-011 (a table without one
+      still echoes its backglass). Apron and backbox-trim art have no art-queue entries; rails
+      and trim stay chrome and black.
     claimed_by: 20261012T081000Z-zuzu-t017-lightmap-k3v9
     claimed_at: '2026-10-12T08:02:45Z'
-    updated: '2026-10-12T08:02:45Z'
+    updated: '2026-10-12T08:30:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#3583'
