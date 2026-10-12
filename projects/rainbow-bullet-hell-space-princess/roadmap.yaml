@@ -106,20 +106,18 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Implement ship movement, hitboxes, bullets, shields and weapons"
-    status: claimed
+    status: review
     depends_on: [t-003]
     owner: worker
     claimed_by: 2026-10-12T091020Z-rainbow-t004-combat-k6j8
     claimed_at: '2026-10-12T09:10:20Z'
-    updated: '2026-10-12T09:10:20Z'
+    updated: '2026-10-12T09:18:20Z'
     passes: 0
     stakes: reversible
-    note: >-
-      60 Hz fixed-step update, deterministic seeded scripted spawns,
-      separate collision and graze hitboxes, invulnerability windows,
-      primary/focus fire, charge/special weapons, 3-step upgrade paths,
-      collectible power and shield modules, limited screen-clearing supers
-      earned by play. No fake bullets, noninteractive art or score inflation.
+    note: |-
+      60 Hz fixed-step update, deterministic seeded scripted spawns, separate collision and graze hitboxes, invulnerability windows, primary/focus fire, charge/special weapons, 3-step upgrade paths, collectible power and shield modules, limited screen-clearing supers earned by play. No fake bullets, noninteractive art or score inflation.
+
+      Built real 60 Hz fixed-tick preview combat with normalized diagonal movement, focused flight, 4 distinct shot families, enemy projectiles, central hitbox, graze, invulnerability, collectible 3-step upgrades, shield modules and earned screen-clearing supers. Added seeded deterministic replay tests and private tutorial update. Await CI and integration review; stages/bosses are separate.
   - id: t-005
     milestone: m2
     title: "Deliver local 1–4 player simultaneous co-op with fair rules"
