@@ -56,17 +56,16 @@ tasks:
   - id: t-002
     milestone: m2
     title: "Build admin-only illustrative region map with tutorial and project placement"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
-    note: >-
-      Create /admin/emperor-of-dust, discoverable requiredRole ADMIN tab,
-      visual map, selectable regions and explicit not-playable labeling.
-      Keep public Play and generic Arcade listings gated.
-    owner: worker
+    note: |-
+      Create /admin/emperor-of-dust, discoverable requiredRole ADMIN tab, visual map, selectable regions and explicit not-playable labeling. Keep public Play and generic Arcade listings gated.
+
+      Private admin preview and requiredRole ADMIN tutorial are implemented in Kind Robots PR #3577, merged at 3e5e8fa0ebd77d5e7682515611b0b7a4bd2989e0 after all 30 workflow runs passed. The page explicitly says it is a concept, not playable. Conductor companion #6027 was previously merged with the game bible and 100-day outline. Deployment, actual gameplay and public /play release were not performed.
     claimed_by: 2026-10-12T093300Z-emperor-t002-9f3c
     claimed_at: '2026-10-12T09:33:00Z'
-    updated: '2026-10-12T09:33:00Z'
+    updated: '2026-10-12T09:45:00Z'
   - id: t-003
     milestone: m3
     title: "Build deterministic incident schema, dispatch choices and resolver"
