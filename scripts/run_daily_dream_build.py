@@ -58,6 +58,10 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
             continue
 
         proposal = core._data_block(text, "proposal-data")
+        if core.is_v3_day(proposal_date) and isinstance(proposal, dict) and proposal.get("bundle_version") != 3:
+            reason = (f"{path.name}: old six-asset buffer retained for review; "
+                      "re-author a separate fourteen-asset proposal for the date")
+            continue
         contract_errors = core._canonical_proposal_errors(proposal)
         if contract_errors:
             reason = (
