@@ -460,3 +460,21 @@ tasks:
       merging).
     updated: '2026-10-11T22:22:19Z'
     implementation_pr: 'silasfelinus/kind_robots#3545'
+  - id: t-017
+    milestone: m4
+    title: "Insert light-map editor and cabinet border art"
+    status: ready
+    depends_on: t-012
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      The two t-012 brief items that did not land with the LED rail, DMD and
+      camera work (kind_robots#3568, #3570, #3573). An insert light-map editor:
+      a private tool to place and preview the table's inserts and flashers
+      (and the LED rail's path) over the painted playfield, writing the
+      positions back as table data, so art and lamp positions can be lined up
+      by eye instead of by hand-edited coordinates. Cabinet border art: the
+      side rails, apron and backbox trim art for the Last Bell cabinet,
+      requested through the art queue, then drawn by the renderer's room and
+      cabinet (render/room.ts), which has no side-art slot yet.
