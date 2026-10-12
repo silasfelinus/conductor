@@ -86,6 +86,8 @@ def asset_manifest(proposal: dict[str, Any]) -> list[BundleAsset]:
         ("scenarios", "scenario", "title"),
     ):
         for index, row in enumerate(_rows(proposal, kind), start=1):
+            if not isinstance(row, dict):
+                continue
             slot = (
                 f"reward_{str(row.get('reward_type') or '').lower()}"
                 if kind == "rewards" else f"{prefix}_{index}"
@@ -128,7 +130,11 @@ def validate_v3(proposal: Any) -> list[str]:
             errors.append("independent vibe must not inherit a Zuzu checkpoint family")
 
     seeds = proposal.get("seed_facets")
-    if not isinstance(seeds, dict) or int(seeds.get("version") or 0) < 3:
+    try:
+        seed_version = int(seeds.get("version") or 0) if isinstance(seeds, dict) else 0
+    except (TypeError, ValueError):
+        seed_version = 0
+    if seed_version < 3:
         errors.append("seed_facets.version must be at least 3")
         elements = {}
     else:
