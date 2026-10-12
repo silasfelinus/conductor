@@ -82,17 +82,18 @@ def test_invalid_family_and_project_are_rejected_before_any_queueing(monkeypatch
 
 
 def test_existing_original_dream_requests_keep_the_old_engine(monkeypatch):
-    monkeypatch.setattr(core, "entry_to_job", lambda e: {
-        "engine": "COMFY",
-        "projectSlug": None,
-        "payload": {"workflow": {"legacy": "preserved"}, "promptString": "dream"},
-    })
+    monkeypatch.setattr(core, "_load_resource_index", lambda: {})
+    monkeypatch.setattr(core, "resolve_seed", lambda *_: 123456)
     original = {
         "source": "dream-cycle",
         "id": "dream-cycle-test-world",
         "target_repo": "silasfelinus/kind_robots",
+        "prompt": "an independent daydream about an inverted city",
+        "size": "512x768",
     }
     job = queue.entry_to_job(original)
     assert job["projectSlug"] == "dream-cycle"
-    assert job["payload"]["workflow"] == {"legacy": "preserved"}
+    assert "CheckpointLoaderSimple" not in {
+        node.get("class_type") for node in job["payload"]["workflow"].values()
+    }
     assert job["idempotencyKey"] == original["id"]
