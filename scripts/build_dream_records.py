@@ -41,6 +41,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from art_prompt_conditional_check import conditional_instruction_violations  # noqa: E402
 from dream_sdxl_checkpoint_art import CHECKPOINT_LANES  # noqa: E402
 from daily_dream_v3_contract import validate_v3  # noqa: E402
+from daily_dream_v3_authoring import is_v3_day  # noqa: E402
 from dream_art_prompts import (  # noqa: E402
     character_prompt,
     location_prompt,
@@ -236,6 +237,10 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
         if status in ("parked", "vetoed", "built", "building"):
             continue
         proposal = _data_block(text, "proposal-data")
+        if is_v3_day(pdate) and isinstance(proposal, dict) and proposal.get("bundle_version") != 3:
+            reason = (f"{p.name}: old buffered six-asset draft retained as idea inventory; "
+                      "a new independent 14-asset proposal is required after cutover")
+            continue
         contract_errors = _canonical_proposal_errors(proposal)
         if contract_errors:
             reason = f"{p.name}: invalid canonical proposal — " + "; ".join(contract_errors)
@@ -1194,6 +1199,11 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     text = path.read_text(encoding="utf-8")
     fm = _frontmatter(text)
     proposal = _data_block(text, "proposal-data")
+    pdate = str(fm.get("proposal_date") or fm.get("created") or "")
+    if is_v3_day(pdate) and isinstance(proposal, dict) and proposal.get("bundle_version") != 3:
+        message = (f"{path.name}: six-asset legacy draft is preserved but requires "
+                   "an independently authored v3 proposal before building")
+        return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
     contract_errors = _canonical_proposal_errors(proposal)
     if contract_errors:
         message = f"{path.name}: invalid canonical proposal — " + "; ".join(contract_errors)
