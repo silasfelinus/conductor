@@ -5,6 +5,10 @@
 **Target:** complete premium-feeling original web campaign inside Kind Robots Arcade  
 **References:** *Gradius*, *Darius* and *R-Type* for scale, precision, boss spectacle and meaningful powerups. Copy no protected designs, music, names or specific layouts.
 
+## Production reference
+
+[WORLD-BIBLE.md](WORLD-BIBLE.md) is the stage-by-stage canonical production roster: four pilots, 24 behavior-defined enemies, nine boss fights, twelve upgrades, opening/ending boards, and tracked art tickets. The registry is planned content until individually implemented and verified.
+
 ## The pitch
 
 The Luminous Ocean has been swallowed by the Prism Eclipse, a machine reef turning deep-space wildlife into obedient starships. Four courageous star princess pilots embark on a pastel-rainbow rescue run through nebula shallows, fluorescent kelp rings and drifting coral fortresses. The world is cheerfully pink, but the challenge is substantial. **Every bullet must be legible and every death teach something.**
