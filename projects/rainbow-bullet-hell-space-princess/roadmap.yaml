@@ -122,20 +122,18 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Deliver local 1–4 player simultaneous co-op with fair rules"
-    status: claimed
+    status: review
     depends_on: [t-004]
     owner: worker
     claimed_by: 2026-10-12T112819Z-rainbow-t005-coop-p4kx
     claimed_at: '2026-10-12T11:28:19Z'
-    updated: '2026-10-12T11:28:19Z'
+    updated: '2026-10-12T11:44:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Join/leave without resetting campaign, 1–4 input slots, keyboard/gamepad
-      assignments, readable colored/shape-coded ship markers and projectiles,
-      independent lives, shield/revive rules, adaptive enemy pressure without
-      hidden damage spikes, shared continues and per-player HUD. Test same-frame
-      collisions, simultaneous supers and full four-player bullet load.
+    note: |-
+      Join/leave without resetting campaign, 1–4 input slots, keyboard/gamepad assignments, readable colored/shape-coded ship markers and projectiles, independent lives, shield/revive rules, adaptive enemy pressure without hidden damage spikes, shared continues and per-player HUD. Test same-frame collisions, simultaneous supers and full four-player bullet load.
+
+      Partial local co-op integration drafted: Rainbow-only pause-time player switching in shared Arcade cabinet, optional live seat API, persistent benched ship positions/lives/upgrades, independent controls, bounded four-seat targeting/pressure, and earned Solenne Halo revive. Pure helper and real engine regression fixtures committed. Other 1-4 player acceptance and full in-run join/leave quality checks still remain. Reconcile with t-007 Pinkwake branch before final merge and return t-005 to ready after the scoped slice lands.
   - id: t-006
     milestone: m2
     title: "Add online 1–4 player co-op rooms with deterministic synchronization"
