@@ -2466,3 +2466,20 @@ tasks:
       inflate elapsed time, weaken assertions or label the target met without evidence. Make a focused
       balance fix only if the measurements reproduce a scoped problem, with before/after evidence.
       Attach actual renderer evidence for any visible change and document remaining human-play limits.
+
+  - id: t-147
+    milestone: m8
+    title: "Verify Rescue Rally co-op and solo aim through the actual shared-cabinet input consumer."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-038
+    note: >-
+      Reviewer kaizen after kind_robots#3581: existing deterministic game tests inject frames directly.
+      Exercise the real ArcadeCabinet input routing for 2-4 seats, keyboard/gamepad/touch as supported,
+      and the solo twin-stick versus multi-seat aim contract. Verify menu selection, distinct seat
+      motion and partner revival with consumer-generated frames, including disconnect/reconnect or
+      absent secondary input. Use a bounded browser fixture with actual consumers and game renderer
+      at phone/tablet/desktop widths. Keep staged scenarios explicit and avoid claiming live deployment
+      or human pacing from fixtures. Fix only a reproduced scoped consumer problem; preserve tests,
+      auth and score ceilings.
