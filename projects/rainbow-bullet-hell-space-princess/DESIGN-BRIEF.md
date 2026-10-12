@@ -9,6 +9,8 @@
 
 [WORLD-BIBLE.md](WORLD-BIBLE.md) defines the stage-by-stage production roster and [CAST-BIBLE.md](CAST-BIBLE.md) governs the four full character designs, inclusive casting, relationships and illustration prompts. WORLD-BIBLE.md: four pilots, 24 behavior-defined enemies, nine boss fights, twelve upgrades, opening/ending boards, and tracked art tickets. The registry is planned content until individually implemented and verified.
 
+**Story and dialogue authority:** [COMMS-AND-ENDINGS-BIBLE.md](COMMS-AND-ENDINGS-BIBLE.md) supplies Lilt-7, universal solo comms, all 15 unique pilot-party reveals, conditional cinematics and deterministic runtime-selection/QA contracts.
+
 ## The pitch
 
 The Luminous Ocean has been swallowed by the Prism Eclipse, a machine reef turning deep-space wildlife into obedient starships. Four courageous star princess pilots embark on a pastel-rainbow rescue run through nebula shallows, fluorescent kelp rings and drifting coral fortresses. The world is cheerfully pink, but the challenge is substantial. **Every bullet must be legible and every death teach something.**
