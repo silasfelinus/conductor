@@ -1820,7 +1820,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -1835,7 +1835,9 @@ tasks:
     CAPPED 2026-09-30 by Silas (in session: "cap them"): min_rest_hours: 24 -- at most one cycle per day, even after a cycle that did real work (this task ran up to 35 times a day in early September). Every picker honors it via roadmap_claims.task_is_resting; re-arm with close_task.py as usual (add --noop when the cycle found nothing, which lengthens the rest up to 48h).
 
     Resume scoped Gmail incident diagnosis: responsive audit 38186259818 reports visible source-less deferred gallery images as broken art. Reproduce browser behavior and repair waiting image presentation without changing alert criteria, preserving viewport loading and real failed-image/error detection.
-  updated: '2026-10-12T04:39:50Z'
+
+    Scoped deferred gallery image fix implemented on worker/interface-vision-t105-deferred-gm8q. Browser regression failed before repair and passed after: source-less waiting images hidden with layout bounds retained, viewport activation works, URL refresh keeps prior frame, missing source hides again, and genuine failed loads still emit errors and remain detectable. Phone/tablet/desktop fixture captures prepared; global audit unchanged.
+  updated: '2026-10-12T04:44:00Z'
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
