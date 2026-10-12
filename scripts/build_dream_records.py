@@ -39,6 +39,7 @@ from typing import Any, Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from art_prompt_conditional_check import conditional_instruction_violations  # noqa: E402
+from dream_sdxl_checkpoint_art import CHECKPOINT_LANES  # noqa: E402
 from dream_art_prompts import (  # noqa: E402
     character_prompt,
     location_prompt,
@@ -147,7 +148,7 @@ def _canonical_proposal_errors(proposal: Optional[dict]) -> list[str]:
         # Fail CLOSED until the nine-record transaction, Facet assignment and
         # ArtJob handoff ship together. The old writer would silently attach
         # eight Zuzu-world entities to an unrelated independent vibe.
-        return ["v3 nine-asset proposals require the upgraded single writer; no live writes permitted"]
+        return ["v3 fourteen-asset proposals require the upgraded single writer and author; no live writes permitted"]
     errors: list[str] = []
     facets = proposal.get("seed_facets")
     if not isinstance(facets, dict) or int(facets.get("version") or 0) < 2:
@@ -614,7 +615,7 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
 
 
 def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple[dict, list, list[str]]:
-    """Create all rows + sheets; returns (built-data dict, results log, art yaml entries)."""
+    """Create rows + sheets; original six plus optional versioned Zuzu extras."""
     results: list = []
     art_entries: list[str] = []
     built: dict[str, Any] = {
@@ -625,6 +626,8 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         "sheets": {},
         "art": [],
     }
+    if proposal.get("bundle_version") == 3:
+        built["bundle_version"] = 3
     title = proposal.get("title", slug)
     vibe = proposal.get("vibe", {})
     vibe_line = vibe.get("line", "")
@@ -661,7 +664,9 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         return out
 
     def queue_art(element_slug: str, element_kind: str, label: str, art_prompt: str,
-                  target_endpoint: str, target_id: Optional[int]) -> None:
+                  target_endpoint: str, target_id: Optional[int], *,
+                  project_target: Optional[str] = None,
+                  checkpoint_family: Optional[str] = None) -> None:
         # dream-cycle/t-028: catch a conditional-instruction prompt here, at
         # build time, instead of letting it reach kind_robots' own contract
         # (server/utils/artPromptContract.ts) and 422 at ArtJob submission —
@@ -705,17 +710,28 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                 f"  entity_id: {int(target_id)}\n"
                 f"  entity_field: imagePath\n"
             )
+        if project_target:
+            if project_target not in ("zuzu-gamebook", "emperor-of-dust") or checkpoint_family not in CHECKPOINT_LANES:
+                raise ValueError("Zuzu art must name a valid project and checkpoint family")
+            yaml_text += (
+                "  engine: sdxl-checkpoint\n"
+                f"  project_target: {project_target}\n"
+                f"  checkpoint_family: {checkpoint_family}\n"
+            )
         art_entries.append(yaml_text)
         built["art"].append({"request_id": req_id, "image_path": image_path,
                              "public_path": "/" + image_path.removeprefix("public/"),
                              "attached": False, "element": resolved_art_slug,
                              "entity_type": entity_type, "entity_id": target_id,
                              "entity_field": "imagePath",
-                             "target_endpoint": target_endpoint, "target_id": target_id})
+                             "target_endpoint": target_endpoint, "target_id": target_id,
+                             **({"project_target": project_target, "checkpoint_family": checkpoint_family}
+                                if project_target else {})})
 
     def card_dream(dream_type: str, dtitle: str, description: str, flavor: str,
                    art_prompt: str, icon: str, element_slug: str,
-                   sheet_overrides: dict, dream_slug: Optional[str] = None) -> Optional[dict]:
+                   sheet_overrides: dict, dream_slug: Optional[str] = None,
+                   project_target: Optional[str] = None) -> Optional[dict]:
         """Create a card Dream + its PitchSheet (via by-dream). Returns the dream.
 
         `dream_slug` pins an explicit, policy-clean slug (used for the world card,
@@ -749,7 +765,8 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             # extraData is a String @db.LongText column — send JSON as a string,
             # not a raw object (an object 400s with a Prisma-invalid error).
             "extraData": json.dumps({**extra_base, "elementType": dream_type,
-                                     "element": element_slug}),
+                                     "element": element_slug,
+                                     **({"projectTarget": project_target} if project_target else {})}),
             **sheet_overrides,
         }
         sheet = kr_call("POST", f"/api/sheets/by-dream/{dream['id']}", sheet_body,
@@ -935,6 +952,173 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                   scenario_prompt(sc.get("title", "Scenario"), setup, loc_titles,
                                   title, vibe_line),
                   "/api/scenarios", rec.get("id") if rec else None)
+
+    # 7. Version 3 adds EIGHT distinctly attributed Zuzu-world records.
+    # None is a child of, linked to, or styled after the random daily PITCH.
+    # They share this build's rollback ledger and the same 14-request handoff.
+    if proposal.get("bundle_version") == 3:
+        extras = proposal["zuzu_assets"]
+        created = {
+            "locations": [], "characters": [],
+            "rewards": [], "scenarios": [],
+        }
+        zuzu_location_ids: dict[str, int] = {}
+        zuzu_location_titles: dict[str, str] = {}
+        built["records"]["zuzu"] = created
+
+        def zuzu_style(row: dict[str, Any]) -> tuple[str, str, str, str]:
+            project = row["project_target"]
+            family = str(row["checkpoint_family"]).lower()
+            lane = CHECKPOINT_LANES[family]
+            scene_world = (
+                "Zuzu Koala Assassin, a samurai wanderer in the Weird West"
+                if project == "zuzu-gamebook"
+                else "Emperor of Dust, pre-Zuzu kingdom of ash and brass"
+            )
+            tone = (
+                "anthropomorphic animal folk, Edo samurai and Weird West, strange landscapes"
+                if project == "zuzu-gamebook"
+                else "ragged banners, salvage, patched leather, ash-gray skies, brass lanterns"
+            )
+            return project, family, scene_world, tone
+
+        for loc in extras["locations"]:
+            project, family, scene_world, tone = zuzu_style(loc)
+            el = "zuzu-" + project + "-" + slugify(loc["title"])
+            description = " ".join(str(loc[k]).strip() for k in (
+                "known_for", "local_rule", "best_scene"
+            ))
+            art_prompt = location_prompt(
+                loc["title"], loc["art_direction"], loc["known_for"], loc["best_scene"],
+                scene_world, tone, style=CHECKPOINT_LANES[family]["style"],
+            )
+            rec = card_dream(
+                "LOCATION", loc["title"], description, loc["local_rule"],
+                art_prompt, "kind-icon:map-pin", el,
+                {"title": loc["title"], "subtitle": "Zuzu location",
+                 "hook": loc["art_direction"],
+                 **trio([("Known For", loc["known_for"]),
+                         ("Local Rule", loc["local_rule"]),
+                         ("Best Scene", loc["best_scene"])])},
+                project_target=project,
+            )
+            if rec:
+                created["locations"].append({
+                    "model": "Dream", "id": rec.get("id"),
+                    "title": loc["title"], "project_target": project,
+                })
+                zuzu_location_ids[project] = rec.get("id")
+                zuzu_location_titles[project] = loc["title"]
+            # Intentionally NO Dream relation from the random daily world.
+            queue_art(el, "zuzu-location", loc["title"], art_prompt,
+                      "/api/dreams", rec.get("id") if rec else None,
+                      project_target=project, checkpoint_family=family)
+
+        for ch in extras["characters"]:
+            project, family, scene_world, tone = zuzu_style(ch)
+            el = "zuzu-" + project + "-" + slugify(ch["name"])
+            art_prompt = character_prompt(
+                ch["name"], ch["look"], ch["role_drive"], ch["carries"],
+                scene_world, tone, style=CHECKPOINT_LANES[family]["style"],
+            )
+            body = {
+                "name": ch["name"], "designer": DESIGNER, "isPublic": True,
+                "drive": ch["role_drive"], "quirks": ch["complication"],
+                "backstory": " ".join((ch["carries"], ch["complication"])),
+                "artPrompt": art_prompt,
+                "genre": scene_world,
+                "dreamIds": [],  # No accidental connection to today's unrelated vibe.
+            }
+            rec = kr_call(
+                "POST", "/api/characters", body, dry_run, results,
+                f"Zuzu character: {ch['name']}",
+                conflict_identity={key: body[key] for key in
+                                   ("name", "designer", "drive", "artPrompt")},
+            )
+            if rec:
+                created["characters"].append({
+                    "model": "Character", "id": rec.get("id"),
+                    "name": ch["name"], "project_target": project,
+                })
+            queue_art(el, "zuzu-character", ch["name"], art_prompt,
+                      "/api/characters", rec.get("id") if rec else None,
+                      project_target=project, checkpoint_family=family)
+
+        for rw in extras["rewards"]:
+            project, family, scene_world, tone = zuzu_style(rw)
+            el = "zuzu-" + project + "-" + slugify(rw["name"])
+            kind = str(rw["reward_type"]).upper()
+            rarity = str(rw["rarity"]).upper()
+            art_prompt = reward_prompt(
+                rw["name"], kind, rw["look"], rw["grants"],
+                rarity, scene_world, tone, style=CHECKPOINT_LANES[family]["style"],
+            )
+            body = {
+                "name": rw["name"], "isPublic": True,
+                "description": rw["grants"], "flavorText": rw["catch"][:500],
+                "effect": rw["grants"], "icon": "kind-icon:gift",
+                "rarity": rarity, "rewardType": kind,
+                "artPrompt": art_prompt, "dreamIds": [],
+            }
+            rec = kr_call(
+                "POST", "/api/rewards", body, dry_run, results,
+                f"Zuzu reward: {rw['name']}",
+                conflict_identity={key: body[key] for key in
+                                   ("name", "description", "rewardType", "artPrompt")},
+            )
+            if rec:
+                created["rewards"].append({
+                    "model": "Reward", "id": rec.get("id"),
+                    "name": rw["name"], "reward_type": kind, "project_target": project,
+                })
+            queue_art(el, "zuzu-reward", rw["name"], art_prompt,
+                      "/api/rewards", rec.get("id") if rec else None,
+                      project_target=project, checkpoint_family=family)
+
+        for sc in extras["scenarios"]:
+            project, family, scene_world, tone = zuzu_style(sc)
+            el = "zuzu-" + project + "-" + slugify(sc["title"]) + "-scenario"
+            location_title = zuzu_location_titles.get(project, "")
+            # Consequential choices are kept in the prose without inventing
+            # unsupported Kind Robots Scenario columns. Durable metadata below
+            # retains the structured choices for downstream gamebook/dispatch use.
+            choice_text = " ".join(
+                f"{choice['label']}: {choice['tradeoff']} "
+                f"{choice['immediate_consequence']} {choice['later_consequence']}"
+                for choice in sc["choices"]
+            )
+            setup = sc["setup"]
+            body = {
+                "title": sc["title"][:190], "isPublic": True,
+                "description": setup + "\n\nChoices: " + choice_text,
+                "intros": setup,
+                "locations": location_title,
+                "genres": scene_world,
+                "dreamIds": [
+                    zuzu_location_ids[project]
+                ] if zuzu_location_ids.get(project) else [],
+            }
+            rec = kr_call(
+                "POST", "/api/scenarios", body, dry_run, results,
+                f"Zuzu scenario: {sc['title']}",
+                conflict_identity={
+                    "title": body["title"], "description": body["description"],
+                    "intros": json.dumps([setup], ensure_ascii=False),
+                    "locations": location_title,
+                },
+            )
+            if rec:
+                created["scenarios"].append({
+                    "model": "Scenario", "id": rec.get("id"), "title": sc["title"],
+                    "project_target": project, "choices": sc["choices"],
+                })
+            art_prompt = scenario_prompt(
+                sc["title"], setup, location_title, scene_world, tone,
+                style=CHECKPOINT_LANES[family]["style"],
+            )
+            queue_art(el, "zuzu-scenario", sc["title"], art_prompt,
+                      "/api/scenarios", rec.get("id") if rec else None,
+                      project_target=project, checkpoint_family=family)
 
     return built, results, art_entries
 

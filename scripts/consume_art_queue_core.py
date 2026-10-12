@@ -581,6 +581,7 @@ _LOCALPATH_PREFIXES = {
     "TEXT_ENCODER": ("text_encoders/", "clip/"),
     "VAE": ("vae/",),
     "DIFFUSION_MODEL": ("diffusion_models/", "unet/"),
+    "CHECKPOINT": ("checkpoints/",),  # retain Illustrious/ subfolder for Comfy loader
     # kind-robots/t-070 added these two. They are separate types because the
     # loaders and directories differ: a LATENT_UPSCALER loads from
     # models/latent_upscale_models/ via LatentUpscaleModelLoader and acts on
