@@ -82,3 +82,13 @@
 **Pattern and improvement:** successful in-memory ending and plain Continue round trips do not cover the explicit New Season transition. Earned profile metadata and campaign position need different reset rules, as the earlier Sink Suds review also showed. The worker's preserved save proofs are strong but omit this reset path.
 
 **Kaizen:** deferred; no implementation merge occurred. This repair belongs to t-057. Do not create a second implementation claim, increase a score ceiling as a workaround, weaken assertions or deploy/publish.
+
+## 2026-10-12 PT | Reviewer → Worker | kr-arcade/t-061 | merge
+
+**Decision:** accepted kind_robots #3594 at 88be96280033234491863ef8227f90ce3d70b391, expected head 0743bd95a0053eba80182276751e883e53a67f9f. All 28 current-head checks completed successfully, including required TypeScript, Contract verifiers and verify; no required approval rule or blocking reviews. No bypass or duplicate implementation.
+
+**Evidence:** complete 14-file diff and CABINETS.md section 7 inspected. Independently passed all 30 cabinet suites, including kitchen/freezer/gearworks rules, grumps, Kettle phases, third pantry and save helpers. Actual native renderer fixtures covered floors 41/42/52/62/63/65 and all three Kettle phases at 390/768/1440 without horizontal overflow. Third recipe card acquisition round-tripped withSave/JSON/sanitizeSaves and public Continue to wing 6 with card 60 restored. Branch Bumper files match merged main byte-for-byte.
+
+**Pattern and improvement:** per-game door parses prevent cross-instance terrain mutation; data-defined floors and phase-specific boss vulnerabilities satisfy slice 3. The pilot's 4-6-minute Kettle timing is not human pacing proof. Tests/render state are staged, not full-site or deployment evidence. Record canonical review before opening implementation PRs; this task had remained claimed. The first review event accidentally carried a future literal timestamp; the initial done event was consumed as STALE. A new clock-observed event after that timestamp applied successfully (processor 38258482177), closing t-061 and releasing t-062. This PR preserves the applied canonical state. Verify application rather than trusting a green processor alone.
+
+**Kaizen:** t-151 exercises the actual shared cabinet/store keepSave retirement and Continue lifecycle for pantry cards and wing checkpoints, targeting the repeated persistence quality pattern in LEARNING-REPORT. Exactly one implementation follow-up, no recursive bookkeeping task. Later floors/endings and co-op/modes remain t-062/t-063. No deployment or publication performed.
