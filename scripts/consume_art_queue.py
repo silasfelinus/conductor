@@ -148,12 +148,14 @@ def _enrich_daily_dream_job(entry: dict[str, Any], job: dict[str, Any]) -> None:
         "id": request_id or None,
         "source": "dream-cycle",
         "label": label or None,
-        "projectTarget": project_target or None,
         "targetRepo": target_repo or None,
         "imagePath": image_path or None,
         "sourceUrl": source_url or None,
         "pageUrl": page_url or None,
     }
+
+    if project_target:
+        payload["conductorRequest"]["projectTarget"] = project_target
 
     if entity_type in DAILY_DREAM_ENTITY_TYPES and entity_id:
         payload["entityArt"] = {
