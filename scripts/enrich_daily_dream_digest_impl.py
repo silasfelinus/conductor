@@ -205,6 +205,45 @@ def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[
         ("scenario", "Scenario", scenario.get("title"), _summary(scenario.get("setup")),
          builder_slugify(scenario.get("title") or "")),
     ]
+    if data.get("bundle_version") == 3:
+        # Eight additional production assets are NOT descendants of today's
+        # random Dream. Their own project is named on each visible card.
+        extras = data.get("zuzu_assets") or {}
+        for kind, kind_label, title_key in (
+            ("locations", "location", "title"),
+            ("characters", "character", "name"),
+            ("rewards", "reward", "name"),
+            ("scenarios", "scenario", "title"),
+        ):
+            for index, row in enumerate(extras.get(kind) or [], 1):
+                if not isinstance(row, dict):
+                    continue
+                title_value = str(row.get(title_key) or "")
+                project = str(row.get("project_target") or "")
+                slot = (
+                    "zuzu_reward_" + str(row.get("reward_type") or "").lower()
+                    if kind == "rewards" else f"zuzu_{kind_label}_{index}"
+                )
+                element = ("zuzu-" + builder_slugify(title_value)
+                           + ("-scenario" if kind == "scenarios" else ""))
+                details = (
+                    (row.get("known_for"), row.get("local_rule"))
+                    if kind == "locations" else
+                    (row.get("role_drive"), row.get("complication"))
+                    if kind == "characters" else
+                    (row.get("grants"), row.get("catch"))
+                    if kind == "rewards" else
+                    (row.get("setup"), *[
+                        str(choice.get("label") or "") + ": " + str(choice.get("tradeoff") or "")
+                        for choice in row.get("choices", []) if isinstance(choice, dict)
+                    ])
+                )
+                label = (
+                    ("Zuzu Gamebook" if project == "zuzu-gamebook"
+                     else "Emperor of Dust") + " " + kind_label
+                )
+                specs.append((slot, label, title_value, _summary(*details), element))
+
     rows: list[dict[str, Any]] = []
     for key, label, title, summary, element_slug in specs:
         if not title:
@@ -218,6 +257,7 @@ def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[
         facets = elements.get(key) if isinstance(elements.get(key), list) else []
         rows.append({
             "key": key,
+            "lane": "zuzu" if key.startswith("zuzu_") else "dream",
             "label": label,
             "title": str(title),
             "summary": str(summary or ""),
@@ -235,11 +275,13 @@ def _records_summary(built: dict[str, Any] | None) -> dict[str, int]:
     if not built:
         return {}
     records = built.get("records") if isinstance(built.get("records"), dict) else {}
+    extras = records.get("zuzu") if isinstance(records.get("zuzu"), dict) else {}
     return {
-        "dreams": sum(bool(records.get(key)) for key in ("world", "vibe")) + len(records.get("locations") or []),
-        "characters": len(records.get("characters") or []),
-        "rewards": len(records.get("rewards") or []),
-        "scenarios": len(records.get("scenarios") or []),
+        "dreams": sum(bool(records.get(key)) for key in ("world", "vibe"))
+                  + len(records.get("locations") or []) + len(extras.get("locations") or []),
+        "characters": len(records.get("characters") or []) + len(extras.get("characters") or []),
+        "rewards": len(records.get("rewards") or []) + len(extras.get("rewards") or []),
+        "scenarios": len(records.get("scenarios") or []) + len(extras.get("scenarios") or []),
     }
 
 
