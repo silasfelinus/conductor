@@ -1,0 +1,57 @@
+# Daily project pitches, 2026-10-12. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-12
+pitches:
+  - slug: kr-cabinet-robot-galaga-swarm
+    target: kr-arcade
+    title: Swarm Wing
+    hook: >-
+      An arcade cabinet riffing on Galaga's diving alien formations, where a small robot ship shoots
+      waves of paper-kite bugs that swoop out of formation in looping dives. Each stage adds more
+      divers, faster loops and a bonus stage, with a score submitted to the leaderboard.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: Cabinet marquee, ship sprite, four kite-bug enemies, bullet and explosion frames and 3 starfield backdrops generated ahead of time.
+    first_slice: Intro splash, one formation with scripted dive paths, shooting, lives, rising dive speed and a score submit.
+  - slug: kr-cabinet-robot-tetris-crates
+    target: kr-arcade
+    title: Crate Stack Shuffle
+    hook: >-
+      An arcade cabinet riffing on Tetris's falling-block line clearing, where a warehouse robot rotates
+      and drops odd-shaped crates to complete rows. Each level drops the crates faster and adds
+      sticky or heavy crate types, with lines cleared counting toward the leaderboard score.
+    llm_at_runtime: none
+    effort: small
+    art_plan: Cabinet marquee, seven crate piece skins, a warehouse robot mascot and 3 backdrops generated ahead of time.
+    first_slice: Intro splash, one well with seven piece shapes, rotation, line clears, rising speed and a score submit.
+  - slug: robot-pocket-weather-garden
+    title: Pocket Weather Garden
+    hook: >-
+      A calm idle toy where a tiny robot tends a window garden, and the player taps clouds to bring
+      sun, rain or breeze so seedlings grow into pre-illustrated flowers. Each flower has a short
+      pre-written note, and the collection is saved locally with no accounts.
+    llm_at_runtime: none
+    effort: small
+    art_plan: Twelve flower growth sets, three weather overlays and a gardener robot sheet generated ahead of time.
+    first_slice: One window box with three weather taps, a growth timer, four flowers and a saved collection page.
+  - slug: kind-lighthouse-tarot-deck
+    title: Kind Signal Card Deck
+    hook: >-
+      A pre-illustrated deck of twenty-two kindness signal cards, each with a pre-written meaning and a
+      small daily action. The player draws one card a day with a seeded shuffle, and a saved streak
+      shelf shows the cards collected over time with no accounts.
+    llm_at_runtime: none
+    effort: small
+    art_plan: Twenty-two card illustrations, a card back and a shelf frame generated ahead of time.
+    first_slice: A daily seeded draw page showing one card with its text and a saved shelf of drawn cards.
+  - slug: robot-sticker-sheet-printables
+    title: Robot Printable Sticker Sheets
+    hook: >-
+      A gallery of pre-generated printable sticker sheets of Kind Robots characters and garden scenes,
+      each laid out on a print-ready page with cut lines. Visitors pick a sheet, preview it and print
+      or save it as a PDF, all in the browser with no accounts.
+    llm_at_runtime: none
+    effort: small
+    art_plan: Six sticker sheets of eight stickers each, with matching cut-line overlays, generated ahead of time.
+    first_slice: A sheet picker with preview and a print stylesheet for two finished sheets.

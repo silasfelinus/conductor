@@ -146,3 +146,14 @@ A LoRA rides only on renders whose own prompt names its character, by trigger or
 human face beside anyone. A render naming either of them with another character therefore gets no default LoRAs; give
 it an explicit list, or keep the frame to one figure. A ledger opts out with `cast_loras: false`, and an explicit `loras:` wins. When a LoRA
 is retrained, update both lists.
+
+Verified 2026-10-12 through Comic Studio's own render path (`POST /api/comics/slots/{id}/render`, lane il-arthemy).
+Both jobs carried LoraLoader `zuzukoala_v1` at 0.8.
+- **Slot 5, Zuzu's back view (ArtImage 245653), current canon tags: pass.** One koala, a true back view, the canon
+  poncho, hat and sash, and the scabbard running from the right shoulder to the left hip. The blade reads more like a
+  saber than a katana.
+- **Slot 90, "Saloon doorway" (ArtImage 245652): fail.** It drew a second, feral koala at his feet. The slot still
+  carries its round-2 prose ("a small grey koala a little under four feet tall... travel cloak"). The 36 Comic Studio
+  slots still on that prose are the round-2/3 exploration archive (costume variants, species tests, plot seeds, early
+  covers; none in an issue, none picked), so they were left as they are. Rewrite a slot to the current canon tags,
+  opening with `solo`, before reusing it with the LoRA.

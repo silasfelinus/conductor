@@ -45,9 +45,15 @@ games:
     effort: medium
     source: catalog
     hook: >-
-      A small kind robot gathers energy sparks through a maze while four glitch gremlins with their own
-      personalities hunt it, and a power cell turns them sleepy-blue so a bump reboots them home.
-    challenge: Faster gremlins and shorter power time each level; bonus item per level; intermission every 3 levels.
+      Recharge the city's six-board power grid, flipping Rewire switches and making a Friend Train,
+      alone or with a co-op partner, or steer a gremlin in two-to-four-player Gremlin Tag.
+    challenge: >-
+      Three bosses, golden bolts for the Battery Garden and true ending, Overclocked, three medals
+      per maze, timed spark banking in Rush Hour and Classic Maze with rising heat.
+    depth_pass: >-
+      Silas, 2026-10-11 (m8, spec depth-pass/CABINETS.md section 2): shipped in kind_robots#3543 (t-039),
+      #3554 (t-040), #3560 (t-041) and #3579 (t-042). Functional slice closeout; unlimited-life
+      probes and staged ending tests do not establish the 45-55 minute human first-clear target.
 
   - slug: rescue-rally
     title: Rescue Rally
@@ -61,9 +67,15 @@ games:
     effort: medium
     source: catalog
     hook: >-
-      A twin-stick arena where a kind robot fires a rebooting beam at glitched drones and rescues
-      wandering humans, pets and little bots for a growing multiplier.
-    challenge: Each wave adds count and new types (spawners, seekers, slow tanks); rescue streak multiplier.
+      One to four heroes sweep five city districts with twin-stick kindness beams, rebooting glitched
+      bots and rescuing families directly or in a parade to the beacon, with shared rescue streaks and partner revival.
+    challenge: >-
+      Forty authored waves, seventeen foes and five bosses, the Reboot Squad and Shelter, golden chips
+      for the Reunion and both endings, Rally 100, District Time Attack, Classic Rally and persistent wave medals.
+    depth_pass: >-
+      Silas, 2026-10-11 (m8, spec depth-pass/CABINETS.md section 1): shipped in kind_robots#3540 (t-035),
+      #3552 (t-036), #3569 (t-037) and #3581 (t-038). Functional slice closeout; bot runs and staged
+      save/ending tests do not establish the authored 50-60 minute human first-clear target.
 
   - slug: sink-suds
     title: Sink Suds
@@ -133,9 +145,15 @@ games:
     effort: medium
     source: catalog
     hook: >-
-      Riders on rainbow butterflies flap to climb and bonk rival riders from above, who curl into cocoons
-      you scoop up before they hatch, while a storm cloud hunts anyone who dawdles.
-    challenge: Rival tiers get smarter each wave; platforms crumble; a storm-cloud wave on a timer.
+      One to four riders flap rainbow butterflies through the Four Gardens Tourney, bonking moth riders,
+      scooping cocoons, chaining Air Combos and charging jousts, with party rescue and a pond frog.
+    challenge: >-
+      Six weather-shaped gardens and their champions, golden petals and both endings, Circuit rematches,
+      Unbonked / Ace / Quick medals and a persistent medal board, plus a seeded Endless Pond with escalating heat.
+    depth_pass: >-
+      Silas, 2026-10-11 (m8, spec depth-pass/CABINETS.md section 4): shipped in kind_robots#3539 (t-047),
+      #3551 (t-048), #3559 (t-049) and #3575 (t-050). Functional slice closeout; the 45-60 minute
+      first-clear pacing target remains to be measured with legitimate limited-life play.
 
   - slug: kind-pinball
     # The hall prefers WebGL 3D; the Canvas 2D fallback now uses the SNES render kit.
@@ -256,13 +274,20 @@ games:
     effort: large
     source: catalog
     hook: >-
-      A top-down co-op dungeon crawl for up to four same-device players, each a different android (fixer,
-      healer, runner, maker), shutting down glitch generators and rescuing trapped bots floor by floor.
-    challenge: Deeper floors bring more generators, locked doors, and an ever-draining battery you refill with snacks.
+      Below the server floors lies the Deep Archive, the memory of the Old Mainframe, a kindly machine who
+      is forgetting herself. Up to four repair bots (Hugs, Fix, Sage, Zip) descend to wake her up.
+    challenge: >-
+      Five wings of eight hand-built floors (Punch-Card Vault, Tape Library, Arcade Basement, Cloud Atrium,
+      Core), 14 glitch kinds each with a tell, five Guardians (Card Sorter, Twin Reels, Attract Mode, Cloud
+      Bank, Old Mainframe), five Memory Cards and a true ending, three medals a floor, then Reboot (New
+      Game+), the Endless Archive, Lost & Found and Score Duel.
     slices: [one floor + one class, all four classes, generators + keys, floor progression]
     # Slice 1 (silasfelinus/kind_robots#3289) also built floor progression and generators; slice 2
     # (#3299) added all four classes (Hugs, Fix, Sage, Zip); slice 3 (#3306) added keys and locked
     # doors. Still to come: same-device co-op (needs more cabinet input streams).
+    depth_pass: >-
+      Silas, 2026-10-11 (m8, spec depth-pass/CABINETS.md section 5): shipped in kind_robots#3537 (t-051),
+      #3550 (t-052), #3556 (t-053) and #3561 (t-054).
 
   - slug: prize-show-panic
     title: Prize Show Panic
@@ -575,3 +600,16 @@ games:
     challenge: >-
       Steeper ramps, faster gloom-balls and a shorter lantern timer each level, across three
       night-street backdrops.
+  - slug: robot-digger-dunes
+    title: Dune Digger Dash
+    riffs_on: Dig Dug (1982)
+    status: queued
+    task: t-009
+    phase: factory
+    effort: medium
+    source: pitches/2026-10-11-kr-cabinet-robot-digger-dunes.md
+    hook: >-
+      A small robot burrows through layered sand, pumping wandering sand-sprites until they pop,
+      or dropping loose boulders on them.
+    challenge: >-
+      More sprites each round, faster pursuit through the tunnels, and more boulders to manage.

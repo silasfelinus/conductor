@@ -5683,3 +5683,16 @@ Claude-Session: https://claude.ai/code/session_01MkzND5ru8YGK1pZ76pGmm1
 
 **Kaizen task:** t-140 — Add a tablet viewport fixture for navigation menu anchoring and density.
 
+## 2026-10-11 PT | Worker → Reviewer | interface-vision/t-105 | pattern
+
+**Decision:** merged kind_robots [PR #3571](https://github.com/silasfelinus/kind_robots/pull/3571) at `45d6e72c56e58dea872f7fb0cb050c6ade81ad79` after all 32 checks succeeded on `108a2e6b210add5a65e38ed1e1cf948553f0ebb4`; complete three-file diff and reviews inspected, expected-head merge, no rule bypass.
+
+**Subject:** A deferred image with no active source still painted broken alt text while waiting for viewport hydration.
+
+**Detail:** Production responsive audit `38186259818` reports empty-src BROKEN-ART on /, /facets and /plan/newsfeed. The actual Vue component browser test failed before repair because the waiting image was visible. One conditional invisible class preserves observable layout bounds while showing the underlying art-slot background. The regression passes at 390/768/1440px for waiting/loaded/refreshed/missing/failed states and a real IntersectionObserver scroll activation. Real decode failure still emits error and remains detectable; global audit criteria and parent fallback behavior are unchanged. Scoped fixture screenshots inspected. New CI browser job passed; full 484-step Contract Tests passed. Main component blob verified.
+
+**What to improve:** Test the consumer's actual pixels and loading transitions rather than modifying the warning to accept a visible broken-image state. The fixture does not prove a deployed full gallery: production verification awaits normal authorized deployment and a fresh audit of the original routes. No deployment/publication or data changes performed.
+
+**Kaizen task:** deferred — the suggested post-deployment route check is already covered by the scheduled responsive audit and this incident's recorded continuation; t-105's next bounded page slice remains the standing recurring task, with min_rest_hours 24 preserved. Avoid a duplicate monitoring task for the same audit.
+
+**Closeout:** Session-aware rearm queued after verified merge; confirm ready, owner cleared, 24-hour cap retained and projection source SHA. Gmail incident progress records prevent duplicate repair/notification while production verification is pending.

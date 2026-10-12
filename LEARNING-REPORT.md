@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-10-12T05:14:09Z
+Generated: 2026-10-12T09:02:26Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1249**
-- Outcomes: blocked: 19, cancelled: 2, done: 1228
+- Closed tasks recorded: **1255**
+- Outcomes: blocked: 19, cancelled: 2, done: 1234
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -46,7 +46,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kind-pinball | 1 | 100% |
 | kind-robots | 79 | 99% |
 | kindrobots-unraid | 9 | 100% |
-| kr-arcade | 10 | 100% |
+| kr-arcade | 16 | 100% |
 | kr-solitaire | 1 | 100% |
 | lora-ingestion | 11 | 100% |
 | mandarin-tutor | 16 | 94% |
@@ -82,7 +82,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 18 | 50% |
-| software | 1231 | 99% |
+| software | 1237 | 99% |
 
 ## Failure categories
 
@@ -104,16 +104,16 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-10-12 `kr-arcade/t-042` — Test saved-entry mode eligibility together with player count through real save consumers, and refresh the PR head before recording a rejection when the worker is actively repairing.
+- 2026-10-12 `kr-arcade/t-041` — Reconcile verified merged parent tasks before reviewing dependent slices, and keep unlimited-life campaign probes distinct from human pacing evidence.
+- 2026-10-12 `kr-arcade/t-038` — Round-trip earned records through the actual save consumer before checkpoint transitions; evaluate a three-way merge rather than mistaking an older branch's two-way registry difference for a revert.
+- 2026-10-11 `kr-arcade/t-037` — Verify and reconcile merged upstream slices before reviewing dependent work; parallel code delivery does not replace canonical dependency closeout.
+- 2026-10-11 `kr-arcade/t-050` — Keep persistent profile awards separate from campaign checkpoints and test quitting through both endings and legacy high-life saves; reconcile merged parent tasks before selecting dependent work.
+- 2026-10-11 `kr-arcade/t-049` — Reconcile completed companion implementations on canonical main promptly; a merged upstream left claimed keeps the next slice waiting despite shipped code.
 - 2026-10-11 `save-the-plumber/t-003` — Validate Admin help through the actual tab resolver rather than unsupported authoring fields; preserve both previews when resolving registry insertions, and retry cancelled image builds instead of treating cancellation as success.
 - 2026-10-12 `rainbow-bullet-hell-space-princess/t-003` — Admin tab tutorials must use tutorial.body and be tested through resolveChannels; structural sections assertions can bless invisible help. Verify current-head check runs and actual responsive page/engine pixels before merging previews.
 - 2026-10-11 `zuzu-pinball/t-006` — A spiral-shot proof must verify the ball's safe deck landing and return, not only the shot sensor; verify Actions check runs rather than interpreting empty legacy statuses as missing CI.
 - 2026-10-11 `interface-vision/t-141` — Validate the rendered adaptive column geometry instead of a stale single-column width cap. Workflow path guards require explicit existing script filenames; use a focused live browser job to verify the repaired fixture before merge.
-- 2026-10-11 `kr-arcade/t-022` — Prettier ratchet validates changed file identity, not just net counts; format new render-only edits before awaiting the full contract suite.
-- 2026-10-10 `zuzu-pinball/t-004` — Gate elevated-ramp development on real shooter trajectory tests, not a decorative shot map.
-- 2026-10-10 `zuzu-pinball/t-003` — Unlisted arcade preview registrations are not private by themselves. Guard public /play/arcade resolution and public score plausibility explicitly. After a Care Package Depot rules rename, update all corresponding DMD contract assertions as one scoped regression correction.
-- 2026-10-10 `zuzu-shifting-lands/t-006` — Pin runtime geography to Conductor's authored manifest; enforce deterministic reducers and finite campaign outcomes with both replay and multi-seed difficulty checks. Format new code before repository-wide ratchet checks; never treat queued CI as green.
-- 2026-10-09 `zuzu-shifting-lands/t-003` — Manifest-driven games should validate design-to-runtime references and use explicit spoiler-safe player DTO allowlists. GitHub Actions workflows must declare the least GITHUB_TOKEN permissions.
-- 2026-10-07 `zuzu-showdown/t-009` — For game backdrops made from diffusion art, two things go wrong quietly. First, any animal word in a scenery prompt, even "a bleached cow skull", brings the whole animal back: all three pond renders had a longhorn even though the negative prompt banned animals. Name no animal or animal part, and ban them in the negative. Second, a single median-cut palette for a whole stage spends its colours on the sky's broad gradient and drops small bright features (the pond's water, then the sun). Quantize each parallax layer with its own octree palette, and look at a preview at both camera limits before shipping.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-12T05:14:09Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-12T09:02:26Z_

@@ -668,6 +668,11 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Notes:**
 - (your notes)
 
+### kind-sliding-tile-gallery  (software)
+**Direction:** A free, no-LLM sliding-tile puzzle toy: solved boards reveal pre-generated Kind Robots art with pre-written captions, a local keepsake wall, and a daily seeded board.
+**Notes:**
+- (your notes)
+
 ### emperor-of-dust  (software, autonomous: true)
 **Direction (2026-10-11 PT):** **Emperor of Dust: One Hundred Days**, an independent Zuzu-world prequel strategy game inspired by the broad decision/dispatch style of *This Is the Police* and *Dispatch*. Rule a small wasteland territory through 100 authored days. Assign zero to three scarce followers per incident, sometimes roll uncertain outcomes and often face moral dilemmas. Permanent injury and death, Prosperity-funded recruitment, Popularity, consumable Support Hoard and seven rival factions with interrelated wars shape the kingdom. Poor outcomes open darker, accessible recovery quests rather than an automatic softlock.
 **Notes:**
