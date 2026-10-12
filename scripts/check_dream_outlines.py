@@ -12,6 +12,11 @@ from typing import Any, Optional
 
 import yaml
 
+try:
+    import daily_dream_v3_contract as v3
+except ModuleNotFoundError:  # loaded as scripts.check_dream_outlines in tests
+    from scripts import daily_dream_v3_contract as v3
+
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 ELIGIBLE_STATUSES = {"outline", "approved"}
@@ -82,6 +87,8 @@ def is_placeholder(body: Optional[str]) -> bool:
 def _canonical_errors(data: Optional[dict[str, Any]]) -> list[str]:
     if not isinstance(data, dict):
         return ["missing or invalid proposal-data block"]
+    if data.get("bundle_version") == v3.BUNDLE_VERSION:
+        return v3.validate_v3(data)
     errors: list[str] = []
     facets = data.get("seed_facets")
     if not isinstance(facets, dict) or int(facets.get("version") or 0) < 2:
