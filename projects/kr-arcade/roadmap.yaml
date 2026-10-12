@@ -679,27 +679,22 @@ tasks:
   - id: t-037
     milestone: m8
     title: "Rescue Rally depth slice 3: Districts 3–5, the Glitch Core and the endings"
-    status: claimed
-    owner: worker
+    status: done
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-11T22:38:07Z'
-    updated: '2026-10-11T22:38:07Z'
+    updated: '2026-10-12T06:52:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-036
-    note: >-
-      CABINETS.md section 1, Rescue Rally (Robotron riff), slice 3 of 4: Districts 3–5, the Glitch Core and
-      the endings. The upgrade is "Citywide Reboot". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read
-      the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every
-      slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rescue-rally). Silas,
-      2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
-      improvements, they should not just be thin veneers of the old games. But newer, better, even more
-      awesome."
+    note: |-
+      CABINETS.md section 1, Rescue Rally (Robotron riff), slice 3 of 4: Districts 3–5, the Glitch Core and the endings. The upgrade is "Citywide Reboot". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rescue-rally). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Reconciled merged kind_robots#3569 at 4641ea14c26bef88b3b2841e5410a389d68e0025. Authoritative merge and all 29 completed original-head checks verified at 3e3efa4a6b0605b9367f349c6c69fbadad81b42d. Current code includes the three later districts, Glitch Core, golden chips, Reunion and endings. The dependent t-038 PR #3581 is receiving a separate complete-diff, save-path and rendered-controls review. This closes stale bookkeeping without claiming or duplicating implementation.
 
   - id: t-038
     milestone: m8
     title: "Rescue Rally depth slice 4: Co-op and the long rally"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-037
