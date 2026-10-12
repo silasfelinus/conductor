@@ -780,7 +780,7 @@ tasks:
   implementation_pr: 'silasfelinus/conductor#5214'
 - id: t-035
   milestone: m4
-  title: 'Daily pitches: author today''s five-pitch docket'
+  title: 'Daily pitches: author five expansions of existing projects'
   status: ready
   owner: null
   recurring: true
@@ -790,7 +790,7 @@ tasks:
   stakes: reversible
   updated: '2026-10-11T10:46:37Z'
   note: |-
-    STANDING DAILY CONTRACT (Silas, 2026-10-02): every day's digest carries FIVE new project
+    HISTORICAL DAILY CONTRACT (Silas, 2026-10-02): every day's digest carries FIVE new project
     pitches, biased to free-to-play ideas that need no LLM at runtime (Kind Robots has a lot
     locked behind LLM API access; authoring tokens and image generation are plentiful). Silas
     decides each by clicking Approve or Pass in the email (signed confirm links), or on the
@@ -802,6 +802,14 @@ tasks:
     Every completed daily attempt updates daily_last_checked to that Pacific date; update
     daily_last_completed only after the day's docket is merged. Undecided pitches stay in the
     digest ("still waiting") until decided; never re-pitch a rejected one.
+
+    UPDATED DIRECTION (Silas, 2026-10-12 PT): starting with new 2026-10-13 PT dockets,
+    ALL five pitches are expansions of existing projects, never fresh projects.
+    A pitch has target and expansion_kind; approvals request the NEXT agent to
+    write a polished roadmap extension with milestones, tasks, dependency order,
+    art direction, tests, and source_pitch: pitches/<date>-<slug>.md.
+    They do not create a project via intake.py or a Kind Robots Project row.
+    See ZUZU-DAILY-CREATIVE-CONTRACT.md and scripts/daily_pitches.py --brief.
 
     RAN 2026-10-09: docket pitches/daily/2026-10-09.yaml already authored and materialized
     by an earlier session today (5 pitches, 5 undecided). Bumper Bubbles approval already
@@ -829,3 +837,25 @@ tasks:
     Silas 2026-10-10 in session: PITCH_LINK_SECRET was added in both places days ago; the
     roadmap was never updated. Closed on his word.
   approved_by_human: true
+
+- id: t-037
+  milestone: m4
+  title: 'Migrate Daily Dream single-writer pipeline to independent vibe plus eight Zuzu-world assets'
+  status: ready
+  passes: 0
+  stakes: reversible
+  depends_on: t-004
+  note: >-
+    Silas, 2026-10-12 PT: preserve one unique self-consistent daily dream vibe,
+    then separately create two Zuzu-world locations, two characters, two rewards
+    (ITEM/SKILL), and two consequential moral-choice scenarios, each attributed
+    to zuzu-gamebook or emperor-of-dust. Mostly use Illustrious and Arthemy
+    checkpoints; Emperor requires its own stable vibe pitch.
+    Full requirements and historical compatibility/cutover instructions:
+    projects/dream-cycle/ZUZU-DAILY-CREATIVE-CONTRACT.md.
+    Update proposal schema, author and validators, builder, Facet attachment,
+    nine idempotent ArtJobs, digest/art evidence, creative checks, remaster tools
+    and unit/CI contracts atomically. The current six-asset pipeline must remain
+    healthy and should NOT be called migrated or finished before CI verifies
+    complete nine-record and nine-ArtJob builds without mixing unrelated vibe
+    with Zuzu canon. No new object writer, manual REST backfill or new project.

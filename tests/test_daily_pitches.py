@@ -256,3 +256,66 @@ def test_approved_intake_command_carries_the_hook_as_desc(repo, capsys):
     dp.cmd_approved()
     out = capsys.readouterr().out
     assert "--desc 'A complete idea that explains what it is" in out
+
+
+def test_expansion_docket_requires_existing_target_and_kind(repo):
+    date = dp.EXPANSION_START
+    pitches = copy.deepcopy(GOOD)
+    pitches[0]["target"] = "new"
+    pitches[0]["expansion_kind"] = "level"
+    pitches[1]["target"] = "missing"
+    pitches[1]["expansion_kind"] = "level"
+    for pitch in pitches[2:]:
+        pitch["target"] = "existing-project"
+        pitch["expansion_kind"] = "card-set"
+    write(repo, date, pitches)
+    errors = dp.validate(date, dp.load_docket(date))
+    assert any("new project pitches are disabled" in e for e in errors)
+    assert any("not an existing project" in e for e in errors)
+    # Old two-target maximum is gone.
+    assert not any("at most 2" in e for e in errors)
+
+
+def test_expansion_docket_all_five_target_existing_projects(repo):
+    date = dp.EXPANSION_START
+    pitches = copy.deepcopy(GOOD)
+    for pitch in pitches:
+        pitch.update(target="existing-project", expansion_kind="encounter")
+    ready(repo, date=date, pitches=pitches)
+    assert dp.cmd_check(date) == 0
+    text = dp.pitch_file(date, "idea-0").read_text()
+    assert "project-target: existing-project" in text
+    assert "expansion-kind: encounter" in text
+    assert "project-target: new" not in text
+
+
+def test_approved_expansion_is_roadmap_handoff_and_stops_after_source_marker(repo, capsys):
+    date = dp.EXPANSION_START
+    pitches = copy.deepcopy(GOOD)
+    for pitch in pitches:
+        pitch.update(target="existing-project", expansion_kind="character")
+    ready(repo, date=date, pitches=pitches)
+    dp.cmd_decide(f"{date}-idea-0", "approved")
+    capsys.readouterr()
+    dp.cmd_approved()
+    out = capsys.readouterr().out
+    assert "polished, actionable" in out
+    assert "source_pitch: pitches/" in out
+    assert "DO NOT run intake.py" in out
+    assert "python scripts/intake.py idea-0" not in out
+    roadmap = repo / "projects" / "existing-project" / "roadmap.yaml"
+    roadmap.write_text("tasks:\n- id: t-101\n  source_pitch: pitches/" + date + "-idea-0.md\n")
+    capsys.readouterr()
+    dp.cmd_approved()
+    assert f"{date}-idea-0" not in capsys.readouterr().out
+
+
+def test_expansion_kind_is_required_and_rejects_unknown_kind(repo):
+    date = dp.EXPANSION_START
+    pitches = copy.deepcopy(GOOD)
+    for pitch in pitches:
+        pitch.update(target="existing-project", expansion_kind="level")
+    pitches[0]["expansion_kind"] = "some-new-game"
+    pitches[1].pop("expansion_kind")
+    write(repo, date, pitches)
+    assert sum("expansion_kind must" in e for e in dp.validate(date, dp.load_docket(date))) == 2

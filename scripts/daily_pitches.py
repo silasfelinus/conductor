@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""daily_pitches.py -- the daily project-pitch docket: five new project ideas per day.
+"""daily_pitches.py -- daily project expansion pitches, preserving legacy project intake.
 
 Silas, 2026-10-02: Kind Robots has a lot of features locked behind LLM API access, while
 image generation and authoring tokens are plentiful. Every day's digest therefore carries
-FIVE new project pitches, biased toward things anyone can use with zero tokens at runtime
+FIVE expansions to existing projects (from 2026-10-13), biased toward things anyone can use with zero tokens at runtime
 (games, toys, pre-written content, pre-generated art).
 
 Flow (sessions author, Silas decides):
@@ -14,8 +14,10 @@ Flow (sessions author, Silas decides):
      page already lists and votes on pitches/*.md.
   3. The digest shows the five (plus any still-undecided earlier ones) with signed Approve /
      Pass links (scripts/pitch_links.py). Silas decides by clicking, or on the project page.
-  4. An approved pitch is scaffolded into a project with scripts/intake.py by the next
-     session (`--approved` lists approved pitches that have no project yet).
+  4. An approved expansion is an agent instruction to produce a polished roadmap in
+     its EXISTING target project, not to scaffold a new project. `--approved` lists
+     approved expansions that still need their source-pitch roadmap handoff.
+     Pitches before 2026-10-13 retain their historical project-intake semantics.
 
 Arcade games (Silas, 2026-10-06): a pitch may carry `target: kr-arcade` (any existing project
 slug works the same way). It is then a new cabinet for the Kind Robots Arcade, not a new project:
@@ -40,7 +42,8 @@ import json
 import re
 import shlex
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 from typing import Any
 
@@ -57,14 +60,16 @@ LLM_AT_RUNTIME = ("none", "optional", "required")
 EFFORTS = ("small", "medium", "large")
 REQUIRED = ("slug", "title", "hook", "llm_at_runtime", "effort", "art_plan", "first_slice")
 ARCADE_PROJECT = "kr-arcade"
-MAX_TARGETED = 2  # pitches aimed at an existing project (arcade cabinets) per day; the rest stay new projects
+MAX_TARGETED = 2  # legacy pre-cutover arcade caps only
+EXPANSION_START = "2026-10-13"  # first fresh PT docket after Silas changed policy 2026-10-12
+EXPANSION_KINDS = ("level", "character", "scenario", "card-set", "follower-set", "power-up", "encounter", "act", "other")
 SLUG_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 MIN_HOOK_WORDS = 15
 PENDING_STATUS = "awaiting-silas"
 
 
 def pacific_today() -> str:
-    return (datetime.now(timezone.utc) - timedelta(hours=8)).strftime("%Y-%m-%d")
+    return datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%Y-%m-%d")
 
 
 def docket_path(date: str) -> Path:
@@ -184,7 +189,13 @@ def validate(date: str, docket: dict[str, Any]) -> list[str]:
         if pitch.get("llm_at_runtime") == "none":
             zero_llm += 1
         target = target_of(pitch)
-        if target:
+        if date >= EXPANSION_START:
+            if not target or target == "new":
+                errors.append(f"{where}: expansion must target an existing project; new project pitches are disabled")
+            kind = str(pitch.get("expansion_kind") or "")
+            if kind not in EXPANSION_KINDS:
+                errors.append(f"{where}: expansion_kind must be one of {EXPANSION_KINDS}")
+        if target and target != "new":
             targeted += 1
             if not (ROOT / "projects" / target).is_dir():
                 errors.append(f"{where}: target '{target}' is not an existing project")
@@ -192,7 +203,7 @@ def validate(date: str, docket: dict[str, Any]) -> list[str]:
             errors.append(f"{where}: effort must be one of {EFFORTS}")
         if len(str(pitch.get("hook") or "").split()) < MIN_HOOK_WORDS:
             errors.append(f"{where}: hook needs at least {MIN_HOOK_WORDS} words (a complete idea, not a label)")
-    if targeted > MAX_TARGETED:
+    if date < EXPANSION_START and targeted > MAX_TARGETED:
         errors.append(f"{date}: at most {MAX_TARGETED} of {PITCHES_PER_DAY} pitches may carry a target "
                       f"(found {targeted}); the rest pitch new projects")
     if zero_llm < MIN_ZERO_LLM:
@@ -214,7 +225,8 @@ def pitch_markdown(date: str, pitch: dict[str, Any]) -> str:
         f"# Pitch: {pitch['title']}\n"
         f"date: {date}\n"
         f"project-target: {target_of(pitch) or 'new'}\n"
-        f"status: {PENDING_STATUS}\n\n"
+        + (f"expansion-kind: {pitch['expansion_kind']}\n" if date >= EXPANSION_START else "")
+        + f"status: {PENDING_STATUS}\n\n"
         f"## The idea\n{hook}\n\n"
         f"## Why it's worth doing\n{why}\n\n"
         f"## Rough effort\n{pitch['effort']}\n\n"
@@ -258,21 +270,35 @@ def payload(date: str) -> dict[str, Any] | None:
 
 
 def cmd_brief() -> int:
-    print(f"Daily pitch docket brief ({pacific_today()}): author pitches/daily/{pacific_today()}.yaml")
-    print(f"\nRules: exactly {PITCHES_PER_DAY} pitches; >= {MIN_ZERO_LLM} with llm_at_runtime: none; each hook a "
-          f"complete idea of >= {MIN_HOOK_WORDS} words; effort small|medium|large.")
-    print("Theme: free-to-play, no LLM at runtime; sessions pre-author words and pre-generate art. Mix kinds "
-          "(games, toys, tools, story/content, art collections). Extend what ships; no SaaS filler, nothing "
-          "needing licensing review.")
-    print(f"Arcade: up to {MAX_TARGETED} of the five may be Kind Robots arcade cabinets for the Arcade tab -- set "
-          f"`target: {ARCADE_PROJECT}`. Riff on a golden-age classic's mechanics (never its name, sprites or "
-          f"levels), name the classic in the hook, and keep it achievable: intro splash, rising difficulty, a "
-          f"leaderboard score. Already queued: projects/{ARCADE_PROJECT}/games.yaml (listed below).")
-    print("Fields per pitch: slug (lowercase-hyphenated), title, hook, llm_at_runtime, effort, art_plan, first_slice"
-          f"; optional target ({ARCADE_PROJECT} for an arcade cabinet)")
-    print("\nDo NOT repeat any of these (projects, pitches, earlier daily slugs):")
-    taken = sorted(existing_slugs(exclude_materialized=False))
-    print("  " + ", ".join(taken))
+    today = pacific_today()
+    print(f"Daily pitch docket brief ({today}): author pitches/daily/{today}.yaml")
+    print(f"\nRules: exactly {PITCHES_PER_DAY} pitches; >= {MIN_ZERO_LLM} with llm_at_runtime: none; "
+          f"each hook >= {MIN_HOOK_WORDS} words; effort small|medium|large.")
+    if today >= EXPANSION_START:
+        print("EXPANSIONS ONLY: every pitch needs target: <existing-project-slug> "
+              "and expansion_kind: " + "|".join(EXPANSION_KINDS) + ".")
+        print("Pitch authored additions to existing work: Zuzu Showdown stages/fighters, "
+              "Rainbow Princess Bullet Hell ships or levels, Zuzu Gamebook chapters or "
+              "card sets, Shifting Lands decks, Emperor of Dust follower batches and "
+              "moral incidents, Arcade levels, encounters and power-ups.")
+        print("Approval is NOT permission to create a project. The next agent MUST "
+              "write a polished, scoped roadmap update in the existing target project "
+              "(tasks, milestones, dependencies, acceptance tests, art brief and "
+              "source_pitch: pitches/<date>-<slug>.md) before implementation.")
+        print("Do not choose paused/retired/finished projects unless Silas resumes them.")
+        print("Suggested active targets: " + ", ".join(
+            p for p in (
+                "zuzu-showdown", "rainbow-bullet-hell-space-princess",
+                "zuzu-gamebook", "zuzu-shifting-lands", "emperor-of-dust",
+                "kr-arcade", "zuzu-pinball", "save-the-plumber"
+            ) if (ROOT / "projects" / p).is_dir()))
+    else:
+        print(f"Legacy docket: up to {MAX_TARGETED} Arcade cabinet pitches may target "
+              f"{ARCADE_PROJECT}; other pitches can still be new projects.")
+    print("Fields per pitch: slug, title, hook, llm_at_runtime, effort, art_plan, first_slice"
+          + (", target, expansion_kind" if today >= EXPANSION_START else "; optional target"))
+    print("\nDo NOT repeat these projects/pitches/earlier slugs:")
+    print("  " + ", ".join(sorted(existing_slugs(exclude_materialized=False))))
     print("\nThen: python scripts/daily_pitches.py --check && python scripts/daily_pitches.py --materialize")
     return 0
 
@@ -325,33 +351,57 @@ def cmd_pending() -> int:
     return 0
 
 
+def expansion_roadmapped(row: dict[str, Any]) -> bool:
+    """A source-pitch marker in the target roadmap makes handoff idempotent."""
+    target = target_of(row)
+    if not target or target == "new":
+        return False
+    roadmap = ROOT / "projects" / target / "roadmap.yaml"
+    if not roadmap.is_file():
+        return False
+    return f"pitches/{row['stem']}.md" in roadmap.read_text(encoding="utf-8")
+
+
 def cmd_approved() -> int:
-    """Approved pitches that have not become a project yet (the next session scaffolds them)."""
+    """Approved pitches still needing intake (legacy) or an expansion roadmap."""
     projects = {p.name for p in (ROOT / "projects").iterdir() if p.is_dir()}
     games = arcade_game_slugs()
-    todo = [r for d in all_docket_dates() for r in _rows(d) if r["decision"] == "approved"
-            and r["slug"] not in projects and not (target_of(r) and r["slug"] in games)]
+    todo = [
+        r for d in all_docket_dates() for r in _rows(d)
+        if r["decision"] == "approved"
+        and (
+            (r["date"] >= EXPANSION_START and not expansion_roadmapped(r))
+            or (
+                r["date"] < EXPANSION_START
+                and r["slug"] not in projects
+                and not (target_of(r) and r["slug"] in games)
+            )
+        )
+    ]
     for row in todo:
         target = target_of(row)
-        if target == ARCADE_PROJECT:
+        if row["date"] >= EXPANSION_START:
+            print(f"{row['stem']}  {row['title']}  -> update EXISTING "
+                  f"projects/{target}/roadmap.yaml with a polished, actionable "
+                  f"expansion plan: milestones, tasks, dependencies, quality checks, "
+                  f"art requirements, and source_pitch: pitches/{row['stem']}.md. "
+                  "DO NOT run intake.py or create a Project row.")
+        elif target == ARCADE_PROJECT:
             print(f"{row['stem']}  {row['title']}  -> add to projects/{ARCADE_PROJECT}/games.yaml as status: queued, "
                   f"source: pitches/{row['stem']}.md, ahead of the first queued catalog game (no intake.py)")
         elif target:
             print(f"{row['stem']}  {row['title']}  -> add as a ready task in projects/{target}/roadmap.yaml "
                   f"(no intake.py)")
         else:
-            # --desc carries the hook so the project's icon/card/hero prompts describe
-            # the idea; a boilerplate --goal became the art subject of two 2026-10-03
-            # projects ("Build the approved ... pitch; see pitches/...md").
             hook = " ".join(str(row.get("hook", "")).split())
             print(f"{row['stem']}  {row['title']}  -> python scripts/intake.py {row['slug']} --kind software "
-                  f"--title {shlex.quote(str(row['title']))} --goal \"...\" --desc {shlex.quote(hook)} "
+                  f"--title {shlex.quote(str(row['title']))} --goal ... --desc {shlex.quote(hook)} "
                   f"--repo silasfelinus/kind_robots")
         mods = modifications(pitch_file(row["date"], row["slug"]))
         if mods:
-            print(f"    APPROVED WITH CHANGES (fold these into the project goal): {mods}")
+            print(f"    APPROVED WITH CHANGES (fold these into the scope): {mods}")
     if not todo:
-        print("daily_pitches: no approved pitch is waiting for a project")
+        print("daily_pitches: no approved pitch is waiting for intake or an expansion roadmap")
     return 0
 
 
