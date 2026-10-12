@@ -504,9 +504,12 @@ def main(argv=None):
         pending = [(s, lane) for s, lane in cells if not job_id_of(s, lane["key"])]
         print(f"DRY RUN: {len(pending)} of {len(cells)} cells would be submitted via {core.KR_BASE_URL}")
         for subject, lane in pending:
-            source = "data:image/png;base64," if lane["engine"] == "kontext" else None
+            source = "data:image/png;base64," if lane["engine"] in ("kontext", *VIDEO_ENGINES) else None
             body = build_request(ledger, lane, subject, source)
-            if source:
+            if lane["engine"] in VIDEO_ENGINES:
+                last = f" -> ArtImage {subject['last_image_id']}" if subject.get("last_image_id") else ""
+                print(f"    frames: ArtImage {subject.get('source_image_id')}{last}, {body['durationSeconds']}s")
+            elif source:
                 extra = f", reference ArtImage {subject['reference_image_id']}" if subject.get("reference_image_id") else ""
                 crop = f", crop {subject['source_crop']}" if subject.get("source_crop") else ""
                 crop += f", masked {subject['mask_box']} via /api/comfy/kontext/enqueue" if subject.get("mask_box") else ""
