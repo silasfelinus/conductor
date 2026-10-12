@@ -865,7 +865,7 @@ tasks:
     status: done
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-12T04:41:35Z'
-    updated: '2026-10-12T09:22:00Z'
+    updated: '2026-10-12T09:31:09Z'
     passes: 1
     stakes: reversible
     depends_on: t-045
@@ -874,6 +874,8 @@ tasks:
       2026-10-11 PT review: kind_robots#3558 remains unmerged. All 28 head checks passed/allowed skips and npm run test:arcade-engine passed (14 cabinet suites), but a direct behavior probe reproduced lost best-time persistence after New Wash from a valid saved room checkpoint. See PR comment https://github.com/silasfelinus/kind_robots/pull/3558#issuecomment-6115161917. Quality rejection, pass 1; reuse the existing implementation branch, repair persistence and verify reload. No human action required.
 
       Kind Robots Sink Suds PR #3558 merged as 0d0f24020ec4f385431b8babd44d912e267308de after all 27 final-head workflow checks passed. The previously documented New Wash to Squeaky Clean persistence defect was fixed and a reload regression case added. This concludes depth slice 4 on main; a self-hosted deployment is not established by the merge.
+
+      Reviewer verified the repaired merged Sink Suds result at 0d0f24020ec4f385431b8babd44d912e267308de, original final head 44d84f3191733fafde053ed5b9543a10eba8d879, all 29 completed head check runs without failure. The independent original saved-checkpoint New Wash -> Squeaky Clean -> finish -> withSave/JSON/sanitizeSaves -> reload probe now preserves the new best, old time, medals, reached rooms, golden soap, skin and clear, and resets only the campaign checkpoint. Repair diff against the reviewed old head inspected. Keep passes 1 as historical quality rejection; remove obsolete retry_context through the focused reviewed closeout PR. This adds missing completion learning without duplicating implementation or a claim. No deployed runtime or 40-50 minute human campaign target is inferred.
     implementation_pr: 'silasfelinus/kind_robots#3558'
     retry_context: 'pass 1 failed (quality): kind_robots#3558 New Wash clears saveData; Squeaky Clean completes and records an in-memory best time but returns null save. Preserve/initialize progress outside campaign and add New Wash -> Squeaky Clean -> finish -> reload regression coverage before merging. Reuse worker/kr-arcade-t-046.'
 
