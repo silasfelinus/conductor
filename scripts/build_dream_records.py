@@ -143,6 +143,11 @@ def _canonical_proposal_errors(proposal: Optional[dict]) -> list[str]:
     """Return violations of the exact version-2 six-asset input contract."""
     if not isinstance(proposal, dict):
         return ["missing or invalid proposal-data block"]
+    if proposal.get("bundle_version") == 3:
+        # Fail CLOSED until the nine-record transaction, Facet assignment and
+        # ArtJob handoff ship together. The old writer would silently attach
+        # eight Zuzu-world entities to an unrelated independent vibe.
+        return ["v3 nine-asset proposals require the upgraded single writer; no live writes permitted"]
     errors: list[str] = []
     facets = proposal.get("seed_facets")
     if not isinstance(facets, dict) or int(facets.get("version") or 0) < 2:
