@@ -36,6 +36,10 @@ except ImportError:
     import consume_art_queue_core as _core
 
 _core_entry_to_job = _core.entry_to_job
+try:
+    from scripts.dream_sdxl_checkpoint_art import ENGINE as ZUZU_CHECKPOINT_ENGINE, make_checkpoint_job
+except ImportError:
+    from dream_sdxl_checkpoint_art import ENGINE as ZUZU_CHECKPOINT_ENGINE, make_checkpoint_job
 DAILY_DREAM_PRIORITY = 200
 DAILY_DREAM_ENTITY_TYPES = {"dream", "character", "reward", "scenario", "bot"}
 
@@ -124,7 +128,10 @@ def _enrich_daily_dream_job(entry: dict[str, Any], job: dict[str, Any]) -> None:
     entity_field = str(entry.get("entity_field") or "imagePath").strip() or "imagePath"
 
     job["priority"] = DAILY_DREAM_PRIORITY
-    job["projectSlug"] = "dream-cycle"
+    project_target = str(entry.get("project_target") or "").strip()
+    if project_target and project_target not in {"zuzu-gamebook", "emperor-of-dust"}:
+        raise ValueError(f"unsupported Daily Dream project_target: {project_target!r}")
+    job["projectSlug"] = project_target or "dream-cycle"
     if request_id:
         job["idempotencyKey"] = request_id
 
@@ -141,6 +148,7 @@ def _enrich_daily_dream_job(entry: dict[str, Any], job: dict[str, Any]) -> None:
         "id": request_id or None,
         "source": "dream-cycle",
         "label": label or None,
+        "projectTarget": project_target or None,
         "targetRepo": target_repo or None,
         "imagePath": image_path or None,
         "sourceUrl": source_url or None,
@@ -162,7 +170,9 @@ def entry_to_job(entry: dict[str, Any]):
     # not gets a fresh random seed from _core.resolve_seed, which is what every
     # lane now wants (see the module docstring).
     normalized = dict(entry)
-    job = _core_entry_to_job(normalized)
+    job = (make_checkpoint_job(normalized, _core)
+           if normalized.get("engine") == ZUZU_CHECKPOINT_ENGINE
+           else _core_entry_to_job(normalized))
     if _is_daily_dream(normalized):
         _enrich_daily_dream_job(normalized, job)
     else:
