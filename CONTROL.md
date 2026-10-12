@@ -667,3 +667,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Direction:** A calm puzzle toy: fold a paper boat from sail, hull and cargo choices, then race it down a pre-painted stream against simple rival boats using deterministic current rules; no model at runtime.
 **Notes:**
 - (your notes)
+
+### kind-sliding-tile-gallery  (software)
+**Direction:** A free, no-LLM sliding-tile puzzle toy: solved boards reveal pre-generated Kind Robots art with pre-written captions, a local keepsake wall, and a daily seeded board.
+**Notes:**
+- (your notes)
