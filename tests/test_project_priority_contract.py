@@ -105,7 +105,13 @@ def test_butterfly_gallery_leads_art_archive_and_both_are_high():
 
 
 def test_silas_october_high_priority_projects_have_high_registry_priority():
-    """Queue order alone is insufficient: UI/projection also reads the priority field."""
+    """Keep Silas's priority call separate from his later acceptance decision.
+
+    On 2026-10-12 Silas approved kind-pinball/t-016: "Yes, it’s great!"
+    The workspace lifecycle command was committed as df952cda3, marking the
+    project finished. Its high priority and the CONTROL steering band remain
+    unchanged; the other three projects still have active development work.
+    """
     overrides_raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     entries = {
         item.get("slug"): item
@@ -113,5 +119,15 @@ def test_silas_october_high_priority_projects_have_high_registry_priority():
         if isinstance(item, dict) and item.get("slug")
     }
     for slug in ("kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"):
-        assert entries[slug]["status"] == "active"
+        expected_status = "finished" if slug == "kind-pinball" else "active"
+        assert entries[slug]["status"] == expected_status
         assert entries[slug]["priority"] == "high"
+
+    # A finished lifecycle must retain the concrete human finish-line approval.
+    roadmap = yaml.safe_load(
+        (ROOT / "projects" / "kind-pinball" / "roadmap.yaml").read_text(encoding="utf-8")
+    )
+    finish_line = next(task for task in roadmap["tasks"] if task["id"] == "t-016")
+    assert finish_line["gate_human"] is True
+    assert finish_line["approved_by_human"] is True
+    assert "Yes, it’s great!" in finish_line["note"]
