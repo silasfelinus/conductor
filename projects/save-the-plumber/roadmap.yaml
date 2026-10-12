@@ -1,0 +1,249 @@
+# Save the Plumber — original 8-world platformer campaign, Silas 2026-10-11 PT.
+project: save-the-plumber
+kind: software
+autonomous: true
+goal: >-
+  Build a full original browser platforming adventure in the Kind Robots
+  Arcade in which a randomly generated young adult woman sets out to
+  rescue her plumber boyfriend. Eight visually distinct authored worlds
+  with at least four substantial stages apiece (32 total), eight world
+  bosses, hidden exits and rewards, original memorable foes, responsive
+  platforming, layered levels, meaningful powerups and abilities,
+  varied traversal and puzzle-combat encounters, checkpoints, secrets,
+  introductory sequence, world interludes, ending and credits. Target
+  campaign length and challenge comparable to the first two Super Mario
+  Bros games, with more original world and enemy variety. Reuse Arcade
+  plumbing where appropriate; no runtime LLM or borrowed Nintendo IP.
+  Completion requires whole-campaign play, fairness metrics, visual
+  acceptance and Silas's hands-on verdict.
+notes_from_silas: |
+  2026-10-11 PT: "Save the Plumber. A riff on super Mario bros 1 and 2.
+  Play as a random young woman going through 8 worlds to save her
+  plumber boyfriend. Again, equivalent length and challenge to
+  original Mario bros, but with more variety and unique enemies."
+
+  Treat the heroine as a generated young ADULT woman, with coherent
+  appearance/name established once per run (not shuffled per level).
+  Her playable silhouette and hitbox remain consistent and legible;
+  appearance is cosmetic, never an unwanted randomized disadvantage.
+  Inspired by the originals' kinetic precision, secrets and
+  enemy-toy creativity, but all cast, visual assets, sounds,
+  mechanics combinations, stage layouts and world writing are original.
+  This is an authored campaign, not randomly generated obstacle tiles
+  or an endless score chase. Show private /admin/save-the-plumber
+  in requiredRole ADMIN nav, then public /play and Arcade only with
+  explicit publication approval. Source work and internal art may begin.
+milestones:
+  - id: m1
+    title: "SHAPE — full 8-world map, mechanics and original art bible"
+    weight: 15
+    status: in-progress
+  - id: m2
+    title: "PLATFORMING CORE — movement, collisions, enemies and progression"
+    weight: 20
+    status: not-started
+  - id: m3
+    title: "CAMPAIGN — 32 authored levels and eight unique bosses"
+    weight: 40
+    status: not-started
+  - id: m4
+    title: "PRESENTATION — cinematic intro, music, layered artwork and finale"
+    weight: 15
+    status: not-started
+  - id: m5
+    title: "BALANCE — complete QA, secrets, responsiveness and approval"
+    weight: 10
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Register project and author detailed design and world bibles"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-11'
+    note: >-
+      Initial conductor registration plus DESIGN-BRIEF.md, WORLD-ATLAS.md and
+      three project-art requests. Planning only; no gameplay or generated
+      images asserted as live.
+  - id: t-002
+    milestone: m1
+    title: "Write 32-level beat sheets, enemy roster and storyboard art prompts"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      World-by-world authored maps/beat sheets from WORLD-ATLAS.md:
+      32 unique level objectives and diagrams, 40+ distinct enemy
+      behaviors, eight readable boss movesets, four-stage pacing,
+      secrets, rewards, original soundtrack motifs, intro, chapter
+      and ending illustrations. Plan collision/exits before painting.
+      Use internal art pipeline and verify delivered assets.
+  - id: t-003
+    milestone: m2
+    title: "Build private /admin Arcade shell and original platforming physics"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Inspect existing Arcade platformer and its adapters before adding
+      code. Create requiredRole ADMIN discoverable tab at
+      /admin/save-the-plumber, isolated game state/score namespace,
+      fixed-step jump/fall/coyote-time and buffered input, adjustable
+      acceleration, camera/colliders, debug replay and mobile/gamepad
+      control maps. No premature public /play route.
+  - id: t-004
+    milestone: m2
+    title: "Implement run-stable heroine generator, animations and opening"
+    status: waiting
+    depends_on: [t-003]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Seed once-per-new-run a young-adult protagonist appearance and name
+      from authored combinations; consistent collision bounds and
+      silhouettes, optionally reroll during new-game setup. Represent
+      the kidnapped plumber boyfriend as an original character with
+      agency in the cutscenes. Persist seed across save/resume.
+  - id: t-005
+    milestone: m2
+    title: "Implement enemy interaction, held objects and powerup systems"
+    status: waiting
+    depends_on: [t-003]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Patrol/chase/ambush/flyer AI, jump/throw/carry interaction with
+      original enemies, moving platforms, slopes, ladders/lifts, switches,
+      destructibles, three meaningful powerup tracks, damage/knockback,
+      invulnerability frames, lives/continues and checkpoint semantics.
+      Source-verified deterministic collision and softlock tests.
+  - id: t-006
+    milestone: m3
+    title: "Build World 1: four complete garden/pipeworks levels and boss"
+    status: waiting
+    depends_on: [t-004, t-005]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Four substantial and independently finishable authored stages
+      with ramping jumps, enemy combinations, hidden alternate room
+      and a fully attackable boss. This is the vertical slice quality bar:
+      no reused 15-second procedural platform shuffle.
+  - id: t-007
+    milestone: m3
+    title: "Build Worlds 2–3: eight new levels and two bosses"
+    status: waiting
+    depends_on: [t-006]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Tideglass Marina and Lantern Orchard: water currents and floating
+      platforms, overhead fruit levers and reversals; authored 2-1 to
+      3-4 levels, distinct foes, alternate exits and unique boss
+      patterns, escalating checkpoint spacing.
+  - id: t-008
+    milestone: m3
+    title: "Build Worlds 4–5: eight new levels and two bosses"
+    status: waiting
+    depends_on: [t-007]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Clockwork Fair and Cloudrail Commons: conveyor toys, parades,
+      lift timing and airship movement, puzzle/combat variety,
+      multiple secret routes, originally authored boss fights.
+  - id: t-009
+    milestone: m3
+    title: "Build Worlds 6–7: eight late-game levels and two bosses"
+    status: waiting
+    depends_on: [t-008]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Crystal Underworks and Night Market Rooftops: reflecting
+      hazards, echo paths, mirrored doors, rooftop chase,
+      vertical platform challenge with growing but fair mastery;
+      challenge derives from telegraphed mechanics, not cheap hits.
+  - id: t-010
+    milestone: m3
+    title: "Build World 8: four final levels, fortress and rescue finale boss"
+    status: waiting
+    depends_on: [t-009]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Eight-world map culminates at the Stardrain Citadel;
+      World 8 has its own four authored stages, multiple mechanical
+      callbacks, legible final boss and real playable rescue.
+      Distinct victory and continued-play/secret ending paths.
+  - id: t-011
+    milestone: m3
+    title: "Finish map progression, lives, secrets, challenge and save system"
+    status: waiting
+    depends_on: [t-006, t-010]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      World map, exits/warps, collectibles, achievements, secret rooms,
+      coin-equivalent reward economy, save/continue, difficulty assists,
+      score and speedrun splits. Every planned secret is mechanically
+      discoverable in a blind run; no impossible dead-end levels.
+  - id: t-012
+    milestone: m4
+    title: "Produce illustrated world art, enemy animation, sound and cinematics"
+    status: waiting
+    depends_on: [t-002, t-006]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Rich original illustrated world/background/foreground layers,
+      heroine animation states, bosses and props; evocative palette
+      families and art-readable collision planes, original music/sfx,
+      skippable intro and world transitions, rescue/ending credits,
+      subtitles and reduced-motion support. Track ArtJob IDs and
+      delivered asset URLs, never call queued art done.
+  - id: t-013
+    milestone: m5
+    title: "Whole-campaign playtests, fairness and device verification"
+    status: waiting
+    depends_on: [t-010, t-011, t-012]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Verify all 32 stages on deterministic scripted and manual
+      keyboard/gamepad/touch runs, save/migration/replay,
+      bosses and secrets, bounded losses/retries, no impossible
+      jumps, checkpoints, 375/768/1440 visual captures, frame
+      budget and loading. Report actual first-clear completion
+      time and difficulty, not assumed Mario parity.
+  - id: t-014
+    milestone: m5
+    title: "Human-approved public Arcade release and final game-quality verdict"
+    status: waiting
+    depends_on: [t-013]
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    note: >-
+      Present verified full private playthrough, world map, secret
+      checklist, captured final fight, art/controls/device evidence,
+      score and full-campaign timing. Public /play registration,
+      Arcade cabinet placement and publication require Silas's
+      explicit decision; separate aesthetic/gameplay acceptance
+      follows hands-on play. Merge is not a production deploy.
