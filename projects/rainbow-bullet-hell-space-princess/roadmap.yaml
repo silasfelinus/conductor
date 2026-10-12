@@ -213,6 +213,15 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Produce opening, between-stage dialogue, endings, sound and score"
+    story_contract: >-
+      Author and implement Lilt-7, the mothership's always-present synthetic
+      liaison, including solo pilot dialogue, 15 composition-specific banter
+      and reveal tracks, six rescue flags, and cinematic endings composed from
+      final choice plus party-specific epilogue. Use authored offline script
+      data and a deterministic 4-bit pilot-set mask; test all masks and
+      player counts, subtitles/skip/replay, combat-safe dialogue priority,
+      reconnect synchronization, and Lilt's agency. See
+      COMMS-AND-ENDINGS-BIBLE.md. Do not mark done for a document alone.
     status: waiting
     depends_on: [t-002, t-009]
     owner: null
