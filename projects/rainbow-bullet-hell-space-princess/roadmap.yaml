@@ -86,21 +86,22 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Register private /admin Arcade prototype and isolated engine shell"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Inspect current Arcade renderer, games registry, input, audio and score APIs first. Add discoverable requiredRole ADMIN tab and private route; canvas/WebGL layer, pause, remappable input and gamepad support; no public /play exposure or published cabinet yet. Keep deterministic simulation separate from renderer and menu.
 
       Private art-first flight-deck page, admin tutorial metadata, hidden Arcade registry preview, 1-4 seat deterministic Canvas 2D flight simulator, gameplay contract and placement have been committed for PR review. Eight stages and online multiplayer remain later roadmap tasks.
+
+      Merged kind_robots PR #3563 at deaab2f016fb2fcc13e199bef633cb26513eb343; 34 checks succeeded on f48df1f2552403b161eb31956215ba39f2bf81d3. Complete eight-file diff and reviews inspected. Actual Vue page and engine rendered in isolated Chromium at 390/768/1440px with no overflow and non-admin cabinet hidden. Shared cabinet/auth integration and full campaign acceptance remain later work. Tutorial body repaired through real tab resolver. Merge only, no deployment or public launch.
     claimed_by: 2026-10-12T005740Z-rainbow-t003-p7nk
     claimed_at: '2026-10-12T00:57:40Z'
-    updated: '2026-10-12T01:03:20Z'
+    updated: '2026-10-12T03:36:00Z'
   - id: t-004
     milestone: m2
     title: "Implement ship movement, hitboxes, bullets, shields and weapons"
-    status: waiting
+    status: ready
     depends_on: [t-003]
     owner: null
     passes: 0
@@ -251,6 +252,7 @@ tasks:
       Await Silas's explicit approval for the public /play and Arcade
       cabinet, outward-facing promotion/deployment, and separate aesthetic
       acceptance. Do not silently mark live when merged to GitHub.
+
   - id: t-015
     milestone: m2
     title: "Prove private flight-deck help and controls through the actual shared cabinet"
