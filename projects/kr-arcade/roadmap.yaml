@@ -997,11 +997,11 @@ tasks:
   - id: t-050
     milestone: m8
     title: "Butterfly Joust depth slice 4: Medals and the endless pond"
-    status: claimed
+    status: done
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-12T04:45:33Z'
-    updated: '2026-10-12T04:45:33Z'
+    updated: '2026-10-12T05:28:10Z'
     passes: 0
     stakes: reversible
     depends_on: t-049
@@ -1013,6 +1013,14 @@ tasks:
       2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
       improvements, they should not just be thin veneers of the old games. But newer, better, even more
       awesome."
+
+      Merged as kind_robots#3575: three medals per tourney wave (Unbonked, Air Ace, Quick
+      Lance), a medal board, the Endless Pond leaderboard run and the new registry blurb and
+      howTo. A save review before merge found the clear was lost when all five petals sent the
+      run into the Rainbow Lists (a slice-3 bug), and lives above 99 made the reader reject
+      the whole profile; both are fixed with round-trip tests. Butterfly Joust's m8 depth pass
+      is complete.
+    implementation_pr: 'silasfelinus/kind_robots#3575'
 
   - id: t-051
     milestone: m8
