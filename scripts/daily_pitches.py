@@ -272,7 +272,7 @@ def payload(date: str) -> dict[str, Any] | None:
 def cmd_brief() -> int:
     today = pacific_today()
     print(f"Daily pitch docket brief ({today}): author pitches/daily/{today}.yaml")
-    print(f"\\nRules: exactly {PITCHES_PER_DAY} pitches; >= {MIN_ZERO_LLM} with llm_at_runtime: none; "
+    print(f"\nRules: exactly {PITCHES_PER_DAY} pitches; >= {MIN_ZERO_LLM} with llm_at_runtime: none; "
           f"each hook >= {MIN_HOOK_WORDS} words; effort small|medium|large.")
     if today >= EXPANSION_START:
         print("EXPANSIONS ONLY: every pitch needs target: <existing-project-slug> "
@@ -297,9 +297,9 @@ def cmd_brief() -> int:
               f"{ARCADE_PROJECT}; other pitches can still be new projects.")
     print("Fields per pitch: slug, title, hook, llm_at_runtime, effort, art_plan, first_slice"
           + (", target, expansion_kind" if today >= EXPANSION_START else "; optional target"))
-    print("\\nDo NOT repeat these projects/pitches/earlier slugs:")
+    print("\nDo NOT repeat these projects/pitches/earlier slugs:")
     print("  " + ", ".join(sorted(existing_slugs(exclude_materialized=False))))
-    print("\\nThen: python scripts/daily_pitches.py --check && python scripts/daily_pitches.py --materialize")
+    print("\nThen: python scripts/daily_pitches.py --check && python scripts/daily_pitches.py --materialize")
     return 0
 
 
@@ -395,7 +395,7 @@ def cmd_approved() -> int:
         else:
             hook = " ".join(str(row.get("hook", "")).split())
             print(f"{row['stem']}  {row['title']}  -> python scripts/intake.py {row['slug']} --kind software "
-                  f"--title {shlex.quote(str(row['title']))} --goal \\"...\\" --desc {shlex.quote(hook)} "
+                  f"--title {shlex.quote(str(row['title']))} --goal ... --desc {shlex.quote(hook)} "
                   f"--repo silasfelinus/kind_robots")
         mods = modifications(pitch_file(row["date"], row["slug"]))
         if mods:
