@@ -694,7 +694,7 @@ tasks:
   - id: t-038
     milestone: m8
     title: "Rescue Rally depth slice 4: Co-op and the long rally"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-037
@@ -702,7 +702,9 @@ tasks:
       CABINETS.md section 1, Rescue Rally (Robotron riff), slice 4 of 4: Co-op and the long rally. The upgrade is "Citywide Reboot". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rescue-rally). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       Reviewer reserved kind_robots#3581 with marker conductor-cycle-20261012T065000Z-rally-r9k2. Current head ea7fba57b6ea2ec5de895077271a45e272debe3a has all 28 checks completed green. Complete eight-file PR diff inspected, independently passed 20 cabinet suites including all five Rescue Rally suites, and actual menu/medal-board/co-op/revive renders fit 390/768/1440 widths. Parent t-037 was verified done through the task-event processor; no duplicate implementation. Await final fresh reviews/comments/head and merge using expected head SHA.
-    updated: '2026-10-12T06:56:00Z'
+
+      Merged kind_robots#3581 at a093d9a69ab7a58b426cb00ef7e23cfd75c22df2 using expected head ea7fba57b6ea2ec5de895077271a45e272debe3a after all 28 head checks completed green, required ruleset checks passed, and no blocking review remained. Full eight-file diff inspected; independent 20-cabinet suite and save round trips passed. Actual menu, full medal board, co-op and revive renders fit 390/768/1440 widths. Merge preserves Joust's separately merged registry. Catalog/TALKBACK and one bounded consumer-control kaizen follow. Fixture state is staged; full-site, deployment and human campaign duration are not claimed.
+    updated: '2026-10-12T07:50:12Z'
 
   - id: t-039
     milestone: m8
