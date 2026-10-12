@@ -13,6 +13,18 @@ It now has two clearly separated responsibilities:
 1. maintain the rolling Daily Dream proposal, creation, art, and digest pipeline;
 2. coordinate delegated, non-dream creation types whose real work lives in another project, such as coloring books.
 
+## Current fourteen-asset production policy (2026-10-13 PT)
+
+**Exactly six assets** still form the original random Daily Dream, with the
+original vibe and five related creations preserving their unique shared style.
+New v3 proposals also provide eight Zuzu-world assets, two each of locations,
+characters, rewards and moral-choice scenarios, split across Gamebook and
+Emperor of Dust. Each extra uses independent Facets and catalog-verified
+Arthemy/Illustrious renderers. The sole daily dream object writer remains
+`scripts/build_dream_records.py`; the morning Daily Digest is the only writer.
+The older six-asset product description below explains the six linked originals,
+not the total output of a new daily v3 build.
+
 ## Daily Dream product
 
 A dated Daily Dream proposal contains exactly six assets:

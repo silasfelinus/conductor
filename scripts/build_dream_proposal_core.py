@@ -919,7 +919,7 @@ def main(argv=None) -> int:
         backlog=unbuilt_backlog()
         if not backlog:
             print("Dream docket is EMPTY: nothing is queued to build. "
-                  "Run --brief, author the six-asset JSON, then pass it to --from-json.")
+                  "Run --brief, author the versioned Daily Dream JSON, then pass it to --from-json.")
             return 1
         span=f"{backlog[0]}..{backlog[-1]}" if len(backlog) > 1 else backlog[0]
         note=("" if len(backlog) >= TARGET_BUFFER_DAYS
@@ -936,7 +936,10 @@ def main(argv=None) -> int:
             proposal=json.loads(raw)
         except (OSError,json.JSONDecodeError) as error:
             print(f"Could not read proposal JSON: {error}",file=sys.stderr); return 1
-        proposal.setdefault("seed_facets",facet_seed_plan(day))
+        # Fill only when absent. setdefault(..., facet_seed_plan(day)) eagerly
+        # drew a legacy six-slot plan even for v3, defeating --brief authors.
+        if "seed_facets" not in proposal:
+            proposal["seed_facets"] = build_brief(day)["seed_facets"]
         contract_problems=creative_contract_complaints(proposal,day)
         if contract_problems:
             print("Creative contract failed (same checks as CI's check_dream_creative_contract.py):",

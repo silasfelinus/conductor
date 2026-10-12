@@ -37,7 +37,7 @@ At the start of every session, before responding to any task, run a conductor sw
    fewer than 5 (`TARGET_BUFFER_DAYS`) unbuilt proposals, author exactly ONE this session with the
    `--brief` → `--from-json` recipe — never more than one per session; a full docket means leave it alone,
    and a day with no proposal dated today is normal. Exit 1 means the docket is **empty**: author one now.
-   The authoring contract (six assets, preserve `seed_facets`, Scenario last, complete-sentence card copy
+   The authoring contract (six linked originals plus eight extra Zuzu assets from 2026-10-13 PT, preserve `seed_facets`, Scenario last, complete-sentence card copy
    per `scripts/dream_prose_quality.py`) and the history behind it are in `docs/sweep-checks.md` (Step 7)
    — read that section before authoring.
 

@@ -2,6 +2,25 @@
 
 This is the canonical end-to-end contract for the Daily Dream. There is one object-creation path and one ordered morning cycle.
 
+## 2026-10-13 PT: fourteen-asset cutover (current)
+
+The existing **sole object writer** remains `scripts/build_dream_records.py`.
+The original Daily Dream continues as a complete six-asset linked mini-world
+(vibe, its location, character, ITEM/SKILL rewards and scenario, one coherent
+visual style). In **addition**, version-3 proposals create two Zuzu locations,
+two characters, two rewards and two consequential-choice scenarios, one in each
+category for Zuzu Gamebook and Emperor of Dust, with independent catalog Facets
+and actual Arthemy/Illustrious SDXL checkpoint ArtJobs.
+
+Exactly **14 distinct record ArtJobs** are staged and their targets retained in
+`built-data`. One transaction, one rollback policy, one morning workflow;
+historic built six-asset proposals stay readable and immutable. Future-dated
+unbuilt six-asset buffered files remain idea inventory, without being erased
+or silently promoted to a partial 14-asset run. The original Daily Dream keeps
+its Krea art lane and Zuzu receives separate provenance and digest headings.
+The operational ordering below is unchanged; old references to six requests
+in its historical sections describe the version-2 lane only.
+
 ## The path
 
 ```text

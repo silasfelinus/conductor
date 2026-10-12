@@ -3,6 +3,18 @@
 **Current contract:** deterministic `seed_facets` version 2
 **Generator:** `scripts/build_dream_proposal.py --brief`
 
+## Versioned seed policy, effective 2026-10-13 PT
+
+The original Dream's six Facet slots, genre-contrast system and history-aware
+entropy rotation stay in place. Newly authored v3 proposals add eight separate
+`zuzu_*` seed slots drawn deterministically from catalog-backed THEME, SETTING,
+ROLE and MATERIAL Facets that are **not** the original world's seeds. The
+plan records `seed_facets.version: 3` and checks all fourteen slots before
+any model writes. Original historic v2 proposals still use
+`seed_facets.version: 2`. Do not style the Zuzu creations with the day's
+random vibe. The older version-2 paragraphs below remain descriptions of
+the original linked six-asset creative component.
+
 ## Source of creative constraints
 
 The author does not manually invent a separate `creative_seeds` block for a dated Daily Dream. The proposal helper deterministically selects and assigns live Facets for the Pacific date. The author must preserve the returned `seed_facets` unchanged when writing the proposal with `--from-json`.

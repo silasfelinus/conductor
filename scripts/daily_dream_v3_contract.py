@@ -152,7 +152,10 @@ def validate_v3(proposal: Any) -> list[str]:
 
     if isinstance(seed, dict) and seed.get("link_zuzu_to_vibe"):
         errors.append("Zuzu extras must not be linked to the daily vibe")
-    if zuzu.get("world_dream_id") or zuzu.get("dream_id") or zuzu.get("dreamIds"):
+    if any(zuzu.get(field) for field in (
+        "world_dream_id", "dream_id", "dreamIds", "dreamId", "worldDreamId",
+        "parentDreamId", "fromDreamId", "toDreamId",
+    )):
         errors.append("Zuzu extras must not inherit daily vibe Dream relations")
 
     for lane, source, expected in (
@@ -184,7 +187,17 @@ def validate_v3(proposal: Any) -> list[str]:
                         errors.append(f"{where} must target zuzu-gamebook or emperor-of-dust")
                     if _checkpoint(row) not in CHECKPOINT_FAMILIES:
                         errors.append(f"{where} must use Arthemy or Illustrious")
-                    if row.get("linked_to_vibe") or row.get("dreamIds"):
+                    # Reject ALL inbound relations on external author input,
+                    # not merely dreamIds. The sole supported Zuzu relation is
+                    # generated within the transaction: scenario -> its newly
+                    # created Zuzu location, never to the random PITCH.
+                    forbidden = (
+                        "dreamIds", "dreamId", "dream_id", "dream_ids",
+                        "world_dream_id", "worldDreamId", "parentDreamId",
+                        "fromDreamId", "toDreamId", "location_dream_id",
+                        "linked_to_vibe",
+                    )
+                    if any(row.get(field) for field in forbidden):
                         errors.append(f"{where} must not link to the daily vibe")
             if lane == "zuzu" and sorted(owners) != sorted(PROJECT_TARGETS):
                 errors.append(f"zuzu.{kind} must give exactly one asset to each project")

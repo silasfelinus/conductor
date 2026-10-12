@@ -41,6 +41,13 @@ def _proposal_is_current_contract(text: str) -> bool:
         return False
     if version < CREATIVE_ENTROPY_VERSION:
         return False
+    fm = _frontmatter_from_text(text)
+    day = str(fm.get("proposal_date") or fm.get("created") or "")
+    if _v3_day(day) and proposal.get("bundle_version") != 3:
+        # Preserve earlier buffered six-asset manuscripts AS FILES, but don't
+        # count them as a post-cutover complete daily authoring slot. A fresh
+        # 14-asset proposal for that date is allowed; neither is overwritten.
+        return False
     return not validate_proposal(proposal)
 
 
@@ -133,6 +140,87 @@ def remote_proposal_for(day: str) -> str | None:
     except OSError:
         pass
     return None
+
+
+# The old six-slot Facet planner is retained verbatim for historical proposals.
+# Newly authored Pacific dates get eight INDEPENDENT project Facet assignments.
+try:
+    from daily_dream_v3_authoring import (
+        extend_brief as _extend_zuzu_brief,
+        is_v3_day as _v3_day,
+    )
+    from daily_dream_v3_contract import validate_v3 as _validate_v3_bundle
+except ModuleNotFoundError:
+    from scripts.daily_dream_v3_authoring import (
+        extend_brief as _extend_zuzu_brief,
+        is_v3_day as _v3_day,
+    )
+    from scripts.daily_dream_v3_contract import validate_v3 as _validate_v3_bundle
+
+_six_asset_build_brief = build_brief
+_six_asset_validate_proposal = validate_proposal
+
+
+def build_brief(day: str | None = None, catalog=None) -> dict[str, Any]:
+    brief = _six_asset_build_brief(day, catalog)
+    if not _v3_day(str(brief["proposal_date"])):
+        return brief
+    # Reuse the supplied catalog when available, otherwise fetch the same
+    # registered taxonomy data the original planner already consults.
+    zuzu_catalog = catalog if catalog is not None else fetch_facet_catalog()[0]
+    return _extend_zuzu_brief(brief, zuzu_catalog)
+
+
+def validate_proposal(proposal: Any) -> list[str]:
+    errors = _six_asset_validate_proposal(proposal)
+    if isinstance(proposal, dict):
+        if proposal.get("bundle_version") == 3:
+            errors.extend(_validate_v3_bundle(proposal))
+        elif proposal.get("zuzu_assets"):
+            errors.append("zuzu_assets require bundle_version 3")
+    return errors
+
+
+_original_render_markdown = render_markdown
+
+
+def render_markdown(p: dict[str, Any], day: str) -> str:
+    base = _original_render_markdown(p, day)
+    if p.get("bundle_version") != 3:
+        return base
+    extras = p["zuzu_assets"]
+    lines = [
+        "## Eight additional Zuzu-world creations (independent of this Dream)",
+        "",
+        "These creations belong to Zuzu Gamebook or Emperor of Dust. They do NOT",
+        "inherit today's original Dream vibe, location, links, or visual style.",
+        "",
+    ]
+    for kind, titlekey in (
+        ("locations", "title"), ("characters", "name"),
+        ("rewards", "name"), ("scenarios", "title"),
+    ):
+        lines.append(f"### Zuzu {kind.title()} (2)")
+        for row in extras[kind]:
+            label = str(row[titlekey])
+            project = str(row["project_target"])
+            checkpoint = str(row["checkpoint_family"])
+            lines.append(f"- **{label}** [{project} / {checkpoint}]")
+            for key, val in row.items():
+                if key in (titlekey, "project_target", "checkpoint_family", "choices"):
+                    continue
+                lines.append(f"  - {key.replace('_', ' ').title()}: {val}")
+            for choice in row.get("choices") or []:
+                lines.append(
+                    f"  - **Choice {choice['label']}**: {choice['tradeoff']} "
+                    f"Immediate: {choice['immediate_consequence']} "
+                    f"Later: {choice['later_consequence']}"
+                )
+        lines.append("")
+    anchor = "## Notes from Silas"
+    if anchor not in base:
+        raise ValueError("proposal template missing Notes from Silas")
+    return base.replace(anchor, "\\n".join(lines) + anchor, 1)
 
 
 if _WRAPPER_NAME == "__main__":

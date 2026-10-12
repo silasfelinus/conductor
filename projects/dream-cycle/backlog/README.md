@@ -4,6 +4,17 @@ This folder is the shared steering surface for daily proposals, legacy dream ide
 
 ## Three kinds of file
 
+### Daily v3 cutover and preserved buffer
+
+From 2026-10-13 PT, newly authored proposals contain the original complete
+six linked Daily Dream outputs **plus eight separate Zuzu Gamebook/Emperor
+of Dust assets** with independently registered Facets and Arthemy/Illustrious
+checkpoint selection. Old future-dated six-asset drafts stay in the repository
+as **idea inventory**, are not deleted or silently rebuilt, and do not count
+toward a newly required v3 authoring slot for that date. Already-built v2
+records remain unchanged. The historical paragraph below refers to the six
+linked originals retained in both versions.
+
 ### Dated daily proposals
 
 Files with `proposal: true` and `proposal_date` are the only files eligible to create daily-dream database objects. They contain exactly one vibe, one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario.

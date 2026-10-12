@@ -167,11 +167,14 @@ def test_offline_outline_validation_accepts_revised_v3(tmp_path):
     assert any("moral choices" in f.detail for f in preflight.check_outline(path))
 
 
-def test_old_live_writer_fails_closed_on_unimplemented_v3():
+def test_upgraded_single_writer_validates_v3_before_live_writes():
     import scripts.build_dream_records as builder
 
-    errors = builder._canonical_proposal_errors(example_v3())
-    assert any("upgraded single writer" in error for error in errors)
+    proposal = example_v3()
+    assert builder._canonical_proposal_errors(proposal) == []
+    proposal["zuzu_assets"]["scenarios"][0]["choices"] = []
+    errors = builder._canonical_proposal_errors(proposal)
+    assert any("moral choices" in error for error in errors)
 
 
 def test_fourteen_record_builder_keeps_world_links_separate(monkeypatch):
