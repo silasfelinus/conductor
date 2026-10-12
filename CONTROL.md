@@ -16,7 +16,7 @@ happened. Don't edit it; edit here.
 reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
-**Priority order this week:** kind-pinball → zuzu-lair → kr-arcade → zuzu-showdown → cthulhuquarium →
+**Standing creative direction (Silas, 2026-10-11 PT):** Across character-led Kind Robots projects, design casts with a genuine range of body types, skin tones, racial and cultural backgrounds, gender identities and expression. Diversity is not a casting checklist or a set of personality stereotypes. Write distinctive, fully realized people with motivations, flaws, friendships, humor, expertise, agency and lived-in visual design. Preserve strong existing canon and art; reconcile designs rather than mechanically replacing them to satisfy labels. Accessibility and fairness require that a person's body/identity does not imply game-balance penalties. A focused cast may only have a few people, but the *world* should feel populated by different kinds of people. Specific project cast bibles decide individual characters.\n\n**Priority order this week:** kind-pinball → zuzu-lair → kr-arcade → zuzu-showdown → cthulhuquarium →
 kind-economy → butterfly-gallery → art-archive → mandarin-tutor → interface-vision → humboldt-scoop-cms →
 digital-storefront → kind-robots → rainbow-butterflies.
 
