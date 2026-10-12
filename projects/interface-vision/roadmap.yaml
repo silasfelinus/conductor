@@ -1820,7 +1820,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1837,13 +1837,12 @@ tasks:
     Resume scoped Gmail incident diagnosis: responsive audit 38186259818 reports visible source-less deferred gallery images as broken art. Reproduce browser behavior and repair waiting image presentation without changing alert criteria, preserving viewport loading and real failed-image/error detection.
 
     Scoped deferred gallery image fix implemented on worker/interface-vision-t105-deferred-gm8q. Browser regression failed before repair and passed after: source-less waiting images hidden with layout bounds retained, viewport activation works, URL refresh keeps prior frame, missing source hides again, and genuine failed loads still emit errors and remain detectable. Phone/tablet/desktop fixture captures prepared; global audit unchanged.
-  updated: '2026-10-12T04:44:00Z'
+
+    RAN 2026-10-11 PT: merged kind_robots#3571 at 45d6e72c56e58dea872f7fb0cb050c6ade81ad79 after all 32 checks succeeded on 108a2e6b210add5a65e38ed1e1cf948553f0ebb4, including the actual-component browser regression and full Contract Tests. Source-less waiting gallery art no longer paints broken alt text; viewport layout/activation, prior-frame refresh and genuine failed-image errors remain verified. Audit criteria unchanged. Main component blob verified. Scoped fixture captures inspected at 390/768/1440px. Keep min_rest_hours 24; no deployment triggered. Original production incident awaits a fresh audit after normal authorized deployment.
+  updated: '2026-10-12T04:56:28Z'
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
-  owner: worker
-  claimed_by: 2026-10-12T043950Z-gallery-deferred-gm8q
-  claimed_at: '2026-10-12T04:39:50Z'
 
 - id: t-106
   milestone: m6
