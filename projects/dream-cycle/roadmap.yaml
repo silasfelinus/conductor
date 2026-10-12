@@ -856,3 +856,21 @@ tasks:
 
     PR #6057 merged and verified: preserve six original linked Dream assets, plus eight unlinked Zuzu extras with Arthemy/Illustrious art direction. All full-head CI passed. This preparatory validation and creative contract must not be mistaken for live fourteen-object creation. Remaining: transactional builder, Facets, ArtJobs, target attribution, digest, compatibility and live ArtImage delivery. Keep task ready for next worker.
   updated: '2026-10-12T22:33:54Z'
+
+- id: t-038
+  milestone: m4
+  title: 'Validate all Zuzu relation fields before enabling the expanded Dream writer'
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from the independent audit of conductor#6057. The pure v3 validator
+    rejects a top-level Zuzu world_dream_id and per-row dreamIds but currently
+    accepts world_dream_id on an individual Zuzu character. The existing live
+    writer still refuses all v3 bundles, so no production relation was created.
+    Before enabling the expanded writer, normalize supported per-record relation
+    fields at the real proposal-to-transaction boundary and reject any reference
+    to the unrelated daily PITCH world. Test both lanes through the actual builder,
+    including a forbidden per-row link and permitted separate canonical Zuzu links.
+    Preserve the original six linked outputs, historical compatibility and the
+    one-writer fail-closed guard. Coordinate with unfinished t-037 to avoid overlap.
