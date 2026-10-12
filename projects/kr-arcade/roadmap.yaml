@@ -2453,3 +2453,21 @@ tasks:
       kind_robots utils/arcade/games/ (registry slug station-sweep). Silas, 2026-10-11: "I need an assessment
       done of the other arcade games. I want the same level of quality improvements, they should not just be
       thin veneers of the old games. But newer, better, even more awesome."
+
+  - id: t-146
+    milestone: m8
+    title: "Measure Butterfly Joust limited-life survival and first-clear pacing against the authored campaign target."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-050
+    note: >-
+      Reviewer kaizen from the merged t-049/t-050 audit (kind_robots#3559 and #3575).
+      Read CABINETS.md section 4 and current Kind Robots instructions. The authored first-clear target
+      is 45-60 minutes; the existing unlimited-life pilot and staged ending checks do not establish
+      human pacing. Add or reuse a bounded deterministic limited-life playtest harness, run multiple
+      seeds, record early-death/survival and clear-time distributions and separate bot estimates from
+      human evidence. Preserve the original difficulty and campaign rules while measuring; do not
+      inflate elapsed time, weaken assertions or label the target met without evidence. Make a focused
+      balance fix only if the measurements reproduce a scoped problem, with before/after evidence.
+      Attach actual renderer evidence for any visible change and document remaining human-play limits.
