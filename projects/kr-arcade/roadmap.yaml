@@ -877,7 +877,6 @@ tasks:
 
       Reviewer verified the repaired merged Sink Suds result at 0d0f24020ec4f385431b8babd44d912e267308de, original final head 44d84f3191733fafde053ed5b9543a10eba8d879, all 29 completed head check runs without failure. The independent original saved-checkpoint New Wash -> Squeaky Clean -> finish -> withSave/JSON/sanitizeSaves -> reload probe now preserves the new best, old time, medals, reached rooms, golden soap, skin and clear, and resets only the campaign checkpoint. Repair diff against the reviewed old head inspected. Keep passes 1 as historical quality rejection; remove obsolete retry_context through the focused reviewed closeout PR. This adds missing completion learning without duplicating implementation or a claim. No deployed runtime or 40-50 minute human campaign target is inferred.
     implementation_pr: 'silasfelinus/kind_robots#3558'
-    retry_context: 'pass 1 failed (quality): kind_robots#3558 New Wash clears saveData; Squeaky Clean completes and records an in-memory best time but returns null save. Preserve/initialize progress outside campaign and add New Wash -> Squeaky Clean -> finish -> reload regression coverage before merging. Reuse worker/kr-arcade-t-046.'
 
   - id: t-047
     milestone: m8
@@ -2583,3 +2582,22 @@ tasks:
       existing shared cabinet/input components instead of a second implementation. Use scoped browser
       fixtures with explicit staged data; fix only a reproduced integration gap and keep auth,
       validators, required checks and score ceilings intact. Do not claim deployment or human pacing.
+
+  - id: t-149
+    milestone: m8
+    title: "Verify Sink Suds earned records through the shared cabinet keepSave and retirement lifecycle."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-046
+    note: >-
+      Reviewer kaizen after repaired kind_robots#3558: the game and withSave/JSON/sanitizeSaves
+      helpers now preserve New Wash -> Squeaky Clean progress. Exercise the actual ArcadeCabinet
+      and arcade store consumer: load a valid later-room checkpoint with prior medals/times,
+      choose New Wash, finish a staged Squeaky Clean basin, then leave/retire and reopen the
+      cabinet through the real keepSave path. Verify new and old best times, medals, reached
+      rooms, skin, golden soap and clear persist while the campaign checkpoint resets. Cover
+      immediate exit after New Wash as a separate transition. Reuse the existing consumers,
+      scoped browser fixtures and storage boundary; fix only a reproduced integration gap.
+      Preserve auth, alerts, validators, required checks and score ceilings. Keep staged fixture
+      evidence distinct from deployment or human campaign timing.

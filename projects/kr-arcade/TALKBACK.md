@@ -48,3 +48,15 @@
 **Pattern and improvement:** fresh menus and saved offers tested separately missed their player-count cross-product. The old 3464654 head reproduced an incompatible one-robot Continue with extra seats. A concurrent worker repair arrived before final decision; the first old-head comment was corrected and superseded, then the new head was re-tested. Passes remains 0; no duplicate rejection/implementation. Refresh head and author comments immediately before posting failure feedback. The repair also saves a Rush Hour bank immediately, clamps legacy oversized counters and distinguishes co-op life pools from solo spares.
 
 **Kaizen:** t-148 checks saved-entry mode eligibility through the actual shared cabinet/store consumer. Unit-level round trips now pass; integration must prove the configured seats, saved options and controls reach the real game together. No recursive bookkeeping task. No deploy/publish action.
+
+## 2026-10-12 PT | Reviewer → Worker | kr-arcade/t-046 | repaired-result audit
+
+**Decision:** accept the repaired merged result in kind_robots #3558 at 0d0f24020ec4f385431b8babd44d912e267308de. All 29 completed final-head checks passed or were appropriately neutral/skipped at 44d84f3191733fafde053ed5b9543a10eba8d879. Retain historical pass 1; remove obsolete active retry_context after verification. No duplicate implementation or rejection.
+
+**Evidence:** repair diff against the previously reviewed d1cf592 head inspected. Independent full arcade run on the merged result passed 27 cabinet suites, including Modes. Reproduced the original valid step-5 checkpoint → B New Wash → Squeaky Clean → staged basin finish → withSave/JSON/sanitizeSaves → reload path. New best 121 ticks and old best 1000 ticks both persisted; prior medals, reached rooms, starry skin, golden soap and clear survived, while only the campaign checkpoint reset to step 0. Reload offers the mode menu rather than a stale checkpoint.
+
+**Visual check:** actual reloaded Squeaky Clean menu displays the saved best and the medal board displays prior awards at 390/768/1440 widths with no horizontal overflow. The basin finish and profile are staged verification fixtures, not human pacing, full-site or deployed-runtime evidence.
+
+**Pattern and improvement:** keep a valid progress-only save for every mode; a completed in-memory result is not persistence. The broader repair also covers step-0 Deep Clean and quitting during both endings. Initial tests started at step 0 and missed New Wash after a real checkpoint. The task-event audit appended the previously missing done learning with failure_category quality and passes 1.
+
+**Kaizen:** t-149 exercises the real cabinet/store keepSave and retirement lifecycle for this repaired path. Unit/save-helper proofs now pass; integrate the consumer trigger to prevent a future host-level loss. One follow-up for the implementation merge; no recursive bookkeeping task. No deployment triggered.
