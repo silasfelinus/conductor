@@ -41,17 +41,24 @@ At the start of every session, before responding to any task, run a conductor sw
    per `scripts/dream_prose_quality.py`) and the history behind it are in `docs/sweep-checks.md` (Step 7)
    — read that section before authoring.
 
-8. Daily pitches: `session_sweep.py` runs `daily_pitches.py --check`. Silas (2026-10-02): every day's digest
-   carries **five new project pitches**, biased to free-to-play things (games, toys, pre-written content,
-   pre-generated art) that need no LLM at runtime. **Sessions author; Silas decides** by clicking Approve or
-   Pass in the digest email (signed confirm links), or on the Kind Robots project page. Never decide a pitch
-   for him. If the check says today's docket is missing: `python scripts/daily_pitches.py --brief`, write
-   `pitches/daily/<pacific-date>.yaml` (exactly 5, at least 3 `llm_at_runtime: none`; up to 2 may be Kind
-   Robots Arcade cabinets with `target: kr-arcade`), `--check`, `--materialize` (writes the
-   `pitches/<date>-<slug>.md` files the project page votes on), open the PR. Then `daily_pitches.py
-   --approved`: scaffold any approved pitch with `scripts/intake.py` in the same session (an approved arcade
-   cabinet goes into `projects/kr-arcade/games.yaml` instead, as `--approved` says).
-   The recurring task dream-cycle/t-035 makes this a daily commitment, so `select_role.py` surfaces it.
+8. Daily pitches: `session_sweep.py` runs `daily_pitches.py --check`. **Sessions author; Silas decides**
+   via the signed digest email or Kind Robots. Never decide a pitch for him.
+   **Silas's 2026-10-12 PT direction, effective for new 2026-10-13 dockets:** all FIVE
+   daily pitches are expansions of existing active projects, NOT ideas for new projects.
+   Run `python scripts/daily_pitches.py --brief` for current rules, then author
+   `pitches/daily/<pacific-date>.yaml` (exactly five, at least three with
+   `llm_at_runtime: none`; every new pitch has `target` and `expansion_kind`),
+   `--check`, `--materialize`, PR, merge when green.
+   Then run `python scripts/daily_pitches.py --approved`. For each post-cutover
+   approval, author a **polished roadmap expansion** in the named EXISTING
+   `projects/<target>/roadmap.yaml`, with actionable milestones/tasks,
+   dependencies, art work, tests and `source_pitch: pitches/<date>-<slug>.md`.
+   An approval is a request for this roadmap work, **never permission to scaffold
+   or publish a new project**. Do NOT call `intake.py` for post-cutover daily pitches.
+   The CLI preserves legacy pre-cutover approvals, including standalone project
+   intake and Arcade cabinet special cases. Follow its dated output; do not
+   retrospectively rewrite old decisions.
+   The recurring dream-cycle/t-035 remains the daily authoring commitment.
 
 Then report:
 - **Branch** and whether the working tree is clean
@@ -74,7 +81,7 @@ Then report:
 - **Daily dream**: whether today's dated proposal exists; its steering/build/retry,
   Facet, art, and digest state; legacy Dream outlines are idea inventory rather
   than queued object builds (warn when useful idea inventory falls below five)
-- **Daily pitches**: whether today's five-pitch docket exists and is materialized, the undecided count (`daily_pitches.py --pending`), and any approved pitch still needing a project (`--approved`)
+- **Daily pitches**: whether today's five-pitch docket exists and is materialized, the undecided count (`daily_pitches.py --pending`), and any approved pitch still needing its existing-project roadmap expansion (or legacy intake) (`--approved`)
 - **Daily Tzaddik**: from the sweep's `tzaddik_review` section (`python scripts/tzaddik_review.py --check`
   for the full list), report the
   approved/rejected/deferred/pending counts across every discovery docket. List
