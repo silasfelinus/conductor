@@ -862,29 +862,18 @@ tasks:
   - id: t-046
     milestone: m8
     title: "Sink Suds depth slice 4: Bubble Buddies and Suds Sumo"
-    status: claimed
-    owner: worker
+    status: done
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-12T04:41:35Z'
-    updated: '2026-10-12T04:41:35Z'
+    updated: '2026-10-12T09:22:00Z'
     passes: 1
     stakes: reversible
     depends_on: t-045
-    note: >-
-      CABINETS.md section 3, Sink Suds (Bubbles riff), slice 4 of 4: Bubble Buddies and Suds Sumo. The upgrade
-      is "The Big House Wash". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section
-      first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top
-      applies. Code: kind_robots utils/arcade/games/ (registry slug sink-suds). Silas, 2026-10-11: "I need an
-      assessment done of the other arcade games. I want the same level of quality improvements, they should
-      not just be thin veneers of the old games. But newer, better, even more awesome."
+    note: |-
+      CABINETS.md section 3, Sink Suds (Bubbles riff), slice 4 of 4: Bubble Buddies and Suds Sumo. The upgrade is "The Big House Wash". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug sink-suds). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+      2026-10-11 PT review: kind_robots#3558 remains unmerged. All 28 head checks passed/allowed skips and npm run test:arcade-engine passed (14 cabinet suites), but a direct behavior probe reproduced lost best-time persistence after New Wash from a valid saved room checkpoint. See PR comment https://github.com/silasfelinus/kind_robots/pull/3558#issuecomment-6115161917. Quality rejection, pass 1; reuse the existing implementation branch, repair persistence and verify reload. No human action required.
 
-      2026-10-11 PT review: kind_robots#3558 remains unmerged. All 28 head checks
-      passed/allowed skips and npm run test:arcade-engine passed (14 cabinet suites), but a
-      direct behavior probe reproduced lost best-time persistence after New Wash from a valid
-      saved room checkpoint. See PR comment
-      https://github.com/silasfelinus/kind_robots/pull/3558#issuecomment-6115161917. Quality
-      rejection, pass 1; reuse the existing implementation branch, repair persistence and
-      verify reload. No human action required.
+      Kind Robots Sink Suds PR #3558 merged as 0d0f24020ec4f385431b8babd44d912e267308de after all 27 final-head workflow checks passed. The previously documented New Wash to Squeaky Clean persistence defect was fixed and a reload regression case added. This concludes depth slice 4 on main; a self-hosted deployment is not established by the merge.
     implementation_pr: 'silasfelinus/kind_robots#3558'
     retry_context: 'pass 1 failed (quality): kind_robots#3558 New Wash clears saveData; Squeaky Clean completes and records an in-memory best time but returns null save. Preserve/initialize progress outside campaign and add New Wash -> Squeaky Clean -> finish -> reload regression coverage before merging. Reuse worker/kr-arcade-t-046.'
 
