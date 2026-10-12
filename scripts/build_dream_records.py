@@ -148,7 +148,7 @@ def _canonical_proposal_errors(proposal: Optional[dict]) -> list[str]:
         # Fail CLOSED until the nine-record transaction, Facet assignment and
         # ArtJob handoff ship together. The old writer would silently attach
         # eight Zuzu-world entities to an unrelated independent vibe.
-        return ["v3 nine-asset proposals require the upgraded single writer; no live writes permitted"]
+        return ["v3 fourteen-asset proposals require the upgraded single writer and author; no live writes permitted"]
     errors: list[str] = []
     facets = proposal.get("seed_facets")
     if not isinstance(facets, dict) or int(facets.get("version") or 0) < 2:
@@ -984,7 +984,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
 
         for loc in extras["locations"]:
             project, family, scene_world, tone = zuzu_style(loc)
-            el = "zuzu-" + slugify(loc["title"])
+            el = "zuzu-" + project + "-" + slugify(loc["title"])
             description = " ".join(str(loc[k]).strip() for k in (
                 "known_for", "local_rule", "best_scene"
             ))
@@ -1016,7 +1016,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
 
         for ch in extras["characters"]:
             project, family, scene_world, tone = zuzu_style(ch)
-            el = "zuzu-" + slugify(ch["name"])
+            el = "zuzu-" + project + "-" + slugify(ch["name"])
             art_prompt = character_prompt(
                 ch["name"], ch["look"], ch["role_drive"], ch["carries"],
                 scene_world, tone, style=CHECKPOINT_LANES[family]["style"],
@@ -1046,7 +1046,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
 
         for rw in extras["rewards"]:
             project, family, scene_world, tone = zuzu_style(rw)
-            el = "zuzu-" + slugify(rw["name"])
+            el = "zuzu-" + project + "-" + slugify(rw["name"])
             kind = str(rw["reward_type"]).upper()
             rarity = str(rw["rarity"]).upper()
             art_prompt = reward_prompt(
@@ -1077,7 +1077,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
 
         for sc in extras["scenarios"]:
             project, family, scene_world, tone = zuzu_style(sc)
-            el = "zuzu-" + slugify(sc["title"]) + "-scenario"
+            el = "zuzu-" + project + "-" + slugify(sc["title"]) + "-scenario"
             location_title = zuzu_location_titles.get(project, "")
             # Consequential choices are kept in the prose without inventing
             # unsupported Kind Robots Scenario columns. Durable metadata below
