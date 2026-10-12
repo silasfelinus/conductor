@@ -451,7 +451,7 @@ tasks:
   - id: t-023
     milestone: m3
     title: "Map twelve bespoke authored Homestead card illustrations"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -460,15 +460,22 @@ tasks:
       Deliver or link approved per-encounter art matching each fixed cast, preserving source Image IDs and resource rights/rating/continuity. Clearly label pending assets, never invent live references or independently reassign species.
 
       2026-10-11 (Silas: "keep working on future upgrades, 23 and 26"): art round 1 in flight, projects/zuzu-shifting-lands/art/ROUND-1.yaml, ArtJobs 37401-37504. Two Arthemy house-lane seeds per card for all 48 authored encounters and the four later trials, prompts from each card's fixed cast in encounters/*.json, so t-026 rides the same round. Keepers get `verdict: keep`, export with scripts/export_shifting_lands_cards.py to kind_robots public/shifting-lands/cards/<card>.webp and are listed in sceneArt.ts BESPOKE_CARDS. rest_until holds the claim while the shared render queue drains.
-    rest_until: '2026-10-12T10:00:00Z'
+
+      Done 2026-10-12: art round 1 (projects/zuzu-shifting-lands/art/ROUND-1.yaml) plus
+      rerolls painted 51 of 52 Shifting Lands cards, two Arthemy house-lane seeds each,
+      reviewed against each card's cast and brief and exported to kind_robots public/shifting-
+      lands/cards (BESPOKE_CARDS). Shipped in kind_robots#3572 and #3586. A Road of Bones
+      missed twice and deliberately keeps its reused bone-valley plate; the Homestead trial
+      keeps the gamebook abbess-welcome plate.
     claimed_by: 2026-10-11T224500Z-zuzu-shifting-lands-t023-art1
     claimed_at: '2026-10-11T22:39:53Z'
-    updated: '2026-10-11T22:39:53Z'
+    updated: '2026-10-12T09:03:53Z'
+    implementation_pr: 'silasfelinus/kind_robots#3586'
 
   - id: t-024
     milestone: m5
     title: "Verify authored prose, choice dice, flips, art and replay"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -495,10 +502,19 @@ tasks:
   - id: t-026
     milestone: m3
     title: "Bespoke illustrations for the 36 later-land encounters and four later trials"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-022, t-023]
     note: |-
       Opened 2026-10-11 after t-013's reuse pass (kind_robots#3546). Every later-land card currently shows a hand-picked existing Zuzu Gamebook/Showdown scene from utils/shiftingLands/sceneArt.ts; the authored packs keep art: null so this task can see what it owes. Paint one fixed-cast illustration per encounter in DUSTWATER-9, TABLELANDS-9, STORM-CROW-9 and BLACK-VERGE-9 plus the Crossing Gate, Canyon Warden, Deep-Cave Judgement and Beyond the Verge trials, following the t-023 Homestead pattern once it lands (same frame, LoRA and rights rules). Durable ArtJobs only; queued != rendered != delivered != verified. Ship delivered art from a path the image serves (never under /images, which Alexandria mounts over), then swap the sceneArt entries and keep verifyShiftingSceneArt.test.ts green.
+
+      Done 2026-10-12: art round 1 (projects/zuzu-shifting-lands/art/ROUND-1.yaml) plus
+      rerolls painted 51 of 52 Shifting Lands cards, two Arthemy house-lane seeds each,
+      reviewed against each card's cast and brief and exported to kind_robots public/shifting-
+      lands/cards (BESPOKE_CARDS). Shipped in kind_robots#3572 and #3586. A Road of Bones
+      missed twice and deliberately keeps its reused bone-valley plate; the Homestead trial
+      keeps the gamebook abbess-welcome plate.
+    updated: '2026-10-12T09:03:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#3586'
