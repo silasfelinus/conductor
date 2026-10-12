@@ -297,3 +297,39 @@ tasks:
     stakes: reversible
     note: |-
       Reviewer kaizen after Conductor PR #6021: check portrait identity/colour consistency, body-silhouette diversity, facial consistency across cinematics and rights/provenance against CAST-BIBLE.md. Docs only; do not overwrite approved art.
+
+  - id: t-017
+    milestone: m2
+    title: "Prove Space Princess earned-super and shield boundary behavior for every pilot."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >-
+      Reviewer kaizen after kind_robots#3590. Current seeded replay proves determinism,
+      hostile bullets and modules, but only tracks a boolean for graze and does not
+      assert a charged super's actual outcome. Add bounded deterministic actual-input
+      proofs for below-full versus full charge, held B versus a fresh B edge, charge
+      consumption/refill, bullet cancellation, pilot-specific effects, shield pickup
+      caps, invulnerability and damage/life boundaries. Include eliminated-seat cases.
+      Keep snapshot data immutable, use earned charge and existing consumer contracts,
+      preserve private score exclusion, and fix only a reproduced scoped defect.
+
+  - id: t-018
+    milestone: m2
+    title: "Commit real-cabinet touch event replay for pointer capture, cancellation and resize boundaries."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >-
+      Reviewer kaizen after the partial touch improvement in kind_robots#3588.
+      The independent isolated actual-handler/CSS probe passes; turn its pointerdown,
+      move, up, cancel and lostcapture scenarios into durable browser regression
+      evidence through the actual cabinet and seatInput consumer, including two
+      fingers, independent seats, resize and compact versus generic dead-zone bounds.
+      Reuse t-015's full cabinet/help integration fixture rather than a competing
+      harness. Avoid a simultaneous overlapping t-015 claim; finish its original
+      remaining help/input scope first when shared consumer work overlaps.
+      Measure input-to-frame sampling, preserve other games' geometry and controls,
+      and keep synthetic pointer evidence distinct from physical touch testing.
