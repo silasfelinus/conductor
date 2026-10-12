@@ -16,3 +16,17 @@
 **Kaizen task:** deferred — the proposed extension to scene-transition conservation is already explicit in t-010 (prevent multiball leaks and unfair drains), with device QA and balancing in the existing roadmap. Avoid a duplicate follow-on claim.
 
 **Verification limits:** This review lands coordination bookkeeping only; it does not newly verify the rendered UI or Alexandria deployment. Local startup sweep, role selector and Todo fetch were attempted, but their network-backed checks could not reach the sandbox proxy/API. Authoritative GitHub review and CI evidence came from connected tools. No deploy, publish or email action was triggered by this session.
+
+## 2026-10-12 — Reviewer: conductor#6061 (t-019 croc poses, WAN clips, video lanes) — merged
+
+**Decision:** approved and squash-merged at e2f8644 (23 check runs, all success or intentionally skipped; no review threads). Reversible software plus private art ledgers; nothing published.
+
+**What was good:**
+- `enqueue_art_requests.py` video lanes are small and well tested (30 pass): first/last frame, duration, loop, negative, and a dry run that lists frames.
+- The clips ledger records the round 1 failure cause (end_image sent to a node without one) and the round 2 fix, not just the retry.
+
+**What to improve:**
+- `croc_atlas.py` ships with empty `CLIPS`/`HOLDS`, so it generates nothing yet. Fill them in the same PR that lands the clips it packs.
+- Round 1 entries are still `FAILED` in the ledger; mark them superseded so `--status` stays quiet.
+
+**Verification limits:** reviewed the diff and CI only; no live render or Kind Robots call was made.
