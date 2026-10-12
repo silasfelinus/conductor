@@ -1108,11 +1108,8 @@ tasks:
   - id: t-057
     milestone: m8
     title: "Butterfly Blaster depth slice 3: Moons 2 and 3, the bosses and the endings"
-    status: claimed
-    owner: worker
-    claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
-    claimed_at: '2026-10-12T09:11:53Z'
-    updated: '2026-10-12T09:11:53Z'
+    status: ready
+    updated: '2026-10-12T10:46:00Z'
     passes: 1
     retry_context: >-
       Pass 1 failed (quality) on kind_robots#3596 head 26482b38c5914b2e2d3f6ac883fad3ef276ef0d2:
@@ -1124,14 +1121,11 @@ tasks:
       Keep the clear-at-ending-start proofs; full arcade suite and 28 head checks already pass.
     stakes: reversible
     depends_on: t-056
-    note: >-
-      CABINETS.md section 6, Butterfly Blaster (Asteroids riff), slice 3 of 4: Moons 2 and 3, the bosses and
-      the endings. The upgrade is "The Rainy Season". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read
-      the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every
-      slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug butterfly-blaster).
-      Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of
-      quality improvements, they should not just be thin veneers of the old games. But newer, better, even
-      more awesome."
+    note: |-
+      CABINETS.md section 6, Butterfly Blaster (Asteroids riff), slice 3 of 4: Moons 2 and 3, the bosses and the endings. The upgrade is "The Rainy Season". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug butterfly-blaster). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Reviewer quality pass 1 on October 12, 2026 at 3:46 AM PT. Conductor#6040 records the independently reproduced earned cleared/zero flag loss on B New Season, exact retry_context and TALKBACK. Return the task to ready and release ownership; retain kind_robots#3596 for the original worker's focused repair. Existing full arcade command passed 30 cabinet suites and 28 head checks were green, but the public New Season save-consumer transition loses earned ending history. No duplicate implementation, new human gate or deployment. Read retry_context and PR feedback before re-claiming, preserve completion flags and test both endings.
+    implementation_pr: 'silasfelinus/kind_robots#3596'
 
   - id: t-058
     milestone: m8
