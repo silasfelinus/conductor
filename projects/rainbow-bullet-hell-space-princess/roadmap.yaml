@@ -158,7 +158,7 @@ tasks:
     updated: '2026-10-12T16:42:55Z'
     passes: 1
     retry_context: >-
-      Quality review on PR3598 head f152fc4bb41cdd32a9a152bc1bf051aa2061e7e2: phase2→3 changes volley period126→90 without resetting/arming warning. HP51 through frame269 has no warning at frames253–269; ordinary shot damage2 after step269 makes step270 emit seven bullets immediately with no charge pulse. Guarantee a phase-safe telegraph interval before every volley and add boundary regressions, including real engine collision ordering. Existing test only ORs any warning across the run, so 32 green head checks/full 29-cabinet suite miss this. Precise review: https://github.com/silasfelinus/kind_robots/pull/3598#issuecomment-6128502143. Repair the existing focused PR, preserving finite Act/pod/state mechanics, then rerun checks and independent review; do not duplicate implementation. Full-length Acts I–II still remain, and complete native product acceptance is not established.
+      Prior phase-boundary defect repaired and independently verified in merged kind_robots#3604 at9ba4375710d47fb94150ae7efe093b8ecf910230. Do not repeat the old PR3598 rejection or scheduling repair. Pass1 history is retained; finish the original full-length ActsI–II, checkpoint/continue and 1/4-player acceptance scope in a focused continuation. Native shared-cabinet/full-campaign acceptance remains unverified.
     stakes: reversible
     note: |-
       Make two polished 10–15 minute authored scroll stages with wave scores, destructible cover, two distinct multi-phase bosses, collectable upgrades, checkpoint/continue and intentional difficulty curve. End each stage, not an endless swarm. Test 1-player and 4-player clears.
@@ -166,7 +166,9 @@ tasks:
       Submitted Act I Pinkwake vertical slice in Kind Robots with authored E01-E04 wave sequence, SOS-station rescue and shield award, B01 Pearl Seahorse three-phase boss, three low-threat Lilt-7 dialogue scenes, four parallax planes, deterministic fixture tests and private-admin tutorial. This is a shortened prototype, not t-007's two full 10-15-minute Acts; after a green merge return task to ready for the remaining full-length Act I and Act II work.
 
       Reviewer quality pass1 recorded in merged conductor#6050 (4a76cf11c22a8210fe0c35d1c2e79b1bd0c30dc9), after all25 checks completed without failure on61eededd6f35f902e6f5bdd28b66a4ede23bcc5d. Retain existing kind_robots#3598 for its original worker to repair phase-boundary telegraph fairness; precise reproduction and retry_context preserved. The current implementation remains open despite greenCI; no gameplay merge or completion claimed. Release ownership for focused repair, avoid duplicate implementation, and preserve unfinished full ActsI–II scope and dependent co-op reconciliation. No deployment or publication.
-    implementation_pr: 'silasfelinus/kind_robots#3598'
+
+      On October12,2026 at12:53PM PT, reviewer accepted the scoped Pearl Seahorse fairness repair in kind_robots#3604 at9ba4375710d47fb94150ae7efe093b8ecf910230 after all28 checks completed successfully on540f36456a63d7b96daa8439ea70e000653b2ab4. Original#3598 had already merged at94ad676e04f258e6ad78652082f1efd1dc337ba4. Complete repair/formatting diff and reviews inspected, required checks satisfied and expected-head merge without bypass. Independent full arcade suite passed30 cabinet suites;1100 HP-threshold/crossing-frame scenarios covered5552 volleys, all with36 warning frames. Actual native1/4-seat initial warning/nonwarning renderer fits390/768/1440; these isolated demo proofs are not full device/auth/campaign acceptance. Initial Contract failure was only formatting in two named files; fixed through complete reads/current blob SHAs without baseline changes. Both final blobs verified on main. t-007 stays ready/unowned, passes1, for the full original unfinished scope; no done learning. Kaizen t-019 commits real player-damage/render cue replay. No deployment/publication.
+    implementation_pr: 'silasfelinus/kind_robots#3604'
   - id: t-008
     milestone: m3
     title: "Author branching stages 3–5 and three distinct bosses"
@@ -340,3 +342,22 @@ tasks:
       remaining help/input scope first when shared consumer work overlaps.
       Measure input-to-frame sampling, preserve other games' geometry and controls,
       and keep synthetic pointer evidence distinct from physical touch testing.
+
+  - id: t-019
+    milestone: m2
+    title: "Prove boss phase warnings through real player damage and rendered cue boundaries."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004]
+    note: >-
+      Reviewer kaizen after kind_robots#3604, targeting LEARNING-REPORT's repeated
+      quality/consumer-boundary pattern. The helper's exact269→270 regression and
+      independent1100-scenario schedule sweep pass, but commit a deterministic replay
+      that earns phase crossings through actual player shots and observes the real
+      renderer's cue before each volley. Include HP100/50 boundaries during and outside
+      charging, one/four seats, damage-after-step ordering, interrupted cues and safe
+      boss defeat/pod cleanup without resetting ship resources. Verify at least36 fixed
+      warning ticks and readable cue at phone/tablet/desktop; preserve original pacing.
+      Distinguish isolated engine/render evidence from full shared-cabinet/device proof.
+      Reuse existing Pinkwake fixtures and avoid overlapping t-007 implementation.
