@@ -383,9 +383,23 @@ tasks:
       Found by the t-010 multiball soak: a ball can wedge at rest near (-0.082, y 0.036,
       -0.415), between the Village ramp's right rail and the Abbey seal channel; the runtime's
       ball-search nudge frees it, but the crevice should be closed in geometry.
+
+      2026-10-12 PT: second slice merged, kind_robots#3578 (squash 7582746). New test:zuzu-
+      pinball-stress: 25 runtime mount/play/render/dispose cycles with physics worlds and GPU
+      resources back to baseline every cycle; six balls through the whole runtime (rules,
+      scene, LED rail, trails) for a minute on each of three seeds, every ball checked inside
+      the cabinet every tick, about 0.9 ms mean / 1.6 ms p95 per tick headless. Its first run
+      found a real escape: a ball flipped into the air off a ramp mouth flew over the 2.5 cm
+      arch and out of the machine (the glass is at 31 cm, above the raised Abbey deck). Fixed
+      with clear hidden cabinet sides 1 cm outside the outline from 4 cm to the glass, last in
+      the collider list: placed mid-list they renumbered colliders, and Rapier's solver order
+      changed two ricochet shot proofs. The croc-mouth proof is now a direct right-inlane
+      flip. No-stuck scan back to 0 ball-search frees. Still open, needing a real browser:
+      touch and keyboard playtests, frame timing on a GPU, and the accessible table guide
+      check.
     claimed_by: 20261012T040000Z-zuzu-t013-qa-k8w2
     claimed_at: '2026-10-12T03:51:43Z'
-    updated: '2026-10-12T03:51:43Z'
+    updated: '2026-10-12T08:30:47Z'
   - id: t-014
     milestone: m5
     title: "Silas visual/play acceptance and authorization for any public /play launch"
