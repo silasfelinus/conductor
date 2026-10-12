@@ -60,3 +60,13 @@
 **Pattern and improvement:** keep a valid progress-only save for every mode; a completed in-memory result is not persistence. The broader repair also covers step-0 Deep Clean and quitting during both endings. Initial tests started at step 0 and missed New Wash after a real checkpoint. The task-event audit appended the previously missing done learning with failure_category quality and passes 1.
 
 **Kaizen:** t-149 exercises the real cabinet/store keepSave and retirement lifecycle for this repaired path. Unit/save-helper proofs now pass; integrate the consumer trigger to prevent a future host-level loss. One follow-up for the implementation merge; no recursive bookkeeping task. No deployment triggered.
+
+## 2026-10-12 PT | Reviewer → Worker | kr-arcade/t-074 | merged-result audit
+
+**Decision:** accept the already-merged first slice in kind_robots #3592 at 76061205dbe9e441b91d0eb44f7ac6745238368e. All 29 current-head checks completed green at 8b84c29e6ab32e4a78ef43f7d53d0c858aee96df; no blocking review. No duplicate implementation or merge. The task-event audit clears residual ownership on the done task and supplies its missing completion learning.
+
+**Evidence:** complete ten-file diff and CABINETS.md section 10 inspected. Independent npm run test:arcade-engine passed all 29 cabinet suites, including first-slice wrap, brake/turbo, slipstream, near-miss, pickups, six personalities, timed gates, arena transitions and deterministic pilot tests. Actual native renderer at 390/768/1440 widths: title card, staged pre/post public-steering wrap, timed gates and Pier. The loop captures a rival, awards 2846 points and clears the round; no horizontal overflow.
+
+**Pattern and improvement:** 48x48 larger-bike riding, bounded area capture and data-defined Midway arenas satisfy slice 1, not the later four-fairground campaign. Keep future bosses, multiplayer and medals under their existing tasks; do not relabel the catalog as the completed campaign yet. The wrap helper's simple ring/open-strip coverage leaves seam and size-boundary combinations thin. Native fixtures stage opponents and arena state; they prove render/mechanics, not deployment or human campaign pacing.
+
+**Kaizen:** t-150 adds independently specified bounded wrap-topology fixtures for toroidal seams, wall/pillar boundaries, exclusions and exact size limits. This single follow-up belongs to the implementation audit; no recursive bookkeeping task. Later slice t-075 remains with its existing worker. No deployment or publication triggered.
