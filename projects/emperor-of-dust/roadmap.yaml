@@ -1,0 +1,124 @@
+# Zuzu-world prequel: the emperor's one hundred days.
+project: emperor-of-dust
+kind: software
+autonomous: true
+goal: >-
+  Deliver a map-led, 100-day original wasteland dispatch/strategy game in
+  the Zuzu universe before Book One: 100 authored daily incident sets,
+  zero-to-three follower assignments, skill odds and consequential moral
+  choices, injury and permanent death, Prosperity-funded recruiting,
+  consumable Support Hoard, Popularity, multi-faction tension and wars,
+  hidden low-resource recovery questlines and multiple endings. Begin
+  in Admin; full Play launch requires explicit publication approval.
+notes_from_silas: |
+  2026-10-11 PT: Inspired by This Is the Police and Dispatch, play the
+  emperor governing the Zuzu wasteland before Zuzu appears. Dispatch
+  0–3 limited followers, sometimes probability, often moral dilemmas.
+  Bad choices or missions can injure or kill helpers. Script exactly 100
+  days. Prosperity buys recruitment; support hoard raises success odds;
+  bad results lower popularity and hoard. Poor outcomes create hidden
+  easier but darker questlines and change factions. Hollow Bell has a
+  genial pragmatic mayor, Storm Crows connive, hyena raiders are punk,
+  swamp witches request defense while concealing their deeper malice.
+  Young Komodo can advise. Bible first, filler Admin frontend.
+milestones:
+  - id: m1
+    title: "FOUNDATION — cast, factions, economy and 100-day bible"
+    weight: 20
+    status: done
+  - id: m2
+    title: "STUDIO — private illustrated Admin map and tutorial"
+    weight: 10
+    status: in-progress
+  - id: m3
+    title: "ENGINE — dispatch, decisions, followers, saves"
+    weight: 20
+    status: not-started
+  - id: m4
+    title: "STORY — all 100 scripted days, political and hidden branches"
+    weight: 30
+    status: not-started
+  - id: m5
+    title: "POLISH — art, balancing, device QA and human verdict"
+    weight: 20
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Establish complete design bible and 100-day anchor plan"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Wrote GAME-BIBLE.md and DAY-PLAN.md on 2026-10-11 PT.
+      These 100 anchors are outlines, not implemented daily script records.
+  - id: t-002
+    milestone: m2
+    title: "Build admin-only illustrative region map with tutorial and project placement"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Create /admin/emperor-of-dust, discoverable requiredRole ADMIN tab,
+      visual map, selectable regions and explicit not-playable labeling.
+      Keep public Play and generic Arcade listings gated.
+  - id: t-003
+    milestone: m3
+    title: "Build deterministic incident schema, dispatch choices and resolver"
+    status: ready
+    passes: 0
+    stakes: reversible
+  - id: t-004
+    milestone: m3
+    title: "Implement recruitable followers, permadeath, wounds and saved campaigns"
+    status: waiting
+    depends_on: t-003
+    passes: 0
+    stakes: reversible
+  - id: t-005
+    milestone: m4
+    title: "Script full incident graphs Days 001–025"
+    status: waiting
+    depends_on: t-003
+    passes: 0
+    stakes: reversible
+  - id: t-006
+    milestone: m4
+    title: "Script Days 026–050 and hidden recovery lines"
+    status: waiting
+    depends_on: t-005
+    passes: 0
+    stakes: reversible
+  - id: t-007
+    milestone: m4
+    title: "Script Days 051–075 with faction wars and difficult alliances"
+    status: waiting
+    depends_on: t-006
+    passes: 0
+    stakes: reversible
+  - id: t-008
+    milestone: m4
+    title: "Script Days 076–100 and eight alternate ending families"
+    status: waiting
+    depends_on: t-007
+    passes: 0
+    stakes: reversible
+  - id: t-009
+    milestone: m5
+    title: "Complete illustration pipeline, full-run balance and phone/tablet/desktop QA"
+    status: waiting
+    depends_on: t-008
+    passes: 0
+    stakes: reversible
+  - id: t-010
+    milestone: m5
+    title: "Obtain explicit human visual acceptance and public Play release approval"
+    status: needs-human
+    gate_human: true
+    gate_reason: outward-facing-publishing
+    stakes: outward-facing
+    passes: 0
+    note: >-
+      Internal admin preview is permitted; no public /play route
+      or published campaign without later explicit approval.
