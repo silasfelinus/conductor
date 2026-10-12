@@ -9,3 +9,7 @@ The authored tab initially used channel-only overview/sections fields, leaving i
 Local Chromium rendered the actual Vue page and four-pilot engine with repository Tailwind at 390/768/1440px. No horizontal overflow; engine pixels present; fixture non-admin page hid the cabinet. Screenshots inspected. The isolated harness substituted the unchanged cabinet wrapper and fixture user store, so it does not prove deployed authentication, shared cabinet integration or online multiplayer. Merge only; no deployment/publication.
 
 Queued and verified t-003 done through task-events with learning. Kaizen t-015 targets the remaining actual shared-cabinet/help integration evidence, following LEARNING-REPORT's quality/consumer-contract lessons. Full campaign and human launch gates remain separate.
+
+## 2026-10-12 PT — t-002 cast/acts docs reviewer closeout
+
+Merged Conductor [PR #6021](https://github.com/silasfelinus/conductor/pull/6021) (squash `b751a769`) after all 26 checks succeeded on `744d4e0b`. Internal, reversible creative documentation (CAST-BIBLE, ACT-STRUCTURE, COMMS-AND-ENDINGS-BIBLE and cross-links); no gameplay code, public UI, ArtJobs or deploys. Worker stated clearly that no art was rendered. t-002 stays open for actual ArtJobs and verified atlases. The branch carried many near-identical commit messages; squash handled it, but distinct messages would aid review. Kaizen: t-016.
