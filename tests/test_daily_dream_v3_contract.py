@@ -122,3 +122,36 @@ def test_each_category_must_give_both_projects_material():
     p = example_v3()
     p["locations"][1]["project_target"] = "zuzu-gamebook"
     assert any("exactly one asset per Zuzu project" in x for x in v3.validate_v3(p))
+
+
+def test_offline_outline_validator_accepts_v3_and_catches_invalid_v3(tmp_path):
+    import json
+    import scripts.check_dream_outlines as preflight
+
+    p = example_v3()
+    outline = tmp_path / "draft.md"
+    outline.write_text(
+        "---\\nslug: test\\ntitle: Test\\ntype: dream\\nstatus: outline\\n"
+        "proposal: true\\n---\\n"
+        + "<!-- proposal-data\\n" + json.dumps(p) + "\\n-->\\n"
+    )
+    assert preflight.check_outline(outline) == []
+    p["scenarios"][0]["choices"] = []
+    outline.write_text(
+        "---\\nslug: test\\ntitle: Test\\ntype: dream\\nstatus: outline\\n"
+        "proposal: true\\n---\\n"
+        + "<!-- proposal-data\\n" + json.dumps(p) + "\\n-->\\n"
+    )
+    assert any("moral choices" in f.detail for f in preflight.check_outline(outline))
+
+
+def test_old_builder_refuses_v3_without_any_api_writes(monkeypatch):
+    import scripts.build_dream_records as builder
+
+    def unexpected_api(*args, **kwargs):
+        raise AssertionError("legacy transaction must never create v3 records")
+
+    monkeypatch.setattr(builder, "http_json", unexpected_api)
+    errors = builder._canonical_proposal_errors(example_v3())
+    assert any("upgraded single writer" in error for error in errors)
+    assert not builder._canonical_proposal_errors(example_v3()) == []
