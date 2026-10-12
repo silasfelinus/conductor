@@ -967,18 +967,15 @@ tasks:
   - id: t-050
     milestone: m8
     title: "Butterfly Joust depth slice 4: Medals and the endless pond"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-049
-    note: >-
-      CABINETS.md section 4, Butterfly Joust (Joust riff), slice 4 of 4: Medals and the endless pond. The
-      upgrade is "The Four Gardens Tourney". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the
-      game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice'
-      at the top applies. Code: kind_robots utils/arcade/games/ (registry slug butterfly-joust). Silas,
-      2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
-      improvements, they should not just be thin veneers of the old games. But newer, better, even more
-      awesome."
+    note: |-
+      CABINETS.md section 4, Butterfly Joust (Joust riff), slice 4 of 4: Medals and the endless pond. The upgrade is "The Four Gardens Tourney". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug butterfly-joust). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Reviewer audited already-merged kind_robots#3575 at 38dc1a0b028a888cf62b0c88c5881c93249428da after reconciling dependency t-049. Complete eight-file diff inspected; all 28 original PR-head checks completed successfully at 2639814ee0a7acf75716b55707d4ab2431078cd5. Independently passed all 19 cabinet suites on current main, including medal/save/endless and both ending paths. Actual canvas menu, empty/populated medal boards and Endless Pond rendered at 390/768/1440 widths without horizontal overflow. Isolated renderer fixtures are not full-site or deployed-runtime verification. Catalog and TALKBACK closeout follows in a focused Conductor PR. No deployment performed; full-campaign pacing remains separately measurable.
+    updated: '2026-10-12T05:38:53Z'
 
   - id: t-051
     milestone: m8
