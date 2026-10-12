@@ -1427,24 +1427,16 @@ tasks:
     milestone: m8
     title: "Ribbon Riders depth slice 1: The riding feel and the wrap-up"
     status: done
-    owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-12T05:28:52Z'
-    updated: '2026-10-12T09:28:06Z'
+    updated: '2026-10-12T09:53:06Z'
     passes: 0
     stakes: reversible
-    note: >-
-      CABINETS.md section 10, Ribbon Riders (Tron light cycles riff), slice 1 of 4: The riding feel and the
-      wrap-up. The upgrade is "The Lantern Festival Circuit". Spec: projects/kr-arcade/depth-pass/CABINETS.md
-      -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for
-      every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug ribbon-riders).
-      Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of
-      quality improvements, they should not just be thin veneers of the old games. But newer, better, even
-      more awesome."
+    note: |-
+      CABINETS.md section 10, Ribbon Riders (Tron light cycles riff), slice 1 of 4: The riding feel and the wrap-up. The upgrade is "The Lantern Festival Circuit". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug ribbon-riders). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+      Merged as kind_robots#3592: a 48x48 grid with bigger animated bikes, brake and turbo, slipstream chains and whiskers, the wrap-up rule, six pickups, six rival personalities, the arena data format with six Midway arenas, and the music loop.
 
-      Merged as kind_robots#3592: a 48x48 grid with bigger animated bikes, brake and turbo,
-      slipstream chains and whiskers, the wrap-up rule, six pickups, six rival personalities,
-      the arena data format with six Midway arenas, and the music loop.
+      Independent reviewer audit on October 12, 2026 at 2:53 AM PT confirmed kind_robots#3592 merged at 76061205dbe9e441b91d0eb44f7ac6745238368e, current head 8b84c29e6ab32e4a78ef43f7d53d0c858aee96df with all 29 checks completed green. Read the complete ten-file diff and first-slice specification. All 29 cabinet suites passed independently; actual native renderer at 390/768/1440 widths showed public-steering wrap capturing a rival and awarding area score, plus timed-gate and Pier arenas without overflow. Fixtures use staged arena state, not live deployment or human campaign pacing evidence. First slice accepted; later fairgrounds/bosses/co-op remain separate tasks. Clear residual owner on already-done t-074 and add the missing idempotent completion learning.
     implementation_pr: 'silasfelinus/kind_robots#3592'
 
   - id: t-075
