@@ -545,3 +545,28 @@ tasks:
     claimed_at: '2026-10-12T14:38:38Z'
     updated: '2026-10-12T15:04:24Z'
     implementation_pr: 'silasfelinus/kind_robots#3602'
+  - id: t-019
+    milestone: m4
+    title: "River Croc toy, second take: animated from Arthemy concept-quality art"
+    status: claimed
+    depends_on: t-018
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas, 2026-10-12, on the t-018 procedural 3D Croc: "I want another take on that
+      croc. I want something closer to an animation style. Something that looks like our
+      concept art. we've got shots of the crocodile attacking zuzu and the coyote. We
+      should start with an image of that quality, built in arthemy or something like that,
+      then generated out. None of this nintendo 64 quality graphic." References: the
+      croc-and-coyote plate (ArtImage 243624, shipped as the gamebook's a1-the-shot), the
+      music-video croc (242572) and the canonical croc (243495, scarred, algae, broken
+      harpoon). Plan: (1) the key image, the Croc as the player sees him on the table, in
+      the house Arthemy lane (projects/zuzu-pinball/art/T019-CROC-KEY.yaml, ArtJobs
+      37624-37629), Silas picks a seed; (2) generate it out: LTX/WAN first-to-last-frame
+      clips per phase (submerged, rising, open, captured, death roll, spit) keyed onto a
+      flat colour; (3) the table plays them as the toy, a keyed animated card standing in
+      the watering hole over the existing scoop and jaw gate, replacing the procedural
+      geometry. Reduced motion holds each phase's key frame.
+    claimed_by: 20261012T160000Z-zuzu-t019-croc-art-b4n8
+    claimed_at: '2026-10-12T16:00:00Z'
