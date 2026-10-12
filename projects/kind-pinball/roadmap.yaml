@@ -107,7 +107,12 @@ milestones:
   - id: m6
     title: "LOOK -- one calm camera, and the mockups' visual quality"
     weight: 30
-    status: in-progress
+    status: done
+
+  - id: m7
+    title: "DEPTH -- close the gaps t-030's side-by-side found against the mockups"
+    weight: 15
+    status: done
 
 tasks:
   - id: t-001
@@ -503,21 +508,19 @@ tasks:
   - id: t-016
     milestone: m4
     title: "The finish line: Silas plays it and judges it as good as any Pinball FX3 table"
-    status: waiting
+    status: ready
     depends_on: [t-010, t-012, t-013, t-014, t-015, t-019, t-020, t-021, t-022, t-023, t-024, t-025, t-026, t-027, t-028, t-029, t-030, t-031]
-    owner: null
     passes: 0
     stakes: reversible
     gate_human: true
     gate_reason: subjective-acceptance
-    note: >-
-      FOR SILAS (gated only when it unblocks): play the table on desktop and touch and judge it against your
-      standard (2026-10-07): "as good as any pinball fx3 table" -- "a truly fun, complex, and quality table".
-      Before asking, agents must have met every line of FX3-QUALITY-BLUEPRINT.md "Acceptance bar", have
-      TUNING.md numbers showing new players reach multiball and good players reach the wizard mode, and
-      have found the hidden sub-table and returned from it in play. A screenshot must read as a physical
-      pinball machine before any label is read. If the verdict is "not yet", fold each note into new
-      tasks and keep the project active -- this project is never finished by task count.
+    note: |-
+      FOR SILAS (gated only when it unblocks): play the table on desktop and touch and judge it against your standard (2026-10-07): "as good as any pinball fx3 table" -- "a truly fun, complex, and quality table". Before asking, agents must have met every line of FX3-QUALITY-BLUEPRINT.md "Acceptance bar", have TUNING.md numbers showing new players reach multiball and good players reach the wizard mode, and have found the hidden sub-table and returned from it in play. A screenshot must read as a physical pinball machine before any label is read. If the verdict is "not yet", fold each note into new tasks and keep the project active -- this project is never finished by task count.
+
+      APPROVED TO CONTINUE by silasfelinus via Kind Robots. Gate released for the next agent. Yes, it’s great!
+    gate_rechecked: '2026-10-11'
+    approved_by_human: true
+    updated: '2026-10-12 09:45:29.007000+00:00'
 
   - id: t-017
     milestone: m1
@@ -798,7 +801,7 @@ tasks:
   - id: t-027
     milestone: m6
     title: "A painted playfield in the mockups' quality, for the main field and the Ridge"
-    status: ready
+    status: done
     depends_on: [t-026]
     owner: worker
     passes: 0
@@ -810,6 +813,22 @@ tasks:
       lanes, inserts and arrows designed into the art, plus its own art for the Ridge (the hilltop above
       the village). Generate through the durable art pipeline, map each region exactly (art bounds per
       region), and keep the engine's inserts crisp over it. Screenshot against the mockups.
+
+      Shipped in kind_robots#3467 (merged). Both krea2 renders were delivered: ArtJob 36069
+      (main playfield, 1024x2000) and 36070 (the Ridge, 1280x1024). They had sat at priority 0
+      behind 269 Zuzu jobs until they were moved to priority 110 (conductor#5920). The main
+      field is a dense night village with a waterfall and river, boardwalks, blossom trees and
+      a butterfly medallion ringed by lights. The Ridge is a moonlit hilltop with a stream, a
+      bridge, a lookout tower and three lantern clearings. Neither has a crocodile.
+      TableDef.art gains a ridge region over the Ridge floor that meets the main art.
+      paintPlayfield crops each image to its region, never stretching it, and keeps the
+      inserts crisp on top. The canvas goes from 1240 to 1750 px/m, capped to the device's
+      texture limit (artScale). The same PR restored the test suites a027022 (#3428) had
+      dropped: dressing, metalwork, depot and snes-kit. Follow-ups for t-030: the lower field
+      reads bright under the key light, and the backglass art (a cat among mushrooms) may be a
+      Zuzu bleed. Screenshots: screenshots/t027-desk.jpg, t027-phone.jpg.
+    updated: '2026-10-10T23:36:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#3467'
 
   - id: t-028
     milestone: m6
@@ -870,9 +889,9 @@ tasks:
   - id: t-030
     milestone: m6
     title: "Warm practical lighting and a carved, painted cabinet; the whole look against the mockups"
-    status: waiting
+    status: done
     depends_on: [t-027, t-028, t-029, t-031]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -880,6 +899,27 @@ tasks:
       insert glow, tuned bloom and tone mapping, shadows and reflections on the ball and chrome. The
       cabinet: painted side art and backglass at the same quality, metal trim and a carved apron. Finish
       with side-by-side screenshots (phone, desktop, ultrawide) next to the mockups for Silas.
+
+      Re-armed: status was claimed with null claimed_by/claimed_at (lost close-out write,
+      flagged by check_recurring_claim_drift).
+
+      Shipped in kind_robots #3481 (lighting) and #3484 (cabinet), both merged. Lighting: a
+      softer, warmer key light (1.15, 0xffe6c4), lower ambient, exposure 1.0; the main field's
+      lanterns throw real flickering warm light, 6 on high, 3 on medium, 0 on low
+      (TierSettings.practicalLights). Cabinet: the backglass shows its own painting, rendered
+      by ArtJob for /images/pinball/ami-village-backglass.webp (1536x640): AMI with butterfly
+      wings over the lantern-lit village, the drone carrying a net of care packages, villagers
+      waving, no lettering, no crocodile. The title art stands in only if that image is
+      missing. The side art takes a crop of the backglass painting; chrome corner armour sits
+      on the side rails; the apron carries a painted plate with a gold scroll frame and a
+      butterfly medallion. Screenshots: screenshots/t030-desk.jpg, t030-phone.jpg,
+      t030-ultrawide.jpg, plus side by side with the quality bar: t030-vs-mockup-playfield.jpg
+      and t030-vs-mockup-overview.jpg. Honest comparison: the mockup is still ahead on density
+      of sculpted 3D props, darker and more dramatic contrast, and the number of inserts,
+      arrows and metal lane guides. Those are candidates for after Silas's verdict (t-016),
+      not blockers on this task.
+    updated: '2026-10-11T02:58:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#3484'
 
   - id: t-031
     milestone: m6
@@ -915,3 +955,98 @@ tasks:
       screenshots/t031-depot.jpg, t031-depot-wide.jpg.
     updated: '2026-10-10T12:12:01Z'
     implementation_pr: 'silasfelinus/kind_robots#3446'
+
+  - id: t-032
+    milestone: m7
+    title: "A darker, more dramatic grade: the lamps and lanterns carry the light, as under glass"
+    status: done
+    depends_on: [t-030]
+    owner: worker
+    claimed_by: 2026-10-11T0300-kp-t032-grade
+    claimed_at: '2026-10-11T03:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      t-030's side-by-side with Silas's quality-bar mockups (2026-10-10) found the painted
+      playfield too bright and even: the mockup's field sits in shadow, so the inserts, lanterns
+      and flashers carry the light. Grade the generated playfield and Ridge art down (a multiply
+      dim and a radial falloff to the rails), keep the inserts and engine marks crisp on top, and
+      tint the cabinet's side art so it frames the table rather than outshining it. Visual only:
+      no physics or rules change. Screenshot against t030-desk.jpg.
+
+      Shipped in kind_robots#3489 (merged). The generated playfield and Ridge art are graded
+      once they load: a multiply dim (#d6cde2) over each region, then a radial falloff toward
+      the rails (#5a4a72 at the edge). The inserts and engine marks paint on top, ungraded.
+      The cabinet's side art (the backglass painting) is tinted #8f86a3 once it loads, so the
+      sides frame the table. The lamps, lanterns and flashers now carry the light the way the
+      mockup's do. Visual only; physics and rules are unchanged. Screenshot:
+      screenshots/t032-desk.jpg.
+    updated: '2026-10-11T03:41:25Z'
+    implementation_pr: 'silasfelinus/kind_robots#3489'
+
+  - id: t-033
+    milestone: m7
+    title: "More inserts and metal lane guides: chevron arrow runs into every shot, steel guide hardware"
+    status: done
+    depends_on: [t-030]
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      The mockups carry far more inserts than our table: a run of three to five chevron arrows
+      leading into every shot lane, lit by the rules (an unlit, lit and flashing state for each
+      shot's ladder), plus rows of round inserts for the mode and village progress. Add metal lane
+      guides and wireform-style steel at the lane entries and inlane and outlane dividers, with
+      chrome bolts and screw heads. The shot map, colliders and physics stay unchanged: new
+      inserts are flat lamps under the playfield clear coat, and guides only dress existing walls.
+      Tests cover a chevron run per shot, and that each run follows its shot's rule state.
+
+      Shipped in kind_robots#3491 (merged). A run of three chevrons sits behind each main shot
+      arrow, in the shot's colour. rules/lamps.ts drives it from the arrow: dark while the
+      arrow is unlit, filling one chevron per time the shot has been made, and chasing toward
+      the arrow while the shot is worth going for (the village shots, the multiball jackpots,
+      the wizard mode). A made shot ripples its run. The award saucer sits in the right ramp's
+      lane, so that shot has no run; chevronRun drops any run that would cross a saucer. Hex
+      stand-offs with domed chrome screw heads hold down both ends of every chrome lane guide,
+      with more along the long guides. Both are scenery only: the colliders are unchanged, and
+      the tests assert it. Tests cover placement and clearance from saucers, posts and
+      inserts, every rule state, the chase order, and the stand-off count. The overlap test
+      caught the right-ramp run sitting on the award lamp before it shipped. Screenshots:
+      screenshots/t033-desk.jpg, t033-chevrons.jpg, t033-standoffs.jpg.
+    updated: '2026-10-11T04:09:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#3491'
+
+  - id: t-034
+    milestone: m7
+    title: "Denser sculpted scenery: blossom trees, more village houses and props on the safe edges"
+    status: done
+    depends_on: [t-030]
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      The mockups' playfield is crowded with sculpted 3D props: flowering trees, cottages, fences,
+      lantern posts, barrels and crates, and a bridge over a stream. Ours has the huts, the depot,
+      AMI and the drone. Add more sculpted village scenery, placed only where the ball cannot reach
+      (outside the lanes, behind the slingshots, along the side rails and around the Ridge), so
+      play is unchanged. Merge geometry and instance it so the medium and low tiers keep their
+      frame budget, with the density set per quality tier. Tests check that no prop's footprint
+      overlaps a ball path, and that each tier's prop count holds.
+
+      Shipped in kind_robots#3495 (merged). 24 sculpted props: cottages (timber frames, gabled
+      roofs, chimneys, lit windows that follow the GI), blossom trees, fences, barrels, crates
+      and flower bushes. They stand in two clusters behind the arch at the Ridge's foot beside
+      the huts, with a tree in each Ridge lower corner and a bush on each sling plastic.
+      pinball/reach.ts flood-fills where a ball's centre can reach (2 mm grid, from the
+      plunger and every eject; walls and posts block, ramps, doors and gates never do). The
+      tests prove every prop's footprint, and any crown low enough to meet a ball, is out of
+      play, and that no ramp or cover passes over a prop. They also check the map against the
+      shooter lane, the shot arrows, the saucers and the flippers. Rendering merges per-
+      vertex-coloured solids and windows per tier, six draw calls at most. Low keeps the
+      cottages and main trees, medium adds trees and fences, high adds the small props. No
+      colliders are added. Honest limit: there is little out-of-play ground on the main field,
+      so from the default desk camera the village shows mostly at the top edge near the DMD.
+      It reads fully on the phone view and the Ridge camera. Screenshots:
+      screenshots/t034-desk.jpg, t034-phone.jpg, t034-village.jpg.
+    updated: '2026-10-11T04:19:06Z'
+    implementation_pr: 'silasfelinus/kind_robots#3495'

@@ -67,7 +67,7 @@ overrides:
     kind: software
 
   - slug: conductor
-    status: active
+    status: finished
     priority: normal
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
@@ -77,7 +77,7 @@ overrides:
     tabKey: projects
 
   - slug: kind-robots
-    status: active
+    status: retired
     priority: normal
 
   - slug: text-generation
@@ -156,7 +156,7 @@ overrides:
     tabKey: projects
 
   - slug: humboldt-scoop-cms
-    status: active
+    status: paused
     priority: normal
     # No Kind Robots placement: the Scoop CMS Admin tab was retired by
     # kind_robots#2663 (2026-10-01); the project lives through its roadmap.
@@ -199,7 +199,7 @@ overrides:
     priority: low
 
   - slug: digital-storefront
-    status: active
+    status: paused
     priority: high
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
@@ -323,7 +323,7 @@ overrides:
     # kind_robots#2668 (2026-10-01) while the project is paused.
 
   - slug: storybook
-    status: active
+    status: finished
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
@@ -370,7 +370,7 @@ overrides:
     tabKey: watchlist
 
   - slug: conductor-app
-    status: active
+    status: retired
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
@@ -422,7 +422,7 @@ overrides:
 
   - slug: coat-dance
     status: active
-    priority: normal
+    priority: low
     kind: content
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
@@ -515,7 +515,7 @@ overrides:
     kind: software
 
   - slug: appmaker
-    status: active
+    status: paused # paused 2026-10-12 PT by Silas in ChatGPT; preserve roadmap and existing app surface
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
@@ -531,7 +531,7 @@ overrides:
     kind: software
 
   - slug: ruler-hooked
-    status: active # REOPENED 2026-08-26 (Silas, in session: "We should start generating
+    status: paused # REOPENED 2026-08-26 (Silas, in session: "We should start generating
     # art for The Ruler is Hooked... We have hundreds of art pieces we'll need for this
     # project"). The `finished` value below was accurate for the PoC milestone and
     # misleading for the product: FULL-GAME-GAP-AUDIT.md (2026-08-26) verified that
@@ -590,19 +590,19 @@ overrides:
     priority: normal
 
   - slug: kind-economy
-    status: active # created 2026-08-19 by Silas — the money layer for Kind Robots:
+    status: paused # created 2026-08-19 by Silas — the money layer for Kind Robots:
     # Stripe going live, the three-way paid-usage split (platform / anti-malaria
     # mission / creator), creator payouts, mission remittance, and the Save One
     # Human restart-or-retire decision. Declared a "vitally important tentpole"
     # in-session, hence priority: urgent. See projects/kind-economy/DESIGN-BRIEF.md.
-    priority: urgent
+    priority: low
     kind: software
 
   - slug: cthulhuquarium
-    status: active # added 2026-08-24 by Silas — long-planned silly project, finally started
+    status: paused # added 2026-08-24 by Silas — long-planned silly project, finally started
     # priority raised to high 2026-08-24 by Silas, in session: "i want it to be the main
     # task worked on by agents over the next few days."
-    priority: high
+    priority: low
     kind: software
     # Frontend placement — synced to the kind_robots Project row (id 2112) by
     # sync_kind_robots_projection.py. Values match the canonical PROJECT_PLACEMENTS
@@ -632,7 +632,7 @@ overrides:
     kind: software
 
   - slug: mandarin-tutor
-    status: active # REOPENED 2026-09-19 by Silas, in session: "i want an evolution of the mandarin
+    status: paused # REOPENED 2026-09-19 by Silas, in session: "i want an evolution of the mandarin
     # project ... I want a tutorial page for each of the words that we teach, and a system where we
     # only show flashcards after showing the instruction that shows the pinyin plus what each aspect
     # represents, with historical info. We should also add a point system." That is a named human
@@ -651,32 +651,32 @@ overrides:
     kind: software
 
   - slug: rainbow-butterflies
-    status: active # added 2026-08-28 by Silas — AMI-led ethical outreach, agent collaboration, and anti-malaria fundraising
+    status: paused # added 2026-08-28 by Silas — AMI-led ethical outreach, agent collaboration, and anti-malaria fundraising
     priority: normal
     kind: software
 
   - slug: art-archive
-    status: active # created 2026-09-17 from Silas's legacy AI-art archive project
+    status: finished # created 2026-09-17 from Silas's legacy AI-art archive project
     priority: high # Silas 2026-09-17: keep high priority for agent work until complete
     kind: software
 
   - slug: butterfly-gallery
-    status: active # created 2026-09-17 from Silas's original animated art-sort vision
+    status: finished # created 2026-09-17 from Silas's original animated art-sort vision
     priority: high # Silas 2026-09-18: high priority until complete
     kind: software
 
   - slug: tzaddik-gallery
-    status: active # created 2026-09-26 by Silas — playful sourced gallery of 36 living "just people"
+    status: finished # created 2026-09-26 by Silas — playful sourced gallery of 36 living "just people"
     priority: normal
     kind: software
 
   - slug: music-video
-    status: active # created 2026-10-01 by Silas — Suno-inspired music video creator on our ComfyUI; admin-only first (kind_robots /admin/music-video)
+    status: finished # created 2026-10-01 by Silas — Suno-inspired music video creator on our ComfyUI; admin-only first (kind_robots /admin/music-video)
     priority: normal
     kind: software
 
   - slug: comic-creator
-    status: active
+    status: retired
     priority: normal
     kind: software
 
@@ -686,7 +686,7 @@ overrides:
     kind: software
 
   - slug: kr-adventures
-    status: active
+    status: retired
     priority: normal
     kind: software
 
@@ -701,12 +701,12 @@ overrides:
     kind: software
 
   - slug: evolve-rebel-button
-    status: active
+    status: finished
     priority: normal
     kind: software
 
   - slug: comic-film
-    status: active
+    status: paused
     priority: normal
     kind: software
 
@@ -722,6 +722,16 @@ overrides:
 
   - slug: zuzu-pinball
     status: active # Silas 2026-10-09, Zuzu: The Last Bell distinct FX3-class pinball game
+    priority: normal
+    kind: software
+
+  - slug: rainbow-bullet-hell-space-princess
+    status: active # 2026-10-11: standalone full-length 1-4 player pastel space shmup Arcade campaign
+    priority: high
+    kind: software
+
+  - slug: save-the-plumber
+    status: active # 2026-10-11: standalone 8-world / 32-stage original platform campaign
     priority: normal
     kind: software
 
@@ -781,11 +791,21 @@ overrides:
     kind: software
 
   - slug: kind-pinball
-    status: active
+    status: finished
     priority: high
     kind: software
 
   - slug: robot-paper-boat-regatta
     status: active
+    priority: normal
+    kind: software
+
+  - slug: kind-sliding-tile-gallery
+    status: active
+    priority: normal
+    kind: software
+
+  - slug: emperor-of-dust
+    status: active # 2026-10-11 PT: independent pre-Zuzu 100-day ruler/dispatch game
     priority: normal
     kind: software

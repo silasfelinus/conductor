@@ -51,7 +51,7 @@ milestones:
   - id: m2
     title: "ENGINE — seeded five-land state, procedural decks, movement, checks, saves"
     weight: 30
-    status: in-progress
+    status: done
   - id: m3
     title: "WORLD & ART — content packs, scoped resources, companion and story logic"
     weight: 25
@@ -59,7 +59,7 @@ milestones:
   - id: m4
     title: "EXPERIENCE — art-heavy board, card decks/flips, sound, accessibility"
     weight: 15
-    status: in-progress
+    status: done
   - id: m5
     title: "POLISH & SHIP — QA, balance, visual verdict, player reveal pacing"
     weight: 10
@@ -182,60 +182,70 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Stats, dice/skill checks, HP, item/technique Rewards and companion relationships"
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-006]
-    note: >-
-      Implement original 2d6 check and consequence table with combat/noncombat
-      options, character sheet, reward gating, inventory and persistent
-      conditions; protect stat balance from infinite farming; reuse gamebook
-      pure utilities where compatible, not its state machine.
+    note: |-
+      Implement original 2d6 check and consequence table with combat/noncombat options, character sheet, reward gating, inventory and persistent conditions; protect stat balance from infinite farming; reuse gamebook pure utilities where compatible, not its state machine.
+
+      Pure provenance-checked character progression and store projection are committed with a dedicated anti-farming/skill-check test. Existing v2 authored encounter dice and saved games remain unchanged; reward spending and applying earned techniques to live checks require the t-009 replay/save migration.
+
+      Merged Kind Robots PR #3486 at 95e0968 after all 29 implementation workflows completed successfully, including TypeScript, dedicated Shifting Lands progression contract and the repository-wide contract suite. Pure character sheet derives bounded learned skills, item Rewards, persistent authored injuries and named NPC bonds from verified saved outcomes, with anti-farming and eligible-use guards. No existing v2 roll was rescored and no save migration or production deploy was performed. Applying new perks to live rolls and persisting item spending is deferred to t-009; inventory overlay is t-016.
+    claimed_by: 2026-10-11T025500Z-zuzu-shifting-lands-t008-c52b91
+    claimed_at: '2026-10-11T02:55:00Z'
+    updated: '2026-10-11T03:19:00Z'
 
   - id: t-009
     milestone: m2
     title: "Safe versioned save/resume, pinned run seed, history and deterministic replay tests"
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-006]
-    note: >-
-      Durable, schema-versioned serialized run; preserve choices, hidden roles,
-      map events, used Rewards, companion identity and both roll dice; reject
-      corrupted saves; no re-roll by refresh.
+    note: |-
+      Durable, schema-versioned serialized run; preserve choices, hidden roles, map events, used Rewards, companion identity and both roll dice; reject corrupted saves; no re-roll by refresh.
+
+      Implemented isolated V3 event replay ledger, source-pinned seed and deterministic validation of card identity, dice, map shifts and spent Rewards, plus V2 save migration as an explicit legacy checkpoint. Private preview store now persists only V3 after migration and refuses rollback from invalid V3. Dedicated replay and board contract tests added; implementation PR and CI pending.
+
+      Merged Kind Robots PR #3499 as b8fd9f7 after all 29 completed green checks, including the Shifting Lands Gameplay Contract, TypeScript, repository-wide Contract Tests and Prettier ratchet. V3 source/seed-pinned save ledger replays exactly authored choices, dice, bosses, shifts and reward spends; V2 migration preserves legacy rolls as explicit checkpoints. New private board saves use V3; old key remains untouched; invalid V3 cannot silently fall back. No live deployed version, public publication or production schema change claimed. Companion/inventory UI remains t-016.
+    claimed_by: 2026-10-11T051600Z-zuzu-shifting-lands-t009-9c42
+    claimed_at: '2026-10-11T05:16:00Z'
+    updated: '2026-10-11T05:35:00Z'
 
   - id: t-010
     milestone: m3
     title: "Author five land encounter decks, three locations each, alternate outcomes"
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-020]
-    note: >-
-      Author three or more whole fixed-cast illustrated scene identities
-      per location with at least two checked choices and good/bad/mixed
-      possibilities, including rescue/bargain/stealth/combat. Land one:
-      Homestead, watering holes, roadside chapel and ambiguous hospitality.
-      Cave witches in higher lands, gorilla encounters in high-tier. Do not
-      misstate the Abbess agenda or invent causes for the lost-humanity
-      mystery. Document existing lore in source; pace its reveal in game.
+    note: |-
+      Author three or more whole fixed-cast illustrated scene identities per location with at least two checked choices and good/bad/mixed possibilities, including rescue/bargain/stealth/combat. Land one: Homestead, watering holes, roadside chapel and ambiguous hospitality. Cave witches in higher lands, gorilla encounters in high-tier. Do not misstate the Abbess agenda or invent causes for the lost-humanity mystery. Document existing lore in source; pace its reveal in game.
+
+      Authored all 36 later-land design-only fixed-cast scene cards with 72 distinct checked choices and 144 outcomes at twelve canonical locations. Each pool includes good/bad/mixed situations; art provenance and live resource IDs remain unverified and null. Added cross-land CI contracts, seed draw checks, causal prospective shifts and an explicit runtime V4 migration handoff. PR and CI review underway. New content is source draft, not yet playable.
+
+      Merged Conductor PR #5950 at 3c45f97 after six completed green workflows, including Shifting Lands Manifest Contract, Worker PR CI full pytest, Roadmap/worker handoff and Security Audit. Authored 36 later-land fixed-cast scenes across 12 canonical locations (72 checked choices and 144 outcomes), with 4 causal prospective route shifts and source-only visual art briefs. Complete source library has 48 cards at all 15 locations. Source status remains draft-not-imported; a separate Kind Robots runtime integration and V4 replay-compatible migration are still required before gameplay.
+    claimed_by: 2026-10-11T073300Z-zuzu-shifting-lands-t010-7f2d
+    claimed_at: '2026-10-11T07:33:00Z'
+    updated: '2026-10-11T08:07:00Z'
 
   - id: t-011
     milestone: m3
     title: "Boss encounters and alternative noncombat solutions for all five land gates"
-    status: waiting
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-010]
-    note: >-
-      Every land boss has a build-up and multiple earned outcomes, plus a
-      failure state. The first land's major challenge centers on the
-      convent/Abbess authority; the longstanding ritual motivation is
-      openly documented in source; reveal it to players via earned clues.
+    note: |-
+      Every land boss has a build-up and multiple earned outcomes, plus a failure state. The first land's major challenge centers on the convent/Abbess authority; the longstanding ritual motivation is openly documented in source; reveal it to players via earned clues.
+
+      Authored all five boss trial scenes with three choices each: combat, nonviolent terms, and unlocked evidence-led passage requiring actual earlier earned flags. Implemented V5 isolated action/replay ledger so prior V4/V3/V2 saves and their original rolls remain unchanged, plus private Admin reading interface and seeded regression checks. Kind Robots PR #3510 open for repository-wide checks and review. No public publishing, paid art, migrations or deployed UI claimed.
+
+      Merged Kind Robots PR #3510 as 77f435f after all 30 GitHub head workflows succeeded, including TypeScript, Shifting Lands Gameplay, and the repository-wide 475-step Contract Tests with ESLint/Prettier ratchets. Authored five 3-route boss trials: physical confrontation, a nonviolent bargain, and evidence-led alternatives requiring actual earned encounter flags. Recorded dice, success/failure passages, wounds, provisioning, progress and history in replay-verified V5 saves. V4/V3/V2 journeys retain their original reducers and saved rolls. No live deployment, public route, paid ArtJobs, schema changes, or bespoke boss illustrations claimed.
+    claimed_by: 2026-10-11T111000Z-zuzu-shifting-lands-t011-b58c
+    claimed_at: '2026-10-11T11:10:00Z'
+    updated: '2026-10-11T11:56:00Z'
 
   - id: t-012
     milestone: m3
@@ -254,7 +264,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Reuse accepted Zuzu ArtImages and enqueue missing illustrated scene variants"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -266,10 +276,24 @@ tasks:
       missing; track queued vs rendered vs delivered vs verified. Observe
       mature/private rights and locked frame requirements.
 
+      2026-10-11 (Silas): the Zuzu character LoRAs are the default for Shifting Lands art. Give each new art ledger
+      `series: zuzu-koala-assassin` and the Arthemy house lane; enqueue_art_requests.py then adds the right character
+      LoRAs per subject (projects/comic-creator/cast-loras/zuzu-koala-assassin.yaml).
+
+      Done 2026-10-11 (kind_robots#3546): every one of 48 encounters, 15 roads and 5 trials
+      now resolves to a hand-picked, git-tracked Zuzu Gamebook/Showdown illustration via
+      utils/shiftingLands/sceneArt.ts (presentation only; authored packs keep art: null for
+      t-023). Card backs moved out of /images (Alexandria mounts the media share over it,
+      which hid them). Also fixed the unresolved NavigationFlipCard (components use
+      pathPrefix: false) that left every drawn encounter blank. No ArtJobs enqueued; bespoke
+      later-land paintings tracked as t-026.
+    updated: '2026-10-11T22:13:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#3546'
+
   - id: t-014
     milestone: m3
     title: "Storybook-style optional prose generation with bounded rules state and offline fallback"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -299,14 +323,23 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Companion rail, inventory/skills overlay, dice/motion/sound and journey log"
-    status: waiting
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-008, t-015]
-    note: >-
-      Show specific named character relationships and Rewards without
-      hiding art beneath CRUD controls; reduced-motion and mute settings.
+    note: |-
+      Show specific named character relationships and Rewards without hiding art beneath CRUD controls; reduced-motion and mute settings.
+
+      Implemented illustrated character sheet rail, actual earned one-use inventory, history-grounded skills and injuries, named nontravelling relationships, journal filters and optional accessible dice cues. Presentation preferences are separate from versioned V5 ledger; no existing dice or save rules change. Kind Robots PR #3530 awaits all repository checks after successful scoped formatting. No public publishing, paid art or live production deployment claimed.
+
+      Merged 2026-10-11 via kind_robots#3546, which carried #3530 and repaired its two stale
+      contract regexes (attemptTrialWithCue rename; Prettier trailing comma in matchMedia).
+      Gameplay contract CI green. Merged != deployed: live after the next Alexandria deploy.
+    claimed_by: 2026-10-11T203500Z-zuzu-shifting-lands-t016-a71c
+    claimed_at: '2026-10-11T20:35:00Z'
+    updated: '2026-10-11T22:13:48Z'
+    implementation_pr: 'silasfelinus/kind_robots#3530'
 
   - id: t-017
     milestone: m5
@@ -418,21 +451,70 @@ tasks:
   - id: t-023
     milestone: m3
     title: "Map twelve bespoke authored Homestead card illustrations"
-    status: waiting
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-013, t-020, t-022]
     note: >-
       Deliver or link approved per-encounter art matching each fixed cast, preserving source Image IDs and resource rights/rating/continuity. Clearly label pending assets, never invent live references or independently reassign species.
 
+      2026-10-11 (Silas: "keep working on future upgrades, 23 and 26"): art round 1 in flight, projects/zuzu-shifting-lands/art/ROUND-1.yaml, ArtJobs 37401-37504. Two Arthemy house-lane seeds per card for all 48 authored encounters and the four later trials, prompts from each card's fixed cast in encounters/*.json, so t-026 rides the same round. Keepers get `verdict: keep`, export with scripts/export_shifting_lands_cards.py to kind_robots public/shifting-lands/cards/<card>.webp and are listed in sceneArt.ts BESPOKE_CARDS. rest_until holds the claim while the shared render queue drains.
+
+      Done 2026-10-12: art round 1 (projects/zuzu-shifting-lands/art/ROUND-1.yaml) plus
+      rerolls painted 51 of 52 Shifting Lands cards, two Arthemy house-lane seeds each,
+      reviewed against each card's cast and brief and exported to kind_robots public/shifting-
+      lands/cards (BESPOKE_CARDS). Shipped in kind_robots#3572 and #3586. A Road of Bones
+      missed twice and deliberately keeps its reused bone-valley plate; the Homestead trial
+      keeps the gamebook abbess-welcome plate.
+    claimed_by: 2026-10-11T224500Z-zuzu-shifting-lands-t023-art1
+    claimed_at: '2026-10-11T22:39:53Z'
+    updated: '2026-10-12T09:03:53Z'
+    implementation_pr: 'silasfelinus/kind_robots#3586'
+
   - id: t-024
     milestone: m5
     title: "Verify authored prose, choice dice, flips, art and replay"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-021, t-023]
     note: >-
       Run seeded and malformed-save tests, no duplicate draws, 2+ meaningfully different decisions, card reading accessibility, reduced-motion/keyboard, durable journal and 375/768/1440 screenshot acceptance; separate human public-release gate t-018 remains.
+
+  - id: t-025
+    milestone: m2
+    title: "Integrate four later-land authored packs with V4-safe replay into private board"
+    status: done
+    passes: 0
+    stakes: reversible
+    depends_on: [t-009, t-010, t-020]
+    note: |-
+      Import the 36 design-only fixed-cast encounter identities from encounters/DUSTWATER-9.json, TABLELANDS-9.json, STORM-CROW-9.json, and BLACK-VERGE-9.json into typed, validated player-safe Kind Robots manifests while preserving exact canonical location IDs, encounter identities, weighted seeded draw and source provenance. Upgrade the pure authored journey reducer to provide two distinct 2d6-checked choices with result prose/effects at each of the remaining twelve locations; remove prototype RESOLVE only for new-version runs. Introduce an explicit V4 saved-run/replay compatibility boundary: existing V2 and V3 checkpoints and later-land prototype rolls must remain reconstructible without rescore or surprise re-draw. Revisit cannot reroll or farm. Shift only unvisited places for source-authored reasons. Wire the existing private Admin board and persistent flip reader/journal to new fixed-cast cards with visibly pending art slots; no invented ArtImage references, public /play route, or paid art generation. Test all 15 location paths and five boss transitions, malformed-save rejection, old-run migrations and balanced seed distributions. Source packs are documented in encounters/LATER-LANDS-IMPLEMENTATION.md. Coordinate with t-011 for final named boss-story alternatives and t-016 for character/inventory UI; do not silently make those tasks complete.
+
+      Imported 36 source-pinned, player-safe later-land encounter cards and implemented separate V4 rules/replay, fixed draws, checked decisions, journaled outcomes and causal prospective shifts. Existing V3/V2 saves remain on original keys and reducers. Private Admin board gains V4 play, old V3 runs retain prototype later-land rules. Seed/property contract suite and all repo CI pending before reversible merge.
+
+      Merged Kind Robots PR #3506 as 3aea16a after all 30 head workflows completed successfully, including dedicated Shifting Lands Gameplay, TypeScript, Prettier/ESLint and repository-wide Contract Tests (473 steps). Imported 36 player-safe, source-pinned later-land authored cards to the private Admin board with seeded whole-card draws, 2d6 checked choices, recorded consequences and prospective causal shifts. V4 new journeys replay exact dice/card/flags/Rewards; existing V3 and V2 saves retain their previous reducer, results and localStorage keys. No public play route, ArtJobs, production deploy or boss-variant/companion UI claimed.
+    claimed_by: 2026-10-11T092100Z-zuzu-shifting-lands-t025-d41e
+    claimed_at: '2026-10-11T09:21:00Z'
+    updated: '2026-10-11T10:09:00Z'
+  - id: t-026
+    milestone: m3
+    title: "Bespoke illustrations for the 36 later-land encounters and four later trials"
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-022, t-023]
+    note: |-
+      Opened 2026-10-11 after t-013's reuse pass (kind_robots#3546). Every later-land card currently shows a hand-picked existing Zuzu Gamebook/Showdown scene from utils/shiftingLands/sceneArt.ts; the authored packs keep art: null so this task can see what it owes. Paint one fixed-cast illustration per encounter in DUSTWATER-9, TABLELANDS-9, STORM-CROW-9 and BLACK-VERGE-9 plus the Crossing Gate, Canyon Warden, Deep-Cave Judgement and Beyond the Verge trials, following the t-023 Homestead pattern once it lands (same frame, LoRA and rights rules). Durable ArtJobs only; queued != rendered != delivered != verified. Ship delivered art from a path the image serves (never under /images, which Alexandria mounts over), then swap the sceneArt entries and keep verifyShiftingSceneArt.test.ts green.
+
+      Done 2026-10-12: art round 1 (projects/zuzu-shifting-lands/art/ROUND-1.yaml) plus
+      rerolls painted 51 of 52 Shifting Lands cards, two Arthemy house-lane seeds each,
+      reviewed against each card's cast and brief and exported to kind_robots public/shifting-
+      lands/cards (BESPOKE_CARDS). Shipped in kind_robots#3572 and #3586. A Road of Bones
+      missed twice and deliberately keeps its reused bone-valley plate; the Homestead trial
+      keeps the gamebook abbess-welcome plate.
+    updated: '2026-10-12T09:03:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#3586'

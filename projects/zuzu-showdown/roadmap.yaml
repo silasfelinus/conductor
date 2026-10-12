@@ -43,7 +43,7 @@ milestones:
   - id: m3
     title: "ART -- sprite pipeline, eight sprite sets, portraits, eight animated stages"
     weight: 30
-    status: in-progress
+    status: done
 
   - id: m4
     title: "FIGHTERS & MODES -- movesets, lines, taunt screens, CPU, Arcade, Training, sound"
@@ -53,7 +53,7 @@ milestones:
   - id: m5
     title: "POLISH & SHIP -- balance, devices, Silas's verdict, hall listing"
     weight: 10
-    status: not-started
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -245,8 +245,8 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Portraits: character select, VS screen and win/defeat art for all eight"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -257,6 +257,22 @@ tasks:
       VIDEO-GUARDRAILS.md word traps and bannedTerms; no lettering. Then pixelize them (downscale and
       quantize to the fighter's palette) so they sit with the sprites. Commit to kind_robots
       public/images/zuzu-showdown/portraits/ with a metadata JSON per image.
+
+      DONE 2026-10-10 (PT): all 36 portraits (9 fighters x 4: select bust, VS half-body slam,
+      victory, beaten) are in the game (silasfelinus/kind_robots#3485). Kontext re-posed each
+      from its canon source (art/T008-PORTRAITS.yaml; the Siblings rerolled with the toddler's
+      own pose stitched in, siblings-vs on its third draw, 244925). New tools/portraits.py
+      ships them as pixel PNGs at screen size (40-colour) and 4x HD WebP (~1 MB in all) plus
+      portraits.json. They live at kind_robots public/zuzu-showdown-portraits/, not
+      public/images/ as this note said, because /public/images/** is gitignored. The select
+      cards show busts, the VS screen slams in the half-bodies, the win screen shows the
+      winner's victory portrait with the loser's beaten one small in the corner; in a mirror
+      match P2's portrait is hue-shifted for its alternate palette; a missing portrait falls
+      back to the sprite.
+    claimed_by: 2026-10-11T00:15:00Z-zs-t008
+    claimed_at: '2026-10-11T00:10:26Z'
+    updated: '2026-10-11T03:26:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#3485'
 
   - id: t-009
     milestone: m3
@@ -423,8 +439,8 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Sprite sets: the Hyena Matriarch, Old Komodo, and the boss"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-010]
@@ -441,7 +457,25 @@ tasks:
       eye layers are rendered (art/T021-BOSS-PARTS.yaml, re-drawn from the door by Kontext); the house-lane
       tentacle seeds drifted into figures and became the Swamp Witch (t-028).
 
+      PROGRESS 2026-10-10 (PT, later): Old Komodo plays as his art (silasfelinus/kind_robots#3483, rig
+      tools/rigs/komodo.py from art/T013-KOMODO-PARTS.yaml; normals fitted to the art; his staff smash
+      reaches 45 px). Left: the boss (its layers are rendered; building it is t-021's).
+
+      DONE 2026-10-10 (PT): all three sets are in the game. The Hyena Matriarch
+      (kind_robots#3462, tools/rigs/hyena.py) and Old Komodo (kind_robots#3483,
+      tools/rigs/komodo.py, the 'komodo dragon, giant monitor lizard, scaled reptile' lead
+      held) play as their art with normals fitted to it. The boss is never drawn whole, as the
+      note asks: tools/boss_layers.py keys and crops the T021 layers (the door 243506, the
+      rising, sweeping and grasping tentacles, the eye) and kind_robots#3493's bossArt.ts
+      animates them by the sim's boss phases: the door widens per phase, the striking tentacle
+      rises from the floor under its target or slides out along it, the eye glows before its
+      beam and hangs out of the door in phase 3.
+
   # ---------------------------------------------------------------- m4 FIGHTERS & MODES
+    claimed_by: 2026-10-11T04:15:00Z-zs-t013
+    claimed_at: '2026-10-11T04:12:26Z'
+    updated: '2026-10-11T04:12:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#3493'
   - id: t-014
     milestone: m4
     title: "Movesets: Zuzu and Coyote Vagrant (frame data from fighters.yaml)"
@@ -580,7 +614,7 @@ tasks:
   - id: t-019
     milestone: m4
     title: "kind_robots: taunt screens -- VS intro, in-match taunt, KO/victory sequence, win screen"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -591,9 +625,20 @@ tasks:
       TS module), stage entrance intros, ROUND/FIGHT, the in-match taunt, the slow-mo KO and flash
       (reduced-motion safe), victory/Perfect/KO poses, and the post-fight win screen with the winner's
       matchup quote. Playwright screenshots of every screen at three widths.
+
+      DONE 2026-10-10 (PT): every piece of the note is on main. VS screen and win screen with
+      every matchup's lines (kind_robots#3341, matchups.json ported by
+      tools/matchups_to_ts.py); slow-mo KO and flash, reduced-motion safe (#3342); round intro
+      with each fighter's intro animation, ROUND/FIGHT callouts, the in-match taunt and
+      victory/Perfect/KO poses as sprites (t-010, #3329); arcade character select with the P2
+      alternate palette (#3423); portraits on all three screens (#3485, t-008). Playwright
+      screen tour at 390, 768 and 1366 px in projects/zuzu-showdown/docs/screens/ (the win
+      screen through a Chromium harness of the same draw code, since headless rendering runs
+      the game too slowly to finish a match).
     claimed_by: 2026-10-07T11:45:00Z-zs-t019
     claimed_at: '2026-10-07T11:44:57Z'
-    updated: '2026-10-07T11:44:57Z'
+    updated: '2026-10-11T03:26:26Z'
+    implementation_pr: 'silasfelinus/kind_robots#3485'
 
   - id: t-020
     milestone: m4
@@ -625,8 +670,8 @@ tasks:
   - id: t-021
     milestone: m4
     title: "kind_robots: Arcade mode, the boss, endings, leaderboard and arcade hall tile"
-    status: waiting
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-019, t-020]
@@ -637,6 +682,32 @@ tasks:
       multiplier) goes through the arcade store's submitScore as gameSlug `zuzu-showdown`, with
       maxPlausibleScore registered and three-initial entry. The Arcade hall tile links to
       /play/zuzu-showdown but stays out of the hall until t-025.
+
+      READY 2026-10-10 (PT): t-019 and t-020 are done (t-019 closed in this PR), so the
+      resolver's promotion is applied here. The ending stills are queued
+      (art/T021-ENDINGS.yaml).
+
+      PROGRESS 2026-10-10 (PT): Arcade mode (kind_robots#3492: a seeded ladder of every other
+      fighter ending on the rival then the Swamp Witch, the CPU climbing two levels,
+      ladder/continue/ending/initials screens, a score from the match's own events times the
+      starting level, posted to the arcade leaderboard as an unlisted scored game so it stays
+      out of the hall until t-025) and The Thing Behind the Door (kind_robots#3493: three
+      phases on the Thin Place, one round, immovable, its own AI; engine hooks
+      immovable/startX/phases/singleRound and render painters; every fighter can bring it down
+      inside the clock) are on main. Left: the 18 ending stills (art/T021-ENDINGS.yaml,
+      queued) ship with tools/endings.py; until then each ending shows the victory portrait.
+      The hall tile's metadata waits in UNLISTED_SCORED_GAMES for t-025.
+
+      DONE 2026-10-11 (PT): the 16 painted ending stills shipped (kind_robots#3505, reviewed
+      against the character rules). The Coyote's two would not render with his right hand gone
+      (four rounds, art/T021-ENDINGS.yaml rejected); they moved to t-030 and his ending keeps
+      the victory-portrait fallback meanwhile. With Arcade/Story mode (#3492), the boss
+      (#3493) and the leaderboard on main, t-021 is complete; the hall tile waits on t-025 as
+      planned.
+    updated: '2026-10-11T09:36:55Z'
+    claimed_by: 2026-10-11T04:10:00Z-zs-t021
+    claimed_at: '2026-10-11T03:59:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#3505'
 
   - id: t-022
     milestone: m4
@@ -697,8 +768,8 @@ tasks:
   - id: t-024
     milestone: m5
     title: "Balance and feel pass, plus phone/tablet/desktop check"
-    status: waiting
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-015, t-016, t-017, t-021, t-022, t-023]
@@ -709,10 +780,26 @@ tasks:
       full device pass: phone portrait and landscape (touch, Easy Specials), tablet, desktop (keyboard,
       two gamepads), with screenshots of every screen.
 
+      READY 2026-10-11 (PT): t-021 is done (closed in this PR), so every dependency is
+      satisfied and the resolver's promotion is applied here.
+
+      DONE 2026-10-11 (PT): balance (kind_robots#3541, fighters.yaml via conductor#5998): a
+      720-match Showdown CPU round robin went from 16-79% to 43-59% for every fighter, half of
+      it a CPU fix (no command grabs out of reach, no taunts up close, reloads when empty).
+      Still lopsided, for a later pass: Storm Crow vs the Abbess, the Coyote vs Old Komodo,
+      River Croc vs the Abbess. Device pass (kind_robots#3549): phone portrait and landscape,
+      tablet and desktop render with no overflow and touch controls on touch screens; the one
+      blocker, a sideways phone mid-fight running off the screen, is fixed. Gamepads were not
+      tested on hardware.
+    updated: '2026-10-11T22:07:59Z'
+    claimed_by: 2026-10-11T10:20:00Z-zs-t024
+    claimed_at: '2026-10-11T20:45:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#3541'
+
   - id: t-025
     milestone: m5
     title: "Silas plays it and gives a verdict (then list it in the hall)"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -725,10 +812,19 @@ tasks:
       it, an agent moves the Admin tab to the Projects channel (content doc +
       utils/projectPlacements.ts) and shows the Arcade hall tile.
 
+      READY 2026-10-11 (PT): t-024 is done (closed in this PR). Silas, 2026-10-11: "If it's
+      ready for prime time, it can move to the Play and out of admin." With t-024 passed, the
+      agent half is done in kind_robots#3549: the tab moved from Admin to Projects (Play), the
+      page lost its admin gate, it has a project placement, and the Arcade hall lists it
+      (LINKED_GAMES, its scores in the hall of fame). Left for Silas: play Story and Versus on
+      phone and desktop and give the verdict on feel, look, lines and KO tone; agents fold his
+      notes into the roadmap.
+    updated: '2026-10-11T22:08:36Z'
+
   - id: t-026
     milestone: m5
     title: "Project art: confirm icon, card and hero landed"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -737,10 +833,18 @@ tasks:
       physical subject first, no negations, no frame nouns). Confirm they landed and look right (Zuzu
       short and stocky in the kasa and poncho, facing a rival); re-stage any that miss.
 
+      DONE 2026-10-10 (PT): all three landed in projects/images/ (zuzu-showdown-icon.webp
+      256x256, -card.webp 512x768, -hero.webp 1280x720) and the queue entries were pruned.
+      Checked by eye: Zuzu is short and stocky in the kasa and poncho in all three; the card
+      has him leaping at the Coyote over the Mission's bell tower, the hero has him facing the
+      River Croc with the Abbess, the Coyote, the Hyena and the Crow looking on; no lettering.
+      Nothing to re-stage.
+    updated: '2026-10-11T03:20:03Z'
+
   - id: t-028
     milestone: m4
     title: "New fighter: the Swamp Witch, the Thing's avatar (moveset, references, rig, portraits)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -762,9 +866,22 @@ tasks:
       window's new `meter` for Bargain, verifyZuzuShowdownWitch with 12 checks); she plays with the
       placeholder body until her rig ships. (3) art/T014-WITCH-PARTS.yaml is queued (jobs 36415-36422);
       rigs/witch.py follows. (4) her portraits are queued in T008.
+      LATER: (3) done, she plays as her art (silasfelinus/kind_robots#3483, tools/rigs/witch.py; her
+      normals fitted to the art). Left: (4) her portraits are rendered; wiring every fighter's portraits
+      into the select, VS and win screens is t-008's.
+
+      DONE 2026-10-10 (PT): the Swamp Witch is a full fighter. (1) References re-posed by
+      Kontext from the drifted boss seeds (art/T014-WITCH-REFERENCES.yaml), 244386 picked; (2)
+      kit fighters/swamp-witch.ts with its contract suite (kind_robots#3463; the parry learned
+      to bank meter for Bargain); (3) parts sheet art/T014-WITCH-PARTS.yaml and rig
+      tools/rigs/witch.py, the coil one bending cut part, normals fitted to the art
+      (kind_robots#3483); (4) her four portraits in T008 (kind_robots#3485). fighters.yaml
+      carries her and the boss's avatar link; matchups.yaml her 9 matchups and boss line. Her
+      arcade role (last fight before the door) lands with t-021.
     claimed_by: 2026-10-10T20:30:00Z-zs-t028
     claimed_at: '2026-10-10T20:28:42Z'
-    updated: '2026-10-10T20:28:42Z'
+    updated: '2026-10-11T03:26:29Z'
+    implementation_pr: 'silasfelinus/kind_robots#3483'
 
   - id: t-027
     milestone: m3
@@ -804,3 +921,74 @@ tasks:
     claimed_at: '2026-10-07T14:45:35Z'
     updated: '2026-10-07T15:17:35Z'
     implementation_pr: 'silasfelinus/kind_robots#3350'
+
+  - id: t-029
+    milestone: m4
+    title: "The wasteland map: select-screen locator and Story mode travel between fights"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    approved_by_human: true
+    depends_on: [t-021]
+    note: >-
+      Silas, 2026-10-10 PT: "Do we have a character select screen yet? I'm envisioning squares with the
+      characters faces, then seeing their character stance facing each other, with a map of the wasteland
+      and their location. We haven't made this map yet, but a lot can be extrapolated or create what is
+      needed. Then we should have story mode showing the character traveling to each match a la an Indiana
+      jones map traversal moment. Do we have continues to continue story mode?" Answer: the faces grid and
+      the stances facing each other existed (t-019, t-008); continues existed (t-021: nine seconds, keeps the
+      climb, starts the score over). Build: kind_robots utils/zuzuShowdown/worldMap.ts with the geography
+      extrapolated from the eight stages and Shifting Lands' five lands (PLACES, HOMES); the select grid as
+      a 3x3 of faces with the map under it pinning each side's home (Story: the road to the Thin Place);
+      Story mode (the Arcade climb, renamed in the menu) travels the map between fights, the next leg
+      drawing itself in red with the challenger's token riding it and beaten opponents crossed off. The map
+      draws in ink until the painted one ships: art/T029-WORLD-MAP.yaml (three house-lane seeds), shipped
+      with tools/world_map.py after picking a seed and tuning PLACES to its landmarks.
+
+      DONE 2026-10-11 (PT): the painted wasteland map shipped (kind_robots#3507): wasteland-
+      map-3 from a krea2 lane (the house-lane seeds painted a scene, not a map), with PLACES
+      and HOMES pinned to its landmarks. The select-screen locator (kind_robots#3500) and
+      Story mode's travel between fights now draw on it in both render styles.
+    claimed_by: 2026-10-11T05:10:00Z-zs-t029
+    claimed_at: '2026-10-11T05:10:00Z'
+    updated: '2026-10-11T09:42:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#3507'
+
+  - id: t-030
+    milestone: m4
+    title: "The Coyote's two ending stills: his right hand gone, the knife lashed to the stump"
+    status: ready
+    owner: worker
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    note: >-
+      Split from t-021 (2026-10-11): 16 of the 18 ending stills shipped (kind_robots#3505); the Coyote's
+      two did not, because Flux Kontext would not draw his right hand missing. Four rounds failed, each
+      with the hand drawn whole (art/T021-ENDINGS.yaml `rejected`): the original prompts; stump-first
+      prompts; a re-pose from the post-croc reference (242404) framed from his left side; and a masked
+      edit of only the knee hand. Root cause: the reference these stills re-pose (242401) shows two
+      fists, and Kontext follows a hand that is anywhere in frame. Until this ships, his ending shows
+      his victory portrait (the fallback in drawEndingScreen). Try a method that does not ask the model
+      to remove a hand: composite the stump from the rig's parts sheet (T010-RIG-PARTS, the knife
+      lashed to the stump, confirmed by Silas 2026-10-07) over a kept still, or compose stills with
+      both arms out of frame (a back view walking away, a close-up of the face), then ship with
+      tools/endings.py.
+    updated: '2026-10-11T09:40:00Z'
+
+  - id: t-031
+    milestone: m5
+    title: "Make the Showdown balance round robin reproducible with a committed runner"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from conductor#5998 review, 2026-10-11 PT: commit a CLI in kind_robots
+      that runs the existing deterministic CPU/sim over all nine fighters, both sides
+      and a configurable seed range, emits per-fighter and per-matchup wins/draws,
+      and includes the exact source SHA, seeds and match count. Preserve the tuning
+      baseline from kind_robots#3541; do not tune fighters in this task. A small
+      replay/determinism contract and a documented invocation make future balance
+      claims independently repeatable rather than relying on PR prose.

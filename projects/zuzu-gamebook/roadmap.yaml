@@ -71,11 +71,11 @@ milestones:
   - id: m1
     title: SHAPE — original rules, book outline, visual and lore bible
     weight: 15
-    status: in-progress
+    status: done
   - id: m2
     title: ENGINE — deterministic state, dice, battles, flags, save and tests
     weight: 25
-    status: not-started
+    status: done
   - id: m3
     title: STORY & ART — playable branching book with delivered illustrations
     weight: 35
@@ -83,7 +83,7 @@ milestones:
   - id: m4
     title: EXPERIENCE — cinematic reader, inventory, animation and accessibility
     weight: 15
-    status: not-started
+    status: in-progress
   - id: m5
     title: POLISH & SHIP — coverage, balance, device verdict and ongoing chapters
     weight: 10
@@ -104,7 +104,7 @@ tasks:
   - id: t-002
     milestone: m2
     title: Pure TypeScript gamebook reducer, dice/combat mechanics and contract tests
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -114,10 +114,16 @@ tasks:
       inventory capacity, powers, flags, mutually exclusive conditions, dice
       roll logs, resource caps, valid transitions, save-version migrations.
       Add contract tests to CI for replay determinism and each combat interaction.
+
+      2026-10-12 reconciliation: built and live. utils/zuzuGamebook/adventure.ts is the pure
+      reducer (no browser APIs or Math.random inside it; dice from the run's seed), and
+      verifyZuzuGamebook.test.ts checks replay determinism, combat, saves, power costs and the
+      375-section graph; the book launched under t-010. The status stayed ready by oversight.
+    updated: '2026-10-12T05:13:01Z'
   - id: t-003
     milestone: m4
     title: Build beautiful standalone /play/zuzu-gamebook reader and character sheet
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -128,10 +134,18 @@ tasks:
       dice roller, inventory, health/resolve and save/restart. Respect AGENTS.md:
       components use a Pinia store for localStorage/state; no live LLM.
       An admin-preview tab until explicit public-launch verdict.
+
+      2026-10-12 reconciliation: built and live at /play/zuzu-gamebook (launched under t-010):
+      illustrated reader with plate-above or portrait-right layouts, HUD, character sheet,
+      dice roller with reduced-motion fallback, combat moves, inventory, health/resolve and
+      save/restart through the Pinia store. Polished on 2026-10-11/12: italics for spoken
+      words, keyboard play (1-9), focus and scroll reset on each new section. The status
+      stayed ready by oversight.
+    updated: '2026-10-12T05:13:17Z'
   - id: t-004
     milestone: m1
     title: Book One graph and all authored scenes (~400 numbered sections)
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -170,6 +184,13 @@ tasks:
       the Road, the Drifter's Bandage, the Sister's Dagger; kasa and katana are worn, not carried).
       No Showdown-only fighters, no Old Komodo, no legacy KR filler lore. A new named character or
       place meant to outlive this book is proposed to Book One / the registry first.
+
+      2026-10-12 reconciliation: done. Book One ships 375 sections and 13 endings across nine
+      acts (utils/zuzuGamebook/book.ts and acts/), within the canon rules above;
+      verifyZuzuGamebook.test.ts proves the graph acyclic, every ending reachable and no
+      softlock. On 2026-10-11/12 the eight short original endings were rewritten to full
+      length and duplicate section titles made unique. The status stayed ready by oversight.
+    updated: '2026-10-12T05:13:21Z'
   - id: t-005
     milestone: m1
     title: Scene art inventory, cinematic layouts and repeatable ArtJob manifest
@@ -305,10 +326,39 @@ tasks:
       figures, 34 places/objects; 52 wide, 39 tall, 24 square). Four prompt writers worked from ART-PROMPT-BRIEF-R9;
       sectionart check now refuses more than one figure. 15 single-figure round-8 jobs still pending. t-012 redraws the
       paired moments with the LoRAs.
+      REVIEW 9 (03:20, 11 Oct): both rounds drained. Round 9's single-figure plates kept 88 of 115 sections (77%,
+      against 23% for round 8's paired scenes); round 8's last 15 kept 4. 338 per-section plates live (344 of 375).
+      House keepers replaced five Kontext plates (croc-ready, a1-reeds, a1-eggs-shared, a1-gun-kept, parting); a1-terrain,
+      a1-bad-ground and a1-gun-road still show Kontext renders. Rejects: a second koala or a big beast beside a
+      'Zuzu alone' prompt that mentioned a shadow or another presence, human-faced nuns, two fennecs, stray objects.
+      31 sections still without a plate go to round 10, with the same single-figure rule and no second presence named.
+      ROUND 10 (03:55, 11 Oct): ROUND-10.yaml queues 68 house jobs (ArtJobs 36786-36853), two seeds each for the 31
+      sections still without a plate plus a1-terrain, a1-bad-ground and a1-gun-road (house-lane redo of their Kontext
+      plates). Each prompt is written to avoid that section's recorded reject reasons: 12 still lifes, 11 empty scenes,
+      4 Zuzu alone naming nothing else alive, 4 creatures, 1 fennec, and 2 nun close-ups on the paws only; 14 wide, 11
+      tall, 9 square. Same day, Silas on the page layout: "a single horizontal view above or portrait to the right ... one
+      clean page of display" (kind_robots#3494, plateLayout is now shape-only).
+      REVIEW 10 (15:45, 11 Oct; the render box went offline at 02:18 UTC and round 10 rendered after it came back): 20 of 34
+      sections kept (59%). 18 new section plates plus house keepers replacing the Kontext plates on a1-terrain and
+      a1-bad-ground; 356 per-section plates live, 362 of 375 sections have their own art. a1-gun-road keeps its Kontext
+      plate (both house seeds put a dog or mule beside Zuzu). Still without a plate (13): a1-two-shadows, a2-beds,
+      a3-cloth-dawn, a3-theft-seen, a4-well-battle, a4-wide-berth, a6-badger-sold, a6-mob-held, cellar, nuns-attack,
+      a8-fire-cells, a8-fire-altar, a9-hollow-after. Rejects: figures or bodies drawn into empty scenes (silhouettes in
+      corridors, a body on the floor, hooded figures), creature faces, a dog-faced Zuzu, red-eyed fennec, wrong objects.
+      ROUND 11 (16:05, 11 Oct): ROUND-11.yaml queues 42 house jobs (ArtJobs 36957-36998), three seeds each for those 13
+      plus a1-gun-road. Every prompt is now a close still life of the object that carries the moment (tin cups with one
+      gap for a2-beds, a planted katana for a4-well-battle, a key ring on charred boards for a8-fire-cells): no rooms,
+      corridors or doorways, which kept drawing stray silhouettes and bodies, and no faces.
+      REVIEW 11 (17:45, 11 Oct): 10 of 14 kept (71%), all object close-ups; a1-gun-road finally has a house keeper (a
+      revolver under shallow water), so no Kontext plate remains. 365 per-section plates live: 371 of 375 sections have
+      their own art. Still on stand-in plates (4): a1-two-shadows (every seed puts silhouettes on the ridge),
+      a4-well-battle (a European longsword instead of Zuzu's katana), a8-fire-cells (no keys, tongs in a fire),
+      a8-fire-altar (a ring hung from a rope reads as a hanging). Each has failed four or five times; proposed to Silas:
+      leave them on their stand-in plates until t-012's character LoRAs, rather than a twelfth round.
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -322,7 +372,7 @@ tasks:
   - id: t-008
     milestone: m4
     title: Combat, powers, dice, inventory and save/resume UI polish
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -388,11 +438,11 @@ tasks:
   - id: t-012
     milestone: m5
     title: Redraw the two-character plates once the character LoRAs exist
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: [t-006]
+    depends_on: []
     note: >-
       Silas, 2026-10-10: "go ahead for workarounds. We can fix things later when we have the LoRAs built, that
       task got moved to later because we had too much art that was going to be made...ironically, since by this
@@ -401,3 +451,30 @@ tasks:
       place, because the Arthemy house lane fuses Zuzu with whoever shares the frame or leaks his costume onto
       them. When the LoRAs land, redraw those sections (ROUND-9.yaml subjects whose original act*.json entry had
       two or more figures) as the two-character scenes the text describes, in the house lane with the LoRAs.
+
+      2026-10-11 Silas: "Loras now exist. Time to do a pass, correct bad art, and give this an overall polish."
+      (comic-creator/t-016 done: zuzukoala 4593, zkasister 4583, zkatoddler 4588, zkacoyote 4578, zkaabbess 4595.)
+      ROUND-12 (ArtJobs 37005-37024) tested ten paired scenes with every present character's LoRA: the sister and the
+      toddler together render cleanly (survivors and a3-shade kept), but Zuzu still fuses with any second LoRA (two
+      koalas, his hat on the fennec, fennec ears on him) and the abbess beside anyone gets a human face. So paired Zuzu
+      moments stay single-figure, now drawn on-model. A plate audit of all 365 live plates flagged 95: 79 of the 102
+      Zuzu plates off-model (bear or dog face, two swords, no hat or poncho) and 16 others (blood, a hanging, human
+      faces, a modern pistol). ROUND-13 (170 jobs from 37025) redraws the 85 Zuzu-alone compositions with his LoRA;
+      ROUND-14 recomposes the 17 Zuzu ensembles, the 16 other flags and the 4 stand-ins; ROUND-15 (94 jobs from 37195)
+      redraws the 47 sister/toddler/coyote/abbess plates with their LoRAs, kept only where better. The
+      t-006 dependency is dropped: t-006's last four stand-ins are now redrawn here (ROUND-14), so t-012 no longer waits on it.
+      REVIEW 13-15 (12 Oct): every redraw judged against the live plate. ROUND-13 kept 77 of 85 Zuzu-alone redraws
+      (the zuzukoala LoRA puts him on-model: koala face, kasa, zigzag poncho, one katana); ROUND-14 kept 29 of 37
+      recompositions, including the last four stand-ins (a1-two-shadows, a4-well-battle, a8-fire-cells, a8-fire-altar);
+      ROUND-15 kept 1 of 47 (the abbess LoRA gives human faces even alone in a scene, and the sister/toddler pair swaps
+      outfits, so those live plates stay). 107 plates replaced. Rejects: tails and high heels on Zuzu, a modern paved
+      road, fusion with a second figure, drowned-body and urination reads. ROUND-16 takes the 18 still left (two
+      stand-ins found by the sweep, a2-bell-view and a4-bloom, plus the live plates whose candidates all failed); the
+      LoRA negative now carries tail, high heels and asphalt road.
+
+      2026-10-11: the character LoRAs exist (comic-creator/t-016 done). Any ledger with `series: zuzu-koala-assassin`
+      (every art/ROUND-*.yaml here) now gets them by default from enqueue_art_requests.py: each subject carries the
+      LoRAs of the characters its prompt names (projects/comic-creator/cast-loras/zuzu-koala-assassin.yaml). The
+      coyote's v1 LoRA still draws his right hand (t-023); stump plates keep the masked bandage edit. Following ROUND-12
+      above, Zuzu and the abbess are `stacks: false` there: a subject naming either beside another character gets no
+      default LoRAs, so the explicit per-subject `loras:` in ROUND-12..15 stay authoritative.

@@ -1,0 +1,336 @@
+# zuzu-showdown t-021: arcade endings. Each fighter's ending is two pixelized stills and a line or two
+# (roadmap t-021), shown after The Thing Behind the Door falls: the door slams shut and the stage drops back to
+# an ordinary moonlit desert (fighters.yaml boss.defeat). Re-posed with Flux Kontext from the same canon sources
+# as their portraits (T008-PORTRAITS) so they stay on model, now set in a place instead of on a dark ground.
+# Children rules hold: the Siblings are together, safe, fully dressed; the toddler's own pose (243484) is
+# stitched in beside his sister as in the portrait rerolls. The Coyote's right hand is gone (a knife lashed to the
+# stump). The Swamp Witch is always fully robed. No lettering; the ending lines are drawn by the game.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# Generated art is pre-approved (Silas, 2026-10-10: "submit anything else that is needed").
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-endings
+  label: Flux Kontext dev (fp8), ending stills from the locked reference
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: zuzu-ending-1
+  entity: zuzu
+  title: 'Zuzu ending: still 1'
+  size: 1216x832
+  source_image_id: 242395
+  prompt_prose: Show him from behind and a little to the side, walking away alone across a moonlit desert toward
+    the far hills, a plain wooden door standing shut in the sand far behind him. Wide shot, small figure under a
+    huge night sky full of stars. Keep the same short stocky koala, the same rust-brown poncho with orange zigzag
+    trim, scarf and conical straw hat, the katana across his back, and the same comic art style. Every surface bare
+    and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245005
+  jobs:
+    kontext-endings: 36854
+- key: zuzu-ending-2
+  entity: zuzu
+  title: 'Zuzu ending: still 2'
+  size: 1216x832
+  source_image_id: 242395
+  prompt_prose: Show him sitting cross-legged under a weathered wooden bell tower at dawn, the katana across his
+    knees, eyes closed under the straw hat, a small cup of tea steaming beside him. A dusty frontier town at first
+    light, warm sky. Keep the same short stocky koala, the same rust-brown poncho with orange zigzag trim, scarf
+    and conical straw hat, the katana across his back, and the same comic art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245006
+  jobs:
+    kontext-endings: 36855
+- key: coyote-ending-1
+  entity: coyote-vagrant
+  title: 'the Coyote ending: still 1'
+  size: 1216x832
+  source_image_id: 245028
+  prompt_prose: 'Replace the hand resting on his knee with his right wrist ending in a bandaged stump, a knife strapped
+    onto the stump with leather cord, its blade pointing forward. Keep everything else exactly the same: the same
+    coyote, coat, pose, lighting and comic art style. Every surface bare and unmarked.'
+  art:
+    kontext-endings:
+      status: REJECTED
+      art_image_id: null
+  jobs:
+    kontext-endings: 36907
+  rejected:
+  - art_image_id: 245007
+    why: 'right hand drawn whole (rule: gone, knife lashed to the stump)'
+  - art_image_id: 245023
+    why: 'hand drawn whole again: the 242401 reference shows two fists; reroll from the post-croc reference with
+      the right arm out of view'
+  - art_image_id: 245028
+    why: right hand drawn whole a third time; kept as the base for a masked edit of that hand
+  - art_image_id: 245032
+    why: masked edit of the knee hand still drew fingers gripping the knife
+  seed: 210321
+  mask_box:
+  - 0.45
+  - 0.64
+  - 0.59
+  - 0.82
+- key: coyote-ending-2
+  entity: coyote-vagrant
+  title: 'the Coyote ending: still 2'
+  size: 1216x832
+  source_image_id: 245029
+  prompt_prose: 'Replace the hand resting on his knee with his right wrist ending in a bandaged stump, a knife strapped
+    onto the stump with leather cord, its blade pointing forward. Keep everything else exactly the same: the same
+    coyote, coat, pose, lighting and comic art style. Every surface bare and unmarked.'
+  art:
+    kontext-endings:
+      status: REJECTED
+      art_image_id: null
+  jobs:
+    kontext-endings: 36908
+  rejected:
+  - art_image_id: 245008
+    why: 'right hand drawn whole (rule: gone, knife lashed to the stump)'
+  - art_image_id: 245024
+    why: 'hand drawn whole again: the 242401 reference shows two fists; reroll from the post-croc reference with
+      the right arm out of view'
+  - art_image_id: 245029
+    why: right hand drawn whole a third time; kept as the base for a masked edit of that hand
+  - art_image_id: 245033
+    why: masked edit of the knee hand still drew fingers gripping the knife
+  seed: 210322
+  mask_box:
+  - 0.51
+  - 0.44
+  - 0.65
+  - 0.63
+- key: abbess-ending-1
+  entity: the-abbess
+  title: 'the Abbess ending: still 1'
+  size: 1216x832
+  source_image_id: 242513
+  prompt_prose: Show her kneeling in the moonlit desert before a plain wooden door standing shut in the sand, one
+    paw laid flat on the door, her head bowed close to it as if whispering to it. Wide shot, huge starry sky. Keep
+    the same elderly head nun, a sea otter with a flat round face, warm brown fur, the same black habit and white
+    wimple, and the same comic art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245009
+  jobs:
+    kontext-endings: 36858
+- key: abbess-ending-2
+  entity: the-abbess
+  title: 'the Abbess ending: still 2'
+  size: 1216x832
+  source_image_id: 242513
+  prompt_prose: Show her in a candlelit adobe mission chapel at night, smiling gently over a single candle, while
+    one thin dark tentacle curls out of her sleeve and around the candlestick. Warm candlelight and deep shadows.
+    Keep the same elderly head nun, a sea otter with a flat round face, warm brown fur, the same black habit and
+    white wimple, and the same comic art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245010
+  jobs:
+    kontext-endings: 36859
+- key: siblings-ending-1
+  entity: the-siblings
+  title: 'the Siblings ending: still 1'
+  size: 1216x832
+  source_image_id: 242128
+  reference_image_id: 243484
+  prompt_prose: 'Show her walking across the desert at dawn carrying her toddler brother on her back, his arms around
+    her neck, toward a lone apple tree on a low hill. Wide shot, warm first light. Her toddler brother is the small
+    fennec fox kit in the left picture: a baby fox with huge pointed ears, sandy fur, a little black snout and a
+    tail, in a small checked blue cloth tunic of rags. He is a fox, like her. Keep the same young fennec fox girl
+    from the right picture, about ten years old, in the same torn pale brown dress of rags, and the same comic art
+    style. Both fully dressed and unhurt. Every surface bare and unmarked.'
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245011
+  jobs:
+    kontext-endings: 36860
+- key: siblings-ending-2
+  entity: the-siblings
+  title: 'the Siblings ending: still 2'
+  size: 1216x832
+  source_image_id: 242128
+  reference_image_id: 243484
+  prompt_prose: 'Show them resting in the shade under a lone apple tree heavy with red apples: her toddler brother
+    asleep curled against her side holding a red apple, and her watching over him with the start of a small smile.
+    Afternoon light, red leaves on the ground. Her toddler brother is the small fennec fox kit in the left picture:
+    a baby fox with huge pointed ears, sandy fur, a little black snout and a tail, in a small checked blue cloth
+    tunic of rags. He is a fox, like her. Keep the same young fennec fox girl from the right picture, about ten
+    years old, in the same torn pale brown dress of rags, and the same comic art style. Both fully dressed and unhurt.
+    Every surface bare and unmarked.'
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245012
+  jobs:
+    kontext-endings: 36861
+- key: crow-ending-1
+  entity: storm-crow
+  title: 'Storm Crow ending: still 1'
+  size: 1216x832
+  source_image_id: 243492
+  prompt_prose: Show him standing on a high canyon crag in a thunderstorm, rifle raised over his head in triumph,
+    coat whipping in the wind, lightning splitting the sky behind him. Rain, dark clouds, red rock. Keep the same
+    crow raider with black feathers slick with rain, the same ragged long riding coat, rusted goggles and torn red
+    captain's sash, the hooked blade and the rifle, and the same comic art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245013
+  jobs:
+    kontext-endings: 36862
+- key: crow-ending-2
+  entity: storm-crow
+  title: 'Storm Crow ending: still 2'
+  size: 1216x832
+  source_image_id: 243492
+  prompt_prose: Show him flying at the head of a great flock of crows through a storm-dark sky over a canyon, wings
+    spread wide, the hooked blade at his belt, lightning far off. Wide shot from below. Keep the same crow raider
+    with black feathers slick with rain, the same ragged long riding coat, rusted goggles and torn red captain's
+    sash, the hooked blade and the rifle, and the same comic art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245014
+  jobs:
+    kontext-endings: 36863
+- key: croc-ending-1
+  entity: river-croc
+  title: 'River Croc ending: still 1'
+  size: 1216x832
+  source_image_id: 243495
+  prompt_prose: Show him sinking back into a moonlit watering hole, only his eyes and the ridge of his snout above
+    the still black water, the moon reflected beside him. Reeds, ripples, a starry sky. Keep the same giant crocodile,
+    a real animal with olive-green scarred armoured hide, patches of green algae and a frayed rope tied round his
+    body, and the same comic art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245015
+  jobs:
+    kontext-endings: 36864
+- key: croc-ending-2
+  entity: river-croc
+  title: 'River Croc ending: still 2'
+  size: 1216x832
+  source_image_id: 243495
+  prompt_prose: Show him basking on a muddy bank at sunrise, jaws open, the broken old harpoon finally out of his
+    back and lying in the mud beside him. Reeds, cracked mud and a warm sky. Keep the same giant crocodile, a real
+    animal with olive-green scarred armoured hide, patches of green algae and a frayed rope tied round his body,
+    and the same comic art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245016
+  jobs:
+    kontext-endings: 36865
+- key: hyena-ending-1
+  entity: hyena-matriarch
+  title: 'the Hyena Matriarch ending: still 1'
+  size: 1216x832
+  source_image_id: 243496
+  prompt_prose: Show her standing on top of a ruined stone arch at night, head thrown back in a laugh, a bonfire
+    below throwing orange light up over her, the chain swinging from her arm. A huge moon behind her. Keep the same
+    big broad spotted hyena chief in scavenged leather armour stitched from many hides, the heavy iron chain and
+    meat hook wound round one arm, the bone trophies, the ragged mane and the too-wide grin, and the same comic
+    art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245017
+  jobs:
+    kontext-endings: 36866
+- key: hyena-ending-2
+  entity: hyena-matriarch
+  title: 'the Hyena Matriarch ending: still 2'
+  size: 1216x832
+  source_image_id: 243496
+  prompt_prose: Show her sprawled on a rough throne of old bones by a bonfire, grinning, holding up a jagged shard
+    of starry dark night sky on a chain around her neck and looking at it. Firelight and deep shadows. Keep the
+    same big broad spotted hyena chief in scavenged leather armour stitched from many hides, the heavy iron chain
+    and meat hook wound round one arm, the bone trophies, the ragged mane and the too-wide grin, and the same comic
+    art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245018
+  jobs:
+    kontext-endings: 36867
+- key: komodo-ending-1
+  entity: old-komodo
+  title: 'Old Komodo ending: still 1'
+  size: 1216x832
+  source_image_id: 244404
+  prompt_prose: Show him lumbering across the top of a golden dune at sunset, leaning on the gnarled staff, his
+    long shadow stretching down the slope. Wide shot, a long low sun and blowing sand. Keep the same komodo dragon,
+    an ancient enormous giant monitor lizard, a scaled reptile with grey-brown scales cracked like desert stone,
+    a dewlap, cloudy pale eyes, the tattered sash and the gnarled walking staff, and the same comic art style. Every
+    surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245019
+  jobs:
+    kontext-endings: 36868
+- key: komodo-ending-2
+  entity: old-komodo
+  title: 'Old Komodo ending: still 2'
+  size: 1216x832
+  source_image_id: 244404
+  prompt_prose: Show him almost buried in the side of a dune at dusk, asleep, only his great head, one cloudy closed
+    eye and the top of the staff showing above the sand, his belly a round hump under it. Soft dusk light, ripples
+    in the sand. Keep the same komodo dragon, an ancient enormous giant monitor lizard, a scaled reptile with grey-brown
+    scales cracked like desert stone, a dewlap, cloudy pale eyes, the tattered sash and the gnarled walking staff,
+    and the same comic art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245020
+  jobs:
+    kontext-endings: 36869
+- key: witch-ending-1
+  entity: swamp-witch
+  title: 'the Swamp Witch ending: still 1'
+  size: 1216x832
+  source_image_id: 244386
+  prompt_prose: Show her standing at a tall wooden door standing open in the moonlit desert, starry darkness and
+    one vast yellow slit eye beyond it, turning back over her shoulder with a sly smile before she steps through.
+    Wide shot. Keep the same swamp witch, gaunt, with grey-violet wet skin, glowing yellow slit-pupil eyes, long
+    stringy black hair and a coil of dark violet tentacles, fully robed in the ragged hooded shawl of green moss,
+    reeds and fishing net, and the same comic art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245021
+  jobs:
+    kontext-endings: 36870
+- key: witch-ending-2
+  entity: swamp-witch
+  title: 'the Swamp Witch ending: still 2'
+  size: 1216x832
+  source_image_id: 244386
+  prompt_prose: Show a moonlit swamp puddle with little glass bottles floating in it, and the tip of her coil of
+    dark violet tentacles sinking slowly under the black water, one hand raised from the water holding a corked
+    glowing bottle. Reeds and mist. Keep the same swamp witch, gaunt, with grey-violet wet skin, glowing yellow
+    slit-pupil eyes, long stringy black hair and a coil of dark violet tentacles, fully robed in the ragged hooded
+    shawl of green moss, reeds and fishing net, and the same comic art style. Every surface bare and unmarked.
+  art:
+    kontext-endings:
+      status: DONE
+      art_image_id: 245022
+  jobs:
+    kontext-endings: 36871

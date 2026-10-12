@@ -39,6 +39,7 @@ Environment: KR_API_TOKEN (required for --live/--status), KR_BASE_URL.
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -61,6 +62,62 @@ def compose_prompt(lane, subject):
     base = base or subject.get("prompt_prose") or ""
     parts = [lane.get("prefix"), base, lane.get("suffix")]
     return ", ".join(" ".join(str(p).split()) for p in parts if p and str(p).strip())
+
+
+CAST_LORA_DIR = Path(__file__).resolve().parent.parent / "projects" / "comic-creator" / "cast-loras"
+_cast_cache = {}
+
+
+def load_cast_loras(series):
+    """The series' character LoRA list (projects/comic-creator/cast-loras/<series>.yaml), or None."""
+    if not series:
+        return None
+    if series not in _cast_cache:
+        path = CAST_LORA_DIR / f"{series}.yaml"
+        _cast_cache[series] = yaml.safe_load(path.read_text()) if path.is_file() else None
+    return _cast_cache[series]
+
+
+def _mentions(text, term):
+    term = str(term).strip().lower()
+    return bool(term) and re.search(rf"(^|[^a-z0-9]){re.escape(term)}($|[^a-z0-9])", text) is not None
+
+
+def select_cast_loras(cast, text):
+    """The character LoRAs whose character ``text`` names, as ledger ``loras`` entries.
+
+    Mirrors Kind Robots' selectComicCastLoras (utils/comicLanes.ts): a whole-word hit on the trigger or a match
+    term; one character at its strength, two or more at ``shared_scale`` of theirs, at most ``max_per_render``.
+    A character marked ``stacks: false`` fuses with any second LoRA (zuzu-gamebook ROUND-12), so a render that names
+    it alongside another character gets none: the prompt carries the scene, as it did before the LoRAs.
+    """
+    haystack = str(text or "").lower()
+    if not cast or not haystack.strip():
+        return []
+    hits = [
+        entry
+        for entry in cast.get("cast") or []
+        if any(_mentions(haystack, term) for term in [entry.get("trigger"), *(entry.get("match") or [])] if term)
+    ][: int(cast.get("max_per_render", 4))]
+    if len(hits) > 1 and any(entry.get("stacks") is False for entry in hits):
+        return []
+    scale = float(cast.get("shared_scale", 0.75)) if len(hits) > 1 else 1.0
+    return [
+        {"resource_id": int(entry["resource_id"]), "strength": round(float(entry.get("strength", 0.8)) * scale, 2)}
+        for entry in hits
+    ]
+
+
+def cast_loras_for(ledger, lane, subject):
+    """Default character LoRAs for a comfy cell of a series ledger (comic-creator t-016), or None."""
+    cast = load_cast_loras(ledger.get("series"))
+    if not cast:
+        return None
+    prefixes = tuple(cast.get("lane_checkpoint_prefixes") or ())
+    if prefixes and not str(lane.get("checkpoint") or "").startswith(prefixes):
+        return None
+    text = ", ".join(str(subject.get(key) or "") for key in ("prompt_tags", "prompt_prose"))
+    return select_cast_loras(cast, text) or None
 
 
 def build_request(ledger, lane, subject, source_image=None):
@@ -94,6 +151,15 @@ def build_request(ledger, lane, subject, source_image=None):
         for field in ("steps", "guidance"):
             if lane.get(field):
                 body[field] = lane[field]
+    # Kind Robots LoRA resources (comic-creator t-016): subject first, then lane. The enqueue route resolves the
+    # resource ids to files and appends each LoRA's trigger words itself.
+    loras = subject.get("loras", lane.get("loras"))
+    if loras is None and lane["engine"] == "comfy" and ledger.get("cast_loras", True) is not False:
+        loras = cast_loras_for(ledger, lane, subject)
+    if lane["engine"] == "comfy" and loras:
+        body["loras"] = [
+            {"resourceId": int(lora["resource_id"]), "strength": float(lora.get("strength", 0.8))} for lora in loras
+        ]
     if lane["engine"] == "comfy" and subject.get("negative"):
         body["negativePrompt"] = " ".join(str(subject["negative"]).split())
     for field, key in (("projectSlug", "project_slug"), ("designer", "designer")):

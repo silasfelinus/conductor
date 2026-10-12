@@ -118,3 +118,42 @@ accelerate config   # this machine, no distributed training, fp16
 Prompt the house lane with the trigger word and the identity tags at LoRA weight 0.7–0.9. Then compare against
 the locked sheet (the facing convention, the eyepatch and holster on the coyote's right side, Zuzu's single
 katana). If the character comes out too stiff, try an earlier epoch file (`-000006`, `-000008`).
+
+## Results (2026-10-11)
+
+All five trained on Ferngrotto: about 1 hour each on the 12 GB card, at 2.1 s/step. All are registered as private
+Kind Robots resources. The final epoch is the pick for every character, and four of the five hold their locked
+design. The coyote's LoRA ignores his stump: only 2 of his 19 images had it. Ids, verdicts and the stump workaround
+are in `issues/zuzu-koala-assassin-01/CAST-PICKS.md`. Test renders are in `LORA-TEST.yaml`.
+
+To use one in an art ledger, add `loras: [{resource_id: 4593, strength: 0.8}]` to a lane or subject, and put the
+trigger word in the prompt. `/api/art/enqueue` resolves the file.
+
+## The default for Zuzu art (2026-10-11)
+
+Silas: the character LoRAs are the default for every project that uses the series' art: the comic, the music videos
+(intro and trailer), the comic-film, the gamebook and Shifting Lands. Not the pinball, the fighting game or the 2D
+game, which have their own stylized looks.
+
+| Path | Projects | Where the list lives |
+| --- | --- | --- |
+| Kind Robots comic lanes | Comic Studio, music videos, comic-film | `castLoras` on the Zuzu series' Arthemy lane (kind_robots `utils/comicLanes.ts`) |
+| Conductor art ledgers | comic issue ledgers, gamebook, Shifting Lands | `projects/comic-creator/cast-loras/zuzu-koala-assassin.yaml`, read by `scripts/enqueue_art_requests.py` for any ledger with `series: zuzu-koala-assassin` |
+
+A LoRA rides only on renders whose own prompt names its character, by trigger or match word. One character gets
+0.8; two or more get 0.6 each, except that Zuzu and the abbess are `stacks: false`. The gamebook's ROUND-12 test
+(2026-10-11) found that Zuzu fuses with any second LoRA (two koalas, his hat on the fennec) and that the abbess gets a
+human face beside anyone. A render naming either of them with another character therefore gets no default LoRAs; give
+it an explicit list, or keep the frame to one figure. A ledger opts out with `cast_loras: false`, and an explicit `loras:` wins. When a LoRA
+is retrained, update both lists.
+
+Verified 2026-10-12 through Comic Studio's own render path (`POST /api/comics/slots/{id}/render`, lane il-arthemy).
+Both jobs carried LoraLoader `zuzukoala_v1` at 0.8.
+- **Slot 5, Zuzu's back view (ArtImage 245653), current canon tags: pass.** One koala, a true back view, the canon
+  poncho, hat and sash, and the scabbard running from the right shoulder to the left hip. The blade reads more like a
+  saber than a katana.
+- **Slot 90, "Saloon doorway" (ArtImage 245652): fail.** It drew a second, feral koala at his feet. The slot still
+  carries its round-2 prose ("a small grey koala a little under four feet tall... travel cloak"). The 36 Comic Studio
+  slots still on that prose are the round-2/3 exploration archive (costume variants, species tests, plot seeds, early
+  covers; none in an issue, none picked), so they were left as they are. Rewrite a slot to the current canon tags,
+  opening with `solo`, before reusing it with the LoRA.

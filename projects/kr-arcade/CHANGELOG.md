@@ -34,3 +34,25 @@
   #3453, #3454, #3455, #3456), render only, with tick-for-tick parity runs on eight of them. t-021
   done. Carry-outs: Ghost Trail's visual rebuild stays in m5 (t-013/t-014), and Kind Pinball's 2D
   no-WebGL fallback is follow-up t-022.
+- **Ghost Trail becomes a real campaign** (Silas: "are we actually upgraded? at least an hour of content,
+  multiple stages, boss fights, animations for all monsters" ... "keep working"). The four looping trails
+  were replaced by six hand-built stages of 16 acts (19 relics), six headline bosses with telegraphed
+  attacks (Grave Marshal, Bone Bull, Drowned Ferryman, Storm-Crow Matriarch, Bell Heretic, the two-phase
+  Abbess) plus the Dust Devil mid-boss, 11 new painted foes, two new worlds (Storm Crow Pass, the Abbey),
+  finite squads that stay down, save/resume per act, an ending and credits, a relic true ending and
+  New Game+ (silasfelinus/kind_robots#3469, #3470, #3471, #3473, #3474, #3476, #3477, #3479).
+  t-015..t-019 done; Zuzu's walk sped up at Silas's request ("zuzu play speed is a bit slow").
+  The >=60-minute target is NOT verified: bot clear times are not human times, and the timed
+  playtest stays open in t-020.
+
+## 2026-10-11
+- **Ghost Trail playtest notes** (Silas: "We should have checkpoints that don't send the player back to
+  the beginning of the stage"; "The non-projectile sword is a bit lackluster"; "do we have a vertical
+  level yet?"): close checkpoints, a boss-gate checkpoint and an in-game CONTINUE; saves resume at the
+  checkpoint; the iai cut became a lunging crescent that cuts shots from the air; a vertical camera and
+  THE BELL STAIR tower climb (silasfelinus/kind_robots#3488). Ghost Trail now has music -- a theme per
+  world, boss and finale themes, an ending -- and its own sound effects (#3490).
+- **Ghost Trail blueprint gaps closed**: River Croc ferries Zuzu across a flooded pool once the squad
+  bothering him is down; the abbey's caged novice can be freed for an extra ending
+  (silasfelinus/kind_robots#3496); Storm Crow Pass gets telegraphed lightning and a second vertical act,
+  THE CLIFF ROAD (#3497). The campaign is now 18 acts and 21 relics.

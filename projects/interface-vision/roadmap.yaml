@@ -1825,25 +1825,21 @@ tasks:
   stakes: reversible
   recurring: true
   depends_on: null
-  note: >-
+  note: |-
     This is the deliberately subjective third phase that prior work mostly skipped. Apply the chosen Storybook design language where appropriate: clean hierarchy, generous useful art, friendly controls, minimal container nesting, calm spacing, readable narrative/text areas, and intentional empty/loading/error states. Produce reviewable screenshots rather than closing from source inspection alone. Polish the Coloring Book curation surface from the live screenshot: use the available workspace width and present Color and B&W candidates as equal-size, equal-height comparison peers instead of a primary image with a small inset. Preserve production actions and responsive behavior. Coloring Book curation polish is ready for CI review. The curation studio now uses the full workspace width, proposal cards use a 540px responsive minimum, and Color/B&W candidates render as permanent 50/50 peers in matching 17:22 frames with object-contain rather than a large primary plus B&W inset. Missing variants retain an equal-size placeholder. Production actions and data behavior are unchanged. Merged silasfelinus/kind_robots#2091 as 75eb077e0d423528b4470808f1a41b6aa546409c from exact head c79bb189bc4e2c2abc3570cfc31cc4d023771f7d after every returned exact-head workflow completed successfully, including TypeScript, Layout Contract, Facet Catalog, Schema Migration Parity, and all 298 Contract Tests stages. Coloring Book curation now uses the full workspace width and presents Color and B&W candidates as equal 17:22 comparison peers with object-contain. Screenshot-driven Coloring Book curation polish is complete and merged as silasfelinus/kind_robots#2091. Return the reusable page-polish task to ready for the next visual review slice. Slice: polished Build Bench (/build-bench, admin-only A/B image-generation build comparison tool). Prior state was hand-rolled relative to established precedent: an emoji h1 with no header hierarchy, an ad-hoc kr-note-warning missing the base kr-note class, and a corner-radius scale drifting between rounded-3xl/2xl/xl/lg across sibling elements with no visual reason; the idle result slot was bare 50%-opacity text with no visual weight. [...]
-
     [Earlier history (43,562 chars) archived verbatim to projects/interface-vision/T105-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
-
     Screenshot-directed Art Generator density and SDXL image-to-image repair. Root cause: the art LoRA picker removed its height cap when expanded, so LoRAs grew the whole page; the generator also spent permanent height on a full-width maturity band, Destination controls, and an empty Latest Result panel. Separately, the front-end LoRA compatibility helper returned zero for every sdxl-img2img LoRA even though the server-side resolver explicitly supports SDXL/COMFY/GENERIC LoRAs, and artStore omitted sdxl-img2img from both Comfy routing requirement and serverCanUseEngine, producing the false "Comfy cannot run SDXL from an image" warning and allowing engine fallback. Changes: LoRAs now scroll within a 14rem compact / 24rem taller bounded panel, with a visible compact Mature toggle in its header; SDXL img2img now mirrors server LoRA compatibility and is preserved/routed as a Comfy engine; automatic routing no longer emits a false preferred-server incompatibility warning, while an explicitly pinned incompatible server disables Generate and explains the conflict; Destination is collapsed by default, prompt/settings/panel spacing is tighter, Facets use compact copy, and the empty Latest Result placeholder no longer consumes a viewport before any render exists. Added regression coverage for maturity placement, bounded LoRA scrolling, img2img compatibility/routing, progressive Destination, and no empty result slab. No API shape, database, mana, generation preset values, or production data changed.
-
     Reviewer merged silasfelinus/kind_robots#2910 at exact head 837c4c2d09da5f9ecca379b5c423351b9e27f602 after all exact-head Actions completed successfully. Art Generator density was reduced, LoRA browsing is bounded, and SDXL image-to-image now stays on the compatible Comfy lane. Re-arm this recurring page-polish task for the next screenshot-directed slice. kind-economy/t-028 (2026-09-23): the Mission Accrual polish slice recorded above (icon-badge header, merged as kind_robots#2114) predates Silas's deliberate retirement of the whole Mission Accrual admin surface in kind_robots#2669 (2026-09-12) -- not an accident, and not a page-polish regression. mission-accrual-page.vue no longer exists; do not treat its historical mentions above as describing a currently-live page.
-
     Screenshot-directed tablet navigation slice: align the tab dropdown beneath its own trigger, cap tablet width at 18rem while retaining 22rem on xl desktops, and hide secondary row descriptions only at tablet breakpoints to reduce menu height and clutter. Added source-contract coverage for the responsive menu behavior.
-
     Screenshot-directed tablet navigation slice merged as silasfelinus/kind_robots#3073 (merge 69224c46c3b4539246c9bf845785bff68615e865). The non-phone tab dropdown had desktop-sized 22rem geometry, end-alignment that hung the panel left across the channel picker, and full two-line rows at tablet widths. It now opens from the tab trigger's leading edge, caps at 18rem below xl, and hides row summaries only from sm through xl. Phone keeps the unified picker and xl desktop keeps the 22rem descriptive menu. All 31 exact-head PR workflows completed successfully. Kaizen follow-up filed as t-140.
+    CAPPED 2026-09-30 by Silas (in session: "cap them"): min_rest_hours: 24 -- at most one cycle per day, even after a cycle that did real work (this task ran up to 35 times a day in early September). Every picker honors it via roadmap_claims.task_is_resting; re-arm with close_task.py as usual (add --noop when the cycle found nothing, which lengthens the rest up to 48h).
 
-    CAPPED 2026-09-30 by Silas (in session: "cap them"): min_rest_hours: 24 -- at most one
-    cycle per day, even after a cycle that did real work (this task ran up to 35 times a day
-    in early September). Every picker honors it via roadmap_claims.task_is_resting; re-arm
-    with close_task.py as usual (add --noop when the cycle found nothing, which lengthens
-    the rest up to 48h).
-  updated: '2026-09-28T06:57:00Z'
+    Resume scoped Gmail incident diagnosis: responsive audit 38186259818 reports visible source-less deferred gallery images as broken art. Reproduce browser behavior and repair waiting image presentation without changing alert criteria, preserving viewport loading and real failed-image/error detection.
+
+    Scoped deferred gallery image fix implemented on worker/interface-vision-t105-deferred-gm8q. Browser regression failed before repair and passed after: source-less waiting images hidden with layout bounds retained, viewport activation works, URL refresh keeps prior frame, missing source hides again, and genuine failed loads still emit errors and remain detectable. Phone/tablet/desktop fixture captures prepared; global audit unchanged.
+
+    RAN 2026-10-11 PT: merged kind_robots#3571 at 45d6e72c56e58dea872f7fb0cb050c6ade81ad79 after all 32 checks succeeded on 108a2e6b210add5a65e38ed1e1cf948553f0ebb4, including the actual-component browser regression and full Contract Tests. Source-less waiting gallery art no longer paints broken alt text; viewport layout/activation, prior-frame refresh and genuine failed-image errors remain verified. Audit criteria unchanged. Main component blob verified. Scoped fixture captures inspected at 390/768/1440px. Keep min_rest_hours 24; no deployment triggered. Original production incident awaits a fresh audit after normal authorized deployment.
+  updated: '2026-10-12T04:56:28Z'
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
@@ -2404,3 +2400,31 @@ tasks:
   owner: worker
   claimed_by: 20260930T0930Z-iv140
   claimed_at: '2026-09-30T04:45:13Z'
+
+- id: t-141
+  milestone: m6
+  title: Align tablet navigation audit with the approved adaptive menu
+  status: done
+  claimed_by: 2026-10-11T212600Z-iv-t141-a82e
+  claimed_at: '2026-10-11T21:26:00Z'
+  updated: '2026-10-11T21:49:20Z'
+  passes: 1
+  stakes: reversible
+  note: |-
+    Operational alert triage 2026-10-11: Responsive Layout Audit run 38172739938 fails tablet navigation because the fixture still caps menus at 288px, although tab-select.vue intentionally uses up to three columns under Silas's 2026-10-09 direction to use available room. The /conductor guest route has no tab menu. Update the fixture to validate adaptive width, viewport bounds, actual visible navigation rows and an appropriate public route. Preserve real failures and add executable regression coverage; do not change product navigation or hide broken art.
+
+    Scoped tablet navigation audit repair implemented on worker/interface-vision-t141-tablet-audit-20261011-a82e. Six executable geometry regression tests passed locally. Full CI and live audit verification follow before merge.
+
+    Merged Kind Robots PR 3544 as e52b63312166375ec94309cf0afe12eca8cb233e after all 29 checks completed successfully on cf6dc18f038d1f55d36eb4242262f2e609711f20. Six geometry regression tests and six live tablet route/viewports passed; Tablet Navigation Audit run 38177070466 verified the approved adaptive menu widths. The fixture preserves bounds, anchoring, row density and genuine failure checks. No product UI or deployment changed. Conductor PR 5997 merged after all 23 checks passed, recording one quality retry and kaizen follow-up t-142 for failure screenshots. Broader responsive broken-art findings remain outside this focused audit repair.
+
+- id: t-142
+  milestone: m6
+  title: Capture screenshots when the tablet navigation fixture fails
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from interface-vision/t-141: save route/viewport failure screenshots and
+    upload them from the focused Tablet Navigation Audit workflow. Keep unloaded
+    pages, hidden menus and geometry regressions failing; screenshots provide evidence,
+    not a substitute for measurements. Use explicit existing file paths in CI triggers.

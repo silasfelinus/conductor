@@ -1,0 +1,342 @@
+# Rainbow Bullet Hell Space Princess — new standalone Arcade campaign, Silas 2026-10-11 PT.
+project: rainbow-bullet-hell-space-princess
+kind: software
+autonomous: true
+goal: >-
+  Ship a lavish, complete original side-scrolling bullet-shmup campaign in the
+  Kind Robots Arcade: pink and pastel-rainbow future-tech oceanic space opera,
+  1–4 simultaneous browser players with local and online co-op, fair readable
+  but demanding combat, at least eight authored multi-phase stages, distinct
+  branching routes, eight end-stage bosses and a final boss, sea-life-inspired
+  enemy fleet, varied upgradable weapons, shields, pickups, limited supers,
+  foreground/midground/background parallax, animation, cinematic opening,
+  interludes, multiple endings, and save/continue/leaderboard integration.
+  No runtime LLM. Accept only after measured end-to-end gameplay, 1/2/3/4
+  player soak, art and accessibility review, and Silas's hands-on verdict.
+notes_from_silas: |
+  2026-10-11 PT: "a gorgeous bullet shmup inspired by gracious, Darius,
+  and r-type, with a focus on gorgeously lavish visuals, fair but challenging
+  combat, and a friendly pink and pastel rainbow aesthetic. Rainbow Bullet
+  Hell Space Princess. Up to four players simultaneous webgame. Intro and
+  cut scenes, ship enemies modeled after sea life (seahorses, jellyfish,
+  mantis shrimp, sharks, dolphins, etc) but with a future tech design.
+  Powerups, shields, multi-level background scrolling, animations, limited
+  super power attacks. as much gameplay, bosses, powerups, and levels as
+  any of the aforementioned games at their best. Start and end sequences."
+
+  Interpret "gracious" as Gradius, alongside Darius and R-Type. Use their
+  genre benchmarks, not proprietary sprites, enemies, shots, music, names,
+  stage routes or level layouts. This must not turn into a five-minute
+  survival-wave veneer: build authored stage content, route choices and
+  full campaign length. Visual softness is not difficulty softness.
+  Build private /admin/rainbow-bullet-hell-space-princess with discoverable
+  Admin tab, then gate a public /play entry and Arcade cabinet until approved.
+  Existing Arcade rendering/audio/input/score code should be reused where
+  fitting, while player and campaign state remain independently owned.
+  Internal art and reversible code may begin without creative sign-off;
+  public publication, production deployment and final taste acceptance
+  remain human gates.
+milestones:
+  - id: m1
+    title: "CREATIVE FOUNDATION — art bible, boss roster and encounter score"
+    weight: 15
+    status: in-progress
+  - id: m2
+    title: "PLAYABLE CORE — 60 Hz combat, co-op, save and collision truth"
+    weight: 20
+    status: in-progress
+  - id: m3
+    title: "FULL CAMPAIGN — authored stages, routes, bosses and progression"
+    weight: 35
+    status: not-started
+  - id: m4
+    title: "VISUAL SPECTACLE — animation, layered worlds, music and cinematic story"
+    weight: 20
+    status: not-started
+  - id: m5
+    title: "BALANCE, QA AND RELEASE VERDICT"
+    weight: 10
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Register project and author gameplay / visual direction briefs"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-11'
+    note: >-
+      Initial Conductor registration, DESIGN-BRIEF.md, ART-DIRECTION.md and
+      three project-asset prompts prepared together. Art prompts are requests,
+      not rendered assets, and no playable implementation is claimed.
+  - id: t-002
+    milestone: m1
+    title: "Create cinematic production board, ship roster and boss storyboard"
+    status: review
+    passes: 0
+    stakes: reversible
+    note: |-
+      Turn the brief into reproducible frame and enemy animation specifications: four heroine ships, base silhouettes and upgrades, enemy silhouettes and weak points, eight major stage-boss set pieces, final boss, intro/cutscene/outro panels, palette tokens, shots and parallax layers. Create source-led internal art requests with provenance. Make accessible design comps and ship only verified delivered art.
+
+      Created WORLD-BIBLE.md for four authored pilots, 24 distinct enemy behavior profiles, eight authored stage scores and finale, nine boss movesets, twelve pickup/powerup designs, storyboard boards and asset-ticket inventory. This completes the design-catalog slice; actual ArtJobs, rendered animation atlases and visual verification remain on this task and should return to ready after the documentation PR lands.
+
+      WORLD-BIBLE.md and DESIGN-BRIEF link merged as Conductor PR #6014. Authored cast, enemy behaviors, boss phases, 8 chapters plus finale, upgrades, storyboard C01-C17 and art tickets are ready for production. Remaining scope: submit tracked internal ArtJobs, verify delivered assets, build usable atlases and visual storyboard comps. No asset was rendered.
+
+      Authored CAST-BIBLE.md for all four adult princesses with the identities, bodies, gender expressions, cultural references and complex personalities Silas requested. Reconciled cast with existing ships/supers in WORLD-BIBLE, ART-DIRECTION, DESIGN-BRIEF, CONTROL and artwork prompt card. This is a design and prompt consistency update, not finished rendered portraits. Original t-002 art submission and verified asset/atlas work remain open.
+    updated: '2026-10-12T04:55:15Z'
+    owner: worker
+    claimed_by: 2026-10-12T044012Z-rainbow-cast-w8mc
+    claimed_at: '2026-10-12T04:40:12Z'
+  - id: t-003
+    milestone: m2
+    title: "Register private /admin Arcade prototype and isolated engine shell"
+    status: done
+    passes: 0
+    stakes: reversible
+    note: |-
+      Inspect current Arcade renderer, games registry, input, audio and score APIs first. Add discoverable requiredRole ADMIN tab and private route; canvas/WebGL layer, pause, remappable input and gamepad support; no public /play exposure or published cabinet yet. Keep deterministic simulation separate from renderer and menu.
+
+      Private art-first flight-deck page, admin tutorial metadata, hidden Arcade registry preview, 1-4 seat deterministic Canvas 2D flight simulator, gameplay contract and placement have been committed for PR review. Eight stages and online multiplayer remain later roadmap tasks.
+
+      Merged kind_robots PR #3563 at deaab2f016fb2fcc13e199bef633cb26513eb343; 34 checks succeeded on f48df1f2552403b161eb31956215ba39f2bf81d3. Complete eight-file diff and reviews inspected. Actual Vue page and engine rendered in isolated Chromium at 390/768/1440px with no overflow and non-admin cabinet hidden. Shared cabinet/auth integration and full campaign acceptance remain later work. Tutorial body repaired through real tab resolver. Merge only, no deployment or public launch.
+    claimed_by: 2026-10-12T005740Z-rainbow-t003-p7nk
+    claimed_at: '2026-10-12T00:57:40Z'
+    updated: '2026-10-12T03:36:00Z'
+  - id: t-004
+    milestone: m2
+    title: "Implement ship movement, hitboxes, bullets, shields and weapons"
+    status: done
+    depends_on: [t-003]
+    claimed_by: 2026-10-12T091020Z-rainbow-t004-combat-k6j8
+    claimed_at: '2026-10-12T09:10:20Z'
+    updated: '2026-10-12T10:51:00Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      60 Hz fixed-step update, deterministic seeded scripted spawns, separate collision and graze hitboxes, invulnerability windows, primary/focus fire, charge/special weapons, 3-step upgrade paths, collectible power and shield modules, limited screen-clearing supers earned by play. No fake bullets, noninteractive art or score inflation.
+
+      Built real 60 Hz fixed-tick preview combat with normalized diagonal movement, focused flight, 4 distinct shot families, enemy projectiles, central hitbox, graze, invulnerability, collectible 3-step upgrades, shield modules and earned screen-clearing supers. Added seeded deterministic replay tests and private tutorial update. Await CI and integration review; stages/bosses are separate.
+
+      Reviewer accepted the scoped private combat foundation on October 12, 2026 at 3:51 AM PT. kind_robots#3590 merged at 439782cf4c5514b5a01a8813710fbd1adb071aef after all 32 checks completed green on d126aee609e57baf95bc4e75fcd0cdf6b5c0e71d. Complete four-file diff, comments/reviews and formatting repair inspected; no blocking review or protection bypass. Independent full branch arcade command passed 23 cabinet suites plus core/preview/seeded combat tests. Actual native 1/4-pilot renders at phone/tablet/desktop show independent numbered ships, live hostile bullets and readable charge/focus HUD without overflow. Private ADMIN preview remains excluded from public scores; stages, final cast art, network co-op and public launch remain separate tasks. No deployment or publication.
+  - id: t-005
+    milestone: m2
+    title: "Deliver local 1–4 player simultaneous co-op with fair rules"
+    status: ready
+    depends_on: [t-004]
+    updated: '2026-10-12T17:34:03Z'
+    passes: 1
+    retry_context: >-
+      Quality pass1 on kind_robots#3599 head5a54c49ac8c8a7b21a27c1b70826bb2a32a8edde: pickup collector uses ships.find over retained benched roster. Normal inputs/rng0.5: players2 move down8ticks, bench P2 at65,132.8/power1, P1 earns first power pickup at222 then moves up34; pickup disappears718 and rejoining P2 shows unearned power2. Limit collectors to active living seats and add actual-engine bench/pickup/rejoin regression without mutating snapshots. Preserve active collection and no-refill/life rules; repair the existing PR. Also reconcile/retest on repaired merged Pinkwake#3598 as the original handoff requires; retain authored Act state. Green33 checks do not prove this consumer boundary; complete shared-cabinet/device acceptance remains unverified.
+    stakes: reversible
+    note: |-
+      Join/leave without resetting campaign, 1–4 input slots, keyboard/gamepad assignments, readable colored/shape-coded ship markers and projectiles, independent lives, shield/revive rules, adaptive enemy pressure without hidden damage spikes, shared continues and per-player HUD. Test same-frame collisions, simultaneous supers and full four-player bullet load.
+
+      Partial local co-op integration drafted: Rainbow-only pause-time player switching in shared Arcade cabinet, optional live seat API, persistent benched ship positions/lives/upgrades, independent controls, bounded four-seat targeting/pressure, and earned Solenne Halo revive. Pure helper and real engine regression fixtures committed. Other 1-4 player acceptance and full in-run join/leave quality checks still remain. Reconcile with t-007 Pinkwake branch before final merge and return t-005 to ready after the scoped slice lands.
+
+      Quality pass 1 handoff merged in conductor#6052 at fb3d24a999224a7e7e777059b68449557a3403f1 after all 25 checks completed without failure on a4e7c9ff905cad1dc6ea7057a80fad7753216e3f. Release ownership and retain existing kind_robots#3599 for original-worker repair of inactive pilot pickup collection. Normal-input reproduction and scoped retry_context/TALKBACK are preserved; full branch arcade suite passes 29 cabinet suites but misses the consumer boundary. Reconcile/retest with repaired merged Pinkwake#3598 as required by the existing handoff. No gameplay merge, task completion, deployment or public publication claimed; full t-005 acceptance remains open. Avoid duplicate implementation and repeat rejection of unchanged heads.
+    implementation_pr: 'silasfelinus/kind_robots#3599'
+  - id: t-006
+    milestone: m2
+    title: "Add online 1–4 player co-op rooms with deterministic synchronization"
+    status: waiting
+    depends_on: [t-005]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Design low-cost authoritative room transport, lobby/invites, join
+      synchronization, bounded prediction, reconnect and host-loss recovery.
+      Respect existing app auth/rate-limit/privacy conventions. Verify
+      divergence across 1–4 clients at simulated packet loss and latency.
+      Avoid secret creation/billing without a human gate.
+  - id: t-007
+    milestone: m3
+    title: "Author and integrate stages 1–2 with complete tutorial and bosses"
+    status: ready
+    depends_on: [t-004]
+    updated: '2026-10-12T16:42:55Z'
+    passes: 1
+    retry_context: >-
+      Quality review on PR3598 head f152fc4bb41cdd32a9a152bc1bf051aa2061e7e2: phase2→3 changes volley period126→90 without resetting/arming warning. HP51 through frame269 has no warning at frames253–269; ordinary shot damage2 after step269 makes step270 emit seven bullets immediately with no charge pulse. Guarantee a phase-safe telegraph interval before every volley and add boundary regressions, including real engine collision ordering. Existing test only ORs any warning across the run, so 32 green head checks/full 29-cabinet suite miss this. Precise review: https://github.com/silasfelinus/kind_robots/pull/3598#issuecomment-6128502143. Repair the existing focused PR, preserving finite Act/pod/state mechanics, then rerun checks and independent review; do not duplicate implementation. Full-length Acts I–II still remain, and complete native product acceptance is not established.
+    stakes: reversible
+    note: |-
+      Make two polished 10–15 minute authored scroll stages with wave scores, destructible cover, two distinct multi-phase bosses, collectable upgrades, checkpoint/continue and intentional difficulty curve. End each stage, not an endless swarm. Test 1-player and 4-player clears.
+
+      Submitted Act I Pinkwake vertical slice in Kind Robots with authored E01-E04 wave sequence, SOS-station rescue and shield award, B01 Pearl Seahorse three-phase boss, three low-threat Lilt-7 dialogue scenes, four parallax planes, deterministic fixture tests and private-admin tutorial. This is a shortened prototype, not t-007's two full 10-15-minute Acts; after a green merge return task to ready for the remaining full-length Act I and Act II work.
+
+      Reviewer quality pass1 recorded in merged conductor#6050 (4a76cf11c22a8210fe0c35d1c2e79b1bd0c30dc9), after all25 checks completed without failure on61eededd6f35f902e6f5bdd28b66a4ede23bcc5d. Retain existing kind_robots#3598 for its original worker to repair phase-boundary telegraph fairness; precise reproduction and retry_context preserved. The current implementation remains open despite greenCI; no gameplay merge or completion claimed. Release ownership for focused repair, avoid duplicate implementation, and preserve unfinished full ActsI–II scope and dependent co-op reconciliation. No deployment or publication.
+    implementation_pr: 'silasfelinus/kind_robots#3598'
+  - id: t-008
+    milestone: m3
+    title: "Author branching stages 3–5 and three distinct bosses"
+    status: waiting
+    depends_on: [t-007]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Multiple encounter branches with persistent route choice, different
+      silhouettes and objectives, jellyfish electrical fields, mantis-shrimp
+      kinetic salvos, and dolphin escort-versus-pursuit patterns.
+      Validate reachable paths and weapon viability.
+  - id: t-009
+    milestone: m3
+    title: "Author stages 6–8, route convergence and final boss"
+    status: waiting
+    depends_on: [t-008]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Finish substantial late campaign, capital reef-ship encounters,
+      shark interceptor packs, final fortress with a readable
+      multi-form showdown and ending branches. Eight stage bosses plus
+      final boss; interstitial cutscenes and complete credits.
+  - id: t-010
+    milestone: m3
+    title: "Add balanced 4-ship loadouts, upgrade matrix and replay incentives"
+    status: waiting
+    depends_on: [t-005, t-007]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Four distinctive princess-ship silhouettes and mechanically meaningful
+      beam, spread, drone and precision weapon families; bomb/super economy,
+      shields, recoverable dropped upgrades, checkpoints, scores, medals,
+      no-hit goals, difficulty settings and save/continue. Every default
+      ship can beat every boss, including in a fresh run.
+  - id: t-011
+    milestone: m4
+    title: "Build lavish stage parallax, readable effects and character animation"
+    status: waiting
+    depends_on: [t-002, t-007]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      At least four separately moving planes per stage, rich painted
+      underwater-cosmos scenery, sprite rigs or atlases, telegraphed boss
+      tells, particles, lens/bloom budget and cinematic explosions. Set
+      projectile outlines and luminance contrast independent of backgrounds;
+      performance budgets, colorblind-safe and reduced-motion modes.
+  - id: t-012
+    milestone: m4
+    title: "Produce opening, between-stage dialogue, endings, sound and score"
+    story_contract: >-
+      Author and implement Lilt-7, the mothership's always-present synthetic
+      liaison, including solo pilot dialogue, 15 composition-specific banter
+      and reveal tracks, six rescue flags, and cinematic endings composed from
+      final choice plus party-specific epilogue. Use authored offline script
+      data and a deterministic 4-bit pilot-set mask; test all masks and
+      player counts, subtitles/skip/replay, combat-safe dialogue priority,
+      reconnect synchronization, and Lilt's agency. See
+      COMMS-AND-ENDINGS-BIBLE.md. Structure the campaign as a continuous
+      eight-Act battle with three major conversation slots per Act
+      (opening, midpoint/pre-boss turn, boss aftermath) plus three finale
+      slots. Preserve persistent ship/party state across seamless boss
+      transitions, with rare optional tableau checkpoints after Acts III
+      and V. See ACT-STRUCTURE.md. Do not mark done for a document alone.
+    status: waiting
+    depends_on: [t-002, t-009]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Authored original short opening, mid-run character moments,
+      distinct victory/failure and route endings, skippable credits,
+      voice-optional subtitle treatment, original cleared sound rights,
+      layered music and shot/hit/cue mixing. No copyrighted music/sample reuse.
+  - id: t-013
+    milestone: m5
+    title: "Deterministic combat fairness, multiplayer soak and campaign QA"
+    status: waiting
+    depends_on: [t-006, t-009, t-010, t-011, t-012]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Full-route autoplay/property runs, zero unavoidable-hit scenarios
+      at documented skill window, seeded repeatability, 60 Hz render
+      target and acceptable mobile fallback, browser refresh/resume,
+      1/2/3/4 player soak under latency, keyboard/gamepad and phone/tablet/
+      desktop UI snapshots. Record measured median completion duration
+      and test all endings; never assert parity to commercial classics
+      based solely on an encounter list.
+  - id: t-014
+    milestone: m5
+    title: "Human-approved public /play Arcade launch and final quality verdict"
+    status: waiting
+    depends_on: [t-013]
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    note: >-
+      Present tested admin preview, art delivery record, video of four-player
+      combat, full-run timing, performance/device captures and scores.
+      Await Silas's explicit approval for the public /play and Arcade
+      cabinet, outward-facing promotion/deployment, and separate aesthetic
+      acceptance. Do not silently mark live when merged to GitHub.
+
+  - id: t-015
+    milestone: m2
+    title: "Prove private flight-deck help and controls through the actual shared cabinet"
+    status: ready
+    updated: '2026-10-12T10:51:01Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Reviewer kaizen after PR #3563: add a browser fixture using the actual shared ArcadeCabinet and Admin tab help renderer at phone/tablet/desktop widths; verify visible tutorial text, keyboard/gamepad pause/remapping and independent seated inputs. Keep private routes and scores excluded from public discovery. Local isolated engine pixels are not this integration proof.
+
+      Scoped Space Princess touch-D-pad responsiveness fix and pure eight-way input tests committed in Kind Robots branch. This does not yet satisfy t-015's full browser fixture requirement; leave task ready after merging the partial UX improvement.
+
+      Reviewer accepted the partial touch-control improvement on October 12, 2026 at 3:51 AM PT. kind_robots#3588 merged at 405f8f4cdca65c38d7f912dc62b52b0d92272cbb after all 30 checks completed green at fdfd06f8a3bf5116a99c198d48c5ac1e5d071d63. Full three-file diff and formatting-only ratchet repair inspected. Independent full branch arcade command passed 23 cabinet suites and preview checks. Actual extracted cabinet handlers/CSS in native browser fixtures at phone/tablet/desktop verified continuous diagonal drag, secondary-finger rejection, cancel/lostcapture release and the unchanged generic dead zone. This isolated handler proof does not complete the actual shared-cabinet/help integration fixture required by t-015. Return it to ready, clear ownership and retain implementation provenance; finish the original remaining scope in a new focused continuation, without duplicate fixture work. No deployment, publication or new human gate.
+    implementation_pr: 'silasfelinus/kind_robots#3588'
+
+  - id: t-016
+    milestone: m1
+    title: "Add a per-pilot ArtJob manifest and cast-identity QA contract before any atlas is marked ready"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Reviewer kaizen after Conductor PR #6021: check portrait identity/colour consistency, body-silhouette diversity, facial consistency across cinematics and rights/provenance against CAST-BIBLE.md. Docs only; do not overwrite approved art.
+
+  - id: t-017
+    milestone: m2
+    title: "Prove Space Princess earned-super and shield boundary behavior for every pilot."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >-
+      Reviewer kaizen after kind_robots#3590. Current seeded replay proves determinism,
+      hostile bullets and modules, but only tracks a boolean for graze and does not
+      assert a charged super's actual outcome. Add bounded deterministic actual-input
+      proofs for below-full versus full charge, held B versus a fresh B edge, charge
+      consumption/refill, bullet cancellation, pilot-specific effects, shield pickup
+      caps, invulnerability and damage/life boundaries. Include eliminated-seat cases.
+      Keep snapshot data immutable, use earned charge and existing consumer contracts,
+      preserve private score exclusion, and fix only a reproduced scoped defect.
+
+  - id: t-018
+    milestone: m2
+    title: "Commit real-cabinet touch event replay for pointer capture, cancellation and resize boundaries."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >-
+      Reviewer kaizen after the partial touch improvement in kind_robots#3588.
+      The independent isolated actual-handler/CSS probe passes; turn its pointerdown,
+      move, up, cancel and lostcapture scenarios into durable browser regression
+      evidence through the actual cabinet and seatInput consumer, including two
+      fingers, independent seats, resize and compact versus generic dead-zone bounds.
+      Reuse t-015's full cabinet/help integration fixture rather than a competing
+      harness. Avoid a simultaneous overlapping t-015 claim; finish its original
+      remaining help/input scope first when shared consumer work overlaps.
+      Measure input-to-frame sampling, preserve other games' geometry and controls,
+      and keep synthetic pointer evidence distinct from physical touch testing.

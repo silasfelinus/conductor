@@ -1,0 +1,705 @@
+# Zuzu Gamebook art round 12 (zuzu-gamebook t-012): character LoRA test for paired scenes.
+# Silas, 2026-10-11: "Loras now exist. Time to do a pass, correct bad art, and give this an overall polish."
+# Ten original two- and three-character compositions that rounds 9-11 reduced to one figure, each with
+# every present character's LoRA (CAST-PICKS.md picks: zuzukoala 4593, zkasister 4583, zkatoddler 4588,
+# zkacoyote 4578, zkaabbess 4595): seed 1 at strength 0.7, seed 2 at 0.55. House lane.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: gamebook-12
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, weathered, grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: gb12-coyote-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act I: an unsteady truce (LoRA 0.7)'
+  size: 1344x768
+  seed: 21001
+  section: coyote
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cloak, cape, two swords, sword on front, cigarette, smoking, mouse ears, mouse
+    face, (two koalas:1.3), second koala, bear, (fusion:1.3), merged characters, hybrid creature, matching outfits,
+    extra characters
+  prompt_prose: Zuzu holds out a canteen to the thirsty coyote while a strange ripple splits the black water behind
+    him.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, holding out a
+    battered canteen at arm's length, zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown hat,
+    tattered olive riding coat, revolver holstered on right hip, thin, reaching to take it with a trembling paw,
+    wary single eye, the two of them at the edge of a desert pool, behind the coyote a long ripple splitting the
+    still black water, red rock, hot afternoon light, medium shot, harsh desert sun, dusty haze, long hard shadows,
+    ochre sand
+  loras:
+  - resource_id: 4578
+    strength: 0.7
+  - resource_id: 4593
+    strength: 0.7
+  jobs:
+    arthemy-house: 37005
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245153
+  verdict: 'reject: LoRA test: two koalas in one render, a small Zuzu in red with no poncho in the other (Zuzu fuses with any second LoRA)'
+- key: gb12-coyote-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act I: an unsteady truce (LoRA 0.55)'
+  size: 1344x768
+  seed: 21002
+  section: coyote
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cloak, cape, two swords, sword on front, cigarette, smoking, mouse ears, mouse
+    face, (two koalas:1.3), second koala, bear, (fusion:1.3), merged characters, hybrid creature, matching outfits,
+    extra characters
+  prompt_prose: Zuzu holds out a canteen to the thirsty coyote while a strange ripple splits the black water behind
+    him.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, holding out a
+    battered canteen at arm's length, zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown hat,
+    tattered olive riding coat, revolver holstered on right hip, thin, reaching to take it with a trembling paw,
+    wary single eye, the two of them at the edge of a desert pool, behind the coyote a long ripple splitting the
+    still black water, red rock, hot afternoon light, medium shot, harsh desert sun, dusty haze, long hard shadows,
+    ochre sand
+  loras:
+  - resource_id: 4578
+    strength: 0.55
+  - resource_id: 4593
+    strength: 0.55
+  jobs:
+    arthemy-house: 37006
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245154
+  verdict: 'reject: LoRA test: two koalas in one render, a small Zuzu in red with no poncho in the other (Zuzu fuses with any second LoRA)'
+- key: gb12-survivors-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: teeth and tears (LoRA 0.7)'
+  size: 1344x768
+  seed: 21011
+  section: survivors
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: A fennec girl crouches under a burned boardwalk with her little brother locked in her arms, baring
+    her teeth at whoever comes near.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, crouched in the dark beneath a burned wooden boardwalk,
+    arms locked tightly around zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked
+    tunic, bandaged paw, baring her teeth, fierce protective glare, ears back, ash and embers drifting, orange firelight
+    through the planks, dusk, medium shot, warm amber firelight, orange glow
+  loras:
+  - resource_id: 4583
+    strength: 0.7
+  - resource_id: 4588
+    strength: 0.7
+  jobs:
+    arthemy-house: 37007
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245155
+  verdict: 'keep'
+- key: gb12-survivors-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: teeth and tears (LoRA 0.55)'
+  size: 1344x768
+  seed: 21012
+  section: survivors
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: A fennec girl crouches under a burned boardwalk with her little brother locked in her arms, baring
+    her teeth at whoever comes near.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, crouched in the dark beneath a burned wooden boardwalk,
+    arms locked tightly around zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked
+    tunic, bandaged paw, baring her teeth, fierce protective glare, ears back, ash and embers drifting, orange firelight
+    through the planks, dusk, medium shot, warm amber firelight, orange glow
+  loras:
+  - resource_id: 4583
+    strength: 0.55
+  - resource_id: 4588
+    strength: 0.55
+  jobs:
+    arthemy-house: 37008
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245157
+  verdict: 'second'
+- key: gb12-sister-trust-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act II: her eyes on your hands (LoRA 0.7)'
+  size: 896x1152
+  seed: 21021
+  section: sister-trust
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, blood,
+    gore, injury, revealing clothes, adult female body, mature, mouse ears, mouse face, (two koalas:1.3), second
+    koala, bear, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Zuzu kneels in the ash with empty paws on his knees while the fennec girl watches from the boardwalk
+    and her little brother reaches toward the shadow of his hat.
+  prompt_tags: (fully clothed:1.3), (three characters:1.2), trio, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, kneeling
+    patiently in grey ash, empty open paws resting on his knees, seen from behind, in front of him at a distance
+    zkasister, anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists
+    at the edge of a burned boardwalk, wary, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw reaching a tiny paw toward the shadow of a wide hat brim, dusk, full
+    body, orange sunset light, red and violet sky
+  loras:
+  - resource_id: 4583
+    strength: 0.7
+  - resource_id: 4588
+    strength: 0.7
+  - resource_id: 4593
+    strength: 0.7
+  jobs:
+    arthemy-house: 37009
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245159
+  verdict: 'reject: LoRA test: Zuzu and the children merge into one heap in one render; the toddler takes Zuzu''s colours in the other'
+- key: gb12-sister-trust-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act II: her eyes on your hands (LoRA 0.55)'
+  size: 896x1152
+  seed: 21022
+  section: sister-trust
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, blood,
+    gore, injury, revealing clothes, adult female body, mature, mouse ears, mouse face, (two koalas:1.3), second
+    koala, bear, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Zuzu kneels in the ash with empty paws on his knees while the fennec girl watches from the boardwalk
+    and her little brother reaches toward the shadow of his hat.
+  prompt_tags: (fully clothed:1.3), (three characters:1.2), trio, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, kneeling
+    patiently in grey ash, empty open paws resting on his knees, seen from behind, in front of him at a distance
+    zkasister, anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists
+    at the edge of a burned boardwalk, wary, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw reaching a tiny paw toward the shadow of a wide hat brim, dusk, full
+    body, orange sunset light, red and violet sky
+  loras:
+  - resource_id: 4583
+    strength: 0.55
+  - resource_id: 4588
+    strength: 0.55
+  - resource_id: 4593
+    strength: 0.55
+  jobs:
+    arthemy-house: 37010
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245161
+  verdict: 'reject: LoRA test: Zuzu and the children merge into one heap in one render; the toddler takes Zuzu''s colours in the other'
+- key: gb12-a2-back-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act II: your back to them (LoRA 0.7)'
+  size: 896x1152
+  seed: 21031
+  section: a2-back
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, blood,
+    gore, injury, revealing clothes, adult female body, mature, mouse ears, mouse face, (two koalas:1.3), second
+    koala, bear, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Zuzu sits in the warm ash with his back to the boardwalk while a tiny fennec toddler tugs curiously
+    at his poncho.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting
+    in warm ash with his back to a burned boardwalk, calm, eyes half closed, zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw behind him tugging curiously at the hem
+    of the poncho with a tiny paw, a pair of large ears in the dark under the planks behind, night, ember glow,
+    medium shot, blue moonlight, deep blue night sky, silver highlights
+  loras:
+  - resource_id: 4588
+    strength: 0.7
+  - resource_id: 4593
+    strength: 0.7
+  jobs:
+    arthemy-house: 37011
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245163
+  verdict: 'reject: LoRA test: the toddler takes Zuzu''s grey fur and orange cloth'
+- key: gb12-a2-back-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act II: your back to them (LoRA 0.55)'
+  size: 896x1152
+  seed: 21032
+  section: a2-back
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, blood,
+    gore, injury, revealing clothes, adult female body, mature, mouse ears, mouse face, (two koalas:1.3), second
+    koala, bear, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Zuzu sits in the warm ash with his back to the boardwalk while a tiny fennec toddler tugs curiously
+    at his poncho.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting
+    in warm ash with his back to a burned boardwalk, calm, eyes half closed, zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw behind him tugging curiously at the hem
+    of the poncho with a tiny paw, a pair of large ears in the dark under the planks behind, night, ember glow,
+    medium shot, blue moonlight, deep blue night sky, silver highlights
+  loras:
+  - resource_id: 4588
+    strength: 0.55
+  - resource_id: 4593
+    strength: 0.55
+  jobs:
+    arthemy-house: 37012
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245164
+  verdict: 'reject: LoRA test: the toddler takes Zuzu''s grey fur and orange cloth'
+- key: gb12-a3-theft-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act III: a small sound (LoRA 0.7)'
+  size: 1344x768
+  seed: 21041
+  section: a3-theft
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, blood,
+    gore, injury, revealing clothes, adult female body, mature, mouse ears, mouse face, (two koalas:1.3), second
+    koala, bear, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In red firelight a thin fennec girl kneels at Zuzu's pack holding a heel of bread while he lies
+    with his eyes open.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, lying
+    on his side by a low campfire at night, eyes open, still, in the foreground zkasister, anthro fennec fox, female,
+    young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists, kneeling at his travel pack, holding
+    a heel of hard bread, glancing back over her shoulder, red firelight, dark desert, medium shot, blue moonlight,
+    deep blue night sky, silver highlights
+  loras:
+  - resource_id: 4583
+    strength: 0.7
+  - resource_id: 4593
+    strength: 0.7
+  jobs:
+    arthemy-house: 37013
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245165
+  verdict: 'reject: LoRA test: the fennec wears Zuzu''s hat and Zuzu grows fennec ears'
+- key: gb12-a3-theft-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act III: a small sound (LoRA 0.55)'
+  size: 1344x768
+  seed: 21042
+  section: a3-theft
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, blood,
+    gore, injury, revealing clothes, adult female body, mature, mouse ears, mouse face, (two koalas:1.3), second
+    koala, bear, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In red firelight a thin fennec girl kneels at Zuzu's pack holding a heel of bread while he lies
+    with his eyes open.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, lying
+    on his side by a low campfire at night, eyes open, still, in the foreground zkasister, anthro fennec fox, female,
+    young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists, kneeling at his travel pack, holding
+    a heel of hard bread, glancing back over her shoulder, red firelight, dark desert, medium shot, blue moonlight,
+    deep blue night sky, silver highlights
+  loras:
+  - resource_id: 4583
+    strength: 0.55
+  - resource_id: 4593
+    strength: 0.55
+  jobs:
+    arthemy-house: 37014
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245166
+  verdict: 'reject: LoRA test: the fennec wears Zuzu''s hat and Zuzu grows fennec ears'
+- key: gb12-caught-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act V: a hand on your shoulder (LoRA 0.7)'
+  size: 1024x1024
+  seed: 21051
+  section: caught
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear, (fusion:1.3), merged characters, hybrid creature, matching
+    outfits, extra characters, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: Zuzu crouches at a locked door while the elderly otter abbess stands behind him with a lantern,
+    resting one paw on his shoulder and smiling.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, crouched
+    at a heavy locked door with a small knife at the lock, freezing, zkaabbess, anthro otter, female, elderly, nun,
+    black habit, white wimple, flat round face, brown fur, standing right behind him holding a lantern, one paw
+    resting lightly on his shoulder, calm smile, lantern light from behind, long shadows on the wall, tense, medium
+    shot, warm amber firelight, orange glow
+  loras:
+  - resource_id: 4595
+    strength: 0.7
+  - resource_id: 4593
+    strength: 0.7
+  jobs:
+    arthemy-house: 37015
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245167
+  verdict: 'reject: LoRA test: the abbess comes out with a human face'
+- key: gb12-caught-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act V: a hand on your shoulder (LoRA 0.55)'
+  size: 1024x1024
+  seed: 21052
+  section: caught
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear, (fusion:1.3), merged characters, hybrid creature, matching
+    outfits, extra characters, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: Zuzu crouches at a locked door while the elderly otter abbess stands behind him with a lantern,
+    resting one paw on his shoulder and smiling.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, crouched
+    at a heavy locked door with a small knife at the lock, freezing, zkaabbess, anthro otter, female, elderly, nun,
+    black habit, white wimple, flat round face, brown fur, standing right behind him holding a lantern, one paw
+    resting lightly on his shoulder, calm smile, lantern light from behind, long shadows on the wall, tense, medium
+    shot, warm amber firelight, orange glow
+  loras:
+  - resource_id: 4595
+    strength: 0.55
+  - resource_id: 4593
+    strength: 0.55
+  jobs:
+    arthemy-house: 37016
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245169
+  verdict: 'reject: LoRA test: the abbess comes out with a human face'
+- key: gb12-a8-word-broken-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: what her word is worth (LoRA 0.7)'
+  size: 1024x1024
+  seed: 21061
+  section: a8-word-broken
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, blood, gore, injury, revealing clothes, adult female body, mature, (fusion:1.3), merged
+    characters, hybrid creature, matching outfits, extra characters, (human face:1.4), human skin, hair, blonde
+    hair
+  prompt_prose: Over the fennec girl's head the Abbess smiles fondly, while the girl stares hard at the viewer,
+    trying to warn him.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkaabbess, anthro otter, female, elderly, nun, black
+    habit, white wimple, flat round face, brown fur, smiling with real fondness, standing behind zkasister, anthro
+    fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists, the girl staring
+    straight at the viewer with urgent warning eyes, candlelight, in the dark doorway behind the viewer a nun's
+    shadow lifting an arm, ominous, close-up, warm amber firelight, orange glow
+  loras:
+  - resource_id: 4595
+    strength: 0.7
+  - resource_id: 4583
+    strength: 0.7
+  jobs:
+    arthemy-house: 37017
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245171
+  verdict: 'reject: LoRA test: the sister comes out in the abbess''s habit'
+- key: gb12-a8-word-broken-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: what her word is worth (LoRA 0.55)'
+  size: 1024x1024
+  seed: 21062
+  section: a8-word-broken
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, blood, gore, injury, revealing clothes, adult female body, mature, (fusion:1.3), merged
+    characters, hybrid creature, matching outfits, extra characters, (human face:1.4), human skin, hair, blonde
+    hair
+  prompt_prose: Over the fennec girl's head the Abbess smiles fondly, while the girl stares hard at the viewer,
+    trying to warn him.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkaabbess, anthro otter, female, elderly, nun, black
+    habit, white wimple, flat round face, brown fur, smiling with real fondness, standing behind zkasister, anthro
+    fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists, the girl staring
+    straight at the viewer with urgent warning eyes, candlelight, in the dark doorway behind the viewer a nun's
+    shadow lifting an arm, ominous, close-up, warm amber firelight, orange glow
+  loras:
+  - resource_id: 4595
+    strength: 0.55
+  - resource_id: 4583
+    strength: 0.55
+  jobs:
+    arthemy-house: 37018
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245172
+  verdict: 'reject: LoRA test: the sister comes out in the abbess''s habit'
+- key: gb12-a2-hum-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act II: a song through the planks (LoRA 0.7)'
+  size: 1344x768
+  seed: 21071
+  section: a2-hum
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, blood,
+    gore, injury, revealing clothes, adult female body, mature, mouse ears, mouse face, (two koalas:1.3), second
+    koala, bear, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: At nightfall Zuzu sits in the street humming, and under the boardwalk the toddler's big ears turn
+    toward the sound while his sister holds him.
+  prompt_tags: (fully clothed:1.3), (three characters:1.2), trio, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting
+    cross-legged in the street at nightfall, humming, eyes closed, far across the street under a burned boardwalk
+    zkasister, anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists
+    holding zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged
+    paw, his enormous ears turned toward the sound, wary curled lip, glowing embers, blue dusk, wide shot, warm
+    amber firelight, orange glow
+  loras:
+  - resource_id: 4583
+    strength: 0.7
+  - resource_id: 4588
+    strength: 0.7
+  - resource_id: 4593
+    strength: 0.7
+  jobs:
+    arthemy-house: 37019
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245160
+  verdict: 'reject: LoRA test: costume bleed between Zuzu and the fennecs, a black jackal-eared Zuzu'
+- key: gb12-a2-hum-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act II: a song through the planks (LoRA 0.55)'
+  size: 1344x768
+  seed: 21072
+  section: a2-hum
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, blood,
+    gore, injury, revealing clothes, adult female body, mature, mouse ears, mouse face, (two koalas:1.3), second
+    koala, bear, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: At nightfall Zuzu sits in the street humming, and under the boardwalk the toddler's big ears turn
+    toward the sound while his sister holds him.
+  prompt_tags: (fully clothed:1.3), (three characters:1.2), trio, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, sitting, sitting
+    cross-legged in the street at nightfall, humming, eyes closed, far across the street under a burned boardwalk
+    zkasister, anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists
+    holding zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged
+    paw, his enormous ears turned toward the sound, wary curled lip, glowing embers, blue dusk, wide shot, warm
+    amber firelight, orange glow
+  loras:
+  - resource_id: 4583
+    strength: 0.55
+  - resource_id: 4588
+    strength: 0.55
+  - resource_id: 4593
+    strength: 0.55
+  jobs:
+    arthemy-house: 37020
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245162
+  verdict: 'reject: LoRA test: costume bleed between Zuzu and the fennecs, a black jackal-eared Zuzu'
+- key: gb12-mission-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act V: looking back (LoRA 0.7)'
+  size: 1344x768
+  seed: 21081
+  section: mission
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear, (fusion:1.3), merged characters, hybrid creature, matching
+    outfits, extra characters, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: Zuzu looks back from the road at the mission gate, where the abbess stands smiling with folded paws
+    beside a cobwebbed merry-go-round in the courtyard.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, standing on a
+    hot dusty road, looking back over his shoulder at an adobe mission, through the open gate a rusted merry-go-round
+    wrapped in cobwebs, zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple, flat round face,
+    brown fur, standing at the gate with paws folded, smiling, bell tower, heat haze, bright sun, long lonely road,
+    wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras:
+  - resource_id: 4595
+    strength: 0.7
+  - resource_id: 4593
+    strength: 0.7
+  jobs:
+    arthemy-house: 37021
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245168
+  verdict: 'reject: LoRA test: human-faced abbess, Zuzu with a tail'
+- key: gb12-mission-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act V: looking back (LoRA 0.55)'
+  size: 1344x768
+  seed: 21082
+  section: mission
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear, (fusion:1.3), merged characters, hybrid creature, matching
+    outfits, extra characters, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: Zuzu looks back from the road at the mission gate, where the abbess stands smiling with folded paws
+    beside a cobwebbed merry-go-round in the courtyard.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zuzukoala, anthro koala, male, grey fur, rust-brown
+    poncho, orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, standing on a
+    hot dusty road, looking back over his shoulder at an adobe mission, through the open gate a rusted merry-go-round
+    wrapped in cobwebs, zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple, flat round face,
+    brown fur, standing at the gate with paws folded, smiling, bell tower, heat haze, bright sun, long lonely road,
+    wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras:
+  - resource_id: 4595
+    strength: 0.55
+  - resource_id: 4593
+    strength: 0.55
+  jobs:
+    arthemy-house: 37022
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245170
+  verdict: 'reject: LoRA test: human-faced abbess, Zuzu with a tail'
+- key: gb12-a3-shade-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: half the shade (LoRA 0.7)'
+  size: 1024x1024
+  seed: 21091
+  section: a3-shade
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl crouches at the edge of a tree's shade with her little brother in her lap, fanning
+    him with her paw.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, crouched at the far edge of a dead tree's shade,
+    zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw
+    sitting in her lap, she fans him with one paw, wary eyes glancing sideways, dappled shadow of bare branches,
+    bright glare beyond, dusty ground, medium shot, harsh desert sun, dusty haze, long hard shadows
+  loras:
+  - resource_id: 4583
+    strength: 0.7
+  - resource_id: 4588
+    strength: 0.7
+  jobs:
+    arthemy-house: 37023
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245156
+  verdict: 'keep'
+- key: gb12-a3-shade-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: half the shade (LoRA 0.55)'
+  size: 1024x1024
+  seed: 21092
+  section: a3-shade
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl crouches at the edge of a tree's shade with her little brother in her lap, fanning
+    him with her paw.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, crouched at the far edge of a dead tree's shade,
+    zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw
+    sitting in her lap, she fans him with one paw, wary eyes glancing sideways, dappled shadow of bare branches,
+    bright glare beyond, dusty ground, medium shot, harsh desert sun, dusty haze, long hard shadows
+  loras:
+  - resource_id: 4583
+    strength: 0.55
+  - resource_id: 4588
+    strength: 0.55
+  jobs:
+    arthemy-house: 37024
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245158
+  verdict: 'second'

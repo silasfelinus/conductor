@@ -623,6 +623,8 @@ tasks:
       over. Running the pipeline would duplicate a roster. Re-arming to ready without a run.
 
       RAN 2026-10-05 (scheduled agent): wrote discovery/2026-10-05.md (10 living + 10 memorial, dedup-validated). Dockets 10-02..10-04 were never built; the latest prior was 10-01. Re-arming to ready.
+
+      RAN 2026-10-11 (scheduled agent): wrote discovery/2026-10-11.md (10 living + 10 memorial, dedup-validated; 20 pending for Silas). Dockets 10-06..10-10 were not built. Ladder rung 1 (continuous program); rungs 2 (dream docket full, 5) and daily pitches (today's docket present) were already satisfied. Re-arming to ready.
     updated: '2026-10-06T05:50:00Z'
 
   - id: t-017
@@ -1170,3 +1172,20 @@ tasks:
       from the pool, leaving 91 pending suggestions.
     updated: '2026-09-30T12:20:00Z'
     implementation_pr: 'silasfelinus/kind_robots#3117'
+
+  - id: t-034
+    milestone: m4
+    title: "Community Top 36 per Tzaddikim category, explicit up/downvotes, and tutorial-sidebar consolidation"
+    status: done
+    passes: 0
+    stakes: reversible
+    depends_on: [t-033]
+    note: |-
+      Silas, 2026-10-11 PT: each category (living, deceased, pop culture, and contribution filters) needs a Top 36 ordered by reviews and upvotes, with other eligible nominees in a distinct gallery on the same page. Enable upvoting and downvoting submissions. Move all Info explanations into the tutorial page and add a visible tab/control opening the ? workspace sidebar. Keep approval separate from community scoring, prevent repeat votes from stacking, and preserve moderation visibility.
+
+      Implementation in silasfelinus/kind_robots#3562. CI typecheck, layout, and most contracts passed; final full contract run pending. User-facing presentation remains unverified until self-hosted deployment and review.
+
+      Kind Robots PR #3562 was squash merged at ad29e90f87ed7cf70cde6f4c636b92c12097d470 after all 33 head workflow runs completed successfully. Top-36 community scoring, voting, and tutorial consolidation reached main. The live self-hosted production deployment and visual acceptance are separate from the code merge.
+    claimed_by: 2026-10-12T004000Z-tzaddik-gallery-t034-a8f2
+    claimed_at: '2026-10-12T00:40:00Z'
+    updated: '2026-10-12T09:21:00Z'

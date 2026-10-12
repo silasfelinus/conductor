@@ -1,0 +1,231 @@
+# Zuzu-world prequel: the emperor's one hundred days.
+project: emperor-of-dust
+kind: software
+autonomous: true
+goal: >-
+  Deliver a map-led, 100-day original wasteland dispatch/strategy game in
+  the Zuzu universe before Book One: 100 authored daily incident sets,
+  zero-to-three follower assignments, skill odds and consequential moral
+  choices, injury and permanent death, Prosperity-funded recruiting,
+  a numerical Horde led by individual commanders, Popularity, eight-faction tension and wars,
+  hidden low-resource recovery questlines and multiple endings. Begin
+  in Admin; full Play launch requires explicit publication approval.
+notes_from_silas: |
+  2026-10-12 PT clarification (supersedes the 2026-10-11 Support Hoard idea):
+  The Horde is a headcount that grows/shrinks through events, recruitment and loss.
+  Named followers command portions of this Horde on missions, not a support-token
+  currency. Author 100 recruitable leaders with personality, faction ties and
+  Might/Diplomacy/Ingenuity. Three initial artworks per leader: healthy portrait,
+  injured portrait, larger splash; optional additional emotion/scene variants
+  as warranted up to 20 per character. Injuries should be fairly common and
+  take X full days to heal; permanent character death must be rare. Use a
+  pausable day clock and 1–5h outward road time plus mission and return travel.
+  Draw mostly straight paths from Emperor's Tower at the top center.
+  Every day 1–100 has three prewritten reports (two truths and a lie),
+  Young Komodo gives imperfect hints. Persist awarded Items of Power between
+  runs, only one or two equipped per run; the Eye of the Elder Crow highlights
+  the lie. Include Mole Revolutionaries, enemies of the swamp witches,
+  who seek the emperor's overthrow but can eventually be won over.
+  Full spec: projects/emperor-of-dust/SYSTEMS-V02.md.
+  2026-10-11 PT: Inspired by This Is the Police and Dispatch, play the
+  emperor governing the Zuzu wasteland before Zuzu appears. Dispatch
+  0–3 limited followers, sometimes probability, often moral dilemmas.
+  Bad choices or missions can injure or kill helpers. Script exactly 100
+  days. Prosperity buys recruitment; support hoard raises success odds;
+  bad results lower popularity and Horde strength (earlier token interpretation superseded). Poor outcomes create hidden
+  easier but darker questlines and change factions. Hollow Bell has a
+  genial pragmatic mayor, Storm Crows connive, hyena raiders are punk,
+  swamp witches request defense while concealing their deeper malice.
+  Young Komodo can advise. Bible first, filler Admin frontend.
+milestones:
+  - id: m1
+    title: "FOUNDATION — cast, factions, economy and 100-day bible"
+    weight: 20
+    status: done
+  - id: m2
+    title: "STUDIO — private illustrated Admin map and tutorial"
+    weight: 10
+    status: in-progress
+  - id: m3
+    title: "ENGINE — dispatch, decisions, followers, saves"
+    weight: 20
+    status: in-progress
+  - id: m4
+    title: "STORY — all 100 scripted days, political and hidden branches"
+    weight: 30
+    status: not-started
+  - id: m5
+    title: "POLISH — art, balancing, device QA and human verdict"
+    weight: 20
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Establish complete design bible and 100-day anchor plan"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Wrote GAME-BIBLE.md and DAY-PLAN.md on 2026-10-11 PT.
+      These 100 anchors are outlines, not implemented daily script records.
+  - id: t-002
+    milestone: m2
+    title: "Build admin-only illustrative region map with tutorial and project placement"
+    status: done
+    passes: 0
+    stakes: reversible
+    note: |-
+      Create /admin/emperor-of-dust, discoverable requiredRole ADMIN tab, visual map, selectable regions and explicit not-playable labeling. Keep public Play and generic Arcade listings gated.
+
+      Private admin preview and requiredRole ADMIN tutorial are implemented in Kind Robots PR #3577, merged at 3e5e8fa0ebd77d5e7682515611b0b7a4bd2989e0 after all 30 workflow runs passed. The page explicitly says it is a concept, not playable. Conductor companion #6027 was previously merged with the game bible and 100-day outline. Deployment, actual gameplay and public /play release were not performed.
+    claimed_by: 2026-10-12T093300Z-emperor-t002-9f3c
+    claimed_at: '2026-10-12T09:33:00Z'
+    updated: '2026-10-12T09:45:00Z'
+  - id: t-003
+    milestone: m3
+    title: "Build deterministic timed dispatch schema, leader/Horde allocation and resolver"
+    status: done
+    passes: 0
+    stakes: reversible
+    claimed_by: 2026-10-12T120500Z-emperor-t003-c8f2
+    claimed_at: '2026-10-12T12:05:00Z'
+    updated: '2026-10-12T12:32:00Z'
+    note: |-
+      Proposed Kind Robots pure TypeScript dispatch engine, serializable schemas, seeded 2d6 odds, Horde troop reservations, travel and full return ETAs, authored moral outcomes, recoverable injury days and deterministic tests. Implementation branch worker/emperor-of-dust-t003-dispatch-20261012-c8f2.
+
+      Implemented the pure, deterministic in-game clock and dispatch foundation in Kind Robots PR #3600, merged at 689bf59e7fc839d26983c8f6a17a16f742f80eeb. Verified all 28 GitHub Actions workflows completed successfully on head 264251c0dcf29956053730e90b477be8b6408d1a, including Emperor of Dust Dispatch Contract, Contract Tests and TypeScript Type Check. Supports Horde troop reservations, 1-5h outward travel plus return, up to 3 unique leaders, chance odds, independent moral effects and multi-day injury downtime. No public Play route or live deploy.
+  - id: t-004
+    milestone: m3
+    title: "Implement recruitable followers, multi-day injuries, rare death and saved campaigns"
+    status: ready
+    depends_on: t-003
+    passes: 0
+    stakes: reversible
+  - id: t-005
+    milestone: m4
+    title: "Script full incident graphs Days 001–025"
+    status: ready
+    depends_on: t-003
+    passes: 0
+    stakes: reversible
+  - id: t-006
+    milestone: m4
+    title: "Script Days 026–050 and hidden recovery lines"
+    status: waiting
+    depends_on: t-005
+    passes: 0
+    stakes: reversible
+  - id: t-007
+    milestone: m4
+    title: "Script Days 051–075 with faction wars and difficult alliances"
+    status: waiting
+    depends_on: t-006
+    passes: 0
+    stakes: reversible
+  - id: t-008
+    milestone: m4
+    title: "Script Days 076–100 and eight alternate ending families"
+    status: waiting
+    depends_on: t-007
+    passes: 0
+    stakes: reversible
+  - id: t-009
+    milestone: m5
+    title: "Verify three-image follower baseline, artwork pipeline, full-run balance and responsive QA"
+    status: waiting
+    depends_on: t-008
+    passes: 0
+    stakes: reversible
+  - id: t-010
+    milestone: m5
+    title: "Obtain explicit human visual acceptance and public Play release approval"
+    status: needs-human
+    gate_human: true
+    gate_reason: outward-facing-publishing
+    stakes: outward-facing
+    passes: 0
+    note: >-
+      Internal admin preview is permitted; no public /play route
+      or published campaign without later explicit approval.
+  - id: t-011
+    milestone: m4
+    title: "Author 100 distinctive follower bios, loyalties, three stats and art briefs"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      100 recruitable leaders, not 100 starting deployments. Preserve original
+      named followers, individual arcs and faction nuance. Produce ten-character
+      editorial batches with the baseline portrait/injured/splash visual brief
+      per leader. Follow SYSTEMS-V02.md.
+  - id: t-012
+    milestone: m5
+    title: "Deliver three baseline character art assets each; modular emotions later"
+    status: waiting
+    depends_on: t-011
+    passes: 0
+    stakes: reversible
+    note: >-
+      Deliver 300 verified assets for 100 cast members via durable ArtJobs
+      and a state/asset manifest; initial three are healthy roster,
+      injured roster and large splash. Modular 1-20 images/follower;
+      no mass generation of twenty each. Do not claim queued art delivered.
+  - id: t-013
+    milestone: m4
+    title: "Write all 100 three-report briefings with Young Komodo clues"
+    status: ready
+    depends_on: t-003
+    passes: 0
+    stakes: reversible
+    note: >-
+      Every scripted day: two true and one false intelligence snippets;
+      author-known metadata, rotating lie position and conditional variants.
+      Allow early lies to be erroneous flavor without unfair punishment.
+      Eye of the Elder Crow highlights the false report when equipped.
+  - id: t-014
+    milestone: m3
+    title: "Implement persistent Items of Power with one or two run slots"
+    status: ready
+    depends_on: t-003
+    passes: 0
+    stakes: reversible
+    note: >-
+      Story-gated, meta-persistent rewards with scripted acquisition
+      windows, no unearned initial Eye. Test loadouts and save migration.
+  - id: t-015
+    milestone: m3
+    title: "Build pausable day clock and mostly radial tower travel routes"
+    status: ready
+    depends_on: t-003
+    passes: 0
+    stakes: reversible
+    note: >-
+      Top-center Emperor's Tower, mostly straight routes, 1-5h one-way
+      distances plus mission and return, visible ETA and troop reservation.
+      Follower available only after return or authored local-stationing.
+  - id: t-016
+    milestone: m4
+    title: "Develop Mole Revolutionary faction and anti-witch choices"
+    status: waiting
+    depends_on: t-005
+    passes: 0
+    stakes: reversible
+    note: >-
+      Eighth faction, opposes empire and swamp witches, with meaningful
+      reconciliation arc, named leaders, authored tension effects and
+      Day 100 ending variants; maintain pre-Zuzu continuity.
+  - id: t-017
+    milestone: m2
+    title: "Build private art-first follower roster and injured state previews"
+    status: waiting
+    depends_on: t-011
+    passes: 0
+    stakes: reversible
+    note: >-
+      Extend /admin/emperor-of-dust with a gallery for the authored
+      recruitment pool, not just a flat text list. Healthy/injured portraits,
+      large splash panels, biographies, Might/Diplomacy/Ingenuity bars,
+      faction ties, assignment availability and visible X-day wound
+      countdowns. Prefer existing art UI primitives and asset fallback
+      rules; only use actually delivered images. Keep the /play gate closed.

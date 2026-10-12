@@ -44,6 +44,7 @@ their own [project briefs](#productions).
 | Zuzu Showdown | Noncanonical versus matchups | [Showdown](../../projects/zuzu-showdown/DESIGN-BRIEF.md), [fighters](../../projects/zuzu-showdown/fighters.yaml) |
 | The Bell That Never Rang | Alternate-trail RPG | [Gamebook](../../projects/zuzu-gamebook/DESIGN-BRIEF.md) |
 | Zuzu: Shifting Lands | Procedural alternate-play board-game expedition | [Brief](../../projects/zuzu-shifting-lands/DESIGN-BRIEF.md), [five-land manifest](../../projects/zuzu-shifting-lands/WORLD-DECKS.json), [board/card architecture](../../projects/zuzu-shifting-lands/BOARD-CARD-ARCHITECTURE.md) |
+| Emperor of Dust: One Hundred Days | Alternate-play early wasteland realm before Book One | [Game bible](../../projects/emperor-of-dust/GAME-BIBLE.md), [100-day calendar](../../projects/emperor-of-dust/DAY-PLAN.md) |
 | Zuzu: Ghost Trail | Arcade spinoff | [Arcade game queue](../../projects/kr-arcade/games.yaml) (slug `zuzu-ghost-trail`) |
 
 Projects share *world references*, not tasks or implementation ownership. Each project
@@ -52,7 +53,7 @@ still owns its own code, assets, decisions and human publication gate.
 ## Complete asset and animation inventory
 
 The previous six curated ArtImage anchors were **not a full inventory**. This directory
-now indexes **1855 distinct completed ArtImage IDs and 2356 distinct ArtJob IDs from 31
+now indexes **2605 distinct completed ArtImage IDs and 2861 distinct ArtJob IDs from 37
 Conductor art-generation ledgers**, with original ledger file, subject key, entity,
 job IDs and recorded output status. These are *recorded* DONE results, **not a
 live Kind Robots database/URL verification**, and include concept attempts and

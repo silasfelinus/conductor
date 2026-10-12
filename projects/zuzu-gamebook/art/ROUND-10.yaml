@@ -1,0 +1,1726 @@
+# Zuzu Gamebook art round 10 (zuzu-gamebook t-006): the 34 sections round 9 could not land, plus the three
+# sections still showing a Kontext plate. One figure per plate at most (Silas, 2026-10-10: "go ahead for
+# workarounds"); each prompt is composed away from its recorded reject reasons: Zuzu plates name nothing
+# living but him, no "bones"/"beds", nuns shown by their paws only, objects and places where figures kept
+# failing. House lane only, two seeds each, scene light tag, approved Zuzu build (ART-DIRECTION.md
+# "Prompt wording"). Keepers go to kind_robots sectionArt.ts. Indexed in worlds/zuzu/assets/ledger-part-05.json.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: gamebook-10
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, weathered, grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: gb10-a1-bowl-bones-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act I: a name in the clay (seed 1)'
+  size: 1024x1024
+  seed: 17001
+  section: a1-bowl-bones
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A small cracked clay bowl with crooked scratches along its rim and a tiny bell stamped into its
+    side sits on a flat black stone at the edge of clear water.
+  prompt_tags: (still life:1.4), (object only:1.3), a single small cracked clay bowl resting upright on a flat black
+    stone at the edge of clear shallow water, a crack running down through it, crooked scratch marks along its rim,
+    a tiny bell shape stamped into its side, pale pebbles and silt around it, rippling noon sunlight, centered,
+    close-up, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36786
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244934
+  verdict: 'keep'
+- key: gb10-a1-bowl-bones-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act I: a name in the clay (seed 2)'
+  size: 1024x1024
+  seed: 17002
+  section: a1-bowl-bones
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A small cracked clay bowl with crooked scratches along its rim and a tiny bell stamped into its
+    side sits on a flat black stone at the edge of clear water.
+  prompt_tags: (still life:1.4), (object only:1.3), a single small cracked clay bowl resting upright on a flat black
+    stone at the edge of clear shallow water, a crack running down through it, crooked scratch marks along its rim,
+    a tiny bell shape stamped into its side, pale pebbles and silt around it, rippling noon sunlight, centered,
+    close-up, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36787
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244935
+  verdict: 'second'
+- key: gb10-a1-downwind-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: downwind (seed 1)'
+  size: 1344x768
+  seed: 17011
+  section: a1-downwind
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: Seen through a screen of dead reeds, a huge crocodile's knobbed eyes and long ridged back slide
+    across the black water toward the far bank.
+  prompt_tags: a huge crocodile, feral, (animal focus:1.2), only its knobbed eyes and long ridged back above the
+    surface, sliding slowly across black still water toward a far muddy bank, seen through gaps in tall dead reeds
+    in the foreground, wind bending the reeds, ripples trailing behind it, harsh afternoon sun, tense, wide shot,
+    harsh desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36788
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244936
+  verdict: 'keep'
+- key: gb10-a1-downwind-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: downwind (seed 2)'
+  size: 1344x768
+  seed: 17012
+  section: a1-downwind
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: Seen through a screen of dead reeds, a huge crocodile's knobbed eyes and long ridged back slide
+    across the black water toward the far bank.
+  prompt_tags: a huge crocodile, feral, (animal focus:1.2), only its knobbed eyes and long ridged back above the
+    surface, sliding slowly across black still water toward a far muddy bank, seen through gaps in tall dead reeds
+    in the foreground, wind bending the reeds, ripples trailing behind it, harsh afternoon sun, tense, wide shot,
+    harsh desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36789
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244937
+  verdict: 'second'
+- key: gb10-a1-two-shadows-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act I: two shadows (seed 1)'
+  size: 1344x768
+  seed: 17021
+  section: a1-two-shadows
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: At sunset two impossibly long, thin shadows reach across an empty white salt pan from opposite sides,
+    their tips nearly touching in the middle.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a vast pale salt pan at sunset, the sun lying flat on the
+    horizon, two impossibly long thin dark streaks of shadow reaching across the white crust from opposite edges
+    of the picture, their tips nearly touching in the empty middle, cracked salt crust, golden and violet light,
+    epic wide shot, orange sunset light, red and violet sky
+  jobs:
+    arthemy-house: 36790
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244938
+  verdict: 'reject: one reads as a body lying on the salt; the other has a stray red figure on the road'
+- key: gb10-a1-two-shadows-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act I: two shadows (seed 2)'
+  size: 1344x768
+  seed: 17022
+  section: a1-two-shadows
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: At sunset two impossibly long, thin shadows reach across an empty white salt pan from opposite sides,
+    their tips nearly touching in the middle.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a vast pale salt pan at sunset, the sun lying flat on the
+    horizon, two impossibly long thin dark streaks of shadow reaching across the white crust from opposite edges
+    of the picture, their tips nearly touching in the empty middle, cracked salt crust, golden and violet light,
+    epic wide shot, orange sunset light, red and violet sky
+  jobs:
+    arthemy-house: 36791
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244939
+  verdict: 'reject: one reads as a body lying on the salt; the other has a stray red figure on the road'
+- key: gb10-a2-beds-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act II: every bed (seed 1)'
+  size: 1024x1024
+  seed: 17031
+  section: a2-beds
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A stitched rag doll lies face up on a plumped pillow above a blanket folded back and smoothed perfectly
+    flat, lit by a bar of pale window light.
+  prompt_tags: (still life:1.4), (object only:1.3), a small stitched sackcloth rag doll with button eyes and limp
+    stuffed limbs lying face up on a plumped white pillow, a wool blanket folded back and smoothed perfectly flat
+    below it, crisp neat linen, dust motes, a bar of pale shuttered window light, unsettling stillness, close-up,
+    harsh desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36792
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244940
+  verdict: 'reject: the rag doll reads as a sleeper in the bed, with a creepy stitched face'
+- key: gb10-a2-beds-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act II: every bed (seed 2)'
+  size: 1024x1024
+  seed: 17032
+  section: a2-beds
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A stitched rag doll lies face up on a plumped pillow above a blanket folded back and smoothed perfectly
+    flat, lit by a bar of pale window light.
+  prompt_tags: (still life:1.4), (object only:1.3), a small stitched sackcloth rag doll with button eyes and limp
+    stuffed limbs lying face up on a plumped white pillow, a wool blanket folded back and smoothed perfectly flat
+    below it, crisp neat linen, dust motes, a bar of pale shuttered window light, unsettling stillness, close-up,
+    harsh desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36793
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244941
+  verdict: 'reject: the rag doll reads as a sleeper in the bed, with a creepy stitched face'
+- key: gb10-a3-cloth-dawn-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act III: a stone for a stone (seed 1)'
+  size: 1024x1024
+  seed: 17041
+  section: a3-cloth-dawn
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A single smooth pebble striped red and white sits exactly in the center of a flat grey rock beaded
+    with dew in grey dawn light.
+  prompt_tags: (still life:1.4), (object only:1.3), macro view of (a single smooth round pebble striped red and
+    white:1.3), set exactly in the center of a flat grey rock, dew drops on the rock, cold grey dawn light, soft
+    blue shadows, quiet, centered composition, close-up, golden dawn light, pink and gold sky
+  jobs:
+    arthemy-house: 36794
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244942
+  verdict: 'reject: drew a giant grey boulder; no red-and-white pebble'
+- key: gb10-a3-cloth-dawn-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act III: a stone for a stone (seed 2)'
+  size: 1024x1024
+  seed: 17042
+  section: a3-cloth-dawn
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A single smooth pebble striped red and white sits exactly in the center of a flat grey rock beaded
+    with dew in grey dawn light.
+  prompt_tags: (still life:1.4), (object only:1.3), macro view of (a single smooth round pebble striped red and
+    white:1.3), set exactly in the center of a flat grey rock, dew drops on the rock, cold grey dawn light, soft
+    blue shadows, quiet, centered composition, close-up, golden dawn light, pink and gold sky
+  jobs:
+    arthemy-house: 36795
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244943
+  verdict: 'reject: drew a giant grey boulder; no red-and-white pebble'
+- key: gb10-a3-tracks-end-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act III: where the tracks stop (seed 1)'
+  size: 896x1152
+  seed: 17051
+  section: a3-tracks-end
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: A single line of footprints crosses cracked hardpan and stops dead in the open, the last two side
+    by side, with smooth untouched ground beyond.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, high angle, a single line of small soft-soled footprints
+    running up the picture across flat cracked hardpan, ending abruptly in the open middle of the flat, the last
+    two prints side by side, smooth untouched ground beyond, vast empty desert, pale morning light, eerie, vertical
+    composition, wide shot, golden dawn light, pink and gold sky
+  jobs:
+    arthemy-house: 36796
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244944
+  verdict: 'second'
+- key: gb10-a3-tracks-end-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act III: where the tracks stop (seed 2)'
+  size: 896x1152
+  seed: 17052
+  section: a3-tracks-end
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: A single line of footprints crosses cracked hardpan and stops dead in the open, the last two side
+    by side, with smooth untouched ground beyond.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, high angle, a single line of small soft-soled footprints
+    running up the picture across flat cracked hardpan, ending abruptly in the open middle of the flat, the last
+    two prints side by side, smooth untouched ground beyond, vast empty desert, pale morning light, eerie, vertical
+    composition, wide shot, golden dawn light, pink and gold sky
+  jobs:
+    arthemy-house: 36797
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244945
+  verdict: 'keep'
+- key: gb10-a3-theft-seen-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: eyes in the firelight (seed 1)'
+  size: 896x1152
+  seed: 17061
+  section: a3-theft-seen
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl stands frozen at the edge of the red firelight at night, clutching a heel of bread
+    to her chest, eyes wide.
+  prompt_tags: anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty
+    fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), solo, standing frozen at the edge of
+    red firelight at night, clutching a heel of bread to her chest with both paws, wide startled eyes, ears straight
+    up, red embers glowing low in the foreground, dark empty desert behind her, red firelight from below, full body,
+    blue moonlight, deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36798
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244946
+  verdict: 'reject: fennec girl drawn with glowing red eyes'
+- key: gb10-a3-theft-seen-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: eyes in the firelight (seed 2)'
+  size: 896x1152
+  seed: 17062
+  section: a3-theft-seen
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl stands frozen at the edge of the red firelight at night, clutching a heel of bread
+    to her chest, eyes wide.
+  prompt_tags: anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty
+    fur, claw-torn ragged pale dress, bandaged wrists, (fully clothed:1.3), solo, standing frozen at the edge of
+    red firelight at night, clutching a heel of bread to her chest with both paws, wide startled eyes, ears straight
+    up, red embers glowing low in the foreground, dark empty desert behind her, red firelight from below, full body,
+    blue moonlight, deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36799
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244947
+  verdict: 'reject: fennec girl drawn with glowing red eyes'
+- key: gb10-a4-well-battle-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IV: five jackals (seed 1)'
+  size: 896x1152
+  seed: 17071
+  section: a4-well-battle
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu stands alone with his katana drawn in a low stance before a dark cleft in the rocks, eyes on
+    a ledge above, as the dust storms up.
+  prompt_tags: anthro koala, male, adult, (chubby:1.2), standing upright, (very short:1.3), (stubby legs:1.4), small
+    round belly, wide body, big round head, (animal proportions:1.3), short arms, grey fur, round fluffy ears, broad
+    black nose, serious, squinting, (dark terracotta brown poncho:1.3), orange zigzag pattern, orange scarf, orange
+    sash, (dark brown cloth trousers:1.3), wrapped shins, (wide-brimmed woven straw hat:1.2), (sheathed katana on
+    back:1.3), katana hilt above his right shoulder, (fully clothed:1.3), solo, katana drawn in both paws, low ready
+    stance, his back to a narrow dark cleft between broken sandstone rocks, guarding it, eyes narrowed, looking
+    up at a rock ledge above, dust storming up around him, harsh white desert sun, low angle, action, full body,
+    harsh desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36800
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244948
+  verdict: 'reject: Zuzu drawn dog-faced'
+- key: gb10-a4-well-battle-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act IV: five jackals (seed 2)'
+  size: 896x1152
+  seed: 17072
+  section: a4-well-battle
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu stands alone with his katana drawn in a low stance before a dark cleft in the rocks, eyes on
+    a ledge above, as the dust storms up.
+  prompt_tags: anthro koala, male, adult, (chubby:1.2), standing upright, (very short:1.3), (stubby legs:1.4), small
+    round belly, wide body, big round head, (animal proportions:1.3), short arms, grey fur, round fluffy ears, broad
+    black nose, serious, squinting, (dark terracotta brown poncho:1.3), orange zigzag pattern, orange scarf, orange
+    sash, (dark brown cloth trousers:1.3), wrapped shins, (wide-brimmed woven straw hat:1.2), (sheathed katana on
+    back:1.3), katana hilt above his right shoulder, (fully clothed:1.3), solo, katana drawn in both paws, low ready
+    stance, his back to a narrow dark cleft between broken sandstone rocks, guarding it, eyes narrowed, looking
+    up at a rock ledge above, dust storming up around him, harsh white desert sun, low angle, action, full body,
+    harsh desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36801
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244949
+  verdict: 'reject: Zuzu drawn dog-faced'
+- key: gb10-a4-well-robbed-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IV: robbed and left (seed 1)'
+  size: 1344x768
+  seed: 17081
+  section: a4-well-robbed
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: 'A ransacked campsite at dusk: churned sand, an empty ring of fire stones, a slit-open coin pouch
+    and a dropped spoon under a purple sky.'
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a ransacked desert campsite at dusk, churned and scuffed
+    sand, a cold ring of fire stones with nothing in it, a slit-open empty coin pouch and a cut thread lying in
+    the sand, a dropped tin spoon, scattered twigs, long purple shadows, purple sky with last orange light, quiet,
+    wide shot, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36802
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244950
+  verdict: 'second'
+- key: gb10-a4-well-robbed-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IV: robbed and left (seed 2)'
+  size: 1344x768
+  seed: 17082
+  section: a4-well-robbed
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: 'A ransacked campsite at dusk: churned sand, an empty ring of fire stones, a slit-open coin pouch
+    and a dropped spoon under a purple sky.'
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a ransacked desert campsite at dusk, churned and scuffed
+    sand, a cold ring of fire stones with nothing in it, a slit-open empty coin pouch and a cut thread lying in
+    the sand, a dropped tin spoon, scattered twigs, long purple shadows, purple sky with last orange light, quiet,
+    wide shot, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36803
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244951
+  verdict: 'keep'
+- key: gb10-a4-wide-berth-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act IV: the long way round (seed 1)'
+  size: 1024x1024
+  seed: 17091
+  section: a4-wide-berth
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A barrel cactus split open with a knife still stuck in its wet pulp, a dented canteen leaning on
+    it, and a ruined waystation shimmering far behind.
+  prompt_tags: (still life:1.4), (object only:1.3), a barrel cactus split open with a knife, the blade still stuck
+    in its wet green pulp, drops of water beading on the cut, a dented tin canteen leaning against it, baking broken
+    rock, heat shimmer, far behind a ruined waystation with half a roof on the flat, evening sun, close-up, orange
+    sunset light, red and violet sky
+  jobs:
+    arthemy-house: 36804
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244952
+  verdict: 'reject: wrong objects (a barrel and a bottle, no split cactus)'
+- key: gb10-a4-wide-berth-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act IV: the long way round (seed 2)'
+  size: 1024x1024
+  seed: 17092
+  section: a4-wide-berth
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A barrel cactus split open with a knife still stuck in its wet pulp, a dented canteen leaning on
+    it, and a ruined waystation shimmering far behind.
+  prompt_tags: (still life:1.4), (object only:1.3), a barrel cactus split open with a knife, the blade still stuck
+    in its wet green pulp, drops of water beading on the cut, a dented tin canteen leaning against it, baking broken
+    rock, heat shimmer, far behind a ruined waystation with half a roof on the flat, evening sun, close-up, orange
+    sunset light, red and violet sky
+  jobs:
+    arthemy-house: 36805
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244953
+  verdict: 'reject: wrong objects (a barrel and a bottle, no split cactus)'
+- key: gb10-supper-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: stew and candles (seed 1)'
+  size: 1344x768
+  seed: 17101
+  section: supper
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: An old otter's paw in a black sleeve tips a ladle of steaming stew into a small wooden bowl on a
+    long refectory table beside round loaves.
+  prompt_tags: close-up of an elderly otter's furry grey-brown paw with short claws, black wool sleeve, tilting
+    a wooden ladle of thick steaming stew into a small wooden bowl on a long scrubbed refectory table, round loaves
+    of bread, tin cups, steam curling, warm golden evening window light, cozy, close-up, orange sunset light, red
+    and violet sky
+  jobs:
+    arthemy-house: 36806
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244954
+  verdict: 'keep'
+- key: gb10-supper-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: stew and candles (seed 2)'
+  size: 1344x768
+  seed: 17102
+  section: supper
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: An old otter's paw in a black sleeve tips a ladle of steaming stew into a small wooden bowl on a
+    long refectory table beside round loaves.
+  prompt_tags: close-up of an elderly otter's furry grey-brown paw with short claws, black wool sleeve, tilting
+    a wooden ladle of thick steaming stew into a small wooden bowl on a long scrubbed refectory table, round loaves
+    of bread, tin cups, steam curling, warm golden evening window light, cozy, close-up, orange sunset light, red
+    and violet sky
+  jobs:
+    arthemy-house: 36807
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244955
+  verdict: 'second'
+- key: gb10-a5-wren-talk-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act V: the novice (seed 1)'
+  size: 896x1152
+  seed: 17111
+  section: a5-wren-talk
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: In a dim chapel corner a low iron-bound door stands shut beside burning candles, a pair of wick
+    scissors dropped on the flagstones before it.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a dim stone chapel corner after vespers, a low heavy plank
+    door bound with iron set in the wall, an old iron lock, tall white candles burning in an iron stand beside it,
+    a pair of small wick scissors dropped on the flagstones, wax drips, deep shadows above, warm candlelight, vertical
+    composition, wide shot, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36808
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244956
+  verdict: 'second'
+- key: gb10-a5-wren-talk-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act V: the novice (seed 2)'
+  size: 896x1152
+  seed: 17112
+  section: a5-wren-talk
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: In a dim chapel corner a low iron-bound door stands shut beside burning candles, a pair of wick
+    scissors dropped on the flagstones before it.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a dim stone chapel corner after vespers, a low heavy plank
+    door bound with iron set in the wall, an old iron lock, tall white candles burning in an iron stand beside it,
+    a pair of small wick scissors dropped on the flagstones, wax drips, deep shadows above, warm candlelight, vertical
+    composition, wide shot, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36809
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244957
+  verdict: 'keep'
+- key: gb10-a5-wagon-road-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act V: the pilgrim wagon (seed 1)'
+  size: 1344x768
+  seed: 17121
+  section: a5-wagon-road
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: A small closed canvas wagon with its cover laced tight and a white cloth snapping on its hoop stands
+    on a long straight desert road, a mission tower tiny on the horizon behind.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, side view of a small closed canvas wagon on a long straight
+    desert road, its canvas cover laced tight, a white cloth snapping on the wagon hoop in the wind, wheel ruts,
+    harsh noon sun, heat shimmer, far off on the horizon behind it a tiny mission bell tower, epic wide shot, harsh
+    desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36810
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244958
+  verdict: 'second'
+- key: gb10-a5-wagon-road-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act V: the pilgrim wagon (seed 2)'
+  size: 1344x768
+  seed: 17122
+  section: a5-wagon-road
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: A small closed canvas wagon with its cover laced tight and a white cloth snapping on its hoop stands
+    on a long straight desert road, a mission tower tiny on the horizon behind.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, side view of a small closed canvas wagon on a long straight
+    desert road, its canvas cover laced tight, a white cloth snapping on the wagon hoop in the wind, wheel ruts,
+    harsh noon sun, heat shimmer, far off on the horizon behind it a tiny mission bell tower, epic wide shot, harsh
+    desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36811
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244959
+  verdict: 'keep'
+- key: gb10-a5-pilgrim-freed-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act V: only asleep (seed 1)'
+  size: 1024x1024
+  seed: 17131
+  section: a5-pilgrim-freed
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A dented canteen with its cap off and a folded letter sealed in black wax lie on sun-bleached canvas
+    in a dry wash, a town's roofs hazy far behind.
+  prompt_tags: (still life:1.4), (object only:1.3), a dented tin canteen with its cap hanging on a chain and a folded
+    letter sealed with a blob of black wax, lying on sun-bleached canvas in a dry sandy wash, a few drops of spilled
+    water darkening the sand, hot afternoon sun, hazy roofs of a frontier town far behind, close-up, harsh desert
+    sun, dusty haze, long hard shadows
+  jobs:
+    arthemy-house: 36812
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244960
+  verdict: 'keep'
+- key: gb10-a5-pilgrim-freed-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act V: only asleep (seed 2)'
+  size: 1024x1024
+  seed: 17132
+  section: a5-pilgrim-freed
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A dented canteen with its cap off and a folded letter sealed in black wax lie on sun-bleached canvas
+    in a dry wash, a town's roofs hazy far behind.
+  prompt_tags: (still life:1.4), (object only:1.3), a dented tin canteen with its cap hanging on a chain and a folded
+    letter sealed with a blob of black wax, lying on sun-bleached canvas in a dry sandy wash, a few drops of spilled
+    water darkening the sand, hot afternoon sun, hazy roofs of a frontier town far behind, close-up, harsh desert
+    sun, dusty haze, long hard shadows
+  jobs:
+    arthemy-house: 36813
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244961
+  verdict: 'second'
+- key: gb10-a6-badger-sold-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act VI: honest pay (seed 1)'
+  size: 1344x768
+  seed: 17141
+  section: a6-badger-sold
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A heavy full canteen stands on the boardwalk planks in a wet ring, and beyond the street a dark
+    ridge sends up a thin thread of campfire haze at dusk.
+  prompt_tags: (still life:1.4), (object only:1.3), a heavy full canteen in a worn canvas cover standing on weathered
+    boardwalk planks, beads of water on it, a wet dark ring on the wood, beyond the empty street a dark north ridge
+    at dusk with a thin thread of campfire haze rising from it, sunset light, wide shot, orange sunset light, red
+    and violet sky
+  jobs:
+    arthemy-house: 36814
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244962
+  verdict: 'reject: figures in the frame (a winged figure, a rider silhouette)'
+- key: gb10-a6-badger-sold-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act VI: honest pay (seed 2)'
+  size: 1344x768
+  seed: 17142
+  section: a6-badger-sold
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A heavy full canteen stands on the boardwalk planks in a wet ring, and beyond the street a dark
+    ridge sends up a thin thread of campfire haze at dusk.
+  prompt_tags: (still life:1.4), (object only:1.3), a heavy full canteen in a worn canvas cover standing on weathered
+    boardwalk planks, beads of water on it, a wet dark ring on the wood, beyond the empty street a dark north ridge
+    at dusk with a thin thread of campfire haze rising from it, sunset light, wide shot, orange sunset light, red
+    and violet sky
+  jobs:
+    arthemy-house: 36815
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244963
+  verdict: 'reject: figures in the frame (a winged figure, a rider silhouette)'
+- key: gb10-a6-vane-begs-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act VI: on his knees (seed 1)'
+  size: 896x1152
+  seed: 17151
+  section: a6-vane-begs
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: A lamplit office at night with a chair knocked over backward, a ledger on the desk and an iron chain
+    running down through a floor hatch into black cistern water.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a lamplit frontier office at night, a leather desk chair
+    knocked over backward on bare floorboards, a heavy ledger on the desk, a single oil lamp, an open hatch in the
+    floor with a thick iron chain running straight down into black cistern water below, dramatic lamplight, vertical
+    composition, wide shot, blue moonlight, deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36816
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244964
+  verdict: 'second'
+- key: gb10-a6-vane-begs-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act VI: on his knees (seed 2)'
+  size: 896x1152
+  seed: 17152
+  section: a6-vane-begs
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: A lamplit office at night with a chair knocked over backward, a ledger on the desk and an iron chain
+    running down through a floor hatch into black cistern water.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a lamplit frontier office at night, a leather desk chair
+    knocked over backward on bare floorboards, a heavy ledger on the desk, a single oil lamp, an open hatch in the
+    floor with a thick iron chain running straight down into black cistern water below, dramatic lamplight, vertical
+    composition, wide shot, blue moonlight, deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36817
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244965
+  verdict: 'keep'
+- key: gb10-a6-beaten-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act VI: in the trough (seed 1)'
+  size: 1344x768
+  seed: 17161
+  section: a6-beaten
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A woven straw hat lies crushed in the bottom of a dry horse trough beside a knotted bar rag, torchlit,
+    with a boarded-up house behind.
+  prompt_tags: (still life:1.4), (object only:1.3), a wide-brimmed woven straw hat lying crushed in the bottom of
+    a dry wooden horse trough, a knotted bar rag beside it, flickering torchlight across the grain, beyond the trough
+    a dark boarded house with a plank nailed across its door, night street, wide shot, blue moonlight, deep blue
+    night sky, silver highlights
+  jobs:
+    arthemy-house: 36818
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244966
+  verdict: 'keep'
+- key: gb10-a6-beaten-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act VI: in the trough (seed 2)'
+  size: 1344x768
+  seed: 17162
+  section: a6-beaten
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A woven straw hat lies crushed in the bottom of a dry horse trough beside a knotted bar rag, torchlit,
+    with a boarded-up house behind.
+  prompt_tags: (still life:1.4), (object only:1.3), a wide-brimmed woven straw hat lying crushed in the bottom of
+    a dry wooden horse trough, a knotted bar rag beside it, flickering torchlight across the grain, beyond the trough
+    a dark boarded house with a plank nailed across its door, night street, wide shot, blue moonlight, deep blue
+    night sky, silver highlights
+  jobs:
+    arthemy-house: 36819
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244967
+  verdict: 'second'
+- key: gb10-a6-riot-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act VI: the town reads the book (seed 1)'
+  size: 1344x768
+  seed: 17171
+  section: a6-riot
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Low and close on a toppled heap of split water casks in a night street, water gushing into the dust
+    past glittering glass under a smashed lit window.
+  prompt_tags: (still life:1.4), (object only:1.3), low angle close on a toppled heap of split wooden water casks
+    in the dirt of a night street, broken staves and loose iron hoops, water gushing out across the dust in dark
+    streams, shards of window glass glittering, a smashed glowing saloon window behind, a thrown stone, orange lamplight,
+    wide shot, blue moonlight, deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36820
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244968
+  verdict: 'second'
+- key: gb10-a6-riot-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act VI: the town reads the book (seed 2)'
+  size: 1344x768
+  seed: 17172
+  section: a6-riot
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Low and close on a toppled heap of split water casks in a night street, water gushing into the dust
+    past glittering glass under a smashed lit window.
+  prompt_tags: (still life:1.4), (object only:1.3), low angle close on a toppled heap of split wooden water casks
+    in the dirt of a night street, broken staves and loose iron hoops, water gushing out across the dust in dark
+    streams, shards of window glass glittering, a smashed glowing saloon window behind, a thrown stone, orange lamplight,
+    wide shot, blue moonlight, deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36821
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244969
+  verdict: 'keep'
+- key: gb10-a6-mob-held-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act VI: lanterns for the names (seed 1)'
+  size: 1024x1024
+  seed: 17181
+  section: a6-mob-held
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Close on a plank wall covered edge to edge with overlapping paper notices of young animals, all
+    glowing gold above a row of torches in iron brackets.
+  prompt_tags: (still life:1.4), (object only:1.3), close view of a weathered plank wall covered edge to edge with
+    dozens of overlapping paper notices, curling yellowed sheets nailed in rows, each with a small sketched portrait
+    of a young animal, a row of burning torches in iron brackets beneath them, every sheet glowing warm gold, night,
+    close-up, blue moonlight, deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36822
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244970
+  verdict: 'reject: drew masked creature faces instead of the notices wall'
+- key: gb10-a6-mob-held-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act VI: lanterns for the names (seed 2)'
+  size: 1024x1024
+  seed: 17182
+  section: a6-mob-held
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Close on a plank wall covered edge to edge with overlapping paper notices of young animals, all
+    glowing gold above a row of torches in iron brackets.
+  prompt_tags: (still life:1.4), (object only:1.3), close view of a weathered plank wall covered edge to edge with
+    dozens of overlapping paper notices, curling yellowed sheets nailed in rows, each with a small sketched portrait
+    of a young animal, a row of burning torches in iron brackets beneath them, every sheet glowing warm gold, night,
+    close-up, blue moonlight, deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36823
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244971
+  verdict: 'reject: drew masked creature faces instead of the notices wall'
+- key: gb10-coyote-return-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act VII: a debt repaid (seed 1)'
+  size: 896x1152
+  seed: 17191
+  section: coyote-return
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: The one-eyed coyote stands alone on a rocky ridge top against a huge pale moon, looking down the
+    slope toward a dark gully.
+  prompt_tags: anthro, coyote, male, adult, gaunt, scruffy tan fur, black eyepatch over one eye, tattered long riding
+    coat, battered hat, right forearm wrapped in dirty cloth, (fully clothed:1.3), solo, standing alone on a rocky
+    ridge top against a huge pale moon, seen from below, looking down the slope, coat stirring in the wind, black
+    rocks, a dark gully falling away beside him, silver moonlight, quiet, low angle, full body, blue moonlight,
+    deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36824
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244972
+  verdict: 'keep'
+- key: gb10-coyote-return-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act VII: a debt repaid (seed 2)'
+  size: 896x1152
+  seed: 17192
+  section: coyote-return
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: The one-eyed coyote stands alone on a rocky ridge top against a huge pale moon, looking down the
+    slope toward a dark gully.
+  prompt_tags: anthro, coyote, male, adult, gaunt, scruffy tan fur, black eyepatch over one eye, tattered long riding
+    coat, battered hat, right forearm wrapped in dirty cloth, (fully clothed:1.3), solo, standing alone on a rocky
+    ridge top against a huge pale moon, seen from below, looking down the slope, coat stirring in the wind, black
+    rocks, a dark gully falling away beside him, silver moonlight, quiet, low angle, full body, blue moonlight,
+    deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36825
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244973
+  verdict: 'second'
+- key: gb10-a7-feather-road-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act VII: through the feather (seed 1)'
+  size: 896x1152
+  seed: 17201
+  section: a7-feather-road
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: A ragged black crow with a scrap of black cloth across its back perches on a lone fence post, one
+    wing lifted to point up a straight white moonlit road.
+  prompt_tags: a large black crow, bird, feral, (animal focus:1.2), ragged feathers, a tattered scrap of black cloth
+    across its back like a coat, perched on a lone fence post standing with no fence, one wing lifted and pointing
+    up a straight white road, milky pale eye, a faint oily shimmer wrinkling over the grey plain, cold moonlight,
+    low angle, full body, blue moonlight, deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36826
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244974
+  verdict: 'second'
+- key: gb10-a7-feather-road-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act VII: through the feather (seed 2)'
+  size: 896x1152
+  seed: 17202
+  section: a7-feather-road
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: A ragged black crow with a scrap of black cloth across its back perches on a lone fence post, one
+    wing lifted to point up a straight white moonlit road.
+  prompt_tags: a large black crow, bird, feral, (animal focus:1.2), ragged feathers, a tattered scrap of black cloth
+    across its back like a coat, perched on a lone fence post standing with no fence, one wing lifted and pointing
+    up a straight white road, milky pale eye, a faint oily shimmer wrinkling over the grey plain, cold moonlight,
+    low angle, full body, blue moonlight, deep blue night sky, silver highlights
+  jobs:
+    arthemy-house: 36827
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244975
+  verdict: 'keep'
+- key: gb10-a7-raider-road-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act VII: the raiders'' road (seed 1)'
+  size: 1344x768
+  seed: 17211
+  section: a7-raider-road
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Under a high moon a pale road curves wide around a cluster of shining black glassy rocks, a black
+    mission tower rising against the stars beyond.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, night desert, a cluster of shining black glassy rocks gleaming
+    wetly under a high moon, a pale dirt road curving wide around them on the left, dry scrub, far off a black mission
+    tower rising against the stars, cold silver moonlight, eerie, wide shot, blue moonlight, deep blue night sky,
+    silver highlights
+  jobs:
+    arthemy-house: 36828
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244976
+  verdict: 'keep'
+- key: gb10-a7-raider-road-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act VII: the raiders'' road (seed 2)'
+  size: 1344x768
+  seed: 17212
+  section: a7-raider-road
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Under a high moon a pale road curves wide around a cluster of shining black glassy rocks, a black
+    mission tower rising against the stars beyond.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, night desert, a cluster of shining black glassy rocks gleaming
+    wetly under a high moon, a pale dirt road curving wide around them on the left, dry scrub, far off a black mission
+    tower rising against the stars, cold silver moonlight, eerie, wide shot, blue moonlight, deep blue night sky,
+    silver highlights
+  jobs:
+    arthemy-house: 36829
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244977
+  verdict: 'second'
+- key: gb10-cellar-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act VIII: the altar (seed 1)'
+  size: 1344x768
+  seed: 17221
+  section: cellar
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: In a candlelit crypt a low stone altar strung with knotted ropes stands between iron candelabra
+    while huge coils of shadow lean out of the darkness behind it.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a candlelit crypt, a low stone altar between tall iron candelabra,
+    knotted ropes threaded through iron rings on its sides, dripping wax pooled on the stone, behind the altar the
+    darkness folding open, enormous coils of shadow leaning toward the candlelight, faint glinting eyes, dread,
+    wide shot, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36830
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244978
+  verdict: 'reject: a hooded figure in one; an orange stream that reads as blood in the other'
+- key: gb10-cellar-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act VIII: the altar (seed 2)'
+  size: 1344x768
+  seed: 17222
+  section: cellar
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: In a candlelit crypt a low stone altar strung with knotted ropes stands between iron candelabra
+    while huge coils of shadow lean out of the darkness behind it.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a candlelit crypt, a low stone altar between tall iron candelabra,
+    knotted ropes threaded through iron rings on its sides, dripping wax pooled on the stone, behind the altar the
+    darkness folding open, enormous coils of shadow leaning toward the candlelight, faint glinting eyes, dread,
+    wide shot, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36831
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244979
+  verdict: 'reject: a hooded figure in one; an orange stream that reads as blood in the other'
+- key: gb10-nuns-attack-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: black habits (seed 1)'
+  size: 896x1152
+  seed: 17231
+  section: nuns-attack
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: Close on soft brown otter paws holding a small knife low against the folds of a black habit, lit
+    from below by candles in a dark archway.
+  prompt_tags: close-up of soft brown furry otter paws with short dark claws, holding a small knife low against
+    the folds of a long black habit, black robes melting into shadow, a dark stone archway behind, candle glow from
+    below, unsettling, vertical composition, close-up, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36832
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244980
+  verdict: 'reject: nun drawn with a near-human face, holding a knife'
+- key: gb10-nuns-attack-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: black habits (seed 2)'
+  size: 896x1152
+  seed: 17232
+  section: nuns-attack
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: Close on soft brown otter paws holding a small knife low against the folds of a black habit, lit
+    from below by candles in a dark archway.
+  prompt_tags: close-up of soft brown furry otter paws with short dark claws, holding a small knife low against
+    the folds of a long black habit, black robes melting into shadow, a dark stone archway behind, candle glow from
+    below, unsettling, vertical composition, close-up, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36833
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244981
+  verdict: 'reject: nun drawn with a near-human face, holding a knife'
+- key: gb10-sister-saves-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act VIII: the lone survivor (seed 1)'
+  size: 1024x1024
+  seed: 17241
+  section: sister-saves
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A small dagger lies on dark crypt flagstones in a pool of candlelight, a strip of frayed pale linen
+    trailing beside it among guttering candle stubs.
+  prompt_tags: (still life:1.4), (object only:1.3), a small dagger lying on dark crypt flagstones in a pool of warm
+    candlelight, a strip of frayed pale linen trailing beside it, guttering candle stubs, dripping wax, deep shadows,
+    quiet aftermath, close-up, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36834
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244982
+  verdict: 'second'
+- key: gb10-sister-saves-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act VIII: the lone survivor (seed 2)'
+  size: 1024x1024
+  seed: 17242
+  section: sister-saves
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A small dagger lies on dark crypt flagstones in a pool of candlelight, a strip of frayed pale linen
+    trailing beside it among guttering candle stubs.
+  prompt_tags: (still life:1.4), (object only:1.3), a small dagger lying on dark crypt flagstones in a pool of warm
+    candlelight, a strip of frayed pale linen trailing beside it, guttering candle stubs, dripping wax, deep shadows,
+    quiet aftermath, close-up, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36835
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244983
+  verdict: 'keep'
+- key: gb10-a8-fire-cells-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act VIII: through the smoke (seed 1)'
+  size: 896x1152
+  seed: 17251
+  section: a8-fire-cells
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Seen from below in a hazy cellar, an open coal hatch pours the orange light of a burning roof down
+    over a coal heap and a row of cell doors with their bolts drawn.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, view from below, a square open coal hatch in a cellar ceiling,
+    orange firelight of a burning roof pouring down through it, haze curling, a heap of coal beneath, a row of plank
+    cell doors standing open with their outside bolts drawn back, vertical composition, wide shot, warm amber firelight,
+    orange glow
+  jobs:
+    arthemy-house: 36836
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244984
+  verdict: 'reject: human silhouettes in the corridor'
+- key: gb10-a8-fire-cells-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act VIII: through the smoke (seed 2)'
+  size: 896x1152
+  seed: 17252
+  section: a8-fire-cells
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Seen from below in a hazy cellar, an open coal hatch pours the orange light of a burning roof down
+    over a coal heap and a row of cell doors with their bolts drawn.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, view from below, a square open coal hatch in a cellar ceiling,
+    orange firelight of a burning roof pouring down through it, haze curling, a heap of coal beneath, a row of plank
+    cell doors standing open with their outside bolts drawn back, vertical composition, wide shot, warm amber firelight,
+    orange glow
+  jobs:
+    arthemy-house: 36837
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244985
+  verdict: 'reject: human silhouettes in the corridor'
+- key: gb10-a8-fire-altar-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act VIII: smoke at the altar (seed 1)'
+  size: 1024x1024
+  seed: 17261
+  section: a8-fire-altar
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Close on the stone edge of an altar where cut ropes hang slack from iron rings beside a toppled
+    candelabra, cinders falling through orange firelight.
+  prompt_tags: (still life:1.4), (object only:1.3), close on the stone edge of an altar, cut ropes hanging slack
+    from iron rings, cleanly severed ends, a toppled iron candelabra, glowing cinders falling, orange firelight,
+    drifting haze, close-up, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36838
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244986
+  verdict: 'reject: a small creature perched on the altar ring'
+- key: gb10-a8-fire-altar-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act VIII: smoke at the altar (seed 2)'
+  size: 1024x1024
+  seed: 17262
+  section: a8-fire-altar
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: Close on the stone edge of an altar where cut ropes hang slack from iron rings beside a toppled
+    candelabra, cinders falling through orange firelight.
+  prompt_tags: (still life:1.4), (object only:1.3), close on the stone edge of an altar, cut ropes hanging slack
+    from iron rings, cleanly severed ends, a toppled iron candelabra, glowing cinders falling, orange firelight,
+    drifting haze, close-up, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36839
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244987
+  verdict: 'reject: a small creature perched on the altar ring'
+- key: gb10-a9-hollow-after-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IX: saint (seed 1)'
+  size: 1344x768
+  seed: 17271
+  section: a9-hollow-after
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: In a grey refectory at dawn, rows of lit prayer candles and dropped rosaries stand on the flagstones
+    before the empty far end of a long table.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a grey stone refectory at dawn, a long bare table, rows
+    of lit prayer candles set on the flagstones in a half circle before its empty far end, dropped rosaries among
+    them, cold grey light through high windows, unsettling reverence, wide shot, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36840
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244988
+  verdict: 'reject: a body lying on the floor in one, a hooded figure in the other'
+- key: gb10-a9-hollow-after-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IX: saint (seed 2)'
+  size: 1344x768
+  seed: 17272
+  section: a9-hollow-after
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: In a grey refectory at dawn, rows of lit prayer candles and dropped rosaries stand on the flagstones
+    before the empty far end of a long table.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, a grey stone refectory at dawn, a long bare table, rows
+    of lit prayer candles set on the flagstones in a half circle before its empty far end, dropped rosaries among
+    them, cold grey light through high windows, unsettling reverence, wide shot, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36841
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244989
+  verdict: 'reject: a body lying on the floor in one, a hooded figure in the other'
+- key: gb10-a9-spared-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IX: the open gate (seed 1)'
+  size: 896x1152
+  seed: 17281
+  section: a9-spared
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Through an iron mission gate swung wide in an adobe arch, faint tracks lead away across a vast white
+    salt flat under an empty sky.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, view through an open wrought iron mission gate in an adobe
+    arch, the gate swung wide on its hinges, a wet stone water trough beside it, beyond it a vast white salt flat
+    under an empty sky, four faint lines of tracks leading away to the horizon, long morning shadows, pale gold
+    light, vertical composition, wide shot, golden dawn light, pink and gold sky
+  jobs:
+    arthemy-house: 36842
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244990
+  verdict: 'keep'
+- key: gb10-a9-spared-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act IX: the open gate (seed 2)'
+  size: 896x1152
+  seed: 17282
+  section: a9-spared
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Through an iron mission gate swung wide in an adobe arch, faint tracks lead away across a vast white
+    salt flat under an empty sky.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, view through an open wrought iron mission gate in an adobe
+    arch, the gate swung wide on its hinges, a wet stone water trough beside it, beyond it a vast white salt flat
+    under an empty sky, four faint lines of tracks leading away to the horizon, long morning shadows, pale gold
+    light, vertical composition, wide shot, golden dawn light, pink and gold sky
+  jobs:
+    arthemy-house: 36843
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244991
+  verdict: 'second'
+- key: gb10-a9-beside-1
+  entity: still
+  lane: arthemy-house
+  title: 'Act IX: beside (seed 1)'
+  size: 1024x1024
+  seed: 17291
+  section: a9-beside
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A long thin knife, wiped clean, lies hilt first on a fold of terracotta cloth with an orange zigzag,
+    catching warm candlelight on a stone step.
+  prompt_tags: (still life:1.4), (object only:1.3), a long thin knife lying hilt first on a fold of dark terracotta
+    cloth with an orange zigzag pattern, its blade wiped clean and catching warm candlelight, the worn edge of a
+    stone step, dim stone stair, warm dim light, intimate, close-up, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36844
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244992
+  verdict: 'second'
+- key: gb10-a9-beside-2
+  entity: still
+  lane: arthemy-house
+  title: 'Act IX: beside (seed 2)'
+  size: 1024x1024
+  seed: 17292
+  section: a9-beside
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, hands, animal, background clutter, face
+  prompt_prose: A long thin knife, wiped clean, lies hilt first on a fold of terracotta cloth with an orange zigzag,
+    catching warm candlelight on a stone step.
+  prompt_tags: (still life:1.4), (object only:1.3), a long thin knife lying hilt first on a fold of dark terracotta
+    cloth with an orange zigzag pattern, its blade wiped clean and catching warm candlelight, the worn edge of a
+    stone step, dim stone stair, warm dim light, intimate, close-up, warm amber firelight, orange glow
+  jobs:
+    arthemy-house: 36845
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244993
+  verdict: 'keep'
+- key: gb10-ending-three-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Ending: three small shadows (seed 1)'
+  size: 1344x768
+  seed: 17301
+  section: ending-three
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu walks toward us along a dusty dawn road, slowing and glancing back over his shoulder, as a
+    column of grey smoke rises behind the ridge into a rose and gold sky.
+  prompt_tags: anthro koala, male, adult, (chubby:1.2), standing upright, (very short:1.3), (stubby legs:1.4), small
+    round belly, wide body, big round head, (animal proportions:1.3), short arms, grey fur, round fluffy ears, broad
+    black nose, serious, squinting, (dark terracotta brown poncho:1.3), orange zigzag pattern, orange scarf, orange
+    sash, (dark brown cloth trousers:1.3), wrapped shins, (wide-brimmed woven straw hat:1.2), (sheathed katana on
+    back:1.3), katana hilt above his right shoulder, (fully clothed:1.3), solo, walking toward the viewer along
+    a dusty desert road at dawn, slowing his step, glancing back over his shoulder, behind him a low ridge with
+    a tall column of grey smoke rising into a rose and gold sky, open land, low dawn light, hopeful, wide shot,
+    golden dawn light, pink and gold sky
+  jobs:
+    arthemy-house: 36846
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244994
+  verdict: 'keep'
+- key: gb10-ending-three-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Ending: three small shadows (seed 2)'
+  size: 1344x768
+  seed: 17302
+  section: ending-three
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu walks toward us along a dusty dawn road, slowing and glancing back over his shoulder, as a
+    column of grey smoke rises behind the ridge into a rose and gold sky.
+  prompt_tags: anthro koala, male, adult, (chubby:1.2), standing upright, (very short:1.3), (stubby legs:1.4), small
+    round belly, wide body, big round head, (animal proportions:1.3), short arms, grey fur, round fluffy ears, broad
+    black nose, serious, squinting, (dark terracotta brown poncho:1.3), orange zigzag pattern, orange scarf, orange
+    sash, (dark brown cloth trousers:1.3), wrapped shins, (wide-brimmed woven straw hat:1.2), (sheathed katana on
+    back:1.3), katana hilt above his right shoulder, (fully clothed:1.3), solo, walking toward the viewer along
+    a dusty desert road at dawn, slowing his step, glancing back over his shoulder, behind him a low ridge with
+    a tall column of grey smoke rising into a rose and gold sky, open land, low dawn light, hopeful, wide shot,
+    golden dawn light, pink and gold sky
+  jobs:
+    arthemy-house: 36847
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244995
+  verdict: 'second'
+- key: gb10-a1-terrain-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act I: choosing the ground (seed 1)'
+  size: 896x1152
+  seed: 17311
+  section: a1-terrain
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu stands braced on slick black stones stepping up out of a watering hole, paw on his hilt, eyes
+    on the still black water and a single spreading ripple.
+  prompt_tags: anthro koala, male, adult, (chubby:1.2), standing upright, (very short:1.3), (stubby legs:1.4), small
+    round belly, wide body, big round head, (animal proportions:1.3), short arms, grey fur, round fluffy ears, broad
+    black nose, serious, squinting, (dark terracotta brown poncho:1.3), orange zigzag pattern, orange scarf, orange
+    sash, (dark brown cloth trousers:1.3), wrapped shins, (wide-brimmed woven straw hat:1.2), (sheathed katana on
+    back:1.3), katana hilt above his right shoulder, (fully clothed:1.3), solo, standing braced on slick sun-hot
+    black stones that step up out of a desert watering hole, one paw on his katana hilt, eyes on the still black
+    water before him, a thick fence of dead reeds in sucking mud to one side, a single ripple spreading on the water,
+    harsh desert sun, low angle, full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36848
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244996
+  verdict: 'keep'
+- key: gb10-a1-terrain-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act I: choosing the ground (seed 2)'
+  size: 896x1152
+  seed: 17312
+  section: a1-terrain
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu stands braced on slick black stones stepping up out of a watering hole, paw on his hilt, eyes
+    on the still black water and a single spreading ripple.
+  prompt_tags: anthro koala, male, adult, (chubby:1.2), standing upright, (very short:1.3), (stubby legs:1.4), small
+    round belly, wide body, big round head, (animal proportions:1.3), short arms, grey fur, round fluffy ears, broad
+    black nose, serious, squinting, (dark terracotta brown poncho:1.3), orange zigzag pattern, orange scarf, orange
+    sash, (dark brown cloth trousers:1.3), wrapped shins, (wide-brimmed woven straw hat:1.2), (sheathed katana on
+    back:1.3), katana hilt above his right shoulder, (fully clothed:1.3), solo, standing braced on slick sun-hot
+    black stones that step up out of a desert watering hole, one paw on his katana hilt, eyes on the still black
+    water before him, a thick fence of dead reeds in sucking mud to one side, a single ripple spreading on the water,
+    harsh desert sun, low angle, full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  jobs:
+    arthemy-house: 36849
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244997
+  verdict: 'second'
+- key: gb10-a1-bad-ground-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: the ground says no (seed 1)'
+  size: 1344x768
+  seed: 17321
+  section: a1-bad-ground
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: A huge crocodile rears out of a muddy pool with its jaws gaping over the shallows and its tail swinging
+    round, a lone sandal stuck in the mud in the foreground.
+  prompt_tags: a huge crocodile, feral, (animal focus:1.2), rising out of a muddy pool with its long jaws gaping
+    open over the shallows, rows of teeth, its heavy tail swinging round in a spray of water, a single woven sandal
+    stuck in the sucking mud in the foreground, splashes, harsh sun, low angle, wide shot, harsh desert sun, dusty
+    haze, long hard shadows
+  jobs:
+    arthemy-house: 36850
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244998
+  verdict: 'keep'
+- key: gb10-a1-bad-ground-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: the ground says no (seed 2)'
+  size: 1344x768
+  seed: 17322
+  section: a1-bad-ground
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: A huge crocodile rears out of a muddy pool with its jaws gaping over the shallows and its tail swinging
+    round, a lone sandal stuck in the mud in the foreground.
+  prompt_tags: a huge crocodile, feral, (animal focus:1.2), rising out of a muddy pool with its long jaws gaping
+    open over the shallows, rows of teeth, its heavy tail swinging round in a spray of water, a single woven sandal
+    stuck in the sucking mud in the foreground, splashes, harsh sun, low angle, wide shot, harsh desert sun, dusty
+    haze, long hard shadows
+  jobs:
+    arthemy-house: 36851
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 244999
+  verdict: 'second'
+- key: gb10-a1-gun-road-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act I: what is left lying (seed 1)'
+  size: 1344x768
+  seed: 17331
+  section: a1-gun-road
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu shoulders a small pack and turns away from a desert pool while an old revolver glints under
+    the clear water on black stones in the foreground.
+  prompt_tags: anthro koala, male, adult, (chubby:1.2), standing upright, (very short:1.3), (stubby legs:1.4), small
+    round belly, wide body, big round head, (animal proportions:1.3), short arms, grey fur, round fluffy ears, broad
+    black nose, serious, squinting, (dark terracotta brown poncho:1.3), orange zigzag pattern, orange scarf, orange
+    sash, (dark brown cloth trousers:1.3), wrapped shins, (wide-brimmed woven straw hat:1.2), (sheathed katana on
+    back:1.3), katana hilt above his right shoulder, (fully clothed:1.3), solo, shouldering a small pack, half turned
+    away and walking off from a desert pool, in the foreground (an old revolver:1.3) glinting under clear shallow
+    water on black stones, late golden light, quiet, wide shot, harsh desert sun, dusty haze, long hard shadows,
+    ochre sand
+  jobs:
+    arthemy-house: 36852
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245000
+  verdict: 'reject: a second animal beside Zuzu in both (a dog, a mule)'
+- key: gb10-a1-gun-road-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act I: what is left lying (seed 2)'
+  size: 1344x768
+  seed: 17332
+  section: a1-gun-road
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear
+  prompt_prose: Zuzu shoulders a small pack and turns away from a desert pool while an old revolver glints under
+    the clear water on black stones in the foreground.
+  prompt_tags: anthro koala, male, adult, (chubby:1.2), standing upright, (very short:1.3), (stubby legs:1.4), small
+    round belly, wide body, big round head, (animal proportions:1.3), short arms, grey fur, round fluffy ears, broad
+    black nose, serious, squinting, (dark terracotta brown poncho:1.3), orange zigzag pattern, orange scarf, orange
+    sash, (dark brown cloth trousers:1.3), wrapped shins, (wide-brimmed woven straw hat:1.2), (sheathed katana on
+    back:1.3), katana hilt above his right shoulder, (fully clothed:1.3), solo, shouldering a small pack, half turned
+    away and walking off from a desert pool, in the foreground (an old revolver:1.3) glinting under clear shallow
+    water on black stones, late golden light, quiet, wide shot, harsh desert sun, dusty haze, long hard shadows,
+    ochre sand
+  jobs:
+    arthemy-house: 36853
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245001
+  verdict: 'reject: a second animal beside Zuzu in both (a dog, a mule)'

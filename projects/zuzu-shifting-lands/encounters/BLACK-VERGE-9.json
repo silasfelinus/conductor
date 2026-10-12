@@ -1,0 +1,845 @@
+{
+  "schema_version": 1,
+  "project": "zuzu-shifting-lands",
+  "source_world_manifest": {
+    "path": "projects/zuzu-shifting-lands/WORLD-DECKS.json",
+    "schema_version": 2
+  },
+  "status": "draft-not-imported",
+  "rules": {
+    "encounters_per_location_min": 3,
+    "selection": "seeded-weighted-eligible-without-replacement",
+    "seed_persisted": true,
+    "revisit_policy": "same-recorded-encounter-no-free-reroll",
+    "dice": "2d6+skill+modifier-vs-difficulty"
+  },
+  "locations": [
+    {
+      "location_id": "obsidian-road",
+      "encounter_ids": [
+        "the-cooling-stones",
+        "mirror-in-the-ash",
+        "ashes-at-the-border"
+      ]
+    },
+    {
+      "location_id": "fortified-camp",
+      "encounter_ids": [
+        "the-last-watchfire",
+        "the-closed-infirmary",
+        "the-prisoner-of-dusk"
+      ]
+    },
+    {
+      "location_id": "last-threshold",
+      "encounter_ids": [
+        "the-key-with-no-door",
+        "a-promise-kept",
+        "the-price-of-silence"
+      ]
+    }
+  ],
+  "encounters": [
+    {
+      "id": "the-cooling-stones",
+      "location_id": "obsidian-road",
+      "title": "The Cooling Stones",
+      "flavor_text": "The black road retains warmth long after sunset. A road mender taps a line of stones that glow faintly under her tool, warning Zuzu that an old fissure opens when the ground cools. The next caravan is already approaching.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo illustration set at obsidian road: An armadillo road mender in quilted leather carrying an obsidian-handled pick; The black road retains warmth long after sunset. Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "the-cooling-stones-cast",
+            "species": "armadillo",
+            "occupation": "road mender",
+            "visual_description": "An armadillo road mender in quilted leather carrying an obsidian-handled pick",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "mark-the-unsafe-seam",
+          "label": "Mark the unsafe seam",
+          "intent": "Zuzu chooses to mark the unsafe seam with full responsibility for the outcome.",
+          "risk_hint": "awareness check versus 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu traces a safe detour and signals the caravan before the fissure opens.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-cooling-stones-1-success"
+            ],
+            "map_effect": "recorded-prospective-shift"
+          },
+          "failure": {
+            "text": "The road parts beneath his boots and cuts his leg before he can retreat.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-cooling-stones-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "help-lay-a-new-crossing",
+          "label": "Help lay a new crossing",
+          "intent": "Zuzu chooses to help lay a new crossing with full responsibility for the outcome.",
+          "risk_hint": "steel check versus 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "steel",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Together they place sturdy slabs over the gap and share water in the renewed shade.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-cooling-stones-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The slabs shift under their weight, forcing a painful climb and wasting the day's supplies.",
+            "hp_delta": -2,
+            "provisions_delta": -1,
+            "add_flags": [
+              "the-cooling-stones-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "The armadillo road mender is permanently fixed to this designed encounter; imply old history through clues only, without resolving the former-human-world mystery."
+    },
+    {
+      "id": "mirror-in-the-ash",
+      "location_id": "obsidian-road",
+      "title": "A Mirror in the Ash",
+      "flavor_text": "A scavenger turns a mirror toward the empty road and watches dust gather on its surface. She claims it shows travelers what they have already lost, though her own reflection remains ordinary. Beside the mirror lie several discarded letters.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo illustration set at obsidian road: A lynx ruin scavenger wearing smoked-glass goggles and carrying a blackened mirror; A scavenger turns a mirror toward the empty road and watches dust gather on its surface. Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "mirror-in-the-ash-cast",
+            "species": "lynx",
+            "occupation": "ruin scavenger",
+            "visual_description": "A lynx ruin scavenger wearing smoked-glass goggles and carrying a blackened mirror",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "read-the-discarded-letters",
+          "label": "Read the discarded letters",
+          "intent": "Zuzu chooses to read the discarded letters with full responsibility for the outcome.",
+          "risk_hint": "insight check versus 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu finds a map reference among the letters, not an answer to the world's older mysteries.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "mirror-in-the-ash-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Wind tears the letters apart before Zuzu can put them in order, leaving him exposed on the ridge.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "mirror-in-the-ash-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "trade-a-true-memory",
+          "label": "Trade a true memory",
+          "intent": "Zuzu chooses to trade a true memory with full responsibility for the outcome.",
+          "risk_hint": "resolve check versus 12; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 12
+          },
+          "success": {
+            "text": "The scavenger accepts his honest recollection and points out a sheltered route past the ruins.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "mirror-in-the-ash-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The exchange shakes him with grief and distraction; he stumbles onward exhausted.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "mirror-in-the-ash-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "The lynx ruin scavenger is permanently fixed to this designed encounter; imply old history through clues only, without resolving the former-human-world mystery."
+    },
+    {
+      "id": "ashes-at-the-border",
+      "location_id": "obsidian-road",
+      "title": "Ashes at the Border",
+      "flavor_text": "A ranger stops Zuzu where ash drifts across the road like snow. She guards a damaged watchtower and insists that no one is permitted through until the signal horn is repaired. Her comrades left hours ago for water.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo illustration set at obsidian road: A vulture border ranger with a sun-bleached cloak, a signal horn and a ledger; A ranger stops Zuzu where ash drifts across the road like snow. Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "ashes-at-the-border-cast",
+            "species": "vulture",
+            "occupation": "border ranger",
+            "visual_description": "A vulture border ranger with a sun-bleached cloak, a signal horn and a ledger",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "repair-the-signal-horn",
+          "label": "Repair the signal horn",
+          "intent": "Zuzu chooses to repair the signal horn with full responsibility for the outcome.",
+          "risk_hint": "wits check versus 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu clears the damaged valve, and the ranger sounds a warning that opens the road.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "ashes-at-the-border-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The horn breaks further in his hands and the stranded ranger demands compensation he cannot pay.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "ashes-at-the-border-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "offer-to-scout-the-tower",
+          "label": "Offer to scout the tower",
+          "intent": "Zuzu chooses to offer to scout the tower with full responsibility for the outcome.",
+          "risk_hint": "awareness check versus 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "From the tower Zuzu spots an approaching dust front and guides the ranger to safety.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "ashes-at-the-border-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The stairs crumble under him, and he escapes the falling stones bruised and coughing.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "ashes-at-the-border-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "The vulture border ranger is permanently fixed to this designed encounter; imply old history through clues only, without resolving the former-human-world mystery."
+    },
+    {
+      "id": "the-last-watchfire",
+      "location_id": "fortified-camp",
+      "title": "The Last Watchfire",
+      "flavor_text": "The camp's final watchfire burns low despite plenty of wood. Its commander says the guards refuse to light a second flame while refugees are still missing outside the barricade. Her sabre rests untouched beside the gate.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo illustration set at fortified camp: A gray wolf camp commander with a wooden leg and a worn ceremonial sabre; The camp's final watchfire burns low despite plenty of wood. Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "the-last-watchfire-cast",
+            "species": "wolf",
+            "occupation": "camp commander",
+            "visual_description": "A gray wolf camp commander with a wooden leg and a worn ceremonial sabre",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "volunteer-for-the-search",
+          "label": "Volunteer for the search",
+          "intent": "Zuzu chooses to volunteer for the search with full responsibility for the outcome.",
+          "risk_hint": "resolve check versus 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu follows quiet calls into the dark and returns with the missing refugees.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-last-watchfire-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "He reaches the ravine too late and returns shaken and scraped by the narrow path.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-last-watchfire-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "organize-the-watch-rota",
+          "label": "Organize the watch rota",
+          "intent": "Zuzu chooses to organize the watch rota with full responsibility for the outcome.",
+          "risk_hint": "bearing check versus 10; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "The camp accepts a fair division of duty, and fresh guards bring food from the stores.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-last-watchfire-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "Distrust splits the patrol and Zuzu is sent away before a new watch can be arranged.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "the-last-watchfire-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "The wolf camp commander is permanently fixed to this designed encounter; imply old history through clues only, without resolving the former-human-world mystery."
+    },
+    {
+      "id": "the-closed-infirmary",
+      "location_id": "fortified-camp",
+      "title": "The Closed Infirmary",
+      "flavor_text": "A field physician keeps wounded travelers outside an infirmary whose door has been nailed shut. She insists the room is contaminated, but the only available bandages are inside. Several guards accuse her of inventing the danger.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo illustration set at fortified camp: A deer physician in ink-stained sleeves barricaded behind a supply wagon; A field physician keeps wounded travelers outside an infirmary whose door has been nailed shut. Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "the-closed-infirmary-cast",
+            "species": "deer",
+            "occupation": "field physician",
+            "visual_description": "A deer physician in ink-stained sleeves barricaded behind a supply wagon",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "inspect-the-sealed-room",
+          "label": "Inspect the sealed room",
+          "intent": "Zuzu chooses to inspect the sealed room with full responsibility for the outcome.",
+          "risk_hint": "insight check versus 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu discovers spoiled herbs rather than a plague, and the clean supplies are recovered safely.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "the-closed-infirmary-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "He forces the door too quickly and inhales bitter fumes that leave him weak.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-closed-infirmary-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "calm-the-waiting-guards",
+          "label": "Calm the waiting guards",
+          "intent": "Zuzu chooses to calm the waiting guards with full responsibility for the outcome.",
+          "risk_hint": "bearing check versus 10; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 10
+          },
+          "success": {
+            "text": "The guards help carry fresh supplies to the wounded instead of breaking the door.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-closed-infirmary-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The crowd panics and overturns the wagon; Zuzu takes a blow in the crush.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-closed-infirmary-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "The deer field physician is permanently fixed to this designed encounter; imply old history through clues only, without resolving the former-human-world mystery."
+    },
+    {
+      "id": "the-prisoner-of-dusk",
+      "location_id": "fortified-camp",
+      "title": "The Prisoner of Dusk",
+      "flavor_text": "Guards hold a scout whose eyes flash red whenever the sun touches the copper wire on his wrists. A medic says the reaction began after an encounter with an occult relic. The commander fears what will happen at sundown.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo illustration set at fortified camp: A gorilla scout in torn frontier cloth restrained by bright copper wire; Guards hold a scout whose eyes flash red whenever the sun touches the copper wire on his wrists. Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "the-prisoner-of-dusk-cast",
+            "species": "gorilla",
+            "occupation": "bound scout",
+            "visual_description": "A gorilla scout in torn frontier cloth restrained by bright copper wire",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "question-the-scout-quietly",
+          "label": "Question the scout quietly",
+          "intent": "Zuzu chooses to question the scout quietly with full responsibility for the outcome.",
+          "risk_hint": "insight check versus 12; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 12
+          },
+          "success": {
+            "text": "Zuzu learns the relic's location and persuades the commander to loosen the binding under supervision.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-prisoner-of-dusk-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The scout loses control of his voice and the frightened guards strike before Zuzu can intervene.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-prisoner-of-dusk-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "secure-the-copper-restraint",
+          "label": "Secure the copper restraint",
+          "intent": "Zuzu chooses to secure the copper restraint with full responsibility for the outcome.",
+          "risk_hint": "wits check versus 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "wits",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu rebuilds the damaged clasp without harming the captive, buying time for a healer.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-prisoner-of-dusk-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The clasp burns through his glove and the camp drives him away from the prisoner.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-prisoner-of-dusk-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "The gorilla bound scout is permanently fixed to this designed encounter; imply old history through clues only, without resolving the former-human-world mystery."
+    },
+    {
+      "id": "the-key-with-no-door",
+      "location_id": "last-threshold",
+      "title": "The Key Without a Door",
+      "flavor_text": "An archivist waits beside an unmarked gate and holds out a key carved from stone. She says the key belongs to a door no one can locate twice. Behind her, faded carvings show travelers arriving from different directions.",
+      "polarity": "mixed",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo illustration set at last threshold: A raven archivist in austere traveling robes holding a key cut from dull stone; An archivist waits beside an unmarked gate and holds out a key carved from stone. Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "the-key-with-no-door-cast",
+            "species": "raven",
+            "occupation": "threshold archivist",
+            "visual_description": "A raven archivist in austere traveling robes holding a key cut from dull stone",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "read-the-worn-carving",
+          "label": "Read the worn carving",
+          "intent": "Zuzu chooses to read the worn carving with full responsibility for the outcome.",
+          "risk_hint": "insight check versus 12; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "insight",
+            "modifier": 0,
+            "target": 12
+          },
+          "success": {
+            "text": "Zuzu identifies a recurring mark that aligns the gate with the path he actually walked.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-key-with-no-door-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The pattern vanishes beneath his rubbing, and the archivist sends him toward a dangerous side passage.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-key-with-no-door-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "ask-who-forged-the-key",
+          "label": "Ask who forged the key",
+          "intent": "Zuzu chooses to ask who forged the key with full responsibility for the outcome.",
+          "risk_hint": "bearing check versus 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "The archivist admits she does not know its makers but shows how to approach the gate safely.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-key-with-no-door-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "She hears accusation in his question and closes the audience, leaving him without supplies.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "the-key-with-no-door-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "The raven threshold archivist is permanently fixed to this designed encounter; imply old history through clues only, without resolving the former-human-world mystery."
+    },
+    {
+      "id": "a-promise-kept",
+      "location_id": "last-threshold",
+      "title": "A Promise Kept",
+      "flavor_text": "A messenger rests just short of the final gate, guarding a letter that has crossed several kingdoms. Its recipient may already have vanished, but the promise to deliver it remains. She asks Zuzu whether a duty can survive the loss of its purpose.",
+      "polarity": "good",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo illustration set at last threshold: A silver fox messenger with a knotted blue sash and a sealed letter; A messenger rests just short of the final gate, guarding a letter that has crossed several kingdoms. Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "a-promise-kept-cast",
+            "species": "fox",
+            "occupation": "weary messenger",
+            "visual_description": "A silver fox messenger with a knotted blue sash and a sealed letter",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "carry-the-sealed-letter",
+          "label": "Carry the sealed letter",
+          "intent": "Zuzu chooses to carry the sealed letter with full responsibility for the outcome.",
+          "risk_hint": "resolve check versus 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "Zuzu accepts the burden without opening the seal, and the messenger shares the final safe directions.",
+            "hp_delta": 0,
+            "provisions_delta": 1,
+            "add_flags": [
+              "a-promise-kept-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The weight of another promise distracts him; a misstep costs him strength in the narrow pass.",
+            "hp_delta": -1,
+            "provisions_delta": 0,
+            "add_flags": [
+              "a-promise-kept-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "help-search-for-its-owner",
+          "label": "Help search for its owner",
+          "intent": "Zuzu chooses to help search for its owner with full responsibility for the outcome.",
+          "risk_hint": "awareness check versus 12; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "awareness",
+            "modifier": 0,
+            "target": 12
+          },
+          "success": {
+            "text": "They find a sign left by the recipient and follow a more certain road to the threshold.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "a-promise-kept-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The search yields only old tracks, and the delay consumes their last meal.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "a-promise-kept-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "The fox weary messenger is permanently fixed to this designed encounter; imply old history through clues only, without resolving the former-human-world mystery."
+    },
+    {
+      "id": "the-price-of-silence",
+      "location_id": "last-threshold",
+      "title": "The Price of Silence",
+      "flavor_text": "A negotiator offers passage on one condition: Zuzu must promise never to speak of what he sees beyond the gate. No contract names the powers behind it. She waits without anger as the black stones cool at her feet.",
+      "polarity": "bad",
+      "weight": 2,
+      "unique_per_run": true,
+      "first_visit_only": true,
+      "art": {
+        "status": "design-only",
+        "art_ref": null,
+        "brief": "Original cinematic Weird West and Edo illustration set at last threshold: A pale owl negotiator wearing a cracked bronze mask and a plain travel cloak; A negotiator offers passage on one condition: Zuzu must promise never to speak of what he sees beyond the gate. Burnished obsidian palette, restrained detail and clear figures, no lettering or logos.",
+        "cast": [
+          {
+            "identity": "the-price-of-silence-cast",
+            "species": "owl",
+            "occupation": "gate negotiator",
+            "visual_description": "A pale owl negotiator wearing a cracked bronze mask and a plain travel cloak",
+            "locked_character_id": null
+          }
+        ]
+      },
+      "choices": [
+        {
+          "id": "refuse-the-secret-bargain",
+          "label": "Refuse the secret bargain",
+          "intent": "Zuzu chooses to refuse the secret bargain with full responsibility for the outcome.",
+          "risk_hint": "resolve check versus 12; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "resolve",
+            "modifier": 0,
+            "target": 12
+          },
+          "success": {
+            "text": "Zuzu refuses to surrender his judgment and finds an unbound route around the negotiator's seal.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-price-of-silence-1-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "The negotiator closes the direct gate and Zuzu must climb a razor-edged ridge to continue.",
+            "hp_delta": -2,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-price-of-silence-1-failure"
+            ],
+            "map_effect": "none"
+          }
+        },
+        {
+          "id": "question-the-cost-openly",
+          "label": "Question the cost openly",
+          "intent": "Zuzu chooses to question the cost openly with full responsibility for the outcome.",
+          "risk_hint": "bearing check versus 11; mistakes may cost health or provisions.",
+          "roll": {
+            "dice_count": 2,
+            "die_sides": 6,
+            "skill": "bearing",
+            "modifier": 0,
+            "target": 11
+          },
+          "success": {
+            "text": "The negotiator admits the price is obedience, not coin; Zuzu walks away with the truth intact.",
+            "hp_delta": 0,
+            "provisions_delta": 0,
+            "add_flags": [
+              "the-price-of-silence-2-success"
+            ],
+            "map_effect": "none"
+          },
+          "failure": {
+            "text": "She answers in riddles until dusk, leaving him hungry and dangerously exposed.",
+            "hp_delta": 0,
+            "provisions_delta": -1,
+            "add_flags": [
+              "the-price-of-silence-2-failure"
+            ],
+            "map_effect": "none"
+          }
+        }
+      ],
+      "developer_note": "The owl gate negotiator is permanently fixed to this designed encounter; imply old history through clues only, without resolving the former-human-world mystery."
+    }
+  ]
+}

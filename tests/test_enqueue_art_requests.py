@@ -353,3 +353,46 @@ def test_source_image_fetch_sends_the_token(monkeypatch):
     assert enq.fetch_source_image(1) == "data:image/webp;base64,aW1n"
     assert seen["url"].endswith("/images/generated/a.webp")
     assert seen["auth"] == "Bearer tok"
+
+
+def test_loras_ride_on_comfy_requests_subject_first():
+    ledger = {"is_public": False}
+    lane = {"key": "a", "engine": "comfy", "prompt": "tags", "loras": [{"resource_id": 7}]}
+    subject = {"key": "s", "size": "832x1216", "prompt_tags": "zuzukoala, front view"}
+    assert enq.build_request(ledger, lane, subject)["loras"] == [{"resourceId": 7, "strength": 0.8}]
+    subject["loras"] = [{"resource_id": "4593", "strength": 0.6}]
+    assert enq.build_request(ledger, lane, subject)["loras"] == [{"resourceId": 4593, "strength": 0.6}]
+    assert "loras" not in enq.build_request(ledger, {**lane, "loras": None}, {**subject, "loras": []})
+
+
+def test_series_cast_loras_ride_only_on_subjects_that_name_the_character():
+    ledger = {"series": "zuzu-koala-assassin"}
+    lane = {"key": "a", "engine": "comfy", "prompt": "tags", "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors"}
+    zuzu = {"key": "z", "size": "832x1216", "prompt_tags": "anthro koala, straw hat"}
+    assert enq.build_request(ledger, lane, zuzu)["loras"] == [{"resourceId": 4593, "strength": 0.8}]
+    siblings = {**zuzu, "prompt_tags": "the older sister carries the toddler"}
+    assert enq.build_request(ledger, lane, siblings)["loras"] == [
+        {"resourceId": 4583, "strength": 0.6},
+        {"resourceId": 4588, "strength": 0.6},
+    ]
+    # Zuzu and the abbess fuse with any second LoRA (stacks: false), so a shared frame gets none.
+    assert "loras" not in enq.build_request(ledger, lane, {**zuzu, "prompt_tags": "the koala bandages the coyote"})
+    assert "loras" not in enq.build_request(ledger, lane, {**zuzu, "prompt_tags": "the abbess grips the sister"})
+    assert enq.build_request(ledger, lane, {**zuzu, "prompt_tags": "the abbess at the gate"})["loras"] == [
+        {"resourceId": 4595, "strength": 0.8}
+    ]
+    assert "loras" not in enq.build_request(ledger, lane, {**zuzu, "prompt_tags": "empty desert, coyotes"})
+    assert "loras" not in enq.build_request(ledger, lane, {**zuzu, "prompt_tags": "a crowd of otter nuns"})
+
+
+def test_series_cast_loras_respect_opt_outs_and_lane_family():
+    ledger = {"series": "zuzu-koala-assassin"}
+    lane = {"key": "a", "engine": "comfy", "prompt": "tags", "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors"}
+    zuzu = {"key": "z", "size": "832x1216", "prompt_tags": "anthro koala"}
+    assert "loras" not in enq.build_request({**ledger, "cast_loras": False}, lane, zuzu)
+    assert "loras" not in enq.build_request(ledger, {**lane, "checkpoint": "SDXL/other.safetensors"}, zuzu)
+    assert "loras" not in enq.build_request({"series": "another-series"}, lane, zuzu)
+    assert "loras" not in enq.build_request(ledger, lane, {**zuzu, "loras": []}), "an explicit empty list wins"
+    assert enq.build_request(ledger, lane, {**zuzu, "loras": [{"resource_id": 9}]})["loras"] == [
+        {"resourceId": 9, "strength": 0.8}
+    ]

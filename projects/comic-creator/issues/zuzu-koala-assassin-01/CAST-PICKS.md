@@ -545,3 +545,27 @@ The fix:
 
 Every clip is now scrubbed at full frame rate (all frames, cropped on the action, then whole frames) before it reaches
 Silas.
+
+## Character LoRAs, trained and tested (2026-10-11)
+
+Silas trained all five sets on Ferngrotto with `train_all.ps1`: kohya sd-scripts, 10 epochs, CUDA, about an hour each.
+`lora_import_agent` registered every file as a private Kind Robots LoRA under `SDXL\REVIEW\`: each final file plus
+the checkpoints from epochs 2, 4, 6 and 8.
+
+`LORA-TEST.yaml` holds the test renders: jobs 36909–36942 on the Arthemy house lane, strength 0.8. Each character got
+three shots (front, in a scene, a close-up with an expression), rendered with both the final LoRA and the epoch-6
+checkpoint, using the same seed for each pair. Each set was screened against the locked cast.
+
+| Character | Trigger | Pick (resource id) | Epoch 6 | Verdict |
+| --- | --- | --- | --- | --- |
+| Zuzu | `zuzukoala` | **final 4593** | 4591 | On-model: hat, poncho, scarf, single katana across the back. The final version keeps the zigzag trim; epoch 6 loses it. |
+| The sister | `zkasister` | **final 4583** | 4581 | On-model: ears, ragged dress, bandaged wrists, hard stare. |
+| The toddler | `zkatoddler` | **final 4588** | 4586 | On-model: checked tunic, sash, bandaged paws, frightened eyes. |
+| The coyote | `zkacoyote` | **final 4578** | 4576 | Face, hat, coat, and the eyepatch and holster on his right are all on-model. **The stump is not**: every render has two hands. |
+| The abbess | `zkaabbess` | **final 4595** | 4573 | On-model: flat brown face, whiskers, habit, folded hands, tail. |
+
+**The coyote's stump.** Only 2 of his 19 training images show it, so the LoRA learned a two-handed coyote. Weighting
+the stump in the prompt (jobs 36939–36942, at strength 0.8 and 0.6) made it worse: his fur went white, the coat went
+brown, tree stumps appeared, and both hands stayed. Until that's fixed, stump panels need the proven masked Kontext
+bandage edit (ANGLES-COYOTE r18 `-d` recipe). The real fix is a v2 coyote set with the stump at every angle
+(comic-creator t-023).

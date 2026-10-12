@@ -29,7 +29,7 @@ milestones:
   - id: m2
     title: "BUILD -- QTE engine, player, keyframes, clips, sound"
     weight: 55
-    status: not-started
+    status: in-progress
 
   - id: m3
     title: "POLISH & SHIP -- Silas's verdict, publish, next chapter"
@@ -90,7 +90,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "kind_robots: pure QTE engine + contract test (utils/zuzuLair/)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -105,14 +105,19 @@ tasks:
       verifyArcadeEngine.test.ts: walks a full perfect run, a run with every death, timeout and wrong
       button, continue after game over, and validates the graph (every target id exists, no orphan nodes,
       windows inside clip length).
-    claimed_by: 2026-10-07T054600Z-zuzu-lair-t004-a7f3
-    claimed_at: '2026-10-07T05:46:00Z'
-    updated: '2026-10-07T05:46:00Z'
+
+      DONE 2026-10-11: engine + chapter1 graph + validator + contract test (npm run test:zuzu-
+      lair, wired into contract-tests.yml) merged in kind_robots#3508. Unblocks t-005 (player
+      page).
+    claimed_by: 2026-10-11T094717Z-zuzu-t004-q1
+    claimed_at: '2026-10-11T09:47:17Z'
+    updated: '2026-10-11T10:17:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#3508'
 
   - id: t-005
     milestone: m2
     title: "kind_robots: the player page (video branches, input, flash assist, on-screen buttons, sound)"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -131,6 +136,12 @@ tasks:
       - Sound: clip audio plus WebAudio stingers (utils/arcade/sound.ts presets).
       - Flow: title card, then the opening animation; at the end, score, initials and the leaderboard.
       Verify at phone, tablet and desktop with Playwright, and screenshot every state.
+
+      DONE 2026-10-11: player page /play/zuzu-lair merged in kind_robots#3521 (placeholder
+      stills until t-006 clips, flash assist at 2 Hz, d-pad, Pinia options, leaderboard slug
+      zuzu-lair). Verified at phone and desktop with Playwright.
+    updated: '2026-10-11T14:12:29Z'
+    implementation_pr: 'silasfelinus/kind_robots#3521'
 
   - id: t-006
     milestone: m2
@@ -185,25 +196,26 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Chapter 1 sound: score and stingers"
-    status: ready
-    owner: null
+    status: needs-human
     passes: 0
     stakes: reversible
     depends_on: [t-003]
-    note: >-
-      A short instrumental weird-west score via ACE-Step (the music-video song route: vocal
-      instrumental, genre spaghetti-western, mood tense, about 60-90 s, looping). The player ducks it
-      under clip audio. Success and death stingers are procedural WebAudio presets added beside the
-      arcade's (utils/arcade/sound.ts), so they need no rendering. Sound is muted until the first tap
-      or keypress (browser autoplay rules).
-      PROGRESS 2026-10-08: stingers done (zuzuSuccess/zuzuDeath presets, kind_robots#3378). Still open:
-      queue the ACE-Step score (admin POST /api/music-video/<id>/song needs a live session).
+    note: |-
+      A short instrumental weird-west score via ACE-Step (the music-video song route: vocal instrumental, genre spaghetti-western, mood tense, about 60-90 s, looping). The player ducks it under clip audio. Success and death stingers are procedural WebAudio presets added beside the arcade's (utils/arcade/sound.ts), so they need no rendering. Sound is muted until the first tap or keypress (browser autoplay rules). PROGRESS 2026-10-08: stingers done (zuzuSuccess/zuzuDeath presets, kind_robots#3378). Still open: queue the ACE-Step score (admin POST /api/music-video/<id>/song needs a live session).
+
+      Stingers are already merged (kind_robots#3378). The remaining ACE-Step score must be queued by authenticated live admin POST /api/music-video/<id>/song; this connector-only session has no authenticated Kind Robots admin path. Physical-access human gate: queue the instrumental score from the music-video UI, then set this task ready or done after the score is attached and playable.
+    claimed_by: 2026-10-11T213852Z-zuzu-lair-t008-gpt6-7f3a
+    claimed_at: '2026-10-11T21:38:52Z'
+    updated: '2026-10-11T21:40:20Z'
+    soft_gate: false
+    gate_human: true
+    gate_reason: Queueing the ACE-Step score needs an authenticated live Kind Robots admin session (POST /api/music-video/<id>/song); no connector-only agent has that path.
 
   - id: t-009
     milestone: m2
     title: "Leaderboard and arcade hall tile"
-    status: waiting
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-005]
@@ -212,6 +224,15 @@ tasks:
       check (a maxPlausibleScore entry the API reads) and keep the per-browser fallback board. Add a
       special cabinet tile in the Arcade hall linking to /play/zuzu-lair (Silas: "yes on arcade
       cabinet", t-002).
+
+      2026-10-12: kind_robots#3601 merged. zuzu-lair registered in LINKED_GAMES (hall tile ->
+      /play/zuzu-lair, score API plausibility 100,000, hall of fame); contract test
+      verifyZuzuLairArcade wired into test:zuzu-lair. Title art is a Showdown placeholder
+      until Lair art exists.
+    claimed_by: 2026-10-11T210718Z-zuzu-lair-t009-gpt6-r8p3
+    claimed_at: '2026-10-11T21:07:18Z'
+    updated: '2026-10-12T14:13:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#3601'
 
   - id: t-010
     milestone: m3

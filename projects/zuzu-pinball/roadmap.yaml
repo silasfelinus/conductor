@@ -47,15 +47,15 @@ milestones:
   - id: m2
     title: "PHYSICAL FOUNDATION — isolated Arcade entry, colliders, ramps, flippers"
     weight: 30
-    status: in-progress
+    status: done
   - id: m3
     title: "DEPTH — modes, multiball, hidden crypt, DMD and game progression"
     weight: 30
-    status: not-started
+    status: done
   - id: m4
     title: "PRESENTATION — PBR cabinet, LEDs, music, cinematic camera and art"
     weight: 15
-    status: not-started
+    status: done
   - id: m5
     title: "POLISH & GATE — performance, device QA, balancing and human verdict"
     weight: 10
@@ -122,51 +122,94 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Build three physically distinct elevated ramps, two orbits and shot sensors"
-    status: claimed
+    status: done
     depends_on: t-004
-    owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Fabricate Village left switchback returning right, Abbey right crossover
-      returning left, and central Bell spiral rising to the Abbey. Add orbit
-      returns, safe sensors, ball collision sweeps and target animations.
-      Prove each shot with captured trajectory and repeatable test scenario.
-    claimed_by: 2026-10-10T230630Z-zuzu-pinball-t005-f81d
-    claimed_at: '2026-10-10T23:06:30Z'
-    updated: '2026-10-10T23:06:30Z'
+    note: |-
+      Fabricate Village left switchback returning right, Abbey right crossover returning left, and central Bell spiral rising to the Abbey. Add orbit returns, safe sensors, ball collision sweeps and target animations. Prove each shot with captured trajectory and repeatable test scenario.
+
+      Prepared a dimensioned mechanical pass in kind_robots branch worker/zuzu-pinball-t005-elevated-shots-20261010-f81d: three genuine mesh floor/rail/roof ramps with independent paths, two physically guided orbit returns, shot switch chains and dedicated Rapier rolling/ball-conservation/shot-order regression tests. Typecheck, CI and target-preview validation remain pending.
+
+      2026-10-10 PT: Merged the first genuine 3D ramp engineering slice to kind_robots main in PR #3475 at 9366670948f6b05a9440a991f37fd967279ce968. Three physically distinct raised Rapier mesh ramp floor/rail/cover paths, two outer orbit return guides, ramp entry/crest/return sensor chains, Croc approach and crossover clearance tests, and seeded 24-tick ball conservation/shot-order checks are committed. 29/29 PR checks completed successful, including TypeScript, all contract tests, Prettier and production-image build. Follow-up required before marking t-005 done: demonstrate actual flipper-origin trajectories that enter, crest and exit EACH ramp at calibrated shot speeds, capture trajectory evidence, verify safe returns and no stuck balls in repeatable physics replay, then tune any competing Croc shot geometry. Admin preview only. Self-hosted Alexandria runtime deployment not verified; public release still gated.
+
+      2026-10-11 PT: Measured on real Rapier physics, the table made 0 of 9 shots from either
+      flipper: the inlane guides sloped the wrong way and balls drained past the flippers.
+      Kind Robots PR #3509 rebuilds the lower field (inlanes, outlanes, slings with caps, tip
+      gap wider than the ball), moves the Abbey seals into an in-line bank between the Village
+      and Bell mouths, gives the River Croc its own mouth beside a one-ball left orbit with
+      its spit landing on the right inlane, and fixes a shared ramp-cover pinch that held
+      balls on the Bell spiral. New test:zuzu-pinball-shots proves every shot from a measured
+      flip, checks that the ramps return to their inlanes and the Croc spit reaches the right
+      flipper, and runs bot games with no stranded ball. 50-game soak: 0 stuck balls. Coverage
+      is now 9/9.
+
+      Merged kind_robots PR #3509 to main at 30b29bbb59551f5155a33eb07ee10853afd5a40f with all
+      33 checks green, including the new test:zuzu-pinball-shots. This clears t-006 and t-008.
+      Production container deploy not verified (manual Unraid Force Update).
+    updated: '2026-10-11T10:17:38Z'
+    owner: worker
+    claimed_by: 20261011T162500Z-zuzu-t005-lowerfield-k3p2
+    claimed_at: '2026-10-11T09:22:40Z'
+    implementation_pr: 'silasfelinus/kind_robots#3509'
   - id: t-006
     milestone: m2
     title: "Build raised Abbey upper deck with two independent flippers"
-    status: waiting
+    status: done
     depends_on: t-005
-    owner: null
     passes: 0
     stakes: reversible
     note: >-
       A visible, physically elevated mini-playfield and upper left/right player
       controls (plus mirrored accessibility mode); ramp entry, deck targets,
       protected exits, and controlled ball returns to lower playfield.
+
+      Merged kind_robots#3557 (squash 64cf7bd): clear raised Abbey deck at the Bell spiral's
+      end (fixes made spirals leaving the cabinet), upper flipper tier (mirrored by default,
+      alone while B/Shift is held), three hollow-bell standups (toll opens the Mortuary),
+      protected exit subway to the right inlane; verifier proves deck landing, each bell,
+      nothing stranded or fallen.
+    claimed_by: 20261011T224500Z-zuzu-t006-abbey-r3p8
+    claimed_at: '2026-10-11T22:35:25Z'
+    updated: '2026-10-11T23:30:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3557'
   - id: t-007
     milestone: m2
     title: "Implement sling, pop bumper, drop bank, scoop, captive ball and tilt"
-    status: ready
+    status: done
+    updated: '2026-10-11T12:17:10Z'
     depends_on: t-004
-    owner: null
     passes: 0
     stakes: reversible
-    note: >-
-      Three pops, four resetting drops, capture-and-eject scoop, trapped relic
-      ball, calibrated slings, ball save and kickback. Implement nudge with
-      warnings, bob threshold, temporary disables, tilt termination, and
-      repeatable no-ball-trap/physics regression tests. Expose capture,
-      switch debouncing and ball ledger hooks for River Croc (t-015).
+    note: |-
+      Three pops, four resetting drops, capture-and-eject scoop, trapped relic ball, calibrated slings, ball save and kickback. Implement nudge with warnings, bob threshold, temporary disables, tilt termination, and repeatable no-ball-trap/physics regression tests. Expose capture, switch debouncing and ball ledger hooks for River Croc (t-015).
+
+      Partial mechanical hardware implementation in Kind Robots PR #3480: a four-target Abbey seal drop bank, physical spinner, left-outlane kickback coil and targeted Rapier lifecycle test. Reconciled with the separately merged three-ramp layout without overwriting it. CI is pending. After merging, return t-007 to ready (not done): rules-driven reset, captive relic ball, Zuzu tilt and kickback arming, and performance/ trajectory QA remain required before dependent River Croc task t-015.
+
+      Completed a bounded hardware slice: Kind Robots PR #3480 merged as 7318576f39df4108f1a054b3faf923c0ec94e2d4, with four physical Abbey seal drops, a relic spinner, left-outlane kickback and passing Rapier lifecycle hardware tests. Preserved t-005's previously merged ramps. Formatting-only follow-up PR #3482 removes a one-time CI diagnostic and applies the exact Prettier output; merge-when-green is enabled. Re-arm this one-off task as ready, not done. Remaining work includes Zuzu-specific automatic bank reset, physically captive relic ball, tilt logic and warning rules, coil arming/ball save, robust geometry and multiball conservation tests. Do not unblock River Croc t-015 yet.
+
+      2026-10-11 PT: Kind Robots PR #3513 finishes the remainder. The engine gains captive
+      balls: a real Rapier ball in a lane of its own that never drains or counts. Zuzu's relic
+      sits in line behind the Abbey seals; with the seals down each strike raises the bonus
+      multiplier, and three strikes wake the crypt (the key for t-010). Fixes a trap where an
+      immediate seal reset could raise a drop target under a ball: seals now stay down until
+      the next ball. Tilt warnings and termination, kickback arming and ball save landed with
+      the t-008 rules (PR #3511). Hardware test: 20 relic strikes stay in the lane. 50-game
+      bot soak: 0 stuck balls.
+
+      Merged kind_robots PR #3513 at 5a47ecea29469fe63d8511b0df1c792a4c75f69b with all 31
+      checks green. Unblocks t-009 (multiball) and t-015 (River Croc jaw rig). Production
+      deploy not verified (manual Unraid Force Update).
+    owner: worker
+    claimed_by: 20261011T185500Z-zuzu-t007-relic-m2w8
+    claimed_at: '2026-10-11T11:51:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#3513'
   - id: t-008
     milestone: m3
     title: "Implement mode director, five story chapters, shot awards and DMD contracts"
-    status: waiting
+    status: done
     depends_on: t-005
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -174,36 +217,79 @@ tasks:
       and Last Bell. Lamp and DMD bindings, ball-to-ball chapter retention,
       skill shots, combo ladder, multiplier, extra ball, match and game over.
       Narrative readability never blocks the player from flipping.
+
+      2026-10-11 PT: Kind Robots PR #3511 gives the Zuzu table its own ruleset; until now it
+      ran AMI Village Rescue's rules. The runtime now takes a PinballRuleset, with AMI's as
+      the default and its reducer unchanged. The Mortuary tells five chapters in order:
+      Homestead in Ash, Storm Crow Canyon, Abbey of Hollow Bells, The Children's Names and The
+      Last Bell. Each is timed, and finishing it breaks one of five seals. Chapter progress is
+      kept across balls, and after the Last Bell the story starts again at double value. The
+      bell lane or all four Abbey seals reopen the Mortuary, and the seals also raise the
+      bonus multiplier and relight the kickback. The Croc always pays, and his fifth swallow
+      lights an extra ball. Also included: soft-plunge Mortuary skill shot, combos, ball save,
+      bonus, tilt, match and game over, plus seal-track, multiplier and shoot-again lamps. New
+      test:zuzu-pinball-rules covers every rule and plays bot games to game over.
+
+      Merged kind_robots PR #3511 at 6be257193188bc201c33a6fbaed63cabadcb3569 with all 33
+      checks green, including test:zuzu-pinball-rules. Production deploy not verified (manual
+      Unraid Force Update).
+    claimed_by: 20261011T171000Z-zuzu-t008-modes-r7q4
+    claimed_at: '2026-10-11T11:17:47Z'
+    updated: '2026-10-11T11:50:54Z'
+    implementation_pr: 'silasfelinus/kind_robots#3511'
   - id: t-009
     milestone: m3
     title: "Add physical lock and 3/4/6 ball multiballs with jackpots"
-    status: waiting
+    status: done
     depends_on: t-007
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
       Real ball trough/serve count and Citadel lock, virtual lock fallback,
       Harvest Moon 3-ball, Storm Crow 4-ball, Last Bell 6-ball, bonus and
       super-jackpot escalation. Soak test multi-contact collisions and cleanup.
+
+      kind_robots#3553: Citadel physical lock at the bell-lane head (shelf slots, subway
+      kickout to the left inlane), 6-ball ledger with self-healing virtual fallback, Harvest
+      Moon 3-ball (staggered ramp jackpots, orbit-combo super), Storm Crow 4-ball (seals +
+      both orbits, per-lane 3-rung ladders, bell-lane super), The Last Bell 6-ball wizard on
+      the fifth seal (releases locks; six jackpots light the Bell spiral super), escalating
+      supers, 10 s multiball ball save; soaks check the ledger every physics step.
+
+      Merged kind_robots#3553 (squash 9adece3): all three multiballs in one PR.
+    claimed_by: 20261011T234500Z-zuzu-t009-multiball-q5m1
+    claimed_at: '2026-10-11T21:32:24Z'
+    updated: '2026-10-11T22:50:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#3553'
   - id: t-010
     milestone: m3
     title: "Build and balance unlockable hidden undercrypt mini-table"
-    status: waiting
+    status: done
     depends_on: t-006
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
       Crypt trapdoor and isolated 3D mini-table with two mini flippers, skill
       targets and a valid mechanical kicker back to primary playfield. Prevent
       multiball leaks and unfair drains when transitioning scenes.
+
+      Merged kind_robots#3566 (squash 00e67b2): undercrypt behind the backbox (zone sub-table,
+      camera, fading backbox), lit every third relic strike, entered by Mortuary subway only
+      with one ball and no chapter/multiball, crypt flippers, three skull standups, HOME
+      saucer, drain subway back to the Mortuary kicker. Also raised the contract-tests job
+      timeout to 15 min (it was cancelled at 10 min after finishing every step).
+    claimed_by: 20261012T030500Z-zuzu-t010-crypt-m2v6
+    claimed_at: '2026-10-12T03:02:03Z'
+    updated: '2026-10-12T03:51:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#3566'
   - id: t-011
     milestone: m4
     title: "Build production art assets, 3D cabinet, ramps, ball, plastics and themed toys"
-    status: waiting
+    status: done
     depends_on: t-005
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -213,12 +299,43 @@ tasks:
       glass/chrome reflections and raised mechanical ramp model. Include the
       canonical scarred, giant River Croc as a rigged waterline jaw toy.
       Log prompts, seeds, sources, rights, destinations and asset state.
+
+      2026-10-11 PT (Silas: queue the final table art and the croc animation overnight):
+      queued 11 krea2 ArtJob requests in projects/art-prompts.yaml (project zuzu-pinball,
+      priority 110): the painted playfield (1024x2000), backglass (1536x640), raised Abbey
+      deck (1280x1024), undercrypt (1024x1280), cabinet side (2048x1024), and six River Croc
+      animation keyframes on seed 731731 (submerged, rising, mouth-open, captured, death-roll,
+      spit), all to kind_robots public/images/pinball/zuzu-*.webp. Next: once delivered,
+      verify each URL, then wire the playfield and backglass into ZUZU_LAST_BELL_GREYBOX.art
+      (playfield region over the table rectangle, room.backglass) and hand the Croc frames to
+      t-015's jaw rig. Queued is not delivered.
+
+      2026-10-11 PT art review. All 11 first renders are delivered and served (ArtJobs
+      36943-36953). Use: playfield, backglass, Abbey deck and undercrypt are good. The cabinet
+      side came back framed as a cabinet photo with white surround and needs a crop. River
+      Croc frames for the t-015 jaw rig: 1 submerged, 2 rising, 3 mouth open v2 (zuzu-river-
+      croc-3-mouth-open-v2.webp, ArtJob 36954, jaws gaping, the one to use), 4 jaws clamped v2
+      (36955; closed jaws without a visible ball, usable because the renderer draws the real
+      ball; a v3 asking for the ball is queued), 5 Death Roll (strong), 6 spit. The originals
+      3 and 4 came back closed-mouthed, because the shared seed pinned the pose; ignore them.
+
+      2026-10-11 PT: kind_robots PR #3531 merged at 7a2517a with all 31 checks green. The
+      painted playfield is now the table's art.playfield over the whole table rectangle, and
+      the backglass is room.backglass (Ghost Trail title as fallback). The admin banner shows
+      the backglass. Rendered in headless Chromium at desktop and phone sizes; the art lines
+      up under the mechanisms. The Abbey deck art goes to t-006 and the undercrypt art to
+      t-010. The cabinet side render needs a crop, and there is no side-art slot in the
+      renderer yet.
+    claimed_by: 20261011T214000Z-zuzu-t011-wire-h6d2
+    claimed_at: '2026-10-11T20:37:30Z'
+    updated: '2026-10-11T21:02:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#3531'
   - id: t-012
     milestone: m4
     title: "Addressable LED rail and bezel splash shows, sound, DMD animations, camera"
-    status: waiting
+    status: done
     depends_on: t-008
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -227,12 +344,32 @@ tasks:
       mixing and camera sweeps that never impair flipper response.
       Provide static camera and reduced-motion settings. Add Croc mouth
       arming/capture/death-roll/spit cues, DMD and multiball callouts.
+
+      2026-10-12 PT: landed in three merged kind_robots PRs. #3568 (squash d54dd2d): 96-LED
+      addressable rail round the cabinet, each mode in the brief's colour (amber Harvest, cyan
+      Storm with restrained white lightning, gold Last Bell with a red comet, violet crypt,
+      teal Watering Hole, a colour per chapter), ball-save ends, River Croc cues on his own
+      LEDs (open glow, capture flare, alternating red death roll, white spit, rising), tilt
+      dark, every flash at most 3 Hz, reduced motion holds still; engine TableDef.ledRail +
+      ruleset.leds, one instanced draw call. #3570 (squash 69266fc): per-table DMD attract
+      pages (Zuzu had been showing KIND PINBALL): ZUZU type-on, THE LAST BELL, a Croc jaws
+      picture page, high score counting up; NEW HIGH SCORE game over; music bus ducks to 35%
+      under every callout. #3573 (squash 4b53191): camera sweeps (shooter lane while the ball
+      waits, pulled back in multiball), each framing the whole playfield so the flippers never
+      leave the screen, debounced 45 ticks; a cabinet Camera moves/still switch, saved,
+      defaulting to still under prefers-reduced-motion, cutting instead of panning; a test
+      proves physics identical tick for tick either way. Not done here and moved to t-017: the
+      insert light-map editor and cabinet border art.
+    claimed_by: 20261012T041500Z-zuzu-t012-show-p4n7
+    claimed_at: '2026-10-12T04:10:56Z'
+    updated: '2026-10-12T05:28:24Z'
+    implementation_pr: 'silasfelinus/kind_robots#3573'
   - id: t-013
     milestone: m5
     title: "Run physics/rules soaks, input accessibility and cross-device performance QA"
-    status: waiting
+    status: claimed
     depends_on: t-009
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -242,6 +379,27 @@ tasks:
       accessible table guide. Soak-test 1,000 Croc swallow and safe-eject
       cycles including multi-ball and tilt. Add missing remediation tasks rather than
       declaring completion by count.
+
+      Found by the t-010 multiball soak: a ball can wedge at rest near (-0.082, y 0.036,
+      -0.415), between the Village ramp's right rail and the Abbey seal channel; the runtime's
+      ball-search nudge frees it, but the crevice should be closed in geometry.
+
+      2026-10-12 PT: second slice merged, kind_robots#3578 (squash 7582746). New test:zuzu-
+      pinball-stress: 25 runtime mount/play/render/dispose cycles with physics worlds and GPU
+      resources back to baseline every cycle; six balls through the whole runtime (rules,
+      scene, LED rail, trails) for a minute on each of three seeds, every ball checked inside
+      the cabinet every tick, about 0.9 ms mean / 1.6 ms p95 per tick headless. Its first run
+      found a real escape: a ball flipped into the air off a ramp mouth flew over the 2.5 cm
+      arch and out of the machine (the glass is at 31 cm, above the raised Abbey deck). Fixed
+      with clear hidden cabinet sides 1 cm outside the outline from 4 cm to the glass, last in
+      the collider list: placed mid-list they renumbered colliders, and Rapier's solver order
+      changed two ricochet shot proofs. The croc-mouth proof is now a direct right-inlane
+      flip. No-stuck scan back to 0 ball-search frees. Still open, needing a real browser:
+      touch and keyboard playtests, frame timing on a GPU, and the accessible table guide
+      check.
+    claimed_by: 20261012T040000Z-zuzu-t013-qa-k8w2
+    claimed_at: '2026-10-12T03:51:43Z'
+    updated: '2026-10-12T08:30:47Z'
   - id: t-014
     milestone: m5
     title: "Silas visual/play acceptance and authorization for any public /play launch"
@@ -260,9 +418,9 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Build River Croc waterline mouth capture, jaw rig and safe spit"
-    status: waiting
+    status: done
     depends_on: t-007
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -275,10 +433,25 @@ tasks:
       Spit/Reset sequence. Spit to right inlane; ball ledger conservation,
       busy-mouth reject, timeout eject, safe tilt, multiball stress and
       unobstructed ramp clearance verified with repeatable trajectory tests.
+
+      2026-10-11 PT: kind_robots PR #3535 adds the River Croc's jaw gate (door croc-jaw,
+      starts open, shuts on capture) and his cycle: open, captured, Death Roll, spit,
+      submerged, rising, open. It also adds the sculpted animatronic toy (engine animatronics
+      plus render/croc.ts) and the lamp aim cue. test:zuzu-pinball-croc covers busy-mouth
+      reject, two-ball conservation and 200 rounds; 1,000 rounds passed locally with no drain
+      during a hold.
+
+      Merged kind_robots#3535 (squash fbca13a): jaw gate, timed cycle, sculpted toy; a follow-
+      up commit in the same PR fixed the jaws staying shut after a mid-chapter swallow (quiet
+      ticks dropped the open effect).
+    claimed_by: 20261011T220500Z-zuzu-t015-croc-j4n8
+    claimed_at: '2026-10-11T20:44:00Z'
+    updated: '2026-10-11T21:31:09Z'
+    implementation_pr: 'silasfelinus/kind_robots#3535'
   - id: t-016
     milestone: m3
     title: "Author River Croc Watering Hole mini-mode and Death Roll jackpot"
-    status: waiting
+    status: done
     depends_on: t-015
     owner: null
     passes: 0
@@ -291,3 +464,84 @@ tasks:
       water-spray and jaw-snap sound, accessible reduced-motion cues and
       trajectory-skill progression. Do not make the mouth an instant drain;
       every legitimate swallow safely ejects and awards something.
+
+      kind_robots#3545: Watering Hole opens on a Homestead swallow (30 s, gamebook coyote
+      canon); orbit lights the mouth for the Death Roll (1M +500k each, window 6/5/4/3.5 s);
+      unlit swallow pays spit-back; waterline LEDs, death-roll DMD close-up, jaw-snap/water-
+      spray cues, reduced-motion toy; physics soak spits every swallow back.
+
+      Merged kind_robots#3545 (Silas added a one-line lint fix to the verifier before
+      merging).
+    updated: '2026-10-11T22:22:19Z'
+    implementation_pr: 'silasfelinus/kind_robots#3545'
+  - id: t-017
+    milestone: m4
+    title: "Insert light-map editor and cabinet border art"
+    status: done
+    depends_on: t-012
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      The two t-012 brief items that did not land with the LED rail, DMD and
+      camera work (kind_robots#3568, #3570, #3573). An insert light-map editor:
+      a private tool to place and preview the table's inserts and flashers
+      (and the LED rail's path) over the painted playfield, writing the
+      positions back as table data, so art and lamp positions can be lined up
+      by eye instead of by hand-edited coordinates. Cabinet border art: the
+      side rails, apron and backbox trim art for the Last Bell cabinet,
+      requested through the art queue, then drawn by the renderer's room and
+      cabinet (render/room.ts), which has no side-art slot yet.
+
+      2026-10-12 PT: both halves merged. kind_robots#3583 (squash 28e10fa): the insert light-
+      map editor on /admin/zuzu-pinball (admin only), the painted playfield with all 29
+      inserts, both flashers and the 96-LED rail as SVG; drag or arrow-nudge (1 mm, 5 with
+      Shift) an insert and copy the moves back as table data; pure model in
+      utils/arcade/pinball/lightMap.ts, verifier test:zuzu-pinball-light-map. kind_robots#3584
+      (squash 1d85d32): cabinet side art, a new art.room.cabinetSide slot painting both side
+      panels with the weird-west panorama the art queue rendered in t-011 (a table without one
+      still echoes its backglass). Apron and backbox-trim art have no art-queue entries; rails
+      and trim stay chrome and black.
+    claimed_by: 20261012T081000Z-zuzu-t017-lightmap-k3v9
+    claimed_at: '2026-10-12T08:02:45Z'
+    updated: '2026-10-12T08:30:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#3583'
+  - id: t-018
+    milestone: m4
+    title: "River Croc animatronic to Williams / Pinball FX quality"
+    status: done
+    depends_on: t-015
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas, 2026-10-12, after playing the table: "The croc animation however
+      is very lackluster, nothing close to the quality of a Williams or
+      pinballfx table ... it needs an upgrade." The t-015 toy is a 5 cm head
+      of a few primitives easing between poses. Rebuild it as the table's
+      signature toy: a sculpted head (lofted snout, eye bosses with slit
+      pupils and blinking lids, nostrils, interlocking irregular teeth, gums
+      and tongue, scarred scutes), a body and tail lying in the river behind
+      it, spring-driven motion with anticipation, overshoot and settle,
+      eyes and head that track the nearest ball, a living water surface
+      (ripple rings, splash and spray particles, bubbles, wake), and staged
+      beats for every phase: surfacing with eyes first, a snap with a head
+      jerk and splash, a full-body death roll in a churn, a rear-and-lunge
+      spit. Reduced motion keeps the poses and colour without rolls,
+      shakes or flicker. Verified by close-up renders of every phase and
+      the existing toy tests.
+
+      2026-10-12: done in kind_robots#3602 (merged 365c45f). The River Croc is rebuilt as a
+      signature toy: lofted superelliptic head, jaw and body with baked vertex colour (29
+      draws, ~0.26 ms/frame); spring-driven jaw, sink, pitch, yaw and lunge; eyes and head
+      that track the nearest ball; a 360 death roll on capture that settles upright; a spit
+      lunge with a 180-droplet spray; a rippling translucent river with its own key and glow
+      lights; and scale 1.3 so it reads from the play camera. Reduced motion keeps it still
+      (no roll, tracking, spray, ripples or blink). verifyZuzuPinballCroc covers tracking, the
+      roll, spray and reduced motion. A real-GPU look on main is still Silas's call; next
+      iteration ideas (sound sync to the roll, a splash decal) go to new tasks if he wants
+      them.
+    claimed_by: 20261012T141500Z-zuzu-t018-croc-r7q2
+    claimed_at: '2026-10-12T14:38:38Z'
+    updated: '2026-10-12T15:04:24Z'
+    implementation_pr: 'silasfelinus/kind_robots#3602'

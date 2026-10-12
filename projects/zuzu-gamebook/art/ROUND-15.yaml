@@ -1,0 +1,2645 @@
+# Zuzu Gamebook art round 15 (zuzu-gamebook t-012): LoRA redraw of the single-character plates.
+# Every live plate whose composition shows only the fennec sister, the toddler (alone or together), the
+# coyote (before he loses his hand) or the abbess, redrawn from that composition with their LoRAs
+# (zkasister 4583, zkatoddler 4588, zkacoyote 4578, zkaabbess 4595; strength 0.75), two seeds. A redraw
+# replaces the live plate in kind_robots sectionArt.ts only when it is better.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: gamebook-15
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, weathered, grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: gb15-a1-downwind-fail-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: a reed breaks (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27001
+  section: a1-downwind-fail
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: The coyote aims his revolver straight out of the picture while the water behind him bulges upward.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, revolver drawn and aimed straight at
+    the viewer, one eye wide, frozen mid-breath, standing among broken dead reeds at the water's edge, behind him
+    the black water bulging upward like a lifted blanket, foreshortening, tense, medium shot, harsh desert sun,
+    dusty haze, long hard shadows
+  loras: &id001
+  - resource_id: 4578
+    strength: 0.75
+  jobs:
+    arthemy-house: 37195
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245343
+  verdict: 'reject: Neither candidate aims the revolver or shows the bulging water; standing poses are no better than the live coyote in the reeds.'
+- key: gb15-a1-downwind-fail-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: a reed breaks (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27002
+  section: a1-downwind-fail
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: The coyote aims his revolver straight out of the picture while the water behind him bulges upward.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, revolver drawn and aimed straight at
+    the viewer, one eye wide, frozen mid-breath, standing among broken dead reeds at the water's edge, behind him
+    the black water bulging upward like a lifted blanket, foreshortening, tense, medium shot, harsh desert sun,
+    dusty haze, long hard shadows
+  loras: *id001
+  jobs:
+    arthemy-house: 37196
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245344
+  verdict: 'reject: Neither candidate aims the revolver or shows the bulging water; standing poses are no better than the live coyote in the reeds.'
+- key: gb15-a1-laid-out-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: hat in hand (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27011
+  section: a1-laid-out
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: Old bones lie in a neat row on dry black stone with a cracked bowl at their head, and across the
+    water the coyote holds his hat to his chest.
+  prompt_tags: solo, (fully clothed:1.3), high angle, a neat row of old bleached bones laid on dry black stone,
+    smallest last, a cracked clay bowl at the head of the row, beyond them the still pool, and on the far bank zkacoyote,
+    anthro coyote, male, eyepatch over right eye, battered brown hat, tattered olive riding coat, revolver holstered
+    on right hip, thin, standing bareheaded holding his battered hat against his chest, solemn, late afternoon light,
+    full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id002
+  - resource_id: 4578
+    strength: 0.75
+  jobs:
+    arthemy-house: 37197
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245345
+  verdict: 'reject: No row of bones and the hat stays on his head in both; not clearly better than live.'
+- key: gb15-a1-laid-out-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: hat in hand (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27012
+  section: a1-laid-out
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: Old bones lie in a neat row on dry black stone with a cracked bowl at their head, and across the
+    water the coyote holds his hat to his chest.
+  prompt_tags: solo, (fully clothed:1.3), high angle, a neat row of old bleached bones laid on dry black stone,
+    smallest last, a cracked clay bowl at the head of the row, beyond them the still pool, and on the far bank zkacoyote,
+    anthro coyote, male, eyepatch over right eye, battered brown hat, tattered olive riding coat, revolver holstered
+    on right hip, thin, standing bareheaded holding his battered hat against his chest, solemn, late afternoon light,
+    full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id002
+  jobs:
+    arthemy-house: 37198
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245346
+  verdict: 'reject: No row of bones and the hat stays on his head in both; not clearly better than live.'
+- key: gb15-a1-stones-watch-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: what the stones can see (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27021
+  section: a1-stones-watch
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: A huge shadow glides under the black water toward the far bank, where the coyote kneels drinking,
+    unaware.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, kneeling on the far bank of a desert
+    watering hole cupping water to his mouth, his one eye looking away across the pool, unaware, a huge long shadow
+    gliding low under the black water toward him, faint ripples, red rock above, high angle from the stones, wide
+    shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id003
+  - resource_id: 4578
+    strength: 0.75
+  jobs:
+    arthemy-house: 37199
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245347
+  verdict: 'reject: Coyote kneels inside the pool, no drinking or under-water shadow; live kept.'
+- key: gb15-a1-stones-watch-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: what the stones can see (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27022
+  section: a1-stones-watch
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: A huge shadow glides under the black water toward the far bank, where the coyote kneels drinking,
+    unaware.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, kneeling on the far bank of a desert
+    watering hole cupping water to his mouth, his one eye looking away across the pool, unaware, a huge long shadow
+    gliding low under the black water toward him, faint ripples, red rock above, high angle from the stones, wide
+    shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id003
+  jobs:
+    arthemy-house: 37200
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245348
+  verdict: 'reject: Coyote kneels inside the pool, no drinking or under-water shadow; live kept.'
+- key: gb15-a1-the-shot-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: one shot (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27031
+  section: a1-the-shot
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: The coyote fires his revolver from one knee as the crocodile rises from the water and turns its
+    head toward him.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, on one knee on the bank, firing his
+    revolver, a bright flash from the barrel, gunsmoke, a giant crocodile rising out of the water and turning its
+    head slowly toward him, a fresh wound above its eye, echo off red rock, dramatic, wide shot, warm amber firelight,
+    orange glow
+  loras: &id004
+  - resource_id: 4578
+    strength: 0.75
+  jobs:
+    arthemy-house: 37201
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245349
+  verdict: 'reject: Both fuse a crocodile head onto the coyote and drop the crocodile; live kept.'
+- key: gb15-a1-the-shot-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: one shot (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27032
+  section: a1-the-shot
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: The coyote fires his revolver from one knee as the crocodile rises from the water and turns its
+    head toward him.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, on one knee on the bank, firing his
+    revolver, a bright flash from the barrel, gunsmoke, a giant crocodile rising out of the water and turning its
+    head slowly toward him, a fresh wound above its eye, echo off red rock, dramatic, wide shot, warm amber firelight,
+    orange glow
+  loras: *id004
+  jobs:
+    arthemy-house: 37202
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245350
+  verdict: 'reject: Both fuse a crocodile head onto the coyote and drop the crocodile; live kept.'
+- key: gb15-a2-back-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: your back to them (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27041
+  section: a2-back
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The tiny fennec toddler peeks out from under a burned boardwalk in the ember glow, reaching out
+    one small paw with curious wide eyes.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, alone, crawling out from the dark under a burned boardwalk, peeking out
+    with curious wide eyes, reaching forward with one tiny paw, babbling, warm grey ash on the ground, charred planks
+    overhead, night, ember glow, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: &id005
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37203
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245351
+  verdict: 'reject: Toddler crouches without reaching out; live plate reads the peek-and-reach better.'
+- key: gb15-a2-back-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: your back to them (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27042
+  section: a2-back
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The tiny fennec toddler peeks out from under a burned boardwalk in the ember glow, reaching out
+    one small paw with curious wide eyes.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, alone, crawling out from the dark under a burned boardwalk, peeking out
+    with curious wide eyes, reaching forward with one tiny paw, babbling, warm grey ash on the ground, charred planks
+    overhead, night, ember glow, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: *id005
+  jobs:
+    arthemy-house: 37204
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245352
+  verdict: 'reject: Toddler crouches without reaching out; live plate reads the peek-and-reach better.'
+- key: gb15-a2-sister-snarl-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: not yours (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27051
+  section: a2-sister-snarl
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl snarls with her ears flat, a torn folded paper notice pressed to her chest, her
+    little brother wailing on her hip.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, snarling, ears flat, a torn folded paper notice
+    clutched against her chest, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged
+    checked tunic, bandaged paw wailing on her hip, backing away into the shadow of a boardwalk, fierce, noon light,
+    close-up, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id006
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37205
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245353
+  verdict: 'reject: 245353 drops the toddler and notice; 245354 adds an extra adult figure behind her; live kept.'
+- key: gb15-a2-sister-snarl-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: not yours (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27052
+  section: a2-sister-snarl
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl snarls with her ears flat, a torn folded paper notice pressed to her chest, her
+    little brother wailing on her hip.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, snarling, ears flat, a torn folded paper notice
+    clutched against her chest, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged
+    checked tunic, bandaged paw wailing on her hip, backing away into the shadow of a boardwalk, fierce, noon light,
+    close-up, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id006
+  jobs:
+    arthemy-house: 37206
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245354
+  verdict: 'reject: 245353 drops the toddler and notice; 245354 adds an extra adult figure behind her; live kept.'
+- key: gb15-a2-sister-wall-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: her paw on the wall (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27061
+  section: a2-sister-wall
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl stands at the wall of notices with her brother on her hip, one paw flat on a sheet,
+    turning with her teeth bared.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing at a scorched plank wall of weathered paper
+    notices, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged
+    paw on her hip, one paw laid flat against a single sheet, turning her head with teeth bared, defiant, ears back,
+    harsh noon light, long shadow, full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id007
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37207
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245355
+  verdict: 'reject: 245355 is sister alone; 245356 puts both siblings in matching outfits with no paw on a notice; not clearly better.'
+- key: gb15-a2-sister-wall-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act II: her paw on the wall (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27062
+  section: a2-sister-wall
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl stands at the wall of notices with her brother on her hip, one paw flat on a sheet,
+    turning with her teeth bared.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing at a scorched plank wall of weathered paper
+    notices, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged
+    paw on her hip, one paw laid flat against a single sheet, turning her head with teeth bared, defiant, ears back,
+    harsh noon light, long shadow, full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id007
+  jobs:
+    arthemy-house: 37208
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245356
+  verdict: 'reject: 245355 is sister alone; 245356 puts both siblings in matching outfits with no paw on a notice; not clearly better.'
+- key: gb15-a3-cold-dawn-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: ash and morning (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27071
+  section: a3-cold-dawn
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Beyond a smear of grey campfire ash, the fennec girl sits at dawn holding her little brother between
+    her knees and tending his foot.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, grey ash of a dead campfire in the foreground, beyond
+    it zkasister, anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged
+    wrists, sitting on cold ground at dawn, holding zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw between her knees, gently tending his small foot, worried, pale cold
+    light, frost-blue shadows, desert, wide shot, golden dawn light, pink and gold sky
+  loras: &id008
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37209
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245357
+  verdict: 'reject: Siblings at dawn but in matching tunics with a lit fire and no foot-tending; not clearly better than live.'
+- key: gb15-a3-cold-dawn-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: ash and morning (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27072
+  section: a3-cold-dawn
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Beyond a smear of grey campfire ash, the fennec girl sits at dawn holding her little brother between
+    her knees and tending his foot.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, grey ash of a dead campfire in the foreground, beyond
+    it zkasister, anthro fennec fox, female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged
+    wrists, sitting on cold ground at dawn, holding zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw between her knees, gently tending his small foot, worried, pale cold
+    light, frost-blue shadows, desert, wide shot, golden dawn light, pink and gold sky
+  loras: *id008
+  jobs:
+    arthemy-house: 37210
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245358
+  verdict: 'reject: Siblings at dawn but in matching tunics with a lit fire and no foot-tending; not clearly better than live.'
+- key: gb15-a3-fever-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: heat in the night (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27081
+  section: a3-fever
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: At the edge of the firelight the fennec girl holds her limp, sleeping little brother in her arms.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing at the edge of firelight at night holding
+    zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw
+    in her arms, he sleeps limp with flushed cheeks, she looks straight ahead, silent, pleading without asking,
+    dark desert behind, warm firelight on her face, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: &id009
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37211
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245359
+  verdict: 'reject: Both show siblings standing side by side, toddler not held or asleep, costume colours swapped in 245360; live kept.'
+- key: gb15-a3-fever-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: heat in the night (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27082
+  section: a3-fever
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: At the edge of the firelight the fennec girl holds her limp, sleeping little brother in her arms.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing at the edge of firelight at night holding
+    zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw
+    in her arms, he sleeps limp with flushed cheeks, she looks straight ahead, silent, pleading without asking,
+    dark desert behind, warm firelight on her face, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: *id009
+  jobs:
+    arthemy-house: 37212
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245360
+  verdict: 'reject: Both show siblings standing side by side, toddler not held or asleep, costume colours swapped in 245360; live kept.'
+- key: gb15-a3-fever-walk-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: walking on hope (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27091
+  section: a3-fever-walk
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Under a blazing sun the fennec girl walks a desert road gazing anxiously upward at something just
+    out of view, a short round shadow beside hers.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, alone, walking along a blazing desert road, gazing up anxiously at
+    something just out of view beside her, dusty, exhausted, a short round shadow falling beside her own on the
+    road, harsh afternoon desert sun, heat shimmer, dust, wide shot, harsh desert sun, dusty haze, long hard shadows,
+    ochre sand
+  loras: &id010
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37213
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245375
+  verdict: 'reject: Comparable lone-sister road walks with no second shadow; not clearly better than live.'
+- key: gb15-a3-fever-walk-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: walking on hope (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27092
+  section: a3-fever-walk
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Under a blazing sun the fennec girl walks a desert road gazing anxiously upward at something just
+    out of view, a short round shadow beside hers.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, alone, walking along a blazing desert road, gazing up anxiously at
+    something just out of view beside her, dusty, exhausted, a short round shadow falling beside her own on the
+    road, harsh afternoon desert sun, heat shimmer, dust, wide shot, harsh desert sun, dusty haze, long hard shadows,
+    ochre sand
+  loras: *id010
+  jobs:
+    arthemy-house: 37214
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245376
+  verdict: 'reject: Comparable lone-sister road walks with no second shadow; not clearly better than live.'
+- key: gb15-a3-going-back-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: back along the wash (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27101
+  section: a3-going-back
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl sits on moonlit sand in a dry wash with her brother asleep across her knees, facing
+    the bend.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, sitting on bright moonlit sand in a dry wash, zkatoddler,
+    anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw asleep across
+    her knees, she faces the bend of the wash, waiting, still, high cliffs of the wash, huge moon above, sand pale
+    as bone, blue night, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: &id011
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37215
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245361
+  verdict: 'reject: Toddler sits awake beside her (not asleep across her knees) and 245362 has a shouting expression; live kept.'
+- key: gb15-a3-going-back-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: back along the wash (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27102
+  section: a3-going-back
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl sits on moonlit sand in a dry wash with her brother asleep across her knees, facing
+    the bend.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, sitting on bright moonlit sand in a dry wash, zkatoddler,
+    anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw asleep across
+    her knees, she faces the bend of the wash, waiting, still, high cliffs of the wash, huge moon above, sand pale
+    as bone, blue night, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: *id011
+  jobs:
+    arthemy-house: 37216
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245362
+  verdict: 'reject: Toddler sits awake beside her (not asleep across her knees) and 245362 has a shouting expression; live kept.'
+- key: gb15-a3-hard-pace-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: a hard pace (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27111
+  section: a3-hard-pace
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: At dusk a fennec girl bent nearly double carries her little brother on her back along an empty desert
+    road.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, walking bent nearly double along an empty desert
+    road at dusk, carrying zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked
+    tunic, bandaged paw on her back, stubborn, exhausted, heat haze fading, long purple shadows, last orange light
+    on distant buttes, wide shot, orange sunset light, red and violet sky
+  loras: &id012
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37217
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245363
+  verdict: 'reject: Siblings walk or stand side by side instead of her carrying him; live already shows the carry.'
+- key: gb15-a3-hard-pace-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: a hard pace (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27112
+  section: a3-hard-pace
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: At dusk a fennec girl bent nearly double carries her little brother on her back along an empty desert
+    road.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, walking bent nearly double along an empty desert
+    road at dusk, carrying zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked
+    tunic, bandaged paw on her back, stubborn, exhausted, heat haze fading, long purple shadows, last orange light
+    on distant buttes, wide shot, orange sunset light, red and violet sky
+  loras: *id012
+  jobs:
+    arthemy-house: 37218
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245364
+  verdict: 'reject: Siblings walk or stand side by side instead of her carrying him; live already shows the carry.'
+- key: gb15-a3-salt-pan-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: the white pan (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27121
+  section: a3-salt-pan
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Halfway across a blinding white salt pan the fennec girl has sunk to one knee while her little brother
+    holds up one foot.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, kneeling on one knee in the middle of a vast white
+    cracked salt pan, exhausted, eyes slitted against the glare, zkatoddler, anthro fennec fox, toddler, enormous
+    ears, sand-colored fur, ragged checked tunic, bandaged paw standing beside her holding up one foot, blinding
+    white ground, pale sky, no shade, wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id013
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37219
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245365
+  verdict: 'reject: 245366 sister has a droopy-eared dog head; 245365 sister reads bulky and adult; live kept.'
+- key: gb15-a3-salt-pan-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: the white pan (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27122
+  section: a3-salt-pan
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Halfway across a blinding white salt pan the fennec girl has sunk to one knee while her little brother
+    holds up one foot.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, kneeling on one knee in the middle of a vast white
+    cracked salt pan, exhausted, eyes slitted against the glare, zkatoddler, anthro fennec fox, toddler, enormous
+    ears, sand-colored fur, ragged checked tunic, bandaged paw standing beside her holding up one foot, blinding
+    white ground, pale sky, no shade, wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id013
+  jobs:
+    arthemy-house: 37220
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245366
+  verdict: 'reject: 245366 sister has a droopy-eared dog head; 245365 sister reads bulky and adult; live kept.'
+- key: gb15-a3-salt-refused-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: teeth on the salt (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27131
+  section: a3-salt-refused
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl bares her teeth with her brother pushed behind her, a lump of salt crust raised
+    in her shaking paw.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing defiant on a white salt pan, teeth bared,
+    ears flat, one arm pushing zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked
+    tunic, bandaged paw behind her, other paw raised holding a lump of salt crust, fierce protective eyes, glare,
+    medium shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id014
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37221
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245367
+  verdict: 'reject: Two near-same-size fennecs standing side by side, no push-behind or raised salt; live kept.'
+- key: gb15-a3-salt-refused-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: teeth on the salt (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27132
+  section: a3-salt-refused
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl bares her teeth with her brother pushed behind her, a lump of salt crust raised
+    in her shaking paw.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing defiant on a white salt pan, teeth bared,
+    ears flat, one arm pushing zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked
+    tunic, bandaged paw behind her, other paw raised holding a lump of salt crust, fierce protective eyes, glare,
+    medium shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id014
+  jobs:
+    arthemy-house: 37222
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245368
+  verdict: 'reject: Two near-same-size fennecs standing side by side, no push-behind or raised salt; live kept.'
+- key: gb15-a3-search-dark-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: in the rocks (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27141
+  section: a3-search-dark
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In a starlit cleft between two boulders the fennec girl raises a rock in both paws in front of her
+    hidden brother.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing in a narrow cleft between two tall boulders
+    at night, raising a rock in both paws, fierce, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw hiding behind her, starlight, deep blue shadows, a heel of bread on
+    a flat stone in the foreground, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: &id015
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37223
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245369
+  verdict: 'reject: Sister wears the toddler''s checked tunic, toddler and rock missing; live kept.'
+- key: gb15-a3-search-dark-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: in the rocks (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27142
+  section: a3-search-dark
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In a starlit cleft between two boulders the fennec girl raises a rock in both paws in front of her
+    hidden brother.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing in a narrow cleft between two tall boulders
+    at night, raising a rock in both paws, fierce, zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored
+    fur, ragged checked tunic, bandaged paw hiding behind her, starlight, deep blue shadows, a heel of bread on
+    a flat stone in the foreground, full body, blue moonlight, deep blue night sky, silver highlights
+  loras: *id015
+  jobs:
+    arthemy-house: 37224
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245370
+  verdict: 'reject: Sister wears the toddler''s checked tunic, toddler and rock missing; live kept.'
+- key: gb15-a3-search-dawn-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: found at first light (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27151
+  section: a3-search-dawn
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Under a rock overhang at cold dawn the fennec girl lies curled around her shivering brother, awake
+    and watching.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, lying curled tightly around zkatoddler, anthro fennec
+    fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw under a low rock overhang
+    at dawn, no fire, awake, flat tired eyes looking out, he shivers, cold grey light, frost on the stones, wide
+    shot, warm amber firelight, orange glow
+  loras: &id016
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37225
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245371
+  verdict: 'reject: 245371 sister lies flat on her back with toddler sitting on her (reads as a body); 245372 no toddler; live kept.'
+- key: gb15-a3-search-dawn-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: found at first light (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27152
+  section: a3-search-dawn
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Under a rock overhang at cold dawn the fennec girl lies curled around her shivering brother, awake
+    and watching.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, lying curled tightly around zkatoddler, anthro fennec
+    fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw under a low rock overhang
+    at dawn, no fire, awake, flat tired eyes looking out, he shivers, cold grey light, frost on the stones, wide
+    shot, warm amber firelight, orange glow
+  loras: *id016
+  jobs:
+    arthemy-house: 37226
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245372
+  verdict: 'reject: 245371 sister lies flat on her back with toddler sitting on her (reads as a body); 245372 no toddler; live kept.'
+- key: gb15-a3-theft-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: a small sound (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27161
+  section: a3-theft
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: In red firelight the thin fennec girl kneels at a travel pack holding a heel of hard bread and glances
+    back over her shoulder.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, alone, kneeling at a canvas travel pack beside a low campfire at night,
+    holding a heel of hard bread, glancing back over her shoulder, worried calculating face, thin wrists, dark desert
+    behind, red firelight, medium shot, blue moonlight, deep blue night sky, silver highlights
+  loras: &id017
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37227
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245377
+  verdict: 'reject: Candidates are comparable kneel-by-fire scenes; live already on-model with bread and fire.'
+- key: gb15-a3-theft-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: a small sound (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27162
+  section: a3-theft
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: In red firelight the thin fennec girl kneels at a travel pack holding a heel of hard bread and glances
+    back over her shoulder.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, alone, kneeling at a canvas travel pack beside a low campfire at night,
+    holding a heel of hard bread, glancing back over her shoulder, worried calculating face, thin wrists, dark desert
+    behind, red firelight, medium shot, blue moonlight, deep blue night sky, silver highlights
+  loras: *id017
+  jobs:
+    arthemy-house: 37228
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245378
+  verdict: 'reject: Candidates are comparable kneel-by-fire scenes; live already on-model with bread and fire.'
+- key: gb15-a3-theft-kept-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: what you did not see (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27171
+  section: a3-theft-kept
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl sleeps sitting up with her brother in her lap and half a heel of bread tucked under
+    his chin.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, asleep sitting up against a rock at dawn, zkatoddler,
+    anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw asleep in her
+    lap, half a heel of bread tucked under his chin, her paw curled around it, peaceful, soft first light, embers
+    of a small fire, medium shot, warm amber firelight, orange glow
+  loras: &id018
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37229
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245373
+  verdict: 'second'
+- key: gb15-a3-theft-kept-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: what you did not see (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27172
+  section: a3-theft-kept
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl sleeps sitting up with her brother in her lap and half a heel of bread tucked under
+    his chin.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, asleep sitting up against a rock at dawn, zkatoddler,
+    anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw asleep in her
+    lap, half a heel of bread tucked under his chin, her paw curled around it, peaceful, soft first light, embers
+    of a small fire, medium shot, warm amber firelight, orange glow
+  loras: *id018
+  jobs:
+    arthemy-house: 37230
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245374
+  verdict: 'keep'
+- key: gb15-a4-stone-face-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: the face in the bank (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27181
+  section: a4-stone-face
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Seen from behind, the tiny fennec toddler takes one step toward a colossal cracked stone face looming
+    out of a collapsed riverbank.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, tiny, seen from behind at the bottom of the picture, taking one step forward,
+    above him a colossal carved grey stone face looming out of a collapsed sandy riverbank, flat brow, narrow ridge
+    of nose, closed lips, a long crack from brow to chin breathing out drifting dust, low amber sun, uncanny, low
+    angle, full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id019
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37231
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245397
+  verdict: 'reject: Toddler faces viewer with no stone face in either; not clearly better than live.'
+- key: gb15-a4-stone-face-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: the face in the bank (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27182
+  section: a4-stone-face
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Seen from behind, the tiny fennec toddler takes one step toward a colossal cracked stone face looming
+    out of a collapsed riverbank.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, tiny, seen from behind at the bottom of the picture, taking one step forward,
+    above him a colossal carved grey stone face looming out of a collapsed sandy riverbank, flat brow, narrow ridge
+    of nose, closed lips, a long crack from brow to chin breathing out drifting dust, low amber sun, uncanny, low
+    angle, full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id019
+  jobs:
+    arthemy-house: 37232
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245398
+  verdict: 'reject: Toddler faces viewer with no stone face in either; not clearly better than live.'
+- key: gb15-a4-storm-lost-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: lost in the dust (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27191
+  section: a4-storm-lost
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl stumbles through a howling brown dust storm with her ears flattened, reaching out
+    one paw blindly into the grit.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, alone, stumbling through a howling brown dust storm, enormous ears
+    flattened, eyes squeezed shut, reaching out one paw blindly into the grit, almost no visibility, grit streaming,
+    the faint looming edge of old stone walls ahead, storm light, full body, slate grey storm light, rain
+  loras: &id020
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37233
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245379
+  verdict: 'reject: Indoor doorway scenes, no dust storm; live kept.'
+- key: gb15-a4-storm-lost-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: lost in the dust (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27192
+  section: a4-storm-lost
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl stumbles through a howling brown dust storm with her ears flattened, reaching out
+    one paw blindly into the grit.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, alone, stumbling through a howling brown dust storm, enormous ears
+    flattened, eyes squeezed shut, reaching out one paw blindly into the grit, almost no visibility, grit streaming,
+    the faint looming edge of old stone walls ahead, storm light, full body, slate grey storm light, rain
+  loras: *id020
+  jobs:
+    arthemy-house: 37234
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245380
+  verdict: 'reject: Indoor doorway scenes, no dust storm; live kept.'
+- key: gb15-a4-well-tricked-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: spotted fever (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27201
+  section: a4-well-tricked
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl holds her wrapped wrists out and coughs theatrically beside an old stone well in
+    the noon dust.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, alone, standing beside an old stone well, holding her rag-wrapped wrists
+    out in front of her, coughing theatrically, hunched, sly glance, long shadows on the sand stepping back from
+    her, dust, hard noon desert sun, full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id021
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37235
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245381
+  verdict: 'reject: Comparable standing poses by stone ruins, no clearer cough or wrists-out; live kept.'
+- key: gb15-a4-well-tricked-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IV: spotted fever (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27202
+  section: a4-well-tricked
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl holds her wrapped wrists out and coughs theatrically beside an old stone well in
+    the noon dust.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, alone, standing beside an old stone well, holding her rag-wrapped wrists
+    out in front of her, coughing theatrically, hunched, sly glance, long shadows on the sand stepping back from
+    her, dust, hard noon desert sun, full body, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id021
+  jobs:
+    arthemy-house: 37236
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245382
+  verdict: 'reject: Comparable standing poses by stone ruins, no clearer cough or wrists-out; live kept.'
+- key: gb15-a5-bath-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: clean clothes (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27211
+  section: a5-bath
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec toddler runs across the sunlit yard, scrubbed fluffy as dandelion fluff, his little white
+    smock flapping at his knees.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, running across a sunlit adobe yard toward the viewer, freshly scrubbed,
+    fur fluffed out like dandelion fluff, little white smock flapping at his knees, happy wide eyes, a folded towel
+    dropped behind him, hot bright afternoon desert sun, full body, harsh desert sun, dusty haze, long hard shadows,
+    ochre sand
+  loras: &id022
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37237
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245399
+  verdict: 'reject: Toddler stands still in checked tunic, not running in a white smock; live (happy, fluffy) better.'
+- key: gb15-a5-bath-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: clean clothes (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27212
+  section: a5-bath
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec toddler runs across the sunlit yard, scrubbed fluffy as dandelion fluff, his little white
+    smock flapping at his knees.
+  prompt_tags: solo, (fully clothed:1.3), zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur,
+    ragged checked tunic, bandaged paw, running across a sunlit adobe yard toward the viewer, freshly scrubbed,
+    fur fluffed out like dandelion fluff, little white smock flapping at his knees, happy wide eyes, a folded towel
+    dropped behind him, hot bright afternoon desert sun, full body, harsh desert sun, dusty haze, long hard shadows,
+    ochre sand
+  loras: *id022
+  jobs:
+    arthemy-house: 37238
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245400
+  verdict: 'reject: Toddler stands still in checked tunic, not running in a white smock; live (happy, fluffy) better.'
+- key: gb15-a5-commission-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: the abbess''s errand (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27221
+  section: a5-commission
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: In a small cool study lined with cracked old books, the abbess pours a cup of cold water by a single
+    window looking south.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, standing at a small wooden table pouring water from a clay jug into a cup, gracious
+    smile, a small cool whitewashed study, shelves of old books with cracked spines, one narrow window looking south
+    onto bright desert, dim cool shade, calm, full body, harsh desert sun, dusty haze, long hard shadows, ochre
+    sand
+  loras: &id023
+  - resource_id: 4595
+    strength: 0.75
+  jobs:
+    arthemy-house: 37239
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245403
+  verdict: 'reject: Abbess faces read human with toothy grins; live otter abbess kept.'
+- key: gb15-a5-commission-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: the abbess''s errand (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27222
+  section: a5-commission
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: In a small cool study lined with cracked old books, the abbess pours a cup of cold water by a single
+    window looking south.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, standing at a small wooden table pouring water from a clay jug into a cup, gracious
+    smile, a small cool whitewashed study, shelves of old books with cracked spines, one narrow window looking south
+    onto bright desert, dim cool shade, calm, full body, harsh desert sun, dusty haze, long hard shadows, ochre
+    sand
+  loras: *id023
+  jobs:
+    arthemy-house: 37240
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245404
+  verdict: 'reject: Abbess faces read human with toothy grins; live otter abbess kept.'
+- key: gb15-a5-dream-wake-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: sleepwalker (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27231
+  section: a5-dream-wake
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: At the end of a dark hall the fennec girl stands barefoot and asleep on her feet, facing a locked
+    door with one paw raised to it.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, standing barefoot at the end of a long dark hallway, eyes closed, asleep
+    on her feet, one paw raised toward a heavy locked door, faint cold light under the door, moonlight on the floor,
+    dreamlike dread, seen from behind, full body, harsh desert sun, dusty haze, long hard shadows
+  loras: &id024
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37241
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245383
+  verdict: 'reject: Near-identical doorway sleepwalker poses; not clearly better than live.'
+- key: gb15-a5-dream-wake-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: sleepwalker (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27232
+  section: a5-dream-wake
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: At the end of a dark hall the fennec girl stands barefoot and asleep on her feet, facing a locked
+    door with one paw raised to it.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, standing barefoot at the end of a long dark hallway, eyes closed, asleep
+    on her feet, one paw raised toward a heavy locked door, faint cold light under the door, moonlight on the floor,
+    dreamlike dread, seen from behind, full body, harsh desert sun, dusty haze, long hard shadows
+  loras: *id024
+  jobs:
+    arthemy-house: 37242
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245384
+  verdict: 'reject: Near-identical doorway sleepwalker poses; not clearly better than live.'
+- key: gb15-a5-errand-refused-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: rarer than water (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27241
+  section: a5-errand-refused
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl sits on top of the newly mended adobe wall in the heat, watching a closed study
+    door across the yard.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, sitting on top of a newly mended adobe wall, knees drawn up, watching
+    a closed wooden door across a sunbaked mission yard, harsh bright heat, a fresh dark patch of new adobe, bell
+    tower, long empty yard, quiet worry, wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id025
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37243
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245385
+  verdict: 'reject: Sister sits on a porch, not on the wall; not clearly better than live.'
+- key: gb15-a5-errand-refused-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: rarer than water (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27242
+  section: a5-errand-refused
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl sits on top of the newly mended adobe wall in the heat, watching a closed study
+    door across the yard.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, sitting on top of a newly mended adobe wall, knees drawn up, watching
+    a closed wooden door across a sunbaked mission yard, harsh bright heat, a fresh dark patch of new adobe, bell
+    tower, long empty yard, quiet worry, wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id025
+  jobs:
+    arthemy-house: 37244
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245386
+  verdict: 'reject: Sister sits on a porch, not on the wall; not clearly better than live.'
+- key: gb15-a5-her-hands-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: look at the hands (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27251
+  section: a5-her-hands
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: Close on the abbess's old clean paws folded still on the supper table, a dark rind of black wax
+    packed deep under every claw beside an untouched bowl.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, extreme close-up of her old clean paws folded perfectly still on a wooden supper
+    table, (black wax under every claw:1.3), dark rind packed deep beneath the claws, an untouched bowl of stew,
+    candlelight, her smile soft and out of focus above, quietly wrong, close-up, warm amber firelight, orange glow
+  loras: &id026
+  - resource_id: 4595
+    strength: 0.75
+  jobs:
+    arthemy-house: 37245
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245405
+  verdict: 'reject: 245406 human face; 245405 grinning off-model face; live otter kept.'
+- key: gb15-a5-her-hands-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: look at the hands (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27252
+  section: a5-her-hands
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: Close on the abbess's old clean paws folded still on the supper table, a dark rind of black wax
+    packed deep under every claw beside an untouched bowl.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, extreme close-up of her old clean paws folded perfectly still on a wooden supper
+    table, (black wax under every claw:1.3), dark rind packed deep beneath the claws, an untouched bowl of stew,
+    candlelight, her smile soft and out of focus above, quietly wrong, close-up, warm amber firelight, orange glow
+  loras: *id026
+  jobs:
+    arthemy-house: 37246
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245406
+  verdict: 'reject: 245406 human face; 245405 grinning off-model face; live otter kept.'
+- key: gb15-a5-kit-supper-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: our quiet one (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27261
+  section: a5-kit-supper
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: A small rabbit kit in a grey smock, ears flat down his back, quietly slides his full bowl of stew
+    along the bench to the fennec toddler's elbow.
+  prompt_tags: solo, (fully clothed:1.3), anthro, rabbit, male, child, small, thin, long ears lying flat down his
+    back, clean grey smock, (fully clothed:1.3), sitting on a wooden bench, sliding his full bowl of stew along
+    the table toward zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic,
+    bandaged paw, eating, candlelight, bread, warm refectory, tender, medium shot, warm amber firelight, orange
+    glow
+  loras: &id027
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37247
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245401
+  verdict: 'reject: No rabbit kit in either, just the toddler eating; not clearly better than live.'
+- key: gb15-a5-kit-supper-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: our quiet one (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27262
+  section: a5-kit-supper
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: A small rabbit kit in a grey smock, ears flat down his back, quietly slides his full bowl of stew
+    along the bench to the fennec toddler's elbow.
+  prompt_tags: solo, (fully clothed:1.3), anthro, rabbit, male, child, small, thin, long ears lying flat down his
+    back, clean grey smock, (fully clothed:1.3), sitting on a wooden bench, sliding his full bowl of stew along
+    the table toward zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic,
+    bandaged paw, eating, candlelight, bread, warm refectory, tender, medium shot, warm amber firelight, orange
+    glow
+  loras: *id027
+  jobs:
+    arthemy-house: 37248
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245402
+  verdict: 'reject: No rabbit kit in either, just the toddler eating; not clearly better than live.'
+- key: gb15-a5-rags-burned-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: the white dress (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27271
+  section: a5-rags-burned
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl sits apart in a white dress too short for her, arms wrapped round her knees, a strip
+    torn from its hem wound round her wrist.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, wearing a plain white dress too short for her, sitting alone against
+    an adobe wall, arms wrapped around her knees, a strip torn from the hem wound round her wrist, evening light,
+    kitchen fire glowing through a doorway behind, lonely, medium shot, warm amber firelight, orange glow
+  loras: &id028
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37249
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245387
+  verdict: 'reject: Comparable seated poses without arms round knees or torn-hem strip; live kept.'
+- key: gb15-a5-rags-burned-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: the white dress (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27272
+  section: a5-rags-burned
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl sits apart in a white dress too short for her, arms wrapped round her knees, a strip
+    torn from its hem wound round her wrist.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, wearing a plain white dress too short for her, sitting alone against
+    an adobe wall, arms wrapped around her knees, a strip torn from the hem wound round her wrist, evening light,
+    kitchen fire glowing through a doorway behind, lonely, medium shot, warm amber firelight, orange glow
+  loras: *id028
+  jobs:
+    arthemy-house: 37250
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245388
+  verdict: 'reject: Comparable seated poses without arms round knees or torn-hem strip; live kept.'
+- key: gb15-a5-tell-abbess-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: an honest guest (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27281
+  section: a5-tell-abbess
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: Close on an elderly otter nun's grey-furred paws in black sleeves holding a small folded note above
+    a wooden prayer bench in candlelight.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, close-up of her grey-furred paws in wide black sleeves, holding a small folded scrap
+    of paper open above a wooden prayer bench, beginning to tuck it into her sleeve, rows of candles blurred behind,
+    dim chapel, cold stillness, close-up, warm amber firelight, orange glow
+  loras: &id029
+  - resource_id: 4595
+    strength: 0.75
+  jobs:
+    arthemy-house: 37251
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245407
+  verdict: 'reject: Both abbess faces read human; live otter kept.'
+- key: gb15-a5-tell-abbess-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: an honest guest (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27282
+  section: a5-tell-abbess
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: Close on an elderly otter nun's grey-furred paws in black sleeves holding a small folded note above
+    a wooden prayer bench in candlelight.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, close-up of her grey-furred paws in wide black sleeves, holding a small folded scrap
+    of paper open above a wooden prayer bench, beginning to tuck it into her sleeve, rows of candles blurred behind,
+    dim chapel, cold stillness, close-up, warm amber firelight, orange glow
+  loras: *id029
+  jobs:
+    arthemy-house: 37252
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245408
+  verdict: 'reject: Both abbess faces read human; live otter kept.'
+- key: gb15-a8-abbess-bound-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: rope (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27291
+  section: a8-abbess-bound
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: The old Abbess sits against the crypt wall with her paws tied behind her, smiling slightly as she
+    gazes across the room at the altar.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, sitting on the flagstones against a stone wall, paws tied behind her back with rope,
+    faint knowing smile, gazing across the room at a candlelit stone altar, cut ropes on the floor, guttering candles,
+    warm candlelight, uneasy calm, vertical composition, full body, warm amber firelight, orange glow
+  loras: &id030
+  - resource_id: 4595
+    strength: 0.75
+  jobs:
+    arthemy-house: 37253
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245409
+  verdict: 'reject: Both abbess faces read human with grins; live otter kept.'
+- key: gb15-a8-abbess-bound-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: rope (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27292
+  section: a8-abbess-bound
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: The old Abbess sits against the crypt wall with her paws tied behind her, smiling slightly as she
+    gazes across the room at the altar.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, sitting on the flagstones against a stone wall, paws tied behind her back with rope,
+    faint knowing smile, gazing across the room at a candlelit stone altar, cut ropes on the floor, guttering candles,
+    warm candlelight, uneasy calm, vertical composition, full body, warm amber firelight, orange glow
+  loras: *id030
+  jobs:
+    arthemy-house: 37254
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245410
+  verdict: 'reject: Both abbess faces read human with grins; live otter kept.'
+- key: gb15-a8-abbess-down-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: she pleads (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27301
+  section: a8-abbess-down
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: On her knees the old Abbess looks up with tear-filled eyes, empty paws open and shaking, folded
+    darkness widening behind her.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, on her knees on the altar steps, small and round, dusty hem, looking up with tear-filled
+    eyes, empty paws held open and shaking, pleading, behind her a chanting nun and folded darkness widening, candlelight,
+    view from above, full body, warm amber firelight, orange glow
+  loras: &id031
+  - resource_id: 4595
+    strength: 0.75
+  jobs:
+    arthemy-house: 37255
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245411
+  verdict: 'reject: Both faces read human; not clearly better than live.'
+- key: gb15-a8-abbess-down-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: she pleads (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27302
+  section: a8-abbess-down
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: On her knees the old Abbess looks up with tear-filled eyes, empty paws open and shaking, folded
+    darkness widening behind her.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, on her knees on the altar steps, small and round, dusty hem, looking up with tear-filled
+    eyes, empty paws held open and shaking, pleading, behind her a chanting nun and folded darkness widening, candlelight,
+    view from above, full body, warm amber firelight, orange glow
+  loras: *id031
+  jobs:
+    arthemy-house: 37256
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245412
+  verdict: 'reject: Both faces read human; not clearly better than live.'
+- key: gb15-a8-sister-bites-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: a nod (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27311
+  section: a8-sister-bites
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl crouches fierce and shaking on the stone altar among cut ropes, teeth bared, as
+    a dropped dagger spins on the flagstones below.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, crouched fierce and shaking on a stone altar, teeth bared, ears back,
+    glaring, cut ropes around her, below on the flagstones a dropped curved dagger spinning, guttering candles,
+    candlelight, crypt, defiant, medium shot, warm amber firelight, orange glow
+  loras: &id032
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37257
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245389
+  verdict: 'reject: Sister crouches on the floor, not on the altar; not clearly better than live.'
+- key: gb15-a8-sister-bites-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: a nod (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27312
+  section: a8-sister-bites
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl crouches fierce and shaking on the stone altar among cut ropes, teeth bared, as
+    a dropped dagger spins on the flagstones below.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, crouched fierce and shaking on a stone altar, teeth bared, ears back,
+    glaring, cut ropes around her, below on the flagstones a dropped curved dagger spinning, guttering candles,
+    candlelight, crypt, defiant, medium shot, warm amber firelight, orange glow
+  loras: *id032
+  jobs:
+    arthemy-house: 37258
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245390
+  verdict: 'reject: Sister crouches on the floor, not on the altar; not clearly better than live.'
+- key: gb15-a8-standoff-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: the long breath (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27321
+  section: a8-standoff
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Close on the fennec girl's wrist, slowly working loose of the rope on the altar stone while a dagger
+    hangs steady above.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, close-up of her small paw and wrist slowly twisting against a rope
+    on a stone altar, her eyes watchful, above her a small curved dagger held perfectly still, candle flames leaning
+    toward the dark, tension, close-up, warm amber firelight, orange glow
+  loras: &id033
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37259
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245391
+  verdict: 'reject: No rope or dagger in either; not clearly better than live.'
+- key: gb15-a8-standoff-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: the long breath (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27322
+  section: a8-standoff
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: Close on the fennec girl's wrist, slowly working loose of the rope on the altar stone while a dagger
+    hangs steady above.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, close-up of her small paw and wrist slowly twisting against a rope
+    on a stone altar, her eyes watchful, above her a small curved dagger held perfectly still, candle flames leaning
+    toward the dark, tension, close-up, warm amber firelight, orange glow
+  loras: *id033
+  jobs:
+    arthemy-house: 37260
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245392
+  verdict: 'reject: No rope or dagger in either; not clearly better than live.'
+- key: gb15-a8-word-broken-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: what her word is worth (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27331
+  section: a8-word-broken
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: The old Abbess smiles at the viewer with real fondness in the candlelight, while the long shadow
+    of a raised arm falls across the wall beside her.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, smiling with real fondness, warm knowing eyes, head tilted, looking straight at
+    the viewer, a small curved dagger held loosely at her side, candlelight from below, dark crypt behind her, on
+    the wall the long shadow of a raised arm, ominous, close-up, warm amber firelight, orange glow
+  loras: &id034
+  - resource_id: 4595
+    strength: 0.75
+  jobs:
+    arthemy-house: 37261
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245413
+  verdict: 'reject: Both abbess faces read human with freckles; live otter kept.'
+- key: gb15-a8-word-broken-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: what her word is worth (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27332
+  section: a8-word-broken
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: The old Abbess smiles at the viewer with real fondness in the candlelight, while the long shadow
+    of a raised arm falls across the wall beside her.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, smiling with real fondness, warm knowing eyes, head tilted, looking straight at
+    the viewer, a small curved dagger held loosely at her side, candlelight from below, dark crypt behind her, on
+    the wall the long shadow of a raised arm, ominous, close-up, warm amber firelight, orange glow
+  loras: *id034
+  jobs:
+    arthemy-house: 37262
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245414
+  verdict: 'reject: Both abbess faces read human with freckles; live otter kept.'
+- key: gb15-a8-word-kept-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: her word (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27341
+  section: a8-word-kept
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl springs up from her knees with a fallen dagger in both bandaged hands and runs back
+    toward the altar.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, rising from her knees on the flagstones, a fallen dagger gripped in
+    both hands, cut ropes at her feet, turning and running back toward a candlelit altar, fierce determined face,
+    ears back, motion, view from behind and side, full body, warm amber firelight, orange glow
+  loras: &id035
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37263
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245393
+  verdict: 'reject: Same back-view walk as live with no dagger in hand; not clearly better.'
+- key: gb15-a8-word-kept-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act VIII: her word (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27342
+  section: a8-word-kept
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl springs up from her knees with a fallen dagger in both bandaged hands and runs back
+    toward the altar.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, rising from her knees on the flagstones, a fallen dagger gripped in
+    both hands, cut ropes at her feet, turning and running back toward a candlelit altar, fierce determined face,
+    ears back, motion, view from behind and side, full body, warm amber firelight, orange glow
+  loras: *id035
+  jobs:
+    arthemy-house: 37264
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245394
+  verdict: 'reject: Same back-view walk as live with no dagger in hand; not clearly better.'
+- key: gb15-a9-dawn-yard-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IX: dawn at the gate (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27351
+  section: a9-dawn-yard
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In the gold dawn the mission gate stands open and a merry-go-round casts a long spoked shadow across
+    the yard, where the fennec girl waits by the gate with her brother on her hip.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing by an open iron mission gate, zkatoddler,
+    anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, on her hip,
+    both looking back toward the viewer, a rusted merry-go-round casting a long spoked shadow across a dusty adobe
+    courtyard, gold ordinary dawn light spilling over the wall, open desert beyond the gate, quiet, wide shot, golden
+    dawn light, pink and gold sky
+  loras: &id036
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37265
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245421
+  verdict: 'reject: Siblings stand apart near-same size, no brother on hip, no merry-go-round; live kept.'
+- key: gb15-a9-dawn-yard-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IX: dawn at the gate (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27352
+  section: a9-dawn-yard
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In the gold dawn the mission gate stands open and a merry-go-round casts a long spoked shadow across
+    the yard, where the fennec girl waits by the gate with her brother on her hip.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing by an open iron mission gate, zkatoddler,
+    anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, on her hip,
+    both looking back toward the viewer, a rusted merry-go-round casting a long spoked shadow across a dusty adobe
+    courtyard, gold ordinary dawn light spilling over the wall, open desert beyond the gate, quiet, wide shot, golden
+    dawn light, pink and gold sky
+  loras: *id036
+  jobs:
+    arthemy-house: 37266
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245422
+  verdict: 'reject: Siblings stand apart near-same size, no brother on hip, no merry-go-round; live kept.'
+- key: gb15-a9-kneel-blood-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IX: what the sword is for (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27361
+  section: a9-kneel-blood
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl stands in a dark doorway taking her little brother slowly by the hand, watching
+    the shadowed refectory where a long shadow of a swordsman falls across the floor.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing in a dark doorway, slowly taking the paw
+    of zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw,
+    wary unblinking eyes fixed ahead, in front of her a shadowed refectory, an overturned bench and a guttering
+    candle, the long cast shadow of a short figure holding a sword stretching across the floorboards, cold grey
+    light, tense silence, vertical composition, full body, warm amber firelight, orange glow
+  loras: &id037
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37267
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245423
+  verdict: 'reject: Siblings in matching outfits, not hand in hand, no swordsman shadow; not clearly better.'
+- key: gb15-a9-kneel-blood-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IX: what the sword is for (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27362
+  section: a9-kneel-blood
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: The fennec girl stands in a dark doorway taking her little brother slowly by the hand, watching
+    the shadowed refectory where a long shadow of a swordsman falls across the floor.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing in a dark doorway, slowly taking the paw
+    of zkatoddler, anthro fennec fox, toddler, enormous ears, sand-colored fur, ragged checked tunic, bandaged paw,
+    wary unblinking eyes fixed ahead, in front of her a shadowed refectory, an overturned bench and a guttering
+    candle, the long cast shadow of a short figure holding a sword stretching across the floorboards, cold grey
+    light, tense silence, vertical composition, full body, warm amber firelight, orange glow
+  loras: *id037
+  jobs:
+    arthemy-house: 37268
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245424
+  verdict: 'reject: Siblings in matching outfits, not hand in hand, no swordsman shadow; not clearly better.'
+- key: gb15-a9-river-song-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IX: unafraid, to the sea (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27371
+  section: a9-river-song
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl stands humming with her eyes closed at dawn before a row of small pebble-marked
+    earth mounds.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, standing with eyes closed, humming softly, paws folded, before a row
+    of small earth mounds marked with pebbles, the shadow of a broken merry-go-round across the ground, first sunlight
+    breaking over an adobe wall, drifting dust glowing, dawn, solemn, tender, medium shot, golden dawn light, pink
+    and gold sky
+  loras: &id038
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37269
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245395
+  verdict: 'reject: Live already shows her humming eyes-closed at sunrise; candidates in doorways no better.'
+- key: gb15-a9-river-song-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IX: unafraid, to the sea (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27372
+  section: a9-river-song
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl stands humming with her eyes closed at dawn before a row of small pebble-marked
+    earth mounds.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, standing with eyes closed, humming softly, paws folded, before a row
+    of small earth mounds marked with pebbles, the shadow of a broken merry-go-round across the ground, first sunlight
+    breaking over an adobe wall, drifting dust glowing, dawn, solemn, tender, medium shot, golden dawn light, pink
+    and gold sky
+  loras: *id038
+  jobs:
+    arthemy-house: 37270
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245396
+  verdict: 'reject: Live already shows her humming eyes-closed at sunrise; candidates in doorways no better.'
+- key: gb15-a9-sister-knife-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IX: the lone survivor (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27381
+  section: a9-sister-knife
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In the candlelit altar room the fennec girl stands alone gripping a long knife, teeth bared, while
+    her little brother sits on the bottom step behind her with his thumb in his mouth.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing alone in a dim stone altar room, gripping
+    a long ceremonial knife in both paws, teeth bared, fierce wet eyes, candles melted down to puddles of wax, still
+    black habits in the shadows at the edge of the light, behind her zkatoddler, anthro fennec fox, toddler, enormous
+    ears, sand-colored fur, ragged checked tunic, bandaged paw, sitting on the bottom step with his thumb in his
+    mouth, watching her, vertical composition, full body, warm amber firelight, orange glow
+  loras: &id039
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37271
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245425
+  verdict: 'reject: Both add an extra adult figure looming behind the sister; live kept.'
+- key: gb15-a9-sister-knife-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act IX: the lone survivor (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27382
+  section: a9-sister-knife
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: In the candlelit altar room the fennec girl stands alone gripping a long knife, teeth bared, while
+    her little brother sits on the bottom step behind her with his thumb in his mouth.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, zkasister, anthro fennec fox, female, young, enormous
+    ears, sand-colored fur, ragged pale dress, bandaged wrists, standing alone in a dim stone altar room, gripping
+    a long ceremonial knife in both paws, teeth bared, fierce wet eyes, candles melted down to puddles of wax, still
+    black habits in the shadows at the edge of the light, behind her zkatoddler, anthro fennec fox, toddler, enormous
+    ears, sand-colored fur, ragged checked tunic, bandaged paw, sitting on the bottom step with his thumb in his
+    mouth, watching her, vertical composition, full body, warm amber firelight, orange glow
+  loras: *id039
+  jobs:
+    arthemy-house: 37272
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245426
+  verdict: 'reject: Both add an extra adult figure looming behind the sister; live kept.'
+- key: gb15-abbess-read-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: the way she watches (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27391
+  section: abbess-read
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, blood, gore, injury, revealing clothes, adult female body, mature, (human face:1.4),
+    human skin, hair, blonde hair
+  prompt_prose: Close on the elderly otter abbess at the supper table, smiling warmly in candlelight while her eyes
+    rest, steady and measuring, on something just out of view.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, sitting at a candlelit supper table, hands folded, warm perfect smile, eyes fixed
+    and measuring, gazing off to the side at a child eating out of view, candlelight on her face, bowl of stew untouched
+    before her, quietly unsettling, close-up, warm amber firelight, orange glow
+  loras: &id040
+  - resource_id: 4595
+    strength: 0.75
+  jobs:
+    arthemy-house: 37273
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245415
+  verdict: 'reject: Candidate faces drift human; live otter abbess kept.'
+- key: gb15-abbess-read-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: the way she watches (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27392
+  section: abbess-read
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, blood, gore, injury, revealing clothes, adult female body, mature, (human face:1.4),
+    human skin, hair, blonde hair
+  prompt_prose: Close on the elderly otter abbess at the supper table, smiling warmly in candlelight while her eyes
+    rest, steady and measuring, on something just out of view.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, sitting at a candlelit supper table, hands folded, warm perfect smile, eyes fixed
+    and measuring, gazing off to the side at a child eating out of view, candlelight on her face, bowl of stew untouched
+    before her, quietly unsettling, close-up, warm amber firelight, orange glow
+  loras: *id040
+  jobs:
+    arthemy-house: 37274
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245416
+  verdict: 'reject: Candidate faces drift human; live otter abbess kept.'
+- key: gb15-abbess-strikes-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: a knife behind a prayer (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27401
+  section: abbess-strikes
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: The old otter Abbess, close behind, her gentle face going cold as she lifts a small curved dagger
+    in the candlelight.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, close behind the viewer, kindness draining from her face, cold flat stare, a small
+    curved dagger raised in one paw, other paw folded as if in prayer, candlelight from below, deep shadows, menacing,
+    close-up, warm amber firelight, orange glow
+  loras: &id041
+  - resource_id: 4595
+    strength: 0.75
+  jobs:
+    arthemy-house: 37275
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245417
+  verdict: 'reject: Both abbess faces read human; live otter kept.'
+- key: gb15-abbess-strikes-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act VIII: a knife behind a prayer (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27402
+  section: abbess-strikes
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: The old otter Abbess, close behind, her gentle face going cold as she lifts a small curved dagger
+    in the candlelight.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, close behind the viewer, kindness draining from her face, cold flat stare, a small
+    curved dagger raised in one paw, other paw folded as if in prayer, candlelight from below, deep shadows, menacing,
+    close-up, warm amber firelight, orange glow
+  loras: *id041
+  jobs:
+    arthemy-house: 37276
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245418
+  verdict: 'reject: Both abbess faces read human; live otter kept.'
+- key: gb15-coyote-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: an unsteady truce (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27411
+  section: coyote
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: The one-eyed coyote crouches at the edge of a desert pool drinking from a battered canteen in trembling
+    paws while a long ripple splits the black water behind him.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, crouched at the edge of a still desert
+    pool, drinking from a battered tin canteen held in both trembling paws, single wary eye raised over the rim,
+    behind him a long impossible ripple splitting the black water, ring of black stones, red rock, hot afternoon
+    desert sun, medium shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id042
+  - resource_id: 4578
+    strength: 0.75
+  jobs:
+    arthemy-house: 37277
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245438
+  verdict: 'reject: No pool or ripple; 245439 face off-model; not clearly better than live.'
+- key: gb15-coyote-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: an unsteady truce (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27412
+  section: coyote
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: The one-eyed coyote crouches at the edge of a desert pool drinking from a battered canteen in trembling
+    paws while a long ripple splits the black water behind him.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, crouched at the edge of a still desert
+    pool, drinking from a battered tin canteen held in both trembling paws, single wary eye raised over the rim,
+    behind him a long impossible ripple splitting the black water, ring of black stones, red rock, hot afternoon
+    desert sun, medium shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id042
+  jobs:
+    arthemy-house: 37278
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245439
+  verdict: 'reject: No pool or ripple; 245439 face off-model; not clearly better than live.'
+- key: gb15-dormitory-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: the cot nobody sleeps in (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27421
+  section: dormitory
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Two neat rows of clean cots fill a dim dormitory, nearly all empty; the fennec siblings sleep in
+    one, and a ragged button-eyed cloth doll lies on the next.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, a long dim mission dormitory, two neat rows of clean
+    cots with folded white blankets, nearly all empty, zkasister, anthro fennec fox, female, young, enormous ears,
+    sand-colored fur, ragged pale dress, bandaged wrists, asleep curled around zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, on one cot, a ragged cloth doll with button
+    eyes lying alone on the next cot, a heavy closed door at the far end, a single candle, quiet, wide shot, warm
+    amber firelight, orange glow
+  loras: &id043
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 37279
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245427
+  verdict: 'reject: Sister sits over a limp lying fennec (reads as a body), no cots; live kept.'
+- key: gb15-dormitory-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: the cot nobody sleeps in (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27422
+  section: dormitory
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters
+  prompt_prose: Two neat rows of clean cots fill a dim dormitory, nearly all empty; the fennec siblings sleep in
+    one, and a ragged button-eyed cloth doll lies on the next.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, a long dim mission dormitory, two neat rows of clean
+    cots with folded white blankets, nearly all empty, zkasister, anthro fennec fox, female, young, enormous ears,
+    sand-colored fur, ragged pale dress, bandaged wrists, asleep curled around zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, on one cot, a ragged cloth doll with button
+    eyes lying alone on the next cot, a heavy closed door at the far end, a single candle, quiet, wide shot, warm
+    amber firelight, orange glow
+  loras: *id043
+  jobs:
+    arthemy-house: 37280
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245428
+  verdict: 'reject: Sister sits over a limp lying fennec (reads as a body), no cots; live kept.'
+- key: gb15-ending-hollow-saint-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Ending: the hollow saint (LoRA, seed 1)'
+  size: 1344x768
+  seed: 27431
+  section: ending-hollow-saint
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl sits awake by a low campfire at night with a knife across her knees, the flames
+    leaning away from her across the embers toward the dark.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, sitting up awake beside a low campfire at night, a knife across her
+    knees, eyes open, watchful, a rolled blanket at her back, the low flames leaning away from her across the embers
+    toward the dark, thin coils of darkness at the edge of the firelight, cold blue night, firelight, unsettling,
+    wide shot, blue moonlight, deep blue night sky, silver highlights
+  loras: &id044
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37281
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245442
+  verdict: 'reject: Comparable fireside sits with no knife visible; not clearly better than live.'
+- key: gb15-ending-hollow-saint-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Ending: the hollow saint (LoRA, seed 2)'
+  size: 1344x768
+  seed: 27432
+  section: ending-hollow-saint
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl sits awake by a low campfire at night with a knife across her knees, the flames
+    leaning away from her across the embers toward the dark.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, sitting up awake beside a low campfire at night, a knife across her
+    knees, eyes open, watchful, a rolled blanket at her back, the low flames leaning away from her across the embers
+    toward the dark, thin coils of darkness at the edge of the firelight, cold blue night, firelight, unsettling,
+    wide shot, blue moonlight, deep blue night sky, silver highlights
+  loras: *id044
+  jobs:
+    arthemy-house: 37282
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245443
+  verdict: 'reject: Comparable fireside sits with no knife visible; not clearly better than live.'
+- key: gb15-mission-gate-1
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: a lantern at the door (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27441
+  section: mission-gate
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: At dusk the elderly otter abbess stands alone in an open wooden door in an adobe wall, lifting a
+    warm lantern toward the viewer with a round kind smile.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, alone in an open heavy wooden door set in a whitewashed adobe wall, lifting a glowing
+    lantern toward the viewer, kind round smile, warm golden light spilling onto the dusty road, iron gate beside
+    her, blue dusk sky, welcoming, view from a short traveller's height, full body, warm amber firelight, orange
+    glow
+  loras: &id045
+  - resource_id: 4595
+    strength: 0.75
+  jobs:
+    arthemy-house: 37283
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245419
+  verdict: 'reject: Abbess faces read human; live kept.'
+- key: gb15-mission-gate-2
+  entity: nun
+  lane: arthemy-house
+  title: 'Act V: a lantern at the door (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27442
+  section: mission-gate
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, (small otter:1.4), feral otter, baby, weasel, ferret, mink, long snout,
+    pointed face, purple fur, (human face:1.4), human skin, hair, blonde hair
+  prompt_prose: At dusk the elderly otter abbess stands alone in an open wooden door in an adobe wall, lifting a
+    warm lantern toward the viewer with a round kind smile.
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, alone in an open heavy wooden door set in a whitewashed adobe wall, lifting a glowing
+    lantern toward the viewer, kind round smile, warm golden light spilling onto the dusty road, iron gate beside
+    her, blue dusk sky, welcoming, view from a short traveller's height, full body, warm amber firelight, orange
+    glow
+  loras: *id045
+  jobs:
+    arthemy-house: 37284
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245420
+  verdict: 'reject: Abbess faces read human; live kept.'
+- key: gb15-morning-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: morning at the gate (LoRA, seed 1)'
+  size: 896x1152
+  seed: 27451
+  section: morning
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl stands alone in a shadowed adobe doorway, watching out into the golden morning light
+    with a solemn face.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, standing alone in a shadowed adobe doorway, one paw on the worn wooden
+    doorpost, watching out toward the gate, solemn wary eyes, enormous ears turned forward, bright golden morning
+    light on the yard outside, swallows overhead, quiet unease, full body, golden dawn light, pink and gold sky
+  loras: &id046
+  - resource_id: 4583
+    strength: 0.75
+  jobs:
+    arthemy-house: 37285
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245444
+  verdict: 'reject: Near-identical doorway compositions; not clearly better than live.'
+- key: gb15-morning-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act V: morning at the gate (LoRA, seed 2)'
+  size: 896x1152
+  seed: 27452
+  section: morning
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person
+  prompt_prose: The fennec girl stands alone in a shadowed adobe doorway, watching out into the golden morning light
+    with a solemn face.
+  prompt_tags: solo, (fully clothed:1.3), zkasister, anthro fennec fox, female, young, enormous ears, sand-colored
+    fur, ragged pale dress, bandaged wrists, standing alone in a shadowed adobe doorway, one paw on the worn wooden
+    doorpost, watching out toward the gate, solemn wary eyes, enormous ears turned forward, bright golden morning
+    light on the yard outside, swallows overhead, quiet unease, full body, golden dawn light, pink and gold sky
+  loras: *id046
+  jobs:
+    arthemy-house: 37286
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245445
+  verdict: 'reject: Near-identical doorway compositions; not clearly better than live.'
+- key: gb15-standoff-1
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: two strangers, one pool (LoRA, seed 1)'
+  size: 1024x1024
+  seed: 27461
+  section: standoff
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: Across the water, the one-eyed coyote kneels at the pool with his hand hovering near his holstered
+    revolver.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, kneeling at the edge of a black desert
+    pool, water dripping from his chin, one unblinking eye staring straight ahead, right hand hovering beside the
+    revolver on his hip, patched coat, black stones, reflections in still water, tense, hot light, medium shot,
+    harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: &id047
+  - resource_id: 4578
+    strength: 0.75
+  jobs:
+    arthemy-house: 37287
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245440
+  verdict: 'reject: Comparable kneel-in-water shots without hand near holster; not clearly better than live.'
+- key: gb15-standoff-2
+  entity: creature
+  lane: arthemy-house
+  title: 'Act I: two strangers, one pool (LoRA, seed 2)'
+  size: 1024x1024
+  seed: 27462
+  section: standoff
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, cigarette
+  prompt_prose: Across the water, the one-eyed coyote kneels at the pool with his hand hovering near his holstered
+    revolver.
+  prompt_tags: solo, (fully clothed:1.3), zkacoyote, anthro coyote, male, eyepatch over right eye, battered brown
+    hat, tattered olive riding coat, revolver holstered on right hip, thin, kneeling at the edge of a black desert
+    pool, water dripping from his chin, one unblinking eye staring straight ahead, right hand hovering beside the
+    revolver on his hip, patched coat, black stones, reflections in still water, tense, hot light, medium shot,
+    harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras: *id047
+  jobs:
+    arthemy-house: 37288
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245441
+  verdict: 'reject: Comparable kneel-in-water shots without hand near holster; not clearly better than live.'
