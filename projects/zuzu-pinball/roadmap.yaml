@@ -265,7 +265,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Build and balance unlockable hidden undercrypt mini-table"
-    status: claimed
+    status: done
     depends_on: t-006
     owner: worker
     passes: 0
@@ -274,9 +274,16 @@ tasks:
       Crypt trapdoor and isolated 3D mini-table with two mini flippers, skill
       targets and a valid mechanical kicker back to primary playfield. Prevent
       multiball leaks and unfair drains when transitioning scenes.
+
+      Merged kind_robots#3566 (squash 00e67b2): undercrypt behind the backbox (zone sub-table,
+      camera, fading backbox), lit every third relic strike, entered by Mortuary subway only
+      with one ball and no chapter/multiball, crypt flippers, three skull standups, HOME
+      saucer, drain subway back to the Mortuary kicker. Also raised the contract-tests job
+      timeout to 15 min (it was cancelled at 10 min after finishing every step).
     claimed_by: 20261012T030500Z-zuzu-t010-crypt-m2v6
     claimed_at: '2026-10-12T03:02:03Z'
-    updated: '2026-10-12T03:02:03Z'
+    updated: '2026-10-12T03:51:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#3566'
   - id: t-011
     milestone: m4
     title: "Build production art assets, 3D cabinet, ramps, ball, plastics and themed toys"
@@ -355,6 +362,10 @@ tasks:
       accessible table guide. Soak-test 1,000 Croc swallow and safe-eject
       cycles including multi-ball and tilt. Add missing remediation tasks rather than
       declaring completion by count.
+
+      Found by the t-010 multiball soak: a ball can wedge at rest near (-0.082, y 0.036,
+      -0.415), between the Village ramp's right rail and the Abbey seal channel; the runtime's
+      ball-search nudge frees it, but the crevice should be closed in geometry.
     claimed_by: 20261012T040000Z-zuzu-t013-qa-k8w2
     claimed_at: '2026-10-12T03:51:43Z'
     updated: '2026-10-12T03:51:43Z'
