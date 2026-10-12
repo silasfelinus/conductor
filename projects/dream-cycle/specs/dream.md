@@ -5,6 +5,21 @@
 
 A daily dream is a coherent six-asset bundle. This playbook governs authoring, steering, creation evidence, ArtJob handoff, and reporting. It does not authorize a second implementation of the object builder.
 
+## Current cutover: 2026-10-13 PT and later
+
+The **sole object writer**, `scripts/build_dream_records.py`, now supports
+**v3 fourteen-asset proposals** in one fail-closed transaction. Preserve the
+existing six linked assets and add two project-targeted Zuzu locations, two
+characters, two rewards and two scenarios with moral choices. Zuzu's art
+renders through catalog-verified Arthemy/Illustrious checkpoints and may not
+inherit that day's random vibe, relationships, or Facets. Fourteen distinct
+Facet targets, record IDs and stable ArtJob requests must agree, or the bundle
+remains unbuilt. Historical built six-asset drafts remain supported without
+being automatically rewritten.
+
+The following six-asset section describes the **original linked mini-world**
+which remains fully intact inside v3.
+
 ## Bundle contract
 
 Every new daily proposal contains exactly:
