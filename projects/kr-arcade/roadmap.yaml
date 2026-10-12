@@ -1274,7 +1274,9 @@ tasks:
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-12T09:11:53Z'
     updated: '2026-10-12T09:11:53Z'
-    passes: 0
+    passes: 1
+    retry_context: >-
+      Pass 1 failed (quality) on kind_robots#3593 head 5e8783bc0ef16cf6a363c77b4af6258340e5b453: addScore can earn 100+ spare cables while snapshot writes the unbounded count; readCableSave rejects lives above 99 and clamps accepted counts to Workbench MAX_LIVES=9. The actual score path (97 awards of 100000; score 9.7M below the 60M ceiling) -> beginComponent(1) -> withSave/JSON/sanitizeSaves -> create(resume) loses Continue and resets the checkpoint. Align earned-life, purchase-cap and bounded persistence semantics. Add consumer regressions at relevant boundaries with later component, earned bytes and kit; keep existing immediate boss/Workbench save tests and strict validators. Original worker retains this PR; no duplicate implementation.
     stakes: reversible
     depends_on: t-064
     note: >-
