@@ -81,21 +81,22 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Build private /admin Arcade shell and original platforming physics"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Inspect existing Arcade platformer and its adapters before adding code. Create requiredRole ADMIN discoverable tab at /admin/save-the-plumber, isolated game state/score namespace, fixed-step jump/fall/coyote-time and buffered input, adjustable acceleration, camera/colliders, debug replay and mobile/gamepad control maps. No premature public /play route.
 
       Private art-forward eight-world map and Bluebell movement lab wired to the shared Arcade cabinet, local input and private unlisted game registry; admin tutorial/sidebar, project placement and regression tests implemented. The 32-stage campaign and heroine generator remain subsequent roadmap tasks.
+
+      Merged kind_robots#3564 at a4e37feb4db759122ca2057d8a1145a4f2016c47. All 34 checks succeeded on 78e88f2d3c82eb49428a19acdad5f481c4221403; cancelled image build recovered on run 38200581045 attempt 2, job 114664187785. Complete diff, Main ruleset checks and reviews inspected. Combined arcade suite and isolated actual Vue-page/engine browser fixtures passed at 390/768/1440px. Tutorial.body and real tab resolver repair verified on main. Preserved both private previews during normal merge conflict resolution. No deployment/public launch; actual shared-cabinet integration and full 32-stage acceptance remain follow-up work. Conductor review handoff #6016 also merged.
     claimed_by: 2026-10-12T010840Z-plumber-t003-k9qm
     claimed_at: '2026-10-12T01:08:40Z'
-    updated: '2026-10-12T01:12:30Z'
+    updated: '2026-10-12T04:48:37Z'
   - id: t-004
     milestone: m2
     title: "Implement run-stable heroine generator, animations and opening"
-    status: waiting
+    status: ready
     depends_on: [t-003]
     owner: null
     passes: 0
@@ -109,7 +110,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: waiting
+    status: ready
     depends_on: [t-003]
     owner: null
     passes: 0
