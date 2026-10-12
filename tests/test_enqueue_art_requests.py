@@ -396,3 +396,83 @@ def test_series_cast_loras_respect_opt_outs_and_lane_family():
     assert enq.build_request(ledger, lane, {**zuzu, "loras": [{"resource_id": 9}]})["loras"] == [
         {"resourceId": 9, "strength": 0.8}
     ]
+
+
+VIDEO_LEDGER = {
+    "project_slug": "zuzu-pinball",
+    "lanes": [
+        {"key": "wan-clips", "engine": "wan", "prompt": "prose", "fps": 16},
+        {"key": "ltx-clips", "engine": "ltx", "prompt": "prose", "output_format": "webm"},
+    ],
+    "subjects": [
+        {
+            "key": "snap",
+            "size": "640x640",
+            "source_image_id": 7,
+            "last_image_id": 8,
+            "duration": 1.5,
+            "prompt_prose": "the crocodile snaps his jaws shut",
+            "negative": "blurry,\n  morphing",
+            "lane": "wan-clips",
+        },
+        {
+            "key": "idle",
+            "size": "640x640",
+            "source_image_id": 7,
+            "duration": 2,
+            "loop": True,
+            "prompt_prose": "the crocodile breathes",
+            "lane": "ltx-clips",
+        },
+    ],
+}
+
+
+def test_video_lane_animates_between_first_and_last_frames():
+    lane, subject = VIDEO_LEDGER["lanes"][0], VIDEO_LEDGER["subjects"][0]
+    body = enq.build_request(VIDEO_LEDGER, lane, subject, "data:image/png;base64,FIRST", "data:image/png;base64,LAST")
+    assert body["engine"] == "wan"
+    assert body["firstImageBase64"] == "data:image/png;base64,FIRST"
+    assert body["secondImageBase64"] == "data:image/png;base64,LAST"
+    assert body["fps"] == 16 and body["durationSeconds"] == 1.5
+    assert body["loop"] is False and body["outputFormat"] == "webp"
+    assert body["negativePrompt"] == "blurry, morphing"
+    assert "renderScale" not in body and "sourceImageBase64" not in body
+
+
+def test_ltx_lane_states_its_render_scale_and_an_empty_negative():
+    lane, subject = VIDEO_LEDGER["lanes"][1], VIDEO_LEDGER["subjects"][1]
+    body = enq.build_request(VIDEO_LEDGER, lane, subject, "data:image/png;base64,FIRST")
+    assert body["renderScale"] == 1.0 and body["outputFormat"] == "webm"
+    assert body["loop"] is True and body["negativePrompt"] == ""
+    assert "secondImageBase64" not in body
+
+
+def test_video_cell_needs_a_first_frame_and_a_duration():
+    lane, subject = VIDEO_LEDGER["lanes"][0], VIDEO_LEDGER["subjects"][0]
+    for args in ((subject, None), ({**subject, "duration": None}, "data:image/png;base64,A")):
+        try:
+            enq.build_request(VIDEO_LEDGER, lane, *args)
+        except ValueError:
+            pass
+        else:  # pragma: no cover
+            raise AssertionError("expected ValueError")
+
+
+def test_submit_fetches_both_frames_of_a_video_cell(tmp_path):
+    path = tmp_path / "clips.yaml"
+    path.write_text(yaml.safe_dump(VIDEO_LEDGER, sort_keys=False))
+    header, ledger = enq.load_ledger(path)
+    sent = []
+
+    def post(body):
+        sent.append(body)
+        return 200, {"data": {"jobId": 500 + len(sent)}}
+
+    cells = list(enq.iter_cells(ledger))
+    assert enq.submit(path, header, ledger, cells, post=post, fetch_source=lambda i: f"data:image/png;base64,{i}") == (
+        2,
+        0,
+    )
+    assert sent[0]["firstImageBase64"].endswith(",7") and sent[0]["secondImageBase64"].endswith(",8")
+    assert sent[1]["firstImageBase64"].endswith(",7") and "secondImageBase64" not in sent[1]
