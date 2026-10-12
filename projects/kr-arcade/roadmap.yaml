@@ -1196,21 +1196,18 @@ tasks:
   - id: t-061
     milestone: m8
     title: "Bumper Bubbles depth slice 3: Wings 5–7"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-12T09:24:15Z'
-    updated: '2026-10-12T09:24:15Z'
+    updated: '2026-10-12T13:49:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-060
-    note: >-
-      CABINETS.md section 7, Bumper Bubbles (Bubble Bobble riff), slice 3 of 5: Wings 5–7. The upgrade is "The
-      Hundred Floors of Fizzwick Tower". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's
-      section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the
-      top applies. Code: kind_robots utils/arcade/games/ (registry slug bumper-bubbles). Silas, 2026-10-11: "I
-      need an assessment done of the other arcade games. I want the same level of quality improvements, they
-      should not just be thin veneers of the old games. But newer, better, even more awesome."
+    note: |-
+      CABINETS.md section 7, Bumper Bubbles (Bubble Bobble riff), slice 3 of 5: Wings 5–7. The upgrade is "The Hundred Floors of Fizzwick Tower". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug bumper-bubbles). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Reviewed kind_robots#3594 at 0743bd95a0053eba80182276751e883e53a67f9f on October 12 PT: complete 14-file diff, all 30 independent cabinet suites, native renderer and third-pantry save consumer at 390/768/1440 widths. All 28 current-head checks completed successfully, required checks satisfied, no blocking review. Awaiting expected-head merge and verified closeout; no deployment.
 
   - id: t-062
     milestone: m8
