@@ -25,6 +25,9 @@ cast pick placed into a widescreen scene; Kontext fills the margins), and
 ``reference_image_id`` (with optional ``reference_crop``) is
 stitched to the LEFT of the source at the same height, so Kontext can dress the right
 figure like the left one (the ImageStitch trick of Kind Robots' kontext/kombine route).
+A ``wan`` or ``ltx`` lane makes image-to-video clips: ``source_image_id`` is the first frame,
+``last_image_id`` (optional) the last, and the subject sets ``duration`` (seconds), ``loop`` and
+``negative``; the lane sets ``fps`` and ``output_format`` (animated ``webp`` by default).
 ``mask_box: [l, t, r, b]`` (fractions of the composed source) makes the edit masked: only that box may
 change, and the job goes to ``/api/comfy/kontext/enqueue`` with a generated mask (white = change).
 
@@ -53,6 +56,7 @@ except ImportError:  # pragma: no cover - direct script execution
     from repair_negation_art_prompts import violations
 
 TERMINAL_STATUSES = {"DONE", "FAILED", "CANCELLED"}
+VIDEO_ENGINES = ("wan", "ltx")
 
 
 def compose_prompt(lane, subject):
@@ -120,11 +124,43 @@ def cast_loras_for(ledger, lane, subject):
     return select_cast_loras(cast, text) or None
 
 
-def build_request(ledger, lane, subject, source_image=None):
+def build_video_fields(lane, subject, first_image, last_image=None):
+    """The image-to-video fields of a WAN or LTX cell (zuzu-pinball t-019).
+
+    The subject's ``source_image_id`` is the first frame and its optional
+    ``last_image_id`` the last, so a clip animates between two approved poses.
+    The lane carries ``fps`` and ``output_format`` (animated ``webp`` unless
+    set); the subject ``duration`` (seconds), ``loop`` and ``negative``.
+    """
+    if not first_image:
+        raise ValueError(f"{subject.get('key')}: a video lane needs the subject's source_image_id")
+    if subject.get("duration") is None:
+        raise ValueError(f"{subject.get('key')}: a video cell needs a duration in seconds")
+    fields = {
+        "firstImageBase64": first_image,
+        "fps": int(lane.get("fps", 16)),
+        "durationSeconds": float(subject["duration"]),
+        "loop": bool(subject.get("loop", False)),
+        "outputFormat": str(lane.get("output_format", "webp")),
+        # Kind Robots wants the negative stated, even when empty.
+        "negativePrompt": " ".join(str(subject.get("negative") or lane.get("negative") or "").split()),
+    }
+    if last_image:
+        fields["secondImageBase64"] = last_image
+    if lane["engine"] == "ltx":
+        fields["renderScale"] = float(lane.get("render_scale", 1))
+    for field in ("steps", "cfg"):
+        if lane.get(field):
+            fields[field] = lane[field]
+    return fields
+
+
+def build_request(ledger, lane, subject, source_image=None, last_image=None):
     """The /api/art/enqueue body for one (subject, lane) cell.
 
-    ``source_image`` is the data URL of the subject's ``source_image_id``; only a
-    Kontext lane sends it.
+    ``source_image`` is the data URL of the subject's ``source_image_id``; a
+    Kontext lane sends it as the image to edit, a video lane as the first frame
+    (with ``last_image``, the subject's ``last_image_id``, as the last).
     """
     width, height = core.parse_size(subject.get("size"))
     body = {
@@ -151,6 +187,8 @@ def build_request(ledger, lane, subject, source_image=None):
         for field in ("steps", "guidance"):
             if lane.get(field):
                 body[field] = lane[field]
+    if lane["engine"] in VIDEO_ENGINES:
+        body.update(build_video_fields(lane, subject, source_image, last_image))
     # Kind Robots LoRA resources (comic-creator t-016): subject first, then lane. The enqueue route resolves the
     # resource ids to files and appends each LoRA's trigger words itself.
     loras = subject.get("loras", lane.get("loras"))
@@ -400,13 +438,15 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None):
             failures += 1
             print(f"  FAILED {subject['key']} [{lane['key']}]: prompt contract {rules}", file=sys.stderr)
             continue
-        source = None
-        if lane["engine"] == "kontext" and subject.get("source_image_id"):
+        source = last = None
+        if lane["engine"] in ("kontext", *VIDEO_ENGINES) and subject.get("source_image_id"):
             source = compose_source(subject, fetch)
+        if lane["engine"] in VIDEO_ENGINES and subject.get("last_image_id"):
+            last = fetch(subject["last_image_id"])
         if source and subject.get("mask_box"):
             body = build_masked_request(ledger, lane, subject, source, make_mask(source, subject["mask_box"]))
         else:
-            body = build_request(ledger, lane, subject, source)
+            body = build_request(ledger, lane, subject, source, last)
         status, resp = post(body)
         job_id = ((resp or {}).get("data") or {}).get("jobId") if isinstance(resp, dict) else None
         if status in (200, 201) and job_id:
@@ -464,9 +504,12 @@ def main(argv=None):
         pending = [(s, lane) for s, lane in cells if not job_id_of(s, lane["key"])]
         print(f"DRY RUN: {len(pending)} of {len(cells)} cells would be submitted via {core.KR_BASE_URL}")
         for subject, lane in pending:
-            source = "data:image/png;base64," if lane["engine"] == "kontext" else None
+            source = "data:image/png;base64," if lane["engine"] in ("kontext", *VIDEO_ENGINES) else None
             body = build_request(ledger, lane, subject, source)
-            if source:
+            if lane["engine"] in VIDEO_ENGINES:
+                last = f" -> ArtImage {subject['last_image_id']}" if subject.get("last_image_id") else ""
+                print(f"    frames: ArtImage {subject.get('source_image_id')}{last}, {body['durationSeconds']}s")
+            elif source:
                 extra = f", reference ArtImage {subject['reference_image_id']}" if subject.get("reference_image_id") else ""
                 crop = f", crop {subject['source_crop']}" if subject.get("source_crop") else ""
                 crop += f", masked {subject['mask_box']} via /api/comfy/kontext/enqueue" if subject.get("mask_box") else ""
