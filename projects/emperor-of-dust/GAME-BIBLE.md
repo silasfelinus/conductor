@@ -1,5 +1,7 @@
 # Emperor of Dust: One Hundred Days
-## Zuzu-world game bible v0.1 (October 11, 2026 PT)
+## Zuzu-world game bible v0.2 (October 12, 2026 PT)
+
+**Current detailed system rules:** [SYSTEMS-V02.md](SYSTEMS-V02.md) defines the numerical Horde, leaders, time clock, 100-character pool, three-image baseline, reports, relics and Mole Revolutionaries. It takes precedence over prototyping examples where this summary is less detailed.
 
 **Premise:** *Before the bell stopped ringing, someone had to answer it.* A pre-Zuzu, alternate-play strategy drama. The player rules a small, precarious wasteland territory for exactly 100 authored days. Every morning the map fills with petitions, and every night its inhabitants remember what the ruler did, and what they left undone.
 
@@ -7,13 +9,13 @@
 
 ## Core loop
 
-**Morning:** Advisor summaries, news from factions, recovering followers, new recruits, faction-war movements, aftermath from yesterday, resources and 2–5 authored map incidents.
+**Morning:** Young Komodo presents three prewritten reports (two truths and one lie) for the day's fixed script, with fallible hints. Review recovering followers, arrivals, new recruits, faction-war movements, and the Horde headcount. Events then arrive in authored in-world time slots across the day.
 
-**Planning:** Select a pin on the zoomable illustrated domain map, see the complaint, deadline, people at risk, favored skills and disclosed danger. Assign **0, 1, 2 or 3** distinct, available followers. Assignments compete for the same scarce roster. Sending zero has a deliberate authored ignored/delegated/deferred outcome, never a free random win. Spend optional Support Hoard to improve odds or protect people.
+**Planning:** Select a pin on the zoomable illustrated domain map, see the complaint, deadline, people at risk, favored skills and disclosed danger. Assign **0, 1, 2 or 3** distinct available follower commanders and a displayed contingent of the **numerical Horde**. Leaders and their troops are occupied during 1–5 hours outward travel, the mission, and the return trip. Sending zero has an authored ignored/delegated/deferred outcome, never a free random win. No Support Hoard token currency exists.
 
-**Resolution:** Some assignments use an honest displayed probability and deterministic seeded dice; others open story decisions, including difficult dilemmas. Choices and success checks are independent: a successful operation can produce a morally disastrous result; a failed check may uncover evidence or permit a compassionate solution. Injuries, fatigue, permanent deaths and compromised alliances persist.
+**Resolution:** Some assignments use an honest displayed probability and deterministic seeded dice; others open story decisions, including difficult dilemmas. Choices and success checks are independent: a successful operation can produce a morally disastrous result; a failed check may uncover evidence or permit a compassionate solution. Wounds more commonly make leaders unavailable for a defined number of days; fatal outcomes are exceptional, warned and narratively consequential. Horde casualties, fatigue and compromised alliances persist.
 
-**Night:** Show a ledger of changed Prosperity, Popularity, Hoard, injuries, memorials, character relationships, faction reputations and active hostilities. Trigger branch flags and recovery paths, then advance to the next scripted day. Day 100 resolves an ending and a consequences epilogue.
+**Night:** Show a ledger of changed Prosperity, Popularity, Horde headcount, injury and return-day schedules, memorials, character relationships, faction reputations and active hostilities. Trigger branch flags and recovery paths, then advance to the next scripted day. Day 100 resolves an ending and a consequences epilogue.
 
 ## Independent resources
 
@@ -21,13 +23,13 @@
 |---|---|---|
 | **Prosperity** | 45 / 100 | Citizens' livelihood and production. Equitable outcomes raise it; scarcity, raids, extraction and failed choices lower it. Recruiting followers spends Prosperity visibly. |
 | **Popularity** | 55 / 100 | Legitimacy of the emperor. Kept promises and fair process help, coercion and avoidable harm hurt, even when a roll succeeds. |
-| **Support Hoard** | 4 / 12 tokens | Supply caches, contacts and favors. Commit 1–3 tokens for odds bonuses, emergency medicine or bribes. Wasted efforts, raiders and poor decisions can reduce it. It is not the same as Popularity. |
+| **Horde** | Provisional 60 organized members; story-adjustable cap | Numerical followers of the empire, deployed in groups led by named characters. Recruitment increases headcount; casualties and desertions decrease it. Troops are busy until they return. **Not** a consumable stash of favors or bonus tokens. |
 | **Faction affinity** | -100..+100 per faction | Each major faction has its own standing with the imperial court. |
 | **Faction-to-faction tension** | 0..5 per pair | Peace, suspicion, provocation, raids, open war, and crisis. Daily dispatches and diplomacy change these bilateral relationships. |
 
-Start with five followers; basic cap eight, optionally expanded to ten by costly investments. Recruiting costs Prosperity and takes a day before a new person is available. Statuses: available, committed, fatigued, wounded, recovering, missing, retired, dead. Serious wounds can have lasting effects. Death is permanent and changes companions' arcs. Fatal hazards must be telegraphed before assignment, not sprung on an ordinary unlucky die. No infinite fresh replacements.
+Author **100 unique recruitable leader characters** with bios, personalities, faction loyalties, Might/Diplomacy/Ingenuity and signature specialties, each with a healthy roster portrait, injured roster portrait and larger splash illustration. Start a run with roughly five active leaders, unlocking further leaders through costs and story, rather than opening with 100 simultaneously deployed heroes. Statuses: available, outbound, on mission, returning, fatigued, wounded, recovering, missing, retired, dead. Injuries are the frequent loss-of-availability event (minor 1–2, moderate 3–5, severe 6–10 days as starting ranges); character death is rare and explicitly telegraphed. Track follower and Horde recovery/returns independently.
 
-**Initial dispatch mechanic for prototyping:** Every incident specifies difficulty 1–12, skill tags, location, hazard, deadline and authored choices. For a check, sum relevant follower skills (0–4), +0–2 complementary-role bonus, +2 per Hoard token to maximum +4, apply fatigue/injury modifiers, and roll seeded 2d6 against `8 + difficulty`. Calibrate with simulations, not intuition. Show truthful odds for known conditions or an estimate range when story information is missing. Explicit deterministic moral consequences must not pretend to be random. Keep regular rolled odds within 5–95% until balanced; a failed objective and companion injury are different outcomes. Deterministic replay from seed + actions must match.
+**Initial dispatch mechanic for prototyping:** Every incident specifies difficulty 1–12, skill tags, location, hazard, deadline and authored choices. For a check, combine contextual Might, Diplomacy or Ingenuity ratings (0–5), follower specialty/relationship bonuses, relevant Horde contingent strength and credible terrain effects; calculate and reveal honest odds before a deterministic seeded roll. No Support Hoard spend bonus. Calibrate with simulations, not intuition. Show truthful odds for known conditions or an estimate range when story information is missing. Explicit deterministic moral consequences must not pretend to be random. Keep regular rolled odds within 5–95% until balanced; a failed objective and companion injury are different outcomes. Deterministic replay from seed + actions must match.
 
 ## Faction bible
 
@@ -40,6 +42,7 @@ Start with five followers; basic cap eight, optionally expanded to ten by costly
 | **The Gentle Mission** | Comfort, meals and beds to struggling families | Its leaders conceal sinister work and the first signals of a future catastrophe. Discovery comes through evidence, not gratuitous spectacle. |
 | **Saltroad Caravans** | Medicine, provisions, messages and vital trade | Compassionate merchants and scarcity profiteers struggle for control of caravan policy. |
 | **Border Freeholds** | Isolated homesteads and town assemblies | Can form mutual aid or resist imperial control; politically divided, not a single rebel stereotype. |
+| **Mole Revolutionaries** | Underground organizing cells openly opposed to the Emperor | Seek to overthrow the crown but can be reconciled through earned political concessions. Their longstanding enemies are the swamp witches/Mire Mothers. Not every Mole agrees on revolutionary methods. |
 
 Tension between *pairs* of factions drives timed raids, relief agreements, spies, truces and diplomatic dispatches. Relationship changes should be communicated through recurring letters and map changes, not just floating numerical badges. Faction identity does not determine an individual's morality or skills.
 
@@ -56,24 +59,24 @@ Tension between *pairs* of factions drives timed raids, relief agreements, spies
 - **Bram Coil:** buffalo quartermaster; defense 4, crafting 2; ration fairness is his obsession.
 - **Pip Thread:** moth archivist; investigation 4, diplomacy 1; would rather lose the palace than burn a record.
 
-All characters require personal arcs, rivalries, injury expressions, clear silhouettes and visual references. Mix gender presentation, body type, age, background and temperament organically; avoid species-coded character stats.
+All characters require personal arcs, rivalries, injury expressions, clear silhouettes and visual references. The **three-image baseline** is healthy roster portrait, injured roster portrait, and larger splash scene, totaling **300 baseline assets for 100 authored followers**, with optional emotion/story variants added incrementally up to a planning ceiling of **20 images per follower**. Mix gender presentation, body type, age, background and temperament organically; avoid species-coded character stats.
 
 ## Map and art
 
-The territory is **one small piece of the larger wasteland**, not the entire Zuzu world: an Imperial Keep and market at its heart; Hollow Bell and its damaged aqueduct east; rail canyon and punk raider encampments south; Storm Crow Heights and caves west; the northern Mirefen wetlands, Black Stones watering hole and mission road; Saltroad villages and distant human remnants uncovered later. Familiar places should look earlier in their history, not ruined before their canonical downfall.
+The territory is **one small piece of the larger wasteland**, not the entire Zuzu world: an Emperor's Tower at the **top center** of the local strategic map with mostly straight radial routes to each region and landmark; Hollow Bell and its damaged aqueduct east; rail canyon and punk raider encampments south; Storm Crow Heights and caves west; the northern Mirefen wetlands, Black Stones watering hole and mission road; Saltroad villages and distant human remnants uncovered later. Familiar places should look earlier in their history, not ruined before their canonical downfall.
 
 Art direction: richly painted cartographic layers, crisp hand-inked trails, readable incident stamps, moving couriers and weather masks; large faction-portrait panels; visible wounds and scars on followers; color plus shape/text to signal urgency. Desktop prioritizes a **large map (around 65% width)** with a court ledger and follower/dispatch drawers. Mobile must keep the map legible, with a bottom panel rather than six tiny columns. Art generation uses approved Kind Robots ArtJobs and current Zuzu guardrails; do not assert a queued job is delivered. Do not copy artwork or interfaces from the inspirations.
 
 ## Failure opens doors
 
-At *authored night checkpoints*, not continuously, unlock one-off recovery paths:
+At *authored night checkpoints*, not continuously, unlock one-off recovery paths. The **Eye of the Elder Crow** and other persistent Items of Power are earned in authored branches, survive between runs, and only one or two can be equipped per run; the Eye visibly identifies the day's false report when equipped:
 - **The Empty Granary** (Prosperity <=25): a lower-difficulty supply rescue can restore food and Hoard, but grants a painful merchant debt.
 - **The Last Five** (three or fewer healthy helpers): a noncombat reunion can recover a stronger follower at lower check difficulty but alters faction loyalties.
 - **A Crown of Ash** (Popularity <=20): harsh decree or honest amnesty; either keeps the story alive at a real political cost.
 - **Storm Refuge** (drought + Crow trust): emergency weather bargain saves lives but makes the empire dependent on a covenant.
 - **The Kindly Road** (missing-person evidence): investigative path with an easier threshold but heavier social consequences.
 
-Recovery arcs typically reduce difficulty by 2–4 or substitute a noncombat choice, grant a resource or recruit, and advance faction conflict. Each has once-only flags / cooldowns and can lead to its own conclusion. Test bad luck, catastrophic loss, low-Hoard, high-popularity, pacifist and opportunistic full runs. **Low resources should unlock interesting stories, not softlock the campaign.**
+Recovery arcs typically reduce difficulty by 2–4 or substitute a noncombat choice, grant a resource or recruit, and advance faction conflict. Each has once-only flags / cooldowns and can lead to its own conclusion. Test bad luck, catastrophic loss, low-Horde, high-popularity, pacifist and opportunistic full runs. **Low resources should unlock interesting stories, not softlock the campaign.**
 
 ## Eight Day-100 ending families
 
@@ -83,6 +86,6 @@ These game interpretations never establish the culprit of the eventual Book One 
 
 ## Authoring, runtime and release contract
 
-`DAY-PLAN.md` gives **100 fixed daily anchors** divided into ten acts. They are only *outlines*. A playable `DayDef` must add 2–5 discrete incidents, meaningful choices, danger tags, success/failure/decision outcomes, resource/faction effects, morning correspondence, evening consequences, and low-resource variants. End-of-act choices should echo at later dates. Save a seed, day, assignments, follower injuries/deaths, resources, all faction affinities and pairwise hostilities, branch flags, and narrative history. Future TypeScript contracts: `DayDef`, `IncidentDef`, `FollowerDef`, `FactionDef`, `OutcomeDef`. Persist game state through a Pinia store, never component-local API calls.
+`DAY-PLAN.md` gives **100 fixed daily anchors** divided into ten acts. They are only *outlines*. A playable `DayDef` must add 2–5 discrete incidents, meaningful choices, danger tags, success/failure/decision outcomes, resource/faction effects, morning correspondence, evening consequences, and low-resource variants. End-of-act choices should echo at later dates. Save a seed, day and in-day clock, assignments and 1–5-hour radial ETAs including return journeys, follower injuries/deaths and recovery days, leader/Horde deployment and headcounts, resources, daily intelligence source/truth labels, unlocked relic inventory and equipped loadout, all eight faction affinities and pairwise hostilities, branch flags, and narrative history. Future TypeScript contracts: `DayDef`, `IncidentDef`, `FollowerDef`, `FactionDef`, `OutcomeDef`. Persist game state through a Pinia store, never component-local API calls.
 
-**Acceptance:** Validate exactly 100 unique days, no double assignment and max three helpers/incident, no dead helpers returning, bounded resources, reachable decisions and all eight endings, realistic comeback paths, deterministic replays, narrative continuity, and functional responsive phone/tablet/desktop UI. First deliverable is a *nonplayable*, admin-only illustrated preview at `/admin/emperor-of-dust` with an Admin tutorial tab. Public `/play` is a separate explicitly approved gate; production deployment is verified separately from merge.
+**Acceptance:** Validate exactly 100 unique days, no double assignment and max three helpers/incident, no dead helpers returning, injuries lasting explicit days, rare signposted deaths, Horde headcount conservation and zero double-booking, three 100-day daily intelligence reports, relic unlock persistence and 1–2 equipped slots, bounded resources, reachable decisions and all eight endings, realistic comeback paths, deterministic replays, narrative continuity, and functional responsive phone/tablet/desktop UI. First deliverable is a *nonplayable*, admin-only illustrated preview at `/admin/emperor-of-dust` with an Admin tutorial tab. Public `/play` is a separate explicitly approved gate; production deployment is verified separately from merge.
