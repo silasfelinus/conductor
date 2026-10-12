@@ -1,29 +1,83 @@
 # Daily Dream and daily pitch creative direction (Silas, 2026-10-12 PT)
 
-Status: **approved direction; nine-asset Dream implementation pending**. This is a migration specification, not proof that the current six-record pipeline already meets it. The existing single-writer Daily Digest must remain healthy until an atomic, tested replacement is merged.
+Status: **approved corrected direction; 14-asset Dream implementation pending**. This is a migration specification, not proof that the current six-record pipeline already meets it. The existing single-writer Daily Digest must remain healthy until an atomic, tested replacement is merged.
 
-## Daily Dream after migration
+## Daily Dream after migration (corrected by Silas, 2026-10-12 PT)
 
-Each Pacific day has two deliberately separate editorial lanes:
+**Do not replace the original Daily Dream's six connected creations.** Silas explicitly
+wants to keep the variety of a fresh day-by-day mini-world, with a cohesive
+visual language across its people, places, rewards, and scene.
 
-1. **One original daily dream vibe**, freshly invented and internally coherent, with its own distinctive setting, Facet combination, art direction and title. It remains independent. Do not make every other daily asset belong to its world or inherit its style.
-2. **Zuzu-world production material**, drawn from the shared `worlds/zuzu` canon and allocated explicitly to either `zuzu-gamebook` or `emperor-of-dust`. This is authored game material, not six reskins of the independent vibe.
+Daily delivery is **14 created assets in two independent editorial/art lanes**:
 
-Daily minimum, including the standalone vibe: **1 unique vibe + 2 locations + 2 characters + 2 rewards (retain one ITEM and one SKILL until revised) + 2 moral-choice scenarios = 9 objects and 9 independently tracked durable ArtJobs**. The six Zuzu characters/locations/scenarios must not be turned into a second random daily world. Each dependent object needs an explicit `project_target` for its owning game. Rewards also need project targets. Avoid mixing incompatible period, characters, technologies, or lore from the two target games. Proposals must work in story/play terms, not merely be descriptive cards.
+1. **The traditional complete Daily Dream, six linked outputs:**
+   - One brand-new original **PITCH Dream/vibe**, with its own distinct theme and art style.
+   - One **LOCATION Dream** linked by `CONTAINS` to that world.
+   - One real **Character** linked to that world.
+   - One ITEM and one SKILL **Reward**, linked to that world.
+   - One **Scenario**, linked to the world and its location, referencing the world's
+     location and character in its setup.
+   - **All six share the vibe's coherent visual style.** The random daily vibe is
+     genuinely independent, and its linked content is allowed to be just as strange
+     and unexpected as the existing Daily Dream. Preserve the existing card gallery,
+     Facet logic, relationship semantics, and distinctive art prompts.
+2. **Eight *additional* Zuzu-world outputs, not linked to that day's vibe:**
+   - Two locations, two characters, two rewards (ITEM and SKILL), and two
+     moral-choice scenarios.
+   - Each category provides one asset for `zuzu-gamebook` and one for
+     `emperor-of-dust`, with explicit project target and provenance.
+   - Use the **Arthemy and/or Illustrious** checkpoint families, chosen per Zuzu
+     asset from the resource catalog; do not force either checkpoint onto the
+     independent Daily Dream. Canon designs and existing visual references win.
+   - The Zuzu assets may have supported canonical Zuzu connections of their own,
+     but **none may inherit `dreamIds`, `CONTAINS`, Facets, scene setting, lore or
+     random visual style from the original daily PITCH Dream**.
 
-**Scenarios are choices:** each has an immediate incident, at least two consequential options, a meaningful tradeoff, and short- and longer-term fallout. No binary saint/villain framing. For gamebook, specify the branching scene, flag/skill effects and replay outcome; for Emperor, specify dispatch candidates, Horde/faction/resource effects, injury risk and subsequent-day consequences, consistent with its existing rules.
+The standalone daily Dream is **not a placeholder**, teaser or ninth asset.
+It is a complete mini-world; the Zuzu batch is *additional production material*.
 
-Art should **mostly use the Illustrious and Arthemy checkpoint families** for Zuzu materials, with the canonical Arthemy series house lane for established Zuzu characters and gamebook scenes. Resolve checkpoint/LoRA identities from the current resource catalog and Zuzu art ledgers; do not guess IDs or silently switch to Flux/Krea. Preserve existing canon designs and reuse delivered art before creating duplicates. Select the checkpoint per asset in the durable ArtJob request, record actual checkpoint/LoRA provenance, and verify delivered ArtImages rather than equating enqueue with completion. The one independent vibe retains its own coherent original visual identity.
+**Zuzu scenarios are genuine choices.** Each has an immediate incident, at
+least two consequential options, a meaningful tradeoff, and short- and
+longer-term fallout. Avoid binary saint/villain decisions. For the gamebook,
+specify branching scene, flags/skills and replay outcomes. For Emperor,
+specify dispatch candidates, Horde/faction/resource impacts, injury risks and
+subsequent-day consequences. The Horde is a number; the named followers lead it,
+and injuries are more common than deaths.
 
-**Emperor of Dust has a separate, consistent visual pitch:** see `projects/emperor-of-dust/DAILY-DREAM-VIBE.md`. Its material belongs to a pre-Zuzu reign and is neither a new project nor a synonym for the day's free-form vibe. Follower mortality is rare, injury more frequent with X-day recovery; the Horde is numerical and followers are its named leadership, not the whole Horde.
+**Emperor of Dust has its own consistent creative pitch**, `projects/emperor-of-dust/DAILY-DREAM-VIBE.md`.
+It is *neither* a synonym for the daily random vibe nor a generic clone of
+Zuzu Gamebook. Different periods and factions must not be conflated.
 
-## Safe migration
+## Implementation and cutover contract
 
-- Maintain the existing one-writer transactional boundary and idempotent date/asset IDs. Never hand-create the three extra objects by direct REST or a second cron.
-- Version the proposal/builder contract from six to nine and update author prompts, deterministic Facet plans, validation, ledger IDs, transactional rollback, target routing, nine ArtJob outputs, art staging, facet targets, digest rendering, retry semantics, remaster audits and tests together. Historical six-asset proposals/builds remain readable and immutable; distinguish old/new via recorded schema version and Pacific date. No silent backfill.
-- The Zuzu six or eight dependent records must NOT be attached as children of the unrelated unique vibe's Dream. Store project-target attribution in the proposal and built metadata, and link to real canonical entities through an explicit supported relation/API contract. If the API lacks this, stage a task-scoped handoff rather than invent a database foreign key.
-- Tests must verify 1/2/2/2/2 counts, two genuinely independent editorial lanes, both project targets, choices/consequences, facet completeness, nine unique art requests and stable retries/rollback, digest display, old-bundle compatibility, and the absence of a second writer.
-- Any buffered **unbuilt** six-asset proposals should be reauthored/retired into idea inventory under the new contract, not sent to the old builder after cutover. Already-built work stays untouched.
+- **One canonical writer, one complete transaction**. Extend the existing
+  six-record transactional builder to commit six linked original Dream outputs
+  **plus** eight separately routed Zuzu assets in one coherent idempotent bundle.
+  Keep rollback/failure/retry semantics and never create a parallel cron or
+  direct-REST backfill. V2 historical six-record outputs remain immutable/readable.
+- Version 3 proposal storage retains the existing top-level `vibe`, `locations`,
+  `characters`, `rewards` and `scenarios` shapes with **original 1/1/2/1 counts**,
+  plus a new, separate `zuzu_assets` object with **2/2/2/2 counts**. This prevents
+  old consumers from mistaking the eight Zuzu entities for attached Dream children.
+- Facet slots are the old six names plus eight distinct `zuzu_*` names. Explicit
+  per-record IDs, project targets, checkpoint/LoRA catalog resolution, **14**
+  noncolliding durable ArtJobs, target attachments, result provenance and
+  art-rich digest presentation all need to agree before the new writer is enabled.
+- Authoring, preflight, creative checks, relatedness/novelty checks, transactional
+  builds, 14-row ArtJob audit, facet assignment, digest/report, remaster, retry
+  and rollback must all migrate together. The existing six-output writer must
+  **fail closed on v3 drafts** until end-to-end CI passes.
+- Tests should establish: old linked-world relations are preserved; original
+  art stays stylistically coherent; Zuzu assets never link to the daily vibe;
+  6 + 8 = 14 distinct assets and ArtJobs, one asset per Zuzu project in each
+  type; scenario consequences; both checkpoint families resolvable from the
+  actual catalog; historical six-output compatibility; no partial commits.
+- Buffered unbuilt pre-cutover proposals need an explicit safe decision, not
+  a silent rewrite or automatic discard. Already-built data stays unchanged.
+- Earlier guidance to produce **one unlinked vibe plus eight Zuzu assets (nine
+  total)** is **superseded**. Never reintroduce it, including in examples, tasks,
+  pitches, or agent prompts. This clarification was made *before* any nine-record
+  rollout had been merged.
 
 ## Daily pitch direction (effective for newly authored dockets starting 2026-10-13 PT)
 
