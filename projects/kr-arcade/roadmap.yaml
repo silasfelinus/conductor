@@ -774,17 +774,15 @@ tasks:
   - id: t-042
     milestone: m8
     title: "Battery Maze depth slice 4: Together and versus"
-    status: ready
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-041
-    note: >-
-      CABINETS.md section 2, Battery Maze (Pac-Man riff), slice 4 of 4: Together and versus. The upgrade is
-      "The Charging Network". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section
-      first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top
-      applies. Code: kind_robots utils/arcade/games/ (registry slug battery-maze). Silas, 2026-10-11: "I need
-      an assessment done of the other arcade games. I want the same level of quality improvements, they should
-      not just be thin veneers of the old games. But newer, better, even more awesome."
+    note: |-
+      CABINETS.md section 2, Battery Maze (Pac-Man riff), slice 4 of 4: Together and versus. The upgrade is "The Charging Network". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug battery-maze). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Reviewer marker conductor-cycle-20261012T083000Z-battery-b7m4 reserves kind_robots#3579. Complete original eight-file diff and current head fd843d471fccdb4ce236d43548bcb2a8bd4da874 repair diff inspected. Independent full arcade suite passed 20 cabinets. Public-input save-consumer round trips verify 3/4-seat Tag gating for a toaster checkpoint and a step-0 later-lap save, including correct gremlin seats and preserved campaign checkpoint. Actual menu, full medals, co-op and saved-entry Tag render at 390/768/1440 without overflow. Old-head reproduction was superseded by the worker's concurrent repair, so passes stays 0. Await fresh current-head checks and blocking-review inspection before expected-head merge.
+    updated: '2026-10-12T08:38:00Z'
 
   - id: t-043
     milestone: m8
