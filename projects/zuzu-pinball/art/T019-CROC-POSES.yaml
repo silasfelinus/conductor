@@ -1,0 +1,152 @@
+# zuzu-pinball t-019 step 2: the River Croc's phase poses, Kontext edits of the key image Silas picked
+# (2026-10-12, "I like 245776": T019-CROC-KEY croc-three-quarter-open-2). Every pose keeps his look, the camera
+# and the framing, so the video model can animate between them (first frame -> last frame) and the table can
+# cut between the clips: open (gape), captured (clamped), submerged, death roll, spit. Two seeds each.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-pinball
+project_slug: zuzu-pinball
+designer: Zuzu Pinball
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-poses
+  label: Flux Kontext dev (fp8), phase poses from the picked key image
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: croc-pose-gape-1
+  entity: river-croc
+  title: River Croc, jaws flung wide open at the camera (seed 1)
+  size: 1024x1024
+  seed: 719201
+  source_image_id: 245776
+  prompt_prose: Open his jaws as wide as they go, the upper jaw lifted high, showing rows of jagged yellowed teeth,
+    a pink mouth and tongue and the dark throat, roaring up at the viewer. Keep the same giant crocodile seen from
+    directly above with his head toward the bottom of the picture, the same olive-green scarred armoured hide, the
+    rope tied round his body and shoulders, the glowing amber eyes, the same dark teal water with the harpoons floating
+    in it, the same white background, the same camera, framing and position, and the same inked western comic art
+    style.
+  jobs:
+    kontext-poses: 37634
+- key: croc-pose-gape-2
+  entity: river-croc
+  title: River Croc, jaws flung wide open at the camera (seed 2)
+  size: 1024x1024
+  seed: 719202
+  source_image_id: 245776
+  prompt_prose: Open his jaws as wide as they go, the upper jaw lifted high, showing rows of jagged yellowed teeth,
+    a pink mouth and tongue and the dark throat, roaring up at the viewer. Keep the same giant crocodile seen from
+    directly above with his head toward the bottom of the picture, the same olive-green scarred armoured hide, the
+    rope tied round his body and shoulders, the glowing amber eyes, the same dark teal water with the harpoons floating
+    in it, the same white background, the same camera, framing and position, and the same inked western comic art
+    style.
+  jobs:
+    kontext-poses: 37635
+- key: croc-pose-clamped-1
+  entity: river-croc
+  title: River Croc, jaws snapped shut (seed 1)
+  size: 1024x1024
+  seed: 719201
+  source_image_id: 245776
+  prompt_prose: Snap his jaws completely shut, teeth interlocking along the closed mouth, his head jerked a little
+    to one side, a splash of water flying up round his snout. Keep the same giant crocodile seen from directly above
+    with his head toward the bottom of the picture, the same olive-green scarred armoured hide, the rope tied round
+    his body and shoulders, the glowing amber eyes, the same dark teal water with the harpoons floating in it, the
+    same white background, the same camera, framing and position, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 37636
+- key: croc-pose-clamped-2
+  entity: river-croc
+  title: River Croc, jaws snapped shut (seed 2)
+  size: 1024x1024
+  seed: 719202
+  source_image_id: 245776
+  prompt_prose: Snap his jaws completely shut, teeth interlocking along the closed mouth, his head jerked a little
+    to one side, a splash of water flying up round his snout. Keep the same giant crocodile seen from directly above
+    with his head toward the bottom of the picture, the same olive-green scarred armoured hide, the rope tied round
+    his body and shoulders, the glowing amber eyes, the same dark teal water with the harpoons floating in it, the
+    same white background, the same camera, framing and position, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 37637
+- key: croc-pose-submerged-1
+  entity: river-croc
+  title: River Croc, lurking under the water (seed 1)
+  size: 1024x1024
+  seed: 719201
+  source_image_id: 245776
+  prompt_prose: Sink him under the water so only his glowing eyes, his nostrils and the ridge of scutes along his
+    back show above the dark surface, his body a shadow below it, ripples spreading round him. Keep the same giant
+    crocodile seen from directly above with his head toward the bottom of the picture, the same olive-green scarred
+    armoured hide, the rope tied round his body and shoulders, the glowing amber eyes, the same dark teal water
+    with the harpoons floating in it, the same white background, the same camera, framing and position, and the
+    same inked western comic art style.
+  jobs:
+    kontext-poses: 37638
+- key: croc-pose-submerged-2
+  entity: river-croc
+  title: River Croc, lurking under the water (seed 2)
+  size: 1024x1024
+  seed: 719202
+  source_image_id: 245776
+  prompt_prose: Sink him under the water so only his glowing eyes, his nostrils and the ridge of scutes along his
+    back show above the dark surface, his body a shadow below it, ripples spreading round him. Keep the same giant
+    crocodile seen from directly above with his head toward the bottom of the picture, the same olive-green scarred
+    armoured hide, the rope tied round his body and shoulders, the glowing amber eyes, the same dark teal water
+    with the harpoons floating in it, the same white background, the same camera, framing and position, and the
+    same inked western comic art style.
+  jobs:
+    kontext-poses: 37639
+- key: croc-pose-death-roll-1
+  entity: river-croc
+  title: River Croc, the death roll (seed 1)
+  size: 1024x1024
+  seed: 719201
+  source_image_id: 245776
+  prompt_prose: Show him mid death roll, twisted over onto his side with his pale belly turning up, his tail whipping
+    round, in a churn of white foam and spray flying off the water. Keep the same giant crocodile seen from directly
+    above with his head toward the bottom of the picture, the same olive-green scarred armoured hide, the rope tied
+    round his body and shoulders, the glowing amber eyes, the same dark teal water with the harpoons floating in
+    it, the same white background, the same camera, framing and position, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 37640
+- key: croc-pose-death-roll-2
+  entity: river-croc
+  title: River Croc, the death roll (seed 2)
+  size: 1024x1024
+  seed: 719202
+  source_image_id: 245776
+  prompt_prose: Show him mid death roll, twisted over onto his side with his pale belly turning up, his tail whipping
+    round, in a churn of white foam and spray flying off the water. Keep the same giant crocodile seen from directly
+    above with his head toward the bottom of the picture, the same olive-green scarred armoured hide, the rope tied
+    round his body and shoulders, the glowing amber eyes, the same dark teal water with the harpoons floating in
+    it, the same white background, the same camera, framing and position, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 37641
+- key: croc-pose-spit-1
+  entity: river-croc
+  title: River Croc, rearing back to spit (seed 1)
+  size: 1024x1024
+  seed: 719201
+  source_image_id: 245776
+  prompt_prose: Show him rearing back with his head thrown up and his jaws wide open, a gush of water spraying out
+    of his mouth toward the viewer. Keep the same giant crocodile seen from directly above with his head toward
+    the bottom of the picture, the same olive-green scarred armoured hide, the rope tied round his body and shoulders,
+    the glowing amber eyes, the same dark teal water with the harpoons floating in it, the same white background,
+    the same camera, framing and position, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 37642
+- key: croc-pose-spit-2
+  entity: river-croc
+  title: River Croc, rearing back to spit (seed 2)
+  size: 1024x1024
+  seed: 719202
+  source_image_id: 245776
+  prompt_prose: Show him rearing back with his head thrown up and his jaws wide open, a gush of water spraying out
+    of his mouth toward the viewer. Keep the same giant crocodile seen from directly above with his head toward
+    the bottom of the picture, the same olive-green scarred armoured hide, the rope tied round his body and shoulders,
+    the glowing amber eyes, the same dark teal water with the harpoons floating in it, the same white background,
+    the same camera, framing and position, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 37643
