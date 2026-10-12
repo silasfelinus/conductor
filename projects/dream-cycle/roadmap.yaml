@@ -840,25 +840,15 @@ tasks:
 - id: t-037
   milestone: m4
   title: 'Migrate Daily Dream single-writer pipeline to independent vibe plus eight Zuzu-world assets'
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   depends_on: t-004
-  note: >-
-    Silas, 2026-10-12 PT: preserve one unique self-consistent daily dream vibe,
-    then separately create two Zuzu-world locations, two characters, two rewards
-    (ITEM/SKILL), and two consequential moral-choice scenarios, each attributed
-    to zuzu-gamebook or emperor-of-dust. Mostly use Illustrious and Arthemy
-    checkpoints; Emperor requires its own stable vibe pitch.
-    Full requirements and historical compatibility/cutover instructions:
-    projects/dream-cycle/ZUZU-DAILY-CREATIVE-CONTRACT.md.
-    Update proposal schema, author and validators, builder, Facet attachment,
-    nine idempotent ArtJobs, digest/art evidence, creative checks, remaster tools
-    and unit/CI contracts atomically. The current six-asset pipeline must remain
-    healthy and should NOT be called migrated or finished before CI verifies
-    complete nine-record and nine-ArtJob builds without mixing unrelated vibe
-    with Zuzu canon. No new object writer, manual REST backfill or new project.
+  note: |-
+    Silas, 2026-10-12 PT: preserve one unique self-consistent daily dream vibe, then separately create two Zuzu-world locations, two characters, two rewards (ITEM/SKILL), and two consequential moral-choice scenarios, each attributed to zuzu-gamebook or emperor-of-dust. Mostly use Illustrious and Arthemy checkpoints; Emperor requires its own stable vibe pitch. Full requirements and historical compatibility/cutover instructions: projects/dream-cycle/ZUZU-DAILY-CREATIVE-CONTRACT.md. Update proposal schema, author and validators, builder, Facet attachment, nine idempotent ArtJobs, digest/art evidence, creative checks, remaster tools and unit/CI contracts atomically. The current six-asset pipeline must remain healthy and should NOT be called migrated or finished before CI verifies complete nine-record and nine-ArtJob builds without mixing unrelated vibe with Zuzu canon. No new object writer, manual REST backfill or new project.
+
+    In-progress migration: corrected and validated the 14-asset contract. The original six linked Daily Dream outputs stay; add eight unlinked Zuzu-world assets with project/checkpoint/choices validation. The old live builder fails closed on v3 until all writer, Facet, art, digest and rollback paths migrate together. This PR is a safe preparatory slice; t-037 remains unfinished and must return to ready after merge.
   owner: worker
   claimed_by: 2026-10-12T221800Z-dream-cycle-t037-q8v2
   claimed_at: '2026-10-12T22:18:00Z'
-  updated: '2026-10-12T22:18:00Z'
+  updated: '2026-10-12T22:46:00Z'
