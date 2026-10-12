@@ -47,7 +47,7 @@ def example_v3():
         bundle_version=3, title="A Lantern for Nobody",
         slug="a-lantern-for-nobody",
         idea="An original daily Dream about a strange new home.",
-        vibe={"title": "Tomorrow's Elsewhere", "line": "A home appears only when needed.",
+        vibe={"title": "Tomorrow's Elsewhere", "line": "A home appears at the edge of a forgotten road.",
               "art_direction": "Bright prismatic towers and sharp clear sunlight."},
         locations=[dict(loc, title="Mirror Orchard")],
         characters=[dict(ch, name="The Faceted Gardener")],
