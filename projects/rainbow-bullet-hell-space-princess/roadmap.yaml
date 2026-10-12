@@ -252,3 +252,16 @@ tasks:
       Await Silas's explicit approval for the public /play and Arcade
       cabinet, outward-facing promotion/deployment, and separate aesthetic
       acceptance. Do not silently mark live when merged to GitHub.
+
+  - id: t-015
+    milestone: m2
+    title: "Prove private flight-deck help and controls through the actual shared cabinet"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Reviewer kaizen after PR #3563: add a browser fixture using the actual
+      shared ArcadeCabinet and Admin tab help renderer at phone/tablet/desktop
+      widths; verify visible tutorial text, keyboard/gamepad pause/remapping and
+      independent seated inputs. Keep private routes and scores excluded from
+      public discovery. Local isolated engine pixels are not this integration proof.
