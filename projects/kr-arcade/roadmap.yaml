@@ -1088,11 +1088,11 @@ tasks:
   - id: t-054
     milestone: m8
     title: "Kindness Gauntlet depth slice 4: The Core and the modes"
-    status: claimed
+    status: done
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-11T22:59:30Z'
-    updated: '2026-10-11T22:59:30Z'
+    updated: '2026-10-12T05:19:16Z'
     passes: 0
     stakes: reversible
     depends_on: t-053
@@ -1103,6 +1103,14 @@ tasks:
       top applies. Code: kind_robots utils/arcade/games/ (registry slug kindness-gauntlet). Silas, 2026-10-11:
       "I need an assessment done of the other arcade games. I want the same level of quality improvements,
       they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Merged as kind_robots#3561: the Core (floors 33-40), the Old Mainframe finale in three
+      phases, the plain and true endings, Descent, Reboot (New Game+), the Endless Archive,
+      Lost & Found, Score Duel and the medal board. A save review before merge found that
+      quitting during the credits lost the clear and the Reboot unlock; the fix records the
+      clear as the ending starts and keeps the Endless best depth per floor, with round-trip
+      tests. Kindness Gauntlet's m8 depth pass is complete.
+    implementation_pr: 'silasfelinus/kind_robots#3561'
 
   - id: t-055
     milestone: m8
