@@ -333,7 +333,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Addressable LED rail and bezel splash shows, sound, DMD animations, camera"
-    status: claimed
+    status: done
     depends_on: t-008
     owner: worker
     passes: 0
@@ -344,9 +344,26 @@ tasks:
       mixing and camera sweeps that never impair flipper response.
       Provide static camera and reduced-motion settings. Add Croc mouth
       arming/capture/death-roll/spit cues, DMD and multiball callouts.
+
+      2026-10-12 PT: landed in three merged kind_robots PRs. #3568 (squash d54dd2d): 96-LED
+      addressable rail round the cabinet, each mode in the brief's colour (amber Harvest, cyan
+      Storm with restrained white lightning, gold Last Bell with a red comet, violet crypt,
+      teal Watering Hole, a colour per chapter), ball-save ends, River Croc cues on his own
+      LEDs (open glow, capture flare, alternating red death roll, white spit, rising), tilt
+      dark, every flash at most 3 Hz, reduced motion holds still; engine TableDef.ledRail +
+      ruleset.leds, one instanced draw call. #3570 (squash 69266fc): per-table DMD attract
+      pages (Zuzu had been showing KIND PINBALL): ZUZU type-on, THE LAST BELL, a Croc jaws
+      picture page, high score counting up; NEW HIGH SCORE game over; music bus ducks to 35%
+      under every callout. #3573 (squash 4b53191): camera sweeps (shooter lane while the ball
+      waits, pulled back in multiball), each framing the whole playfield so the flippers never
+      leave the screen, debounced 45 ticks; a cabinet Camera moves/still switch, saved,
+      defaulting to still under prefers-reduced-motion, cutting instead of panning; a test
+      proves physics identical tick for tick either way. Not done here and moved to t-017: the
+      insert light-map editor and cabinet border art.
     claimed_by: 20261012T041500Z-zuzu-t012-show-p4n7
     claimed_at: '2026-10-12T04:10:56Z'
-    updated: '2026-10-12T04:10:56Z'
+    updated: '2026-10-12T05:28:24Z'
+    implementation_pr: 'silasfelinus/kind_robots#3573'
   - id: t-013
     milestone: m5
     title: "Run physics/rules soaks, input accessibility and cross-device performance QA"
