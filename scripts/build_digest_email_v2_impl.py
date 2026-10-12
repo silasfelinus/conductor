@@ -283,12 +283,28 @@ def proposal_section(
             f'these renders belong in the next cycle’s art-rich section.</p>'
         ) if assets else ""
 
+    # Show the existing linked mini-world intact instead of interleaving its
+    # coherent vibe cards with the unrelated Zuzu project production cards.
+    zuzu_assets = [asset for asset in assets if asset.get("lane") == "zuzu"]
+    if zuzu_assets:
+        dream_assets = [asset for asset in assets if asset.get("lane") != "zuzu"]
+        grid_html = (
+            '<h3 style="margin:18px 0 5px">🌙 Original Daily Dream</h3>'
+            + asset_grid(dream_assets, show_art=show_art)
+            + '<h3 style="margin:18px 0 5px">🐨 Zuzu-world creations</h3>'
+            + '<p style="font-size:12px;color:#475569">'
+            'Additional game assets, not linked to today\'s original Dream.</p>'
+            + asset_grid(zuzu_assets, show_art=show_art)
+        )
+    else:
+        grid_html = asset_grid(assets, show_art=show_art)
+
     return (
         f'<h2 style="margin-bottom:2px">{heading}</h2>'
         f'<p style="font-size:1.15em;color:#2e1065;margin:2px 0"><strong>{title}</strong></p>'
         f'<p style="color:#444;line-height:1.5;margin-top:4px;max-width:100%">{idea}</p>'
         f'{calendar_line}{art_line}{facet_line}{buttons}'
-        f'{asset_grid(assets, show_art=show_art)}'
+        f'{grid_html}'
     )
 
 
