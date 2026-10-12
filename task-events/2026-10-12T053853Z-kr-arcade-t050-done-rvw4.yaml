@@ -1,0 +1,25 @@
+version: 1
+project: kr-arcade
+task: t-050
+operation: done
+updated: '2026-10-12T05:38:53Z'
+verify_pr: silasfelinus/kind_robots#3575
+note: >-
+  Reviewer audited already-merged kind_robots#3575 at 38dc1a0b028a888cf62b0c88c5881c93249428da
+  after reconciling dependency t-049. Complete eight-file diff inspected; all 28 original PR-head
+  checks completed successfully at 2639814ee0a7acf75716b55707d4ab2431078cd5.
+  Independently passed all 19 cabinet suites on current main, including medal/save/endless and
+  both ending paths. Actual canvas menu, empty/populated medal boards and Endless Pond rendered
+  at 390/768/1440 widths without horizontal overflow. Isolated renderer fixtures are not full-site
+  or deployed-runtime verification. Catalog and TALKBACK closeout follows in a focused Conductor PR.
+  No deployment performed; full-campaign pacing remains separately measurable.
+learning:
+  date: '2026-10-11'
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Keep persistent profile awards separate from campaign checkpoints and test quitting through both
+    endings and legacy high-life saves; reconcile merged parent tasks before selecting dependent work.
