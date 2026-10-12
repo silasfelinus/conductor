@@ -56,6 +56,9 @@ Every adult pilot must read as a **person first** in action, dialogue and expres
 - **Connections:** mischievous studio history with Maribel, technical music partnership with Azure, warm unresolved arguments with Solenne over whether music belongs in a cockpit.
 - **Avoid:** reducing queer to flirtation, making her curviness a joke or sexual spectacle, associating punk with carelessness or crime, requiring romance to establish sexuality.
 
+## Mothership relationship: Lilt-7
+**Lilt** (they/them) is the pearl-glass android/alien liaison aboard the *Aurora Mercy*. They are a fifth conversational voice in **every** playthrough, not a fifth selectable pilot. Their independent motivations, humor, secrets and specific relationships to every combination of princesses are canon in [COMMS-AND-ENDINGS-BIBLE.md](COMMS-AND-ENDINGS-BIBLE.md). The four princesses still drive their own decisions and moral dilemmas. Party composition changes actual story reveals and ending cinematic stingers across all 15 nonempty combinations, including four solo campaigns.
+
 ## Canonical interaction beats (writers, voice and animators)
 - **Intro C04:** Maribel is neck-deep in a broken rescue radio, Azure corrects the navigation star chart by hand, Solenne composes a half-bar of harmony before the alarm, and Vivi edits a concert recording into the fleet's launch signal. Introduce **interests before identities are explained**.
 - **S02 Nemi rescue:** Azure initially recommends a direct blast; Solenne calculates risks; Maribel hears the trapped transmission; Vivi improvises a safe synchronized fire rhythm. All four affect the outcome.
