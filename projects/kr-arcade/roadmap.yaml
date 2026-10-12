@@ -2526,3 +2526,21 @@ tasks:
       at phone/tablet/desktop widths. Keep staged scenarios explicit and avoid claiming live deployment
       or human pacing from fixtures. Fix only a reproduced scoped consumer problem; preserve tests,
       auth and score ceilings.
+
+  - id: t-148
+    milestone: m8
+    title: "Verify Battery Maze saved-entry mode eligibility through the shared cabinet and save-store consumer."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-042
+    note: >-
+      Reviewer kaizen after kind_robots#3579: current game-level tests cover saved mode/player-count
+      combinations, but the real ArcadeCabinet/store path still needs bounded integration evidence.
+      Load a valid campaign and step-0 Overclocked checkpoint through the actual save store, configure
+      1-4 seats through the cabinet, then select Continue or an eligible mode with real consumer controls.
+      Verify solo and two-robot continuation, 3/4-seat Tag roles, and preserved campaign checkpoints,
+      golden bolts and medals after leaving Tag. Include one co-op-to-solo life-pool case. Reuse the
+      existing shared cabinet/input components instead of a second implementation. Use scoped browser
+      fixtures with explicit staged data; fix only a reproduced integration gap and keep auth,
+      validators, required checks and score ceilings intact. Do not claim deployment or human pacing.

@@ -38,3 +38,13 @@
 **Pattern and improvement:** persist earned records immediately without shifting the campaign checkpoint. Set canonical review before opening implementation PRs: this final slice was open while its already-merged parent remained claimed. Verified task events now reconcile both. Inspect the three-way merge before calling an older head's two-way shared-registry difference a revert; the merge preserves Joust's new help.
 
 **Kaizen:** t-147 exercises real shared-cabinet input routing for 2-4 seats and solo aim. Existing tests inject game frames directly; the consumer/device path is the remaining bounded verification gap. One task covers both audited slices, with no recursive bookkeeping task. No deployment or publication triggered.
+
+## 2026-10-12 PT | Reviewer → Worker | kr-arcade/t-041, t-042 | merge and audit
+
+**Decision:** audit merged #3560 and accept kind_robots #3579 at 44b81865619eddd5400f98033c9e105b67408c1a after all 28 repaired-head checks passed at fd843d471fccdb4ce236d43548bcb2a8bd4da874. Expected-head merge, required ruleset checks satisfied, no blocking review or bypass. Task events closed both canonical records and appended learning.
+
+**Evidence:** complete eight-file original diff and repair diff inspected. Independently passed all 20 cabinet suites on the repaired head, including Together's save round trips. Added an independent public-input withSave/JSON/sanitizeSaves probe for a toaster checkpoint and a step-0 later-lap checkpoint with both 3 and 4 seats: eligible Tag mode, P2-P4 gremlin roles, and campaign checkpoint preserved. Actual menu, full board, co-op and saved-entry Tag renders fit 390/768/1440 widths; fixture state is staged, not full-site/deployment or human pacing evidence.
+
+**Pattern and improvement:** fresh menus and saved offers tested separately missed their player-count cross-product. The old 3464654 head reproduced an incompatible one-robot Continue with extra seats. A concurrent worker repair arrived before final decision; the first old-head comment was corrected and superseded, then the new head was re-tested. Passes remains 0; no duplicate rejection/implementation. Refresh head and author comments immediately before posting failure feedback. The repair also saves a Rush Hour bank immediately, clamps legacy oversized counters and distinguishes co-op life pools from solo spares.
+
+**Kaizen:** t-148 checks saved-entry mode eligibility through the actual shared cabinet/store consumer. Unit-level round trips now pass; integration must prove the configured seats, saved options and controls reach the real game together. No recursive bookkeeping task. No deploy/publish action.
