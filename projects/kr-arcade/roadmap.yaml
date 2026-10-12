@@ -759,27 +759,22 @@ tasks:
   - id: t-041
     milestone: m8
     title: "Battery Maze depth slice 3: Power Phases 2 and 3, the Overload and the endings"
-    status: claimed
-    owner: worker
+    status: done
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-11T22:41:19Z'
-    updated: '2026-10-11T22:41:19Z'
+    updated: '2026-10-12T08:31:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-040
-    note: >-
-      CABINETS.md section 2, Battery Maze (Pac-Man riff), slice 3 of 4: Power Phases 2 and 3, the Overload and
-      the endings. The upgrade is "The Charging Network". Spec: projects/kr-arcade/depth-pass/CABINETS.md --
-      read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for
-      every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug battery-maze).
-      Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of
-      quality improvements, they should not just be thin veneers of the old games. But newer, better, even
-      more awesome."
+    note: |-
+      CABINETS.md section 2, Battery Maze (Pac-Man riff), slice 3 of 4: Power Phases 2 and 3, the Overload and the endings. The upgrade is "The Charging Network". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug battery-maze). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Reconciled already-merged kind_robots#3560 at c7cc4c1a26478ea2788c649b58ddce9d7cfdbb87. Verified authoritative merge and all 29 completed original-head checks at bc254854c78eb3fbd4861268e8e2d5bc33c80549. Code includes all six boards, three bosses, golden bolts, Battery Garden, both endings and Overclocked. This closes stale bookkeeping and unblocks t-042, whose open #3579 receives a separate full diff/save/input review. Unlimited-life pilot estimates are not evidence of human first-clear duration.
 
   - id: t-042
     milestone: m8
     title: "Battery Maze depth slice 4: Together and versus"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-041
