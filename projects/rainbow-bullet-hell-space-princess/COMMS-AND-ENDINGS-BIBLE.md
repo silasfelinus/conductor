@@ -12,6 +12,10 @@ Every run has living, authored conversation regardless of player count. A persis
 - **Agency:** They can identify safe lanes, warn of telegraphed hazards, save a corrupted distress call, and, once per story, **refuse** a Crown Voice command in favor of a crew member's chosen risk. They cannot override player movement or dictate moral decisions.
 - **Visual/animation tickets:** A-LIAISON-01 (turnaround, bust portrait, neutral/teasing/worried/defiant/laughing expressions, speaking mouth shapes, radio static hologram overlay, original mothership command bay plate), A-CIN-LILT (voluntary reveal, memory-glass repair, alternate ending stingers). Text and subtitles stay in UI, not painted into images.
 
+## Three major conversation beats per Act
+
+**[ACT-STRUCTURE.md](ACT-STRUCTURE.md) is authoritative for pacing and transitions.** The eight campaign regions are presented as Acts in a continuous battle. Each has an **OPEN** scene (new region and stakes), **TURN** (mid-Act or pre-boss revelation/decision), and **AFTER** (boss aftermath and emotional resolution). The finale uses the same three-slot schema for a total of **27 authored major scene slots**. Solo pilots converse with Lilt at all three beats. A boss-to-boss handoff gets a safe, concise aftermath/next-opening bridge, not a forced stage-clear reset; Acts III and V have optional deliberate tableau checkpoints. No important conversation is delivered over a dangerous boss pattern.
+
 ## Conversation architecture: every one of the 15 nonempty pilot combinations
 Stable pilot IDs: **P1 Maribel** (pink), **P2 Azure** (cyan), **P3 Solenne** (gold), **P4 Vivi** (lilac). `partyMask` is a 4-bit set, values 1..15, **independent of seat order**. `P0 Lilt` is always a speaker and is not counted as a player.
 
