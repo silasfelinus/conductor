@@ -7,7 +7,7 @@
 
 ## Production reference
 
-[WORLD-BIBLE.md](WORLD-BIBLE.md) is the stage-by-stage canonical production roster: four pilots, 24 behavior-defined enemies, nine boss fights, twelve upgrades, opening/ending boards, and tracked art tickets. The registry is planned content until individually implemented and verified.
+[WORLD-BIBLE.md](WORLD-BIBLE.md) defines the stage-by-stage production roster and [CAST-BIBLE.md](CAST-BIBLE.md) governs the four full character designs, inclusive casting, relationships and illustration prompts. WORLD-BIBLE.md: four pilots, 24 behavior-defined enemies, nine boss fights, twelve upgrades, opening/ending boards, and tracked art tickets. The registry is planned content until individually implemented and verified.
 
 ## The pitch
 
