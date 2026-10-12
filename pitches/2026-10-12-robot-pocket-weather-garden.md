@@ -1,7 +1,8 @@
 # Pitch: Pocket Weather Garden
 date: 2026-10-12
 project-target: new
-status: awaiting-silas
+status: rejected
+public-ready: false
 
 ## The idea
 A calm idle toy where a tiny robot tends a window garden, and the player taps clouds to bring sun, rain or breeze so seedlings grow into pre-illustrated flowers. Each flower has a short pre-written note, and the collection is saved locally with no accounts.
