@@ -839,7 +839,7 @@ tasks:
 
 - id: t-037
   milestone: m4
-  title: 'Migrate Daily Dream single-writer pipeline to independent vibe plus eight Zuzu-world assets'
+  title: 'Extend linked six-asset Daily Dream with eight unlinked Zuzu-world assets'
   status: review
   passes: 0
   stakes: reversible
@@ -848,6 +848,8 @@ tasks:
     Silas, 2026-10-12 PT: preserve one unique self-consistent daily dream vibe, then separately create two Zuzu-world locations, two characters, two rewards (ITEM/SKILL), and two consequential moral-choice scenarios, each attributed to zuzu-gamebook or emperor-of-dust. Mostly use Illustrious and Arthemy checkpoints; Emperor requires its own stable vibe pitch. Full requirements and historical compatibility/cutover instructions: projects/dream-cycle/ZUZU-DAILY-CREATIVE-CONTRACT.md. Update proposal schema, author and validators, builder, Facet attachment, nine idempotent ArtJobs, digest/art evidence, creative checks, remaster tools and unit/CI contracts atomically. The current six-asset pipeline must remain healthy and should NOT be called migrated or finished before CI verifies complete nine-record and nine-ArtJob builds without mixing unrelated vibe with Zuzu canon. No new object writer, manual REST backfill or new project.
 
     In-progress migration: corrected and validated the 14-asset contract. The original six linked Daily Dream outputs stay; add eight unlinked Zuzu-world assets with project/checkpoint/choices validation. The old live builder fails closed on v3 until all writer, Facet, art, digest and rollback paths migrate together. This PR is a safe preparatory slice; t-037 remains unfinished and must return to ready after merge.
+
+    SUPERSEDING DIRECTION (Silas, 2026-10-12 PT): original random Daily Dream = six assets, five linked to the daily PITCH Dream and all sharing its original visual style. ADD a separate eight-asset Zuzu batch = two locations, two characters, two ITEM/SKILL rewards and two consequential moral-choice scenarios, targeting zuzu-gamebook or emperor-of-dust using Arthemy/Illustrious. Never attach those eight to the random Dream. All 14 plus Facets/ArtJobs/digest/retries must ship atomically before calling this task done. The old nine-asset interpretation in the historical task description above is explicitly revoked.
   owner: worker
   claimed_by: 2026-10-12T221800Z-dream-cycle-t037-q8v2
   claimed_at: '2026-10-12T22:18:00Z'
