@@ -1196,11 +1196,10 @@ tasks:
   - id: t-061
     milestone: m8
     title: "Bumper Bubbles depth slice 3: Wings 5–7"
-    status: review
-    owner: worker
+    status: done
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-12T09:24:15Z'
-    updated: '2026-10-12T13:49:00Z'
+    updated: '2026-10-12T13:49:57Z'
     passes: 0
     stakes: reversible
     depends_on: t-060
@@ -1209,10 +1208,12 @@ tasks:
 
       Reviewed kind_robots#3594 at 0743bd95a0053eba80182276751e883e53a67f9f on October 12 PT: complete 14-file diff, all 30 independent cabinet suites, native renderer and third-pantry save consumer at 390/768/1440 widths. All 28 current-head checks completed successfully, required checks satisfied, no blocking review. Awaiting expected-head merge and verified closeout; no deployment.
 
+      October 12 PT: kind_robots#3594 merged at 88be96280033234491863ef8227f90ce3d70b391 with expected head 0743bd95a0053eba80182276751e883e53a67f9f. All 28 current-head checks completed successfully, required checks satisfied, no blocking review. Independent 30 cabinet suites and native renderer/third-pantry save Continue at 390/768/1440 passed. The earlier done event was consumed as STALE because the review event accidentally carried a future literal timestamp; this clock-observed event follows that timestamp and must be verified applied. Slice 3 only, no deployment or human pacing claim.
+
   - id: t-062
     milestone: m8
     title: "Bumper Bubbles depth slice 4: Wings 8–10 and the endings"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-061
