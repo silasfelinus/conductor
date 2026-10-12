@@ -98,15 +98,17 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Implement recruitable followers, multi-day injuries, rare death and saved campaigns"
-    status: review
+    status: done
     depends_on: t-003
     passes: 0
     stakes: reversible
-    owner: worker
     claimed_by: 2026-10-12T183015Z-emperor-t004-v7c
     claimed_at: '2026-10-12T18:30:15Z'
-    updated: '2026-10-12T18:42:00Z'
-    note: 'Implemented first ten candidate leaders (five starters), gated Prosperity-funded recruiting, next-day arrivals, persistent injury recovery, story-flag-gated rare fatality memorials, defensive save validation, local Pinia storage and targeted contract tests in branch worker/emperor-of-dust-t004-saves-b83 of kind_robots. Gameplay/UI integration and ninety further authored followers remain.'
+    updated: '2026-10-12T18:59:00Z'
+    note: |-
+      Implemented first ten candidate leaders (five starters), gated Prosperity-funded recruiting, next-day arrivals, persistent injury recovery, story-flag-gated rare fatality memorials, defensive save validation, local Pinia storage and targeted contract tests in branch worker/emperor-of-dust-t004-saves-b83 of kind_robots. Gameplay/UI integration and ninety further authored followers remain.
+
+      First ten follower profiles and five starter leaders, gated Prosperity recruitment, one-day arrival, multi-day wound unavailability, explicitly authored and forewarned fatality memorials, defensive versioned local campaign saves and Pinia orchestration. Kind Robots PR #3603 merged as 32e4172007f4daf1bdfeb219611f509b1f01351c after all 29 exact-head GitHub Actions workflows passed. No images rendered, public Play changes, migrations or live deployment. Next: t-015 private map clock.
   - id: t-005
     milestone: m4
     title: "Script full incident graphs Days 001–025"
