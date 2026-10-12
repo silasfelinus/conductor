@@ -672,3 +672,11 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Direction:** A free, no-LLM sliding-tile puzzle toy: solved boards reveal pre-generated Kind Robots art with pre-written captions, a local keepsake wall, and a daily seeded board.
 **Notes:**
 - (your notes)
+
+### emperor-of-dust  (software, autonomous: true)
+**Direction (2026-10-11 PT):** **Emperor of Dust: One Hundred Days**, an independent Zuzu-world prequel strategy game inspired by the broad decision/dispatch style of *This Is the Police* and *Dispatch*. Rule a small wasteland territory through 100 authored days. Assign zero to three scarce followers per incident, sometimes roll uncertain outcomes and often face moral dilemmas. Permanent injury and death, Prosperity-funded recruitment, Popularity, consumable Support Hoard and seven rival factions with interrelated wars shape the kingdom. Poor outcomes open darker, accessible recovery quests rather than an automatic softlock.
+**Notes:**
+- `projects/emperor-of-dust/GAME-BIBLE.md` defines the roster, factions, economy, hidden story tracks and outcomes; `DAY-PLAN.md` has 100 *outlines*, not playable full incident scripts. Do not claim the whole campaign exists.
+- Hollow Bell is inhabited with a genial pragmatic mayor; the eventual Book One tragedy is unresolved in canon. Young Komodo advises. Storm Crows use cunning magic, punk hyena raiders fracture into crews, and the superficially beleaguered swamp witches conceal a dangerous leadership agenda.
+- Start at private `/admin/emperor-of-dust` with a `requiredRole: ADMIN` navigation/tutorial tab. The rendered first pass is only a map-led concept. Public /play launch is a separate hard human gate; no real deployment or runtime playability can be inferred from merging code.
+- Conductor owns coordination; Kind Robots owns Project presentation and `conductorSlug` joins. Follow `worlds/zuzu/README.md` before changing shared canon.
