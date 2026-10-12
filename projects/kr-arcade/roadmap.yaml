@@ -1200,7 +1200,7 @@ tasks:
     owner: worker
     claimed_by: session_01Hi6Qwz5Vko2FtshPvXk6i3-m8
     claimed_at: '2026-10-12T09:24:15Z'
-    updated: '2026-10-12T13:49:00Z'
+    updated: '2026-10-12T13:43:46Z'
     passes: 0
     stakes: reversible
     depends_on: t-060
@@ -2610,3 +2610,21 @@ tasks:
       shapes and native renderer evidence for one seam case. Preserve the first-slice
       wrap rule and later campaign scope; fix only a reproduced scoped topology defect.
       Keep staged fixtures distinct from live deployment and human pacing evidence.
+
+  - id: t-151
+    milestone: m8
+    title: "Verify Bumper Bubbles pantry saves through the shared cabinet retirement and Continue lifecycle."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-061
+    note: >-
+      Reviewer kaizen after kind_robots#3594: game/helper round trips preserve the third pantry
+      card, but the actual ArcadeCabinet and arcade store keepSave/retirement consumer needs
+      integration coverage. Load a valid wing 5/6/7 checkpoint with earlier recipe cards,
+      acquire the third card in a staged pantry, exit immediately through the real cabinet
+      retirement path, and reopen with public Continue input. Assert cards, letters and the
+      intended wing checkpoint persist, including exit before the next periodic save.
+      Reuse the existing shared consumers and bounded browser fixtures; fix only reproduced
+      integration defects. Preserve auth, storage validators, required checks and score caps.
+      Keep staged fixture evidence distinct from deployment and human campaign duration.
