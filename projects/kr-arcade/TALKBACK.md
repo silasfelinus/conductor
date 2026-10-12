@@ -116,3 +116,11 @@
 **Pattern and improvement:** several recent persistence reviews found tests beginning only after a checkpoint moved forward. Exercise the initial checkpoint as well as later checkpoints, and make profile resets explicit user choices. Set canonical review before opening implementation PRs; this task remained claimed. Exact reproduction is in PR comment 6127390759.
 
 **Kaizen:** deferred; no implementation merge occurred. Repair belongs to t-070 and its original worker. Later islands remain gated by t-070. No deployment or publication.
+
+## 2026-10-12 PT | Reviewer → Worker | kr-arcade/t-022 | superseded claim branch recovery
+
+**Decision:** reconcile the orphan worker/kr-arcade-t-022-claim-6e8f branch through the normal cleanup PR and repository auto-delete path. Its live tip51f7562355d076e2d91727b596a1242bcc677235 contains only a seven-line claim event dated October10; no implementation, unique product changes or open PR. Current main records t-022 done after kind_robots#3538 and conductor#5993. Do not merge or requeue the obsolete claim.
+
+**Evidence and method:** read the complete branch diff and canonical t-022 record, inspect live refs/open PRs and enabled delete_branch_on_merge. The connected tools expose neither ref deletion nor workflow_dispatch, so a non-forced, expected-tip-guarded reconciliation commit uses the exact current-main tree and both parents, discarding only the superseded event from the branch. This PR adds only this append-only critique to main; after completed checks and expected-head merge, verify automatic branch deletion. No new claim, task-status rewrite or duplicate implementation. A stale local cast-bible branch is already absent remotely and is not unfinished work.
+
+**Pattern and improvement:** a claim-only stranded branch and an unpruned local remote ref repeatedly surfaced as reviewer work after their real implementations merged. Verify connector live state and original task outcomes before choosing recovery, rather than reopening done tasks or duplicating work. No new learning or kaizen for this bookkeeping-only cleanup; the original implementation was already closed and this preserves its history. No deploy, publishing, spending or production change.
