@@ -172,3 +172,104 @@ def test_old_live_writer_fails_closed_on_unimplemented_v3():
 
     errors = builder._canonical_proposal_errors(example_v3())
     assert any("upgraded single writer" in error for error in errors)
+
+
+def test_fourteen_record_builder_keeps_world_links_separate(monkeypatch):
+    from scripts import build_dream_records as builder
+
+    proposal = example_v3()
+    assert v3.validate_v3(proposal) == []
+    created_bodies = []
+    next_id = 500
+
+    def fake_http(method, url, body=None, timeout=60):
+        nonlocal next_id
+        if method != "POST":
+            raise AssertionError(f"unexpected {method}: {url}")
+        next_id += 1
+        created_bodies.append((url, body, next_id))
+        return 201, {"data": {"id": next_id}}
+
+    monkeypatch.setattr(builder, "http_json", fake_http)
+    built, results, art_entries = builder.build_records(
+        proposal, proposal["slug"], "2026-10-13", dry_run=False
+    )
+    assert all(row["ok"] for row in results)
+    assert built["bundle_version"] == 3
+    assert len(art_entries) == len(built["art"]) == 14
+    assert len({row["request_id"] for row in built["art"]}) == 14
+    assert len(built["records"]["locations"]) == 1
+    assert len(built["records"]["characters"]) == 1
+    assert len(built["records"]["rewards"]) == 2
+    assert len(built["records"]["scenarios"]) == 1
+    assert all(len(built["records"]["zuzu"][key]) == 2 for key in v3.ZUZU_COUNTS)
+
+    world_id = built["records"]["world"]["id"]
+    original_location_id = built["records"]["locations"][0]["id"]
+    zuzu_location_ids = {
+        row["project_target"]: row["id"]
+        for row in built["records"]["zuzu"]["locations"]
+    }
+    relations = [
+        body for url, body, _ in created_bodies
+        if url.endswith("/api/dream-relations")
+    ]
+    assert relations == [{
+        "fromDreamId": world_id,
+        "toDreamId": original_location_id,
+        "relationType": "CONTAINS",
+    }]
+    # Zuzu Characters and Rewards have no linkage to random daily Dream.
+    chars = [body for url, body, _ in created_bodies if url.endswith("/api/characters")]
+    rewards = [body for url, body, _ in created_bodies if url.endswith("/api/rewards")]
+    assert len(chars) == 3 and len(rewards) == 4
+    assert chars[0]["dreamIds"] == [world_id]
+    assert all(row["dreamIds"] == [] for row in chars[1:])
+    assert all(row["dreamIds"] == [world_id] for row in rewards[:2])
+    assert all(row["dreamIds"] == [] for row in rewards[2:])
+    scenarios = [body for url, body, _ in created_bodies if url.endswith("/api/scenarios")]
+    assert len(scenarios) == 3
+    assert scenarios[0]["dreamIds"] == [world_id, original_location_id]
+    assert all(world_id not in row["dreamIds"] for row in scenarios[1:])
+    assert {row["dreamIds"][0] for row in scenarios[1:]} == set(zuzu_location_ids.values())
+    assert all("Choices:" in row["description"] for row in scenarios[1:])
+    extras = [row for row in built["art"] if row.get("project_target")]
+    assert len(extras) == 8
+    assert all(row["checkpoint_family"] in ("arthemy", "illustrious") for row in extras)
+    assert len([e for e in art_entries if "engine: sdxl-checkpoint" in e]) == 8
+    assert len([e for e in art_entries if "engine: sdxl-checkpoint" not in e]) == 6
+    # Project attribution survives in generated metadata and ArtJob requests.
+    assert all("  project_target: " in e and "  checkpoint_family: " in e
+               for e in art_entries if "engine: sdxl-checkpoint" in e)
+
+
+def test_v3_partial_transaction_can_rollback_all_fourteen(monkeypatch):
+    from scripts import build_dream_records as builder
+
+    proposal = example_v3()
+    next_id = 900
+    deleted = []
+
+    def fake_http(method, url, body=None, timeout=60):
+        nonlocal next_id
+        if method == "DELETE":
+            deleted.append(url)
+            return 200, {"success": True}
+        if method != "POST":
+            raise AssertionError(method)
+        next_id += 1
+        if url.endswith("/api/scenarios") and "The Winter Claim" in str(body):
+            return 503, {"message": "transient database outage"}
+        return 201, {"data": {"id": next_id}}
+
+    monkeypatch.setattr(builder, "http_json", fake_http)
+    _, results, art = builder.build_records(
+        proposal, proposal["slug"], "2026-10-13", dry_run=False
+    )
+    assert len(art) == 14
+    assert any(not row["ok"] for row in results)
+    successful_rows = [
+        row for row in results if row["ok"] and row["created"] and row["id"]
+    ]
+    assert builder.rollback_created(results) > 0
+    assert len(deleted) == len(successful_rows)
