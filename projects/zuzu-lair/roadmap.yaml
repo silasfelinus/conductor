@@ -214,7 +214,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Leaderboard and arcade hall tile"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -224,9 +224,15 @@ tasks:
       check (a maxPlausibleScore entry the API reads) and keep the per-browser fallback board. Add a
       special cabinet tile in the Arcade hall linking to /play/zuzu-lair (Silas: "yes on arcade
       cabinet", t-002).
+
+      2026-10-12: kind_robots#3601 merged. zuzu-lair registered in LINKED_GAMES (hall tile ->
+      /play/zuzu-lair, score API plausibility 100,000, hall of fame); contract test
+      verifyZuzuLairArcade wired into test:zuzu-lair. Title art is a Showdown placeholder
+      until Lair art exists.
     claimed_by: 2026-10-11T210718Z-zuzu-lair-t009-gpt6-r8p3
     claimed_at: '2026-10-11T21:07:18Z'
-    updated: '2026-10-11T21:07:18Z'
+    updated: '2026-10-12T14:13:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#3601'
 
   - id: t-010
     milestone: m3
