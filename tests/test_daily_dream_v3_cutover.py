@@ -78,7 +78,7 @@ def test_author_includes_full_v3_system_instructions_and_provenance(monkeypatch)
     assert out["bundle_version"] == 3
     assert v3.validate_v3(out) == []
     assert "FOURTEEN ASSETS TOTAL" in seen["system"]
-    assert "eight" in seen["system"].lower() or "EIGHT" in seen["system"]
+    assert "zuzu_assets" in seen["system"]
     assert "zuzu_scenario_1" in seen["prompt"]
     assert [r["project_target"] for r in out["zuzu_assets"]["locations"]] == [
         "zuzu-gamebook", "emperor-of-dust"
