@@ -304,7 +304,7 @@ def test_approved_expansion_is_roadmap_handoff_and_stops_after_source_marker(rep
     assert "DO NOT run intake.py" in out
     assert "python scripts/intake.py idea-0" not in out
     roadmap = repo / "projects" / "existing-project" / "roadmap.yaml"
-    roadmap.write_text("tasks:\\n- id: t-101\\n  source_pitch: pitches/" + date + "-idea-0.md\\n")
+    roadmap.write_text("tasks:\n- id: t-101\n  source_pitch: pitches/" + date + "-idea-0.md\n")
     capsys.readouterr()
     dp.cmd_approved()
     assert f"{date}-idea-0" not in capsys.readouterr().out
