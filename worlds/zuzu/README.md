@@ -52,7 +52,7 @@ still owns its own code, assets, decisions and human publication gate.
 ## Complete asset and animation inventory
 
 The previous six curated ArtImage anchors were **not a full inventory**. This directory
-now indexes **2210 distinct completed ArtImage IDs and 2466 distinct ArtJob IDs from 33
+now indexes **2605 distinct completed ArtImage IDs and 2861 distinct ArtJob IDs from 37
 Conductor art-generation ledgers**, with original ledger file, subject key, entity,
 job IDs and recorded output status. These are *recorded* DONE results, **not a
 live Kind Robots database/URL verification**, and include concept attempts and

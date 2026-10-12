@@ -442,6 +442,14 @@ tasks:
       ROUND-14 recomposes the 17 Zuzu ensembles, the 16 other flags and the 4 stand-ins; ROUND-15 (94 jobs from 37195)
       redraws the 47 sister/toddler/coyote/abbess plates with their LoRAs, kept only where better. The
       t-006 dependency is dropped: t-006's last four stand-ins are now redrawn here (ROUND-14), so t-012 no longer waits on it.
+      REVIEW 13-15 (12 Oct): every redraw judged against the live plate. ROUND-13 kept 77 of 85 Zuzu-alone redraws
+      (the zuzukoala LoRA puts him on-model: koala face, kasa, zigzag poncho, one katana); ROUND-14 kept 29 of 37
+      recompositions, including the last four stand-ins (a1-two-shadows, a4-well-battle, a8-fire-cells, a8-fire-altar);
+      ROUND-15 kept 1 of 47 (the abbess LoRA gives human faces even alone in a scene, and the sister/toddler pair swaps
+      outfits, so those live plates stay). 107 plates replaced. Rejects: tails and high heels on Zuzu, a modern paved
+      road, fusion with a second figure, drowned-body and urination reads. ROUND-16 takes the 18 still left (two
+      stand-ins found by the sweep, a2-bell-view and a4-bloom, plus the live plates whose candidates all failed); the
+      LoRA negative now carries tail, high heels and asphalt road.
 
       2026-10-11: the character LoRAs exist (comic-creator/t-016 done). Any ledger with `series: zuzu-koala-assassin`
       (every art/ROUND-*.yaml here) now gets them by default from enqueue_art_requests.py: each subject carries the
