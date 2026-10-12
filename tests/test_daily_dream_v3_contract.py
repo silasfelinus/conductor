@@ -273,3 +273,50 @@ def test_v3_partial_transaction_can_rollback_all_fourteen(monkeypatch):
     ]
     assert builder.rollback_created(results) > 0
     assert len(deleted) == len(successful_rows)
+
+
+def test_v3_facet_targets_are_fourteen_and_do_not_cross_link(monkeypatch):
+    from scripts import build_dream_records as builder
+    from scripts import apply_daily_dream_facets as facets
+
+    p = example_v3()
+    next_id = 1600
+
+    def fake_api(method, url, body=None, timeout=60):
+        nonlocal next_id
+        next_id += 1
+        return 201, {"data": {"id": next_id}}
+
+    monkeypatch.setattr(builder, "http_json", fake_api)
+    built, results, art = builder.build_records(p, p["slug"], "2026-10-13", False)
+    assert all(row["ok"] for row in results)
+    targets = facets._record_targets(p, built)
+    assert len(targets) == 14
+    assert len({(t["model"], t["record_id"]) for t in targets}) == 14
+    assert {t["element"] for t in targets} == set(v3.FACET_SLOTS)
+    assert all(t["facets"] == p["seed_facets"]["elements"][t["element"]]
+               for t in targets)
+
+
+def test_v3_digest_has_separated_original_and_zuzu_assets():
+    from scripts import build_digest_email_v2_impl as email
+    from scripts import enrich_daily_dream_digest_impl as digest
+
+    p = example_v3()
+    bundle = {
+        "data": p,
+        "built": {"bundle_version": 3, "records": {}, "art": []},
+    }
+    assets = digest._asset_rows(bundle, probe_images=False)
+    assert len(assets) == 14
+    assert sum(asset["lane"] == "dream" for asset in assets) == 6
+    assert sum(asset["lane"] == "zuzu" for asset in assets) == 8
+    assert all(asset["label"].startswith(("Zuzu Gamebook", "Emperor of Dust"))
+               for asset in assets if asset["lane"] == "zuzu")
+    html = email.proposal_section("x", {
+        "title": p["title"], "idea": p["idea"], "assets": assets,
+    })
+    assert "Original Daily Dream" in html
+    assert "Zuzu-world creations" in html
+    assert "not linked to today" in html
+    assert html.index("Original Daily Dream") < html.index("Zuzu-world creations")
