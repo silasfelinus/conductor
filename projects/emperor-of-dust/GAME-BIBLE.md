@@ -50,14 +50,18 @@ Tension between *pairs* of factions drives timed raids, relief agreements, spies
 
 - **Young Komodo:** concerned court adviser, incisive and often comically specific about the price of a promise.
 - **Mara Reedbell:** Hollow Bell mayor, smiling until the ledger closes.
-- **Rook Bramble:** hare outrider; scouting 4, diplomacy 1; still owes a raider a favor.
-- **Saffron Kett:** hyena machinist; crafting 4, stealth 2; old pack loyalties.
-- **Wisp Fen:** heron field medic; healing 4, lore 2; has seen swamp rituals.
-- **Duchess Flint:** tortoise mediator; diplomacy 4, defense 2; refuses to use people as expendable resources.
-- **Nera Gale:** Storm Crow dissident; weather 4, lore 3; bargains to save lives.
-- **Ash Quill:** fox courier; speed 4, observation 2; seeking a vanished sibling.
-- **Bram Coil:** buffalo quartermaster; defense 4, crafting 2; ration fairness is his obsession.
-- **Pip Thread:** moth archivist; investigation 4, diplomacy 1; would rather lose the palace than burn a record.
+- **Rook Bramble:** hare outrider, 3/2/4; tracks roads and owes a raider a favor.
+- **Saffron Kett:** hyena machinist, 3/1/5; builds infrastructure while confronting old pack loyalties.
+- **Wisp Fen:** heron field medic, 1/3/5; works to keep care independent of dangerous patrons.
+- **Duchess Flint:** tortoise mediator, 2/5/3; refuses to use people as expendable resources.
+- **Nera Gale:** Storm Crow dissident, 2/4/5; bargains to save lives without selling the rain.
+- **Ash Quill:** fox courier, 3/3/4; seeking a vanished sibling.
+- **Bram Coil:** buffalo quartermaster, 5/2/3; ration fairness is his obsession.
+- **Pip Thread:** moth archivist, 1/4/5; would rather lose the palace than burn a record.
+- **Keel Understone:** mole surveyor, 2/4/5; challenges the emperor over water and tunnels.
+- **Lumen Shale:** mole organizer, 1/5/4; insists reconciliation requires real reforms.
+
+**See [FOLLOWERS-PILOT-01.md](FOLLOWERS-PILOT-01.md)** for the first ten individual bios, faction ties, stats and three-image art briefs. Each is a provisional concept, not yet a playable follower or delivered artwork.
 
 All characters require personal arcs, rivalries, injury expressions, clear silhouettes and visual references. The **three-image baseline** is healthy roster portrait, injured roster portrait, and larger splash scene, totaling **300 baseline assets for 100 authored followers**, with optional emotion/story variants added incrementally up to a planning ceiling of **20 images per follower**. Mix gender presentation, body type, age, background and temperament organically; avoid species-coded character stats.
 
