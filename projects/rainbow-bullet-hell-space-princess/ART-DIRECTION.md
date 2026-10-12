@@ -10,6 +10,10 @@ The character art **must** follow [CAST-BIBLE.md](CAST-BIBLE.md). Four adult pri
 
 **All four get equivalent production treatment:** front/side/back turnaround, expression atlas, cockpit portrait, off-duty portrait, interaction beat and group scene. Reference character face/silhouette via named ID, never infer their appearance from ship colors alone. Match their ships with P1–P4 identifiers and retain non-color HUD glyphs.
 
+## Seamless Act transitions
+
+Art direction follows [ACT-STRUCTURE.md](ACT-STRUCTURE.md): eight visually distinct Acts that blend into one continuous scrolling journey. Produce environment-to-environment parallax morphs, safe boss-aftermath rescue vignettes, Act title treatments and optional quiet tableau backgrounds after Acts III and V. Every Act has OPEN, TURN and AFTER story moments with flexible holographic portraits, not mandatory full-screen blocking dialogue. Preserve combat readability and keep all UI text separate from painted images.
+
 ## Mission control portraits and cinematics
 
 The always-present mothership liaison **Lilt-7** is an original pearl-glass alien-influenced synthetic person with a calm androgynous silhouette, luminous filaments, warm gold eyes and expressive crack across one cheek. Build a reusable comms hologram and six distinct expression/gesture states; no generic voice-assistant icon. Preserve Captain Purl as the training mentor and Professor Opal as engineer. The art system must support a single-pilot exchange with Lilt and up to four individual princess portraits without shrinking combat visibility. Plan conditional ending illustration layers for all 15 pilot sets rather than an identical ending with swapped names. See COMMS-AND-ENDINGS-BIBLE.md.
