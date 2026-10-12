@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-"""Pure, network-free creative contract for the next Daily Dream bundle.
+"""Pure, network-free contract for a future 14-asset Daily Dream build.
 
-This module deliberately does NOT create Kind Robots objects or ArtJobs.
-The v2 transaction remains the only live writer until its v3 replacement is
-fully integrated and CI verifies every nine-record / nine-art boundary.
-
-Version 3 contains one independent daily vibe and eight Zuzu-world assets,
-explicitly divided between Zuzu Gamebook and Emperor of Dust. Historical v2
-proposals are not migrated, reinterpreted or modified by this module.
+Keep the ORIGINAL six-asset Daily Dream as one connected, styled mini-world.
+Add a separate eight-asset Zuzu allocation with no relations to that Dream.
+This only validates future drafts and creates a deterministic manifest: it
+does NOT create Kind Robots rows or ArtJobs or activate the v3 build path.
 """
 from __future__ import annotations
 
@@ -17,25 +14,24 @@ from typing import Any
 BUNDLE_VERSION = 3
 PROJECT_TARGETS = ("zuzu-gamebook", "emperor-of-dust")
 CHECKPOINT_FAMILIES = ("arthemy", "illustrious")
-KIND_SLOTS = (
-    ("vibe", None),
-    ("location_1", "locations"),
-    ("location_2", "locations"),
-    ("character_1", "characters"),
-    ("character_2", "characters"),
-    ("reward_item", "rewards"),
-    ("reward_skill", "rewards"),
-    ("scenario_1", "scenarios"),
-    ("scenario_2", "scenarios"),
+
+DREAM_SLOTS = ("vibe", "location", "character", "reward_item", "reward_skill", "scenario")
+ZUZU_SLOTS = (
+    "zuzu_location_1", "zuzu_location_2",
+    "zuzu_character_1", "zuzu_character_2",
+    "zuzu_reward_item", "zuzu_reward_skill",
+    "zuzu_scenario_1", "zuzu_scenario_2",
 )
-FACET_SLOTS = tuple(slot for slot, _ in KIND_SLOTS)
-EXPECTED_COUNTS = {"locations": 2, "characters": 2, "rewards": 2, "scenarios": 2}
+FACET_SLOTS = DREAM_SLOTS + ZUZU_SLOTS
+DREAM_COUNTS = {"locations": 1, "characters": 1, "rewards": 2, "scenarios": 1}
+ZUZU_COUNTS = {"locations": 2, "characters": 2, "rewards": 2, "scenarios": 2}
 COPY_FIELDS = {
     "locations": ("title", "known_for", "local_rule", "best_scene", "art_direction"),
     "characters": ("name", "role_drive", "carries", "complication", "look"),
     "rewards": ("name", "reward_type", "rarity", "grants", "best_used_when", "catch", "look"),
     "scenarios": ("title", "setup"),
 }
+TITLE_FIELD = {"locations": "title", "characters": "name", "rewards": "name", "scenarios": "title"}
 REWARD_TYPES = ("ITEM", "SKILL")
 
 
@@ -43,22 +39,20 @@ REWARD_TYPES = ("ITEM", "SKILL")
 class BundleAsset:
     slot: str
     kind: str
+    lane: str
+    linked_to_vibe: bool
     project_target: str | None
     checkpoint_family: str | None
     title: str
-
-    @property
-    def is_independent(self) -> bool:
-        return self.project_target is None
 
 
 def _present(value: Any) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
-def _rows(proposal: dict[str, Any], kind: str) -> list[dict[str, Any]]:
-    rows = proposal.get(kind)
-    return rows if isinstance(rows, list) else []
+def _rows(parent: dict[str, Any], kind: str) -> list[Any]:
+    value = parent.get(kind)
+    return value if isinstance(value, list) else []
 
 
 def _target(row: dict[str, Any]) -> str:
@@ -69,45 +63,45 @@ def _checkpoint(row: dict[str, Any]) -> str:
     return str(row.get("checkpoint_family") or "").strip().lower()
 
 
-def asset_manifest(proposal: dict[str, Any]) -> list[BundleAsset]:
-    """Stable nine-slot plan consumed by eventual builder, Facets, art and digest.
+def _slot(kind: str, index: int, row: dict[str, Any], lane: str) -> str:
+    prefix = "zuzu_" if lane == "zuzu" else ""
+    if kind == "rewards":
+        return prefix + "reward_" + str(row.get("reward_type") or "").lower()
+    return prefix + kind[:-1] + (f"_{index}" if lane == "zuzu" else "")
 
-    The vibe is NEVER a parent/project for the other eight assets. The manifest
-    carries attribution but does not fabricate an unsupported database foreign key.
-    The caller must run validate_v3() before trusting this manifest.
+
+def asset_manifest(proposal: dict[str, Any]) -> list[BundleAsset]:
+    """Stable 14-asset assignment for the eventual single transactional writer.
+
+    Vibe is the Dream root, its five satellite records are linked to the world,
+    and NONE of the eight Zuzu assets link to the unrelated daily world.
+    Do not trust the manifest until validate_v3(proposal) returns no errors.
     """
-    result: list[BundleAsset] = []
-    vibe = proposal.get("vibe") or {}
-    result.append(BundleAsset("vibe", "vibe", None, None, str(vibe.get("title") or "")))
-    for kind, prefix, title_field in (
-        ("locations", "location", "title"),
-        ("characters", "character", "name"),
-        ("rewards", "reward", "name"),
-        ("scenarios", "scenario", "title"),
-    ):
-        for index, row in enumerate(_rows(proposal, kind), start=1):
-            if not isinstance(row, dict):
-                continue
-            slot = (
-                f"reward_{str(row.get('reward_type') or '').lower()}"
-                if kind == "rewards" else f"{prefix}_{index}"
-            )
-            result.append(
-                BundleAsset(
-                    slot, kind, _target(row), _checkpoint(row),
-                    str(row.get(title_field) or ""),
+    vibe = proposal.get("vibe")
+    title = str(vibe.get("title") or "") if isinstance(vibe, dict) else ""
+    result = [BundleAsset("vibe", "vibe", "dream", False, None, None, title)]
+    zuzu = proposal.get("zuzu_assets")
+    for lane, source in (("dream", proposal), ("zuzu", zuzu if isinstance(zuzu, dict) else {})):
+        for kind in ZUZU_COUNTS:
+            for index, row in enumerate(_rows(source, kind), start=1):
+                if not isinstance(row, dict):
+                    continue
+                result.append(
+                    BundleAsset(
+                        slot=_slot(kind, index, row, lane),
+                        kind=kind,
+                        lane=lane,
+                        linked_to_vibe=(lane == "dream"),
+                        project_target=_target(row) if lane == "zuzu" else None,
+                        checkpoint_family=_checkpoint(row) if lane == "zuzu" else None,
+                        title=str(row.get(TITLE_FIELD[kind]) or ""),
+                    )
                 )
-            )
     return result
 
 
 def validate_v3(proposal: Any) -> list[str]:
-    """Validate explicit ownership, independent vibe and meaningful moral choices.
-
-    In particular, every content category contributes one asset to EACH Zuzu
-    project. A pitch cannot silently route all its characters to one game and
-    leave the other with no daily material.
-    """
+    """Reject wrong counts, cross-lane links and choice-free Zuzu scenarios."""
     if not isinstance(proposal, dict):
         return ["proposal must be an object"]
     errors: list[str] = []
@@ -119,26 +113,28 @@ def validate_v3(proposal: Any) -> list[str]:
 
     vibe = proposal.get("vibe")
     if not isinstance(vibe, dict):
-        errors.append("one independent vibe is required")
+        errors.append("one original daily vibe is required")
     else:
         for field in ("title", "line", "art_direction"):
             if not _present(vibe.get(field)):
                 errors.append(f"vibe missing {field}")
-        if vibe.get("project_target"):
-            errors.append("independent vibe must not target a Zuzu project")
-        if vibe.get("checkpoint_family"):
-            errors.append("independent vibe must not inherit a Zuzu checkpoint family")
+        if vibe.get("project_target") or vibe.get("checkpoint_family"):
+            errors.append("daily vibe must retain its original art identity, not a Zuzu project style")
 
-    seeds = proposal.get("seed_facets")
+    dream = proposal
+    zuzu = proposal.get("zuzu_assets")
+    if not isinstance(zuzu, dict):
+        errors.append("zuzu_assets must be a separate object")
+        zuzu = {}
+
+    seed = proposal.get("seed_facets")
     try:
-        seed_version = int(seeds.get("version") or 0) if isinstance(seeds, dict) else 0
-    except (TypeError, ValueError):
-        seed_version = 0
-    if seed_version < 3:
+        version = int(seed.get("version") or 0) if isinstance(seed, dict) else 0
+    except (ValueError, TypeError):
+        version = 0
+    if version < 3:
         errors.append("seed_facets.version must be at least 3")
-        elements = {}
-    else:
-        elements = seeds.get("elements")
+    elements = seed.get("elements") if isinstance(seed, dict) else None
     if not isinstance(elements, dict):
         errors.append("seed_facets.elements must be an object")
         elements = {}
@@ -152,52 +148,78 @@ def validate_v3(proposal: Any) -> list[str]:
             or not (_present(f.get("slug")) or isinstance(f.get("id"), int))
             for f in facets
         ):
-            errors.append(f"seed_facets.elements.{slot} contains an invalid Facet")
-    # No subordinate asset inherits the daily vibe's umbrella. Deliberate
-    # project-specific editorial briefs remain separate from the independent vibe.
-    if isinstance(seeds, dict) and seeds.get("link_zuzu_to_vibe", False):
-        errors.append("Zuzu objects must not be linked to the independent vibe")
+            errors.append(f"seed_facets.elements.{slot} contains invalid Facets")
 
-    for kind, expected in EXPECTED_COUNTS.items():
-        actual = len(_rows(proposal, kind))
-        if actual != expected:
-            errors.append(f"{kind} has {actual}; expected exactly {expected}")
-            continue
-        project_owners: list[str] = []
-        for index, row in enumerate(_rows(proposal, kind)):
-            where = f"{kind}[{index}]"
-            if not isinstance(row, dict):
-                errors.append(f"{where} must be an object")
+    if isinstance(seed, dict) and seed.get("link_zuzu_to_vibe"):
+        errors.append("Zuzu extras must not be linked to the daily vibe")
+    if zuzu.get("world_dream_id") or zuzu.get("dream_id") or zuzu.get("dreamIds"):
+        errors.append("Zuzu extras must not inherit daily vibe Dream relations")
+
+    for lane, source, expected in (
+        ("dream", dream, DREAM_COUNTS), ("zuzu", zuzu, ZUZU_COUNTS)
+    ):
+        for kind, count in expected.items():
+            rows = _rows(source, kind)
+            if len(rows) != count:
+                errors.append(f"{lane}.{kind} has {len(rows)}; expected exactly {count}")
                 continue
-            for field in COPY_FIELDS[kind]:
-                if not _present(row.get(field)):
-                    errors.append(f"{where} missing {field}")
-            owner = _target(row)
-            project_owners.append(owner)
-            if owner not in PROJECT_TARGETS:
-                errors.append(f"{where} must target zuzu-gamebook or emperor-of-dust")
-            if _checkpoint(row) not in CHECKPOINT_FAMILIES:
-                errors.append(f"{where} must use an Illustrious or Arthemy checkpoint family")
-        if sorted(project_owners) != sorted(PROJECT_TARGETS):
-            errors.append(f"{kind} must contain exactly one asset per Zuzu project")
+            owners: list[str] = []
+            for index, row in enumerate(rows):
+                where = f"{lane}.{kind}[{index}]"
+                if not isinstance(row, dict):
+                    errors.append(f"{where} must be an object")
+                    continue
+                for field in COPY_FIELDS[kind]:
+                    if not _present(row.get(field)):
+                        errors.append(f"{where} missing {field}")
+                if lane == "dream":
+                    if row.get("project_target") or row.get("checkpoint_family"):
+                        errors.append(f"{where} must inherit the daily vibe's art style, not Zuzu")
+                    if row.get("linked_to_vibe") is False:
+                        errors.append(f"{where} must link to the daily vibe")
+                else:
+                    owner = _target(row)
+                    owners.append(owner)
+                    if owner not in PROJECT_TARGETS:
+                        errors.append(f"{where} must target zuzu-gamebook or emperor-of-dust")
+                    if _checkpoint(row) not in CHECKPOINT_FAMILIES:
+                        errors.append(f"{where} must use Arthemy or Illustrious")
+                    if row.get("linked_to_vibe") or row.get("dreamIds"):
+                        errors.append(f"{where} must not link to the daily vibe")
+            if lane == "zuzu" and sorted(owners) != sorted(PROJECT_TARGETS):
+                errors.append(f"zuzu.{kind} must give exactly one asset to each project")
+            if kind == "rewards":
+                types = sorted(
+                    str(row.get("reward_type") or "").upper()
+                    for row in rows if isinstance(row, dict)
+                )
+                if types != sorted(REWARD_TYPES):
+                    errors.append(f"{lane}.rewards need one ITEM and one SKILL")
 
-    rewards = _rows(proposal, "rewards")
-    if len(rewards) == 2 and sorted(
-        str(row.get("reward_type") or "").upper()
-        for row in rewards if isinstance(row, dict)
-    ) != sorted(REWARD_TYPES):
-        errors.append("rewards must contain one ITEM and one SKILL")
-    for index, row in enumerate(_rows(proposal, "scenarios")):
+    # The original Daily Dream scene is part of its coherent mini-world.
+    original_scenes = _rows(dream, "scenarios")
+    if len(original_scenes) == 1 and isinstance(original_scenes[0], dict) and isinstance(vibe, dict):
+        setup = str(original_scenes[0].get("setup") or "").casefold()
+        named = (vibe.get("title"),)
+        for source, field in (("locations", "title"), ("characters", "name")):
+            rows = _rows(dream, source)
+            if rows and isinstance(rows[0], dict):
+                named += (rows[0].get(field),)
+        for name in named:
+            if _present(name) and str(name).casefold() not in setup:
+                errors.append(f"dream scenario must reference the linked vibe/location/character: {name}")
+
+    for i, row in enumerate(_rows(zuzu, "scenarios")):
         if not isinstance(row, dict):
             continue
-        where = f"scenarios[{index}]"
+        where = f"zuzu.scenarios[{i}]"
         choices = row.get("choices")
         if not isinstance(choices, list) or len(choices) < 2:
             errors.append(f"{where} needs at least two moral choices")
             continue
         labels: list[str] = []
-        for choice_index, choice in enumerate(choices):
-            label = f"{where}.choices[{choice_index}]"
+        for j, choice in enumerate(choices):
+            label = f"{where}.choices[{j}]"
             if not isinstance(choice, dict):
                 errors.append(f"{label} must be an object")
                 continue
@@ -206,11 +228,15 @@ def validate_v3(proposal: Any) -> list[str]:
                     errors.append(f"{label} missing {field}")
             labels.append(str(choice.get("label") or "").strip().casefold())
         if len(set(labels)) != len(labels):
-            errors.append(f"{where} moral choice labels must be distinct")
+            errors.append(f"{where} choice labels must be distinct")
 
     if proposal.get("narrator"):
-        errors.append("Daily Dream proposals must not create a narrator")
-    manifest = asset_manifest(proposal) if isinstance(vibe, dict) else []
-    if len(manifest) != 9 or len({a.slot for a in manifest}) != len(manifest):
-        errors.append("nine unique asset slots are required for Facets and ArtJobs")
+        errors.append("Daily Dreams do not create a narrator")
+    manifest = asset_manifest(proposal)
+    if len(manifest) != 14 or len(set(a.slot for a in manifest)) != 14:
+        errors.append("fourteen unique asset slots are required")
+    if sum(a.linked_to_vibe for a in manifest) != 5:
+        errors.append("five Dream satellites must link to the daily vibe")
+    if any(a.lane == "zuzu" and (a.linked_to_vibe or not a.project_target) for a in manifest):
+        errors.append("all eight Zuzu extras must have projects and no vibe links")
     return errors
