@@ -18,9 +18,9 @@ Environment: KR_API_TOKEN, KR_BASE_URL (default https://kindrobots.org).
 from __future__ import annotations
 
 import argparse
-import base64
 import io
 import sys
+import urllib.request
 from pathlib import Path
 
 import yaml
@@ -38,8 +38,19 @@ def finished(subject):
 
 
 def load_image(art_image_id):
-    raw = base64.b64decode(core.fetch_image_b64(art_image_id))
-    return Image.open(io.BytesIO(raw)).convert("RGB")
+    """The render's bytes. Round art is private, so its file is fetched with the API token."""
+    status, resp = core.http_json(
+        "GET", f"{core.KR_BASE_URL}/api/art/image/{art_image_id}"
+    )
+    image_path = (
+        ((resp or {}).get("data") or {}).get("imagePath") if status == 200 else None
+    )
+    if not image_path:
+        raise RuntimeError(f"ArtImage {art_image_id}: HTTP {status}, no imagePath")
+    request = urllib.request.Request(f"{core.KR_BASE_URL}{image_path}")
+    request.add_header("Authorization", f"Bearer {core.KR_API_TOKEN}")
+    with urllib.request.urlopen(request, timeout=180) as file_resp:
+        return Image.open(io.BytesIO(file_resp.read())).convert("RGB")
 
 
 def contact_sheet(subjects, out, thumb=(448, 256)):
