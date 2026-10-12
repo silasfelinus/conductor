@@ -1,7 +1,8 @@
 # Pitch: Swarm Wing
 date: 2026-10-12
 project-target: kr-arcade
-status: awaiting-silas
+status: rejected
+public-ready: false
 
 ## The idea
 An arcade cabinet riffing on Galaga's diving alien formations, where a small robot ship shoots waves of paper-kite bugs that swoop out of formation in looping dives. Each stage adds more divers, faster loops and a bonus stage, with a score submitted to the leaderboard.
