@@ -548,7 +548,7 @@ tasks:
   - id: t-019
     milestone: m4
     title: "River Croc toy, second take: animated from Arthemy concept-quality art"
-    status: claimed
+    status: done
     depends_on: t-018
     owner: worker
     passes: 0
@@ -568,8 +568,25 @@ tasks:
       flat colour; (3) the table plays them as the toy, a keyed animated card standing in
       the watering hole over the existing scoop and jaw gate, replacing the procedural
       geometry. Reduced motion holds each phase's key frame.
+
+      2026-10-13: done. The River Croc is drawn from generated art in the concept art's inked
+      western style. Key image: Arthemy house lane, Silas picked ArtImage 245776
+      (art/T019-CROC-KEY.yaml). Phase poses: Kontext edits (art/T019-CROC-POSES.yaml: gape
+      245782, submerged 245792, death roll 245788/245789). Clips: WAN (art/T019-CROC-
+      CLIPS.yaml): TI2V-5B breathing and lurk loops; A14B first-last-frame snap, sink, rise,
+      spit and a two-part death roll (245801-245806), after kind_robots#3608 fixed first-last
+      frame (WanFirstLastFrameToVideo). tools/croc_atlas.py cuts every frame out of its white
+      surround and packs a 101-frame atlas (kind_robots public/zuzu-pinball/river-croc.webp,
+      2.4 MB). The table plays it as an animated card lying in the painted pond with his snout
+      at the scoop (kind_robots#3609 renderer + v1 atlas, #3613 v2 clips). Reduced motion
+      holds one still per phase; the aim ring stays. Tests: croc, watering hole, stress (mean
+      tick 1.36 ms), camera, LEDs, light map, shots. Headless renders only: the real-GPU look
+      on kindrobots.org is Silas's call; next ideas if wanted: a larger card, a brighter
+      submerged lurk, sound timed to the snap and roll.
     claimed_by: 20261012T160000Z-zuzu-t019-croc-art-b4n8
     claimed_at: '2026-10-12T16:00:00Z'
+    updated: '2026-10-13T01:30:20Z'
+    implementation_pr: 'silasfelinus/kind_robots#3613'
 
   - id: t-020
     milestone: m4
