@@ -142,6 +142,17 @@ def scan_pitches():
             out.append(title)
     return out
 
+def daily_project_deliveries_payload():
+    """Five evidenced project changes, separate from the original Daily Dream."""
+    try:
+        import sys
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import daily_project_deliveries
+        return daily_project_deliveries.payload(daily_project_deliveries.today())
+    except Exception:
+        return {"entries": [], "missing": True}
+
+
 def daily_pitches_payload():
     """Today's five project pitches (pitches/daily/<date>.yaml), or None when not authored yet."""
     try:
@@ -522,6 +533,7 @@ def main():
         "all_needs_attention": [x for p in projects for x in p["needs_attention"]],
         "pitches_awaiting_vote": scan_pitches(),
         "daily_pitches": daily_pitches_payload(),
+        "daily_project_deliveries": daily_project_deliveries_payload(),
         "open_branches": scan_branches(),
         "render_engine": render_engine_health(),
         "container_logs": container_log_health(),
