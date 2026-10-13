@@ -580,3 +580,24 @@ tasks:
       UVs across all seven clips and reduced-motion holds, retaining frame
       ordering, timings, original ArtJob provenance and safe-mouth physics.
       Reuse delivered clips; no new generation, deployment or public release.
+
+  - id: t-022
+    milestone: m5
+    title: "Make native-browser pinball cabinet audio checks repeatable in CI."
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Reviewer kaizen from kind_robots#3638 targets the repeated quality and
+      consumer-verification gap in LEARNING-REPORT: green mocked mixer tests
+      missed gesture activation, open-guide ownership and paused cabinet mute.
+      Package the actual-cabinet/native-AudioContext Chromium smoke probe as a
+      repository-owned bounded test and wire it into permitted CI. Use actual
+      trusted touch/keyboard events, verify guide navigation before game creation,
+      five start gestures, paused mute/unmute without update ticks, suspended
+      context recovery and disposal, at phone/tablet/desktop widths. Keep the
+      existing source-handler regressions; demonstrate failure on the old guide
+      and paused-mute paths. Fixtures must disclose game/physics substitutions.
+      This repeatable audio consumer check is separate from t-013 real-device
+      GPU/frame-timing acceptance and does not clear t-014 or authorize deployment.
