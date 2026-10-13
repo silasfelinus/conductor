@@ -59,6 +59,10 @@ The paperwork floor. Everything here requires a form, including the form. Shippe
 
 The nuclear-toy floor, played for corporate cheer. Children are never present: employees play them in propeller beanies, and nothing ever detonates. **Concept Lab** (a brainstorm where Defense writes down every idea, the Mk 1 nursery and its recycling chute, the fingernail-sized warning label, Dale testing squeak codes), **Focus Group Room** (you are Emma, 6; a questionnaire that wants three coworkers' desks; the Concerned Parents' circle behind the mirror; Gus in a beanie), **Proving Grounds** (the drop test, Kevin's lanyard on a crash-test dummy, the safe-distance memo, Mk 0 returned to sender). Boss: *Snuggle Sentinel's Launch Party* (present it, swap the payload for stuffing, blame the Parents, pull the fire alarm, let an imprinted Mk 0 speak, or the Empathy 4 and Spite 4 routes). Pays off bear-imprinted, defused-mk0, mailed-the-bear-upstairs, owes-gus-a-favor and sent-dale-to-toys.
 
+### Wellness & Testing (Level −3, the Vault): shipped as [encounters/WELLNESS-12.json](encounters/WELLNESS-12.json) (t-012)
+
+The heart of the vault-test spine, and the heaviest psych-test floor in the game. **Nutrition Studies** (a control-group lunch with Compound W and Pip, a calorie confessional that weighs guilt in grams, a vending machine that dispenses what your file says you need, next year's menu of identical paste), **Cognitive Testing Chamber** (a red button you were told not to press, a word list read to your own Successor with a strengthening buzzer, proctoring Pip's loyalty test, the Thursday door your permanent record warned you about), **the Mutation Suite** (a second dose, a humming vault door that the squeak code opens onto spare Founders' mustaches, Kevin in frosted Tank Nine, a mirror test where your reflection is a step ahead). Boss: *The Final Wellness Exam*, where the test is whether you will administer the test to Pip. Pays off saved-pip, assigned-as-proctor, knows-the-incident, heard-the-squeak-code, kevin-owes-you and has-true-minutes. Original facility only: no borrowed labs, mascots or numbered shelters.
+
 ## Recurring cast (original)
 
 | Character | Role | Notes |
@@ -143,5 +147,6 @@ Callbacks are **short original allusions, never quotations**. Each callback card
 | Secret societies + a cheerful supervising machine | Paranoia | the whole social layer | No Friend Computer, Alpha Complex, clearance colors or society names |
 | Approve/deny stamps at a window | Papers, Please | Window 9, *The Double-Sided Stamp* | No country, no UI copy, no rules |
 | A cheerful mascot judging a safe distance with one raised thumb | Fallout | Toy Division, *The Safe-Distance Memo* | Original mascot; no Vault Boy, no Vault-Tec, no slogans |
+| A learner, word pairs and a strengthening buzzer | the classic obedience experiments | Wellness, *The Word List* | Original staging; no named researcher, no recreated script |
 | A sealed vault running experiments on residents | Fallout | the Vault | No Vault-Tec, no Vault Boy |
 | A towel in the emergency kit | Hitchhiker's Guide | Records, *The Jam in Tube 14* | One object, no line |

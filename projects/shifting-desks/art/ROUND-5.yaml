@@ -1,0 +1,423 @@
+# Shifting Desks art round 5 (shifting-desks t-012): every station in Department 4, Wellness & Testing -- the
+# 12 encounter faces and The Final Wellness Exam boss face (each card's art.brief rewritten into the house prompt
+# order, like round 2), the 3 location plates and the department arrival (copied word for word, like
+# round 3). Style rules live in ../ART-DIRECTION.md. Tone guardrail: no child is pictured anywhere; the
+# generator refuses a prompt that names one.
+#
+# Queue: each subject is one row in projects/art-prompts.yaml `requests:` (id = request_id, lane
+# art-round-5). The auto-art-generate workflow submits it to Kind Robots as a krea2 ArtJob and the home
+# relay writes the render to the self-hosted media host at media_url.
+#
+# Status values: requested -> rendered -> delivered (media_url answers 200). Never mark a subject
+# delivered before that check passes. Generated internal art is pre-approved (AGENTS.md "Generated art
+# is pre-approved"). Krea 2 on the self-hosted render box: no paid third-party spend, nothing published.
+round: shifting-desks-5
+project_slug: shifting-desks
+task: t-012
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-13T09:10:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph,
+  3d render, blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: the-control-group-lunch
+  kind: card-face
+  department: wellness
+  title: The Control Group Lunch
+  card: the-control-group-lunch
+  source_ref: encounters/WELLNESS-12.json encounters[the-control-group-lunch].art.brief
+  request_id: shifting-desks-r5-the-control-group-lunch
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55001
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-control-group-lunch.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-control-group-lunch.webp
+  prompt: Two identical cafeteria trays of grey stew and pink drinks on a long steel table under harsh
+    lights, a nervous worker on one side and a beaming young intern on the other, a man in a lab coat
+    watching through a large window with a clipboard, fluorescent green and manila dominant colors, single
+    readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-calorie-confessional
+  kind: card-face
+  department: wellness
+  title: The Calorie Confessional
+  card: the-calorie-confessional
+  source_ref: encounters/WELLNESS-12.json encounters[the-calorie-confessional].art.brief
+  request_id: shifting-desks-r5-the-calorie-confessional
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55002
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-calorie-confessional.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-calorie-confessional.webp
+  prompt: A narrow curtained booth with a small padded kneeler and a brass grille, a single soft lamp
+    glowing inside, a worker kneeling with hands clasped, a needle gauge on the wall swinging high, oxblood
+    and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate
+    safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with
+    halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-vending-machine-that-knows
+  kind: card-face
+  department: wellness
+  title: The Vending Machine That Knows
+  card: the-vending-machine-that-knows
+  source_ref: encounters/WELLNESS-12.json encounters[the-vending-machine-that-knows].art.brief
+  request_id: shifting-desks-r5-the-vending-machine-that-knows
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55003
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-vending-machine-that-knows.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-vending-machine-that-knows.webp
+  prompt: A tall beige vending machine with a single round glass lens instead of buttons, a granola bar
+    and a small paper cup waiting in its tray, a worker leaning back and peering into the lens, fluorescent
+    green and oxblood dominant colors, single readable scene with a strong silhouette, mid-century corporate
+    safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with
+    halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: next-years-menu
+  kind: card-face
+  department: wellness
+  title: Next Year's Menu
+  card: next-years-menu
+  source_ref: encounters/WELLNESS-12.json encounters[next-years-menu].art.brief
+  request_id: shifting-desks-r5-next-years-menu
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55004
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/next-years-menu.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/next-years-menu.webp
+  prompt: A long printed menu on a clipboard showing forty identical photographs of beige paste on different
+    colored plates, a pencil hovering over one blank line at the bottom, a steaming serving hatch behind,
+    carbon-paper blue and manila dominant colors, single readable scene with a strong silhouette, mid-century
+    corporate safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache
+    with halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-button
+  kind: card-face
+  department: wellness
+  title: The Button
+  card: the-button
+  source_ref: encounters/WELLNESS-12.json encounters[the-button].art.brief
+  request_id: shifting-desks-r5-the-button
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55005
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-button.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-button.webp
+  prompt: A bright white room with a single white table holding one large round red button, a worker sitting
+    very still on a stool with hands tucked under their thighs, a plain wall clock, a glowing round speaker
+    grille above, safety orange and fluorescent green dominant colors, single readable scene with a strong
+    silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist beige office,
+    screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette
+    of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait
+    composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-word-list
+  kind: card-face
+  department: wellness
+  title: The Word List
+  card: the-word-list
+  source_ref: encounters/WELLNESS-12.json encounters[the-word-list].art.brief
+  request_id: shifting-desks-r5-the-word-list
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55006
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-word-list.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-word-list.webp
+  prompt: A worker at a small desk with a microphone and a row of chunky switches stepping up in size,
+    a thick window showing a second identical worker strapped calmly into a chair, a proctor in a lab
+    coat leaning in to whisper, oxblood and carbon-paper blue dominant colors, single readable scene with
+    a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-other-side-of-the-glass
+  kind: card-face
+  department: wellness
+  title: The Other Side of the Glass
+  card: the-other-side-of-the-glass
+  source_ref: encounters/WELLNESS-12.json encounters[the-other-side-of-the-glass].art.brief
+  request_id: shifting-desks-r5-the-other-side-of-the-glass
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55007
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-other-side-of-the-glass.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-other-side-of-the-glass.webp
+  prompt: A worker in an oversized white lab coat holding a stopwatch and a thick binder, looking through
+    a window at a nervous young intern in a cable-knit sweater sitting in a padded chair and giving a
+    thumbs-up, a clean white corridor, fluorescent green and manila dominant colors, single readable scene
+    with a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-thursday-door
+  kind: card-face
+  department: wellness
+  title: The Thursday Door
+  card: the-thursday-door
+  source_ref: encounters/WELLNESS-12.json encounters[the-thursday-door].art.brief
+  request_id: shifting-desks-r5-the-thursday-door
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55008
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-thursday-door.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-thursday-door.webp
+  prompt: A long white corridor ending in three identical doors, a painted arrow on the floor pointing
+    to the middle door, a worker hesitating with one hand raised, a coworker silhouette standing perfectly
+    still at the far end, safety orange and carbon-paper blue dominant colors, single readable scene with
+    a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-second-dose
+  kind: card-face
+  department: wellness
+  title: The Second Dose
+  card: the-second-dose
+  source_ref: encounters/WELLNESS-12.json encounters[the-second-dose].art.brief
+  request_id: shifting-desks-r5-the-second-dose
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55009
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-second-dose.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-second-dose.webp
+  prompt: A smiling nurse in a crisp white cap holding out a small paper cup with one glowing green drop,
+    a worker staring at it with their own fingertips faintly shimmering, tall bubbling glass tanks lining
+    the room behind, fluorescent green and oxblood dominant colors, single readable scene with a strong
+    silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist beige office,
+    screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette
+    of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait
+    composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-humming-door
+  kind: card-face
+  department: wellness
+  title: The Humming Door
+  card: the-humming-door
+  source_ref: encounters/WELLNESS-12.json encounters[the-humming-door].art.brief
+  request_id: shifting-desks-r5-the-humming-door
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55010
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-humming-door.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-humming-door.webp
+  prompt: A huge round steel vault door set into a tiled wall at the end of a row of bubbling tanks, faint
+    sound ripples drawn in the air around it, a worker pressing one ear to the steel, a yellow rubber
+    duck in their other hand, carbon-paper blue and fluorescent green dominant colors, single readable
+    scene with a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: tank-nine
+  kind: card-face
+  department: wellness
+  title: Tank Nine
+  card: tank-nine
+  source_ref: encounters/WELLNESS-12.json encounters[tank-nine].art.brief
+  request_id: shifting-desks-r5-tank-nine
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55011
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/tank-nine.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/tank-nine.webp
+  prompt: A tall glass tank frosted white from the inside with soft bubbles rising, a small brass plaque
+    on its base, a worker knocking gently on the glass, a row of other tanks glowing faintly behind, fluorescent
+    green and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate
+    safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with
+    halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-mirror-test
+  kind: card-face
+  department: wellness
+  title: The Mirror Test
+  card: the-mirror-test
+  source_ref: encounters/WELLNESS-12.json encounters[the-mirror-test].art.brief
+  request_id: shifting-desks-r5-the-mirror-test
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55012
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-mirror-test.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-mirror-test.webp
+  prompt: A worker standing before a tall framed mirror with a small red dot on their forehead, their
+    reflection a half-second ahead with one finger already raised to its own forehead, a technician with
+    a clipboard watching from the side, tiled walls and bubbling tanks, oxblood and carbon-paper blue
+    dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual
+    illustration crossed with a retro-futurist beige office, screen-printed gouache with halftone grain,
+    flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety
+    orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare
+    and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-final-wellness-exam
+  kind: boss-face
+  department: wellness
+  title: The Final Wellness Exam
+  card: the-final-wellness-exam
+  source_ref: encounters/WELLNESS-12.json boss.art.brief
+  request_id: shifting-desks-r5-the-final-wellness-exam
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55013
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-final-wellness-exam.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-final-wellness-exam.webp
+  prompt: A vast hushed exam hall with two small wooden desks facing each other under a single hanging
+    lamp, a worker at one desk holding an exam booklet, a brave young intern in a cable-knit sweater at
+    the other gripping a pencil, a tall proctor in a lab coat standing between them, a glowing round speaker
+    grille high on the wall, oxblood and manila dominant colors, single readable scene with a strong silhouette,
+    mid-century corporate safety-manual illustration crossed with a retro-futurist beige office, screen-printed
+    gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: nutrition-studies
+  kind: location
+  department: wellness
+  title: Nutrition Studies
+  card: null
+  source_ref: encounters/WELLNESS-12.json locations[nutrition-studies].art.brief
+  request_id: shifting-desks-r5-nutrition-studies
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55014
+  target_path: kind_robots public/images/shifting-desks/locations/nutrition-studies.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/nutrition-studies.webp
+  prompt: A long steel cafeteria under a curved glass ceiling, numbered trays sliding along a conveyor,
+    a wide observation window with clipboards pressed to it, a single potted plant thriving in a corner,
+    mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette
+    of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait
+    composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: cognitive-testing-chamber
+  kind: location
+  department: wellness
+  title: Cognitive Testing Chamber
+  card: null
+  source_ref: encounters/WELLNESS-12.json locations[cognitive-testing-chamber].art.brief
+  request_id: shifting-desks-r5-cognitive-testing-chamber
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55015
+  target_path: kind_robots public/images/shifting-desks/locations/cognitive-testing-chamber.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/cognitive-testing-chamber.webp
+  prompt: A bright white room nested inside a larger white room, a single chair and table at the center,
+    a dark one-way window along one wall, a corridor of identical doors glimpsed through an archway, a
+    glowing round speaker grille, mid-century safety-manual illustration, screen-printed gouache with
+    halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green
+    and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-suite
+  kind: location
+  department: wellness
+  title: Mutation Suite
+  card: null
+  source_ref: encounters/WELLNESS-12.json locations[mutation-suite].art.brief
+  request_id: shifting-desks-r5-mutation-suite
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 55016
+  target_path: kind_robots public/images/shifting-desks/locations/mutation-suite.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/mutation-suite.webp
+  prompt: A tiled clinical hall lined with tall glass tanks of softly glowing green liquid, a smiling
+    nurse's trolley of paper cups, a huge round steel vault door set into the far wall, rising bubbles
+    catching the light, mid-century safety-manual illustration, screen-printed gouache with halftone grain,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: wellness
+  kind: department
+  department: wellness
+  title: Wellness & Testing arrival
+  card: null
+  source_ref: encounters/WELLNESS-12.json department.arrival_art.brief
+  request_id: shifting-desks-r5-wellness
+  engine: krea2
+  size: 1248x936
+  aspect: 4:3 landscape
+  seed: 55017
+  target_path: kind_robots public/images/shifting-desks/departments/wellness.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/departments/wellness.webp
+  prompt: Elevator doors opening onto a gleaming white testing level deep underground, long corridors
+    of identical doors under cold fluorescent strips, glass tanks glowing green at the far end, a single
+    welcome mat at the elevator's edge, mid-century safety-manual illustration, screen-printed gouache
+    with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, horizontal 4:3 composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
