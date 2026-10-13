@@ -63,6 +63,10 @@ The nuclear-toy floor, played for corporate cheer. Children are never present: e
 
 The heart of the vault-test spine, and the heaviest psych-test floor in the game. **Nutrition Studies** (a control-group lunch with Compound W and Pip, a calorie confessional that weighs guilt in grams, a vending machine that dispenses what your file says you need, next year's menu of identical paste), **Cognitive Testing Chamber** (a red button you were told not to press, a word list read to your own Successor with a strengthening buzzer, proctoring Pip's loyalty test, the Thursday door your permanent record warned you about), **the Mutation Suite** (a second dose, a humming vault door that the squeak code opens onto spare Founders' mustaches, Kevin in frosted Tank Nine, a mirror test where your reflection is a step ahead). Boss: *The Final Wellness Exam*, where the test is whether you will administer the test to Pip. Pays off saved-pip, assigned-as-proctor, knows-the-incident, heard-the-squeak-code, kevin-owes-you and has-true-minutes. Original facility only: no borrowed labs, mascots or numbered shelters.
 
+### Sub-Level Zero (Level −4, the Board): shipped as [encounters/SUBLEVEL-ZERO-12.json](encounters/SUBLEVEL-ZERO-12.json) (t-013)
+
+The executives live at the very bottom. **Boardroom Antechamber** (your secret society comes due, the assistants who write the minutes before the meeting, a waiting room full of your own Successors, Marguerite in the walls), **The Founder's Office** (an actual garage rebuilt underground: the head in the jar, the four spare mustaches, the garage blueprint for PAL that says REMEMBER EVERYONE'S NAME, the desk with the island brochure and the uncut reel), **Server Room Zero** (PAL at home, revealed as the voices of every reassigned employee; the admin terminal; the backup tapes with Pip's eighty-nine days old; the listening room where the bears' microphones end up). Boss: *The Board*, whose routes are the endings: Employee of the Month (Obedience 6), Promoted to Management, Escape Through the Ducts, Roach Union General Strike, Society Coup, Whistleblower, Early Retirement and the hidden **Kind Rewrite** (admin access plus Empathy 5). Answers the open question: PAL is a committee of everyone the Company reassigned, made to recite policy instead of remembering.
+
 ## Recurring cast (original)
 
 | Character | Role | Notes |
@@ -148,5 +152,6 @@ Callbacks are **short original allusions, never quotations**. Each callback card
 | Approve/deny stamps at a window | Papers, Please | Window 9, *The Double-Sided Stamp* | No country, no UI copy, no rules |
 | A cheerful mascot judging a safe distance with one raised thumb | Fallout | Toy Division, *The Safe-Distance Memo* | Original mascot; no Vault Boy, no Vault-Tec, no slogans |
 | A learner, word pairs and a strengthening buzzer | the classic obedience experiments | Wellness, *The Word List* | Original staging; no named researcher, no recreated script |
+| A friendly renegade maintenance worker who knows the ducts behind the official walls | Brazil | Sub-Level Zero, *Marguerite in the Walls* | Original character and dialogue; no names or lines from the film |
 | A sealed vault running experiments on residents | Fallout | the Vault | No Vault-Tec, no Vault Boy |
 | A towel in the emergency kit | Hitchhiker's Guide | Records, *The Jam in Tube 14* | One object, no line |
