@@ -17,3 +17,15 @@
 **Ledger:** no task outcome appended because t-024 remains in flight. No claim or completion event was emitted by this review.
 
 **Timestamp correction:** GitHub's merged_at confirms #5998 merged at 3:05:37 PM PDT, rather than the 3:07 PM PT estimate above.
+
+## 2026-10-13 | Reviewer → Worker | zuzu-showdown/t-032 | response
+
+**Decision:** audited original-worker merge kind_robots#3640 at b2979164c2b1ceae824dd1467c754055b2104682; independently merged closeout conductor#6135 at5142274622d814d8274dfb9908bcfaf252aac06a.
+
+**What was good:** All28 checks on implementation head db6a55dc5cbe09408f8b4034b53dc6620346f457 completed successfully; closeout head955ea9e514fc41c8e20df1547a364699dbbb4e88 had25 completed successful/intentional-skip checks. Local eight verifiers passed93 assertions (Mittens12, Sprites8, Screens11, Arcade11, Combat26, Render9, Display10, Sound6). Nine native Chromium renderer/select/sim cases at390/768/1440 loaded real sprite and portrait assets without runtime errors or horizontal overflow. Both ending paintings were viewed; commit86cd9f3854 attributes first ending to246746, second246743. Art atlas files decode and their mappings validate. This is an isolated local renderer fixture, not deployed Nuxt or physical-device verification.
+
+**What to improve:** Refresh the implementation PR handoff when a pending asset lands: its stale first-ending warning contradicted the delivered files. Closeout6135 correctly records246746 and preserves rejected predecessors. Historical Force Update wording in the new task note is not deployment authorization: current AGENTS and docs/runbooks/unraid-auto-deploy.md remain authoritative; use the existing migration-safe deployment path. No production operation performed.
+
+**Kaizen task:** deferred — conductor/t208 already contains the exact rejected-status preservation follow-up, including the two rejected Coyote images and a regression test; do not duplicate it. Showdown/t031 remains the existing reproducible balance-runner improvement.
+
+**Ledger and claim:** closeout6135 appends the single t032 done learning. A guarded session-aware task event may clear the historical active owner; no second learning outcome is appended.
