@@ -122,11 +122,8 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Deliver local 1–4 player simultaneous co-op with fair rules"
-    status: review
-    owner: worker
-    claimed_by: 2026-10-13T012310Z-rainbow-t005-bench-p9sz
-    claimed_at: '2026-10-13T01:23:10Z'
-    updated: '2026-10-13T01:28:50Z'
+    status: ready
+    updated: '2026-10-13T02:35:35Z'
     depends_on: [t-004]
     passes: 1
     retry_context: >-
@@ -140,7 +137,8 @@ tasks:
       Quality pass 1 handoff merged in conductor#6052 at fb3d24a999224a7e7e777059b68449557a3403f1 after all 25 checks completed without failure on a4e7c9ff905cad1dc6ea7057a80fad7753216e3f. Release ownership and retain existing kind_robots#3599 for original-worker repair of inactive pilot pickup collection. Normal-input reproduction and scoped retry_context/TALKBACK are preserved; full branch arcade suite passes 29 cabinet suites but misses the consumer boundary. Reconcile/retest with repaired merged Pinkwake#3598 as required by the existing handoff. No gameplay merge, task completion, deployment or public publication claimed; full t-005 acceptance remains open. Avoid duplicate implementation and repeat rejection of unchanged heads.
 
       Added real fixed-tick local co-op replay proving a benched pilot cannot collect a power pickup as it passes over the stored ship position, cannot receive unearned upgrades when rejoining, and preserves original position and lives. The engine active-seat pickup filter is already present on main; this codifies the quality pass1 reviewer reproduction. CI and broader shared-cabinet/device acceptance remain outstanding; after a green merge return t-005 to ready for its unfinished full co-op scope.
-    implementation_pr: 'silasfelinus/kind_robots#3599'
+
+      On October 12 PT, accepted partial quality repair in kind_robots#3614, merged at 0ead042a443bf072db86c520534459d6d0f8aa13 after all 28 current-head checks passed. Independently passed actual fixed-tick bench/pickup/rejoin test, removed only the active-seat collector guard in a local verification fixture and observed the intended failure, restored original bytes and passed again. Full shared-cabinet/device and 1-4 pilot acceptance remain unfinished. Retain pass1 history and dependent waiting gates; this is ready, not done and not recurring rearm. Do not close scope merely because #3599 or #3614 merged. Existing t-015/t-018 cover the remaining consumer fixture; no duplicate kaizen or done learning. No deployment/publication.
   - id: t-006
     milestone: m2
     title: "Add online 1–4 player co-op rooms with deterministic synchronization"
