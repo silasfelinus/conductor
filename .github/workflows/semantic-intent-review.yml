@@ -1,7 +1,8 @@
 name: Scheduled Semantic Intent Review
 
-# GitHub, not ChatGPT, owns cadence. A Python date guard invokes the model only
-# when the previous merged review is at least three days old.
+# GitHub owns cadence. A Python date guard invokes a model only when an
+# authenticated, explicitly opted-in paid provider is available and the
+# previous merged review is at least three days old.
 on:
   schedule:
     - cron: '23 16 * * *'
@@ -9,6 +10,11 @@ on:
     inputs:
       force:
         description: 'Run despite a recent completed audit'
+        type: boolean
+        required: false
+        default: false
+      spend_api_credits:
+        description: 'Explicitly opt this manual run into Anthropic API billing'
         type: boolean
         required: false
         default: false
@@ -27,7 +33,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      models: read
     outputs:
       status: ${{ steps.review.outputs.status }}
       branch: ${{ steps.review.outputs.branch }}
@@ -46,7 +51,10 @@ jobs:
       - name: Perform LLM semantic intent review
         shell: bash
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          # Never spend by default. Automatic scheduled calls are opt-in via
+          # SEMANTIC_INTENT_PAID_REVIEW repository variable; dispatches may
+          # opt in for this single run using spend_api_credits.
+          ANTHROPIC_API_KEY: ${{ (inputs.spend_api_credits == true || vars.SEMANTIC_INTENT_PAID_REVIEW == 'true') && secrets.ANTHROPIC_API_KEY || '' }}
           FORCE: ${{ inputs.force }}
         run: |
           args=()
@@ -70,6 +78,10 @@ jobs:
           status="$(python -c 'import json; print(json.load(open("semantic-intent-attempt.json"))["status"])')"
           echo "status=$status" >> "$GITHUB_OUTPUT"
           if [[ "$status" == 'skipped' ]]; then exit 0; fi
+          if [[ "$status" == 'awaiting-provider' ]]; then
+            echo "::notice::Semantic audit not run: paid Anthropic provider is not opted in."
+            exit 0
+          fi
           if [[ "$status" != 'completed' ]]; then exit 1; fi
           report="$(python -c 'import json; print(json.load(open("semantic-intent-attempt.json"))["report"])')"
           branch="bot/semantic-intent-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
