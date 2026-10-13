@@ -58,7 +58,7 @@ def test_records_pack_shape():
     assert {p: polarity.count(p) for p in set(polarity)} == {"good": 4, "bad": 4, "mixed": 4}
     lead = [e for e in records["encounters"] if vp.LEAD_TAGS & set(e["tags"])]
     assert len(lead) >= 9
-    assert 4 <= len(records["boss"]["choices"]) <= 5
+    assert 4 <= len(records["boss"]["choices"]) <= 7
     outcomes = {o["id"] for o in records["boss"]["department_outcomes"]}
     assert "refiled" in outcomes and len(outcomes - {"refiled"}) >= 3
 
@@ -218,3 +218,72 @@ def test_every_deck_card_needs_an_image_prompt(tmp_path):
     path.write_text(json.dumps(decks), encoding="utf-8")
     errors = vp.validate_decks(path, vp.pack_paths([]))
     assert any("art_prompt" in e for e in errors)
+
+
+# Hidden Test Results (t-022)
+
+def _grade_gated(pack):
+    return [c for c in pack["boss"]["choices"] if (c["requires"] or {}).get("grade")]
+
+
+def test_every_card_grades_and_every_pack_grades_all_four_axes():
+    for path in vp.pack_paths([]):
+        pack = json.loads(path.read_text(encoding="utf-8"))
+        raised = set()
+        for card in pack["encounters"]:
+            card_grades = [
+                (ch.get(k) or {}).get("grades") for ch in card["choices"] for k in ("success", "failure")
+            ]
+            assert any(card_grades), f"{path.name}:{card['id']} grades nothing"
+            for g in filter(None, card_grades):
+                raised.update(k for k, v in g.items() if v > 0)
+        assert raised == set(vp.GRADES), path.name
+        assert _grade_gated(pack), f"{path.name}: some review route should need a grade"
+
+
+def test_a_card_with_no_grades_is_rejected(tmp_path, pack):
+    bad = copy.deepcopy(pack)
+    for ch in bad["encounters"][0]["choices"]:
+        for k in ("success", "failure"):
+            if ch.get(k):
+                ch[k].pop("grades", None)
+    assert any("grades the player" in e for e in _validate(tmp_path, bad))
+
+
+def test_grade_values_are_small_nonzero_integers(tmp_path, pack):
+    bad = copy.deepcopy(pack)
+    bad["encounters"][0]["choices"][0]["success"]["grades"] = {"spite": 3, "charisma": 1}
+    errors = _validate(tmp_path, bad)
+    assert any("spite must be a nonzero integer in -2..2" in e for e in errors)
+    assert any("unknown grade 'charisma'" in e for e in errors)
+
+
+def test_only_a_review_may_gate_on_a_grade(tmp_path, pack):
+    bad = copy.deepcopy(pack)
+    bad["encounters"][0]["choices"][0]["requires"] = {"grade": {"spite": 1}}
+    assert any("only a department review may gate" in e for e in _validate(tmp_path, bad))
+
+
+def test_grade_gate_must_be_reachable(tmp_path, pack):
+    bad = copy.deepcopy(pack)
+    _grade_gated(bad)[0]["requires"] = {"grade": {"spite": 6}}
+    assert any("a run can earn at most" in e for e in _validate(tmp_path, bad))
+
+
+def test_records_gates_count_grades_earned_in_orientation():
+    """Records' review may ask for more than Records alone can grant: Orientation's grades carry down."""
+    records = json.loads(RECORDS.read_text(encoding="utf-8"))
+    alone = vp.grade_reach(records)
+    above = vp.earlier_grade_reach(RECORDS, records["department"]["order"])
+    assert all(above[axis] > 0 for axis in vp.GRADES)
+    for ch in _grade_gated(records):
+        (axis, minimum), = ch["requires"]["grade"].items()
+        assert minimum <= alone[axis] + above[axis]
+
+
+def test_decks_need_a_verdict_for_every_axis(tmp_path):
+    decks = json.loads(DECKS.read_text(encoding="utf-8"))
+    decks["test_results"]["verdicts"] = [v for v in decks["test_results"]["verdicts"] if v["axis"] != "spite"]
+    path = tmp_path / "DECKS.json"
+    path.write_text(json.dumps(decks), encoding="utf-8")
+    assert any("verdicts must cover" in e for e in vp.validate_decks(path, vp.pack_paths([])))

@@ -18,6 +18,14 @@ A choice's `requires.flag` must be grantable: by a choice in the same pack, or
 by a pack with a lower `department.order` (flags carry forward as the player
 descends, so Records & Forms may pay off a flag granted in Orientation).
 
+Hidden Test Results (t-022): outcomes may carry `grades` (obedience, empathy,
+ingenuity, spite; nonzero integers in -2..2). Every encounter card grades on at
+least one choice, and every pack grades each axis upward somewhere. Grades stay
+hidden during play, so only a department review may gate a route on one
+(`requires.grade`), and the gate must be reachable: no higher than the best
+grade a player can collect on one card per location, in this department and
+every department above it.
+
 Usage:
   python projects/shifting-desks/encounters/validate_pack.py            # every *.json pack here
   python projects/shifting-desks/encounters/validate_pack.py PACK.json  # one pack
@@ -48,7 +56,9 @@ LEAD_SHARE_MIN = 0.5
 NON_PACK_FILES = {"DECKS.json"}
 FAVOR_KINDS = {"force-success", "effects", "ignore-requirement", "bonus"}
 MUTATION_KINDS = {"reroll", "auto-success", "bonus", "restore-composure"}
-REQUIRE_KEYS = {"clearance", "flag", "forms"}
+REQUIRE_KEYS = {"clearance", "flag", "forms", "grade"}
+GRADES = ("obedience", "empathy", "ingenuity", "spite")
+VERDICT_AXES = set(GRADES) | {"balanced"}
 ART_STATUSES = {"design-only", "verified-repository-art", "approved-ArtImage"}
 ART_SUFFIX = "every surface bare and unmarked"
 # Kind Robots art-prompt contract: positive phrasing only (scripts/repair_negation_art_prompts.py).
@@ -111,6 +121,49 @@ def granted_flags(pack: dict) -> set[str]:
         for key in ("success", "failure"):
             flags.update((ch.get(key) or {}).get("add_flags") or [])
     return flags
+
+
+def grade_reach(pack: dict) -> dict[str, int]:
+    """Most of each grade one pass through `pack` can earn: one card per location, then the review."""
+    def best(choices, axis):
+        top = 0
+        for ch in choices or []:
+            for key in ("success", "failure"):
+                grades = (ch.get(key) or {}).get("grades") or {}
+                value = grades.get(axis, 0) if isinstance(grades, dict) else 0
+                if isinstance(value, int):
+                    top = max(top, value)
+        return top
+
+    encounters = {e.get("id"): e for e in pack.get("encounters") or []}
+    boss = pack.get("boss") if isinstance(pack.get("boss"), dict) else {}
+    reach = {}
+    for axis in GRADES:
+        total = 0
+        for loc in pack.get("locations") or []:
+            cards = [encounters[i] for i in loc.get("encounter_ids") or [] if i in encounters]
+            total += max((best(c.get("choices"), axis) for c in cards), default=0)
+        reach[axis] = total + best(boss.get("choices"), axis)
+    return reach
+
+
+def earlier_grade_reach(path: Path, order: int | None) -> dict[str, int]:
+    """Grade reach summed over sibling packs whose department.order is lower than `order`."""
+    reach = {axis: 0 for axis in GRADES}
+    if order is None:
+        return reach
+    for sibling in pack_paths([], path.parent):
+        if sibling.resolve() == path.resolve():
+            continue
+        try:
+            other = json.loads(sibling.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        other_order = _department_order(other)
+        if other_order is not None and other_order < order:
+            for axis, value in grade_reach(other).items():
+                reach[axis] += value
+    return reach
 
 
 def _department_order(pack: dict) -> int | None:
@@ -179,6 +232,16 @@ class Checker:
                 self.slug(f"{where}.{key}", f)
         if not isinstance(out.get("map_effect"), str) or not out.get("map_effect"):
             self.err(where, "map_effect must be 'none' or a written reason")
+        grades = out.get("grades")
+        if grades is not None:
+            if not isinstance(grades, dict) or not grades:
+                self.err(f"{where}.grades", "must be a non-empty object when present")
+            else:
+                for k, v in grades.items():
+                    if k not in GRADES:
+                        self.err(f"{where}.grades", f"unknown grade {k!r} (allowed: {list(GRADES)})")
+                    elif not isinstance(v, int) or isinstance(v, bool) or v == 0 or not -2 <= v <= 2:
+                        self.err(f"{where}.grades", f"{k} must be a nonzero integer in -2..2, got {v!r}")
         if boss_outcomes is not None:
             if out.get("department_outcome") not in boss_outcomes:
                 self.err(where, f"department_outcome {out.get('department_outcome')!r} is not declared")
@@ -230,6 +293,13 @@ class Checker:
         if req is not None:
             if not isinstance(req, dict) or not req or set(req) - REQUIRE_KEYS:
                 self.err(f"{where}.requires", f"must be null or an object with keys from {sorted(REQUIRE_KEYS)}")
+            elif "grade" in req:
+                gate = req["grade"]
+                if boss_outcomes is None:
+                    self.err(f"{where}.requires.grade", "grades stay hidden during play; only a department review may gate on one")
+                if (not isinstance(gate, dict) or len(gate) != 1 or set(gate) - set(GRADES)
+                        or not all(isinstance(v, int) and not isinstance(v, bool) and 1 <= v <= 6 for v in gate.values())):
+                    self.err(f"{where}.requires.grade", f"must name one grade from {list(GRADES)} with a minimum of 1-6")
         cost = ch.get("cost")
         self.effects(f"{where}.cost", cost)
         roll = ch.get("roll", "missing")
@@ -320,6 +390,18 @@ def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str
 
     all_added: set[str] = set()
     required_flags: list[tuple[str, str]] = []
+    grade_gates: list[tuple[str, str, int]] = []
+    graded_up: set[str] = set()
+
+    def graded(choices) -> bool:
+        any_grade = False
+        for ch in choices:
+            for key in ("success", "failure"):
+                grades = (ch.get(key) or {}).get("grades")
+                if isinstance(grades, dict) and grades:
+                    any_grade = True
+                    graded_up.update(k for k, v in grades.items() if isinstance(v, int) and v > 0)
+        return any_grade
 
     def collect(where, choices):
         for ch in choices:
@@ -329,6 +411,11 @@ def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str
             req = ch.get("requires") or {}
             if isinstance(req, dict) and "flag" in req:
                 required_flags.append((f"{where}.{ch.get('id')}", req["flag"]))
+            gate = req.get("grade") if isinstance(req, dict) else None
+            if isinstance(gate, dict):
+                for axis, minimum in gate.items():
+                    if axis in GRADES and isinstance(minimum, int):
+                        grade_gates.append((f"{where}.{ch.get('id')}", axis, minimum))
 
     for enc in encounters:
         w = f"encounters[{enc.get('id')}]"
@@ -360,6 +447,8 @@ def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str
         for ch in choices:
             c.choice(f"{w}.choices[{ch.get('id')}]", ch)
         c.text(f"{w}.developer_note", enc.get("developer_note"), 20)
+        if not graded(choices):
+            c.err(w, "no choice grades the player; every card feeds the hidden Test Results (t-022)")
         collect(w, choices)
 
     if encounters:
@@ -400,6 +489,7 @@ def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str
         if not unconditional:
             c.err(w, "at least one boss route must have no requirement")
         c.text(f"{w}.developer_note", boss.get("developer_note"), 20)
+        graded(choices)
         collect(w, choices)
 
     if earlier_flags is None:
@@ -408,6 +498,18 @@ def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str
         if flag not in all_added and flag not in earlier_flags:
             c.err(where, f"requires flag {flag!r} that nothing in this pack grants "
                   "(nor any pack with a lower department.order)")
+
+    if encounters:
+        for axis in GRADES:
+            if axis not in graded_up:
+                c.err("encounters", f"no outcome raises {axis}; every pack grades all four Test Results upward somewhere")
+    if grade_gates:
+        reach = grade_reach(pack)
+        above = earlier_grade_reach(path, _department_order(pack))
+        for where, axis, minimum in grade_gates:
+            available = reach[axis] + above[axis]
+            if minimum > available:
+                c.err(where, f"requires {axis} {minimum}, but a run can earn at most {available} by this review")
 
     return c.errors
 
@@ -465,6 +567,27 @@ def validate_decks(path: Path, packs: list[Path]) -> list[str]:
         for s in mut.get("skills") or []:
             if s not in SKILLS:
                 errors.append(f"DECKS: mutation {mut.get('id')!r} names unknown skill {s!r}")
+    results = decks.get("test_results")
+    if not isinstance(results, dict):
+        errors.append("DECKS: test_results is required (hidden Test Results, t-022)")
+        return errors
+    axes = {a.get("id"): a for a in results.get("axes") or [] if isinstance(a, dict)}
+    if set(axes) != set(GRADES):
+        errors.append(f"DECKS: test_results.axes must be exactly {list(GRADES)}")
+    for aid, axis in axes.items():
+        for key in ("title", "high", "low"):
+            value = axis.get(key)
+            if not isinstance(value, str) or len(value.strip()) < (3 if key == "title" else 30):
+                errors.append(f"DECKS: test_results axis {aid!r} needs {key}")
+    verdicts = {v.get("axis"): v for v in results.get("verdicts") or [] if isinstance(v, dict)}
+    if set(verdicts) != VERDICT_AXES:
+        errors.append(f"DECKS: test_results.verdicts must cover {sorted(VERDICT_AXES)}")
+    for vid, verdict in verdicts.items():
+        if not isinstance(verdict.get("title"), str) or len(verdict["title"].strip()) < 3:
+            errors.append(f"DECKS: test_results verdict {vid!r} needs a title")
+        text = verdict.get("text")
+        if not isinstance(text, str) or len(text.strip()) < 60 or not text.rstrip().endswith((".", "!", "?")):
+            errors.append(f"DECKS: test_results verdict {vid!r} needs complete-sentence text of at least 60 chars")
     return errors
 
 
@@ -487,7 +610,7 @@ def main(argv: list[str]) -> int:
         deck_errors = validate_decks(decks, paths)
         errors.extend(deck_errors)
         if not deck_errors:
-            print(f"OK {decks.name}: job titles, societies and mutations reference granted flags")
+            print(f"OK {decks.name}: job titles, societies, mutations and Test Results check out")
     for e in errors:
         print(e)
     return 1 if errors else 0
