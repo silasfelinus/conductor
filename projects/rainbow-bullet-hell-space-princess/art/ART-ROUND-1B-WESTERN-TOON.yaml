@@ -1,0 +1,278 @@
+# Rainbow Space Princess art round 1B: western-toon STYLE bake-off (t-020, 2026-10-12 PT).
+# Silas, 2026-10-12 PT, after round 1: "we need a different style. It should be more like she ra princesses of power.
+# Keep what was done for a specific theme...character ids in the menu. But for general flavor, we need more western
+# cartoon, not faux realism." Round 1's pilot portraits stay as menu character IDs; this round picks the general look.
+# Five lanes (three western-capable checkpoints, the flattest round-1 lane, plus a flat-colour LoRA) x nine subjects,
+# same western-toon prefix/suffix/negative, seed and sampler per row. No She-Ra character LoRA: the show is a style
+# reference only; its characters are pushed out in the negative. Private.
+round: 1b
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-toon
+  label: Arthemy Western Art v3.0 + western-toon tags
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, toon (style), western cartoon, she-ra and the princesses
+    of power (style), flat color, cel shading, clean lineart, bold outlines, simple shading, bold graphic shapes,
+    expressive
+  suffix: flat pastel colors, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy, sparkles,
+    glowing magic, 2d animation still
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: nova-comic-toon
+  label: Nova Comic XL v2.0 + western-toon tags
+  engine: comfy
+  checkpoint: Illustrious/novaComicXL_v20.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, toon (style), western cartoon, she-ra and the princesses
+    of power (style), flat color, cel shading, clean lineart, bold outlines, simple shading, bold graphic shapes,
+    expressive
+  suffix: flat pastel colors, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy, sparkles,
+    glowing magic, 2d animation still
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: ntrmix-toon
+  label: NTR MIX xii + western-toon tags (flattest lane in round 1)
+  engine: comfy
+  checkpoint: Illustrious/ntrMIXIllustriousXL_xii.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, toon (style), western cartoon, she-ra and the princesses
+    of power (style), flat color, cel shading, clean lineart, bold outlines, simple shading, bold graphic shapes,
+    expressive
+  suffix: flat pastel colors, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy, sparkles,
+    glowing magic, 2d animation still
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: ftm-toon
+  label: FurryToonMix XL-V3 (ToonYou-based cartoon) + western-toon tags, humans
+  engine: comfy
+  checkpoint: Illustrious/furrytoonmix_xlV3.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, toon (style), western cartoon, she-ra and the princesses
+    of power (style), flat color, cel shading, clean lineart, bold outlines, simple shading, bold graphic shapes,
+    expressive
+  suffix: flat pastel colors, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy, sparkles,
+    glowing magic, 2d animation still
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: arthemy-flatlora
+  label: Arthemy + western-toon tags + Line Art + Flat Colors SDXL LoRA 0.6
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, toon (style), western cartoon, she-ra and the princesses
+    of power (style), flat color, cel shading, clean lineart, bold outlines, simple shading, bold graphic shapes,
+    expressive
+  suffix: flat pastel colors, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy, sparkles,
+    glowing magic, 2d animation still
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+  loras:
+  - resource_id: 3632
+    strength: 0.6
+subjects:
+- key: r1b-title-keyart
+  ticket: FE-TITLE
+  title: title screen key art, four princess ships (western toon)
+  size: 1344x768
+  seed: 411001
+  negative: humans, person, 1girl, 1boy, pilot visible, nsfw, nude, suggestive, lowres, worst quality, low quality,
+    bad anatomy, deformed, watermark, signature, text, logo, letters, username, blurry, jpeg artifacts, grainy,
+    muddy colors, grey, gritty, horror, realistic, photorealistic, 3d, semi-realistic, painterly, oil painting,
+    detailed shading, soft shading, airbrush, anime, manga, moe, she-ra (character), adora (she-ra), catra (she-ra),
+    glimmer (she-ra)
+  prompt_prose: Four princess starfighters fly in formation across a pastel cosmic ocean nebula, trailing rainbow
+    light.
+  prompt_tags: scenery, four starfighters flying in formation, pink swallowtail starfighter with four swept petal
+    wings, cyan needle starfighter with one long fin, butter yellow round disc starfighter with twin rings, lilac
+    three-pointed arrowhead starfighter, rainbow light trails, glowing pink bullets, bullet hell, cosmic ocean,
+    pink and lilac nebula clouds like waves, distant giant mechanical whale silhouette, robotic jellyfish ships,
+    stars, dynamic angle, wide shot, epic key visual, side-scrolling shooter, sense of speed
+  jobs:
+    arthemy-toon: 37935
+    nova-comic-toon: 37936
+    ntrmix-toon: 37937
+    ftm-toon: 37938
+    arthemy-flatlora: 37939
+- key: r1b-cast-group
+  ticket: CAST-GROUP
+  title: ensemble scene, four princesses (western toon)
+  size: 1344x768
+  seed: 411002
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, midriff, lowres, worst quality, bad anatomy, bad
+    hands, extra limbs, deformed, watermark, signature, text, logo, child, chibi, identical faces, same face, same
+    body type, realistic, photorealistic, 3d, semi-realistic, painterly, oil painting, detailed shading, soft shading,
+    airbrush, anime, manga, moe, she-ra (character), adora (she-ra), catra (she-ra), glimmer (she-ra)
+  prompt_prose: All four princess pilots stand together on a luminous starport deck before their ships.
+  prompt_tags: 4girls, group, adult women, standing together on a starport deck, different heights, different body
+    types, petite tomboy with very short copper hair and freckles in pink flight jacket, tall east asian woman with
+    long black braid in cyan flight coat, muscular dark-skinned woman with twists in yellow and gold sleeveless
+    flight suit, curvy latina punk with side shave and purple streaks in lilac patched jacket, four starfighters
+    behind them, confident, smiling, full body, sea nebula sky
+  jobs:
+    arthemy-toon: 37940
+    nova-comic-toon: 37941
+    ntrmix-toon: 37942
+    ftm-toon: 37943
+    arthemy-flatlora: 37944
+- key: r1b-pilot-solenne
+  ticket: CAST-P3
+  title: Solenne Adisa, cutscene look (western toon)
+  size: 832x1216
+  seed: 411003
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, midriff, underboob, lowres, worst quality, low
+    quality, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, deformed, watermark, signature,
+    text, logo, username, blurry, jpeg artifacts, child, loli, chibi, multiple girls, 2girls, multiple views, pale
+    skin, light skin, thin arms, skinny, realistic, photorealistic, 3d, semi-realistic, painterly, oil painting,
+    detailed shading, soft shading, airbrush, anime, manga, moe, she-ra (character), adora (she-ra), catra (she-ra),
+    glimmer (she-ra)
+  prompt_prose: Princess Solenne Adisa, a powerfully muscular adult Black pilot with deep-brown skin and hair in
+    twists, in a butter-yellow and gold flight suit.
+  prompt_tags: 1girl, solo, mature female, dark-skinned female, very dark skin, muscular female, broad shoulders,
+    toned arms, strong forearms, black hair, two-strand twists, hair up, ear cuff, brown eyes, warm smile, commanding,
+    butter yellow and antique gold flight suit, sleeveless, reinforced shoulder plates, circular ring insignia,
+    holding notebook with music notes, upper body, looking at viewer, mothership bridge background, golden ring
+    lights
+  jobs:
+    arthemy-toon: 37945
+    nova-comic-toon: 37946
+    ntrmix-toon: 37947
+    ftm-toon: 37948
+    arthemy-flatlora: 37949
+- key: r1b-pilot-vivi
+  ticket: CAST-P4
+  title: Vivi Reyes, cutscene look (western toon)
+  size: 832x1216
+  seed: 411004
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, midriff, underboob, large breasts, lowres, worst
+    quality, low quality, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, deformed, watermark,
+    signature, text, logo, username, blurry, jpeg artifacts, child, loli, chibi, multiple girls, 2girls, multiple
+    views, skinny, thin waist, realistic, photorealistic, 3d, semi-realistic, painterly, oil painting, detailed
+    shading, soft shading, airbrush, anime, manga, moe, she-ra (character), adora (she-ra), catra (she-ra), glimmer
+    (she-ra)
+  prompt_prose: Princess Vivi Reyes, a curvy adult Mexican-heritage punk pilot with a shaved side and lilac-streaked
+    dark hair, in a patched lilac armored jacket.
+  prompt_tags: 1girl, solo, mature female, plump, curvy, wide hips, tan skin, latina, undercut, side shave, dark
+    wavy hair, streaked hair, purple streaks, coral streaks, eyebrow piercing, ear piercings, painted nails, punk,
+    expressive eyebrows, mischievous grin, lilac armored jacket, sewn patches, comet pins, fully clothed, holding
+    music sampler, upper body, looking at viewer, starship hangar background, lilac neon lights
+  jobs:
+    arthemy-toon: 37950
+    nova-comic-toon: 37951
+    ntrmix-toon: 37952
+    ftm-toon: 37953
+    arthemy-flatlora: 37954
+- key: r1b-lilt-comms
+  ticket: FE-COMMS-LILT
+  title: Lilt-7 comms bust (western toon)
+  size: 832x1216
+  seed: 411005
+  negative: nsfw, nude, suggestive, lowres, worst quality, low quality, bad anatomy, deformed, watermark, signature,
+    text, logo, username, blurry, jpeg artifacts, child, chibi, multiple views, horror, creepy, mouthless, realistic,
+    photorealistic, 3d, semi-realistic, painterly, oil painting, detailed shading, soft shading, airbrush, anime,
+    manga, moe, she-ra (character), adora (she-ra), catra (she-ra), glimmer (she-ra), 1girl, cute, girly, large
+    breasts, pink hair
+  prompt_prose: Lilt-7, an androgynous pearl-glass synthetic liaison with gold eyes, cyan filaments and a crack
+    across one cheek, on a comms hologram.
+  prompt_tags: solo, (androgynous:1.3), nonbinary, adult, angular face, flat chest, android, synthetic humanoid,
+    translucent pearl glass skin, glowing cyan filaments under skin, golden eyes, small crack across one cheek,
+    short sleek iridescent hair, calm deadpan expression, high collar, pearl white uniform, hologram, scanlines,
+    bust portrait, looking at viewer, command bridge background
+  jobs:
+    arthemy-toon: 37955
+    nova-comic-toon: 37956
+    ntrmix-toon: 37957
+    ftm-toon: 37958
+    arthemy-flatlora: 37959
+- key: r1b-ship-petal-wing
+  ticket: FE-SHIP-P1
+  title: Petal Wing player ship (western toon)
+  size: 1216x832
+  seed: 411006
+  negative: humans, person, 1girl, 1boy, pilot visible, nsfw, nude, suggestive, lowres, worst quality, low quality,
+    bad anatomy, deformed, watermark, signature, text, logo, letters, username, blurry, jpeg artifacts, grainy,
+    muddy colors, grey, gritty, horror, realistic, photorealistic, 3d, semi-realistic, painterly, oil painting,
+    detailed shading, soft shading, airbrush, anime, manga, moe, she-ra (character), adora (she-ra), catra (she-ra),
+    glimmer (she-ra)
+  prompt_prose: The Petal Wing, a rose-gold swallowtail starfighter with four swept petal blades, side view on a
+    plain background.
+  prompt_tags: spaceship, vehicle, spacecraft, starfighter, side view, profile, sleek rose gold and pink hull, four
+    swept swallowtail wings shaped like petals, pearl white accents, glowing pink thrusters, cockpit canopy, iridescent
+    metal, concept art, game asset, single object, centered, full shot, simple background, dark navy background
+  jobs:
+    arthemy-toon: 37960
+    nova-comic-toon: 37961
+    ntrmix-toon: 37962
+    ftm-toon: 37963
+    arthemy-flatlora: 37964
+- key: r1b-enemy-moonjelly
+  ticket: FE-ENEMY-E05
+  title: Moonjelly Lantern enemy (western toon)
+  size: 1216x832
+  seed: 411007
+  negative: humans, person, 1girl, 1boy, pilot visible, nsfw, nude, suggestive, lowres, worst quality, low quality,
+    bad anatomy, deformed, watermark, signature, text, logo, letters, username, blurry, jpeg artifacts, grainy,
+    muddy colors, grey, gritty, horror, realistic, photorealistic, 3d, semi-realistic, painterly, oil painting,
+    detailed shading, soft shading, airbrush, anime, manga, moe, she-ra (character), adora (she-ra), catra (she-ra),
+    glimmer (she-ra), legs, quadruped, walking, animal legs, feet, creature
+  prompt_prose: A Moonjelly Lantern, a robotic jellyfish warship with a translucent glass bell and electric tentacle
+    antennae, side view on a plain background.
+  prompt_tags: spaceship, vehicle, flying, robotic jellyfish spaceship, translucent glass bell hull, glowing core
+    inside bell, electric tentacle antennae, lilac and cyan bioluminescence, iridescent metal ribs, futuristic,
+    enemy ship, side view, concept art, game asset, single object, centered, full shot, simple background, dark
+    navy background
+  jobs:
+    arthemy-toon: 37965
+    nova-comic-toon: 37966
+    ntrmix-toon: 37967
+    ftm-toon: 37968
+    arthemy-flatlora: 37969
+- key: r1b-boss-pearl-seahorse
+  ticket: A-BOSS-01
+  title: B01 Pearl Seahorse boss (western toon)
+  size: 1344x768
+  seed: 411008
+  negative: humans, person, 1girl, 1boy, pilot visible, nsfw, nude, suggestive, lowres, worst quality, low quality,
+    bad anatomy, deformed, watermark, signature, text, logo, letters, username, blurry, jpeg artifacts, grainy,
+    muddy colors, grey, gritty, horror, realistic, photorealistic, 3d, semi-realistic, painterly, oil painting,
+    detailed shading, soft shading, airbrush, anime, manga, moe, she-ra (character), adora (she-ra), catra (she-ra),
+    glimmer (she-ra), legs, quadruped, walking, animal legs, feet
+  prompt_prose: The Pearl Seahorse, a giant robotic seahorse battle cruiser with a glowing pearl in its throat.
+  prompt_tags: spaceship, vehicle, giant robotic seahorse battle cruiser, tall coiled hull, glowing pearl in throat,
+    rotating tail shield, colossal boss warship, iridescent armor, glowing weak point, side view, facing left, pink
+    cloud sea background, epic scale, wide shot
+  jobs:
+    arthemy-toon: 37970
+    nova-comic-toon: 37971
+    ntrmix-toon: 37972
+    ftm-toon: 37973
+    arthemy-flatlora: 37974
+- key: r1b-stage-pinkwake
+  ticket: FE-STAGE-S01
+  title: S01 Pinkwake Estuary plate (western toon)
+  size: 1344x768
+  seed: 411009
+  negative: humans, person, 1girl, 1boy, pilot visible, nsfw, nude, suggestive, lowres, worst quality, low quality,
+    bad anatomy, deformed, watermark, signature, text, logo, letters, username, blurry, jpeg artifacts, grainy,
+    muddy colors, grey, gritty, horror, realistic, photorealistic, 3d, semi-realistic, painterly, oil painting,
+    detailed shading, soft shading, airbrush, anime, manga, moe, she-ra (character), adora (she-ra), catra (she-ra),
+    glimmer (she-ra)
+  prompt_prose: The Pinkwake Estuary, a pink cloud sea in space with floating glass buoys, a pearly shoal and coral.
+  prompt_tags: scenery, outer space, pink cloud sea, nebula clouds like ocean waves, floating glass buoys, pearly
+    fish shoal in the distance, coral reef silhouettes, stars, horizon, wide shot, dreamy, calm, side-scrolling
+    game background, parallax layer, open sky in center
+  jobs:
+    arthemy-toon: 37975
+    nova-comic-toon: 37976
+    ntrmix-toon: 37977
+    ftm-toon: 37978
+    arthemy-flatlora: 37979
