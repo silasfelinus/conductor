@@ -158,7 +158,7 @@ tasks:
   - id: t-005
     milestone: m1
     title: "Art direction sheet, card backs and three style-test card faces"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -171,9 +171,16 @@ tasks:
       Something Ticking in the Toner, Trust Fall Over the Shredder). Record prompt, model,
       seed, ArtJob and ArtImage IDs in art/ROUND-1.yaml. Never list art as delivered before
       its URL loads. Generated internal art is pre-approved.
+
+      Art round 1 queued 2026-10-13 (session 2026-10-13T00:00:00Z-sd-art-q7k2): ART-
+      DIRECTION.md written; five krea2 requests (shifting-desks-r1-*) added to projects/art-
+      prompts.yaml requests and recorded in art/ROUND-1.yaml, all status requested. ArtJob and
+      ArtImage ids arrive with the auto-art-generate run (watch each row's last_art_job_id);
+      mark a subject delivered only after its media_url returns 200, then review the renders
+      against ART-DIRECTION.md before setting art_ref on the cards.
     claimed_by: 2026-10-13T00:00:00Z-sd-art-q7k2
     claimed_at: '2026-10-13T04:55:47Z'
-    updated: '2026-10-13T04:55:47Z'
+    updated: '2026-10-13T05:13:15Z'
   - id: t-006
     milestone: m2
     title: "Public /play front page, Projects tab and card board shell"
