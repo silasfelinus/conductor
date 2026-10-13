@@ -528,3 +528,29 @@ def test_flag_map_is_current_and_every_read_flag_is_granted():
     flags = json.loads((ENC_DIR / "FLAG-MAP.json").read_text(encoding="utf-8"))["flags"]
     assert "admin-access" in flags and flags["admin-access"]["granted_by"]
     assert any("the-kind-rewrite" in r for r in flags["admin-access"]["read_by"])
+
+
+DIFFICULTY_WORDS = {"Routine": 7, "Risky": 9, "Dire": 11}
+
+
+@pytest.mark.parametrize("path", vp.pack_paths([]), ids=lambda p: p.name)
+def test_risk_hints_tell_the_truth(path):
+    # t-019: the balance sim found swap-the-file promising "success spends a Successor"
+    # while charging one up front on every attempt. Hints must match the data.
+    pack = json.loads(path.read_text(encoding="utf-8"))
+    for card in [*pack["encounters"], pack["boss"]]:
+        for choice in card["choices"]:
+            hint, roll = choice["risk_hint"], choice["roll"]
+            for word, target in DIFFICULTY_WORDS.items():
+                if re.search(rf"\b{word}\b", hint, re.I):
+                    assert roll and roll["target"] == target, (choice["id"], word)
+            if re.search(r"success spends", hint, re.I):
+                assert choice["cost"].get("successors", 0) == 0, choice["id"]
+                assert choice["success"]["effects"].get("successors", 0) < 0, choice["id"]
+
+
+def test_balance_report_is_committed():
+    report = (ROOT / "projects" / "shifting-desks" / "BALANCE-REPORT.md").read_text(encoding="utf-8")
+    assert "<!-- generated:balance -->" in report and "<!-- /generated:balance -->" in report
+    for policy in ("Complier", "Rebel", "Coward", "Saint"):
+        assert f"The {policy}" in report
