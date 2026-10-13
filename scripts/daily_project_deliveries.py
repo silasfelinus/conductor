@@ -36,7 +36,7 @@ def active_targets():
     if not p.exists():
         return {p.name for p in (ROOT / "projects").iterdir() if p.is_dir()}
     data = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
-    entries = data.get("projects", [])
+    entries = data.get("overrides", [])
     if isinstance(entries, dict):
         entries = [{"slug": k, **v} for k, v in entries.items()]
     return {e["slug"] for e in entries if isinstance(e, dict) and
