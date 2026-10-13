@@ -1108,8 +1108,8 @@ tasks:
   - id: t-057
     milestone: m8
     title: "Butterfly Blaster depth slice 3: Moons 2 and 3, the bosses and the endings"
-    status: review
-    updated: '2026-10-13T22:36:00Z'
+    status: done
+    updated: '2026-10-13T23:27:16Z'
     passes: 1
     stakes: reversible
     depends_on: t-056
@@ -1119,15 +1119,16 @@ tasks:
       Reviewer quality pass 1 on October 12, 2026 at 3:46 AM PT. Conductor#6040 records the independently reproduced earned cleared/zero flag loss on B New Season, exact retry_context and TALKBACK. Return the task to ready and release ownership; retain kind_robots#3596 for the original worker's focused repair. Existing full arcade command passed 30 cabinet suites and 28 head checks were green, but the public New Season save-consumer transition loses earned ending history. No duplicate implementation, new human gate or deployment. Read retry_context and PR feedback before re-claiming, preserve completion flags and test both endings.
 
       Recovery of quality pass1 from already-merged kind_robots#3596: preserve earned cleared/zero/threads before the first checkpoint, including B New Season and step-zero reload. Focused runtime and actual input/save-consumer regressions prepared on worker/kr-arcade-t057-profile-recovery-c9f2. Original-code red reproduced; Finale, full arcade engine (33 cabinet suites), targeted ESLint/Prettier, and six native Chromium actual keyboard/touch/localStorage/reload/play renders at390/768/1440 passed. Browser uses staged earned ending profiles, not a claimed full human campaign playthrough. Existing Moons/bosses/endings retained; CI/merge still pending. Daily five ledger unchanged.
+
+      Merged silasfelinus/kind_robots#3646 at a4196c625b03be48bcc468b4de0848ef8bb236f5 using expected head f3d4acf4fbdbfc5eaa86a5358a8f1709d29f38a6 after all28 actual head checks completed success, including required TypeScript/Contract verifiers/verify. Complete final diff and reviews checked; no blocking review or approval requirement, no bypass. Main runtime matches repaired blob12b55a257 and obsolete branch verified404. New Season and step-zero reload retain earned dawn/Zero Night history; Continue retains current-run resources. Original runtime red and B-only mutation fails intended reload assertion. Focused strict tsc/Finale/ESLint/Prettier/full33cabinet engine and six actual Chromium keyboard/touch/storage/reload/play cases passed. Existing audited later regions/bosses/endings retained; slice3 complete, co-op/modes remain t058. Staged fixtures are not human45-60minute pacing or deployment evidence. Historical quality pass1 retained; retry_context resolved, implementation link3646, one targeted retirement kaizen t152 awaits dependency release. Daily five ledger untouched.
     implementation_pr: 'silasfelinus/kind_robots#3646'
-    owner: worker
     claimed_by: 20261013T203523Z-blaster-t057-c9f2
     claimed_at: '2026-10-13T20:35:23Z'
 
   - id: t-058
     milestone: m8
     title: "Butterfly Blaster depth slice 4: Together and forever"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-057
@@ -2635,7 +2636,7 @@ tasks:
   - id: t-152
     milestone: m8
     title: "Verify Butterfly Blaster earned history through cabinet retirement and first-checkpoint reload."
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-057
