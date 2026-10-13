@@ -23,3 +23,15 @@
 ### October 13, 2026, 2:42 AM PT — concurrent merge recovery
 
 Conductor#6110's unchanged reviewed head merged in another session at `2026-10-13T09:40:45Z`, as `800c4d7858db202fee072e0078250140fdcdd089`. The actual enqueue-contract rejection is still present in that head. Conductor#6111 merged as `533b1bc8827ef3b8531ccbcf15bd0140a1765e9e` after all 25 exact-head checks completed successfully or intentionally skipped; main now verifies t-013 **ready, unowned, pass 1**, with retry context. Its review branch is deleted. The original worker should re-claim t-013 and open a focused **follow-up** repair PR, then verify the consumer; the earlier instruction to retain an open #6110 is superseded by the concurrent merge. No additional pass or completion is recorded for this handoff.
+
+## October 13, 2026, 3:35 AM PT — t-014 ending source review
+
+**Session:** 2026-10-13T103246Z-shifting-desks-endings-review-n8r3
+
+**Decision:** merged source/data half [conductor#6113](https://github.com/silasfelinus/conductor/pull/6113), exact head `58fbaf9bc0946dc46ff7f47b13fdf56d1a3c34a5`, squash `21e41fd75e72e588bed7dc2427fb67043dc4a607`. All 23 current head checks completed successfully or intentionally skipped, no blocking reviews/threads, no approval requirement. Complete eight-file diff inspected, including all ten epilogues/variants, every generated flag entry and all ten requested image rows.
+
+**What was good:** Ten authored epilogues distinguish Board, default elimination and secret Posthumous Affairs outcomes. The generated 254-flag map is reproducible and every read flag has a grant. Independent encounter/negation suite: 54 passed; full validator accepts all packs, decks, endings and flag map. All ten root/ROUND-7/epilogue prompts match exactly and pass the actual current Kind Robots krea2 enqueue contract (cfg 1, steps 8). No requested image is falsely reported delivered.
+
+**What to improve / handoff:** These are structural validations, not a seeded proof that all ten endings are playable. Keep t-014 owned by `2026-10-13T-sd-t014-endings` for the Kind Robots consumer: verify every ending, secret elimination precedence, variant and save/reload behavior, accessible visible epilogue cards and current-head CI before closing. The source merge does not publish/deploy or satisfy the final fun verdict. No learning closure is appended because the task remains in progress.
+
+**Kaizen task:** t-024 — Repair rejected Shifting Desks art prompts using the live enqueue contract. This targets the recurring producer/real-gate mismatch: the three older frame-noun requests still need synchronized source/ledger/queue repair and generator verification. Coordinate shared root edits with the active t-014 worker; preserve issued jobs. No extra task is created for this review bookkeeping PR.
