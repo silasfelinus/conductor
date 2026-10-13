@@ -103,3 +103,23 @@ def test_lead_flavor_quota_is_enforced(tmp_path, pack):
     for enc in bad["encounters"]:
         enc["tags"] = ["deathtrap"]
     assert any("lead tag" in e for e in _validate(tmp_path, bad))
+
+
+DECKS = ENC_DIR / "DECKS.json"
+
+
+def test_decks_reference_only_granted_flags():
+    assert vp.validate_decks(DECKS, vp.pack_paths([])) == []
+
+
+def test_decks_reject_a_society_flag_nothing_grants(tmp_path):
+    decks = json.loads(DECKS.read_text(encoding="utf-8"))
+    decks["societies"][0]["objectives"]["orientation"].append("a-flag-nothing-grants")
+    path = tmp_path / "DECKS.json"
+    path.write_text(json.dumps(decks), encoding="utf-8")
+    errors = vp.validate_decks(path, vp.pack_paths([]))
+    assert any("no pack grants" in e for e in errors)
+
+
+def test_decks_are_not_validated_as_packs():
+    assert DECKS not in vp.pack_paths([])
