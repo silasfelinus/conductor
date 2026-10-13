@@ -1,0 +1,25 @@
+version: 1
+project: zuzu-pinball
+task: t-019
+operation: done
+session: 20261012T160000Z-zuzu-t019-croc-art-b4n8
+updated: '2026-10-13T03:36:27Z'
+verify_pr: silasfelinus/kind_robots#3613
+note: >-
+  October12 PT reviewer independently verified merged renderer kind_robots#3609
+  at0ee864c36903c5c0285f1b27eb4e67b4825dd75e and v2 atlas kind_robots#3613
+  at4f12ebd7a8fbecc1f9e501133601d774c7390c7d, all final-head checks completed
+  green. conductor#6070 merged by original worker at43ecc535ec602a8eb6ee641d2a2917f011570be2.
+  Independently passed1000 capture/spit cycles,24 Watering Hole swallows and
+  25 lifecycle plus3 six-ball stress replays. Final immutable GitHub assetHTTP200,
+  2404328bytes exactly match committed3840x2880RGBA atlas;101 nonempty cells.
+  Close only t019 source/art integration; preserve t013 device QA and t014
+  human acceptance/publication gate. No deployment or realGPU verdict claimed.
+learning:
+  date: '2026-10-12'
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Verify the delivered atlas bytes and decoded frames alongside real capture/spit and reduced-motion consumers; successful ArtJobs alone do not prove usable art or live deployment.
