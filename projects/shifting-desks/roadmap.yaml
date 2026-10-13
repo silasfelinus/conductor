@@ -3,7 +3,7 @@
 # and zuzu-gamebook (authored depth, character sheet, endings), in an original non-Zuzu world.
 # Creative deliverables: DESIGN-BRIEF.md (engine, rules, guardrails), PITCHES.md (directions
 # for Silas), encounters/ (schema, validator, ORIENTATION-12.json first department pack).
-# Runtime: silasfelinus/kind_robots, admin preview /admin/shifting-desks first.
+# Runtime: silasfelinus/kind_robots, public front page /play/shifting-desks (Silas, 2026-10-12 PT).
 project: shifting-desks
 kind: software
 autonomous: true
@@ -40,9 +40,21 @@ notes_from_silas: |
 
   2026-10-12 PT, answering t-002's choices: spine = "Combination of synthesis with vault
   test facility. I liked them best"; party mode = "Not at all"; emphasis = "Secret
-  societies & traitors, Paperwork & psych tests". Title left unanswered, so the working
-  title "Shifting Desks" stands. Applied in DESIGN-BRIEF.md "Decided world" and PITCHES.md
+  societies & traitors, Paperwork & psych tests". Title: "Weirdly. I confirmed shifting
+  desks but it didn't get confirmed." The title is Shifting Desks (confirmed).
+
+  2026-10-12 PT: "Give us a real, front end, non admin front page, since I expect we will
+  get to front end user facing before anyone else looks at my site (I'm currently the
+  only user)". This overrides the admin-preview-first default for this project: the
+  playable game lives at public /play/shifting-desks with a Projects tab, and grows there. Applied in DESIGN-BRIEF.md "Decided world" and PITCHES.md
   "Decision".
+
+  2026-10-12 PT: "priority: front end interaction. not in admin, in play. that means it
+  needs to be up to standard for a five minute, multi stage expeirence demo." And: "all
+  stations need an image. to be clear. we are making a demo, so i;s cool, but final result
+  needs an image, and text is easy, so we should always have the prompt". Every station
+  (card, review, location, department arrival, job title, society, mutation) carries an
+  image prompt from the moment it is authored; validate_pack.py enforces it.
 
   Agent mandate (AGENTS.md defaults for new projects): scope gate t-002 is SOFT and runs
   in parallel; build immediately. Internal generated art is pre-approved. Public /play,
@@ -55,7 +67,7 @@ milestones:
     weight: 15
     status: in-progress
   - id: m2
-    title: "ENGINE — admin preview, seeded reducer, meters, Successors, decks, save"
+    title: "ENGINE — public front page, seeded reducer, meters, Successors, decks, save"
     weight: 25
     status: not-started
   - id: m3
@@ -104,8 +116,9 @@ tasks:
       PAL is HR and test proctor, and hidden Test Results grade the player). Party mode:
       "Not at all" (removed from the roadmap). Emphasis: "Secret societies & traitors" and
       "Paperwork & psych tests" (validator now requires at least half of each pack's cards
-      to carry conspiracy, psych-test or paperwork tags). Title: no answer, working title
-      "Shifting Desks" stands until Silas renames it.
+      to carry conspiracy, psych-test or paperwork tags). Title: CONFIRMED "Shifting Desks"
+      (Silas, 2026-10-12 PT: "I confirmed shifting desks but it didn't get confirmed"; the
+      question offered no keep-as-is option, so his pick did not register).
   - id: t-003
     milestone: m1
     title: "Encounter-pack contract, validator and Orientation department pack"
@@ -125,7 +138,7 @@ tasks:
   - id: t-004
     milestone: m1
     title: "World bible: the Company, PAL, departments, recurring cast, societies, mutations, callback ledger"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -143,11 +156,17 @@ tasks:
       (6-point skill spread + perk); a callback ledger listing every homage with its
       source and the "allusion, not quotation" boundary; and the ten endings with
       unlock conditions. Keep the IP and tone guardrails from DESIGN-BRIEF.md.
+
+      DONE 2026-10-12 PT: WORLD-BIBLE.md and encounters/DECKS.json (6 societies with flag-
+      keyed objectives/betrayals, 8 mutations, 5 job titles), validated by validate_pack.py +
+      tests/test_shifting_desks_encounters.py (12 pass). Unblocks t-008 and the department
+      packs t-010..t-013.
+    updated: '2026-10-13T04:57:19Z'
   - id: t-005
     milestone: m1
     title: "Art direction sheet, card backs and three style-test card faces"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -159,27 +178,52 @@ tasks:
       Something Ticking in the Toner, Trust Fall Over the Shredder). Record prompt, model,
       seed, ArtJob and ArtImage IDs in art/ROUND-1.yaml. Never list art as delivered before
       its URL loads. Generated internal art is pre-approved.
+
+      Art round 1 queued 2026-10-13 (session 2026-10-13T00:00:00Z-sd-art-q7k2): ART-
+      DIRECTION.md written; five krea2 requests (shifting-desks-r1-*) added to projects/art-
+      prompts.yaml requests and recorded in art/ROUND-1.yaml, all status requested. ArtJob and
+      ArtImage ids arrive with the auto-art-generate run (watch each row's last_art_job_id);
+      mark a subject delivered only after its media_url returns 200, then review the renders
+      against ART-DIRECTION.md before setting art_ref on the cards.
+
+      DONE 2026-10-13 PT: all five round-1 renders answer 200 on media.acrocatranch.com and
+      kindrobots.org (encounter back, review back, Gus, Something Ticking in the Toner, Trust
+      Fall Over the Shredder). Reviewed against ART-DIRECTION.md: on palette, halftone, single
+      readable scene, no lettering; verdict keep for all five (ROUND-1.yaml). Style test
+      accepted internally, which unblocks t-015 (its faces are already queued in ROUND-2).
+    claimed_by: 2026-10-13T00:00:00Z-sd-art-q7k2
+    claimed_at: '2026-10-13T04:55:47Z'
+    updated: '2026-10-13T07:37:11Z'
   - id: t-006
     milestone: m2
-    title: "Admin preview route, admin nav tab and reused card board shell"
-    status: ready
+    title: "Public /play front page, Projects tab and card board shell"
+    status: done
     depends_on: t-003
-    owner: null
+    owner: reviewer
+    updated: '2026-10-13T04:00:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3620'
     passes: 0
     stakes: reversible
     note: >-
-      kind_robots: /admin/shifting-desks with requiredRole ADMIN and a discoverable Admin
-      nav tab. Reuse Shifting Lands' stateless board grid, kr-card-flip reader and dice
-      result components; do not mount the Shifting Lands or Gamebook pages or share their
-      stores. Ship a static Orientation board rendering the 12 cards face-down/face-up from
-      a snapshot of ORIENTATION-12.json with provenance. No public /play route or menu
-      listing (hard gate t-020).
+      kind_robots: public /play/shifting-desks (Silas, 2026-10-12 PT: "a real, front end,
+      non admin front page") with a Projects channel tab. Do not mount the Shifting Lands
+      or Gamebook pages or share their stores. Content is a provenance-stamped snapshot of
+      ORIENTATION-12.json.
+
+      DONE 2026-10-12 PT in kind_robots#3620: public /play/shifting-desks (front page with
+      PAL's welcome, three pillars and the five-level descent), Projects channel tab
+      content/channels/projects/shifting-desks.md, original poster public/shifting-desks/
+      front-poster.svg, provenance-stamped content snapshot utils/shiftingDesks/orientation.json.
+      Screenshots: projects/shifting-desks/screenshots/.
+
   - id: t-007
     milestone: m2
     title: "Seeded run reducer: meters, Successors, Suspicion, Clearance gates, save v1"
-    status: ready
+    status: done
     depends_on: t-003
-    owner: null
+    owner: reviewer
+    updated: '2026-10-13T04:00:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3620'
     passes: 0
     stakes: reversible
     note: >-
@@ -192,14 +236,23 @@ tasks:
       disciplinary card; requires gates with explained disabled choices; boss department
       outcomes; Restructuring map effects with written reasons; browser-local versioned
       save. Unit tests for every rule plus a seeded replay test.
+
+      DONE 2026-10-12 PT in kind_robots#3620: utils/shiftingDesks/rules.ts (seeded draw, cost +
+      2d6 + skill + Form boost, natural 12/2, five clamped meters, Successor arrival with the
+      Temp perk, Suspicion 10 conversation, requires gates with reasons, boss outcomes and
+      reorientation re-deal, versioned save guard) and stores/shiftingDesksStore.ts.
+      verifyShiftingDesks.test.ts simulates 3,000 seeded runs. Not yet built: Restructuring
+      map effects between departments (moved to t-023; meaningful only once Department 2
+      exists) and carried items (none are authored yet).
+
   - id: t-008
     milestone: m2
-    title: "Job Title, Secret Society and Mutation decks in the engine"
-    status: waiting
+    title: "Secret Society and Mutation decks in the engine (Job Titles shipped in t-007)"
+    status: done
     depends_on:
       - t-004
       - t-007
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -208,14 +261,27 @@ tasks:
       against run flags; the Mutation is once per department, with +2 Suspicion on
       witnessed cards. Never reveal the player's Society to other cards. Tests for dealing,
       seeding, objective scoring and witnessed costs.
+
+      DONE 2026-10-12 PT in kind_robots#3622 (merged 98da421): every run deals a face-down
+      society and mutation from a sealed envelope; per-department orders and betrayals keyed
+      to flags; favors (force success, +3, ignore requirement, instant effects) and mutations
+      (reroll, auto-success, +3, restore Composure) with +2 Suspicion when witnessed; v1/v2
+      saves upgrade. Verified by test:shifting-desks (3,000 seeded runs) and Playwright
+      playthroughs at 390/768/1440.
+    claimed_by: 2026-10-13T051500Z-sd-societies-m4x8
+    claimed_at: '2026-10-13T05:09:34Z'
+    updated: '2026-10-13T06:22:36Z'
+    implementation_pr: 'silasfelinus/kind_robots#3622'
   - id: t-009
     milestone: m2
-    title: "Playable Orientation slice end to end at the admin route"
-    status: waiting
+    title: "Playable Orientation slice end to end at the public route"
+    status: done
     depends_on:
       - t-006
       - t-007
-    owner: null
+    owner: reviewer
+    updated: '2026-10-13T04:00:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3620'
     passes: 0
     stakes: reversible
     note: >-
@@ -224,12 +290,17 @@ tasks:
       success/failure prose and effects, journal, Successor deaths, the 90-Day Review with
       its 5 routes, and at least 3 reachable department outcomes. Placeholder art clearly
       labeled pending. Screenshots at 375/768/1440 in the PR.
+
+      DONE 2026-10-12 PT in kind_robots#3620, at the PUBLIC route per Silas's direction. Verified
+      by a local nuxi dev + Playwright full playthrough at 390/768/1440 px: zero horizontal
+      overflow, zero page errors, result screen reached at every width.
+
   - id: t-010
     milestone: m3
     title: "Department 2 pack: Records & Forms (Brazil / Bureaucracy)"
-    status: waiting
+    status: done
     depends_on: t-004
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -238,12 +309,29 @@ tasks:
       location as ordinary cards now). 3 x 4 cards, balanced polarity, boss "The Form That
       Requires Itself" with at least 3 routes. Must pass validate_pack.py. Pays off
       forged-dale, halvorsen-envelope and the Stapler Liberation Front contact from Orientation.
+
+      DONE 2026-10-13 PT: encounters/RECORDS-12.json ships Pneumatic Tube Exchange, The
+      Sub-Archive and Window 9 with 4 authored cards each (12 cards, 4 good / 4 bad / 4
+      mixed, 11 of 12 tagged conspiracy, psych-test or paperwork, 3 ledger-bounded
+      callbacks), and every choice pays a cost. Nine choices are gated on Orientation flags
+      (forged-dale, halvorsen-envelope, stapler-front-contact, has-master-key,
+      knows-the-ducts, roach-union-ally, roach-union-member, pip-trusts-you,
+      wearing-a-dead-mans-badge). Boss "The Form That Requires Itself" has 5 routes and 5
+      department outcomes plus the refiled re-deal. validate_pack.py now lets requires.flag
+      be granted by any pack with a lower department.order; DECKS.json gains records
+      objectives and betrayals for all six societies; WORLD-BIBLE callback ledger updated.
+      validate_pack.py OK for both packs and the decks; pytest
+      tests/test_shifting_desks_encounters.py 17 passed. Wiring the pack into the
+      kind_robots game is separate work.
+    claimed_by: 2026-10-13T05:17:00Z-sd-records-q7k2
+    claimed_at: '2026-10-13T05:17:05Z'
+    updated: '2026-10-13T05:27:01Z'
   - id: t-011
     milestone: m3
     title: "Department 3 pack: Product Safety, Toy Division (Snuggle Sentinel)"
-    status: waiting
+    status: done
     depends_on: t-004
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -251,12 +339,23 @@ tasks:
       boss "Snuggle Sentinel's Launch Party". Nuclear-capable toys are played for
       corporate cheer; nothing ever detonates near a child (tone guardrail). Pays off
       bear-imprinted, defused-mk0 and mailed-the-bear-upstairs. Must pass validate_pack.py.
+
+      DONE 2026-10-13 PT: pack conductor#6104 (TOY-DIVISION-12.json: Concept Lab, Focus Group
+      Room, Proving Grounds, 12 graded cards, Launch Party boss with seven routes incl.
+      Empathy 4 and Spite 4 gates, Restructuring memos for every Records outcome, society
+      orders, art round 4 queued), wiring kind_robots#3629 (merged 8dc5530: third department
+      registered, fallback, PAL memos). Three-department playthrough verified at 390 and 1440
+      with no errors or overflow; sim 2,666/3,000 complete.
+    claimed_by: 2026-10-13T-sd-t011-toys
+    claimed_at: '2026-10-13T07:11:28Z'
+    updated: '2026-10-13T07:45:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#3629'
   - id: t-012
     milestone: m3
     title: "Department 4 pack: Wellness & Testing (vault tests, psych tests, mutation suite)"
-    status: waiting
+    status: claimed
     depends_on: t-004
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -266,10 +365,13 @@ tasks:
       Heaviest psych-test density in the game, and where hidden Test Results are partly
       revealed. Original facility, voice and framing, with no Aperture or Vault-Tec
       likeness. Must pass validate_pack.py.
+    claimed_by: 2026-10-13T-sd-t012-vault
+    claimed_at: '2026-10-13T08:52:22Z'
+    updated: '2026-10-13T08:52:22Z'
   - id: t-013
     milestone: m3
     title: "Department 5 pack: Sub-Level Zero, The Board and the Kind Rewrite true ending"
-    status: waiting
+    status: ready
     depends_on: t-004
     owner: null
     passes: 0
@@ -301,7 +403,7 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Illustrate the 13 Orientation card faces (12 encounters + review)"
-    status: waiting
+    status: ready
     depends_on: t-005
     owner: null
     passes: 0
@@ -314,7 +416,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Window shifts: the Papers-Please-style desk card type"
-    status: waiting
+    status: ready
     depends_on: t-009
     owner: null
     passes: 0
@@ -327,7 +429,9 @@ tasks:
   - id: t-017
     milestone: m4
     title: "Comic timing: memo ticker, stamp animation, Successor arrival and personnel file export"
-    status: waiting
+    status: done
+    updated: '2026-10-13T06:30:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3622'
     depends_on: t-009
     owner: null
     passes: 0
@@ -337,18 +441,32 @@ tasks:
       reduced-motion path; Successor arrival card with an orientation line; an end-of-run
       Personnel File (cause of each termination, societies betrayed, forms filed) as a
       local printable/downloadable card. No external sharing, which is a publish gate.
+
+      DONE 2026-10-12 PT in kind_robots#3622: scrolling PAL memo ticker keyed to flags, APPROVED/DENIED stamp slam, Successor-thawed card, elevator interstitial with restructuring memo, and a printable Personnel File finale (both departments, society verdict, causes of termination, Print button). Reduced-motion paths for all of it.
+
   - id: t-018
     milestone: m4
     title: "Accessibility and device pass at 375 / 768 / 1440"
-    status: waiting
+    status: done
     depends_on: t-009
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
       Keyboard and screen reader through a full department, roll results announced
       immediately, developer notes never spoken, disabled choices explained, focus return
       after flip, no hover-only actions, no horizontal overflow. Screenshots in the PR.
+
+      DONE 2026-10-13 PT: axe-core WCAG 2.1 A/AA audit through a full three-department run at
+      375, 768 and 1440 (front, hire, envelope, keyboard-opened choices, result, elevator,
+      review, Personnel File): no overflow, no page errors. Fixed site-wide html lang,
+      contrast on labels/chips/badges, focus return to the new card after Next and the
+      elevator. Only remaining findings are two shared workspace-header elements at 1440
+      (outside the game; separate change). kind_robots#3630 merged e905484.
+    claimed_by: 2026-10-13T-sd-t018-a11y
+    claimed_at: '2026-10-13T07:38:33Z'
+    updated: '2026-10-13T08:51:47Z'
+    implementation_pr: 'silasfelinus/kind_robots#3630'
   - id: t-019
     milestone: m5
     title: "Seeded balance simulation across all five departments"
@@ -366,7 +484,7 @@ tasks:
       clean and every ending appears. Commit the report and tuned packs.
   - id: t-020
     milestone: m5
-    title: "Public /play/shifting-desks release decision"
+    title: "Silas's fun verdict and wider promotion (home, Arcade, sharing)"
     status: waiting
     depends_on:
       - t-018
@@ -375,10 +493,12 @@ tasks:
     passes: 0
     stakes: outward-facing
     gate_human: true
-    gate_reason: publish
+    gate_reason: subjective-acceptance
     note: >-
-      Hard gate. Publishing the public route, any menu or Arcade listing, and Silas's
-      verdict that it is genuinely funny and fun. Agents prepare the release PR and
+      Hard gate. The public /play/shifting-desks page and its Projects tab were authorized
+      by Silas on 2026-10-12 PT and ship as the game grows. This task is what remains
+      human-only: his verdict that the full game is genuinely funny and fun, and any wider
+      promotion (home page feature, Arcade listing, external sharing). Agents prepare
       device screenshots, then stop at needs-human.
   - id: t-021
     milestone: m5
@@ -395,9 +515,9 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Hidden Test Results: Obedience, Empathy, Ingenuity and Spite grading"
-    status: waiting
+    status: done
     depends_on: t-007
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -407,3 +527,40 @@ tasks:
       during play, are partly revealed at each department review ("PAL has prepared your
       interim results"), gate some boss routes, and set the ending's flavor text in the
       Personnel File. Tests for accumulation, gating and that no grade is shown early.
+
+      DONE 2026-10-13 PT: data half conductor#6100 (grades on all 82 choices, grade-gated
+      review routes, DECKS test_results, validator checks), engine/UI kind_robots#3627 (save
+      v4, interim results at each review revealing one more grade per level, Personnel File
+      verdict). 3,000-run sim asserts every grade route is earned and four or more verdicts
+      occur.
+    claimed_by: 2026-10-13T-sd-t022-grades
+    claimed_at: '2026-10-13T06:34:11Z'
+    updated: '2026-10-13T07:24:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#3627'
+  - id: t-023
+    milestone: m2
+    title: "Restructuring: map changes between departments with written reasons"
+    status: done
+    depends_on: t-010
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Split from t-007 (2026-10-12 PT). When a department is cleared, a Restructuring memo
+      may merge, eliminate or add unvisited locations in the next department, always with
+      a written reason, and visited history stays pinned (DESIGN-BRIEF Rules v1). Needs
+      Department 2 content (t-010) to mean anything. Reducer, journal entry, UI memo card
+      and tests.
+
+      PARTIAL 2026-10-12 PT (kind_robots#3622): department progression shipped (descend, per-department outcomes, elevator with a PAL restructuring memo). Still open: memos that actually merge, eliminate or add unvisited locations in the next department, with the reason pinned in the journal.
+
+      DONE 2026-10-13 PT: data half conductor#6102 (RECORDS-12 restructurings keyed on every
+      Orientation outcome plus knows-the-ducts; validator requires memos below the surface),
+      engine/UI kind_robots#3628 (departmentBoard eliminate/merge/add/none, elevator notice
+      and floor plan, restructured breadcrumb and card location, banner, journal pin,
+      Personnel File line, save v5; re-deals never reopen a closed location). Sim asserts all
+      four kinds occur in play.
+    claimed_by: 2026-10-13T-sd-t023-restructure
+    claimed_at: '2026-10-13T06:58:08Z'
+    updated: '2026-10-13T07:24:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#3628'

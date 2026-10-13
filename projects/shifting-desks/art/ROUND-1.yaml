@@ -1,0 +1,141 @@
+# Shifting Desks art round 1 (shifting-desks t-005): the two card backs and three Orientation style-test
+# faces that set the look for every later card. Style rules live in ../ART-DIRECTION.md.
+#
+# Queue: each subject is one row in projects/art-prompts.yaml `requests:` (id = request_id). The
+# auto-art-generate workflow (every 6h) submits it to Kind Robots as a krea2 ArtJob and the home relay
+# writes the render straight to the self-hosted media host at media_url. The consumer records the job
+# number on the request row as `last_art_job_id`; copy it here as art_job_id, and the ArtImage id as
+# art_image_id, once the job finishes.
+#
+# Status values: requested (row queued, nothing rendered yet) -> rendered (ArtJob done, ArtImage id known)
+# -> delivered (media_url answers 200 to `curl -s -o /dev/null -w '%{http_code}'`). Never mark a subject
+# delivered before that check passes. `verdict` is keep / reroll / reject with a reason, after review
+# against ART-DIRECTION.md (palette, halftone, single readable scene, no lettering, original designs).
+#
+# Generated internal art is pre-approved (AGENTS.md "Generated art is pre-approved"). Krea 2 on the
+# self-hosted render box: no paid third-party spend, nothing published.
+round: shifting-desks-1
+project_slug: shifting-desks
+task: t-005
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-13T05:00:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph,
+  3d render, blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: encounter-back
+  kind: card-back
+  title: 'Encounter card back: manila folder'
+  card: null
+  request_id: shifting-desks-r1-encounter-back
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 51001
+  target_path: kind_robots public/images/shifting-desks/backs/encounter.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/backs/encounter.webp
+  prompt: A closed manila office folder lying flat and centered, seen straight from above and filling
+    the frame with even margins, a pale brown coffee ring stain near the lower corner, a large round rubber-stamp
+    impression in carbon-paper blue at the center shaped as a plain double ring around a stylized watchful
+    eye, a single brass paperclip gripping the top edge, soft fluorescent-tube green light raking across
+    the paper fibers, a thin safety orange tab along one side, symmetrical and calm, mid-century corporate
+    safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with
+    halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: delivered
+  art_job_id: null
+  art_image_id: null
+  verdict: 'keep: manila folder, coffee ring and watchful-eye stamp in flat halftone, on palette'
+- key: review-back
+  kind: card-back
+  title: 'Review/boss card back: oxblood folder with wax seal'
+  card: null
+  request_id: shifting-desks-r1-review-back
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 51002
+  target_path: kind_robots public/images/shifting-desks/backs/review.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/backs/review.webp
+  prompt: A closed oxblood leather executive folder lying flat and centered, seen straight from above
+    and filling the frame with even margins, a glossy round wax seal in deep red-black at the center pressed
+    with a simple stylized keyhole emblem, a narrow safety orange ribbon running under the seal from edge
+    to edge, fine grain of polished leather with brass corner caps, warm wood-paneled desk lamp glow from
+    above, symmetrical, ominous and dignified, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: delivered
+  art_job_id: null
+  art_image_id: null
+  verdict: 'keep: oxblood folder with an orange band and wax seal; a stray wooden plaque at the top edge crops away in the card frame'
+- key: gus-shop-steward
+  kind: style-test-face
+  title: Gus, Shop Steward
+  card: gus-shop-steward
+  request_id: shifting-desks-r1-gus-shop-steward
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 51003
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/gus-shop-steward.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/gus-shop-steward.webp
+  prompt: A giant friendly cockroach with a glossy chestnut shell in a mustard knitted cardigan and half-moon
+    reading glasses sitting on a stack of paper towel boxes in a cramped supply closet, holding out one
+    claw for a handshake with patient union-organizer eyes, a startled new hire in a beige suit frozen
+    in the doorway, a red stapler on a high shelf, warm bare bulb light, manila and oxblood dominant colors,
+    single readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: delivered
+  art_job_id: null
+  art_image_id: null
+  verdict: 'keep: Gus in his cardigan shaking hands in Supply Closet B, warm halftone, strong silhouette'
+- key: something-ticking-in-the-toner
+  kind: style-test-face
+  title: Something Ticking in the Toner
+  card: something-ticking-in-the-toner
+  request_id: shifting-desks-r1-something-ticking-in-the-toner
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 51004
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/something-ticking-in-the-toner.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/something-ticking-in-the-toner.webp
+  prompt: An adorable honey-colored plush teddy bear with a quilted belly hatch, a stitched smile, mismatched
+    button eyes and a faint glowing seam, wedged between tall stacks of toner boxes in a supply closet,
+    a small atomic swirl motif embroidered on its paw, a worker frozen mid-reach with a screwdriver, fluorescent-tube
+    green and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate
+    safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with
+    halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: delivered
+  art_job_id: null
+  art_image_id: null
+  verdict: 'keep: Mk 0 wedged in the toner stacks with its atomic paw and a silhouetted worker reaching in, on palette'
+- key: trust-fall-over-the-shredder
+  kind: style-test-face
+  title: Trust Fall Over the Shredder
+  card: trust-fall-over-the-shredder
+  request_id: shifting-desks-r1-trust-fall-over-the-shredder
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 51005
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/trust-fall-over-the-shredder.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/trust-fall-over-the-shredder.webp
+  prompt: A worker on an orientation theater stage leaning backward with arms crossed in a trust fall,
+    an enormous open industrial shredder with gleaming rollers waiting below the stage edge, a mild mustached
+    colleague in a short-sleeved dress shirt, clip-on tie and pocket protector holding his arms out a
+    little too far away with a friendly smile, a single spotlight beam, oxblood and fluorescent-tube green
+    dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual
+    illustration crossed with a retro-futurist beige office, screen-printed gouache with halftone grain,
+    flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety
+    orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare
+    and unmarked
+  status: delivered
+  art_job_id: null
+  art_image_id: null
+  verdict: 'keep: spotlight on the shredder and two silhouettes, stark and readable, on palette'

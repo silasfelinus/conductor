@@ -193,7 +193,7 @@ tasks:
   - id: t-014
     milestone: m3
     title: "Implement persistent Items of Power with one or two run slots"
-    status: review
+    status: done
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -201,10 +201,11 @@ tasks:
       Story-gated, meta-persistent rewards with scripted acquisition windows, no unearned initial Eye. Test loadouts and save migration.
 
       Private Items of Power system developed on Kind Robots branch worker/emperor-of-dust-t014-relics-20261013-9af2: story-gated persistent relic vault, one/two next-run loadout slots, Eye highlights false reports, and once-per-day Brass Hourglass reduces only outbound travel. Backward- compatible saved campaigns and Admin collection UI with placeholders. Unlocks are gated for later authored days, not automatically distributed in the Day 1 prototype. Pending exact-head GitHub CI review and merge.
-    owner: worker
+
+      October12 PT at10:42PM: completed the private Items of Power system in kind_robots#3617 merged6de8caf2c585a710f79fc3176203c511514e2e58 after all33 actual checks completed successfully on9481dfafd3bf35cc5a56174d50a1ea57e1003d5f. Full nine-file diff/current reviews/threads inspected; expected-head merge with required checks/approvals satisfied and no bypass. Validated persistent vault, one/two next-run slots, story/day-gated ownership, Eye false-report reveal, once-daily outbound-only Hourglass and backward-compatible save fields. Independent relic/dispatch/campaign/map tests pass; actual compiled component with real Pinia/store and fixture storage fits390/768/1440 without errors. Artwork is explicitly placeholders; no final art delivery asserted. Current Day1 pilot cannot earn later story flags: t-005/t-013 still own authored days and discovery integration. This finishes system plumbing, not the100-day game or a completed daily playable content addition. No deploy/public release.
     claimed_by: 2026-10-13T030100Z-emperor-t014-9af2
     claimed_at: '2026-10-13T03:01:00Z'
-    updated: '2026-10-13T03:19:00Z'
+    updated: '2026-10-13T05:42:19Z'
   - id: t-015
     milestone: m3
     title: "Build pausable day clock and mostly radial tower travel routes"
@@ -246,3 +247,23 @@ tasks:
       faction ties, assignment availability and visible X-day wound
       countdowns. Prefer existing art UI primitives and asset fallback
       rules; only use actually delivered images. Keep the /play gate closed.
+
+  - id: t-018
+    milestone: m3
+    title: "Verify relic vault through actual Pinia restart and storage-failure boundaries."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: >-
+      Reviewer kaizen after kind_robots#3617, targeting LEARNING-REPORT's
+      recurring quality/consumer-boundary pattern. Existing pure vault and
+      campaign codecs pass; add a fixture through the actual store for loaded
+      ownership, next-loadout changes, beginNewRun and reload. Test full storage,
+      malformed vaults and throwing localStorage access without clobbering
+      unreadable data. The isolated render used explicitly in-memory storage;
+      it is not this persistence proof. Existing load() tests typeof localStorage
+      before its try block, which can throw on denied-access documents; reproduce
+      and repair that boundary without disabling warnings or granting permissions.
+      Keep t-005/t-013's later authored discovery branches independent and
+      preserve private ADMIN scope; no account creation or production mutation.

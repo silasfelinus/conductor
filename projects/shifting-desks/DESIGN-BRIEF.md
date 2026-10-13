@@ -2,7 +2,7 @@
 
 date: 2026-10-12 PT
 status: authorized new project; design phase; spine decided by Silas 2026-10-12 PT (t-002)
-owner: Conductor project `shifting-desks`; Kind Robots runtime, admin preview `/admin/shifting-desks`; public `/play/shifting-desks` is a separate hard human gate
+owner: Conductor project `shifting-desks`; Kind Robots runtime at public `/play/shifting-desks` (Silas, 2026-10-12 PT: "a real, front end, non admin front page")
 direction menu: [PITCHES.md](PITCHES.md) (decision recorded there)
 
 ## Promise
@@ -89,6 +89,7 @@ First pack: [ORIENTATION-12.json](encounters/ORIENTATION-12.json). It has 3 loca
 
 **Mid-century corporate safety-poster illustration meets retro-futurist beige office.** It looks like screen-printed gouache with halftone grain. The limited palette is manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood. Cheerful mascot-poster compositions carry dread in the details. The world is full of pneumatic tubes, endless cubicle horizons, Brazil-like ducts, beige terminals with green phosphor, and wood-paneled executive gloom.
 
+- **Every station has an image, and every image slot always has its prompt** (Silas, 2026-10-12 PT: *"all stations need an image ... final result needs an image, and text is easy, so we should always have the prompt"*). That covers every encounter card, review, location, department arrival, job title, secret society and mutation. A prompt is written the moment the station is authored, before any render exists. `validate_pack.py` rejects any station without a positive-only, contract-clean prompt, and the game shows the prompt as the art brief until the render lands.
 - **Card faces:** a single readable scene per card in 2:3 portrait, with a strong silhouette and a comic detail you notice on the second look.
 - **Card backs:** a manila folder with a coffee ring, a security-stamp silhouette and a paperclip, with no lettering. Boss/review cards get an oxblood folder with a wax seal.
 - **Prompts** are positive-only (Kind Robots art-prompt contract: no negations). End each one with "every surface bare and unmarked" so the renders carry no garbled text. In-game text lives in the UI, never in the art.
@@ -112,7 +113,7 @@ Callbacks are welcome as **short original allusions**, such as a jammed printer,
 
 ## Implementation shape (Kind Robots)
 
-- Admin preview first: `/admin/shifting-desks` with `requiredRole: ADMIN` and a discoverable Admin nav tab. Public `/play/shifting-desks` and any Arcade or menu listing are a **hard publish gate** that needs Silas's explicit approval.
+- Public front page at `/play/shifting-desks` with a Projects channel tab (Silas, 2026-10-12 PT, overriding the usual admin-preview-first default because he is currently the site's only user). Wider promotion (home feature, Arcade, sharing) and the final fun verdict stay a hard gate (t-020).
 - `utils/shiftingDesks/` holds a pure, tested reducer (seeded draw, meters, Successors, Suspicion, Clearance gates, Restructuring, save versioning). `stores/shiftingDesksStore.ts` is a thin Pinia 3 wrapper.
 - **Reuse, don't fork,** Shifting Lands' stateless pieces (seeded RNG, 2d6 dice/result utility, the `kr-card-flip` reader and its board grid) and the Gamebook's dice tray where it fits. Do **not** mount either game's page or share their state owners.
 - Content is a versioned snapshot of `projects/shifting-desks/encounters/*.json`, imported with provenance. Saves are browser-local, schema-versioned and migratable. No backend writes during play for v1.
@@ -120,7 +121,7 @@ Callbacks are welcome as **short original allusions**, such as a jammed printer,
 
 ## MVP (first playable slice)
 
-**Department 1 only:** the 12 Orientation cards plus the *90-Day Review* boss, Job Title select, the Society and Mutation cards, all five meters, Successors, a journal, save/resume, and at least 3 distinct department outcomes. It runs at the admin route with placeholder-labeled art and then with real card faces.
+**Department 1 only:** the 12 Orientation cards plus the *90-Day Review* boss, Job Title select, the Society and Mutation cards, all five meters, Successors, a journal, save/resume, and at least 3 distinct department outcomes. It runs at the public route with placeholder-labeled art and then with real card faces.
 
 ## Gates
 
@@ -129,4 +130,4 @@ Callbacks are welcome as **short original allusions**, such as a jammed printer,
 
 ## Open questions
 
-1. Title: *Shifting Desks* is the working title (Silas left it open). Alternates are in PITCHES.md.
+None open. Title confirmed: *Shifting Desks* (2026-10-12 PT).

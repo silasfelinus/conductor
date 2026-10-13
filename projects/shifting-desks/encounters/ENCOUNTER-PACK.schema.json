@@ -32,7 +32,8 @@
         "id",
         "title",
         "order",
-        "boss_id"
+        "boss_id",
+        "arrival_art"
       ],
       "properties": {
         "id": {
@@ -49,6 +50,9 @@
         },
         "boss_id": {
           "$ref": "#/$defs/slug"
+        },
+        "arrival_art": {
+          "$ref": "#/$defs/station_art"
         }
       }
     },
@@ -95,7 +99,8 @@
           "location_id",
           "title",
           "description",
-          "encounter_ids"
+          "encounter_ids",
+          "art"
         ],
         "properties": {
           "location_id": {
@@ -116,6 +121,9 @@
             "items": {
               "$ref": "#/$defs/slug"
             }
+          },
+          "art": {
+            "$ref": "#/$defs/station_art"
           }
         }
       }
@@ -129,6 +137,80 @@
     },
     "boss": {
       "$ref": "#/$defs/boss"
+    },
+    "restructurings": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Departments below the surface only (t-023). Memos that reshape this department's map on arrival; the first whose `when` matches an outcome or flag from above applies, and the last is the default (when: null). validate_pack.py enforces order, location counts and that outcomes and flags come from above.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "location_ids",
+          "title",
+          "when",
+          "reason"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/slug"
+          },
+          "kind": {
+            "enum": [
+              "eliminate",
+              "merge",
+              "add",
+              "none"
+            ]
+          },
+          "location_ids": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/slug"
+            },
+            "maxItems": 2
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Required for merge (the merged location's name); optional for add."
+          },
+          "when": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "outcomes": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/slug"
+                    }
+                  },
+                  "flags": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/slug"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 40,
+            "maxLength": 300
+          }
+        }
+      }
     }
   },
   "$defs": {
@@ -220,6 +302,46 @@
         "department_outcome": {
           "$ref": "#/$defs/slug",
           "description": "Boss routes only: the department outcome this result leads to."
+        },
+        "grades": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "description": "Hidden Test Results (t-022): small nudges, never shown during play. validate_pack.py requires every encounter card to grade on at least one choice.",
+          "properties": {
+            "obedience": {
+              "type": "integer",
+              "minimum": -2,
+              "maximum": 2,
+              "not": {
+                "const": 0
+              }
+            },
+            "empathy": {
+              "type": "integer",
+              "minimum": -2,
+              "maximum": 2,
+              "not": {
+                "const": 0
+              }
+            },
+            "ingenuity": {
+              "type": "integer",
+              "minimum": -2,
+              "maximum": 2,
+              "not": {
+                "const": 0
+              }
+            },
+            "spite": {
+              "type": "integer",
+              "minimum": -2,
+              "maximum": 2,
+              "not": {
+                "const": 0
+              }
+            }
+          }
         }
       }
     },
@@ -316,6 +438,35 @@
             "forms": {
               "type": "integer",
               "minimum": 1
+            },
+            "grade": {
+              "type": "object",
+              "additionalProperties": false,
+              "minProperties": 1,
+              "maxProperties": 1,
+              "description": "Boss routes only: a minimum hidden grade. validate_pack.py checks the gate is reachable by this review.",
+              "properties": {
+                "obedience": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                },
+                "empathy": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                },
+                "ingenuity": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                },
+                "spite": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                }
+              }
             }
           }
         },
@@ -570,6 +721,35 @@
         "developer_note": {
           "type": "string",
           "minLength": 20
+        }
+      }
+    },
+    "station_art": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "art_ref",
+        "brief"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "design-only",
+            "verified-repository-art",
+            "approved-ArtImage"
+          ]
+        },
+        "art_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "brief": {
+          "type": "string",
+          "minLength": 50,
+          "description": "Positive-only house-style prompt ending 'every surface bare and unmarked'. Silas, 2026-10-12 PT: every station needs an image, and always has its prompt."
         }
       }
     }

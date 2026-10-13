@@ -14,6 +14,25 @@ outcome must contain at least one harmful meter effect. Even winning hurts.
 It also enforces Silas's chosen emphasis: at least half of a pack's cards are
 tagged conspiracy, psych-test or paperwork.
 
+A choice's `requires.flag` must be grantable: by a choice in the same pack, or
+by a pack with a lower `department.order` (flags carry forward as the player
+descends, so Records & Forms may pay off a flag granted in Orientation).
+
+Hidden Test Results (t-022): outcomes may carry `grades` (obedience, empathy,
+ingenuity, spite; nonzero integers in -2..2). Every encounter card grades on at
+least one choice, and every pack grades each axis upward somewhere. Grades stay
+hidden during play, so only a department review may gate a route on one
+(`requires.grade`), and the gate must be reachable: no higher than the best
+grade a player can collect on one card per location, in this department and
+every department above it.
+
+Restructuring (t-023): every department below the surface declares
+`restructurings`, the memos that reshape its map as the player arrives. Each one
+eliminates a location, merges two into a single draw, adds a second card from a
+location, or changes nothing, always with a written reason. `when` names
+outcomes or flags from the departments above (any one matches); the first match
+applies, and exactly one memo with `when: null` comes last as the default.
+
 Usage:
   python projects/shifting-desks/encounters/validate_pack.py            # every *.json pack here
   python projects/shifting-desks/encounters/validate_pack.py PACK.json  # one pack
@@ -41,11 +60,51 @@ TAGS = {
 # Silas, 2026-10-12 PT: secret societies & traitors and paperwork & psych tests lead.
 LEAD_TAGS = {"conspiracy", "psych-test", "paperwork"}
 LEAD_SHARE_MIN = 0.5
-REQUIRE_KEYS = {"clearance", "flag", "forms"}
+NON_PACK_FILES = {"DECKS.json"}
+FAVOR_KINDS = {"force-success", "effects", "ignore-requirement", "bonus"}
+MUTATION_KINDS = {"reroll", "auto-success", "bonus", "restore-composure"}
+REQUIRE_KEYS = {"clearance", "flag", "forms", "grade"}
+GRADES = ("obedience", "empathy", "ingenuity", "spite")
+VERDICT_AXES = set(GRADES) | {"balanced"}
+RESTRUCTURE_LOCATIONS = {"eliminate": 1, "merge": 2, "add": 1, "none": 0}
 ART_STATUSES = {"design-only", "verified-repository-art", "approved-ArtImage"}
 ART_SUFFIX = "every surface bare and unmarked"
 # Kind Robots art-prompt contract: positive phrasing only (scripts/repair_negation_art_prompts.py).
 NEGATION_RE = re.compile(r"\b(no|not|never|without|none|nothing|avoid|don't|isn't)\b", re.I)
+# Ported from kind_robots server/utils/artPromptContract.ts (FORMAT_PATTERNS and
+# ART_DIRECTION_JARGON_PATTERNS): words that make the image model paint lettering
+# or a framed format instead of a scene. Art-medic PR #6094 had to strip "poster"
+# from these briefs after the live contract rejected them.
+CONTRACT_PATTERNS = [
+    re.compile(r"\b(?:trading[- ])?card (?:illustration|artwork|composition|art)\b", re.I),
+    re.compile(r"\b(?:treasure|ability|item|reward)[- ]card\b", re.I),
+    re.compile(r"\b(?:movie |film |book )?(?:poster|book cover|magazine cover|album cover)\b(?!\s+(?:composition|framing|layout|crop))", re.I),
+    re.compile(r"\bcomic (?:page|panel|strip)\b", re.I),
+    re.compile(r"\bconcrete\s+(?:focal\s+)?subject\b", re.I),
+    re.compile(r"\biconic\s+scene\b", re.I),
+    re.compile(r"\b(?:unmistakable|clean)\s+silhouette\b", re.I),
+    re.compile(r"\bthumbnail\s+readability\b", re.I),
+    re.compile(r"\blegible at thumbnail size\b", re.I),
+    re.compile(r"\bsubject separation\b", re.I),
+    re.compile(r"\b(?:readable|legible|clearly\s+readable|easily\s+read)\s+(?:tools?|labels?|signs?|instruments?|markings?|details?|iconography|symbols?)\b", re.I),
+]
+
+
+def prompt_errors(text) -> list[str]:
+    """Every station's image prompt: present, house suffix, positive-only, contract-clean."""
+    if not isinstance(text, str) or len(text.strip()) < 50:
+        return ["needs an image prompt of at least 50 chars (Silas: every station needs an image)"]
+    out = []
+    if not text.rstrip(". ").endswith(ART_SUFFIX):
+        out.append(f"must end with '{ART_SUFFIX}'")
+    m = NEGATION_RE.search(text)
+    if m:
+        out.append(f"negation {m.group(0)!r}; art prompts are positive-only")
+    for pat in CONTRACT_PATTERNS:
+        hit = pat.search(text)
+        if hit:
+            out.append(f"art-contract vocabulary {hit.group(0)!r} paints lettering or a framed format")
+    return out
 SLUG_RE = re.compile(r"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$")
 RULES = {
     "selection": "seeded-weighted-eligible-without-replacement",
@@ -58,6 +117,103 @@ RULES = {
 
 def is_harmful(effects: dict) -> bool:
     return any(v * METERS[k] > 0 for k, v in effects.items() if k in METERS)
+
+
+def granted_flags(pack: dict) -> set[str]:
+    """Every flag any encounter or boss choice in `pack` can add."""
+    flags: set[str] = set()
+    boss = pack.get("boss") if isinstance(pack.get("boss"), dict) else {}
+    choices = [ch for enc in pack.get("encounters") or [] for ch in enc.get("choices") or []]
+    choices += boss.get("choices") or []
+    for ch in choices:
+        for key in ("success", "failure"):
+            flags.update((ch.get(key) or {}).get("add_flags") or [])
+    return flags
+
+
+def grade_reach(pack: dict) -> dict[str, int]:
+    """Most of each grade one pass through `pack` can earn: one card per location, then the review."""
+    def best(choices, axis):
+        top = 0
+        for ch in choices or []:
+            for key in ("success", "failure"):
+                grades = (ch.get(key) or {}).get("grades") or {}
+                value = grades.get(axis, 0) if isinstance(grades, dict) else 0
+                if isinstance(value, int):
+                    top = max(top, value)
+        return top
+
+    encounters = {e.get("id"): e for e in pack.get("encounters") or []}
+    boss = pack.get("boss") if isinstance(pack.get("boss"), dict) else {}
+    reach = {}
+    for axis in GRADES:
+        total = 0
+        for loc in pack.get("locations") or []:
+            cards = [encounters[i] for i in loc.get("encounter_ids") or [] if i in encounters]
+            total += max((best(c.get("choices"), axis) for c in cards), default=0)
+        reach[axis] = total + best(boss.get("choices"), axis)
+    return reach
+
+
+def earlier_grade_reach(path: Path, order: int | None) -> dict[str, int]:
+    """Grade reach summed over sibling packs whose department.order is lower than `order`."""
+    reach = {axis: 0 for axis in GRADES}
+    if order is None:
+        return reach
+    for sibling in pack_paths([], path.parent):
+        if sibling.resolve() == path.resolve():
+            continue
+        try:
+            other = json.loads(sibling.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        other_order = _department_order(other)
+        if other_order is not None and other_order < order:
+            for axis, value in grade_reach(other).items():
+                reach[axis] += value
+    return reach
+
+
+def earlier_department_outcomes(path: Path, order: int | None) -> set[str]:
+    """Department outcome ids declared by sibling packs above this one."""
+    outcomes: set[str] = set()
+    if order is None:
+        return outcomes
+    for sibling in pack_paths([], path.parent):
+        if sibling.resolve() == path.resolve():
+            continue
+        try:
+            other = json.loads(sibling.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        other_order = _department_order(other)
+        if other_order is not None and other_order < order:
+            boss = other.get("boss") if isinstance(other.get("boss"), dict) else {}
+            outcomes |= {o.get("id") for o in boss.get("department_outcomes") or []}
+    return outcomes
+
+
+def _department_order(pack: dict) -> int | None:
+    order = (pack.get("department") or {}).get("order")
+    return order if isinstance(order, int) and not isinstance(order, bool) else None
+
+
+def earlier_department_flags(path: Path, order: int | None) -> set[str]:
+    """Flags granted by sibling packs whose department.order is lower than `order`."""
+    if order is None:
+        return set()
+    flags: set[str] = set()
+    for sibling in pack_paths([], path.parent):
+        if sibling.resolve() == path.resolve():
+            continue
+        try:
+            other = json.loads(sibling.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue  # reported when that pack is validated on its own
+        other_order = _department_order(other)
+        if other_order is not None and other_order < order:
+            flags |= granted_flags(other)
+    return flags
 
 
 class Checker:
@@ -103,6 +259,16 @@ class Checker:
                 self.slug(f"{where}.{key}", f)
         if not isinstance(out.get("map_effect"), str) or not out.get("map_effect"):
             self.err(where, "map_effect must be 'none' or a written reason")
+        grades = out.get("grades")
+        if grades is not None:
+            if not isinstance(grades, dict) or not grades:
+                self.err(f"{where}.grades", "must be a non-empty object when present")
+            else:
+                for k, v in grades.items():
+                    if k not in GRADES:
+                        self.err(f"{where}.grades", f"unknown grade {k!r} (allowed: {list(GRADES)})")
+                    elif not isinstance(v, int) or isinstance(v, bool) or v == 0 or not -2 <= v <= 2:
+                        self.err(f"{where}.grades", f"{k} must be a nonzero integer in -2..2, got {v!r}")
         if boss_outcomes is not None:
             if out.get("department_outcome") not in boss_outcomes:
                 self.err(where, f"department_outcome {out.get('department_outcome')!r} is not declared")
@@ -122,7 +288,7 @@ class Checker:
         if roll.get("target") not in TARGETS:
             self.err(where, f"target must be one of {sorted(TARGETS)}")
 
-    def art(self, where, art):
+    def art(self, where, art, cast_required=True):
         if not isinstance(art, dict):
             self.err(where, "art must be an object")
             return
@@ -130,14 +296,10 @@ class Checker:
             self.err(where, f"status must be one of {sorted(ART_STATUSES)}")
         if art.get("status") == "design-only" and art.get("art_ref") is not None:
             self.err(where, "design-only art must have art_ref null")
-        brief = art.get("brief", "")
-        self.text(f"{where}.brief", brief, 50)
-        if isinstance(brief, str):
-            if not brief.rstrip(". ").endswith(ART_SUFFIX):
-                self.err(f"{where}.brief", f"must end with '{ART_SUFFIX}'")
-            m = NEGATION_RE.search(brief)
-            if m:
-                self.err(f"{where}.brief", f"negation {m.group(0)!r}; art prompts are positive-only")
+        for problem in prompt_errors(art.get("brief")):
+            self.err(f"{where}.brief", problem)
+        if cast_required is False:
+            return
         cast = art.get("cast")
         if not isinstance(cast, list) or not cast:
             self.err(where, "cast must be a non-empty list")
@@ -158,6 +320,13 @@ class Checker:
         if req is not None:
             if not isinstance(req, dict) or not req or set(req) - REQUIRE_KEYS:
                 self.err(f"{where}.requires", f"must be null or an object with keys from {sorted(REQUIRE_KEYS)}")
+            elif "grade" in req:
+                gate = req["grade"]
+                if boss_outcomes is None:
+                    self.err(f"{where}.requires.grade", "grades stay hidden during play; only a department review may gate on one")
+                if (not isinstance(gate, dict) or len(gate) != 1 or set(gate) - set(GRADES)
+                        or not all(isinstance(v, int) and not isinstance(v, bool) and 1 <= v <= 6 for v in gate.values())):
+                    self.err(f"{where}.requires.grade", f"must name one grade from {list(GRADES)} with a minimum of 1-6")
         cost = ch.get("cost")
         self.effects(f"{where}.cost", cost)
         roll = ch.get("roll", "missing")
@@ -178,7 +347,13 @@ class Checker:
                 self.err(where, "clean win: cost + success has no harmful effect (DESIGN-BRIEF 'no clean wins')")
 
 
-def validate_pack(path: Path) -> list[str]:
+def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str]:
+    """Validate one pack.
+
+    `earlier_flags` are flags the player may already carry from lower departments. When
+    omitted, they are collected from sibling packs in the same directory whose
+    department.order is lower than this pack's.
+    """
     c = Checker(path.name)
     try:
         pack = json.loads(path.read_text(encoding="utf-8"))
@@ -193,6 +368,7 @@ def validate_pack(path: Path) -> list[str]:
         c.err("status", "must be 'draft-not-imported' until a versioned import exists")
     dept = pack.get("department") or {}
     c.slug("department.id", dept.get("id"))
+    c.art("department.arrival_art", dept.get("arrival_art"), cast_required=False)
     c.text("department.title", dept.get("title"), 3)
     if not isinstance(dept.get("order"), int) or not 1 <= dept.get("order", 0) <= 5:
         c.err("department.order", "must be 1..5")
@@ -223,6 +399,7 @@ def validate_pack(path: Path) -> list[str]:
         c.slug("locations.location_id", lid)
         c.text(f"locations[{lid}].title", loc.get("title"), 3)
         c.text(f"locations[{lid}].description", loc.get("description"), 20)
+        c.art(f"locations[{lid}].art", loc.get("art"), cast_required=False)
         ids = loc.get("encounter_ids") or []
         if len(ids) < min_per or len(set(ids)) != len(ids):
             c.err(f"locations[{lid}]", f"needs at least {min_per} unique encounter_ids")
@@ -240,6 +417,18 @@ def validate_pack(path: Path) -> list[str]:
 
     all_added: set[str] = set()
     required_flags: list[tuple[str, str]] = []
+    grade_gates: list[tuple[str, str, int]] = []
+    graded_up: set[str] = set()
+
+    def graded(choices) -> bool:
+        any_grade = False
+        for ch in choices:
+            for key in ("success", "failure"):
+                grades = (ch.get(key) or {}).get("grades")
+                if isinstance(grades, dict) and grades:
+                    any_grade = True
+                    graded_up.update(k for k, v in grades.items() if isinstance(v, int) and v > 0)
+        return any_grade
 
     def collect(where, choices):
         for ch in choices:
@@ -249,6 +438,11 @@ def validate_pack(path: Path) -> list[str]:
             req = ch.get("requires") or {}
             if isinstance(req, dict) and "flag" in req:
                 required_flags.append((f"{where}.{ch.get('id')}", req["flag"]))
+            gate = req.get("grade") if isinstance(req, dict) else None
+            if isinstance(gate, dict):
+                for axis, minimum in gate.items():
+                    if axis in GRADES and isinstance(minimum, int):
+                        grade_gates.append((f"{where}.{ch.get('id')}", axis, minimum))
 
     for enc in encounters:
         w = f"encounters[{enc.get('id')}]"
@@ -280,6 +474,8 @@ def validate_pack(path: Path) -> list[str]:
         for ch in choices:
             c.choice(f"{w}.choices[{ch.get('id')}]", ch)
         c.text(f"{w}.developer_note", enc.get("developer_note"), 20)
+        if not graded(choices):
+            c.err(w, "no choice grades the player; every card feeds the hidden Test Results (t-022)")
         collect(w, choices)
 
     if encounters:
@@ -320,19 +516,170 @@ def validate_pack(path: Path) -> list[str]:
         if not unconditional:
             c.err(w, "at least one boss route must have no requirement")
         c.text(f"{w}.developer_note", boss.get("developer_note"), 20)
+        graded(choices)
         collect(w, choices)
 
+    if earlier_flags is None:
+        earlier_flags = earlier_department_flags(path, _department_order(pack))
+    check_restructurings(c, pack, earlier_flags, earlier_department_outcomes(path, _department_order(pack)))
     for where, flag in required_flags:
-        if flag not in all_added:
-            c.err(where, f"requires flag {flag!r} that nothing in this pack grants")
+        if flag not in all_added and flag not in earlier_flags:
+            c.err(where, f"requires flag {flag!r} that nothing in this pack grants "
+                  "(nor any pack with a lower department.order)")
+
+    if encounters:
+        for axis in GRADES:
+            if axis not in graded_up:
+                c.err("encounters", f"no outcome raises {axis}; every pack grades all four Test Results upward somewhere")
+    if grade_gates:
+        reach = grade_reach(pack)
+        above = earlier_grade_reach(path, _department_order(pack))
+        for where, axis, minimum in grade_gates:
+            available = reach[axis] + above[axis]
+            if minimum > available:
+                c.err(where, f"requires {axis} {minimum}, but a run can earn at most {available} by this review")
 
     return c.errors
 
 
-def pack_paths(args: list[str]) -> list[Path]:
+def check_restructurings(c: "Checker", pack: dict, earlier_flags: set[str], earlier_outcomes: set[str]) -> None:
+    order = _department_order(pack)
+    items = pack.get("restructurings")
+    if order == 1:
+        if items:
+            c.err("restructurings", "the surface department has nothing above it to restructure from")
+        return
+    if not isinstance(items, list) or not items:
+        c.err("restructurings", "every department below the surface needs Restructuring memos (DESIGN-BRIEF Rules v1)")
+        return
+    location_ids = {loc.get("location_id") for loc in pack.get("locations") or []}
+    seen: set[str] = set()
+    for i, item in enumerate(items):
+        w = f"restructurings[{item.get('id') if isinstance(item, dict) else i}]"
+        if not isinstance(item, dict):
+            c.err(w, "must be an object")
+            continue
+        c.slug(f"{w}.id", item.get("id"))
+        if item.get("id") in seen:
+            c.err(w, "ids must be unique")
+        seen.add(item.get("id"))
+        kind = item.get("kind")
+        if kind not in RESTRUCTURE_LOCATIONS:
+            c.err(w, f"kind must be one of {sorted(RESTRUCTURE_LOCATIONS)}")
+            continue
+        locs = item.get("location_ids")
+        if not isinstance(locs, list) or len(locs) != RESTRUCTURE_LOCATIONS[kind] or len(set(locs)) != len(locs):
+            c.err(w, f"a {kind} memo names exactly {RESTRUCTURE_LOCATIONS[kind]} distinct location(s)")
+        else:
+            for loc in locs:
+                if loc not in location_ids:
+                    c.err(w, f"unknown location {loc!r}")
+        if kind == "merge":
+            c.text(f"{w}.title", item.get("title"), 5, 48)
+        elif kind == "add" and item.get("title") is not None:
+            c.text(f"{w}.title", item.get("title"), 5, 48)
+        reason = item.get("reason")
+        c.text(f"{w}.reason", reason, 40, 300)
+        if isinstance(reason, str) and not reason.rstrip().endswith((".", "!", "?")):
+            c.err(f"{w}.reason", "must be complete sentences")
+        when = item.get("when", "missing")
+        last = i == len(items) - 1
+        if when is None:
+            if not last:
+                c.err(w, "the default memo (when: null) must come last")
+            continue
+        if last:
+            c.err(w, "the last memo must be the default (when: null)")
+        if not isinstance(when, dict) or set(when) - {"outcomes", "flags"}:
+            c.err(f"{w}.when", "must be null or an object with outcomes and/or flags")
+            continue
+        outcomes = when.get("outcomes") or []
+        flags = when.get("flags") or []
+        if not outcomes and not flags:
+            c.err(f"{w}.when", "names no outcome or flag; use when: null for the default")
+        for o in outcomes:
+            if o not in earlier_outcomes:
+                c.err(f"{w}.when", f"outcome {o!r} is not a department outcome above this one")
+        for f in flags:
+            if f not in earlier_flags:
+                c.err(f"{w}.when", f"flag {f!r} is not granted by any department above this one")
+
+
+def pack_paths(args: list[str], directory: Path = HERE) -> list[Path]:
     if args:
         return [Path(a) for a in args]
-    return sorted(p for p in HERE.glob("*.json") if not p.name.endswith(".schema.json"))
+    return sorted(
+        p for p in directory.glob("*.json")
+        if not p.name.endswith(".schema.json") and p.name not in NON_PACK_FILES
+    )
+
+
+def validate_decks(path: Path, packs: list[Path]) -> list[str]:
+    """DECKS.json: job titles, societies and mutations, checked against the packs' flags."""
+    errors: list[str] = []
+    decks = json.loads(path.read_text(encoding="utf-8"))
+    granted: set[str] = set()
+    for p in packs:
+        granted |= granted_flags(json.loads(p.read_text(encoding="utf-8")))
+    jobs = decks.get("job_titles") or []
+    if len(jobs) < 3:
+        errors.append("DECKS: need at least 3 job titles")
+    for group, items in (("job", jobs), ("society", decks.get("societies") or []), ("mutation", decks.get("mutations") or [])):
+        for item in items:
+            for problem in prompt_errors(item.get("art_prompt")):
+                errors.append(f"DECKS: {group} {item.get('id')!r} art_prompt: {problem}")
+    for job in jobs:
+        skills = job.get("skills") or {}
+        if set(skills) != SKILLS or sum(skills.values()) != 6 or not all(0 <= v <= 3 for v in skills.values()):
+            errors.append(f"DECKS: job {job.get('id')!r} needs all six skills, each 0-3, summing to 6")
+    societies = decks.get("societies") or []
+    if len(societies) < 6:
+        errors.append("DECKS: need at least 6 societies")
+    for soc in societies:
+        sid = soc.get("id")
+        for key in ("objectives", "betrayals"):
+            for dept, flags in (soc.get(key) or {}).items():
+                if not flags:
+                    errors.append(f"DECKS: {sid} {key}.{dept} is empty")
+                for f in flags:
+                    if f not in granted:
+                        errors.append(f"DECKS: {sid} {key}.{dept} names {f!r}, which no pack grants")
+        if (soc.get("favor") or {}).get("kind") not in FAVOR_KINDS:
+            errors.append(f"DECKS: {sid} favor kind must be one of {sorted(FAVOR_KINDS)}")
+        reward = soc.get("reward") or {}
+        if not reward or set(reward) - set(METERS):
+            errors.append(f"DECKS: {sid} reward must be meter effects")
+    mutations = decks.get("mutations") or []
+    if len(mutations) < 8:
+        errors.append("DECKS: need at least 8 mutations")
+    for mut in mutations:
+        if mut.get("kind") not in MUTATION_KINDS:
+            errors.append(f"DECKS: mutation {mut.get('id')!r} kind must be one of {sorted(MUTATION_KINDS)}")
+        for s in mut.get("skills") or []:
+            if s not in SKILLS:
+                errors.append(f"DECKS: mutation {mut.get('id')!r} names unknown skill {s!r}")
+    results = decks.get("test_results")
+    if not isinstance(results, dict):
+        errors.append("DECKS: test_results is required (hidden Test Results, t-022)")
+        return errors
+    axes = {a.get("id"): a for a in results.get("axes") or [] if isinstance(a, dict)}
+    if set(axes) != set(GRADES):
+        errors.append(f"DECKS: test_results.axes must be exactly {list(GRADES)}")
+    for aid, axis in axes.items():
+        for key in ("title", "high", "low"):
+            value = axis.get(key)
+            if not isinstance(value, str) or len(value.strip()) < (3 if key == "title" else 30):
+                errors.append(f"DECKS: test_results axis {aid!r} needs {key}")
+    verdicts = {v.get("axis"): v for v in results.get("verdicts") or [] if isinstance(v, dict)}
+    if set(verdicts) != VERDICT_AXES:
+        errors.append(f"DECKS: test_results.verdicts must cover {sorted(VERDICT_AXES)}")
+    for vid, verdict in verdicts.items():
+        if not isinstance(verdict.get("title"), str) or len(verdict["title"].strip()) < 3:
+            errors.append(f"DECKS: test_results verdict {vid!r} needs a title")
+        text = verdict.get("text")
+        if not isinstance(text, str) or len(text.strip()) < 60 or not text.rstrip().endswith((".", "!", "?")):
+            errors.append(f"DECKS: test_results verdict {vid!r} needs complete-sentence text of at least 60 chars")
+    return errors
 
 
 def main(argv: list[str]) -> int:
@@ -349,6 +696,12 @@ def main(argv: list[str]) -> int:
             print(f"OK {p.name}: {len(pack['encounters'])} encounters, "
                   f"{len(pack['locations'])} locations, polarity {pol}, "
                   f"boss {pack['boss']['id']} with {len(pack['boss']['choices'])} routes")
+    decks = HERE / "DECKS.json"
+    if not argv and decks.exists():
+        deck_errors = validate_decks(decks, paths)
+        errors.extend(deck_errors)
+        if not deck_errors:
+            print(f"OK {decks.name}: job titles, societies, mutations and Test Results check out")
     for e in errors:
         print(e)
     return 1 if errors else 0

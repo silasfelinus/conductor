@@ -163,15 +163,17 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Author and integrate stages 1–2 with complete tutorial and bosses"
-    status: review
-    owner: worker
-    claimed_by: 2026-10-12T222725Z-rainbow-t007-moonjelly-8g2q
-    claimed_at: '2026-10-12T22:27:25Z'
-    updated: '2026-10-12T22:33:00Z'
+    status: ready
+    updated: '2026-10-13T05:32:33Z'
     depends_on: [t-004]
     passes: 1
     retry_context: >-
-      Prior phase-boundary defect repaired and independently verified in merged kind_robots#3604 at9ba4375710d47fb94150ae7efe093b8ecf910230. Do not repeat the old PR3598 rejection or scheduling repair. Pass1 history is retained; finish the original full-length ActsI–II, checkpoint/continue and 1/4-player acceptance scope in a focused continuation. Native shared-cabinet/full-campaign acceptance remains unverified.
+      Phase-boundary repair #3604 and Moonjelly continuation #3605 are merged
+      and independently verified. Retain pass1; do not redo those slices. Finish
+      the full 10-15-minute authored Acts I-II, checkpoint/continue and actual
+      1/4-player shared-cabinet/device acceptance. Integrate with current main
+      and preserve existing co-op, super boundaries, pilot roster and art claim.
+      This shortened implementation does not satisfy the original full task.
     stakes: reversible
     note: |-
       Make two polished 10–15 minute authored scroll stages with wave scores, destructible cover, two distinct multi-phase bosses, collectable upgrades, checkpoint/continue and intentional difficulty curve. End each stage, not an endless swarm. Test 1-player and 4-player clears.
@@ -183,7 +185,8 @@ tasks:
       On October12,2026 at12:53PM PT, reviewer accepted the scoped Pearl Seahorse fairness repair in kind_robots#3604 at9ba4375710d47fb94150ae7efe093b8ecf910230 after all28 checks completed successfully on540f36456a63d7b96daa8439ea70e000653b2ab4. Original#3598 had already merged at94ad676e04f258e6ad78652082f1efd1dc337ba4. Complete repair/formatting diff and reviews inspected, required checks satisfied and expected-head merge without bypass. Independent full arcade suite passed30 cabinet suites;1100 HP-threshold/crossing-frame scenarios covered5552 volleys, all with36 warning frames. Actual native1/4-seat initial warning/nonwarning renderer fits390/768/1440; these isolated demo proofs are not full device/auth/campaign acceptance. Initial Contract failure was only formatting in two named files; fixed through complete reads/current blob SHAs without baseline changes. Both final blobs verified on main. t-007 stays ready/unowned, passes1, for the full original unfinished scope; no done learning. Kaizen t-019 commits real player-damage/render cue replay. No deployment/publication.
 
       Authored and integrated a deterministic second-act Moonjelly playable slice: continuous boss aftermath transition preserving lives, upgrades, score and local co-op; E05-E08-inspired new attack patterns; optional Nemi rescue with flag/charge consequence; three Lilt-7 conversation windows; B02 Aurelia Array with telegraphed 3-phase fan attacks and readable gaps; four-plane Moonjelly field parallax; seeded 1/4-pilot replay/boss warning tests; updated admin flight training. This remains a shortened vertical slice, not the full 10-15 minute two-Act delivery, full save/continue or browser acceptance. CI and actual render validation still required. Return t-007 to ready after merging verified reversible improvements.
-    implementation_pr: 'silasfelinus/kind_robots#3604'
+
+      October 12 PT at 10:32 PM: merged the scoped Moonjelly Act II continuation in kind_robots#3605 at cfdc04e8d57e3c76543ab68eb8fc49c4fd8879e8 after all 32 actual checks completed successfully on 9ff79308d618d61a6bac6bae080d6d889fd96579. Complete six-file diff and current reviews/threads inspected; required checks and approval rules satisfied, expected-head merge without bypass. Full combined Arcade command and nondemo 1/4-seat Nemi rescue/two-boss replay passed; resources persist through transition. Native Canvas warning renders at 390/768/1440 fit. This is a shortened private vertical slice: full 10-15-minute authored Acts, checkpoint/continue and shared-cabinet/device acceptance remain unfinished. Release ownership, preserve pass1 and dependent waiting gates; ready, not done or recurring rearm. No completion learning, deployment or public publication.
   - id: t-008
     milestone: m3
     title: "Author branching stages 3–5 and three distinct bosses"
@@ -445,3 +448,20 @@ tasks:
       layout-guided generation for full-bleed horizontal planes, and Kontext composition from the approved
       cast/boss/enemy ArtImages for cutscenes and group key art. Colour misses (Azure, Halo Fin, Vivi streaks)
       are best fixed by Kontext recolour of the otherwise-good frames. Next: a follow-up task for that pass.
+  - id: t-021
+    milestone: m2
+    title: "Verify Nemi rescue and missed-beacon outcomes through actual eligible pilot inputs."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004]
+    note: >-
+      Reviewer kaizen after kind_robots#3605, targeting recurring quality failures
+      at the real consumer boundary. Extend the current Moonjelly engine replay
+      to earn rescue through ordinary input and separately miss the beacon;
+      verify branch dialogue, charge reward, expiry and active living-seat
+      eligibility, including benched/dead seats. Never mutate snapshots or rely
+      only on immortal demo mode. Reuse existing fixtures; coordinate with t-007
+      to avoid overlapping implementation and preserve authored timing/private
+      ADMIN placement. t-015/t-018 cover cabinet inputs and t-019 boss warnings,
+      so this narrow rescue-consumer scope does not duplicate them.

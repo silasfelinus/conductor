@@ -12495,3 +12495,7 @@ Worker pattern: good — the coyote stump failure is reported honestly (prompt w
 ## 2026-10-11 — Reviewer: conductor#5975 (zuzu-lair/t-005 close-out)
 Approved and squash-merged. Roadmap-only close for t-005 (kind_robots#3521 verified merged), t-009 waiting → ready. Reversible bookkeeping, CI green on head, no review-claim marker from another session.
 Worker pattern: good — completion note names the PR and Playwright verification. Not done: kaizen task skipped (bookkeeping-only close; zuzu-lair already has ready t-006/t-009 follow-ons).
+
+## 2026-10-13 — Reviewer: conductor#6100 (shifting-desks t-022 hidden Test Results, data half)
+Approved and squash-merged. Grades on all 82 choices in ORIENTATION-12/RECORDS-12, grade-gated review routes, DECKS.json test_results, validate_pack.py checks plus 7 tests. Reversible content data scoped to one project; CI green on head, validator re-run locally OK on all three files, no review-claim marker from another session.
+Worker pattern: good — PR names the companion kind_robots reducer/UI half, so t-022 stays open until that lands. Not done: no kaizen task created (companion PR is the follow-on). Note: art_queue_health flags 5 shifting-desks requests as contract-rejected [format-vocabulary]; art-medic work.

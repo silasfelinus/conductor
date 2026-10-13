@@ -107,6 +107,12 @@ tasks:
       silhouettes, optionally reroll during new-game setup. Represent
       the kidnapped plumber boyfriend as an original character with
       agency in the cutscenes. Persist seed across save/resume.
+      2026-10-13: the seeded generator (createHeroine, HEROINE_HITBOX,
+      authored name/skin/hair/outfit palettes) and its persisted kept seed
+      exist in kind_robots utils/arcade/games/savePlumberHeroine.ts and
+      stores/savePlumberStore.ts, driving the front page. Remaining: use
+      the kept seed in the game engine's sprite, New Game reroll in-cabinet,
+      and the opening cutscene.
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
@@ -260,3 +266,27 @@ tasks:
       with actual consumers rather than source-field matches. Keep public
       registry and score exclusions. Initial isolated engine pixels are not
       shared-cabinet/auth integration or full campaign acceptance.
+
+  - id: t-016
+    milestone: m4
+    title: "Art-led front page: title screen, overworld map, casting, cast and framed training run"
+    status: done
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-13: "all of our projects need to have an impressive front
+      end from the get go." Replaced the placeholder admin page with an
+      animated SVG title scene (citadel, uphill rivers, heroine mid-leap),
+      prologue panels, an interactive eight-island overworld map with
+      per-world stage/boss detail, a seeded heroine casting call with
+      reroll/keep, Teo and Lady Spigot, enemy toy box, powers and a framed
+      training run. Painted world/cast vignettes queued in art-prompts.yaml
+      (save-the-plumber-world-*, save-the-plumber-cast-*) and overlay only
+      once delivered; queued is not rendered. Implementation:
+      kind_robots#3624.
+
+      Merged kind_robots#3624 at 3434300ed807a8eba9841c915372904fc4dab7fa; all 34 checks green
+      on 8108e3b (layout-contract fixed with container-width grids). Painted world/cast art is
+      queued, not yet rendered; drawn SVG scenes stand in until delivered.
+    updated: '2026-10-13T05:57:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#3624'
