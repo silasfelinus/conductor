@@ -409,7 +409,9 @@ tasks:
   - id: t-017
     milestone: m4
     title: "Comic timing: memo ticker, stamp animation, Successor arrival and personnel file export"
-    status: ready
+    status: done
+    updated: '2026-10-13T06:30:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3622'
     depends_on: t-009
     owner: null
     passes: 0
@@ -419,6 +421,9 @@ tasks:
       reduced-motion path; Successor arrival card with an orientation line; an end-of-run
       Personnel File (cause of each termination, societies betrayed, forms filed) as a
       local printable/downloadable card. No external sharing, which is a publish gate.
+
+      DONE 2026-10-12 PT in kind_robots#3622: scrolling PAL memo ticker keyed to flags, APPROVED/DENIED stamp slam, Successor-thawed card, elevator interstitial with restructuring memo, and a printable Personnel File finale (both departments, society verdict, causes of termination, Print button). Reduced-motion paths for all of it.
+
   - id: t-018
     milestone: m4
     title: "Accessibility and device pass at 375 / 768 / 1440"
@@ -505,3 +510,5 @@ tasks:
       a written reason, and visited history stays pinned (DESIGN-BRIEF Rules v1). Needs
       Department 2 content (t-010) to mean anything. Reducer, journal entry, UI memo card
       and tests.
+
+      PARTIAL 2026-10-12 PT (kind_robots#3622): department progression shipped (descend, per-department outcomes, elevator with a PAL restructuring memo). Still open: memos that actually merge, eliminate or add unvisited locations in the next department, with the reason pinned in the journal.
