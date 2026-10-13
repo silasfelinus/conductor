@@ -1,4 +1,4 @@
-"""GitHub semantic intent reviews must be real, fail closed and page only on failure."""
+"""Scheduled semantic intent reviews must be real, opt-in, and fail closed."""
 from datetime import date, datetime, timezone
 from pathlib import Path
 from unittest import mock
@@ -19,11 +19,11 @@ def test_review_due_uses_merged_dated_reports(tmp_path):
     assert review.due(tmp_path, date(2026, 10, 11))
 
 
-def test_missing_token_never_fakes_report(tmp_path):
+def test_missing_token_is_explicitly_waiting_for_opt_in(tmp_path):
     directory = tmp_path / "projects/conductor"
     directory.mkdir(parents=True)
-    with pytest.raises(ValueError, match="GITHUB_TOKEN"):
-        review.execute(tmp_path, date(2026, 10, 10), "")
+    result = review.execute(tmp_path, date(2026, 10, 10), "")
+    assert result["status"] == "awaiting-provider"
     assert list(directory.glob("INTENT-AUDIT-*.md")) == []
 
 
@@ -90,7 +90,7 @@ def test_runner_requires_real_named_lead_evidence(monkeypatch):
         def __exit__(self, *unused):
             return False
         def read(self):
-            return b'{"choices":[{"message":{"content":"too short"}}]}'
+            return b'{"content":[{"type":"text","text":"too short"}]}'
     monkeypatch.setattr(review.urllib.request, "urlopen", lambda req, timeout: Response())
     with pytest.raises(ValueError, match="Incomplete"):
         review.model_review("mock context", "fake")
@@ -108,7 +108,7 @@ def test_model_retries_non_json_and_accepts_verified_response(monkeypatch):
     from io import BytesIO
 
     calls = []
-    good = {"choices": [{"message": {"content": _complete_review_text()}}]}
+    good = {"content": [{"type": "text", "text": _complete_review_text()}]}
 
     def urlopen(_request, timeout):
         calls.append(timeout)
@@ -129,7 +129,7 @@ def test_model_retries_transient_http_error(monkeypatch):
     from urllib.error import HTTPError
 
     calls = []
-    good = {"choices": [{"message": {"content": _complete_review_text()}}]}
+    good = {"content": [{"type": "text", "text": _complete_review_text()}]}
 
     def urlopen(request, timeout):
         calls.append(timeout)
@@ -172,3 +172,34 @@ def test_model_stops_after_three_invalid_responses(monkeypatch):
     with pytest.raises(__import__("json").JSONDecodeError):
         review.model_review("source context", "fake")
     assert len(calls) == 3
+
+
+def test_anthropic_request_uses_messages_api_without_bearer_header(monkeypatch):
+    from io import BytesIO
+    import json
+
+    observed = {}
+    def urlopen(request, timeout):
+        observed["url"] = request.full_url
+        observed["headers"] = dict(request.header_items())
+        observed["payload"] = json.loads(request.data)
+        return BytesIO(json.dumps({
+            "content": [{"type": "text", "text": _complete_review_text()}]
+        }).encode())
+
+    monkeypatch.setattr(review.urllib.request, "urlopen", urlopen)
+    assert review.model_review("context", "fake-api-key").startswith("## Verified")
+    assert observed["url"] == "https://api.anthropic.com/v1/messages"
+    assert observed["payload"]["system"] == review.SYSTEM
+    assert observed["payload"]["messages"] == [{"role": "user", "content": "context"}]
+    assert observed["headers"]["X-api-key"] == "fake-api-key"
+    assert not any(k.lower() == "authorization" for k in observed["headers"])
+
+
+def test_missing_provider_does_not_collect_or_create_report(tmp_path, monkeypatch):
+    directory = tmp_path / "projects/conductor"
+    directory.mkdir(parents=True)
+    monkeypatch.setattr(review, "gather", lambda _root: pytest.fail("no paid inference"))
+    result = review.execute(tmp_path, date(2026, 10, 13), "")
+    assert result["status"] == "awaiting-provider"
+    assert not list(directory.iterdir())

@@ -1,7 +1,8 @@
 name: Scheduled Semantic Intent Review
 
-# GitHub, not ChatGPT, owns cadence. A Python date guard invokes the model only
-# when the previous merged review is at least three days old.
+# GitHub owns cadence. A Python date guard invokes a model only when an
+# explicitly approved provider is made available by a later change and the
+# previous merged review is at least three days old.
 on:
   schedule:
     - cron: '23 16 * * *'
@@ -27,7 +28,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      models: read
     outputs:
       status: ${{ steps.review.outputs.status }}
       branch: ${{ steps.review.outputs.branch }}
@@ -46,7 +46,9 @@ jobs:
       - name: Perform LLM semantic intent review
         shell: bash
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          # Provider credentials are deliberately absent. The paid-access
+          # workflow grant and spend allowlist need separate human approval.
+          # Without it, the runner records awaiting-provider, not a fake audit.
           FORCE: ${{ inputs.force }}
         run: |
           args=()
@@ -70,6 +72,10 @@ jobs:
           status="$(python -c 'import json; print(json.load(open("semantic-intent-attempt.json"))["status"])')"
           echo "status=$status" >> "$GITHUB_OUTPUT"
           if [[ "$status" == 'skipped' ]]; then exit 0; fi
+          if [[ "$status" == 'awaiting-provider' ]]; then
+            echo "::notice::Semantic audit not run: paid Anthropic provider is not opted in."
+            exit 0
+          fi
           if [[ "$status" != 'completed' ]]; then exit 1; fi
           report="$(python -c 'import json; print(json.load(open("semantic-intent-attempt.json"))["report"])')"
           branch="bot/semantic-intent-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"

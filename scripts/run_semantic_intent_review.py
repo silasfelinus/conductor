@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run an evidence-backed semantic audit with GitHub Models; never fake success."""
+"""Run an evidence-backed semantic audit with opt-in Anthropic; never fake success."""
 import argparse
 import json
 import os
@@ -15,8 +15,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 LEADS = ("kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown")
-MODEL = "openai/gpt-4.1"
-API = "https://models.github.ai/inference/chat/completions"
+MODEL = "claude-haiku-4-5-20251001"
+API = "https://api.anthropic.com/v1/messages"
 
 
 def due(root, today):
@@ -85,21 +85,24 @@ these headings in order: ## Verified, ## Corrected, ## Still questionable,
 
 def model_review(context, token):
     payload = json.dumps({
-        "model": MODEL, "temperature": 0.1, "max_tokens": 2200,
-        "messages": [{"role": "system", "content": SYSTEM},
-                     {"role": "user", "content": context}],
+        "model": MODEL, "temperature": 0.1, "max_tokens": 3000,
+        "system": SYSTEM,
+        "messages": [{"role": "user", "content": context}],
     }).encode()
     req = urllib.request.Request(API, data=payload, method="POST", headers={
-        "Authorization": "Bearer " + token, "Content-Type": "application/json"})
+        "x-api-key": token,
+        "anthropic-version": "2023-06-01",
+        "Content-Type": "application/json"})
     headings = ("## Verified", "## Corrected", "## Still questionable", "## Next review")
-    # Models occasionally responds with an empty/non-JSON body or an incomplete
-    # generation. A bounded retry fixes transient failures without ever writing
-    # an unverified audit. Permanent HTTP errors (e.g. 401/403) fail immediately.
+    # The Anthropic endpoint may return transient errors or an incomplete
+    # generation. A bounded retry fixes these without writing an unverified audit.
+    # Permanent HTTP errors (e.g. 401/403) fail immediately.
     for attempt in range(1, 4):
         try:
             with urllib.request.urlopen(req, timeout=120) as resp:
                 data = json.load(resp)
-            out = data["choices"][0]["message"]["content"]
+            out = "\n".join(block["text"] for block in data["content"]
+                            if isinstance(block, dict) and block.get("type") == "text")
             if not isinstance(out, str):
                 raise ValueError("Missing semantic-review text")
             out = out.strip()
@@ -130,13 +133,16 @@ def execute(root, today, token, force=False):
     if not force and not due(root, today):
         return {"status": "skipped", "reason": "semantic review is current"}
     if not token:
-        raise ValueError("GITHUB_TOKEN missing; no model inference attempted")
+        # GitHub Models retired on 2026-07-30. Never silently substitute a
+        # billable endpoint or pretend a semantic audit ran without a provider.
+        return {"status": "awaiting-provider",
+                "reason": "paid model inference is not opted in"}
     content = model_review(gather(root), token)
     target = root / "projects/conductor" / ("INTENT-AUDIT-" + today.isoformat() + ".md")
     if target.exists():
         raise ValueError("Today's report already exists; refusing overwrite")
     target.write_text("# Portfolio Intent Audit — " + today.isoformat() + "\n\n"
-                      + "Automated GitHub Models review of repository evidence ("
+                      + "Opt-in Anthropic review of repository evidence ("
                       + MODEL + "); not a live UI verification.\n\n"
                       + content + "\n\nNext review target: "
                       + (today + timedelta(days=3)).isoformat() + " PT.\n")
@@ -157,7 +163,7 @@ def main():
                 raise ValueError("Insufficient semantic review context")
             result = {"status": "input-verified", "context_chars": len(context)}
         else:
-            result = execute(ROOT, today, os.environ.get("GITHUB_TOKEN", ""), args.force)
+            result = execute(ROOT, today, os.environ.get("ANTHROPIC_API_KEY", ""), args.force)
     except Exception as error:
         result = {"status": "failed", "error_type": type(error).__name__,
                   "date": today.isoformat()}
