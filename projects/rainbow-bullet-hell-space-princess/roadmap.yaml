@@ -122,11 +122,11 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Deliver local 1–4 player simultaneous co-op with fair rules"
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-10-13T012310Z-rainbow-t005-bench-p9sz
     claimed_at: '2026-10-13T01:23:10Z'
-    updated: '2026-10-13T01:28:50Z'
+    updated: '2026-10-13T02:29:16Z'
     depends_on: [t-004]
     passes: 1
     retry_context: >-
@@ -140,6 +140,9 @@ tasks:
       Quality pass 1 handoff merged in conductor#6052 at fb3d24a999224a7e7e777059b68449557a3403f1 after all 25 checks completed without failure on a4e7c9ff905cad1dc6ea7057a80fad7753216e3f. Release ownership and retain existing kind_robots#3599 for original-worker repair of inactive pilot pickup collection. Normal-input reproduction and scoped retry_context/TALKBACK are preserved; full branch arcade suite passes 29 cabinet suites but misses the consumer boundary. Reconcile/retest with repaired merged Pinkwake#3598 as required by the existing handoff. No gameplay merge, task completion, deployment or public publication claimed; full t-005 acceptance remains open. Avoid duplicate implementation and repeat rejection of unchanged heads.
 
       Added real fixed-tick local co-op replay proving a benched pilot cannot collect a power pickup as it passes over the stored ship position, cannot receive unearned upgrades when rejoining, and preserves original position and lives. The engine active-seat pickup filter is already present on main; this codifies the quality pass1 reviewer reproduction. CI and broader shared-cabinet/device acceptance remain outstanding; after a green merge return t-005 to ready for its unfinished full co-op scope.
+
+      Reconciled 2026-10-12 PT: implementing PR silasfelinus/kind_robots#3599 merged
+      2026-10-12 PT (21:48Z); flagged by check_pr_merged_drift in the session sweep.
     implementation_pr: 'silasfelinus/kind_robots#3599'
   - id: t-006
     milestone: m2
