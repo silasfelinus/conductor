@@ -39,6 +39,22 @@ The earlier Kind Robots Character, Reward, Scenario and Dream lore was generated
 
 This setting guide supplies **constraints**, not a fixed procedural encounter table: the board game may vary species/roles, alliances, locations and results within those constraints. Approved locked cast ArtImages and LoRA provenance take priority over newly sampled generic illustrations.
 
+### Main characters beyond Book One
+
+Book One's cast (Zuzu, the coyote, the fennec siblings, the Abbess) stays defined by [BOOK-ONE.md](../../projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md) and [CAST-PICKS.md](../../projects/comic-creator/issues/zuzu-koala-assassin-01/CAST-PICKS.md). The characters below are **main characters of the wider world** by Silas's direction: every production may use them, with a stable name, look, history and relationships. Adding one to the comic is a separate Book One decision; nothing here changes Book One's chronology.
+
+#### Jeffery Mittens
+
+*Elevated by Silas, 2026-10-13: "I love the raccoon boot character from the zuzu gamebook. He should be elevated to a main character ... I think his name is Jeffery Mittens."*
+
+- **Who he is.** A young raccoon of **Hollow Bell**, the boy Zuzu finds kneeling among the massacre's dead, working the boots off their feet with four more pairs hung round his neck by their laces and his own feet bare and bleeding. The boots are not for him: somewhere there are other children with bare feet, and he is their quartermaster. "Weren't me. Weren't us. We only come after."
+- **His name.** He gives it at the town's arch if Zuzu spares him: "Jeffery. Jeffery Mittens," holding up one paw, black to the wrist like a mitten, by way of explaining. Spelled **Jeffery**.
+- **Look** (gamebook plates 243522, 243677, 243685, 243818; Showdown references in [T032-MITTENS-REFERENCES.yaml](../../projects/zuzu-showdown/art/T032-MITTENS-REFERENCES.yaml)). Skinny and quick: grey fur, a black mask, bright wary eyes, a black-and-grey ringed tail. A grey-green vest over a dirty off-white shirt with rolled sleeves, grey trousers, scuffed black boots once he has a pair of his own, a long brown coat far too big for him, the string of boots round his neck, and a little kitchen knife he holds the way nobody who has used one holds it (later, properly). After Hollow Bell, a jackal's rag tied round his arm.
+- **Voice.** Quick and low, frontier slang ("ain't", "them boots"), and his voice cracks in the middle. Proud, defensive and scared underneath; he lies first and tells the truth sideways.
+- **His road.** Spared, he warns Zuzu that the jackals of the dry well will come for what is left, and later **scouts for them** under Hollis: hungry, not wicked, and he says so. He shadows Zuzu along the rocks and answers a low whistle; he will speak for the koala at the well, and in the gamebook's last act he can carry word through the dark. Broken or shamed instead, he becomes the barefoot boy who comes back for Zuzu's canteen at night. Which road is real outside a given production is open; the debt between them is the constant.
+- **Where he appears.** The gamebook *The Bell That Never Rang* (Act II "Boots", Act IV "A Familiar Thief", Act IX), and **Zuzu Showdown** as a playable fighter (`jeffery-mittens` in [fighters.yaml](../../projects/zuzu-showdown/fighters.yaml): boots thrown from a string of four, a slide underfoot, a ledge drop, tied laces, and the jackals of the dry well as his Showdown super). Shifting Lands, Lair and future books may draw on him; Hollow Bell and the dry well are his home ground.
+- **Guardrails.** He is a child: harm to him is stakes, never spectacle (the depiction rule above). His looting is survival and care, not comedy villainy; species is not his morality. Prompts never say "human" or "people".
+
 ---
 
 ## Expanded gazetteer (proposed, 2026-10-09)

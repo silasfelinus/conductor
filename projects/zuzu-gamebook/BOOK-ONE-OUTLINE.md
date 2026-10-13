@@ -70,7 +70,7 @@ helped who can repay him later, for better or worse.
 | **Sister Wren** *(provisional, gamebook-only)* | otter, novice | Young novice who suspects the truth and is afraid. Can be protected, betrayed or recruited. | V / IX |
 | **Mags** *(provisional)* | rabbit | Dustwater barkeep, scattergun, lost her son to the mission road. Truth for kindness; grief that can become a mob. | VI / IX |
 | **The raider mother** *(provisional: "Hollis")* | jackal | Leader of a starving raider band at the dry well; her kits are hidden in the rocks. Fight, bargain, or share. | IV / VII |
-| **The looter** | raccoon, young | Stripping the dead in Hollow Bell. Spared, he becomes a raider scout who can warn or betray. | II / IV |
+| **The looter: Jeffery Mittens** | raccoon, young | Stripping the dead in Hollow Bell. Spared, he gives his name at the arch and becomes a raider scout who can warn or betray. A main character of the wider world since 2026-10-13 (worlds/zuzu/WORLD-GUIDE.md). | II / IV / IX |
 | **Brother Peddler** *(provisional)* | hare | Sells "blessed water" to desperate families. Con man or the last kindness left? Both. | IV |
 | **The Storm Crow witch** *(provisional: "Old Ash")* | crow | A witch far from her cave, perched on a dead tree at a crossroads. Offers sight for a price. | IV (VII) |
 | **Gideon Vane** *(provisional)* | pronghorn | Dustwater's water baron, who trades orphans to the mission for water rights. Desperation turned to business. | VI |
@@ -130,7 +130,7 @@ Hollow Bell after the massacre. **Adds:**
 - **Dilemma — the dying shopkeeper** (an old badger): one canteen. Give it to a man who will die anyway (he
   tells you, with his last breath, that "the bell rang inside the smoke" and that the children were taken
   *before* the fire; `honor:last-water`) or keep it for the children you have not yet found.
-- **Dilemma — the looter** (a young raccoon stripping boots from the dead): break his hand (taint), shame him
+- **Dilemma — the looter** (Jeffery Mittens, a young raccoon stripping boots from the dead): break his hand (taint), shame him
   and send him off with nothing, or let him take what he needs and leave the dead their boots
   (`debt:looter`). He returns in Act IV.
 - *The bell tower:* climb it; from the top see the mission's tower far south, and a line of small tracks.
