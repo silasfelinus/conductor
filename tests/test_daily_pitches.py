@@ -290,7 +290,7 @@ def test_expansion_docket_all_five_target_existing_projects(repo):
     for pitch in pitches:
         pitch.update(target="existing-project", expansion_kind="encounter")
     ready(repo, date=date, pitches=pitches)
-    assert dp.cmd_check(date) == 0
+    assert dp.cmd_check(date) == 1  # new policy requires evidenced deliveries, not five pitch files
     text = dp.pitch_file(date, "idea-0").read_text()
     assert "project-target: existing-project" in text
     assert "expansion-kind: encounter" in text
