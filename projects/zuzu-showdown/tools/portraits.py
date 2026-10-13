@@ -50,6 +50,7 @@ FILES = {
     "hyena-matriarch": "hyena",
     "old-komodo": "komodo",
     "swamp-witch": "witch",
+    "jeffery-mittens": "mittens",
 }
 
 
