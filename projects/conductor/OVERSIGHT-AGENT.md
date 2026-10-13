@@ -29,45 +29,41 @@ The existing `scripts/check_project_scaffold_drift.py` is the minimum mechanical
 
 Run this at least every **3 days**, and sooner after a substantial priority or direction change.
 
-**Advance agent notice:** Every six hours, Conductor Oversight marks the review
-as `semantic-review-upcoming` when there is one day left in the three-day
-window, even while the separate GitHub Models review is still scheduled for
-its due date. `scripts/select_role.py` also reads the latest completed audit
-date directly and assigns `roadmap-intent-auditor` ahead of normal backlog.
-Neither mechanism depends on the disabled personal Conductor Hourly Run;
-both are supplemental to the native daily reviewer below. Upcoming alone
-never triggers a semantic email.
+**Advance agent notice:** Every six hours, Conductor Oversight marks an
+upcoming review one day before its three-day deadline. `scripts/select_role.py`
+assigns `roadmap-intent-auditor` ahead of the ordinary ready-task backlog.
+The agent is the only semantic judgment layer, using existing Conductor agent
+sessions rather than billing a new model API. An upcoming/due notice alone
+must not generate an email or claim the audit is done.
 
-**Scheduled owner:** GitHub Actions workflow `.github/workflows/semantic-intent-review.yml`
-runs daily and performs an actual semantic review **only when the last merged
-`INTENT-AUDIT-YYYY-MM-DD.md` is at least three Pacific-calendar days old**.
-It invokes GitHub Models with the workflow's ephemeral `GITHUB_TOKEN`
-(`models: read`), not an independent ChatGPT scheduler or paid API key.
-The six-hour Conductor Oversight workflow is its fallback dispatcher if GitHub
-has not attempted a due review in 18 hours.
+**Scheduled evidence preparation (no API spend):** GitHub Actions
+`.github/workflows/semantic-intent-review.yml` runs daily. When the last
+merged `INTENT-AUDIT-YYYY-MM-DD.md` is at least three Pacific days old,
+`scripts/run_semantic_intent_review.py` creates the artifact
+`semantic-intent-brief.md` plus a machine-readable attempt record with
+`status: awaiting-agent`. The bounded context contains human direction,
+lifecycle, priorities, lead roadmaps, structural warnings and recent commits.
+This is **a brief, not a semantic review**: the workflow never makes an
+LLM inference, writes a dated INTENT-AUDIT report, opens a report PR,
+advances freshness, or spends credits. The six-hour oversight workflow
+dispatches another packet only when due and no recent attempt exists.
 
-`scripts/run_semantic_intent_review.py` packs current human steering, lifecycle,
-project priorities, high-priority roadmap goals and tasks, recent commits, and
-structural audit warnings into a bounded review input. GitHub Models performs the
-semantic judgment; deterministic validation rejects empty, malformed, or
-missing-lead responses. Only a successful actual inference can create a dated
-report; errors never advance freshness. A dedicated Actions validation job checks
-that the generated PR changes only a dated report, then runs Python regression
-checks on the exact commit before the merge job attempts a standard (non-bypass)
-PR merge. All workflow steps and attempted results are visible in GitHub Actions.
+**Actual reviewer:** On a `roadmap-intent-auditor` assignment, an existing
+Conductor agent reads the original files listed below, evaluates intent with
+evidence and, when warranted, authors a real
+`projects/conductor/INTENT-AUDIT-YYYY-MM-DD.md`. Open a PR, run CI and
+merge if safe. An agent unable to finish keeps the review due. The report
+date only advances after that real report merges. Never copy the packet
+verbatim as a completed report. Inspect actual PRs and shipped behavior
+before treating a `done` task as a delivered result.
 
-The email watchdog **never emails for age alone**. It reads GitHub's run history:
-only a real completed failed semantic-review run newer than the last successful
-report, or a separately verified `INTENT-REVIEW-FAILURE.json`, is a semantic
-email incident. Running/queued attempts and clean semantic staleness are not
-incidents. Production parity and deterministic roadmap errors retain their
-separate immediate escalation rules.
-
-If GitHub Models inference, PR permissions, CI, or merge protection blocks an
-attempt, the failed Actions run is the durable evidence. Its artifact includes
-`semantic-intent-attempt.json`; oversight will re-dispatch after its retry window
-and escalate based on the failed run. Do not manufacture a completed report or
-manually set a marker for ordinary staleness.
+**Failure and notification boundary:** The email watchdog never emails for
+review age alone or `awaiting-agent`. A genuine failed evidence-preparation
+Actions job newer than the last successful report (or an explicitly verified
+`INTENT-REVIEW-FAILURE.json`) may trigger an incident email. Model unavailability
+and the retired GitHub Models failures are not active service incidents.
+A successful packet-preparation job **does not** prove semantic review happened.
+Project parity and deterministic roadmap errors keep separate escalation rules.
 
 Read, in order:
 
