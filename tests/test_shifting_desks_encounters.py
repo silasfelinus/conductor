@@ -542,9 +542,9 @@ def test_risk_hints_tell_the_truth(path):
         for choice in card["choices"]:
             hint, roll = choice["risk_hint"], choice["roll"]
             for word, target in DIFFICULTY_WORDS.items():
-                if re.search(rf"\b{word}\b", hint, re.I):
+                if re.search(rf"\b{word}\b", hint, re.IGNORECASE):
                     assert roll and roll["target"] == target, (choice["id"], word)
-            if re.search(r"success spends", hint, re.I):
+            if re.search(r"success spends", hint, re.IGNORECASE):
                 assert choice["cost"].get("successors", 0) == 0, choice["id"]
                 assert choice["success"]["effects"].get("successors", 0) < 0, choice["id"]
 
