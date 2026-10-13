@@ -548,28 +548,19 @@ tasks:
   - id: t-019
     milestone: m4
     title: "River Croc toy, second take: animated from Arthemy concept-quality art"
-    status: claimed
+    status: done
     depends_on: t-018
-    owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Silas, 2026-10-12, on the t-018 procedural 3D Croc: "I want another take on that
-      croc. I want something closer to an animation style. Something that looks like our
-      concept art. we've got shots of the crocodile attacking zuzu and the coyote. We
-      should start with an image of that quality, built in arthemy or something like that,
-      then generated out. None of this nintendo 64 quality graphic." References: the
-      croc-and-coyote plate (ArtImage 243624, shipped as the gamebook's a1-the-shot), the
-      music-video croc (242572) and the canonical croc (243495, scarred, algae, broken
-      harpoon). Plan: (1) the key image, the Croc as the player sees him on the table, in
-      the house Arthemy lane (projects/zuzu-pinball/art/T019-CROC-KEY.yaml, ArtJobs
-      37624-37629), Silas picks a seed; (2) generate it out: LTX/WAN first-to-last-frame
-      clips per phase (submerged, rising, open, captured, death roll, spit) keyed onto a
-      flat colour; (3) the table plays them as the toy, a keyed animated card standing in
-      the watering hole over the existing scoop and jaw gate, replacing the procedural
-      geometry. Reduced motion holds each phase's key frame.
+    note: |-
+      Silas, 2026-10-12, on the t-018 procedural 3D Croc: "I want another take on that croc. I want something closer to an animation style. Something that looks like our concept art. we've got shots of the crocodile attacking zuzu and the coyote. We should start with an image of that quality, built in arthemy or something like that, then generated out. None of this nintendo 64 quality graphic." References: the croc-and-coyote plate (ArtImage 243624, shipped as the gamebook's a1-the-shot), the music-video croc (242572) and the canonical croc (243495, scarred, algae, broken harpoon). Plan: (1) the key image, the Croc as the player sees him on the table, in the house Arthemy lane (projects/zuzu-pinball/art/T019-CROC-KEY.yaml, ArtJobs 37624-37629), Silas picks a seed; (2) generate it out: LTX/WAN first-to-last-frame clips per phase (submerged, rising, open, captured, death roll, spit) keyed onto a flat colour; (3) the table plays them as the toy, a keyed animated card standing in the watering hole over the existing scoop and jaw gate, replacing the procedural geometry. Reduced motion holds each phase's key frame.
+      October 12, 2026 PT: implementation merged. The River Croc is drawn from generated art in the concept art's inked western style. Key image: Arthemy house lane, Silas picked ArtImage 245776 (art/T019-CROC-KEY.yaml). Phase poses: Kontext edits (art/T019-CROC-POSES.yaml: gape 245782, submerged 245792, death roll 245788/245789). Clips: WAN (art/T019-CROC- CLIPS.yaml): TI2V-5B breathing and lurk loops; A14B first-last-frame snap, sink, rise, spit and a two-part death roll (245801-245806), after kind_robots#3608 fixed first-last frame (WanFirstLastFrameToVideo). tools/croc_atlas.py cuts every frame out of its white surround and packs a 101-frame atlas (kind_robots public/zuzu-pinball/river-croc.webp, 2.4 MB). The table plays it as an animated card lying in the painted pond with his snout at the scoop (kind_robots#3609 renderer + v1 atlas, #3613 v2 clips). Reduced motion holds one still per phase; the aim ring stays. Tests: croc, watering hole, stress (mean tick 1.36 ms), camera, LEDs, light map, shots. Headless renders only: the real-GPU look on kindrobots.org is Silas's call; next ideas if wanted: a larger card, a brighter submerged lurk, sound timed to the snap and roll.
+
+      October12 PT reviewer independently verified merged renderer kind_robots#3609 at0ee864c36903c5c0285f1b27eb4e67b4825dd75e and v2 atlas kind_robots#3613 at4f12ebd7a8fbecc1f9e501133601d774c7390c7d, all final-head checks completed green. conductor#6070 merged by original worker at43ecc535ec602a8eb6ee641d2a2917f011570be2. Independently passed1000 capture/spit cycles,24 Watering Hole swallows and 25 lifecycle plus3 six-ball stress replays. Final immutable GitHub assetHTTP200, 2404328bytes exactly match committed3840x2880RGBA atlas;101 nonempty cells. Close only t019 source/art integration; preserve t013 device QA and t014 human acceptance/publication gate. No deployment or realGPU verdict claimed.
     claimed_by: 20261012T160000Z-zuzu-t019-croc-art-b4n8
     claimed_at: '2026-10-12T16:00:00Z'
+    updated: '2026-10-13T03:36:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#3613'
 
   - id: t-020
     milestone: m4
@@ -591,3 +582,20 @@ tasks:
       Coordinate with active t-019; do not regenerate its clips or duplicate
       its delivery work. No model installation, renderer restart, deployment,
       secrets, paid generation or public release without concrete authorization.
+
+  - id: t-021
+    milestone: m4
+    title: "Smooth Croc atlas cutout edges and verify every playback phase."
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Reviewer kaizen from t-019 closeout: the delivered 101-frame atlas is
+      nonempty and bounds-correct, but direct visual inspection shows jagged
+      white-surround cutout notches near the inked pool edges. Improve the
+      existing croc_atlas.py mask/edge treatment without erasing teeth, eyes,
+      spray or historical source art. Verify decoded alpha and actual renderer
+      UVs across all seven clips and reduced-motion holds, retaining frame
+      ordering, timings, original ArtJob provenance and safe-mouth physics.
+      Reuse delivered clips; no new generation, deployment or public release.

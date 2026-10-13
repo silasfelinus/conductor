@@ -33,15 +33,25 @@ import yaml
 HERE = Path(__file__).resolve().parent
 SLUG = "rainbow-bullet-hell-space-princess"
 
-PREFIX = "masterpiece, best quality, amazing quality, absurdres, very aesthetic, highres"
+# Style: Silas, 2026-10-12 PT: "more like she ra princesses of power ... western cartoon, not faux realism"
+# (ART-ROUND-1B-WESTERN-TOON.yaml). The show is a style reference only; its characters stay out (STYLE_NEG).
+PREFIX = (
+    "masterpiece, best quality, amazing quality, absurdres, toon (style), western cartoon, she-ra and the princesses "
+    "of power (style), flat color, cel shading, clean lineart, bold outlines, simple shading, bold graphic shapes, "
+    "expressive"
+)
 SUFFIX = (
-    "pastel rainbow palette, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy "
-    "shadows, iridescent glow, soft bloom, painterly, lavish detail, cinematic lighting"
+    "flat pastel colors, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy, sparkles, "
+    "glowing magic, 2d animation still"
+)
+STYLE_NEG = (
+    "realistic, photorealistic, 3d, semi-realistic, painterly, oil painting, detailed shading, soft shading, airbrush, "
+    "anime, manga, moe, she-ra (character), adora (she-ra), catra (she-ra), glimmer (she-ra)"
 )
 
 BASE_NEG = (
     "nsfw, nude, suggestive, lowres, worst quality, low quality, bad anatomy, deformed, watermark, signature, "
-    "text, logo, letters, username, blurry, jpeg artifacts"
+    "text, logo, letters, username, blurry, jpeg artifacts, " + STYLE_NEG
 )
 NEG_PERSON = (
     BASE_NEG + ", cleavage, revealing clothes, midriff, underboob, bad hands, extra fingers, missing fingers, "
@@ -50,7 +60,12 @@ NEG_PERSON = (
 NEG_SOLO = NEG_PERSON + ", multiple girls, 2girls, multiple views"
 # Machines, places and props: keep people out without a negation in the positive prompt (prompt contract).
 NEG_SCENE = "humans, person, 1girl, 1boy, " + BASE_NEG + ", grainy, muddy colors, grey, gritty, horror, gore"
-NEG_GROUP = NEG_PERSON + ", identical faces, same face, same body type, pale skin on everyone"
+# Round 1: "mecha" grew the Moonjelly Lantern dog legs on Arthemy and Mol_Keun, so machines ban legs outright.
+NEG_MACHINE = NEG_SCENE + (
+    ", legs, quadruped, walking, animal legs, feet, robot animal, creature, battleship, naval ship, boat, gun turrets"
+)
+# Round 1B: "battle cruiser" drew a literal naval battleship riding the seahorse.
+NEG_GROUP = NEG_PERSON + ", identical faces, same face, same body type, pale skin on everyone, 5girls, 6+girls, extra person"
 
 PORTRAIT = "832x1216"
 WIDE = "1344x768"
@@ -60,31 +75,31 @@ LAND = "1216x832"
 PILOTS = {
     "maribel": {
         "label": "P1 Maribel Rowan (pink, Petal Wing)",
-        "id": "1girl, solo, adult woman, petite, wiry, tomboy, very short hair, pixie cut, copper hair, auburn hair, "
+        "id": "1girl, solo, adult woman, petite, wiry, tomboy, very short hair, pixie cut, (copper hair:1.2), auburn hair, "
         "freckles, light skin, strong nose, green eyes",
-        "suit": "rose pink utility flight jacket, asymmetrical zipped high collar, rolled sleeves, old radio clipped to "
+        "suit": "(rose pink utility flight jacket:1.2), asymmetrical zipped high collar, rolled sleeves, old radio clipped to "
         "shoulder, small four-petal badge, navy undershirt, cargo trousers, sturdy boots",
         "offduty": "repaired cream knit sweater, weatherproof trousers, sitting at a cluttered workbench, vintage radio "
         "receivers, soldering iron, warm lamp light, workshop full of antennas",
         "cockpit": "pink cockpit lights, petal-shaped canopy frame",
         "prop": "holding wrench, grease smudge on hands",
-        "neg": NEG_SOLO + ", long hair",
+        "neg": NEG_SOLO + ", long hair, pink hair",
     },
     "azure": {
         "label": "P2 Azure Lin (cyan, Prism Lance)",
         "id": "1girl, solo, mature female, tall, long legs, slender, east asian, vietnamese, black hair, long braid, "
         "side undercut, dark eyes",
-        "suit": "powder cyan flight coat, asymmetrical coat, geometric seams, prism instrument on collar, dark gloves, "
+        "suit": "(powder cyan flight coat:1.3), cyan and white, asymmetrical coat, geometric seams, prism instrument on collar, dark gloves, "
         "constellation lines drawn on gloves, dark trousers, tall boots",
         "offduty": "loose cyan linen shirt, rolled sleeves, standing in a glass-domed observatory, hand-drawn star maps "
         "pinned everywhere, brass telescope, night sky full of stars",
         "cockpit": "cyan cockpit lights, holographic trajectory lines",
         "prop": "holding glowing star chart",
-        "neg": NEG_SOLO + ", short",
+        "neg": NEG_SOLO + ", short, pink coat, white coat, yellow coat",
     },
     "solenne": {
         "label": "P3 Solenne Adisa (gold, Halo Fin)",
-        "id": "1girl, solo, mature female, dark-skinned female, very dark skin, muscular female, broad shoulders, toned "
+        "id": "1girl, solo, mature female, dark-skinned female, very dark skin, (muscular female:1.2), broad shoulders, toned "
         "arms, strong forearms, thick thighs, black hair, two-strand twists, hair up, ear cuff, brown eyes",
         "suit": "butter yellow and antique gold flight suit, sleeveless, reinforced shoulder plates, circular ring "
         "insignia, utility belt, gold boots",
@@ -97,14 +112,14 @@ PILOTS = {
     "vivi": {
         "label": "P4 Vivi Reyes (lilac, Comet Crown)",
         "id": "1girl, solo, mature female, plump, curvy, wide hips, soft belly, tan skin, latina, undercut, side shave, "
-        "dark wavy hair, streaked hair, purple streaks, coral streaks, eyebrow piercing, ear piercings, painted nails",
+        "(dark brown hair:1.3), streaked hair, purple streaks, coral streaks, eyebrow piercing, ear piercings, painted nails",
         "suit": "lilac armored jacket, sewn patches, comet pins, quick-release belt, dark cargo pants, heavy boots, "
         "fully clothed",
         "offduty": "oversized lilac hoodie covered in stitched patches, combat boots, sitting on a small garage stage, "
         "speakers, tangled cables, synthesizer, string lights, cassette recordings labeled by hand",
         "cockpit": "lilac cockpit lights, three-pointed comet canopy",
         "prop": "holding music sampler",
-        "neg": NEG_SOLO + ", skinny, thin waist, large breasts",
+        "neg": NEG_SOLO + ", skinny, thin waist, large breasts, text on clothes, graphic tee, light skin, pink hair, blonde hair",
     },
 }
 EXPRESSIONS = {
@@ -117,7 +132,7 @@ EXPRESSIONS = {
 }
 
 LILT_ID = (
-    "solo, androgynous, android, synthetic humanoid, translucent pearl glass skin, glowing cyan filaments under "
+    "solo, (androgynous:1.3), nonbinary, adult, mature, angular face, sharp features, flat chest, android, synthetic humanoid, translucent pearl glass skin, glowing cyan filaments under "
     "skin, golden eyes, small crack across one cheek, short sleek iridescent hair, high collar, pearl white "
     "mothership uniform"
 )
@@ -195,20 +210,20 @@ ENEMIES = [
     ("e21", "Nautilus Bulwark", "robotic nautilus shell fortress, spiral shell, glowing eye window"),
     ("e22", "Mirror Eel", "silver robotic eel ship with blue afterimages, mirrored scales"),
     ("e23", "Crystal Squid", "robotic squid ship with crystal lens head, prismatic glitter, tentacles"),
-    ("e24", "Crown Harbinger", "ornate prismatic crown-shaped warship, glowing prism core, stained glass panels"),
+    ("e24", "Crown Harbinger", "ornate prismatic crown-shaped starship, glowing prism core, stained glass panels"),
 ]
 
 # ---------------------------------------------------------------- bosses (WORLD-BIBLE.md B01-B09)
 BOSSES = [
-    ("b01", "Pearl Seahorse", "giant robotic seahorse battle cruiser, tall coiled hull, glowing pearl in throat, "
+    ("b01", "Pearl Seahorse", "giant robotic seahorse starship, tall coiled hull, glowing pearl in throat, "
      "rotating tail shield", "cracked pearl, a small glowing living pod escaping, safe and free"),
     ("b02", "Aurelia Array", "three giant translucent robotic jellyfish bells linked to a central antenna, current "
      "lanes", "freed luminous jellyfish colony drifting away, peaceful"),
-    ("b03", "Clawburst", "giant robotic mantis shrimp warship, massive forward punch cannon, armored joint socket",
+    ("b03", "Clawburst", "giant robotic mantis shrimp starship, massive forward punch cannon, armored joint socket",
      "shattered cannon, rescued pilot waving from an escape pod"),
-    ("b04", "Delphion", "two giant robotic dolphin scimitar warships coupled at the rear, synchronized",
+    ("b04", "Delphion", "two giant robotic dolphin scimitar starships coupled at the rear, synchronized",
      "two dolphin ships uncoupling and swimming free together"),
-    ("b05", "Sawtooth Regent", "giant robotic shark wedge battle cruiser, sawtooth jaws, hinged jaw, hammerhead escorts",
+    ("b05", "Sawtooth Regent", "giant robotic shark wedge starship, sawtooth jaws, hinged jaw, hammerhead escorts",
      "broken teeth turning into falling coral rain, shark ship floating calm"),
     ("b06", "Lantern Ray", "immense robotic manta ray carrier, glowing underside beacons, drone nurseries",
      "baby manta rays drifting away alive and glowing"),
@@ -322,8 +337,8 @@ def round_front_end():
         seed += 1
         rows.append(subj(f"r2-title-keyart-{n + 1}", "title screen key art, four princess ships",
                          f"scenery, {ships_all}, rainbow light trails, glowing bullets, bullet hell, cosmic ocean, "
-                         "pink and lilac nebula clouds like waves, distant giant mechanical whale silhouette, robotic "
-                         "jellyfish ships, stars, dynamic angle, wide shot, epic key visual, sense of speed",
+                         "pink and lilac nebula clouds like waves, small distant mechanical whale silhouette, "
+                         "stars, ships in the foreground, large ships, dynamic angle, wide shot, epic key visual, sense of speed",
                          size=WIDE, seed=seed, ticket="FE-TITLE"))
     for n in range(2):
         seed += 1
@@ -374,7 +389,7 @@ def round_front_end():
             rows.append(subj(f"r2-{name}-expr-{expr}", f"expression {expr}, {p['label']}",
                              f"{ident}, {suit}, {tags}, portrait, bust, looking at viewer, simple background, soft "
                              "pastel gradient background", seed=seed, negative=p["neg"], ticket="A-PILOT-EXPR"))
-    lilt_neg = NEG_PERSON + ", multiple views, horror, creepy, mouthless"
+    lilt_neg = NEG_PERSON + ", multiple views, horror, creepy, mouthless, 1girl, cute, moe, girly, large breasts, pink hair"
     seed += 1
     rows.append(subj("r2-lilt-turnaround", "Lilt-7 turnaround sheet",
                      f"{LILT_ID}, character sheet, turnaround, multiple views, front view, side view, back view, "
@@ -418,9 +433,9 @@ def round_enemies():
         for n in range(2):
             seed += 1
             rows.append(subj(f"r3-{eid}-{n + 1}", f"{eid.upper()} {name} enemy craft",
-                             f"mecha, {tags}, futuristic sea life starship, iridescent metal, bioluminescence, enemy "
+                             f"spaceship, vehicle, flying, {tags}, futuristic sea life starship, iridescent metal, bioluminescence, enemy "
                              "ship, side view, facing left, concept art, game asset, single object, centered, full "
-                             "shot, simple background, dark navy background", size=LAND, seed=seed,
+                             "shot, simple background, dark navy background", size=LAND, seed=seed, negative=NEG_MACHINE,
                              ticket=f"A-ENEMY-{eid[1:]}"))
     return rows
 
@@ -431,9 +446,10 @@ def round_bosses():
         for n in range(2):
             seed += 1
             rows.append(subj(f"r4-{bid}-hero-{n + 1}", f"{bid.upper()} {name} boss",
-                             f"mecha, {tags}, colossal boss warship, futuristic sea life, iridescent metal, glowing "
+                             f"starship, sci-fi spaceship shaped like a sea creature, {tags}, colossal boss starship, futuristic sea life, iridescent metal, glowing "
                              "weak point, side view, facing left, cosmic ocean background, epic scale, dramatic "
-                             "lighting, boss battle, wide shot", size=WIDE, seed=seed, ticket=f"A-BOSS-{bid[1:]}"))
+                             "lighting, boss battle, wide shot", size=WIDE, seed=seed, negative=NEG_MACHINE,
+                             ticket=f"A-BOSS-{bid[1:]}"))
         seed += 1
         rows.append(subj(f"r4-{bid}-rescue", f"{bid.upper()} {name} defeat and rescue image",
                          f"{rescue}, aftermath, gentle light, hopeful, sparkles, cosmic ocean background, wide shot",
