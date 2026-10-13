@@ -84,3 +84,38 @@ Zuzu Gamebook. Different periods and factions must not be conflated.
 Five daily pitches, all **expansions of existing active projects**: new stages/fighters for Zuzu Showdown, acts/ships/characters for Rainbow Princess Bullet Hell, book sections or card sets for Zuzu Gamebook, Shifting Lands encounter/deck packs, new follower sets and dilemmas for Emperor of Dust, or levels/power-ups for Arcade games. Each carries a real `target` project slug, an `expansion_kind`, a content hook, art plan and actionable first slice.
 
 An approval is **not intake** and **not authorization to publish**. It is a durable request for the next agent to prepare a **polished scope and actionable roadmap additions in that existing project's roadmap.yaml**, with milestones, dependency ordering, tests/acceptance, art, and `source_pitch: pitches/<date>-<slug>.md` for deduplication. Notes from Silas must be folded in. Never create a new conductor or Kind Robots Project for a post-cutover daily pitch. Preserve pre-cutover pitch decisions and intake history.
+
+
+## Superseding five-daily-upgrades direction (2026-10-12 PT)
+
+Effective for 2026-10-13 PT dockets, the five daily project entries are now
+a **build-first delivery report**, NOT five concepts or five approvals to make
+roadmaps later. The older daily pitch rules above remain historical.
+
+Autonomous workers should implement five independent improvements to already
+approved, active projects before review, preferring playable, tested, merged
+features and producing art where possible. Real in-progress PRs can fill slots
+that could not safely finish today, but a design spec or roadmap is not an
+implemented feature. Never pad a docket with proposals.
+
+Record five source-backed entries at
+projects/dream-cycle/daily-deliveries/YYYY-MM-DD.yaml, including title, target,
+kind, summary, status (shipped or in-progress), implementation PR, actual
+GitHub Actions run, verification, and artwork status. Shipped requires a
+full merge SHA and passing completed CI; in-progress requires a concrete
+next step. Link playables, delivered image URLs and durable ArtJob IDs where
+available. Run scripts/daily_project_deliveries.py --materialize and --check
+to prepare review records and digest entries. An absent or invalid docket is
+reported as missing, not fabricated.
+
+The existing signed Kind Robots pitch inbox is reused for *after-the-fact*
+Keep (approve), Modify (approve with changes), Reject (pass). Agent workers
+read --feedback to action modifications or propose carefully verified,
+reversible rollback PRs after rejection. Never directly destroy data.
+This does not authorize outward-facing publishing, secrets, billing or
+irreversible production changes. Preserve prior pitch votes and their
+historical interpretation.
+
+The unrelated daily creative pipeline still produces its original six linked
+mini-world assets and eight separate Zuzu-world assets, not counted among
+the five software upgrades.

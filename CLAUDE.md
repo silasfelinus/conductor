@@ -41,24 +41,28 @@ At the start of every session, before responding to any task, run a conductor sw
    per `scripts/dream_prose_quality.py`) and the history behind it are in `docs/sweep-checks.md` (Step 7)
    — read that section before authoring.
 
-8. Daily pitches: `session_sweep.py` runs `daily_pitches.py --check`. **Sessions author; Silas decides**
-   via the signed digest email or Kind Robots. Never decide a pitch for him.
-   **Silas's 2026-10-12 PT direction, effective for new 2026-10-13 dockets:** all FIVE
-   daily pitches are expansions of existing active projects, NOT ideas for new projects.
-   Run `python scripts/daily_pitches.py --brief` for current rules, then author
-   `pitches/daily/<pacific-date>.yaml` (exactly five, at least three with
-   `llm_at_runtime: none`; every new pitch has `target` and `expansion_kind`),
-   `--check`, `--materialize`, PR, merge when green.
-   Then run `python scripts/daily_pitches.py --approved`. For each post-cutover
-   approval, author a **polished roadmap expansion** in the named EXISTING
-   `projects/<target>/roadmap.yaml`, with actionable milestones/tasks,
-   dependencies, art work, tests and `source_pitch: pitches/<date>-<slug>.md`.
-   An approval is a request for this roadmap work, **never permission to scaffold
-   or publish a new project**. Do NOT call `intake.py` for post-cutover daily pitches.
-   The CLI preserves legacy pre-cutover approvals, including standalone project
-   intake and Arcade cabinet special cases. Follow its dated output; do not
-   retrospectively rewrite old decisions.
-   The recurring dream-cycle/t-035 remains the daily authoring commitment.
+8. Daily upgrades, effective 2026-10-13 PT (Silas's superseding direction):
+   **Build first, review afterward.** The five extra digest entries are NOT
+   speculative pitches or roadmaps. Choose existing approved ACTIVE projects
+   and ship five small, reversible, CI-tested improvements where possible:
+   Arcade stages/enemies, fighter moves, gamebook branches, Shifting Lands
+   cards, Emperor of Dust encounters, and similar additions.
+   Claim scoped source tasks, implement, open PRs, inspect completed CI, merge
+   safe green work, link playable previews and actual rendered art or ArtJobs.
+   If unfinished, report real implementation PR and next step as in-progress;
+   neither ideas nor queued art count as finished.
+   Run python scripts/daily_project_deliveries.py --brief, author five
+   evidenced entries at projects/dream-cycle/daily-deliveries/<Pacific-date>.yaml,
+   then --materialize and --check before the morning digest.
+   The signed inbox handles Keep / Modify / Reject AFTER implementation.
+   --feedback is the agent queue for modifications and scoped tested rollback
+   PRs. Reject does not destructively remove live data. Existing hard gates
+   for secrets, billing, DNS, publishing and irreversible operations remain.
+   The original six-linked Daily Dream and eight additional Zuzu assets
+   remain separate from these five project improvements.
+   Never rewrite historical pitch votes. For old intake only,
+   python scripts/daily_pitches.py --approved preserves legacy behavior.
+   dream-cycle/t-035 is the recurring build-and-report commitment.
 
 Then report:
 - **Branch** and whether the working tree is clean
@@ -81,7 +85,7 @@ Then report:
 - **Daily dream**: whether today's dated proposal exists; its steering/build/retry,
   Facet, art, and digest state; legacy Dream outlines are idea inventory rather
   than queued object builds (warn when useful idea inventory falls below five)
-- **Daily pitches**: whether today's five-pitch docket exists and is materialized, the undecided count (`daily_pitches.py --pending`), and any approved pitch still needing its existing-project roadmap expansion (or legacy intake) (`--approved`)
+- **Daily upgrades**: report five PR-backed shipped/in-progress additions, actual CI runs and merge SHA, playable and art evidence, plus the modifications/rollback feedback queue (daily_project_deliveries.py --check / --feedback). Historical decisions remain in daily_pitches.py --approved.
 - **Daily Tzaddik**: from the sweep's `tzaddik_review` section (`python scripts/tzaddik_review.py --check`
   for the full list), report the
   approved/rejected/deferred/pending counts across every discovery docket. List
