@@ -367,9 +367,8 @@ tasks:
   - id: t-013
     milestone: m5
     title: "Run physics/rules soaks, input accessibility and cross-device performance QA"
-    status: review
+    status: ready
     depends_on: t-009
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -378,9 +377,9 @@ tasks:
       2026-10-12 PT: second slice merged, kind_robots#3578 (squash 7582746). New test:zuzu- pinball-stress: 25 runtime mount/play/render/dispose cycles with physics worlds and GPU resources back to baseline every cycle; six balls through the whole runtime (rules, scene, LED rail, trails) for a minute on each of three seeds, every ball checked inside the cabinet every tick, about 0.9 ms mean / 1.6 ms p95 per tick headless. Its first run found a real escape: a ball flipped into the air off a ramp mouth flew over the 2.5 cm arch and out of the machine (the glass is at 31 cm, above the raised Abbey deck). Fixed with clear hidden cabinet sides 1 cm outside the outline from 4 cm to the glass, last in the collider list: placed mid-list they renumbered colliders, and Rapier's solver order changed two ricochet shot proofs. The croc-mouth proof is now a direct right-inlane flip. No-stuck scan back to 0 ball-search frees. Still open, needing a real browser: touch and keyboard playtests, frame timing on a GPU, and the accessible table guide check.
 
       Recovered expired input QA and repaired3638 in place: an open guide owns touchA/Start and Enter/Space/Z; closed guide still starts pinball synchronously in the audio gesture. Actual SFC handler regression covers ten open/closed cases, alongside the existing mixer mute/resume/runtime sound checks. Final-head CI and browser verification follow. This is a partial t013 slice; real device/GPU acceptance remains unfinished.
-    claimed_by: 20261013T193231Z-pinball-guide-b2r6
-    claimed_at: '2026-10-13T19:32:31Z'
-    updated: '2026-10-13T19:36:42Z'
+
+      Partial recovery merged kind_robots#3638 at401b7e14c42d4854b0b02c1be7f12b9c7326a35c using expected final head4318bcf747d5886c53a6a5805c6db03c04fd9ce8; all32 actual check runs completed successfully, with required TypeScript, Contract verifiers and verify green. Main source blobs verified. Actual guide handlers preserve open-guide input; synchronous audio activation, suspended-context recovery and immediate paused mute/unmute are repaired and covered by mutation-proven regressions. Fifteen native-audio Chromium cases and six Music Mentor SFC shelf layouts pass; local DMD/audio, real physics/rules, lint and formatter pass. Release this partial claim to ready, not done: representative real-device/GPU frame timing, full touch/table playtests and subjective FX3 acceptance remain unfinished. Browser audio fixture substituted game creation/physics and does not clear t-014 or PR3618 gates. t-022 is the separate repeatable native-browser CI kaizen. No deployment, publication, spend or email action. Today's five merged delivery entries/review records validate separately with no feedback.
+    updated: '2026-10-13T20:22:04Z'
   - id: t-014
     milestone: m5
     title: "Silas visual/play acceptance and authorization for any public /play launch"
