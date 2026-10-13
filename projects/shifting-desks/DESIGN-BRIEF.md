@@ -27,6 +27,7 @@ This project is modeled on **Zuzu: Shifting Lands** (the board) and **Zuzu Gameb
 | **Journal** of every draw, roll, effect and reason | **Disabled choices explain themselves** ("Requires Clearance 3") instead of vanishing |
 | **Seed persisted; no free reroll by refreshing** | **10+ distinct endings**, including hopeful ones, and ending ledger across runs |
 | Contract tests + schema in Conductor, runtime in Kind Robots | **Pacing: welcome before threat.** The Company is lovely before it is horrifying |
+| **Single screen on every device** (kind_robots#3610): the page never scrolls; a compact toolbar, panes that own their own overflow, and tabs or overlays instead of long pages | |
 
 The new idea that is neither parent's: **every choice costs something** (below). The project lives or dies on that rule.
 
@@ -118,6 +119,7 @@ Callbacks are welcome as **short original allusions**, such as a jammed printer,
 - **Reuse, don't fork,** Shifting Lands' stateless pieces (seeded RNG, 2d6 dice/result utility, the `kr-card-flip` reader and its board grid) and the Gamebook's dice tray where it fits. Do **not** mount either game's page or share their state owners.
 - Content is a versioned snapshot of `projects/shifting-desks/encounters/*.json`, imported with provenance. Saves are browser-local, schema-versioned and migratable. No backend writes during play for v1.
 - Accessibility: keyboard and screen reader, reduced-motion flip, the roll result announced immediately, and no hover-only actions. Device checks at 375 / 768 / 1440.
+- **Single screen, always** (Silas, 2026-10-13 PT: *"Whether phone, tablet, or desktop, all layouts should be a single screen"*). Every screen (front desk, hiring, the desk, the elevator, the Personnel File) fits the viewport at 390×844, 768×1024 and 1440×900 with no page scroll. The desk is two panes, card and decision, side by side on wide screens and stacked on narrow ones. The journal and the envelope open as overlays, and the Personnel File pages through tabs. A pane may scroll inside itself only as a fallback for unusually long content, such as an eight-route Board on a phone. The Kind Robots contract test fails if the page regains a page-level scroll region.
 
 ## MVP (first playable slice)
 
