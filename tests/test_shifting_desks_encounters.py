@@ -528,3 +528,18 @@ def test_flag_map_is_current_and_every_read_flag_is_granted():
     flags = json.loads((ENC_DIR / "FLAG-MAP.json").read_text(encoding="utf-8"))["flags"]
     assert "admin-access" in flags and flags["admin-access"]["granted_by"]
     assert any("the-kind-rewrite" in r for r in flags["admin-access"]["read_by"])
+
+
+def test_frame_nouns_are_rejected_but_real_frames_are_fine(tmp_path, pack):
+    bad = copy.deepcopy(pack)
+    bad["locations"][0]["art"]["brief"] = (
+        "A marble lobby with a detector and teeth along its inner frame, a desk filling the picture, halftone grain, "
+        "every surface bare and unmarked"
+    )
+    assert sum("art-contract vocabulary" in e for e in _validate(tmp_path, bad)) >= 2
+    ok = copy.deepcopy(pack)
+    ok["locations"][0]["art"]["brief"] = (
+        "A long elevator car lined with framed portraits of a smiling employee, halftone grain, "
+        "every surface bare and unmarked"
+    )
+    assert not any("art-contract vocabulary" in e for e in _validate(tmp_path, ok))

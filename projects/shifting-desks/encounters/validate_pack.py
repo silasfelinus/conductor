@@ -95,6 +95,11 @@ CONTRACT_PATTERNS = [
     re.compile(r"\blegible at thumbnail size\b", re.I),
     re.compile(r"\bsubject separation\b", re.I),
     re.compile(r"\b(?:readable|legible|clearly\s+readable|easily\s+read)\s+(?:tools?|labels?|signs?|instruments?|markings?|details?|iconography|symbols?)\b", re.I),
+    # The live contract's frame-noun and picture-noun rules (kind_robots artPromptContract rule 8): Krea paints
+    # the noun, so "the frame" or "filling the picture" comes back as a framed picture on a wall. A real framed
+    # object ("framed portraits") is fine. Three Shifting Desks requests were rejected at enqueue for this.
+    re.compile(r"\b(?:the|its|inner|whole|entire)\s+frame\b", re.I),
+    re.compile(r"\bfilling\s+the\s+(?:frame|picture|image)\b", re.I),
 ]
 
 
