@@ -297,7 +297,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Wire delivered art into the movement lab: stage plates, tiles, keyed sprites, animated heroine"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -307,7 +307,14 @@ tasks:
       backgrounds at load time, and a canvas port of the front page's animated
       heroine (run/jump poses, scarf) using the kept heroine seed. Verify in a
       browser at phone and desktop widths, with and without delivered art.
+
+      Merged kind_robots#3650 at 76c34fda66bb67e1005fb01f128415352937e7a7. Engine draws
+      delivered art with code-drawn fallbacks: 1-1 plate, World 1 ground tile, keyed
+      pumpbug/token/goal-valve sprites, and an animated canvas heroine using the kept seed.
+      Verified in Chromium with stand-in art and with none; the 84 queued assets render
+      through Auto Art Generate.
     owner: worker
     claimed_by: 2026-10-13T232000Z-plumber-art-wire-r4
     claimed_at: '2026-10-13T23:27:59Z'
-    updated: '2026-10-13T23:27:59Z'
+    updated: '2026-10-13T23:48:07Z'
+    implementation_pr: 'silasfelinus/kind_robots#3650'
