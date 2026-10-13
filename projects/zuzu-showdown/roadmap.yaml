@@ -997,38 +997,15 @@ tasks:
     milestone: m4
     title: "New fighter: Jeffery Mittens, the boot-looter raccoon of Hollow Bell (kit, references, rig, portraits, endings)"
     status: done
-    owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Silas, 2026-10-13 PT: "I love the raccoon boot character from the zuzu gamebook. He should be
-      elevated to a main character in the zuzu workdbook and added as a player in zuzu showdown. I think
-      his name is Jeffery Mittens." He is the gamebook's young raccoon looter (Act II "Boots", spared he
-      becomes a raider scout in Act IV); he had no name in any source, so Jeffery Mittens is his name from
-      today. Steps, as t-028 (the Swamp Witch): (1) references re-posed by Kontext from his gamebook plates
-      (art/T032-MITTENS-REFERENCES.yaml), pick one; (2) fighters.yaml kit, matchups.yaml lines, and the kit
-      in kind_robots (fighters/jeffery-mittens.ts with a contract suite); (3) a parts sheet and
-      tools/rigs/mittens.py; (4) his four portraits (T008) and two ending stills (T021); he joins the picker
-      once his bust renders. The worldbook profile (worlds/zuzu/WORLD-GUIDE.md) and the gamebook naming land
-      with this task (zuzu-gamebook owns the gamebook text). Prompts never say "human" or "people".
+    note: |-
+      Silas, 2026-10-13 PT: "I love the raccoon boot character from the zuzu gamebook. He should be elevated to a main character in the zuzu workdbook and added as a player in zuzu showdown. I think his name is Jeffery Mittens." He is the gamebook's young raccoon looter (Act II "Boots", spared he becomes a raider scout in Act IV); he had no name in any source, so Jeffery Mittens is his name from today. Steps, as t-028 (the Swamp Witch): (1) references re-posed by Kontext from his gamebook plates (art/T032-MITTENS-REFERENCES.yaml), pick one; (2) fighters.yaml kit, matchups.yaml lines, and the kit in kind_robots (fighters/jeffery-mittens.ts with a contract suite); (3) a parts sheet and tools/rigs/mittens.py; (4) his four portraits (T008) and two ending stills (T021); he joins the picker once his bust renders. The worldbook profile (worlds/zuzu/WORLD-GUIDE.md) and the gamebook naming land with this task (zuzu-gamebook owns the gamebook text). Prompts never say "human" or "people".
+      PROGRESS 2026-10-13 8:35 AM PT: worldbook profile (WORLD-GUIDE.md 'Main characters beyond Book One'), fighters.yaml and matchups.yaml merged (conductor#6131). kind_robots#3637: his kit (fighters/jeffery-mittens.ts, verifyZuzuShowdownMittens 12 checks), rival/endings/map data, and the gamebook naming him. Reference art ArtJobs 38587-38590 rendering; next: pick one, portraits (T008), endings (T021), parts (T032-MITTENS-PARTS) and rigs/mittens.py, then he joins the picker with matchups.json.
+      DONE 2026-10-13 10:30 AM PT: Jeffery Mittens is a main character and a playable fighter. Worldbook: WORLD-GUIDE.md 'Main characters beyond Book One' + resource-submissions profile (conductor#6131). Gamebook names him (Act II arch, IV, IX, journal debt) and his kit (fighters/jeffery-mittens.ts, verifyZuzuShowdownMittens 12 checks) in kind_robots#3637. Roster, rig (tools/rigs/mittens.py from parts 246733-246737, reference 246731), four portraits (246738-246740, 246744), endings (246746, 246743) and matchups in kind_robots#3640 + conductor#6134. Rejected renders: beaten portrait 246741 (a hat), ending 1 246742/246745 (human children). Not deployed: kindrobots.org shows him after the next Unraid Force Update.
 
-      PROGRESS 2026-10-13 8:35 AM PT: worldbook profile (WORLD-GUIDE.md 'Main characters
-      beyond Book One'), fighters.yaml and matchups.yaml merged (conductor#6131).
-      kind_robots#3637: his kit (fighters/jeffery-mittens.ts, verifyZuzuShowdownMittens 12
-      checks), rival/endings/map data, and the gamebook naming him. Reference art ArtJobs
-      38587-38590 rendering; next: pick one, portraits (T008), endings (T021), parts
-      (T032-MITTENS-PARTS) and rigs/mittens.py, then he joins the picker with matchups.json.
-
-      DONE 2026-10-13 10:30 AM PT: Jeffery Mittens is a main character and a playable fighter.
-      Worldbook: WORLD-GUIDE.md 'Main characters beyond Book One' + resource-submissions
-      profile (conductor#6131). Gamebook names him (Act II arch, IV, IX, journal debt) and his
-      kit (fighters/jeffery-mittens.ts, verifyZuzuShowdownMittens 12 checks) in
-      kind_robots#3637. Roster, rig (tools/rigs/mittens.py from parts 246733-246737, reference
-      246731), four portraits (246738-246740, 246744), endings (246746, 246743) and matchups
-      in kind_robots#3640 + conductor#6134. Rejected renders: beaten portrait 246741 (a hat),
-      ending 1 246742/246745 (human children). Not deployed: kindrobots.org shows him after
-      the next Unraid Force Update.
+      Independent review confirms implementation3640 merged at b2979164c2b1ceae824dd1467c754055b2104682 with28 completed successful exact-head checks, and closeout6135 at5142274622d814d8274dfb9908bcfaf252aac06a with25 completed checks. Local93 assertions and9 browser renderer cases passed. Both ending plates246746/246743 are delivered in repository assets; actual production deployment is not asserted. Clear the completed task owner; preserve the one done learning already appended by6135. Deployment uses the current migration-safe Unraid runbook, not historical Force Update prose.
     claimed_by: 2026-10-13T15:16:00Z-zs-t032-mittens
     claimed_at: '2026-10-13T15:16:36Z'
-    updated: '2026-10-13T17:30:45Z'
+    updated: '2026-10-13T17:35:13Z'
     implementation_pr: 'silasfelinus/kind_robots#3640'
