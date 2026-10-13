@@ -41,6 +41,9 @@ TAGS = {
 # Silas, 2026-10-12 PT: secret societies & traitors and paperwork & psych tests lead.
 LEAD_TAGS = {"conspiracy", "psych-test", "paperwork"}
 LEAD_SHARE_MIN = 0.5
+NON_PACK_FILES = {"DECKS.json"}
+FAVOR_KINDS = {"force-success", "effects", "ignore-requirement", "bonus"}
+MUTATION_KINDS = {"reroll", "auto-success", "bonus", "restore-composure"}
 REQUIRE_KEYS = {"clearance", "flag", "forms"}
 ART_STATUSES = {"design-only", "verified-repository-art", "approved-ArtImage"}
 ART_SUFFIX = "every surface bare and unmarked"
@@ -332,7 +335,56 @@ def validate_pack(path: Path) -> list[str]:
 def pack_paths(args: list[str]) -> list[Path]:
     if args:
         return [Path(a) for a in args]
-    return sorted(p for p in HERE.glob("*.json") if not p.name.endswith(".schema.json"))
+    return sorted(
+        p for p in HERE.glob("*.json")
+        if not p.name.endswith(".schema.json") and p.name not in NON_PACK_FILES
+    )
+
+
+def validate_decks(path: Path, packs: list[Path]) -> list[str]:
+    """DECKS.json: job titles, societies and mutations, checked against the packs' flags."""
+    errors: list[str] = []
+    decks = json.loads(path.read_text(encoding="utf-8"))
+    granted: set[str] = set()
+    for p in packs:
+        pack = json.loads(p.read_text(encoding="utf-8"))
+        for choice in [c for e in pack["encounters"] for c in e["choices"]] + pack["boss"]["choices"]:
+            for key in ("success", "failure"):
+                granted.update((choice.get(key) or {}).get("add_flags") or [])
+    jobs = decks.get("job_titles") or []
+    if len(jobs) < 3:
+        errors.append("DECKS: need at least 3 job titles")
+    for job in jobs:
+        skills = job.get("skills") or {}
+        if set(skills) != SKILLS or sum(skills.values()) != 6 or not all(0 <= v <= 3 for v in skills.values()):
+            errors.append(f"DECKS: job {job.get('id')!r} needs all six skills, each 0-3, summing to 6")
+    societies = decks.get("societies") or []
+    if len(societies) < 6:
+        errors.append("DECKS: need at least 6 societies")
+    for soc in societies:
+        sid = soc.get("id")
+        for key in ("objectives", "betrayals"):
+            for dept, flags in (soc.get(key) or {}).items():
+                if not flags:
+                    errors.append(f"DECKS: {sid} {key}.{dept} is empty")
+                for f in flags:
+                    if f not in granted:
+                        errors.append(f"DECKS: {sid} {key}.{dept} names {f!r}, which no pack grants")
+        if (soc.get("favor") or {}).get("kind") not in FAVOR_KINDS:
+            errors.append(f"DECKS: {sid} favor kind must be one of {sorted(FAVOR_KINDS)}")
+        reward = soc.get("reward") or {}
+        if not reward or set(reward) - set(METERS):
+            errors.append(f"DECKS: {sid} reward must be meter effects")
+    mutations = decks.get("mutations") or []
+    if len(mutations) < 8:
+        errors.append("DECKS: need at least 8 mutations")
+    for mut in mutations:
+        if mut.get("kind") not in MUTATION_KINDS:
+            errors.append(f"DECKS: mutation {mut.get('id')!r} kind must be one of {sorted(MUTATION_KINDS)}")
+        for s in mut.get("skills") or []:
+            if s not in SKILLS:
+                errors.append(f"DECKS: mutation {mut.get('id')!r} names unknown skill {s!r}")
+    return errors
 
 
 def main(argv: list[str]) -> int:
@@ -349,6 +401,12 @@ def main(argv: list[str]) -> int:
             print(f"OK {p.name}: {len(pack['encounters'])} encounters, "
                   f"{len(pack['locations'])} locations, polarity {pol}, "
                   f"boss {pack['boss']['id']} with {len(pack['boss']['choices'])} routes")
+    decks = HERE / "DECKS.json"
+    if not argv and decks.exists():
+        deck_errors = validate_decks(decks, paths)
+        errors.extend(deck_errors)
+        if not deck_errors:
+            print(f"OK {decks.name}: job titles, societies and mutations reference granted flags")
     for e in errors:
         print(e)
     return 1 if errors else 0
