@@ -1,0 +1,13 @@
+version: 1
+project: zuzu-pinball
+task: t-013
+operation: review
+owner: worker
+session: 20261013T220640Z-zuzu-t013-flipper-j8x4
+updated: '2026-10-13T22:09:00Z'
+note: >-
+  Partial input QA slice: patched shared PinballTouch pointer-id reuse and
+  window pointerup/cancel/blur/pagehide/visibility releases, with cabinet-wide
+  input cleanup on blur/visibility. Added duplicate-pointer and delayed-up
+  regression cases in verifyArcadeEngine. Kind Robots implementation PR follows;
+  real-device/GPU performance and full cross-device QA remain outstanding.
