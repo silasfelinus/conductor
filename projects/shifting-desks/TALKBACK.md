@@ -19,3 +19,7 @@
 **Kaizen task:** deferred — no merge; the immediate improvement is full producer/enqueue contract parity.
 
 **Pattern note:** This is the same frame-noun class diagnosed for round 2's Hungry Detector in Auto Art Generate run 38355444443. The enqueue gate must bind every producer, including reviewed source packs.
+
+### October 13, 2026, 2:42 AM PT — concurrent merge recovery
+
+Conductor#6110's unchanged reviewed head merged in another session at `2026-10-13T09:40:45Z`, as `800c4d7858db202fee072e0078250140fdcdd089`. The actual enqueue-contract rejection is still present in that head. Conductor#6111 merged as `533b1bc8827ef3b8531ccbcf15bd0140a1765e9e` after all 25 exact-head checks completed successfully or intentionally skipped; main now verifies t-013 **ready, unowned, pass 1**, with retry context. Its review branch is deleted. The original worker should re-claim t-013 and open a focused **follow-up** repair PR, then verify the consumer; the earlier instruction to retain an open #6110 is superseded by the concurrent merge. No additional pass or completion is recorded for this handoff.
