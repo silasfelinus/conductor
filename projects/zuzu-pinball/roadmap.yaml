@@ -569,7 +569,7 @@ tasks:
       the watering hole over the existing scoop and jaw gate, replacing the procedural
       geometry. Reduced motion holds each phase's key frame.
 
-      2026-10-13: done. The River Croc is drawn from generated art in the concept art's inked
+      October 12, 2026 PT: implementation merged. The River Croc is drawn from generated art in the concept art's inked
       western style. Key image: Arthemy house lane, Silas picked ArtImage 245776
       (art/T019-CROC-KEY.yaml). Phase poses: Kontext edits (art/T019-CROC-POSES.yaml: gape
       245782, submerged 245792, death roll 245788/245789). Clips: WAN (art/T019-CROC-
@@ -608,3 +608,20 @@ tasks:
       Coordinate with active t-019; do not regenerate its clips or duplicate
       its delivery work. No model installation, renderer restart, deployment,
       secrets, paid generation or public release without concrete authorization.
+
+  - id: t-021
+    milestone: m4
+    title: "Smooth Croc atlas cutout edges and verify every playback phase."
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Reviewer kaizen from t-019 closeout: the delivered 101-frame atlas is
+      nonempty and bounds-correct, but direct visual inspection shows jagged
+      white-surround cutout notches near the inked pool edges. Improve the
+      existing croc_atlas.py mask/edge treatment without erasing teeth, eyes,
+      spray or historical source art. Verify decoded alpha and actual renderer
+      UVs across all seven clips and reduced-motion holds, retaining frame
+      ordering, timings, original ArtJob provenance and safe-mouth physics.
+      Reuse delivered clips; no new generation, deployment or public release.
