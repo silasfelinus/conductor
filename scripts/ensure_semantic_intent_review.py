@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Dispatch a real GitHub semantic review if due and no recent attempt exists."""
+"""Dispatch a no-cost semantic evidence packet if due and no recent attempt exists."""
 import json
 import os
 import sys
@@ -38,18 +38,18 @@ def main():
     repo = os.environ.get("GITHUB_REPOSITORY", "")
     report = json.loads(Path("PORTFOLIO-OVERSIGHT.json").read_text())
     if not report.get("intent_review", {}).get("due"):
-        print("Semantic review current; no dispatch required")
+        print("Semantic audit current; no new source brief required")
         return 0
     if not token or not repo:
-        print("::error::Cannot dispatch semantic review: Actions token/repo absent", file=sys.stderr)
+        print("::error::Cannot dispatch semantic source briefing:  Actions token/repo absent", file=sys.stderr)
         return 1
     try:
         result = ensure(report, token, repo, datetime.now(timezone.utc))
-        print("Semantic review dispatcher: " + result)
+        print("Semantic evidence packet dispatcher: " + result)
         return 0
     except Exception as error:
         # No secrets or remote response body may appear in logs.
-        print("::error::Semantic review dispatch failed: " + type(error).__name__, file=sys.stderr)
+        print("::error::Semantic briefing dispatch failed: " + type(error).__name__, file=sys.stderr)
         return 1
 
 
