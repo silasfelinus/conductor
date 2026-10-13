@@ -34,11 +34,29 @@ FRAME = 320
 COLS = 12
 BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 
-# What the table plays. Each clip comes from a WAN clip (`clip`, its ArtImage) or a still (`still`), takes
-# `frames` frames evenly from `start` to `end` (fractions of the source), and plays at `fps`. `hold` is the
-# still a phase shows with reduced motion. Edit this, re-run, and commit both outputs.
-CLIPS: dict[str, dict] = {}
-HOLDS: dict[str, int] = {}
+# What the table plays. Each clip comes from a WAN clip (`clip`, its ArtImage), taking `frames` frames evenly
+# from `start` to `end` (fractions of the source), or from a run of approved stills (`stills`), and plays at
+# `fps`. `pingpong` plays a loop forward then back; `then` appends stills (the pose a clip lands on). HOLDS is
+# the still each phase shows with reduced motion. Edit this, re-run, and commit both outputs.
+CLIPS: dict[str, dict] = {
+    # WAN TI2V clips (T019-CROC-CLIPS round 2): he breathes with his jaws wide, lurks, stirs to rise.
+    "open": {"clip": 245794, "frames": 12, "start": 0.0, "end": 0.7, "fps": 8, "loop": True, "pingpong": True},
+    "lurk": {"clip": 245799, "frames": 10, "fps": 6, "loop": True, "pingpong": True},
+    "rise": {"clip": 245800, "frames": 8, "start": 0.3, "end": 1.0, "fps": 16, "then": [245782]},
+    # Until the first-last-frame clips (round 3) are in: limited animation, cut between the approved poses.
+    "snap": {"stills": [245782, 245776], "fps": 12},
+    "roll": {"stills": [245776, 245788, 245789, 245788], "fps": 10, "loop": True},
+    "spit": {"stills": [245776, 245782], "fps": 10},
+    "sink": {"stills": [245776, 245792], "fps": 6},
+}
+HOLDS: dict[str, int] = {
+    "submerged": 245792,
+    "rising": 245782,
+    "open": 245782,
+    "captured": 245776,
+    "death-roll": 245776,
+    "spit": 245782,
+}
 
 
 def fetch(image_id: int, cache: Path) -> bytes:
@@ -145,8 +163,15 @@ def main(argv=None) -> int:
     layout: dict = {"frame": FRAME, "cols": COLS, "clips": {}, "holds": {}}
     stills: dict[int, int] = {}
     for name, spec in CLIPS.items():
-        source = frames_of(fetch(spec.get("clip") or spec["still"], args.cache))
-        chosen = pick(source, spec["frames"], spec.get("start", 0.0), spec.get("end", 1.0))
+        if "stills" in spec:
+            chosen = [frames_of(fetch(image_id, args.cache))[0] for image_id in spec["stills"]]
+        else:
+            source = frames_of(fetch(spec["clip"], args.cache))
+            chosen = pick(source, spec["frames"], spec.get("start", 0.0), spec.get("end", 1.0))
+        if spec.get("pingpong"):
+            # A clip that cannot pin its last frame loops forward and back, so it never jumps.
+            chosen = chosen + chosen[-2:0:-1]
+        chosen += [frames_of(fetch(image_id, args.cache))[0] for image_id in spec.get("then", [])]
         layout["clips"][name] = {
             "first": len(cells),
             "count": len(chosen),
