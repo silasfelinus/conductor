@@ -591,3 +591,28 @@ tasks:
     claimed_at: '2026-10-13T06:58:08Z'
     updated: '2026-10-13T07:24:18Z'
     implementation_pr: 'silasfelinus/kind_robots#3628'
+  - id: t-024
+    milestone: m3
+    title: "Repair rejected Shifting Desks art prompts using the live enqueue contract"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-13T10:35:39Z'
+    note: >-
+      Kaizen from conductor#6113 source review; next_free_task_id.py returned t-024.
+      Actual Auto Art Generate run 38364751716 rejects Hungry Detector and Security
+      Desk frame-noun prompts; actual TypeScript enqueue validation also rejects
+      Founder's Desk. Replace inner frame with inner arch for requests
+      shifting-desks-r2-the-hungry-detector and shifting-desks-r3-location-security-desk;
+      replace corner of the frame with corner of the desk for
+      shifting-desks-r6-the-founders-desk. Fix corresponding ROUND-2/3/6 ledgers and
+      ORIENTATION-12/SUBLEVEL-ZERO-12 art briefs so every producer agrees. The Python
+      negation detector is not the full server contract: validate changed/new requests
+      with actual current Kind Robots checkArtPromptContract for krea2, cfg 1, steps 8.
+      Read complete current files in explicit ranges, patch text in place, use current
+      blob SHAs, preserve all pending durable ArtJobs, and coordinate with the active
+      t-014 worker before shared root edits. Do not copy server regexes, weaken checks,
+      overwrite queue state or mark requested art delivered. Verify the next generator
+      adopts/renders the original targets and health clears without hand editing it.
+      t-013's consumer is merged; these art defects remain independent unfinished work.
