@@ -12,7 +12,9 @@ Toy Division now descends into the Vault with Nutrition Studies, Cognitive Testi
 PR: https://github.com/silasfelinus/kind_robots/pull/3632
 Checks: https://github.com/silasfelinus/kind_robots/actions/runs/38373922664
 Verified: All 33 actual checks completed successfully or intentionally skipped for implementation head 0afb81ac45bdbb8e684c0c963de79af449e159a9. Independent gameplay contract on final merged main fe55977b4b3c1a88713dcf355310eb4cf2723bde passed: 2475/3000 runs completed, 525 eliminated, including grades, gates, restructuring and five departments.
-Art: blocked
+Art: delivered
+Art URL: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-final-wellness-exam.webp
+Art evidence: https://github.com/silasfelinus/conductor/actions/runs/38386864668 — all seventeen canonical round targets verified available by successful workflow media HEAD probes; visual curation remains separate.
 Merge: 5a1c181e2085ea3db093801b26f99301ae57f8b8
 
 ## Review after the work
