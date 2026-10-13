@@ -55,6 +55,10 @@ The paperwork floor. Everything here requires a form, including the form. Shippe
 - **Window 9.** A Papers, Please-style desk shift on the other side of the glass. Cards (until the Window card type ships in t-016): a giant cockroach applying for your job with flawless paperwork; a coworker's form that will save them and doom you; a stamp that says APPROVED on one side and REASSIGNED on the other; Dale, applying for a transfer away from you.
 - **Boss: *The Form That Requires Itself*.** Form 0, the Request to Submit Form 0. Routes: comply forever (lose Composure, gain a stamp), forge it (Discretion, a Society favor), fill it out *correctly* for the first time in Company history (Compliance, which breaks something important), feed it to the pneumatic tubes (Initiative; it comes back), or get the Society for Accurate Minutes to prove it never existed.
 
+### Toy Division (Level −2): shipped as [encounters/TOY-DIVISION-12.json](encounters/TOY-DIVISION-12.json) (t-011)
+
+The nuclear-toy floor, played for corporate cheer. Children are never present: employees play them in propeller beanies, and nothing ever detonates. **Concept Lab** (a brainstorm where Defense writes down every idea, the Mk 1 nursery and its recycling chute, the fingernail-sized warning label, Dale testing squeak codes), **Focus Group Room** (you are Emma, 6; a questionnaire that wants three coworkers' desks; the Concerned Parents' circle behind the mirror; Gus in a beanie), **Proving Grounds** (the drop test, Kevin's lanyard on a crash-test dummy, the safe-distance memo, Mk 0 returned to sender). Boss: *Snuggle Sentinel's Launch Party* (present it, swap the payload for stuffing, blame the Parents, pull the fire alarm, let an imprinted Mk 0 speak, or the Empathy 4 and Spite 4 routes). Pays off bear-imprinted, defused-mk0, mailed-the-bear-upstairs, owes-gus-a-favor and sent-dale-to-toys.
+
 ## Recurring cast (original)
 
 | Character | Role | Notes |
@@ -138,5 +142,6 @@ Callbacks are **short original allusions, never quotations**. Each callback card
 | Clone backups who inherit your debts | Paranoia | Successors | Original names; no six-pack clone wording |
 | Secret societies + a cheerful supervising machine | Paranoia | the whole social layer | No Friend Computer, Alpha Complex, clearance colors or society names |
 | Approve/deny stamps at a window | Papers, Please | Window 9, *The Double-Sided Stamp* | No country, no UI copy, no rules |
+| A cheerful mascot judging a safe distance with one raised thumb | Fallout | Toy Division, *The Safe-Distance Memo* | Original mascot; no Vault Boy, no Vault-Tec, no slogans |
 | A sealed vault running experiments on residents | Fallout | the Vault | No Vault-Tec, no Vault Boy |
 | A towel in the emergency kit | Hitchhiker's Guide | Records, *The Jam in Tube 14* | One object, no line |

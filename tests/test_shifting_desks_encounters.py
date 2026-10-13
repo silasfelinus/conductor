@@ -10,6 +10,8 @@ import importlib.util
 import json
 from pathlib import Path
 
+import re
+
 import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -357,3 +359,47 @@ def test_restructuring_shape_is_enforced(tmp_path, records):
 def test_restructuring_reason_is_written_out(tmp_path, records):
     records["restructurings"][0]["reason"] = "Closed"
     assert any("reason" in e for e in _validate_records(tmp_path, records))
+
+
+# Toy Division (t-011)
+
+TOYS = ENC_DIR / "TOY-DIVISION-12.json"
+
+
+def test_toy_division_pack_shape():
+    toys = json.loads(TOYS.read_text(encoding="utf-8"))
+    assert toys["department"]["id"] == "toy-division"
+    assert toys["department"]["order"] == 3
+    assert [loc["location_id"] for loc in toys["locations"]] == ["concept-lab", "focus-group-room", "proving-grounds"]
+    assert all(len(loc["encounter_ids"]) == 4 for loc in toys["locations"])
+    polarity = [e["polarity"] for e in toys["encounters"]]
+    assert {p: polarity.count(p) for p in set(polarity)} == {"good": 4, "bad": 4, "mixed": 4}
+    assert toys["boss"]["id"] == "snuggle-sentinels-launch-party"
+    assert toys["boss"]["department_outcomes"][-1]["id"] == "back-to-the-drawing-board"
+
+
+def test_toy_division_pays_off_earlier_flags():
+    toys = json.loads(TOYS.read_text(encoding="utf-8"))
+    required = {
+        (ch["requires"] or {}).get("flag")
+        for card in toys["encounters"] + [toys["boss"]]
+        for ch in card["choices"]
+    }
+    assert {"bear-imprinted", "defused-mk0", "mailed-the-bear-upstairs", "sent-dale-to-toys", "owes-gus-a-favor"} <= required
+
+
+def test_toy_division_restructures_on_every_records_outcome():
+    toys = json.loads(TOYS.read_text(encoding="utf-8"))
+    records = json.loads(RECORDS.read_text(encoding="utf-8"))
+    keyed = {o for m in toys["restructurings"] if m["when"] for o in m["when"]["outcomes"]}
+    outcomes = {o["id"] for o in records["boss"]["department_outcomes"]} - {"refiled"}
+    assert outcomes <= keyed, outcomes - keyed
+
+
+def test_toy_art_keeps_children_out_of_frame():
+    """Tone guardrail (DESIGN-BRIEF): no child is ever pictured near the bears; adults play the children."""
+    toys = json.loads(TOYS.read_text(encoding="utf-8"))
+    briefs = [e["art"]["brief"] for e in toys["encounters"]] + [toys["boss"]["art"]["brief"]]
+    briefs += [loc["art"]["brief"] for loc in toys["locations"]] + [toys["department"]["arrival_art"]["brief"]]
+    for brief in briefs:
+        assert not re.search(r"\b(child|children|kid|kids|toddler|baby|infant)\b", brief, re.I), brief
