@@ -382,7 +382,17 @@ tasks:
     status: claimed
     depends_on: t-004
     owner: worker
-    passes: 0
+    passes: 1
+    retry_context: >-
+      Pass 1 failed (quality): conductor#6110 head 758d8aa8aba1d524b629cf5c1854183dc7a623c9
+      contains a frame-noun enqueue violation in The Founder's Desk. The actual current
+      Kind Robots checkArtPromptContract rejects the ROUND-6 prompt; the 50 Python
+      encounter/negation tests pass but cover a narrower detector. Replace corner of the
+      frame with corner of the desk in SUBLEVEL-ZERO-12.json art.brief, ROUND-6.yaml
+      prompt, and the shifting-desks-r6-the-founders-desk art-prompts.yaml request.
+      Reclaim this task and retain the implementation PR; validate all 17 requests
+      against the actual krea2 enqueue contract, then implement and verify the consumer.
+      Do not bypass the gate, mark requested art delivered, or close the task on data alone.
     stakes: reversible
     note: >-
       encounters/SUBLEVEL-ZERO-12.json (the executives live at the very bottom of the
