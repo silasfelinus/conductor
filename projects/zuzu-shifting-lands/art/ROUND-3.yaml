@@ -1,0 +1,2255 @@
+# Zuzu: Shifting Lands art round 3 (zuzu-shifting-lands t-029): the 22 consequence plates that missed twice
+# in ROUND-2 (fresh seed, then a reroll with prompt fixes). Silas, 2026-10-13: "Are there still 22 missing? Find
+# a solution." Text alone could not hold these: the lane kept painting the mole mason as a fox/rat, the boar as a
+# feral herd, the washed-out bridge intact, the Verge door shut. So each one now starts from its card's approved
+# ROUND-1 painting (source_image_id) and is repainted on the SAME Arthemy house checkpoint via sdxl-img2img: the
+# keeper holds the species, costume and setting, the prompt moves the moment to the consequence. Not Kontext:
+# Silas dropped the Flux lane for these plates on 2026-10-10 ("arthemy was the default for a reason").
+# Three strengths per outcome (denoise 0.5 / 0.65 / 0.8: stay close to the card -> let the scene change), 66
+# subjects; review picks at most one keeper per outcome. Keepers export to kind_robots
+# public/shifting-lands/outcomes/<outcome>.webp and BESPOKE_OUTCOMES like ROUND-2.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# Probe (ArtJob 38518, 0.65): house style and layout held, but the ROUND-1 'mole mason' card was never a mole
+# (a dark shaggy mason), and 'anthro mole' tags pulled the repaint off it. The three hammer-under-the-stone
+# outcomes now describe the card's own mason and add a 0.4 strength (-d); the goal is the same character as the card.
+round: shifting-lands-3
+project_slug: zuzu-shifting-lands
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: house-i2i
+  label: Arthemy Western Art v3.0 img2img from the card's ROUND-1 keeper
+  engine: sdxl-img2img
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, weathered, grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: sl3-the-locked-dormitory--search-lock--failure-a
+  entity: scenery
+  lane: house-i2i
+  title: The Locked Dormitory — Examine the old lock (failure) (img2img 0.5)
+  size: 1344x768
+  seed: 34001
+  shape: wide
+  card: the-locked-dormitory
+  outcome: the-locked-dormitory--search-lock--failure
+  land: homestead
+  task: t-029
+  source_image_id: 245549
+  source_key: sl1-the-locked-dormitory-2
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, horse, pony, animal, children, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, a thin metal tool hangs stuck in the old iron lock as a dropped
+    lantern rolls on the floor and the looming shadow of a caretaker stretches down the corridor toward the door,
+    no lettering or logos.
+  prompt_tags: deserted scene, scenery, thin metal pick stuck in an old iron lock, locked wooden dormitory door,
+    dropped lantern rolling on the floor, spilled light, small wooden toy horse knocked over, looming shadow of
+    a large figure stretching down the corridor wall, dim adobe mission corridor, harsh contrast, dutch angle, alarm,
+    panic, flickering light, abandoned tool, empty coat peg, sinister, heavy shadows, menace, cinematic lighting,
+    detailed background, medium shot
+  replaces:
+  - sl2-the-locked-dormitory--search-lock--failure
+  - sl2r2-the-locked-dormitory--search-lock--failure
+  jobs:
+    house-i2i: 38519
+  art: {}
+  verdict: null
+- key: sl3-the-locked-dormitory--search-lock--failure-b
+  entity: scenery
+  lane: house-i2i
+  title: The Locked Dormitory — Examine the old lock (failure) (img2img 0.65)
+  size: 1344x768
+  seed: 34002
+  shape: wide
+  card: the-locked-dormitory
+  outcome: the-locked-dormitory--search-lock--failure
+  land: homestead
+  task: t-029
+  source_image_id: 245549
+  source_key: sl1-the-locked-dormitory-2
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, horse, pony, animal, children, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, a thin metal tool hangs stuck in the old iron lock as a dropped
+    lantern rolls on the floor and the looming shadow of a caretaker stretches down the corridor toward the door,
+    no lettering or logos.
+  prompt_tags: deserted scene, scenery, thin metal pick stuck in an old iron lock, locked wooden dormitory door,
+    dropped lantern rolling on the floor, spilled light, small wooden toy horse knocked over, looming shadow of
+    a large figure stretching down the corridor wall, dim adobe mission corridor, harsh contrast, dutch angle, alarm,
+    panic, flickering light, abandoned tool, empty coat peg, sinister, heavy shadows, menace, cinematic lighting,
+    detailed background, medium shot
+  replaces:
+  - sl2-the-locked-dormitory--search-lock--failure
+  - sl2r2-the-locked-dormitory--search-lock--failure
+  jobs:
+    house-i2i: 38520
+  art: {}
+  verdict: null
+- key: sl3-the-locked-dormitory--search-lock--failure-c
+  entity: scenery
+  lane: house-i2i
+  title: The Locked Dormitory — Examine the old lock (failure) (img2img 0.8)
+  size: 1344x768
+  seed: 34003
+  shape: wide
+  card: the-locked-dormitory
+  outcome: the-locked-dormitory--search-lock--failure
+  land: homestead
+  task: t-029
+  source_image_id: 245549
+  source_key: sl1-the-locked-dormitory-2
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, horse, pony, animal, children, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, a thin metal tool hangs stuck in the old iron lock as a dropped
+    lantern rolls on the floor and the looming shadow of a caretaker stretches down the corridor toward the door,
+    no lettering or logos.
+  prompt_tags: deserted scene, scenery, thin metal pick stuck in an old iron lock, locked wooden dormitory door,
+    dropped lantern rolling on the floor, spilled light, small wooden toy horse knocked over, looming shadow of
+    a large figure stretching down the corridor wall, dim adobe mission corridor, harsh contrast, dutch angle, alarm,
+    panic, flickering light, abandoned tool, empty coat peg, sinister, heavy shadows, menace, cinematic lighting,
+    detailed background, medium shot
+  replaces:
+  - sl2-the-locked-dormitory--search-lock--failure
+  - sl2r2-the-locked-dormitory--search-lock--failure
+  jobs:
+    house-i2i: 38521
+  art: {}
+  verdict: null
+- key: sl3-a-crust-for-the-road--offer-help--failure-a
+  entity: scenery
+  lane: house-i2i
+  title: A Crust for the Road — Offer to help at the kitchen (failure) (img2img 0.5)
+  size: 1344x768
+  seed: 34004
+  shape: wide
+  card: a-crust-for-the-road
+  outcome: a-crust-for-the-road--offer-help--failure
+  land: homestead
+  task: t-029
+  source_image_id: 245551
+  source_key: sl1-a-crust-for-the-road-2
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, warm
+    light, cozy, human, hair, person sleeping, bed, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, a thin blanket lies on frosted ground against the cold mission wall
+    at night while above, in a single lit window, a dark silhouette keeps watch, no lettering or logos.
+  prompt_tags: deserted scene, scenery, cold night outside the adobe mission wall, thin blanket on frosted ground,
+    breath of cold mist, single lit window high above, dark watching silhouette in the window, dark adobe walls,
+    starless sky, cold blue tones, sleepless, exhausting, frost on adobe, bare ground, discarded travel pack, surveillance,
+    isolation, bitter cold, dim moon, cinematic lighting, detailed background, wide shot
+  replaces:
+  - sl2-a-crust-for-the-road--offer-help--failure
+  - sl2r2-a-crust-for-the-road--offer-help--failure
+  jobs:
+    house-i2i: 38522
+  art: {}
+  verdict: null
+- key: sl3-a-crust-for-the-road--offer-help--failure-b
+  entity: scenery
+  lane: house-i2i
+  title: A Crust for the Road — Offer to help at the kitchen (failure) (img2img 0.65)
+  size: 1344x768
+  seed: 34005
+  shape: wide
+  card: a-crust-for-the-road
+  outcome: a-crust-for-the-road--offer-help--failure
+  land: homestead
+  task: t-029
+  source_image_id: 245551
+  source_key: sl1-a-crust-for-the-road-2
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, warm
+    light, cozy, human, hair, person sleeping, bed, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, a thin blanket lies on frosted ground against the cold mission wall
+    at night while above, in a single lit window, a dark silhouette keeps watch, no lettering or logos.
+  prompt_tags: deserted scene, scenery, cold night outside the adobe mission wall, thin blanket on frosted ground,
+    breath of cold mist, single lit window high above, dark watching silhouette in the window, dark adobe walls,
+    starless sky, cold blue tones, sleepless, exhausting, frost on adobe, bare ground, discarded travel pack, surveillance,
+    isolation, bitter cold, dim moon, cinematic lighting, detailed background, wide shot
+  replaces:
+  - sl2-a-crust-for-the-road--offer-help--failure
+  - sl2r2-a-crust-for-the-road--offer-help--failure
+  jobs:
+    house-i2i: 38523
+  art: {}
+  verdict: null
+- key: sl3-a-crust-for-the-road--offer-help--failure-c
+  entity: scenery
+  lane: house-i2i
+  title: A Crust for the Road — Offer to help at the kitchen (failure) (img2img 0.8)
+  size: 1344x768
+  seed: 34006
+  shape: wide
+  card: a-crust-for-the-road
+  outcome: a-crust-for-the-road--offer-help--failure
+  land: homestead
+  task: t-029
+  source_image_id: 245551
+  source_key: sl1-a-crust-for-the-road-2
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, warm
+    light, cozy, human, hair, person sleeping, bed, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, a thin blanket lies on frosted ground against the cold mission wall
+    at night while above, in a single lit window, a dark silhouette keeps watch, no lettering or logos.
+  prompt_tags: deserted scene, scenery, cold night outside the adobe mission wall, thin blanket on frosted ground,
+    breath of cold mist, single lit window high above, dark watching silhouette in the window, dark adobe walls,
+    starless sky, cold blue tones, sleepless, exhausting, frost on adobe, bare ground, discarded travel pack, surveillance,
+    isolation, bitter cold, dim moon, cinematic lighting, detailed background, wide shot
+  replaces:
+  - sl2-a-crust-for-the-road--offer-help--failure
+  - sl2r2-a-crust-for-the-road--offer-help--failure
+  jobs:
+    house-i2i: 38524
+  art: {}
+  verdict: null
+- key: sl3-the-silent-bell--climb-stairs--success-a
+  entity: scenery
+  lane: house-i2i
+  title: The Silent Bell — Climb and inspect the bell (success) (img2img 0.5)
+  size: 1344x768
+  seed: 34007
+  shape: wide
+  card: the-silent-bell
+  outcome: the-silent-bell--climb-stairs--success
+  land: homestead
+  task: t-029
+  source_image_id: 245552
+  source_key: sl1-the-silent-bell-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, people,
+    rope swinging, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view at the top of the tower, the intact bronze bell hangs silent with
+    no clapper inside, sunset pouring through the adobe arches over the mission rooftops below, no lettering or
+    logos.
+  prompt_tags: deserted scene, scenery, inside the top of an adobe bell tower, intact bronze bell hanging silent,
+    empty bell interior, no clapper, wooden yoke and beam, sunset light pouring through the arches, mission rooftops
+    below, dust motes, quiet discovery, from below, wide shot, warm amber glow, long shadows, weathered adobe, bronze
+    patina, hush, vantage point, cinematic lighting, detailed background, stillness
+  replaces:
+  - sl2-the-silent-bell--climb-stairs--success
+  - sl2r2-the-silent-bell--climb-stairs--success
+  jobs:
+    house-i2i: 38525
+  art: {}
+  verdict: null
+- key: sl3-the-silent-bell--climb-stairs--success-b
+  entity: scenery
+  lane: house-i2i
+  title: The Silent Bell — Climb and inspect the bell (success) (img2img 0.65)
+  size: 1344x768
+  seed: 34008
+  shape: wide
+  card: the-silent-bell
+  outcome: the-silent-bell--climb-stairs--success
+  land: homestead
+  task: t-029
+  source_image_id: 245552
+  source_key: sl1-the-silent-bell-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, people,
+    rope swinging, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view at the top of the tower, the intact bronze bell hangs silent with
+    no clapper inside, sunset pouring through the adobe arches over the mission rooftops below, no lettering or
+    logos.
+  prompt_tags: deserted scene, scenery, inside the top of an adobe bell tower, intact bronze bell hanging silent,
+    empty bell interior, no clapper, wooden yoke and beam, sunset light pouring through the arches, mission rooftops
+    below, dust motes, quiet discovery, from below, wide shot, warm amber glow, long shadows, weathered adobe, bronze
+    patina, hush, vantage point, cinematic lighting, detailed background, stillness
+  replaces:
+  - sl2-the-silent-bell--climb-stairs--success
+  - sl2r2-the-silent-bell--climb-stairs--success
+  jobs:
+    house-i2i: 38526
+  art: {}
+  verdict: null
+- key: sl3-the-silent-bell--climb-stairs--success-c
+  entity: scenery
+  lane: house-i2i
+  title: The Silent Bell — Climb and inspect the bell (success) (img2img 0.8)
+  size: 1344x768
+  seed: 34009
+  shape: wide
+  card: the-silent-bell
+  outcome: the-silent-bell--climb-stairs--success
+  land: homestead
+  task: t-029
+  source_image_id: 245552
+  source_key: sl1-the-silent-bell-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, people,
+    rope swinging, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view at the top of the tower, the intact bronze bell hangs silent with
+    no clapper inside, sunset pouring through the adobe arches over the mission rooftops below, no lettering or
+    logos.
+  prompt_tags: deserted scene, scenery, inside the top of an adobe bell tower, intact bronze bell hanging silent,
+    empty bell interior, no clapper, wooden yoke and beam, sunset light pouring through the arches, mission rooftops
+    below, dust motes, quiet discovery, from below, wide shot, warm amber glow, long shadows, weathered adobe, bronze
+    patina, hush, vantage point, cinematic lighting, detailed background, stillness
+  replaces:
+  - sl2-the-silent-bell--climb-stairs--success
+  - sl2r2-the-silent-bell--climb-stairs--success
+  jobs:
+    house-i2i: 38527
+  art: {}
+  verdict: null
+- key: sl3-the-mended-compass--compare-the-two-charts--failure-a
+  entity: scenery
+  lane: house-i2i
+  title: The Mended Compass — Compare the two charts (failure) (img2img 0.5)
+  size: 1344x768
+  seed: 34010
+  shape: wide
+  card: the-mended-compass
+  outcome: the-mended-compass--compare-the-two-charts--failure
+  land: dustwater
+  task: t-029
+  source_image_id: 245563
+  source_key: sl1-the-mended-compass-2
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, characters,
+    readable text, letters on map, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the bridge on the neat chart is gone, only broken stumps in rushing
+    water, the useless chart lying in the mud as the sun sinks, no lettering or logos.
+  prompt_tags: deserted scene, scenery, washed-away wooden bridge, broken bridge stumps in rushing brown water,
+    a neat folded chart dropped in the mud in the foreground, steep muddy bank, long detour trail along the river,
+    low red sun, late afternoon, tired mood, dusty delta, frontier trading post, brass instruments, parchment, weird
+    west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric, wide
+    shot
+  replaces:
+  - sl2-the-mended-compass--compare-the-two-charts--failure
+  - sl2r2-the-mended-compass--compare-the-two-charts--failure
+  jobs:
+    house-i2i: 38528
+  art: {}
+  verdict: null
+- key: sl3-the-mended-compass--compare-the-two-charts--failure-b
+  entity: scenery
+  lane: house-i2i
+  title: The Mended Compass — Compare the two charts (failure) (img2img 0.65)
+  size: 1344x768
+  seed: 34011
+  shape: wide
+  card: the-mended-compass
+  outcome: the-mended-compass--compare-the-two-charts--failure
+  land: dustwater
+  task: t-029
+  source_image_id: 245563
+  source_key: sl1-the-mended-compass-2
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, characters,
+    readable text, letters on map, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the bridge on the neat chart is gone, only broken stumps in rushing
+    water, the useless chart lying in the mud as the sun sinks, no lettering or logos.
+  prompt_tags: deserted scene, scenery, washed-away wooden bridge, broken bridge stumps in rushing brown water,
+    a neat folded chart dropped in the mud in the foreground, steep muddy bank, long detour trail along the river,
+    low red sun, late afternoon, tired mood, dusty delta, frontier trading post, brass instruments, parchment, weird
+    west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric, wide
+    shot
+  replaces:
+  - sl2-the-mended-compass--compare-the-two-charts--failure
+  - sl2r2-the-mended-compass--compare-the-two-charts--failure
+  jobs:
+    house-i2i: 38529
+  art: {}
+  verdict: null
+- key: sl3-the-mended-compass--compare-the-two-charts--failure-c
+  entity: scenery
+  lane: house-i2i
+  title: The Mended Compass — Compare the two charts (failure) (img2img 0.8)
+  size: 1344x768
+  seed: 34012
+  shape: wide
+  card: the-mended-compass
+  outcome: the-mended-compass--compare-the-two-charts--failure
+  land: dustwater
+  task: t-029
+  source_image_id: 245563
+  source_key: sl1-the-mended-compass-2
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, characters,
+    readable text, letters on map, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the bridge on the neat chart is gone, only broken stumps in rushing
+    water, the useless chart lying in the mud as the sun sinks, no lettering or logos.
+  prompt_tags: deserted scene, scenery, washed-away wooden bridge, broken bridge stumps in rushing brown water,
+    a neat folded chart dropped in the mud in the foreground, steep muddy bank, long detour trail along the river,
+    low red sun, late afternoon, tired mood, dusty delta, frontier trading post, brass instruments, parchment, weird
+    west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric, wide
+    shot
+  replaces:
+  - sl2-the-mended-compass--compare-the-two-charts--failure
+  - sl2r2-the-mended-compass--compare-the-two-charts--failure
+  jobs:
+    house-i2i: 38530
+  art: {}
+  verdict: null
+- key: sl3-three-cups-on-the-table--question-the-armed-patrons--failure-a
+  entity: scenery
+  lane: house-i2i
+  title: Three Cups on the Table — Question the armed patrons (failure) (img2img 0.5)
+  size: 1344x768
+  seed: 34013
+  shape: wide
+  card: three-cups-on-the-table
+  outcome: three-cups-on-the-table--question-the-armed-patrons--failure
+  land: dustwater
+  task: t-029
+  source_image_id: 245564
+  source_key: sl1-three-cups-on-the-table-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, visible face, smiling, mouse on counter, empty room, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, a faceless hooded patron draws a glinting knife in the backlit doorway
+    beside a tipped chair and spilled broth, no lettering or logos.
+  prompt_tags: solo, shadowy hooded armed patron silhouette, face hidden, drawing a knife, glint of the blade, backlit
+    in the trading post doorway, tipped-over chair, spilled enamel cup of broth, rough plank table, long shadows
+    across the floor, lantern light, menacing, low angle, frontier trading post kitchen, cast iron stove, wooden
+    beams, weird west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric,
+    medium shot
+  replaces:
+  - sl2-three-cups-on-the-table--question-the-armed-patrons--failure
+  - sl2r2-three-cups-on-the-table--question-the-armed-patrons--failure
+  jobs:
+    house-i2i: 38531
+  art: {}
+  verdict: null
+- key: sl3-three-cups-on-the-table--question-the-armed-patrons--failure-b
+  entity: scenery
+  lane: house-i2i
+  title: Three Cups on the Table — Question the armed patrons (failure) (img2img 0.65)
+  size: 1344x768
+  seed: 34014
+  shape: wide
+  card: three-cups-on-the-table
+  outcome: three-cups-on-the-table--question-the-armed-patrons--failure
+  land: dustwater
+  task: t-029
+  source_image_id: 245564
+  source_key: sl1-three-cups-on-the-table-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, visible face, smiling, mouse on counter, empty room, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, a faceless hooded patron draws a glinting knife in the backlit doorway
+    beside a tipped chair and spilled broth, no lettering or logos.
+  prompt_tags: solo, shadowy hooded armed patron silhouette, face hidden, drawing a knife, glint of the blade, backlit
+    in the trading post doorway, tipped-over chair, spilled enamel cup of broth, rough plank table, long shadows
+    across the floor, lantern light, menacing, low angle, frontier trading post kitchen, cast iron stove, wooden
+    beams, weird west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric,
+    medium shot
+  replaces:
+  - sl2-three-cups-on-the-table--question-the-armed-patrons--failure
+  - sl2r2-three-cups-on-the-table--question-the-armed-patrons--failure
+  jobs:
+    house-i2i: 38532
+  art: {}
+  verdict: null
+- key: sl3-three-cups-on-the-table--question-the-armed-patrons--failure-c
+  entity: scenery
+  lane: house-i2i
+  title: Three Cups on the Table — Question the armed patrons (failure) (img2img 0.8)
+  size: 1344x768
+  seed: 34015
+  shape: wide
+  card: three-cups-on-the-table
+  outcome: three-cups-on-the-table--question-the-armed-patrons--failure
+  land: dustwater
+  task: t-029
+  source_image_id: 245564
+  source_key: sl1-three-cups-on-the-table-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, visible face, smiling, mouse on counter, empty room, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, a faceless hooded patron draws a glinting knife in the backlit doorway
+    beside a tipped chair and spilled broth, no lettering or logos.
+  prompt_tags: solo, shadowy hooded armed patron silhouette, face hidden, drawing a knife, glint of the blade, backlit
+    in the trading post doorway, tipped-over chair, spilled enamel cup of broth, rough plank table, long shadows
+    across the floor, lantern light, menacing, low angle, frontier trading post kitchen, cast iron stove, wooden
+    beams, weird west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric,
+    medium shot
+  replaces:
+  - sl2-three-cups-on-the-table--question-the-armed-patrons--failure
+  - sl2r2-three-cups-on-the-table--question-the-armed-patrons--failure
+  jobs:
+    house-i2i: 38533
+  art: {}
+  verdict: null
+- key: sl3-footprints-in-the-silt--follow-the-wet-prints--failure-a
+  entity: creature
+  lane: house-i2i
+  title: Footprints in the Silt — Follow the wet prints (failure) (img2img 0.5)
+  size: 1344x768
+  seed: 34016
+  shape: wide
+  card: footprints-in-the-silt
+  outcome: footprints-in-the-silt--follow-the-wet-prints--failure
+  land: dustwater
+  task: t-029
+  source_image_id: 245567
+  source_key: sl1-footprints-in-the-silt-2
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    blood, skull, skeleton, monster, lizard, no shell, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view from inside a collapsed salt crust, the tortoise surveyor leans over
+    the broken rim and reaches his hooked staff down to help, no lettering or logos.
+  prompt_tags: solo, (anthro tortoise:1.3), male, old river surveyor, chalk dust on his shell, hooked measuring
+    staff, alarmed, leaning forward, reaching his hooked measuring staff down toward the viewer, edge of a collapsed
+    salt crust sinkhole, broken white crust plates, claw scrape marks at the rim, dust rising, dry cracked channel,
+    harsh glaring light, high angle looking up, looking at viewer, dry river delta, silt flats, wooden survey stakes,
+    weird west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric,
+    medium shot
+  replaces:
+  - sl2-footprints-in-the-silt--follow-the-wet-prints--failure
+  - sl2r2-footprints-in-the-silt--follow-the-wet-prints--failure
+  jobs:
+    house-i2i: 38534
+  art: {}
+  verdict: null
+- key: sl3-footprints-in-the-silt--follow-the-wet-prints--failure-b
+  entity: creature
+  lane: house-i2i
+  title: Footprints in the Silt — Follow the wet prints (failure) (img2img 0.65)
+  size: 1344x768
+  seed: 34017
+  shape: wide
+  card: footprints-in-the-silt
+  outcome: footprints-in-the-silt--follow-the-wet-prints--failure
+  land: dustwater
+  task: t-029
+  source_image_id: 245567
+  source_key: sl1-footprints-in-the-silt-2
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    blood, skull, skeleton, monster, lizard, no shell, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view from inside a collapsed salt crust, the tortoise surveyor leans over
+    the broken rim and reaches his hooked staff down to help, no lettering or logos.
+  prompt_tags: solo, (anthro tortoise:1.3), male, old river surveyor, chalk dust on his shell, hooked measuring
+    staff, alarmed, leaning forward, reaching his hooked measuring staff down toward the viewer, edge of a collapsed
+    salt crust sinkhole, broken white crust plates, claw scrape marks at the rim, dust rising, dry cracked channel,
+    harsh glaring light, high angle looking up, looking at viewer, dry river delta, silt flats, wooden survey stakes,
+    weird west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric,
+    medium shot
+  replaces:
+  - sl2-footprints-in-the-silt--follow-the-wet-prints--failure
+  - sl2r2-footprints-in-the-silt--follow-the-wet-prints--failure
+  jobs:
+    house-i2i: 38535
+  art: {}
+  verdict: null
+- key: sl3-footprints-in-the-silt--follow-the-wet-prints--failure-c
+  entity: creature
+  lane: house-i2i
+  title: Footprints in the Silt — Follow the wet prints (failure) (img2img 0.8)
+  size: 1344x768
+  seed: 34018
+  shape: wide
+  card: footprints-in-the-silt
+  outcome: footprints-in-the-silt--follow-the-wet-prints--failure
+  land: dustwater
+  task: t-029
+  source_image_id: 245567
+  source_key: sl1-footprints-in-the-silt-2
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    blood, skull, skeleton, monster, lizard, no shell, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view from inside a collapsed salt crust, the tortoise surveyor leans over
+    the broken rim and reaches his hooked staff down to help, no lettering or logos.
+  prompt_tags: solo, (anthro tortoise:1.3), male, old river surveyor, chalk dust on his shell, hooked measuring
+    staff, alarmed, leaning forward, reaching his hooked measuring staff down toward the viewer, edge of a collapsed
+    salt crust sinkhole, broken white crust plates, claw scrape marks at the rim, dust rising, dry cracked channel,
+    harsh glaring light, high angle looking up, looking at viewer, dry river delta, silt flats, wooden survey stakes,
+    weird west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric,
+    medium shot
+  replaces:
+  - sl2-footprints-in-the-silt--follow-the-wet-prints--failure
+  - sl2r2-footprints-in-the-silt--follow-the-wet-prints--failure
+  jobs:
+    house-i2i: 38536
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--brace-the-loosened-wall--success-a
+  entity: creature
+  lane: house-i2i
+  title: Hammer Under Stone — Brace the loosened wall (success) (img2img 0.5)
+  size: 1344x768
+  seed: 34019
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--brace-the-loosened-wall--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rubble
+    burying road, injury, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings,
+    guardrail, modern, pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view, the mole mason grins with relief beside a thick timber brace jammed
+    under a cracked quarry shelf, holding out a dented metal flask while the cleared road beyond lies safe in warm
+    sun, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer lowered, relieved smile, holding out a dented metal flask toward viewer, thick timber brace
+    wedged under a cracked rock shelf, settling dust, clear safe road through the quarry beyond, red rock quarry,
+    warm late sun, looking at viewer, wooden wedge, cleared path, dust motes, hopeful mood, quarry, sandstone, weird
+    west, ink wash, medium shot
+  replaces: &id001
+  - sl2-hammer-under-the-stone--brace-the-loosened-wall--success
+  - sl2r2-hammer-under-the-stone--brace-the-loosened-wall--success
+  jobs:
+    house-i2i: 38537
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--brace-the-loosened-wall--success-d
+  entity: creature
+  lane: house-i2i
+  title: Hammer Under Stone — Brace the loosened wall (success) (img2img 0.4)
+  size: 1344x768
+  seed: 34101
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--brace-the-loosened-wall--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.4
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rubble
+    burying road, injury, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings,
+    guardrail, modern, pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view, the mole mason grins with relief beside a thick timber brace jammed
+    under a cracked quarry shelf, holding out a dented metal flask while the cleared road beyond lies safe in warm
+    sun, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer lowered, relieved smile, holding out a dented metal flask toward viewer, thick timber brace
+    wedged under a cracked rock shelf, settling dust, clear safe road through the quarry beyond, red rock quarry,
+    warm late sun, looking at viewer, wooden wedge, cleared path, dust motes, hopeful mood, quarry, sandstone, weird
+    west, ink wash, medium shot
+  replaces: *id001
+  jobs:
+    house-i2i: 38538
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--brace-the-loosened-wall--success-b
+  entity: creature
+  lane: house-i2i
+  title: Hammer Under Stone — Brace the loosened wall (success) (img2img 0.65)
+  size: 1344x768
+  seed: 34020
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--brace-the-loosened-wall--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rubble
+    burying road, injury, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings,
+    guardrail, modern, pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view, the mole mason grins with relief beside a thick timber brace jammed
+    under a cracked quarry shelf, holding out a dented metal flask while the cleared road beyond lies safe in warm
+    sun, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer lowered, relieved smile, holding out a dented metal flask toward viewer, thick timber brace
+    wedged under a cracked rock shelf, settling dust, clear safe road through the quarry beyond, red rock quarry,
+    warm late sun, looking at viewer, wooden wedge, cleared path, dust motes, hopeful mood, quarry, sandstone, weird
+    west, ink wash, medium shot
+  replaces:
+  - sl2-hammer-under-the-stone--brace-the-loosened-wall--success
+  - sl2r2-hammer-under-the-stone--brace-the-loosened-wall--success
+  jobs:
+    house-i2i: 38518
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 246660
+  verdict: 'reject: probe; anthro-mole tags pulled the repaint into a pink bald creature, off the card mason'
+- key: sl3-hammer-under-the-stone--brace-the-loosened-wall--success-c
+  entity: creature
+  lane: house-i2i
+  title: Hammer Under Stone — Brace the loosened wall (success) (img2img 0.8)
+  size: 1344x768
+  seed: 34021
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--brace-the-loosened-wall--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rubble
+    burying road, injury, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings,
+    guardrail, modern, pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view, the mole mason grins with relief beside a thick timber brace jammed
+    under a cracked quarry shelf, holding out a dented metal flask while the cleared road beyond lies safe in warm
+    sun, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer lowered, relieved smile, holding out a dented metal flask toward viewer, thick timber brace
+    wedged under a cracked rock shelf, settling dust, clear safe road through the quarry beyond, red rock quarry,
+    warm late sun, looking at viewer, wooden wedge, cleared path, dust motes, hopeful mood, quarry, sandstone, weird
+    west, ink wash, medium shot
+  replaces:
+  - sl2-hammer-under-the-stone--brace-the-loosened-wall--success
+  - sl2r2-hammer-under-the-stone--brace-the-loosened-wall--success
+  jobs:
+    house-i2i: 38539
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--success-a
+  entity: creature
+  lane: house-i2i
+  title: Hammer Under Stone — Inspect the fresh cuts (success) (img2img 0.5)
+  size: 1344x768
+  seed: 34022
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rockslide,
+    running, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view, the mole mason crouches at the freshly cut seam and points his hammer
+    along a trail of chisel marks toward the dark mouth of a hidden side tunnel, his tiny eyes narrowed in grim
+    realization, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer, crouching, pointing hammer, grim realization, fresh chisel marks on stone leading into the
+    dark mouth of a hidden side tunnel, discarded chisel on ground, red rock quarry wall, low raking sunlight, looking
+    at viewer, tool marks, shadowed tunnel, suspicious, tense mood, quarry, sandstone, weird west, ink wash, medium
+    shot
+  replaces: &id002
+  - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--success
+  - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--success
+  jobs:
+    house-i2i: 38540
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--success-d
+  entity: creature
+  lane: house-i2i
+  title: Hammer Under Stone — Inspect the fresh cuts (success) (img2img 0.4)
+  size: 1344x768
+  seed: 34102
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.4
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rockslide,
+    running, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view, the mole mason crouches at the freshly cut seam and points his hammer
+    along a trail of chisel marks toward the dark mouth of a hidden side tunnel, his tiny eyes narrowed in grim
+    realization, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer, crouching, pointing hammer, grim realization, fresh chisel marks on stone leading into the
+    dark mouth of a hidden side tunnel, discarded chisel on ground, red rock quarry wall, low raking sunlight, looking
+    at viewer, tool marks, shadowed tunnel, suspicious, tense mood, quarry, sandstone, weird west, ink wash, medium
+    shot
+  replaces: *id002
+  jobs:
+    house-i2i: 38541
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--success-b
+  entity: creature
+  lane: house-i2i
+  title: Hammer Under Stone — Inspect the fresh cuts (success) (img2img 0.65)
+  size: 1344x768
+  seed: 34023
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rockslide,
+    running, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view, the mole mason crouches at the freshly cut seam and points his hammer
+    along a trail of chisel marks toward the dark mouth of a hidden side tunnel, his tiny eyes narrowed in grim
+    realization, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer, crouching, pointing hammer, grim realization, fresh chisel marks on stone leading into the
+    dark mouth of a hidden side tunnel, discarded chisel on ground, red rock quarry wall, low raking sunlight, looking
+    at viewer, tool marks, shadowed tunnel, suspicious, tense mood, quarry, sandstone, weird west, ink wash, medium
+    shot
+  replaces:
+  - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--success
+  - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--success
+  jobs:
+    house-i2i: 38542
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--success-c
+  entity: creature
+  lane: house-i2i
+  title: Hammer Under Stone — Inspect the fresh cuts (success) (img2img 0.8)
+  size: 1344x768
+  seed: 34024
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rockslide,
+    running, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view, the mole mason crouches at the freshly cut seam and points his hammer
+    along a trail of chisel marks toward the dark mouth of a hidden side tunnel, his tiny eyes narrowed in grim
+    realization, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer, crouching, pointing hammer, grim realization, fresh chisel marks on stone leading into the
+    dark mouth of a hidden side tunnel, discarded chisel on ground, red rock quarry wall, low raking sunlight, looking
+    at viewer, tool marks, shadowed tunnel, suspicious, tense mood, quarry, sandstone, weird west, ink wash, medium
+    shot
+  replaces:
+  - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--success
+  - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--success
+  jobs:
+    house-i2i: 38543
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--failure-a
+  entity: scenery
+  lane: house-i2i
+  title: Hammer Under Stone — Inspect the fresh cuts (failure) (img2img 0.5)
+  size: 1344x768
+  seed: 34025
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    calm, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view during a hurried retreat, loose shale cascades down a quarry slope
+    while lantern glows of unseen miners flare in a tunnel mouth above and the mole mason waves the viewer back
+    from cover, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer, waving urgently from behind a boulder, loose shale sliding down a steep slope, lantern glows
+    in a dark tunnel mouth above, distant shadowy silhouettes, scattered stones, dusk quarry, ominous shadows, dynamic
+    angle, debris, danger, tense mood, motion blur, quarry, sandstone, weird west, ink wash, wide shot
+  replaces: &id003
+  - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  jobs:
+    house-i2i: 38544
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--failure-d
+  entity: scenery
+  lane: house-i2i
+  title: Hammer Under Stone — Inspect the fresh cuts (failure) (img2img 0.4)
+  size: 1344x768
+  seed: 34103
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.4
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    calm, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view during a hurried retreat, loose shale cascades down a quarry slope
+    while lantern glows of unseen miners flare in a tunnel mouth above and the mole mason waves the viewer back
+    from cover, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer, waving urgently from behind a boulder, loose shale sliding down a steep slope, lantern glows
+    in a dark tunnel mouth above, distant shadowy silhouettes, scattered stones, dusk quarry, ominous shadows, dynamic
+    angle, debris, danger, tense mood, motion blur, quarry, sandstone, weird west, ink wash, wide shot
+  replaces: *id003
+  jobs:
+    house-i2i: 38545
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--failure-b
+  entity: scenery
+  lane: house-i2i
+  title: Hammer Under Stone — Inspect the fresh cuts (failure) (img2img 0.65)
+  size: 1344x768
+  seed: 34026
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    calm, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view during a hurried retreat, loose shale cascades down a quarry slope
+    while lantern glows of unseen miners flare in a tunnel mouth above and the mole mason waves the viewer back
+    from cover, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer, waving urgently from behind a boulder, loose shale sliding down a steep slope, lantern glows
+    in a dark tunnel mouth above, distant shadowy silhouettes, scattered stones, dusk quarry, ominous shadows, dynamic
+    angle, debris, danger, tense mood, motion blur, quarry, sandstone, weird west, ink wash, wide shot
+  replaces:
+  - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  jobs:
+    house-i2i: 38546
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--failure-c
+  entity: scenery
+  lane: house-i2i
+  title: Hammer Under Stone — Inspect the fresh cuts (failure) (img2img 0.8)
+  size: 1344x768
+  seed: 34027
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    calm, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view during a hurried retreat, loose shale cascades down a quarry slope
+    while lantern glows of unseen miners flare in a tunnel mouth above and the mole mason waves the viewer back
+    from cover, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer, waving urgently from behind a boulder, loose shale sliding down a steep slope, lantern glows
+    in a dark tunnel mouth above, distant shadowy silhouettes, scattered stones, dusk quarry, ominous shadows, dynamic
+    angle, debris, danger, tense mood, motion blur, quarry, sandstone, weird west, ink wash, wide shot
+  replaces:
+  - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  jobs:
+    house-i2i: 38547
+  art: {}
+  verdict: null
+- key: sl3-the-empty-pay-cart--read-the-pay-sheet-aloud--success-a
+  entity: scenery
+  lane: house-i2i
+  title: The Empty Pay Cart — Read the pay sheet aloud (success) (img2img 0.5)
+  size: 1344x768
+  seed: 34028
+  shape: wide
+  card: the-empty-pay-cart
+  outcome: the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245664
+  source_key: sl1r2-the-empty-pay-cart-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, violence,
+    asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, weary quarry workers in distant silhouette stream back toward the
+    ore cart now heaped with supply sacks and tools, while the boar accountant steps aside with his abacus lowered
+    in defeat, no lettering or logos.
+  prompt_tags: solo, (anthro boar:1.3), male, standing upright on two legs, tusks, striped waistcoat, spectacles,
+    cracked wooden abacus lowered, stepping aside, defeated, iron ore cart heaped with supply sacks and tools, distant
+    silhouettes of quarry workers approaching through dust, blank pay sheet in the wind, red canyon quarry, golden
+    hour, hope, reunion, supplies reclaimed, dust motes, warm mood, quarry, sandstone, weird west, ink wash, wide
+    shot
+  replaces:
+  - sl2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  - sl2r2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  jobs:
+    house-i2i: 38548
+  art: {}
+  verdict: null
+- key: sl3-the-empty-pay-cart--read-the-pay-sheet-aloud--success-b
+  entity: scenery
+  lane: house-i2i
+  title: The Empty Pay Cart — Read the pay sheet aloud (success) (img2img 0.65)
+  size: 1344x768
+  seed: 34029
+  shape: wide
+  card: the-empty-pay-cart
+  outcome: the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245664
+  source_key: sl1r2-the-empty-pay-cart-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, violence,
+    asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, weary quarry workers in distant silhouette stream back toward the
+    ore cart now heaped with supply sacks and tools, while the boar accountant steps aside with his abacus lowered
+    in defeat, no lettering or logos.
+  prompt_tags: solo, (anthro boar:1.3), male, standing upright on two legs, tusks, striped waistcoat, spectacles,
+    cracked wooden abacus lowered, stepping aside, defeated, iron ore cart heaped with supply sacks and tools, distant
+    silhouettes of quarry workers approaching through dust, blank pay sheet in the wind, red canyon quarry, golden
+    hour, hope, reunion, supplies reclaimed, dust motes, warm mood, quarry, sandstone, weird west, ink wash, wide
+    shot
+  replaces:
+  - sl2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  - sl2r2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  jobs:
+    house-i2i: 38549
+  art: {}
+  verdict: null
+- key: sl3-the-empty-pay-cart--read-the-pay-sheet-aloud--success-c
+  entity: scenery
+  lane: house-i2i
+  title: The Empty Pay Cart — Read the pay sheet aloud (success) (img2img 0.8)
+  size: 1344x768
+  seed: 34030
+  shape: wide
+  card: the-empty-pay-cart
+  outcome: the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245664
+  source_key: sl1r2-the-empty-pay-cart-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, violence,
+    asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, weary quarry workers in distant silhouette stream back toward the
+    ore cart now heaped with supply sacks and tools, while the boar accountant steps aside with his abacus lowered
+    in defeat, no lettering or logos.
+  prompt_tags: solo, (anthro boar:1.3), male, standing upright on two legs, tusks, striped waistcoat, spectacles,
+    cracked wooden abacus lowered, stepping aside, defeated, iron ore cart heaped with supply sacks and tools, distant
+    silhouettes of quarry workers approaching through dust, blank pay sheet in the wind, red canyon quarry, golden
+    hour, hope, reunion, supplies reclaimed, dust motes, warm mood, quarry, sandstone, weird west, ink wash, wide
+    shot
+  replaces:
+  - sl2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  - sl2r2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  jobs:
+    house-i2i: 38550
+  art: {}
+  verdict: null
+- key: sl3-the-glass-vein--cut-a-safe-sample--failure-a
+  entity: scenery
+  lane: house-i2i
+  title: The Glass Vein — Cut a safe sample (failure) (img2img 0.5)
+  size: 1344x768
+  seed: 34031
+  shape: wide
+  card: the-glass-vein
+  outcome: the-glass-vein--cut-a-safe-sample--failure
+  land: tablelands
+  task: t-029
+  source_image_id: 245667
+  source_key: sl1r2-the-glass-vein-2
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, smiling, dinosaur, raptor, sledding, playful, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the black glass seam bursts apart in a spray of glittering shards
+    while the lizard collector flinches back with her padded tray raised as a shield, no lettering or logos.
+  prompt_tags: solo, (anthro lizard:1.3), female, desert stone collector, scaly, leather gloves, wide-brim hat,
+    flinching back, raising padded wooden tray as a shield, black glass seam fracturing, spray of glittering black
+    shards flying toward viewer, cracked canyon wall, harsh sun glare, dynamic angle, danger, shards in midair,
+    motion blur, sparkles, tense mood, quarry, sandstone, weird west, ink wash, medium shot
+  replaces:
+  - sl2-the-glass-vein--cut-a-safe-sample--failure
+  - sl2r2-the-glass-vein--cut-a-safe-sample--failure
+  jobs:
+    house-i2i: 38551
+  art: {}
+  verdict: null
+- key: sl3-the-glass-vein--cut-a-safe-sample--failure-b
+  entity: scenery
+  lane: house-i2i
+  title: The Glass Vein — Cut a safe sample (failure) (img2img 0.65)
+  size: 1344x768
+  seed: 34032
+  shape: wide
+  card: the-glass-vein
+  outcome: the-glass-vein--cut-a-safe-sample--failure
+  land: tablelands
+  task: t-029
+  source_image_id: 245667
+  source_key: sl1r2-the-glass-vein-2
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, smiling, dinosaur, raptor, sledding, playful, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the black glass seam bursts apart in a spray of glittering shards
+    while the lizard collector flinches back with her padded tray raised as a shield, no lettering or logos.
+  prompt_tags: solo, (anthro lizard:1.3), female, desert stone collector, scaly, leather gloves, wide-brim hat,
+    flinching back, raising padded wooden tray as a shield, black glass seam fracturing, spray of glittering black
+    shards flying toward viewer, cracked canyon wall, harsh sun glare, dynamic angle, danger, shards in midair,
+    motion blur, sparkles, tense mood, quarry, sandstone, weird west, ink wash, medium shot
+  replaces:
+  - sl2-the-glass-vein--cut-a-safe-sample--failure
+  - sl2r2-the-glass-vein--cut-a-safe-sample--failure
+  jobs:
+    house-i2i: 38552
+  art: {}
+  verdict: null
+- key: sl3-the-glass-vein--cut-a-safe-sample--failure-c
+  entity: scenery
+  lane: house-i2i
+  title: The Glass Vein — Cut a safe sample (failure) (img2img 0.8)
+  size: 1344x768
+  seed: 34033
+  shape: wide
+  card: the-glass-vein
+  outcome: the-glass-vein--cut-a-safe-sample--failure
+  land: tablelands
+  task: t-029
+  source_image_id: 245667
+  source_key: sl1r2-the-glass-vein-2
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, smiling, dinosaur, raptor, sledding, playful, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the black glass seam bursts apart in a spray of glittering shards
+    while the lizard collector flinches back with her padded tray raised as a shield, no lettering or logos.
+  prompt_tags: solo, (anthro lizard:1.3), female, desert stone collector, scaly, leather gloves, wide-brim hat,
+    flinching back, raising padded wooden tray as a shield, black glass seam fracturing, spray of glittering black
+    shards flying toward viewer, cracked canyon wall, harsh sun glare, dynamic angle, danger, shards in midair,
+    motion blur, sparkles, tense mood, quarry, sandstone, weird west, ink wash, medium shot
+  replaces:
+  - sl2-the-glass-vein--cut-a-safe-sample--failure
+  - sl2r2-the-glass-vein--cut-a-safe-sample--failure
+  jobs:
+    house-i2i: 38553
+  art: {}
+  verdict: null
+- key: sl3-the-watchful-overhang--test-the-ledge-alone--success-a
+  entity: creature
+  lane: house-i2i
+  title: The Watchful Overhang — Test the ledge alone (success) (img2img 0.5)
+  size: 1344x768
+  seed: 34034
+  shape: wide
+  card: the-watchful-overhang
+  outcome: the-watchful-overhang--test-the-ledge-alone--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245578
+  source_key: sl1-the-watchful-overhang-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, falling,
+    rockslide, tail, devil, demon, bull, cow, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view on the ledge, the ibex scout nods approvingly as a row of chalk-white
+    foothold marks and small stone cairns trace a safe line past a hollow-sounding patch of path, no lettering or
+    logos.
+  prompt_tags: solo, (anthro ibex:1.3), female, trail scout, bandaged horn, braided rope coiled, approving nod,
+    standing on narrow canyon ledge, row of white chalk dots and small stone cairns marking safe footholds, hollow
+    cracked stone patch on the path, overhang above, deep red canyon, bright clear light, looking at viewer, safe
+    route, careful, trail markers, calm mood, sharp shadows, canyon trail, sandstone cliffs, weird west, ink wash,
+    medium shot
+  replaces:
+  - sl2-the-watchful-overhang--test-the-ledge-alone--success
+  - sl2r2-the-watchful-overhang--test-the-ledge-alone--success
+  jobs:
+    house-i2i: 38554
+  art: {}
+  verdict: null
+- key: sl3-the-watchful-overhang--test-the-ledge-alone--success-b
+  entity: creature
+  lane: house-i2i
+  title: The Watchful Overhang — Test the ledge alone (success) (img2img 0.65)
+  size: 1344x768
+  seed: 34035
+  shape: wide
+  card: the-watchful-overhang
+  outcome: the-watchful-overhang--test-the-ledge-alone--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245578
+  source_key: sl1-the-watchful-overhang-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, falling,
+    rockslide, tail, devil, demon, bull, cow, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view on the ledge, the ibex scout nods approvingly as a row of chalk-white
+    foothold marks and small stone cairns trace a safe line past a hollow-sounding patch of path, no lettering or
+    logos.
+  prompt_tags: solo, (anthro ibex:1.3), female, trail scout, bandaged horn, braided rope coiled, approving nod,
+    standing on narrow canyon ledge, row of white chalk dots and small stone cairns marking safe footholds, hollow
+    cracked stone patch on the path, overhang above, deep red canyon, bright clear light, looking at viewer, safe
+    route, careful, trail markers, calm mood, sharp shadows, canyon trail, sandstone cliffs, weird west, ink wash,
+    medium shot
+  replaces:
+  - sl2-the-watchful-overhang--test-the-ledge-alone--success
+  - sl2r2-the-watchful-overhang--test-the-ledge-alone--success
+  jobs:
+    house-i2i: 38555
+  art: {}
+  verdict: null
+- key: sl3-the-watchful-overhang--test-the-ledge-alone--success-c
+  entity: creature
+  lane: house-i2i
+  title: The Watchful Overhang — Test the ledge alone (success) (img2img 0.8)
+  size: 1344x768
+  seed: 34036
+  shape: wide
+  card: the-watchful-overhang
+  outcome: the-watchful-overhang--test-the-ledge-alone--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245578
+  source_key: sl1-the-watchful-overhang-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, falling,
+    rockslide, tail, devil, demon, bull, cow, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view on the ledge, the ibex scout nods approvingly as a row of chalk-white
+    foothold marks and small stone cairns trace a safe line past a hollow-sounding patch of path, no lettering or
+    logos.
+  prompt_tags: solo, (anthro ibex:1.3), female, trail scout, bandaged horn, braided rope coiled, approving nod,
+    standing on narrow canyon ledge, row of white chalk dots and small stone cairns marking safe footholds, hollow
+    cracked stone patch on the path, overhang above, deep red canyon, bright clear light, looking at viewer, safe
+    route, careful, trail markers, calm mood, sharp shadows, canyon trail, sandstone cliffs, weird west, ink wash,
+    medium shot
+  replaces:
+  - sl2-the-watchful-overhang--test-the-ledge-alone--success
+  - sl2r2-the-watchful-overhang--test-the-ledge-alone--success
+  jobs:
+    house-i2i: 38556
+  art: {}
+  verdict: null
+- key: sl3-the-toll-without-a-keeper--challenge-the-false-toll--success-a
+  entity: creature
+  lane: house-i2i
+  title: The Toll Without a Keeper — Challenge the false toll (success) (img2img 0.5)
+  size: 1344x768
+  seed: 34037
+  shape: wide
+  card: the-toll-without-a-keeper
+  outcome: the-toll-without-a-keeper--challenge-the-false-toll--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245668
+  source_key: sl1r2-the-toll-without-a-keeper-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    wound, letters, asphalt, paved road, guardrail, lane markings, modern, car, sleeping, asleep
+  prompt_prose: Seen from Zuzu's point of view, the cut toll rope lies slack across the canyon trail as the hyena
+    enforcer backs away up the rocks, ears flat and broken spear lowered, abandoning her post, no lettering or logos.
+  prompt_tags: solo, (anthro hyena:1.3), female, spotted fur, scarred road enforcer, broken spear lowered, ears
+    flat, shaken, backing away up the rocks, cleanly cut toll rope lying slack across the canyon trail, small plain
+    wooden box on a post, open trail ahead, clear afternoon light, retreating, defeated, cut rope ends, broken barrier,
+    relief, trail open, canyon trail, sandstone cliffs, weird west, ink wash, medium shot
+  replaces:
+  - sl2-the-toll-without-a-keeper--challenge-the-false-toll--success
+  - sl2r2-the-toll-without-a-keeper--challenge-the-false-toll--success
+  jobs:
+    house-i2i: 38557
+  art: {}
+  verdict: null
+- key: sl3-the-toll-without-a-keeper--challenge-the-false-toll--success-b
+  entity: creature
+  lane: house-i2i
+  title: The Toll Without a Keeper — Challenge the false toll (success) (img2img 0.65)
+  size: 1344x768
+  seed: 34038
+  shape: wide
+  card: the-toll-without-a-keeper
+  outcome: the-toll-without-a-keeper--challenge-the-false-toll--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245668
+  source_key: sl1r2-the-toll-without-a-keeper-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    wound, letters, asphalt, paved road, guardrail, lane markings, modern, car, sleeping, asleep
+  prompt_prose: Seen from Zuzu's point of view, the cut toll rope lies slack across the canyon trail as the hyena
+    enforcer backs away up the rocks, ears flat and broken spear lowered, abandoning her post, no lettering or logos.
+  prompt_tags: solo, (anthro hyena:1.3), female, spotted fur, scarred road enforcer, broken spear lowered, ears
+    flat, shaken, backing away up the rocks, cleanly cut toll rope lying slack across the canyon trail, small plain
+    wooden box on a post, open trail ahead, clear afternoon light, retreating, defeated, cut rope ends, broken barrier,
+    relief, trail open, canyon trail, sandstone cliffs, weird west, ink wash, medium shot
+  replaces:
+  - sl2-the-toll-without-a-keeper--challenge-the-false-toll--success
+  - sl2r2-the-toll-without-a-keeper--challenge-the-false-toll--success
+  jobs:
+    house-i2i: 38558
+  art: {}
+  verdict: null
+- key: sl3-the-toll-without-a-keeper--challenge-the-false-toll--success-c
+  entity: creature
+  lane: house-i2i
+  title: The Toll Without a Keeper — Challenge the false toll (success) (img2img 0.8)
+  size: 1344x768
+  seed: 34039
+  shape: wide
+  card: the-toll-without-a-keeper
+  outcome: the-toll-without-a-keeper--challenge-the-false-toll--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245668
+  source_key: sl1r2-the-toll-without-a-keeper-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    wound, letters, asphalt, paved road, guardrail, lane markings, modern, car, sleeping, asleep
+  prompt_prose: Seen from Zuzu's point of view, the cut toll rope lies slack across the canyon trail as the hyena
+    enforcer backs away up the rocks, ears flat and broken spear lowered, abandoning her post, no lettering or logos.
+  prompt_tags: solo, (anthro hyena:1.3), female, spotted fur, scarred road enforcer, broken spear lowered, ears
+    flat, shaken, backing away up the rocks, cleanly cut toll rope lying slack across the canyon trail, small plain
+    wooden box on a post, open trail ahead, clear afternoon light, retreating, defeated, cut rope ends, broken barrier,
+    relief, trail open, canyon trail, sandstone cliffs, weird west, ink wash, medium shot
+  replaces:
+  - sl2-the-toll-without-a-keeper--challenge-the-false-toll--success
+  - sl2r2-the-toll-without-a-keeper--challenge-the-false-toll--success
+  jobs:
+    house-i2i: 38559
+  art: {}
+  verdict: null
+- key: sl3-the-map-in-ashes--persuade-her-to-stop--failure-a
+  entity: creature
+  lane: house-i2i
+  title: The Map in Ashes — Persuade her to stop (failure) (img2img 0.5)
+  size: 1344x768
+  seed: 34040
+  shape: wide
+  card: the-map-in-ashes
+  outcome: the-map-in-ashes--persuade-her-to-stop--failure
+  land: tablelands
+  task: t-029
+  source_image_id: 245586
+  source_key: sl1-the-map-in-ashes-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, letters,
+    writing, smiling, fire breathing, flames from mouth, monster, asphalt, paved road, lane markings, guardrail,
+    modern
+  prompt_prose: Seen from Zuzu's point of view, the raccoon archivist hurls an armful of maps into a roaring blaze
+    in defiance as the papers curl black and the fire leaps high, no lettering or logos.
+  prompt_tags: solo, (anthro raccoon:1.3), female, wandering archivist, ink-stained gloves, defiant, angry, throwing
+    an armful of maps into the fire, roaring blaze, curling blackened paper, thick smoke, flying embers, canyon
+    camp at night, harsh orange glow, rage, rejection, destruction, heat haze, sparks, smoke plume, canyon camp,
+    weird west, ink wash, medium shot
+  replaces:
+  - sl2-the-map-in-ashes--persuade-her-to-stop--failure
+  - sl2r2-the-map-in-ashes--persuade-her-to-stop--failure
+  jobs:
+    house-i2i: 38560
+  art: {}
+  verdict: null
+- key: sl3-the-map-in-ashes--persuade-her-to-stop--failure-b
+  entity: creature
+  lane: house-i2i
+  title: The Map in Ashes — Persuade her to stop (failure) (img2img 0.65)
+  size: 1344x768
+  seed: 34041
+  shape: wide
+  card: the-map-in-ashes
+  outcome: the-map-in-ashes--persuade-her-to-stop--failure
+  land: tablelands
+  task: t-029
+  source_image_id: 245586
+  source_key: sl1-the-map-in-ashes-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, letters,
+    writing, smiling, fire breathing, flames from mouth, monster, asphalt, paved road, lane markings, guardrail,
+    modern
+  prompt_prose: Seen from Zuzu's point of view, the raccoon archivist hurls an armful of maps into a roaring blaze
+    in defiance as the papers curl black and the fire leaps high, no lettering or logos.
+  prompt_tags: solo, (anthro raccoon:1.3), female, wandering archivist, ink-stained gloves, defiant, angry, throwing
+    an armful of maps into the fire, roaring blaze, curling blackened paper, thick smoke, flying embers, canyon
+    camp at night, harsh orange glow, rage, rejection, destruction, heat haze, sparks, smoke plume, canyon camp,
+    weird west, ink wash, medium shot
+  replaces:
+  - sl2-the-map-in-ashes--persuade-her-to-stop--failure
+  - sl2r2-the-map-in-ashes--persuade-her-to-stop--failure
+  jobs:
+    house-i2i: 38561
+  art: {}
+  verdict: null
+- key: sl3-the-map-in-ashes--persuade-her-to-stop--failure-c
+  entity: creature
+  lane: house-i2i
+  title: The Map in Ashes — Persuade her to stop (failure) (img2img 0.8)
+  size: 1344x768
+  seed: 34042
+  shape: wide
+  card: the-map-in-ashes
+  outcome: the-map-in-ashes--persuade-her-to-stop--failure
+  land: tablelands
+  task: t-029
+  source_image_id: 245586
+  source_key: sl1-the-map-in-ashes-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, letters,
+    writing, smiling, fire breathing, flames from mouth, monster, asphalt, paved road, lane markings, guardrail,
+    modern
+  prompt_prose: Seen from Zuzu's point of view, the raccoon archivist hurls an armful of maps into a roaring blaze
+    in defiance as the papers curl black and the fire leaps high, no lettering or logos.
+  prompt_tags: solo, (anthro raccoon:1.3), female, wandering archivist, ink-stained gloves, defiant, angry, throwing
+    an armful of maps into the fire, roaring blaze, curling blackened paper, thick smoke, flying embers, canyon
+    camp at night, harsh orange glow, rage, rejection, destruction, heat haze, sparks, smoke plume, canyon camp,
+    weird west, ink wash, medium shot
+  replaces:
+  - sl2-the-map-in-ashes--persuade-her-to-stop--failure
+  - sl2r2-the-map-in-ashes--persuade-her-to-stop--failure
+  jobs:
+    house-i2i: 38562
+  art: {}
+  verdict: null
+- key: sl3-the-third-shadow--count-the-lantern-positions--success-a
+  entity: creature
+  lane: house-i2i
+  title: The Third Shadow — Count the lantern positions (success) (img2img 0.5)
+  size: 1344x768
+  seed: 34043
+  shape: wide
+  card: the-third-shadow
+  outcome: the-third-shadow--count-the-lantern-positions--success
+  land: cave
+  task: t-029
+  source_image_id: 245593
+  source_key: sl1-the-third-shadow-2
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, sword,
+    blood, human face, human skin, hair, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Caught out at the cave entrance, the pale bat guide raises her two lanterns in startled guilt as
+    a hidden third lantern blazes in a rock niche beside her and a slack trapper's snare lies useless on the wet
+    stone; no lettering or logos.
+  prompt_tags: solo, (anthro bat:1.3), female, pale cave guide, polished stone spectacles, braided cord, caught
+    out, startled guilty expression, arms raised, holding two lanterns, hidden third lantern revealed in a rock
+    niche, slack trapper's snare cord lying on the ground, three shadows explained on the rock wall, cave entrance,
+    wet rock, bright revealing lantern light, tense standoff, deserted scene, dark fantasy, weird west, edo period,
+    cave, atmospheric, cinematic lighting, depth of field, medium shot
+  replaces:
+  - sl2-the-third-shadow--count-the-lantern-positions--success
+  - sl2r2-the-third-shadow--count-the-lantern-positions--success
+  jobs:
+    house-i2i: 38563
+  art: {}
+  verdict: null
+- key: sl3-the-third-shadow--count-the-lantern-positions--success-b
+  entity: creature
+  lane: house-i2i
+  title: The Third Shadow — Count the lantern positions (success) (img2img 0.65)
+  size: 1344x768
+  seed: 34044
+  shape: wide
+  card: the-third-shadow
+  outcome: the-third-shadow--count-the-lantern-positions--success
+  land: cave
+  task: t-029
+  source_image_id: 245593
+  source_key: sl1-the-third-shadow-2
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, sword,
+    blood, human face, human skin, hair, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Caught out at the cave entrance, the pale bat guide raises her two lanterns in startled guilt as
+    a hidden third lantern blazes in a rock niche beside her and a slack trapper's snare lies useless on the wet
+    stone; no lettering or logos.
+  prompt_tags: solo, (anthro bat:1.3), female, pale cave guide, polished stone spectacles, braided cord, caught
+    out, startled guilty expression, arms raised, holding two lanterns, hidden third lantern revealed in a rock
+    niche, slack trapper's snare cord lying on the ground, three shadows explained on the rock wall, cave entrance,
+    wet rock, bright revealing lantern light, tense standoff, deserted scene, dark fantasy, weird west, edo period,
+    cave, atmospheric, cinematic lighting, depth of field, medium shot
+  replaces:
+  - sl2-the-third-shadow--count-the-lantern-positions--success
+  - sl2r2-the-third-shadow--count-the-lantern-positions--success
+  jobs:
+    house-i2i: 38564
+  art: {}
+  verdict: null
+- key: sl3-the-third-shadow--count-the-lantern-positions--success-c
+  entity: creature
+  lane: house-i2i
+  title: The Third Shadow — Count the lantern positions (success) (img2img 0.8)
+  size: 1344x768
+  seed: 34045
+  shape: wide
+  card: the-third-shadow
+  outcome: the-third-shadow--count-the-lantern-positions--success
+  land: cave
+  task: t-029
+  source_image_id: 245593
+  source_key: sl1-the-third-shadow-2
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, sword,
+    blood, human face, human skin, hair, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Caught out at the cave entrance, the pale bat guide raises her two lanterns in startled guilt as
+    a hidden third lantern blazes in a rock niche beside her and a slack trapper's snare lies useless on the wet
+    stone; no lettering or logos.
+  prompt_tags: solo, (anthro bat:1.3), female, pale cave guide, polished stone spectacles, braided cord, caught
+    out, startled guilty expression, arms raised, holding two lanterns, hidden third lantern revealed in a rock
+    niche, slack trapper's snare cord lying on the ground, three shadows explained on the rock wall, cave entrance,
+    wet rock, bright revealing lantern light, tense standoff, deserted scene, dark fantasy, weird west, edo period,
+    cave, atmospheric, cinematic lighting, depth of field, medium shot
+  replaces:
+  - sl2-the-third-shadow--count-the-lantern-positions--success
+  - sl2r2-the-third-shadow--count-the-lantern-positions--success
+  jobs:
+    house-i2i: 38565
+  art: {}
+  verdict: null
+- key: sl3-the-cooling-stones--mark-the-unsafe-seam--success-a
+  entity: scenery
+  lane: house-i2i
+  title: The Cooling Stones — Mark the unsafe seam (success) (img2img 0.5)
+  size: 1344x768
+  seed: 34046
+  shape: wide
+  card: the-cooling-stones
+  outcome: the-cooling-stones--mark-the-unsafe-seam--success
+  land: verge
+  task: t-029
+  source_image_id: 245608
+  source_key: sl1-the-cooling-stones-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, glowing
+    eyes, frown, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the armadillo road mender raises her obsidian-handled pick to signal
+    as distant caravan lanterns swing onto a marked detour, the black road splitting harmlessly in an orange glow
+    beside them; burnished obsidian palette, no lettering or logos.
+  prompt_tags: solo, (anthro armadillo:1.3), female, armored shell, road mender, quilted leather, dust-caked boots,
+    obsidian-handled pick raised high in signal, relieved expression, standing on a safe detour, line of marked
+    pale stones, glowing orange fissure split open beside the road, distant caravan lanterns turning aside, tiny
+    distant silhouettes, black glass road, night after sunset, warm orange glow, calm, weird west, edo period, burnished
+    obsidian palette, cinematic lighting, wide shot
+  replaces:
+  - sl2-the-cooling-stones--mark-the-unsafe-seam--success
+  - sl2r2-the-cooling-stones--mark-the-unsafe-seam--success
+  jobs:
+    house-i2i: 38566
+  art: {}
+  verdict: null
+- key: sl3-the-cooling-stones--mark-the-unsafe-seam--success-b
+  entity: scenery
+  lane: house-i2i
+  title: The Cooling Stones — Mark the unsafe seam (success) (img2img 0.65)
+  size: 1344x768
+  seed: 34047
+  shape: wide
+  card: the-cooling-stones
+  outcome: the-cooling-stones--mark-the-unsafe-seam--success
+  land: verge
+  task: t-029
+  source_image_id: 245608
+  source_key: sl1-the-cooling-stones-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, glowing
+    eyes, frown, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the armadillo road mender raises her obsidian-handled pick to signal
+    as distant caravan lanterns swing onto a marked detour, the black road splitting harmlessly in an orange glow
+    beside them; burnished obsidian palette, no lettering or logos.
+  prompt_tags: solo, (anthro armadillo:1.3), female, armored shell, road mender, quilted leather, dust-caked boots,
+    obsidian-handled pick raised high in signal, relieved expression, standing on a safe detour, line of marked
+    pale stones, glowing orange fissure split open beside the road, distant caravan lanterns turning aside, tiny
+    distant silhouettes, black glass road, night after sunset, warm orange glow, calm, weird west, edo period, burnished
+    obsidian palette, cinematic lighting, wide shot
+  replaces:
+  - sl2-the-cooling-stones--mark-the-unsafe-seam--success
+  - sl2r2-the-cooling-stones--mark-the-unsafe-seam--success
+  jobs:
+    house-i2i: 38567
+  art: {}
+  verdict: null
+- key: sl3-the-cooling-stones--mark-the-unsafe-seam--success-c
+  entity: scenery
+  lane: house-i2i
+  title: The Cooling Stones — Mark the unsafe seam (success) (img2img 0.8)
+  size: 1344x768
+  seed: 34048
+  shape: wide
+  card: the-cooling-stones
+  outcome: the-cooling-stones--mark-the-unsafe-seam--success
+  land: verge
+  task: t-029
+  source_image_id: 245608
+  source_key: sl1-the-cooling-stones-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, glowing
+    eyes, frown, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the armadillo road mender raises her obsidian-handled pick to signal
+    as distant caravan lanterns swing onto a marked detour, the black road splitting harmlessly in an orange glow
+    beside them; burnished obsidian palette, no lettering or logos.
+  prompt_tags: solo, (anthro armadillo:1.3), female, armored shell, road mender, quilted leather, dust-caked boots,
+    obsidian-handled pick raised high in signal, relieved expression, standing on a safe detour, line of marked
+    pale stones, glowing orange fissure split open beside the road, distant caravan lanterns turning aside, tiny
+    distant silhouettes, black glass road, night after sunset, warm orange glow, calm, weird west, edo period, burnished
+    obsidian palette, cinematic lighting, wide shot
+  replaces:
+  - sl2-the-cooling-stones--mark-the-unsafe-seam--success
+  - sl2r2-the-cooling-stones--mark-the-unsafe-seam--success
+  jobs:
+    house-i2i: 38568
+  art: {}
+  verdict: null
+- key: sl3-ashes-at-the-border--offer-to-scout-the-tower--failure-a
+  entity: creature
+  lane: house-i2i
+  title: Ashes at the Border — Offer to scout the tower (failure) (img2img 0.5)
+  size: 1344x768
+  seed: 34049
+  shape: wide
+  card: ashes-at-the-border
+  outcome: ashes-at-the-border--offer-to-scout-the-tower--failure
+  land: verge
+  task: t-029
+  source_image_id: 245612
+  source_key: sl1-ashes-at-the-border-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    blood, gore, horns, horned, bull, antlers, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The vulture ranger rushes toward the viewer with a water flask through a choking cloud of dust as
+    the watchtower stairs collapse into rubble behind her; no lettering or logos.
+  prompt_tags: solo, (anthro vulture:1.3), female, bald head, hooked beak, border ranger, sun-bleached cloak, worried
+    expression, rushing forward with a water flask, brass signal bugle swinging, collapsed watchtower stairway,
+    falling stones, rubble heap, broken timbers, thick choking dust cloud, ash, dim grey light, chaos, low angle,
+    weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
+  replaces:
+  - sl2-ashes-at-the-border--offer-to-scout-the-tower--failure
+  - sl2r2-ashes-at-the-border--offer-to-scout-the-tower--failure
+  jobs:
+    house-i2i: 38569
+  art: {}
+  verdict: null
+- key: sl3-ashes-at-the-border--offer-to-scout-the-tower--failure-b
+  entity: creature
+  lane: house-i2i
+  title: Ashes at the Border — Offer to scout the tower (failure) (img2img 0.65)
+  size: 1344x768
+  seed: 34050
+  shape: wide
+  card: ashes-at-the-border
+  outcome: ashes-at-the-border--offer-to-scout-the-tower--failure
+  land: verge
+  task: t-029
+  source_image_id: 245612
+  source_key: sl1-ashes-at-the-border-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    blood, gore, horns, horned, bull, antlers, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The vulture ranger rushes toward the viewer with a water flask through a choking cloud of dust as
+    the watchtower stairs collapse into rubble behind her; no lettering or logos.
+  prompt_tags: solo, (anthro vulture:1.3), female, bald head, hooked beak, border ranger, sun-bleached cloak, worried
+    expression, rushing forward with a water flask, brass signal bugle swinging, collapsed watchtower stairway,
+    falling stones, rubble heap, broken timbers, thick choking dust cloud, ash, dim grey light, chaos, low angle,
+    weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
+  replaces:
+  - sl2-ashes-at-the-border--offer-to-scout-the-tower--failure
+  - sl2r2-ashes-at-the-border--offer-to-scout-the-tower--failure
+  jobs:
+    house-i2i: 38570
+  art: {}
+  verdict: null
+- key: sl3-ashes-at-the-border--offer-to-scout-the-tower--failure-c
+  entity: creature
+  lane: house-i2i
+  title: Ashes at the Border — Offer to scout the tower (failure) (img2img 0.8)
+  size: 1344x768
+  seed: 34051
+  shape: wide
+  card: ashes-at-the-border
+  outcome: ashes-at-the-border--offer-to-scout-the-tower--failure
+  land: verge
+  task: t-029
+  source_image_id: 245612
+  source_key: sl1-ashes-at-the-border-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    blood, gore, horns, horned, bull, antlers, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The vulture ranger rushes toward the viewer with a water flask through a choking cloud of dust as
+    the watchtower stairs collapse into rubble behind her; no lettering or logos.
+  prompt_tags: solo, (anthro vulture:1.3), female, bald head, hooked beak, border ranger, sun-bleached cloak, worried
+    expression, rushing forward with a water flask, brass signal bugle swinging, collapsed watchtower stairway,
+    falling stones, rubble heap, broken timbers, thick choking dust cloud, ash, dim grey light, chaos, low angle,
+    weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
+  replaces:
+  - sl2-ashes-at-the-border--offer-to-scout-the-tower--failure
+  - sl2r2-ashes-at-the-border--offer-to-scout-the-tower--failure
+  jobs:
+    house-i2i: 38571
+  art: {}
+  verdict: null
+- key: sl3-the-last-watchfire--volunteer-for-the-search--failure-a
+  entity: creature
+  lane: house-i2i
+  title: The Last Watchfire — Volunteer for the search (failure) (img2img 0.5)
+  size: 1344x768
+  seed: 34052
+  shape: wide
+  card: the-last-watchfire
+  outcome: the-last-watchfire--volunteer-for-the-search--failure
+  land: verge
+  task: t-029
+  source_image_id: 245614
+  source_key: sl1-the-last-watchfire-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    muzzle, cage, mask, two wolves, duplicate, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The wolf commander bows her head and holds out a strip of bandage at the gate, her single watchfire
+    guttering to embers against a cold, empty ravine beyond the barricade; no lettering or logos.
+  prompt_tags: solo, (anthro wolf:1.3), female, grey fur, scarred muzzle, camp commander, wooden peg leg, frontier
+    officer coat, worn ceremonial sabre untouched, head bowed, ears down, holding out a strip of bandage, single
+    dying watchfire, glowing embers, empty dark ravine beyond the barricade, cold blue night, mist, grim, sorrowful,
+    weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
+  replaces:
+  - sl2-the-last-watchfire--volunteer-for-the-search--failure
+  - sl2r2-the-last-watchfire--volunteer-for-the-search--failure
+  jobs:
+    house-i2i: 38572
+  art: {}
+  verdict: null
+- key: sl3-the-last-watchfire--volunteer-for-the-search--failure-b
+  entity: creature
+  lane: house-i2i
+  title: The Last Watchfire — Volunteer for the search (failure) (img2img 0.65)
+  size: 1344x768
+  seed: 34053
+  shape: wide
+  card: the-last-watchfire
+  outcome: the-last-watchfire--volunteer-for-the-search--failure
+  land: verge
+  task: t-029
+  source_image_id: 245614
+  source_key: sl1-the-last-watchfire-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    muzzle, cage, mask, two wolves, duplicate, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The wolf commander bows her head and holds out a strip of bandage at the gate, her single watchfire
+    guttering to embers against a cold, empty ravine beyond the barricade; no lettering or logos.
+  prompt_tags: solo, (anthro wolf:1.3), female, grey fur, scarred muzzle, camp commander, wooden peg leg, frontier
+    officer coat, worn ceremonial sabre untouched, head bowed, ears down, holding out a strip of bandage, single
+    dying watchfire, glowing embers, empty dark ravine beyond the barricade, cold blue night, mist, grim, sorrowful,
+    weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
+  replaces:
+  - sl2-the-last-watchfire--volunteer-for-the-search--failure
+  - sl2r2-the-last-watchfire--volunteer-for-the-search--failure
+  jobs:
+    house-i2i: 38573
+  art: {}
+  verdict: null
+- key: sl3-the-last-watchfire--volunteer-for-the-search--failure-c
+  entity: creature
+  lane: house-i2i
+  title: The Last Watchfire — Volunteer for the search (failure) (img2img 0.8)
+  size: 1344x768
+  seed: 34054
+  shape: wide
+  card: the-last-watchfire
+  outcome: the-last-watchfire--volunteer-for-the-search--failure
+  land: verge
+  task: t-029
+  source_image_id: 245614
+  source_key: sl1-the-last-watchfire-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    muzzle, cage, mask, two wolves, duplicate, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The wolf commander bows her head and holds out a strip of bandage at the gate, her single watchfire
+    guttering to embers against a cold, empty ravine beyond the barricade; no lettering or logos.
+  prompt_tags: solo, (anthro wolf:1.3), female, grey fur, scarred muzzle, camp commander, wooden peg leg, frontier
+    officer coat, worn ceremonial sabre untouched, head bowed, ears down, holding out a strip of bandage, single
+    dying watchfire, glowing embers, empty dark ravine beyond the barricade, cold blue night, mist, grim, sorrowful,
+    weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
+  replaces:
+  - sl2-the-last-watchfire--volunteer-for-the-search--failure
+  - sl2r2-the-last-watchfire--volunteer-for-the-search--failure
+  jobs:
+    house-i2i: 38574
+  art: {}
+  verdict: null
+- key: sl3-the-closed-infirmary--inspect-the-sealed-room--failure-a
+  entity: creature
+  lane: house-i2i
+  title: The Closed Infirmary — Inspect the sealed room (failure) (img2img 0.5)
+  size: 1344x768
+  seed: 34055
+  shape: wide
+  card: the-closed-infirmary
+  outcome: the-closed-infirmary--inspect-the-sealed-room--failure
+  land: verge
+  task: t-029
+  source_image_id: 245617
+  source_key: sl1-the-closed-infirmary-2
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    gore, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The deer physician presses a cloth to her muzzle and reaches toward the viewer to pull him back
+    as bitter yellow-green fumes pour from the forced infirmary door; no lettering or logos.
+  prompt_tags: solo, (anthro deer:1.3), female, doe, field physician, ink-stained sleeves, plain apron, cloth pressed
+    over her muzzle, alarmed, reaching toward viewer to pull back, infirmary door burst open, splintered planks,
+    sickly yellow-green fumes pouring out, choking haze, fortified camp, dim dusk, weird west, edo period, burnished
+    obsidian palette, cinematic lighting, medium shot
+  replaces:
+  - sl2-the-closed-infirmary--inspect-the-sealed-room--failure
+  - sl2r2-the-closed-infirmary--inspect-the-sealed-room--failure
+  jobs:
+    house-i2i: 38575
+  art: {}
+  verdict: null
+- key: sl3-the-closed-infirmary--inspect-the-sealed-room--failure-b
+  entity: creature
+  lane: house-i2i
+  title: The Closed Infirmary — Inspect the sealed room (failure) (img2img 0.65)
+  size: 1344x768
+  seed: 34056
+  shape: wide
+  card: the-closed-infirmary
+  outcome: the-closed-infirmary--inspect-the-sealed-room--failure
+  land: verge
+  task: t-029
+  source_image_id: 245617
+  source_key: sl1-the-closed-infirmary-2
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    gore, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The deer physician presses a cloth to her muzzle and reaches toward the viewer to pull him back
+    as bitter yellow-green fumes pour from the forced infirmary door; no lettering or logos.
+  prompt_tags: solo, (anthro deer:1.3), female, doe, field physician, ink-stained sleeves, plain apron, cloth pressed
+    over her muzzle, alarmed, reaching toward viewer to pull back, infirmary door burst open, splintered planks,
+    sickly yellow-green fumes pouring out, choking haze, fortified camp, dim dusk, weird west, edo period, burnished
+    obsidian palette, cinematic lighting, medium shot
+  replaces:
+  - sl2-the-closed-infirmary--inspect-the-sealed-room--failure
+  - sl2r2-the-closed-infirmary--inspect-the-sealed-room--failure
+  jobs:
+    house-i2i: 38576
+  art: {}
+  verdict: null
+- key: sl3-the-closed-infirmary--inspect-the-sealed-room--failure-c
+  entity: creature
+  lane: house-i2i
+  title: The Closed Infirmary — Inspect the sealed room (failure) (img2img 0.8)
+  size: 1344x768
+  seed: 34057
+  shape: wide
+  card: the-closed-infirmary
+  outcome: the-closed-infirmary--inspect-the-sealed-room--failure
+  land: verge
+  task: t-029
+  source_image_id: 245617
+  source_key: sl1-the-closed-infirmary-2
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    gore, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The deer physician presses a cloth to her muzzle and reaches toward the viewer to pull him back
+    as bitter yellow-green fumes pour from the forced infirmary door; no lettering or logos.
+  prompt_tags: solo, (anthro deer:1.3), female, doe, field physician, ink-stained sleeves, plain apron, cloth pressed
+    over her muzzle, alarmed, reaching toward viewer to pull back, infirmary door burst open, splintered planks,
+    sickly yellow-green fumes pouring out, choking haze, fortified camp, dim dusk, weird west, edo period, burnished
+    obsidian palette, cinematic lighting, medium shot
+  replaces:
+  - sl2-the-closed-infirmary--inspect-the-sealed-room--failure
+  - sl2r2-the-closed-infirmary--inspect-the-sealed-room--failure
+  jobs:
+    house-i2i: 38577
+  art: {}
+  verdict: null
+- key: sl3-the-price-of-silence--refuse-the-secret-bargain--success-a
+  entity: scenery
+  lane: house-i2i
+  title: The Price of Silence — Refuse the secret bargain (success) (img2img 0.5)
+  size: 1344x768
+  seed: 34058
+  shape: wide
+  card: the-price-of-silence
+  outcome: the-price-of-silence--refuse-the-secret-bargain--success
+  land: verge
+  task: t-029
+  source_image_id: 245624
+  source_key: sl1-the-price-of-silence-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, text,
+    glowing eyes, blocking the gate, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The masked owl negotiator steps aside with a lowered wing as a narrow, unbound footpath winds around
+    her bronze-sealed gate toward a breaking dawn; no lettering or logos.
+  prompt_tags: solo, (anthro owl:1.3), female, pale feathers, gate negotiator, cracked bronze mask, plain travel
+    cloak, feathered tufts, standing aside, wing lowered, head tilted in quiet respect, great stone gate sealed
+    with a glowing bronze seal, narrow unbound footpath winding around the gate, open sky beyond, black desert,
+    dawn light breaking, freedom, weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
+  replaces:
+  - sl2-the-price-of-silence--refuse-the-secret-bargain--success
+  - sl2r2-the-price-of-silence--refuse-the-secret-bargain--success
+  jobs:
+    house-i2i: 38578
+  art: {}
+  verdict: null
+- key: sl3-the-price-of-silence--refuse-the-secret-bargain--success-b
+  entity: scenery
+  lane: house-i2i
+  title: The Price of Silence — Refuse the secret bargain (success) (img2img 0.65)
+  size: 1344x768
+  seed: 34059
+  shape: wide
+  card: the-price-of-silence
+  outcome: the-price-of-silence--refuse-the-secret-bargain--success
+  land: verge
+  task: t-029
+  source_image_id: 245624
+  source_key: sl1-the-price-of-silence-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, text,
+    glowing eyes, blocking the gate, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The masked owl negotiator steps aside with a lowered wing as a narrow, unbound footpath winds around
+    her bronze-sealed gate toward a breaking dawn; no lettering or logos.
+  prompt_tags: solo, (anthro owl:1.3), female, pale feathers, gate negotiator, cracked bronze mask, plain travel
+    cloak, feathered tufts, standing aside, wing lowered, head tilted in quiet respect, great stone gate sealed
+    with a glowing bronze seal, narrow unbound footpath winding around the gate, open sky beyond, black desert,
+    dawn light breaking, freedom, weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
+  replaces:
+  - sl2-the-price-of-silence--refuse-the-secret-bargain--success
+  - sl2r2-the-price-of-silence--refuse-the-secret-bargain--success
+  jobs:
+    house-i2i: 38579
+  art: {}
+  verdict: null
+- key: sl3-the-price-of-silence--refuse-the-secret-bargain--success-c
+  entity: scenery
+  lane: house-i2i
+  title: The Price of Silence — Refuse the secret bargain (success) (img2img 0.8)
+  size: 1344x768
+  seed: 34060
+  shape: wide
+  card: the-price-of-silence
+  outcome: the-price-of-silence--refuse-the-secret-bargain--success
+  land: verge
+  task: t-029
+  source_image_id: 245624
+  source_key: sl1-the-price-of-silence-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, text,
+    glowing eyes, blocking the gate, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: The masked owl negotiator steps aside with a lowered wing as a narrow, unbound footpath winds around
+    her bronze-sealed gate toward a breaking dawn; no lettering or logos.
+  prompt_tags: solo, (anthro owl:1.3), female, pale feathers, gate negotiator, cracked bronze mask, plain travel
+    cloak, feathered tufts, standing aside, wing lowered, head tilted in quiet respect, great stone gate sealed
+    with a glowing bronze seal, narrow unbound footpath winding around the gate, open sky beyond, black desert,
+    dawn light breaking, freedom, weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
+  replaces:
+  - sl2-the-price-of-silence--refuse-the-secret-bargain--success
+  - sl2r2-the-price-of-silence--refuse-the-secret-bargain--success
+  jobs:
+    house-i2i: 38580
+  art: {}
+  verdict: null
+- key: sl3-trial-verge--confront--success-a
+  entity: scenery
+  lane: house-i2i
+  title: Beyond the Verge — Cut the seal without accepting its terms (success) (img2img 0.5)
+  size: 1344x768
+  seed: 34061
+  shape: wide
+  card: trial-verge
+  outcome: trial-verge--confront--success
+  land: verge
+  task: t-029
+  source_image_id: 245632
+  source_key: sl1-trial-verge-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    crowd, text, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the great hingeless stone door is split by a glowing fracture down
+    its seal, swung partly open on a pale misty road beyond, while the masked owl negotiator stands aside with the
+    stone key lowered, no lettering or logos.
+  prompt_tags: great hingeless stone door in a black cliff split by a glowing fracture, broken seal, door ajar,
+    misty pale road beyond, (anthro owl:1.3), female, pale feathers, silent negotiator, cracked bronze mask, plain
+    travel cloak, small in frame, standing aside, stone key lowered, black desert, obsidian shards on the ground,
+    dim violet sky, dawn glow, weird west, painterly, cinematic lighting, detailed background, wide shot
+  replaces:
+  - sl2-trial-verge--confront--success
+  - sl2r2-trial-verge--confront--success
+  jobs:
+    house-i2i: 38581
+  art: {}
+  verdict: null
+- key: sl3-trial-verge--confront--success-b
+  entity: scenery
+  lane: house-i2i
+  title: Beyond the Verge — Cut the seal without accepting its terms (success) (img2img 0.65)
+  size: 1344x768
+  seed: 34062
+  shape: wide
+  card: trial-verge
+  outcome: trial-verge--confront--success
+  land: verge
+  task: t-029
+  source_image_id: 245632
+  source_key: sl1-trial-verge-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    crowd, text, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the great hingeless stone door is split by a glowing fracture down
+    its seal, swung partly open on a pale misty road beyond, while the masked owl negotiator stands aside with the
+    stone key lowered, no lettering or logos.
+  prompt_tags: great hingeless stone door in a black cliff split by a glowing fracture, broken seal, door ajar,
+    misty pale road beyond, (anthro owl:1.3), female, pale feathers, silent negotiator, cracked bronze mask, plain
+    travel cloak, small in frame, standing aside, stone key lowered, black desert, obsidian shards on the ground,
+    dim violet sky, dawn glow, weird west, painterly, cinematic lighting, detailed background, wide shot
+  replaces:
+  - sl2-trial-verge--confront--success
+  - sl2r2-trial-verge--confront--success
+  jobs:
+    house-i2i: 38582
+  art: {}
+  verdict: null
+- key: sl3-trial-verge--confront--success-c
+  entity: scenery
+  lane: house-i2i
+  title: Beyond the Verge — Cut the seal without accepting its terms (success) (img2img 0.8)
+  size: 1344x768
+  seed: 34063
+  shape: wide
+  card: trial-verge
+  outcome: trial-verge--confront--success
+  land: verge
+  task: t-029
+  source_image_id: 245632
+  source_key: sl1-trial-verge-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    crowd, text, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the great hingeless stone door is split by a glowing fracture down
+    its seal, swung partly open on a pale misty road beyond, while the masked owl negotiator stands aside with the
+    stone key lowered, no lettering or logos.
+  prompt_tags: great hingeless stone door in a black cliff split by a glowing fracture, broken seal, door ajar,
+    misty pale road beyond, (anthro owl:1.3), female, pale feathers, silent negotiator, cracked bronze mask, plain
+    travel cloak, small in frame, standing aside, stone key lowered, black desert, obsidian shards on the ground,
+    dim violet sky, dawn glow, weird west, painterly, cinematic lighting, detailed background, wide shot
+  replaces:
+  - sl2-trial-verge--confront--success
+  - sl2r2-trial-verge--confront--success
+  jobs:
+    house-i2i: 38583
+  art: {}
+  verdict: null
+- key: sl3-trial-verge--parley--success-a
+  entity: creature
+  lane: house-i2i
+  title: Beyond the Verge — Renounce the demand for silence (success) (img2img 0.5)
+  size: 1344x768
+  seed: 34064
+  shape: wide
+  card: trial-verge
+  outcome: trial-verge--parley--success
+  land: verge
+  task: t-029
+  source_image_id: 245632
+  source_key: sl1-trial-verge-1
+  denoise: 0.5
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, crowd,
+    text, chains, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the masked owl negotiator lowers the stone key and bows her head,
+    the hingeless door standing open behind her onto a road of soft violet dawn, with no oath taken, no lettering
+    or logos.
+  prompt_tags: solo, (anthro owl:1.3), female, pale feathers, silent negotiator, cracked bronze mask, plain travel
+    cloak, bowing her head, stone key lowered at her side, yielding, conceding, huge hingeless stone door standing
+    open behind her, road of soft violet dawn light beyond, black cliff, black desert, quiet, serene, weird west,
+    painterly, cinematic lighting, detailed background, medium shot
+  replaces:
+  - sl2-trial-verge--parley--success
+  - sl2r2-trial-verge--parley--success
+  jobs:
+    house-i2i: 38584
+  art: {}
+  verdict: null
+- key: sl3-trial-verge--parley--success-b
+  entity: creature
+  lane: house-i2i
+  title: Beyond the Verge — Renounce the demand for silence (success) (img2img 0.65)
+  size: 1344x768
+  seed: 34065
+  shape: wide
+  card: trial-verge
+  outcome: trial-verge--parley--success
+  land: verge
+  task: t-029
+  source_image_id: 245632
+  source_key: sl1-trial-verge-1
+  denoise: 0.65
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, crowd,
+    text, chains, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the masked owl negotiator lowers the stone key and bows her head,
+    the hingeless door standing open behind her onto a road of soft violet dawn, with no oath taken, no lettering
+    or logos.
+  prompt_tags: solo, (anthro owl:1.3), female, pale feathers, silent negotiator, cracked bronze mask, plain travel
+    cloak, bowing her head, stone key lowered at her side, yielding, conceding, huge hingeless stone door standing
+    open behind her, road of soft violet dawn light beyond, black cliff, black desert, quiet, serene, weird west,
+    painterly, cinematic lighting, detailed background, medium shot
+  replaces:
+  - sl2-trial-verge--parley--success
+  - sl2r2-trial-verge--parley--success
+  jobs:
+    house-i2i: 38585
+  art: {}
+  verdict: null
+- key: sl3-trial-verge--parley--success-c
+  entity: creature
+  lane: house-i2i
+  title: Beyond the Verge — Renounce the demand for silence (success) (img2img 0.8)
+  size: 1344x768
+  seed: 34066
+  shape: wide
+  card: trial-verge
+  outcome: trial-verge--parley--success
+  land: verge
+  task: t-029
+  source_image_id: 245632
+  source_key: sl1-trial-verge-1
+  denoise: 0.8
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, crowd,
+    text, chains, asphalt, paved road, lane markings, guardrail, modern
+  prompt_prose: Seen from Zuzu's point of view, the masked owl negotiator lowers the stone key and bows her head,
+    the hingeless door standing open behind her onto a road of soft violet dawn, with no oath taken, no lettering
+    or logos.
+  prompt_tags: solo, (anthro owl:1.3), female, pale feathers, silent negotiator, cracked bronze mask, plain travel
+    cloak, bowing her head, stone key lowered at her side, yielding, conceding, huge hingeless stone door standing
+    open behind her, road of soft violet dawn light beyond, black cliff, black desert, quiet, serene, weird west,
+    painterly, cinematic lighting, detailed background, medium shot
+  replaces:
+  - sl2-trial-verge--parley--success
+  - sl2r2-trial-verge--parley--success
+  jobs:
+    house-i2i: 38586
+  art: {}
+  verdict: null

@@ -57,6 +57,11 @@ except ImportError:  # pragma: no cover - direct script execution
 
 TERMINAL_STATUSES = {"DONE", "FAILED", "CANCELLED"}
 VIDEO_ENGINES = ("wan", "ltx")
+# Engines that take the subject's source_image_id as an input image. sdxl-img2img
+# (zuzu-shifting-lands t-029) repaints an approved render on the house checkpoint, so
+# the cast and style hold while the scene changes; Kontext swaps in Flux.
+SOURCE_ENGINES = ("kontext", "sdxl-img2img", *VIDEO_ENGINES)
+SDXL_ENGINES = ("comfy", "sdxl-img2img")
 
 
 def compose_prompt(lane, subject):
@@ -173,7 +178,7 @@ def build_request(ledger, lane, subject, source_image=None, last_image=None):
     }
     if lane.get("checkpoint"):
         body["checkpoint"] = lane["checkpoint"]
-    if lane["engine"] == "comfy":
+    if lane["engine"] in SDXL_ENGINES:
         # Optional per-lane overrides (a checkpoint author's recommended settings).
         # Absent, Kind Robots applies the checkpoint family's sampler profile. The
         # scheduler always stays the profile's: enqueue does not forward one for comfy.
@@ -187,18 +192,27 @@ def build_request(ledger, lane, subject, source_image=None, last_image=None):
         for field in ("steps", "guidance"):
             if lane.get(field):
                 body[field] = lane[field]
+    if lane["engine"] == "sdxl-img2img":
+        if not source_image:
+            raise ValueError(f"{subject.get('key')}: an sdxl-img2img lane needs the subject's source_image_id")
+        body["sourceImageBase64"] = source_image
+        # How far the render may leave its source (subject first, then lane): low keeps
+        # the cast and layout, high lets the scene change.
+        denoise = subject.get("denoise", lane.get("denoise"))
+        if denoise is not None:
+            body["denoise"] = float(denoise)
     if lane["engine"] in VIDEO_ENGINES:
         body.update(build_video_fields(lane, subject, source_image, last_image))
     # Kind Robots LoRA resources (comic-creator t-016): subject first, then lane. The enqueue route resolves the
     # resource ids to files and appends each LoRA's trigger words itself.
     loras = subject.get("loras", lane.get("loras"))
-    if loras is None and lane["engine"] == "comfy" and ledger.get("cast_loras", True) is not False:
+    if loras is None and lane["engine"] in SDXL_ENGINES and ledger.get("cast_loras", True) is not False:
         loras = cast_loras_for(ledger, lane, subject)
-    if lane["engine"] == "comfy" and loras:
+    if lane["engine"] in SDXL_ENGINES and loras:
         body["loras"] = [
             {"resourceId": int(lora["resource_id"]), "strength": float(lora.get("strength", 0.8))} for lora in loras
         ]
-    if lane["engine"] == "comfy" and subject.get("negative"):
+    if lane["engine"] in SDXL_ENGINES and subject.get("negative"):
         body["negativePrompt"] = " ".join(str(subject["negative"]).split())
     for field, key in (("projectSlug", "project_slug"), ("designer", "designer")):
         if ledger.get(key):
@@ -439,7 +453,7 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None):
             print(f"  FAILED {subject['key']} [{lane['key']}]: prompt contract {rules}", file=sys.stderr)
             continue
         source = last = None
-        if lane["engine"] in ("kontext", *VIDEO_ENGINES) and subject.get("source_image_id"):
+        if lane["engine"] in SOURCE_ENGINES and subject.get("source_image_id"):
             source = compose_source(subject, fetch)
         if lane["engine"] in VIDEO_ENGINES and subject.get("last_image_id"):
             last = fetch(subject["last_image_id"])
@@ -504,7 +518,7 @@ def main(argv=None):
         pending = [(s, lane) for s, lane in cells if not job_id_of(s, lane["key"])]
         print(f"DRY RUN: {len(pending)} of {len(cells)} cells would be submitted via {core.KR_BASE_URL}")
         for subject, lane in pending:
-            source = "data:image/png;base64," if lane["engine"] in ("kontext", *VIDEO_ENGINES) else None
+            source = "data:image/png;base64," if lane["engine"] in SOURCE_ENGINES else None
             body = build_request(ledger, lane, subject, source)
             if lane["engine"] in VIDEO_ENGINES:
                 last = f" -> ArtImage {subject['last_image_id']}" if subject.get("last_image_id") else ""

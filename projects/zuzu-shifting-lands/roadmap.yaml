@@ -548,3 +548,19 @@ tasks:
       2026-10-13 review: all 222 rendered. 173 keep (homestead 49/54, dustwater 33/42, tablelands 30/42, cave 29/42, verge 32/42), exported and shipped in kind_robots#3623 (BESPOKE_OUTCOMES). 49 rejects (wrong species, cloned figures, a gore-looking puddle, stray lettering, a modern road, success/failure reading the same) rerolled as sl2r2-* with targeted prompt fixes, queued as ArtJobs 38223-38271. Next: --status, review the rerolls, export keepers, add to BESPOKE_OUTCOMES; a second miss may keep its card-art fallback.
       Done 2026-10-13: rerolls reviewed, 27 of 49 keep, shipped with kind_robots#3623 (173) for 200 of 222 painted consequence plates. The 22 outcomes that missed twice keep the graded card-art fallback and can be revisited in a later art round: the-locked-dormitory--search-lock--failure, a-crust-for-the-road--offer-help--failure, the-silent-bell--climb-stairs--success, the-mended-compass--compare-the-two-charts--failure, three-cups-on-the-table--question-the-armed-patrons--failure, footprints-in-the-silt--follow-the-wet-prints--failure, hammer-under-the-stone--brace-the-loosened-wall--success, hammer-under-the-stone--inspect-the-fresh-cuts--success, hammer-under-the-stone--inspect-the-fresh-cuts--failure, the-empty-pay-cart--read-the-pay-sheet-aloud--success, the-glass-vein--cut-a-safe-sample--failure, the-watchful-overhang--test-the-ledge-alone--success, the-toll-without-a-keeper--challenge-the-false-toll--success, the-map-in-ashes--persuade-her-to-stop--failure, the-third-shadow--count-the-lantern-positions--success, the-cooling-stones--mark-the-unsafe-seam--success, ashes-at-the-border--offer-to-scout-the-tower--failure, the-last-watchfire--volunteer-for-the-search--failure, the-closed-infirmary--inspect-the-sealed-room--failure, the-price-of-silence--refuse-the-secret-bargain--success, trial-verge--confront--success, trial-verge--parley--success.
     updated: '2026-10-13T08:55:00Z'
+  - id: t-029
+    milestone: m3
+    title: "Art round 3: repaint the 22 twice-missed consequence plates from their card art (img2img)"
+    status: claimed
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-028]
+    source: silas-2026-10-13
+    note: |-
+      Silas, 2026-10-13: "Are there still 22 missing? Find a solution." After t-028, 22 of 222 outcomes still show the graded card-art fallback: two text-to-image tries each could not hold them (the mole mason painted as a fox/rat three times, the boar as a feral herd, the washed-out bridge intact, both Verge trial successes a closed door, a modern road). Text alone cannot pin the species or the scene change.
+      Fix: art/ROUND-3.yaml repaints each from its card's approved ROUND-1 painting with sdxl-img2img on the SAME Arthemy house checkpoint (not Kontext/Flux, which Silas dropped for these plates on 2026-10-10), so the keeper holds species, costume and setting while the prompt moves the moment to the consequence. Three strengths per outcome (denoise 0.5/0.65/0.8), 66 subjects. scripts/enqueue_art_requests.py gains the sdxl-img2img lane (source image, denoise, house sampler settings; tests). Probe ArtJob 38518 first, then the rest.
+      Next: --status, review (one keeper per outcome), export with the shifting-lands card exporter (outcome subjects write public/shifting-lands/outcomes/), extend kind_robots BESPOKE_OUTCOMES, PR and merge.
+    claimed_by: 2026-10-13T090500Z-zuzu-shifting-lands-t029
+    claimed_at: '2026-10-13T09:05:00Z'
+    updated: '2026-10-13T09:05:00Z'
