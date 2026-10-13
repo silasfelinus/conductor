@@ -1,0 +1,88 @@
+# zuzu-showdown t-032: HD parts sheets for Jeffery Mittens's rig, from his picked reference (T032-MITTENS-REFERENCES,
+# ArtImage 246731, flipped to face right). Like the Swamp Witch's rig (t-028): the stance is cut into moving parts (legs, coat and body,
+# the knife arm, the boot arm, the head), and his bigger shapes are whole poses: crouched low, leaping, the
+# Underfoot slide, and his KO under a pile of boots. Prompts never say "human" or "people" (bannedTerms).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-parts
+  label: Flux Kontext dev (fp8), rig parts from the picked reference
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+  seed: 32032
+subjects:
+- key: mittens-rig-stance-apart
+  entity: jeffery-mittens
+  title: 'Jeffery Mittens rig part: stance-apart'
+  size: 832x1216
+  source_image_id: 246731
+  source_flip: true
+  prompt_prose: 'Put him in a low scrappy fighting stance seen from the side facing right, knees bent and feet apart,
+    both arms held out away from his body so his sleeves do not overlap his coat: his front paw holding a little
+    kitchen knife point-down, his back paw raised behind him holding an old boot ready to throw. Keep the same skinny
+    young raccoon with grey fur, the black mask and the black-and-grey ringed tail, the grey-green vest over a dirty
+    off-white shirt with rolled sleeves, the grey trousers and scuffed black boots, the long brown coat far too
+    big for him, the string of old boots tied by their laces round his neck, and the same comic art style. On a
+    plain off-white background, nothing else in the picture.'
+  jobs:
+    kontext-parts: 38591
+- key: mittens-rig-crouch
+  entity: jeffery-mittens
+  title: 'Jeffery Mittens rig part: crouch'
+  size: 832x1216
+  source_image_id: 246731
+  source_flip: true
+  prompt_prose: Show him crouching very low facing right, knees fully bent, the coat pooled around him, the little
+    knife held ready in his front paw. Keep the same skinny young raccoon with grey fur, the black mask and the
+    black-and-grey ringed tail, the grey-green vest over a dirty off-white shirt with rolled sleeves, the grey trousers
+    and scuffed black boots, the long brown coat far too big for him, the string of old boots tied by their laces
+    round his neck, and the same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 38592
+- key: mittens-rig-jump
+  entity: jeffery-mittens
+  title: 'Jeffery Mittens rig part: jump'
+  size: 832x1216
+  source_image_id: 246731
+  source_flip: true
+  prompt_prose: Show him in mid-air leaping facing right, knees tucked up, the long coat and the string of boots
+    flying up behind him, one paw clawed forward. Keep the same skinny young raccoon with grey fur, the black mask
+    and the black-and-grey ringed tail, the grey-green vest over a dirty off-white shirt with rolled sleeves, the
+    grey trousers and scuffed black boots, the long brown coat far too big for him, the string of old boots tied
+    by their laces round his neck, and the same comic art style. On a plain off-white background, nothing else in
+    the picture.
+  jobs:
+    kontext-parts: 38593
+- key: mittens-rig-slide
+  entity: jeffery-mittens
+  title: 'Jeffery Mittens rig part: slide'
+  size: 832x1216
+  source_image_id: 246731
+  source_flip: true
+  prompt_prose: Show him sliding feet-first along the ground facing right, lying back low with one leg stretched
+    out in front and the other bent, the long coat flapping behind him, dust kicking up from his front boot. Keep
+    the same skinny young raccoon with grey fur, the black mask and the black-and-grey ringed tail, the grey-green
+    vest over a dirty off-white shirt with rolled sleeves, the grey trousers and scuffed black boots, the long brown
+    coat far too big for him, the string of old boots tied by their laces round his neck, and the same comic art
+    style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 38594
+- key: mittens-rig-knockdown
+  entity: jeffery-mittens
+  title: 'Jeffery Mittens rig part: knockdown'
+  size: 832x1216
+  source_image_id: 246731
+  source_flip: true
+  prompt_prose: Show him knocked flat on his back on the ground, dazed, the string of old boots tumbled on top of
+    him and one boot sitting on his head. Keep the same skinny young raccoon with grey fur, the black mask and the
+    black-and-grey ringed tail, the grey-green vest over a dirty off-white shirt with rolled sleeves, the grey trousers
+    and scuffed black boots, the long brown coat far too big for him, the string of old boots tied by their laces
+    round his neck, and the same comic art style. On a plain off-white background, nothing else in the picture.
+  jobs:
+    kontext-parts: 38595
