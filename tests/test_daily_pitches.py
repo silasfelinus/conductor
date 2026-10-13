@@ -8,6 +8,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 import build_digest_email_v2_impl as email_v2  # noqa: E402
 import daily_pitches as dp  # noqa: E402
+import daily_project_deliveries as deliveries  # noqa: E402
 import pitch_links  # noqa: E402
 
 
@@ -26,6 +27,10 @@ def repo(tmp_path, monkeypatch):
     (tmp_path / "pitches" / "2026-01-01-old-pitch.md").write_text("# x\n")
     monkeypatch.setattr(dp, "ROOT", tmp_path)
     monkeypatch.setattr(dp, "DAILY_DIR", tmp_path / "pitches" / "daily")
+    # Post-cutover cmd_check delegates to deliveries; isolate its paths too,
+    # otherwise a real daily ledger makes an intentionally empty fixture pass.
+    monkeypatch.setattr(deliveries, "ROOT", tmp_path)
+    monkeypatch.setattr(deliveries, "DIR", tmp_path / "projects/dream-cycle/daily-deliveries")
     return tmp_path
 
 
