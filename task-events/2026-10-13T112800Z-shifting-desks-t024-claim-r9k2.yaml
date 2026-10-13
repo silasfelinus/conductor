@@ -1,8 +1,0 @@
-version: 1
-project: shifting-desks
-task: t-024
-operation: claim
-owner: worker
-session: 2026-10-13T112800Z-shifting-desks-t024-r9k2
-note: >-
-  Resume own prior source repair: generator38386864668 completed successfully, original targets ArtJobs38506/38507/38508 DONE with ArtImages246648/246649/246650 and generated health failures empty. Recover the new producer consistency test's incorrect assumption that fulfilled requests remain forever: the generator legitimately prunes satisfied root rows, so verify live submissions against authoring ledgers without requiring retired history in the active queue. Preserve checks and add retirement/drift/duplicate regression coverage; record target delivery evidence and close only after exact-head green CI and live media verification.

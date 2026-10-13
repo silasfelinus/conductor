@@ -594,10 +594,10 @@ tasks:
   - id: t-024
     milestone: m3
     title: "Repair rejected Shifting Desks art prompts using the live enqueue contract"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    updated: '2026-10-13T10:57:12Z'
+    updated: '2026-10-13T11:27:01+00:00'
     note: |-
       Kaizen from conductor#6113 source review; next_free_task_id.py returned t-024. Actual Auto Art Generate run 38364751716 rejects Hungry Detector and Security Desk frame-noun prompts; actual TypeScript enqueue validation also rejects Founder's Desk. Replace inner frame with inner arch for requests shifting-desks-r2-the-hungry-detector and shifting-desks-r3-location-security-desk; replace corner of the frame with corner of the desk for shifting-desks-r6-the-founders-desk. Fix corresponding ROUND-2/3/6 ledgers and ORIENTATION-12/SUBLEVEL-ZERO-12 art briefs so every producer agrees. The Python negation detector is not the full server contract: validate changed/new requests with actual current Kind Robots checkArtPromptContract for krea2, cfg 1, steps 8. Read complete current files in explicit ranges, patch text in place, use current blob SHAs, preserve all pending durable ArtJobs, and coordinate with the active t-014 worker before shared root edits. Do not copy server regexes, weaken checks, overwrite queue state or mark requested art delivered. Verify the next generator adopts/renders the original targets and health clears without hand editing it. t-013's consumer is merged; these art defects remain independent unfinished work.
 
@@ -606,3 +606,8 @@ tasks:
       Focused canonical prompt repair submitted from worker/shifting-desks-t024-art-prompts-j3p8. All nine changed request/ledger/source copies pass actual Kind Robots checkArtPromptContract (krea2 cfg1 steps8); originals reproduce frame-noun. 75 Python tests pass. Source merge and next generator adoption/rendering/health verification remain required; do not mark requested art delivered or close task from source changes alone.
 
       Canonical source repair merged as conductor#6116 at 24cdb603f2634285af1ab7f8180ab8728a30f169 after all 23 exact-head checks completed success/intentional skip. Nine prompt copies pass actual current Kind Robots enqueue contract, all originals reproduce frame-noun; 75 focused Python tests and full pack/deck/ending validators pass. Job IDs/statuses/seeds/output paths retained. Task unfinished: inspect merge-triggered Auto Art Generate run on repaired main for original Hungry Detector, Security Desk and Founder Desk acceptance/adoption/rendered ArtImage and generated health clearance; do not close on source-only evidence or duplicate active jobs. Releases this session for sequential daily-delivery verification.
+
+      Resume own prior source repair: generator38386864668 completed successfully, original targets ArtJobs38506/38507/38508 DONE with ArtImages246648/246649/246650 and generated health failures empty. Recover the new producer consistency test's incorrect assumption that fulfilled requests remain forever: the generator legitimately prunes satisfied root rows, so verify live submissions against authoring ledgers without requiring retired history in the active queue. Preserve checks and add retirement/drift/duplicate regression coverage; record target delivery evidence and close only after exact-head green CI and live media verification.
+    owner: worker
+    claimed_by: 2026-10-13T112800Z-shifting-desks-t024-r9k2
+    claimed_at: '2026-10-13T11:27:01+00:00'
