@@ -613,3 +613,14 @@ tasks:
     owner: worker
     claimed_by: 2026-10-13T112800Z-shifting-desks-t024-r9k2
     claimed_at: '2026-10-13T11:27:01+00:00'
+
+  - id: t-025
+    milestone: m3
+    title: 'Persist round-ledger render evidence before completed queue rows retire'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-13T11:34:43Z'
+    note: >-
+      Kaizen from conductor#6119. Successful Auto Art Generate38386864668 legitimately pruned fulfilled active requests but ROUND2/3/6 still said requested with null job/image IDs until manual recovery. Add a scoped comment-preserving synchronization utility that copies confirmed ArtJob/ArtImage and media-probe evidence into matching Shifting Desks round subjects before queue retirement, preserving prompts, seeds, pending jobs and curation verdicts. Distinguish submitted, rendered and independently delivered; no fake exact200 or automatic visual acceptance. Test successful fulfillment, pending job retention, idempotent repeat, unknown subject and concurrent edits without resubmitting completed art. Keep server prompt contract authoritative.
