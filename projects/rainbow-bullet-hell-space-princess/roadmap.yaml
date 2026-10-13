@@ -315,23 +315,18 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Prove Space Princess earned-super and shield boundary behavior for every pilot."
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-13T010500Z-rainbow-t017-super-e5kh
     claimed_at: '2026-10-13T01:05:00Z'
-    updated: '2026-10-13T01:05:00Z'
+    updated: '2026-10-13T01:11:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-004
-    note: >-
-      Reviewer kaizen after kind_robots#3590. Current seeded replay proves determinism,
-      hostile bullets and modules, but only tracks a boolean for graze and does not
-      assert a charged super's actual outcome. Add bounded deterministic actual-input
-      proofs for below-full versus full charge, held B versus a fresh B edge, charge
-      consumption/refill, bullet cancellation, pilot-specific effects, shield pickup
-      caps, invulnerability and damage/life boundaries. Include eliminated-seat cases.
-      Keep snapshot data immutable, use earned charge and existing consumer contracts,
-      preserve private score exclusion, and fix only a reproduced scoped defect.
+    note: |-
+      Reviewer kaizen after kind_robots#3590. Current seeded replay proves determinism, hostile bullets and modules, but only tracks a boolean for graze and does not assert a charged super's actual outcome. Add bounded deterministic actual-input proofs for below-full versus full charge, held B versus a fresh B edge, charge consumption/refill, bullet cancellation, pilot-specific effects, shield pickup caps, invulnerability and damage/life boundaries. Include eliminated-seat cases. Keep snapshot data immutable, use earned charge and existing consumer contracts, preserve private score exclusion, and fix only a reproduced scoped defect.
+
+      Scoped real-input four-pilot charge and super fixtures, non-stacking damage and invulnerability replay, plus a production core-vs-graze classification repair: protected direct projectile overlaps cannot award near-miss charge. Keep the private preview, no scores or release changes. Await complete Arcade and repository ratchet checks before safe merge.
 
   - id: t-018
     milestone: m2
