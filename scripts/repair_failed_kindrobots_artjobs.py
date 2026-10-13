@@ -32,6 +32,24 @@ VAGUE_ART_DIRECTION = re.compile(
     re.IGNORECASE,
 )
 PROMPT_CONTRACT_FAILURE = "Art prompt rejected by the prompt contract"
+# FAILED jobs that a later round re-ran stay FAILED in Kind Robots forever. Listing the id
+# here (with the job that replaced it) keeps them out of art-queue-health as history.
+SUPERSEDED_FILE = Path(__file__).resolve().parent.parent / "ops" / "superseded-art-jobs.yaml"
+
+
+def superseded_jobs(path=SUPERSEDED_FILE):
+    """Map of ArtJob id -> reason for FAILED jobs a later round replaced."""
+    import yaml
+
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except FileNotFoundError:
+        return {}
+    return {
+        int(row["id"]): str(row.get("reason") or "superseded")
+        for row in data.get("superseded") or []
+        if isinstance(row, dict) and row.get("id") is not None
+    }
 
 
 def failed_jobs():
@@ -148,9 +166,13 @@ def main() -> int:
 
     selected = []
     unhandled = []
+    superseded = superseded_jobs()
     for job in failed_jobs():
         reasons = repair_reasons(job)
         if not reasons:
+            if str(job.get("id")).isdigit() and int(job["id"]) in superseded:
+                print(f"  ArtJob {job['id']}: superseded ({superseded[int(job['id'])]})")
+                continue
             unhandled.append(job)
             continue
         selected.append(int(job["id"]))
