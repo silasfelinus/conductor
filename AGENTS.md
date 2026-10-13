@@ -81,6 +81,21 @@ Every roadmap declares a `kind`. It tells agents how to handle finished work:
 When unsure which bucket applies, treat it as the more cautious one (proposal > content >
 software) and escalate.
 
+### User-facing software ships an impressive front end first (Silas, 2026-10-13)
+
+Silas, verbatim: *"all of our projects need to have an impressive front end from the get go. I
+should not see this page after multiple llm exchanges."* (said of Save the Plumber's admin page,
+still a generic hero card, emoji tiles and a dev-status paragraph after several sessions).
+
+For any user-facing software project, the first implementation PR ships a designed front page,
+not a placeholder: an art-led title/hero (code-drawn SVG or canvas when rendered art does not exist
+yet), the project's real content made explorable (map, roster, cast, chapters), and the playable or
+usable slice framed inside it. Queue the project's painted art in the same session and overlay it
+only once it loads. Keep status copy short and honest; roadmap language belongs in Conductor.
+Screenshot phone and desktop widths before handing off (`docs/agents/frontend-verification.md`).
+An active project whose front page is still placeholder-grade gets a front-page pass before more
+engine or backend work. Reference implementation: kind_robots `pages/admin/save-the-plumber.vue`.
+
 ## Todos — Silas's priority overrides
 
 Silas creates Todos in the kind_robots workspace as lightweight, one-off tasks for agents
