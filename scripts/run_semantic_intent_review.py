@@ -5,6 +5,8 @@ import json
 import os
 import subprocess
 import sys
+import time
+import urllib.error
 import urllib.request
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -89,18 +91,39 @@ def model_review(context, token):
     }).encode()
     req = urllib.request.Request(API, data=payload, method="POST", headers={
         "Authorization": "Bearer " + token, "Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        out = json.load(resp)["choices"][0]["message"]["content"].strip()
     headings = ("## Verified", "## Corrected", "## Still questionable", "## Next review")
-    if len(out) < 500 or any(h not in out for h in headings):
-        raise ValueError("Incomplete semantic-review response")
-    if [out.index(h) for h in headings] != sorted(out.index(h) for h in headings):
-        raise ValueError("Semantic-review headings out of order")
-    if any(p not in out for p in LEADS):
-        raise ValueError("Lead projects missing from review")
-    if "CONTROL.md" not in out or "roadmap.yaml" not in out:
-        raise ValueError("Review lacks traceable source paths")
-    return out
+    # Models occasionally responds with an empty/non-JSON body or an incomplete
+    # generation. A bounded retry fixes transient failures without ever writing
+    # an unverified audit. Permanent HTTP errors (e.g. 401/403) fail immediately.
+    for attempt in range(1, 4):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                data = json.load(resp)
+            out = data["choices"][0]["message"]["content"]
+            if not isinstance(out, str):
+                raise ValueError("Missing semantic-review text")
+            out = out.strip()
+            if len(out) < 500 or any(h not in out for h in headings):
+                raise ValueError("Incomplete semantic-review response")
+            if [out.index(h) for h in headings] != sorted(out.index(h) for h in headings):
+                raise ValueError("Semantic-review headings out of order")
+            if any(p not in out for p in LEADS):
+                raise ValueError("Lead projects missing from review")
+            if "CONTROL.md" not in out or "roadmap.yaml" not in out:
+                raise ValueError("Review lacks traceable source paths")
+            return out
+        except (ValueError, KeyError, IndexError, TypeError, UnicodeError,
+                urllib.error.URLError) as error:
+            if isinstance(error, urllib.error.HTTPError) and error.code not in (
+                    408, 429, 500, 502, 503, 504):
+                raise
+            if attempt == 3:
+                raise
+            # Only diagnostic type is logged; never expose upstream response
+            # bodies, which may contain untrusted input or sensitive content.
+            print(f"::warning::Semantic review attempt {attempt}/3 failed "
+                  f"({type(error).__name__}); retrying", file=sys.stderr)
+            time.sleep(attempt * 2)
 
 
 def execute(root, today, token, force=False):
