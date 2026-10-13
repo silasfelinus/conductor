@@ -165,7 +165,7 @@ tasks:
   - id: t-005
     milestone: m1
     title: "Art direction sheet, card backs and three style-test card faces"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -185,9 +185,15 @@ tasks:
       ArtImage ids arrive with the auto-art-generate run (watch each row's last_art_job_id);
       mark a subject delivered only after its media_url returns 200, then review the renders
       against ART-DIRECTION.md before setting art_ref on the cards.
+
+      DONE 2026-10-13 PT: all five round-1 renders answer 200 on media.acrocatranch.com and
+      kindrobots.org (encounter back, review back, Gus, Something Ticking in the Toner, Trust
+      Fall Over the Shredder). Reviewed against ART-DIRECTION.md: on palette, halftone, single
+      readable scene, no lettering; verdict keep for all five (ROUND-1.yaml). Style test
+      accepted internally, which unblocks t-015 (its faces are already queued in ROUND-2).
     claimed_by: 2026-10-13T00:00:00Z-sd-art-q7k2
     claimed_at: '2026-10-13T04:55:47Z'
-    updated: '2026-10-13T05:13:15Z'
+    updated: '2026-10-13T07:37:11Z'
   - id: t-006
     milestone: m2
     title: "Public /play front page, Projects tab and card board shell"
@@ -323,7 +329,7 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Department 3 pack: Product Safety, Toy Division (Snuggle Sentinel)"
-    status: claimed
+    status: done
     depends_on: t-004
     owner: worker
     passes: 0
@@ -333,9 +339,17 @@ tasks:
       boss "Snuggle Sentinel's Launch Party". Nuclear-capable toys are played for
       corporate cheer; nothing ever detonates near a child (tone guardrail). Pays off
       bear-imprinted, defused-mk0 and mailed-the-bear-upstairs. Must pass validate_pack.py.
+
+      DONE 2026-10-13 PT: pack conductor#6104 (TOY-DIVISION-12.json: Concept Lab, Focus Group
+      Room, Proving Grounds, 12 graded cards, Launch Party boss with seven routes incl.
+      Empathy 4 and Spite 4 gates, Restructuring memos for every Records outcome, society
+      orders, art round 4 queued), wiring kind_robots#3629 (merged 8dc5530: third department
+      registered, fallback, PAL memos). Three-department playthrough verified at 390 and 1440
+      with no errors or overflow; sim 2,666/3,000 complete.
     claimed_by: 2026-10-13T-sd-t011-toys
     claimed_at: '2026-10-13T07:11:28Z'
-    updated: '2026-10-13T07:11:28Z'
+    updated: '2026-10-13T07:45:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#3629'
   - id: t-012
     milestone: m3
     title: "Department 4 pack: Wellness & Testing (vault tests, psych tests, mutation suite)"
@@ -386,7 +400,7 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Illustrate the 13 Orientation card faces (12 encounters + review)"
-    status: waiting
+    status: ready
     depends_on: t-005
     owner: null
     passes: 0
