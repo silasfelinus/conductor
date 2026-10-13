@@ -447,7 +447,7 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Accessibility and device pass at 375 / 768 / 1440"
-    status: claimed
+    status: done
     depends_on: t-009
     owner: worker
     passes: 0
@@ -456,9 +456,17 @@ tasks:
       Keyboard and screen reader through a full department, roll results announced
       immediately, developer notes never spoken, disabled choices explained, focus return
       after flip, no hover-only actions, no horizontal overflow. Screenshots in the PR.
+
+      DONE 2026-10-13 PT: axe-core WCAG 2.1 A/AA audit through a full three-department run at
+      375, 768 and 1440 (front, hire, envelope, keyboard-opened choices, result, elevator,
+      review, Personnel File): no overflow, no page errors. Fixed site-wide html lang,
+      contrast on labels/chips/badges, focus return to the new card after Next and the
+      elevator. Only remaining findings are two shared workspace-header elements at 1440
+      (outside the game; separate change). kind_robots#3630 merged e905484.
     claimed_by: 2026-10-13T-sd-t018-a11y
     claimed_at: '2026-10-13T07:38:33Z'
-    updated: '2026-10-13T07:38:33Z'
+    updated: '2026-10-13T08:51:47Z'
+    implementation_pr: 'silasfelinus/kind_robots#3630'
   - id: t-019
     milestone: m5
     title: "Seeded balance simulation across all five departments"
