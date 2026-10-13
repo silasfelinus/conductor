@@ -33,6 +33,13 @@ location, or changes nothing, always with a written reason. `when` names
 outcomes or flags from the departments above (any one matches); the first match
 applies, and exactly one memo with `when: null` comes last as the default.
 
+Endings (t-014): ENDINGS.json covers every outcome of the bottom floor's review
+(except its fallback) with a board ending, has exactly one default elimination
+ending, keys secret endings and epilogue variants only on flags some pack
+grants, and gives every epilogue complete sentences and a contract-clean image
+prompt. FLAG-MAP.json is generated from the packs (`--flag-map`) and must match
+them: every flag, where it is granted and where it is read.
+
 Usage:
   python projects/shifting-desks/encounters/validate_pack.py            # every *.json pack here
   python projects/shifting-desks/encounters/validate_pack.py PACK.json  # one pack
@@ -60,7 +67,8 @@ TAGS = {
 # Silas, 2026-10-12 PT: secret societies & traitors and paperwork & psych tests lead.
 LEAD_TAGS = {"conspiracy", "psych-test", "paperwork"}
 LEAD_SHARE_MIN = 0.5
-NON_PACK_FILES = {"DECKS.json"}
+NON_PACK_FILES = {"DECKS.json", "ENDINGS.json", "FLAG-MAP.json"}
+ENDING_KINDS = {"board", "elimination", "secret"}
 FAVOR_KINDS = {"force-success", "effects", "ignore-requirement", "bonus"}
 MUTATION_KINDS = {"reroll", "auto-success", "bonus", "restore-composure"}
 REQUIRE_KEYS = {"clearance", "flag", "forms", "grade"}
@@ -682,7 +690,141 @@ def validate_decks(path: Path, packs: list[Path]) -> list[str]:
     return errors
 
 
+def _loaded(packs: list[Path]) -> list[tuple[Path, dict]]:
+    out = []
+    for p in packs:
+        try:
+            out.append((p, json.loads(p.read_text(encoding="utf-8"))))
+        except (OSError, json.JSONDecodeError):
+            continue
+    return sorted(out, key=lambda pp: _department_order(pp[1]) or 0)
+
+
+def validate_endings(path: Path, packs: list[Path]) -> list[str]:
+    errors: list[str] = []
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    loaded = _loaded(packs)
+    if not loaded:
+        return ["ENDINGS: no department packs to check against"]
+    granted: set[str] = set()
+    for _, pack in loaded:
+        granted |= granted_flags(pack)
+    bottom = loaded[-1][1]
+    boss = bottom.get("boss") or {}
+    outcome_ids = [o.get("id") for o in boss.get("department_outcomes") or []]
+    fallback = outcome_ids[-1] if outcome_ids else None
+    endings = doc.get("endings") or []
+    if len(endings) < 10:
+        errors.append(f"ENDINGS: need at least ten endings, have {len(endings)}")
+    ids = [e.get("id") for e in endings]
+    if len(set(ids)) != len(ids):
+        errors.append("ENDINGS: ending ids must be unique")
+    board_outcomes = set()
+    defaults = 0
+    for e in endings:
+        w = f"ENDINGS: {e.get('id')!r}"
+        if e.get("kind") not in ENDING_KINDS:
+            errors.append(f"{w} kind must be one of {sorted(ENDING_KINDS)}")
+            continue
+        trig = e.get("trigger") or {}
+        if e["kind"] == "board":
+            oid = trig.get("department_outcome")
+            if oid not in outcome_ids or oid == fallback:
+                errors.append(f"{w} must name a non-fallback outcome of {boss.get('id')!r}")
+            board_outcomes.add(oid)
+        else:
+            if trig.get("status") != "eliminated":
+                errors.append(f"{w} elimination endings trigger on status 'eliminated'")
+            flag = trig.get("flag")
+            if flag is None:
+                defaults += 1
+                if e["kind"] == "secret":
+                    errors.append(f"{w} a secret ending needs a flag")
+            elif flag not in granted:
+                errors.append(f"{w} keys on flag {flag!r}, which no pack grants")
+        epi = e.get("epilogue") or {}
+        if not isinstance(epi.get("title"), str) or len(epi["title"].strip()) < 3:
+            errors.append(f"{w} epilogue needs a title")
+        text = epi.get("text")
+        if not isinstance(text, str) or text.count(". ") < 1 or not text.rstrip().endswith((".", "!", "?")):
+            errors.append(f"{w} epilogue needs at least two complete sentences")
+        for problem in prompt_errors(epi.get("art_prompt")):
+            errors.append(f"{w} epilogue art_prompt: {problem}")
+        for v in e.get("variants") or []:
+            if v.get("when_flag") not in granted:
+                errors.append(f"{w} variant keys on {v.get('when_flag')!r}, which no pack grants")
+            vt = v.get("text")
+            if not isinstance(vt, str) or not vt.rstrip().endswith((".", "!", "?")):
+                errors.append(f"{w} variant text must be a complete sentence")
+    for oid in outcome_ids:
+        if oid != fallback and oid not in board_outcomes:
+            errors.append(f"ENDINGS: outcome {oid!r} of {boss.get('id')!r} has no ending")
+    if defaults != 1:
+        errors.append(f"ENDINGS: need exactly one default elimination ending, have {defaults}")
+    return errors
+
+
+def flag_map(packs: list[Path], endings_path: Path | None = None) -> dict:
+    """Every flag: which pack/card/choice grants it and which reads it (requires, Restructuring, societies, endings)."""
+    flags: dict[str, dict[str, list[str]]] = {}
+
+    def entry(f):
+        return flags.setdefault(f, {"granted_by": [], "read_by": []})
+
+    for _, pack in _loaded(packs):
+        dept = (pack.get("department") or {}).get("id")
+        boss = pack.get("boss") if isinstance(pack.get("boss"), dict) else {}
+        for card in (pack.get("encounters") or []) + ([boss] if boss else []):
+            for ch in card.get("choices") or []:
+                where = f"{dept}/{card.get('id')}/{ch.get('id')}"
+                for key in ("success", "failure"):
+                    for f in (ch.get(key) or {}).get("add_flags") or []:
+                        if where not in entry(f)["granted_by"]:
+                            entry(f)["granted_by"].append(where)
+                req = ch.get("requires") or {}
+                if isinstance(req, dict) and req.get("flag"):
+                    entry(req["flag"])["read_by"].append(f"{where} (requires)")
+        for m in pack.get("restructurings") or []:
+            for f in ((m.get("when") or {}).get("flags") or []):
+                entry(f)["read_by"].append(f"{dept} restructuring {m.get('id')}")
+    decks_path = packs[0].parent / "DECKS.json" if packs else None
+    if decks_path and decks_path.exists():
+        decks = json.loads(decks_path.read_text(encoding="utf-8"))
+        for soc in decks.get("societies") or []:
+            for key in ("objectives", "betrayals"):
+                for dept, fl in (soc.get(key) or {}).items():
+                    for f in fl:
+                        entry(f)["read_by"].append(f"society {soc.get('id')} {key[:-1]} ({dept})")
+    if endings_path and endings_path.exists():
+        doc = json.loads(endings_path.read_text(encoding="utf-8"))
+        for e in doc.get("endings") or []:
+            f = (e.get("trigger") or {}).get("flag")
+            if f:
+                entry(f)["read_by"].append(f"ending {e.get('id')} (trigger)")
+            for v in e.get("variants") or []:
+                entry(v.get("when_flag"))["read_by"].append(f"ending {e.get('id')} (variant)")
+    return {"schema_version": 1, "generated_by": "validate_pack.py --flag-map", "flags": dict(sorted(flags.items()))}
+
+
+def flag_map_errors(packs: list[Path], directory: Path = HERE) -> list[str]:
+    errors = []
+    current = flag_map(packs, directory / "ENDINGS.json")
+    for f, info in current["flags"].items():
+        if info["read_by"] and not info["granted_by"]:
+            errors.append(f"FLAG-MAP: {f!r} is read ({info['read_by'][0]}) but granted by no pack")
+    committed = directory / "FLAG-MAP.json"
+    if not committed.exists() or json.loads(committed.read_text(encoding="utf-8")) != current:
+        errors.append("FLAG-MAP: FLAG-MAP.json is stale; regenerate with `validate_pack.py --flag-map`")
+    return errors
+
+
 def main(argv: list[str]) -> int:
+    if argv == ["--flag-map"]:
+        packs = pack_paths([])
+        (HERE / "FLAG-MAP.json").write_text(
+            json.dumps(flag_map(packs, HERE / "ENDINGS.json"), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        print("wrote FLAG-MAP.json")
+        return 0
     paths = pack_paths(argv)
     errors: list[str] = []
     for p in paths:
@@ -702,6 +844,12 @@ def main(argv: list[str]) -> int:
         errors.extend(deck_errors)
         if not deck_errors:
             print(f"OK {decks.name}: job titles, societies, mutations and Test Results check out")
+    endings = HERE / "ENDINGS.json"
+    if not argv and endings.exists():
+        ending_errors = validate_endings(endings, paths) + flag_map_errors(paths)
+        errors.extend(ending_errors)
+        if not ending_errors:
+            print(f"OK {endings.name} and FLAG-MAP.json: every ending covered, every flag accounted for")
     for e in errors:
         print(e)
     return 1 if errors else 0

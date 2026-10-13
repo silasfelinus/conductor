@@ -490,3 +490,41 @@ def test_sublevel_zero_restructures_on_every_wellness_outcome():
     keyed = {o for m in bottom["restructurings"] if m["when"] for o in m["when"]["outcomes"]}
     outcomes = {o["id"] for o in vault["boss"]["department_outcomes"]} - {"retest"}
     assert outcomes <= keyed, outcomes - keyed
+
+
+# Endings ledger and flag map (t-014)
+
+ENDINGS = ENC_DIR / "ENDINGS.json"
+
+
+def test_endings_ledger_is_valid_and_complete():
+    assert vp.validate_endings(ENDINGS, vp.pack_paths([])) == []
+    doc = json.loads(ENDINGS.read_text(encoding="utf-8"))
+    ids = {e["id"] for e in doc["endings"]}
+    assert len(ids) >= 10
+    assert {"the-kind-rewrite", "posthumous-affairs", "position-eliminated"} <= ids
+
+
+def test_every_board_outcome_needs_an_ending(tmp_path):
+    doc = json.loads(ENDINGS.read_text(encoding="utf-8"))
+    doc["endings"] = [e for e in doc["endings"] if e["id"] != "whistleblower"]
+    path = tmp_path / "ENDINGS.json"
+    path.write_text(json.dumps(doc), encoding="utf-8")
+    errors = vp.validate_endings(path, vp.pack_paths([]))
+    assert any("'whistleblower'" in e and "has no ending" in e for e in errors)
+
+
+def test_secret_endings_need_a_granted_flag(tmp_path):
+    doc = json.loads(ENDINGS.read_text(encoding="utf-8"))
+    secret = next(e for e in doc["endings"] if e["kind"] == "secret")
+    secret["trigger"]["flag"] = "a-flag-nothing-grants"
+    path = tmp_path / "ENDINGS.json"
+    path.write_text(json.dumps(doc), encoding="utf-8")
+    assert any("which no pack grants" in e for e in vp.validate_endings(path, vp.pack_paths([])))
+
+
+def test_flag_map_is_current_and_every_read_flag_is_granted():
+    assert vp.flag_map_errors(vp.pack_paths([])) == []
+    flags = json.loads((ENC_DIR / "FLAG-MAP.json").read_text(encoding="utf-8"))["flags"]
+    assert "admin-access" in flags and flags["admin-access"]["granted_by"]
+    assert any("the-kind-rewrite" in r for r in flags["admin-access"]["read_by"])
