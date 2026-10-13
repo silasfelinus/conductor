@@ -53,6 +53,40 @@ ART_STATUSES = {"design-only", "verified-repository-art", "approved-ArtImage"}
 ART_SUFFIX = "every surface bare and unmarked"
 # Kind Robots art-prompt contract: positive phrasing only (scripts/repair_negation_art_prompts.py).
 NEGATION_RE = re.compile(r"\b(no|not|never|without|none|nothing|avoid|don't|isn't)\b", re.I)
+# Ported from kind_robots server/utils/artPromptContract.ts (FORMAT_PATTERNS and
+# ART_DIRECTION_JARGON_PATTERNS): words that make the image model paint lettering
+# or a framed format instead of a scene. Art-medic PR #6094 had to strip "poster"
+# from these briefs after the live contract rejected them.
+CONTRACT_PATTERNS = [
+    re.compile(r"\b(?:trading[- ])?card (?:illustration|artwork|composition|art)\b", re.I),
+    re.compile(r"\b(?:treasure|ability|item|reward)[- ]card\b", re.I),
+    re.compile(r"\b(?:movie |film |book )?(?:poster|book cover|magazine cover|album cover)\b(?!\s+(?:composition|framing|layout|crop))", re.I),
+    re.compile(r"\bcomic (?:page|panel|strip)\b", re.I),
+    re.compile(r"\bconcrete\s+(?:focal\s+)?subject\b", re.I),
+    re.compile(r"\biconic\s+scene\b", re.I),
+    re.compile(r"\b(?:unmistakable|clean)\s+silhouette\b", re.I),
+    re.compile(r"\bthumbnail\s+readability\b", re.I),
+    re.compile(r"\blegible at thumbnail size\b", re.I),
+    re.compile(r"\bsubject separation\b", re.I),
+    re.compile(r"\b(?:readable|legible|clearly\s+readable|easily\s+read)\s+(?:tools?|labels?|signs?|instruments?|markings?|details?|iconography|symbols?)\b", re.I),
+]
+
+
+def prompt_errors(text) -> list[str]:
+    """Every station's image prompt: present, house suffix, positive-only, contract-clean."""
+    if not isinstance(text, str) or len(text.strip()) < 50:
+        return ["needs an image prompt of at least 50 chars (Silas: every station needs an image)"]
+    out = []
+    if not text.rstrip(". ").endswith(ART_SUFFIX):
+        out.append(f"must end with '{ART_SUFFIX}'")
+    m = NEGATION_RE.search(text)
+    if m:
+        out.append(f"negation {m.group(0)!r}; art prompts are positive-only")
+    for pat in CONTRACT_PATTERNS:
+        hit = pat.search(text)
+        if hit:
+            out.append(f"art-contract vocabulary {hit.group(0)!r} paints lettering or a framed format")
+    return out
 SLUG_RE = re.compile(r"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$")
 RULES = {
     "selection": "seeded-weighted-eligible-without-replacement",
@@ -164,7 +198,7 @@ class Checker:
         if roll.get("target") not in TARGETS:
             self.err(where, f"target must be one of {sorted(TARGETS)}")
 
-    def art(self, where, art):
+    def art(self, where, art, cast_required=True):
         if not isinstance(art, dict):
             self.err(where, "art must be an object")
             return
@@ -172,14 +206,10 @@ class Checker:
             self.err(where, f"status must be one of {sorted(ART_STATUSES)}")
         if art.get("status") == "design-only" and art.get("art_ref") is not None:
             self.err(where, "design-only art must have art_ref null")
-        brief = art.get("brief", "")
-        self.text(f"{where}.brief", brief, 50)
-        if isinstance(brief, str):
-            if not brief.rstrip(". ").endswith(ART_SUFFIX):
-                self.err(f"{where}.brief", f"must end with '{ART_SUFFIX}'")
-            m = NEGATION_RE.search(brief)
-            if m:
-                self.err(f"{where}.brief", f"negation {m.group(0)!r}; art prompts are positive-only")
+        for problem in prompt_errors(art.get("brief")):
+            self.err(f"{where}.brief", problem)
+        if cast_required is False:
+            return
         cast = art.get("cast")
         if not isinstance(cast, list) or not cast:
             self.err(where, "cast must be a non-empty list")
@@ -241,6 +271,7 @@ def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str
         c.err("status", "must be 'draft-not-imported' until a versioned import exists")
     dept = pack.get("department") or {}
     c.slug("department.id", dept.get("id"))
+    c.art("department.arrival_art", dept.get("arrival_art"), cast_required=False)
     c.text("department.title", dept.get("title"), 3)
     if not isinstance(dept.get("order"), int) or not 1 <= dept.get("order", 0) <= 5:
         c.err("department.order", "must be 1..5")
@@ -271,6 +302,7 @@ def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str
         c.slug("locations.location_id", lid)
         c.text(f"locations[{lid}].title", loc.get("title"), 3)
         c.text(f"locations[{lid}].description", loc.get("description"), 20)
+        c.art(f"locations[{lid}].art", loc.get("art"), cast_required=False)
         ids = loc.get("encounter_ids") or []
         if len(ids) < min_per or len(set(ids)) != len(ids):
             c.err(f"locations[{lid}]", f"needs at least {min_per} unique encounter_ids")
@@ -399,6 +431,10 @@ def validate_decks(path: Path, packs: list[Path]) -> list[str]:
     jobs = decks.get("job_titles") or []
     if len(jobs) < 3:
         errors.append("DECKS: need at least 3 job titles")
+    for group, items in (("job", jobs), ("society", decks.get("societies") or []), ("mutation", decks.get("mutations") or [])):
+        for item in items:
+            for problem in prompt_errors(item.get("art_prompt")):
+                errors.append(f"DECKS: {group} {item.get('id')!r} art_prompt: {problem}")
     for job in jobs:
         skills = job.get("skills") or {}
         if set(skills) != SKILLS or sum(skills.values()) != 6 or not all(0 <= v <= 3 for v in skills.values()):

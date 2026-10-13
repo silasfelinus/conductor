@@ -77,7 +77,13 @@ def test_requires_flag_may_come_from_a_lower_department(tmp_path, pack):
     earlier = copy.deepcopy(pack)
     (tmp_path / "EARLIER.json").write_text(json.dumps(earlier), encoding="utf-8")
     later = copy.deepcopy(pack)
-    later["department"] = {"id": "later", "title": "Later", "order": 2, "boss_id": later["boss"]["id"]}
+    later["department"] = {
+        **later["department"],
+        "id": "later",
+        "title": "Later",
+        "order": 2,
+        "boss_id": later["boss"]["id"],
+    }
     # Remove every in-pack source of the gated flag, so only the earlier pack can grant it.
     gated = next(c for c in later["boss"]["choices"] if c["requires"])
     flag = gated["requires"]["flag"]
@@ -184,3 +190,31 @@ def test_decks_reject_a_society_flag_nothing_grants(tmp_path):
 
 def test_decks_are_not_validated_as_packs():
     assert DECKS not in vp.pack_paths([])
+
+
+def test_every_location_and_department_needs_an_image_prompt(tmp_path, pack):
+    bad = copy.deepcopy(pack)
+    del bad["locations"][0]["art"]
+    del bad["department"]["arrival_art"]
+    errors = _validate(tmp_path, bad)
+    assert any("locations[" in e and "art" in e for e in errors)
+    assert any("department.arrival_art" in e for e in errors)
+
+
+def test_art_contract_vocabulary_is_rejected(tmp_path, pack):
+    bad = copy.deepcopy(pack)
+    bad["locations"][0]["art"]["brief"] = (
+        "A safety poster of a marble lobby with readable labels on every desk, halftone grain, "
+        "every surface bare and unmarked"
+    )
+    errors = _validate(tmp_path, bad)
+    assert sum("art-contract vocabulary" in e for e in errors) >= 2
+
+
+def test_every_deck_card_needs_an_image_prompt(tmp_path):
+    decks = json.loads(DECKS.read_text(encoding="utf-8"))
+    decks["mutations"][0].pop("art_prompt")
+    path = tmp_path / "DECKS.json"
+    path.write_text(json.dumps(decks), encoding="utf-8")
+    errors = vp.validate_decks(path, vp.pack_paths([]))
+    assert any("art_prompt" in e for e in errors)
