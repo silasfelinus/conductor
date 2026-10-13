@@ -9,6 +9,9 @@
 # subjects; review picks at most one keeper per outcome. Keepers export to kind_robots
 # public/shifting-lands/outcomes/<outcome>.webp and BESPOKE_OUTCOMES like ROUND-2.
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# Probe (ArtJob 38518, 0.65): house style and layout held, but the ROUND-1 'mole mason' card was never a mole
+# (a dark shaggy mason), and 'anthro mole' tags pulled the repaint off it. The three hammer-under-the-stone
+# outcomes now describe the card's own mason and add a 0.4 strength (-d); the goal is the same character as the card.
 round: shifting-lands-3
 project_slug: zuzu-shifting-lands
 designer: Comic Studio
@@ -57,7 +60,8 @@ subjects:
   replaces:
   - sl2-the-locked-dormitory--search-lock--failure
   - sl2r2-the-locked-dormitory--search-lock--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38519
   art: {}
   verdict: null
 - key: sl3-the-locked-dormitory--search-lock--failure-b
@@ -89,7 +93,8 @@ subjects:
   replaces:
   - sl2-the-locked-dormitory--search-lock--failure
   - sl2r2-the-locked-dormitory--search-lock--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38520
   art: {}
   verdict: null
 - key: sl3-the-locked-dormitory--search-lock--failure-c
@@ -121,7 +126,8 @@ subjects:
   replaces:
   - sl2-the-locked-dormitory--search-lock--failure
   - sl2r2-the-locked-dormitory--search-lock--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38521
   art: {}
   verdict: null
 - key: sl3-a-crust-for-the-road--offer-help--failure-a
@@ -151,7 +157,8 @@ subjects:
   replaces:
   - sl2-a-crust-for-the-road--offer-help--failure
   - sl2r2-a-crust-for-the-road--offer-help--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38522
   art: {}
   verdict: null
 - key: sl3-a-crust-for-the-road--offer-help--failure-b
@@ -181,7 +188,8 @@ subjects:
   replaces:
   - sl2-a-crust-for-the-road--offer-help--failure
   - sl2r2-a-crust-for-the-road--offer-help--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38523
   art: {}
   verdict: null
 - key: sl3-a-crust-for-the-road--offer-help--failure-c
@@ -211,7 +219,8 @@ subjects:
   replaces:
   - sl2-a-crust-for-the-road--offer-help--failure
   - sl2r2-a-crust-for-the-road--offer-help--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38524
   art: {}
   verdict: null
 - key: sl3-the-silent-bell--climb-stairs--success-a
@@ -242,7 +251,8 @@ subjects:
   replaces:
   - sl2-the-silent-bell--climb-stairs--success
   - sl2r2-the-silent-bell--climb-stairs--success
-  jobs: {}
+  jobs:
+    house-i2i: 38525
   art: {}
   verdict: null
 - key: sl3-the-silent-bell--climb-stairs--success-b
@@ -273,7 +283,8 @@ subjects:
   replaces:
   - sl2-the-silent-bell--climb-stairs--success
   - sl2r2-the-silent-bell--climb-stairs--success
-  jobs: {}
+  jobs:
+    house-i2i: 38526
   art: {}
   verdict: null
 - key: sl3-the-silent-bell--climb-stairs--success-c
@@ -304,7 +315,8 @@ subjects:
   replaces:
   - sl2-the-silent-bell--climb-stairs--success
   - sl2r2-the-silent-bell--climb-stairs--success
-  jobs: {}
+  jobs:
+    house-i2i: 38527
   art: {}
   verdict: null
 - key: sl3-the-mended-compass--compare-the-two-charts--failure-a
@@ -335,7 +347,8 @@ subjects:
   replaces:
   - sl2-the-mended-compass--compare-the-two-charts--failure
   - sl2r2-the-mended-compass--compare-the-two-charts--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38528
   art: {}
   verdict: null
 - key: sl3-the-mended-compass--compare-the-two-charts--failure-b
@@ -366,7 +379,8 @@ subjects:
   replaces:
   - sl2-the-mended-compass--compare-the-two-charts--failure
   - sl2r2-the-mended-compass--compare-the-two-charts--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38529
   art: {}
   verdict: null
 - key: sl3-the-mended-compass--compare-the-two-charts--failure-c
@@ -397,7 +411,8 @@ subjects:
   replaces:
   - sl2-the-mended-compass--compare-the-two-charts--failure
   - sl2r2-the-mended-compass--compare-the-two-charts--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38530
   art: {}
   verdict: null
 - key: sl3-three-cups-on-the-table--question-the-armed-patrons--failure-a
@@ -428,7 +443,8 @@ subjects:
   replaces:
   - sl2-three-cups-on-the-table--question-the-armed-patrons--failure
   - sl2r2-three-cups-on-the-table--question-the-armed-patrons--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38531
   art: {}
   verdict: null
 - key: sl3-three-cups-on-the-table--question-the-armed-patrons--failure-b
@@ -459,7 +475,8 @@ subjects:
   replaces:
   - sl2-three-cups-on-the-table--question-the-armed-patrons--failure
   - sl2r2-three-cups-on-the-table--question-the-armed-patrons--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38532
   art: {}
   verdict: null
 - key: sl3-three-cups-on-the-table--question-the-armed-patrons--failure-c
@@ -490,7 +507,8 @@ subjects:
   replaces:
   - sl2-three-cups-on-the-table--question-the-armed-patrons--failure
   - sl2r2-three-cups-on-the-table--question-the-armed-patrons--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38533
   art: {}
   verdict: null
 - key: sl3-footprints-in-the-silt--follow-the-wet-prints--failure-a
@@ -522,7 +540,8 @@ subjects:
   replaces:
   - sl2-footprints-in-the-silt--follow-the-wet-prints--failure
   - sl2r2-footprints-in-the-silt--follow-the-wet-prints--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38534
   art: {}
   verdict: null
 - key: sl3-footprints-in-the-silt--follow-the-wet-prints--failure-b
@@ -554,7 +573,8 @@ subjects:
   replaces:
   - sl2-footprints-in-the-silt--follow-the-wet-prints--failure
   - sl2r2-footprints-in-the-silt--follow-the-wet-prints--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38535
   art: {}
   verdict: null
 - key: sl3-footprints-in-the-silt--follow-the-wet-prints--failure-c
@@ -586,7 +606,8 @@ subjects:
   replaces:
   - sl2-footprints-in-the-silt--follow-the-wet-prints--failure
   - sl2r2-footprints-in-the-silt--follow-the-wet-prints--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38536
   art: {}
   verdict: null
 - key: sl3-hammer-under-the-stone--brace-the-loosened-wall--success-a
@@ -607,19 +628,52 @@ subjects:
     watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
     cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rubble
     burying road, injury, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings,
-    guardrail, modern
+    guardrail, modern, pink skin, red fur, bald, mole, star-shaped nose
   prompt_prose: Seen from Zuzu's point of view, the mole mason grins with relief beside a thick timber brace jammed
     under a cracked quarry shelf, holding out a dented metal flask while the cleared road beyond lies safe in warm
     sun, no lettering or logos.
-  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
     vest, iron hammer lowered, relieved smile, holding out a dented metal flask toward viewer, thick timber brace
     wedged under a cracked rock shelf, settling dust, clear safe road through the quarry beyond, red rock quarry,
     warm late sun, looking at viewer, wooden wedge, cleared path, dust motes, hopeful mood, quarry, sandstone, weird
     west, ink wash, medium shot
-  replaces:
+  replaces: &id001
   - sl2-hammer-under-the-stone--brace-the-loosened-wall--success
   - sl2r2-hammer-under-the-stone--brace-the-loosened-wall--success
-  jobs: {}
+  jobs:
+    house-i2i: 38537
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--brace-the-loosened-wall--success-d
+  entity: creature
+  lane: house-i2i
+  title: Hammer Under Stone — Brace the loosened wall (success) (img2img 0.4)
+  size: 1344x768
+  seed: 34101
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--brace-the-loosened-wall--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.4
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rubble
+    burying road, injury, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings,
+    guardrail, modern, pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view, the mole mason grins with relief beside a thick timber brace jammed
+    under a cracked quarry shelf, holding out a dented metal flask while the cleared road beyond lies safe in warm
+    sun, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer lowered, relieved smile, holding out a dented metal flask toward viewer, thick timber brace
+    wedged under a cracked rock shelf, settling dust, clear safe road through the quarry beyond, red rock quarry,
+    warm late sun, looking at viewer, wooden wedge, cleared path, dust motes, hopeful mood, quarry, sandstone, weird
+    west, ink wash, medium shot
+  replaces: *id001
+  jobs:
+    house-i2i: 38538
   art: {}
   verdict: null
 - key: sl3-hammer-under-the-stone--brace-the-loosened-wall--success-b
@@ -640,11 +694,11 @@ subjects:
     watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
     cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rubble
     burying road, injury, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings,
-    guardrail, modern
+    guardrail, modern, pink skin, red fur, bald, mole, star-shaped nose
   prompt_prose: Seen from Zuzu's point of view, the mole mason grins with relief beside a thick timber brace jammed
     under a cracked quarry shelf, holding out a dented metal flask while the cleared road beyond lies safe in warm
     sun, no lettering or logos.
-  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
     vest, iron hammer lowered, relieved smile, holding out a dented metal flask toward viewer, thick timber brace
     wedged under a cracked rock shelf, settling dust, clear safe road through the quarry beyond, red rock quarry,
     warm late sun, looking at viewer, wooden wedge, cleared path, dust motes, hopeful mood, quarry, sandstone, weird
@@ -656,9 +710,9 @@ subjects:
     house-i2i: 38518
   art:
     house-i2i:
-      status: RUNNING
-      art_image_id: null
-  verdict: null
+      status: DONE
+      art_image_id: 246660
+  verdict: 'reject: probe; anthro-mole tags pulled the repaint into a pink bald creature, off the card mason'
 - key: sl3-hammer-under-the-stone--brace-the-loosened-wall--success-c
   entity: creature
   lane: house-i2i
@@ -677,11 +731,11 @@ subjects:
     watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
     cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rubble
     burying road, injury, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings,
-    guardrail, modern
+    guardrail, modern, pink skin, red fur, bald, mole, star-shaped nose
   prompt_prose: Seen from Zuzu's point of view, the mole mason grins with relief beside a thick timber brace jammed
     under a cracked quarry shelf, holding out a dented metal flask while the cleared road beyond lies safe in warm
     sun, no lettering or logos.
-  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
     vest, iron hammer lowered, relieved smile, holding out a dented metal flask toward viewer, thick timber brace
     wedged under a cracked rock shelf, settling dust, clear safe road through the quarry beyond, red rock quarry,
     warm late sun, looking at viewer, wooden wedge, cleared path, dust motes, hopeful mood, quarry, sandstone, weird
@@ -689,7 +743,8 @@ subjects:
   replaces:
   - sl2-hammer-under-the-stone--brace-the-loosened-wall--success
   - sl2r2-hammer-under-the-stone--brace-the-loosened-wall--success
-  jobs: {}
+  jobs:
+    house-i2i: 38539
   art: {}
   verdict: null
 - key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--success-a
@@ -709,19 +764,53 @@ subjects:
   negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
     watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
     cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rockslide,
-    running, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern
+    running, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
   prompt_prose: Seen from Zuzu's point of view, the mole mason crouches at the freshly cut seam and points his hammer
     along a trail of chisel marks toward the dark mouth of a hidden side tunnel, his tiny eyes narrowed in grim
     realization, no lettering or logos.
-  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
     vest, iron hammer, crouching, pointing hammer, grim realization, fresh chisel marks on stone leading into the
     dark mouth of a hidden side tunnel, discarded chisel on ground, red rock quarry wall, low raking sunlight, looking
     at viewer, tool marks, shadowed tunnel, suspicious, tense mood, quarry, sandstone, weird west, ink wash, medium
     shot
-  replaces:
+  replaces: &id002
   - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--success
   - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--success
-  jobs: {}
+  jobs:
+    house-i2i: 38540
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--success-d
+  entity: creature
+  lane: house-i2i
+  title: Hammer Under Stone — Inspect the fresh cuts (success) (img2img 0.4)
+  size: 1344x768
+  seed: 34102
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--success
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.4
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rockslide,
+    running, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view, the mole mason crouches at the freshly cut seam and points his hammer
+    along a trail of chisel marks toward the dark mouth of a hidden side tunnel, his tiny eyes narrowed in grim
+    realization, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer, crouching, pointing hammer, grim realization, fresh chisel marks on stone leading into the
+    dark mouth of a hidden side tunnel, discarded chisel on ground, red rock quarry wall, low raking sunlight, looking
+    at viewer, tool marks, shadowed tunnel, suspicious, tense mood, quarry, sandstone, weird west, ink wash, medium
+    shot
+  replaces: *id002
+  jobs:
+    house-i2i: 38541
   art: {}
   verdict: null
 - key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--success-b
@@ -741,11 +830,12 @@ subjects:
   negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
     watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
     cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rockslide,
-    running, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern
+    running, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
   prompt_prose: Seen from Zuzu's point of view, the mole mason crouches at the freshly cut seam and points his hammer
     along a trail of chisel marks toward the dark mouth of a hidden side tunnel, his tiny eyes narrowed in grim
     realization, no lettering or logos.
-  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
     vest, iron hammer, crouching, pointing hammer, grim realization, fresh chisel marks on stone leading into the
     dark mouth of a hidden side tunnel, discarded chisel on ground, red rock quarry wall, low raking sunlight, looking
     at viewer, tool marks, shadowed tunnel, suspicious, tense mood, quarry, sandstone, weird west, ink wash, medium
@@ -753,7 +843,8 @@ subjects:
   replaces:
   - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--success
   - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--success
-  jobs: {}
+  jobs:
+    house-i2i: 38542
   art: {}
   verdict: null
 - key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--success-c
@@ -773,11 +864,12 @@ subjects:
   negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
     watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
     cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rockslide,
-    running, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern
+    running, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
   prompt_prose: Seen from Zuzu's point of view, the mole mason crouches at the freshly cut seam and points his hammer
     along a trail of chisel marks toward the dark mouth of a hidden side tunnel, his tiny eyes narrowed in grim
     realization, no lettering or logos.
-  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
     vest, iron hammer, crouching, pointing hammer, grim realization, fresh chisel marks on stone leading into the
     dark mouth of a hidden side tunnel, discarded chisel on ground, red rock quarry wall, low raking sunlight, looking
     at viewer, tool marks, shadowed tunnel, suspicious, tense mood, quarry, sandstone, weird west, ink wash, medium
@@ -785,7 +877,8 @@ subjects:
   replaces:
   - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--success
   - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--success
-  jobs: {}
+  jobs:
+    house-i2i: 38543
   art: {}
   verdict: null
 - key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--failure-a
@@ -805,18 +898,51 @@ subjects:
   negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
     watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
     cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
-    calm, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern
+    calm, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
   prompt_prose: Seen from Zuzu's point of view during a hurried retreat, loose shale cascades down a quarry slope
     while lantern glows of unseen miners flare in a tunnel mouth above and the mole mason waves the viewer back
     from cover, no lettering or logos.
-  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
     vest, iron hammer, waving urgently from behind a boulder, loose shale sliding down a steep slope, lantern glows
     in a dark tunnel mouth above, distant shadowy silhouettes, scattered stones, dusk quarry, ominous shadows, dynamic
     angle, debris, danger, tense mood, motion blur, quarry, sandstone, weird west, ink wash, wide shot
-  replaces:
+  replaces: &id003
   - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
   - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38544
+  art: {}
+  verdict: null
+- key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--failure-d
+  entity: scenery
+  lane: house-i2i
+  title: Hammer Under Stone — Inspect the fresh cuts (failure) (img2img 0.4)
+  size: 1344x768
+  seed: 34103
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  land: tablelands
+  task: t-029
+  source_image_id: 245663
+  source_key: sl1r2-hammer-under-the-stone-2
+  denoise: 0.4
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    calm, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
+  prompt_prose: Seen from Zuzu's point of view during a hurried retreat, loose shale cascades down a quarry slope
+    while lantern glows of unseen miners flare in a tunnel mouth above and the mole mason waves the viewer back
+    from cover, no lettering or logos.
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
+    vest, iron hammer, waving urgently from behind a boulder, loose shale sliding down a steep slope, lantern glows
+    in a dark tunnel mouth above, distant shadowy silhouettes, scattered stones, dusk quarry, ominous shadows, dynamic
+    angle, debris, danger, tense mood, motion blur, quarry, sandstone, weird west, ink wash, wide shot
+  replaces: *id003
+  jobs:
+    house-i2i: 38545
   art: {}
   verdict: null
 - key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--failure-b
@@ -836,18 +962,20 @@ subjects:
   negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
     watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
     cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
-    calm, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern
+    calm, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
   prompt_prose: Seen from Zuzu's point of view during a hurried retreat, loose shale cascades down a quarry slope
     while lantern glows of unseen miners flare in a tunnel mouth above and the mole mason waves the viewer back
     from cover, no lettering or logos.
-  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
     vest, iron hammer, waving urgently from behind a boulder, loose shale sliding down a steep slope, lantern glows
     in a dark tunnel mouth above, distant shadowy silhouettes, scattered stones, dusk quarry, ominous shadows, dynamic
     angle, debris, danger, tense mood, motion blur, quarry, sandstone, weird west, ink wash, wide shot
   replaces:
   - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
   - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38546
   art: {}
   verdict: null
 - key: sl3-hammer-under-the-stone--inspect-the-fresh-cuts--failure-c
@@ -867,18 +995,20 @@ subjects:
   negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
     watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
     cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
-    calm, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern
+    calm, fox, wolf, coyote, canine, cat, snout, long ears, asphalt, paved road, lane markings, guardrail, modern,
+    pink skin, red fur, bald, mole, star-shaped nose
   prompt_prose: Seen from Zuzu's point of view during a hurried retreat, loose shale cascades down a quarry slope
     while lantern glows of unseen miners flare in a tunnel mouth above and the mole mason waves the viewer back
     from cover, no lettering or logos.
-  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+  prompt_tags: solo, anthro, male, stout mason, dark grey shaggy fur, black nose, pale eyes, torn brown leather
     vest, iron hammer, waving urgently from behind a boulder, loose shale sliding down a steep slope, lantern glows
     in a dark tunnel mouth above, distant shadowy silhouettes, scattered stones, dusk quarry, ominous shadows, dynamic
     angle, debris, danger, tense mood, motion blur, quarry, sandstone, weird west, ink wash, wide shot
   replaces:
   - sl2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
   - sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38547
   art: {}
   verdict: null
 - key: sl3-the-empty-pay-cart--read-the-pay-sheet-aloud--success-a
@@ -910,7 +1040,8 @@ subjects:
   replaces:
   - sl2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
   - sl2r2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
-  jobs: {}
+  jobs:
+    house-i2i: 38548
   art: {}
   verdict: null
 - key: sl3-the-empty-pay-cart--read-the-pay-sheet-aloud--success-b
@@ -942,7 +1073,8 @@ subjects:
   replaces:
   - sl2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
   - sl2r2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
-  jobs: {}
+  jobs:
+    house-i2i: 38549
   art: {}
   verdict: null
 - key: sl3-the-empty-pay-cart--read-the-pay-sheet-aloud--success-c
@@ -974,7 +1106,8 @@ subjects:
   replaces:
   - sl2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
   - sl2r2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
-  jobs: {}
+  jobs:
+    house-i2i: 38550
   art: {}
   verdict: null
 - key: sl3-the-glass-vein--cut-a-safe-sample--failure-a
@@ -1004,7 +1137,8 @@ subjects:
   replaces:
   - sl2-the-glass-vein--cut-a-safe-sample--failure
   - sl2r2-the-glass-vein--cut-a-safe-sample--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38551
   art: {}
   verdict: null
 - key: sl3-the-glass-vein--cut-a-safe-sample--failure-b
@@ -1034,7 +1168,8 @@ subjects:
   replaces:
   - sl2-the-glass-vein--cut-a-safe-sample--failure
   - sl2r2-the-glass-vein--cut-a-safe-sample--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38552
   art: {}
   verdict: null
 - key: sl3-the-glass-vein--cut-a-safe-sample--failure-c
@@ -1064,7 +1199,8 @@ subjects:
   replaces:
   - sl2-the-glass-vein--cut-a-safe-sample--failure
   - sl2r2-the-glass-vein--cut-a-safe-sample--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38553
   art: {}
   verdict: null
 - key: sl3-the-watchful-overhang--test-the-ledge-alone--success-a
@@ -1096,7 +1232,8 @@ subjects:
   replaces:
   - sl2-the-watchful-overhang--test-the-ledge-alone--success
   - sl2r2-the-watchful-overhang--test-the-ledge-alone--success
-  jobs: {}
+  jobs:
+    house-i2i: 38554
   art: {}
   verdict: null
 - key: sl3-the-watchful-overhang--test-the-ledge-alone--success-b
@@ -1128,7 +1265,8 @@ subjects:
   replaces:
   - sl2-the-watchful-overhang--test-the-ledge-alone--success
   - sl2r2-the-watchful-overhang--test-the-ledge-alone--success
-  jobs: {}
+  jobs:
+    house-i2i: 38555
   art: {}
   verdict: null
 - key: sl3-the-watchful-overhang--test-the-ledge-alone--success-c
@@ -1160,7 +1298,8 @@ subjects:
   replaces:
   - sl2-the-watchful-overhang--test-the-ledge-alone--success
   - sl2r2-the-watchful-overhang--test-the-ledge-alone--success
-  jobs: {}
+  jobs:
+    house-i2i: 38556
   art: {}
   verdict: null
 - key: sl3-the-toll-without-a-keeper--challenge-the-false-toll--success-a
@@ -1190,7 +1329,8 @@ subjects:
   replaces:
   - sl2-the-toll-without-a-keeper--challenge-the-false-toll--success
   - sl2r2-the-toll-without-a-keeper--challenge-the-false-toll--success
-  jobs: {}
+  jobs:
+    house-i2i: 38557
   art: {}
   verdict: null
 - key: sl3-the-toll-without-a-keeper--challenge-the-false-toll--success-b
@@ -1220,7 +1360,8 @@ subjects:
   replaces:
   - sl2-the-toll-without-a-keeper--challenge-the-false-toll--success
   - sl2r2-the-toll-without-a-keeper--challenge-the-false-toll--success
-  jobs: {}
+  jobs:
+    house-i2i: 38558
   art: {}
   verdict: null
 - key: sl3-the-toll-without-a-keeper--challenge-the-false-toll--success-c
@@ -1250,7 +1391,8 @@ subjects:
   replaces:
   - sl2-the-toll-without-a-keeper--challenge-the-false-toll--success
   - sl2r2-the-toll-without-a-keeper--challenge-the-false-toll--success
-  jobs: {}
+  jobs:
+    house-i2i: 38559
   art: {}
   verdict: null
 - key: sl3-the-map-in-ashes--persuade-her-to-stop--failure-a
@@ -1281,7 +1423,8 @@ subjects:
   replaces:
   - sl2-the-map-in-ashes--persuade-her-to-stop--failure
   - sl2r2-the-map-in-ashes--persuade-her-to-stop--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38560
   art: {}
   verdict: null
 - key: sl3-the-map-in-ashes--persuade-her-to-stop--failure-b
@@ -1312,7 +1455,8 @@ subjects:
   replaces:
   - sl2-the-map-in-ashes--persuade-her-to-stop--failure
   - sl2r2-the-map-in-ashes--persuade-her-to-stop--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38561
   art: {}
   verdict: null
 - key: sl3-the-map-in-ashes--persuade-her-to-stop--failure-c
@@ -1343,7 +1487,8 @@ subjects:
   replaces:
   - sl2-the-map-in-ashes--persuade-her-to-stop--failure
   - sl2r2-the-map-in-ashes--persuade-her-to-stop--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38562
   art: {}
   verdict: null
 - key: sl3-the-third-shadow--count-the-lantern-positions--success-a
@@ -1375,7 +1520,8 @@ subjects:
   replaces:
   - sl2-the-third-shadow--count-the-lantern-positions--success
   - sl2r2-the-third-shadow--count-the-lantern-positions--success
-  jobs: {}
+  jobs:
+    house-i2i: 38563
   art: {}
   verdict: null
 - key: sl3-the-third-shadow--count-the-lantern-positions--success-b
@@ -1407,7 +1553,8 @@ subjects:
   replaces:
   - sl2-the-third-shadow--count-the-lantern-positions--success
   - sl2r2-the-third-shadow--count-the-lantern-positions--success
-  jobs: {}
+  jobs:
+    house-i2i: 38564
   art: {}
   verdict: null
 - key: sl3-the-third-shadow--count-the-lantern-positions--success-c
@@ -1439,7 +1586,8 @@ subjects:
   replaces:
   - sl2-the-third-shadow--count-the-lantern-positions--success
   - sl2r2-the-third-shadow--count-the-lantern-positions--success
-  jobs: {}
+  jobs:
+    house-i2i: 38565
   art: {}
   verdict: null
 - key: sl3-the-cooling-stones--mark-the-unsafe-seam--success-a
@@ -1471,7 +1619,8 @@ subjects:
   replaces:
   - sl2-the-cooling-stones--mark-the-unsafe-seam--success
   - sl2r2-the-cooling-stones--mark-the-unsafe-seam--success
-  jobs: {}
+  jobs:
+    house-i2i: 38566
   art: {}
   verdict: null
 - key: sl3-the-cooling-stones--mark-the-unsafe-seam--success-b
@@ -1503,7 +1652,8 @@ subjects:
   replaces:
   - sl2-the-cooling-stones--mark-the-unsafe-seam--success
   - sl2r2-the-cooling-stones--mark-the-unsafe-seam--success
-  jobs: {}
+  jobs:
+    house-i2i: 38567
   art: {}
   verdict: null
 - key: sl3-the-cooling-stones--mark-the-unsafe-seam--success-c
@@ -1535,7 +1685,8 @@ subjects:
   replaces:
   - sl2-the-cooling-stones--mark-the-unsafe-seam--success
   - sl2r2-the-cooling-stones--mark-the-unsafe-seam--success
-  jobs: {}
+  jobs:
+    house-i2i: 38568
   art: {}
   verdict: null
 - key: sl3-ashes-at-the-border--offer-to-scout-the-tower--failure-a
@@ -1565,7 +1716,8 @@ subjects:
   replaces:
   - sl2-ashes-at-the-border--offer-to-scout-the-tower--failure
   - sl2r2-ashes-at-the-border--offer-to-scout-the-tower--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38569
   art: {}
   verdict: null
 - key: sl3-ashes-at-the-border--offer-to-scout-the-tower--failure-b
@@ -1595,7 +1747,8 @@ subjects:
   replaces:
   - sl2-ashes-at-the-border--offer-to-scout-the-tower--failure
   - sl2r2-ashes-at-the-border--offer-to-scout-the-tower--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38570
   art: {}
   verdict: null
 - key: sl3-ashes-at-the-border--offer-to-scout-the-tower--failure-c
@@ -1625,7 +1778,8 @@ subjects:
   replaces:
   - sl2-ashes-at-the-border--offer-to-scout-the-tower--failure
   - sl2r2-ashes-at-the-border--offer-to-scout-the-tower--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38571
   art: {}
   verdict: null
 - key: sl3-the-last-watchfire--volunteer-for-the-search--failure-a
@@ -1655,7 +1809,8 @@ subjects:
   replaces:
   - sl2-the-last-watchfire--volunteer-for-the-search--failure
   - sl2r2-the-last-watchfire--volunteer-for-the-search--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38572
   art: {}
   verdict: null
 - key: sl3-the-last-watchfire--volunteer-for-the-search--failure-b
@@ -1685,7 +1840,8 @@ subjects:
   replaces:
   - sl2-the-last-watchfire--volunteer-for-the-search--failure
   - sl2r2-the-last-watchfire--volunteer-for-the-search--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38573
   art: {}
   verdict: null
 - key: sl3-the-last-watchfire--volunteer-for-the-search--failure-c
@@ -1715,7 +1871,8 @@ subjects:
   replaces:
   - sl2-the-last-watchfire--volunteer-for-the-search--failure
   - sl2r2-the-last-watchfire--volunteer-for-the-search--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38574
   art: {}
   verdict: null
 - key: sl3-the-closed-infirmary--inspect-the-sealed-room--failure-a
@@ -1745,7 +1902,8 @@ subjects:
   replaces:
   - sl2-the-closed-infirmary--inspect-the-sealed-room--failure
   - sl2r2-the-closed-infirmary--inspect-the-sealed-room--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38575
   art: {}
   verdict: null
 - key: sl3-the-closed-infirmary--inspect-the-sealed-room--failure-b
@@ -1775,7 +1933,8 @@ subjects:
   replaces:
   - sl2-the-closed-infirmary--inspect-the-sealed-room--failure
   - sl2r2-the-closed-infirmary--inspect-the-sealed-room--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38576
   art: {}
   verdict: null
 - key: sl3-the-closed-infirmary--inspect-the-sealed-room--failure-c
@@ -1805,7 +1964,8 @@ subjects:
   replaces:
   - sl2-the-closed-infirmary--inspect-the-sealed-room--failure
   - sl2r2-the-closed-infirmary--inspect-the-sealed-room--failure
-  jobs: {}
+  jobs:
+    house-i2i: 38577
   art: {}
   verdict: null
 - key: sl3-the-price-of-silence--refuse-the-secret-bargain--success-a
@@ -1835,7 +1995,8 @@ subjects:
   replaces:
   - sl2-the-price-of-silence--refuse-the-secret-bargain--success
   - sl2r2-the-price-of-silence--refuse-the-secret-bargain--success
-  jobs: {}
+  jobs:
+    house-i2i: 38578
   art: {}
   verdict: null
 - key: sl3-the-price-of-silence--refuse-the-secret-bargain--success-b
@@ -1865,7 +2026,8 @@ subjects:
   replaces:
   - sl2-the-price-of-silence--refuse-the-secret-bargain--success
   - sl2r2-the-price-of-silence--refuse-the-secret-bargain--success
-  jobs: {}
+  jobs:
+    house-i2i: 38579
   art: {}
   verdict: null
 - key: sl3-the-price-of-silence--refuse-the-secret-bargain--success-c
@@ -1895,7 +2057,8 @@ subjects:
   replaces:
   - sl2-the-price-of-silence--refuse-the-secret-bargain--success
   - sl2r2-the-price-of-silence--refuse-the-secret-bargain--success
-  jobs: {}
+  jobs:
+    house-i2i: 38580
   art: {}
   verdict: null
 - key: sl3-trial-verge--confront--success-a
@@ -1926,7 +2089,8 @@ subjects:
   replaces:
   - sl2-trial-verge--confront--success
   - sl2r2-trial-verge--confront--success
-  jobs: {}
+  jobs:
+    house-i2i: 38581
   art: {}
   verdict: null
 - key: sl3-trial-verge--confront--success-b
@@ -1957,7 +2121,8 @@ subjects:
   replaces:
   - sl2-trial-verge--confront--success
   - sl2r2-trial-verge--confront--success
-  jobs: {}
+  jobs:
+    house-i2i: 38582
   art: {}
   verdict: null
 - key: sl3-trial-verge--confront--success-c
@@ -1988,7 +2153,8 @@ subjects:
   replaces:
   - sl2-trial-verge--confront--success
   - sl2r2-trial-verge--confront--success
-  jobs: {}
+  jobs:
+    house-i2i: 38583
   art: {}
   verdict: null
 - key: sl3-trial-verge--parley--success-a
@@ -2019,7 +2185,8 @@ subjects:
   replaces:
   - sl2-trial-verge--parley--success
   - sl2r2-trial-verge--parley--success
-  jobs: {}
+  jobs:
+    house-i2i: 38584
   art: {}
   verdict: null
 - key: sl3-trial-verge--parley--success-b
@@ -2050,7 +2217,8 @@ subjects:
   replaces:
   - sl2-trial-verge--parley--success
   - sl2r2-trial-verge--parley--success
-  jobs: {}
+  jobs:
+    house-i2i: 38585
   art: {}
   verdict: null
 - key: sl3-trial-verge--parley--success-c
@@ -2081,6 +2249,7 @@ subjects:
   replaces:
   - sl2-trial-verge--parley--success
   - sl2r2-trial-verge--parley--success
-  jobs: {}
+  jobs:
+    house-i2i: 38586
   art: {}
   verdict: null
