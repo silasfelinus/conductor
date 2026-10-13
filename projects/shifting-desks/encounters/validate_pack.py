@@ -14,6 +14,10 @@ outcome must contain at least one harmful meter effect. Even winning hurts.
 It also enforces Silas's chosen emphasis: at least half of a pack's cards are
 tagged conspiracy, psych-test or paperwork.
 
+A choice's `requires.flag` must be grantable: by a choice in the same pack, or
+by a pack with a lower `department.order` (flags carry forward as the player
+descends, so Records & Forms may pay off a flag granted in Orientation).
+
 Usage:
   python projects/shifting-desks/encounters/validate_pack.py            # every *.json pack here
   python projects/shifting-desks/encounters/validate_pack.py PACK.json  # one pack
@@ -61,6 +65,41 @@ RULES = {
 
 def is_harmful(effects: dict) -> bool:
     return any(v * METERS[k] > 0 for k, v in effects.items() if k in METERS)
+
+
+def granted_flags(pack: dict) -> set[str]:
+    """Every flag any encounter or boss choice in `pack` can add."""
+    flags: set[str] = set()
+    boss = pack.get("boss") if isinstance(pack.get("boss"), dict) else {}
+    choices = [ch for enc in pack.get("encounters") or [] for ch in enc.get("choices") or []]
+    choices += boss.get("choices") or []
+    for ch in choices:
+        for key in ("success", "failure"):
+            flags.update((ch.get(key) or {}).get("add_flags") or [])
+    return flags
+
+
+def _department_order(pack: dict) -> int | None:
+    order = (pack.get("department") or {}).get("order")
+    return order if isinstance(order, int) and not isinstance(order, bool) else None
+
+
+def earlier_department_flags(path: Path, order: int | None) -> set[str]:
+    """Flags granted by sibling packs whose department.order is lower than `order`."""
+    if order is None:
+        return set()
+    flags: set[str] = set()
+    for sibling in pack_paths([], path.parent):
+        if sibling.resolve() == path.resolve():
+            continue
+        try:
+            other = json.loads(sibling.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue  # reported when that pack is validated on its own
+        other_order = _department_order(other)
+        if other_order is not None and other_order < order:
+            flags |= granted_flags(other)
+    return flags
 
 
 class Checker:
@@ -181,7 +220,13 @@ class Checker:
                 self.err(where, "clean win: cost + success has no harmful effect (DESIGN-BRIEF 'no clean wins')")
 
 
-def validate_pack(path: Path) -> list[str]:
+def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str]:
+    """Validate one pack.
+
+    `earlier_flags` are flags the player may already carry from lower departments. When
+    omitted, they are collected from sibling packs in the same directory whose
+    department.order is lower than this pack's.
+    """
     c = Checker(path.name)
     try:
         pack = json.loads(path.read_text(encoding="utf-8"))
@@ -325,18 +370,21 @@ def validate_pack(path: Path) -> list[str]:
         c.text(f"{w}.developer_note", boss.get("developer_note"), 20)
         collect(w, choices)
 
+    if earlier_flags is None:
+        earlier_flags = earlier_department_flags(path, _department_order(pack))
     for where, flag in required_flags:
-        if flag not in all_added:
-            c.err(where, f"requires flag {flag!r} that nothing in this pack grants")
+        if flag not in all_added and flag not in earlier_flags:
+            c.err(where, f"requires flag {flag!r} that nothing in this pack grants "
+                  "(nor any pack with a lower department.order)")
 
     return c.errors
 
 
-def pack_paths(args: list[str]) -> list[Path]:
+def pack_paths(args: list[str], directory: Path = HERE) -> list[Path]:
     if args:
         return [Path(a) for a in args]
     return sorted(
-        p for p in HERE.glob("*.json")
+        p for p in directory.glob("*.json")
         if not p.name.endswith(".schema.json") and p.name not in NON_PACK_FILES
     )
 
@@ -347,10 +395,7 @@ def validate_decks(path: Path, packs: list[Path]) -> list[str]:
     decks = json.loads(path.read_text(encoding="utf-8"))
     granted: set[str] = set()
     for p in packs:
-        pack = json.loads(p.read_text(encoding="utf-8"))
-        for choice in [c for e in pack["encounters"] for c in e["choices"]] + pack["boss"]["choices"]:
-            for key in ("success", "failure"):
-                granted.update((choice.get(key) or {}).get("add_flags") or [])
+        granted |= granted_flags(json.loads(p.read_text(encoding="utf-8")))
     jobs = decks.get("job_titles") or []
     if len(jobs) < 3:
         errors.append("DECKS: need at least 3 job titles")
