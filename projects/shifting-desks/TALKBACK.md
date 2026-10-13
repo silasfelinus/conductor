@@ -35,3 +35,13 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **What to improve / handoff:** These are structural validations, not a seeded proof that all ten endings are playable. Keep t-014 owned by `2026-10-13T-sd-t014-endings` for the Kind Robots consumer: verify every ending, secret elimination precedence, variant and save/reload behavior, accessible visible epilogue cards and current-head CI before closing. The source merge does not publish/deploy or satisfy the final fun verdict. No learning closure is appended because the task remains in progress.
 
 **Kaizen task:** t-024 — Repair rejected Shifting Desks art prompts using the live enqueue contract. This targets the recurring producer/real-gate mismatch: the three older frame-noun requests still need synchronized source/ledger/queue repair and generator verification. Coordinate shared root edits with the active t-014 worker; preserve issued jobs. No extra task is created for this review bookkeeping PR.
+
+## October 13, 2026, 3:57 AM PT — t-024 prompt repair
+
+**Decision:** merged conductor#6116 at `24cdb603f2634285af1ab7f8180ab8728a30f169`, expected head `22e912a7cdfb3fe413fb9066ab92f5feaefa2011`; all23 actual head checks completed success/intentional skip. Complete7-file diff inspected; nine prompt-only lines changed, no job IDs/statuses/seeds/paths changed. 75 focused tests, all pack/deck/ending validators and actual live-contract before/after checks passed.
+
+**What was good:** Reproduced the three originals against actual Kind Robots checkArtPromptContract, repaired queue/round/source copies consistently and preserved issued jobs. Generic ledger/submission consistency coverage was implemented rather than copying server regexes.
+
+**What to improve / handoff:** Source repair is not delivered art. Merge-triggered Auto Art Generate38386864668 remains queued; t024 is ready/unowned for original target acceptance/adoption/rendering and generated-health verification. No learning closure yet. Concurrent original-worker follow-up6115 includes distinct already-delivered ROUND-1 prompt cleanup; comment6144037653 asks it to retain current main and replace its copied-regex guard approach. Do not duplicate or force completed renders.
+
+**Kaizen task:** deferred as redundant — the Worker's proposed cross-copy consistency guard is implemented in6116; t024 already retains the necessary delivery-verification work and6115 owns the wider producer-guard discussion.
