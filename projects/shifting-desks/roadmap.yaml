@@ -637,3 +637,14 @@ tasks:
     updated: '2026-10-13T11:34:43Z'
     note: >-
       Kaizen from conductor#6119. Successful Auto Art Generate38386864668 legitimately pruned fulfilled active requests but ROUND2/3/6 still said requested with null job/image IDs until manual recovery. Add a scoped comment-preserving synchronization utility that copies confirmed ArtJob/ArtImage and media-probe evidence into matching Shifting Desks round subjects before queue retirement, preserving prompts, seeds, pending jobs and curation verdicts. Distinguish submitted, rendered and independently delivered; no fake exact200 or automatic visual acceptance. Test successful fulfillment, pending job retention, idempotent repeat, unknown subject and concurrent edits without resubmitting completed art. Keep server prompt contract authoritative.
+
+  - id: t-026
+    milestone: m3
+    title: 'Exercise epilogue cards and real save reload in the browser contract'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-13T11:39:26Z'
+    note: >-
+      Kaizen from independent review of kind_robots#3634/conductor#6118. The shipped verifier checks Personnel File template text with a regex, which cannot establish mounted Vue/Pinia behavior or real localStorage reload. Independent native Chromium fixture of actual components/store/engine/scoped repository CSS passed30 cases: all10 naturally reached endings at390/768/1440,15 flag-variant checks, no overflow/runtime errors, persisted seed survives reload, art failure fallback remains visible. Add a focused reproducible equivalent to the app's permitted browser verification suite, retaining natural saved-state provenance and isolation from live APIs/deployment. Include secret-versus-default elimination and text-transform-safe DOM assertions; do not weaken engine gates or claim a fixture is a production deployment.
