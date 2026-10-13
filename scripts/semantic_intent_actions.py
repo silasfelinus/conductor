@@ -1,4 +1,4 @@
-"""Inspect *actual* GitHub Actions semantic-review attempts; staleness is not failure."""
+"""Inspect GitHub Actions evidence-packet attempts; review staleness is not failure."""
 from __future__ import annotations
 import json
 import urllib.request
@@ -30,7 +30,7 @@ def failed_attempt(runs: list[dict[str, Any]], report_date: date | None) -> dict
     return {
         "status": "failed",
         "attempted_at": latest.get("run_started_at") or latest["created_at"],
-        "reason": ("GitHub scheduled semantic review " + str(conclusion)
+        "reason": ("GitHub semantic evidence-packet job " + str(conclusion)
                    + ": " + str(latest.get("html_url") or "workflow run")),
     }
 
