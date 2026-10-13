@@ -219,6 +219,9 @@ tasks:
       skippable intro and world transitions, rescue/ending credits,
       subtitles and reduced-motion support. Track ArtJob IDs and
       delivered asset URLs, never call queued art done.
+      2026-10-13: 84 in-game assets queued (32 stage plates, 8 ground
+      tiles, 14 enemies, 8 bosses x idle/tell, Teo sprites, 8 items, 4
+      cutscenes); see ART-PLAN.md. Queued, not yet verified delivered.
   - id: t-013
     milestone: m5
     title: "Whole-campaign playtests, fairness and device verification"
@@ -290,3 +293,17 @@ tasks:
       queued, not yet rendered; drawn SVG scenes stand in until delivered.
     updated: '2026-10-13T05:57:02Z'
     implementation_pr: 'silasfelinus/kind_robots#3624'
+
+  - id: t-017
+    milestone: m2
+    title: "Wire delivered art into the movement lab: stage plates, tiles, keyed sprites, animated heroine"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Load the ART-PLAN.md assets in the engine with code-drawn fallbacks: the
+      1-1 stage plate as the far layer, the World 1 ground tile as the platform
+      fill, pumpbug/token/pennant/goal-valve sprites keyed out of their white
+      backgrounds at load time, and a canvas port of the front page's animated
+      heroine (run/jump poses, scarf) using the kept heroine seed. Verify in a
+      browser at phone and desktop widths, with and without delivered art.
