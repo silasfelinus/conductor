@@ -1,0 +1,575 @@
+# Shifting Desks art round 2 (shifting-desks t-015, widened to both shipped departments): every card
+# face in Orientation and Records that round 1 did not already queue -- 9 Orientation encounters, all 12
+# Records encounters, and the two department boss cards (23 subjects). Style rules live in
+# ../ART-DIRECTION.md; each prompt is the card's art.brief from encounters/<PACK>-12.json rewritten into
+# the house prompt order (subject, setting, second-look detail, lead colors, house style tail).
+#
+# Queue: each subject is one row in projects/art-prompts.yaml `requests:` (id = request_id, lane
+# art-round-2). The auto-art-generate workflow submits it to Kind Robots as a krea2 ArtJob and the home
+# relay writes the render to the self-hosted media host at media_url. Copy the request row's
+# `last_art_job_id` here as art_job_id, and the ArtImage id as art_image_id, once the job finishes.
+#
+# Status values: requested -> rendered (ArtJob done, ArtImage id known) -> delivered (media_url answers
+# 200 to `curl -s -o /dev/null -w '%{http_code}'`). Never mark a subject delivered before that check
+# passes; only then set the card's art.art_ref in the encounter pack. `verdict` is keep / reroll / reject
+# with a reason, after review against ART-DIRECTION.md.
+#
+# Generated internal art is pre-approved (AGENTS.md "Generated art is pre-approved"). Krea 2 on the
+# self-hosted render box: no paid third-party spend, nothing published.
+round: shifting-desks-2
+project_slug: shifting-desks
+task: t-015
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-13T06:10:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph,
+  3d render, blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: smile-for-your-badge
+  kind: card-face
+  department: orientation
+  title: Smile for Your Badge
+  card: smile-for-your-badge
+  request_id: shifting-desks-r2-smile-for-your-badge
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52001
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/smile-for-your-badge.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/smile-for-your-badge.webp
+  prompt: A nervous new hire in an ill-fitting beige suit and visitor lanyard grinning with enormous strain
+    at a brass badge camera on a long marble security desk, a cheerful round speaker grille with a soft
+    green glow above, a second badge photo scribbled over in dark pencil resting in a tray, manila and
+    safety orange dominant colors, single readable scene with a strong silhouette, mid-century corporate
+    safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with
+    halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-guard-who-is-also-you
+  kind: card-face
+  department: orientation
+  title: The Guard Who Is Also You
+  card: the-guard-who-is-also-you
+  request_id: shifting-desks-r2-the-guard-who-is-also-you
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52002
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/the-guard-who-is-also-you.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/the-guard-who-is-also-you.webp
+  prompt: Two identical office workers face to face across a security desk in mirrored poses, one in a
+    navy guard uniform holding a crossword with a pencil behind one ear and looking slightly more rested,
+    the other in a beige new-hire suit, banks of green phosphor monitors glowing behind them, carbon-paper
+    blue and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate
+    safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with
+    halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-visitor-log
+  kind: card-face
+  department: orientation
+  title: The Visitor Log
+  card: the-visitor-log
+  request_id: shifting-desks-r2-the-visitor-log
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52003
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/the-visitor-log.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/the-visitor-log.webp
+  prompt: An eager young intern with a cowlick, an oversized cable-knit sweater and three lanyards pointing
+    at a clipboard on a chain at a marble desk, a distant corridor leading to a dim restroom door marked
+    with a small cartoon jaguar silhouette pictogram, manila and fluorescent-tube green dominant colors,
+    single readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-hungry-detector
+  kind: card-face
+  department: orientation
+  title: The Hungry Detector
+  card: the-hungry-detector
+  request_id: shifting-desks-r2-the-hungry-detector
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52004
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/the-hungry-detector.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/the-hungry-detector.webp
+  prompt: A plush upholstered beige walk-through security arch with a faint smiling seam and a neat row
+    of small rounded teeth along its inner frame, an umbrella handle poking out of its top, a nervous
+    worker holding out a tray of keys and papers, warm lobby light, oxblood and manila dominant colors,
+    single readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-inkblot-that-looks-back
+  kind: card-face
+  department: orientation
+  title: The Inkblot That Looks Back
+  card: the-inkblot-that-looks-back
+  request_id: shifting-desks-r2-the-inkblot-that-looks-back
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52005
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/the-inkblot-that-looks-back.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/the-inkblot-that-looks-back.webp
+  prompt: A smiling psychologist with cat-eye glasses, a tidy grey bun and a lab coat over a cardigan
+    holding up an inkblot card shaped exactly like a mushroom cloud, an anxious worker in a velvet theater
+    seat, a rolling cart of refreshments under a white cloth beside the aisle, velvet curtains, carbon-paper
+    blue and safety orange dominant colors, single readable scene with a strong silhouette, mid-century
+    corporate safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache
+    with halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-mandatory-fun-survey
+  kind: card-face
+  department: orientation
+  title: The Mandatory Fun Survey
+  card: the-mandatory-fun-survey
+  request_id: shifting-desks-r2-the-mandatory-fun-survey
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52006
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/the-mandatory-fun-survey.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/the-mandatory-fun-survey.webp
+  prompt: A long row of theater seats with workers bent over identical clipboards, a close-up hand in
+    the foreground holding a pencil with a bare metal ferrule above a survey grid of smiling face icons,
+    a tiny raised-fist stapler doodle in the margin, manila and carbon-paper blue dominant colors, single
+    readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-unlisted-chapter
+  kind: card-face
+  department: orientation
+  title: The Unlisted Chapter
+  card: the-unlisted-chapter
+  request_id: shifting-desks-r2-the-unlisted-chapter
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52007
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/the-unlisted-chapter.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/the-unlisted-chapter.webp
+  prompt: A dark orientation theater lit by a single projector beam, the screen showing a flickering wood-paneled
+    boardroom with a distinguished elderly mustached head preserved in a glowing glass jar at the head
+    of the table and a plush teddy bear perched on a missile launch rail, a lone worker silhouetted in
+    the front row, a film reel spinning in the booth, oxblood and fluorescent-tube green dominant colors,
+    single readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-last-box-of-pens
+  kind: card-face
+  department: orientation
+  title: The Last Box of Pens
+  card: the-last-box-of-pens
+  request_id: shifting-desks-r2-the-last-box-of-pens
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52008
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/the-last-box-of-pens.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/the-last-box-of-pens.webp
+  prompt: Three people reaching toward a single small box of pens on a bare metal shelf, a weathered older
+    janitor in grey coveralls and a headscarf with a ring of keys at her belt, an anxious young intern
+    in an oversized cable-knit sweater, and a new hire in a beige suit, a dramatic overhead bulb, rows
+    of bare shelves stretching away, safety orange and carbon-paper blue dominant colors, single readable
+    scene with a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-duct-has-opinions
+  kind: card-face
+  department: orientation
+  title: The Duct Has Opinions
+  card: the-duct-has-opinions
+  request_id: shifting-desks-r2-the-duct-has-opinions
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52009
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/the-duct-has-opinions.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/the-duct-has-opinions.webp
+  prompt: A weathered older janitor in grey coveralls and a headscarf half inside an open ventilation
+    grille with a wrench and a crumpled repair form in her hand, fat ribbed silver ducts snaking away
+    into the ceiling like vines, a shimmer of warm air, a worker crouched beside her, carbon-paper blue
+    and safety orange dominant colors, single readable scene with a strong silhouette, mid-century corporate
+    safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with
+    halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: ninety-day-review
+  kind: boss-face
+  department: orientation
+  title: Your 90-Day Review, Today at 3
+  card: ninety-day-review
+  request_id: shifting-desks-r2-ninety-day-review
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52010
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/ninety-day-review.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/ninety-day-review.webp
+  prompt: A long oxblood review table under a single hanging lamp, a cheerful round speaker grille with
+    a soft green glow at one end, an immaculate supervisor in a grey three-piece suit and rimless glasses
+    holding an impossibly thick folder, an empty chair with a face-down place card, a small worker sitting
+    alone on the far side, vast dark wood paneling, oxblood and manila dominant colors, single readable
+    scene with a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: a-capsule-from-yourself
+  kind: card-face
+  department: records
+  title: A Capsule from Yourself
+  card: a-capsule-from-yourself
+  request_id: shifting-desks-r2-a-capsule-from-yourself
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52011
+  target_path: kind_robots public/images/shifting-desks/cards/records/a-capsule-from-yourself.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/a-capsule-from-yourself.webp
+  prompt: A worker in a rumpled beige suit with a Records armband at a brass pneumatic tube terminal holding
+    a capsule in each hand, one large and one small, a curl of paper stamped with round blue postmark
+    rings unrolling between them, a wall of gleaming brass tubes rising behind like organ pipes, carbon-paper
+    blue and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate
+    safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with
+    halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-jam-in-tube-14
+  kind: card-face
+  department: records
+  title: The Jam in Tube 14
+  card: the-jam-in-tube-14
+  request_id: shifting-desks-r2-the-jam-in-tube-14
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52012
+  target_path: kind_robots public/images/shifting-desks/cards/records/the-jam-in-tube-14.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/the-jam-in-tube-14.webp
+  prompt: A fat brass pneumatic tube bulging in one round lump along its length, a worker in a rumpled
+    beige suit with a Records armband with one ear pressed to the brass, an open emergency kit on the
+    wall holding a red axe, a flare and a neatly folded striped towel, steam curling from a joint, safety
+    orange and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate
+    safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with
+    halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: problem-mail
+  kind: card-face
+  department: records
+  title: Problem Mail
+  card: problem-mail
+  request_id: shifting-desks-r2-problem-mail
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52013
+  target_path: kind_robots public/images/shifting-desks/cards/records/problem-mail.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/problem-mail.webp
+  prompt: A lean older dispatcher with sleeve garters, a green visor and a headset standing between two
+    brass chutes, one glowing warm orange from a furnace below, his hand resting on a capsule sliding
+    toward the glow with a calm practiced flick, a worker reaching in from the side, oxblood and safety
+    orange dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual
+    illustration crossed with a retro-futurist beige office, screen-printed gouache with halftone grain,
+    flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety
+    orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare
+    and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: interdepartmental-romance
+  kind: card-face
+  department: records
+  title: Interdepartmental Romance
+  card: interdepartmental-romance
+  request_id: shifting-desks-r2-interdepartmental-romance
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52014
+  target_path: kind_robots public/images/shifting-desks/cards/records/interdepartmental-romance.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/interdepartmental-romance.webp
+  prompt: A pink glass capsule looping through a tangle of brass tubes trailing a faint lavender shimmer,
+    two office doors far apart on opposite walls with silhouettes leaning wistfully in each doorway, a
+    worker in a rumpled beige suit with a Records armband below reaching up to catch the capsule, manila
+    and fluorescent-tube green dominant colors with one pink accent, single readable scene with a strong
+    silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist beige office,
+    screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette
+    of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait
+    composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: your-permanent-record
+  kind: card-face
+  department: records
+  title: Your Permanent Record
+  card: your-permanent-record
+  request_id: shifting-desks-r2-your-permanent-record
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52015
+  target_path: kind_robots public/images/shifting-desks/cards/records/your-permanent-record.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/your-permanent-record.webp
+  prompt: A worker in a rumpled beige suit with a Records armband standing at an open filing drawer holding
+    an enormously thick manila folder, a blood-pressure cuff wrapped around one arm connected by a rubber
+    tube to a round dial gauge on the cabinet with its needle swinging high, one bare bulb swinging overhead,
+    endless filing cabinets fading into gloom, manila and carbon-paper blue dominant colors, single readable
+    scene with a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: alphabetizing-since-1974
+  kind: card-face
+  department: records
+  title: Alphabetizing Since 1974
+  card: alphabetizing-since-1974
+  request_id: shifting-desks-r2-alphabetizing-since-1974
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52016
+  target_path: kind_robots public/images/shifting-desks/cards/records/alphabetizing-since-1974.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/alphabetizing-since-1974.webp
+  prompt: A gentle small elderly clerk with a white fringe, a cardigan and sleeve garters fingering through
+    a single open file drawer with infinite patience, a faded assignment slip in his other hand, a worker
+    leaning in beside him, dust motes drifting in the beam of one bulb, manila and oxblood dominant colors,
+    single readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-cabinet-marked-destroy
+  kind: card-face
+  department: records
+  title: The Cabinet Marked DESTROY
+  card: the-cabinet-marked-destroy
+  request_id: shifting-desks-r2-the-cabinet-marked-destroy
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52017
+  target_path: kind_robots public/images/shifting-desks/cards/records/the-cabinet-marked-destroy.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/the-cabinet-marked-destroy.webp
+  prompt: A tall grey filing cabinet standing alone at the end of a long dim aisle, its drawers bulging
+    with folders, a single ballpoint pen balanced on top pointing at the second drawer, a worker in a
+    rumpled beige suit with a Records armband creeping toward it with a flashlight, deep shadows between
+    the aisles, carbon-paper blue and oxblood dominant colors, single readable scene with a strong silhouette,
+    mid-century corporate safety-manual illustration crossed with a retro-futurist beige office, screen-printed
+    gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-union-archive
+  kind: card-face
+  department: records
+  title: The Union Archive
+  card: the-union-archive
+  request_id: shifting-desks-r2-the-union-archive
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52018
+  target_path: kind_robots public/images/shifting-desks/cards/records/the-union-archive.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/the-union-archive.webp
+  prompt: A seven-foot cockroach with a glossy chestnut shell in a mustard knitted cardigan and half-moon
+    reading glasses hunched at a desk under a green-shaded lamp, delicately piecing paper strips together
+    with tweezers, walls papered with reassembled paper scraps, a worker peering in through a gap behind
+    a swung-open filing cabinet, warm lamplight against deep shadow, manila and oxblood dominant colors,
+    single readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: flawless-paperwork
+  kind: card-face
+  department: records
+  title: Flawless Paperwork
+  card: flawless-paperwork
+  request_id: shifting-desks-r2-flawless-paperwork
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52019
+  target_path: kind_robots public/images/shifting-desks/cards/records/flawless-paperwork.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/flawless-paperwork.webp
+  prompt: A poised elegant six-foot cockroach with a burnished shell in a navy blazer and pearl earrings
+    sliding a stack of glossy laminated documents through a booth drawer with a confident patient smile,
+    a sweating worker behind thick glass holding a brass stamp, a long queue curling away behind her,
+    carbon-paper blue and safety orange dominant colors, single readable scene with a strong silhouette,
+    mid-century corporate safety-manual illustration crossed with a retro-futurist beige office, screen-printed
+    gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-small-box-on-line-12
+  kind: card-face
+  department: records
+  title: The Small Box on Line 12
+  card: the-small-box-on-line-12
+  request_id: shifting-desks-r2-the-small-box-on-line-12
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52020
+  target_path: kind_robots public/images/shifting-desks/cards/records/the-small-box-on-line-12.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/the-small-box-on-line-12.webp
+  prompt: A brisk psychologist with cat-eye glasses, a tidy grey bun and a lab coat over a cardigan standing
+    at a thick glass booth window clutching an enormous clipboard, one transfer form lying in the brass
+    drawer between her and a worker holding a stamp, both looking down at the same tiny box on the form,
+    fluorescent-tube green and manila dominant colors, single readable scene with a strong silhouette,
+    mid-century corporate safety-manual illustration crossed with a retro-futurist beige office, screen-printed
+    gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: dale-requests-a-transfer
+  kind: card-face
+  department: records
+  title: Dale Requests a Transfer
+  card: dale-requests-a-transfer
+  request_id: shifting-desks-r2-dale-requests-a-transfer
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52021
+  target_path: kind_robots public/images/shifting-desks/cards/records/dale-requests-a-transfer.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/dale-requests-a-transfer.webp
+  prompt: A mild mustached man in a short-sleeved dress shirt, clip-on tie and pocket protector at a thick
+    glass booth window, eyes cast sideways, pushing a form through the drawer with two fingers, a worker
+    behind the glass holding a brass stamp aloft and hesitating, a long queue fading into the distance,
+    oxblood and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate
+    safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with
+    halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-double-sided-stamp
+  kind: card-face
+  department: records
+  title: The Double-Sided Stamp
+  card: the-double-sided-stamp
+  request_id: shifting-desks-r2-the-double-sided-stamp
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52022
+  target_path: kind_robots public/images/shifting-desks/cards/records/the-double-sided-stamp.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/the-double-sided-stamp.webp
+  prompt: A close view of a hand gripping a heavy two-faced brass stamp above an ink pad, the thumb resting
+    on a polished worn spot, a frail elderly man in a felt hat and a neatly pressed overcoat waiting hopefully
+    on the far side of thick glass, a round ticking wall clock above, safety orange and carbon-paper blue
+    dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual
+    illustration crossed with a retro-futurist beige office, screen-printed gouache with halftone grain,
+    flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety
+    orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare
+    and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-form-that-requires-itself
+  kind: boss-face
+  department: records
+  title: The Form That Requires Itself
+  card: the-form-that-requires-itself
+  request_id: shifting-desks-r2-the-form-that-requires-itself
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 52023
+  target_path: kind_robots public/images/shifting-desks/cards/records/the-form-that-requires-itself.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/the-form-that-requires-itself.webp
+  prompt: A towering spiral of identical forms rising from a single oxblood service window into darkness,
+    an immaculate supervisor in a grey three-piece suit, rimless glasses and a green clerk's visor waiting
+    behind the glass with a stamp, a small worker at the counter holding a pen, brass pneumatic tubes
+    coiling around the spiral, a cheerful round speaker grille with a soft green glow above, oxblood and
+    manila dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual
+    illustration crossed with a retro-futurist beige office, screen-printed gouache with halftone grain,
+    flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety
+    orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare
+    and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
