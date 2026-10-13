@@ -1050,3 +1050,29 @@ tasks:
       screenshots/t034-desk.jpg, t034-phone.jpg, t034-village.jpg.
     updated: '2026-10-11T04:19:06Z'
     implementation_pr: 'silasfelinus/kind_robots#3495'
+  - id: t-035
+    milestone: m4
+    title: "No ball stuck for good: seal AMI's centre pockets, escalating ball search with rescue, Nudge button"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    approved_by_human: true
+    note: >-
+      Silas, 2026-10-13: his son's ball stuck for good in play (screenshot), and pinball games
+      should have a tilt option. The ball was wedged between the upper feed's right rail and
+      the lock pocket, beside AMI's post house. That pocket and its mirror beside the spinner
+      lane were sealed on every side, so the ball search's shake lifted the ball and it rolled
+      straight back. Shipped in kind_robots#3621 (merged d8fef84). Clear roofs now cover both
+      pockets. The shared runtime's ball search (both tables) watches displacement rather than
+      speed, so a rattling ball counts as stuck. It escalates over three shakes, then sets the
+      ball back on the plunger and fires it ("BALL RESCUED"), with no ball lost. Locked and
+      scooped balls are captured and never moved. Pinball cabinets gain a Nudge button and a
+      pinball controls hint; the tilt bob (WARNING, DANGER, TILT) already existed in the rules
+      engine. New CI test test:kind-pinball-no-stuck runs a 3 cm drop scan inside the arch,
+      pins the found pockets, and checks the rescue on AMI and Zuzu; it fails on the old
+      geometry at the screenshot's spot. Known limit: the dead corner outside the top arch, by
+      the secret chamber, is reachable only by a ball flying over the arch wall; the rescue
+      covers it.
+    updated: '2026-10-13T04:35:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3621'
