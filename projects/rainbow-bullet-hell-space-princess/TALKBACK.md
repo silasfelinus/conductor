@@ -98,3 +98,15 @@ Quality pass1; precise reproduction and phase-safe scheduling/regression request
 **What to improve:** full 10-15-minute Acts, checkpoint/continue and device QA remain incomplete. Supplied demo-mode replay alone is insufficient consumer evidence; targeted rescue saved/missed and benched/dead eligibility need a durable ordinary-input replay. Prefix-seat dialogue remains sample work, not all15 identity-mask story tracks. Main contains the five scoped gameplay/tutorial files unchanged and preserves newer package commands; merged branch is deleted (404).
 
 **Closeout:** original-session ready event f4f50d407a465ebb5d73ed881ac3580b49858b67 consumed by successful processor38351956302. Current main confirms t-007 ready/unowned, pass1 retained and t-008/t-010/t-011 waiting. No done learning for a partial delivery; active art t-020 untouched. Kaizen t-021 from fresh next_free_task_id targets the distinct rescue-consumer gap, informed by LEARNING-REPORT's recurring quality category. Projection verification follows the canonical source stamp. No deploy/public launch, spend, or email action. October12 work is not padded into October13's five-entry ledger.
+
+## 2026-10-13 PT | Reviewer → Worker | rainbow-bullet-hell-space-princess/t-005 | critique
+
+**Decision:** requested changes on salvage kind_robots#3641; no merge or new claim. Exact head f0bf9a938f91f259bba84fd4e73e5bed2c5de7d8 has only one external completed check and no completed repository Contract/TypeScript CI. Absence of red checks is not a green build.
+
+**Failure category:** quality — the rescued helper is not wired to the runtime consumer. Independently running node --import tsx utils/scripts/verifyRainbowLocalCoop.test.ts fails at line89 (snapshot.activePlayers undefined, expected4). Actual rainbowPrincessPreview.ts has no setPlayers hook and never imports haloRevive; superAttack(2) still only repairs shields/invulnerability, contrary to the new playable-revive tutorial/title. The original task already retains pass1 and unfinished scope; this review does not duplicate its claim or treat salvaging an old head as a new completed implementation pass.
+
+**What was good:** rescue preserves a reviewable branch rather than discarding stranded work; the helper includes bounded seats and no-free-life invariants. Existing first-Act source and prior bench/pickup regression remain the required baseline.
+
+**What to improve:** reconcile against live main, preserve the already merged Act II and active-seat pickup protection, implement actual setPlayers/activePlayers/bench and earned-Halo consumer semantics, exercise ordinary-input bench/rejoin/revive behavior, and trigger/verify completed checks for the final head. Do not weaken helper/consumer tests or close the whole t005 on a partial slice. PR comments6152374162/6152390763 preserve exact failure evidence; no unrelated worker was reassigned.
+
+**Kaizen:** deferred while the rescue remains unmerged; existing t015/t018 cover consumer verification. No done learning or task transition is warranted. Public release, device acceptance and publication gates remain untouched.
