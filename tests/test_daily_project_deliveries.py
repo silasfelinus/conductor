@@ -108,6 +108,7 @@ def test_email_explicitly_distinguishes_shipped_and_progress(repo, monkeypatch):
     data = docket(repo)
     data["entries"][1].update(status="in-progress",
                               next_step="Complete the second screen and finish all pending tests.")
+    (repo / "projects/dream-cycle/daily-deliveries/2026-10-13.yaml").write_text(yaml.safe_dump(data))
     dd.materialize("2026-10-13", data)
     monkeypatch.setenv("PITCH_LINK_SECRET", "fixture-not-production")
     html = email.daily_deliveries_section(dd.payload("2026-10-13"))
