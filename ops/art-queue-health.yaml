@@ -4,28 +4,11 @@
 failures:
 - source: project-art
   target: projects/images/shifting-desks-card.webp
-  kind: contract-rejected
-  rules:
-  - format-vocabulary
-  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [format-vocabulary]
-    "poster" asks for a physical format, so the model renders the format — frame, title bar, and invented
-    text included. Describe the subjec…'
-  first_seen: '2026-10-13'
-- source: project-art
-  target: projects/images/shifting-desks-hero.webp
-  kind: contract-rejected
-  rules:
-  - format-vocabulary
-  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [format-vocabulary]
-    "poster" asks for a physical format, so the model renders the format — frame, title bar, and invented
-    text included. Describe the subjec…'
+  kind: timeout
+  detail: job 37933 timed out after 300s (still queued/running)
   first_seen: '2026-10-13'
 - source: project-art
   target: projects/images/shifting-desks-icon.webp
-  kind: contract-rejected
-  rules:
-  - format-vocabulary
-  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [format-vocabulary]
-    "poster" asks for a physical format, so the model renders the format — frame, title bar, and invented
-    text included. Describe the subjec…'
+  kind: timeout
+  detail: job 37932 timed out after 300s (still queued/running)
   first_seen: '2026-10-13'
