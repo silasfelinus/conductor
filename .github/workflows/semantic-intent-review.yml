@@ -1,7 +1,7 @@
 name: Scheduled Semantic Intent Review
 
 # GitHub owns cadence. A Python date guard invokes a model only when an
-# authenticated, explicitly opted-in paid provider is available and the
+# explicitly approved provider is made available by a later change and the
 # previous merged review is at least three days old.
 on:
   schedule:
@@ -10,11 +10,6 @@ on:
     inputs:
       force:
         description: 'Run despite a recent completed audit'
-        type: boolean
-        required: false
-        default: false
-      spend_api_credits:
-        description: 'Explicitly opt this manual run into Anthropic API billing'
         type: boolean
         required: false
         default: false
@@ -51,10 +46,9 @@ jobs:
       - name: Perform LLM semantic intent review
         shell: bash
         env:
-          # Never spend by default. Automatic scheduled calls are opt-in via
-          # SEMANTIC_INTENT_PAID_REVIEW repository variable; dispatches may
-          # opt in for this single run using spend_api_credits.
-          ANTHROPIC_API_KEY: ${{ (inputs.spend_api_credits == true || vars.SEMANTIC_INTENT_PAID_REVIEW == 'true') && secrets.ANTHROPIC_API_KEY || '' }}
+          # Provider credentials are deliberately absent. The paid-access
+          # workflow grant and spend allowlist need separate human approval.
+          # Without it, the runner records awaiting-provider, not a fake audit.
           FORCE: ${{ inputs.force }}
         run: |
           args=()
