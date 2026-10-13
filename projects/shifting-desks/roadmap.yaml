@@ -500,7 +500,7 @@ tasks:
   - id: t-019
     milestone: m5
     title: "Seeded balance simulation across all five departments"
-    status: claimed
+    status: done
     depends_on:
       - t-008
       - t-014
@@ -512,13 +512,24 @@ tasks:
       saint). Report the Successor death rate per department, ending distribution,
       meter-limit hits and dominant choices. Tune targets and costs so no policy wins
       clean and every ending appears. Commit the report and tuned packs.
+
+      DONE 2026-10-13 PT. Conductor #6122 (84b3f13): BALANCE-REPORT.md and the data-driven
+      tuning (swap-the-file spends its Successor on success and is Risky 9; squeeze-the-duck
+      is Risky 9; Humming Door and Spare Mustaches weight 3; thaw kept at 2). Kind Robots
+      #3635 (68a0ed8): utils/shiftingDesks/balance.ts, five temperament bots plus a random
+      baseline at 2,000 seeded runs each; verifyShiftingDesksBalance.test.ts runs in the
+      gameplay CI (green, same numbers as the report). Elimination: complier 18.7%, rebel
+      35.8%, coward 0.1%, saint 19.9%, schemer 45.0% (was 54.0%), random 14.4%; every ending
+      reached; no dominant or ungated dead choices. The Coward's near-total survival, paid for
+      in Successors and with no payoff endings, is flagged for Silas's t-020 verdict.
     claimed_by: 2026-10-13T114000Z-sd-t019-balance
     claimed_at: '2026-10-13T11:37:58Z'
-    updated: '2026-10-13T11:37:58Z'
+    updated: '2026-10-13T12:10:46Z'
+    implementation_pr: 'silasfelinus/kind_robots#3635'
   - id: t-020
     milestone: m5
     title: "Silas's fun verdict and wider promotion (home, Arcade, sharing)"
-    status: waiting
+    status: ready
     depends_on:
       - t-018
       - t-019
