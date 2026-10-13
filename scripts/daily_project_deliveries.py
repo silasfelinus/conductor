@@ -46,7 +46,7 @@ def active_targets():
 def validate(date, docket):
     if date < CUTOVER:
         return ["Delivery mode starts 2026-10-13 PT; historical pitches remain unchanged"]
-    if not isinstance(docket, dict) or docket.get("date") != date:
+    if not isinstance(docket, dict) or str(docket.get("date")) != date:
         return [f"{date}: missing docket or date mismatch"]
     entries = docket.get("entries")
     if not isinstance(entries, list) or len(entries) != 5:
