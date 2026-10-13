@@ -211,6 +211,161 @@
           }
         }
       }
+    },
+    "window_shift": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional (t-016). A Papers, Please desk shift at one of this department's locations, dealt just before the review unless a Restructuring closes that location. validate_pack.py enforces 2-4 memo rules each broken by someone, 3-5 applicants with exactly two certain stamps (approve, deny), Suspicion on every stamp against the memo, at least one clean applicant, and at least one by-the-book stamp that costs Empathy.",
+      "required": [
+        "id",
+        "location_id",
+        "title",
+        "flavor_text",
+        "art",
+        "memo",
+        "applicants"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/slug"
+        },
+        "location_id": {
+          "$ref": "#/$defs/slug"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 64
+        },
+        "flavor_text": {
+          "type": "string",
+          "minLength": 90,
+          "maxLength": 700
+        },
+        "art": {
+          "$ref": "#/$defs/art"
+        },
+        "memo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "title",
+            "rules"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 80
+            },
+            "rules": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "text"
+                ],
+                "properties": {
+                  "id": {
+                    "$ref": "#/$defs/slug"
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 15,
+                    "maxLength": 140
+                  }
+                }
+              }
+            }
+          }
+        },
+        "applicants": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "name",
+              "request",
+              "plea",
+              "art",
+              "documents",
+              "choices"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/slug"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 48
+              },
+              "request": {
+                "type": "string",
+                "minLength": 15,
+                "maxLength": 160
+              },
+              "plea": {
+                "type": "string",
+                "minLength": 20,
+                "maxLength": 300
+              },
+              "art": {
+                "$ref": "#/$defs/art"
+              },
+              "documents": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 4,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "label",
+                    "value",
+                    "breaks"
+                  ],
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    },
+                    "breaks": {
+                      "description": "The memo rule id this document breaks, or null.",
+                      "oneOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "$ref": "#/$defs/slug"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "choices": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "$ref": "#/$defs/choice"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "$defs": {
