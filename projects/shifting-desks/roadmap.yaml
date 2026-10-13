@@ -443,7 +443,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Window shifts: the Papers-Please-style desk card type"
-    status: claimed
+    status: done
     depends_on: t-009
     owner: worker
     passes: 0
@@ -453,9 +453,20 @@ tasks:
       memo, stamp APPROVED/DENIED, with consequences written as flags that later cards read.
       Schema v2 extension + validator + reducer + UI. Original country-free office setting
       and original UI.
+
+      DONE 2026-10-13 PT. Data: conductor #6124 (17a71a7, RECORDS-12 window_shift, validator,
+      schema, FLAG-MAP, art round 8) and #6125 (1d20d96, balance pass: two by-the-book denials
+      cost a Form, approving your Successor costs 2 Suspicion for 2 composure). Engine and UI:
+      kind_robots #3636 (8ddf03f). Window 9: The Tuesday Line deals four applicants before the
+      Records review; you stamp APPROVED or DENIED against a three-rule memo; off-memo stamps
+      draw PAL's audit and +1 Suspicion; a Restructuring that closes Window 9 skips the shift;
+      mid-shift saves reload. Verified in CI and in local Chromium at 390/768/1440 (stamps,
+      slam, audit, review follows, zero overflow and errors). t-019 balance thresholds hold
+      (Schemer 44.5%). Art round 8 pending render.
     claimed_by: 2026-10-13T120500Z-sd-t016-window
     claimed_at: '2026-10-13T12:11:38Z'
-    updated: '2026-10-13T12:11:38Z'
+    updated: '2026-10-13T12:58:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#3636'
   - id: t-017
     milestone: m4
     title: "Comic timing: memo ticker, stamp animation, Successor arrival and personnel file export"
