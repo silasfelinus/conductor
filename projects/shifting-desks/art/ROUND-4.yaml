@@ -1,0 +1,424 @@
+# Shifting Desks art round 4 (shifting-desks t-011): every station in Department 3, Toy Division -- the
+# 12 encounter faces and the Launch Party boss face (each card's art.brief rewritten into the house prompt
+# order, like round 2), the 3 location plates and the department arrival (copied word for word, like
+# round 3). Style rules live in ../ART-DIRECTION.md. Tone guardrail: no child is pictured anywhere; the
+# generator refuses a prompt that names one.
+#
+# Queue: each subject is one row in projects/art-prompts.yaml `requests:` (id = request_id, lane
+# art-round-4). The auto-art-generate workflow submits it to Kind Robots as a krea2 ArtJob and the home
+# relay writes the render to the self-hosted media host at media_url.
+#
+# Status values: requested -> rendered -> delivered (media_url answers 200). Never mark a subject
+# delivered before that check passes. Generated internal art is pre-approved (AGENTS.md "Generated art
+# is pre-approved"). Krea 2 on the self-hosted render box: no paid third-party spend, nothing published.
+round: shifting-desks-4
+project_slug: shifting-desks
+task: t-011
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-13T07:30:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph,
+  3d render, blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: no-bad-ideas
+  kind: card-face
+  department: toy-division
+  title: There Are No Bad Ideas
+  card: no-bad-ideas
+  source_ref: encounters/TOY-DIVISION-12.json encounters[no-bad-ideas].art.brief
+  request_id: shifting-desks-r4-no-bad-ideas
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54001
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/no-bad-ideas.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/no-bad-ideas.webp
+  prompt: A cheerful brainstorm in a bright toy workshop, a whiteboard of crayon suns and smiling rockets,
+    a beaming lead designer in a cardigan pointing a marker at a nervous worker, a stern man in a dark
+    suit taking notes in the corner with a pencil, safety orange and manila dominant colors, single readable
+    scene with a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-nursery
+  kind: card-face
+  department: toy-division
+  title: The Mk 1 Nursery
+  card: the-nursery
+  source_ref: encounters/TOY-DIVISION-12.json encounters[the-nursery].art.brief
+  request_id: shifting-desks-r4-the-nursery
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54002
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/the-nursery.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/the-nursery.webp
+  prompt: A quiet nursery of glass incubators under warm amber lamps, a plush teddy bear sleeping in each
+    one with a soft glow at its seams, a worker bending over one incubator to cradle a bear, a brass chute
+    hatch set into the floor nearby, fluorescent green and manila dominant colors, single readable scene
+    with a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-warning-label
+  kind: card-face
+  department: toy-division
+  title: Writing the Warning Label
+  card: the-warning-label
+  source_ref: encounters/TOY-DIVISION-12.json encounters[the-warning-label].art.brief
+  request_id: shifting-desks-r4-the-warning-label
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54003
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/the-warning-label.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/the-warning-label.webp
+  prompt: A worker hunched over a drafting desk with a jeweler's loupe, a single tiny round sticker on
+    the blotter, a towering stack of hazard binders leaning beside the desk, a glowing round speaker grille
+    above, a wall clock near five o'clock, carbon-paper blue and manila dominant colors, single readable
+    scene with a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-squeak-tester
+  kind: card-face
+  department: toy-division
+  title: The Squeak Tester
+  card: the-squeak-tester
+  source_ref: encounters/TOY-DIVISION-12.json encounters[the-squeak-tester].art.brief
+  request_id: shifting-desks-r4-the-squeak-tester
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54004
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/the-squeak-tester.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/the-squeak-tester.webp
+  prompt: A tired office worker with a mustache and a clip-on tie at a long workbench crowded with yellow
+    rubber ducks, holding one duck up to his ear, a ledger open beside him, a heavy vault door glimpsed
+    through a doorway behind him, safety orange and carbon-paper blue dominant colors, single readable
+    scene with a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: you-are-six-today
+  kind: card-face
+  department: toy-division
+  title: You Are Six Today
+  card: you-are-six-today
+  source_ref: encounters/TOY-DIVISION-12.json encounters[you-are-six-today].art.brief
+  request_id: shifting-desks-r4-you-are-six-today
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54005
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/you-are-six-today.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/you-are-six-today.webp
+  prompt: A grown office worker in a beige suit wearing a tiny propeller beanie and holding a juice box,
+    sitting on a beanbag and hugging a plush teddy bear, a huge dark two-way mirror behind with faint
+    silhouettes of observers, a bowl of bright fruit on a low table, safety orange and manila dominant
+    colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration
+    crossed with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident
+    shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-questionnaire
+  kind: card-face
+  department: toy-division
+  title: Questionnaire for a Five-Year-Old
+  card: the-questionnaire
+  source_ref: encounters/TOY-DIVISION-12.json encounters[the-questionnaire].art.brief
+  request_id: shifting-desks-r4-the-questionnaire
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54006
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/the-questionnaire.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/the-questionnaire.webp
+  prompt: A large sheet of paper on a tiny low table with a fat box of crayons, an adult hand gripping
+    a crayon awkwardly, smiling suns drawn in the margins, a plush teddy bear propped on the chair opposite
+    as if supervising, fluorescent green and manila dominant colors, single readable scene with a strong
+    silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist beige office,
+    screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette
+    of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait
+    composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-parents-behind-the-mirror
+  kind: card-face
+  department: toy-division
+  title: The Parents Behind the Mirror
+  card: the-parents-behind-the-mirror
+  source_ref: encounters/TOY-DIVISION-12.json encounters[the-parents-behind-the-mirror].art.brief
+  request_id: shifting-desks-r4-the-parents-behind-the-mirror
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54007
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/the-parents-behind-the-mirror.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/the-parents-behind-the-mirror.webp
+  prompt: A dim observation room behind a large two-way mirror, nine engineers in white lab coats sitting
+    in a tight circle on folding chairs, one holding up a small screwdriver like a candle, a bright empty
+    focus group room visible through the glass, carbon-paper blue and oxblood dominant colors, single
+    readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: gus-in-a-beanie
+  kind: card-face
+  department: toy-division
+  title: Gus Joins the Focus Group
+  card: gus-in-a-beanie
+  source_ref: encounters/TOY-DIVISION-12.json encounters[gus-in-a-beanie].art.brief
+  request_id: shifting-desks-r4-gus-in-a-beanie
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54008
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/gus-in-a-beanie.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/gus-in-a-beanie.webp
+  prompt: A seven-foot cockroach in a cable-knit cardigan sitting very upright on a small beanbag, a tiny
+    propeller beanie on his head, holding a plush teddy bear at arm's length, a worker beside him in a
+    matching beanie, a dark two-way mirror behind them, oxblood and manila dominant colors, single readable
+    scene with a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-drop-test
+  kind: card-face
+  department: toy-division
+  title: The Drop Test
+  card: the-drop-test
+  source_ref: encounters/TOY-DIVISION-12.json encounters[the-drop-test].art.brief
+  request_id: shifting-desks-r4-the-drop-test
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54009
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/the-drop-test.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/the-drop-test.webp
+  prompt: A worker leaning over a high railing on a third-floor balcony holding a plush teddy bear out
+    over a vast padded test range, a round target pad far below, a technician with a stopwatch, a row
+    of observers peeking over a thick blast shield, floodlights overhead, safety orange and carbon-paper
+    blue dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual
+    illustration crossed with a retro-futurist beige office, screen-printed gouache with halftone grain,
+    flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety
+    orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare
+    and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: kevins-lanyard
+  kind: card-face
+  department: toy-division
+  title: Kevin's Lanyard
+  card: kevins-lanyard
+  source_ref: encounters/TOY-DIVISION-12.json encounters[kevins-lanyard].art.brief
+  request_id: shifting-desks-r4-kevins-lanyard
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54010
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/kevins-lanyard.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/kevins-lanyard.webp
+  prompt: A crash-test dummy seated on a bench on a padded test range, wearing a cardigan, a wristwatch
+    and a lanyard, a drawn-on mustache, a party hat slightly askew, a worker standing before it with hands
+    clasped, long floodlight shadows, oxblood and manila dominant colors, single readable scene with a
+    strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-safe-distance-memo
+  kind: card-face
+  department: toy-division
+  title: The Safe-Distance Memo
+  card: the-safe-distance-memo
+  source_ref: encounters/TOY-DIVISION-12.json encounters[the-safe-distance-memo].art.brief
+  request_id: shifting-desks-r4-the-safe-distance-memo
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54011
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/the-safe-distance-memo.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/the-safe-distance-memo.webp
+  prompt: A single typed memo pinned to a corkboard beside a desk, a small grinning mascot drawing in
+    its corner holding up one thumb at arm's length, a worker's finger hovering over a large round button
+    on a desk intercom, a window showing a second office building across a plaza, carbon-paper blue and
+    manila dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual
+    illustration crossed with a retro-futurist beige office, screen-printed gouache with halftone grain,
+    flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety
+    orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare
+    and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: return-to-sender
+  kind: card-face
+  department: toy-division
+  title: Return to Sender
+  card: return-to-sender
+  source_ref: encounters/TOY-DIVISION-12.json encounters[return-to-sender].art.brief
+  request_id: shifting-desks-r4-return-to-sender
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54012
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/return-to-sender.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/return-to-sender.webp
+  prompt: A squeaky delivery cart on a padded test range carrying one cardboard parcel tied with string,
+    a soft glow leaking from a seam in the box, a worker reaching for it with a very long pole, crash-test
+    dummies in party hats watching from a bench, fluorescent green and manila dominant colors, single
+    readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: snuggle-sentinels-launch-party
+  kind: boss-face
+  department: toy-division
+  title: Snuggle Sentinel's Launch Party
+  card: snuggle-sentinels-launch-party
+  source_ref: encounters/TOY-DIVISION-12.json boss.art.brief
+  request_id: shifting-desks-r4-snuggle-sentinels-launch-party
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54013
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/snuggle-sentinels-launch-party.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/snuggle-sentinels-launch-party.webp
+  prompt: A bright corporate atrium full of pastel balloons and investors in dark suits, a velvet plinth
+    holding a plush teddy bear with a tiny satin cap over one paw, a sheet cake shaped like a smiling
+    cloud, an immaculate supervisor in a grey three-piece suit offering a pair of ribbon scissors to a
+    small worker, a glowing round speaker grille high on the wall, safety orange and manila dominant colors,
+    single readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: concept-lab
+  kind: location
+  department: toy-division
+  title: Concept Lab
+  card: null
+  source_ref: encounters/TOY-DIVISION-12.json locations[concept-lab].art.brief
+  request_id: shifting-desks-r4-concept-lab
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54014
+  target_path: kind_robots public/images/shifting-desks/locations/concept-lab.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/concept-lab.webp
+  prompt: A bright toy workshop with long benches of half-built plush bears and rubber ducks, crayon sketches
+    pinned beside blueprint sheets along one wall, warm desk lamps, a man in a dark suit taking notes
+    in a far corner, mid-century safety-manual illustration, screen-printed gouache with halftone grain,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: focus-group-room
+  kind: location
+  department: toy-division
+  title: Focus Group Room
+  card: null
+  source_ref: encounters/TOY-DIVISION-12.json locations[focus-group-room].art.brief
+  request_id: shifting-desks-r4-focus-group-room
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54015
+  target_path: kind_robots public/images/shifting-desks/locations/focus-group-room.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/focus-group-room.webp
+  prompt: A cozy focus group room with bright beanbags, a bowl of glossy fruit and a basket of plush toys,
+    a huge dark two-way mirror filling one wall, faint silhouettes of observers behind the glass, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: proving-grounds
+  kind: location
+  department: toy-division
+  title: Proving Grounds
+  card: null
+  source_ref: encounters/TOY-DIVISION-12.json locations[proving-grounds].art.brief
+  request_id: shifting-desks-r4-proving-grounds
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 54016
+  target_path: kind_robots public/images/shifting-desks/locations/proving-grounds.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/proving-grounds.webp
+  prompt: A vast padded test range under tall floodlights, crash-test dummies in party hats seated along
+    a bench, a high balcony above a round target pad, a thick blast shield with observers peeking over
+    it, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette
+    of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait
+    composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: toy-division
+  kind: department
+  department: toy-division
+  title: Toy Division arrival
+  card: null
+  source_ref: encounters/TOY-DIVISION-12.json department.arrival_art.brief
+  request_id: shifting-desks-r4-toy-division
+  engine: krea2
+  size: 1248x936
+  aspect: 4:3 landscape
+  seed: 54017
+  target_path: kind_robots public/images/shifting-desks/departments/toy-division.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/departments/toy-division.webp
+  prompt: Elevator doors opening onto a cheerful toy workshop floor deep underground, rows of plush teddy
+    bears riding conveyor belts, pastel balloons tied to heavy blast doors, a padded test range glowing
+    under floodlights in the distance, mid-century safety-manual illustration, screen-printed gouache
+    with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, horizontal 4:3 composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
