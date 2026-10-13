@@ -323,3 +323,14 @@ def test_v3_digest_has_separated_original_and_zuzu_assets():
     assert "Zuzu-world creations" in html
     assert "not linked to today" in html
     assert html.index("Original Daily Dream") < html.index("Zuzu-world creations")
+
+
+def test_v3_markdown_uses_real_newlines_so_silas_notes_stay_a_heading():
+    # Regression: the Zuzu section was joined with a literal backslash-n, which glued
+    # "## Notes from Silas" onto the previous line and hid it from build_dream_records.
+    import scripts.build_dream_proposal as bdp
+
+    md = bdp.render_markdown(example_v3(), "2026-10-13")
+    assert "\\n" not in md
+    assert "\n## Notes from Silas" in md
+    assert "\n## Eight additional Zuzu-world creations" in md
