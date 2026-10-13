@@ -35,8 +35,11 @@ CARD_SIZE = (1344, 768)
 
 
 def finished(subject):
-    art = (subject.get("art") or {}).get("arthemy-house") or {}
-    return art.get("art_image_id") if art.get("status") == "DONE" else None
+    """The subject's finished ArtImage id, from whichever lane rendered it (house, or ROUND-3's house-i2i)."""
+    for art in (subject.get("art") or {}).values():
+        if (art or {}).get("status") == "DONE" and art.get("art_image_id"):
+            return art["art_image_id"]
+    return None
 
 
 def load_image(art_image_id):

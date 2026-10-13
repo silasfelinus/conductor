@@ -173,6 +173,73 @@ def test_kontext_lane_without_source_image_is_refused():
         raise AssertionError("expected ValueError")
 
 
+IMG2IMG_LEDGER = {
+    "cast_loras": False,
+    "lanes": [
+        {
+            "key": "house-i2i",
+            "engine": "sdxl-img2img",
+            "prompt": "tags",
+            "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors",
+            "steps": 30,
+            "cfg": 5,
+            "sampler": "euler_ancestral",
+            "denoise": 0.6,
+        }
+    ],
+    "subjects": [
+        {
+            "key": "mole-success",
+            "size": "1344x768",
+            "prompt_tags": "solo, anthro mole, relieved smile",
+            "negative": "fox, wolf",
+            "source_image_id": 245600,
+            "seed": 3,
+            "jobs": {},
+        }
+    ],
+}
+
+
+def test_sdxl_img2img_lane_sends_source_denoise_and_house_settings():
+    lane, subject = IMG2IMG_LEDGER["lanes"][0], IMG2IMG_LEDGER["subjects"][0]
+    body = enq.build_request(IMG2IMG_LEDGER, lane, subject, "data:image/png;base64,AAAA")
+    assert body["engine"] == "sdxl-img2img"
+    assert body["sourceImageBase64"] == "data:image/png;base64,AAAA"
+    assert body["checkpoint"] == "Illustrious/arthemyWesternArt_v30.safetensors"
+    assert (body["steps"], body["cfg"], body["sampler"]) == (30, 5, "euler_ancestral")
+    assert body["denoise"] == 0.6 and body["negativePrompt"] == "fox, wolf" and body["seed"] == 3
+    body = enq.build_request(IMG2IMG_LEDGER, lane, {**subject, "denoise": 0.75}, "data:image/png;base64,AAAA")
+    assert body["denoise"] == 0.75
+
+
+def test_sdxl_img2img_lane_without_source_image_is_refused():
+    lane, subject = IMG2IMG_LEDGER["lanes"][0], IMG2IMG_LEDGER["subjects"][0]
+    try:
+        enq.build_request(IMG2IMG_LEDGER, lane, subject)
+    except ValueError as exc:
+        assert "source_image_id" in str(exc)
+    else:  # pragma: no cover
+        raise AssertionError("expected ValueError")
+
+
+def test_submit_fetches_the_img2img_source(tmp_path):
+    path = tmp_path / "img2img.yaml"
+    path.write_text(yaml.safe_dump(IMG2IMG_LEDGER, sort_keys=False))
+    header, ledger = enq.load_ledger(path)
+    fetched, sent = [], []
+    enq.submit(
+        path,
+        header,
+        ledger,
+        list(enq.iter_cells(ledger)),
+        post=lambda body: (sent.append(body), (200, {"data": {"jobId": 5}}))[1],
+        fetch_source=lambda image_id: (fetched.append(image_id), "data:image/png;base64,BBBB")[1],
+    )
+    assert fetched == [245600]
+    assert sent[0]["sourceImageBase64"] == "data:image/png;base64,BBBB"
+
+
 def test_submit_fetches_each_source_image_once(tmp_path):
     path = tmp_path / "kontext.yaml"
     path.write_text(yaml.safe_dump(KONTEXT_LEDGER, sort_keys=False))
