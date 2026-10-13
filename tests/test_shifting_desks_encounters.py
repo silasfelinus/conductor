@@ -73,6 +73,16 @@ def test_records_pays_off_orientation_flags():
     assert carried and carried <= orientation_flags
 
 
+DEFAULT_MEMO = {
+    "id": "nothing-has-changed",
+    "kind": "none",
+    "location_ids": [],
+    "title": None,
+    "when": None,
+    "reason": "The department has been restructured overnight. Nothing has changed. Please act surprised.",
+}
+
+
 def test_requires_flag_may_come_from_a_lower_department(tmp_path, pack):
     earlier = copy.deepcopy(pack)
     (tmp_path / "EARLIER.json").write_text(json.dumps(earlier), encoding="utf-8")
@@ -84,6 +94,7 @@ def test_requires_flag_may_come_from_a_lower_department(tmp_path, pack):
         "order": 2,
         "boss_id": later["boss"]["id"],
     }
+    later["restructurings"] = [DEFAULT_MEMO]
     # Remove every in-pack source of the gated flag, so only the earlier pack can grant it.
     gated = next(c for c in later["boss"]["choices"] if c["requires"])
     flag = gated["requires"]["flag"]
@@ -287,3 +298,62 @@ def test_decks_need_a_verdict_for_every_axis(tmp_path):
     path = tmp_path / "DECKS.json"
     path.write_text(json.dumps(decks), encoding="utf-8")
     assert any("verdicts must cover" in e for e in vp.validate_decks(path, vp.pack_paths([])))
+
+
+# Restructuring (t-023)
+
+@pytest.fixture
+def records():
+    return json.loads(RECORDS.read_text(encoding="utf-8"))
+
+
+def _validate_records(tmp_path, records):
+    """Validate an edited Records pack beside a copy of Orientation, so earlier outcomes and flags resolve."""
+    (tmp_path / PACK.name).write_text(PACK.read_text(encoding="utf-8"), encoding="utf-8")
+    path = tmp_path / RECORDS.name
+    path.write_text(json.dumps(records), encoding="utf-8")
+    return vp.validate_pack(path)
+
+
+def test_records_restructures_on_every_orientation_outcome(records):
+    orientation = json.loads(PACK.read_text(encoding="utf-8"))
+    memos = records["restructurings"]
+    assert memos[-1]["when"] is None
+    kinds = {m["kind"] for m in memos}
+    assert {"eliminate", "merge", "add"} <= kinds
+    keyed = {o for m in memos if m["when"] for o in m["when"]["outcomes"]}
+    outcomes = {o["id"] for o in orientation["boss"]["department_outcomes"]} - {"reorientation"}
+    assert outcomes <= keyed, outcomes - keyed
+
+
+def test_surface_department_may_not_restructure(tmp_path, pack):
+    bad = copy.deepcopy(pack)
+    bad["restructurings"] = [DEFAULT_MEMO]
+    assert any("nothing above it" in e for e in _validate(tmp_path, bad))
+
+
+def test_a_lower_department_needs_restructurings(tmp_path, records):
+    records.pop("restructurings")
+    assert any("needs Restructuring memos" in e for e in _validate_records(tmp_path, records))
+
+
+def test_restructuring_shape_is_enforced(tmp_path, records):
+    memos = records["restructurings"]
+    merge = next(m for m in memos if m["kind"] == "merge")
+    merge["location_ids"] = merge["location_ids"][:1]
+    eliminate = next(m for m in memos if m["kind"] == "eliminate")
+    eliminate["location_ids"] = ["the-moon"]
+    eliminate["when"] = {"outcomes": ["not-an-outcome"], "flags": ["not-a-flag"]}
+    memos.append(memos.pop(memos.index(next(m for m in memos if m["when"] is None))) | {"id": "x"})
+    memos.insert(0, dict(DEFAULT_MEMO, id="early-default"))
+    errors = _validate_records(tmp_path, records)
+    assert any("names exactly 2" in e for e in errors)
+    assert any("unknown location 'the-moon'" in e for e in errors)
+    assert any("outcome 'not-an-outcome'" in e for e in errors)
+    assert any("flag 'not-a-flag'" in e for e in errors)
+    assert any("must come last" in e for e in errors)
+
+
+def test_restructuring_reason_is_written_out(tmp_path, records):
+    records["restructurings"][0]["reason"] = "Closed"
+    assert any("reason" in e for e in _validate_records(tmp_path, records))

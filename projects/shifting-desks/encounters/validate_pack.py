@@ -26,6 +26,13 @@ hidden during play, so only a department review may gate a route on one
 grade a player can collect on one card per location, in this department and
 every department above it.
 
+Restructuring (t-023): every department below the surface declares
+`restructurings`, the memos that reshape its map as the player arrives. Each one
+eliminates a location, merges two into a single draw, adds a second card from a
+location, or changes nothing, always with a written reason. `when` names
+outcomes or flags from the departments above (any one matches); the first match
+applies, and exactly one memo with `when: null` comes last as the default.
+
 Usage:
   python projects/shifting-desks/encounters/validate_pack.py            # every *.json pack here
   python projects/shifting-desks/encounters/validate_pack.py PACK.json  # one pack
@@ -59,6 +66,7 @@ MUTATION_KINDS = {"reroll", "auto-success", "bonus", "restore-composure"}
 REQUIRE_KEYS = {"clearance", "flag", "forms", "grade"}
 GRADES = ("obedience", "empathy", "ingenuity", "spite")
 VERDICT_AXES = set(GRADES) | {"balanced"}
+RESTRUCTURE_LOCATIONS = {"eliminate": 1, "merge": 2, "add": 1, "none": 0}
 ART_STATUSES = {"design-only", "verified-repository-art", "approved-ArtImage"}
 ART_SUFFIX = "every surface bare and unmarked"
 # Kind Robots art-prompt contract: positive phrasing only (scripts/repair_negation_art_prompts.py).
@@ -164,6 +172,25 @@ def earlier_grade_reach(path: Path, order: int | None) -> dict[str, int]:
             for axis, value in grade_reach(other).items():
                 reach[axis] += value
     return reach
+
+
+def earlier_department_outcomes(path: Path, order: int | None) -> set[str]:
+    """Department outcome ids declared by sibling packs above this one."""
+    outcomes: set[str] = set()
+    if order is None:
+        return outcomes
+    for sibling in pack_paths([], path.parent):
+        if sibling.resolve() == path.resolve():
+            continue
+        try:
+            other = json.loads(sibling.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        other_order = _department_order(other)
+        if other_order is not None and other_order < order:
+            boss = other.get("boss") if isinstance(other.get("boss"), dict) else {}
+            outcomes |= {o.get("id") for o in boss.get("department_outcomes") or []}
+    return outcomes
 
 
 def _department_order(pack: dict) -> int | None:
@@ -494,6 +521,7 @@ def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str
 
     if earlier_flags is None:
         earlier_flags = earlier_department_flags(path, _department_order(pack))
+    check_restructurings(c, pack, earlier_flags, earlier_department_outcomes(path, _department_order(pack)))
     for where, flag in required_flags:
         if flag not in all_added and flag not in earlier_flags:
             c.err(where, f"requires flag {flag!r} that nothing in this pack grants "
@@ -512,6 +540,69 @@ def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str
                 c.err(where, f"requires {axis} {minimum}, but a run can earn at most {available} by this review")
 
     return c.errors
+
+
+def check_restructurings(c: "Checker", pack: dict, earlier_flags: set[str], earlier_outcomes: set[str]) -> None:
+    order = _department_order(pack)
+    items = pack.get("restructurings")
+    if order == 1:
+        if items:
+            c.err("restructurings", "the surface department has nothing above it to restructure from")
+        return
+    if not isinstance(items, list) or not items:
+        c.err("restructurings", "every department below the surface needs Restructuring memos (DESIGN-BRIEF Rules v1)")
+        return
+    location_ids = {loc.get("location_id") for loc in pack.get("locations") or []}
+    seen: set[str] = set()
+    for i, item in enumerate(items):
+        w = f"restructurings[{item.get('id') if isinstance(item, dict) else i}]"
+        if not isinstance(item, dict):
+            c.err(w, "must be an object")
+            continue
+        c.slug(f"{w}.id", item.get("id"))
+        if item.get("id") in seen:
+            c.err(w, "ids must be unique")
+        seen.add(item.get("id"))
+        kind = item.get("kind")
+        if kind not in RESTRUCTURE_LOCATIONS:
+            c.err(w, f"kind must be one of {sorted(RESTRUCTURE_LOCATIONS)}")
+            continue
+        locs = item.get("location_ids")
+        if not isinstance(locs, list) or len(locs) != RESTRUCTURE_LOCATIONS[kind] or len(set(locs)) != len(locs):
+            c.err(w, f"a {kind} memo names exactly {RESTRUCTURE_LOCATIONS[kind]} distinct location(s)")
+        else:
+            for loc in locs:
+                if loc not in location_ids:
+                    c.err(w, f"unknown location {loc!r}")
+        if kind == "merge":
+            c.text(f"{w}.title", item.get("title"), 5, 48)
+        elif kind == "add" and item.get("title") is not None:
+            c.text(f"{w}.title", item.get("title"), 5, 48)
+        reason = item.get("reason")
+        c.text(f"{w}.reason", reason, 40, 300)
+        if isinstance(reason, str) and not reason.rstrip().endswith((".", "!", "?")):
+            c.err(f"{w}.reason", "must be complete sentences")
+        when = item.get("when", "missing")
+        last = i == len(items) - 1
+        if when is None:
+            if not last:
+                c.err(w, "the default memo (when: null) must come last")
+            continue
+        if last:
+            c.err(w, "the last memo must be the default (when: null)")
+        if not isinstance(when, dict) or set(when) - {"outcomes", "flags"}:
+            c.err(f"{w}.when", "must be null or an object with outcomes and/or flags")
+            continue
+        outcomes = when.get("outcomes") or []
+        flags = when.get("flags") or []
+        if not outcomes and not flags:
+            c.err(f"{w}.when", "names no outcome or flag; use when: null for the default")
+        for o in outcomes:
+            if o not in earlier_outcomes:
+                c.err(f"{w}.when", f"outcome {o!r} is not a department outcome above this one")
+        for f in flags:
+            if f not in earlier_flags:
+                c.err(f"{w}.when", f"flag {f!r} is not granted by any department above this one")
 
 
 def pack_paths(args: list[str], directory: Path = HERE) -> list[Path]:
