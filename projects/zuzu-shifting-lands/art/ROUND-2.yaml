@@ -12,6 +12,10 @@
 # to the card art until a plate lands). The homestead trial has no ROUND-1 subject: its Abbess follows the otter
 # convent cast and the comic-creator Abbess turnaround; children are kept out of every homestead plate.
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# 2026-10-13 review: 173 of 222 keep; 49 rejected (verdicts say why) and rerolled below as sl2r2-*, one new
+# seed each. Prompt fixes where the prompt caused the miss: trial-cave plates paint the bound gorilla solo (as a
+# duo the lane cloned the crow judge), the vulture ranger's 'signal horn' became a brass bugle (it grew horns),
+# species tags are weighted, and each reroll's negative names the defect it replaces.
 round: shifting-lands-2
 project_slug: zuzu-shifting-lands
 designer: Comic Studio
@@ -56,8 +60,11 @@ subjects:
     cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37665
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245807
+  verdict: 'keep: rabbit homesteader at warm doorway offers produce, water bowl set out'
 - key: sl2-family-at-the-fence--honor-guest--failure
   entity: creature
   lane: arthemy-house
@@ -83,8 +90,11 @@ subjects:
     cinematic lighting, medium shot
   jobs:
     arthemy-house: 37666
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245808
+  verdict: 'keep: guarded rabbit with glowing eyes at lit gate, dusk fence, cold welcome'
 - key: sl2-family-at-the-fence--guard-the-gate--success
   entity: creature
   lane: arthemy-house
@@ -109,8 +119,11 @@ subjects:
     viewer, guarded respect, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37667
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245809
+  verdict: 'keep: wary rabbit homesteader at lit gate behind fence, cautious acceptance'
 - key: sl2-family-at-the-fence--guard-the-gate--failure
   entity: scenery
   lane: arthemy-house
@@ -136,8 +149,11 @@ subjects:
     lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37668
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245810
+  verdict: 'keep: shut farmhouse in cold blue dusk, empty yard behind fence'
 - key: sl2-the-orchard-debt--lift-together--success
   entity: creature
   lane: arthemy-house
@@ -163,8 +179,11 @@ subjects:
     cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37669
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245811
+  verdict: 'keep: smiling otter farmer behind loaded handcart under breaking storm light'
 - key: sl2-the-orchard-debt--lift-together--failure
   entity: creature
   lane: arthemy-house
@@ -189,8 +208,11 @@ subjects:
     raindrops, gloomy light, dutch angle, looking at viewer, motion blur, tension, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37670
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245812
+  verdict: 'keep: worried otter splashes after runaway cart, reaching toward viewer in storm'
 - key: sl2-the-orchard-debt--brace-axle--success
   entity: creature
   lane: arthemy-house
@@ -215,8 +237,11 @@ subjects:
     lighting, medium shot
   jobs:
     arthemy-house: 37671
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245813
+  verdict: 'keep: otter farmer with repaired fruit cart standing calm as rain begins'
 - key: sl2-the-orchard-debt--brace-axle--failure
   entity: creature
   lane: arthemy-house
@@ -242,8 +267,12 @@ subjects:
     apples, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37672
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245814
+  verdict: 'reject: otter farmer lies collapsed face-down in the dirt as if felled; no apron-strip bandage offer,
+    cart absent — reads as the otter being hurt, not the described consequence'
 - key: sl2-scarecrows-lantern--cut-the-line--success
   entity: scenery
   lane: arthemy-house
@@ -268,8 +297,12 @@ subjects:
     background, wide shot
   jobs:
     arthemy-house: 37673
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245815
+  verdict: 'reject: two coyotes — one stands calmly holding the lantern and rod while a second lies sprawled on
+    the ground like a body; prompt calls for one thief bolting into the dark, leaving a pouch'
 - key: sl2-scarecrows-lantern--cut-the-line--failure
   entity: scenery
   lane: arthemy-house
@@ -295,8 +328,11 @@ subjects:
     perspective, low angle
   jobs:
     arthemy-house: 37674
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245816
+  verdict: 'keep: silhouetted coyote thief with glowing eyes on tilted dark field, trap board'
 - key: sl2-scarecrows-lantern--follow-footsteps--success
   entity: creature
   lane: arthemy-house
@@ -320,8 +356,11 @@ subjects:
     pose, looking at viewer, open mouth, ears perked, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37675
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245817
+  verdict: 'keep: cornered coyote thief whirls wide-eyed and snarling on fenced lane'
 - key: sl2-scarecrows-lantern--follow-footsteps--failure
   entity: scenery
   lane: arthemy-house
@@ -346,8 +385,11 @@ subjects:
     light, cinematic lighting, detailed background, atmospheric perspective, weathered textures, deep shadows
   jobs:
     arthemy-house: 37676
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245818
+  verdict: 'keep: footprints trail away down dark path, coyote vanishing in distance'
 - key: sl2-the-last-seed--share-water--success
   entity: creature
   lane: arthemy-house
@@ -373,8 +415,11 @@ subjects:
     lighting, medium shot
   jobs:
     arthemy-house: 37677
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245819
+  verdict: 'keep: smiling mouse gardener kneels holding out jar of preserves, warm light'
 - key: sl2-the-last-seed--share-water--failure
   entity: creature
   lane: arthemy-house
@@ -400,8 +445,11 @@ subjects:
     background, medium shot
   jobs:
     arthemy-house: 37678
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245820
+  verdict: 'keep: dismayed mouse gardener kneels by spilled water at stone well'
 - key: sl2-the-last-seed--shield-shoot--success
   entity: creature
   lane: arthemy-house
@@ -427,8 +475,11 @@ subjects:
     detailed background, medium shot
   jobs:
     arthemy-house: 37679
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245821
+  verdict: 'keep: delighted mouse gardener beside unearthed old clay jar at glowing arch'
 - key: sl2-the-last-seed--shield-shoot--failure
   entity: creature
   lane: arthemy-house
@@ -454,8 +505,11 @@ subjects:
     cinematic lighting, medium shot
   jobs:
     arthemy-house: 37680
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245822
+  verdict: 'keep: startled mouse gardener clutches cloth strip amid blowing dust'
 - key: sl2-rope-at-dawn--take-the-rope--success
   entity: creature
   lane: arthemy-house
@@ -479,8 +533,11 @@ subjects:
     sharing, soft rim light, looking at viewer, warm, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37681
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245823
+  verdict: 'keep: otter well keeper with bread loaf and flask against warm sunrise'
 - key: sl2-rope-at-dawn--take-the-rope--failure
   entity: creature
   lane: arthemy-house
@@ -505,8 +562,11 @@ subjects:
     looking at viewer, worry, damp stones, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37682
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245824
+  verdict: 'keep: anxious otter keeper holds saved bucket and rope in grey light'
 - key: sl2-rope-at-dawn--tie-new-knot--success
   entity: creature
   lane: arthemy-house
@@ -531,8 +591,11 @@ subjects:
     medium shot
   jobs:
     arthemy-house: 37683
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245825
+  verdict: 'keep: otter keeper hauls full bucket from water, calm and steady'
 - key: sl2-rope-at-dawn--tie-new-knot--failure
   entity: creature
   lane: arthemy-house
@@ -557,8 +620,11 @@ subjects:
     background, medium shot
   jobs:
     arthemy-house: 37684
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245826
+  verdict: 'keep: grumpy otter keeper in well bucket with sack beneath snagged pulley'
 - key: sl2-a-cup-offered--ask-ingredients--success
   entity: creature
   lane: arthemy-house
@@ -584,8 +650,11 @@ subjects:
     atmospheric perspective, close-up
   jobs:
     arthemy-house: 37685
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245827
+  verdict: 'keep: rabbit herbalist on well rim holding cup, calm warm desert light'
 - key: sl2-a-cup-offered--ask-ingredients--failure
   entity: creature
   lane: arthemy-house
@@ -610,8 +679,11 @@ subjects:
     eyes closed, rejection, cinematic lighting, detailed background, close-up
   jobs:
     arthemy-house: 37686
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245828
+  verdict: 'keep: rabbit herbalist turns away, tipping cup so water spills into sand'
 - key: sl2-a-cup-offered--drink-first--success
   entity: creature
   lane: arthemy-house
@@ -635,8 +707,11 @@ subjects:
     golden hour, steam, cinematic lighting, detailed background, close-up
   jobs:
     arthemy-house: 37687
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245829
+  verdict: 'keep: rabbit herbalist smiles warmly at well beside steaming tin cup'
 - key: sl2-a-cup-offered--drink-first--failure
   entity: creature
   lane: arthemy-house
@@ -660,8 +735,11 @@ subjects:
     at viewer, vignette, cinematic lighting, detailed background, close-up
   jobs:
     arthemy-house: 37688
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245830
+  verdict: 'keep: concerned rabbit peers over tilted well stones, cups knocked over'
 - key: sl2-marks-below-water--measure-stone--success
   entity: creature
   lane: arthemy-house
@@ -687,8 +765,11 @@ subjects:
     wide shot
   jobs:
     arthemy-house: 37689
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245831
+  verdict: 'keep: goat stonemason carefully sets a stone block in shadowed masonry'
 - key: sl2-marks-below-water--measure-stone--failure
   entity: creature
   lane: arthemy-house
@@ -713,8 +794,11 @@ subjects:
     debris, danger, rubble, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37690
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245832
+  verdict: 'keep: goat stonemason lurches and reaches out as stones tumble in dust'
 - key: sl2-marks-below-water--sound-depth--success
   entity: creature
   lane: arthemy-house
@@ -739,8 +823,11 @@ subjects:
     background, medium shot
   jobs:
     arthemy-house: 37691
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245833
+  verdict: 'keep: goat stonemason crouches with lantern, peering at find in archway'
 - key: sl2-marks-below-water--sound-depth--failure
   entity: creature
   lane: arthemy-house
@@ -765,8 +852,11 @@ subjects:
     at viewer, misery, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37692
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245834
+  verdict: 'keep: drenched goat stonemason hugs himself in cold water under grey sky'
 - key: sl2-two-empty-buckets--carry-buckets--success
   entity: creature
   lane: arthemy-house
@@ -791,8 +881,11 @@ subjects:
     detailed background, medium shot
   jobs:
     arthemy-house: 37693
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245835
+  verdict: 'keep: smiling fox courier at lit doorway, bucket and bread loaves waiting'
 - key: sl2-two-empty-buckets--carry-buckets--failure
   entity: creature
   lane: arthemy-house
@@ -817,8 +910,11 @@ subjects:
     shot
   jobs:
     arthemy-house: 37694
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245836
+  verdict: 'keep: crouched fox courier glowers beside bucket on dusk path, wasted effort'
 - key: sl2-two-empty-buckets--follow-missing--success
   entity: scenery
   lane: arthemy-house
@@ -843,8 +939,11 @@ subjects:
     wind-blown grass, clue, dust motes, warm sky, faint clouds, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37695
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245837
+  verdict: 'keep: footprints lead down the refuge road toward a glowing dusk horizon'
 - key: sl2-two-empty-buckets--follow-missing--failure
   entity: creature
   lane: arthemy-house
@@ -869,8 +968,11 @@ subjects:
     glow, worry, desolate, night wind, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37696
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245838
+  verdict: 'keep: anxious fox courier crouches with lantern under stars, footprints around'
 - key: sl2-gate-still-open--accept-stew--success
   entity: creature
   lane: arthemy-house
@@ -894,8 +996,11 @@ subjects:
     cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37697
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245839
+  verdict: 'keep: smiling otter sister serves stew and bread basket in candlelit refectory'
 - key: sl2-gate-still-open--accept-stew--failure
   entity: creature
   lane: arthemy-house
@@ -919,8 +1024,11 @@ subjects:
     glance, alarm, abandoned meal, dark corners, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37698
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245840
+  verdict: 'keep: sly otter sister at cold blue table, bowls left, uneasy turn'
 - key: sl2-gate-still-open--inspect-arch--success
   entity: scenery
   lane: arthemy-house
@@ -944,8 +1052,11 @@ subjects:
     subtle unease, dust, adobe bricks, quiet observation, clue, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37699
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245841
+  verdict: 'keep: footprint-marked arch passage with lantern, small otter silhouette inside'
 - key: sl2-gate-still-open--inspect-arch--failure
   entity: creature
   lane: arthemy-house
@@ -969,8 +1080,11 @@ subjects:
     cold stars, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37700
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245842
+  verdict: 'keep: otter sister''s thin cold smile under blue lantern light, viewer shut out'
 - key: sl2-the-locked-dormitory--question-novice--success
   entity: creature
   lane: arthemy-house
@@ -996,8 +1110,11 @@ subjects:
     background, medium shot
   jobs:
     arthemy-house: 37701
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245843
+  verdict: 'keep: nervous mouse novice in dim corridor, hands to cheeks, toy horse nearby'
 - key: sl2-the-locked-dormitory--question-novice--failure
   entity: creature
   lane: arthemy-house
@@ -1021,8 +1138,11 @@ subjects:
     medium shot
   jobs:
     arthemy-house: 37702
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245844
+  verdict: 'keep: hooded mouse novice blocks lantern-lit corridor, cold glowing stare'
 - key: sl2-the-locked-dormitory--search-lock--success
   entity: scenery
   lane: arthemy-house
@@ -1047,8 +1167,11 @@ subjects:
     weathered textures, still life
   jobs:
     arthemy-house: 37703
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245845
+  verdict: 'keep: toy horse with faded red ribbon before the lantern-lit locked door'
 - key: sl2-the-locked-dormitory--search-lock--failure
   entity: scenery
   lane: arthemy-house
@@ -1074,8 +1197,12 @@ subjects:
     detailed background, medium shot
   jobs:
     arthemy-house: 37704
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245846
+  verdict: 'reject: a live black pony trots out of a side room beside a heap of cloth on the floor; no stuck tool
+    in the lock — unprompted figure confuses the scene'
 - key: sl2-a-crust-for-the-road--thank-with-bow--success
   entity: creature
   lane: arthemy-house
@@ -1100,8 +1227,11 @@ subjects:
     wet stones, trust, kindness, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37705
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245847
+  verdict: 'keep: otter kitchen novice holds wrapped bread at rainy threshold, soft expression'
 - key: sl2-a-crust-for-the-road--thank-with-bow--failure
   entity: scenery
   lane: arthemy-house
@@ -1126,8 +1256,11 @@ subjects:
     rejection, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37706
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245848
+  verdict: 'keep: otter novice retreats through closing door into cold blue rain'
 - key: sl2-a-crust-for-the-road--offer-help--success
   entity: creature
   lane: arthemy-house
@@ -1151,8 +1284,11 @@ subjects:
     flickering shadows, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37707
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245849
+  verdict: 'keep: otter novice leans in conspiratorially over steamy candlelit kitchen counter'
 - key: sl2-a-crust-for-the-road--offer-help--failure
   entity: scenery
   lane: arthemy-house
@@ -1176,8 +1312,12 @@ subjects:
     isolation, bitter cold, dim moon, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37708
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245850
+  verdict: 'reject: a human (dark-haired person) sleeps under a blanket by the window — wrong species for the all-animal
+    cast and reads as the never-drawn viewer in frame'
 - key: sl2-the-silent-bell--ask-about-bell--success
   entity: creature
   lane: arthemy-house
@@ -1201,8 +1341,11 @@ subjects:
     secretive, avoidance, adobe walls, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37709
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245851
+  verdict: 'keep: uneasy badger caretaker on tower stairs beneath the motionless bell'
 - key: sl2-the-silent-bell--ask-about-bell--failure
   entity: creature
   lane: arthemy-house
@@ -1225,8 +1368,11 @@ subjects:
     dust, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37710
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245852
+  verdict: 'keep: scowling badger caretaker points sternly away from gate under bell'
 - key: sl2-the-silent-bell--climb-stairs--success
   entity: scenery
   lane: arthemy-house
@@ -1251,8 +1397,12 @@ subjects:
     patina, hush, vantage point, cinematic lighting, detailed background, stillness
   jobs:
     arthemy-house: 37711
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245853
+  verdict: 'reject: ground-level sunset colonnade with a tiny bell and an unprompted horned, arms-raised robed silhouette;
+    not the tower-top clapperless-bell discovery'
 - key: sl2-the-silent-bell--climb-stairs--failure
   entity: scenery
   lane: arthemy-house
@@ -1277,8 +1427,11 @@ subjects:
     step, vertigo, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37712
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245854
+  verdict: 'keep: overhead view down dark stairwell, badger caretaker staring up from below'
 - key: sl2-lanterns-on-the-raft--offer-to-steady-the-mooring--success
   entity: creature
   lane: arthemy-house
@@ -1304,8 +1457,11 @@ subjects:
     ink wash shading, detailed background, cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37713
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245855
+  verdict: 'keep: otter ferryman in red coat on lashed raft holding cloth, golden calm river'
 - key: sl2-lanterns-on-the-raft--offer-to-steady-the-mooring--failure
   entity: scenery
   lane: arthemy-house
@@ -1331,8 +1487,11 @@ subjects:
     shading, detailed background, cinematic composition, atmospheric, wide shot
   jobs:
     arthemy-house: 37714
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245856
+  verdict: 'keep: otter ferryman alone at night on black water, slipped rope trailing, lone lantern'
 - key: sl2-lanterns-on-the-raft--ask-why-the-lantern-burns--success
   entity: creature
   lane: arthemy-house
@@ -1357,8 +1516,11 @@ subjects:
     detailed background, cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37715
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245857
+  verdict: 'keep: otter ferryman with long pole standing calm in a still daylit river'
 - key: sl2-lanterns-on-the-raft--ask-why-the-lantern-burns--failure
   entity: creature
   lane: arthemy-house
@@ -1383,8 +1545,11 @@ subjects:
     background, cinematic composition, atmospheric, wide shot
   jobs:
     arthemy-house: 37716
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245858
+  verdict: 'keep: scowling otter ferryman with pole and lantern on grey dusk river'
 - key: sl2-toll-of-two-names--demand-an-honest-account--success
   entity: creature
   lane: arthemy-house
@@ -1411,8 +1576,11 @@ subjects:
     shot
   jobs:
     arthemy-house: 37717
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245859
+  verdict: 'keep: goat registrar at toll booth writing a line in her ledger, warm light'
 - key: sl2-toll-of-two-names--demand-an-honest-account--failure
   entity: creature
   lane: arthemy-house
@@ -1437,8 +1605,11 @@ subjects:
     period influence, ink wash shading, detailed background, cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37718
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245860
+  verdict: 'keep: menacing goat registrar rising on the dock, hostile confrontation at the toll'
 - key: sl2-toll-of-two-names--copy-the-ledger-quietly--success
   entity: creature
   lane: arthemy-house
@@ -1463,8 +1634,11 @@ subjects:
     ink wash shading, detailed background, cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37719
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245861
+  verdict: 'keep: goat registrar silhouetted at sunset by toll table, ledger left on it'
 - key: sl2-toll-of-two-names--copy-the-ledger-quietly--failure
   entity: creature
   lane: arthemy-house
@@ -1489,8 +1663,11 @@ subjects:
     period influence, ink wash shading, detailed background, cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37720
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245862
+  verdict: 'reject: snarling demonic goat dripping red from its mouth over a blood-like red puddle; reads as gore'
 - key: sl2-the-boat-that-waits--repair-the-rudder--success
   entity: creature
   lane: arthemy-house
@@ -1515,8 +1692,11 @@ subjects:
     wash shading, detailed background, cinematic composition, atmospheric, wide shot
   jobs:
     arthemy-house: 37721
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245863
+  verdict: 'keep: heron boatwright in coat pointing the safe route through pale shallows'
 - key: sl2-the-boat-that-waits--repair-the-rudder--failure
   entity: creature
   lane: arthemy-house
@@ -1541,8 +1721,11 @@ subjects:
     wash shading, detailed background, cinematic composition, atmospheric, wide shot
   jobs:
     arthemy-house: 37722
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245864
+  verdict: 'keep: heron cries out in alarm beside splintered rudder wood in the mud'
 - key: sl2-the-boat-that-waits--wait-for-its-owner--success
   entity: scenery
   lane: arthemy-house
@@ -1568,8 +1751,11 @@ subjects:
     cinematic composition, atmospheric, wide shot
   jobs:
     arthemy-house: 37723
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245865
+  verdict: 'reject: heron stands alone in grey dusk, no traveler or dawn arrival; success reads bleak'
 - key: sl2-the-boat-that-waits--wait-for-its-owner--failure
   entity: creature
   lane: arthemy-house
@@ -1594,8 +1780,11 @@ subjects:
     shading, detailed background, cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37724
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245866
+  verdict: 'reject: heron appears lashed by the neck to the mooring post, reads as bound or hanged'
 - key: sl2-weighed-in-salt--test-the-counterweights--success
   entity: creature
   lane: arthemy-house
@@ -1619,8 +1808,11 @@ subjects:
     composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37725
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245867
+  verdict: 'keep: badger merchant caught skulking sheepishly in lantern-lit salt storeroom'
 - key: sl2-weighed-in-salt--test-the-counterweights--failure
   entity: creature
   lane: arthemy-house
@@ -1646,8 +1838,11 @@ subjects:
     ink wash shading, detailed background, cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37726
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245868
+  verdict: 'keep: badger merchant standing arms crossed and sneering in the storeroom'
 - key: sl2-weighed-in-salt--trade-supplies-for-passage--success
   entity: creature
   lane: arthemy-house
@@ -1672,8 +1867,11 @@ subjects:
     background, cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37727
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245869
+  verdict: 'keep: badger merchant at counter with sacks and balance scale, deal struck'
 - key: sl2-weighed-in-salt--trade-supplies-for-passage--failure
   entity: creature
   lane: arthemy-house
@@ -1697,8 +1895,11 @@ subjects:
     composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37728
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245870
+  verdict: 'keep: grinning badger merchant scooping food off the counter into his haul'
 - key: sl2-the-mended-compass--compare-the-two-charts--success
   entity: creature
   lane: arthemy-house
@@ -1724,8 +1925,11 @@ subjects:
     cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37729
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245871
+  verdict: 'keep: hooded fox cartographer on riverbend stone holding brass compass, trail ahead'
 - key: sl2-the-mended-compass--compare-the-two-charts--failure
   entity: scenery
   lane: arthemy-house
@@ -1750,8 +1954,11 @@ subjects:
     shot
   jobs:
     arthemy-house: 37730
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245872
+  verdict: 'reject: bridge is shown intact across the river; failure needs the washed-out bridge stumps'
 - key: sl2-the-mended-compass--help-reset-the-compass--success
   entity: creature
   lane: arthemy-house
@@ -1776,8 +1983,11 @@ subjects:
     cinematic composition, atmospheric, close-up
   jobs:
     arthemy-house: 37731
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245873
+  verdict: 'keep: smiling hooded fox cartographer at lamplit table with chart and tools'
 - key: sl2-the-mended-compass--help-reset-the-compass--failure
   entity: creature
   lane: arthemy-house
@@ -1802,8 +2012,11 @@ subjects:
     cinematic composition, atmospheric, close-up
   jobs:
     arthemy-house: 37732
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245874
+  verdict: 'keep: hooded fox frowning hard over a skewed compass on the table'
 - key: sl2-three-cups-on-the-table--share-the-untouched-meal--success
   entity: creature
   lane: arthemy-house
@@ -1828,8 +2041,11 @@ subjects:
     background, cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37733
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245875
+  verdict: 'keep: mouse cook with fresh bread in kitchen, bright open doorway behind'
 - key: sl2-three-cups-on-the-table--share-the-untouched-meal--failure
   entity: creature
   lane: arthemy-house
@@ -1854,8 +2070,11 @@ subjects:
     influence, ink wash shading, detailed background, cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37734
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245876
+  verdict: 'keep: frightened mouse cook crouched by the door among spilled bread loaves'
 - key: sl2-three-cups-on-the-table--question-the-armed-patrons--success
   entity: scenery
   lane: arthemy-house
@@ -1880,8 +2099,11 @@ subjects:
     cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37735
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245877
+  verdict: 'reject: armed hooded patron rendered as a tiny wide-eyed mouse perched on the counter; no exposed checkpoint'
 - key: sl2-three-cups-on-the-table--question-the-armed-patrons--failure
   entity: scenery
   lane: arthemy-house
@@ -1906,8 +2128,12 @@ subjects:
     medium shot
   jobs:
     arthemy-house: 37736
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245878
+  verdict: 'reject: empty tidy room with upright chair; no patron, drawn knife, tipped chair or spill, so no ambush
+    reads'
 - key: sl2-footprints-in-the-silt--follow-the-wet-prints--success
   entity: creature
   lane: arthemy-house
@@ -1931,8 +2157,11 @@ subjects:
     influence, ink wash shading, detailed background, cinematic composition, atmospheric, wide shot
   jobs:
     arthemy-house: 37737
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245879
+  verdict: 'keep: hooded surveyor with staff following glowing wet prints along the channel'
 - key: sl2-footprints-in-the-silt--follow-the-wet-prints--failure
   entity: creature
   lane: arthemy-house
@@ -1958,8 +2187,11 @@ subjects:
     medium shot
   jobs:
     arthemy-house: 37738
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245880
+  verdict: 'reject: surveyor drawn as skull-faced hooded monster lunging at viewer; reads as attack, not rescue'
 - key: sl2-footprints-in-the-silt--help-set-new-markers--success
   entity: creature
   lane: arthemy-house
@@ -1983,8 +2215,11 @@ subjects:
     ink wash shading, detailed background, cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37739
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245881
+  verdict: 'reject: shell-less lizard in leather armour, clearly not the tortoise surveyor; no stakes or rope line'
 - key: sl2-footprints-in-the-silt--help-set-new-markers--failure
   entity: creature
   lane: arthemy-house
@@ -2009,8 +2244,11 @@ subjects:
     composition, atmospheric, wide shot
   jobs:
     arthemy-house: 37740
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245882
+  verdict: 'keep: drenched tortoise surveyor slumped in muddy current, torn rope drifting'
 - key: sl2-a-road-of-bones--cross-on-the-old-timbers--success
   entity: scenery
   lane: arthemy-house
@@ -2035,8 +2273,11 @@ subjects:
     wide shot
   jobs:
     arthemy-house: 37741
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245883
+  verdict: 'keep: long driftwood-beam walkway framed against dusk sun, crossing completed'
 - key: sl2-a-road-of-bones--cross-on-the-old-timbers--failure
   entity: scenery
   lane: arthemy-house
@@ -2061,8 +2302,11 @@ subjects:
     atmospheric, wide shot
   jobs:
     arthemy-house: 37742
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245884
+  verdict: 'keep: snapped rotten timbers under a storm sky over shimmering salt flats'
 - key: sl2-a-road-of-bones--ask-the-guide-to-lead--success
   entity: creature
   lane: arthemy-house
@@ -2087,8 +2331,11 @@ subjects:
     background, cinematic composition, atmospheric, wide shot
   jobs:
     arthemy-house: 37743
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245885
+  verdict: 'keep: jackal salvage guide striding ahead with rope coils, leading the way'
 - key: sl2-a-road-of-bones--ask-the-guide-to-lead--failure
   entity: scenery
   lane: arthemy-house
@@ -2113,8 +2360,11 @@ subjects:
     background, cinematic composition, atmospheric, wide shot
   jobs:
     arthemy-house: 37744
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245886
+  verdict: 'keep: jackal guide a tiny figure vanishing toward far dunes, footprints left behind'
 - key: sl2-the-reed-music--listen-between-the-notes--success
   entity: creature
   lane: arthemy-house
@@ -2138,8 +2388,11 @@ subjects:
     cinematic composition, atmospheric, medium shot
   jobs:
     arthemy-house: 37745
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245887
+  verdict: 'keep: frog musician resting reed on his stone beside a shining shallow pool'
 - key: sl2-the-reed-music--listen-between-the-notes--failure
   entity: scenery
   lane: arthemy-house
@@ -2163,8 +2416,11 @@ subjects:
     edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric, wide shot
   jobs:
     arthemy-house: 37746
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245888
+  verdict: 'keep: frog musician half-lost in a brown dust haze over the delta'
 - key: sl2-the-reed-music--offer-an-old-traveling-song--success
   entity: creature
   lane: arthemy-house
@@ -2188,8 +2444,11 @@ subjects:
     atmospheric, medium shot
   jobs:
     arthemy-house: 37747
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245889
+  verdict: 'keep: frog playing his reed on a rock above a winding moonlit path'
 - key: sl2-the-reed-music--offer-an-old-traveling-song--failure
   entity: scenery
   lane: arthemy-house
@@ -2214,8 +2473,11 @@ subjects:
     wide shot
   jobs:
     arthemy-house: 37748
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245890
+  verdict: 'keep: frog crouched on a rock under a blazing harsh sun in the wastes'
 - key: sl2-hammer-under-the-stone--brace-the-loosened-wall--success
   entity: creature
   lane: arthemy-house
@@ -2241,8 +2503,11 @@ subjects:
     west, ink wash, medium shot
   jobs:
     arthemy-house: 37749
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245891
+  verdict: 'reject: lead is a grinning red fox/coyote with a hammer, not the mole mason; no timber brace'
 - key: sl2-hammer-under-the-stone--brace-the-loosened-wall--failure
   entity: scenery
   lane: arthemy-house
@@ -2267,8 +2532,11 @@ subjects:
     buried road, debris, grim mood, chaos, quarry, sandstone, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37750
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245892
+  verdict: 'keep: mole mason flattened in dust beside his hammer after the shelf slumps'
 - key: sl2-hammer-under-the-stone--inspect-the-fresh-cuts--success
   entity: creature
   lane: arthemy-house
@@ -2294,8 +2562,11 @@ subjects:
     shot
   jobs:
     arthemy-house: 37751
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245893
+  verdict: 'reject: crouching figure is a snarling red wolf, not the mole mason; no chisel trail'
 - key: sl2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
   entity: scenery
   lane: arthemy-house
@@ -2320,8 +2591,11 @@ subjects:
     angle, debris, danger, tense mood, motion blur, quarry, sandstone, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37752
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245894
+  verdict: 'reject: silhouetted waving figure reads as a wolf/cat, not the mole mason; no shale cascade'
 - key: sl2-the-empty-pay-cart--refuse-the-crooked-bargain--success
   entity: creature
   lane: arthemy-house
@@ -2347,8 +2621,11 @@ subjects:
     shot
   jobs:
     arthemy-house: 37753
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245895
+  verdict: 'keep: boar accountant standing at a timbered quarry tunnel mouth, the workers'' last lead'
 - key: sl2-the-empty-pay-cart--refuse-the-crooked-bargain--failure
   entity: scenery
   lane: arthemy-house
@@ -2373,8 +2650,11 @@ subjects:
     tense mood, motion blur, low angle, quarry, sandstone, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37754
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245896
+  verdict: 'keep: menacing glowing-eyed boar looms in a rock-strewn quarry beside the ore cart'
 - key: sl2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
   entity: scenery
   lane: arthemy-house
@@ -2398,8 +2678,12 @@ subjects:
     reunion, supplies reclaimed, dust motes, warm mood, quarry, sandstone, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37755
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245897
+  verdict: 'reject: feral quadruped boar wearing a saddle pack; no returning workers or heaped cart, consequence
+    unreadable'
 - key: sl2-the-empty-pay-cart--read-the-pay-sheet-aloud--failure
   entity: scenery
   lane: arthemy-house
@@ -2424,8 +2708,11 @@ subjects:
     lonely, tense mood, quarry, sandstone, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37756
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245898
+  verdict: 'keep: smug boar accountant alone in the dark quarry, a cold failure mood'
 - key: sl2-the-glass-vein--cut-a-safe-sample--success
   entity: creature
   lane: arthemy-house
@@ -2450,8 +2737,11 @@ subjects:
     gentle, safe path, shade, careful hands, quarry, sandstone, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37757
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245899
+  verdict: 'keep: lizard collector kneels in a quarry hollow over her padded sample tray'
 - key: sl2-the-glass-vein--cut-a-safe-sample--failure
   entity: scenery
   lane: arthemy-house
@@ -2475,8 +2765,11 @@ subjects:
     blur, sparkles, tense mood, quarry, sandstone, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37758
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245900
+  verdict: 'reject: collector drawn as a feral raptor sledding downhill; no shard burst, reads playful not failed'
 - key: sl2-the-glass-vein--carry-the-collector-s-load--success
   entity: creature
   lane: arthemy-house
@@ -2501,8 +2794,11 @@ subjects:
     peaceful, long shadows, distant mesas, quarry, sandstone, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37759
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245901
+  verdict: 'keep: lizard collector resting on a rock at sunset with tea and tray'
 - key: sl2-the-glass-vein--carry-the-collector-s-load--failure
   entity: creature
   lane: arthemy-house
@@ -2526,8 +2822,11 @@ subjects:
     struggling, heat haze, tense mood, quarry, sandstone, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37760
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245902
+  verdict: 'keep: lizard collector crouched and huffing over her heavy tray on the trail'
 - key: sl2-the-watchful-overhang--call-the-travelers-back--success
   entity: scenery
   lane: arthemy-house
@@ -2552,8 +2851,11 @@ subjects:
     relief, safe passage, distant mesas, calm mood, canyon trail, sandstone cliffs, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37761
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245903
+  verdict: 'keep: ibex scout silhouette leads a guide rope out through a sunlit canyon'
 - key: sl2-the-watchful-overhang--call-the-travelers-back--failure
   entity: scenery
   lane: arthemy-house
@@ -2578,8 +2880,11 @@ subjects:
     cliffs, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37762
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245904
+  verdict: 'keep: overhang tunnel collapsing in dust while a small figure scrambles clear'
 - key: sl2-the-watchful-overhang--test-the-ledge-alone--success
   entity: creature
   lane: arthemy-house
@@ -2605,8 +2910,11 @@ subjects:
     shot
   jobs:
     arthemy-house: 37763
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245905
+  verdict: 'reject: ibex scout given a pointed devil tail and reads as a demon girl; no chalk marks or cairns'
 - key: sl2-the-watchful-overhang--test-the-ledge-alone--failure
   entity: creature
   lane: arthemy-house
@@ -2631,8 +2939,11 @@ subjects:
     cliffs, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37764
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245906
+  verdict: 'reject: black horned bull stalking toward viewer, not the ibex scout bracing a rope'
 - key: sl2-the-banner-in-the-wind--decode-the-banner-knots--success
   entity: creature
   lane: arthemy-house
@@ -2658,8 +2969,11 @@ subjects:
     ink wash, medium shot
   jobs:
     arthemy-house: 37765
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245907
+  verdict: 'keep: eagle captain spreads wings triumphantly over the rope bridge under bright sun'
 - key: sl2-the-banner-in-the-wind--decode-the-banner-knots--failure
   entity: scenery
   lane: arthemy-house
@@ -2685,8 +2999,11 @@ subjects:
     shot
   jobs:
     arthemy-house: 37766
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245908
+  verdict: 'reject: modern paved road with guardrails breaks the frontier setting; no banner'
 - key: sl2-the-banner-in-the-wind--search-below-the-bridge--success
   entity: creature
   lane: arthemy-house
@@ -2711,8 +3028,11 @@ subjects:
     river below, canyon trail, sandstone cliffs, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37767
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245909
+  verdict: 'keep: eagle courier alive in the bridge ropes, reaching toward the viewer'
 - key: sl2-the-banner-in-the-wind--search-below-the-bridge--failure
   entity: scenery
   lane: arthemy-house
@@ -2737,8 +3057,11 @@ subjects:
     dust, mist, canyon trail, sandstone cliffs, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37768
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245910
+  verdict: 'keep: view up from the riverbed to a dark bridge far overhead'
 - key: sl2-the-toll-without-a-keeper--challenge-the-false-toll--success
   entity: creature
   lane: arthemy-house
@@ -2762,8 +3085,11 @@ subjects:
     relief, trail open, canyon trail, sandstone cliffs, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37769
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245911
+  verdict: 'reject: hyena enforcer shown asleep on a crate; does not read as backing away or abandoning post'
 - key: sl2-the-toll-without-a-keeper--challenge-the-false-toll--failure
   entity: scenery
   lane: arthemy-house
@@ -2788,8 +3114,11 @@ subjects:
     scattered stones, canyon trail, sandstone cliffs, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37770
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245912
+  verdict: 'keep: snarling hyena enforcer crouched at a boulder, second hyena lunging distant'
 - key: sl2-the-toll-without-a-keeper--offer-a-fair-trade--success
   entity: creature
   lane: arthemy-house
@@ -2814,8 +3143,11 @@ subjects:
     lifted, passage granted, calm mood, canyon trail, sandstone cliffs, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37771
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245913
+  verdict: 'keep: anthro hyena on the toll post pointing down the open trail between spears'
 - key: sl2-the-toll-without-a-keeper--offer-a-fair-trade--failure
   entity: scenery
   lane: arthemy-house
@@ -2840,8 +3172,11 @@ subjects:
     cliffs, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37772
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245914
+  verdict: 'reject: lane-marked modern asphalt highway with no ledge; figure just walking off, consequence unreadable'
 - key: sl2-one-place-by-the-fire--accept-the-offered-place--success
   entity: creature
   lane: arthemy-house
@@ -2866,8 +3201,11 @@ subjects:
     west, ink wash, medium shot
   jobs:
     arthemy-house: 37773
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245915
+  verdict: 'keep: kindly elk host holding a stew pot over the fire under stars'
 - key: sl2-one-place-by-the-fire--accept-the-offered-place--failure
   entity: creature
   lane: arthemy-house
@@ -2892,8 +3230,11 @@ subjects:
     camp, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37774
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245916
+  verdict: 'keep: agitated elk host gesturing over a smoking, boiling pot in the dark canyon'
 - key: sl2-one-place-by-the-fire--ask-about-the-missing-name--success
   entity: creature
   lane: arthemy-house
@@ -2918,8 +3259,11 @@ subjects:
     camp, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37775
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245917
+  verdict: 'keep: sorrowful elk host seated by the fire in the canyon at night'
 - key: sl2-one-place-by-the-fire--ask-about-the-missing-name--failure
   entity: scenery
   lane: arthemy-house
@@ -2944,8 +3288,11 @@ subjects:
     weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37776
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245918
+  verdict: 'keep: lone elk host by a small fire in a cold blue night canyon'
 - key: sl2-the-map-in-ashes--rescue-the-marked-fragment--success
   entity: creature
   lane: arthemy-house
@@ -2970,8 +3317,11 @@ subjects:
     canyon camp, weird west, ink wash, close-up
   jobs:
     arthemy-house: 37777
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245919
+  verdict: 'keep: wide-eyed raccoon archivist leaning over a rescued map fragment in firelight'
 - key: sl2-the-map-in-ashes--rescue-the-marked-fragment--failure
   entity: creature
   lane: arthemy-house
@@ -2996,8 +3346,11 @@ subjects:
     wash, close-up
   jobs:
     arthemy-house: 37778
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245920
+  verdict: 'keep: dismayed raccoon archivist crouched beside a roaring fire and sparks'
 - key: sl2-the-map-in-ashes--persuade-her-to-stop--success
   entity: creature
   lane: arthemy-house
@@ -3022,8 +3375,11 @@ subjects:
     starry sky, canyon camp, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37779
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245921
+  verdict: 'keep: teary raccoon archivist holding out an intact chart behind the fire'
 - key: sl2-the-map-in-ashes--persuade-her-to-stop--failure
   entity: creature
   lane: arthemy-house
@@ -3047,8 +3403,11 @@ subjects:
     west, ink wash, medium shot
   jobs:
     arthemy-house: 37780
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245922
+  verdict: 'reject: raccoon breathes fire from its mouth with a glowing chest; reads as a monster, no maps thrown'
 - key: sl2-the-night-watch-debt--take-the-first-watch--success
   entity: creature
   lane: arthemy-house
@@ -3073,8 +3432,12 @@ subjects:
     thief, lantern glow, starry sky, canyon camp, weird west, ink wash, medium shot
   jobs:
     arthemy-house: 37781
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245923
+  verdict: 'reject: wolf sentry clutching his head in despair beside the sacks; mood contradicts success, no thief
+    caught'
 - key: sl2-the-night-watch-debt--take-the-first-watch--failure
   entity: scenery
   lane: arthemy-house
@@ -3099,8 +3462,11 @@ subjects:
     loss, exhaustion, empty camp, grim mood, dark shadows, canyon camp, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37782
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245924
+  verdict: 'keep: glowering wolf sentry over a dying fire beside slumped, looted supplies'
 - key: sl2-the-night-watch-debt--follow-the-counted-footsteps--success
   entity: scenery
   lane: arthemy-house
@@ -3124,8 +3490,11 @@ subjects:
     gentle, peaceful, morning mist, pink sky, canyon camp, weird west, ink wash, wide shot
   jobs:
     arthemy-house: 37783
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245925
+  verdict: 'keep: lantern-carrying pilgrim silhouette on footprinted canyon road at rosy dawn'
 - key: sl2-the-night-watch-debt--follow-the-counted-footsteps--failure
   entity: scenery
   lane: arthemy-house
@@ -3149,8 +3518,11 @@ subjects:
     wide shot
   jobs:
     arthemy-house: 37784
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245926
+  verdict: 'keep: cold empty blue gully with a trail of footprints ending'
 - key: sl2-feathers-in-the-draft--answer-her-question-plainly--success
   entity: creature
   lane: arthemy-house
@@ -3175,8 +3547,11 @@ subjects:
     cave, atmospheric, cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37785
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245927
+  verdict: 'keep: crow storm-reader in purple robe holds chalk inside a glowing chalk circle'
 - key: sl2-feathers-in-the-draft--answer-her-question-plainly--failure
   entity: scenery
   lane: arthemy-house
@@ -3202,8 +3577,11 @@ subjects:
     lighting, depth of field, wide shot
   jobs:
     arthemy-house: 37786
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245928
+  verdict: 'keep: tiny crow far off in a cold blue cave mouth, viewer lost in mist'
 - key: sl2-feathers-in-the-draft--study-the-returning-draft--success
   entity: creature
   lane: arthemy-house
@@ -3228,8 +3606,11 @@ subjects:
     cave, atmospheric, cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37787
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245929
+  verdict: 'keep: crow storm-reader stands by a warm lantern in a calm amber tunnel'
 - key: sl2-feathers-in-the-draft--study-the-returning-draft--failure
   entity: scenery
   lane: arthemy-house
@@ -3255,8 +3636,11 @@ subjects:
     cave, atmospheric, cinematic lighting, depth of field, wide shot
   jobs:
     arthemy-house: 37788
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245930
+  verdict: 'keep: lone crow silhouette in a grey, smoky cavern with dim lamps, ominous'
 - key: sl2-the-third-shadow--count-the-lantern-positions--success
   entity: creature
   lane: arthemy-house
@@ -3282,8 +3666,12 @@ subjects:
     lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37789
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245931
+  verdict: 'reject: bat guide sprawled prone like a collapsed beast with a disembodied arm holding the lantern;
+    confusing anatomy, not startled guilt'
 - key: sl2-the-third-shadow--count-the-lantern-positions--failure
   entity: scenery
   lane: arthemy-house
@@ -3309,8 +3697,11 @@ subjects:
     cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37790
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245932
+  verdict: 'keep: bat-eared guide kneels with lantern, scowling, retreating into blue-lit tunnel'
 - key: sl2-the-third-shadow--demand-a-safer-passage--success
   entity: creature
   lane: arthemy-house
@@ -3335,8 +3726,11 @@ subjects:
     depth of field, medium shot
   jobs:
     arthemy-house: 37791
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245933
+  verdict: 'reject: bat guide drawn as a human woman with a human face and small wings; wrong species'
 - key: sl2-the-third-shadow--demand-a-safer-passage--failure
   entity: scenery
   lane: arthemy-house
@@ -3362,8 +3756,11 @@ subjects:
     medium shot
   jobs:
     arthemy-house: 37792
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245934
+  verdict: 'keep: hooded bat guide stands coldly in a stone gateway, standoff mood'
 - key: sl2-shelter-for-the-storm--carry-the-medicine-chest--success
   entity: creature
   lane: arthemy-house
@@ -3388,8 +3785,12 @@ subjects:
     of field, medium shot
   jobs:
     arthemy-house: 37793
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245935
+  verdict: 'reject: healer reads as a fanged, glowing-eyed hooded ghoul conjuring over fire; menacing, not a warm
+    pangolin success'
 - key: sl2-shelter-for-the-storm--carry-the-medicine-chest--failure
   entity: creature
   lane: arthemy-house
@@ -3415,8 +3816,11 @@ subjects:
     field, medium shot
   jobs:
     arthemy-house: 37794
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245936
+  verdict: 'keep: scaly cloaked pangolin healer hunches in rain near the medicine chest'
 - key: sl2-shelter-for-the-storm--guide-the-stranded-travelers--success
   entity: creature
   lane: arthemy-house
@@ -3441,8 +3845,11 @@ subjects:
     depth of field, medium shot
   jobs:
     arthemy-house: 37795
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245937
+  verdict: 'keep: hooded healer kneels smiling at a warm campfire in a dry cave'
 - key: sl2-shelter-for-the-storm--guide-the-stranded-travelers--failure
   entity: scenery
   lane: arthemy-house
@@ -3468,8 +3875,11 @@ subjects:
     wide shot
   jobs:
     arthemy-house: 37796
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245938
+  verdict: 'keep: hooded healer with lantern stands alone in rain-swept floodwater'
 - key: sl2-the-candle-court--hear-both-testimonies--success
   entity: creature
   lane: arthemy-house
@@ -3494,8 +3904,11 @@ subjects:
     of field, medium shot
   jobs:
     arthemy-house: 37797
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245939
+  verdict: 'keep: crow adjudicator consults a blank tablet beside a steady blue flame'
 - key: sl2-the-candle-court--hear-both-testimonies--failure
   entity: creature
   lane: arthemy-house
@@ -3521,8 +3934,11 @@ subjects:
     depth of field, medium shot
   jobs:
     arthemy-house: 37798
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245940
+  verdict: 'keep: crow adjudicator beside flaring blue flame, miners'' pickaxes looming behind'
 - key: sl2-the-candle-court--offer-a-shared-judgment--success
   entity: creature
   lane: arthemy-house
@@ -3546,8 +3962,11 @@ subjects:
     dark fantasy, weird west, edo period, cave, atmospheric, cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37799
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245941
+  verdict: 'keep: crow adjudicator turns toward a lit passage among calm blue candles'
 - key: sl2-the-candle-court--offer-a-shared-judgment--failure
   entity: creature
   lane: arthemy-house
@@ -3572,8 +3991,11 @@ subjects:
     depth of field, medium shot
   jobs:
     arthemy-house: 37800
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245942
+  verdict: 'keep: hooded crow slumps over a guttering candle bowl late at night'
 - key: sl2-salt-on-the-threshold--reinforce-the-vent-above--success
   entity: creature
   lane: arthemy-house
@@ -3598,8 +4020,11 @@ subjects:
     field, medium shot
   jobs:
     arthemy-house: 37801
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245943
+  verdict: 'keep: salamander mason points onward beside a lantern in a warm tunnel'
 - key: sl2-salt-on-the-threshold--reinforce-the-vent-above--failure
   entity: creature
   lane: arthemy-house
@@ -3625,8 +4050,12 @@ subjects:
     cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37802
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245944
+  verdict: 'reject: salamander simply stands in a doorway under grey sky; no dust, coughing or dropped chisel, consequence
+    does not read'
 - key: sl2-salt-on-the-threshold--test-the-air-carefully--success
   entity: creature
   lane: arthemy-house
@@ -3651,8 +4080,11 @@ subjects:
     west, edo period, cave, atmospheric, cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37803
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245945
+  verdict: 'keep: salamander mason crouches with a test candle at a lit stone arch'
 - key: sl2-salt-on-the-threshold--test-the-air-carefully--failure
   entity: scenery
   lane: arthemy-house
@@ -3678,8 +4110,12 @@ subjects:
     atmospheric, cinematic lighting, depth of field, wide shot
   jobs:
     arthemy-house: 37804
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245946
+  verdict: 'reject: tiny figure waves in a warm, candle-lit tunnel with no dust flood; reads as a welcoming success,
+    not a failure'
 - key: sl2-the-forgotten-pledge--speak-the-oath-back-to-him--success
   entity: creature
   lane: arthemy-house
@@ -3703,8 +4139,11 @@ subjects:
     weird west, edo period, atmospheric, cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37805
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245947
+  verdict: 'keep: robed guardian flings arms wide in golden light of an opened doorway'
 - key: sl2-the-forgotten-pledge--speak-the-oath-back-to-him--failure
   entity: creature
   lane: arthemy-house
@@ -3730,8 +4169,11 @@ subjects:
     lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37806
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245948
+  verdict: 'keep: gorilla guardian in red robe roars as red ritual energy surges'
 - key: sl2-the-forgotten-pledge--examine-the-iron-charm--success
   entity: creature
   lane: arthemy-house
@@ -3754,8 +4196,12 @@ subjects:
     atmospheric, cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37807
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245949
+  verdict: 'reject: guardian drawn as a crocodile-snouted reptile with a tail holding an axe; wrong species, charm
+    not shown'
 - key: sl2-the-forgotten-pledge--examine-the-iron-charm--failure
   entity: creature
   lane: arthemy-house
@@ -3780,8 +4226,11 @@ subjects:
     atmospheric, cinematic lighting, depth of field, close-up
   jobs:
     arthemy-house: 37808
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245950
+  verdict: 'keep: gorilla guardian recoils on the floor, smoke rising, broken charm beside him'
 - key: sl2-three-doors-no-hinges--compare-the-chain-marks--success
   entity: creature
   lane: arthemy-house
@@ -3806,8 +4255,11 @@ subjects:
     cave, atmospheric, cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37809
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245951
+  verdict: 'keep: crow architect with silver chain beside lantern at a stone arch'
 - key: sl2-three-doors-no-hinges--compare-the-chain-marks--failure
   entity: scenery
   lane: arthemy-house
@@ -3833,8 +4285,11 @@ subjects:
     field, wide shot
   jobs:
     arthemy-house: 37810
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245952
+  verdict: 'keep: crow architect silhouetted in a tilted corridor with the chain pinned'
 - key: sl2-three-doors-no-hinges--ask-for-a-witness-to-the-path--success
   entity: scenery
   lane: arthemy-house
@@ -3858,8 +4313,11 @@ subjects:
     field, wide shot
   jobs:
     arthemy-house: 37811
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245953
+  verdict: 'keep: hooded novice waits under a lantern in the chosen arch'
 - key: sl2-three-doors-no-hinges--ask-for-a-witness-to-the-path--failure
   entity: scenery
   lane: arthemy-house
@@ -3885,8 +4343,11 @@ subjects:
     of field, wide shot
   jobs:
     arthemy-house: 37812
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245954
+  verdict: 'keep: hooded architect walks away into dark tunnel past an unused bedroll'
 - key: sl2-voices-across-the-rock--trace-the-true-echo--success
   entity: creature
   lane: arthemy-house
@@ -3910,8 +4371,11 @@ subjects:
     west, edo period, cave, atmospheric, cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37813
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245955
+  verdict: 'reject: courier drawn as a long-tailed lizard, not a shrew, and no message tube; wrong species'
 - key: sl2-voices-across-the-rock--trace-the-true-echo--failure
   entity: scenery
   lane: arthemy-house
@@ -3936,8 +4400,11 @@ subjects:
     scene, dark fantasy, weird west, edo period, cave, atmospheric, cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37814
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245956
+  verdict: 'reject: a paper notice with scrawled lettering is pinned on the tunnel wall; readable text'
 - key: sl2-voices-across-the-rock--signal-a-safe-meeting-point--success
   entity: creature
   lane: arthemy-house
@@ -3961,8 +4428,11 @@ subjects:
     west, edo period, cave, atmospheric, cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37815
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245957
+  verdict: 'keep: grinning critter courier sits by a warm lantern, friendly reunion'
 - key: sl2-voices-across-the-rock--signal-a-safe-meeting-point--failure
   entity: scenery
   lane: arthemy-house
@@ -3988,8 +4458,11 @@ subjects:
     wide shot
   jobs:
     arthemy-house: 37816
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245958
+  verdict: 'keep: small figure lies curled far down a tunnel by a lone lantern, lost'
 - key: sl2-the-red-vial--help-secure-the-vial--success
   entity: creature
   lane: arthemy-house
@@ -4012,8 +4485,11 @@ subjects:
     west, edo period, cave, atmospheric, cinematic lighting, depth of field, medium shot
   jobs:
     arthemy-house: 37817
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245959
+  verdict: 'keep: gorilla pilgrim steadies and points calmly by warm lantern light'
 - key: sl2-the-red-vial--help-secure-the-vial--failure
   entity: creature
   lane: arthemy-house
@@ -4037,8 +4513,11 @@ subjects:
     fantasy, weird west, edo period, cave, atmospheric, cinematic lighting, depth of field, close-up
   jobs:
     arthemy-house: 37818
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245960
+  verdict: 'keep: wild-eyed gorilla pilgrim lunges toward viewer, lantern swinging, panic'
 - key: sl2-the-red-vial--ask-about-the-binding-spell--success
   entity: creature
   lane: arthemy-house
@@ -4064,8 +4543,11 @@ subjects:
     depth of field, medium shot
   jobs:
     arthemy-house: 37819
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245961
+  verdict: 'keep: hooded pilgrim kneels by a small candle in a quiet tunnel'
 - key: sl2-the-red-vial--ask-about-the-binding-spell--failure
   entity: creature
   lane: arthemy-house
@@ -4090,8 +4572,11 @@ subjects:
     scene, dark fantasy, weird west, edo period, cave, atmospheric, cinematic lighting, depth of field, close-up
   jobs:
     arthemy-house: 37820
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245962
+  verdict: 'keep: gorilla pilgrim sprawls in the dust beside a red-glowing lantern'
 - key: sl2-the-cooling-stones--mark-the-unsafe-seam--success
   entity: scenery
   lane: arthemy-house
@@ -4116,8 +4601,12 @@ subjects:
     cinematic lighting, wide shot
   jobs:
     arthemy-house: 37821
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245963
+  verdict: 'reject: no signal, caravan lanterns or detour; a frowning glowing-faced armadillo just stands on the
+    road, reads grim not success'
 - key: sl2-the-cooling-stones--mark-the-unsafe-seam--failure
   entity: creature
   lane: arthemy-house
@@ -4143,8 +4632,11 @@ subjects:
     cinematic lighting, medium shot
   jobs:
     arthemy-house: 37822
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245964
+  verdict: 'keep: bandaged armadillo mender crouches at a sparking fissure on the black road'
 - key: sl2-the-cooling-stones--help-lay-a-new-crossing--success
   entity: creature
   lane: arthemy-house
@@ -4167,8 +4659,11 @@ subjects:
     weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37823
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245965
+  verdict: 'keep: armored mender rests on a stone slab drinking from a canteen in cool shade'
 - key: sl2-the-cooling-stones--help-lay-a-new-crossing--failure
   entity: creature
   lane: arthemy-house
@@ -4193,8 +4688,11 @@ subjects:
     medium shot
   jobs:
     arthemy-house: 37824
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245966
+  verdict: 'keep: shelled armadillo hauls itself up a dusty slope under a harsh glaring sun'
 - key: sl2-mirror-in-the-ash--read-the-discarded-letters--success
   entity: creature
   lane: arthemy-house
@@ -4219,8 +4717,11 @@ subjects:
     palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37825
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245967
+  verdict: 'keep: goggled lynx kneels in the ash beside a hand-drawn map and her mirror'
 - key: sl2-mirror-in-the-ash--read-the-discarded-letters--failure
   entity: scenery
   lane: arthemy-house
@@ -4244,8 +4745,11 @@ subjects:
     west, edo period, burnished obsidian palette, cinematic lighting, wide shot
   jobs:
     arthemy-house: 37826
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245968
+  verdict: 'keep: lynx sprawled exhausted on a bleak ruined ridge, mirror tumbling away in the wind'
 - key: sl2-mirror-in-the-ash--trade-a-true-memory--success
   entity: creature
   lane: arthemy-house
@@ -4268,8 +4772,11 @@ subjects:
     weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37827
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245969
+  verdict: 'keep: lynx silhouette in a warm-lit stone archway marking the sheltered route'
 - key: sl2-mirror-in-the-ash--trade-a-true-memory--failure
   entity: scenery
   lane: arthemy-house
@@ -4292,8 +4799,11 @@ subjects:
     fading grey dusk, melancholy, weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
   jobs:
     arthemy-house: 37828
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245970
+  verdict: 'keep: shadowed lynx with raised mirror in a cold grey archway, bleak and disorienting'
 - key: sl2-ashes-at-the-border--repair-the-signal-horn--success
   entity: creature
   lane: arthemy-house
@@ -4317,8 +4827,11 @@ subjects:
     weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
   jobs:
     arthemy-house: 37829
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245971
+  verdict: 'keep: vulture ranger sounds the horn skyward beside the watchtower at golden dusk'
 - key: sl2-ashes-at-the-border--repair-the-signal-horn--failure
   entity: creature
   lane: arthemy-house
@@ -4343,8 +4856,12 @@ subjects:
     west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37830
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245972
+  verdict: 'reject: the vulture ranger has prominent bull horns (wrong species read); no outstretched wing, ledger
+    or broken horn'
 - key: sl2-ashes-at-the-border--offer-to-scout-the-tower--success
   entity: scenery
   lane: arthemy-house
@@ -4368,8 +4885,11 @@ subjects:
     cinematic lighting, wide shot
   jobs:
     arthemy-house: 37831
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245973
+  verdict: 'reject: the ranger has large bull horns, reading as a horned beast-man rather than a vulture'
 - key: sl2-ashes-at-the-border--offer-to-scout-the-tower--failure
   entity: creature
   lane: arthemy-house
@@ -4393,8 +4913,12 @@ subjects:
     west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37832
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245974
+  verdict: 'reject: horned vulture on all fours beside a bubbling lab flask; tower intact, no collapsing stairs,
+    wrong species read'
 - key: sl2-the-last-watchfire--volunteer-for-the-search--success
   entity: creature
   lane: arthemy-house
@@ -4418,8 +4942,11 @@ subjects:
     cinematic lighting, wide shot
   jobs:
     arthemy-house: 37833
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245975
+  verdict: 'keep: wolf commander stands with a lantern at the open barricade gate at night'
 - key: sl2-the-last-watchfire--volunteer-for-the-search--failure
   entity: creature
   lane: arthemy-house
@@ -4442,8 +4969,12 @@ subjects:
     edo period, burnished obsidian palette, cinematic lighting, wide shot
   jobs:
     arthemy-house: 37834
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245976
+  verdict: 'reject: a giant muzzle-caged monster wolf looms over a second sword-bearing wolf, confusing duplicate
+    figures, not the bowed commander'
 - key: sl2-the-last-watchfire--organize-the-watch-rota--success
   entity: creature
   lane: arthemy-house
@@ -4467,8 +4998,12 @@ subjects:
     cinematic lighting, medium shot
   jobs:
     arthemy-house: 37835
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245977
+  verdict: 'reject: muzzle-caged wolf stands arms spread behind leaping flames, reads as a captive at a pyre rather
+    than a nodding commander'
 - key: sl2-the-last-watchfire--organize-the-watch-rota--failure
   entity: creature
   lane: arthemy-house
@@ -4491,8 +5026,11 @@ subjects:
     west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37836
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245978
+  verdict: 'keep: masked wolf commander in a greatcoat, hand on sabre, coldly fills the doorway'
 - key: sl2-the-closed-infirmary--inspect-the-sealed-room--success
   entity: creature
   lane: arthemy-house
@@ -4515,8 +5053,11 @@ subjects:
     camp, warm light, weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37837
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245979
+  verdict: 'keep: deer physician opens the infirmary door into warm golden light beside supply carts'
 - key: sl2-the-closed-infirmary--inspect-the-sealed-room--failure
   entity: creature
   lane: arthemy-house
@@ -4540,8 +5081,12 @@ subjects:
     obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37838
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245980
+  verdict: 'reject: no yellow-green fumes; deer in a lit doorway with arms spread looks nearly the same as the success
+    plate'
 - key: sl2-the-closed-infirmary--calm-the-waiting-guards--success
   entity: scenery
   lane: arthemy-house
@@ -4565,8 +5110,11 @@ subjects:
     shot
   jobs:
     arthemy-house: 37839
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245981
+  verdict: 'keep: deer physician with a supply case gestures from the open infirmary door'
 - key: sl2-the-closed-infirmary--calm-the-waiting-guards--failure
   entity: scenery
   lane: arthemy-house
@@ -4592,8 +5140,11 @@ subjects:
     cinematic lighting, wide shot
   jobs:
     arthemy-house: 37840
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245982
+  verdict: 'keep: supply wagon careens downhill spilling bottles as the deer clings on amid smoke'
 - key: sl2-the-prisoner-of-dusk--question-the-scout-quietly--success
   entity: creature
   lane: arthemy-house
@@ -4616,8 +5167,11 @@ subjects:
     obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37841
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245983
+  verdict: 'keep: calm gorilla scout on a crate points toward distant mesas by a campfire'
 - key: sl2-the-prisoner-of-dusk--question-the-scout-quietly--failure
   entity: creature
   lane: arthemy-house
@@ -4641,8 +5195,11 @@ subjects:
     angle, weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37842
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245984
+  verdict: 'keep: red-eyed gorilla roars under a blood-red sun among staves and lamps'
 - key: sl2-the-prisoner-of-dusk--secure-the-copper-restraint--success
   entity: creature
   lane: arthemy-house
@@ -4665,8 +5222,11 @@ subjects:
     steady, quiet, weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37843
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245985
+  verdict: 'keep: gorilla scout sits calm with wrapped wrists and a satchel at dusk'
 - key: sl2-the-prisoner-of-dusk--secure-the-copper-restraint--failure
   entity: creature
   lane: arthemy-house
@@ -4690,8 +5250,11 @@ subjects:
     west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37844
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245986
+  verdict: 'keep: smoking, glaring gorilla scout crouches tense against a harsh red sunset'
 - key: sl2-the-key-with-no-door--read-the-worn-carving--success
   entity: creature
   lane: arthemy-house
@@ -4715,8 +5278,11 @@ subjects:
     dawn light warming, weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37845
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245987
+  verdict: 'keep: raven archivist in the gate holds a glowing gold key, quiet affirmation'
 - key: sl2-the-key-with-no-door--read-the-worn-carving--failure
   entity: creature
   lane: arthemy-house
@@ -4741,8 +5307,11 @@ subjects:
     palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37846
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245988
+  verdict: 'keep: stern hooded raven points sharply aside, key hanging at her chest'
 - key: sl2-the-key-with-no-door--ask-who-forged-the-key--success
   entity: creature
   lane: arthemy-house
@@ -4767,8 +5336,11 @@ subjects:
     cinematic lighting, medium shot
   jobs:
     arthemy-house: 37847
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245989
+  verdict: 'keep: raven archivist holds a softly glowing light, guiding along a pillared path'
 - key: sl2-the-key-with-no-door--ask-who-forged-the-key--failure
   entity: creature
   lane: arthemy-house
@@ -4793,8 +5365,11 @@ subjects:
     medium shot
   jobs:
     arthemy-house: 37848
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245990
+  verdict: 'keep: raven archivist turns her back and walks off through the barred gate'
 - key: sl2-a-promise-kept--carry-the-sealed-letter--success
   entity: creature
   lane: arthemy-house
@@ -4818,8 +5393,11 @@ subjects:
     weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37849
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245991
+  verdict: 'keep: silver fox messenger at a lantern-lit doorway with the sealed envelope at her feet'
 - key: sl2-a-promise-kept--carry-the-sealed-letter--failure
   entity: creature
   lane: arthemy-house
@@ -4843,8 +5421,11 @@ subjects:
     tense, low angle, weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37850
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245992
+  verdict: 'keep: distressed fox messenger clutches the sealed letter amid sliding scree'
 - key: sl2-a-promise-kept--help-search-for-its-owner--success
   entity: scenery
   lane: arthemy-house
@@ -4869,8 +5450,11 @@ subjects:
     wide shot
   jobs:
     arthemy-house: 37851
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245993
+  verdict: 'keep: fox messenger sits on the road gazing hopefully up toward a distant tower'
 - key: sl2-a-promise-kept--help-search-for-its-owner--failure
   entity: creature
   lane: arthemy-house
@@ -4895,8 +5479,11 @@ subjects:
     lighting, medium shot
   jobs:
     arthemy-house: 37852
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245994
+  verdict: 'keep: weary fox crouches by a meagre fire holding an empty food wrap at night'
 - key: sl2-the-price-of-silence--refuse-the-secret-bargain--success
   entity: scenery
   lane: arthemy-house
@@ -4919,8 +5506,12 @@ subjects:
     breaking, freedom, weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
   jobs:
     arthemy-house: 37853
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245995
+  verdict: 'reject: glowing-eyed negotiator blocks the centre of the gate; no side path or dawn, reads menacing
+    and mirrors the failure plate'
 - key: sl2-the-price-of-silence--refuse-the-secret-bargain--failure
   entity: scenery
   lane: arthemy-house
@@ -4945,8 +5536,11 @@ subjects:
     lighting, wide shot
   jobs:
     arthemy-house: 37854
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245996
+  verdict: 'keep: masked owl stands small in a black doorway as the gate closes'
 - key: sl2-the-price-of-silence--question-the-cost-openly--success
   entity: creature
   lane: arthemy-house
@@ -4970,8 +5564,11 @@ subjects:
     light, honest, weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
   jobs:
     arthemy-house: 37855
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245997
+  verdict: 'keep: hooded owl negotiator in a silver mask faces the viewer candidly at the gate'
 - key: sl2-the-price-of-silence--question-the-cost-openly--failure
   entity: scenery
   lane: arthemy-house
@@ -4995,8 +5592,11 @@ subjects:
     weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
   jobs:
     arthemy-house: 37856
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245998
+  verdict: 'keep: masked owl spreads vast wings in a cryptic gesture under the night moon'
 - key: sl2-trial-homestead--confront--success
   entity: creature
   lane: arthemy-house
@@ -5022,8 +5622,11 @@ subjects:
     cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37857
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 245999
+  verdict: 'keep: Abbess in black habit at thrown-open door, light pouring in'
 - key: sl2-trial-homestead--confront--failure
   entity: scenery
   lane: arthemy-house
@@ -5049,8 +5652,11 @@ subjects:
     painterly, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37858
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246000
+  verdict: 'keep: serene Abbess looms from low angle, dropped staff and bread at edges'
 - key: sl2-trial-homestead--parley--success
   entity: creature
   lane: arthemy-house
@@ -5076,8 +5682,11 @@ subjects:
     detailed background, medium shot
   jobs:
     arthemy-house: 37859
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246001
+  verdict: 'keep: Abbess stands in lit passage between lantern-lit stone walls, way opened'
 - key: sl2-trial-homestead--parley--failure
   entity: creature
   lane: arthemy-house
@@ -5103,8 +5712,11 @@ subjects:
     medium shot
   jobs:
     arthemy-house: 37860
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246002
+  verdict: 'keep: Abbess points accusingly at viewer against red evening courtyard'
 - key: sl2-trial-homestead--evidence--success
   entity: creature
   lane: arthemy-house
@@ -5130,8 +5742,11 @@ subjects:
     background, medium shot
   jobs:
     arthemy-house: 37861
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246003
+  verdict: 'keep: shocked Abbess stares wide-eyed in dim candlelit hallway, side door open'
 - key: sl2-trial-homestead--evidence--failure
   entity: creature
   lane: arthemy-house
@@ -5157,8 +5772,11 @@ subjects:
     painterly, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37862
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246004
+  verdict: 'keep: smug Abbess at candlelit table with papers, composure intact'
 - key: sl2-trial-dustwater--confront--success
   entity: scenery
   lane: arthemy-house
@@ -5184,8 +5802,12 @@ subjects:
     lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37863
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246005
+  verdict: 'reject: cold static dam with goat looming above a dark arch; no raised gate, rushing river or boats,
+    success reads ominous'
 - key: sl2-trial-dustwater--confront--failure
   entity: scenery
   lane: arthemy-house
@@ -5211,8 +5833,11 @@ subjects:
     weird west, painterly, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37864
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246006
+  verdict: 'keep: glaring goat gatekeeper with snapped chains in a flooded spillway'
 - key: sl2-trial-dustwater--parley--success
   entity: scenery
   lane: arthemy-house
@@ -5238,8 +5863,11 @@ subjects:
     shot
   jobs:
     arthemy-house: 37865
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246007
+  verdict: 'keep: goat gatekeeper and otter boatman turning the gate wheel together, warm light'
 - key: sl2-trial-dustwater--parley--failure
   entity: creature
   lane: arthemy-house
@@ -5265,8 +5893,11 @@ subjects:
     shot
   jobs:
     arthemy-house: 37866
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246008
+  verdict: 'keep: goat gatekeeper blocking the walkway with toll book, gate shut behind'
 - key: sl2-trial-dustwater--evidence--success
   entity: scenery
   lane: arthemy-house
@@ -5292,8 +5923,11 @@ subjects:
     lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37867
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246009
+  verdict: 'keep: goat silhouetted in a glowing hidden channel arch under the dam'
 - key: sl2-trial-dustwater--evidence--failure
   entity: scenery
   lane: arthemy-house
@@ -5318,8 +5952,11 @@ subjects:
     angle, weird west, painterly, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37868
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246010
+  verdict: 'keep: storm-dark dam amid rubble, signal lantern blasted up in spray'
 - key: sl2-trial-tablelands--confront--success
   entity: creature
   lane: arthemy-house
@@ -5344,8 +5981,11 @@ subjects:
     breaking, shaft of light, dramatic, weird west, painterly, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37869
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246011
+  verdict: 'keep: masked ram warden standing on the bridge as the storm breaks'
 - key: sl2-trial-tablelands--confront--failure
   entity: scenery
   lane: arthemy-house
@@ -5370,8 +6010,11 @@ subjects:
     from below, grim, weird west, painterly, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37870
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246012
+  verdict: 'keep: defiant masked ram warden, arms crossed, framed by lightning and timber walls'
 - key: sl2-trial-tablelands--parley--success
   entity: creature
   lane: arthemy-house
@@ -5396,8 +6039,11 @@ subjects:
     dusk, hopeful, weird west, painterly, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37871
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246013
+  verdict: 'keep: masked ram warden offering a lantern on the bridge in clearing rain'
 - key: sl2-trial-tablelands--parley--failure
   entity: creature
   lane: arthemy-house
@@ -5422,8 +6068,11 @@ subjects:
     cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37872
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246014
+  verdict: 'keep: masked ram warden walking away across the barred bridge in grey wind'
 - key: sl2-trial-tablelands--evidence--success
   entity: scenery
   lane: arthemy-house
@@ -5449,8 +6098,11 @@ subjects:
     detailed background, wide shot
   jobs:
     arthemy-house: 37873
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246015
+  verdict: 'keep: signal fire on a side-gorge bridge with two traveler silhouettes crossing'
 - key: sl2-trial-tablelands--evidence--failure
   entity: scenery
   lane: arthemy-house
@@ -5475,8 +6127,11 @@ subjects:
     weird west, painterly, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37874
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246016
+  verdict: 'keep: lightning storm lashes the red canyon road, far ledge lamp lost in rain'
 - key: sl2-trial-cave--confront--success
   entity: scenery
   lane: arthemy-house
@@ -5501,8 +6156,12 @@ subjects:
     court, blue light, triumphant, weird west, painterly, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37875
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246017
+  verdict: 'reject: no gorilla guardian, just a looming hooded crow over a cloned smaller crow; reads menacing,
+    not a freed captive'
 - key: sl2-trial-cave--confront--failure
   entity: creature
   lane: arthemy-house
@@ -5527,8 +6186,11 @@ subjects:
     below, ominous, weird west, painterly, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37876
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246018
+  verdict: 'reject: bound guardian drawn as a smaller cloned hooded crow instead of the gorilla; wrong cast'
 - key: sl2-trial-cave--parley--success
   entity: creature
   lane: arthemy-house
@@ -5553,8 +6215,12 @@ subjects:
     quiet, weird west, painterly, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37877
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246019
+  verdict: 'reject: kneeling guardian is a second hooded crow, not the gorilla; cloned/wrong species confuses the
+    release'
 - key: sl2-trial-cave--parley--failure
   entity: creature
   lane: arthemy-house
@@ -5579,8 +6245,11 @@ subjects:
     painterly, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37878
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246020
+  verdict: 'keep: winged crow adjudicator flares wings as blue flame surges toward viewer'
 - key: sl2-trial-cave--evidence--success
   entity: creature
   lane: arthemy-house
@@ -5606,8 +6275,11 @@ subjects:
     detailed background, medium shot
   jobs:
     arthemy-house: 37879
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246021
+  verdict: 'reject: guardian drawn as a second hooded crow bowing by the fire; wrong species, no tablet reveal'
 - key: sl2-trial-cave--evidence--failure
   entity: scenery
   lane: arthemy-house
@@ -5632,8 +6304,12 @@ subjects:
     ominous, weird west, painterly, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37880
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246022
+  verdict: 'reject: calm hooded figure stands between lit candles in a quiet tunnel; no shockwave, failure does
+    not read'
 - key: sl2-trial-verge--confront--success
   entity: scenery
   lane: arthemy-house
@@ -5658,8 +6334,12 @@ subjects:
     sky, dawn glow, weird west, painterly, cinematic lighting, detailed background, wide shot
   jobs:
     arthemy-house: 37881
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246023
+  verdict: 'reject: door is an ordinary closed wooden door with no glowing fracture or misty road; success does
+    not read'
 - key: sl2-trial-verge--confront--failure
   entity: scenery
   lane: arthemy-house
@@ -5685,8 +6365,11 @@ subjects:
     wide shot
   jobs:
     arthemy-house: 37882
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246024
+  verdict: 'keep: towering masked owl figure looms over the obsidian slope, lightning haloed'
 - key: sl2-trial-verge--parley--success
   entity: creature
   lane: arthemy-house
@@ -5711,8 +6394,11 @@ subjects:
     cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37883
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246025
+  verdict: 'reject: door remains shut with no dawn road beyond; nearly the same closed-door scene as confront success'
 - key: sl2-trial-verge--parley--failure
   entity: creature
   lane: arthemy-house
@@ -5737,8 +6423,11 @@ subjects:
     foreboding, weird west, painterly, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37884
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246026
+  verdict: 'keep: cloaked owl with a breath wisp beside a stone arch in cold violet dark'
 - key: sl2-trial-verge--evidence--success
   entity: creature
   lane: arthemy-house
@@ -5763,8 +6452,11 @@ subjects:
     weird west, painterly, cinematic lighting, detailed background, medium shot
   jobs:
     arthemy-house: 37885
-  art: {}
-  verdict: null
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246027
+  verdict: 'keep: masked owl steps through the opened door into warm golden light'
 - key: sl2-trial-verge--evidence--failure
   entity: scenery
   lane: arthemy-house
@@ -5790,5 +6482,1341 @@ subjects:
     shot
   jobs:
     arthemy-house: 37886
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 246028
+  verdict: 'keep: distant cloaked owl on a dim road below a rubble-choked cliff door'
+- key: sl2r2-the-orchard-debt--brace-axle--failure
+  entity: creature
+  lane: arthemy-house
+  title: The Orchard Debt — Repair the axle first (failure) (reroll)
+  size: 1344x768
+  seed: 33001
+  shape: wide
+  card: the-orchard-debt
+  outcome: the-orchard-debt--brace-axle--failure
+  land: homestead
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, smiling
+  prompt_prose: Seen from Zuzu's point of view, a snapped wooden pin lies in the dust beside the sagging axle while
+    the otter farmer, her harvest baskets saved, tears a strip from her apron to offer as a bandage under the darkening
+    storm, no lettering or logos.
+  prompt_tags: solo, (anthro otter:1.3), female, orchard farmer, rolled sleeves, dust-stained work apron, concerned
+    expression, tearing a strip of cloth from her apron as a bandage, holding it out toward viewer, snapped wooden
+    pin lying in the dust in the foreground, handcart sagging on its axle, harvest baskets saved beside the cart,
+    heavy water barrel, edge of a dry frontier orchard, dark storm clouds, wind, dim light, looking at viewer, worry,
+    scattered apples, cinematic lighting, medium shot
+  reroll_of: sl2-the-orchard-debt--brace-axle--failure
+  jobs:
+    arthemy-house: 38223
+  art: {}
+  verdict: null
+- key: sl2r2-scarecrows-lantern--cut-the-line--success
+  entity: scenery
+  lane: arthemy-house
+  title: The Scarecrow's Lantern — Cut the hidden line (success) (reroll)
+  size: 1344x768
+  seed: 33002
+  shape: wide
+  card: scarecrows-lantern
+  outcome: scarecrows-lantern--cut-the-line--success
+  land: homestead
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, second
+    character, lying on ground, body, duplicate
+  prompt_prose: Seen from Zuzu's point of view, the cut fishing line lies slack in the dirt under the scarecrow's
+    swaying lantern while the startled coyote thief bolts into the dark field, leaving a leather pouch of stolen
+    rations behind in the light, no lettering or logos.
+  prompt_tags: solo, (anthro coyote:1.3), lean grain thief, dusty frontier jacket, startled, fleeing into the dark
+    field, seen from behind, looking back over shoulder, cut fishing line lying slack in the dirt, dropped leather
+    pouch of rations in the foreground, patched scarecrow holding a swinging oil lantern, grain shed and barn, night
+    field, high contrast, eerie, motion blur, dust trail, cold moonlight, scattered grain, cinematic lighting, detailed
+    background, wide shot
+  reroll_of: sl2-scarecrows-lantern--cut-the-line--success
+  jobs:
+    arthemy-house: 38224
+  art: {}
+  verdict: null
+- key: sl2r2-the-locked-dormitory--search-lock--failure
+  entity: scenery
+  lane: arthemy-house
+  title: The Locked Dormitory — Examine the old lock (failure) (reroll)
+  size: 1344x768
+  seed: 33003
+  shape: wide
+  card: the-locked-dormitory
+  outcome: the-locked-dormitory--search-lock--failure
+  land: homestead
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, horse, pony, animal, children
+  prompt_prose: Seen from Zuzu's point of view, a thin metal tool hangs stuck in the old iron lock as a dropped
+    lantern rolls on the floor and the looming shadow of a caretaker stretches down the corridor toward the door,
+    no lettering or logos.
+  prompt_tags: deserted scene, scenery, thin metal pick stuck in an old iron lock, locked wooden dormitory door,
+    dropped lantern rolling on the floor, spilled light, small wooden toy horse knocked over, looming shadow of
+    a large figure stretching down the corridor wall, dim adobe mission corridor, harsh contrast, dutch angle, alarm,
+    panic, flickering light, abandoned tool, empty coat peg, sinister, heavy shadows, menace, cinematic lighting,
+    detailed background, medium shot
+  reroll_of: sl2-the-locked-dormitory--search-lock--failure
+  jobs:
+    arthemy-house: 38225
+  art: {}
+  verdict: null
+- key: sl2r2-a-crust-for-the-road--offer-help--failure
+  entity: scenery
+  lane: arthemy-house
+  title: A Crust for the Road — Offer to help at the kitchen (failure) (reroll)
+  size: 1344x768
+  seed: 33004
+  shape: wide
+  card: a-crust-for-the-road
+  outcome: a-crust-for-the-road--offer-help--failure
+  land: homestead
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, warm
+    light, cozy, human, hair, person sleeping, bed
+  prompt_prose: Seen from Zuzu's point of view, a thin blanket lies on frosted ground against the cold mission wall
+    at night while above, in a single lit window, a dark silhouette keeps watch, no lettering or logos.
+  prompt_tags: deserted scene, scenery, cold night outside the adobe mission wall, thin blanket on frosted ground,
+    breath of cold mist, single lit window high above, dark watching silhouette in the window, dark adobe walls,
+    starless sky, cold blue tones, sleepless, exhausting, frost on adobe, bare ground, discarded travel pack, surveillance,
+    isolation, bitter cold, dim moon, cinematic lighting, detailed background, wide shot
+  reroll_of: sl2-a-crust-for-the-road--offer-help--failure
+  jobs:
+    arthemy-house: 38226
+  art: {}
+  verdict: null
+- key: sl2r2-the-silent-bell--climb-stairs--success
+  entity: scenery
+  lane: arthemy-house
+  title: The Silent Bell — Climb and inspect the bell (success) (reroll)
+  size: 1344x768
+  seed: 33005
+  shape: wide
+  card: the-silent-bell
+  outcome: the-silent-bell--climb-stairs--success
+  land: homestead
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, people,
+    rope swinging
+  prompt_prose: Seen from Zuzu's point of view at the top of the tower, the intact bronze bell hangs silent with
+    no clapper inside, sunset pouring through the adobe arches over the mission rooftops below, no lettering or
+    logos.
+  prompt_tags: deserted scene, scenery, inside the top of an adobe bell tower, intact bronze bell hanging silent,
+    empty bell interior, no clapper, wooden yoke and beam, sunset light pouring through the arches, mission rooftops
+    below, dust motes, quiet discovery, from below, wide shot, warm amber glow, long shadows, weathered adobe, bronze
+    patina, hush, vantage point, cinematic lighting, detailed background, stillness
+  reroll_of: sl2-the-silent-bell--climb-stairs--success
+  jobs:
+    arthemy-house: 38227
+  art: {}
+  verdict: null
+- key: sl2r2-toll-of-two-names--copy-the-ledger-quietly--failure
+  entity: creature
+  lane: arthemy-house
+  title: The Toll of Two Names — Copy the ledger quietly (failure) (reroll)
+  size: 1344x768
+  seed: 33006
+  shape: wide
+  card: toll-of-two-names
+  outcome: toll-of-two-names--copy-the-ledger-quietly--failure
+  land: dustwater
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    blood, blood, red liquid, drool, fangs, demon, snarling
+  prompt_prose: Seen from Zuzu's point of view, the goat registrar springs up in alarm over a cracked wax seal while
+    his spilled rations scatter across the planks and the queue scatters behind her, no lettering or logos.
+  prompt_tags: solo, (anthro goat:1.3), female, stern registrar, ivory tally sticks, wax-sealed ledger book with
+    blank pages, startled alarm, rising from her seat and shouting, broken red wax seal fragments on the ledger,
+    overturned stool, spilled rice balls and torn rations bundle on the planks, distant fleeing silhouettes, ferry
+    landing, harsh afternoon light, dutch angle, river ferry checkpoint, plank boardwalk, wooden railings, weird
+    west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric, medium
+    shot
+  reroll_of: sl2-toll-of-two-names--copy-the-ledger-quietly--failure
+  jobs:
+    arthemy-house: 38228
+  art: {}
+  verdict: null
+- key: sl2r2-the-boat-that-waits--wait-for-its-owner--success
+  entity: scenery
+  lane: arthemy-house
+  title: The Boat That Waits — Wait for its owner (success) (reroll)
+  size: 1344x768
+  seed: 33007
+  shape: wide
+  card: the-boat-that-waits
+  outcome: the-boat-that-waits--wait-for-its-owner--success
+  land: dustwater
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, fox,
+    cat, crowd, rope around neck, noose, tied up, bound
+  prompt_prose: Seen from Zuzu's point of view after the long vigil, the heron boatwright turns as a cloaked traveler
+    with a lantern, the owner's sister, comes across the dawn mud flat toward the waiting skiff, no lettering or
+    logos.
+  prompt_tags: duo, (anthro heron:1.3), tall long-legged wading bird, long neck, long pointed beak, grey-blue feathers,
+    indigo work coat, turning to greet a newcomer, cloaked traveler silhouette with a lantern approaching across
+    the mud flat, empty skiff tied to a lone post, river fallen low, first light of dawn, hopeful, river delta,
+    wooden skiff, driftwood, tall reeds, weird west, edo period influence, ink wash shading, detailed background,
+    cinematic composition, atmospheric, wide shot
+  reroll_of: sl2-the-boat-that-waits--wait-for-its-owner--success
+  jobs:
+    arthemy-house: 38229
+  art: {}
+  verdict: null
+- key: sl2r2-the-boat-that-waits--wait-for-its-owner--failure
+  entity: creature
+  lane: arthemy-house
+  title: The Boat That Waits — Wait for its owner (failure) (reroll)
+  size: 1344x768
+  seed: 33008
+  shape: wide
+  card: the-boat-that-waits
+  outcome: the-boat-that-waits--wait-for-its-owner--failure
+  land: dustwater
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, fox,
+    cat, mammal, smiling, daylight, rope around neck, noose, tied up, bound
+  prompt_prose: Seen from Zuzu's point of view at night, the heron boatwright sits slumped by the post beside the
+    empty skiff and a second coiled rope that no one ever used, no lettering or logos.
+  prompt_tags: solo, (anthro heron:1.3), tall long-legged wading bird, long neck, long pointed beak, grey-blue feathers,
+    indigo work coat, weary, slumped against the mooring post, cracked rudder across the knees, empty skiff tied
+    to the post, a second coiled unused rope hanging on the post, empty food bowl, dark night, cold moonlight on
+    low water, lonely, river delta, wooden skiff, driftwood, tall reeds, weird west, edo period influence, ink wash
+    shading, detailed background, cinematic composition, atmospheric, medium shot
+  reroll_of: sl2-the-boat-that-waits--wait-for-its-owner--failure
+  jobs:
+    arthemy-house: 38230
+  art: {}
+  verdict: null
+- key: sl2r2-the-mended-compass--compare-the-two-charts--failure
+  entity: scenery
+  lane: arthemy-house
+  title: The Mended Compass — Compare the two charts (failure) (reroll)
+  size: 1344x768
+  seed: 33009
+  shape: wide
+  card: the-mended-compass
+  outcome: the-mended-compass--compare-the-two-charts--failure
+  land: dustwater
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, characters,
+    readable text, letters on map
+  prompt_prose: Seen from Zuzu's point of view, the bridge on the neat chart is gone, only broken stumps in rushing
+    water, the useless chart lying in the mud as the sun sinks, no lettering or logos.
+  prompt_tags: deserted scene, scenery, washed-away wooden bridge, broken bridge stumps in rushing brown water,
+    a neat folded chart dropped in the mud in the foreground, steep muddy bank, long detour trail along the river,
+    low red sun, late afternoon, tired mood, dusty delta, frontier trading post, brass instruments, parchment, weird
+    west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric, wide
+    shot
+  reroll_of: sl2-the-mended-compass--compare-the-two-charts--failure
+  jobs:
+    arthemy-house: 38231
+  art: {}
+  verdict: null
+- key: sl2r2-three-cups-on-the-table--question-the-armed-patrons--success
+  entity: scenery
+  lane: arthemy-house
+  title: Three Cups on the Table — Question the armed patrons (success) (reroll)
+  size: 1344x768
+  seed: 33010
+  shape: wide
+  card: three-cups-on-the-table
+  outcome: three-cups-on-the-table--question-the-armed-patrons--success
+  land: dustwater
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, crowd,
+    blood, mouse on counter, empty room
+  prompt_prose: Seen from Zuzu's point of view, a hooded armed patron gestures toward the window and a distant lantern-lit
+    barricade on the river while the mouse cook freezes as the false checkpoint is exposed, no lettering or logos.
+  prompt_tags: duo, (anthro mouse:1.3), female, traveling cook, grey fur, patched apron, wide-eyed realization,
+    one shadowy hooded armed patron silhouette at the table gesturing toward an open window, distant lantern-lit
+    wooden barricade on the river downriver, three enamel cups of broth, trading post kitchen, lantern light, tense,
+    frontier trading post kitchen, cast iron stove, wooden beams, weird west, edo period influence, ink wash shading,
+    detailed background, cinematic composition, atmospheric, medium shot
+  reroll_of: sl2-three-cups-on-the-table--question-the-armed-patrons--success
+  jobs:
+    arthemy-house: 38232
+  art: {}
+  verdict: null
+- key: sl2r2-three-cups-on-the-table--question-the-armed-patrons--failure
+  entity: scenery
+  lane: arthemy-house
+  title: Three Cups on the Table — Question the armed patrons (failure) (reroll)
+  size: 1344x768
+  seed: 33011
+  shape: wide
+  card: three-cups-on-the-table
+  outcome: three-cups-on-the-table--question-the-armed-patrons--failure
+  land: dustwater
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, visible face, smiling, mouse on counter, empty room
+  prompt_prose: Seen from Zuzu's point of view, a faceless hooded patron draws a glinting knife in the backlit doorway
+    beside a tipped chair and spilled broth, no lettering or logos.
+  prompt_tags: solo, shadowy hooded armed patron silhouette, face hidden, drawing a knife, glint of the blade, backlit
+    in the trading post doorway, tipped-over chair, spilled enamel cup of broth, rough plank table, long shadows
+    across the floor, lantern light, menacing, low angle, frontier trading post kitchen, cast iron stove, wooden
+    beams, weird west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric,
+    medium shot
+  reroll_of: sl2-three-cups-on-the-table--question-the-armed-patrons--failure
+  jobs:
+    arthemy-house: 38233
+  art: {}
+  verdict: null
+- key: sl2r2-footprints-in-the-silt--follow-the-wet-prints--failure
+  entity: creature
+  lane: arthemy-house
+  title: Footprints in the Silt — Follow the wet prints (failure) (reroll)
+  size: 1344x768
+  seed: 33012
+  shape: wide
+  card: footprints-in-the-silt
+  outcome: footprints-in-the-silt--follow-the-wet-prints--failure
+  land: dustwater
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    blood, skull, skeleton, monster, lizard, no shell
+  prompt_prose: Seen from Zuzu's point of view from inside a collapsed salt crust, the tortoise surveyor leans over
+    the broken rim and reaches his hooked staff down to help, no lettering or logos.
+  prompt_tags: solo, (anthro tortoise:1.3), male, old river surveyor, chalk dust on his shell, hooked measuring
+    staff, alarmed, leaning forward, reaching his hooked measuring staff down toward the viewer, edge of a collapsed
+    salt crust sinkhole, broken white crust plates, claw scrape marks at the rim, dust rising, dry cracked channel,
+    harsh glaring light, high angle looking up, looking at viewer, dry river delta, silt flats, wooden survey stakes,
+    weird west, edo period influence, ink wash shading, detailed background, cinematic composition, atmospheric,
+    medium shot
+  reroll_of: sl2-footprints-in-the-silt--follow-the-wet-prints--failure
+  jobs:
+    arthemy-house: 38234
+  art: {}
+  verdict: null
+- key: sl2r2-footprints-in-the-silt--help-set-new-markers--success
+  entity: creature
+  lane: arthemy-house
+  title: Footprints in the Silt — Help set new markers (success) (reroll)
+  size: 1344x768
+  seed: 33013
+  shape: wide
+  card: footprints-in-the-silt
+  outcome: footprints-in-the-silt--help-set-new-markers--success
+  land: dustwater
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, skull,
+    skeleton, monster, lizard, no shell
+  prompt_prose: Seen from Zuzu's point of view, the tortoise surveyor offers a water skin beside a firm new row
+    of stakes and a taut rope line across the mud, no lettering or logos.
+  prompt_tags: solo, (anthro tortoise:1.3), male, old river surveyor, chalk dust on his shell, hooked measuring
+    staff, friendly weathered smile, offering a leather water skin toward the viewer, row of newly set wooden stakes
+    standing firm in the mud, tight rope line between stakes, dry delta, fresh mud above the old waterline, clear
+    afternoon light, looking at viewer, dry river delta, silt flats, wooden survey stakes, weird west, edo period
+    influence, ink wash shading, detailed background, cinematic composition, atmospheric, medium shot
+  reroll_of: sl2-footprints-in-the-silt--help-set-new-markers--success
+  jobs:
+    arthemy-house: 38235
+  art: {}
+  verdict: null
+- key: sl2r2-hammer-under-the-stone--brace-the-loosened-wall--success
+  entity: creature
+  lane: arthemy-house
+  title: Hammer Under Stone — Brace the loosened wall (success) (reroll)
+  size: 1344x768
+  seed: 33014
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--brace-the-loosened-wall--success
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rubble
+    burying road, injury, fox, wolf, coyote, canine, cat, snout, long ears
+  prompt_prose: Seen from Zuzu's point of view, the mole mason grins with relief beside a thick timber brace jammed
+    under a cracked quarry shelf, holding out a dented metal flask while the cleared road beyond lies safe in warm
+    sun, no lettering or logos.
+  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+    vest, iron hammer lowered, relieved smile, holding out a dented metal flask toward viewer, thick timber brace
+    wedged under a cracked rock shelf, settling dust, clear safe road through the quarry beyond, red rock quarry,
+    warm late sun, looking at viewer, wooden wedge, cleared path, dust motes, hopeful mood, quarry, sandstone, weird
+    west, ink wash, medium shot
+  reroll_of: sl2-hammer-under-the-stone--brace-the-loosened-wall--success
+  jobs:
+    arthemy-house: 38236
+  art: {}
+  verdict: null
+- key: sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--success
+  entity: creature
+  lane: arthemy-house
+  title: Hammer Under Stone — Inspect the fresh cuts (success) (reroll)
+  size: 1344x768
+  seed: 33015
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--success
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, rockslide,
+    running, fox, wolf, coyote, canine, cat, snout, long ears
+  prompt_prose: Seen from Zuzu's point of view, the mole mason crouches at the freshly cut seam and points his hammer
+    along a trail of chisel marks toward the dark mouth of a hidden side tunnel, his tiny eyes narrowed in grim
+    realization, no lettering or logos.
+  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+    vest, iron hammer, crouching, pointing hammer, grim realization, fresh chisel marks on stone leading into the
+    dark mouth of a hidden side tunnel, discarded chisel on ground, red rock quarry wall, low raking sunlight, looking
+    at viewer, tool marks, shadowed tunnel, suspicious, tense mood, quarry, sandstone, weird west, ink wash, medium
+    shot
+  reroll_of: sl2-hammer-under-the-stone--inspect-the-fresh-cuts--success
+  jobs:
+    arthemy-house: 38237
+  art: {}
+  verdict: null
+- key: sl2r2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  entity: scenery
+  lane: arthemy-house
+  title: Hammer Under Stone — Inspect the fresh cuts (failure) (reroll)
+  size: 1344x768
+  seed: 33016
+  shape: wide
+  card: hammer-under-the-stone
+  outcome: hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    calm, fox, wolf, coyote, canine, cat, snout, long ears
+  prompt_prose: Seen from Zuzu's point of view during a hurried retreat, loose shale cascades down a quarry slope
+    while lantern glows of unseen miners flare in a tunnel mouth above and the mole mason waves the viewer back
+    from cover, no lettering or logos.
+  prompt_tags: solo, (anthro mole:1.3), male, stout, dark velvet fur, pink star-shaped nose, tiny eyes, dusty leather
+    vest, iron hammer, waving urgently from behind a boulder, loose shale sliding down a steep slope, lantern glows
+    in a dark tunnel mouth above, distant shadowy silhouettes, scattered stones, dusk quarry, ominous shadows, dynamic
+    angle, debris, danger, tense mood, motion blur, quarry, sandstone, weird west, ink wash, wide shot
+  reroll_of: sl2-hammer-under-the-stone--inspect-the-fresh-cuts--failure
+  jobs:
+    arthemy-house: 38238
+  art: {}
+  verdict: null
+- key: sl2r2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  entity: scenery
+  lane: arthemy-house
+  title: The Empty Pay Cart — Read the pay sheet aloud (success) (reroll)
+  size: 1344x768
+  seed: 33017
+  shape: wide
+  card: the-empty-pay-cart
+  outcome: the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, violence
+  prompt_prose: Seen from Zuzu's point of view, weary quarry workers in distant silhouette stream back toward the
+    ore cart now heaped with supply sacks and tools, while the boar accountant steps aside with his abacus lowered
+    in defeat, no lettering or logos.
+  prompt_tags: solo, (anthro boar:1.3), male, standing upright on two legs, tusks, striped waistcoat, spectacles,
+    cracked wooden abacus lowered, stepping aside, defeated, iron ore cart heaped with supply sacks and tools, distant
+    silhouettes of quarry workers approaching through dust, blank pay sheet in the wind, red canyon quarry, golden
+    hour, hope, reunion, supplies reclaimed, dust motes, warm mood, quarry, sandstone, weird west, ink wash, wide
+    shot
+  reroll_of: sl2-the-empty-pay-cart--read-the-pay-sheet-aloud--success
+  jobs:
+    arthemy-house: 38239
+  art: {}
+  verdict: null
+- key: sl2r2-the-glass-vein--cut-a-safe-sample--failure
+  entity: scenery
+  lane: arthemy-house
+  title: The Glass Vein — Cut a safe sample (failure) (reroll)
+  size: 1344x768
+  seed: 33018
+  shape: wide
+  card: the-glass-vein
+  outcome: the-glass-vein--cut-a-safe-sample--failure
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    gore, smiling, dinosaur, raptor, sledding, playful
+  prompt_prose: Seen from Zuzu's point of view, the black glass seam bursts apart in a spray of glittering shards
+    while the lizard collector flinches back with her padded tray raised as a shield, no lettering or logos.
+  prompt_tags: solo, (anthro lizard:1.3), female, desert stone collector, scaly, leather gloves, wide-brim hat,
+    flinching back, raising padded wooden tray as a shield, black glass seam fracturing, spray of glittering black
+    shards flying toward viewer, cracked canyon wall, harsh sun glare, dynamic angle, danger, shards in midair,
+    motion blur, sparkles, tense mood, quarry, sandstone, weird west, ink wash, medium shot
+  reroll_of: sl2-the-glass-vein--cut-a-safe-sample--failure
+  jobs:
+    arthemy-house: 38240
+  art: {}
+  verdict: null
+- key: sl2r2-the-watchful-overhang--test-the-ledge-alone--success
+  entity: creature
+  lane: arthemy-house
+  title: The Watchful Overhang — Test the ledge alone (success) (reroll)
+  size: 1344x768
+  seed: 33019
+  shape: wide
+  card: the-watchful-overhang
+  outcome: the-watchful-overhang--test-the-ledge-alone--success
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, falling,
+    rockslide, tail, devil, demon, bull, cow
+  prompt_prose: Seen from Zuzu's point of view on the ledge, the ibex scout nods approvingly as a row of chalk-white
+    foothold marks and small stone cairns trace a safe line past a hollow-sounding patch of path, no lettering or
+    logos.
+  prompt_tags: solo, (anthro ibex:1.3), female, trail scout, bandaged horn, braided rope coiled, approving nod,
+    standing on narrow canyon ledge, row of white chalk dots and small stone cairns marking safe footholds, hollow
+    cracked stone patch on the path, overhang above, deep red canyon, bright clear light, looking at viewer, safe
+    route, careful, trail markers, calm mood, sharp shadows, canyon trail, sandstone cliffs, weird west, ink wash,
+    medium shot
+  reroll_of: sl2-the-watchful-overhang--test-the-ledge-alone--success
+  jobs:
+    arthemy-house: 38241
+  art: {}
+  verdict: null
+- key: sl2r2-the-watchful-overhang--test-the-ledge-alone--failure
+  entity: creature
+  lane: arthemy-house
+  title: The Watchful Overhang — Test the ledge alone (failure) (reroll)
+  size: 1344x768
+  seed: 33020
+  shape: wide
+  card: the-watchful-overhang
+  outcome: the-watchful-overhang--test-the-ledge-alone--failure
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    blood, tail, devil, demon, bull, cow
+  prompt_prose: Seen from Zuzu's point of view dangling over the ravine, the ibex scout braces against a rock with
+    the taut braided rope wrapped around her arms, a loose slab tumbling into the depths below, no lettering or
+    logos.
+  prompt_tags: solo, (anthro ibex:1.3), female, trail scout, bandaged horn, braided rope pulled taut, bracing hooves
+    against rock, straining, looking down toward viewer, loose stone slab tumbling into a deep ravine, rope burns,
+    dust, vertigo, high angle, dramatic shadows, danger, hanging rope, rescue, desperate, abyss, canyon trail, sandstone
+    cliffs, weird west, ink wash, medium shot
+  reroll_of: sl2-the-watchful-overhang--test-the-ledge-alone--failure
+  jobs:
+    arthemy-house: 38242
+  art: {}
+  verdict: null
+- key: sl2r2-the-banner-in-the-wind--decode-the-banner-knots--failure
+  entity: scenery
+  lane: arthemy-house
+  title: The Banner in the Wind — Decode the banner knots (failure) (reroll)
+  size: 1344x768
+  seed: 33021
+  shape: wide
+  card: the-banner-in-the-wind
+  outcome: the-banner-in-the-wind--decode-the-banner-knots--failure
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, letters,
+    symbols on banner, sunshine, asphalt, paved road, guardrail, lane markings, modern, car
+  prompt_prose: Seen from Zuzu's point of view, the torn banner whips into a tangled twist in a howling gust above
+    the narrow bridge while a long, winding detour trail snakes away down the canyon under heavy grey skies, no
+    lettering or logos.
+  prompt_tags: solo, (anthro eagle:1.3), female, courier captain, weathered feathers, worn courier coat, small figure
+    on the bridge, frustrated, torn plain signal banner twisted and tangled in a strong gust, narrow rope bridge,
+    long winding detour trail descending into the canyon, heavy grey storm clouds, windblown dust, strong wind,
+    disappointment, overcast, gloomy mood, long journey, canyon trail, sandstone cliffs, weird west, ink wash, wide
+    shot
+  reroll_of: sl2-the-banner-in-the-wind--decode-the-banner-knots--failure
+  jobs:
+    arthemy-house: 38243
+  art: {}
+  verdict: null
+- key: sl2r2-the-toll-without-a-keeper--challenge-the-false-toll--success
+  entity: creature
+  lane: arthemy-house
+  title: The Toll Without a Keeper — Challenge the false toll (success) (reroll)
+  size: 1344x768
+  seed: 33022
+  shape: wide
+  card: the-toll-without-a-keeper
+  outcome: the-toll-without-a-keeper--challenge-the-false-toll--success
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    wound, letters, asphalt, paved road, guardrail, lane markings, modern, car, sleeping, asleep
+  prompt_prose: Seen from Zuzu's point of view, the cut toll rope lies slack across the canyon trail as the hyena
+    enforcer backs away up the rocks, ears flat and broken spear lowered, abandoning her post, no lettering or logos.
+  prompt_tags: solo, (anthro hyena:1.3), female, spotted fur, scarred road enforcer, broken spear lowered, ears
+    flat, shaken, backing away up the rocks, cleanly cut toll rope lying slack across the canyon trail, small plain
+    wooden box on a post, open trail ahead, clear afternoon light, retreating, defeated, cut rope ends, broken barrier,
+    relief, trail open, canyon trail, sandstone cliffs, weird west, ink wash, medium shot
+  reroll_of: sl2-the-toll-without-a-keeper--challenge-the-false-toll--success
+  jobs:
+    arthemy-house: 38244
+  art: {}
+  verdict: null
+- key: sl2r2-the-toll-without-a-keeper--offer-a-fair-trade--failure
+  entity: scenery
+  lane: arthemy-house
+  title: The Toll Without a Keeper — Offer a fair trade (failure) (reroll)
+  size: 1344x768
+  seed: 33023
+  shape: wide
+  card: the-toll-without-a-keeper
+  outcome: the-toll-without-a-keeper--offer-a-fair-trade--failure
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    bridge, letters, asphalt, paved road, guardrail, lane markings, modern, car, sleeping, asleep
+  prompt_prose: Seen from Zuzu's point of view, the trail ends abruptly at a sheer ledge over empty canyon air,
+    and far back up the path the hyena enforcer's silhouette walks off with the bundle of provisions, no lettering
+    or logos.
+  prompt_tags: solo, (anthro hyena:1.3), female, spotted fur, scarred road enforcer, broken spear, tiny distant
+    silhouette walking away carrying a bundle, dead-end trail ending at a sheer cliff ledge, empty canyon air, crumbling
+    edge, long shadows, dusk, bleak, betrayal, dead end, abyss, lonely, sheer drop, grim mood, canyon trail, sandstone
+    cliffs, weird west, ink wash, wide shot
+  reroll_of: sl2-the-toll-without-a-keeper--offer-a-fair-trade--failure
+  jobs:
+    arthemy-house: 38245
+  art: {}
+  verdict: null
+- key: sl2r2-the-map-in-ashes--persuade-her-to-stop--failure
+  entity: creature
+  lane: arthemy-house
+  title: The Map in Ashes — Persuade her to stop (failure) (reroll)
+  size: 1344x768
+  seed: 33024
+  shape: wide
+  card: the-map-in-ashes
+  outcome: the-map-in-ashes--persuade-her-to-stop--failure
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, letters,
+    writing, smiling, fire breathing, flames from mouth, monster
+  prompt_prose: Seen from Zuzu's point of view, the raccoon archivist hurls an armful of maps into a roaring blaze
+    in defiance as the papers curl black and the fire leaps high, no lettering or logos.
+  prompt_tags: solo, (anthro raccoon:1.3), female, wandering archivist, ink-stained gloves, defiant, angry, throwing
+    an armful of maps into the fire, roaring blaze, curling blackened paper, thick smoke, flying embers, canyon
+    camp at night, harsh orange glow, rage, rejection, destruction, heat haze, sparks, smoke plume, canyon camp,
+    weird west, ink wash, medium shot
+  reroll_of: sl2-the-map-in-ashes--persuade-her-to-stop--failure
+  jobs:
+    arthemy-house: 38246
+  art: {}
+  verdict: null
+- key: sl2r2-the-night-watch-debt--take-the-first-watch--success
+  entity: creature
+  lane: arthemy-house
+  title: The Night Watch Debt — Take the first watch (success) (reroll)
+  size: 1344x768
+  seed: 33025
+  shape: wide
+  card: the-night-watch-debt
+  outcome: the-night-watch-debt--take-the-first-watch--success
+  land: tablelands
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    weapons drawn
+  prompt_prose: Seen from Zuzu's point of view, the old wolf sentry raises his lensless lantern over a cowering
+    thief silhouette caught beside the supply sacks and gives the viewer a grudging nod of respect, no lettering
+    or logos.
+  prompt_tags: solo, (anthro wolf:1.3), male, older retired sentry, grey muzzle, patched faded uniform, lantern
+    with no glass lens raised, grudging approving nod, cowering small thief silhouette caught beside supply sacks,
+    untouched supply crates, canyon camp at night, campfire embers, moonlight, looking at viewer, respect, vigilant,
+    caught thief, lantern glow, starry sky, canyon camp, weird west, ink wash, medium shot
+  reroll_of: sl2-the-night-watch-debt--take-the-first-watch--success
+  jobs:
+    arthemy-house: 38247
+  art: {}
+  verdict: null
+- key: sl2r2-the-third-shadow--count-the-lantern-positions--success
+  entity: creature
+  lane: arthemy-house
+  title: The Third Shadow — Count the lantern positions (success) (reroll)
+  size: 1344x768
+  seed: 33026
+  shape: wide
+  card: the-third-shadow
+  outcome: the-third-shadow--count-the-lantern-positions--success
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, sword,
+    blood, human face, human skin, hair
+  prompt_prose: Caught out at the cave entrance, the pale bat guide raises her two lanterns in startled guilt as
+    a hidden third lantern blazes in a rock niche beside her and a slack trapper's snare lies useless on the wet
+    stone; no lettering or logos.
+  prompt_tags: solo, (anthro bat:1.3), female, pale cave guide, polished stone spectacles, braided cord, caught
+    out, startled guilty expression, arms raised, holding two lanterns, hidden third lantern revealed in a rock
+    niche, slack trapper's snare cord lying on the ground, three shadows explained on the rock wall, cave entrance,
+    wet rock, bright revealing lantern light, tense standoff, deserted scene, dark fantasy, weird west, edo period,
+    cave, atmospheric, cinematic lighting, depth of field, medium shot
+  reroll_of: sl2-the-third-shadow--count-the-lantern-positions--success
+  jobs:
+    arthemy-house: 38248
+  art: {}
+  verdict: null
+- key: sl2r2-the-third-shadow--demand-a-safer-passage--success
+  entity: creature
+  lane: arthemy-house
+  title: The Third Shadow — Demand a safer passage (success) (reroll)
+  size: 1344x768
+  seed: 33027
+  shape: wide
+  card: the-third-shadow
+  outcome: the-third-shadow--demand-a-safer-passage--success
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, human
+    face, human skin, hair
+  prompt_prose: The pale bat guide kneels with her braided cord coiled at her feet, pleading for mercy as she points
+    one wing toward rough stone stairs descending into a genuine lower corridor under a single steady lantern; no
+    lettering or logos.
+  prompt_tags: solo, (anthro bat:1.3), female, pale cave guide, polished stone spectacles, braided cord, braided
+    cord coiled and set down, kneeling, contrite, pleading for mercy, one wing pointing toward a lower corridor,
+    rough stone stairs descending into a genuine tunnel, single steady lantern on the ground, cave entrance, calm
+    warm light, surrender, deserted scene, dark fantasy, weird west, edo period, cave, atmospheric, cinematic lighting,
+    depth of field, medium shot
+  reroll_of: sl2-the-third-shadow--demand-a-safer-passage--success
+  jobs:
+    arthemy-house: 38249
+  art: {}
+  verdict: null
+- key: sl2r2-shelter-for-the-storm--carry-the-medicine-chest--success
+  entity: creature
+  lane: arthemy-house
+  title: Shelter for the Storm — Carry the medicine chest (success) (reroll)
+  size: 1344x768
+  seed: 33028
+  shape: wide
+  card: shelter-for-the-storm
+  outcome: shelter-for-the-storm--carry-the-medicine-chest--success
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, fangs,
+    glowing eyes, ghoul, spell
+  prompt_prose: Inside a dry cave lit by a small fire, the pangolin healer pushes back her hood and holds out a
+    rolled bandage and a folded blank map, the wooden medicine chest set safely beside her as rain curtains the
+    entrance behind; no lettering or logos.
+  prompt_tags: solo, (anthro pangolin:1.3), female, itinerant healer, hood pushed back, herb satchels, grateful
+    smile, holding out a rolled bandage and a folded blank map toward the viewer, wooden medicine chest set down
+    safely beside her, dry cave interior, small campfire, steady lantern, rain curtain at the cave mouth behind,
+    warm firelight, shelter, deserted scene, dark fantasy, weird west, edo period, cave, atmospheric, cinematic
+    lighting, depth of field, medium shot
+  reroll_of: sl2-shelter-for-the-storm--carry-the-medicine-chest--success
+  jobs:
+    arthemy-house: 38250
+  art: {}
+  verdict: null
+- key: sl2r2-salt-on-the-threshold--reinforce-the-vent-above--failure
+  entity: creature
+  lane: arthemy-house
+  title: Salt on the Threshold — Reinforce the vent above (failure) (reroll)
+  size: 1344x768
+  seed: 33029
+  shape: wide
+  card: salt-on-the-threshold
+  outcome: salt-on-the-threshold--reinforce-the-vent-above--failure
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    clear air
+  prompt_prose: Stinging grey dust billows down from a cracked stone seal above as the salamander mason shields
+    her face and coughs, a dropped chisel lying across the smeared salt line in the murky lantern haze; no lettering
+    or logos.
+  prompt_tags: solo, (anthro salamander:1.3), female, cave mason, charcoal-speckled skin, white salt dust on her
+    gloves, shielding her face with one arm, squinting, coughing, billowing cloud of stinging grey dust falling
+    from above, cracked stone seal in the ceiling vent, dropped chisel, broken smeared salt line, narrow stone doorway,
+    hazy choking air, murky lantern glow, danger, deserted scene, dark fantasy, weird west, edo period, cave, atmospheric,
+    cinematic lighting, depth of field, medium shot
+  reroll_of: sl2-salt-on-the-threshold--reinforce-the-vent-above--failure
+  jobs:
+    arthemy-house: 38251
+  art: {}
+  verdict: null
+- key: sl2r2-salt-on-the-threshold--test-the-air-carefully--failure
+  entity: scenery
+  lane: arthemy-house
+  title: Salt on the Threshold — Test the air carefully (failure) (reroll)
+  size: 1344x768
+  seed: 33030
+  shape: wide
+  card: salt-on-the-threshold
+  outcome: salt-on-the-threshold--test-the-air-carefully--failure
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    clear air
+  prompt_prose: Thick yellow-grey dust pours through the narrow doorway and floods past the salt line as the salamander
+    mason backs away with cloth over her mouth, waving urgently beside a snuffed, smoking test candle; no lettering
+    or logos.
+  prompt_tags: solo, (anthro salamander:1.3), female, cave mason, charcoal-speckled skin, white salt dust on her
+    gloves, backing away, cloth pulled over her mouth, waving urgently, thick yellow-grey dust pouring through the
+    narrow doorway, dust flooding the floor past the salt line, snuffed test candle smoking on the ground, chalk
+    scuffs on the walls, murky ochre haze, dim light, urgency, deserted scene, dark fantasy, weird west, edo period,
+    cave, atmospheric, cinematic lighting, depth of field, wide shot
+  reroll_of: sl2-salt-on-the-threshold--test-the-air-carefully--failure
+  jobs:
+    arthemy-house: 38252
+  art: {}
+  verdict: null
+- key: sl2r2-the-forgotten-pledge--examine-the-iron-charm--success
+  entity: creature
+  lane: arthemy-house
+  title: The Forgotten Pledge — Examine the iron charm (success) (reroll)
+  size: 1344x768
+  seed: 33031
+  shape: wide
+  card: the-forgotten-pledge
+  outcome: the-forgotten-pledge--examine-the-iron-charm--success
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, crocodile,
+    alligator, reptile, scales
+  prompt_prose: The gorilla guardian bows gratefully toward the viewer, holding the unfastened iron charm in his
+    open palm and his bare wrist free at last, in soft lantern light before the chamber door; no lettering or logos.
+  prompt_tags: solo, (anthro gorilla:1.3), male, massive oathbound guardian, frayed travel robes, bare freed wrist,
+    holding the opened iron charm in his open palm, unfastened clasp, grateful bow toward the viewer, gentle smile,
+    sealed chamber door behind, soft lantern light, cave, release, deserted scene, dark fantasy, weird west, edo
+    period, atmospheric, cinematic lighting, depth of field, medium shot
+  reroll_of: sl2-the-forgotten-pledge--examine-the-iron-charm--success
+  jobs:
+    arthemy-house: 38253
+  art: {}
+  verdict: null
+- key: sl2r2-voices-across-the-rock--trace-the-true-echo--success
+  entity: creature
+  lane: arthemy-house
+  title: Voices Across the Rock — Trace the true echo (success) (reroll)
+  size: 1344x768
+  seed: 33032
+  shape: wide
+  card: voices-across-the-rock
+  outcome: voices-across-the-rock--trace-the-true-echo--success
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, darkness,
+    paper notice, poster, scroll, parchment, lizard, reptile, scales
+  prompt_prose: The small shrew courier clambers through a broken gap in a thin sheet of rock into open air, clutching
+    his sealed message tube to his chest in joyful relief as sunlight pours in and the dust settles; no lettering
+    or logos.
+  prompt_tags: solo, (anthro shrew:1.3), male, small lost courier, dust-stained leathers, sealed sealed leather
+    message tube, clutching the sealed leather message tube to his chest, joyful relief, climbing through a broken
+    gap in a thin sheet of rock, open air beyond, bright sky, mountain wind, sunlight pouring in, dust settling,
+    hope, deserted scene, dark fantasy, weird west, edo period, cave, atmospheric, cinematic lighting, depth of
+    field, medium shot
+  reroll_of: sl2-voices-across-the-rock--trace-the-true-echo--success
+  jobs:
+    arthemy-house: 38254
+  art: {}
+  verdict: null
+- key: sl2r2-voices-across-the-rock--trace-the-true-echo--failure
+  entity: scenery
+  lane: arthemy-house
+  title: Voices Across the Rock — Trace the true echo (failure) (reroll)
+  size: 1344x768
+  seed: 33033
+  shape: wide
+  card: voices-across-the-rock
+  outcome: voices-across-the-rock--trace-the-true-echo--failure
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, sunlight,
+    smiling, paper notice, poster, scroll, parchment, lizard, reptile, scales
+  prompt_prose: In a dead-end tunnel, grit and pebbles pour from the ceiling across a scraped rock wall, and through
+    a narrow crack in the stone sheet the shrew courier is glimpsed cringing with his arms over his head; no lettering
+    or logos.
+  prompt_tags: solo, (anthro shrew:1.3), male, small lost courier, dust-stained leathers, sealed sealed leather
+    message tube, glimpsed through a narrow crack in a sheet of stone, cringing, covering his head, falling grit
+    and pebbles pouring from the ceiling, dead-end tunnel, scraped rock wall, dust haze, dim lantern, claustrophobic,
+    foreboding, deserted scene, dark fantasy, weird west, edo period, cave, atmospheric, cinematic lighting, depth
+    of field, medium shot
+  reroll_of: sl2-voices-across-the-rock--trace-the-true-echo--failure
+  jobs:
+    arthemy-house: 38255
+  art: {}
+  verdict: null
+- key: sl2r2-the-cooling-stones--mark-the-unsafe-seam--success
+  entity: scenery
+  lane: arthemy-house
+  title: The Cooling Stones — Mark the unsafe seam (success) (reroll)
+  size: 1344x768
+  seed: 33034
+  shape: wide
+  card: the-cooling-stones
+  outcome: the-cooling-stones--mark-the-unsafe-seam--success
+  land: verge
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, glowing
+    eyes, frown
+  prompt_prose: Seen from Zuzu's point of view, the armadillo road mender raises her obsidian-handled pick to signal
+    as distant caravan lanterns swing onto a marked detour, the black road splitting harmlessly in an orange glow
+    beside them; burnished obsidian palette, no lettering or logos.
+  prompt_tags: solo, (anthro armadillo:1.3), female, armored shell, road mender, quilted leather, dust-caked boots,
+    obsidian-handled pick raised high in signal, relieved expression, standing on a safe detour, line of marked
+    pale stones, glowing orange fissure split open beside the road, distant caravan lanterns turning aside, tiny
+    distant silhouettes, black glass road, night after sunset, warm orange glow, calm, weird west, edo period, burnished
+    obsidian palette, cinematic lighting, wide shot
+  reroll_of: sl2-the-cooling-stones--mark-the-unsafe-seam--success
+  jobs:
+    arthemy-house: 38256
+  art: {}
+  verdict: null
+- key: sl2r2-ashes-at-the-border--repair-the-signal-horn--failure
+  entity: creature
+  lane: arthemy-house
+  title: Ashes at the Border — Repair the signal horn (failure) (reroll)
+  size: 1344x768
+  seed: 33035
+  shape: wide
+  card: ashes-at-the-border
+  outcome: ashes-at-the-border--repair-the-signal-horn--failure
+  land: verge
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    text, horns, horned, bull, antlers
+  prompt_prose: The vulture ranger glares at the viewer with one wing held out for payment and her ledger open,
+    the signal horn lying in broken pieces on a crate while the barrier stays shut in falling ash; no lettering
+    or logos.
+  prompt_tags: solo, (anthro vulture:1.3), female, bald head, hooked beak, border ranger, sun-bleached cloak, angry
+    glare, one wing held out palm up demanding payment, open ledger book in other wing, broken brass signal bugle
+    in pieces on a crate, bent brass valve, barrier pole still closed, ash falling like snow, grey overcast, cold
+    light, weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
+  reroll_of: sl2-ashes-at-the-border--repair-the-signal-horn--failure
+  jobs:
+    arthemy-house: 38257
+  art: {}
+  verdict: null
+- key: sl2r2-ashes-at-the-border--offer-to-scout-the-tower--success
+  entity: scenery
+  lane: arthemy-house
+  title: Ashes at the Border — Offer to scout the tower (success) (reroll)
+  size: 1344x768
+  seed: 33036
+  shape: wide
+  card: ashes-at-the-border
+  outcome: ashes-at-the-border--offer-to-scout-the-tower--success
+  land: verge
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, horns,
+    horned, bull, antlers
+  prompt_prose: Seen from the top of the watchtower, the vulture ranger hurries into a lantern-lit stone shelter
+    and raises a wing in thanks as a towering dust front rolls across the horizon; no lettering or logos.
+  prompt_tags: solo, (anthro vulture:1.3), female, bald head, hooked beak, border ranger, sun-bleached cloak, brass
+    signal bugle at her side, running toward a sturdy stone shelter doorway, looking back over her shoulder, wing
+    raised in thanks, huge dust storm wall rolling across the horizon, high angle view from watchtower top, black
+    road below, drifting ash, ominous brown sky, warm lantern light in the doorway, weird west, edo period, burnished
+    obsidian palette, cinematic lighting, wide shot
+  reroll_of: sl2-ashes-at-the-border--offer-to-scout-the-tower--success
+  jobs:
+    arthemy-house: 38258
+  art: {}
+  verdict: null
+- key: sl2r2-ashes-at-the-border--offer-to-scout-the-tower--failure
+  entity: creature
+  lane: arthemy-house
+  title: Ashes at the Border — Offer to scout the tower (failure) (reroll)
+  size: 1344x768
+  seed: 33037
+  shape: wide
+  card: ashes-at-the-border
+  outcome: ashes-at-the-border--offer-to-scout-the-tower--failure
+  land: verge
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    blood, gore, horns, horned, bull, antlers
+  prompt_prose: The vulture ranger rushes toward the viewer with a water flask through a choking cloud of dust as
+    the watchtower stairs collapse into rubble behind her; no lettering or logos.
+  prompt_tags: solo, (anthro vulture:1.3), female, bald head, hooked beak, border ranger, sun-bleached cloak, worried
+    expression, rushing forward with a water flask, brass signal bugle swinging, collapsed watchtower stairway,
+    falling stones, rubble heap, broken timbers, thick choking dust cloud, ash, dim grey light, chaos, low angle,
+    weird west, edo period, burnished obsidian palette, cinematic lighting, medium shot
+  reroll_of: sl2-ashes-at-the-border--offer-to-scout-the-tower--failure
+  jobs:
+    arthemy-house: 38259
+  art: {}
+  verdict: null
+- key: sl2r2-the-last-watchfire--volunteer-for-the-search--failure
+  entity: creature
+  lane: arthemy-house
+  title: The Last Watchfire — Volunteer for the search (failure) (reroll)
+  size: 1344x768
+  seed: 33038
+  shape: wide
+  card: the-last-watchfire
+  outcome: the-last-watchfire--volunteer-for-the-search--failure
+  land: verge
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    muzzle, cage, mask, two wolves, duplicate
+  prompt_prose: The wolf commander bows her head and holds out a strip of bandage at the gate, her single watchfire
+    guttering to embers against a cold, empty ravine beyond the barricade; no lettering or logos.
+  prompt_tags: solo, (anthro wolf:1.3), female, grey fur, scarred muzzle, camp commander, wooden peg leg, frontier
+    officer coat, worn ceremonial sabre untouched, head bowed, ears down, holding out a strip of bandage, single
+    dying watchfire, glowing embers, empty dark ravine beyond the barricade, cold blue night, mist, grim, sorrowful,
+    weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
+  reroll_of: sl2-the-last-watchfire--volunteer-for-the-search--failure
+  jobs:
+    arthemy-house: 38260
+  art: {}
+  verdict: null
+- key: sl2r2-the-last-watchfire--organize-the-watch-rota--success
+  entity: creature
+  lane: arthemy-house
+  title: The Last Watchfire — Organize the watch rota (success) (reroll)
+  size: 1344x768
+  seed: 33039
+  shape: wide
+  card: the-last-watchfire
+  outcome: the-last-watchfire--organize-the-watch-rota--success
+  land: verge
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, muzzle,
+    cage, mask, two wolves, duplicate
+  prompt_prose: The wolf commander nods and points along a palisade now ringed with lit guard posts, bread and a
+    steaming stew pot set out by a steady watchfire; no lettering or logos.
+  prompt_tags: solo, (anthro wolf:1.3), female, grey fur, scarred muzzle, camp commander, wooden peg leg, frontier
+    officer coat, confident nod, worn ceremonial sabre sheathed, pointing along the palisade wall, lit torches at
+    every guard post, distant guard silhouettes on the wall, baskets of bread and steaming stew pot beside the fire,
+    stacked firewood, steady watchfire, night, warm orange light, orderly, weird west, edo period, burnished obsidian
+    palette, cinematic lighting, medium shot
+  reroll_of: sl2-the-last-watchfire--organize-the-watch-rota--success
+  jobs:
+    arthemy-house: 38261
+  art: {}
+  verdict: null
+- key: sl2r2-the-closed-infirmary--inspect-the-sealed-room--failure
+  entity: creature
+  lane: arthemy-house
+  title: The Closed Infirmary — Inspect the sealed room (failure) (reroll)
+  size: 1344x768
+  seed: 33040
+  shape: wide
+  card: the-closed-infirmary
+  outcome: the-closed-infirmary--inspect-the-sealed-room--failure
+  land: verge
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, smiling,
+    gore
+  prompt_prose: The deer physician presses a cloth to her muzzle and reaches toward the viewer to pull him back
+    as bitter yellow-green fumes pour from the forced infirmary door; no lettering or logos.
+  prompt_tags: solo, (anthro deer:1.3), female, doe, field physician, ink-stained sleeves, plain apron, cloth pressed
+    over her muzzle, alarmed, reaching toward viewer to pull back, infirmary door burst open, splintered planks,
+    sickly yellow-green fumes pouring out, choking haze, fortified camp, dim dusk, weird west, edo period, burnished
+    obsidian palette, cinematic lighting, medium shot
+  reroll_of: sl2-the-closed-infirmary--inspect-the-sealed-room--failure
+  jobs:
+    arthemy-house: 38262
+  art: {}
+  verdict: null
+- key: sl2r2-the-price-of-silence--refuse-the-secret-bargain--success
+  entity: scenery
+  lane: arthemy-house
+  title: The Price of Silence — Refuse the secret bargain (success) (reroll)
+  size: 1344x768
+  seed: 33041
+  shape: wide
+  card: the-price-of-silence
+  outcome: the-price-of-silence--refuse-the-secret-bargain--success
+  land: verge
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, text,
+    glowing eyes, blocking the gate
+  prompt_prose: The masked owl negotiator steps aside with a lowered wing as a narrow, unbound footpath winds around
+    her bronze-sealed gate toward a breaking dawn; no lettering or logos.
+  prompt_tags: solo, (anthro owl:1.3), female, pale feathers, gate negotiator, cracked bronze mask, plain travel
+    cloak, feathered tufts, standing aside, wing lowered, head tilted in quiet respect, great stone gate sealed
+    with a glowing bronze seal, narrow unbound footpath winding around the gate, open sky beyond, black desert,
+    dawn light breaking, freedom, weird west, edo period, burnished obsidian palette, cinematic lighting, wide shot
+  reroll_of: sl2-the-price-of-silence--refuse-the-secret-bargain--success
+  jobs:
+    arthemy-house: 38263
+  art: {}
+  verdict: null
+- key: sl2r2-trial-dustwater--confront--success
+  entity: scenery
+  lane: arthemy-house
+  title: The Crossing Gate — Raise the jammed gate (success) (reroll)
+  size: 1344x768
+  seed: 33042
+  shape: wide
+  card: trial-dustwater
+  outcome: trial-dustwater--confront--success
+  land: dustwater
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, quadruped,
+    feral, on all fours, plinth
+  prompt_prose: Seen from Zuzu's point of view on the dam walkway, the massive iron flood gate hangs raised high
+    on its salt-crusted chains with the river rushing free beneath it, small boats sliding through toward the far
+    bank while the goat gatekeeper stands aside astonished, toll book hanging limp, no lettering or logos.
+  prompt_tags: (massive iron flood gate raised high:1.3), salt-crusted chains pulled taut, river rushing free beneath
+    the gate, small boats passing through toward the far bank, (anthro goat:1.3), male, gatekeeper, standing upright
+    on two legs, long coat, toll book chained to his belt, small in frame, stepping aside, astonished, stone dam
+    walkway, great iron wheel locked in place, spray, clearing sky, golden light, triumphant, weird west, painterly,
+    cinematic lighting, detailed background, wide shot
+  reroll_of: sl2-trial-dustwater--confront--success
+  jobs:
+    arthemy-house: 38264
+  art: {}
+  verdict: null
+- key: sl2r2-trial-cave--confront--success
+  entity: scenery
+  lane: arthemy-house
+  title: The Deep-Cave Judgement — Defend the captive against the court (success) (reroll)
+  size: 1344x768
+  seed: 33043
+  shape: wide
+  card: trial-cave
+  outcome: trial-cave--confront--success
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    crowd, extra characters, crow, bird, beak, feathers, hood, robe, second character
+  prompt_prose: Seen from Zuzu's point of view, the chalk circle on the stone floor is scuffed and broken, snapped
+    bindings lying in it as the massive gorilla guardian rises to his feet free, a robed crow adjudicator recoiling
+    in the blue candlelight behind him, no lettering or logos.
+  prompt_tags: solo, (anthro gorilla:1.3), male, massive silverback guardian, gorilla face, heavy brow, rising to
+    his feet, freed, snapped rope bindings falling away, broken chalk circle scuffed on the stone floor, ring of
+    blue candle flames, knocked over candles, deep cave stone court, blue light, triumphant, weird west, painterly,
+    cinematic lighting, detailed background, wide shot
+  reroll_of: sl2-trial-cave--confront--success
+  jobs:
+    arthemy-house: 38265
+  art: {}
+  verdict: null
+- key: sl2r2-trial-cave--confront--failure
+  entity: creature
+  lane: arthemy-house
+  title: The Deep-Cave Judgement — Defend the captive against the court (failure) (reroll)
+  size: 1344x768
+  seed: 33044
+  shape: wide
+  card: trial-cave
+  outcome: trial-cave--confront--failure
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    crowd, extra characters, smiling, crow, bird, beak, feathers, hood, robe, second character
+  prompt_prose: Seen from Zuzu's point of view, thrown back to the cave floor, a hooded crow adjudicator stands
+    over the unbroken chalk circle with a staff leveled at the viewer as the ring of blue candle flames flares high,
+    the bound gorilla guardian bowed and still captive behind, no lettering or logos.
+  prompt_tags: solo, (anthro gorilla:1.3), male, massive silverback guardian, gorilla face, heavy brow, kneeling,
+    bound, head bowed, unbroken chalk circle, ring of blue candle flames flaring high, deep cave stone court, harsh
+    blue light, low angle, from below, ominous, weird west, painterly, cinematic lighting, detailed background,
+    medium shot
+  reroll_of: sl2-trial-cave--confront--failure
+  jobs:
+    arthemy-house: 38266
+  art: {}
+  verdict: null
+- key: sl2r2-trial-cave--parley--success
+  entity: creature
+  lane: arthemy-house
+  title: The Deep-Cave Judgement — Accept a binding testimony (success) (reroll)
+  size: 1344x768
+  seed: 33045
+  shape: wide
+  card: trial-cave
+  outcome: trial-cave--parley--success
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    crowd, extra characters, crow, bird, beak, feathers, hood, robe, second character
+  prompt_prose: Seen from Zuzu's point of view, the hooded crow adjudicator lifts one wing to release the kneeling
+    gorilla guardian, a single loose cord left on his wrist as a supervised term, the blue candles burning low and
+    calm around the stone court, no lettering or logos.
+  prompt_tags: solo, (anthro gorilla:1.3), male, massive silverback guardian, gorilla face, heavy brow, kneeling,
+    looking up with relief, single loose cord on his wrist, open chalk circle, ring of calm low blue candle flames,
+    deep cave stone court, soft blue light, quiet, weird west, painterly, cinematic lighting, detailed background,
+    medium shot
+  reroll_of: sl2-trial-cave--parley--success
+  jobs:
+    arthemy-house: 38267
+  art: {}
+  verdict: null
+- key: sl2r2-trial-cave--evidence--success
+  entity: creature
+  lane: arthemy-house
+  title: The Deep-Cave Judgement — Expose the false oath (success) (reroll)
+  size: 1344x768
+  seed: 33046
+  shape: wide
+  card: trial-cave
+  outcome: trial-cave--evidence--success
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    crowd, text, extra characters, crow, bird, beak, feathers, hood, robe, second character
+  prompt_prose: Seen from Zuzu's point of view, a hooded crow adjudicator bows low before a stone tablet where melted
+    wax has peeled away to reveal a glowing hidden line of carved pattern, while the gorilla guardian's binding
+    cords slacken and fall behind, no lettering or logos.
+  prompt_tags: solo, (anthro gorilla:1.3), male, massive silverback guardian, gorilla face, heavy brow, binding
+    cords slackening and falling from his arms, stone tablet with melted wax peeled away, glowing hidden carved
+    groove, plain unmarked stone, broken charms on the floor, ring of blue candle flames turning warm gold, deep
+    cave stone court, revelation, weird west, painterly, cinematic lighting, detailed background, medium shot
+  reroll_of: sl2-trial-cave--evidence--success
+  jobs:
+    arthemy-house: 38268
+  art: {}
+  verdict: null
+- key: sl2r2-trial-cave--evidence--failure
+  entity: scenery
+  lane: arthemy-house
+  title: The Deep-Cave Judgement — Expose the false oath (failure) (reroll)
+  size: 1344x768
+  seed: 33047
+  shape: wide
+  card: trial-cave
+  outcome: trial-cave--evidence--failure
+  land: cave
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    crowd, text, calm, calm, quiet
+  prompt_prose: Seen from Zuzu's point of view, being driven out of the chamber, a shockwave of blue ritual light
+    bursts from an unreadable wax-sealed tablet, candles blown out in a ring and a hooded crow adjudicator a dark
+    silhouette against the glare, no lettering or logos.
+  prompt_tags: solo, anthro crow, adjudicator, black feathers, black robes, hooded cloak, (blue ritual shockwave:1.3),
+    dark silhouette against the glare, arms spread, blue ritual shockwave bursting from a wax-sealed stone tablet,
+    ring of candles blown out, smoke trails, cave entrance tunnel framing the scene, cracked stone floor, drifting
+    embers, harsh backlight, ominous, weird west, painterly, cinematic lighting, detailed background, wide shot
+  reroll_of: sl2-trial-cave--evidence--failure
+  jobs:
+    arthemy-house: 38269
+  art: {}
+  verdict: null
+- key: sl2r2-trial-verge--confront--success
+  entity: scenery
+  lane: arthemy-house
+  title: Beyond the Verge — Cut the seal without accepting its terms (success) (reroll)
+  size: 1344x768
+  seed: 33048
+  shape: wide
+  card: trial-verge
+  outcome: trial-verge--confront--success
+  land: verge
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, blood,
+    crowd, text
+  prompt_prose: Seen from Zuzu's point of view, the great hingeless stone door is split by a glowing fracture down
+    its seal, swung partly open on a pale misty road beyond, while the masked owl negotiator stands aside with the
+    stone key lowered, no lettering or logos.
+  prompt_tags: great hingeless stone door in a black cliff split by a glowing fracture, broken seal, door ajar,
+    misty pale road beyond, (anthro owl:1.3), female, pale feathers, silent negotiator, cracked bronze mask, plain
+    travel cloak, small in frame, standing aside, stone key lowered, black desert, obsidian shards on the ground,
+    dim violet sky, dawn glow, weird west, painterly, cinematic lighting, detailed background, wide shot
+  reroll_of: sl2-trial-verge--confront--success
+  jobs:
+    arthemy-house: 38270
+  art: {}
+  verdict: null
+- key: sl2r2-trial-verge--parley--success
+  entity: creature
+  lane: arthemy-house
+  title: Beyond the Verge — Renounce the demand for silence (success) (reroll)
+  size: 1344x768
+  seed: 33049
+  shape: wide
+  card: trial-verge
+  outcome: trial-verge--parley--success
+  land: verge
+  task: t-028
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, writing, logo, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors, person, cigarette, koala, straw hat, katana, gore, blood, crowd,
+    text, chains
+  prompt_prose: Seen from Zuzu's point of view, the masked owl negotiator lowers the stone key and bows her head,
+    the hingeless door standing open behind her onto a road of soft violet dawn, with no oath taken, no lettering
+    or logos.
+  prompt_tags: solo, (anthro owl:1.3), female, pale feathers, silent negotiator, cracked bronze mask, plain travel
+    cloak, bowing her head, stone key lowered at her side, yielding, conceding, huge hingeless stone door standing
+    open behind her, road of soft violet dawn light beyond, black cliff, black desert, quiet, serene, weird west,
+    painterly, cinematic lighting, detailed background, medium shot
+  reroll_of: sl2-trial-verge--parley--success
+  jobs:
+    arthemy-house: 38271
   art: {}
   verdict: null
