@@ -15,29 +15,82 @@ from __future__ import annotations
 
 HEIGHT = 88
 PALETTE_COLOURS = 20
-# Filled from art/T032-MITTENS-PARTS.yaml once it renders.
-STANCE = 0
-CROUCH, JUMP, SLIDE, DOWN = 0, 0, 0, 0
-REFERENCE = {"art": STANCE}  # scale only
+STANCE = 246733  # mittens-rig-stance-apart, mirrored: Kontext kept him facing left
+CROUCH, JUMP, SLIDE, DOWN = 246734, 246735, 246736, 246737  # all mirrored like the stance
+# Scale from the stance itself, ears to boot soles (the knife held above his head is left out, and so
+# are the cast shadow and the scrawl in the corner).
+REFERENCE = {"art": STANCE, "mirror": True, "crop": (0, 190, 832, 1132)}
 
-NECK = (0, 0)
-NEAR_SHOULDER = (0, 0)
-FAR_SHOULDER = (0, 0)
-HIP_BACK = (0, 0)
-HIP_FRONT = (0, 0)
+NECK = (440, 375)
+NEAR_SHOULDER = (530, 405)
+FAR_SHOULDER = (290, 450)
+HIP_BACK = (330, 720)
+HIP_FRONT = (500, 700)
+TAIL_ROOT = (255, 700)
 # The fighter's spot on the ground: midway between his boots.
-ANCHOR = (0, 0)
+ANCHOR = (420, 1112)
 
 
-def whole(art, ground, polygon, z):
-    """A whole-figure pose, placed so its own spot on the ground lands on ANCHOR."""
-    return {"art": art, "z": z, "pivot": ground, "follows": ["pose"], "polygon": polygon,
-            "base": {"dx": ANCHOR[0] - ground[0], "dy": ANCHOR[1] - ground[1]}}
+def whole(art, ground, polygon, z, scale=1.0):
+    """A whole-figure pose, scaled to the stance's size about its own spot on the ground, and placed so
+    that spot lands on ANCHOR (Kontext drew each pose at its own scale)."""
+    return {"art": art, "z": z, "pivot": ground, "follows": ["pose"], "polygon": polygon, "mirror": True,
+            "base": {"dx": ANCHOR[0] - ground[0], "dy": ANCHOR[1] - ground[1], "sx": scale - 1,
+                     "sy": scale - 1}}
 
 
-PARTS: dict = {}
+def cut(z, pivot, follows, polygon):
+    return {"art": STANCE, "mirror": True, "z": z, "pivot": pivot, "follows": follows, "polygon": polygon}
 
-STANCE_PARTS = ["far_arm", "back_leg", "front_leg", "torso", "head", "near_arm"]
+
+PARTS = {
+    "tail": cut(0, TAIL_ROOT, ["body"], [(55, 585), (130, 588), (200, 635), (268, 688), (262, 748), (200, 742),
+                                         (130, 712), (78, 660)]),
+    "back_leg": cut(1, HIP_BACK, [], [(250, 690), (400, 700), (340, 820), (300, 890), (275, 960), (225, 1005),
+                                      (190, 1060), (185, 1132), (58, 1132), (60, 1090), (120, 1040), (148, 960),
+                                      (155, 895), (215, 800)]),
+    "front_leg": cut(2, HIP_FRONT, [], [(430, 650), (560, 650), (650, 700), (712, 780), (718, 890), (705, 955),
+                                        (760, 1035), (792, 1085), (782, 1108), (618, 1108), (622, 1050), (628, 960),
+                                        (598, 885), (560, 825), (480, 785), (425, 740)]),
+    "far_arm": cut(4.5, FAR_SHOULDER, ["body"], [(108, 392), (172, 398), (240, 428), (302, 418), (304, 470),
+                                               (272, 560), (240, 612), (188, 592), (158, 552), (118, 522),
+                                               (106, 470)]),
+    "torso": cut(4, HIP_FRONT, ["body"], [(290, 330), (380, 345), (480, 368), (512, 400), (542, 445), (546, 520),
+                                          (532, 580), (562, 660), (602, 720), (602, 900), (562, 906), (522, 842),
+                                          (502, 832), (502, 982), (440, 986), (430, 902), (380, 892), (270, 896),
+                                          (204, 886), (230, 760), (250, 690), (256, 600), (272, 560), (304, 470),
+                                          (302, 420)]),
+    "head": cut(5, NECK, ["body"], [(330, 192), (382, 192), (402, 212), (452, 202), (512, 198), (522, 240),
+                                    (522, 288), (578, 298), (592, 350), (560, 372), (500, 386), (440, 402),
+                                    (380, 382), (330, 352), (308, 300), (328, 250)]),
+    "near_arm": cut(6, NEAR_SHOULDER, ["body"], [(498, 360), (560, 368), (628, 338), (612, 160), (642, 168),
+                                                 (662, 288), (702, 292), (722, 328), (752, 345), (752, 402),
+                                                 (702, 412), (600, 432), (540, 442), (498, 420)]),
+    "crouch_pose": whole(CROUCH, (440, 1062), [(70, 330), (290, 290), (350, 215), (450, 190), (540, 190),
+                                               (600, 330), (690, 360), (690, 470), (610, 560), (690, 700),
+                                               (720, 800), (780, 960), (740, 965), (655, 900), (655, 985),
+                                               (455, 985), (440, 1070), (240, 1070), (240, 980), (78, 985),
+                                               (68, 720)], 7, 0.72),
+    "jump_pose": whole(JUMP, (400, 1110), [(75, 365), (170, 370), (240, 280), (250, 200), (400, 200), (440, 330),
+                                           (560, 380), (700, 370), (790, 400), (780, 470), (700, 470), (620, 560),
+                                           (720, 600), (800, 700), (790, 730), (700, 720), (640, 760), (710, 840),
+                                           (720, 932), (640, 932), (600, 820), (560, 730), (470, 700), (350, 700),
+                                           (350, 892), (290, 892), (290, 720), (190, 760), (140, 832), (30, 780),
+                                           (40, 700), (130, 650), (140, 550), (170, 470), (80, 450)], 8),
+    "slide_pose": whole(SLIDE, (520, 912), [(55, 820), (90, 640), (80, 590), (140, 580), (200, 470), (300, 350),
+                                            (400, 275), (540, 295), (560, 380), (650, 380), (770, 385), (780, 420),
+                                            (720, 450), (560, 450), (530, 540), (620, 600), (630, 700), (600, 720),
+                                            (695, 820), (690, 850), (600, 850), (600, 915), (460, 915), (450, 760),
+                                            (420, 760), (330, 780), (270, 790), (200, 700), (150, 780),
+                                            (100, 840)], 9, 1.05),
+    "down_pose": whole(DOWN, (400, 900), [(42, 772), (75, 700), (120, 620), (130, 410), (220, 355), (300, 360),
+                                          (320, 440), (400, 470), (540, 430), (560, 370), (620, 290), (700, 290),
+                                          (760, 420), (740, 450), (690, 450), (790, 700), (780, 755), (720, 755),
+                                          (680, 800), (620, 880), (565, 945), (475, 945), (455, 880), (300, 890),
+                                          (275, 850), (200, 800), (150, 795)], 10, 1.1),
+}
+
+STANCE_PARTS = ["tail", "far_arm", "back_leg", "front_leg", "torso", "head", "near_arm"]
 POSES = ["crouch_pose", "jump_pose", "slide_pose", "down_pose"]
 
 MEASURING = False  # set by rig.py while it measures reach
@@ -106,10 +159,13 @@ def timed(startup, active, recovery, windup, strike, recover, settle=None, fps=2
     return frames
 
 
-# The knife arm jabs forward and down (clockwise); the boot arm, raised behind him, swings over the top
-# and through (the throw, the HP shove).
+# Angles are counter-clockwise. The knife arm, raised up and forward in the stance, jabs straight out
+# (clockwise); the boot arm points back behind him, so it winds up by lifting (clockwise, up and back)
+# and throws by swinging over and through to point forward (counter-clockwise, past the vertical).
 JAB = -30
-THROW = -140
+WIND = -40
+THROW = 160
+REACH = 240  # how far the thrown arm carries forward across his chest
 
 
 def kick(leg="front_leg", angle=50, dx=40, dy=-20, sy=0.1):
@@ -119,9 +175,9 @@ def kick(leg="front_leg", angle=50, dx=40, dy=-20, sy=0.1):
 STRIKES = {
     "stand_lp": ("near_arm", timed(4, 2, 6, stance(4, near=10), stance(2, near=JAB, near_arm={"dx": 50}),
                                    stance(2, near=-6), stance(0))),
-    "stand_hp": ("far_arm", timed(8, 3, 16, stance(-4, -4, far=30), stance(6, 6, far=THROW, far_arm={"dx": 160},
-                                                                           body={"dx": 20, "angle": 6}),
-                                  stance(4, far=-30), stance(0))),
+    "stand_hp": ("far_arm", timed(8, 3, 16, stance(-4, -4, far=WIND), stance(6, 6, far=THROW, far_arm={"dx": REACH},
+                                                                             body={"dx": 20, "angle": 6}),
+                                  stance(4, far=60, far_arm={"dx": 60}), stance(0))),
     "stand_lk": ("front_leg", timed(5, 3, 8, stance(4), merged(stance(4, body={"angle": -6}), kick(angle=40)),
                                     stance(2), stance(0))),
     "stand_hk": ("front_leg", timed(10, 4, 18, stance(8), merged(stance(0, body={"angle": -12}),
@@ -130,15 +186,16 @@ STRIKES = {
     "crouch_lp": ("near_arm", timed(4, 2, 6, crouched(), crouched(near_arm={"angle": JAB - 10, "dx": 50}),
                                     crouched())),
     "crouch_lk": ("front_leg", timed(5, 3, 8, crouched(),
-                                     crouched(front_leg={"sy": 0.1, "sx": 0, "angle": 50, "dx": 40}), crouched())),
+                                     crouched(front_leg={"sy": 0.1, "sx": 0, "angle": 50, "dx": 40, "dy": CROUCH_DY + 110}),
+                                     crouched())),
     "crouch_hp": ("near_arm", timed(7, 4, 16, crouched(), crouched(near_arm={"angle": 70, "dy": -40}),
                                     crouched())),
     "crouch_hk": ("front_leg", timed(9, 4, 20, crouched(),
-                                     crouched(front_leg={"sy": 0.25, "sx": 0, "angle": 84, "dx": 100}),
+                                     crouched(front_leg={"sy": 0.25, "sx": 0, "angle": 84, "dx": 100, "dy": CROUCH_DY + 170}),
                                      crouched())),
     "jump_lp": ("near_arm", timed(4, 6, 4, tucked(), tucked(near_arm={"angle": JAB - 20, "dx": 40}), tucked())),
-    "jump_hp": ("far_arm", timed(7, 5, 6, tucked(), tucked(far_arm={"angle": THROW - 10, "dx": 160, "dy": 80}),
-                                 tucked())),
+    "jump_hp": ("far_arm", timed(7, 5, 6, tucked(far_arm={"angle": WIND}),
+                                 tucked(far_arm={"angle": THROW + 15, "dx": REACH, "dy": 60}), tucked())),
     "jump_lk": ("front_leg", timed(4, 8, 4, tucked(), tucked(front_leg={"sy": 0.05, "angle": 18}), tucked())),
     "jump_hk": ("front_leg", timed(7, 5, 6, tucked(body={"angle": -12}),
                                    tucked(body={"angle": -14}, front_leg={"sy": 0.2, "angle": 24, "dx": 80}),
@@ -193,11 +250,11 @@ ANIMATIONS = {
                                                     stance(-30, 18, 40, 40, body={"dx": 30, "angle": 14})]},
     # Boot Toss: the boot arm winds back and throws overarm (the game draws the boot in flight).
     "boot_toss": {"fps": 20, "loop": False, "frames": timed(
-        12, 1, 18, stance(-6, -6, far=40), stance(8, 8, far=THROW, far_arm={"dx": 160}, body={"angle": 8}),
-        stance(4, far=-30), stance(0))},
+        12, 1, 18, stance(-6, -6, far=WIND - 20), stance(8, 8, far=THROW, far_arm={"dx": REACH}, body={"angle": 8}),
+        stance(4, far=60, far_arm={"dx": 60}), stance(0))},
     # Scavenge: he crouches and snatches boots up off the ground onto the string.
     "scavenge": {"fps": 12, "loop": False, "frames": [crouched(near_arm={"angle": -60}), posed("crouch"),
-                                                      crouched(far_arm={"angle": -40}), stance(10)]},
+                                                      crouched(far_arm={"angle": 90, "dx": 80}), stance(10)]},
     # Underfoot: the slide, feet first along the ground and out the other side.
     "underfoot": {"fps": 20, "loop": False, "frames": timed(
         6, 14, 14, posed("crouch"), [posed("slide"), posed("slide", dy=4)], posed("crouch"), stance(10))},
@@ -217,18 +274,18 @@ ANIMATIONS = {
                                                        stance(6, -4, 10, 10)]},
     # Every Last Boot: the whole string swung round on its laces as he scrambles forward.
     "every_last_boot": {"fps": 20, "loop": False, "frames": timed(
-        5, 24, 28, stance(-4, far=40),
-        [stance(6, far=THROW, far_arm={"dx": 140}), stance(4, far=-60, far_arm={"dx": 120}),
-         stance(6, far=60, far_arm={"dx": 40}), stance(4, far=THROW, far_arm={"dx": 140})],
-        stance(4, far=-20), stance(0))},
+        5, 24, 28, stance(-4, far=WIND),
+        [stance(6, far=THROW, far_arm={"dx": REACH}), stance(4, far=-90, far_arm={"dx": 140}),
+         stance(6, far=110, far_arm={"dx": 120}), stance(4, far=THROW, far_arm={"dx": REACH})],
+        stance(4, far=60, far_arm={"dx": 60}), stance(0))},
     # The Dry Well Pack: two fingers to his mouth, the whistle, and he ducks as the pack goes through.
     "the_dry_well_pack": {"fps": 12, "loop": False, "frames": [
         stance(-6, -10, 80, near_arm={"dy": -60}), stance(-6, -12, 84, near_arm={"dy": -60}), posed("crouch"),
         posed("crouch"), stance(4), stance(0)]},
     # Taunt: holds a boot up against the opponent's foot, squints, shakes his head. Wrong size.
-    "taunt": {"fps": 6, "loop": False, "frames": [stance(0, 0, far=-90, far_arm={"dx": 120}),
-                                                  stance(0, 6, far=-90, far_arm={"dx": 120}),
-                                                  stance(0, -6, far=-90, far_arm={"dx": 120}), stance(0)]},
+    "taunt": {"fps": 6, "loop": False, "frames": [stance(0, 0, far=135, far_arm={"dx": 160}),
+                                                  stance(0, 6, far=135, far_arm={"dx": 160}),
+                                                  stance(0, -6, far=135, far_arm={"dx": 160}), stance(0)]},
     # Victory: counts the boots on his string, loses count, starts again.
     "victory": {"fps": 5, "loop": False, "frames": [stance(0, 10, 40), stance(0, 12, 50), stance(0, 10, 40),
                                                     stance(0, -4, 0)]},

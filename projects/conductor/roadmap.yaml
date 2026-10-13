@@ -3150,5 +3150,18 @@ tasks:
 
     This issue is follow-up implementation, not permission to skip required deployment or human gates.
 
+- id: t-208
+  title: "enqueue_art_requests.py --status overwrites hand-set REJECTED art statuses"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  updated: '2026-10-13'
+  note: |-
+    Found 2026-10-13 PT (zuzu-showdown/t-032). Running `--status` on art/T021-ENDINGS.yaml flipped coyote-ending-1
+    and coyote-ending-2 from `status: REJECTED, art_image_id: null` back to `DONE` with the rejected images (245032,
+    245033), because refresh_status copies the job's result over whatever the ledger says. tools/endings.py then
+    shipped the rejected stills. Reverted by hand in the t-032 art PR. Fix: refresh_status leaves a subject's lane
+    alone while it is REJECTED (or the job id equals one listed under `rejected:`), and add a test.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
