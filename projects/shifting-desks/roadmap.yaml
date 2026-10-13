@@ -242,7 +242,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Secret Society and Mutation decks in the engine (Job Titles shipped in t-007)"
-    status: claimed
+    status: done
     depends_on:
       - t-004
       - t-007
@@ -255,9 +255,17 @@ tasks:
       against run flags; the Mutation is once per department, with +2 Suspicion on
       witnessed cards. Never reveal the player's Society to other cards. Tests for dealing,
       seeding, objective scoring and witnessed costs.
+
+      DONE 2026-10-12 PT in kind_robots#3622 (merged 98da421): every run deals a face-down
+      society and mutation from a sealed envelope; per-department orders and betrayals keyed
+      to flags; favors (force success, +3, ignore requirement, instant effects) and mutations
+      (reroll, auto-success, +3, restore Composure) with +2 Suspicion when witnessed; v1/v2
+      saves upgrade. Verified by test:shifting-desks (3,000 seeded runs) and Playwright
+      playthroughs at 390/768/1440.
     claimed_by: 2026-10-13T051500Z-sd-societies-m4x8
     claimed_at: '2026-10-13T05:09:34Z'
-    updated: '2026-10-13T05:09:34Z'
+    updated: '2026-10-13T06:22:36Z'
+    implementation_pr: 'silasfelinus/kind_robots#3622'
   - id: t-009
     milestone: m2
     title: "Playable Orientation slice end to end at the public route"
