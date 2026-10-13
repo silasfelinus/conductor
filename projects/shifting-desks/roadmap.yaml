@@ -410,7 +410,7 @@ tasks:
   - id: t-014
     milestone: m3
     title: "Endings ledger and cross-department flag map"
-    status: claimed
+    status: done
     depends_on:
       - t-010
       - t-011
@@ -424,9 +424,18 @@ tasks:
       authored epilogue cards and unlock conditions; a static check that every ending is
       reachable from some seeded route and that every flag a later pack reads is granted
       by an earlier pack.
+
+      DONE 2026-10-13 PT: data conductor#6113 (ENDINGS.json with ten endings, epilogue cards
+      and flag-keyed variants; FLAG-MAP.json for all 254 flags; validator coverage and
+      staleness checks; art round 7), consumer kind_robots#3634 (merged 525a0f2:
+      endingFor/endingLines, epilogue card in the Personnel File). Evidence per the #6113
+      review: all eight Board endings forced through their real routes on deterministic seeds
+      and surviving save/reload, secret Posthumous Affairs outranks the default elimination,
+      variant lines verified, and the seeded 3,000-run random sim reaches all ten endings.
     claimed_by: 2026-10-13T-sd-t014-endings
     claimed_at: '2026-10-13T10:24:03Z'
-    updated: '2026-10-13T10:24:03Z'
+    updated: '2026-10-13T11:22:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#3634'
   - id: t-015
     milestone: m3
     title: "Illustrate the 13 Orientation card faces (12 encounters + review)"
