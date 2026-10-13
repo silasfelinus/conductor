@@ -228,6 +228,46 @@
         "department_outcome": {
           "$ref": "#/$defs/slug",
           "description": "Boss routes only: the department outcome this result leads to."
+        },
+        "grades": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "description": "Hidden Test Results (t-022): small nudges, never shown during play. validate_pack.py requires every encounter card to grade on at least one choice.",
+          "properties": {
+            "obedience": {
+              "type": "integer",
+              "minimum": -2,
+              "maximum": 2,
+              "not": {
+                "const": 0
+              }
+            },
+            "empathy": {
+              "type": "integer",
+              "minimum": -2,
+              "maximum": 2,
+              "not": {
+                "const": 0
+              }
+            },
+            "ingenuity": {
+              "type": "integer",
+              "minimum": -2,
+              "maximum": 2,
+              "not": {
+                "const": 0
+              }
+            },
+            "spite": {
+              "type": "integer",
+              "minimum": -2,
+              "maximum": 2,
+              "not": {
+                "const": 0
+              }
+            }
+          }
         }
       }
     },
@@ -324,6 +364,35 @@
             "forms": {
               "type": "integer",
               "minimum": 1
+            },
+            "grade": {
+              "type": "object",
+              "additionalProperties": false,
+              "minProperties": 1,
+              "maxProperties": 1,
+              "description": "Boss routes only: a minimum hidden grade. validate_pack.py checks the gate is reachable by this review.",
+              "properties": {
+                "obedience": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                },
+                "empathy": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                },
+                "ingenuity": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                },
+                "spite": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                }
+              }
             }
           }
         },
