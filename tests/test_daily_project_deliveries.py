@@ -116,6 +116,6 @@ def test_email_explicitly_distinguishes_shipped_and_progress(repo, monkeypatch):
     assert html.count("Keep</a>") == 5
     assert html.count("Modify</a>") == 5
     assert html.count("Reject / request rollback</a>") == 5
-    assert "actual PR-backed" not in html  # no fabrication claims on missing docket
+    assert "actual PR-backed" in html  # supported delivery description
     missing = email.daily_deliveries_section({"entries": [], "missing": True})
     assert "No five-entry verified" in missing
