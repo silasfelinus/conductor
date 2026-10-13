@@ -9,6 +9,10 @@
 # Round 1 (37646-37651) all FAILED: Kind Robots sent end_image to ComfyUI's WanImageToVideo, which has none
 # (fixed in kind_robots#3608: WanFirstLastFrameToVideo; first-last clips also run the A14B pair, an overnight
 # job). Round 2 below: first frame only on the default TI2V-5B, the same day; the atlas ping-pongs the loops.
+# Round 2 (37652-37658, TI2V-5B, first frame only): the open loop breathes and is kept; roll, sink and snap
+# barely move (the snap never shuts) and the spit melts. 5B will not make big prompted motion from a still.
+# Round 3 (croc-clip3-*): first-last-frame on the A14B pair once kind_robots#3608 is deployed, the poses pinned
+# at both ends. Round 1 (croc-clip-*) is SUPERSEDED by round 3: its FAILED status is history, not a retry.
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
 series: zuzu-pinball
 project_slug: zuzu-pinball
@@ -239,3 +243,102 @@ subjects:
     wan-clips:
       status: DONE
       art_image_id: 245800
+- key: croc-clip3-snap
+  entity: river-croc
+  title: River Croc snaps his jaws shut (first-last frame)
+  size: 640x640
+  seed: 719321
+  source_image_id: 245782
+  last_image_id: 245776
+  duration: 1
+  prompt_prose: A giant crocodile seen from directly above snaps his wide-open jaws shut with a sudden violent clamp,
+    his head jerking, water splashing up round his snout. The camera does not move. Inked western comic animation.
+  jobs:
+    wan-clips: 37659
+  art:
+    wan-clips:
+      status: RUNNING
+      art_image_id: null
+- key: croc-clip3-sink
+  entity: river-croc
+  title: River Croc sinks under the water (first-last frame)
+  size: 640x640
+  seed: 719322
+  source_image_id: 245776
+  last_image_id: 245792
+  duration: 1.5
+  prompt_prose: A giant crocodile seen from directly above slowly sinks down into the teal water, his body darkening
+    to a shadow under the surface, ripples spreading. The camera does not move. Inked western comic animation.
+  jobs:
+    wan-clips: 37660
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: croc-clip3-rise
+  entity: river-croc
+  title: River Croc surges up and opens his jaws (first-last frame)
+  size: 640x640
+  seed: 719323
+  source_image_id: 245792
+  last_image_id: 245782
+  duration: 1
+  prompt_prose: A giant crocodile seen from directly above surges up out of the teal water, water streaming off
+    his back and head, and flings his jaws wide open. The camera does not move. Inked western comic animation.
+  jobs:
+    wan-clips: 37661
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: croc-clip3-spit
+  entity: river-croc
+  title: River Croc spits the ball back out (first-last frame)
+  size: 640x640
+  seed: 719324
+  source_image_id: 245776
+  last_image_id: 245782
+  duration: 1
+  prompt_prose: A giant crocodile seen from directly above rears his head and flings his jaws wide open, spitting
+    a gush of water out of his mouth toward the camera, spray flying. The camera does not move. Inked western comic
+    animation.
+  jobs:
+    wan-clips: 37662
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: croc-clip3-roll-over
+  entity: river-croc
+  title: River Croc death roll, over onto his back (first-last frame)
+  size: 640x640
+  seed: 719325
+  source_image_id: 245776
+  last_image_id: 245788
+  duration: 1
+  prompt_prose: A giant crocodile seen from directly above, jaws clamped shut, twists violently over onto his back
+    in a death roll, his pale belly turning up, white foam and spray exploding round him. The camera does not move.
+    Inked western comic animation.
+  jobs:
+    wan-clips: 37663
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: croc-clip3-roll-back
+  entity: river-croc
+  title: River Croc death roll, back onto his belly (first-last frame)
+  size: 640x640
+  seed: 719326
+  source_image_id: 245788
+  last_image_id: 245776
+  duration: 1
+  prompt_prose: A giant crocodile twisting on his back in a death roll rolls on over onto his belly, white foam
+    and spray flying, and settles low in the water seen from directly above, jaws shut. The camera does not move.
+    Inked western comic animation.
+  jobs:
+    wan-clips: 37664
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
