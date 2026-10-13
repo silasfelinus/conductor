@@ -430,7 +430,7 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Illustrate the 13 Orientation card faces (12 encounters + review)"
-    status: claimed
+    status: ready
     depends_on: t-005
     owner: worker
     passes: 0
@@ -440,9 +440,16 @@ tasks:
       accepted internally. Verify delivered URLs, then set art.status to approved-ArtImage
       and art_ref to the verified ArtImage id in ORIENTATION-12.json. Ledger in
       art/ROUND-2.yaml.
+
+      2026-10-13 PT: conductor #6127 (bc9b4b2) records delivery for every Shifting Desks
+      station image: all 121 subjects across rounds 1-8 answered GET media_url with 200
+      image/webp, and Kind Robots serves /images from the media origin, so the art is live.
+      Round 8 is reviewed (keep x5). Remaining for this task: Orientation cards' art.status
+      approved-ArtImage and art_ref need ArtImage ids, which most ledger rows lack (a Kind
+      Robots ArtImage lookup). Claim released.
     claimed_by: 2026-10-13T133000Z-sd-t015-art
     claimed_at: '2026-10-13T13:01:47Z'
-    updated: '2026-10-13T13:01:47Z'
+    updated: '2026-10-13T13:07:55Z'
   - id: t-016
     milestone: m4
     title: "Window shifts: the Papers-Please-style desk card type"
