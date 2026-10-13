@@ -1,0 +1,80 @@
+# zuzu-showdown t-032: design references for Jeffery Mittens, the young raccoon looter of Hollow Bell (the
+# gamebook's Act II "Boots"; spared, he scouts for the jackals of the dry well in Act IV). Silas, 2026-10-13
+# PT, made him a main character of the Zuzu world and a Showdown fighter. Flux Kontext re-poses his gamebook
+# plates into a full-body profile facing right, the view the rigs are cut from, and keeps his look: grey fur,
+# black mask, ringed tail, grey-green vest over a dirty rolled-sleeve shirt, a brown coat too big for him,
+# a string of boots tied round his neck by their laces, a little kitchen knife. Pick one and cut his parts
+# sheet from it (next). Prompts never say "human" or "people" (bannedTerms). Generated art is pre-approved.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-showdown
+project_slug: zuzu-showdown
+designer: Zuzu Showdown
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-refs
+  label: Flux Kontext dev (fp8), references re-posed from his gamebook plates
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: mittens-from-crouch-1
+  entity: jeffery-mittens
+  title: Jeffery Mittens reference (from the crouching looter, gamebook 243522)
+  size: 832x1216
+  source_image_id: 243522
+  source_flip: false
+  prompt_prose: Stand this young raccoon up into a scrappy fighting stance, seen from the side facing right, full
+    body from his ears to his boots, small fists raised and a little kitchen knife held point-down in his front
+    paw. Keep his grey fur, black mask, bright wary eyes and black-and-grey ringed tail, his grey-green vest over
+    a dirty off-white shirt with rolled sleeves, his grey trousers and his scuffed black boots. Give him a long
+    brown coat that is much too big for him, sleeves rolled, and a string of four old boots tied together by their
+    laces slung round his neck. Skinny, quick and nervy, a little funny. Keep the same comic art style. On a plain
+    off-white background, nothing else in the picture.
+  jobs:
+    kontext-refs: 38587
+- key: mittens-from-crouch-2
+  entity: jeffery-mittens
+  title: Jeffery Mittens reference (from the crouching looter, gamebook 243522), throwing
+  size: 832x1216
+  source_image_id: 243522
+  source_flip: false
+  prompt_prose: Stand this young raccoon up, seen from the side facing right, full body from his ears to his boots,
+    winding up to throw an old boot overarm with his back paw, his front paw out for balance. Keep his grey fur,
+    black mask, bright wary eyes and black-and-grey ringed tail, his grey-green vest over a dirty off-white shirt
+    with rolled sleeves, his grey trousers and his scuffed black boots. Give him a long brown coat that is much
+    too big for him, sleeves rolled, and a string of old boots tied together by their laces slung round his neck.
+    Skinny, quick and nervy, a little funny. Keep the same comic art style. On a plain off-white background, nothing
+    else in the picture.
+  jobs:
+    kontext-refs: 38588
+- key: mittens-from-cloak
+  entity: jeffery-mittens
+  title: Jeffery Mittens reference (from the kneeling looter, gamebook 243677)
+  size: 832x1216
+  source_image_id: 243677
+  source_flip: false
+  prompt_prose: Stand this young raccoon up into a scrappy fighting stance, turned to the side facing right, full
+    body from his ears to his feet, holding the little kitchen knife low and ready. Keep his face, black mask, wide
+    eyes and black-and-grey ringed tail, his grey-green vest over a dirty off-white shirt with rolled sleeves and
+    his grey trousers. Turn the brown cloak into a long brown coat much too big for him, sleeves rolled, put scuffed
+    black boots on his feet, and hang a string of old boots tied together by their laces round his neck. Skinny,
+    quick and nervy, a little funny. Keep the same comic art style. On a plain off-white background, nothing else
+    in the picture.
+  jobs:
+    kontext-refs: 38589
+- key: mittens-from-leap
+  entity: jeffery-mittens
+  title: Jeffery Mittens reference (from the leaping scout, gamebook 243818)
+  size: 832x1216
+  source_image_id: 243818
+  source_flip: false
+  prompt_prose: Turn this leaping young raccoon into a full-body side view facing right, landing in a low scrappy
+    fighting crouch, one paw clawed forward. Keep his grey fur, black mask, ringed tail and his long brown coat
+    that is much too big for him, sleeves rolled. Under the coat give him a grey-green vest over a dirty off-white
+    shirt and grey trousers, scuffed black boots on his feet, and a string of old boots tied together by their laces
+    slung round his neck. Skinny, quick and nervy, a little funny. Keep the same comic art style. On a plain off-white
+    background, nothing else in the picture.
+  jobs:
+    kontext-refs: 38590
