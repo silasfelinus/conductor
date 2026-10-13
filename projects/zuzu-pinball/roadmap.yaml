@@ -367,7 +367,7 @@ tasks:
   - id: t-013
     milestone: m5
     title: "Run physics/rules soaks, input accessibility and cross-device performance QA"
-    status: ready
+    status: claimed
     depends_on: t-009
     passes: 0
     stakes: reversible
@@ -379,7 +379,10 @@ tasks:
       Recovered expired input QA and repaired3638 in place: an open guide owns touchA/Start and Enter/Space/Z; closed guide still starts pinball synchronously in the audio gesture. Actual SFC handler regression covers ten open/closed cases, alongside the existing mixer mute/resume/runtime sound checks. Final-head CI and browser verification follow. This is a partial t013 slice; real device/GPU acceptance remains unfinished.
 
       Partial recovery merged kind_robots#3638 at401b7e14c42d4854b0b02c1be7f12b9c7326a35c using expected final head4318bcf747d5886c53a6a5805c6db03c04fd9ce8; all32 actual check runs completed successfully, with required TypeScript, Contract verifiers and verify green. Main source blobs verified. Actual guide handlers preserve open-guide input; synchronous audio activation, suspended-context recovery and immediate paused mute/unmute are repaired and covered by mutation-proven regressions. Fifteen native-audio Chromium cases and six Music Mentor SFC shelf layouts pass; local DMD/audio, real physics/rules, lint and formatter pass. Release this partial claim to ready, not done: representative real-device/GPU frame timing, full touch/table playtests and subjective FX3 acceptance remain unfinished. Browser audio fixture substituted game creation/physics and does not clear t-014 or PR3618 gates. t-022 is the separate repeatable native-browser CI kaizen. No deployment, publication, spend or email action. Today's five merged delivery entries/review records validate separately with no feedback.
-    updated: '2026-10-13T20:22:04Z'
+    updated: '2026-10-13T22:06:40Z'
+    owner: worker
+    claimed_by: 20261013T220640Z-zuzu-t013-flipper-j8x4
+    claimed_at: '2026-10-13T22:06:40Z'
   - id: t-014
     milestone: m5
     title: "Silas visual/play acceptance and authorization for any public /play launch"
