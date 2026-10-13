@@ -570,3 +570,24 @@ tasks:
       geometry. Reduced motion holds each phase's key frame.
     claimed_by: 20261012T160000Z-zuzu-t019-croc-art-b4n8
     claimed_at: '2026-10-12T16:00:00Z'
+
+  - id: t-020
+    milestone: m4
+    title: "Validate video graphs against renderer node schemas before enqueueing."
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Reviewer kaizen from kind_robots#3608, which repaired the first/last-frame
+      WAN node after ArtJobs 37646-37651 rejected an unsupported end_image input.
+      Target the repeated quality/consumer-contract verification gap in
+      LEARNING-REPORT: graph self-consistency is not renderer compatibility.
+      Use the existing renderer capability/object-info path to validate required
+      node classes, supported input names and output references for first-only,
+      first/last-frame and supported video modes before queueing. Add bounded
+      contract fixtures for a supported graph and missing/incompatible nodes;
+      retain current worker/provenance, idempotent ArtJobs and queue semantics.
+      Coordinate with active t-019; do not regenerate its clips or duplicate
+      its delivery work. No model installation, renderer restart, deployment,
+      secrets, paid generation or public release without concrete authorization.
