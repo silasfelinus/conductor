@@ -43,10 +43,18 @@ subjects:
     safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
     carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
     every surface bare and unmarked
-  status: requested
-  art_job_id: null
-  art_image_id: null
+  status: rendered
+  art_job_id: 38507
+  art_image_id: 246649
   verdict: null
+  render_evidence:
+    workflow_run: https://github.com/silasfelinus/conductor/actions/runs/38386864668
+    media_probe: successful-2xx-HEAD-on-workflow-runner
+    note: >-
+      DONE .media-direct output requires the media HEAD probe to succeed. Local managed
+      egress cannot independently repeat the probe; retain rendered rather than claiming
+      an independent exact-200 delivery or visual keep verdict. Issued job is complete.
+
 - key: location-orientation-theater
   kind: location
   department: orientation
