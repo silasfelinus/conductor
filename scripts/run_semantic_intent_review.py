@@ -79,7 +79,7 @@ def prepare_brief(root, today, force=False, brief_path=None):
     brief_path.write_text(
         "# Semantic intent audit: agent evidence packet — " + today.isoformat() + "\n\n"
         "**NOT A COMPLETED AUDIT.** Prepared deterministically by GitHub Actions; "
-        "a Conductor agent must inspect original evidence and author judgment. "
+        "the assigned roadmap-intent-auditor must inspect original evidence and author judgment. "
         "This packet does not advance the 3-day deadline.\n\n"
         "Read `projects/conductor/OVERSIGHT-AGENT.md`, then cross-check "
         "`CONTROL.md`, `project-overrides.yaml`, `projects/priority.yaml`, "
