@@ -1,0 +1,614 @@
+# Shifting Desks art round 3: the 27 non-card stations -- 6 location plates and 2 department arrival
+# plates (encounters/ORIENTATION-12.json, RECORDS-12.json) plus 5 job titles, 6 secret societies and 8
+# mutations (encounters/DECKS.json). Prompts are the source art.brief / art_prompt text verbatim; each
+# subject's source_ref names the field. Style rules live in ../ART-DIRECTION.md. Locations and deck cards
+# render 832x1248 (2:3 portrait); department arrivals render 1248x936 (their prompts say horizontal 4:3).
+#
+# Queue: each subject is one row in projects/art-prompts.yaml `requests:` (id = request_id, lane
+# art-round-3). The auto-art-generate workflow submits it to Kind Robots as a krea2 ArtJob and the home
+# relay writes the render to the self-hosted media host at media_url. Copy the request row's
+# `last_art_job_id` here as art_job_id, and the ArtImage id as art_image_id, once the job finishes.
+#
+# Status values: requested -> rendered (ArtJob done, ArtImage id known) -> delivered (media_url answers
+# 200 to `curl -s -o /dev/null -w '%{http_code}'`). Never mark a subject delivered before that check
+# passes; only then set the source's art_ref. `verdict` is keep / reroll / reject with a reason, after
+# review against ART-DIRECTION.md.
+#
+# Generated internal art is pre-approved (AGENTS.md "Generated art is pre-approved"). Krea 2 on the
+# self-hosted render box: no paid third-party spend, nothing published.
+round: shifting-desks-3
+project_slug: shifting-desks
+task: null
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-13T06:30:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph,
+  3d render, blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: location-security-desk
+  kind: location
+  department: orientation
+  title: Security Desk & Badge Photo
+  card: null
+  source_ref: encounters/ORIENTATION-12.json locations[security-desk].art.brief
+  request_id: shifting-desks-r3-location-security-desk
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53001
+  target_path: kind_robots public/images/shifting-desks/locations/security-desk.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/security-desk.webp
+  prompt: A cathedral-sized marble lobby with one long security desk, a brass badge camera on a stand,
+    an upholstered walk-through detector with a row of small rounded teeth along its inner frame, a cheerful
+    round speaker grille high on the wall, long shafts of morning light across the floor, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: location-orientation-theater
+  kind: location
+  department: orientation
+  title: Orientation Theater
+  card: null
+  source_ref: encounters/ORIENTATION-12.json locations[orientation-theater].art.brief
+  request_id: shifting-desks-r3-location-orientation-theater
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53002
+  target_path: kind_robots public/images/shifting-desks/locations/orientation-theater.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/orientation-theater.webp
+  prompt: A dim orientation theater with rows of red velvet seats, a single projector beam cutting through
+    dust, a small stage holding an industrial shredder under a spotlight, a rolling cart of refreshments
+    under a cloth beside the aisle, mid-century safety-manual illustration, screen-printed gouache with
+    halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green
+    and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: location-supply-closet-b
+  kind: location
+  department: orientation
+  title: Supply Closet B
+  card: null
+  source_ref: encounters/ORIENTATION-12.json locations[supply-closet-b].art.brief
+  request_id: shifting-desks-r3-location-supply-closet-b
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53003
+  target_path: kind_robots public/images/shifting-desks/locations/supply-closet-b.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/supply-closet-b.webp
+  prompt: A cramped supply closet with tall metal shelves of paper towel boxes, a lone red stapler on
+    the highest shelf, a ventilation grille breathing warm air, one bare bulb swinging, the long shadow
+    of an enormous cockroach across the far wall, mid-century safety-manual illustration, screen-printed
+    gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: location-pneumatic-tube-exchange
+  kind: location
+  department: records
+  title: Pneumatic Tube Exchange
+  card: null
+  source_ref: encounters/RECORDS-12.json locations[pneumatic-tube-exchange].art.brief
+  request_id: shifting-desks-r3-location-pneumatic-tube-exchange
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53004
+  target_path: kind_robots public/images/shifting-desks/locations/pneumatic-tube-exchange.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/pneumatic-tube-exchange.webp
+  prompt: A soaring hall of polished brass pneumatic tubes branching like organ pipes into the ceiling,
+    glass capsules rushing through them, a dispatcher's console of levers and dials, drifts of carbon
+    copies on the tiled floor, mid-century safety-manual illustration, screen-printed gouache with halftone
+    grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood,
+    vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: location-sub-archive
+  kind: location
+  department: records
+  title: The Sub-Archive
+  card: null
+  source_ref: encounters/RECORDS-12.json locations[sub-archive].art.brief
+  request_id: shifting-desks-r3-location-sub-archive
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53005
+  target_path: kind_robots public/images/shifting-desks/locations/sub-archive.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/sub-archive.webp
+  prompt: An underground archive of grey filing cabinets marching to the horizon, one swinging bulb lighting
+    a narrow aisle, a few drawers left ajar, a stepladder and a cold cup of coffee on a cabinet top, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: location-window-9
+  kind: location
+  department: records
+  title: Window 9
+  card: null
+  source_ref: encounters/RECORDS-12.json locations[window-9].art.brief
+  request_id: shifting-desks-r3-location-window-9
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53006
+  target_path: kind_robots public/images/shifting-desks/locations/window-9.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/window-9.webp
+  prompt: A long counter of frosted service windows with brass grilles, a single lit window in the middle,
+    a weary queue of applicants stretching away including a giant cockroach in a necktie, inkpads and
+    rubber stamps lined up on the clerk's side, mid-century safety-manual illustration, screen-printed
+    gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: department-orientation
+  kind: department
+  department: orientation
+  title: Orientation arrival
+  card: null
+  source_ref: encounters/ORIENTATION-12.json department.arrival_art.brief
+  request_id: shifting-desks-r3-department-orientation
+  engine: krea2
+  size: 1248x936
+  aspect: 4:3 landscape
+  seed: 53007
+  target_path: kind_robots public/images/shifting-desks/departments/orientation.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/departments/orientation.webp
+  prompt: A sunny modernist office campus at dawn, a cheerful entrance arch over a spotless plaza, new
+    hires with lanyards filing in under neat hedges, everything gleaming slightly too clean, a single
+    elevator door waiting in the lobby, mid-century safety-manual illustration, screen-printed gouache
+    with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, horizontal 4:3 composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: department-records
+  kind: department
+  department: records
+  title: Records & Forms arrival
+  card: null
+  source_ref: encounters/RECORDS-12.json department.arrival_art.brief
+  request_id: shifting-desks-r3-department-records
+  engine: krea2
+  size: 1248x936
+  aspect: 4:3 landscape
+  seed: 53008
+  target_path: kind_robots public/images/shifting-desks/departments/records.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/departments/records.webp
+  prompt: Elevator doors sliding open onto an endless floor of brass and paper, pneumatic tubes looping
+    overhead, towers of folders and filing cabinets receding into haze, a lone clerk's desk lamp glowing
+    in the distance, mid-century safety-manual illustration, screen-printed gouache with halftone grain,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, horizontal
+    4:3 composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: job-intern
+  kind: job
+  department: null
+  title: Intern
+  card: null
+  source_ref: encounters/DECKS.json job_titles[intern].art_prompt
+  request_id: shifting-desks-r3-job-intern
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53009
+  target_path: kind_robots public/images/shifting-desks/jobs/intern.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/jobs/intern.webp
+  prompt: An eager young intern with a cowlick and an oversized cable-knit sweater, three lanyards around
+    the neck, balancing a teetering tray of coffee cups, beaming at an office corridor, mid-century safety-manual
+    illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: job-temp
+  kind: job
+  department: null
+  title: Temp
+  card: null
+  source_ref: encounters/DECKS.json job_titles[temp].art_prompt
+  request_id: shifting-desks-r3-job-temp
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53010
+  target_path: kind_robots public/images/shifting-desks/jobs/temp.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/jobs/temp.webp
+  prompt: An unremarkable office temp in a beige cardigan half-blending into beige wallpaper, a visitor
+    sticker on the lapel, holding a clipboard against the chest, gaze politely elsewhere, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: job-middle-manager
+  kind: job
+  department: null
+  title: Middle Manager
+  card: null
+  source_ref: encounters/DECKS.json job_titles[middle-manager].art_prompt
+  request_id: shifting-desks-r3-job-middle-manager
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53011
+  target_path: kind_robots public/images/shifting-desks/jobs/middle-manager.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/jobs/middle-manager.webp
+  prompt: A tired middle manager in shirtsleeves behind a perfectly tidy desk, gripping an enormous rubber
+    stamp in one hand and a chipped mug in the other, a wall of identical binders behind, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: job-night-janitor
+  kind: job
+  department: null
+  title: Night Janitor
+  card: null
+  source_ref: encounters/DECKS.json job_titles[night-janitor].art_prompt
+  request_id: shifting-desks-r3-job-night-janitor
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53012
+  target_path: kind_robots public/images/shifting-desks/jobs/night-janitor.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/jobs/night-janitor.webp
+  prompt: A weathered older night janitor in grey coveralls with a ring of fifty keys at the belt, leaning
+    on a mop beside an open ventilation grille, a dark office floor lit by a single desk lamp, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: job-internal-auditor
+  kind: job
+  department: null
+  title: Internal Auditor
+  card: null
+  source_ref: encounters/DECKS.json job_titles[internal-auditor].art_prompt
+  request_id: shifting-desks-r3-job-internal-auditor
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53013
+  target_path: kind_robots public/images/shifting-desks/jobs/internal-auditor.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/jobs/internal-auditor.webp
+  prompt: A stern internal auditor in a dark three-piece suit holding a magnifying glass over an open
+    ledger, coworkers in the background leaning politely away, a green banker's lamp glowing, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: society-stapler-liberation-front
+  kind: society
+  department: null
+  title: Stapler Liberation Front
+  card: null
+  source_ref: encounters/DECKS.json societies[stapler-liberation-front].art_prompt
+  request_id: shifting-desks-r3-society-stapler-liberation-front
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53014
+  target_path: kind_robots public/images/shifting-desks/societies/stapler-liberation-front.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/societies/stapler-liberation-front.webp
+  prompt: A red stapler rearing up on a desk like a raised fist, a defiant ring of paperclips arranged
+    around it, dramatic low lighting and long shadows, a scatter of liberated pens, mid-century safety-manual
+    illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: society-friends-of-the-old-coffee-machine
+  kind: society
+  department: null
+  title: Friends of the Old Coffee Machine
+  card: null
+  source_ref: encounters/DECKS.json societies[friends-of-the-old-coffee-machine].art_prompt
+  request_id: shifting-desks-r3-society-friends-of-the-old-coffee-machine
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53015
+  target_path: kind_robots public/images/shifting-desks/societies/friends-of-the-old-coffee-machine.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/societies/friends-of-the-old-coffee-machine.webp
+  prompt: A battered chrome coffee machine glowing warmly in a dark break room, mismatched mugs gathered
+    around it like a small congregation, steam curling upward in the lamplight, mid-century safety-manual
+    illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: society-society-for-accurate-minutes
+  kind: society
+  department: null
+  title: Society for Accurate Minutes
+  card: null
+  source_ref: encounters/DECKS.json societies[society-for-accurate-minutes].art_prompt
+  request_id: shifting-desks-r3-society-society-for-accurate-minutes
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53016
+  target_path: kind_robots public/images/shifting-desks/societies/society-for-accurate-minutes.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/societies/society-for-accurate-minutes.webp
+  prompt: A secret candlelit meeting of clerks between towering filing cabinets, each clerk writing in
+    an identical notebook, faces lit from below, an open drawer of carbon copies at the center, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: society-fourth-floor-irregulars
+  kind: society
+  department: null
+  title: Fourth Floor Irregulars
+  card: null
+  source_ref: encounters/DECKS.json societies[fourth-floor-irregulars].art_prompt
+  request_id: shifting-desks-r3-society-fourth-floor-irregulars
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53017
+  target_path: kind_robots public/images/shifting-desks/societies/fourth-floor-irregulars.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/societies/fourth-floor-irregulars.webp
+  prompt: A brass elevator button panel with an extra round button glowing softly between the others,
+    a gloved hand reaching for it, the elevator car lit in eerie fluorescent green, mid-century safety-manual
+    illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: society-the-recyclers
+  kind: society
+  department: null
+  title: The Recyclers
+  card: null
+  source_ref: encounters/DECKS.json societies[the-recyclers].art_prompt
+  request_id: shifting-desks-r3-society-the-recyclers
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53018
+  target_path: kind_robots public/images/shifting-desks/societies/the-recyclers.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/societies/the-recyclers.webp
+  prompt: An enormous recycling bin overflowing with crumpled paper, staplers and coffee mugs, a giant
+    friendly cockroach in a cardigan and a night janitor nodding to each other beside it, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: society-concerned-parents-of-the-toy-division
+  kind: society
+  department: null
+  title: Concerned Parents of the Toy Division
+  card: null
+  source_ref: encounters/DECKS.json societies[concerned-parents-of-the-toy-division].art_prompt
+  request_id: shifting-desks-r3-society-concerned-parents-of-the-toy-division
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53019
+  target_path: kind_robots public/images/shifting-desks/societies/concerned-parents-of-the-toy-division.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/societies/concerned-parents-of-the-toy-division.webp
+  prompt: A huddle of worried adults in lab coats around a workbench, one gently holding a screwdriver
+    over a plush teddy bear with a quilted belly hatch, a warm desk lamp over the scene, mid-century safety-manual
+    illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-four-second-precognition
+  kind: mutation
+  department: null
+  title: Four-Second Precognition
+  card: null
+  source_ref: encounters/DECKS.json mutations[four-second-precognition].art_prompt
+  request_id: shifting-desks-r3-mutation-four-second-precognition
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53020
+  target_path: kind_robots public/images/shifting-desks/mutations/four-second-precognition.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/four-second-precognition.webp
+  prompt: An office worker watching a pale translucent echo of themselves a few steps ahead tripping over
+    a loose cable, the real worker calmly stepping around it, mid-century safety-manual illustration,
+    screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange,
+    fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-printer-whisperer
+  kind: mutation
+  department: null
+  title: Printer Whisperer
+  card: null
+  source_ref: encounters/DECKS.json mutations[printer-whisperer].art_prompt
+  request_id: shifting-desks-r3-mutation-printer-whisperer
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53021
+  target_path: kind_robots public/images/shifting-desks/mutations/printer-whisperer.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/printer-whisperer.webp
+  prompt: An office worker leaning close to an enormous beige photocopier that glows contentedly, a fan
+    of fresh paper curling out of it like a happy cat's tail, mid-century safety-manual illustration,
+    screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange,
+    fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-paperclip-telekinesis
+  kind: mutation
+  department: null
+  title: Paperclip Telekinesis
+  card: null
+  source_ref: encounters/DECKS.json mutations[paperclip-telekinesis].art_prompt
+  request_id: shifting-desks-r3-mutation-paperclip-telekinesis
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53022
+  target_path: kind_robots public/images/shifting-desks/mutations/paperclip-telekinesis.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/paperclip-telekinesis.webp
+  prompt: A swirl of floating silver paperclips orbiting an office worker's raised fingertips, desk papers
+    lifting gently in the air around them, mid-century safety-manual illustration, screen-printed gouache
+    with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-fluorescent-camouflage
+  kind: mutation
+  department: null
+  title: Fluorescent Camouflage
+  card: null
+  source_ref: encounters/DECKS.json mutations[fluorescent-camouflage].art_prompt
+  request_id: shifting-desks-r3-mutation-fluorescent-camouflage
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53023
+  target_path: kind_robots public/images/shifting-desks/mutations/fluorescent-camouflage.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/fluorescent-camouflage.webp
+  prompt: An office worker dissolving into the pale glow of an overhead fluorescent ceiling panel, only
+    a faint outline of their shoulders remaining, coworkers walking past, mid-century safety-manual illustration,
+    screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange,
+    fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-perfect-signature-mimicry
+  kind: mutation
+  department: null
+  title: Perfect Signature Mimicry
+  card: null
+  source_ref: encounters/DECKS.json mutations[perfect-signature-mimicry].art_prompt
+  request_id: shifting-desks-r3-mutation-perfect-signature-mimicry
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53024
+  target_path: kind_robots public/images/shifting-desks/mutations/perfect-signature-mimicry.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/perfect-signature-mimicry.webp
+  prompt: A fountain pen tracing a glowing ribbon of ink through the air above a tall stack of forms,
+    a hand guiding it with uncanny ease, mid-century safety-manual illustration, screen-printed gouache
+    with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-empathic-static
+  kind: mutation
+  department: null
+  title: Empathic Static
+  card: null
+  source_ref: encounters/DECKS.json mutations[empathic-static].art_prompt
+  request_id: shifting-desks-r3-mutation-empathic-static
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53025
+  target_path: kind_robots public/images/shifting-desks/mutations/empathic-static.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/empathic-static.webp
+  prompt: Two coworkers facing each other across a desk, soft crackles of warm golden static light passing
+    between their temples, papers lifting in the charge, mid-century safety-manual illustration, screen-printed
+    gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-eyes-in-the-back-of-your-head
+  kind: mutation
+  department: null
+  title: Eyes in the Back of Your Head
+  card: null
+  source_ref: encounters/DECKS.json mutations[eyes-in-the-back-of-your-head].art_prompt
+  request_id: shifting-desks-r3-mutation-eyes-in-the-back-of-your-head
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53026
+  target_path: kind_robots public/images/shifting-desks/mutations/eyes-in-the-back-of-your-head.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/eyes-in-the-back-of-your-head.webp
+  prompt: An office worker at a desk seen from behind, a calm second pair of eyes drawn in soft light
+    on the back of their neat bob haircut, a sneaking coworker frozen mid-step, mid-century safety-manual
+    illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every
+    surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-spontaneous-calm
+  kind: mutation
+  department: null
+  title: Spontaneous Calm
+  card: null
+  source_ref: encounters/DECKS.json mutations[spontaneous-calm].art_prompt
+  request_id: shifting-desks-r3-mutation-spontaneous-calm
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 53027
+  target_path: kind_robots public/images/shifting-desks/mutations/spontaneous-calm.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/spontaneous-calm.webp
+  prompt: A frazzled office worker suddenly serene, floating an inch above the desk chair with eyes closed,
+    scattered papers settling around them like falling leaves, mid-century safety-manual illustration,
+    screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange,
+    fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
