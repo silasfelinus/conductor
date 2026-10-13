@@ -379,9 +379,8 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Department 5 pack: Sub-Level Zero, The Board and the Kind Rewrite true ending"
-    status: claimed
+    status: ready
     depends_on: t-004
-    owner: worker
     passes: 1
     retry_context: >-
       Pass 1 failed (quality): conductor#6110 head 758d8aa8aba1d524b629cf5c1854183dc7a623c9
@@ -394,16 +393,11 @@ tasks:
       against the actual krea2 enqueue contract, then implement and verify the consumer.
       Do not bypass the gate, mark requested art delivered, or close the task on data alone.
     stakes: reversible
-    note: >-
-      encounters/SUBLEVEL-ZERO-12.json (the executives live at the very bottom of the
-      vault): Boardroom Antechamber, the Founder's Office, Server
-      Room Zero; boss "The Board" with routes to Society Coup, Roach Union General Strike,
-      Whistleblower, Promoted to Management and the hidden Kind Rewrite (gain admin access,
-      rewrite PAL to remember people). Society objectives come due here. Must pass
-      validate_pack.py.
-    claimed_by: 2026-10-13T-sd-t013-board
-    claimed_at: '2026-10-13T09:22:47Z'
-    updated: '2026-10-13T09:22:47Z'
+    note: |-
+      encounters/SUBLEVEL-ZERO-12.json (the executives live at the very bottom of the vault): Boardroom Antechamber, the Founder's Office, Server Room Zero; boss "The Board" with routes to Society Coup, Roach Union General Strike, Whistleblower, Promoted to Management and the hidden Kind Rewrite (gain admin access, rewrite PAL to remember people). Society objectives come due here. Must pass validate_pack.py.
+
+      Reviewer pass 1 failed (quality) on conductor#6110 head 758d8aa8aba1d524b629cf5c1854183dc7a623c9. Actual Kind Robots enqueue contract rejects The Founder's Desk corner-of-the-frame wording. See retry_context, project TALKBACK and PR comment 6142649623. Retain #6110 for original worker, re-claim before repair, correct all three prompt copies and validate all 17 actual krea2 requests. Consumer wiring and its CI are still required; no human gate, deployment or delivered-art claim is introduced.
+    updated: '2026-10-13T09:36:15Z'
   - id: t-014
     milestone: m3
     title: "Endings ledger and cross-department flag map"
