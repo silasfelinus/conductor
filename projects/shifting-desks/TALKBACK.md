@@ -45,3 +45,18 @@ Conductor#6110's unchanged reviewed head merged in another session at `2026-10-1
 **What to improve / handoff:** Source repair is not delivered art. Merge-triggered Auto Art Generate38386864668 remains queued; t024 is ready/unowned for original target acceptance/adoption/rendering and generated-health verification. No learning closure yet. Concurrent original-worker follow-up6115 includes distinct already-delivered ROUND-1 prompt cleanup; comment6144037653 asks it to retain current main and replace its copied-regex guard approach. Do not duplicate or force completed renders.
 
 **Kaizen task:** deferred as redundant — the Worker's proposed cross-copy consistency guard is implemented in6116; t024 already retains the necessary delivery-verification work and6115 owns the wider producer-guard discussion.
+
+## October 13, 2026, 4:39 AM PT — art recovery and ending consumer closeout
+
+**Art recovery decision:** conductor#6119 merged `df7a4da1eeb25bf1cbf43311d19925dcbc55e86e`, exact head `1247b9e345332832af9f059a4bc4c1d8de94405b`, all23 completed checks success/intentional skip. Auto Art Generate38386864668 completed with generated failures[]; original three requests became ArtJobs38506/38507/38508 and ArtImages246648/246649/246650. DONE .media-direct is returned only after the workflow's successful2xx media HEAD. Durable ROUND2/3/6 IDs recorded as rendered, without inventing an independent exact200 probe or visual keep verdict. Task024 done event applied, owner cleared; one learning record.
+
+**What to improve:** My prior6116 test assumed fulfilled root requests would remain forever. The generator correctly retires them after delivery; that exposed a lifecycle mistake in the test.6119 keeps strict live prompt/settings/uniqueness checks and permits retired authoring history, with retirement, four drift, duplicate request and missing/duplicate authoring regression cases.63 focused tests and all pack/deck/ending validators passed. Do not requeue completed jobs to satisfy an incorrect historical-queue assertion.
+
+**Kaizen task:** t025 — persist confirmed render evidence in authoring ledgers before active queue rows retire.
+
+**Ending decision:** consumer kind_robots#3634 already merged `525a0f278c21c5a23390b516cb7e7d380dadddd9`, exact head `b81722f44eb67641449fd8f830a40ce119bfa160`, all32 completed checks green. Coordinator6118 merged concurrently as `5713cffd6947408c2d001d410dd543c58c11de9f`, final head `2e3832e9057e4b243c3bc13566faea6fc15dc173`, all27 checks green/intentional skip. Its port is byte-identical to6119 and current main retains render evidence; no stale branch overwrite was attempted. Full10-file consumer and final coordinator diffs inspected.
+
+**Independent verification:** Current engine suite reaches all10 endings with2475/3000 completed525 eliminated. Actual Vue/Pinia Personnel File with genuine natural-play saved states and full repository/scoped CSS: native Chromium at390/768/1440,30 epilogue+real-localStorage-reload cases,15 earned variant checks, zero runtime errors/overflow; image failure fallback exercised. This is an isolated component/store browser fixture, not a live deployment. Secret elimination precedence and seeded Board routes/save upgrades passed. Session-aware done event clears the original residual owner and records one verified learning; t019 remains ready.
+
+**Kaizen task:** t026 — replace the static epilogue template regex as sole UI proof with a reproducible mounted-component/browser-storage contract. No additional kaizen is needed for this bookkeeping entry.
+
