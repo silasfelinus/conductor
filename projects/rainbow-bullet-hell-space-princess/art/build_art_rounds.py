@@ -221,7 +221,7 @@ BOSSES = [
      "lanes", "freed luminous jellyfish colony drifting away, peaceful"),
     ("b03", "Clawburst", "giant robotic mantis shrimp starship, massive forward punch cannon, armored joint socket",
      "shattered cannon, rescued pilot waving from an escape pod"),
-    ("b04", "Delphion", "two giant robotic dolphin scimitar warships coupled at the rear, synchronized",
+    ("b04", "Delphion", "two giant robotic dolphin scimitar starships coupled at the rear, synchronized",
      "two dolphin ships uncoupling and swimming free together"),
     ("b05", "Sawtooth Regent", "giant robotic shark wedge starship, sawtooth jaws, hinged jaw, hammerhead escorts",
      "broken teeth turning into falling coral rain, shark ship floating calm"),
