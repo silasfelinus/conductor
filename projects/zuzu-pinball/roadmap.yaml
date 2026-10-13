@@ -367,39 +367,20 @@ tasks:
   - id: t-013
     milestone: m5
     title: "Run physics/rules soaks, input accessibility and cross-device performance QA"
-    status: claimed
+    status: review
     depends_on: t-009
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      After t-010 through t-012 complete, run no-stuck-ball scenarios, repeated
-      setup/dispose, six-ball stress, representative desktop/touch playtests,
-      mobile/desktop screenshots, camera/input layouts, frame timing and
-      accessible table guide. Soak-test 1,000 Croc swallow and safe-eject
-      cycles including multi-ball and tilt. Add missing remediation tasks rather than
-      declaring completion by count.
+    note: |-
+      After t-010 through t-012 complete, run no-stuck-ball scenarios, repeated setup/dispose, six-ball stress, representative desktop/touch playtests, mobile/desktop screenshots, camera/input layouts, frame timing and accessible table guide. Soak-test 1,000 Croc swallow and safe-eject cycles including multi-ball and tilt. Add missing remediation tasks rather than declaring completion by count.
+      Found by the t-010 multiball soak: a ball can wedge at rest near (-0.082, y 0.036, -0.415), between the Village ramp's right rail and the Abbey seal channel; the runtime's ball-search nudge frees it, but the crevice should be closed in geometry.
+      2026-10-12 PT: second slice merged, kind_robots#3578 (squash 7582746). New test:zuzu- pinball-stress: 25 runtime mount/play/render/dispose cycles with physics worlds and GPU resources back to baseline every cycle; six balls through the whole runtime (rules, scene, LED rail, trails) for a minute on each of three seeds, every ball checked inside the cabinet every tick, about 0.9 ms mean / 1.6 ms p95 per tick headless. Its first run found a real escape: a ball flipped into the air off a ramp mouth flew over the 2.5 cm arch and out of the machine (the glass is at 31 cm, above the raised Abbey deck). Fixed with clear hidden cabinet sides 1 cm outside the outline from 4 cm to the glass, last in the collider list: placed mid-list they renumbered colliders, and Rapier's solver order changed two ricochet shot proofs. The croc-mouth proof is now a direct right-inlane flip. No-stuck scan back to 0 ball-search frees. Still open, needing a real browser: touch and keyboard playtests, frame timing on a GPU, and the accessible table guide check.
 
-      Found by the t-010 multiball soak: a ball can wedge at rest near (-0.082, y 0.036,
-      -0.415), between the Village ramp's right rail and the Abbey seal channel; the runtime's
-      ball-search nudge frees it, but the crevice should be closed in geometry.
-
-      2026-10-12 PT: second slice merged, kind_robots#3578 (squash 7582746). New test:zuzu-
-      pinball-stress: 25 runtime mount/play/render/dispose cycles with physics worlds and GPU
-      resources back to baseline every cycle; six balls through the whole runtime (rules,
-      scene, LED rail, trails) for a minute on each of three seeds, every ball checked inside
-      the cabinet every tick, about 0.9 ms mean / 1.6 ms p95 per tick headless. Its first run
-      found a real escape: a ball flipped into the air off a ramp mouth flew over the 2.5 cm
-      arch and out of the machine (the glass is at 31 cm, above the raised Abbey deck). Fixed
-      with clear hidden cabinet sides 1 cm outside the outline from 4 cm to the glass, last in
-      the collider list: placed mid-list they renumbered colliders, and Rapier's solver order
-      changed two ricochet shot proofs. The croc-mouth proof is now a direct right-inlane
-      flip. No-stuck scan back to 0 ball-search frees. Still open, needing a real browser:
-      touch and keyboard playtests, frame timing on a GPU, and the accessible table guide
-      check.
+      Recovered expired input QA and repaired3638 in place: an open guide owns touchA/Start and Enter/Space/Z; closed guide still starts pinball synchronously in the audio gesture. Actual SFC handler regression covers ten open/closed cases, alongside the existing mixer mute/resume/runtime sound checks. Final-head CI and browser verification follow. This is a partial t013 slice; real device/GPU acceptance remains unfinished.
     claimed_by: 20261013T193231Z-pinball-guide-b2r6
     claimed_at: '2026-10-13T19:32:31Z'
-    updated: '2026-10-13T19:32:31Z'
+    updated: '2026-10-13T19:36:42Z'
   - id: t-014
     milestone: m5
     title: "Silas visual/play acceptance and authorization for any public /play launch"
