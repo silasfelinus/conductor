@@ -57,3 +57,12 @@ Quality pass1; precise reproduction and phase-safe scheduling/regression request
 **Pattern and improvement:** previous global-any-warning test missed per-volley phase changes. Durable repair tests now assert full intervals and exact collision-order boundary; actual player damage/render consumer replay remains kaizen t-019. Current Contract failure named only the two changed files' Prettier formatting, repaired on the existing branch with full reads/blob-SHA guards and no weakened checks/baselines. Formatting does not consume another quality pass.
 
 **Closeout:** t-007 already ready/unowned and stays so, with pass1 history and full original ActsI–II scope retained. Rewrite active retry context to the verified repair/remaining scope; no status transition, claim release or completion learning is needed. One ready kaizen from fresh next_free_task_id t-019, no recursive bookkeeping kaizen. Co-op #3599 still needs repaired-engine reconciliation and independent review. No deployment/publication.
+
+
+## 2026-10-12 PT: t-017 earned-super and hitbox fairness
+
+**Implemented:** Kind Robots [#3612](https://github.com/silasfelinus/kind_robots/pull/3612) merged as `02d3e4ff1cb0f7b3e145343b342b76e5e0b0510a`. Real fixed-tick four-pilot tests earn full super charge, distinguish held focus from a fresh super press, verify hostile-bullet cancellation and charge spending, shield pickup caps, damage invulnerability and eliminated-caster guards. The engine now treats a direct invulnerable core overlap as protected, not a graze, and blocks later near-miss credit on that same projectile.
+
+**Evidence:** 30/30 completed green checks on head `e94b3c23089fb97209c782f246def610d76699f4`, including the full Arcade suite, TypeScript, lint/format ratchets and image build; no blocking review threads. Safe admin-only code merge, **not** proof of Alexandria deployment or a public launch. Conductor t-017 done event submitted. Upcoming Act II/t-007 work remains under its independent claim.
+
+**Kaizen:** Separate real collision categories before rewarding graze; use actual gameplay input rather than snapshot edits when proving earned-charge paths.

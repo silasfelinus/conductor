@@ -518,3 +518,32 @@ tasks:
       keeps the gamebook abbess-welcome plate.
     updated: '2026-10-12T09:03:57Z'
     implementation_pr: 'silasfelinus/kind_robots#3586'
+  - id: t-027
+    milestone: m4
+    title: "Zoomed consequence reveal after every choice and trial"
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-021, t-015]
+    source: silas-2026-10-13
+    note: |-
+      Silas, 2026-10-13: "when we make a choice between the two paths, we need to see a real display and new art showing the consequence of our action ... definitely needed for immersion and to really pay off the experience."
+      kind_robots#3611: after a checked choice or trial attempt the private Admin board stays zoomed in on the consequence (outcome plate flips in with a Success/Failure ribbon, pip dice with skill/modifier/total/target, the authored result at display size, health and provision chips) and a context-aware Continue (down the road, face the trial, return to the gate, enter the next land, see how it ends). Painted plates come from sceneArt BESPOKE_OUTCOMES (t-028); unpainted outcomes fall back to their card art with a success/failure grade. Presentation only; no reducer or save change. Builds on the single-screen tabbed board from kind_robots#3610.
+      Done 2026-10-13: kind_robots#3611 merged as 872b2ae after all 31 head checks passed (TypeScript, Shifting Lands gameplay contract, layout contract, Contract verifiers). Admin-only preview; no production deploy claimed.
+    updated: '2026-10-13T01:10:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3611'
+  - id: t-028
+    milestone: m3
+    title: "Art round 2: one consequence painting per choice and result (222 plates)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-026]
+    source: silas-2026-10-13
+    rest_until: '2026-10-13T08:00:00Z'
+    note: |-
+      Silas, 2026-10-13, asking for new art that shows the consequence of each choice (see t-027). art/ROUND-2.yaml holds 222 subjects: every choice of the 48 authored encounters (192) and of the five major trials (30), success and failure, one Arthemy house-lane seed each, prompts written from each outcome's authored text with identity tags copied from the card's ROUND-1 keeper (fixed cast, Zuzu out of frame, injury implied and non-graphic, no lettering). All 222 passed the prompt contract dry run and were queued 2026-10-13 as ArtJobs 37665-37886. Queued != rendered != delivered != verified.
+      Next (after rest_until, once the shared render queue drains): enqueue_art_requests.py art/ROUND-2.yaml --status, review with the shifting-lands card exporter's --sheet mode land by land, mark keepers `verdict: 'keep: ...'` (success and failure of one choice must read differently; cast must match the card), reroll misses as sl2r2-* subjects, then run the exporter with --kind-robots ../kind_robots (subjects with `outcome` write public/shifting-lands/outcomes/<card>--<choice>--<result>.webp) and list the printed keys in kind_robots utils/shiftingLands/sceneArt.ts BESPOKE_OUTCOMES; verifyShiftingSceneArt.test.ts checks each one. Can ship land by land.
+    updated: '2026-10-13T01:30:00Z'

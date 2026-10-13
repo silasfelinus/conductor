@@ -5,6 +5,8 @@ zuzu-shifting-lands t-023/t-026. A round ledger (projects/zuzu-shifting-lands/ar
 twice; a reviewer marks the keeper with ``verdict: 'keep: ...'``. This writes each keeper's ArtImage to
 ``<kind_robots>/public/shifting-lands/cards/<card>.webp`` (git-tracked, never under /images, which Alexandria
 mounts over) and prints the card ids for ``BESPOKE_CARDS`` in utils/shiftingLands/sceneArt.ts.
+A subject carrying an ``outcome`` key (art round 2, t-028: one painting per choice and result) is written
+to ``public/shifting-lands/outcomes/<outcome>.webp`` instead and listed for ``BESPOKE_OUTCOMES``.
 
 ``--sheet OUT.jpg`` instead writes a labelled contact sheet of every finished render, for review.
 
@@ -69,23 +71,33 @@ def contact_sheet(subjects, out, thumb=(448, 256)):
     print(f"{len(cells)} renders -> {out}")
 
 
+def export_target(subject):
+    """(folder, name) for a keeper: outcome plates go to outcomes/, card faces to cards/."""
+    if subject.get("outcome"):
+        return "outcomes", subject["outcome"]
+    return "cards", subject["card"]
+
+
 def export(subjects, kind_robots):
-    dest = Path(kind_robots) / "public" / "shifting-lands" / "cards"
-    dest.mkdir(parents=True, exist_ok=True)
-    cards = []
+    root = Path(kind_robots) / "public" / "shifting-lands"
+    written = {}
     for subject in subjects:
         if not str(subject.get("verdict") or "").startswith("keep") or not finished(
             subject
         ):
             continue
+        folder, name = export_target(subject)
+        dest = root / folder
+        dest.mkdir(parents=True, exist_ok=True)
         image = load_image(finished(subject))
         if image.size != CARD_SIZE:
             image = image.resize(CARD_SIZE, Image.LANCZOS)
-        image.save(dest / f"{subject['card']}.webp", "WEBP", quality=80, method=6)
-        cards.append(subject["card"])
-    for card in sorted(set(cards)):
-        print(card)
-    print(f"{len(set(cards))} cards exported to {dest}", file=sys.stderr)
+        image.save(dest / f"{name}.webp", "WEBP", quality=80, method=6)
+        written.setdefault(folder, set()).add(name)
+    for folder, names in sorted(written.items()):
+        for name in sorted(names):
+            print(name)
+        print(f"{len(names)} {folder} exported to {root / folder}", file=sys.stderr)
 
 
 def main(argv=None):

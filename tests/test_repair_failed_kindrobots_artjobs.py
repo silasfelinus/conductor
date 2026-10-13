@@ -41,3 +41,14 @@ def test_repair_reasons_remains_default_deny_for_unrelated_failure():
         },
     }
     assert repair.repair_reasons(job) == []
+
+
+def test_superseded_jobs_reads_ledger(tmp_path):
+    ledger = tmp_path / "s.yaml"
+    ledger.write_text("superseded:\n- id: 12\n  reason: re-run in round 2\n- id: '13'\n", encoding="utf-8")
+    assert repair.superseded_jobs(ledger) == {12: "re-run in round 2", 13: "superseded"}
+    assert repair.superseded_jobs(tmp_path / "missing.yaml") == {}
+
+
+def test_repo_ledger_covers_croc_round_one():
+    assert set(range(37646, 37652)) <= set(repair.superseded_jobs())
