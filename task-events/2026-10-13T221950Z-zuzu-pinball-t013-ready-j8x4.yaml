@@ -1,0 +1,21 @@
+version: 1
+project: zuzu-pinball
+task: t-013
+operation: ready
+owner: worker
+session: 20261013T220640Z-zuzu-t013-flipper-j8x4
+updated: '2026-10-13T22:19:50Z'
+note: >-
+  2026-10-13 PT: Silas reported left flipper stuck raised on iPad Safari.
+  Merged kind_robots#3645 (60a84e2) after all 29 GitHub PR workflows
+  completed successfully, including Contract Tests and TypeScript.
+  Root-cause path: stale touch holds survived lost pointerup across page
+  blur/hide; duplicate Safari pointer IDs could compound holds. Touch overlay
+  now releases on window pointerup/cancel, blur, pagehide, visibility change,
+  while the cabinet clears all input on focus loss/hidden page; duplicate IDs
+  close the old finger before new down. verifyArcadeEngine tests late pointerup,
+  two-flipper cleanup and duplicate IDs. Exact in-device reproduction and
+  hardware motor behavior not verified; self-hosted production deploy not
+  verified. This is a partial QA repair, NOT full t-013 completion:
+  continue real iPad/controller playtests, GPU/frame timing, physical soaks
+  and FX3 acceptance separately. No public release gate changed.
