@@ -168,9 +168,11 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Public /play front page, Projects tab and card board shell"
-    status: ready
+    status: done
     depends_on: t-003
-    owner: null
+    owner: reviewer
+    updated: '2026-10-13T04:00:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3620'
     passes: 0
     stakes: reversible
     note: >-
@@ -178,12 +180,21 @@ tasks:
       non admin front page") with a Projects channel tab. Do not mount the Shifting Lands
       or Gamebook pages or share their stores. Content is a provenance-stamped snapshot of
       ORIENTATION-12.json.
+
+      DONE 2026-10-12 PT in kind_robots#3620: public /play/shifting-desks (front page with
+      PAL's welcome, three pillars and the five-level descent), Projects channel tab
+      content/channels/projects/shifting-desks.md, original poster public/shifting-desks/
+      front-poster.svg, provenance-stamped content snapshot utils/shiftingDesks/orientation.json.
+      Screenshots: projects/shifting-desks/screenshots/.
+
   - id: t-007
     milestone: m2
     title: "Seeded run reducer: meters, Successors, Suspicion, Clearance gates, save v1"
-    status: ready
+    status: done
     depends_on: t-003
-    owner: null
+    owner: reviewer
+    updated: '2026-10-13T04:00:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3620'
     passes: 0
     stakes: reversible
     note: >-
@@ -196,9 +207,18 @@ tasks:
       disciplinary card; requires gates with explained disabled choices; boss department
       outcomes; Restructuring map effects with written reasons; browser-local versioned
       save. Unit tests for every rule plus a seeded replay test.
+
+      DONE 2026-10-12 PT in kind_robots#3620: utils/shiftingDesks/rules.ts (seeded draw, cost +
+      2d6 + skill + Form boost, natural 12/2, five clamped meters, Successor arrival with the
+      Temp perk, Suspicion 10 conversation, requires gates with reasons, boss outcomes and
+      reorientation re-deal, versioned save guard) and stores/shiftingDesksStore.ts.
+      verifyShiftingDesks.test.ts simulates 3,000 seeded runs. Not yet built: Restructuring
+      map effects between departments (moved to t-023; meaningful only once Department 2
+      exists) and carried items (none are authored yet).
+
   - id: t-008
     milestone: m2
-    title: "Job Title, Secret Society and Mutation decks in the engine"
+    title: "Secret Society and Mutation decks in the engine (Job Titles shipped in t-007)"
     status: waiting
     depends_on:
       - t-004
@@ -215,11 +235,13 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Playable Orientation slice end to end at the public route"
-    status: waiting
+    status: done
     depends_on:
       - t-006
       - t-007
-    owner: null
+    owner: reviewer
+    updated: '2026-10-13T04:00:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3620'
     passes: 0
     stakes: reversible
     note: >-
@@ -228,6 +250,11 @@ tasks:
       success/failure prose and effects, journal, Successor deaths, the 90-Day Review with
       its 5 routes, and at least 3 reachable department outcomes. Placeholder art clearly
       labeled pending. Screenshots at 375/768/1440 in the PR.
+
+      DONE 2026-10-12 PT in kind_robots#3620, at the PUBLIC route per Silas's direction. Verified
+      by a local nuxi dev + Playwright full playthrough at 390/768/1440 px: zero horizontal
+      overflow, zero page errors, result screen reached at every width.
+
   - id: t-010
     milestone: m3
     title: "Department 2 pack: Records & Forms (Brazil / Bureaucracy)"
@@ -318,7 +345,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Window shifts: the Papers-Please-style desk card type"
-    status: waiting
+    status: ready
     depends_on: t-009
     owner: null
     passes: 0
@@ -331,7 +358,7 @@ tasks:
   - id: t-017
     milestone: m4
     title: "Comic timing: memo ticker, stamp animation, Successor arrival and personnel file export"
-    status: waiting
+    status: ready
     depends_on: t-009
     owner: null
     passes: 0
@@ -344,7 +371,7 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Accessibility and device pass at 375 / 768 / 1440"
-    status: waiting
+    status: ready
     depends_on: t-009
     owner: null
     passes: 0
@@ -401,7 +428,7 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Hidden Test Results: Obedience, Empathy, Ingenuity and Spite grading"
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     passes: 0
@@ -413,3 +440,17 @@ tasks:
       during play, are partly revealed at each department review ("PAL has prepared your
       interim results"), gate some boss routes, and set the ending's flavor text in the
       Personnel File. Tests for accumulation, gating and that no grade is shown early.
+  - id: t-023
+    milestone: m2
+    title: "Restructuring: map changes between departments with written reasons"
+    status: waiting
+    depends_on: t-010
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Split from t-007 (2026-10-12 PT). When a department is cleared, a Restructuring memo
+      may merge, eliminate or add unvisited locations in the next department, always with
+      a written reason, and visited history stays pinned (DESIGN-BRIEF Rules v1). Needs
+      Department 2 content (t-010) to mean anything. Reducer, journal entry, UI memo card
+      and tests.
