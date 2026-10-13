@@ -271,6 +271,11 @@ def payload(date: str) -> dict[str, Any] | None:
 
 def cmd_brief() -> int:
     today = pacific_today()
+    if today >= "2026-10-13":
+        print("Daily pitch authoring is retired. BUILD FIVE ACTUAL UPGRADES instead.")
+        print("Run python scripts/daily_project_deliveries.py --brief.")
+        print("Do not write new speculative pitches/daily dockets after 2026-10-12 PT.")
+        return 0
     print(f"Daily pitch docket brief ({today}): author pitches/daily/{today}.yaml")
     print(f"\nRules: exactly {PITCHES_PER_DAY} pitches; >= {MIN_ZERO_LLM} with llm_at_runtime: none; "
           f"each hook >= {MIN_HOOK_WORDS} words; effort small|medium|large.")
