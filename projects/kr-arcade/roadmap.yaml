@@ -1490,7 +1490,7 @@ tasks:
   - id: t-078
     milestone: m8
     title: "Brick Bloom depth slice 1: The bloom core"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: >-
@@ -1501,10 +1501,18 @@ tasks:
       2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
       improvements, they should not just be thin veneers of the old games. But newer, better, even more
       awesome."
+
+      2026-10-13: Slice 1 shipped in kind_robots#3643 (squash 9dcf56f, Contract Tests green on
+      attempt 2 after a 15-min job timeout on attempt 1). Authored walls (12), Bloom Bed,
+      Pollen Chain, Last-Crate Rush with Bumble, Leaf Curl, ball heat, roof chime,
+      sprout/hinge/puffball crates, R/T/Q seeds. Pilot probe seeds 5/9/13: last three crates
+      3.7-10.5 s (target <30 s). verifyCabinetBrickBloom.test.ts added; test:arcade-engine 34
+      suites, vue-tsc, eslint, prettier clean. No saves/co-op yet (later slices).
     owner: worker
     claimed_by: claude-gbemzx-brickbloom
     claimed_at: '2026-10-13T20:45:31Z'
-    updated: '2026-10-13T20:45:31Z'
+    updated: '2026-10-13T21:48:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#3643'
 
   - id: t-079
     milestone: m8
