@@ -242,7 +242,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Secret Society and Mutation decks in the engine (Job Titles shipped in t-007)"
-    status: claimed
+    status: done
     depends_on:
       - t-004
       - t-007
@@ -255,9 +255,17 @@ tasks:
       against run flags; the Mutation is once per department, with +2 Suspicion on
       witnessed cards. Never reveal the player's Society to other cards. Tests for dealing,
       seeding, objective scoring and witnessed costs.
+
+      DONE 2026-10-12 PT in kind_robots#3622 (merged 98da421): every run deals a face-down
+      society and mutation from a sealed envelope; per-department orders and betrayals keyed
+      to flags; favors (force success, +3, ignore requirement, instant effects) and mutations
+      (reroll, auto-success, +3, restore Composure) with +2 Suspicion when witnessed; v1/v2
+      saves upgrade. Verified by test:shifting-desks (3,000 seeded runs) and Playwright
+      playthroughs at 390/768/1440.
     claimed_by: 2026-10-13T051500Z-sd-societies-m4x8
     claimed_at: '2026-10-13T05:09:34Z'
-    updated: '2026-10-13T05:09:34Z'
+    updated: '2026-10-13T06:22:36Z'
+    implementation_pr: 'silasfelinus/kind_robots#3622'
   - id: t-009
     milestone: m2
     title: "Playable Orientation slice end to end at the public route"
@@ -401,7 +409,9 @@ tasks:
   - id: t-017
     milestone: m4
     title: "Comic timing: memo ticker, stamp animation, Successor arrival and personnel file export"
-    status: ready
+    status: done
+    updated: '2026-10-13T06:30:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3622'
     depends_on: t-009
     owner: null
     passes: 0
@@ -411,6 +421,9 @@ tasks:
       reduced-motion path; Successor arrival card with an orientation line; an end-of-run
       Personnel File (cause of each termination, societies betrayed, forms filed) as a
       local printable/downloadable card. No external sharing, which is a publish gate.
+
+      DONE 2026-10-12 PT in kind_robots#3622: scrolling PAL memo ticker keyed to flags, APPROVED/DENIED stamp slam, Successor-thawed card, elevator interstitial with restructuring memo, and a printable Personnel File finale (both departments, society verdict, causes of termination, Print button). Reduced-motion paths for all of it.
+
   - id: t-018
     milestone: m4
     title: "Accessibility and device pass at 375 / 768 / 1440"
@@ -497,3 +510,5 @@ tasks:
       a written reason, and visited history stays pinned (DESIGN-BRIEF Rules v1). Needs
       Department 2 content (t-010) to mean anything. Reducer, journal entry, UI memo card
       and tests.
+
+      PARTIAL 2026-10-12 PT (kind_robots#3622): department progression shipped (descend, per-department outcomes, elevator with a PAL restructuring memo). Still open: memos that actually merge, eliminate or add unvisited locations in the next department, with the reason pinned in the journal.
