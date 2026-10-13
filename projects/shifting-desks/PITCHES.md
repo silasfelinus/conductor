@@ -1,6 +1,6 @@
 # Shifting Desks: Where It Goes From Here
 
-**Status:** directions for Silas to pick from, 2026-10-12 PT. Nothing here is decided until Silas says so. The engine in [DESIGN-BRIEF.md](DESIGN-BRIEF.md) works with every direction below, so building starts now (soft scope gate, AGENTS.md).
+**Status:** DECIDED by Silas, 2026-10-12 PT. See "Decision" at the end. The pitches below are kept as the record of what was on the table. The engine in [DESIGN-BRIEF.md](DESIGN-BRIEF.md) works with every direction below, so building starts now (soft scope gate, AGENTS.md).
 
 **Silas's seed pitch (2026-10-12 PT):** a darkly comic, image-card-based game of experiences. The player finds their way through a complicated, paranoid office hellscape using the Shifting Lands layout. Every choice is morally questionable and none is right. There are impossible sacrifices and sudden comedy. Giant cockroaches, deathtraps, strange psych tests, children's toys that can carry a nuclear bomb, mutant powers, secret organizations, and callbacks to classic works.
 
@@ -87,7 +87,7 @@ Every pitch keeps the Shifting Lands spine: **5 "lands" (departments/wings/floor
 
 | Expansion | What it is | Cost |
 | --- | --- | --- |
-| **Accusation Meeting (party mode)** | Pass-and-play for 3–6 players (family game night). Each player gets a secret society, everyone shares one encounter deck, and the team votes on who is to blame for each failure. | medium |
+| ~~Accusation Meeting (party mode)~~ | Rejected by Silas 2026-10-12 PT. | — |
 | **Daily Memo** | One seeded run per day, the same for everyone, with a shareable "Personnel File" result card ("Cause of termination: stapler"). | small |
 | **Personnel File export** | A printable/shareable dossier of your run: successors lost, societies betrayed, forms filed, final review. | small |
 | **Memo ticker** | A scrolling corporate PA/news crawl that comments on your choices ("Reminder: the incident on Floor 6 did not happen"). Pure comic timing. | small |
@@ -116,10 +116,10 @@ That gives the cockroaches, deathtraps, psych tests, nuclear toys, mutant powers
 
 *Shifting Desks* (working title; signals the Shifting Lands lineage) · *Restructuring* · *Please Hold* · *Mandatory Wellness* · *Consolidated* · *Making Tomorrow Safer, Today* · *Successor B*
 
-## What Silas decides (soft gate t-002)
+## Decision (Silas, 2026-10-12 PT)
 
-1. Which spine (default: the recommendation above).
-2. Title (default: *Shifting Desks*).
-3. Whether party mode is in scope for v1 (default: no; it goes on the roadmap as a post-v1 expansion).
-
-Under the 2026-09-30 default-recommendation rule, if there's no answer within 7 days the recommendation is adopted, and Silas can still redirect afterwards.
+- **Spine:** *"Combination of synthesis with vault test facility. I liked them best."* The recommended synthesis (A + C + F + D + G) is fused with **Pitch B**. The campus is the surface of a sealed test vault, each department is one level deeper, PAL is HR and test proctor, and hidden **Test Results** (Obedience, Empathy, Ingenuity, Spite) grade the player. Departments: Orientation (surface) → Records & Forms (−1) → Toy Division (−2) → Wellness & Testing: the Vault (−3) → Sub-Level Zero: the Board (−4). Details are in DESIGN-BRIEF.md "Decided world".
+- **Emphasis:** **secret societies & traitors** and **paperwork & psych tests** lead. At least half of every department pack is tagged `conspiracy`, `psych-test` or `paperwork`, and the validator enforces it.
+- **Party mode:** *"Not at all."* Removed from the roadmap; do not re-pitch it.
+- **Title:** not chosen; *Shifting Desks* stays the working title.
+- **Pitch E** (afterlife bureaucracy) remains a possible secret ending / later expansion (t-021).

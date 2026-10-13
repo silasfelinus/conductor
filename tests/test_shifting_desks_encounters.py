@@ -96,3 +96,10 @@ def test_unknown_meter_and_skill_rejected(tmp_path, pack):
     errors = _validate(tmp_path, bad)
     assert any("unknown meter" in e for e in errors)
     assert any("skill 'steel'" in e for e in errors)
+
+
+def test_lead_flavor_quota_is_enforced(tmp_path, pack):
+    bad = copy.deepcopy(pack)
+    for enc in bad["encounters"]:
+        enc["tags"] = ["deathtrap"]
+    assert any("lead tag" in e for e in _validate(tmp_path, bad))

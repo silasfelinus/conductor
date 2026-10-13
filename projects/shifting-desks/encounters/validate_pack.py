@@ -11,6 +11,8 @@ pytest + pyyaml (no jsonschema).
 Beyond shape it enforces the project's core design rule, NO CLEAN WINS
 (DESIGN-BRIEF.md): for every choice, the up-front cost plus the *success*
 outcome must contain at least one harmful meter effect. Even winning hurts.
+It also enforces Silas's chosen emphasis: at least half of a pack's cards are
+tagged conspiracy, psych-test or paperwork.
 
 Usage:
   python projects/shifting-desks/encounters/validate_pack.py            # every *.json pack here
@@ -34,8 +36,11 @@ TARGETS = {7, 9, 11}
 POLARITIES = {"good", "bad", "mixed"}
 TAGS = {
     "satire", "psych-test", "deathtrap", "creature", "conspiracy",
-    "toy", "mutant", "callback", "sacrifice",
+    "toy", "mutant", "callback", "sacrifice", "paperwork",
 }
+# Silas, 2026-10-12 PT: secret societies & traitors and paperwork & psych tests lead.
+LEAD_TAGS = {"conspiracy", "psych-test", "paperwork"}
+LEAD_SHARE_MIN = 0.5
 REQUIRE_KEYS = {"clearance", "flag", "forms"}
 ART_STATUSES = {"design-only", "verified-repository-art", "approved-ArtImage"}
 ART_SUFFIX = "every surface bare and unmarked"
@@ -276,6 +281,12 @@ def validate_pack(path: Path) -> list[str]:
             c.choice(f"{w}.choices[{ch.get('id')}]", ch)
         c.text(f"{w}.developer_note", enc.get("developer_note"), 20)
         collect(w, choices)
+
+    if encounters:
+        lead = sum(1 for e in encounters if LEAD_TAGS & set(e.get("tags") or []))
+        if lead < LEAD_SHARE_MIN * len(encounters):
+            c.err("encounters", f"only {lead}/{len(encounters)} cards carry a lead tag "
+                  f"{sorted(LEAD_TAGS)}; at least half must (Silas's 2026-10-12 emphasis)")
 
     boss = pack.get("boss")
     if not isinstance(boss, dict):
