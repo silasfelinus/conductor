@@ -725,6 +725,101 @@ fighters:
       The last fight before the door. When she falls she sinks into the mud, the puddle spreads into the
       starry dark, and the Thin Place opens: the boss fight is the rest of her.
 
+  - slug: jeffery-mittens
+    name: Jeffery Mittens
+    species: raccoon
+    title: The Boot-Looter of Hollow Bell
+    archetype: "scrappy runaway: boots thrown from a string of four, slides under and through, ledge drops, tied laces; light and quick"
+    new_character: true
+    health: 900
+    height_px: 88
+    ammo: 4
+    walk_speed: fast
+    home_stage: hollow-bell
+    rival: zuzu
+    look: >-
+      Silas, 2026-10-13: the gamebook's young raccoon looter (Act II "Boots"), named Jeffery Mittens and
+      made a main character of the Zuzu world (worlds/zuzu/WORLD-GUIDE.md). Gamebook plates 243522, 243677,
+      243685, 243818. A skinny young raccoon: grey fur, black mask, bright wary eyes, black-and-grey ringed
+      tail; a grey-green vest over a dirty off-white shirt with rolled sleeves, grey trousers, scuffed black
+      boots (the pair Zuzu may have left him); a long brown coat far too big for him; a string of old boots
+      tied together by their laces round his neck; a little kitchen knife he holds wrong. Quick, nervy and
+      a little funny. In Showdown he carries a jackal's rag tied round his arm (Act IV).
+    voice: >-
+      Quick and low, frontier slang ("ain't", "them boots"), and the voice cracks in the middle. Defensive
+      and proud, scared under it, and always counting the barefoot kids he is collecting boots for.
+    punch_buttons: "LP = the little knife, held wrong; HP = a two-pawed shove"
+    specials:
+      - name: Boot Toss
+        input: QCF+P
+        triangle: strike
+        speed: medium
+        damage: 55
+        description: >-
+          A boot off the string, thrown overarm. LP flies high; HP skids along the ground and must be
+          blocked low. Four boots per string (pips under his name), then he has to Scavenge; the string
+          is full again each round.
+      - name: Underfoot
+        input: QCB+K
+        triangle: strike
+        speed: fast
+        damage: 60
+        description: A low slide between their legs and out the other side; projectiles pass over him and his body passes through theirs. A knockdown.
+      - name: Ledge Drop
+        input: QCB+K (air)
+        triangle: strike
+        speed: fast
+        damage: 80
+        description: He drops on them from above, as he does to Zuzu at the dry well. An overhead; on contact he springs back up.
+      - name: Tied Laces
+        input: HCB+P
+        triangle: grab
+        speed: fast
+        damage: 50
+        description: A command grab that ties their laces together; it leaves them standing and hobbled in reach rather than knocked down.
+      - name: Little Knife
+        input: DP+P
+        triangle: strike
+        speed: fast
+        damage: 90
+        description: The kitchen knife comes up in a rising slash, untouchable by strikes on startup. His anti-air.
+      - name: "Weren't Me"
+        input: dd+K
+        triangle: guard
+        speed: fast
+        damage: 80
+        description: >-
+          He flinches from a standing or jumping strike and the knife answers by itself (a parry, 80). A low
+          sweep or a grab just catches him.
+      - name: Scavenge
+        input: dd+P
+        triangle: guard
+        speed: slow
+        damage: 0
+        description: He pulls boots off the ground to restring all four (16 frames).
+    supers:
+      - level: 1
+        name: Every Last Boot
+        input: QCF QCF+P
+        damage: 5 x 52 (260)
+        description: The whole string swung on its laces, boot after boot after boot, as he scrambles forward.
+      - level: 3
+        name: The Dry Well Pack
+        input: QCB QCB+HP
+        damage: 380
+        description: >-
+          Eye-strip cutaway of his masked eyes, wide. One low whistle, and the jackals of the dry well come
+          through wherever the opponent stands (strikeAt opponent), a rush of dust, rags and teeth that
+          knocks them flat and is gone. Hollis tips her hat from the ridge.
+    intro: Drops off a ledge in a too-big coat, boots thumping round his neck, and pulls the little knife.
+    taunt: Holds up one boot against the opponent's foot, squints, and shakes his head. Wrong size.
+    victory_poses:
+      - Unlaces the loser's boots, thinks better of it, and laces them back up properly.
+      - Counts the boots on his string on his fingers, loses count, and starts again.
+    perfect_pose: Pulls on a fresh pair of boots, stamps them twice, and grins.
+    ko_pose: Sits down hard; the string of boots lands on top of him, one by one.
+    vs_siblings_win: He leaves a small pair of boots in front of the sister and backs away. She takes them.
+
 boss:
   slug: thing-behind-the-door
   avatar: swamp-witch

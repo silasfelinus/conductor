@@ -78,7 +78,7 @@ superseded images. Consult the latest CAST-PICKS decisions for the approved mode
   verify trained LoRA and Resource IDs separately before labeling imported.
 
 **Resource reconciliation and additions:** [resource-submissions.json](resource-submissions.json)
-contains **nine Character profiles, five Rewards, five Scenarios**, and the five
+contains **ten Character profiles (Jeffery Mittens added 2026-10-13), five Rewards, five Scenarios**, and the five
 LoRA source references. Existing LLM-generated entries may be rewritten to align
 with the new canon, explicitly authorized 2026-10-09, but must be matched to their
 real owner-scoped records rather than overwritten by guesswork. New entries remain
