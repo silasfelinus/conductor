@@ -121,5 +121,5 @@ That gives the cockroaches, deathtraps, psych tests, nuclear toys, mutant powers
 - **Spine:** *"Combination of synthesis with vault test facility. I liked them best."* The recommended synthesis (A + C + F + D + G) is fused with **Pitch B**. The campus is the surface of a sealed test vault, each department is one level deeper, PAL is HR and test proctor, and hidden **Test Results** (Obedience, Empathy, Ingenuity, Spite) grade the player. Departments: Orientation (surface) → Records & Forms (−1) → Toy Division (−2) → Wellness & Testing: the Vault (−3) → Sub-Level Zero: the Board (−4). Details are in DESIGN-BRIEF.md "Decided world".
 - **Emphasis:** **secret societies & traitors** and **paperwork & psych tests** lead. At least half of every department pack is tagged `conspiracy`, `psych-test` or `paperwork`, and the validator enforces it.
 - **Party mode:** *"Not at all."* Removed from the roadmap; do not re-pitch it.
-- **Title:** not chosen; *Shifting Desks* stays the working title.
+- **Title:** *Shifting Desks*, confirmed (the first answer did not register because the question offered no keep-as-is option).
 - **Pitch E** (afterlife bureaucracy) remains a possible secret ending / later expansion (t-021).

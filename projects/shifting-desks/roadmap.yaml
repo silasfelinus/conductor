@@ -3,7 +3,7 @@
 # and zuzu-gamebook (authored depth, character sheet, endings), in an original non-Zuzu world.
 # Creative deliverables: DESIGN-BRIEF.md (engine, rules, guardrails), PITCHES.md (directions
 # for Silas), encounters/ (schema, validator, ORIENTATION-12.json first department pack).
-# Runtime: silasfelinus/kind_robots, admin preview /admin/shifting-desks first.
+# Runtime: silasfelinus/kind_robots, public front page /play/shifting-desks (Silas, 2026-10-12 PT).
 project: shifting-desks
 kind: software
 autonomous: true
@@ -40,8 +40,13 @@ notes_from_silas: |
 
   2026-10-12 PT, answering t-002's choices: spine = "Combination of synthesis with vault
   test facility. I liked them best"; party mode = "Not at all"; emphasis = "Secret
-  societies & traitors, Paperwork & psych tests". Title left unanswered, so the working
-  title "Shifting Desks" stands. Applied in DESIGN-BRIEF.md "Decided world" and PITCHES.md
+  societies & traitors, Paperwork & psych tests". Title: "Weirdly. I confirmed shifting
+  desks but it didn't get confirmed." The title is Shifting Desks (confirmed).
+
+  2026-10-12 PT: "Give us a real, front end, non admin front page, since I expect we will
+  get to front end user facing before anyone else looks at my site (I'm currently the
+  only user)". This overrides the admin-preview-first default for this project: the
+  playable game lives at public /play/shifting-desks with a Projects tab, and grows there. Applied in DESIGN-BRIEF.md "Decided world" and PITCHES.md
   "Decision".
 
   Agent mandate (AGENTS.md defaults for new projects): scope gate t-002 is SOFT and runs
@@ -55,7 +60,7 @@ milestones:
     weight: 15
     status: in-progress
   - id: m2
-    title: "ENGINE — admin preview, seeded reducer, meters, Successors, decks, save"
+    title: "ENGINE — public front page, seeded reducer, meters, Successors, decks, save"
     weight: 25
     status: not-started
   - id: m3
@@ -104,8 +109,9 @@ tasks:
       PAL is HR and test proctor, and hidden Test Results grade the player). Party mode:
       "Not at all" (removed from the roadmap). Emphasis: "Secret societies & traitors" and
       "Paperwork & psych tests" (validator now requires at least half of each pack's cards
-      to carry conspiracy, psych-test or paperwork tags). Title: no answer, working title
-      "Shifting Desks" stands until Silas renames it.
+      to carry conspiracy, psych-test or paperwork tags). Title: CONFIRMED "Shifting Desks"
+      (Silas, 2026-10-12 PT: "I confirmed shifting desks but it didn't get confirmed"; the
+      question offered no keep-as-is option, so his pick did not register).
   - id: t-003
     milestone: m1
     title: "Encounter-pack contract, validator and Orientation department pack"
@@ -161,19 +167,17 @@ tasks:
       its URL loads. Generated internal art is pre-approved.
   - id: t-006
     milestone: m2
-    title: "Admin preview route, admin nav tab and reused card board shell"
+    title: "Public /play front page, Projects tab and card board shell"
     status: ready
     depends_on: t-003
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      kind_robots: /admin/shifting-desks with requiredRole ADMIN and a discoverable Admin
-      nav tab. Reuse Shifting Lands' stateless board grid, kr-card-flip reader and dice
-      result components; do not mount the Shifting Lands or Gamebook pages or share their
-      stores. Ship a static Orientation board rendering the 12 cards face-down/face-up from
-      a snapshot of ORIENTATION-12.json with provenance. No public /play route or menu
-      listing (hard gate t-020).
+      kind_robots: public /play/shifting-desks (Silas, 2026-10-12 PT: "a real, front end,
+      non admin front page") with a Projects channel tab. Do not mount the Shifting Lands
+      or Gamebook pages or share their stores. Content is a provenance-stamped snapshot of
+      ORIENTATION-12.json.
   - id: t-007
     milestone: m2
     title: "Seeded run reducer: meters, Successors, Suspicion, Clearance gates, save v1"
@@ -210,7 +214,7 @@ tasks:
       seeding, objective scoring and witnessed costs.
   - id: t-009
     milestone: m2
-    title: "Playable Orientation slice end to end at the admin route"
+    title: "Playable Orientation slice end to end at the public route"
     status: waiting
     depends_on:
       - t-006
@@ -366,7 +370,7 @@ tasks:
       clean and every ending appears. Commit the report and tuned packs.
   - id: t-020
     milestone: m5
-    title: "Public /play/shifting-desks release decision"
+    title: "Silas's fun verdict and wider promotion (home, Arcade, sharing)"
     status: waiting
     depends_on:
       - t-018
@@ -375,10 +379,12 @@ tasks:
     passes: 0
     stakes: outward-facing
     gate_human: true
-    gate_reason: publish
+    gate_reason: subjective-acceptance
     note: >-
-      Hard gate. Publishing the public route, any menu or Arcade listing, and Silas's
-      verdict that it is genuinely funny and fun. Agents prepare the release PR and
+      Hard gate. The public /play/shifting-desks page and its Projects tab were authorized
+      by Silas on 2026-10-12 PT and ship as the game grows. This task is what remains
+      human-only: his verdict that the full game is genuinely funny and fun, and any wider
+      promotion (home page feature, Arcade listing, external sharing). Agents prepare
       device screenshots, then stop at needs-human.
   - id: t-021
     milestone: m5

@@ -2,7 +2,7 @@
 
 date: 2026-10-12 PT
 status: authorized new project; design phase; spine decided by Silas 2026-10-12 PT (t-002)
-owner: Conductor project `shifting-desks`; Kind Robots runtime, admin preview `/admin/shifting-desks`; public `/play/shifting-desks` is a separate hard human gate
+owner: Conductor project `shifting-desks`; Kind Robots runtime at public `/play/shifting-desks` (Silas, 2026-10-12 PT: "a real, front end, non admin front page")
 direction menu: [PITCHES.md](PITCHES.md) (decision recorded there)
 
 ## Promise
@@ -112,7 +112,7 @@ Callbacks are welcome as **short original allusions**, such as a jammed printer,
 
 ## Implementation shape (Kind Robots)
 
-- Admin preview first: `/admin/shifting-desks` with `requiredRole: ADMIN` and a discoverable Admin nav tab. Public `/play/shifting-desks` and any Arcade or menu listing are a **hard publish gate** that needs Silas's explicit approval.
+- Public front page at `/play/shifting-desks` with a Projects channel tab (Silas, 2026-10-12 PT, overriding the usual admin-preview-first default because he is currently the site's only user). Wider promotion (home feature, Arcade, sharing) and the final fun verdict stay a hard gate (t-020).
 - `utils/shiftingDesks/` holds a pure, tested reducer (seeded draw, meters, Successors, Suspicion, Clearance gates, Restructuring, save versioning). `stores/shiftingDesksStore.ts` is a thin Pinia 3 wrapper.
 - **Reuse, don't fork,** Shifting Lands' stateless pieces (seeded RNG, 2d6 dice/result utility, the `kr-card-flip` reader and its board grid) and the Gamebook's dice tray where it fits. Do **not** mount either game's page or share their state owners.
 - Content is a versioned snapshot of `projects/shifting-desks/encounters/*.json`, imported with provenance. Saves are browser-local, schema-versioned and migratable. No backend writes during play for v1.
@@ -120,7 +120,7 @@ Callbacks are welcome as **short original allusions**, such as a jammed printer,
 
 ## MVP (first playable slice)
 
-**Department 1 only:** the 12 Orientation cards plus the *90-Day Review* boss, Job Title select, the Society and Mutation cards, all five meters, Successors, a journal, save/resume, and at least 3 distinct department outcomes. It runs at the admin route with placeholder-labeled art and then with real card faces.
+**Department 1 only:** the 12 Orientation cards plus the *90-Day Review* boss, Job Title select, the Society and Mutation cards, all five meters, Successors, a journal, save/resume, and at least 3 distinct department outcomes. It runs at the public route with placeholder-labeled art and then with real card faces.
 
 ## Gates
 
@@ -129,4 +129,4 @@ Callbacks are welcome as **short original allusions**, such as a jammed printer,
 
 ## Open questions
 
-1. Title: *Shifting Desks* is the working title (Silas left it open). Alternates are in PITCHES.md.
+None open. Title confirmed: *Shifting Desks* (2026-10-12 PT).
