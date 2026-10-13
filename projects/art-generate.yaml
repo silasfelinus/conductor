@@ -1,6 +1,26 @@
-generated_by: scripts/queue_missing_project_art.py
-mode: dry-run
-description: Concrete project image requests ready for generation; active retries are preserved until
-  the consumer marks them complete.
 batch:
-  entries: []
+  entries:
+  - project: shifting-desks
+    variant: icon
+    target_repo: silasfelinus/conductor
+    image_path: projects/images/shifting-desks-icon.webp
+    size: 256x256
+    status: pending
+    prompt: Square game icon of a single manila office folder with a coffee ring stain and
+      a glowing green eye peeking out from between its pages, a small brass paperclip on top,
+      mid-century industrial-safety flat illustration, manila, carbon blue and safety orange,
+      halftone grain, bold centered silhouette for small sizes, every surface bare and unmarked
+    engine: krea2
+  - project: shifting-desks
+    variant: card
+    target_repo: silasfelinus/conductor
+    image_path: projects/images/shifting-desks-card.webp
+    size: 512x768
+    status: pending
+    prompt: Portrait key art of a lone new hire in a beige suit standing at the start of an
+      endless cubicle maze arranged like giant illustrated playing cards, a seven-foot cockroach
+      in a cardigan, a plush teddy bear with a glowing belly hatch and a cheerful round speaker
+      grille watching from above, pneumatic tubes and silver ducts overhead, mid-century corporate
+      industrial-safety flat illustration, manila, oxblood, fluorescent green and carbon blue,
+      halftone grain, 2:3 portrait, calm title-safe area, every surface bare and unmarked
+    engine: krea2

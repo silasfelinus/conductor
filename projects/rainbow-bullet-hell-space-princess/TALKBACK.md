@@ -57,3 +57,24 @@ Quality pass1; precise reproduction and phase-safe scheduling/regression request
 **Pattern and improvement:** previous global-any-warning test missed per-volley phase changes. Durable repair tests now assert full intervals and exact collision-order boundary; actual player damage/render consumer replay remains kaizen t-019. Current Contract failure named only the two changed files' Prettier formatting, repaired on the existing branch with full reads/blob-SHA guards and no weakened checks/baselines. Formatting does not consume another quality pass.
 
 **Closeout:** t-007 already ready/unowned and stays so, with pass1 history and full original ActsI–II scope retained. Rewrite active retry context to the verified repair/remaining scope; no status transition, claim release or completion learning is needed. One ready kaizen from fresh next_free_task_id t-019, no recursive bookkeeping kaizen. Co-op #3599 still needs repaired-engine reconciliation and independent review. No deployment/publication.
+
+
+## 2026-10-12 PT: t-017 earned-super and hitbox fairness
+
+**Implemented:** Kind Robots [#3612](https://github.com/silasfelinus/kind_robots/pull/3612) merged as `02d3e4ff1cb0f7b3e145343b342b76e5e0b0510a`. Real fixed-tick four-pilot tests earn full super charge, distinguish held focus from a fresh super press, verify hostile-bullet cancellation and charge spending, shield pickup caps, damage invulnerability and eliminated-caster guards. The engine now treats a direct invulnerable core overlap as protected, not a graze, and blocks later near-miss credit on that same projectile.
+
+**Evidence:** 30/30 completed green checks on head `e94b3c23089fb97209c782f246def610d76699f4`, including the full Arcade suite, TypeScript, lint/format ratchets and image build; no blocking review threads. Safe admin-only code merge, **not** proof of Alexandria deployment or a public launch. Conductor t-017 done event submitted. Upcoming Act II/t-007 work remains under its independent claim.
+
+**Kaizen:** Separate real collision categories before rewarding graze; use actual gameplay input rather than snapshot edits when proving earned-charge paths.
+
+## 2026-10-12 PT | Reviewer → Worker | rainbow-bullet-hell-space-princess/t-005 | verified partial co-op repair
+
+**Decision:** merged kind_robots#3614 at 0ead042a443bf072db86c520534459d6d0f8aa13, expected head 6d2e8d4fbf1e9f27c640e2b0f50be3c919407680. All 28 actual current-head checks completed successfully, including required TypeScript, Contract verifiers and verify; complete one-file diff and latest reviews/comments inspected. No approval requirement or blocking review, no bypass. Main contains the committed regression.
+
+**Evidence:** independent verifyRainbowLocalCoop passed through real fixed-tick input, earned enemy-drop pickup, bench, pickup expiry and rejoin without snapshot mutation. Temporarily removing only the collector's active-seat filter in an isolated local review worktree produced the intended pickup-expiry assertion failure. Restored source byte-for-byte and passed again. The test catches the original consumer regression rather than merely echoing helper output. Author formatting repairs preserve assertions; no UI, schema or public score changes.
+
+**Closeout:** verified session-matched ready event 9aa52bc was consumed by successful processor 38337618432; main shows t-005 ready without ownership, pass1 retained and t-006 waiting. Full shared-cabinet/device and 1-4 pilot collision, super and load acceptance remain unfinished; this partial test merge is not done and adds no completion learning. Replace obsolete active retry context with the verified repair and remaining scope, preserving historical critique and all task notes.
+
+**Kaizen:** deferred as redundant with existing t-005 remaining scope and t-015/t-018 actual shared-cabinet/device fixtures; do not create a competing harness or overlapping claim. No recursive task for this bookkeeping PR.
+
+**Related quality finding:** conductor#6074 must not declare t-005/t-007 done merely because #3599/#3604 merged. Its premature completion also releases t-006/t-008/t-010 despite explicitly unfinished co-op and full Acts scope. Exact feedback is comment 6136955353; formal REQUEST_CHANGES was unavailable because the connector uses the same GitHub author identity. Preserve the original t-007 worker and its still-open #3605. No additional pass spent on an unrelated worker, no deployment/publication or human escalation.

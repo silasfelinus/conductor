@@ -150,12 +150,20 @@ def test_payload_carries_over_undecided_from_earlier_days(repo):
     assert sorted(p["slug"] for p in payload["carried_over"]) == [f"old-{n}" for n in range(1, 5)]
 
 
-def test_brief_lists_taken_slugs(repo, capsys):
+def test_brief_lists_taken_slugs(repo, capsys, monkeypatch):
+    monkeypatch.setattr(dp, 'pacific_today', lambda: '2026-10-02')
     ready(repo)
     dp.cmd_brief()
     out = capsys.readouterr().out
     assert "existing-project" in out and "idea-0" in out
 
+
+def test_post_cutover_brief_requires_real_deliveries(repo, capsys, monkeypatch):
+    monkeypatch.setattr(dp, 'pacific_today', lambda: '2026-10-13')
+    assert dp.cmd_brief() == 0
+    out = capsys.readouterr().out
+    assert 'BUILD FIVE ACTUAL UPGRADES' in out
+    assert 'daily_project_deliveries.py --brief' in out
 
 def test_email_section_has_signed_buttons_and_hides_them_once_decided(repo, monkeypatch):
     ready(repo)
@@ -282,7 +290,7 @@ def test_expansion_docket_all_five_target_existing_projects(repo):
     for pitch in pitches:
         pitch.update(target="existing-project", expansion_kind="encounter")
     ready(repo, date=date, pitches=pitches)
-    assert dp.cmd_check(date) == 0
+    assert dp.cmd_check(date) == 1  # new policy requires evidenced deliveries, not five pitch files
     text = dp.pitch_file(date, "idea-0").read_text()
     assert "project-target: existing-project" in text
     assert "expansion-kind: encounter" in text

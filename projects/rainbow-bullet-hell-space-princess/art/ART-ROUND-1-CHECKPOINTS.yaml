@@ -1,0 +1,396 @@
+# Rainbow Space Princess art round 1: Illustrious checkpoint bake-off (t-020, 2026-10-12 PT).
+# Silas, 2026-10-12 PT: "we should decide on the checkpoint before anything substantial. Illustrious checkpoints
+# have been great for this kind of work in the past." Five Illustrious-family checkpoints already installed on the
+# render box x nine FRONT-END subjects (title key art, the four pilot-select portraits, Lilt-7's comms bust, one
+# player ship, one enemy, one stage plate) = 45 private ArtJobs. Every lane gets the SAME tag prompt, prefix, suffix,
+# negative, seed, sampler (euler_ancestral), steps (28) and CFG (5) -- a setting inside every candidate's
+# author-recommended range -- so only the checkpoint varies. The winner becomes the house lane for every later round.
+# Canon: CAST-BIBLE.md, WORLD-BIBLE.md, ART-DIRECTION.md, COMMS-AND-ENDINGS-BIBLE.md. Nothing here is a finished
+# asset: ArtImages are inspiration until cropped, keyed and tested in the real cabinet (ART-DIRECTION.md).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: 1
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+lanes:
+- key: illustrij
+  label: Illustrij v2.1
+  engine: comfy
+  checkpoint: Illustrious/illustrij_v21.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, highres
+  suffix: pastel rainbow palette, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy
+    shadows, iridescent glow, soft bloom, painterly, lavish detail, cinematic lighting
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: ntrmix
+  label: NTR MIX Illustrious-XL xii
+  engine: comfy
+  checkpoint: Illustrious/ntrMIXIllustriousXL_xii.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, highres
+  suffix: pastel rainbow palette, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy
+    shadows, iridescent glow, soft bloom, painterly, lavish detail, cinematic lighting
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: arthemy
+  label: Arthemy Western Art v3.0 (comic-creator house, without its gritty western prefix)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, highres
+  suffix: pastel rainbow palette, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy
+    shadows, iridescent glow, soft bloom, painterly, lavish detail, cinematic lighting
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: nova-comic
+  label: Nova Comic XL v2.0
+  engine: comfy
+  checkpoint: Illustrious/novaComicXL_v20.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, highres
+  suffix: pastel rainbow palette, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy
+    shadows, iridescent glow, soft bloom, painterly, lavish detail, cinematic lighting
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: molkeun
+  label: Mol_Keun Mix DeepCobalt V2
+  engine: comfy
+  checkpoint: Illustrious/molKeunMix_deepCobaltV2.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, highres
+  suffix: pastel rainbow palette, candy pink, lilac, powder cyan, butter yellow, opalescent turquoise, deep navy
+    shadows, iridescent glow, soft bloom, painterly, lavish detail, cinematic lighting
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: r1-title-keyart
+  ticket: FE-TITLE
+  title: title screen key art, four princess ships in formation
+  size: 1344x768
+  seed: 410001
+  negative: humans, person, 1girl, 1boy, pilot visible, nsfw, nude, suggestive, lowres, worst quality, low quality,
+    bad anatomy, deformed, watermark, signature, text, logo, letters, username, blurry, jpeg artifacts, grainy,
+    muddy colors, grey, gritty, horror
+  prompt_prose: Four princess starfighters fly in formation across a pastel cosmic ocean nebula, trailing rainbow
+    light.
+  prompt_tags: scenery, four starfighters flying in formation, pink swallowtail starfighter with four swept petal
+    wings, cyan needle starfighter with one long fin, butter yellow round disc starfighter with twin rings, lilac
+    three-pointed arrowhead starfighter, rainbow light trails, glowing pink bullets, bullet hell, cosmic ocean,
+    pink and lilac nebula clouds like waves, distant giant mechanical whale silhouette, robotic jellyfish ships,
+    stars, dynamic angle, wide shot, epic key visual, side-scrolling shooter, sense of speed
+  jobs:
+    illustrij: 37887
+    ntrmix: 37888
+    arthemy: 37889
+    nova-comic: 37890
+    molkeun: 37891
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    ntrmix:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    molkeun:
+      status: PENDING
+      art_image_id: null
+- key: r1-pilot-maribel
+  ticket: FE-SELECT-P1
+  title: pilot select portrait P1 Maribel Rowan (pink, Petal Wing)
+  size: 832x1216
+  seed: 410002
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, midriff, underboob, lowres, worst quality, low
+    quality, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, deformed, watermark, signature,
+    text, logo, username, blurry, jpeg artifacts, child, loli, chibi, multiple girls, 2girls, multiple views
+  prompt_prose: Princess Maribel Rowan, a short wiry freckled adult pilot with a cropped copper haircut, in a scuffed
+    rose-pink flight jacket.
+  prompt_tags: 1girl, solo, adult woman, petite, wiry, tomboy, very short hair, pixie cut, copper hair, auburn hair,
+    freckles, light skin, strong nose, green eyes, crooked grin, confident, rose pink utility flight jacket, asymmetrical
+    zipped high collar, rolled sleeves, old radio clipped to shoulder, small four-petal badge, navy undershirt,
+    grease smudge on hands, holding wrench, upper body, looking at viewer, starship hangar background, pink glowing
+    lights, pearl white accents
+  jobs:
+    illustrij: 37892
+    ntrmix: 37893
+    arthemy: 37894
+    nova-comic: 37895
+    molkeun: 37896
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    ntrmix:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    molkeun:
+      status: PENDING
+      art_image_id: null
+- key: r1-pilot-azure
+  ticket: FE-SELECT-P2
+  title: pilot select portrait P2 Azure Lin (cyan, Prism Lance)
+  size: 832x1216
+  seed: 410003
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, midriff, underboob, lowres, worst quality, low
+    quality, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, deformed, watermark, signature,
+    text, logo, username, blurry, jpeg artifacts, child, loli, chibi, multiple girls, 2girls, multiple views
+  prompt_prose: Princess Azure Lin, a tall adult Vietnamese-heritage star navigator with a long black braid, in
+    a powder-cyan geometric flight coat.
+  prompt_tags: 1girl, solo, mature female, tall, long legs, slender, east asian, vietnamese, black hair, long braid,
+    side undercut, dark eyes, calm, dry smile, elegant posture, powder cyan flight coat, asymmetrical coat, geometric
+    seams, prism instrument on collar, dark gloves, constellation lines drawn on gloves, holding glowing star chart,
+    upper body, looking at viewer, cockpit, holographic star map background, cyan glow
+  jobs:
+    illustrij: 37897
+    ntrmix: 37898
+    arthemy: 37899
+    nova-comic: 37900
+    molkeun: 37901
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    ntrmix:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    molkeun:
+      status: PENDING
+      art_image_id: null
+- key: r1-pilot-solenne
+  ticket: FE-SELECT-P3
+  title: pilot select portrait P3 Solenne Adisa (gold, Halo Fin)
+  size: 832x1216
+  seed: 410004
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, midriff, underboob, lowres, worst quality, low
+    quality, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, deformed, watermark, signature,
+    text, logo, username, blurry, jpeg artifacts, child, loli, chibi, multiple girls, 2girls, multiple views, pale
+    skin, light skin, thin arms, skinny
+  prompt_prose: Princess Solenne Adisa, a powerfully muscular adult Black pilot with deep-brown skin and hair in
+    twists, in a butter-yellow and gold flight suit.
+  prompt_tags: 1girl, solo, mature female, dark-skinned female, very dark skin, muscular female, broad shoulders,
+    toned arms, strong forearms, black hair, two-strand twists, hair up, ear cuff, brown eyes, warm smile, commanding,
+    butter yellow and antique gold flight suit, sleeveless, reinforced shoulder plates, circular ring insignia,
+    holding notebook with music notes, upper body, looking at viewer, mothership bridge background, golden ring
+    lights
+  jobs:
+    illustrij: 37902
+    ntrmix: 37903
+    arthemy: 37904
+    nova-comic: 37905
+    molkeun: 37906
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    ntrmix:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    molkeun:
+      status: PENDING
+      art_image_id: null
+- key: r1-pilot-vivi
+  ticket: FE-SELECT-P4
+  title: pilot select portrait P4 Vivi Reyes (lilac, Comet Crown)
+  size: 832x1216
+  seed: 410005
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, midriff, underboob, large breasts, lowres, worst
+    quality, low quality, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, deformed, watermark,
+    signature, text, logo, username, blurry, jpeg artifacts, child, loli, chibi, multiple girls, 2girls, multiple
+    views, skinny, thin waist
+  prompt_prose: Princess Vivi Reyes, a curvy adult Mexican-heritage punk pilot with a shaved side and lilac-streaked
+    dark hair, in a patched lilac armored jacket.
+  prompt_tags: 1girl, solo, mature female, plump, curvy, wide hips, tan skin, latina, undercut, side shave, dark
+    wavy hair, streaked hair, purple streaks, coral streaks, eyebrow piercing, ear piercings, painted nails, punk,
+    expressive eyebrows, mischievous grin, lilac armored jacket, sewn patches, comet pins, fully clothed, holding
+    music sampler, upper body, looking at viewer, starship hangar background, lilac neon lights
+  jobs:
+    illustrij: 37907
+    ntrmix: 37908
+    arthemy: 37909
+    nova-comic: 37910
+    molkeun: 37911
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    ntrmix:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    molkeun:
+      status: PENDING
+      art_image_id: null
+- key: r1-lilt-comms
+  ticket: FE-COMMS-LILT
+  title: Lilt-7 comms hologram bust (mothership liaison)
+  size: 832x1216
+  seed: 410006
+  negative: nsfw, nude, suggestive, lowres, worst quality, low quality, bad anatomy, deformed, watermark, signature,
+    text, logo, username, blurry, jpeg artifacts, child, chibi, multiple views, horror, creepy, mouthless
+  prompt_prose: Lilt-7, an androgynous pearl-glass synthetic liaison with gold eyes, cyan filaments and a crack
+    across one cheek, on a comms hologram.
+  prompt_tags: solo, androgynous, android, synthetic humanoid, translucent pearl glass skin, glowing cyan filaments
+    under skin, golden eyes, small crack across one cheek, short sleek iridescent hair, calm deadpan expression,
+    slight smile, high collar, mothership uniform, hologram, scanlines, comms screen, bust portrait, looking at
+    viewer, mothership command bridge background, soft cyan and gold light
+  jobs:
+    illustrij: 37912
+    ntrmix: 37913
+    arthemy: 37914
+    nova-comic: 37915
+    molkeun: 37916
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    ntrmix:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    molkeun:
+      status: PENDING
+      art_image_id: null
+- key: r1-ship-petal-wing
+  ticket: FE-SHIP-P1
+  title: P1 Petal Wing player ship, side view asset
+  size: 1216x832
+  seed: 410007
+  negative: humans, person, 1girl, 1boy, pilot visible, nsfw, nude, suggestive, lowres, worst quality, low quality,
+    bad anatomy, deformed, watermark, signature, text, logo, letters, username, blurry, jpeg artifacts, grainy,
+    muddy colors, grey, gritty, horror
+  prompt_prose: The Petal Wing, a rose-gold swallowtail starfighter with four swept petal blades, side view on a
+    plain background.
+  prompt_tags: mecha, spacecraft, starfighter, side view, profile, sleek rose gold and pink hull, four swept swallowtail
+    wings shaped like petals, pearl white accents, glowing pink thrusters, cockpit canopy, iridescent metal, concept
+    art, game asset, single object, centered, full shot, simple background, dark navy background
+  jobs:
+    illustrij: 37917
+    ntrmix: 37918
+    arthemy: 37919
+    nova-comic: 37920
+    molkeun: 37921
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    ntrmix:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    molkeun:
+      status: PENDING
+      art_image_id: null
+- key: r1-enemy-moonjelly
+  ticket: FE-ENEMY-E05
+  title: E05 Moonjelly Lantern enemy craft, side view asset
+  size: 1216x832
+  seed: 410008
+  negative: humans, person, 1girl, 1boy, pilot visible, nsfw, nude, suggestive, lowres, worst quality, low quality,
+    bad anatomy, deformed, watermark, signature, text, logo, letters, username, blurry, jpeg artifacts, grainy,
+    muddy colors, grey, gritty, horror
+  prompt_prose: A Moonjelly Lantern, a robotic jellyfish warship with a translucent glass bell and electric tentacle
+    antennae, side view on a plain background.
+  prompt_tags: mecha, robotic jellyfish spaceship, translucent glass bell hull, glowing core inside bell, electric
+    tentacle antennae, lilac and cyan bioluminescence, iridescent metal ribs, futuristic, enemy ship, side view,
+    concept art, game asset, single object, centered, full shot, simple background, dark navy background
+  jobs:
+    illustrij: 37922
+    ntrmix: 37923
+    arthemy: 37924
+    nova-comic: 37925
+    molkeun: 37926
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    ntrmix:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    molkeun:
+      status: PENDING
+      art_image_id: null
+- key: r1-stage-pinkwake
+  ticket: FE-STAGE-S01
+  title: S01 Pinkwake Estuary far background plate
+  size: 1344x768
+  seed: 410009
+  negative: humans, person, 1girl, 1boy, pilot visible, nsfw, nude, suggestive, lowres, worst quality, low quality,
+    bad anatomy, deformed, watermark, signature, text, logo, letters, username, blurry, jpeg artifacts, grainy,
+    muddy colors, grey, gritty, horror
+  prompt_prose: The Pinkwake Estuary, a pink cloud sea in space with floating glass buoys, a pearly shoal and coral.
+  prompt_tags: scenery, outer space, pink cloud sea, nebula clouds like ocean waves, floating glass buoys, pearly
+    fish shoal in the distance, coral reef silhouettes, stars, horizon, wide shot, dreamy, calm, side-scrolling
+    game background, parallax layer, open sky in center
+  jobs:
+    illustrij: 37927
+    ntrmix: 37928
+    arthemy: 37929
+    nova-comic: 37930
+    molkeun: 37931
+  art:
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    ntrmix:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    nova-comic:
+      status: PENDING
+      art_image_id: null
+    molkeun:
+      status: PENDING
+      art_image_id: null

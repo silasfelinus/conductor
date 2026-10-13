@@ -1,0 +1,409 @@
+# Shifting Desks: darkly comic image-card office-dystopia adventure (Silas, 2026-10-12 PT).
+# Modeled on zuzu-shifting-lands (card board, authored location pools, flip, seeded draw)
+# and zuzu-gamebook (authored depth, character sheet, endings), in an original non-Zuzu world.
+# Creative deliverables: DESIGN-BRIEF.md (engine, rules, guardrails), PITCHES.md (directions
+# for Silas), encounters/ (schema, validator, ORIENTATION-12.json first department pack).
+# Runtime: silasfelinus/kind_robots, admin preview /admin/shifting-desks first.
+project: shifting-desks
+kind: software
+autonomous: true
+goal: >-
+  A darkly comic, illustrated card adventure at /play/shifting-desks. The player
+  navigates a paranoid, ever-reorganizing office hellscape across five departments
+  of three locations each (pools of fully authored illustrated encounter cards) plus
+  a boss review per department. Every choice costs something (the no-clean-wins
+  contract) across Composure, Clearance, Suspicion, Successors and Forms, with
+  secret-society and mutation cards, deathtraps, psych tests, giant cockroaches,
+  nuclear-capable toys, callbacks to classic works and at least ten distinct
+  endings. Deterministic, seeded and saveable, with no LLM at play time. Finished only
+  after balance simulation, accessible phone/tablet/desktop review and Silas's
+  verdict that it is genuinely funny and fun.
+notes_from_silas: |
+  2026-10-12 PT: "I have a new conductor project. It should be modeled after the Zuzu
+  shifting lands and Zuzu gamebook, ideally picking the best ideas from each. My
+  inspiration is bureaucracy games like the paranoia rpg (especially Paranoia, my first
+  ever rpg, it holds such a dear space in my heart), the text adventures Bureaucracy and
+  Hitchhikers Guide to the Galaxy, and movies like Brazil, Office Space, games like papers
+  please, fallout (especially the vault tests), portal, and other dystopian office
+  adventures.
+
+  This will be a darkly comic image card based experiential game system, where the user
+  must navigate a complicated paranoid office hellscape.
+
+  And...that's where my pitch starts, but I want some more pitches on where to go from
+  there. In any case, I expect the output layout to use the shifting sands format, the
+  user will be given a series of morally questionable choices with no right answer,
+  forced to impossibly difficult sacrifices, and unexpected moments of comedy. Giant
+  cockroaches, deathtraps, weird psychological tests, nuclear bomb capable children's
+  toys, mutant powers, secret organizations, and callbacks to classic works optional but
+  appreciated"
+
+  2026-10-12 PT, answering t-002's choices: spine = "Combination of synthesis with vault
+  test facility. I liked them best"; party mode = "Not at all"; emphasis = "Secret
+  societies & traitors, Paperwork & psych tests". Title left unanswered, so the working
+  title "Shifting Desks" stands. Applied in DESIGN-BRIEF.md "Decided world" and PITCHES.md
+  "Decision".
+
+  Agent mandate (AGENTS.md defaults for new projects): scope gate t-002 is SOFT and runs
+  in parallel; build immediately. Internal generated art is pre-approved. Public /play,
+  publishing, spend, secrets and production deploys are NOT pre-approved. Homage, never
+  copied IP (DESIGN-BRIEF "IP guardrails"). PG-13 darkly comic register (DESIGN-BRIEF
+  "Tone guardrails").
+milestones:
+  - id: m1
+    title: "SHAPE — pitches, design brief, card contract, first department pack, world bible"
+    weight: 15
+    status: in-progress
+  - id: m2
+    title: "ENGINE — admin preview, seeded reducer, meters, Successors, decks, save"
+    weight: 25
+    status: not-started
+  - id: m3
+    title: "CONTENT & ART — five departments, five reviews, endings, illustrated card faces"
+    weight: 35
+    status: not-started
+  - id: m4
+    title: "EXPERIENCE — comic timing, journal, personnel file, accessibility"
+    weight: 15
+    status: not-started
+  - id: m5
+    title: "POLISH & SHIP — balance, device verdict, gated release, expansions"
+    weight: 10
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Design brief, pitch menu and project scaffold"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-13T03:00:00Z'
+    note: >-
+      Silas-directed session 2026-10-12 PT. Scaffolded via intake.py; wrote
+      DESIGN-BRIEF.md (best-of-both table from Shifting Lands + Gamebook, no-clean-wins
+      rule, five meters, Rules v1 "File, Stamp, Survive", Successors, Society and Mutation
+      cards, recommended world Consolidated Wellness & Defense with PAL, five departments,
+      ten endings, art direction, tone and IP guardrails) and PITCHES.md (seven directions
+      A-G, six expansions, a recommended synthesis, title options).
+  - id: t-002
+    milestone: m1
+    title: "Pick the spine, title and party-mode scope from PITCHES.md"
+    status: done
+    approved_by_human: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_reason: creative-approval
+    updated: '2026-10-13T03:30:00Z'
+    note: >-
+      DECIDED by Silas in session, 2026-10-12 PT. Spine: "Combination of synthesis with
+      vault test facility. I liked them best" (the restructuring campus + Paranoia social
+      layer + Toy Division + window shifts + Kind Rewrite ending, fused with Pitch B: the
+      campus is the surface of a sealed test vault, every department is a level deeper,
+      PAL is HR and test proctor, and hidden Test Results grade the player). Party mode:
+      "Not at all" (removed from the roadmap). Emphasis: "Secret societies & traitors" and
+      "Paperwork & psych tests" (validator now requires at least half of each pack's cards
+      to carry conspiracy, psych-test or paperwork tags). Title: no answer, working title
+      "Shifting Desks" stands until Silas renames it.
+  - id: t-003
+    milestone: m1
+    title: "Encounter-pack contract, validator and Orientation department pack"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-13T03:00:00Z'
+    note: >-
+      encounters/ENCOUNTER-PACK.schema.json (fork of Shifting Lands v1: five meters, cost
+      per choice, optional roll, requires gates, tags, callback, boss review), validate_pack.py
+      (CI authority; enforces shape, positive-only art prompts, flag and outcome
+      reachability and NO CLEAN WINS), tests/test_shifting_desks_encounters.py (8 tests),
+      and ORIENTATION-12.json: 3 locations x 4 cards (4 good / 4 bad / 4 mixed), 36 choices
+      and the 5-route "Your 90-Day Review, Today at 3" boss with 6 department outcomes.
+      All art is design-only.
+  - id: t-004
+    milestone: m1
+    title: "World bible: the Company, PAL, departments, recurring cast, societies, mutations, callback ledger"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Write projects/shifting-desks/WORLD-BIBLE.md against the DECIDED world (t-002 and
+      DESIGN-BRIEF "Decided world": the campus is the surface of a sealed test vault, each
+      department one level deeper, PAL as HR and test proctor, hidden Test Results axes).
+      Secret societies/traitors and paperwork/psych tests are the lead flavors, so give
+      them the most depth. Cover Consolidated Wellness & Defense and its
+      euphemism-speak; PAL's voice rules (cheerful, concerned, never cruel on purpose);
+      all five departments with 3 locations each and a boss review sketch; the recurring
+      cast (Dale, Pip, Marguerite, Gus and the Roach Union, Dr. Halvorsen, the Supervisor,
+      the Founder, the Successor line); 6 Secret Society cards (objective, favor, betrayal
+      condition); 8 Mutation cards (power, use window, witnessed cost); 5 Job Title cards
+      (6-point skill spread + perk); a callback ledger listing every homage with its
+      source and the "allusion, not quotation" boundary; and the ten endings with
+      unlock conditions. Keep the IP and tone guardrails from DESIGN-BRIEF.md.
+  - id: t-005
+    milestone: m1
+    title: "Art direction sheet, card backs and three style-test card faces"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Write projects/shifting-desks/ART-DIRECTION.md (mid-century safety-poster x
+      retro-futurist beige office, limited palette, halftone, positive-only prompts ending
+      "every surface bare and unmarked"). Queue internal ArtJobs for: the encounter card
+      back (manila folder, coffee ring, stamp silhouette), the boss/review card back
+      (oxblood folder, wax seal), and three Orientation style-test faces (Gus Shop Steward,
+      Something Ticking in the Toner, Trust Fall Over the Shredder). Record prompt, model,
+      seed, ArtJob and ArtImage IDs in art/ROUND-1.yaml. Never list art as delivered before
+      its URL loads. Generated internal art is pre-approved.
+  - id: t-006
+    milestone: m2
+    title: "Admin preview route, admin nav tab and reused card board shell"
+    status: ready
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      kind_robots: /admin/shifting-desks with requiredRole ADMIN and a discoverable Admin
+      nav tab. Reuse Shifting Lands' stateless board grid, kr-card-flip reader and dice
+      result components; do not mount the Shifting Lands or Gamebook pages or share their
+      stores. Ship a static Orientation board rendering the 12 cards face-down/face-up from
+      a snapshot of ORIENTATION-12.json with provenance. No public /play route or menu
+      listing (hard gate t-020).
+  - id: t-007
+    milestone: m2
+    title: "Seeded run reducer: meters, Successors, Suspicion, Clearance gates, save v1"
+    status: ready
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      kind_robots utils/shiftingDesks/ pure reducer + stores/shiftingDesksStore.ts (Pinia 3
+      thin wrapper). Seeded weighted draw per location (persisted, no refresh reroll);
+      choice resolution with cost, 2d6 + skill + Form boost vs 7/9/11, natural 12
+      Commendation / natural 2 Incident hooks; the five meters with limits from
+      DESIGN-BRIEF; Successor arrival flow (keep flags and Clearance, halve Suspicion
+      rounded up, reset Composure, drop carried items); Suspicion 10 triggers the
+      disciplinary card; requires gates with explained disabled choices; boss department
+      outcomes; Restructuring map effects with written reasons; browser-local versioned
+      save. Unit tests for every rule plus a seeded replay test.
+  - id: t-008
+    milestone: m2
+    title: "Job Title, Secret Society and Mutation decks in the engine"
+    status: waiting
+    depends_on:
+      - t-004
+      - t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Deal a face-down Society card and a Mutation card at run start; Job Title select sets
+      the skill spread and perk. Society objectives and betrayal conditions evaluate
+      against run flags; the Mutation is once per department, with +2 Suspicion on
+      witnessed cards. Never reveal the player's Society to other cards. Tests for dealing,
+      seeding, objective scoring and witnessed costs.
+  - id: t-009
+    milestone: m2
+    title: "Playable Orientation slice end to end at the admin route"
+    status: waiting
+    depends_on:
+      - t-006
+      - t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      MVP from DESIGN-BRIEF: Job Title select, the 12 Orientation cards drawn 3-per-run
+      (one per location), choice cards showing intent, risk, skill and target, dice roll,
+      success/failure prose and effects, journal, Successor deaths, the 90-Day Review with
+      its 5 routes, and at least 3 reachable department outcomes. Placeholder art clearly
+      labeled pending. Screenshots at 375/768/1440 in the PR.
+  - id: t-010
+    milestone: m3
+    title: "Department 2 pack: Records & Forms (Brazil / Bureaucracy)"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      encounters/RECORDS-12.json: Pneumatic Tube Exchange, The Sub-Archive, Window 9
+      (Papers-Please-style applicant cards are a later engine feature, t-016; author this
+      location as ordinary cards now). 3 x 4 cards, balanced polarity, boss "The Form That
+      Requires Itself" with at least 3 routes. Must pass validate_pack.py. Pays off
+      forged-dale, halvorsen-envelope and the Stapler Liberation Front contact from Orientation.
+  - id: t-011
+    milestone: m3
+    title: "Department 3 pack: Product Safety, Toy Division (Snuggle Sentinel)"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      encounters/TOY-DIVISION-12.json: Concept Lab, Focus Group Room, Proving Grounds;
+      boss "Snuggle Sentinel's Launch Party". Nuclear-capable toys are played for
+      corporate cheer; nothing ever detonates near a child (tone guardrail). Pays off
+      bear-imprinted, defused-mk0 and mailed-the-bear-upstairs. Must pass validate_pack.py.
+  - id: t-012
+    milestone: m3
+    title: "Department 4 pack: Wellness & Testing (vault tests, psych tests, mutation suite)"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      encounters/WELLNESS-12.json (Level -3, the Vault proper and the heart of the decided
+      vault-test spine): Nutrition Studies, Cognitive Testing Chamber, the Mutation Suite;
+      boss "The Final Wellness Exam" (the test is whether you will administer the test).
+      Heaviest psych-test density in the game, and where hidden Test Results are partly
+      revealed. Original facility, voice and framing, with no Aperture or Vault-Tec
+      likeness. Must pass validate_pack.py.
+  - id: t-013
+    milestone: m3
+    title: "Department 5 pack: Sub-Level Zero, The Board and the Kind Rewrite true ending"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      encounters/SUBLEVEL-ZERO-12.json (the executives live at the very bottom of the
+      vault): Boardroom Antechamber, the Founder's Office, Server
+      Room Zero; boss "The Board" with routes to Society Coup, Roach Union General Strike,
+      Whistleblower, Promoted to Management and the hidden Kind Rewrite (gain admin access,
+      rewrite PAL to remember people). Society objectives come due here. Must pass
+      validate_pack.py.
+  - id: t-014
+    milestone: m3
+    title: "Endings ledger and cross-department flag map"
+    status: waiting
+    depends_on:
+      - t-010
+      - t-011
+      - t-012
+      - t-013
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      encounters/ENDINGS.json + a validator extension: at least ten distinct endings with
+      authored epilogue cards and unlock conditions; a static check that every ending is
+      reachable from some seeded route and that every flag a later pack reads is granted
+      by an earlier pack.
+  - id: t-015
+    milestone: m3
+    title: "Illustrate the 13 Orientation card faces (12 encounters + review)"
+    status: waiting
+    depends_on: t-005
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Queue internal ArtJobs from each card's art.brief once t-005's style test is
+      accepted internally. Verify delivered URLs, then set art.status to approved-ArtImage
+      and art_ref to the verified ArtImage id in ORIENTATION-12.json. Ledger in
+      art/ROUND-2.yaml.
+  - id: t-016
+    milestone: m4
+    title: "Window shifts: the Papers-Please-style desk card type"
+    status: waiting
+    depends_on: t-009
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Pitch D as a recurring card type: inspect 3-5 applicant cards against the day's rule
+      memo, stamp APPROVED/DENIED, with consequences written as flags that later cards read.
+      Schema v2 extension + validator + reducer + UI. Original country-free office setting
+      and original UI.
+  - id: t-017
+    milestone: m4
+    title: "Comic timing: memo ticker, stamp animation, Successor arrival and personnel file export"
+    status: waiting
+    depends_on: t-009
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Scrolling PA/memo crawl reacting to flags; stamp and flip animations with a
+      reduced-motion path; Successor arrival card with an orientation line; an end-of-run
+      Personnel File (cause of each termination, societies betrayed, forms filed) as a
+      local printable/downloadable card. No external sharing, which is a publish gate.
+  - id: t-018
+    milestone: m4
+    title: "Accessibility and device pass at 375 / 768 / 1440"
+    status: waiting
+    depends_on: t-009
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Keyboard and screen reader through a full department, roll results announced
+      immediately, developer notes never spoken, disabled choices explained, focus return
+      after flip, no hover-only actions, no horizontal overflow. Screenshots in the PR.
+  - id: t-019
+    milestone: m5
+    title: "Seeded balance simulation across all five departments"
+    status: waiting
+    depends_on:
+      - t-008
+      - t-014
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Simulate thousands of seeded runs with several policy bots (complier, rebel, coward,
+      saint). Report the Successor death rate per department, ending distribution,
+      meter-limit hits and dominant choices. Tune targets and costs so no policy wins
+      clean and every ending appears. Commit the report and tuned packs.
+  - id: t-020
+    milestone: m5
+    title: "Public /play/shifting-desks release decision"
+    status: waiting
+    depends_on:
+      - t-018
+      - t-019
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    note: >-
+      Hard gate. Publishing the public route, any menu or Arcade listing, and Silas's
+      verdict that it is genuinely funny and fun. Agents prepare the release PR and
+      device screenshots, then stop at needs-human.
+  - id: t-021
+    milestone: m5
+    title: "Pitch: Department of Posthumous Affairs expansion / secret ending"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Write an expansion pitch in pitches/ (AGENTS.md pitch template) for Pitch E, the
+      afterlife bureaucracy, as the secret ending reached from Position Eliminated and as
+      a possible later expansion. Party mode was rejected by Silas on 2026-10-12 PT
+      ("Not at all"); do not pitch it again.
+  - id: t-022
+    milestone: m2
+    title: "Hidden Test Results: Obedience, Empathy, Ingenuity and Spite grading"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      The vault-test half of the decided spine. Extend the pack schema/validator with an
+      optional per-outcome grades object (obedience, empathy, ingenuity, spite; small
+      integers), backfill ORIENTATION-12.json, and add reducer support. Grades stay hidden
+      during play, are partly revealed at each department review ("PAL has prepared your
+      interim results"), gate some boss routes, and set the ending's flavor text in the
+      Personnel File. Tests for accumulation, gating and that no grade is shown early.

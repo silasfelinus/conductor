@@ -365,6 +365,72 @@ def _pitch_row(pitch: dict[str, Any], links_for, fallback_url: str) -> str:
     )
 
 
+def daily_deliveries_section(daily: dict[str, Any] | None) -> str:
+    """Show implementation evidence FIRST; review decisions come afterward."""
+    if not isinstance(daily, dict):
+        return ""
+    rows = daily.get("entries") or []
+    if not rows:
+        return (
+            '<div style="background:#fff7ed;border:1px solid #fdba74;padding:12px;border-radius:10px">'
+            '<h2 style="margin:0">🛠️ Five daily project upgrades</h2>'
+            '<p>No five-entry verified delivery docket was submitted for this Pacific day. '
+            'No proposed additions are being presented as shipped.</p></div>'
+        )
+    import pitch_links
+    html = []
+    for row in rows:
+        state = str(row.get("status") or "in-progress")
+        art = row.get("art") or {}
+        title = esc(row.get("title"))
+        summary = esc(row.get("summary"))
+        target = esc(row.get("target"))
+        verification = esc(row.get("verification"))
+        link = str(row.get("pull_request") or "")
+        checks = str(row.get("checks_url") or "")
+        preview = str(row.get("preview_url") or "")
+        extra = (
+            f'<a href="{esc(preview)}">🎮 Play/view change</a> · ' if preview.startswith("https://") else ""
+        )
+        extra += f'<a href="{esc(link)}">PR</a> · <a href="{esc(checks)}">CI evidence</a>'
+        if art.get("url") and str(art["url"]).startswith("https://"):
+            extra += f' · <a href="{esc(art["url"])}">🎨 Finished artwork</a>'
+        elif art.get("status") == "queued":
+            extra += f' · Art queued: {esc(str(art.get("job_ids") or []))}'
+        else:
+            extra += f' · Art: {esc(art.get("status") or "unavailable")}'
+        buttons = ""
+        if row.get("decision") == "pending":
+            links = pitch_links.links_for(str(row.get("stem") or ""))
+            if links:
+                buttons = (
+                    '<p style="margin:8px 0">'
+                    f'{legacy._button(links["approve"], "✅ Keep", color="#15803d")} '
+                    f'{legacy._button(links["changes"], "✏️ Modify", color="#0369a1")} '
+                    f'{legacy._button(links["pass"], "↩️ Reject / request rollback", color="#64748b")}</p>'
+                )
+            else:
+                buttons = '<p>' + legacy._button(pitch_links.project_page_url(), "Review on Kind Robots") + '</p>'
+        else:
+            buttons = f'<p style="color:#64748b">Review: {esc(row.get("decision"))}</p>'
+        status = "SHIPPED (merged, passing checks)" if state == "shipped" else "IN PROGRESS (not shipped)"
+        next_step = (f'<p>Next: {esc(row["next_step"])}</p>' if state != "shipped" and row.get("next_step") else "")
+        html.append(
+            '<li style="margin:0 0 16px">'
+            f'<strong>{title}</strong> · {target} · {status}<p>{summary}</p>'
+            f'<p>Verified: {verification}</p><p>{extra}</p>{next_step}{buttons}</li>'
+        )
+    return (
+        '<div style="background:#ecfeff;border:1px solid #a5f3fc;padding:12px;border-radius:10px">'
+        '<h2 style="margin:0 0 6px">🛠️ Your five daily project upgrades</h2>'
+        '<p>These are actual PR-backed additions or clearly marked progress, not new ideas '
+        'awaiting permission. Keep, request modifications, or reject after reviewing. '
+        'A rejection creates follow-up rollback work, not an immediate destructive removal. '
+        'The separate Daily Dream continues unchanged.</p>'
+        '<ol style="padding-left:20px">' + "".join(html) + '</ol></div>'
+    )
+
+
 def daily_pitches_section(daily: dict[str, Any] | None, links_for=None, fallback_url: str = "", inbox: str | None = None) -> str:
     """Today's five pitches with signed links into the one pitch inbox, then undecided ones from earlier days."""
     if not isinstance(daily, dict) or not daily.get("pitches"):
@@ -575,7 +641,7 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     animation_html = animation_release_section(digest)
     operational_html = engine_banner(digest) + container_log_banner(digest) + review_html
     pitch_html = next_pitch_section(digest.get("next_dream_proposal"))
-    middle = animation_html + operational_html + pitch_html + daily_pitches_section(digest.get("daily_pitches"))
+    middle = animation_html + operational_html + pitch_html + daily_deliveries_section(digest.get("daily_project_deliveries")) + daily_pitches_section(digest.get("daily_pitches"))
 
     # Place health and the next text pitch directly after the previous pitch's generated output.
     # If a build failed so there is no fresh output, put them immediately after

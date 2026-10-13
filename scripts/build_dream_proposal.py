@@ -220,7 +220,7 @@ def render_markdown(p: dict[str, Any], day: str) -> str:
     anchor = "## Notes from Silas"
     if anchor not in base:
         raise ValueError("proposal template missing Notes from Silas")
-    return base.replace(anchor, "\\n".join(lines) + anchor, 1)
+    return base.replace(anchor, "\n".join(lines) + anchor, 1)
 
 
 if _WRAPPER_NAME == "__main__":

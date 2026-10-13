@@ -17688,3 +17688,26 @@ records:
   failure_category: null
   lesson: Test recovery countdown semantics explicitly (the remainder of the injury day plus full recovery
     days), and pin Prettier formatting before full CI.
+- date: '2026-10-13'
+  project: rainbow-bullet-hell-space-princess
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Never treat bullet/ship proximity as a graze until the core-hit state is classified, including
+    invulnerable contacts. Mark protected direct core overlaps in the projectile's per-pilot graze mask
+    to prevent a later, unearned exit graze. Replays must earn charge through actual input instead of
+    mutating snapshots and must assert charge spend, pickup caps and post-damage immunity explicitly.
+- date: '2026-10-13'
+  project: emperor-of-dust
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Auto-registered Nuxt components should use a basename matching their actual root template tag
+    for component-reachability CI. Test missed-deadline effects at the exact deadline boundary, save/reload
+    JSON semantics and multi-hour versus incremental simulation equivalence.
