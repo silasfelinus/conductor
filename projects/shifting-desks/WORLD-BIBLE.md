@@ -135,6 +135,8 @@ Intern (Expendable), Temp (Unremarkable), Middle Manager (Signing Authority), Ni
 | *Department of Posthumous Affairs* (secret) | be eliminated while carrying a specific flag set; the afterlife has forms too |
 | ***The Kind Rewrite*** (true ending) | reach Server Room Zero with Pip alive, Empathy as highest grade and admin access; rewrite PAL to remember people |
 
+The ledger with epilogue cards, unlock triggers and variant closing lines is [encounters/ENDINGS.json](encounters/ENDINGS.json) (t-014). The shipped unlocks are simpler than the targets above: board endings fire on the Board's routes and their gates (Obedience 6, knows-the-ducts, roach-union-member, society-backs-you, has-unlisted-reel, admin-access plus Empathy 5), and *Posthumous Affairs* fires on elimination while wearing the dead man's badge from Orientation. [encounters/FLAG-MAP.json](encounters/FLAG-MAP.json) maps every flag to where it is granted and read.
+
 ## Callback ledger
 
 Callbacks are **short original allusions, never quotations**. Each callback card sets `callback` with a note like these.
