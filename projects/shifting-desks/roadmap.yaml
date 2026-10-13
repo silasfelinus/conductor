@@ -277,7 +277,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Department 2 pack: Records & Forms (Brazil / Bureaucracy)"
-    status: claimed
+    status: done
     depends_on: t-004
     owner: worker
     passes: 0
@@ -288,9 +288,23 @@ tasks:
       location as ordinary cards now). 3 x 4 cards, balanced polarity, boss "The Form That
       Requires Itself" with at least 3 routes. Must pass validate_pack.py. Pays off
       forged-dale, halvorsen-envelope and the Stapler Liberation Front contact from Orientation.
+
+      DONE 2026-10-13 PT: encounters/RECORDS-12.json ships Pneumatic Tube Exchange, The
+      Sub-Archive and Window 9 with 4 authored cards each (12 cards, 4 good / 4 bad / 4
+      mixed, 11 of 12 tagged conspiracy, psych-test or paperwork, 3 ledger-bounded
+      callbacks), and every choice pays a cost. Nine choices are gated on Orientation flags
+      (forged-dale, halvorsen-envelope, stapler-front-contact, has-master-key,
+      knows-the-ducts, roach-union-ally, roach-union-member, pip-trusts-you,
+      wearing-a-dead-mans-badge). Boss "The Form That Requires Itself" has 5 routes and 5
+      department outcomes plus the refiled re-deal. validate_pack.py now lets requires.flag
+      be granted by any pack with a lower department.order; DECKS.json gains records
+      objectives and betrayals for all six societies; WORLD-BIBLE callback ledger updated.
+      validate_pack.py OK for both packs and the decks; pytest
+      tests/test_shifting_desks_encounters.py 17 passed. Wiring the pack into the
+      kind_robots game is separate work.
     claimed_by: 2026-10-13T05:17:00Z-sd-records-q7k2
     claimed_at: '2026-10-13T05:17:05Z'
-    updated: '2026-10-13T05:17:05Z'
+    updated: '2026-10-13T05:27:01Z'
   - id: t-011
     milestone: m3
     title: "Department 3 pack: Product Safety, Toy Division (Snuggle Sentinel)"
@@ -465,7 +479,7 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Restructuring: map changes between departments with written reasons"
-    status: waiting
+    status: ready
     depends_on: t-010
     owner: null
     passes: 0

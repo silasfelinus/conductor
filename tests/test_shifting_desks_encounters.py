@@ -15,6 +15,7 @@ import pytest
 ROOT = Path(__file__).resolve().parent.parent
 ENC_DIR = ROOT / "projects" / "shifting-desks" / "encounters"
 PACK = ENC_DIR / "ORIENTATION-12.json"
+RECORDS = ENC_DIR / "RECORDS-12.json"
 
 _spec = importlib.util.spec_from_file_location("shifting_desks_validate_pack", ENC_DIR / "validate_pack.py")
 vp = importlib.util.module_from_spec(_spec)
@@ -43,6 +44,57 @@ def test_orientation_pack_shape(pack):
     polarity = [e["polarity"] for e in pack["encounters"]]
     assert {p: polarity.count(p) for p in set(polarity)} == {"good": 4, "bad": 4, "mixed": 4}
     assert len(pack["boss"]["choices"]) >= 3
+
+
+def test_records_pack_shape():
+    records = json.loads(RECORDS.read_text(encoding="utf-8"))
+    assert records["department"]["id"] == "records"
+    assert records["department"]["order"] == 2
+    assert [loc["location_id"] for loc in records["locations"]] == [
+        "pneumatic-tube-exchange", "sub-archive", "window-9",
+    ]
+    assert all(len(loc["encounter_ids"]) == 4 for loc in records["locations"])
+    polarity = [e["polarity"] for e in records["encounters"]]
+    assert {p: polarity.count(p) for p in set(polarity)} == {"good": 4, "bad": 4, "mixed": 4}
+    lead = [e for e in records["encounters"] if vp.LEAD_TAGS & set(e["tags"])]
+    assert len(lead) >= 9
+    assert 4 <= len(records["boss"]["choices"]) <= 5
+    outcomes = {o["id"] for o in records["boss"]["department_outcomes"]}
+    assert "refiled" in outcomes and len(outcomes - {"refiled"}) >= 3
+
+
+def test_records_pays_off_orientation_flags():
+    """At least one Records choice is gated on a flag only Orientation grants."""
+    records = json.loads(RECORDS.read_text(encoding="utf-8"))
+    orientation_flags = vp.granted_flags(json.loads(PACK.read_text(encoding="utf-8")))
+    own = vp.granted_flags(records)
+    choices = [c for e in records["encounters"] for c in e["choices"]] + records["boss"]["choices"]
+    carried = {(c.get("requires") or {}).get("flag") for c in choices} - {None} - own
+    assert carried and carried <= orientation_flags
+
+
+def test_requires_flag_may_come_from_a_lower_department(tmp_path, pack):
+    earlier = copy.deepcopy(pack)
+    (tmp_path / "EARLIER.json").write_text(json.dumps(earlier), encoding="utf-8")
+    later = copy.deepcopy(pack)
+    later["department"] = {"id": "later", "title": "Later", "order": 2, "boss_id": later["boss"]["id"]}
+    # Remove every in-pack source of the gated flag, so only the earlier pack can grant it.
+    gated = next(c for c in later["boss"]["choices"] if c["requires"])
+    flag = gated["requires"]["flag"]
+    for choice in [c for e in later["encounters"] for c in e["choices"]] + later["boss"]["choices"]:
+        for key in ("success", "failure"):
+            out = choice.get(key) or {}
+            out["add_flags"] = [f for f in out.get("add_flags", []) if f != flag]
+    later_path = tmp_path / "LATER.json"
+    later_path.write_text(json.dumps(later), encoding="utf-8")
+    assert vp.validate_pack(later_path) == []
+    # The same flag from a pack of the same or a higher order does not count.
+    earlier["department"]["order"] = 2
+    (tmp_path / "EARLIER.json").write_text(json.dumps(earlier), encoding="utf-8")
+    errors = vp.validate_pack(later_path)
+    assert any(f"requires flag {flag!r}" in e for e in errors)
+    # An explicit earlier_flags set overrides the sibling scan.
+    assert vp.validate_pack(later_path, earlier_flags={flag}) == []
 
 
 def test_clean_win_is_rejected(tmp_path, pack):
@@ -110,6 +162,15 @@ DECKS = ENC_DIR / "DECKS.json"
 
 def test_decks_reference_only_granted_flags():
     assert vp.validate_decks(DECKS, vp.pack_paths([])) == []
+
+
+def test_decks_cover_every_department_pack():
+    """Every society names an objective and a betrayal for each committed department."""
+    decks = json.loads(DECKS.read_text(encoding="utf-8"))
+    departments = {json.loads(p.read_text(encoding="utf-8"))["department"]["id"] for p in vp.pack_paths([])}
+    for soc in decks["societies"]:
+        assert departments <= set(soc["objectives"]), soc["id"]
+        assert departments <= set(soc["betrayals"]), soc["id"]
 
 
 def test_decks_reject_a_society_flag_nothing_grants(tmp_path):

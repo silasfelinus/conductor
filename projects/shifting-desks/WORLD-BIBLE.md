@@ -41,14 +41,14 @@ PAL (Personnel Administration Liaison: "PAL is your pal!") is the campus voice, 
 | Level | Department | Locations | Boss review | Lead flavor |
 | --- | --- | --- | --- | --- |
 | Surface | **Orientation** | Security Desk & Badge Photo · Orientation Theater · Supply Closet B | *Your 90-Day Review, Today at 3* (written) | paperwork, psych tests, first society contact |
-| −1 | **Records & Forms** | Pneumatic Tube Exchange · The Sub-Archive · Window 9 | *The Form That Requires Itself* | paperwork, traitors |
+| −1 | **Records & Forms** | Pneumatic Tube Exchange · The Sub-Archive · Window 9 | *The Form That Requires Itself* (written) | paperwork, traitors |
 | −2 | **Product Safety: Toy Division** | Concept Lab · Focus Group Room · Proving Grounds | *Snuggle Sentinel's Launch Party* | conspiracy, toys |
 | −3 | **Wellness & Testing: the Vault** | Nutrition Studies · Cognitive Testing Chamber · the Mutation Suite | *The Final Wellness Exam* | psych tests, mutants |
 | −4 | **Sub-Level Zero: the Board** | Boardroom Antechamber · The Founder's Office · Server Room Zero | *The Board* | traitors, every society comes due |
 
 ### Records & Forms (Level −1): sketch for t-010
 
-The paperwork floor. Everything here requires a form, including the form.
+The paperwork floor. Everything here requires a form, including the form. Shipped as [encounters/RECORDS-12.json](encounters/RECORDS-12.json) (t-010); the sketch below is the brief it was written from.
 
 - **Pneumatic Tube Exchange.** A cathedral of brass tubes humming with capsules. Messages, lunches, evidence and occasionally employees go through it. Cards: a capsule addressed to you from yourself; a tube jam with someone inside; the dispatcher who reroutes "problem mail" to the incinerator; a love letter between two departments that are not allowed to merge.
 - **The Sub-Archive.** Filing cabinets to the horizon, lit by one swinging bulb. The Society for Accurate Minutes meets here in secret. Cards: your own personnel file (thicker than you remember living); a filing clerk who has been alphabetizing the same drawer since 1974; a cabinet marked DESTROY that is still full; a Roach Union archive of everything the Company tried to shred.
@@ -72,7 +72,7 @@ The paperwork floor. Everything here requires a form, including the form.
 
 ## Secret Societies (dealt face-down, one per run)
 
-Each society card has a **creed**, a **department objective**, a **betrayal condition**, a one-time **favor**, and a **reward** for meeting the objective. Objectives and betrayals key off story flags the cards grant. You only ever see your own society, and no card reveals it to anyone else. Full data: `DECKS.json`.
+Each society card has a **creed**, a **department objective**, a **betrayal condition**, a one-time **favor**, and a **reward** for meeting the objective. Objectives and betrayals key off story flags the cards grant. You only ever see your own society, and no card reveals it to anyone else. Full data, including each society's Records & Forms objective and betrayal: `DECKS.json`.
 
 | Society | Creed | Orientation objective (any one) | Betrayal (any one) | Favor (once per run) | Reward |
 | --- | --- | --- | --- | --- | --- |
@@ -131,11 +131,12 @@ Callbacks are **short original allusions, never quotations**. Each callback card
 | --- | --- | --- | --- |
 | Plan "on display" in a locked cabinet past a warning sign | Hitchhiker's Guide | Orientation, *The Visitor Log* | No leopard, no quoted line |
 | Unlicensed duct repair, a form numbered 27-something | Brazil | Orientation, *The Duct Has Opinions* | No character names, no form 27B/6 verbatim |
-| Refreshments promised after testing | Portal | Orientation, *The Inkblot That Looks Back* | No cake line, no Aperture |
+| Refreshments promised after testing | Portal | Orientation, *The Inkblot That Looks Back*; recurs as a gag in Records, *Interdepartmental Romance* | No cake line, no Aperture |
 | A red stapler nobody dares touch | Office Space | Supply Closet B description | Two-word nod only |
 | Composure meter as blood pressure | Bureaucracy (Infocom) | the core meters | No text, no plot |
+| A blood-pressure cuff that records you reading your own file | Bureaucracy (Infocom) | Records, *Your Permanent Record* | A dial and a needle only; no text, no plot |
 | Clone backups who inherit your debts | Paranoia | Successors | Original names; no six-pack clone wording |
 | Secret societies + a cheerful supervising machine | Paranoia | the whole social layer | No Friend Computer, Alpha Complex, clearance colors or society names |
-| Approve/deny stamps at a window | Papers, Please | Window 9 | No country, no UI copy |
+| Approve/deny stamps at a window | Papers, Please | Window 9, *The Double-Sided Stamp* | No country, no UI copy, no rules |
 | A sealed vault running experiments on residents | Fallout | the Vault | No Vault-Tec, no Vault Boy |
-| A towel in the emergency kit | Hitchhiker's Guide | a later supply card | One object, no line |
+| A towel in the emergency kit | Hitchhiker's Guide | Records, *The Jam in Tube 14* | One object, no line |
