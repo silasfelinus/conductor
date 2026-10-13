@@ -94,3 +94,81 @@ def test_runner_requires_real_named_lead_evidence(monkeypatch):
     monkeypatch.setattr(review.urllib.request, "urlopen", lambda req, timeout: Response())
     with pytest.raises(ValueError, match="Incomplete"):
         review.model_review("mock context", "fake")
+
+
+def _complete_review_text():
+    return ("## Verified\n" + "\n".join(review.LEADS)
+            + "\nCONTROL.md and projects/kind-pinball/roadmap.yaml\n"
+            + "The tested implementation matches the documented portfolio direction. " * 12
+            + "\n## Corrected\nNone.\n## Still questionable\nLive QA outstanding."
+            + "\n## Next review\nIn three days.")
+
+
+def test_model_retries_non_json_and_accepts_verified_response(monkeypatch):
+    from io import BytesIO
+
+    calls = []
+    good = {"choices": [{"message": {"content": _complete_review_text()}}]}
+
+    def urlopen(_request, timeout):
+        calls.append(timeout)
+        if len(calls) == 1:
+            return BytesIO(b"")
+        return BytesIO(__import__("json").dumps(good).encode())
+
+    monkeypatch.setattr(review.urllib.request, "urlopen", urlopen)
+    sleep = mock.Mock()
+    monkeypatch.setattr(review.time, "sleep", sleep)
+    assert "## Verified" in review.model_review("source context", "fake")
+    assert calls == [120, 120]
+    sleep.assert_called_once_with(2)
+
+
+def test_model_retries_transient_http_error(monkeypatch):
+    from io import BytesIO
+    from urllib.error import HTTPError
+
+    calls = []
+    good = {"choices": [{"message": {"content": _complete_review_text()}}]}
+
+    def urlopen(request, timeout):
+        calls.append(timeout)
+        if len(calls) == 1:
+            raise HTTPError(review.API, 429, "Too Many Requests", {}, None)
+        return BytesIO(__import__("json").dumps(good).encode())
+
+    monkeypatch.setattr(review.urllib.request, "urlopen", urlopen)
+    monkeypatch.setattr(review.time, "sleep", lambda _delay: None)
+    assert "## Next review" in review.model_review("source context", "fake")
+    assert len(calls) == 2
+
+
+def test_model_does_not_retry_permanent_http_error(monkeypatch):
+    from urllib.error import HTTPError
+
+    calls = []
+    def urlopen(request, timeout):
+        calls.append(True)
+        raise HTTPError(review.API, 403, "Forbidden", {}, None)
+
+    monkeypatch.setattr(review.urllib.request, "urlopen", urlopen)
+    monkeypatch.setattr(review.time, "sleep", lambda _delay: pytest.fail("should not sleep"))
+    with pytest.raises(HTTPError) as exc:
+        review.model_review("source context", "fake")
+    assert exc.value.code == 403
+    assert len(calls) == 1
+
+
+def test_model_stops_after_three_invalid_responses(monkeypatch):
+    from io import BytesIO
+
+    calls = []
+    def urlopen(request, timeout):
+        calls.append(True)
+        return BytesIO(b"not json")
+
+    monkeypatch.setattr(review.urllib.request, "urlopen", urlopen)
+    monkeypatch.setattr(review.time, "sleep", lambda _delay: None)
+    with pytest.raises(__import__("json").JSONDecodeError):
+        review.model_review("source context", "fake")
+    assert len(calls) == 3
