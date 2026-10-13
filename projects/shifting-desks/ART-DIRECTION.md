@@ -48,7 +48,7 @@ Kind Robots rejects any prompt containing a negation, so prompts are **positive-
 
 Every prompt follows this order: subject and action, then setting, then the second-look detail, then the lead colors, then the house style tail:
 
-> mid-century corporate safety-poster illustration crossed with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+> mid-century corporate safety-manual illustration crossed with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
 
 The last words are always **"every surface bare and unmarked"**. Check a new prompt with `scripts/repair_negation_art_prompts.py` (its `violations()` must return nothing) before queueing it.
 
