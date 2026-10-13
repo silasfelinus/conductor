@@ -32,7 +32,8 @@
         "id",
         "title",
         "order",
-        "boss_id"
+        "boss_id",
+        "arrival_art"
       ],
       "properties": {
         "id": {
@@ -49,6 +50,9 @@
         },
         "boss_id": {
           "$ref": "#/$defs/slug"
+        },
+        "arrival_art": {
+          "$ref": "#/$defs/station_art"
         }
       }
     },
@@ -95,7 +99,8 @@
           "location_id",
           "title",
           "description",
-          "encounter_ids"
+          "encounter_ids",
+          "art"
         ],
         "properties": {
           "location_id": {
@@ -116,6 +121,9 @@
             "items": {
               "$ref": "#/$defs/slug"
             }
+          },
+          "art": {
+            "$ref": "#/$defs/station_art"
           }
         }
       }
@@ -570,6 +578,35 @@
         "developer_note": {
           "type": "string",
           "minLength": 20
+        }
+      }
+    },
+    "station_art": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "art_ref",
+        "brief"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "design-only",
+            "verified-repository-art",
+            "approved-ArtImage"
+          ]
+        },
+        "art_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "brief": {
+          "type": "string",
+          "minLength": 50,
+          "description": "Positive-only house-style prompt ending 'every surface bare and unmarked'. Silas, 2026-10-12 PT: every station needs an image, and always has its prompt."
         }
       }
     }
