@@ -38,6 +38,12 @@ notes_from_silas: |
   toys, mutant powers, secret organizations, and callbacks to classic works optional but
   appreciated"
 
+  2026-10-12 PT, answering t-002's choices: spine = "Combination of synthesis with vault
+  test facility. I liked them best"; party mode = "Not at all"; emphasis = "Secret
+  societies & traitors, Paperwork & psych tests". Title left unanswered, so the working
+  title "Shifting Desks" stands. Applied in DESIGN-BRIEF.md "Decided world" and PITCHES.md
+  "Decision".
+
   Agent mandate (AGENTS.md defaults for new projects): scope gate t-002 is SOFT and runs
   in parallel; build immediately. Internal generated art is pre-approved. Public /play,
   publishing, spend, secrets and production deploys are NOT pre-approved. Homage, never
@@ -83,27 +89,23 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Pick the spine, title and party-mode scope from PITCHES.md"
-    status: needs-human
+    status: done
+    approved_by_human: true
     owner: null
     passes: 0
     stakes: reversible
-    soft_gate: true
     gate_reason: creative-approval
-    updated: '2026-10-13T03:00:00Z'
+    updated: '2026-10-13T03:30:00Z'
     note: >-
-      FOR SILAS: soft checkpoint, nothing is blocked. PITCHES.md
-      (projects/shifting-desks/PITCHES.md) has seven directions: A the restructuring
-      corporate tower, B the sealed wellness-retreat test facility, C the Paranoia-style
-      everyone-is-a-traitor social layer, D Papers-Please window shifts, E the afterlife
-      bureaucracy, F the nuclear toy division and G the "it was a training simulation,
-      rewrite the AI to be kind" true ending. It also has six expansions (party mode,
-      daily memo, personnel file, and more).
-      RECOMMENDATION: A as the world + C as the systems + F and B as departments + D as a
-      recurring card type + G as the true ending, title "Shifting Desks", party mode
-      post-v1. TO DECIDE: reply in chat or edit this note with your pick. Under the
-      2026-09-30 default-recommendation rule the recommendation is adopted if there is
-      no answer within 7 days (2026-10-19 PT), and you can still redirect afterwards.
-      What unblocks: t-004 (world bible) is already building against the recommendation.
+      DECIDED by Silas in session, 2026-10-12 PT. Spine: "Combination of synthesis with
+      vault test facility. I liked them best" (the restructuring campus + Paranoia social
+      layer + Toy Division + window shifts + Kind Rewrite ending, fused with Pitch B: the
+      campus is the surface of a sealed test vault, every department is a level deeper,
+      PAL is HR and test proctor, and hidden Test Results grade the player). Party mode:
+      "Not at all" (removed from the roadmap). Emphasis: "Secret societies & traitors" and
+      "Paperwork & psych tests" (validator now requires at least half of each pack's cards
+      to carry conspiracy, psych-test or paperwork tags). Title: no answer, working title
+      "Shifting Desks" stands until Silas renames it.
   - id: t-003
     milestone: m1
     title: "Encounter-pack contract, validator and Orientation department pack"
@@ -128,8 +130,11 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Write projects/shifting-desks/WORLD-BIBLE.md against the t-002 recommendation
-      (adjust if Silas redirects). Cover Consolidated Wellness & Defense and its
+      Write projects/shifting-desks/WORLD-BIBLE.md against the DECIDED world (t-002 and
+      DESIGN-BRIEF "Decided world": the campus is the surface of a sealed test vault, each
+      department one level deeper, PAL as HR and test proctor, hidden Test Results axes).
+      Secret societies/traitors and paperwork/psych tests are the lead flavors, so give
+      them the most depth. Cover Consolidated Wellness & Defense and its
       euphemism-speak; PAL's voice rules (cheerful, concerned, never cruel on purpose);
       all five departments with 3 locations each and a boss review sketch; the recurring
       cast (Dale, Pip, Marguerite, Gus and the Roach Union, Dr. Halvorsen, the Supervisor,
@@ -255,20 +260,23 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      encounters/WELLNESS-12.json: Nutrition Studies, Cognitive Testing Chamber, the
-      Mutation Suite; boss "The Final Wellness Exam" (the test is whether you will
-      administer the test). Original facility, voice and framing, with no Aperture or
-      Vault-Tec likeness. Must pass validate_pack.py.
+      encounters/WELLNESS-12.json (Level -3, the Vault proper and the heart of the decided
+      vault-test spine): Nutrition Studies, Cognitive Testing Chamber, the Mutation Suite;
+      boss "The Final Wellness Exam" (the test is whether you will administer the test).
+      Heaviest psych-test density in the game, and where hidden Test Results are partly
+      revealed. Original facility, voice and framing, with no Aperture or Vault-Tec
+      likeness. Must pass validate_pack.py.
   - id: t-013
     milestone: m3
-    title: "Department 5 pack: The Executive Floor, The Board and the Kind Rewrite true ending"
+    title: "Department 5 pack: Sub-Level Zero, The Board and the Kind Rewrite true ending"
     status: waiting
     depends_on: t-004
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      encounters/EXECUTIVE-12.json: Boardroom Antechamber, the Founder's Office, Server
+      encounters/SUBLEVEL-ZERO-12.json (the executives live at the very bottom of the
+      vault): Boardroom Antechamber, the Founder's Office, Server
       Room Zero; boss "The Board" with routes to Society Coup, Roach Union General Strike,
       Whistleblower, Promoted to Management and the hidden Kind Rewrite (gain admin access,
       rewrite PAL to remember people). Society objectives come due here. Must pass
@@ -374,14 +382,28 @@ tasks:
       device screenshots, then stop at needs-human.
   - id: t-021
     milestone: m5
-    title: "Pitch: Accusation Meeting party mode and Department of Posthumous Affairs expansion"
-    status: waiting
-    depends_on: t-002
+    title: "Pitch: Department of Posthumous Affairs expansion / secret ending"
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Proposal-shaped follow-up once Silas has answered t-002: write expansion pitches for
-      pass-and-play party mode (3-6 players, secret societies, a blame vote) and the
-      afterlife bureaucracy expansion / secret ending (Pitch E) in pitches/ using the
-      AGENTS.md pitch template.
+      Write an expansion pitch in pitches/ (AGENTS.md pitch template) for Pitch E, the
+      afterlife bureaucracy, as the secret ending reached from Position Eliminated and as
+      a possible later expansion. Party mode was rejected by Silas on 2026-10-12 PT
+      ("Not at all"); do not pitch it again.
+  - id: t-022
+    milestone: m2
+    title: "Hidden Test Results: Obedience, Empathy, Ingenuity and Spite grading"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      The vault-test half of the decided spine. Extend the pack schema/validator with an
+      optional per-outcome grades object (obedience, empathy, ingenuity, spite; small
+      integers), backfill ORIENTATION-12.json, and add reducer support. Grades stay hidden
+      during play, are partly revealed at each department review ("PAL has prepared your
+      interim results"), gate some boss routes, and set the ending's flavor text in the
+      Personnel File. Tests for accumulation, gating and that no grade is shown early.

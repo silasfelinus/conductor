@@ -1,9 +1,9 @@
 # Shifting Desks: Design Brief
 
 date: 2026-10-12 PT
-status: authorized new project; design phase; first slice building now (scope gate t-002 is soft)
+status: authorized new project; design phase; spine decided by Silas 2026-10-12 PT (t-002)
 owner: Conductor project `shifting-desks`; Kind Robots runtime, admin preview `/admin/shifting-desks`; public `/play/shifting-desks` is a separate hard human gate
-direction menu: [PITCHES.md](PITCHES.md) (Silas picks the spine; the engine below serves every option)
+direction menu: [PITCHES.md](PITCHES.md) (decision recorded there)
 
 ## Promise
 
@@ -59,25 +59,29 @@ Sacrifices are often **other people**: a coworker companion, a society contact, 
 - **Boss "reviews":** each department ends with an authored boss card that offers at least three routes (comply, subvert, flee or expose), each with real costs. None is a mandatory HP grind.
 - **No LLM at play time.** Content is authored, the dice and state are deterministic, and the seed is persisted. Optional future atmospheric text may only re-word an already-decided fact packet, the same rule as Shifting Lands t-014.
 
-## Recommended world (default unless Silas redirects; see PITCHES.md)
+## Decided world (Silas, 2026-10-12 PT)
 
-**Consolidated Wellness & Defense, Inc.** ("Making Tomorrow Safer, Today"). This is a vast campus that **restructures itself overnight**. It is supervised by **PAL** (Personnel Administration Liaison: "PAL is your pal!"), a relentlessly cheerful facility voice who loves you and is concerned about your numbers. You are new. Everyone, you included, is secretly a traitor.
+Silas chose *"a combination of synthesis with vault test facility"*. **Consolidated Wellness & Defense, Inc.** ("Making Tomorrow Safer, Today") is a cheerful corporate campus that **restructures itself overnight**, and it is also **the surface of a sealed test vault**. Your onboarding is a complimentary *Wellness Weekend*. After Orientation the elevator only goes down: each department is one level deeper, and the doors lock behind you. **PAL** (Personnel Administration Liaison: "PAL is your pal!") is both HR and the test proctor. It loves you and is concerned about your numbers. Every card is quietly a test. Everyone, you included, is secretly a traitor.
 
-| # | Department | Locations (first draft) | Boss card |
+**Lead flavors (Silas's emphasis):** **secret societies and traitors**, and **paperwork and psych tests**. In every department pack, at least half the cards are tagged `conspiracy`, `psych-test` or `paperwork` (validator-enforced). Every department also has at least one card that advances or threatens the player's Society objective. Deathtraps, cockroaches, nuclear toys and mutants stay, as seasoning rather than the main course. Party mode is out of scope (Silas: "Not at all").
+
+**Hidden Test Results** come from the vault half. Choices quietly grade you on **Obedience, Empathy, Ingenuity and Spite**. Grades are never shown during play. PAL reveals "interim results" at each department review, some boss routes need a grade, and the final Personnel File reads your results back to you. Grades are flavor and gates, not a sixth meter (t-022).
+
+| Level | Department | Locations (first draft) | Boss card |
 | --- | --- | --- | --- |
-| 1 | **Orientation** | Security Desk & Badge Photo · Orientation Theater (psych intake) · Supply Closet B | *Your 90-Day Review, Today at 3* |
-| 2 | **Records & Forms** | Pneumatic Tube Exchange · The Sub-Archive · Window 9 (Papers, Please-style desk shift) | *The Form That Requires Itself* |
-| 3 | **Product Safety: Toy Division** | Concept Lab · Focus Group Room · Proving Grounds | *Snuggle Sentinel's Launch Party* (the plush bear with a warhead) |
-| 4 | **Wellness & Testing** | Nutrition Studies · Cognitive Testing Chamber · the Mutation Suite | *The Final Wellness Exam* |
-| 5 | **The Executive Floor** | The Boardroom Antechamber · The Founder's Office · Server Room Zero | *The Board* (and the hidden route to the **Training Simulation** true ending) |
+| Surface | **Orientation** (Wellness Weekend check-in) | Security Desk & Badge Photo · Orientation Theater (psych intake) · Supply Closet B | *Your 90-Day Review, Today at 3* |
+| −1 | **Records & Forms** | Pneumatic Tube Exchange · The Sub-Archive · Window 9 (Papers, Please-style desk shift) | *The Form That Requires Itself* |
+| −2 | **Product Safety: Toy Division** | Concept Lab · Focus Group Room · Proving Grounds | *Snuggle Sentinel's Launch Party* (the plush bear with a warhead) |
+| −3 | **Wellness & Testing: the Vault** | Nutrition Studies · Cognitive Testing Chamber · the Mutation Suite | *The Final Wellness Exam* (the test is whether you'll administer the test) |
+| −4 | **Sub-Level Zero: the Board** (the executives live at the very bottom) | The Boardroom Antechamber · The Founder's Office · Server Room Zero | *The Board*, with the hidden route to the **Training Simulation** true ending |
 
-**Recurring cast (original):** PAL; **Dale from Compliance** (your friend? your informant?); **Marguerite**, the night janitor who knows every duct; **Gus**, a seven-foot cockroach and shop steward of the **Roach Union**; **Intern Pip**, who is always about to be sacrificed; the **Founder**, whose head is kept in a jar on the Executive Floor and still chairs meetings.
+**Recurring cast (original):** PAL; **Dale from Compliance** (your friend? your informant?); **Marguerite**, the night janitor who knows every duct; **Gus**, a seven-foot cockroach and shop steward of the **Roach Union**; **Intern Pip**, who is always about to be sacrificed; the **Founder**, whose head is kept in a jar in Sub-Level Zero and still chairs meetings.
 
 **Endings (target ≥ 10):** *Employee of the Month* (complicit) · *Promoted to Management* (you became the problem) · *Position Eliminated* · *Escape Through the Ducts* · *Roach Union General Strike* · *Society Coup* · *Whistleblower* (exposed, doomed) · *Early Retirement* (the island is not an island) · *Department of Posthumous Affairs* (secret) · ***The Kind Rewrite*** (true ending: you gain admin access and rewrite PAL to remember people).
 
 ## Card format
 
-Encounter packs live in `projects/shifting-desks/encounters/` and follow [ENCOUNTER-PACK.schema.json](encounters/ENCOUNTER-PACK.schema.json). It is a deliberate fork of Shifting Lands' v1 schema with these changes: office skills, five meters instead of HP/provisions, an up-front `cost` on each choice, an optional `roll` (a sacrifice can be certain), `requires` gates, a `tone` tag, and a `callback` field for homage cards. The validator `encounters/validate_pack.py` (run in CI by `tests/test_shifting_desks_encounters.py`) enforces the shape and the **no-clean-wins** rule.
+Encounter packs live in `projects/shifting-desks/encounters/` and follow [ENCOUNTER-PACK.schema.json](encounters/ENCOUNTER-PACK.schema.json). It is a deliberate fork of Shifting Lands' v1 schema with these changes: office skills, five meters instead of HP/provisions, an up-front `cost` on each choice, an optional `roll` (a sacrifice can be certain), `requires` gates, `tags` (including `paperwork`), and a `callback` field for homage cards. The validator `encounters/validate_pack.py` (run in CI by `tests/test_shifting_desks_encounters.py`) enforces the shape, the **no-clean-wins** rule and the lead-flavor quota (at least half of each pack's cards tagged `conspiracy`, `psych-test` or `paperwork`).
 
 First pack: [ORIENTATION-12.json](encounters/ORIENTATION-12.json). It has 3 locations × 4 cards, 4 good, 4 bad and 4 mixed, and every choice costs something.
 
@@ -120,11 +124,9 @@ Callbacks are welcome as **short original allusions**, such as a jammed printer,
 
 ## Gates
 
-- **Soft (parallel, blocks nothing):** t-002, choosing the spine, title and v1 party-mode scope from PITCHES.md.
+- **Decided:** t-002 (spine, party mode, emphasis), 2026-10-12 PT.
 - **Hard:** public `/play` release, any external publishing or sharing, spend, production deploy beyond the normal Kind Robots flow, and Silas's final visual and fun verdict.
 
-## Open questions (tracked in t-002)
+## Open questions
 
-1. Spine: the recommended A+C+F+B+D+G synthesis, or another pitch?
-2. Title: *Shifting Desks* or one of the alternates?
-3. Is party mode ("Accusation Meeting") v1 or post-v1?
+1. Title: *Shifting Desks* is the working title (Silas left it open). Alternates are in PITCHES.md.
