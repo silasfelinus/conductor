@@ -50,3 +50,19 @@
 **What to improve:** source delivery and physical safety are verified, but atlas edges show jagged pool cutout notches. Do not call this Silas's final FX3-grade verdict. t-021 improves masks and verifies decoded pixels against actual renderer UVs; existing t-020 remains the graph-schema kaizen. Preserve t-013 device QA ownership, t-014 human publication/acceptance gate and all main changes. The old Rainbow duplicate-key failure already recovered on main; a fresh successful exact-head process check is required, never bypass the historical red check.
 
 **Limits:** kindrobots.org asset read was denied by the managed HTTP destination policy (CONNECT403); verified the final immutable GitHub asset instead. No runtime deploy or live-device/aesthetic acceptance claimed, no credentials inspected, no publication/spend/email action. Historical source notes are preserved; the completion date is October12 PT.
+
+
+## 2026-10-13 PT | Worker recovery and Reviewer closeout | zuzu-pinball/t-013 | partial repair merged
+
+**Decision:** expected-head squash merged kind_robots#3638 at401b7e14c42d4854b0b02c1be7f12b9c7326a35c. All32 actual checks completed successfully on4318bcf747d5886c53a6a5805c6db03c04fd9ce8, including required TypeScript, Contract verifiers and verify. Complete eight-file diff, reviews and comments inspected; no blocking review, required approval or protection bypass. Main source blob SHAs match the repaired cabinet, mixer and regression test.
+
+**What was good:** preserved the existing worker branch and original Music Mentor discovery work instead of duplicating it. Recovered the expired t-013 claim through verified session-aware events. Gesture-time creation/unlock now preserves open-guide ownership; suspended pinball audio resumes; paused mute/unmute reaches the dedicated master gain without waiting for a game tick.
+
+**What to improve:** the prior32 green checks missed both an open-guide start bypass and a paused-mute consumer gap. Execute actual consumer handlers and native browser audio as well as isolated mixer assertions. The new actual-SFC regressions fail when either guide guards or the direct paused-mute refresh are removed. Applied pinned formatter output for the new test predicate; no baseline or check was weakened.
+
+**Verification:** local DMD/audio, real Rapier shooter/physics and rules suites, approved-pitch verifier, targeted ESLint and changed-file Prettier pass. Fifteen Chromium cases at390/768/1440px execute actual cabinet handlers with native AudioContext, testing guide navigation before creation, all five start gestures, paused mute/unmute and suspended-context recovery with no manual mixer sync. Six actual Music Mentor SFC render cases (guest/admin, three widths) pass discovery filters, route, overflow and page-error checks using existing local approved artwork.
+
+**Kaizen task:** t-022 ready — make the native-browser cabinet audio smoke probe repository-owned and repeatable in CI, targeting the recurring quality/consumer-verification weakness in LEARNING-REPORT. Fresh next_free_task_id.py returned t-022; complete roadmap bytes were fetched in explicit ranges and hash-verified before the exact-SHA append. Existing t-013 device/GPU QA remains distinct.
+
+**Scope and closeout:** partial t-013 only; return it to ready under session20261013T193231Z-pinball-guide-b2r6 and verify event consumption plus projection source commit. Do not mark full device/frame-timing or FX3-quality acceptance done; t-014 remains waiting. Native audio was real, while the browser fixture substituted game creation/physics; this is not a full Nuxt/table/hardware playtest. Local shelf art is not production URL/deployment proof. Today's five merged delivery ledger and review records validate separately with no feedback requiring work. No deploy, publication, generation, spend, secrets or email action; no done learning for this unfinished task.
+
