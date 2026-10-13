@@ -165,7 +165,7 @@ tasks:
   - id: t-005
     milestone: m1
     title: "Art direction sheet, card backs and three style-test card faces"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -185,9 +185,15 @@ tasks:
       ArtImage ids arrive with the auto-art-generate run (watch each row's last_art_job_id);
       mark a subject delivered only after its media_url returns 200, then review the renders
       against ART-DIRECTION.md before setting art_ref on the cards.
+
+      DONE 2026-10-13 PT: all five round-1 renders answer 200 on media.acrocatranch.com and
+      kindrobots.org (encounter back, review back, Gus, Something Ticking in the Toner, Trust
+      Fall Over the Shredder). Reviewed against ART-DIRECTION.md: on palette, halftone, single
+      readable scene, no lettering; verdict keep for all five (ROUND-1.yaml). Style test
+      accepted internally, which unblocks t-015 (its faces are already queued in ROUND-2).
     claimed_by: 2026-10-13T00:00:00Z-sd-art-q7k2
     claimed_at: '2026-10-13T04:55:47Z'
-    updated: '2026-10-13T05:13:15Z'
+    updated: '2026-10-13T07:37:11Z'
   - id: t-006
     milestone: m2
     title: "Public /play front page, Projects tab and card board shell"
