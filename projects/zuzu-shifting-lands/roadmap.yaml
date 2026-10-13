@@ -521,7 +521,7 @@ tasks:
   - id: t-027
     milestone: m4
     title: "Zoomed consequence reveal after every choice and trial"
-    status: review
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -530,7 +530,8 @@ tasks:
     note: |-
       Silas, 2026-10-13: "when we make a choice between the two paths, we need to see a real display and new art showing the consequence of our action ... definitely needed for immersion and to really pay off the experience."
       kind_robots#3611: after a checked choice or trial attempt the private Admin board stays zoomed in on the consequence (outcome plate flips in with a Success/Failure ribbon, pip dice with skill/modifier/total/target, the authored result at display size, health and provision chips) and a context-aware Continue (down the road, face the trial, return to the gate, enter the next land, see how it ends). Painted plates come from sceneArt BESPOKE_OUTCOMES (t-028); unpainted outcomes fall back to their card art with a success/failure grade. Presentation only; no reducer or save change. Builds on the single-screen tabbed board from kind_robots#3610.
-    updated: '2026-10-13T01:30:00Z'
+      Done 2026-10-13: kind_robots#3611 merged as 872b2ae after all 31 head checks passed (TypeScript, Shifting Lands gameplay contract, layout contract, Contract verifiers). Admin-only preview; no production deploy claimed.
+    updated: '2026-10-13T01:10:00Z'
     implementation_pr: 'silasfelinus/kind_robots#3611'
   - id: t-028
     milestone: m3
