@@ -403,3 +403,47 @@ def test_toy_art_keeps_children_out_of_frame():
     briefs += [loc["art"]["brief"] for loc in toys["locations"]] + [toys["department"]["arrival_art"]["brief"]]
     for brief in briefs:
         assert not re.search(r"\b(child|children|kid|kids|toddler|baby|infant)\b", brief, re.I), brief
+
+
+# Wellness & Testing (t-012)
+
+WELLNESS = ENC_DIR / "WELLNESS-12.json"
+
+
+def test_wellness_pack_shape():
+    vault = json.loads(WELLNESS.read_text(encoding="utf-8"))
+    assert vault["department"]["id"] == "wellness"
+    assert vault["department"]["order"] == 4
+    assert [loc["location_id"] for loc in vault["locations"]] == [
+        "nutrition-studies", "cognitive-testing-chamber", "mutation-suite",
+    ]
+    psych = [e for e in vault["encounters"] if "psych-test" in e["tags"]]
+    assert len(psych) >= 9, "the Vault carries the heaviest psych-test density in the game"
+    assert vault["boss"]["id"] == "the-final-wellness-exam"
+    assert vault["boss"]["department_outcomes"][-1]["id"] == "retest"
+
+
+def test_wellness_pays_off_earlier_flags():
+    vault = json.loads(WELLNESS.read_text(encoding="utf-8"))
+    required = {
+        (ch["requires"] or {}).get("flag")
+        for card in vault["encounters"] + [vault["boss"]]
+        for ch in card["choices"]
+    }
+    assert {"saved-pip", "assigned-as-proctor", "knows-the-incident", "heard-the-squeak-code",
+            "kevin-owes-you", "has-true-minutes"} <= required
+
+
+def test_wellness_restructures_on_every_toy_division_outcome():
+    vault = json.loads(WELLNESS.read_text(encoding="utf-8"))
+    toys = json.loads(TOYS.read_text(encoding="utf-8"))
+    keyed = {o for m in vault["restructurings"] if m["when"] for o in m["when"]["outcomes"]}
+    outcomes = {o["id"] for o in toys["boss"]["department_outcomes"]} - {"back-to-the-drawing-board"}
+    assert outcomes <= keyed, outcomes - keyed
+
+
+def test_wellness_avoids_borrowed_facilities():
+    """Original facility only (t-012): no Aperture or Vault-Tec likeness anywhere in the pack."""
+    text = WELLNESS.read_text(encoding="utf-8").lower()
+    for borrowed in ("aperture", "vault-tec", "vault boy", "portal", "turret", "companion cube", "cake"):
+        assert not re.search(rf"\b{re.escape(borrowed)}\b", text), borrowed
