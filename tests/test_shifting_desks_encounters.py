@@ -447,3 +447,46 @@ def test_wellness_avoids_borrowed_facilities():
     text = WELLNESS.read_text(encoding="utf-8").lower()
     for borrowed in ("aperture", "vault-tec", "vault boy", "portal", "turret", "companion cube", "cake"):
         assert not re.search(rf"\b{re.escape(borrowed)}\b", text), borrowed
+
+
+# Sub-Level Zero (t-013)
+
+SUBLEVEL = ENC_DIR / "SUBLEVEL-ZERO-12.json"
+
+
+def test_sublevel_zero_pack_shape():
+    bottom = json.loads(SUBLEVEL.read_text(encoding="utf-8"))
+    assert bottom["department"]["id"] == "sub-level-zero"
+    assert bottom["department"]["order"] == 5
+    assert [loc["location_id"] for loc in bottom["locations"]] == [
+        "boardroom-antechamber", "founders-office", "server-room-zero",
+    ]
+    assert bottom["boss"]["id"] == "the-board"
+    assert bottom["boss"]["department_outcomes"][-1]["id"] == "adjourned"
+
+
+def test_the_board_offers_the_named_endings():
+    """WORLD-BIBLE 'Endings': the Board's routes are the endings themselves."""
+    bottom = json.loads(SUBLEVEL.read_text(encoding="utf-8"))
+    outcomes = {o["id"] for o in bottom["boss"]["department_outcomes"]}
+    assert {
+        "employee-of-the-month", "promoted-to-management", "escape-through-the-ducts",
+        "roach-union-general-strike", "society-coup", "whistleblower", "early-retirement", "the-kind-rewrite",
+    } <= outcomes
+
+
+def test_the_kind_rewrite_needs_admin_access_and_kindness():
+    bottom = json.loads(SUBLEVEL.read_text(encoding="utf-8"))
+    route = next(c for c in bottom["boss"]["choices"] if c["success"].get("department_outcome") == "the-kind-rewrite")
+    assert route["requires"]["flag"] == "admin-access"
+    assert route["requires"]["grade"] == {"empathy": 5}
+    granted = vp.granted_flags(bottom)
+    assert "admin-access" in granted, "Server Room Zero must be able to grant admin access"
+
+
+def test_sublevel_zero_restructures_on_every_wellness_outcome():
+    bottom = json.loads(SUBLEVEL.read_text(encoding="utf-8"))
+    vault = json.loads(WELLNESS.read_text(encoding="utf-8"))
+    keyed = {o for m in bottom["restructurings"] if m["when"] for o in m["when"]["outcomes"]}
+    outcomes = {o["id"] for o in vault["boss"]["department_outcomes"]} - {"retest"}
+    assert outcomes <= keyed, outcomes - keyed

@@ -1,0 +1,422 @@
+# Shifting Desks art round 6 (shifting-desks t-013): every station in Department 5, Sub-Level Zero -- the
+# 12 encounter faces and The Board boss face (each card's art.brief rewritten into the house prompt
+# order, like round 2), the 3 location plates and the department arrival (copied word for word, like
+# round 3). Style rules live in ../ART-DIRECTION.md. Tone guardrail: no child is pictured anywhere; the
+# generator refuses a prompt that names one.
+#
+# Queue: each subject is one row in projects/art-prompts.yaml `requests:` (id = request_id, lane
+# art-round-6). The auto-art-generate workflow submits it to Kind Robots as a krea2 ArtJob and the home
+# relay writes the render to the self-hosted media host at media_url.
+#
+# Status values: requested -> rendered -> delivered (media_url answers 200). Never mark a subject
+# delivered before that check passes. Generated internal art is pre-approved (AGENTS.md "Generated art
+# is pre-approved"). Krea 2 on the self-hosted render box: no paid third-party spend, nothing published.
+round: shifting-desks-6
+project_slug: shifting-desks
+task: t-013
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-13T09:40:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph,
+  3d render, blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: your-society-comes-due
+  kind: card-face
+  department: sub-level-zero
+  title: Your Society Comes Due
+  card: your-society-comes-due
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[your-society-comes-due].art.brief
+  request_id: shifting-desks-r6-your-society-comes-due
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56001
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/your-society-comes-due.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/your-society-comes-due.webp
+  prompt: A hushed wood-paneled waiting room with deep leather chairs, a mysterious figure in a cardigan
+    lowering a newspaper to look at a worker seated beside them, a tall closed double door at the far
+    end glowing at its edges, oxblood and manila dominant colors, single readable scene with a strong
+    silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist beige office,
+    screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette
+    of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait
+    composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-assistants-pool
+  kind: card-face
+  department: sub-level-zero
+  title: The Assistants' Pool
+  card: the-assistants-pool
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-assistants-pool].art.brief
+  request_id: shifting-desks-r6-the-assistants-pool
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56002
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-assistants-pool.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-assistants-pool.webp
+  prompt: A horseshoe of twelve identical desks with executive assistants typing in perfect unison on
+    heavy typewriters, one assistant looking up and offering a neat stack of carbon copies to a worker,
+    a towering double door behind them, carbon-paper blue and manila dominant colors, single readable
+    scene with a strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-successor-waiting-room
+  kind: card-face
+  department: sub-level-zero
+  title: The Successor Waiting Room
+  card: the-successor-waiting-room
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-successor-waiting-room].art.brief
+  request_id: shifting-desks-r6-the-successor-waiting-room
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56003
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-successor-waiting-room.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-successor-waiting-room.webp
+  prompt: A narrow waiting room lined with chairs holding five identical workers in fresh beige suits
+    sitting in a neat row, hands folded, one of them leaning forward to speak, the real worker standing
+    in the doorway, oxblood and fluorescent green dominant colors, single readable scene with a strong
+    silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist beige office,
+    screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette
+    of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait
+    composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: marguerite-in-the-walls
+  kind: card-face
+  department: sub-level-zero
+  title: Marguerite in the Walls
+  card: marguerite-in-the-walls
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[marguerite-in-the-walls].art.brief
+  request_id: shifting-desks-r6-marguerite-in-the-walls
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56004
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/marguerite-in-the-walls.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/marguerite-in-the-walls.webp
+  prompt: A weathered older janitor in grey coveralls and a headscarf peering out of an open ceiling vent
+    with a flashlight and a wrench, a worker on a leather chair looking up at her, a ring of keys dangling
+    from the vent, oxblood and fluorescent green dominant colors, single readable scene with a strong
+    silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist beige office,
+    screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette
+    of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait
+    composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-head-in-the-jar
+  kind: card-face
+  department: sub-level-zero
+  title: The Head in the Jar
+  card: the-head-in-the-jar
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-head-in-the-jar].art.brief
+  request_id: shifting-desks-r6-the-head-in-the-jar
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56005
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-head-in-the-jar.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-head-in-the-jar.webp
+  prompt: A cozy old garage rebuilt deep underground, a cluttered workbench with a soldering iron and
+    a dusty radio, a distinguished elderly mustached head floating in a glowing glass jar on the bench,
+    a worker standing before it with hat in hand, warm lamplight, fluorescent green and oxblood dominant
+    colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration
+    crossed with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident
+    shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-spare-mustaches
+  kind: card-face
+  department: sub-level-zero
+  title: The Spare Mustaches
+  card: the-spare-mustaches
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-spare-mustaches].art.brief
+  request_id: shifting-desks-r6-the-spare-mustaches
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56006
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-spare-mustaches.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-spare-mustaches.webp
+  prompt: A high wooden shelf in an old garage with four small empty brass stands in a row, a glowing
+    head in a glass jar on the workbench below gazing up at them with longing, a worker holding a small
+    wooden box, warm lamplight, manila and oxblood dominant colors, single readable scene with a strong
+    silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist beige office,
+    screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette
+    of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait
+    composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-garage-blueprint
+  kind: card-face
+  department: sub-level-zero
+  title: The Garage Blueprint
+  card: the-garage-blueprint
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-garage-blueprint].art.brief
+  request_id: shifting-desks-r6-the-garage-blueprint
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56007
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-garage-blueprint.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-garage-blueprint.webp
+  prompt: A faded curling blueprint pinned above an old workbench, showing a pencil sketch of a cheerful
+    round speaker grille, a worker reaching up to unpin it, a glowing head in a jar watching from the
+    bench, warm lamplight, carbon-paper blue and manila dominant colors, single readable scene with a
+    strong silhouette, mid-century corporate safety-manual illustration crossed with a retro-futurist
+    beige office, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-founders-desk
+  kind: card-face
+  department: sub-level-zero
+  title: The Founder's Desk
+  card: the-founders-desk
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-founders-desk].art.brief
+  request_id: shifting-desks-r6-the-founders-desk
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56008
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-founders-desk.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-founders-desk.webp
+  prompt: An old wooden desk with one drawer pulled open, holding a glossy travel brochure and a dented
+    round film tin, a worker's hands hovering between the two, a glowing head in a jar watching from the
+    corner of the frame, oxblood and manila dominant colors, single readable scene with a strong silhouette,
+    mid-century corporate safety-manual illustration crossed with a retro-futurist beige office, screen-printed
+    gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: pal-at-home
+  kind: card-face
+  department: sub-level-zero
+  title: PAL at Home
+  card: pal-at-home
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[pal-at-home].art.brief
+  request_id: shifting-desks-r6-pal-at-home
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56009
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/pal-at-home.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/pal-at-home.webp
+  prompt: A cold blue server room of tall humming cabinets receding into darkness, each cabinet with a
+    small round speaker grille glowing softly, a lone worker standing in the central aisle listening,
+    faint sound ripples drawn in the air, carbon-paper blue and fluorescent green dominant colors, single
+    readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-admin-terminal
+  kind: card-face
+  department: sub-level-zero
+  title: The Admin Terminal
+  card: the-admin-terminal
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-admin-terminal].art.brief
+  request_id: shifting-desks-r6-the-admin-terminal
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56010
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-admin-terminal.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-admin-terminal.webp
+  prompt: A lone glowing green computer terminal on a steel desk at the center of a dark server room,
+    a blinking cursor, a tattered sticky note on the bezel, a worker hunched over the keyboard with one
+    finger raised, tall humming cabinets all around, fluorescent green and carbon-paper blue dominant
+    colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration
+    crossed with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident
+    shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-backup-tapes
+  kind: card-face
+  department: sub-level-zero
+  title: The Backup Tapes
+  card: the-backup-tapes
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-backup-tapes].art.brief
+  request_id: shifting-desks-r6-the-backup-tapes
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56011
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-backup-tapes.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-backup-tapes.webp
+  prompt: A tall aisle of shelves packed with labeled tape reels stretching up into darkness, a worker
+    on a rolling ladder holding two reels, one thick and one thin, a notice pinned to the shelf, cold
+    blue light, carbon-paper blue and oxblood dominant colors, single readable scene with a strong silhouette,
+    mid-century corporate safety-manual illustration crossed with a retro-futurist beige office, screen-printed
+    gouache with halftone grain, flat confident shapes and crisp silhouettes, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-listening-room
+  kind: card-face
+  department: sub-level-zero
+  title: The Listening Room
+  card: the-listening-room
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-listening-room].art.brief
+  request_id: shifting-desks-r6-the-listening-room
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56012
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-listening-room.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-listening-room.webp
+  prompt: A small padded room with hundreds of headphones hanging from hooks on every wall, each cable
+    running into the ceiling, a single plush executive chair in the center, a worker in the doorway holding
+    a pair of headphones away from their ear, warm amber light, oxblood and manila dominant colors, single
+    readable scene with a strong silhouette, mid-century corporate safety-manual illustration crossed
+    with a retro-futurist beige office, screen-printed gouache with halftone grain, flat confident shapes
+    and crisp silhouettes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube
+    green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-board
+  kind: boss-face
+  department: sub-level-zero
+  title: The Board
+  card: the-board
+  source_ref: encounters/SUBLEVEL-ZERO-12.json boss.art.brief
+  request_id: shifting-desks-r6-the-board
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56013
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-board.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-board.webp
+  prompt: A vast perfectly round boardroom under a single great hanging lamp, eleven executives in grey
+    suits seated around a round dark table, one empty chair facing them, a glowing head in a jar at the
+    head of the table, a small worker standing at the empty chair with a folded paper, oxblood and manila
+    dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual
+    illustration crossed with a retro-futurist beige office, screen-printed gouache with halftone grain,
+    flat confident shapes and crisp silhouettes, limited palette of manila, carbon-paper blue, safety
+    orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare
+    and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: boardroom-antechamber
+  kind: location
+  department: sub-level-zero
+  title: Boardroom Antechamber
+  card: null
+  source_ref: encounters/SUBLEVEL-ZERO-12.json locations[boardroom-antechamber].art.brief
+  request_id: shifting-desks-r6-boardroom-antechamber
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56014
+  target_path: kind_robots public/images/shifting-desks/locations/boardroom-antechamber.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/boardroom-antechamber.webp
+  prompt: A hushed wood-paneled waiting room with deep leather chairs, four oval portraits of the same
+    mustached man at different ages, a horseshoe of typing desks to one side, a tall double door glowing
+    at its edges, mid-century safety-manual illustration, screen-printed gouache with halftone grain,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical
+    2:3 portrait composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: founders-office
+  kind: location
+  department: sub-level-zero
+  title: The Founder's Office
+  card: null
+  source_ref: encounters/SUBLEVEL-ZERO-12.json locations[founders-office].art.brief
+  request_id: shifting-desks-r6-founders-office
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56015
+  target_path: kind_robots public/images/shifting-desks/locations/founders-office.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/founders-office.webp
+  prompt: An old suburban garage rebuilt deep underground, a cluttered workbench under a hanging lamp,
+    a glowing glass jar on the bench, a faded blueprint pinned to the wall, a wooden desk in the corner,
+    mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette
+    of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait
+    composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: server-room-zero
+  kind: location
+  department: sub-level-zero
+  title: Server Room Zero
+  card: null
+  source_ref: encounters/SUBLEVEL-ZERO-12.json locations[server-room-zero].art.brief
+  request_id: shifting-desks-r6-server-room-zero
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 56016
+  target_path: kind_robots public/images/shifting-desks/locations/server-room-zero.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/server-room-zero.webp
+  prompt: A cold blue server room of tall humming cabinets in long rows, each cabinet fitted with a small
+    glowing round speaker grille, a single green terminal at the center, tape reels on high shelves, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
+    carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition,
+    every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: sub-level-zero
+  kind: department
+  department: sub-level-zero
+  title: Sub-Level Zero arrival
+  card: null
+  source_ref: encounters/SUBLEVEL-ZERO-12.json department.arrival_art.brief
+  request_id: shifting-desks-r6-sub-level-zero
+  engine: krea2
+  size: 1248x936
+  aspect: 4:3 landscape
+  seed: 56017
+  target_path: kind_robots public/images/shifting-desks/departments/sub-level-zero.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/departments/sub-level-zero.webp
+  prompt: Elevator doors opening at the very bottom of the Vault onto a plush executive corridor of dark
+    wood and brass, portraits of a mustached man at four different ages, a round boardroom door glowing
+    at the far end, mid-century safety-manual illustration, screen-printed gouache with halftone grain,
+    limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, horizontal
+    4:3 composition, every surface bare and unmarked
+  status: requested
+  art_job_id: null
+  art_image_id: null
+  verdict: null
