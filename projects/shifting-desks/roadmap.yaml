@@ -487,7 +487,7 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Hidden Test Results: Obedience, Empathy, Ingenuity and Spite grading"
-    status: claimed
+    status: done
     depends_on: t-007
     owner: worker
     passes: 0
@@ -499,9 +499,16 @@ tasks:
       during play, are partly revealed at each department review ("PAL has prepared your
       interim results"), gate some boss routes, and set the ending's flavor text in the
       Personnel File. Tests for accumulation, gating and that no grade is shown early.
+
+      DONE 2026-10-13 PT: data half conductor#6100 (grades on all 82 choices, grade-gated
+      review routes, DECKS test_results, validator checks), engine/UI kind_robots#3627 (save
+      v4, interim results at each review revealing one more grade per level, Personnel File
+      verdict). 3,000-run sim asserts every grade route is earned and four or more verdicts
+      occur.
     claimed_by: 2026-10-13T-sd-t022-grades
     claimed_at: '2026-10-13T06:34:11Z'
-    updated: '2026-10-13T06:34:11Z'
+    updated: '2026-10-13T07:24:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#3627'
   - id: t-023
     milestone: m2
     title: "Restructuring: map changes between departments with written reasons"
