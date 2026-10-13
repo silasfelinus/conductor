@@ -309,6 +309,19 @@ def cmd_brief() -> int:
 
 
 def cmd_check(date: str) -> int:
+    if date >= '2026-10-13':
+        import daily_project_deliveries as deliveries
+        docket = deliveries.load(date)
+        errors = deliveries.validate(date, docket)
+        if not errors:
+            errors = [f"{row['slug']}: delivery review record missing"
+                      for row in docket['entries']
+                      if not deliveries.record_path(date, row['slug']).exists()]
+        if errors:
+            print('daily_project_deliveries: ' + '; '.join(errors))
+            return 1
+        print(f'{date}: five evidenced project upgrades ready for digest review')
+        return 0
     docket = load_docket(date)
     if docket is None:
         print(f"daily_pitches: no docket for {date}; run `python scripts/daily_pitches.py --brief` and author "
