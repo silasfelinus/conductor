@@ -554,3 +554,61 @@ def test_balance_report_is_committed():
     assert "<!-- generated:balance -->" in report and "<!-- /generated:balance -->" in report
     for policy in ("Complier", "Rebel", "Coward", "Saint"):
         assert f"The {policy}" in report
+
+
+
+def _applicant(pack, aid):
+    return next(a for a in pack["window_shift"]["applicants"] if a["id"] == aid)
+
+
+def test_records_window_shift_shape(records):
+    shift = records["window_shift"]
+    assert shift["location_id"] == "window-9"
+    assert 3 <= len(shift["applicants"]) <= 5
+    books = {a["id"]: vp.by_the_book(a) for a in shift["applicants"]}
+    assert set(books.values()) == {"approve", "deny"}
+    assert "let-the-courier-through" in vp.granted_flags(records)
+
+
+def test_off_memo_stamp_must_raise_suspicion(tmp_path, records):
+    courier = _applicant(records, "courier-from-four")
+    approve = next(ch for ch in courier["choices"] if ch["id"] == "approve")
+    approve["success"]["effects"] = {"forms": 2, "composure": -1}
+    assert any("PAL audits every stamp" in e for e in _validate(tmp_path, records))
+
+
+def test_every_memo_rule_must_matter(tmp_path, records):
+    records["window_shift"]["memo"]["rules"].append({"id": "spare-rule", "text": "A rule that nobody ever breaks."})
+    assert any("never matters" in e for e in _validate(tmp_path, records))
+
+
+def test_the_memo_is_never_simply_kind(tmp_path, records):
+    for a in records["window_shift"]["applicants"]:
+        for ch in a["choices"]:
+            grades = ch["success"]["grades"]
+            if ch["id"] == vp.by_the_book(a) and grades.get("empathy", 0) < 0:
+                grades["empathy"] = 1
+    assert any("never simply kind" in e for e in _validate(tmp_path, records))
+
+
+def test_stamps_are_exactly_approve_and_deny(tmp_path, records):
+    _applicant(records, "doreen-of-the-night-shift")["choices"][0]["id"] = "shrug"
+    assert any("approve and deny" in e for e in _validate(tmp_path, records))
+
+
+def test_stamps_are_certain(tmp_path, records):
+    stamp = _applicant(records, "doreen-of-the-night-shift")["choices"][0]
+    stamp["roll"] = {"dice_count": 2, "die_sides": 6, "skill": "rapport", "modifier": 0, "target": 9}
+    stamp["failure"] = copy.deepcopy(stamp["success"])
+    assert any("a stamp is certain" in e for e in _validate(tmp_path, records))
+
+
+def test_window_shift_must_sit_at_a_real_location(tmp_path, records):
+    records["window_shift"]["location_id"] = "window-10"
+    assert any("is not a location in this pack" in e for e in _validate(tmp_path, records))
+
+
+def test_flag_map_lists_window_stamps():
+    flags = json.loads((ENC_DIR / "FLAG-MAP.json").read_text(encoding="utf-8"))["flags"]
+    assert "records/courier-from-four/approve" in flags["let-the-courier-through"]["granted_by"]
+    assert any("ending escape-through-the-ducts" in r for r in flags["let-the-courier-through"]["read_by"])

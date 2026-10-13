@@ -40,6 +40,14 @@ grants, and gives every epilogue complete sentences and a contract-clean image
 prompt. FLAG-MAP.json is generated from the packs (`--flag-map`) and must match
 them: every flag, where it is granted and where it is read.
 
+Window shifts (t-016): a pack may declare one `window_shift`, a Papers, Please desk
+shift at one of its locations. The day's memo lists 2-4 rules; each of 3-5
+applicants shows documents, and a document may break one rule. Every applicant
+offers exactly two certain stamps, `approve` and `deny`. Stamping against the memo
+always carries Suspicion (PAL audits every stamp), every rule is broken by someone,
+at least one applicant is clean, and at least one by-the-book stamp costs Empathy:
+the memo is never simply the kind thing to do.
+
 Usage:
   python projects/shifting-desks/encounters/validate_pack.py            # every *.json pack here
   python projects/shifting-desks/encounters/validate_pack.py PACK.json  # one pack
@@ -127,11 +135,28 @@ def is_harmful(effects: dict) -> bool:
     return any(v * METERS[k] > 0 for k, v in effects.items() if k in METERS)
 
 
+WINDOW_STAMPS = ("approve", "deny")
+
+
+def window_applicants(pack: dict) -> list[dict]:
+    shift = pack.get("window_shift")
+    if not isinstance(shift, dict):
+        return []
+    return [a for a in shift.get("applicants") or [] if isinstance(a, dict)]
+
+
+def by_the_book(applicant: dict) -> str:
+    """The stamp the day's memo demands: deny anyone whose documents break a rule."""
+    broken = [d for d in applicant.get("documents") or [] if isinstance(d, dict) and d.get("breaks")]
+    return "deny" if broken else "approve"
+
+
 def granted_flags(pack: dict) -> set[str]:
-    """Every flag any encounter or boss choice in `pack` can add."""
+    """Every flag any encounter, window applicant or boss choice in `pack` can add."""
     flags: set[str] = set()
     boss = pack.get("boss") if isinstance(pack.get("boss"), dict) else {}
     choices = [ch for enc in pack.get("encounters") or [] for ch in enc.get("choices") or []]
+    choices += [ch for a in window_applicants(pack) for ch in a.get("choices") or []]
     choices += boss.get("choices") or []
     for ch in choices:
         for key in ("success", "failure"):
@@ -159,6 +184,7 @@ def grade_reach(pack: dict) -> dict[str, int]:
         for loc in pack.get("locations") or []:
             cards = [encounters[i] for i in loc.get("encounter_ids") or [] if i in encounters]
             total += max((best(c.get("choices"), axis) for c in cards), default=0)
+        total += sum(best(a.get("choices"), axis) for a in window_applicants(pack))
         reach[axis] = total + best(boss.get("choices"), axis)
     return reach
 
@@ -486,6 +512,9 @@ def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str
             c.err(w, "no choice grades the player; every card feeds the hidden Test Results (t-022)")
         collect(w, choices)
 
+    if pack.get("window_shift") is not None:
+        check_window_shift(c, pack, set(by_id), graded, collect)
+
     if encounters:
         lead = sum(1 for e in encounters if LEAD_TAGS & set(e.get("tags") or []))
         if lead < LEAD_SHARE_MIN * len(encounters):
@@ -548,6 +577,91 @@ def validate_pack(path: Path, earlier_flags: set[str] | None = None) -> list[str
                 c.err(where, f"requires {axis} {minimum}, but a run can earn at most {available} by this review")
 
     return c.errors
+
+
+def check_window_shift(c: "Checker", pack: dict, encounter_ids: set[str], graded, collect) -> None:
+    shift = pack.get("window_shift")
+    w = "window_shift"
+    if not isinstance(shift, dict):
+        c.err(w, "must be an object when present")
+        return
+    c.slug(f"{w}.id", shift.get("id"))
+    c.text(f"{w}.title", shift.get("title"), 5, 64)
+    c.text(f"{w}.flavor_text", shift.get("flavor_text"), 90, 700)
+    c.art(f"{w}.art", shift.get("art"))
+    locations = {loc.get("location_id") for loc in pack.get("locations") or []}
+    if shift.get("location_id") not in locations:
+        c.err(w, f"location_id {shift.get('location_id')!r} is not a location in this pack")
+    memo = shift.get("memo") or {}
+    c.text(f"{w}.memo.title", memo.get("title"), 5, 80)
+    rules = memo.get("rules") or []
+    rule_ids = [r.get("id") for r in rules if isinstance(r, dict)]
+    if not 2 <= len(rules) <= 4 or len(set(rule_ids)) != len(rules):
+        c.err(f"{w}.memo.rules", "needs 2-4 rules with unique ids")
+    for r in rules:
+        c.slug(f"{w}.memo.rules.id", r.get("id"))
+        c.text(f"{w}.memo.rules[{r.get('id')}].text", r.get("text"), 15, 140)
+    applicants = shift.get("applicants") or []
+    if not 3 <= len(applicants) <= 5:
+        c.err(f"{w}.applicants", "a shift sees 3-5 applicants")
+    seen: set[str] = set()
+    broken_rules: set[str] = set()
+    stamps = {"approve": 0, "deny": 0}
+    bite = False
+    for a in applicants:
+        aid = a.get("id")
+        aw = f"{w}.applicants[{aid}]"
+        c.slug(f"{aw}.id", aid)
+        if aid in seen or aid in encounter_ids:
+            c.err(aw, "applicant ids must be unique and differ from encounter ids")
+        seen.add(aid)
+        c.text(f"{aw}.name", a.get("name"), 3, 48)
+        c.text(f"{aw}.request", a.get("request"), 15, 160)
+        c.text(f"{aw}.plea", a.get("plea"), 20, 300)
+        c.art(f"{aw}.art", a.get("art"))
+        documents = a.get("documents") or []
+        if not 2 <= len(documents) <= 4:
+            c.err(aw, "needs 2-4 documents")
+        breaks = []
+        for d in documents:
+            c.text(f"{aw}.documents.label", d.get("label"), 3, 40)
+            c.text(f"{aw}.documents.value", d.get("value"), 2, 80)
+            if d.get("breaks") is not None:
+                if d["breaks"] not in rule_ids:
+                    c.err(aw, f"document breaks unknown rule {d['breaks']!r}")
+                breaks.append(d["breaks"])
+        if len(breaks) > 1:
+            c.err(aw, "an applicant breaks at most one rule, so the shift reads at a glance")
+        broken_rules.update(breaks)
+        choices = a.get("choices") or []
+        if sorted(ch.get("id") for ch in choices) != sorted(WINDOW_STAMPS):
+            c.err(aw, "offers exactly two stamps: approve and deny")
+            continue
+        book = by_the_book(a)
+        stamps[book] += 1
+        for ch in choices:
+            cw = f"{aw}.choices[{ch.get('id')}]"
+            c.choice(cw, ch)
+            if ch.get("roll") is not None or ch.get("requires") is not None:
+                c.err(cw, "a stamp is certain and open to everyone: roll and requires are null")
+            effects = (ch.get("success") or {}).get("effects") or {}
+            grades = (ch.get("success") or {}).get("grades") or {}
+            if ch.get("id") != book and (effects.get("suspicion") or 0) < 1:
+                c.err(cw, "stamping against the memo must raise Suspicion (PAL audits every stamp)")
+            if ch.get("id") == book and (grades.get("empathy") or 0) < 0:
+                bite = True
+        if not graded(choices):
+            c.err(aw, "no stamp grades the player")
+        collect(aw, choices)
+    for rid in rule_ids:
+        if rid not in broken_rules:
+            c.err(f"{w}.memo.rules[{rid}]", "no applicant breaks this rule, so it never matters")
+    if applicants and not stamps["approve"]:
+        c.err(f"{w}.applicants", "at least one applicant must be clean (the memo says approve)")
+    if applicants and not stamps["deny"]:
+        c.err(f"{w}.applicants", "at least one applicant must break a rule")
+    if applicants and not bite:
+        c.err(f"{w}.applicants", "at least one by-the-book stamp must cost Empathy; the memo is never simply kind")
 
 
 def check_restructurings(c: "Checker", pack: dict, earlier_flags: set[str], earlier_outcomes: set[str]) -> None:
@@ -774,7 +888,8 @@ def flag_map(packs: list[Path], endings_path: Path | None = None) -> dict:
     for _, pack in _loaded(packs):
         dept = (pack.get("department") or {}).get("id")
         boss = pack.get("boss") if isinstance(pack.get("boss"), dict) else {}
-        for card in (pack.get("encounters") or []) + ([boss] if boss else []):
+        cards = (pack.get("encounters") or []) + window_applicants(pack) + ([boss] if boss else [])
+        for card in cards:
             for ch in card.get("choices") or []:
                 where = f"{dept}/{card.get('id')}/{ch.get('id')}"
                 for key in ("success", "failure"):
