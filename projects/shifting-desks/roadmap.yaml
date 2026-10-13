@@ -410,13 +410,13 @@ tasks:
   - id: t-014
     milestone: m3
     title: "Endings ledger and cross-department flag map"
-    status: ready
+    status: claimed
     depends_on:
       - t-010
       - t-011
       - t-012
       - t-013
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -424,6 +424,9 @@ tasks:
       authored epilogue cards and unlock conditions; a static check that every ending is
       reachable from some seeded route and that every flag a later pack reads is granted
       by an earlier pack.
+    claimed_by: 2026-10-13T-sd-t014-endings
+    claimed_at: '2026-10-13T10:24:03Z'
+    updated: '2026-10-13T10:24:03Z'
   - id: t-015
     milestone: m3
     title: "Illustrate the 13 Orientation card faces (12 encounters + review)"
