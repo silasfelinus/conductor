@@ -1,4 +1,31 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: requests
+  target: public/images/arcade/save-the-plumber/anim/heroine-a-v2-actions.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "Six clearly different key poses of an adult woman in her mid-twenties with grown-up adult proportions,
+    about seven heads tall, long legs and a…'
+  first_seen: '2026-10-14'
+- source: requests
+  target: public/images/arcade/save-the-plumber/anim/heroine-a-v2-run.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "Four frame sprint of an adult woman in her mid-twenties with grown-up adult proportions, about seven
+    heads tall, long legs and a slim athletic…'
+  first_seen: '2026-10-14'
+- source: requests
+  target: public/images/arcade/save-the-plumber/anim/heroine-a-v2-turnaround.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "Character model sheet of an adult woman in her mid-twenties with grown-up adult proportions, about
+    seven heads tall, long legs and a slim athl…'
+  first_seen: '2026-10-14'
