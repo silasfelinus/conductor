@@ -318,3 +318,32 @@ tasks:
     claimed_at: '2026-10-13T23:27:59Z'
     updated: '2026-10-13T23:48:07Z'
     implementation_pr: 'silasfelinus/kind_robots#3650'
+  - id: t-018
+    milestone: m2
+    title: "Painted heroine roster: eight heroines with portraits and run/action sheets in casting and the engine"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    approved_by_human: true
+    note: >-
+      Silas, 2026-10-14: "Love multiple heroines, with notable differences in
+      body type, ethnicity, etc." The roster is in ART-PLAN.md ("The heroine
+      roster"): Pip, Marisol, Tala, Ji-woo, Odette, Hodan, Priya and Nova, each
+      with a character select portrait and six-pose run and action sheets. Waits
+      on those renders. Then slice every sheet, re-roll any that fail, pick the
+      heroine from the seed, replace the code-drawn casting with the painted
+      portraits, and draw the chosen heroine's sheets in the engine, keeping the
+      canvas heroine as the fallback.
+    owner: worker
+  - id: t-019
+    milestone: m2
+    title: "Animate enemies and bosses from their painted sheets"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    note: >-
+      Waits on the 20 enemy and boss sheets queued in silasfelinus/conductor#6158
+      (reworded to drop "frame" in the roster PR). Slice each one and wire
+      move/tell/attack/hurt/defeat poses into the engine as enemies and bosses
+      appear, with the single keyed sprite as the fallback.
+    owner: worker

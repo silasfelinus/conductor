@@ -64,7 +64,8 @@ line, on white, which the engine keys out and slices into frames.
 becomes a roster: each new game randomly picks one of a set of fully painted young women (the way
 Rainbow Princess picks among P1 to P4), each with her own name and complete animation sheets. Every
 roster member keeps the same hitbox and abilities. The pilot tests two designs; if their frames hold
-together, the roster and every enemy and boss get full sheets.
+together, the roster and every enemy and boss get full sheets. Silas approved the roster on
+2026-10-14 (see "The heroine roster" below).
 
 ### Round 1 findings (2026-10-14)
 
@@ -107,5 +108,33 @@ save-the-plumber` (needs a kind_robots checkout beside conductor).
 
 Enemy batch (`anim/*-cycle`, `anim/*-attack`, priority 115): the other 13 enemy families and the
 other 7 bosses, six categorically different poses each (move, tell, attack, hurt, defeat), every
-figure small in its own sixth of the sheet. The heroine roster batch waits on Silas's call between
-a painted roster and the per-run randomized look.
+figure small in its own sixth of the sheet. The first push of this batch said "six frames" in 16
+prompts and was reworded to "poses" before any render (see the prompt-wording note above).
+
+### The heroine roster (Silas, 2026-10-14)
+
+Silas chose the painted roster: *"Love multiple heroines, with notable differences in body type,
+ethnicity, etc."* Each new game picks one of eight heroines at random. All share the hitbox and
+abilities, and all wear the crew motif (brass goggles, a scarf, a small wrench on the belt). Each
+has her own silhouette and palette so she reads at sprite size.
+
+| Key | Heroine | Build and look | Palette |
+| --- | --- | --- | --- |
+| `pip` | Pip | slim, pale and freckled, magenta bob (pilot Heroine B, sheets already in game) | mustard, lavender, white |
+| `marisol` | Marisol | slim athletic Afro-Latina, big curly hair, coral bandana (Heroine A, redrawn with small figures) | teal, cream, coral |
+| `tala` | Tala | tall and fat Samoan, broad shoulders, thick braid with a hibiscus clip | sunflower, white, turquoise |
+| `jiwoo` | Ji-woo | short, stocky and very muscular Korean, teal-topped undercut | safety orange, charcoal |
+| `odette` | Odette | Black grandmother in her sixties, soft sturdy build, silver locs, gold glasses | plum, denim, mustard |
+| `hodan` | Hodan | very tall and lanky Somali, sporty fitted hijab | teal, coral, olive |
+| `priya` | Priya | short and curvy Indian, long braid, gold nose stud | burgundy, saffron, pink |
+| `nova` | Nova | lean and wiry Indigenous North American, two braids, running-blade prosthetic right leg | denim, forest green, red |
+
+Queued per heroine (priority 130): a character select portrait (`cast/heroine-<key>`, 1024 square,
+painted backdrop), a six-pose run sheet and a six-pose action sheet (`anim/heroine-<key>-run`,
+`anim/heroine-<key>-actions`), using the small-figure formula. Pip only needs her portrait. Nova's
+blade is on her right leg so it shows on the near side in the right-facing sheets; if a sheet drops
+it in some poses, re-roll that sheet rather than painting it in by hand.
+
+When the sheets land: slice each one (4-connected, at 960px), re-roll any that fail, then replace
+the code-drawn casting with the painted roster. `rollHeroineSeed` picks the heroine, and "keep"
+remembers her.

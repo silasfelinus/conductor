@@ -1765,43 +1765,32 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
   depends_on: t-103
-  note: >-
+  note: |-
     Recurring kr-* consistency umbrella (interface-vision). Full slice 1-234 history (395KB) archived to projects/interface-vision/T104-HISTORY.md -- see that file for the full archive pointer and what's established. Slice 236 merged as silasfelinus/kind_robots#2644. Named .kr-input-rounded-xl/.kr-input-rounded-2xl (the rounded-xl/rounded-2xl override shapes on the .kr-input family that .kr-input/.kr-input-sm/.kr-input-xs don't cover), dropping the dead input-bordered class; migrated 68 occurrences across 25 files via two new codemods (kr_input_rounded_xl_codemod.py, kr_input_rounded_2xl_codemod.py). No color/behavior/API/schema/route/geometry change. All kind_robots PR checks green. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: the btn/badge combos flagged by slice 235 (btn btn-primary btn-sm rounded-2xl, badge badge-sm rounded-xl) remain unclaimed -- a fresh full-repo class-frequency survey outside every closed family (now also kr-input-rounded-xl/-2xl) is the starting point. Keep this note short going forward -- append future slice history to T104-HISTORY.md, not here. Slice 237 merged as silasfelinus/kind_robots#2646. Named .kr-btn-primary-2xl (rounded-2xl sibling of .kr-btn-primary) and migrated 13 btn btn-primary btn-sm rounded-2xl occurrences across 12 files; migrated 13 badge badge-sm rounded-xl occurrences across 9 files onto the existing radius-less .kr-badge-sm primitive. No color/behavior/API/schema/route/geometry change. All 52 kind_robots PR checks green, mergeable_state clean before merge. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: no further exact-match btn- primary-sm-rounded-2xl or badge-sm-rounded-xl occurrences remain; the wider (still hand- rolled) badge badge-sm pool has other radius/utility variants (rounded-lg, shrink-0, absolute positioning -- see conductor/coat-dance-page.vue, storybook/storybook-life- run.vue) that a future slice could survey individually, similar to how .kr-badge-xs treated its more varied pool. Slice 238 (silasfelinus/kind_robots#2647): extended kr_badge_codemod.py's BOUNDED_EXTRAS["kr-badge-sm"] with shrink-0 and rounded-lg[+font-black], migrating 11 occurrences across 9 files. PR open, CI in progress. Slice 238 merged as silasfelinus/kind_robots#2647 (squash 4d0b6b2). Extended kr_badge_codemod.py's BOUNDED_EXTRAS["kr-badge-sm"] with shrink-0 and rounded-lg[+font- black], migrating 11 occurrences across 9 files. All 52 kind_robots PR checks green (Contract verifiers took ~6 min this run, matching the known intermittent-stall pattern in conductor/t-132, but resolved on its own before the 10-minute job timeout -- no rerun needed). Return the recurring consistency umbrella to ready for the next bounded slice. [...]
-
     [Earlier history (40,414 chars) archived verbatim to projects/interface-vision/T104-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
-
     Bounded consistency survey slice: added a discovery-only codemod for the still-hand-rolled font-medium text-xs family. No runtime classes changed; the tool quantifies candidates before opening a shared primitive.
-
     Bounded consistency survey slice: added a discovery-only codemod for the still-hand-rolled font-medium text-xs family. No runtime classes changed; the tool quantifies candidates before opening a shared primitive.
-
-    Merged silasfelinus/kind_robots#2912 (medium-xs text family survey codemod, discovery-
-    only, no runtime changes) -- all 46 checks green, mergeable_state clean. Re-arming
-    recurring umbrella to ready for the next bounded slice.
-
+    Merged silasfelinus/kind_robots#2912 (medium-xs text family survey codemod, discovery- only, no runtime changes) -- all 46 checks green, mergeable_state clean. Re-arming recurring umbrella to ready for the next bounded slice.
     Prepared the medium-xs survey helper for the eventual runtime migration by adding a fail-closed --write path that refuses until .kr-text-medium-xs exists, preserves unrelated class tokens, and can remain bounded to exact-only candidates. Implementation branch head 5e1ae4a9357977b359162168d5575d03b02a69e7.
-
     Reviewed and merged silasfelinus/kind_robots#2916 at exact head 5e1ae4a9357977b359162168d5575d03b02a69e7 after all returned exact-head workflow runs completed successfully. The fail-closed medium-xs migration helper is now on main; return the recurring consistency umbrella to ready for the next bounded slice.
-
     Bounded consistency slice adds a dry-run-first codemod for the remaining hand-rolled badge badge-error badge-sm shape, migrating onto the existing kr-badge-sm base while preserving badge-error and any extra utilities. No runtime classes changed in this slice.
-
     State reconciliation after the prior slice merged: kind_robots#2954 is merged and there is no open reviewer target, but recurring interface-vision/t-104 remained status: review. Rearm the recurring consistency umbrella so the next bounded slice can be selected normally.
-
     Reviewer merged Kind Robots PR #2957 at b46b91f7f3c9601631b48bf252b707cdfa02e7ed after all exact-head Actions completed successfully. Recurring consistency sweep is ready for its next bounded slice. kind-economy/t-028 (2026-09-23): mission-accrual-page.vue, cited above as a live icon-badge-header example file (slice 149's kr-icon-tile survey), was deliberately retired by Silas in kind_robots#2669 (2026-09-12) -- not an accident. It is no longer a valid example file for future slices; do not treat its historical mentions above as describing a currently-live page.
+    CAPPED 2026-09-30 by Silas (in session: "cap them"): min_rest_hours: 24 -- at most one cycle per day, even after a cycle that did real work (this task ran up to 35 times a day in early September). Every picker honors it via roadmap_claims.task_is_resting; re-arm with close_task.py as usual (add --noop when the cycle found nothing, which lengthens the rest up to 48h).
 
-    CAPPED 2026-09-30 by Silas (in session: "cap them"): min_rest_hours: 24 -- at most one
-    cycle per day, even after a cycle that did real work (this task ran up to 35 times a day
-    in early September). Every picker honors it via roadmap_claims.task_is_resting; re-arm
-    with close_task.py as usual (add --noop when the cycle found nothing, which lengthens
-    the rest up to 48h).
-  updated: '2026-09-21T20:19:00Z'
+    Silas requests sitewide application of the viewport-first interaction and fully-scrollable gallery rule. Audit route inventory, add sitewide regression protection, fix highest-impact shared shells and targeted surfaces in scoped PRs.
+  updated: '2026-10-14T05:02:21Z'
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
   min_rest_hours: 24
+  owner: worker
+  claimed_by: 2026-10-14T050221Z-interface-vision-t104-18b8
+  claimed_at: '2026-10-14T05:02:21Z'
 
 - id: t-123
   milestone: m5

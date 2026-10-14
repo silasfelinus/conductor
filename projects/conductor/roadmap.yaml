@@ -3129,11 +3129,11 @@ tasks:
   implementation_pr: 'silasfelinus/conductor#5833'
 - id: t-207
   title: "Approved daily pitches need automatic intake, admin playable previews, and explicit Play promotion"
-  status: ready
+  status: review
   stakes: reversible
   passes: 0
   source_issue: "silasfelinus/conductor#6013"
-  updated: '2026-10-14T01:46:00Z'
+  updated: '2026-10-14T05:07:00Z'
   note: |-
     FROM GITHUB ISSUE silasfelinus/conductor#6013 (https://github.com/silasfelinus/conductor/issues/6013), opened by @silasfelinus on 2026-10-12. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/conductor#6013`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -3152,6 +3152,11 @@ tasks:
     First reversible intake-recovery slice staged: idempotent historical approved-pitch backfill, concrete admin-preview/playability/art/polish tasks, hourly scheduled workflow and tests. Post-cutover daily-delivery process remains untouched; public release still requires approval. Implementation not yet merged; issue and roadmap remain open for live preview and backfill verification.
 
     Merged first automated legacy approved-pitch intake slice in conductor PR #6148 (commit e53f76df675449c58d60df0970aaf696f7795172), verified 23 fully green checks. Re-arm remaining non-recurring work as ready: verify actual historical backfill and projection sync, create and verify real protected Kind Robots previews and project presentation links, deliver missing gameplay/art, and require human approval before public Play promotion. Historical approval backfill is not full issue completion.
+
+    Historical approval recovery YAML corruption reproduced from the completed workflow: older project task lists are zero-indented but intake hardcoded two spaces. Staged a source-format-preserving and validated insertion helper with focused regression tests. Full backfill verification remains required; this issue is not closed by the patch alone.
+  owner: worker
+  claimed_by: 2026-10-14T050200Z-conductor-t207-gpt6-f4c2
+  claimed_at: '2026-10-14T05:02:00Z'
 
 - id: t-208
   title: "enqueue_art_requests.py --status overwrites hand-set REJECTED art statuses"
