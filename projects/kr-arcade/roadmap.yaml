@@ -1278,8 +1278,6 @@ tasks:
     status: review
     updated: '2026-10-14T00:35:24Z'
     passes: 1
-    retry_context: >-
-      Pass 1 failed (quality) on kind_robots#3593 head 5e8783bc0ef16cf6a363c77b4af6258340e5b453: addScore can earn 100+ spare cables while snapshot writes the unbounded count; readCableSave rejects lives above 99 and clamps accepted counts to Workbench MAX_LIVES=9. The actual score path (97 awards of 100000; score 9.7M below the 60M ceiling) -> beginComponent(1) -> withSave/JSON/sanitizeSaves -> create(resume) loses Continue and resets the checkpoint. Align earned-life, purchase-cap and bounded persistence semantics. Add consumer regressions at relevant boundaries with later component, earned bytes and kit; keep existing immediate boss/Workbench save tests and strict validators. Original worker retains this PR; no duplicate implementation.
     stakes: reversible
     depends_on: t-064
     note: |-
@@ -1290,7 +1288,7 @@ tasks:
       Focused recovery of recorded quality pass1: original kind_robots#3593 is already merged, but live source still awards unbounded spare cables and its strict save reader rejects above99/clamps accepted earned counts to the Workbench purchase cap9. No open Cable PR or overlapping task claim. Preserve existing RAM/Fan mechanics, strict validation and purchase ceiling; reproduce legitimate score-award/save/Continue boundary before repair. Daily five forOctober13PT already evidenced separately. Local role selector used stale checkout/no GitHub token, so live connected PRs/claims and current source supersede its outdated audit signal.
 
       Quality-pass1 recovery for already-merged kind_robots#3593 prepared on worker/kr-arcade-t065-save-recovery-d7p2. Score-awarded spares use the existing strict99 save domain; Workbench purchases remain capped9, earned10..99 survive reload without clamping. Actual score-path tests reproduce old10-to9 loss and100-cable overflow separately; repaired boundary matrix8/9/10/98/99, publicA/Start Continue, bytes/kit, post-cap actual battery loss and re-earn, and unchanged invalid-count rejection pass. Full35cabinet arcade command, strict scoped tsc, ESLint/Prettier and nine native Chromium actual touch/keyboard/storage/repeatedContinue/render cases390/768/1440 pass. Staged score-award/byte fixtures do not prove human50-60minute pacing or deployment. Existing RAM/Fan implementation retained; PR/CI/merge pending. Daily five ledger unchanged.
-    implementation_pr: 'silasfelinus/kind_robots#3593'
+    implementation_pr: 'silasfelinus/kind_robots#3654'
     owner: worker
     claimed_by: 20261014T003039Z-cable-t065-d7p2
     claimed_at: '2026-10-14T00:30:39Z'
@@ -2668,3 +2666,25 @@ tasks:
       validators, auth, score ceilings and required checks; distinguish staged profiles from
       full human campaign timing and deployment evidence. The task-event dependency resolver
       releases this follow-up after verified t-057 closeout.
+
+  - id: t-153
+    milestone: m8
+    title: "Verify Cable Crawler earned spares through cabinet retirement and Workbench continuation."
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: t-065
+    note: >-
+      Reviewer kaizen after kind_robots#3654, targeting the repeated writer-reader/profile
+      persistence quality pattern. Game/helper tests now preserve score-earned cables
+      through99 while Workbench purchases stop9. Exercise the actual ArcadeCabinet/store
+      keepSave and retirement path with legitimate score awards around9/10/98/99, a later
+      component checkpoint and golden bytes/kit. Reopen through A/Start Continue; at the
+      real Workbench reject a cable purchase above its nine-cable ceiling without spending
+      copper or reducing earned lives, then buy another eligible item, exit immediately and
+      reload. Include an actual loss followed by re-earning at the saved-life ceiling.
+      Reuse real consumers and bounded staged fixtures, not copied save or input handlers;
+      fix only a reproduced integration gap. Preserve strict validators, auth, score
+      ceilings and required checks. Separate staged evidence from human50-60minute pacing
+      and deployed-device acceptance. Dependency resolution releases this follow-up after
+      verified t-065 closeout.
