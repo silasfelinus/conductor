@@ -2445,12 +2445,12 @@ tasks:
   implementation_pr: 'silasfelinus/kind_robots#3681'
 - id: t-143
   title: "Zuzu World: admin resource explorer with live joins to shared universe registry"
-  status: ready
+  status: done
   stakes: reversible
   owner: null
   passes: 0
   source_issue: "silasfelinus/kind_robots#3388"
-  updated: '2026-10-09'
+  updated: '2026-10-14T07:34:28Z'
   note: |-
     FROM GITHUB ISSUE silasfelinus/kind_robots#3388 (https://github.com/silasfelinus/kind_robots/issues/3388), opened by @silasfelinus on 2026-10-09. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3388`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -2477,6 +2477,13 @@ tasks:
     - New canon, cast changes and external publication remain human-gated; art-generation rights and pipelines remain with production owners.
 
     This issue is a follow-up to Conductor [PR #5812](https://github.com/silasfelinus/conductor/pull/5812), which delivered the repository-backed world registry and cross-production links.
+
+    Done 2026-10-14: production roles/slots/pinned versions on ProjectArtImage (additive
+    migration 20261014090000) and read-only repository-media index (488 files) shipped in
+    kind_robots#3681; first slice was #3392. Remaining post-deploy visual acceptance, typed
+    lore editing and durable ArtJob enqueue moved to interface-vision/t-148 (kind-robots
+    project is retired).
+  implementation_pr: 'silasfelinus/kind_robots#3681'
 
 - id: t-144
   milestone: m6
