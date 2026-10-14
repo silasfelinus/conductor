@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-10-13T17:38:58.020934+00:00`
+Generated: `2026-10-14T15:12:53.462463+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **83** roadmaps, **23** active + **3** continuous projects, **2329** tasks
-- **141 ready**, **181 waiting**, **37 needs-human**, **16 claimed/review**, **1938 done**
-- Findings: **0 errors**, **26 warnings**, **82 informational**
+- **83** roadmaps, **23** active + **3** continuous projects, **2373** tasks
+- **168 ready**, **188 waiting**, **37 needs-human**, **17 claimed/review**, **1947 done**
+- Findings: **0 errors**, **28 warnings**, **84 informational**
 
 ## Project inventory
 
@@ -16,26 +16,26 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `kind-pinball` | finished | software | 1 | 0 | 0 | 0 | 34 / 35 |
 | 2 | `zuzu-lair` | active | software | 0 | 4 | 2 | 1 | 7 / 14 |
-| 3 | `kr-arcade` | active | software | 27 | 63 | 0 | 1 | 60 / 151 |
+| 3 | `kr-arcade` | active | software | 29 | 59 | 1 | 2 | 64 / 155 |
 | 4 | `zuzu-showdown` | active | software | 3 | 0 | 0 | 0 | 29 / 32 |
 | 5 | `cthulhuquarium` | paused | software | 2 | 0 | 1 | 0 | 83 / 86 |
 | 6 | `kind-economy` | paused | software | 0 | 4 | 1 | 1 | 22 / 28 |
 | 7 | `butterfly-gallery` | finished | software | 1 | 0 | 0 | 0 | 34 / 35 |
 | 8 | `art-archive` | finished | software | 0 | 2 | 0 | 2 | 40 / 44 |
 | 9 | `mandarin-tutor` | paused | software | 0 | 0 | 0 | 1 | 30 / 31 |
-| 10 | `interface-vision` | continuous | software | 4 | 1 | 0 | 0 | 138 / 143 |
+| 10 | `interface-vision` | continuous | software | 9 | 2 | 0 | 0 | 138 / 149 |
 | 11 | `humboldt-scoop-cms` | paused | software | 1 | 1 | 4 | 0 | 40 / 46 |
 | 12 | `digital-storefront` | paused | software | 1 | 2 | 1 | 0 | 40 / 44 |
-| 13 | `kind-robots` | retired | software | 6 | 0 | 0 | 3 | 138 / 147 |
+| 13 | `kind-robots` | retired | software | 4 | 0 | 0 | 3 | 140 / 147 |
 | 14 | `rainbow-butterflies` | paused | software | 0 | 1 | 2 | 0 | 50 / 53 |
 | 15 | `music-video` | finished | software | 6 | 3 | 0 | 0 | 26 / 35 |
 | 16 | `comic-film` | paused | software | 3 | 6 | 0 | 0 | 2 / 11 |
 | 17 | `zuzu-gamebook` | active | software | 5 | 1 | 0 | 0 | 6 / 12 |
 | 18 | `zuzu-shifting-lands` | active | software | 3 | 3 | 1 | 1 | 21 / 29 |
-| 19 | `zuzu-pinball` | active | software | 2 | 1 | 1 | 1 | 16 / 21 |
+| 19 | `zuzu-pinball` | active | software | 4 | 1 | 1 | 0 | 16 / 22 |
 | 20 | `emperor-of-dust` | active | software | 4 | 7 | 1 | 0 | 6 / 18 |
-| 21 | `rainbow-bullet-hell-space-princess` | active | software | 7 | 8 | 0 | 2 | 4 / 21 |
-| 22 | `save-the-plumber` | active | software | 4 | 9 | 0 | 0 | 3 / 16 |
+| 21 | `rainbow-bullet-hell-space-princess` | active | software | 8 | 8 | 0 | 1 | 5 / 22 |
+| 22 | `save-the-plumber` | active | software | 4 | 9 | 0 | 2 | 4 / 19 |
 | 23 | `shifting-desks` | active | software | 5 | 0 | 0 | 0 | 21 / 26 |
 | 24 | `tzaddik-gallery` | finished | software | 1 | 1 | 1 | 0 | 31 / 34 |
 | 25 | `scene-animator` | finished | software | 0 | 0 | 0 | 0 | 11 / 11 |
@@ -52,18 +52,18 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 36 | `comic-creator` | retired | software | 10 | 2 | 0 | 0 | 11 / 23 |
 | 37 | `kr-solitaire` | active | software | 4 | 2 | 0 | 0 | 5 / 11 |
 | 38 | `kr-adventures` | retired | software | 4 | 4 | 0 | 0 | 3 / 11 |
-| 39 | `kind-oracle` | active | software | 1 | 3 | 0 | 0 | 4 / 8 |
-| 40 | `pocket-pet-robot` | active | software | 1 | 4 | 0 | 0 | 3 / 8 |
+| 39 | `kind-oracle` | active | software | 3 | 4 | 0 | 0 | 4 / 11 |
+| 40 | `pocket-pet-robot` | active | software | 3 | 5 | 0 | 0 | 3 / 11 |
 | 41 | `evolve-rebel-button` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
-| 42 | `robot-mashup-flipbook` | active | software | 1 | 0 | 0 | 0 | 1 / 2 |
-| 43 | `robot-sound-garden` | active | software | 1 | 0 | 0 | 0 | 1 / 2 |
-| 44 | `kind-trivia-trail` | active | software | 1 | 0 | 0 | 0 | 1 / 2 |
-| 45 | `kind-lantern-garden` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
-| 46 | `robot-species-sorting-quiz` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
-| 47 | `kind-daily-riddle` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
-| 48 | `kind-nonogram-gallery` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
-| 49 | `robot-paper-boat-regatta` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
-| 50 | `kind-sliding-tile-gallery` | active | software | 2 | 0 | 1 | 0 | 0 / 3 |
+| 42 | `robot-mashup-flipbook` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 43 | `robot-sound-garden` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 44 | `kind-trivia-trail` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 45 | `kind-lantern-garden` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 46 | `robot-species-sorting-quiz` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 47 | `kind-daily-riddle` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 48 | `kind-nonogram-gallery` | active | software | 4 | 1 | 0 | 0 | 1 / 6 |
+| 49 | `robot-paper-boat-regatta` | active | software | 3 | 1 | 0 | 0 | 2 / 6 |
+| 50 | `kind-sliding-tile-gallery` | active | software | 4 | 0 | 0 | 0 | 1 / 5 |
 | 51 | `dream-cycle` | continuous | software | 5 | 0 | 0 | 0 | 34 / 39 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
@@ -104,36 +104,38 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (26)
+### Warning (28)
 
 - **STALE_CLAIM_FIELDS** — `animation-manager` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 19 days.
-- **STALE_IN_PROGRESS** — `art-archive` / `t-033`: Task has remained claimed for 10 days.
-- **STALE_IN_PROGRESS** — `art-archive` / `t-044`: Task has remained claimed for 10 days.
+- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 20 days.
+- **STALE_IN_PROGRESS** — `art-archive` / `t-033`: Task has remained claimed for 11 days.
+- **STALE_IN_PROGRESS** — `art-archive` / `t-044`: Task has remained claimed for 11 days.
 - **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 16 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `comic-film` / `t-009`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
-- **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 12 days.
-- **STALE_IN_PROGRESS** — `kind-economy` / `t-011`: Task has remained claimed for 7 days.
+- **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 13 days.
+- **STALE_IN_PROGRESS** — `kind-economy` / `t-011`: Task has remained claimed for 8 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-economy` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
-- **STALE_IN_PROGRESS** — `kind-robots` / `t-127`: Task has remained review for 9 days.
-- **STALE_IN_PROGRESS** — `kind-robots` / `t-131`: Task has remained review for 7 days.
-- **STALE_IN_PROGRESS** — `kind-robots` / `t-133`: Task has remained review for 6 days.
+- **STALE_IN_PROGRESS** — `kind-robots` / `t-127`: Task has remained review for 10 days.
+- **STALE_IN_PROGRESS** — `kind-robots` / `t-131`: Task has remained review for 8 days.
+- **STALE_IN_PROGRESS** — `kind-robots` / `t-133`: Task has remained review for 7 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-robots` / `t-139`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-014`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-015`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-018`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
-- **STALE_IN_PROGRESS** — `mandarin-tutor` / `t-030`: Task has remained claimed for 10 days.
-- **IN_PROGRESS_WITHOUT_TIMESTAMP** — `rainbow-bullet-hell-space-princess` / `t-020`: Claimed/review task has no parseable updated timestamp.
+- **STALE_CLAIM_FIELDS** — `kr-arcade` / `t-009`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
+- **STALE_IN_PROGRESS** — `mandarin-tutor` / `t-030`: Task has remained claimed for 11 days.
+- **IN_PROGRESS_WITHOUT_TIMESTAMP** — `save-the-plumber` / `t-018`: Claimed/review task has no parseable updated timestamp.
+- **IN_PROGRESS_WITHOUT_TIMESTAMP** — `save-the-plumber` / `t-019`: Claimed/review task has no parseable updated timestamp.
 - **POSSIBLY_UNNECESSARY_GATE** — `tzaddik-gallery` / `t-013`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **SOFT_NEEDS_HUMAN** — `zuzu-lair` / `t-006`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-lair` / `t-008`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-lair` / `t-010`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
-- **STALE_IN_PROGRESS** — `zuzu-lair` / `t-014`: Task has remained review for 3 days.
-- **STALE_IN_PROGRESS** — `zuzu-shifting-lands` / `t-004`: Task has remained review for 3 days.
+- **STALE_IN_PROGRESS** — `zuzu-lair` / `t-014`: Task has remained review for 4 days.
+- **STALE_IN_PROGRESS** — `zuzu-shifting-lands` / `t-004`: Task has remained review for 4 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-showdown` / `t-025`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 
-### Info (82)
+### Info (84)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-064`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-079`: approved_by_human is set on a task that is not human-gated.
@@ -175,7 +177,7 @@ _None._
 - **APPROVAL_WITHOUT_GATE** — `kind-oracle` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `kind-pinball`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **APPROVAL_WITHOUT_GATE** — `kind-pinball` / `t-035`: approved_by_human is set on a task that is not human-gated.
-- **INACTIVE_PROJECT_HAS_READY_TASKS** — `kind-robots`: Inactive project retains 6 ready task(s); harmless but misleading in generated status.
+- **INACTIVE_PROJECT_HAS_READY_TASKS** — `kind-robots`: Inactive project retains 4 ready task(s); harmless but misleading in generated status.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-078`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-092`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-104`: approved_by_human is set on a task that is not human-gated.
@@ -186,6 +188,7 @@ _None._
 - **APPROVAL_WITHOUT_GATE** — `kr-arcade` / `t-011`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kr-arcade` / `t-012`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kr-arcade` / `t-021`: approved_by_human is set on a task that is not human-gated.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `kr-arcade` / `t-155`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `lora-ingestion`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **APPROVAL_WITHOUT_GATE** — `mandarin-tutor` / `t-021`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `mandarin-tutor` / `t-030`: approved_by_human is set on a task that is not human-gated.
@@ -203,6 +206,7 @@ _None._
 - **APPROVAL_WITHOUT_GATE** — `robot-species-sorting-quiz` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `ruler-hooked`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **APPROVAL_WITHOUT_GATE** — `ruler-hooked` / `t-031`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `save-the-plumber` / `t-018`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `scene-animator` / `t-005`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `shifting-desks` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `storybook`: Inactive project retains 5 ready task(s); harmless but misleading in generated status.
