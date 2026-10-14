@@ -93,3 +93,19 @@ Round 1 lost seven sheets and round 2 lost three to 422s this way. Say "poses" a
 poses of ...", "the same character repeated in every pose", "every figure the same scale", "first
 pose ..."). Before pushing new rows, run `python scripts/check_art_prompts_live_contract.py --project
 save-the-plumber` (needs a kind_robots checkout beside conductor).
+
+### Round 2 findings and the enemy batch (2026-10-14)
+
+- **Figure size decides separation.** Heroine B's sheets, the pumpbug and Madame Pressure all sliced
+  cleanly because their figures sat small in their sections. Heroine A's adult-proportion sheets
+  touched and failed to slice; her round-2 turnaround drew five views instead of four.
+- Adult proportions worked: Heroine A v2 reads as a young adult.
+- Heroine B's run sheet varies its stride across six frames and is now the game's first painted
+  animation (kind_robots silasfelinus/kind_robots#3666), with the pumpbug walk cycle.
+- Madame Pressure's body barely changes across frames, but her gauge needle (green, red, green) is
+  the readable tell; steam and shake are added in code.
+
+Enemy batch (`anim/*-cycle`, `anim/*-attack`, priority 115): the other 13 enemy families and the
+other 7 bosses, six categorically different poses each (move, tell, attack, hurt, defeat), every
+figure small in its own sixth of the sheet. The heroine roster batch waits on Silas's call between
+a painted roster and the per-run randomized look.
