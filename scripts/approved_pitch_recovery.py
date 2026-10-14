@@ -96,15 +96,15 @@ def _ensure_standalone_tasks(row: dict) -> bool:
     parsed = yaml.safe_load(text) or {}
     if parsed.get("project") != slug:
         raise ValueError(f"project identity mismatch for {slug}")
-    if source in text:
-        return False
 
-    original_task_ids = {
-        str(t["id"]) for t in parsed.get("tasks", []) if isinstance(t, dict)
-    }
-    if not original_task_ids:
+    tasks = [task for task in parsed.get("tasks", []) if isinstance(task, dict)]
+    if not tasks:
         raise ValueError(f"scaffold has no tasks: {slug}")
-    ids = []
+    milestones = [m.get("id") for m in parsed.get("milestones", [])
+                  if isinstance(m, dict) and m.get("id")]
+    if not milestones:
+        raise ValueError(f"scaffold has no milestones: {slug}")
+
     followups = [
         (
             "Build an actual admin-only interactive preview",
@@ -124,15 +124,38 @@ def _ensure_standalone_tasks(row: dict) -> bool:
             "publishing and outward-facing operations remain human-gated.",
         ),
     ]
+    # A pitch reference in t-003 is evidence of ONE slice, not proof that its
+    # admin preview, art and release checks all exist. Match work per slice.
+    existing = {
+        str(task.get("title")): str(task.get("id"))
+        for task in tasks
+        if task.get("source_pitch") == source
+    }
+    implementation = next(
+        (
+            task for task in tasks
+            if source in str(task.get("note", ""))
+            and str(task.get("milestone")) == "m2"
+            and any(word in str(task.get("title", "")).lower()
+                    for word in ("ship", "build", "implement", "playable"))
+        ),
+        None,
+    )
     added = ""
-    for title, note in followups:
-        current = _next_task_id(text + added)
-        ids.append(current)
-        milestone = ("m2" if len(ids) < 3 else "m3")
-        if milestone not in {m.get("id") for m in parsed.get("milestones", []) if isinstance(m, dict)}:
-            milestone = str(parsed["milestones"][-1]["id"])
+    ids: list[str] = []
+    for index, (title, note) in enumerate(followups):
+        prior = existing.get(title)
+        if not prior and index == 1 and implementation:
+            prior = str(implementation["id"])
+        if prior:
+            ids.append(prior)
+            continue
+        task_id = _next_task_id(text + added)
+        milestone = ("m2" if index < 2 else "m3")
+        if milestone not in milestones:
+            milestone = str(milestones[-1])
         added += (
-            f"\n  - id: {current}\n"
+            f"\n  - id: {task_id}\n"
             f"    milestone: {milestone}\n"
             f"    title: {_quoted(title)}\n"
             "    status: ready\n"
@@ -142,8 +165,12 @@ def _ensure_standalone_tasks(row: dict) -> bool:
             f"    source_pitch: {_quoted(source)}\n"
             f"    note: {_quoted(note + ' Pitch: ' + row.get('hook', ''))}\n"
         )
-        if len(ids) > 1:
-            added += f"    depends_on: {ids[-2]}\n"
+        if ids and index == 2:
+            # Polish waits for playable content, not only for the UI scaffold.
+            added += f"    depends_on: {ids[-1]}\n"
+        ids.append(task_id)
+    if not added:
+        return False
     roadmap.write_text(text.rstrip("\n") + "\n" + added, encoding="utf-8")
     return True
 
