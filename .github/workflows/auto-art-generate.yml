@@ -174,6 +174,23 @@ jobs:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
         run: python scripts/submit_mandarin_tutor_artjobs.py --limit 1000
 
+      # Shifting Desks has 220 approved style requests. Hand all of them to
+      # the durable ArtJob scheduler first, instead of blocking on each render
+      # (up to 300s each) inside a 150-minute workflow. Stable request IDs and
+      # last_art_job_id prevent repeat submissions on subsequent scheduled runs.
+      - name: Bulk-submit Shifting Desks style ArtJobs
+        id: shifting_desks_submit
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          set -o pipefail
+          python scripts/consume_art_requests_to_media.py --live --submit-only \
+            --id-prefix shifting-desks-style-v2- 2>&1 | tee "$RUNNER_TEMP/art-shifting-desks-submit.log"
+
       # Time-sensitive request lanes go first. Daily Dream requests are already
       # priority 200 once they become ArtJobs; Mandarin curriculum art is staged
       # at priority 80; ordinary repair/missing-image requests remain priority 0.

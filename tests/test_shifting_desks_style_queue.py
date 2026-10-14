@@ -55,3 +55,21 @@ def test_western_cartoon_is_arhemy_not_rejected_furrytoonmix():
         "Illustrious/arthemyWesternArt_v30.safetensors"
     )
     assert "western animated feature" in CHECKPOINT_LANES["western-cartoon"]["style"]
+
+
+def test_shifting_desks_220_job_batch_is_submitted_before_serial_render_wait():
+    workflow = (ROOT / ".github/workflows/auto-art-generate.yml").read_text()
+    submit = workflow.index("name: Bulk-submit Shifting Desks style ArtJobs")
+    slow = workflow.index("name: Submit + wait + verify art requests")
+    assert submit < slow
+    block = workflow[submit:slow]
+    assert "--live --submit-only" in block
+    assert "--id-prefix shifting-desks-style-v2-" in block
+    assert "continue-on-error: true" in block
+    assert "KR_API_TOKEN:" in block
+    assert "steps.boxhealth.outputs.up == 'true'" in block
+    assert "steps.krhealth.outputs.up == 'true'" in block
+    # One concurrency group serializes submissions, so the next run sees
+    # last_art_job_id instead of POSTing copies.
+    assert "group: auto-art-generate" in workflow
+    assert "cancel-in-progress: false" in workflow
