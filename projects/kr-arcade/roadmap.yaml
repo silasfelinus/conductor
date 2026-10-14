@@ -1506,7 +1506,7 @@ tasks:
   - id: t-078
     milestone: m8
     title: "Brick Bloom depth slice 1: The bloom core"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -1524,16 +1524,19 @@ tasks:
       sprout/hinge/puffball crates, R/T/Q seeds. Pilot probe seeds 5/9/13: last three crates
       3.7-10.5 s (target <30 s). verifyCabinetBrickBloom.test.ts added; test:arcade-engine 34
       suites, vue-tsc, eslint, prettier clean. No saves/co-op yet (later slices).
+
+      Reconciled 2026-10-14: slice 1 PR kind_robots#3643 merged 2026-10-13T21:48:27Z; later
+      slices tracked as t-079+.
     owner: worker
     claimed_by: claude-gbemzx-brickbloom
     claimed_at: '2026-10-13T20:45:31Z'
-    updated: '2026-10-13T21:48:41Z'
+    updated: '2026-10-14T09:48:06Z'
     implementation_pr: 'silasfelinus/kind_robots#3643'
 
   - id: t-079
     milestone: m8
     title: "Brick Bloom depth slice 2: Seedling House and Vine Hall"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-078
