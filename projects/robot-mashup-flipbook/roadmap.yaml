@@ -62,3 +62,31 @@ tasks:
     gate_rechecked: '2026-10-04'
     approved_by_human: true
     updated: '2026-10-10T09:34:38Z'
+  - id: t-003
+    milestone: m2
+    title: "Build an actual admin-only interactive preview"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-03-robot-mashup-flipbook.md"
+    note: "Implement the first executable interaction under an /admin/ route, with an ADMIN tab, contextual tutorial, server authorization, and targeted tests. A scaffold or status URL is NOT a preview. Pitch: A three-band flip toy where the head, torso and legs of twelve robots turn independently, so you can spin up 1,728 silly combinations, each with a pre-written funny name built from hand-authored name parts. Save a favourite as a card to download or share."
+  - id: t-004
+    milestone: m2
+    title: "Implement the first playable or usable content slice and art"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-03-robot-mashup-flipbook.md"
+    note: "Produce genuine mechanics/content and queue or reuse verified art through the normal no-unapproved-spend pipeline; test the experience, not only metadata. Pitch: A three-band flip toy where the head, torso and legs of twelve robots turn independently, so you can spin up 1,728 silly combinations, each with a pre-written funny name built from hand-authored name parts. Save a favourite as a card to download or share."
+  - id: t-005
+    milestone: m3
+    title: "Polish, verify and request explicit Play promotion"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-03-robot-mashup-flipbook.md"
+    note: "Review phone/tablet/desktop usability, art relevance and functional checks. Only after a working build and owner approval may a public /play route launch; publishing and outward-facing operations remain human-gated. Pitch: A three-band flip toy where the head, torso and legs of twelve robots turn independently, so you can spin up 1,728 silly combinations, each with a pre-written funny name built from hand-authored name parts. Save a favourite as a card to download or share."
+    depends_on: t-004

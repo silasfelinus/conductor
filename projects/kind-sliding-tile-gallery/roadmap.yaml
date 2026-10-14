@@ -74,3 +74,22 @@ tasks:
     claimed_by: 2026-10-14T013100Z-sliding-tiles-t003-gpt6-64ad
     claimed_at: '2026-10-14T01:31:00Z'
     updated: '2026-10-14T02:52:00Z'
+  - id: t-004
+    milestone: m2
+    title: "Build an actual admin-only interactive preview"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-11-kind-sliding-tile-gallery.md"
+    note: "Implement the first executable interaction under an /admin/ route, with an ADMIN tab, contextual tutorial, server authorization, and targeted tests. A scaffold or status URL is NOT a preview. Pitch: A sliding-tile puzzle toy where each solved board reveals one piece from a pre-generated gallery of Kind Robots art, with captions written ahead of time. Boards grow from three-by-three to five-by-five, and every solve fills a keepsake wall saved locally, with a daily seeded board for a shared challenge."
+  - id: t-005
+    milestone: m3
+    title: "Polish, verify and request explicit Play promotion"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-11-kind-sliding-tile-gallery.md"
+    note: "Review phone/tablet/desktop usability, art relevance and functional checks. Only after a working build and owner approval may a public /play route launch; publishing and outward-facing operations remain human-gated. Pitch: A sliding-tile puzzle toy where each solved board reveals one piece from a pre-generated gallery of Kind Robots art, with captions written ahead of time. Boards grow from three-by-three to five-by-five, and every solve fills a keepsake wall saved locally, with a daily seeded board for a shared challenge."
+    depends_on: t-003

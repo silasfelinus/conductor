@@ -75,3 +75,22 @@ tasks:
       Build in silasfelinus/kind_robots as a free page with no LLM at runtime and
       pre-written content. Generated art is pre-approved (keep prompt metadata).
       Verify at phone, tablet and desktop widths before merging.
+  - id: t-004
+    milestone: m2
+    title: "Build an actual admin-only interactive preview"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-04-kind-lantern-garden.md"
+    note: "Implement the first executable interaction under an /admin/ route, with an ADMIN tab, contextual tutorial, server authorization, and targeted tests. A scaffold or status URL is NOT a preview. Pitch: An idle-style toy where each tap lights a lantern in a night garden and, as the count grows, new creatures wander in with pre-written one-line stories. Nothing can be lost, it needs no accounts, and progress is a quiet collection page of everyone you have met."
+  - id: t-005
+    milestone: m3
+    title: "Polish, verify and request explicit Play promotion"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-04-kind-lantern-garden.md"
+    note: "Review phone/tablet/desktop usability, art relevance and functional checks. Only after a working build and owner approval may a public /play route launch; publishing and outward-facing operations remain human-gated. Pitch: An idle-style toy where each tap lights a lantern in a night garden and, as the count grows, new creatures wander in with pre-written one-line stories. Nothing can be lost, it needs no accounts, and progress is a quiet collection page of everyone you have met."
+    depends_on: t-003

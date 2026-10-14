@@ -75,3 +75,22 @@ tasks:
       Build in silasfelinus/kind_robots as a free page with no LLM at runtime and
       pre-written content. Generated art is pre-approved (keep prompt metadata).
       Verify at phone, tablet and desktop widths before merging.
+  - id: t-004
+    milestone: m2
+    title: "Build an actual admin-only interactive preview"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-04-robot-species-sorting-quiz.md"
+    note: "Implement the first executable interaction under an /admin/ route, with an ADMIN tab, contextual tutorial, server authorization, and targeted tests. A scaffold or status URL is NOT a preview. Pitch: A short personality quiz of twelve whimsical questions that sorts you into one of sixteen robot species, each with a pre-written profile card and a matching illustration. It reuses the Robot Field Guide look and gives a result that is easy to screenshot and share."
+  - id: t-005
+    milestone: m3
+    title: "Polish, verify and request explicit Play promotion"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-04-robot-species-sorting-quiz.md"
+    note: "Review phone/tablet/desktop usability, art relevance and functional checks. Only after a working build and owner approval may a public /play route launch; publishing and outward-facing operations remain human-gated. Pitch: A short personality quiz of twelve whimsical questions that sorts you into one of sixteen robot species, each with a pre-written profile card and a matching illustration. It reuses the Robot Field Guide look and gives a result that is easy to screenshot and share."
+    depends_on: t-003

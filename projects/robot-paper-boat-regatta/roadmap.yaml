@@ -79,3 +79,31 @@ tasks:
     note: >
       Per DESIGN-BRIEF.md build plan step 1: pure simulation (part traits, lane
       rules, two scripted rivals, tick log) plus unit tests. No UI yet.
+  - id: t-004
+    milestone: m2
+    title: "Build an actual admin-only interactive preview"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-09-robot-paper-boat-regatta.md"
+    note: "Implement the first executable interaction under an /admin/ route, with an ADMIN tab, contextual tutorial, server authorization, and targeted tests. A scaffold or status URL is NOT a preview. Pitch: A calm puzzle toy where players fold a paper boat by choosing its sail, hull and cargo, then race it down a pre-painted stream against simple rival boats using deterministic current rules. Streams unlock in order and every race is replayable, with no model at runtime."
+  - id: t-005
+    milestone: m2
+    title: "Implement the first playable or usable content slice and art"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-09-robot-paper-boat-regatta.md"
+    note: "Produce genuine mechanics/content and queue or reuse verified art through the normal no-unapproved-spend pipeline; test the experience, not only metadata. Pitch: A calm puzzle toy where players fold a paper boat by choosing its sail, hull and cargo, then race it down a pre-painted stream against simple rival boats using deterministic current rules. Streams unlock in order and every race is replayable, with no model at runtime."
+  - id: t-006
+    milestone: m3
+    title: "Polish, verify and request explicit Play promotion"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-09-robot-paper-boat-regatta.md"
+    note: "Review phone/tablet/desktop usability, art relevance and functional checks. Only after a working build and owner approval may a public /play route launch; publishing and outward-facing operations remain human-gated. Pitch: A calm puzzle toy where players fold a paper boat by choosing its sail, hull and cargo, then race it down a pre-painted stream against simple rival boats using deterministic current rules. Streams unlock in order and every race is replayable, with no model at runtime."
+    depends_on: t-005

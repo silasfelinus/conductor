@@ -75,3 +75,22 @@ tasks:
       Build in silasfelinus/kind_robots as a free page with no LLM at runtime and
       pre-written content. Generated art is pre-approved (keep prompt metadata).
       Verify at phone, tablet and desktop widths before merging.
+  - id: t-004
+    milestone: m2
+    title: "Build an actual admin-only interactive preview"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-05-kind-daily-riddle.md"
+    note: "Implement the first executable interaction under an /admin/ route, with an ADMIN tab, contextual tutorial, server authorization, and targeted tests. A scaffold or status URL is NOT a preview. Pitch: One hand-written riddle every day, chosen from a bundled calendar of 365, with three gentle hints that unlock over time and a pre-made illustration revealed on the right answer. Streaks count quietly and a missed day never erases anything you have earned."
+  - id: t-005
+    milestone: m3
+    title: "Polish, verify and request explicit Play promotion"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-05-kind-daily-riddle.md"
+    note: "Review phone/tablet/desktop usability, art relevance and functional checks. Only after a working build and owner approval may a public /play route launch; publishing and outward-facing operations remain human-gated. Pitch: One hand-written riddle every day, chosen from a bundled calendar of 365, with three gentle hints that unlock over time and a pre-made illustration revealed on the right answer. Streaks count quietly and a missed day never erases anything you have earned."
+    depends_on: t-003

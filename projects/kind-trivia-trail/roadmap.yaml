@@ -62,3 +62,31 @@ tasks:
     gate_rechecked: '2026-10-04'
     approved_by_human: true
     updated: '2026-10-10T09:34:38Z'
+  - id: t-003
+    milestone: m2
+    title: "Build an actual admin-only interactive preview"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-03-kind-trivia-trail.md"
+    note: "Implement the first executable interaction under an /admin/ route, with an ADMIN tab, contextual tutorial, server authorization, and targeted tests. A scaffold or status URL is NOT a preview. Pitch: A walking trail of 200 pre-written multiple-choice questions about robots, animals, space and kindness, where each correct answer moves your robot along an illustrated map and wrong answers show a friendly hand-written hint. Every question and hint is written ahead of time by sessions."
+  - id: t-004
+    milestone: m2
+    title: "Implement the first playable or usable content slice and art"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-03-kind-trivia-trail.md"
+    note: "Produce genuine mechanics/content and queue or reuse verified art through the normal no-unapproved-spend pipeline; test the experience, not only metadata. Pitch: A walking trail of 200 pre-written multiple-choice questions about robots, animals, space and kindness, where each correct answer moves your robot along an illustrated map and wrong answers show a friendly hand-written hint. Every question and hint is written ahead of time by sessions."
+  - id: t-005
+    milestone: m3
+    title: "Polish, verify and request explicit Play promotion"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-03-kind-trivia-trail.md"
+    note: "Review phone/tablet/desktop usability, art relevance and functional checks. Only after a working build and owner approval may a public /play route launch; publishing and outward-facing operations remain human-gated. Pitch: A walking trail of 200 pre-written multiple-choice questions about robots, animals, space and kindness, where each correct answer moves your robot along an illustrated map and wrong answers show a friendly hand-written hint. Every question and hint is written ahead of time by sessions."
+    depends_on: t-004

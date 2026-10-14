@@ -78,3 +78,31 @@ tasks:
       gentle mistake-forgiving mode; on solve, colour the grid with the species
       palette. Lives in silasfelinus/kind_robots; no LLM calls at runtime.
       Verify at phone/tablet/desktop widths.
+  - id: t-004
+    milestone: m2
+    title: "Build an actual admin-only interactive preview"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-06-kind-nonogram-gallery.md"
+    note: "Implement the first executable interaction under an /admin/ route, with an ADMIN tab, contextual tutorial, server authorization, and targeted tests. A scaffold or status URL is NOT a preview. Pitch: Picture-cross puzzles where numeric row and column clues reveal a pixel portrait of a Kind Robot species, with a gentle mistake-forgiving mode. Each solved grid is stored in a gallery and colours in using the species palette."
+  - id: t-005
+    milestone: m2
+    title: "Implement the first playable or usable content slice and art"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-06-kind-nonogram-gallery.md"
+    note: "Produce genuine mechanics/content and queue or reuse verified art through the normal no-unapproved-spend pipeline; test the experience, not only metadata. Pitch: Picture-cross puzzles where numeric row and column clues reveal a pixel portrait of a Kind Robot species, with a gentle mistake-forgiving mode. Each solved grid is stored in a gallery and colours in using the species palette."
+  - id: t-006
+    milestone: m3
+    title: "Polish, verify and request explicit Play promotion"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_pitch: "pitches/2026-10-06-kind-nonogram-gallery.md"
+    note: "Review phone/tablet/desktop usability, art relevance and functional checks. Only after a working build and owner approval may a public /play route launch; publishing and outward-facing operations remain human-gated. Pitch: Picture-cross puzzles where numeric row and column clues reveal a pixel portrait of a Kind Robot species, with a gentle mistake-forgiving mode. Each solved grid is stored in a gallery and colours in using the species palette."
+    depends_on: t-005
