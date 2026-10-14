@@ -2696,3 +2696,43 @@ tasks:
       ceilings and required checks. Separate staged evidence from human50-60minute pacing
       and deployed-device acceptance. Dependency resolution releases this follow-up after
       verified t-065 closeout.
+  - id: t-154
+    milestone: m8
+    title: "Arcade audio approval-queue admin page, and cabinets that switch music scenes"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Follow-up to silasfelinus/kind_robots#3606 (closed by kind_robots#3681, which
+      shipped the soundtrack manifest, the gesture-safe mixer and admin-only
+      GET/POST /api/arcade/audio-jobs). (1) Add an admin page plus a
+      content/channels/admin/*.md tab (requiredRole ADMIN) over those endpoints:
+      list briefs per cabinet/cue, relay readiness, existing jobs, and an Approve
+      button that POSTs {game, cue, approve: true}. (2) Have Gloom Invaders, Ghost
+      Trail and Prize Show Panic set musicScene ('boss' / 'level-2') so the cabinet
+      crossfades between tracks, and call playCue for the shared cues where it fits.
+      (3) Check in a real browser at 390/768/1440 and with a gamepad: no sound before
+      the first gesture, mute and the Vol slider work, and music stops on cabinet
+      exit and route change. Does not enable generation; that is t-155.
+  - id: t-155
+    milestone: m8
+    title: "Turn on ACE arcade soundtrack generation, ingest the first approved track, and listen to it in a cabinet"
+    status: needs-human
+    gate_human: true
+    gate_reason: money
+    gate_rechecked: '2026-10-14'
+    passes: 0
+    stakes: outward-facing
+    note: >-
+      Remainder of silasfelinus/kind_robots#3606 that needs Silas. Human steps:
+      confirm the kr-relay build advertises supportsAudio with the ACE-Step model
+      installed (GET /api/arcade/audio-jobs then reports the relay ready), and set
+      ARCADE_AUDIO_JOBS_ENABLED=true on production. After that an agent can: approve
+      one test cue (gloom-invaders/level), confirm the worker returns a readable
+      file, and ingest it: check duration and format, set the loop point, trim cue
+      renders from 10s, transcode, record the SHA-256, ArtJob id and approval/verified
+      dates, publish under /images/arcade/audio/<game|shared>/<cue>.<ext>, confirm it
+      fetches from production, and add it to VERIFIED_ARCADE_AUDIO_ASSETS. Then approve
+      the remaining priority-cabinet cues. Done when someone has heard at least one
+      ACE recording in a cabinet, including the crossfade, ducking and oscillator
+      fallback.

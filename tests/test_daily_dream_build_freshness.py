@@ -195,6 +195,9 @@ def test_explicit_date_selects_that_day_but_not_past_the_creative_contract(backl
 
 def test_creative_contract_is_rechecked_for_fresh_candidates(backlog, monkeypatch):
     recent = _write_proposal(backlog, _today() - datetime.timedelta(days=1), "ledger-redux")
+    # Every "yesterday" is past the v3 cutover now; this fixture is a six-asset
+    # proposal, so pin the cutover off to keep testing the contract re-check.
+    monkeypatch.setattr(runner.core, "is_v3_day", lambda day: False)
     monkeypatch.setattr(
         runner.creative_contract,
         "validate_path",
