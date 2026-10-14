@@ -218,6 +218,10 @@ def _ensure_standalone_tasks(row: dict) -> bool:
             ids.append(prior)
             continue
         task_id = _next_task_id(text + added)
+        # Polish waits for playable content, not only for the UI scaffold, so
+        # it starts `waiting`: a `ready` task with an open dependency fails
+        # the roadmap audit for every roadmap PR (2026-10-14 backfill).
+        waits = bool(ids) and index == 2
         milestone = ("m2" if index < 2 else "m3")
         if milestone not in milestones:
             milestone = str(milestones[-1])
@@ -225,15 +229,14 @@ def _ensure_standalone_tasks(row: dict) -> bool:
             f"{indent}- id: {task_id}\n"
             f"{field}milestone: {milestone}\n"
             f"{field}title: {_quoted(title)}\n"
-            f"{field}status: ready\n"
+            f"{field}status: {'waiting' if waits else 'ready'}\n"
             f"{field}owner: null\n"
             f"{field}passes: 0\n"
             f"{field}stakes: reversible\n"
             f"{field}source_pitch: {_quoted(source)}\n"
             f"{field}note: {_quoted(note + ' Pitch: ' + row.get('hook', ''))}\n"
         )
-        if ids and index == 2:
-            # Polish waits for playable content, not only for the UI scaffold.
+        if waits:
             added += f"{field}depends_on: {ids[-1]}\n"
         ids.append(task_id)
         created += 1

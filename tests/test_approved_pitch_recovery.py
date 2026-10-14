@@ -199,6 +199,10 @@ def test_zero_indent_legacy_task_rows_get_new_unique_ids(repo):
         "t-011",
     ]
     assert parsed["goal"] == "preserve the existing tail metadata"
+    added = {task["id"]: task for task in parsed["tasks"][-3:]}
+    assert added["t-009"]["status"] == added["t-010"]["status"] == "ready"
+    assert added["t-011"]["status"] == "waiting"
+    assert added["t-011"]["depends_on"] == "t-010"
     assert result.count("goal: preserve the existing tail metadata") == 1
     assert recovery.recover_one(row).result == "already-linked"
     assert path.read_text() == result
