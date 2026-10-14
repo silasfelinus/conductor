@@ -77,7 +77,7 @@ def test_invalid_family_and_project_are_rejected_before_any_queueing(monkeypatch
     monkeypatch.setattr(core, "_load_resource_index", lambda: deepcopy(CATALOG))
     with pytest.raises(ValueError, match="known project_target"):
         queue.entry_to_job(_entry(project_target="not-a-project"))
-    with pytest.raises(ValueError, match="unsupported Zuzu checkpoint family"):
+    with pytest.raises(ValueError, match="unsupported checkpoint family"):
         queue.entry_to_job(_entry("krea"))
 
 
@@ -97,3 +97,38 @@ def test_existing_original_dream_requests_keep_the_old_engine(monkeypatch):
         node.get("class_type") for node in job["payload"]["workflow"].values()
     }
     assert job["idempotencyKey"] == original["id"]
+
+
+@pytest.mark.parametrize("family", ["corporate-noir", "western-cartoon"])
+def test_shifting_desks_illustrious_jobs_keep_style_and_destination(family, monkeypatch):
+    monkeypatch.setattr(core, "_load_resource_index", lambda: deepcopy(CATALOG))
+    monkeypatch.setattr(core, "resolve_seed", lambda *_: 987654)
+    request = _entry(
+        family,
+        source="shifting-desks",
+        id=f"shifting-desks-art-{family}-gus-shop-steward",
+        project_target="shifting-desks",
+        image_path=f"public/images/shifting-desks/styles/{family}/cards/orientation/gus-shop-steward.webp",
+        project_slug="shifting-desks",
+        priority=10,
+    )
+    job = queue.entry_to_job(request)
+    assert job["engine"] == "COMFY"
+    assert job["projectSlug"] == "shifting-desks"
+    assert job["idempotencyKey"] == request["id"]
+    assert job["priority"] == 10
+    assert job["payload"]["imagePath"] == request["image_path"]
+    assert job["payload"]["collection"] == "shifting-desks"
+    assert job["payload"]["resources"]["checkpointName"] == "Illustrious/arthemyWesternArt_v30.safetensors"
+    assert job["payload"]["workflow"]["8"]["inputs"]["stop_at_clip_layer"] == -2
+    assert job["payload"]["workflow"]["5"]["inputs"]["seed"] == 987654
+    assert job["payload"]["workflow"]["7"]["inputs"]["filename_prefix"] == f"shifting_desks_{family}"
+    assert "western animated feature" in job["payload"]["promptString"] if family == "western-cartoon" else "dramatic graphic novel" in job["payload"]["promptString"]
+
+
+def test_shifting_desks_cannot_use_rejected_or_unregistered_checkpoint(monkeypatch):
+    monkeypatch.setattr(core, "_load_resource_index", lambda: deepcopy(CATALOG))
+    with pytest.raises(ValueError, match="reserved for its own project"):
+        queue.entry_to_job(_entry("illustrious", project_target="shifting-desks"))
+    with pytest.raises(ValueError, match="reserved for its own project"):
+        queue.entry_to_job(_entry("western-cartoon", project_target="zuzu-gamebook"))
