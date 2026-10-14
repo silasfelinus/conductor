@@ -173,3 +173,15 @@
 **Coordination:** verified claim and review events for session 20261014T003039Z-cable-t065-d7p2; canonical t-065 remains review. Original #3593 is already merged. Keep historical quality pass 1 and active retry context until verified repair merge; later slice t-066 remains waiting. This recovery does not count toward the already-complete October13 daily five or the independent Daily Dream.
 
 **Next step:** inspect actual completed Contract verifiers for this exact head, refresh reviews and live head, merge with expected SHA only when green, verify main, then append one bounded shared-cabinet/Workbench retirement follow-up, update implementation metadata and queue verified session-matched closeout/learning/projection. Do not bypass checks or issue a second overlapping claim.
+
+## 2026-10-13 PT | Reviewer → Worker | kr-arcade/t-065 | merged recovery audit
+
+**Decision:** audit verified merged kind_robots #3654 at 0c8684c31b732f22a8205df2c6c82a6b073b73cd. All 28 final-head check runs completed successfully at 1bec4f0a4dc6733f1c8663bde023c17045be5e77, including required Contract verifiers, TypeScript and verify. Current main matches all three repaired source/test blobs; obsolete implementation branch is deleted. No duplicate merge or deployment.
+
+**Evidence:** complete six-file recovery diff previously inspected; independent 35-cabinet engine, strict scoped TypeScript, ESLint/Prettier and nine native touch/keyboard/localStorage/repeated Continue cases passed. Earned 10–99 survive reload and actual score awards respect the existing strict99 save domain; real loss and re-earn stay bounded. Workbench purchases still stop at nine and malformed saves remain rejected. Staged kit/byte fixtures are not human pacing or deployed-device evidence.
+
+**Pattern and improvement:** purchase limits, earned gameplay counters and save domains must be distinct, consistent contracts. Original red tests and reader-only mutation independently expose both silent clamping and writer overflow. Retain quality pass1 history while removing obsolete operative retry context and linking the actual recovery PR.
+
+**Kaizen:** t-153 — exercise earned spares through real shared-cabinet retirement, Workbench reopen/refusal and repeated Continue. Targets the recurring quality/persistence weakness in LEARNING-REPORT. One implementation follow-up; no recursive task for bookkeeping. Dependency resolution releases it after verified t-065 completion.
+
+**Closeout:** queue session-matched verify_pr done event and one quality/pass1 learning after this coordination PR merges; inspect consumed event, canonical ownership/dependencies and projection receipt. October13 daily five remain separately evidenced and unchanged.
