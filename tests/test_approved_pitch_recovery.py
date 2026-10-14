@@ -51,6 +51,8 @@ def pitch(repo, date="2026-10-12", slug="painted-palace", target="new"):
         "llm_at_runtime": "none",
         "target": target,
     }
+    if date >= pitches.EXPANSION_START:
+        row["expansion_kind"] = "level"
     docket = repo / "pitches" / "daily" / f"{date}.yaml"
     docket.write_text(yaml.safe_dump({"date": date, "pitches": [row]}))
     record = repo / "pitches" / f"{date}-{slug}.md"
