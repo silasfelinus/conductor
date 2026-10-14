@@ -348,7 +348,7 @@ tasks:
   - id: t-019
     milestone: m2
     title: "Animate enemies and bosses from their painted sheets"
-    status: waiting
+    status: claimed
     passes: 0
     stakes: reversible
     note: >-
@@ -356,4 +356,16 @@ tasks:
       (reworded to drop "frame" in the roster PR). Slice each one and wire
       move/tell/attack/hurt/defeat poses into the engine as enemies and bosses
       appear, with the single keyed sprite as the fallback.
+
+      2026-10-14: front-page half merged in silasfelinus/kind_robots#3680
+      (e874c1dba26edb90374707155db9984e434af93d): the toy box shows all 14
+      enemy families looping their painted cycles with a hover/tap move, the
+      world map's boss panel plays the attack sheet, and the slicer joins
+      column-stacked shapes (spring hare above its spring). 13 of 14 enemy
+      sheets and 2 of 8 boss sheets (Madame Pressure, Prism Mole) slice 6/6;
+      tea-kettle knight and 6 boss sheets are still rendering. Remaining: put
+      the other families into the playable level with their behaviours.
     owner: worker
+    claimed_by: 2026-10-14T0620Z-plumber-enemy-anim
+    claimed_at: '2026-10-14T06:20:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3680'
