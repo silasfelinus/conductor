@@ -69,7 +69,7 @@ def test_partial_resource_catalog_mismatch_fails_closed():
     bad_catalog = {"CHECKPOINT": {
         "arthemywesternart_v30.safetensors": "SDXL/another.ckpt",
     }}
-    with pytest.raises(RuntimeError, match="not confirmed"):
+    with pytest.raises(RuntimeError, match="conflicts with Resource registry"):
         resolve_registered_checkpoint("arthemy", bad_catalog)
 
 
