@@ -1,0 +1,20 @@
+version: 1
+project: zuzu-pinball
+task: t-013
+operation: ready
+owner: worker
+session: 2026-10-14T034902Z-zuzu-pinball-t013-gamefirst-p6b8
+updated: '2026-10-14T03:59:03Z'
+note: >-
+  Public game-first route regression fixed and merged: kind_robots#3669
+  (squash ef88ef0042ec9ad6a1bd9080854f5c57487311d6). PR #3639 fixed
+  the former /admin/zuzu-pinball view only; the later /play relocation copied
+  the obsolete full-width 'The water has teeth' hero and long developer sidebar.
+  Public /play/zuzu-pinball now opens on a compact ArcadeCabinet without the
+  generic rainbow marquee; introduction and controls live in the Zuzu tab's
+  Tutorial sidebar. Added assertions against the actual public route. Final
+  head 34f15801b4b1cccc8b6e8a6968ee550af1d77a0b passed 31 of 31 completed
+  GitHub workflows including TypeScript, layout, navigation and four Contract
+  Tests shards before expected-head squash merge. Production Alexandria deployment
+  and physical iPad rendering are not yet verified. t-013 remains open for
+  genuine device, input and GPU performance playtests; t-014 visual gate remains.
