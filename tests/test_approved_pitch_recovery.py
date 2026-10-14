@@ -143,3 +143,24 @@ def test_missing_existing_target_fails_without_auto_fabricating_project(repo):
     with pytest.raises(ValueError, match="missing target"):
         recovery.recover_one(row)
     assert not (repo / "projects" / "missing-project").exists()
+
+
+def test_existing_source_linked_first_slice_still_gets_missing_followups(repo):
+    pitch(repo, slug="kind-sliding-tile-gallery")
+    path = roadmap(repo, "kind-sliding-tile-gallery")
+    path.write_text(
+        path.read_text() +
+        "  - id: t-003\n    milestone: m2\n"
+        "    title: Ship one 3x3 daily puzzle\n"
+        "    status: ready\n    stakes: reversible\n"
+        "    note: Source pitches/2026-10-12-kind-sliding-tile-gallery.md\n"
+    )
+    row = recovery.approved_legacy_rows()[0]
+    assert recovery.recover_one(row).result == "queued"
+    tasks = yaml.safe_load(path.read_text())["tasks"]
+    assert len(tasks) == 4
+    assert any("admin-only interactive preview" in t["title"] for t in tasks)
+    assert any("explicit Play promotion" in t["title"] for t in tasks)
+    assert sum("playable or usable content slice" in t["title"] for t in tasks) == 0
+    assert recovery.recover_one(row).result == "already-linked"
+    assert len(yaml.safe_load(path.read_text())["tasks"]) == 4
