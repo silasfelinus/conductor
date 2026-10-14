@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "silasfelinus/kind_robots utils/shiftingDesks/*.json as of 2026-10-13 PT",
-  "status": "pitch-only; no alternate renders queued or delivered",
+  "status": "approved_2026-10-13_PT; queue submission staged in this PR; render status tracked on requests ledger",
   "baseImagePrefix": "/images/shifting-desks/",
   "alternateImagePrefix": "/images/shifting-desks/styles/<style-id>/",
   "styles": [
@@ -16,35 +16,29 @@
     },
     {
       "id": "corporate-noir",
-      "title": "Corporate Noir / A Stamped Confession",
-      "engine": "comfy",
+      "title": "Noir",
+      "engine": "sdxl-checkpoint",
       "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors",
       "promptStyle": "tags",
       "steps": 30,
       "cfg": 5,
       "sampler": "euler_ancestral",
-      "phase": "pitch",
+      "phase": "approved",
       "prefix": "masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style)",
-      "tail": "shadow-heavy western graphic novel, inked faces, theatrical gestures, sharply separated foreground and background, electric phosphor highlights, noir office architecture, gritty brushwork, atmospheric, every surface bare and unmarked"
+      "tail": "western graphic novel, bold inky shadows, dramatic angles, expressive body language, moody atmospheric lighting, readable silhouettes, every surface bare and unmarked"
     },
     {
-      "id": "mandatory-fun",
-      "title": "Mandatory Fun / Department Cartoon",
-      "engine": "comfy",
-      "checkpoint": "Illustrious/furrytoonmix_xlV3.safetensors",
+      "id": "western-cartoon",
+      "title": "Western Cartoon (selected Gus reference)",
+      "engine": "sdxl-checkpoint",
+      "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors",
       "promptStyle": "tags",
-      "phase": "pitch",
-      "prefix": "masterpiece, best quality, amazing quality, absurdres, very aesthetic",
-      "tail": "bold cel-style outlines, animated 1990s workplace cartoon, expressive character acting, exaggerated props, vivid bureaucratic color blocking, whimsical sinister corporate staging, clean silhouettes, every surface bare and unmarked"
-    },
-    {
-      "id": "endless-department",
-      "title": "Endless Department / Infinite HR",
-      "engine": "comfy",
-      "checkpoint": "SDXL/sdxlUnstableDiffusers_nihilmania.safetensors",
-      "promptStyle": "prose",
-      "phase": "pitch",
-      "tail": "surreal painterly dark oil and matte gouache, monumental underground institutional architecture, richly textured liminal spaces, ominous diffuse fluorescent pools of light, exaggerated perspectives, human-scale vulnerability, restrained cosmic absurdity, every surface bare and unmarked"
+      "steps": 30,
+      "cfg": 5,
+      "sampler": "euler_ancestral",
+      "phase": "approved",
+      "prefix": "masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics (style), toon (style)",
+      "tail": "feature-quality Western animated cartoon, warm copper-gold highlights, strong phosphor green office lighting, polished expressive character acting, rich cinematic cel painting, warm approachable Gus, high-impact perspective, every surface bare and unmarked"
     }
   ],
   "subjects": [
@@ -1026,7 +1020,7 @@
       "id": "encounter",
       "title": "Encounter folder",
       "source": "projects/shifting-desks/art/ROUND-1.yaml",
-      "prompt": "",
+      "prompt": "A closed manila folder lying flat on a desk, symmetrical centered composition, brass paperclip, coffee ring, cobalt round official stamp impression and thin orange tab, simple office stationery seen directly from above, every surface bare and unmarked",
       "classicImage": "/images/shifting-desks/backs/encounter.webp"
     },
     {
@@ -1035,7 +1029,7 @@
       "id": "review",
       "title": "Review folder",
       "source": "projects/shifting-desks/art/ROUND-1.yaml",
-      "prompt": "",
+      "prompt": "An oxblood leather executive folder with brass corner caps and a polished wax seal on a safety orange ribbon, symmetrical centered composition on dark wooden desk, every surface bare and unmarked",
       "classicImage": "/images/shifting-desks/backs/review.webp"
     }
   ]
