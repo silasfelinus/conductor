@@ -40,7 +40,12 @@ has a `source` (`project-art` = `images:` in `projects/art-prompts.yaml`,
      fixing the 24 rows without the template would have re-broken the next intake.
      If the producer is in kind_robots (`server/utils/artPromptContract.ts`,
      the missing-image reporter, `artAssetSuggest.ts`), open the PR there.
-  3. Add a test that the producer's output passes `violations()` from
+  3. Before pushing, run `python scripts/check_art_prompts_live_contract.py` (needs a
+     kind_robots checkout beside this repo). It runs the real `artPromptContract.ts` under
+     Node over every active row, so it catches the non-negation rules (`frame-noun`,
+     `art-direction-jargon`, `format-vocabulary`) the Python test cannot. Run it after
+     authoring hand-written `requests:` rows, too.
+  4. Add a test that the producer's output passes `violations()` from
      `scripts/repair_negation_art_prompts.py`. That function mirrors only the negation rules. The
      server stays the authority, so do not copy its regexes into this repo.
 - **`adopt-failed`** (the request's `last_art_job_id` points at a DONE ArtJob
