@@ -2156,3 +2156,36 @@ pitches:
           - kind_robots CI 29/29 green; merged to main (squash b535876)
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+
+  - id: dandelion-seed-drift
+    title: Dandelion Seed Drift
+    status: candidate
+    priority: 41
+    surprise: |
+      Fluffy dandelion seeds float and bob across a summer sky above a meadow ridge.
+    passive_loop: |
+      Twenty-two seeded seeds cross the screen once or twice per 60 second loop with a gentle bob, so the field repeats exactly with no interaction.
+    optional_interaction: |
+      Hovering near a seed makes it glow; a rate-limited click sends a gentle gust through the field.
+    technique: |
+      One canvas, filament-and-halo seeds as pure functions of time, capped DPR, ResizeObserver sizing.
+    reduced_motion: |
+      Draws a single static frame with no drift, hover glow or gust.
+    performance_risk: |
+      Low: twenty-two small seeds per frame.
+    novelty: |
+      First daytime sky scene in the catalog.
+    acceptance:
+      - seeds drift and bob without interaction
+      - hovering brightens a nearby seed
+      - clicking triggers a gust at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/dandelion-seed-drift.vue
+        pull_request: silasfelinus/kind_robots#3656
+        released_at: '2026-10-14T08:00:00Z'
+        verification:
+          - kind_robots CI 29/29 green; merged to main (squash e334abc)
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
