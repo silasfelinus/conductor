@@ -39,3 +39,11 @@ Silas: *"now we should have multiple art styles. Make sure they are integrated, 
 - **Presented.** The front desk shows the three editions as image tiles, each previewing the same card in that style, and the in-game toolbar keeps a compact switcher.
 - **Coverage.** All 220 original renders are delivered: every media URL answers 200. The lane now also covers the 10 epilogue cards and the Window 9 desk card, which were added after the batch was cut. That makes 121 subjects and 242 requests on the same `shifting-desks-style-v2-` lane, bulk-submitted like the rest. Until those 22 render, those cards show Classic.
 
+
+## 2026-10-14 PT (later): Classic is the default again
+
+Silas, after playing the Illustrious editions: *"the new art is actually worse than the classic. classic should be default."*
+
+- **Default.** New players start in **Classic** (Krea 2), and it leads the picker. Kind Robots bumps the preference key to `shifting-desks-art-style-v3` so visitors saved on Western Cartoon while it was the default land on Classic. **Western Cartoon** and **Noir** remain choices; their queued renders (including the clothed Jam in Tube 14 re-render, #6168) still land.
+- **Front page.** The art-first front desk is one giant hero painted in the chosen style, so the default hero is now the Classic orientation art.
+- Do not flip the default back to an Illustrious edition without a new decision from Silas.
