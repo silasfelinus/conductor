@@ -475,3 +475,31 @@ tasks:
       to avoid overlapping implementation and preserve authored timing/private
       ADMIN placement. t-015/t-018 cover cabinet inputs and t-019 boss warnings,
       so this narrow rescue-consumer scope does not duplicate them.
+  - id: t-022
+    milestone: m4
+    title: "Kontext pass: recolour off-model frames, compose cutscenes and group art, and build layout-guided stage planes"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: [t-020]
+    note: >-
+      Silas, 2026-10-14 PT: "yes, open the Kontext pass as its own task", following t-020's finding that txt2img
+      has plateaued on multi-element scenes and stubborn colours (see t-020 note and art/ART-ROUND-1..8). Write
+      art/ART-ROUND-9-KONTEXT.yaml and drive it with scripts/enqueue_art_requests.py (engine: kontext lanes,
+      source_image_id / reference_image_id / source_pad / mask_box are already supported). Keep the house look:
+      Arthemy Western v3 + western-toon tags; every source must be an approved ArtImage from the t-020 ledgers.
+      (1) RECOLOUR, masked where possible: Azure coat to powder cyan from 246431 (select) and 246147/246149
+      (comms/neutral); Vivi's purple and coral streaks onto 246439/246440; Halo Fin hull to butter yellow and gold
+      from 246443/246445; Comet Crown to a clean three-prong lilac arrowhead from 246448. Pass bar: canon
+      colours per CAST-BIBLE.md, face and body unchanged.
+      (2) COMPOSE: group key art from the four approved pilots as references (Maribel 246424, Azure recolour
+      from (1), Solenne 246155, Vivi 246439) with heights and builds preserved; title key art from backdrop
+      246126 plus the four ship sources (246198, 246201, recoloured Halo Fin and Comet Crown); cutscenes
+      C01-C03, C05-C09 and C14-C17 restaged from approved cast, boss and enemy ArtImages instead of txt2img;
+      the B09 Eclipse Crown boss; and the Comet Parade super (246570 drew a woman) built from the Comet Crown
+      ship plus drone trails.
+      (3) STAGE PLANES: for S01-S09 x far/mid/near/fore, script a flat-colour layout guide (horizontal bands,
+      edge-to-edge silhouettes, empty top third, nothing centred) and Kontext-paint it, keeping the 246449 and
+      246453 far plates as style anchors; then test tiling and parallax in the real cabinet at 390/768/1440.
+      (4) Pickups u04, u11, u12 redrawn to their WORLD-BIBLE shapes. Do not reroll anything t-020 already
+      kept. Generated art is pre-approved internal work (AGENTS.md); public release stays gated by t-014.
