@@ -59,6 +59,10 @@ has a `source` (`project-art` = `images:` in `projects/art-prompts.yaml`,
     does. Fix its producer too, usually in kind_robots.
   - **Render-host fault:** use `scripts/drain_failed_art_backlog.py`, which
     canaries before it drains.
+  - **Already replaced:** a later round re-rendered the work. List the id in
+    `ops/superseded-art-jobs.yaml` with the replacement, and clear it in Kind Robots
+    (`POST /api/art/queue/cancel-failed` with `jobIds` and a `reason`). The yaml alone hides it
+    from art-queue-health but leaves it FAILED on Silas's admin queue page.
   - **Recurring class:** a whole class of payload faults the repair script should
     always handle goes into `repair_failed_kindrobots_artjobs.py` as a new repair
     reason.

@@ -2,6 +2,11 @@
 # repair_failed_kindrobots_artjobs.py reports them here as history instead of as unhandled
 # failures that art_queue_health.py would hand to art-medic every run. Add an id only when
 # the work it carried has been resubmitted (name the replacement in `reason`).
+#
+# Listing an id only hides it from Conductor's report: the job stays FAILED on the Kind Robots
+# admin queue page. When you add one, also clear it there (POST /api/art/queue/cancel-failed with
+# the ids and a reason; FAILED -> CANCELLED). 37646-37651 sat on that page two days after being
+# listed here, until they were cleared on 2026-10-14.
 superseded:
 - id: 37646
   reason: end_image sent to WanImageToVideo (fixed kind_robots#3608); zuzu-pinball t-019 croc clips re-run in rounds 2-3, see projects/zuzu-pinball/art/T019-CROC-CLIPS.yaml
