@@ -2437,19 +2437,17 @@ tasks:
 - id: t-143
   milestone: m6
   title: "Viewport-first sweep of public games and interactive play surfaces"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  note: >-
-    Silas 2026-10-13 sitewide instruction. Inventory every public game and
-    interactive /play route (including shared Arcade cabinets, Zuzu, Storybook,
-    Shifting Desks, gamebook, pinball, and legacy redirects) and retrofit
-    excessive scroll/copy into compact fixed game stages with scrollable
-    panels where needed. Build on the t-104 initial Ghost Trail, Zuzu Pinball
-    and Showdown pass. Preserve gameplay actions, inputs and art. Each scoped
-    PR needs exact-head CI plus phone 390, tablet 820, desktop 1440 preview
-    evidence or an explicit outstanding visual gap. Do not claim sitewide done
-    from this first batch; record each route's audit outcome.
+  note: |-
+    Silas 2026-10-13 sitewide instruction. Inventory every public game and interactive /play route (including shared Arcade cabinets, Zuzu, Storybook, Shifting Desks, gamebook, pinball, and legacy redirects) and retrofit excessive scroll/copy into compact fixed game stages with scrollable panels where needed. Build on the t-104 initial Ghost Trail, Zuzu Pinball and Showdown pass. Preserve gameplay actions, inputs and art. Each scoped PR needs exact-head CI plus phone 390, tablet 820, desktop 1440 preview evidence or an explicit outstanding visual gap. Do not claim sitewide done from this first batch; record each route's audit outcome.
+
+    Silas explicitly requests continuation of sitewide viewport-first pass. Bounded public game UI slice after PR 3673. Inspect overlapping PRs and do not touch Shifting Desks while its other PR is open.
+  owner: worker
+  claimed_by: 2026-10-14T054450Z-interface-vision-t143-c91f
+  claimed_at: '2026-10-14T05:44:50Z'
+  updated: '2026-10-14T05:44:50Z'
 
 - id: t-144
   milestone: m6
