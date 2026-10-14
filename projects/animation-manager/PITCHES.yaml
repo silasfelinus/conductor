@@ -2189,3 +2189,36 @@ pitches:
           - kind_robots CI 29/29 green; merged to main (squash e334abc)
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+
+  - id: paper-lantern-rise
+    title: Paper Lantern Rise
+    status: candidate
+    priority: 42
+    surprise: |
+      Glowing paper lanterns rise and sway into a starry night sky.
+    passive_loop: |
+      Eighteen seeded lanterns rise once or twice per 60 second loop with a gentle sway, so the sky repeats exactly with no interaction.
+    optional_interaction: |
+      Hovering near a lantern makes it glow; a rate-limited click gives the lanterns a gentle lift.
+    technique: |
+      One canvas, lantern bodies and halos as pure functions of time, capped DPR, ResizeObserver sizing.
+    reduced_motion: |
+      Draws a single static frame with no rise, hover glow or lift.
+    performance_risk: |
+      Low: eighteen small lanterns per frame.
+    novelty: |
+      First rising-light night festival scene in the catalog.
+    acceptance:
+      - lanterns rise and sway without interaction
+      - hovering brightens a nearby lantern
+      - clicking gives a lift at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/paper-lantern-rise.vue
+        pull_request: silasfelinus/kind_robots#3685
+        released_at: '2026-10-15T08:00:00Z'
+        verification:
+          - kind_robots CI green; 34 checks green; merged to main (squash 081bbae)
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
