@@ -65,3 +65,24 @@ becomes a roster: each new game randomly picks one of a set of fully painted you
 Rainbow Princess picks among P1 to P4), each with her own name and complete animation sheets. Every
 roster member keeps the same hitbox and abilities. The pilot tests two designs; if their frames hold
 together, the roster and every enemy and boss get full sheets.
+
+### Round 1 findings (2026-10-14)
+
+| Sheet | Character consistency | Poses | Slices |
+| --- | --- | --- | --- |
+| heroine-a-actions | identical across frames | six clearly different poses | 6/6 |
+| heroine-a-turnaround | identical | four clean views | 4/4 |
+| rivet-roller-cycle | identical | near-identical; asked-for roll ignored | 6/6 |
+| heroine-a-run | identical | near-identical stride, figures overlap | rejected |
+
+- krea2 holds one character steady inside a sheet, and draws categorically different poses
+  (idle, crouch, leap, fall) well. It does not draw subtle cycle phases: it repeats the pose.
+- Figures must not touch. Column slicing failed on organic poses (a raised hand shares columns with
+  the next figure), so the engine slices by connected shape and cuts only each figure's pixels
+  (kind_robots silasfelinus/kind_robots#3661).
+- Design A read as a child (large head, short limbs). The brief wants a young adult.
+
+Round 2 (`*-v2-*`): adult proportions spelled out (about seven heads tall, long legs), the run as four
+categorically different poses rather than a smooth cycle, and every figure in its own section of the
+sheet with a wide white gap. The engine tweens between key poses with bob and squash, so four strong
+run poses are enough. Rolling enemies rotate a single sprite in code rather than painting a cycle.
