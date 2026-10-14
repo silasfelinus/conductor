@@ -138,3 +138,15 @@ it in some poses, re-roll that sheet rather than painting it in by hand.
 When the sheets land: slice each one (4-connected, at 960px), re-roll any that fail, then replace
 the code-drawn casting with the painted roster. `rollHeroineSeed` picks the heroine, and "keep"
 remembers her.
+
+### Roster round 1 findings (2026-10-14)
+
+- Portraits for Pip, Marisol, Tala, Ji-woo, Odette and Hodan are on-model and read as clearly
+  different builds. The small-figure formula sliced 8 of the 9 delivered sheets 6/6.
+- Run sheets still repeat one stride across six figures (only the scarf changes), so the engine's
+  bob carries the motion. Action sheets give distinct idle, crouch, leap and fall poses in the
+  default order.
+- Marisol's run overlapped into one shape again. She is re-rolled as `heroine-marisol-run-v2`
+  with an explicit boot-to-fist gap; until it lands she steps between two action poses.
+- Wired into kind_robots silasfelinus/kind_robots#3676 (casting picker, painted faces, sheets per heroine).
+
