@@ -1368,8 +1368,8 @@ tasks:
   - id: t-070
     milestone: m8
     title: "Seed Lander depth slice 2: Meadow Isle and Windmill Downs"
-    status: ready
-    updated: '2026-10-12T15:35:21Z'
+    status: claimed
+    updated: '2026-10-14T02:25:21Z'
     passes: 1
     retry_context: >-
       Pass 1 failed (quality) on kind_robots#3595 head 4c9c99f409862a3685fa07ec641cd25be0592f35: collecting the authored meadow-a1 acorn in the first mission saves nectar=5 and island=0/mission=0, but after withSave/JSON/sanitizeSaves/create(resume) the constructor offers Continue only for island>0 or mission>0. The menu forces a new campaign, resetting nectar to 0 while keeping that acorn collected. Provide a Continue path for an active first-mission checkpoint distinct from profile-only Free Flight saves; retain explicit new-campaign reset semantics. Add actual consumer/public-input regressions for quit after the first authored acorn and a partial planting, plus choosing Free Flight without losing the checkpoint. The existing mid-mission test starts at mission 1 after meadow-1 cleared, missing this boundary. Retain this PR for the original worker; do not duplicate implementation or weaken validation.
@@ -1379,7 +1379,12 @@ tasks:
       CABINETS.md section 9, Seed Lander (Lunar Lander riff), slice 2 of 5: Meadow Isle and Windmill Downs. The upgrade is "The Great Replanting". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug seed-lander). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       October 12 PT: Conductor#6049 merged first-mission repair metadata at 0a1877b5a2215dbf56040697936eb9bc691b7421 after 25 final-head checks completed successfully, expected-head merge and no blocking review. Quality pass 1: actual meadow-1 acorn collection saves nectar=5 at island=0/mission=0, but reload has no Continue and public A overwrites it with a new campaign's zero nectar while keeping the acorn collected. Exact reproduction and repair requirements are in retry_context and kind_robots#3595 comment 6127390759. Release ownership, retain the original implementation PR for its worker's scoped repair. Independent 30 cabinet suites and 28 implementation checks passed but miss this initial boundary. No duplicate implementation, human gate, deployment or publication.
+
+      Recover recorded quality pass1 first-mission checkpoint. Original kind_robots#3595 merged, no open Seed repair PR or overlapping task claim; live constructor still omits island0/mission0 Continue. Preserve profile-only Free Flight and explicit New Replanting semantics. Daily five separately complete; no deployment/publication.
     implementation_pr: 'silasfelinus/kind_robots#3595'
+    owner: worker
+    claimed_by: 20261014T022521Z-seed-t070-h6p4
+    claimed_at: '2026-10-14T02:25:21Z'
 
   - id: t-071
     milestone: m8
