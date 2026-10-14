@@ -1,26 +1,23 @@
-name: Recover approved historical daily pitches
+name: Recover historical approved pitches
 
-# Historical approvals are idempotent. New daily-delivery entries (from
-# 2026-10-13 PT onward) are intentionally excluded by the Python script.
 on:
-  schedule:
-    - cron: "47 * * * *"
-  workflow_dispatch:
   push:
     branches:
       - main
     paths:
+      - "pitches/*.md"
       - "pitches/daily/*.yaml"
-      - "pitches/20??-??-??-*.md"
-      - "scripts/approved_pitch_recovery.py"
       - ".github/workflows/recover-approved-pitches.yml"
+  schedule:
+    - cron: "47 * * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
   actions: write
 
 concurrency:
-  group: conductor-main-writers
+  group: conductor-pitch-intake
   cancel-in-progress: false
 
 jobs:
@@ -34,20 +31,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python -m pip install pyyaml pytest
-
-      - name: Test idempotent intake and release gates
+      - name: Install test dependencies
+        run: python -m pip install --disable-pip-version-check pyyaml pytest
+      - name: Verify legacy intake does not duplicate projects
         run: python -m pytest -q tests/test_approved_pitch_recovery.py
-
-      - name: Apply only approved pre-cutover intake
+      - name: Recover only approved legacy records
         run: python scripts/approved_pitch_recovery.py --apply
-
-      - name: Validate affected coordination data
+      - name: Validate roadmaps
         run: python scripts/validate_roadmaps.py
-
-      - name: Commit coordination changes without force push
-        id: commit
-        shell: bash
+      - name: Commit updates and dispatch projection
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -56,19 +48,10 @@ jobs:
           git config user.email "conductor-pitch-recovery[bot]@users.noreply.github.com"
           git add projects repos.yaml project-overrides.yaml CONTROL.md
           if git diff --cached --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "No new approved pitches require intake."
+            echo "No new historical intake to commit."
             exit 0
           fi
           git commit -m "chore: backfill approved historical pitches [skip ci]"
           git fetch origin main
-          # A concurrent main writer wins the race: no force push. Next hourly
-          # run rebuilds from the new main and rechecks idempotence.
           git push origin HEAD:main
-          echo "changed=true" >> "$GITHUB_OUTPUT"
-
-      - name: Dispatch updated Kind Robots coordination projection
-        if: steps.commit.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run sync-kind-robots-projection.yml --ref main
+          gh workflow run sync-kind-robots-projection.yml --ref main
