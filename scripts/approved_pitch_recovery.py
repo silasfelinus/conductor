@@ -50,8 +50,70 @@ def _source(row: dict) -> str:
     return f"pitches/{row['stem']}.md"
 
 
+def _task_list_bounds(text: str) -> tuple[int, int, str]:
+    """Locate the real tasks list, preserving its existing sequence indentation.
+
+    Older roadmaps use a zero-indent YAML list under tasks:, whereas newer
+    scaffolds use two spaces. Inserting a two-space item into the former makes
+    the entire roadmap unparseable.
+    """
+    lines = text.splitlines(keepends=True)
+    start = next(
+        (i for i, line in enumerate(lines) if re.fullmatch(r"tasks:\s*", line.strip("\n"))),
+        None,
+    )
+    if start is None:
+        raise ValueError("roadmap is missing a top-level tasks: sequence")
+    end = next(
+        (i for i in range(start + 1, len(lines))
+         if re.match(r"^[a-zA-Z][\w-]*:\s*", lines[i])),
+        len(lines),
+    )
+    match = next(
+        (m for line in lines[start + 1:end]
+         if (m := re.match(r"^( *)- id:\s*t-\d+\s*$", line))),
+        None,
+    )
+    if match is None:
+        raise ValueError("roadmap tasks: has no existing task items")
+    return start, end, match.group(1)
+
+
+def _append_task_rows(text: str, added: str, expected_new_tasks: int) -> str:
+    """Insert new list members inside tasks: and reject malformed YAML.
+
+    Never modify an existing task or any later top-level sections. Validate
+    in memory first; writing only happens once the structural checks pass.
+    """
+    import copy
+
+    lines = text.splitlines(keepends=True)
+    _, end, indent = _task_list_bounds(text)
+    if not added.lstrip("\n").startswith(indent + "- id: t-"):
+        raise ValueError("new tasks must match existing list indentation")
+    joined = "".join(lines[:end]).rstrip("\n") + "\n"
+    joined += added.strip("\n") + "\n"
+    joined += "".join(lines[end:])
+    original = yaml.safe_load(text)
+    parsed = yaml.safe_load(joined)
+    if not isinstance(parsed, dict) or not isinstance(original, dict):
+        raise ValueError("updated roadmap must be a mapping")
+    if len(parsed.get("tasks", [])) != len(original.get("tasks", [])) + expected_new_tasks:
+        raise ValueError("updated roadmap did not append the expected number of tasks")
+    before = copy.deepcopy(original)
+    after = copy.deepcopy(parsed)
+    before_tasks = before.pop("tasks")
+    after_tasks = after.pop("tasks")
+    if before != after or after_tasks[:len(before_tasks)] != before_tasks:
+        raise ValueError("task insertion unexpectedly changed existing roadmap data")
+    ids = [item.get("id") for item in after_tasks]
+    if len(ids) != len(set(ids)):
+        raise ValueError("task insertion produced duplicate task IDs")
+    return joined
+
+
 def _next_task_id(text: str) -> str:
-    ids = [int(n) for n in re.findall(r"(?m)^  - id: t-(\d+)\s*$", text)]
+    ids = [int(n) for n in re.findall(r"(?m)^ *- id: t-(\d+)\s*$", text)]
     return f"t-{max(ids, default=0) + 1:03d}"
 
 
@@ -70,20 +132,22 @@ def _append_task(path: Path, *, title: str, source: str, note: str,
     milestones = parsed.get("milestones") or []
     selected = milestone or (str(milestones[-1]["id"]) if milestones else "m1")
     task_id = _next_task_id(original)
+    _, _, indent = _task_list_bounds(original)
+    field = indent + "  "
     block = (
-        f"\n  - id: {task_id}\n"
-        f"    milestone: {selected}\n"
-        f"    title: {_quoted(title)}\n"
-        "    status: ready\n"
-        "    owner: null\n"
-        "    passes: 0\n"
-        "    stakes: reversible\n"
-        f"    source_pitch: {_quoted(source)}\n"
-        f"    note: {_quoted(note)}\n"
+        f"{indent}- id: {task_id}\n"
+        f"{field}milestone: {selected}\n"
+        f"{field}title: {_quoted(title)}\n"
+        f"{field}status: ready\n"
+        f"{field}owner: null\n"
+        f"{field}passes: 0\n"
+        f"{field}stakes: reversible\n"
+        f"{field}source_pitch: {_quoted(source)}\n"
+        f"{field}note: {_quoted(note)}\n"
     )
     if depends_on:
-        block += f"    depends_on: {depends_on}\n"
-    path.write_text(original.rstrip("\n") + "\n" + block, encoding="utf-8")
+        block += f"{field}depends_on: {depends_on}\n"
+    path.write_text(_append_task_rows(original, block, 1), encoding="utf-8")
     return True
 
 
@@ -142,6 +206,9 @@ def _ensure_standalone_tasks(row: dict) -> bool:
         None,
     )
     added = ""
+    _, _, indent = _task_list_bounds(text)
+    field = indent + "  "
+    created = 0
     ids: list[str] = []
     for index, (title, note) in enumerate(followups):
         prior = existing.get(title)
@@ -155,23 +222,24 @@ def _ensure_standalone_tasks(row: dict) -> bool:
         if milestone not in milestones:
             milestone = str(milestones[-1])
         added += (
-            f"\n  - id: {task_id}\n"
-            f"    milestone: {milestone}\n"
-            f"    title: {_quoted(title)}\n"
-            "    status: ready\n"
-            "    owner: null\n"
-            "    passes: 0\n"
-            "    stakes: reversible\n"
-            f"    source_pitch: {_quoted(source)}\n"
-            f"    note: {_quoted(note + ' Pitch: ' + row.get('hook', ''))}\n"
+            f"{indent}- id: {task_id}\n"
+            f"{field}milestone: {milestone}\n"
+            f"{field}title: {_quoted(title)}\n"
+            f"{field}status: ready\n"
+            f"{field}owner: null\n"
+            f"{field}passes: 0\n"
+            f"{field}stakes: reversible\n"
+            f"{field}source_pitch: {_quoted(source)}\n"
+            f"{field}note: {_quoted(note + ' Pitch: ' + row.get('hook', ''))}\n"
         )
         if ids and index == 2:
             # Polish waits for playable content, not only for the UI scaffold.
-            added += f"    depends_on: {ids[-1]}\n"
+            added += f"{field}depends_on: {ids[-1]}\n"
         ids.append(task_id)
+        created += 1
     if not added:
         return False
-    roadmap.write_text(text.rstrip("\n") + "\n" + added, encoding="utf-8")
+    roadmap.write_text(_append_task_rows(text, added, created), encoding="utf-8")
     return True
 
 

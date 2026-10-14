@@ -7,6 +7,8 @@ on:
     paths:
       - "pitches/*.md"
       - "pitches/daily/*.yaml"
+      - "scripts/approved_pitch_recovery.py"
+      - "tests/test_approved_pitch_recovery.py"
       - ".github/workflows/recover-approved-pitches.yml"
   schedule:
     - cron: "47 * * * *"
