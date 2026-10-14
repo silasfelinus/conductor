@@ -1,4 +1,76 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: requests
+  target: public/images/arcade/save-the-plumber/tiles/world-1-ground.webp
+  kind: contract-rejected
+  rules:
+  - art-direction-jargon
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [art-direction-jargon]
+    "readable detail" is how you ask a person for a picture, not how you describe one. A caption-conditioned
+    model renders the words: "co…'
+  first_seen: '2026-10-14'
+- source: requests
+  target: public/images/arcade/save-the-plumber/tiles/world-2-ground.webp
+  kind: contract-rejected
+  rules:
+  - art-direction-jargon
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [art-direction-jargon]
+    "readable detail" is how you ask a person for a picture, not how you describe one. A caption-conditioned
+    model renders the words: "co…'
+  first_seen: '2026-10-14'
+- source: requests
+  target: public/images/arcade/save-the-plumber/tiles/world-3-ground.webp
+  kind: contract-rejected
+  rules:
+  - art-direction-jargon
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [art-direction-jargon]
+    "readable detail" is how you ask a person for a picture, not how you describe one. A caption-conditioned
+    model renders the words: "co…'
+  first_seen: '2026-10-14'
+- source: requests
+  target: public/images/arcade/save-the-plumber/tiles/world-4-ground.webp
+  kind: contract-rejected
+  rules:
+  - art-direction-jargon
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [art-direction-jargon]
+    "readable detail" is how you ask a person for a picture, not how you describe one. A caption-conditioned
+    model renders the words: "co…'
+  first_seen: '2026-10-14'
+- source: requests
+  target: public/images/arcade/save-the-plumber/tiles/world-5-ground.webp
+  kind: contract-rejected
+  rules:
+  - art-direction-jargon
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [art-direction-jargon]
+    "readable detail" is how you ask a person for a picture, not how you describe one. A caption-conditioned
+    model renders the words: "co…'
+  first_seen: '2026-10-14'
+- source: requests
+  target: public/images/arcade/save-the-plumber/tiles/world-6-ground.webp
+  kind: contract-rejected
+  rules:
+  - art-direction-jargon
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [art-direction-jargon]
+    "readable detail" is how you ask a person for a picture, not how you describe one. A caption-conditioned
+    model renders the words: "co…'
+  first_seen: '2026-10-14'
+- source: requests
+  target: public/images/arcade/save-the-plumber/tiles/world-7-ground.webp
+  kind: contract-rejected
+  rules:
+  - art-direction-jargon
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [art-direction-jargon]
+    "readable detail" is how you ask a person for a picture, not how you describe one. A caption-conditioned
+    model renders the words: "co…'
+  first_seen: '2026-10-14'
+- source: requests
+  target: public/images/arcade/save-the-plumber/tiles/world-8-ground.webp
+  kind: contract-rejected
+  rules:
+  - art-direction-jargon
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [art-direction-jargon]
+    "readable detail" is how you ask a person for a picture, not how you describe one. A caption-conditioned
+    model renders the words: "co…'
+  first_seen: '2026-10-14'
