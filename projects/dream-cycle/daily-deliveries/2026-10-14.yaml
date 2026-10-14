@@ -1,0 +1,115 @@
+{
+  "date": "2026-10-14",
+  "entries": [
+    {
+      "slug": "paper-lantern-rise-screensaver",
+      "title": "Paper Lantern Rise screensaver",
+      "target": "animation-manager",
+      "kind": "screensaver animation",
+      "summary": "Eighteen deterministic paper lanterns rise and sway in a 60-second exact loop, brighten on hover and lift on click. Reduced motion shows one static frame.",
+      "status": "shipped",
+      "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3685",
+      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/38530542158",
+      "merge_sha": "081bbae03c1b1e8cee4f875d09e60167c64afa82",
+      "checks": "passed",
+      "verification": "Merged PR's aggregate 'Contract verifiers' check run completed with conclusion success on the final head; main commit confirmed. Rendered preview not independently opened by this cycle.",
+      "art": {
+        "status": "not-required",
+        "note": "Code-drawn canvas scene; no rendered art asset is required."
+      },
+      "provenance": {
+        "implemented_by": "existing assigned project worker",
+        "merged_at": "2026-10-14T07:51:47Z",
+        "independent_verification": "this Conductor cycle re-read PR metadata, main commit and completed check run"
+      }
+    },
+    {
+      "slug": "arcade-cabinet-fits-one-screen",
+      "title": "Arcade cabinet and controls fit inside one screen",
+      "target": "kr-arcade",
+      "kind": "viewport fit",
+      "summary": "Arcade cabinet gains a contained mode that sizes the screen to the measured pane so marquee, screen and Start controls are never clipped. The responsive audit now fails on clipped cabinets at three widths.",
+      "status": "shipped",
+      "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3684",
+      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/38530342805",
+      "merge_sha": "98fa6e1b1302a81d1d3db0c0c9561635342d1204",
+      "checks": "passed",
+      "verification": "Merged PR's aggregate 'Contract verifiers' check run completed with conclusion success; main commit confirmed. PR text states post-deploy 390/820/1440 screenshots are not yet confirmed, so visual acceptance is still open.",
+      "art": {
+        "status": "not-required",
+        "note": "Layout fix; no new artwork."
+      },
+      "provenance": {
+        "implemented_by": "existing assigned project worker",
+        "merged_at": "2026-10-14T07:51:10Z",
+        "independent_verification": "this Conductor cycle re-read PR metadata, main commit and completed check run"
+      }
+    },
+    {
+      "slug": "shifting-desks-in-game-art-picker",
+      "title": "In-game art style picker and description beside choices",
+      "target": "shifting-desks",
+      "kind": "gameplay UI",
+      "summary": "An Art button with current-style thumbnail opens the picture picker mid-game and repaints every card immediately. From tablet width the card description sits above the choices; phones keep it on the card.",
+      "status": "shipped",
+      "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3683",
+      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/38530779948",
+      "merge_sha": "f0501ce3bddb2941ddb7a63c7361fa72a78eb206",
+      "checks": "passed",
+      "verification": "Merged PR's head-commit 'Shifting Desks gameplay contract' run completed success, as did the other PR contract workflows listed for that head; main commit confirmed.",
+      "art": {
+        "status": "not-required",
+        "note": "Uses the existing Classic, Noir and Western Cartoon card art."
+      },
+      "provenance": {
+        "implemented_by": "existing assigned project worker",
+        "merged_at": "2026-10-14T07:54:32Z",
+        "independent_verification": "this Conductor cycle re-read PR metadata, main commit and completed check run"
+      }
+    },
+    {
+      "slug": "arcade-soundtrack-mixer",
+      "title": "Arcade soundtrack briefs and gesture-safe mixer",
+      "target": "kr-arcade",
+      "kind": "audio system",
+      "summary": "Typed soundtrack briefs for seven cabinets and a mixer that crossfades scenes, ducks music under stingers and falls back to oscillators until a track decodes. Cabinets gain a persisted volume slider.",
+      "status": "shipped",
+      "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3681",
+      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/38526984311",
+      "merge_sha": "5ad7219e82c48fe2d699cab1ed801f1469d666b7",
+      "checks": "passed",
+      "verification": "Merged PR's aggregate 'Contract verifiers' check run completed with conclusion success; main commit confirmed. Recorded music files are not yet produced; only the mixer, briefs and an admin-gated job queue shipped.",
+      "art": {
+        "status": "not-required",
+        "note": "No audio or image assets generated; the audio job queue is admin-gated and was not called."
+      },
+      "provenance": {
+        "implemented_by": "existing assigned project worker",
+        "merged_at": "2026-10-14T07:33:09Z",
+        "independent_verification": "this Conductor cycle re-read PR metadata, main commit and completed check run"
+      }
+    },
+    {
+      "slug": "plumber-enemy-boss-animation",
+      "title": "Save the Plumber painted enemy and boss animation",
+      "target": "save-the-plumber",
+      "kind": "animation",
+      "summary": "The front-page toy box grows to fourteen enemy families that play their painted cycles on hover or tap. The boss panel plays its attack sheet, with reduced-motion and drawn-sprite fallbacks.",
+      "status": "shipped",
+      "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3680",
+      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/38521763648",
+      "merge_sha": "e874c1dba26edb90374707155db9984e434af93d",
+      "checks": "passed",
+      "verification": "Merged PR's aggregate 'Contract verifiers' check run completed with conclusion success; main commit confirmed. Merged at 11:37 PM PT on 2026-10-13, just before this docket's date; not used in the 10-13 docket.",
+      "art": {
+        "status": "not-required",
+        "note": "Plays the already-painted animation sheets from earlier ArtJobs; no new renders requested."
+      },
+      "provenance": {
+        "implemented_by": "existing assigned project worker",
+        "merged_at": "2026-10-14T06:37:47Z",
+        "independent_verification": "this Conductor cycle re-read PR metadata, main commit and completed check run"
+      }
+    }
+  ]
+}
