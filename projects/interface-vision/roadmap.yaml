@@ -1776,7 +1776,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1797,13 +1797,12 @@ tasks:
     Silas requests sitewide application of the viewport-first interaction and fully-scrollable gallery rule. Audit route inventory, add sitewide regression protection, fix highest-impact shared shells and targeted surfaces in scoped PRs.
 
     Sitewide viewport-first initial implementation is ready for CI review: the scheduled responsive browser audit now records page-flow and clipped last gallery items across expanded public routes, plus bounded Ghost Trail/Pinball stages and collapsed Showdown controls with reference text in tutorial sidebar. Companion Conductor work specifies further public/gallery/admin batches and final screenshot atlas. Code awaiting PR and exact-head checks, no deploy.
-  updated: '2026-10-14T05:22:21Z'
+
+    Sitewide viewport-first first batch shipped in Kind Robots PR #3673, merged as a97747b50b09f2f03edace24f9b4746a245550b1 from exact-head 0dd03c38ebfad96e3716057c659f8ad213f1497f after all 32 workflows completed successfully (including TypeScript, Layout, Contract Tests, Prettier, Workflow paths and branch janitor). Resolved two scoped CI quality issues without loosening checks: exact generated audit JSON path allowance and formatter-normalized Showdown disclosure. Added viewport owner/gallery reachability measurements and audit artifact, expanded public route scan, bounded Ghost Trail/Pinball stages, Showdown settings disclosure, and tutorial help. Companion Conductor PR #6165 merged as 89724c91c5f64080d00b0c216c12f66825553b52, tracking independent public, gallery, admin and final deployment/screenshot tasks t-143..t-146. No art job, game engine changes, database migration, public route moves, manual deployment or live three-device visual verification performed. Return t-104 to ready/resting for consistency fallback; specific finite sitewide work now belongs to t-143..t-146.
+  updated: '2026-10-14T05:36:12Z'
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
   min_rest_hours: 24
-  owner: worker
-  claimed_by: 2026-10-14T050221Z-interface-vision-t104-18b8
-  claimed_at: '2026-10-14T05:02:21Z'
 
 - id: t-123
   milestone: m5
