@@ -164,3 +164,72 @@ def test_existing_source_linked_first_slice_still_gets_missing_followups(repo):
     assert sum("playable or usable content slice" in t["title"] for t in tasks) == 0
     assert recovery.recover_one(row).result == "already-linked"
     assert len(yaml.safe_load(path.read_text())["tasks"]) == 4
+
+
+def test_zero_indent_legacy_task_rows_get_new_unique_ids(repo):
+    """Actual October backlog uses tasks: then - id at column zero."""
+    pitch(repo, slug="older-game")
+    path = roadmap(repo, "older-game")
+    old = (
+        "project: older-game\n"
+        "kind: software\n"
+        "milestones:\n"
+        "- id: m1\n  title: Shape\n  weight: 30\n  status: not-started\n"
+        "- id: m2\n  title: Build\n  weight: 40\n  status: not-started\n"
+        "- id: m3\n  title: Polish\n  weight: 30\n  status: not-started\n"
+        "tasks:\n"
+        + "".join(
+            f"- id: t-{number:03d}\n"
+            "  milestone: m2\n"
+            f"  title: Legacy task {number}\n"
+            "  status: ready\n"
+            for number in range(1, 9)
+        )
+        + "goal: preserve the existing tail metadata\n"
+    )
+    path.write_text(old)
+    row = recovery.approved_legacy_rows()[0]
+    assert recovery.recover_one(row).result == "queued"
+    result = path.read_text()
+    parsed = yaml.safe_load(result)
+    assert [task["id"] for task in parsed["tasks"]] == [
+        *(f"t-{number:03d}" for number in range(1, 9)),
+        "t-009",
+        "t-010",
+        "t-011",
+    ]
+    assert parsed["goal"] == "preserve the existing tail metadata"
+    assert result.count("goal: preserve the existing tail metadata") == 1
+    assert recovery.recover_one(row).result == "already-linked"
+    assert path.read_text() == result
+
+
+def test_zero_indent_existing_project_target_preserves_following_section(repo):
+    path = roadmap(repo, "kind-robots")
+    path.write_text(
+        "project: kind-robots\n"
+        "milestones:\n- id: m1\n  title: Build\n  weight: 100\n"
+        "  status: not-started\n"
+        "tasks:\n- id: t-008\n  milestone: m1\n  title: Existing\n"
+        "  status: ready\n"
+        "summary: keep me unchanged\n"
+    )
+    pitch(repo, slug="new-feature", target="kind-robots")
+    row = recovery.approved_legacy_rows()[0]
+    assert recovery.recover_one(row).result == "queued"
+    parsed = yaml.safe_load(path.read_text())
+    assert parsed["summary"] == "keep me unchanged"
+    assert [task["id"] for task in parsed["tasks"]] == ["t-008", "t-009"]
+    assert recovery.recover_one(row).result == "already-linked"
+
+
+def test_writer_never_persists_invalid_task_insertion(repo):
+    path = roadmap(repo, "kind-robots")
+    original = path.read_text()
+    with pytest.raises(ValueError, match="expected number"):
+        recovery._append_task_rows(
+            original,
+            "  - id: t-002\n    title: Not enough\n",
+            2,
+        )
+    assert path.read_text() == original
