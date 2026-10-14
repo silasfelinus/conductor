@@ -1,0 +1,1036 @@
+{
+  "version": 1,
+  "source": "silasfelinus/kind_robots utils/shiftingDesks/*.json as of 2026-10-13 PT",
+  "status": "approved_2026-10-13_PT; queue submission staged in this PR; render status tracked on requests ledger",
+  "baseImagePrefix": "/images/shifting-desks/",
+  "alternateImagePrefix": "/images/shifting-desks/styles/<style-id>/",
+  "styles": [
+    {
+      "id": "classic",
+      "title": "Classic / The Company Smile",
+      "engine": "krea2",
+      "checkpoint": null,
+      "promptStyle": "prose",
+      "phase": "existing",
+      "tail": "mid-century corporate safety-manual illustration, screen-printed gouache, halftone grain, flat confident shapes, manila carbon-blue safety-orange green and oxblood, vertical portrait composition, every surface bare and unmarked"
+    },
+    {
+      "id": "corporate-noir",
+      "title": "Noir",
+      "engine": "sdxl-checkpoint",
+      "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors",
+      "promptStyle": "tags",
+      "steps": 30,
+      "cfg": 5,
+      "sampler": "euler_ancestral",
+      "phase": "approved",
+      "prefix": "masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style)",
+      "tail": "western graphic novel, bold inky shadows, dramatic angles, expressive body language, moody atmospheric lighting, readable silhouettes, every surface bare and unmarked"
+    },
+    {
+      "id": "western-cartoon",
+      "title": "Western Cartoon (selected Gus reference)",
+      "engine": "sdxl-checkpoint",
+      "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors",
+      "promptStyle": "tags",
+      "steps": 30,
+      "cfg": 5,
+      "sampler": "euler_ancestral",
+      "phase": "approved",
+      "prefix": "masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics (style), toon (style)",
+      "tail": "feature-quality Western animated cartoon, warm copper-gold highlights, strong phosphor green office lighting, polished expressive character acting, rich cinematic cel painting, warm approachable Gus, high-impact perspective, every surface bare and unmarked"
+    }
+  ],
+  "subjects": [
+    {
+      "kind": "department",
+      "department": "orientation",
+      "id": "orientation",
+      "title": "Orientation",
+      "source": "orientation.json department.arrival_prompt",
+      "prompt": "A sunny modernist office campus at dawn, a cheerful entrance arch over a spotless plaza, new hires with lanyards filing in under neat hedges, everything gleaming slightly too clean, a single elevator door waiting in the lobby, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, horizontal 4:3 composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/departments/orientation.webp"
+    },
+    {
+      "kind": "location",
+      "department": "orientation",
+      "id": "security-desk",
+      "title": "Security Desk & Badge Photo",
+      "source": "orientation.json locations[security-desk].art_prompt",
+      "prompt": "A cathedral-sized marble lobby with one long security desk, a brass badge camera on a stand, an upholstered walk-through detector with a row of small rounded teeth along its inner arch, a cheerful round speaker grille high on the wall, long shafts of morning light across the floor, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/security-desk.webp"
+    },
+    {
+      "kind": "location",
+      "department": "orientation",
+      "id": "orientation-theater",
+      "title": "Orientation Theater",
+      "source": "orientation.json locations[orientation-theater].art_prompt",
+      "prompt": "A dim orientation theater with rows of red velvet seats, a single projector beam cutting through dust, a small stage holding an industrial shredder under a spotlight, a rolling cart of refreshments under a cloth beside the aisle, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/orientation-theater.webp"
+    },
+    {
+      "kind": "location",
+      "department": "orientation",
+      "id": "supply-closet-b",
+      "title": "Supply Closet B",
+      "source": "orientation.json locations[supply-closet-b].art_prompt",
+      "prompt": "A cramped supply closet with tall metal shelves of paper towel boxes, a lone red stapler on the highest shelf, a ventilation grille breathing warm air, one bare bulb swinging, the long shadow of an enormous cockroach across the far wall, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/supply-closet-b.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "smile-for-your-badge",
+      "title": "Smile for Your Badge",
+      "source": "orientation.json encounters[smile-for-your-badge].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a nervous new hire grinning with enormous strain at a brass badge camera on a long marble security desk, a cheerful round speaker grille glowing above, a second badge with a scratched-out face resting in a tray, manila and safety-orange palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/smile-for-your-badge.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "the-guard-who-is-also-you",
+      "title": "The Guard Who Is Also You",
+      "source": "orientation.json encounters[the-guard-who-is-also-you].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of two identical office workers face to face across a security desk, one in a guard uniform holding a crossword, the other in a beige new-hire suit, mirrored poses, banks of green phosphor monitors behind them, carbon blue and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/the-guard-who-is-also-you.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "the-visitor-log",
+      "title": "The Visitor Log",
+      "source": "orientation.json encounters[the-visitor-log].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of an eager young intern in an oversized sweater pointing at a clipboard on a chain at a marble desk, a distant corridor leading to a dim restroom door with a cartoon jaguar silhouette pictogram, cheerful palette of manila and fluorescent green, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/the-visitor-log.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "the-hungry-detector",
+      "title": "The Hungry Detector",
+      "source": "orientation.json encounters[the-hungry-detector].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a plush beige walk-through security arch with a subtle row of small rounded teeth along its inner arch, an umbrella handle poking out of the top, a nervous worker holding out a tray of keys and papers, warm lobby light, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/the-hungry-detector.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "the-inkblot-that-looks-back",
+      "title": "The Inkblot That Looks Back",
+      "source": "orientation.json encounters[the-inkblot-that-looks-back].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a smiling psychologist in cat-eye glasses holding up an inkblot card shaped exactly like a mushroom cloud, an anxious worker in a theater seat, a rolling cart of untouched refreshments under a cloth, velvet curtains, carbon blue and safety-orange palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/the-inkblot-that-looks-back.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "trust-fall-over-the-shredder",
+      "title": "Trust Fall Over the Shredder",
+      "source": "orientation.json encounters[trust-fall-over-the-shredder].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a worker on a theater stage leaning backward with arms crossed, an enormous open industrial shredder with gleaming rollers below, a mustached colleague in a short-sleeved shirt and tie holding his arms out a little too far away, spotlight beam, oxblood and fluorescent green palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/trust-fall-over-the-shredder.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "the-mandatory-fun-survey",
+      "title": "The Mandatory Fun Survey",
+      "source": "orientation.json encounters[the-mandatory-fun-survey].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a long row of theater seats with workers bent over identical clipboards, a close-up hand holding an eraserless pencil above a survey grid of smiling face icons, a tiny raised-fist stapler doodle in a margin, manila and carbon blue palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/the-mandatory-fun-survey.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "the-unlisted-chapter",
+      "title": "The Unlisted Chapter",
+      "source": "orientation.json encounters[the-unlisted-chapter].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a dark theater lit by a projector beam showing a flickering frame of a wood-paneled boardroom with a preserved head in a glass jar at the head of the table and a plush teddy bear on a missile launch rail, a lone worker silhouetted in the front row, film reel spinning in the booth, oxblood and phosphor green palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/the-unlisted-chapter.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "gus-shop-steward",
+      "title": "Gus, Shop Steward",
+      "source": "orientation.json encounters[gus-shop-steward].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a giant friendly cockroach in a knitted cardigan and half-moon reading glasses sitting on a stack of paper towel boxes in a cramped supply closet, holding out one claw for a handshake, a startled worker in the doorway, a red stapler on a high shelf, warm bare bulb light, manila and oxblood palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/gus-shop-steward.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "the-last-box-of-pens",
+      "title": "The Last Box of Pens",
+      "source": "orientation.json encounters[the-last-box-of-pens].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of three people reaching toward a single small box of pens on a bare metal shelf, a tired older janitor in coveralls, an anxious intern in a big sweater, and a new hire in beige, dramatic overhead bulb, empty shelves stretching away, safety-orange and carbon blue palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/the-last-box-of-pens.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "something-ticking-in-the-toner",
+      "title": "Something Ticking in the Toner",
+      "source": "orientation.json encounters[something-ticking-in-the-toner].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of an adorable plush teddy bear with a quilted belly hatch and a faint glowing seam, wedged between stacks of toner boxes, button eyes open, a worker frozen mid-reach with a screwdriver, a small atomic swirl motif embroidered on the bear's paw, fluorescent green and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/something-ticking-in-the-toner.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "orientation",
+      "id": "the-duct-has-opinions",
+      "title": "The Duct Has Opinions",
+      "source": "orientation.json encounters[the-duct-has-opinions].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of an older janitor in coveralls half inside an open ventilation grille with a wrench, a tangle of fat silver ducts snaking away into the ceiling like vines, warm air shimmer, a crumpled repair form in her hand, a worker crouched beside her, carbon blue and safety-orange palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/the-duct-has-opinions.webp"
+    },
+    {
+      "kind": "review",
+      "department": "orientation",
+      "id": "ninety-day-review",
+      "title": "Your 90-Day Review, Today at 3",
+      "source": "orientation.json boss.art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a long oxblood review table under a single hanging lamp, a glowing round speaker grille at one end, a stern supervisor holding an impossibly thick folder, an empty chair with a face-down place card, a small worker sitting alone on the far side, vast dark wood paneling, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/orientation/ninety-day-review.webp"
+    },
+    {
+      "kind": "department",
+      "department": "records",
+      "id": "records",
+      "title": "Records & Forms",
+      "source": "records.json department.arrival_prompt",
+      "prompt": "Elevator doors sliding open onto an endless floor of brass and paper, pneumatic tubes looping overhead, towers of folders and filing cabinets receding into haze, a lone clerk's desk lamp glowing in the distance, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, horizontal 4:3 composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/departments/records.webp"
+    },
+    {
+      "kind": "location",
+      "department": "records",
+      "id": "pneumatic-tube-exchange",
+      "title": "Pneumatic Tube Exchange",
+      "source": "records.json locations[pneumatic-tube-exchange].art_prompt",
+      "prompt": "A soaring hall of polished brass pneumatic tubes branching like organ pipes into the ceiling, glass capsules rushing through them, a dispatcher's console of levers and dials, drifts of carbon copies on the tiled floor, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/pneumatic-tube-exchange.webp"
+    },
+    {
+      "kind": "location",
+      "department": "records",
+      "id": "sub-archive",
+      "title": "The Sub-Archive",
+      "source": "records.json locations[sub-archive].art_prompt",
+      "prompt": "An underground archive of grey filing cabinets marching to the horizon, one swinging bulb lighting a narrow aisle, a few drawers left ajar, a stepladder and a cold cup of coffee on a cabinet top, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/sub-archive.webp"
+    },
+    {
+      "kind": "location",
+      "department": "records",
+      "id": "window-9",
+      "title": "Window 9",
+      "source": "records.json locations[window-9].art_prompt",
+      "prompt": "A long counter of frosted service windows with brass grilles, a single lit window in the middle, a weary queue of applicants stretching away including a giant cockroach in a necktie, inkpads and rubber stamps lined up on the clerk's side, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/window-9.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "a-capsule-from-yourself",
+      "title": "A Capsule from Yourself",
+      "source": "records.json encounters[a-capsule-from-yourself].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a worker at a brass pneumatic tube terminal holding a capsule in each hand, one large and one small, a curl of postmarked paper unrolling between them, a wall of gleaming brass tubes rising behind like organ pipes, carbon blue and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/a-capsule-from-yourself.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "the-jam-in-tube-14",
+      "title": "The Jam in Tube 14",
+      "source": "records.json encounters[the-jam-in-tube-14].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a fat brass pneumatic tube bulging in one round lump along its length, a worker with one ear pressed to the brass, an open emergency kit on the wall holding a red axe, a flare and a neatly folded striped towel, steam curling from a joint, safety-orange and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/the-jam-in-tube-14.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "problem-mail",
+      "title": "Problem Mail",
+      "source": "records.json encounters[problem-mail].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a lean dispatcher in sleeve garters and a headset standing between two brass chutes, one glowing warm orange from a furnace below, his hand resting on a capsule sliding toward the glow, a worker reaching from the side, oxblood and safety-orange palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/problem-mail.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "interdepartmental-romance",
+      "title": "Interdepartmental Romance",
+      "source": "records.json encounters[interdepartmental-romance].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a pink glass capsule looping through a tangle of brass tubes trailing a faint lavender shimmer, two office doors far apart on opposite walls with silhouettes leaning wistfully in each doorway, a worker below catching the capsule, manila and fluorescent green palette with one pink accent, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/interdepartmental-romance.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "your-permanent-record",
+      "title": "Your Permanent Record",
+      "source": "records.json encounters[your-permanent-record].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a worker standing at an open filing drawer holding an enormously thick manila folder, a blood-pressure cuff wrapped around one arm connected by a rubber tube to a round dial gauge on the cabinet, the needle swinging high, one bare bulb swinging overhead, endless cabinets fading into gloom, manila and carbon blue palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/your-permanent-record.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "alphabetizing-since-1974",
+      "title": "Alphabetizing Since 1974",
+      "source": "records.json encounters[alphabetizing-since-1974].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a gentle elderly clerk in a cardigan and sleeve garters fingering through a single open file drawer with infinite patience, a faded assignment slip in his other hand, a worker leaning in beside him, dust motes drifting in the beam of one bulb, manila and oxblood palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/alphabetizing-since-1974.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "the-cabinet-marked-destroy",
+      "title": "The Cabinet Marked DESTROY",
+      "source": "records.json encounters[the-cabinet-marked-destroy].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a tall grey filing cabinet alone at the end of a long dim aisle, drawers bulging with folders, a single ballpoint pen balanced on top pointing at the second drawer, a worker approaching with a flashlight, deep shadows between the aisles, carbon blue and oxblood palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/the-cabinet-marked-destroy.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "the-union-archive",
+      "title": "The Union Archive",
+      "source": "records.json encounters[the-union-archive].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a giant cockroach in a mustard cardigan and half-moon reading glasses hunched at a desk under a green-shaded lamp, delicately piecing paper strips together with tweezers, walls papered with reassembled memos, a worker peering in through a gap behind a swung-open filing cabinet, warm lamplight against deep shadow, manila and oxblood palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/the-union-archive.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "flawless-paperwork",
+      "title": "Flawless Paperwork",
+      "source": "records.json encounters[flawless-paperwork].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a poised six-foot cockroach in a navy blazer and pearl earrings sliding a stack of glossy laminated documents through a booth drawer, a sweating worker behind thick glass holding a brass stamp, a long queue curling away behind her, carbon blue and safety-orange palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/flawless-paperwork.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "the-small-box-on-line-12",
+      "title": "The Small Box on Line 12",
+      "source": "records.json encounters[the-small-box-on-line-12].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a brisk psychologist in cat-eye glasses and a lab coat over a cardigan standing at a thick glass booth window, clutching an enormous clipboard, one transfer form lying in the brass drawer between her and a worker holding a stamp, both looking down at the same tiny line, fluorescent green and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/the-small-box-on-line-12.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "dale-requests-a-transfer",
+      "title": "Dale Requests a Transfer",
+      "source": "records.json encounters[dale-requests-a-transfer].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a mild mustached man in a short-sleeved shirt and clip-on tie at a thick glass booth window, eyes cast sideways, pushing a form through the drawer with two fingers, a worker behind the glass holding a brass stamp aloft and hesitating, a long queue fading into the distance, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/dale-requests-a-transfer.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "records",
+      "id": "the-double-sided-stamp",
+      "title": "The Double-Sided Stamp",
+      "source": "records.json encounters[the-double-sided-stamp].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a close view of a hand gripping a heavy two-faced brass stamp above an ink pad, the thumb resting on a polished worn spot, an elderly man in a hat waiting hopefully on the far side of thick glass, a ticking wall clock above, safety-orange and carbon blue palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/the-double-sided-stamp.webp"
+    },
+    {
+      "kind": "review",
+      "department": "records",
+      "id": "the-form-that-requires-itself",
+      "title": "The Form That Requires Itself",
+      "source": "records.json boss.art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a towering spiral of identical forms rising from a single oxblood service window into darkness, an immaculate supervisor in a grey three-piece suit and green visor waiting behind the glass with a stamp, a small worker at the counter holding a pen, brass pneumatic tubes coiling around the spiral, a glowing round speaker grille above, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/records/the-form-that-requires-itself.webp"
+    },
+    {
+      "kind": "window",
+      "department": "records",
+      "id": "courier-from-four",
+      "title": "A courier from the Fourth Floor",
+      "source": "records.json window_shift.applicants[courier-from-four]",
+      "prompt": "A courier in a grey cap and a long coat that seems slightly too long, holding a sealed brown parcel tied with string, standing at a brass service window and smiling patiently, mid-century safety-manual illustration, carbon blue and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/window/courier-from-four.webp"
+    },
+    {
+      "kind": "window",
+      "department": "records",
+      "id": "doreen-of-the-night-shift",
+      "title": "Doreen, night janitor",
+      "source": "records.json window_shift.applicants[doreen-of-the-night-shift]",
+      "prompt": "A tired night janitor in a grey work coverall leaning on a mop handle at a brass service window, holding out a small creased slip of paper, a wheeled bucket beside her, mid-century safety-manual illustration, carbon blue and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/window/doreen-of-the-night-shift.webp"
+    },
+    {
+      "kind": "window",
+      "department": "records",
+      "id": "successor-4471-b",
+      "title": "Employee #4471-B, your Successor",
+      "source": "records.json window_shift.applicants[successor-4471-b]",
+      "prompt": "A freshly thawed office worker in a crisp beige suit with frost still melting off his shoulders, standing at a brass service window and offering a form with a warm, familiar smile, mid-century safety-manual illustration, carbon blue and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/window/successor-4471-b.webp"
+    },
+    {
+      "kind": "window",
+      "department": "records",
+      "id": "the-efficiency-consultant",
+      "title": "An efficiency consultant",
+      "source": "records.json window_shift.applicants[the-efficiency-consultant]",
+      "prompt": "A smiling efficiency consultant in a sharp navy suit with an enormous clipboard, setting up a small folding chair directly behind a clerk at a brass service window, a stopwatch on a chain, mid-century safety-manual illustration, carbon blue and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/window/the-efficiency-consultant.webp"
+    },
+    {
+      "kind": "department",
+      "department": "toy-division",
+      "id": "toy-division",
+      "title": "Toy Division",
+      "source": "toy-division.json department.arrival_prompt",
+      "prompt": "Elevator doors opening onto a cheerful toy workshop floor deep underground, rows of plush teddy bears riding conveyor belts, pastel balloons tied to heavy blast doors, a padded test range glowing under floodlights in the distance, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, horizontal 4:3 composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/departments/toy-division.webp"
+    },
+    {
+      "kind": "location",
+      "department": "toy-division",
+      "id": "concept-lab",
+      "title": "Concept Lab",
+      "source": "toy-division.json locations[concept-lab].art_prompt",
+      "prompt": "A bright toy workshop with long benches of half-built plush bears and rubber ducks, crayon sketches pinned beside blueprint sheets along one wall, warm desk lamps, a man in a dark suit taking notes in a far corner, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/concept-lab.webp"
+    },
+    {
+      "kind": "location",
+      "department": "toy-division",
+      "id": "focus-group-room",
+      "title": "Focus Group Room",
+      "source": "toy-division.json locations[focus-group-room].art_prompt",
+      "prompt": "A cozy focus group room with bright beanbags, a bowl of glossy fruit and a basket of plush toys, a huge dark two-way mirror filling one wall, faint silhouettes of observers behind the glass, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/focus-group-room.webp"
+    },
+    {
+      "kind": "location",
+      "department": "toy-division",
+      "id": "proving-grounds",
+      "title": "Proving Grounds",
+      "source": "toy-division.json locations[proving-grounds].art_prompt",
+      "prompt": "A vast padded test range under tall floodlights, crash-test dummies in party hats seated along a bench, a high balcony above a round target pad, a thick blast shield with observers peeking over it, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/proving-grounds.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "no-bad-ideas",
+      "title": "There Are No Bad Ideas",
+      "source": "toy-division.json encounters[no-bad-ideas].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a cheerful brainstorm in a bright toy workshop, a whiteboard of crayon suns and smiling rockets, a beaming lead designer in a cardigan pointing a marker at a nervous worker, a stern man in a dark suit taking notes in the corner with a pencil, safety orange and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/no-bad-ideas.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "the-nursery",
+      "title": "The Mk 1 Nursery",
+      "source": "toy-division.json encounters[the-nursery].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a quiet nursery of glass incubators under warm amber lamps, a plush teddy bear sleeping in each one with a soft glow at its seams, a worker bending over one incubator to cradle a bear, a brass chute hatch set into the floor nearby, fluorescent green and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/the-nursery.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "the-warning-label",
+      "title": "Writing the Warning Label",
+      "source": "toy-division.json encounters[the-warning-label].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a worker hunched over a drafting desk with a jeweler's loupe, a single tiny round sticker on the blotter, a towering stack of hazard binders leaning beside the desk, a glowing round speaker grille above, a wall clock near five o'clock, carbon-paper blue and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/the-warning-label.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "the-squeak-tester",
+      "title": "The Squeak Tester",
+      "source": "toy-division.json encounters[the-squeak-tester].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a tired office worker with a mustache and a clip-on tie at a long workbench crowded with yellow rubber ducks, holding one duck up to his ear, a ledger open beside him, a heavy vault door glimpsed through a doorway behind him, safety orange and carbon-paper blue palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/the-squeak-tester.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "you-are-six-today",
+      "title": "You Are Six Today",
+      "source": "toy-division.json encounters[you-are-six-today].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a grown office worker in a beige suit wearing a tiny propeller beanie and holding a juice box, sitting on a beanbag and hugging a plush teddy bear, a huge dark two-way mirror behind with faint silhouettes of observers, a bowl of bright fruit on a low table, safety orange and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/you-are-six-today.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "the-questionnaire",
+      "title": "Questionnaire for a Five-Year-Old",
+      "source": "toy-division.json encounters[the-questionnaire].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a large sheet of paper on a tiny low table with a fat box of crayons, an adult hand gripping a crayon awkwardly, smiling suns drawn in the margins, a plush teddy bear propped on the chair opposite as if supervising, fluorescent green and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/the-questionnaire.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "the-parents-behind-the-mirror",
+      "title": "The Parents Behind the Mirror",
+      "source": "toy-division.json encounters[the-parents-behind-the-mirror].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a dim observation room behind a large two-way mirror, nine engineers in white lab coats sitting in a tight circle on folding chairs, one holding up a small screwdriver like a candle, a bright empty focus group room visible through the glass, carbon-paper blue and oxblood palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/the-parents-behind-the-mirror.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "gus-in-a-beanie",
+      "title": "Gus Joins the Focus Group",
+      "source": "toy-division.json encounters[gus-in-a-beanie].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a seven-foot cockroach in a cable-knit cardigan sitting very upright on a small beanbag, a tiny propeller beanie on his head, holding a plush teddy bear at arm's length, a worker beside him in a matching beanie, a dark two-way mirror behind them, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/gus-in-a-beanie.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "the-drop-test",
+      "title": "The Drop Test",
+      "source": "toy-division.json encounters[the-drop-test].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a worker leaning over a high railing on a third-floor balcony holding a plush teddy bear out over a vast padded test range, a round target pad far below, a technician with a stopwatch, a row of observers peeking over a thick blast shield, floodlights overhead, safety orange and carbon-paper blue palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/the-drop-test.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "kevins-lanyard",
+      "title": "Kevin's Lanyard",
+      "source": "toy-division.json encounters[kevins-lanyard].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a crash-test dummy seated on a bench on a padded test range, wearing a cardigan, a wristwatch and a lanyard, a drawn-on mustache, a party hat slightly askew, a worker standing before it with hands clasped, long floodlight shadows, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/kevins-lanyard.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "the-safe-distance-memo",
+      "title": "The Safe-Distance Memo",
+      "source": "toy-division.json encounters[the-safe-distance-memo].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a single typed memo pinned to a corkboard beside a desk, a small grinning mascot drawing in its corner holding up one thumb at arm's length, a worker's finger hovering over a large round button on a desk intercom, a window showing a second office building across a plaza, carbon-paper blue and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/the-safe-distance-memo.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "toy-division",
+      "id": "return-to-sender",
+      "title": "Return to Sender",
+      "source": "toy-division.json encounters[return-to-sender].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a squeaky delivery cart on a padded test range carrying one cardboard parcel tied with string, a soft glow leaking from a seam in the box, a worker reaching for it with a very long pole, crash-test dummies in party hats watching from a bench, fluorescent green and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/return-to-sender.webp"
+    },
+    {
+      "kind": "review",
+      "department": "toy-division",
+      "id": "snuggle-sentinels-launch-party",
+      "title": "Snuggle Sentinel's Launch Party",
+      "source": "toy-division.json boss.art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a bright corporate atrium full of pastel balloons and investors in dark suits, a velvet plinth holding a plush teddy bear with a tiny satin cap over one paw, a sheet cake shaped like a smiling cloud, an immaculate supervisor in a grey three-piece suit offering a pair of ribbon scissors to a small worker, a glowing round speaker grille high on the wall, safety orange and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/toy-division/snuggle-sentinels-launch-party.webp"
+    },
+    {
+      "kind": "department",
+      "department": "wellness",
+      "id": "wellness",
+      "title": "Wellness & Testing",
+      "source": "wellness.json department.arrival_prompt",
+      "prompt": "Elevator doors opening onto a gleaming white testing level deep underground, long corridors of identical doors under cold fluorescent strips, glass tanks glowing green at the far end, a single welcome mat at the elevator's edge, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, horizontal 4:3 composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/departments/wellness.webp"
+    },
+    {
+      "kind": "location",
+      "department": "wellness",
+      "id": "nutrition-studies",
+      "title": "Nutrition Studies",
+      "source": "wellness.json locations[nutrition-studies].art_prompt",
+      "prompt": "A long steel cafeteria under a curved glass ceiling, numbered trays sliding along a conveyor, a wide observation window with clipboards pressed to it, a single potted plant thriving in a corner, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/nutrition-studies.webp"
+    },
+    {
+      "kind": "location",
+      "department": "wellness",
+      "id": "cognitive-testing-chamber",
+      "title": "Cognitive Testing Chamber",
+      "source": "wellness.json locations[cognitive-testing-chamber].art_prompt",
+      "prompt": "A bright white room nested inside a larger white room, a single chair and table at the center, a dark one-way window along one wall, a corridor of identical doors glimpsed through an archway, a glowing round speaker grille, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/cognitive-testing-chamber.webp"
+    },
+    {
+      "kind": "location",
+      "department": "wellness",
+      "id": "mutation-suite",
+      "title": "Mutation Suite",
+      "source": "wellness.json locations[mutation-suite].art_prompt",
+      "prompt": "A tiled clinical hall lined with tall glass tanks of softly glowing green liquid, a smiling nurse's trolley of paper cups, a huge round steel vault door set into the far wall, rising bubbles catching the light, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/mutation-suite.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "the-control-group-lunch",
+      "title": "The Control Group Lunch",
+      "source": "wellness.json encounters[the-control-group-lunch].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of two identical cafeteria trays of grey stew and pink drinks on a long steel table under harsh lights, a nervous worker on one side and a beaming young intern on the other, a man in a lab coat watching through a large window with a clipboard, fluorescent green and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/the-control-group-lunch.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "the-calorie-confessional",
+      "title": "The Calorie Confessional",
+      "source": "wellness.json encounters[the-calorie-confessional].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a narrow curtained booth with a small padded kneeler and a brass grille, a single soft lamp glowing inside, a worker kneeling with hands clasped, a needle gauge on the wall swinging high, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/the-calorie-confessional.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "the-vending-machine-that-knows",
+      "title": "The Vending Machine That Knows",
+      "source": "wellness.json encounters[the-vending-machine-that-knows].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a tall beige vending machine with a single round glass lens instead of buttons, a granola bar and a small paper cup waiting in its tray, a worker leaning back and peering into the lens, fluorescent green and oxblood palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/the-vending-machine-that-knows.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "next-years-menu",
+      "title": "Next Year's Menu",
+      "source": "wellness.json encounters[next-years-menu].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a long printed menu on a clipboard showing forty identical photographs of beige paste on different colored plates, a pencil hovering over one blank line at the bottom, a steaming serving hatch behind, carbon-paper blue and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/next-years-menu.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "the-button",
+      "title": "The Button",
+      "source": "wellness.json encounters[the-button].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a bright white room with a single white table holding one large round red button, a worker sitting very still on a stool with hands tucked under their thighs, a plain wall clock, a glowing round speaker grille above, safety orange and fluorescent green palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/the-button.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "the-word-list",
+      "title": "The Word List",
+      "source": "wellness.json encounters[the-word-list].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a worker at a small desk with a microphone and a row of chunky switches stepping up in size, a thick window showing a second identical worker strapped calmly into a chair, a proctor in a lab coat leaning in to whisper, oxblood and carbon-paper blue palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/the-word-list.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "the-other-side-of-the-glass",
+      "title": "The Other Side of the Glass",
+      "source": "wellness.json encounters[the-other-side-of-the-glass].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a worker in an oversized white lab coat holding a stopwatch and a thick binder, looking through a window at a nervous young intern in a cable-knit sweater sitting in a padded chair and giving a thumbs-up, a clean white corridor, fluorescent green and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/the-other-side-of-the-glass.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "the-thursday-door",
+      "title": "The Thursday Door",
+      "source": "wellness.json encounters[the-thursday-door].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a long white corridor ending in three identical doors, a painted arrow on the floor pointing to the middle door, a worker hesitating with one hand raised, a coworker silhouette standing perfectly still at the far end, safety orange and carbon-paper blue palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/the-thursday-door.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "the-second-dose",
+      "title": "The Second Dose",
+      "source": "wellness.json encounters[the-second-dose].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a smiling nurse in a crisp white cap holding out a small paper cup with one glowing green drop, a worker staring at it with their own fingertips faintly shimmering, tall bubbling glass tanks lining the room behind, fluorescent green and oxblood palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/the-second-dose.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "the-humming-door",
+      "title": "The Humming Door",
+      "source": "wellness.json encounters[the-humming-door].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a huge round steel vault door set into a tiled wall at the end of a row of bubbling tanks, faint sound ripples drawn in the air around it, a worker pressing one ear to the steel, a yellow rubber duck in their other hand, carbon-paper blue and fluorescent green palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/the-humming-door.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "tank-nine",
+      "title": "Tank Nine",
+      "source": "wellness.json encounters[tank-nine].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a tall glass tank frosted white from the inside with soft bubbles rising, a small brass plaque on its base, a worker knocking gently on the glass, a row of other tanks glowing faintly behind, fluorescent green and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/tank-nine.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "wellness",
+      "id": "the-mirror-test",
+      "title": "The Mirror Test",
+      "source": "wellness.json encounters[the-mirror-test].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a worker standing before a tall framed mirror with a small red dot on their forehead, their reflection a half-second ahead with one finger already raised to its own forehead, a technician with a clipboard watching from the side, tiled walls and bubbling tanks, oxblood and carbon-paper blue palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/the-mirror-test.webp"
+    },
+    {
+      "kind": "review",
+      "department": "wellness",
+      "id": "the-final-wellness-exam",
+      "title": "The Final Wellness Exam",
+      "source": "wellness.json boss.art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a vast hushed exam hall with two small wooden desks facing each other under a single hanging lamp, a worker at one desk holding an exam booklet, a brave young intern in a cable-knit sweater at the other gripping a pencil, a tall proctor in a lab coat standing between them, a glowing round speaker grille high on the wall, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/wellness/the-final-wellness-exam.webp"
+    },
+    {
+      "kind": "department",
+      "department": "sub-level-zero",
+      "id": "sub-level-zero",
+      "title": "Sub-Level Zero",
+      "source": "sub-level-zero.json department.arrival_prompt",
+      "prompt": "Elevator doors opening at the very bottom of the Vault onto a plush executive corridor of dark wood and brass, portraits of a mustached man at four different ages, a round boardroom door glowing at the far end, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, horizontal 4:3 composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/departments/sub-level-zero.webp"
+    },
+    {
+      "kind": "location",
+      "department": "sub-level-zero",
+      "id": "boardroom-antechamber",
+      "title": "Boardroom Antechamber",
+      "source": "sub-level-zero.json locations[boardroom-antechamber].art_prompt",
+      "prompt": "A hushed wood-paneled waiting room with deep leather chairs, four oval portraits of the same mustached man at different ages, a horseshoe of typing desks to one side, a tall double door glowing at its edges, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/boardroom-antechamber.webp"
+    },
+    {
+      "kind": "location",
+      "department": "sub-level-zero",
+      "id": "founders-office",
+      "title": "The Founder's Office",
+      "source": "sub-level-zero.json locations[founders-office].art_prompt",
+      "prompt": "An old suburban garage rebuilt deep underground, a cluttered workbench under a hanging lamp, a glowing glass jar on the bench, a faded blueprint pinned to the wall, a wooden desk in the corner, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/founders-office.webp"
+    },
+    {
+      "kind": "location",
+      "department": "sub-level-zero",
+      "id": "server-room-zero",
+      "title": "Server Room Zero",
+      "source": "sub-level-zero.json locations[server-room-zero].art_prompt",
+      "prompt": "A cold blue server room of tall humming cabinets in long rows, each cabinet fitted with a small glowing round speaker grille, a single green terminal at the center, tape reels on high shelves, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/locations/server-room-zero.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "your-society-comes-due",
+      "title": "Your Society Comes Due",
+      "source": "sub-level-zero.json encounters[your-society-comes-due].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a hushed wood-paneled waiting room with deep leather chairs, a mysterious figure in a cardigan lowering a newspaper to look at a worker seated beside them, a tall closed double door at the far end glowing at its edges, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/your-society-comes-due.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "the-assistants-pool",
+      "title": "The Assistants' Pool",
+      "source": "sub-level-zero.json encounters[the-assistants-pool].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a horseshoe of twelve identical desks with executive assistants typing in perfect unison on heavy typewriters, one assistant looking up and offering a neat stack of carbon copies to a worker, a towering double door behind them, carbon-paper blue and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/the-assistants-pool.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "the-successor-waiting-room",
+      "title": "The Successor Waiting Room",
+      "source": "sub-level-zero.json encounters[the-successor-waiting-room].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a narrow waiting room lined with chairs holding five identical workers in fresh beige suits sitting in a neat row, hands folded, one of them leaning forward to speak, the real worker standing in the doorway, oxblood and fluorescent green palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/the-successor-waiting-room.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "marguerite-in-the-walls",
+      "title": "Marguerite in the Walls",
+      "source": "sub-level-zero.json encounters[marguerite-in-the-walls].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a weathered older janitor in grey coveralls and a headscarf peering out of an open ceiling vent with a flashlight and a wrench, a worker on a leather chair looking up at her, a ring of keys dangling from the vent, oxblood and fluorescent green palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/marguerite-in-the-walls.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "the-head-in-the-jar",
+      "title": "The Head in the Jar",
+      "source": "sub-level-zero.json encounters[the-head-in-the-jar].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a cozy old garage rebuilt deep underground, a cluttered workbench with a soldering iron and a dusty radio, a distinguished elderly mustached head floating in a glowing glass jar on the bench, a worker standing before it with hat in hand, warm lamplight, fluorescent green and oxblood palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/the-head-in-the-jar.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "the-spare-mustaches",
+      "title": "The Spare Mustaches",
+      "source": "sub-level-zero.json encounters[the-spare-mustaches].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a high wooden shelf in an old garage with four small empty brass stands in a row, a glowing head in a glass jar on the workbench below gazing up at them with longing, a worker holding a small wooden box, warm lamplight, manila and oxblood palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/the-spare-mustaches.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "the-garage-blueprint",
+      "title": "The Garage Blueprint",
+      "source": "sub-level-zero.json encounters[the-garage-blueprint].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a faded curling blueprint pinned above an old workbench, showing a pencil sketch of a cheerful round speaker grille, a worker reaching up to unpin it, a glowing head in a jar watching from the bench, warm lamplight, carbon-paper blue and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/the-garage-blueprint.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "the-founders-desk",
+      "title": "The Founder's Desk",
+      "source": "sub-level-zero.json encounters[the-founders-desk].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of an old wooden desk with one drawer pulled open, holding a glossy travel brochure and a dented round film tin, a worker's hands hovering between the two, a glowing head in a jar watching from the corner of the desk, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/the-founders-desk.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "pal-at-home",
+      "title": "PAL at Home",
+      "source": "sub-level-zero.json encounters[pal-at-home].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a cold blue server room of tall humming cabinets receding into darkness, each cabinet with a small round speaker grille glowing softly, a lone worker standing in the central aisle listening, faint sound ripples drawn in the air, carbon-paper blue and fluorescent green palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/pal-at-home.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "the-admin-terminal",
+      "title": "The Admin Terminal",
+      "source": "sub-level-zero.json encounters[the-admin-terminal].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a lone glowing green computer terminal on a steel desk at the center of a dark server room, a blinking cursor, a tattered sticky note on the bezel, a worker hunched over the keyboard with one finger raised, tall humming cabinets all around, fluorescent green and carbon-paper blue palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/the-admin-terminal.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "the-backup-tapes",
+      "title": "The Backup Tapes",
+      "source": "sub-level-zero.json encounters[the-backup-tapes].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a tall aisle of shelves packed with labeled tape reels stretching up into darkness, a worker on a rolling ladder holding two reels, one thick and one thin, a notice pinned to the shelf, cold blue light, carbon-paper blue and oxblood palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/the-backup-tapes.webp"
+    },
+    {
+      "kind": "encounter",
+      "department": "sub-level-zero",
+      "id": "the-listening-room",
+      "title": "The Listening Room",
+      "source": "sub-level-zero.json encounters[the-listening-room].art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a small padded room with hundreds of headphones hanging from hooks on every wall, each cable running into the ceiling, a single plush executive chair in the center, a worker in the doorway holding a pair of headphones away from their ear, warm amber light, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/the-listening-room.webp"
+    },
+    {
+      "kind": "review",
+      "department": "sub-level-zero",
+      "id": "the-board",
+      "title": "The Board",
+      "source": "sub-level-zero.json boss.art_prompt",
+      "prompt": "Mid-century safety-manual illustration of a vast perfectly round boardroom under a single great hanging lamp, eleven executives in grey suits seated around a round dark table, one empty chair facing them, a glowing head in a jar at the head of the table, a small worker standing at the empty chair with a folded paper, oxblood and manila palette, halftone grain, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/cards/sub-level-zero/the-board.webp"
+    },
+    {
+      "kind": "job",
+      "department": null,
+      "id": "intern",
+      "title": "Intern",
+      "source": "decks.json jobTitles[intern]",
+      "prompt": "An eager young intern with a cowlick and an oversized cable-knit sweater, three lanyards around the neck, balancing a teetering tray of coffee cups, beaming at an office corridor, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/jobs/intern.webp"
+    },
+    {
+      "kind": "job",
+      "department": null,
+      "id": "temp",
+      "title": "Temp",
+      "source": "decks.json jobTitles[temp]",
+      "prompt": "An unremarkable office temp in a beige cardigan half-blending into beige wallpaper, a visitor sticker on the lapel, holding a clipboard against the chest, gaze politely elsewhere, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/jobs/temp.webp"
+    },
+    {
+      "kind": "job",
+      "department": null,
+      "id": "middle-manager",
+      "title": "Middle Manager",
+      "source": "decks.json jobTitles[middle-manager]",
+      "prompt": "A tired middle manager in shirtsleeves behind a perfectly tidy desk, gripping an enormous rubber stamp in one hand and a chipped mug in the other, a wall of identical binders behind, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/jobs/middle-manager.webp"
+    },
+    {
+      "kind": "job",
+      "department": null,
+      "id": "night-janitor",
+      "title": "Night Janitor",
+      "source": "decks.json jobTitles[night-janitor]",
+      "prompt": "A weathered older night janitor in grey coveralls with a ring of fifty keys at the belt, leaning on a mop beside an open ventilation grille, a dark office floor lit by a single desk lamp, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/jobs/night-janitor.webp"
+    },
+    {
+      "kind": "job",
+      "department": null,
+      "id": "internal-auditor",
+      "title": "Internal Auditor",
+      "source": "decks.json jobTitles[internal-auditor]",
+      "prompt": "A stern internal auditor in a dark three-piece suit holding a magnifying glass over an open ledger, coworkers in the background leaning politely away, a green banker's lamp glowing, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/jobs/internal-auditor.webp"
+    },
+    {
+      "kind": "society",
+      "department": null,
+      "id": "stapler-liberation-front",
+      "title": "Stapler Liberation Front",
+      "source": "decks.json societies[stapler-liberation-front]",
+      "prompt": "A red stapler rearing up on a desk like a raised fist, a defiant ring of paperclips arranged around it, dramatic low lighting and long shadows, a scatter of liberated pens, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/societies/stapler-liberation-front.webp"
+    },
+    {
+      "kind": "society",
+      "department": null,
+      "id": "friends-of-the-old-coffee-machine",
+      "title": "Friends of the Old Coffee Machine",
+      "source": "decks.json societies[friends-of-the-old-coffee-machine]",
+      "prompt": "A battered chrome coffee machine glowing warmly in a dark break room, mismatched mugs gathered around it like a small congregation, steam curling upward in the lamplight, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/societies/friends-of-the-old-coffee-machine.webp"
+    },
+    {
+      "kind": "society",
+      "department": null,
+      "id": "society-for-accurate-minutes",
+      "title": "Society for Accurate Minutes",
+      "source": "decks.json societies[society-for-accurate-minutes]",
+      "prompt": "A secret candlelit meeting of clerks between towering filing cabinets, each clerk writing in an identical notebook, faces lit from below, an open drawer of carbon copies at the center, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/societies/society-for-accurate-minutes.webp"
+    },
+    {
+      "kind": "society",
+      "department": null,
+      "id": "fourth-floor-irregulars",
+      "title": "Fourth Floor Irregulars",
+      "source": "decks.json societies[fourth-floor-irregulars]",
+      "prompt": "A brass elevator button panel with an extra round button glowing softly between the others, a gloved hand reaching for it, the elevator car lit in eerie fluorescent green, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/societies/fourth-floor-irregulars.webp"
+    },
+    {
+      "kind": "society",
+      "department": null,
+      "id": "the-recyclers",
+      "title": "The Recyclers",
+      "source": "decks.json societies[the-recyclers]",
+      "prompt": "An enormous recycling bin overflowing with crumpled paper, staplers and coffee mugs, a giant friendly cockroach in a cardigan and a night janitor nodding to each other beside it, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/societies/the-recyclers.webp"
+    },
+    {
+      "kind": "society",
+      "department": null,
+      "id": "concerned-parents-of-the-toy-division",
+      "title": "Concerned Parents of the Toy Division",
+      "source": "decks.json societies[concerned-parents-of-the-toy-division]",
+      "prompt": "A huddle of worried adults in lab coats around a workbench, one gently holding a screwdriver over a plush teddy bear with a quilted belly hatch, a warm desk lamp over the scene, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/societies/concerned-parents-of-the-toy-division.webp"
+    },
+    {
+      "kind": "mutation",
+      "department": null,
+      "id": "four-second-precognition",
+      "title": "Four-Second Precognition",
+      "source": "decks.json mutations[four-second-precognition]",
+      "prompt": "An office worker watching a pale translucent echo of themselves a few steps ahead tripping over a loose cable, the real worker calmly stepping around it, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/mutations/four-second-precognition.webp"
+    },
+    {
+      "kind": "mutation",
+      "department": null,
+      "id": "printer-whisperer",
+      "title": "Printer Whisperer",
+      "source": "decks.json mutations[printer-whisperer]",
+      "prompt": "An office worker leaning close to an enormous beige photocopier that glows contentedly, a fan of fresh paper curling out of it like a happy cat's tail, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/mutations/printer-whisperer.webp"
+    },
+    {
+      "kind": "mutation",
+      "department": null,
+      "id": "paperclip-telekinesis",
+      "title": "Paperclip Telekinesis",
+      "source": "decks.json mutations[paperclip-telekinesis]",
+      "prompt": "A swirl of floating silver paperclips orbiting an office worker's raised fingertips, desk papers lifting gently in the air around them, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/mutations/paperclip-telekinesis.webp"
+    },
+    {
+      "kind": "mutation",
+      "department": null,
+      "id": "fluorescent-camouflage",
+      "title": "Fluorescent Camouflage",
+      "source": "decks.json mutations[fluorescent-camouflage]",
+      "prompt": "An office worker dissolving into the pale glow of an overhead fluorescent ceiling panel, only a faint outline of their shoulders remaining, coworkers walking past, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/mutations/fluorescent-camouflage.webp"
+    },
+    {
+      "kind": "mutation",
+      "department": null,
+      "id": "perfect-signature-mimicry",
+      "title": "Perfect Signature Mimicry",
+      "source": "decks.json mutations[perfect-signature-mimicry]",
+      "prompt": "A fountain pen tracing a glowing ribbon of ink through the air above a tall stack of forms, a hand guiding it with uncanny ease, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/mutations/perfect-signature-mimicry.webp"
+    },
+    {
+      "kind": "mutation",
+      "department": null,
+      "id": "empathic-static",
+      "title": "Empathic Static",
+      "source": "decks.json mutations[empathic-static]",
+      "prompt": "Two coworkers facing each other across a desk, soft crackles of warm golden static light passing between their temples, papers lifting in the charge, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/mutations/empathic-static.webp"
+    },
+    {
+      "kind": "mutation",
+      "department": null,
+      "id": "eyes-in-the-back-of-your-head",
+      "title": "Eyes in the Back of Your Head",
+      "source": "decks.json mutations[eyes-in-the-back-of-your-head]",
+      "prompt": "An office worker at a desk seen from behind, a calm second pair of eyes drawn in soft light on the back of their neat bob haircut, a sneaking coworker frozen mid-step, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/mutations/eyes-in-the-back-of-your-head.webp"
+    },
+    {
+      "kind": "mutation",
+      "department": null,
+      "id": "spontaneous-calm",
+      "title": "Spontaneous Calm",
+      "source": "decks.json mutations[spontaneous-calm]",
+      "prompt": "A frazzled office worker suddenly serene, floating an inch above the desk chair with eyes closed, scattered papers settling around them like falling leaves, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/mutations/spontaneous-calm.webp"
+    },
+    {
+      "kind": "back",
+      "department": null,
+      "id": "encounter",
+      "title": "Encounter folder",
+      "source": "projects/shifting-desks/art/ROUND-1.yaml",
+      "prompt": "A closed manila folder lying flat on a desk, symmetrical centered composition, brass paperclip, coffee ring, cobalt round official stamp impression and thin orange tab, simple office stationery seen directly from above, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/backs/encounter.webp"
+    },
+    {
+      "kind": "back",
+      "department": null,
+      "id": "review",
+      "title": "Review folder",
+      "source": "projects/shifting-desks/art/ROUND-1.yaml",
+      "prompt": "An oxblood leather executive folder with brass corner caps and a polished wax seal on a safety orange ribbon, symmetrical centered composition on dark wooden desk, every surface bare and unmarked",
+      "classicImage": "/images/shifting-desks/backs/review.webp"
+    }
+  ]
+}
