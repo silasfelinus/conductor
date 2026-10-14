@@ -1765,7 +1765,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -1784,7 +1784,9 @@ tasks:
     CAPPED 2026-09-30 by Silas (in session: "cap them"): min_rest_hours: 24 -- at most one cycle per day, even after a cycle that did real work (this task ran up to 35 times a day in early September). Every picker honors it via roadmap_claims.task_is_resting; re-arm with close_task.py as usual (add --noop when the cycle found nothing, which lengthens the rest up to 48h).
 
     Silas requests sitewide application of the viewport-first interaction and fully-scrollable gallery rule. Audit route inventory, add sitewide regression protection, fix highest-impact shared shells and targeted surfaces in scoped PRs.
-  updated: '2026-10-14T05:02:21Z'
+
+    Sitewide viewport-first initial implementation is ready for CI review: the scheduled responsive browser audit now records page-flow and clipped last gallery items across expanded public routes, plus bounded Ghost Trail/Pinball stages and collapsed Showdown controls with reference text in tutorial sidebar. Companion Conductor work specifies further public/gallery/admin batches and final screenshot atlas. Code awaiting PR and exact-head checks, no deploy.
+  updated: '2026-10-14T05:22:21Z'
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
   min_rest_hours: 24
