@@ -47,6 +47,17 @@ notes_from_silas: |
   This is the biggest thing holding us back from releasing the site and moving into
   beta."
 
+  2026-10-13 PT, sitewide direction from Silas: "If we have a gallery, we
+  should be able to scroll down to see all items. But we should not have a
+  scrollable design by default!" Treat interactive pages as viewport-first
+  on phone, tablet and desktop, with one bounded stage and appropriately
+  scrolling content panels; long document-style pages are intentional
+  exceptions. Move instructions/reference copy into the existing tutorial
+  sidebar. Repair ALL reachable public, creator and admin surfaces in audited
+  batches rather than falsely closing after a single showcase fix. Required:
+  an inventory and progressive Playwright visual verification of final-item
+  reachability, including admin routes with authenticated fixture access.
+
   Scope decisions Silas made when this project was planned (2026-08-01):
   1. Sequencing — thin foundation, then flagship, then sweep.
   2. Aesthetic — build mockups first; Silas picks by eye, not from description.
@@ -2423,3 +2434,70 @@ tasks:
     upload them from the focused Tablet Navigation Audit workflow. Keep unloaded
     pages, hidden menus and geometry regressions failing; screenshots provide evidence,
     not a substitute for measurements. Use explicit existing file paths in CI triggers.
+
+- id: t-143
+  milestone: m6
+  title: "Viewport-first sweep of public games and interactive play surfaces"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Silas 2026-10-13 sitewide instruction. Inventory every public game and
+    interactive /play route (including shared Arcade cabinets, Zuzu, Storybook,
+    Shifting Desks, gamebook, pinball, and legacy redirects) and retrofit
+    excessive scroll/copy into compact fixed game stages with scrollable
+    panels where needed. Build on the t-104 initial Ghost Trail, Zuzu Pinball
+    and Showdown pass. Preserve gameplay actions, inputs and art. Each scoped
+    PR needs exact-head CI plus phone 390, tablet 820, desktop 1440 preview
+    evidence or an explicit outstanding visual gap. Do not claim sitewide done
+    from this first batch; record each route's audit outcome.
+
+- id: t-144
+  milestone: m6
+  title: "Full-gallery reachability sweep across public and creator collections"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Audit every reachable gallery, facet selector, project gallery, dream and
+    art chooser for a last item reachable by scrolling inside a bounded region
+    or via explicit pagination. Keep big images and normal creative actions.
+    Inspect responsive-route-audit viewport-ownership.json, identify
+    document-flow and clipped-bottom offenders, fix highest-traffic galleries
+    first. Add actual-element/browser fixture coverage, not only source regex.
+    Treat dynamic content, loading states and zero-results separately; preserve
+    accessible keyboard navigation and report route coverage at 390/820/1440.
+
+- id: t-145
+  milestone: m6
+  title: "Viewport-first admin and creator tools sweep with tutorial-first help"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Complete the sitewide instruction on admin/editor/queue/account screens
+    after the high-traffic public passes. Use authenticated fixture coverage
+    and per-route inventory; guest-only Playwright cannot verify admin pages.
+    Move explanatory/caveat copy to existing tutorial sidebar, keep settings
+    compact and preserve essential workflow actions. Apply bounded scroll
+    owners without clipping dialogs, menus, galleries or keyboard focus.
+    Reuse kr-* primitives; no public route or permissions change.
+
+- id: t-146
+  milestone: m6
+  title: "Verify complete viewport-first sitewide atlas and hand off beta review"
+  status: waiting
+  depends_on:
+    - t-143
+    - t-144
+    - t-145
+  passes: 0
+  stakes: reversible
+  note: >-
+    Run the full reachable surface inventory against the self-hosted deployed
+    site at 390/820/1440 with real representative content and authenticated
+    fixtures for protected surfaces. Check last gallery item access, no lost
+    actions, controlled scroll ownership, readable art and no duplicate info
+    blocks. Produce screenshot atlas and source/run IDs, distinguish merged
+    code from verified deploy. Only then hand off to existing t-106 human
+    visual beta-acceptance gate; do not approve that gate automatically.
