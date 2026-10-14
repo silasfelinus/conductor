@@ -1,0 +1,9 @@
+version: 1
+project: interface-vision
+task: t-143
+operation: ready
+owner: worker
+session: 2026-10-14T073700Z-interface-vision-t143-fit-c7e2
+updated: '2026-10-14T07:51:00Z'
+note: >-
+  Screenshot-reported Arcade height bug fixed and merged in Kind Robots PR #3684 as 98fa6e1b1302a81d1d3db0c0c9561635342d1204. Exact PR head df13ebc0fbd4bb338135d85b2c26d26a8a646a3c passed all 31 actual GitHub workflows including TypeScript, four contract shards, layout and formatting. Root cause: PR #3677 bounded parent scroll but ArcadeCabinet still sized canvas from 62svh plus natural-height marquee/title/panel, hiding Start/settings. New opt-in contained sizing measures remaining screen-wrap height with ResizeObserver, constrains canvas by aspect ratio, keeps game pane non-scrolling and Start visible; exceptional controls can scroll only within panel. Responsive Playwright audit now checks actual cabinet, screen, panel and Start geometry for Battery Maze and Ghost Trail at 390/820/1440 and fails on clipped game controls. Temporary formatter workflow removed, code branch cleaned. No live deployed PR preview or post-deploy screenshot verification, no ArtJob, engine, route, DB, or API changes. t-143 remains ready for other public play surfaces.
