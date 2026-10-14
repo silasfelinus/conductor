@@ -3129,12 +3129,12 @@ tasks:
   implementation_pr: 'silasfelinus/conductor#5833'
 - id: t-207
   title: "Approved daily pitches need automatic intake, admin playable previews, and explicit Play promotion"
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
   source_issue: "silasfelinus/conductor#6013"
-  updated: '2026-10-12'
+  updated: '2026-10-14T01:18:00Z'
   note: |-
     FROM GITHUB ISSUE silasfelinus/conductor#6013 (https://github.com/silasfelinus/conductor/issues/6013), opened by @silasfelinus on 2026-10-12. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/conductor#6013`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -3149,6 +3149,8 @@ tasks:
     6. The new Admin Approved Pitches dashboard in kind_robots PR #3565 reports the canonical intake/build/link state. Validate the projection sync and surface stalled items.
 
     This issue is follow-up implementation, not permission to skip required deployment or human gates.
+  claimed_by: 2026-10-14T011800Z-conductor-t-207-gpt6-c49a
+  claimed_at: '2026-10-14T01:18:00Z'
 
 - id: t-208
   title: "enqueue_art_requests.py --status overwrites hand-set REJECTED art statuses"
