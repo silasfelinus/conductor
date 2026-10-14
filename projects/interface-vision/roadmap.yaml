@@ -2499,3 +2499,39 @@ tasks:
     blocks. Produce screenshot atlas and source/run IDs, distinguish merged
     code from verified deploy. Only then hand off to existing t-106 human
     visual beta-acceptance gate; do not approve that gate automatically.
+- id: t-147
+  milestone: m6
+  title: "Re-render the weak tutorial images flagged by the #3379 audit, and screenshot-check the workspace sheet after deploy"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Follow-up to silasfelinus/kind_robots#3379 (closed by kind_robots#3681). The audit
+    traced every Storybook and Admin > Retired tab to its component and opened every
+    image; these still have no good art: Facets tutorial and the /images/nav/heroes/facets.webp
+    hero (404), Watchlist (current tutorial image has garbled text), the Storybook and
+    Dreams tab nav images (garbled text / wrong subject), Emperor of Dust (generic
+    samurai), and the legacy Humboldt Scoop tutorial (shows a newspaper office; the
+    business is pet-waste removal). Queue each through the normal ArtJob pipeline with a
+    concrete no-text scene, open every render before linking it, then wire it in. After
+    deploy, screenshot the workspace sheet at 390/768/1440 on a Storybook tab, an Admin >
+    Retired tab, /play/arcade and /admin/worlds/zuzu, and attach the screenshots for Silas's
+    visual pass. Mandarin flashcard art stays with its own pipeline.
+- id: t-148
+  milestone: m6
+  title: "Zuzu World Studio: post-deploy visual acceptance, typed lore editing and durable ArtJob enqueue"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Follow-up to silasfelinus/kind_robots#3388 (closed by kind_robots#3681, which shipped
+    production roles/slots/pinned versions on ProjectArtImage via an additive migration and
+    the read-only repository-media index). (1) After deploy, confirm migration
+    20261014090000_project_art_image_production_role applied, then screenshot
+    /admin/worlds/zuzu signed in as admin at 390/768/1440: role assignment, usage chips,
+    the repository-media view, last gallery item reachable. (2) Typed lore editing for
+    characters/locations/items inside the studio instead of linking out to the managers.
+    (3) Make "Request edit" enqueue a durable ArtJob (not only a private agent Todo).
+    Optional: index the Showdown boss/ending/map art and arcade title art; make "pin
+    version" a validated ArtImage/ArtJob reference. The studio stays admin-only; any
+    public surface needs Silas's separate publication decision.

@@ -309,9 +309,21 @@
         "Coyote",
         "Abbess"
       ],
-      "stable_ids": [],
-      "status": "legacy-filler-unreconciled",
-      "rule": "Legacy LLM filler is NOT canon; inspect existing owner-scoped live rows, reconcile/patch by verified identity from worlds/zuzu/resource-submissions.json, and add missing entries via the existing Kind Robots API without duplicating or publishing."
+      "stable_ids": [
+        110,
+        209,
+        3374,
+        3375,
+        3376,
+        3377,
+        3378,
+        3379,
+        3380,
+        3381
+      ],
+      "status": "reconciled",
+      "rule": "Canon rows from worlds/zuzu/resource-submissions.json. #110 Zuzu and #209 Coyote Vagrant (legacy name 'The Crossroads Coyote' kept; Silas confirmed the identity 2026-10-14) were patched in place and stay public; #3374-#3381 (Fennec Sister, Fennec Toddler, Abbess, River Croc, Storm Crow, Hyena Matriarch, Old Komodo, Jeffery Mittens) were created private. Other legacy Zuzu-linked filler rows (#111-114, #134-137, #207, #213, #221, #222, #231, #246, #266, #355) are NOT canon and were left untouched.",
+      "provenance": "Verified 2026-10-14 by kind_robots utils/scripts/reconcileZuzuResources.ts (applied plan 7b957871c11621e5; post-apply plan all skip). Report: kind_robots artifacts/zuzu-reconcile-applied.json; issue silasfelinus/kind_robots#3390."
     },
     {
       "model": "Scenario",
@@ -319,9 +331,16 @@
         "Zuzu",
         "Koala Assassin"
       ],
-      "stable_ids": [],
-      "status": "legacy-filler-unreconciled",
-      "rule": "Legacy LLM filler is NOT canon; inspect existing owner-scoped live rows, reconcile/patch by verified identity from worlds/zuzu/resource-submissions.json, and add missing entries via the existing Kind Robots API without duplicating or publishing."
+      "stable_ids": [
+        2251,
+        2252,
+        2253,
+        2254,
+        2255
+      ],
+      "status": "reconciled",
+      "rule": "Canon scenarios created private: #2251 The Watering Hole, #2252 Aftermath at Hollow Bell, #2253 The Apple Tree, #2254 The Mission, #2255 Storm Crow Ambush (Showdown/game continuity only). Legacy filler scenarios (#69, #83, #159, #172, #175, #176, #198, #199) are NOT canon and were left untouched.",
+      "provenance": "Verified 2026-10-14 by kind_robots utils/scripts/reconcileZuzuResources.ts (applied plan 7b957871c11621e5; post-apply plan all skip). Report: kind_robots artifacts/zuzu-reconcile-applied.json; issue silasfelinus/kind_robots#3390."
     },
     {
       "model": "Reward",
@@ -329,9 +348,16 @@
         "Zuzu",
         "Koala Assassin"
       ],
-      "stable_ids": [],
-      "status": "legacy-filler-unreconciled",
-      "rule": "Legacy LLM filler is NOT canon; inspect existing owner-scoped live rows, reconcile/patch by verified identity from worlds/zuzu/resource-submissions.json, and add missing entries via the existing Kind Robots API without duplicating or publishing."
+      "stable_ids": [
+        3000,
+        3001,
+        3002,
+        3003,
+        3004
+      ],
+      "status": "reconciled",
+      "rule": "Canon rewards created private: #3000 Zuzu's Kasa, #3001 The Back-Slung Katana, #3002 Apples for the Road, #3003 The Drifter's Bandage, #3004 The Sister's Dagger. Mechanical effects are labelled editorial/game-only.",
+      "provenance": "Verified 2026-10-14 by kind_robots utils/scripts/reconcileZuzuResources.ts (applied plan 7b957871c11621e5; post-apply plan all skip). Report: kind_robots artifacts/zuzu-reconcile-applied.json; issue silasfelinus/kind_robots#3390."
     },
     {
       "model": "Resource",
@@ -340,9 +366,16 @@
         "Zuzu",
         "arthemyWesternArt"
       ],
-      "stable_ids": [],
-      "status": "not-audited",
-      "rule": "The five character LoRA DATASETS are built but trained/imported Resources not verified. Query existing live Resource rows by actual trigger/checkpoint/owner; never invent Resource IDs."
+      "stable_ids": [
+        4593,
+        4583,
+        4588,
+        4578,
+        4595
+      ],
+      "status": "resource-rows-verified",
+      "rule": "Final character LoRA Resource rows found live by trigger: zuzukoala #4593, zkasister #4583, zkatoddler #4588, zkacoyote #4578, zkaabbess #4595 (each also has four intermediate epoch rows). The API confirms the rows exist, not the weight files on the render box.",
+      "provenance": "Verified 2026-10-14 by kind_robots utils/scripts/reconcileZuzuResources.ts (applied plan 7b957871c11621e5; post-apply plan all skip). Report: kind_robots artifacts/zuzu-reconcile-applied.json; issue silasfelinus/kind_robots#3390."
     },
     {
       "model": "Dream",
