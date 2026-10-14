@@ -30,3 +30,12 @@ All 220 requests use `engine: sdxl-checkpoint` rather than a mislabeled Krea wor
 `/play/shifting-desks` has an accessible, global style selector separate from deterministic saved run state. Changing style changes the image namespace, and a missing alternative falls back to Classic. Style preference persists across page reloads. Choice text, routes, rolls, and existing save schema are identical.
 
 The generated images are independent assets, not replacements. No deletion or mass regeneration of Classic. The user authorized these new art submissions on 2026-10-13 PT.
+
+## 2026-10-14 PT: Illustrious is the default, and every station is covered
+
+Silas: *"now we should have multiple art styles. Make sure they are integrated, and they are presented to the user. Illustrious should be the default."*
+
+- **Default.** New players start in **Western Cartoon**, the Illustrious edition built on the Gus reference Silas selected. **Noir** is the other Illustrious edition. **Classic** (Krea 2) remains a choice and the per-image fallback. Kind Robots bumps the preference key to `shifting-desks-art-style-v2`, so earlier visitors, who were silently saved on Classic, also land on the Illustrious default once.
+- **Presented.** The front desk shows the three editions as image tiles, each previewing the same card in that style, and the in-game toolbar keeps a compact switcher.
+- **Coverage.** All 220 original renders are delivered: every media URL answers 200. The lane now also covers the 10 epilogue cards and the Window 9 desk card, which were added after the batch was cut. That makes 121 subjects and 242 requests on the same `shifting-desks-style-v2-` lane, bulk-submitted like the rest. Until those 22 render, those cards show Classic.
+
