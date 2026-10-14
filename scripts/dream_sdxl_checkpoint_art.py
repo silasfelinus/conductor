@@ -53,12 +53,31 @@ def resolve_registered_checkpoint(family: str, resource_index: dict) -> str:
     filename = expected.rsplit("/", 1)[-1]
     registered = resource_index.get("CHECKPOINT", {}).get(filename.lower())
     # The catalog uses a ComfyUI-relative path retaining the Illustrious/ folder.
-    if not registered or registered.casefold() != expected.casefold():
-        raise RuntimeError(
-            f"{family} checkpoint {expected!r} is not confirmed in the Kind Robots "
-            "CHECKPOINT Resource catalog; refusing a mislabeled ArtJob"
-        )
-    return registered
+    if registered:
+        if registered.casefold() != expected.casefold():
+            raise RuntimeError(
+                f"{family} checkpoint {expected!r} conflicts with Resource registry "
+                f"entry {registered!r}; refusing a mislabeled ArtJob"
+            )
+        return registered
+
+    # /api/resources is a *visibility-filtered gallery*, not a complete model
+    # inventory. Private/mature CHECKPOINT rows are omitted for the worker JWT
+    # even though the house Comic Studio has rendered against this exact Arthemy
+    # path (kind_robots utils/comicLanes.ts, Zuzu's approved Arthemy keyframes).
+    # For the two Shifting Desks lanes ONLY, fall back to that one audited,
+    # exact pinned path; the render box will still check actual file existence.
+    # Never do this for arbitrary names, mismatched active catalog entries or
+    # Daily Dream's independently guarded checkpoint lanes.
+    if family in SHIFTING_DESKS_FAMILIES and expected == (
+        "Illustrious/arthemyWesternArt_v30.safetensors"
+    ):
+        return expected
+
+    raise RuntimeError(
+        f"{family} checkpoint {expected!r} is not confirmed in the Kind Robots "
+        "CHECKPOINT Resource catalog; refusing a mislabeled ArtJob"
+    )
 
 
 def make_checkpoint_job(entry: dict[str, Any], core) -> dict[str, Any]:
