@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-14T12:04:14.929520+00:00",
+  "generated_at": "2026-10-14T17:20:00.433488+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 27,
+    "roadmap_warnings": 28,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 266.67,
+    "hours_since": 271.93,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,7 +35,7 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-14T12:04:14.929528+00:00",
+    "generated_at": "2026-10-14T17:20:00.433497+00:00",
     "summary": {
       "roadmaps": 83,
       "active_projects": 23,
@@ -47,7 +47,7 @@
       "in_progress": 17,
       "done": 1947,
       "errors": 0,
-      "warnings": 27,
+      "warnings": 28,
       "info": 84
     },
     "errors": [],
@@ -85,7 +85,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "coloring-book",
         "task": "t-058",
-        "message": "Task has remained claimed for 16 days."
+        "message": "Task has remained claimed for 17 days."
       },
       {
         "severity": "warning",
@@ -99,7 +99,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "conductor",
         "task": "t-203",
-        "message": "Task has remained claimed for 12 days."
+        "message": "Task has remained claimed for 13 days."
       },
       {
         "severity": "warning",
@@ -170,6 +170,13 @@
         "project": "kindrobots-unraid",
         "task": "t-018",
         "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "kr-arcade",
+        "task": "t-009",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
