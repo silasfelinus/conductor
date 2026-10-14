@@ -2437,7 +2437,7 @@ tasks:
 - id: t-143
   milestone: m6
   title: "Viewport-first sweep of public games and interactive play surfaces"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   note: |-
@@ -2450,7 +2450,9 @@ tasks:
     Scoped sitewide public-play viewport slice shipped in Kind Robots PR #3677 (merged as 406e81d3eeceb5e403bb4f501cbda353f94e419e) from exact-head 5c3dd8fc61dc3841a73bef9231e84c04f168f2fd, with all 31 exact-head workflows completed successfully including TypeScript, Layout Contract, Contract Tests (all four shards), ESLint and Prettier. Root cause: Arcade route stacked high-score/review content below cabinet at phone/tablet widths, causing whole-page scrolling. Used kr-panes/kr-pane-scroll for both hall and cabinet/score panes; game visible by default, scores via mobile switch; kept all score/review/AMF interactions. New source assertions, direct ?game= responsive audit URL and tutorial instructions. Initial one-scroll mix caught by layout CI and corrected, then test formatting caught by Prettier and corrected with repository formatter. Temporary formatting workflows removed. No browser screenshot or deployed self-host check; t-143 remains open for other public game routes. No gameplay engine, public route, account, database, deployment or ArtJob changes.
 
     Fix proven desktop Battery Maze single-screen failure: PR 3677 bounded Arcade panes, but its cabinet still uses natural-height marquee, art, and control panel with a 62svh-based screen width. The user provided screenshots showing controls below viewport. Implement true container-aware playfield scaling, retain controls, and add geometry validation at responsive widths without changing unrelated Arcade game engines.
-  updated: '2026-10-14T07:37:00Z'
+
+    Implemented true contained mode for ArcadeCabinet on /play/arcade?game: the marquee/title/control panel consume bounded height and the playfield is aspect-fit via ResizeObserver against the remaining screen wrap instead of 62svh. The game pane is no longer scroll-owned. Added direct Battery Maze route to the existing 390/820/1440 browser audit and hard fail if cabinet, game screen or Start button is clipped; source regression assertions updated. Repository formatter passed and temporary workflow removed, four-file diff scoped. Awaiting PR exact-head CI and actual deployed-screen atlas.
+  updated: '2026-10-14T07:41:30Z'
   owner: worker
   claimed_by: 2026-10-14T073700Z-interface-vision-t143-fit-c7e2
   claimed_at: '2026-10-14T07:37:00Z'
