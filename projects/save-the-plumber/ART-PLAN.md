@@ -40,3 +40,28 @@ Save the Plumber follows that pattern, with one addition:
 A cleaner long-term fix is an image-matting node (BiRefNet or RMBG-2.0) as a post-step in the
 ComfyUI workflow, which would give every sprite request a true alpha channel. That is a change to
 the home render box, not to this repo.
+
+## Animation pilot (2026-10-14)
+
+Silas: *"This game would live or die on the quality of the main character, and the enemies."* One
+painted pose per character is not animation, and a code-drawn heroine is not that bar.
+
+Image models drift between separate renders but stay consistent inside one image, which is why Kind
+Robots' character-sheet workflow draws every view in a single canvas. The pilot (`anim/`, 8 sheets,
+priority 125) applies that to animation: each sheet is one character in six frames on one ground
+line, on white, which the engine keys out and slices into frames.
+
+| Sheet | Frames |
+| --- | --- |
+| `heroine-a-run`, `heroine-b-run` | six-frame run cycle |
+| `heroine-a-actions`, `heroine-b-actions` | idle, crouch, leap, fall, land, hurt |
+| `heroine-a-turnaround` | front, three-quarter, side, back |
+| `pumpbug-cycle` | four walk frames, squashed, flipped |
+| `rivet-roller-cycle` | four roll frames, stunned, tipped over |
+| `madame-pressure-attack` | idle, wind-up, steam burst, recover, hurt, defeated |
+
+**Heroine proposal.** Painted animation cannot follow a per-pixel randomized look, so the heroine
+becomes a roster: each new game randomly picks one of a set of fully painted young women (the way
+Rainbow Princess picks among P1 to P4), each with her own name and complete animation sheets. Every
+roster member keeps the same hitbox and abilities. The pilot tests two designs; if their frames hold
+together, the roster and every enemy and boss get full sheets.
