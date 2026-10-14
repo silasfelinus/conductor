@@ -1275,8 +1275,8 @@ tasks:
   - id: t-065
     milestone: m8
     title: "Cable Crawler depth slice 2: RAM Rows and the Cooling Fan"
-    status: claimed
-    updated: '2026-10-14T00:30:39Z'
+    status: review
+    updated: '2026-10-14T00:35:24Z'
     passes: 1
     retry_context: >-
       Pass 1 failed (quality) on kind_robots#3593 head 5e8783bc0ef16cf6a363c77b4af6258340e5b453: addScore can earn 100+ spare cables while snapshot writes the unbounded count; readCableSave rejects lives above 99 and clamps accepted counts to Workbench MAX_LIVES=9. The actual score path (97 awards of 100000; score 9.7M below the 60M ceiling) -> beginComponent(1) -> withSave/JSON/sanitizeSaves -> create(resume) loses Continue and resets the checkpoint. Align earned-life, purchase-cap and bounded persistence semantics. Add consumer regressions at relevant boundaries with later component, earned bytes and kit; keep existing immediate boss/Workbench save tests and strict validators. Original worker retains this PR; no duplicate implementation.
@@ -1288,6 +1288,8 @@ tasks:
       October 12 PT: Conductor#6046 merged retry metadata at a09034fea3e02848026036d6fbf010896813a898 after 25 completed current-head checks passed. Quality pass 1: legitimate earned spare count exceeds its own save reader domain, dropping Continue at 100 lives below the 60M score ceiling; exact reproduction and repair requirements in retry_context and kind_robots#3593 comment 6126370861. Release ownership, retain the original implementation PR for its worker's scoped repair; no duplicate implementation or human gate. Independent full arcade run passed 30 cabinet suites, but this boundary remains unresolved. No deployment or publication.
 
       Focused recovery of recorded quality pass1: original kind_robots#3593 is already merged, but live source still awards unbounded spare cables and its strict save reader rejects above99/clamps accepted earned counts to the Workbench purchase cap9. No open Cable PR or overlapping task claim. Preserve existing RAM/Fan mechanics, strict validation and purchase ceiling; reproduce legitimate score-award/save/Continue boundary before repair. Daily five forOctober13PT already evidenced separately. Local role selector used stale checkout/no GitHub token, so live connected PRs/claims and current source supersede its outdated audit signal.
+
+      Quality-pass1 recovery for already-merged kind_robots#3593 prepared on worker/kr-arcade-t065-save-recovery-d7p2. Score-awarded spares use the existing strict99 save domain; Workbench purchases remain capped9, earned10..99 survive reload without clamping. Actual score-path tests reproduce old10-to9 loss and100-cable overflow separately; repaired boundary matrix8/9/10/98/99, publicA/Start Continue, bytes/kit, post-cap actual battery loss and re-earn, and unchanged invalid-count rejection pass. Full35cabinet arcade command, strict scoped tsc, ESLint/Prettier and nine native Chromium actual touch/keyboard/storage/repeatedContinue/render cases390/768/1440 pass. Staged score-award/byte fixtures do not prove human50-60minute pacing or deployment. Existing RAM/Fan implementation retained; PR/CI/merge pending. Daily five ledger unchanged.
     implementation_pr: 'silasfelinus/kind_robots#3593'
     owner: worker
     claimed_by: 20261014T003039Z-cable-t065-d7p2
