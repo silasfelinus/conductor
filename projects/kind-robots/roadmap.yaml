@@ -2409,12 +2409,12 @@ tasks:
     Prevention worth considering (not started): a post-deploy smoke check that fetches the home page and fails on a 500, since the database health check stayed green through the outage.
 - id: t-142
   title: "Reconcile legacy Zuzu resource lore and import missing canon-aligned characters, rewards and scenarios"
-  status: ready
+  status: done
   stakes: reversible
   owner: null
   passes: 0
   source_issue: "silasfelinus/kind_robots#3390"
-  updated: '2026-10-09'
+  updated: '2026-10-14T07:34:25Z'
   note: |-
     FROM GITHUB ISSUE silasfelinus/kind_robots#3390 (https://github.com/silasfelinus/kind_robots/issues/3390), opened by @silasfelinus on 2026-10-09. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3390`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -2436,6 +2436,13 @@ tasks:
     Reference: [Zuzu world registry](https://github.com/silasfelinus/conductor/tree/main/worlds/zuzu), [asset audit PR #5814](https://github.com/silasfelinus/conductor/pull/5814), [related live admin world explorer issue #3388](https://github.com/silasfelinus/kind_robots/issues/3388). This issue owns the *data reconciliation*; #3388 owns the visual browser.
 
     Do not announce as applied until actual authenticated API calls and the returned rows have been verified.
+
+    Done 2026-10-14: applied live (plan 7b957871c11621e5, post-apply all skip). Patched
+    Character #110 and #209 (Silas confirmed #209 as Coyote Vagrant); created private
+    Characters #3374-#3381, Rewards #3000-#3004, Scenarios #2251-#2255; LoRA Resource rows
+    #4593/#4583/#4588/#4578/#4595 verified. IDs recorded in worlds/zuzu/catalog.json
+    (conductor#6172). Tool + tests merged in kind_robots#3681.
+  implementation_pr: 'silasfelinus/kind_robots#3681'
 - id: t-143
   title: "Zuzu World: admin resource explorer with live joins to shared universe registry"
   status: ready
