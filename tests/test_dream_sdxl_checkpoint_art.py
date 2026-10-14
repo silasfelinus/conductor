@@ -69,7 +69,7 @@ def test_partial_resource_catalog_mismatch_fails_closed():
     bad_catalog = {"CHECKPOINT": {
         "arthemywesternart_v30.safetensors": "SDXL/another.ckpt",
     }}
-    with pytest.raises(RuntimeError, match="not confirmed"):
+    with pytest.raises(RuntimeError, match="conflicts with Resource registry"):
         resolve_registered_checkpoint("arthemy", bad_catalog)
 
 
@@ -132,3 +132,23 @@ def test_shifting_desks_cannot_use_rejected_or_unregistered_checkpoint(monkeypat
         queue.entry_to_job(_entry("illustrious", project_target="shifting-desks"))
     with pytest.raises(ValueError, match="reserved for its own project"):
         queue.entry_to_job(_entry("western-cartoon", project_target="zuzu-gamebook"))
+
+
+@pytest.mark.parametrize("family", ["corporate-noir", "western-cartoon"])
+def test_shifting_desks_pinned_arhemy_survives_filtered_gallery(monkeypatch, family):
+    # /api/resources is filtered by owner, publicity and maturity. A house
+    # checkpoint whose public gallery row is hidden still has a known Comfy path.
+    monkeypatch.setattr(core, "_load_resource_index", lambda: {"CHECKPOINT": {}})
+    monkeypatch.setattr(core, "resolve_seed", lambda *_: 333)
+    job = queue.entry_to_job(_entry(family, project_target="shifting-desks", source="shifting-desks"))
+    assert job["payload"]["workflow"]["1"]["inputs"]["ckpt_name"] == (
+        "Illustrious/arthemyWesternArt_v30.safetensors"
+    )
+
+
+def test_shifting_desks_rejects_conflicting_catalog_record():
+    with pytest.raises(RuntimeError, match="conflicts with Resource registry"):
+        resolve_registered_checkpoint(
+            "western-cartoon",
+            {"CHECKPOINT": {"arthemywesternart_v30.safetensors": "SDXL/something-else.safetensors"}},
+        )
