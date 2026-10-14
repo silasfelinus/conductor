@@ -2437,7 +2437,7 @@ tasks:
 - id: t-143
   milestone: m6
   title: "Viewport-first sweep of public games and interactive play surfaces"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -2452,10 +2452,9 @@ tasks:
     Fix proven desktop Battery Maze single-screen failure: PR 3677 bounded Arcade panes, but its cabinet still uses natural-height marquee, art, and control panel with a 62svh-based screen width. The user provided screenshots showing controls below viewport. Implement true container-aware playfield scaling, retain controls, and add geometry validation at responsive widths without changing unrelated Arcade game engines.
 
     Implemented true contained mode for ArcadeCabinet on /play/arcade?game: the marquee/title/control panel consume bounded height and the playfield is aspect-fit via ResizeObserver against the remaining screen wrap instead of 62svh. The game pane is no longer scroll-owned. Added direct Battery Maze route to the existing 390/820/1440 browser audit and hard fail if cabinet, game screen or Start button is clipped; source regression assertions updated. Repository formatter passed and temporary workflow removed, four-file diff scoped. Awaiting PR exact-head CI and actual deployed-screen atlas.
-  updated: '2026-10-14T07:41:30Z'
-  owner: worker
-  claimed_by: 2026-10-14T073700Z-interface-vision-t143-fit-c7e2
-  claimed_at: '2026-10-14T07:37:00Z'
+
+    Screenshot-reported Arcade height bug fixed and merged in Kind Robots PR #3684 as 98fa6e1b1302a81d1d3db0c0c9561635342d1204. Exact PR head df13ebc0fbd4bb338135d85b2c26d26a8a646a3c passed all 31 actual GitHub workflows including TypeScript, four contract shards, layout and formatting. Root cause: PR #3677 bounded parent scroll but ArcadeCabinet still sized canvas from 62svh plus natural-height marquee/title/panel, hiding Start/settings. New opt-in contained sizing measures remaining screen-wrap height with ResizeObserver, constrains canvas by aspect ratio, keeps game pane non-scrolling and Start visible; exceptional controls can scroll only within panel. Responsive Playwright audit now checks actual cabinet, screen, panel and Start geometry for Battery Maze and Ghost Trail at 390/820/1440 and fails on clipped game controls. Temporary formatter workflow removed, code branch cleaned. No live deployed PR preview or post-deploy screenshot verification, no ArtJob, engine, route, DB, or API changes. t-143 remains ready for other public play surfaces.
+  updated: '2026-10-14T07:51:00Z'
 
 - id: t-144
   milestone: m6
