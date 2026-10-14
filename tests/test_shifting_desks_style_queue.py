@@ -10,23 +10,24 @@ ART = ROOT / "projects" / "shifting-desks" / "art"
 PREFIX = "shifting-desks-style-v2-"
 
 
-def test_style_manifest_and_220_live_queue_requests_are_bijective():
+def test_style_manifest_and_242_live_queue_requests_are_bijective():
     catalog = json.loads((ART / "STYLE-CATALOG.json").read_text())
     assert {s["id"] for s in catalog["styles"]} == {
         "classic", "corporate-noir", "western-cartoon"
     }
     subjects = catalog["subjects"]
-    assert len(subjects) == 110
-    assert len({(s["kind"], s["id"]) for s in subjects}) == 110
+    # 110 original stations plus the 10 epilogue cards and the Window 9 desk (2026-10-14).
+    assert len(subjects) == 121
+    assert len({(s["kind"], s["id"]) for s in subjects}) == 121
     assert all(s["prompt"] for s in subjects)
     assert all(s["classicImage"].startswith("/images/shifting-desks/") for s in subjects)
 
     all_requests = yaml.safe_load((ROOT / "projects/art-prompts.yaml").read_text())["requests"]
     entries = [e for e in all_requests if e.get("id", "").startswith(PREFIX)]
-    assert len(entries) == 220
+    assert len(entries) == 242
     ids = [e["id"] for e in entries]
     targets = [e["image_path"] for e in entries]
-    assert len(set(ids)) == len(set(targets)) == 220
+    assert len(set(ids)) == len(set(targets)) == 242
     assert all(e["source"] == "shifting-desks" and e["variant"] == "image" for e in entries)
     assert all(e["project_target"] == e["project_slug"] == "shifting-desks" for e in entries)
     assert all(e["engine"] == "sdxl-checkpoint" for e in entries)
@@ -37,7 +38,7 @@ def test_style_manifest_and_220_live_queue_requests_are_bijective():
     assert all(not e["image_path"].startswith("public/images/shifting-desks/cards/") for e in entries)
 
     counts = Counter(e["checkpoint_family"] for e in entries)
-    assert counts == {"corporate-noir": 110, "western-cartoon": 110}
+    assert counts == {"corporate-noir": 121, "western-cartoon": 121}
     expected = {
         f"public/images/shifting-desks/styles/{style}/{s['classicImage'][len('/images/shifting-desks/'):]}"
         for style in counts
