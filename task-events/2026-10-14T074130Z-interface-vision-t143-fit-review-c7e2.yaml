@@ -1,0 +1,9 @@
+version: 1
+project: interface-vision
+task: t-143
+operation: review
+owner: worker
+session: 2026-10-14T073700Z-interface-vision-t143-fit-c7e2
+updated: '2026-10-14T07:41:30Z'
+note: >-
+  Implemented true contained mode for ArcadeCabinet on /play/arcade?game: the marquee/title/control panel consume bounded height and the playfield is aspect-fit via ResizeObserver against the remaining screen wrap instead of 62svh. The game pane is no longer scroll-owned. Added direct Battery Maze route to the existing 390/820/1440 browser audit and hard fail if cabinet, game screen or Start button is clipped; source regression assertions updated. Repository formatter passed and temporary workflow removed, four-file diff scoped. Awaiting PR exact-head CI and actual deployed-screen atlas.
