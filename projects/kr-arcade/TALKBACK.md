@@ -163,3 +163,13 @@
 **Kaizen task:** t-152 — bounded Butterfly Blaster shared-cabinet retirement and immediate step-zero reload coverage, targeting the repeated earned-profile persistence quality pattern. Live next_free_task_id.py and current blob CAS protected the one append; dependency resolution releases it after verified t-057 done. No recursive bookkeeping follow-up.
 
 **Closeout:** session-matched done event with verify_pr kind_robots#3646 queues actual merged-proof verification and one quality/pass1 completion learning. Inspect canonical task/dependency/owner state and projection receipt before declaring closeout complete. The historical pass remains, obsolete retry metadata is removed and implementation_pr now links the repair. Daily five delivery ledger is unchanged. No deployment or publication.
+
+## 2026-10-13 PT | Reviewer → Worker | kr-arcade/t-065 | recovery in progress
+
+**Decision:** retain kind_robots #3654 open at head 1bec4f0a4dc6733f1c8663bde023c17045be5e77. All 27 other check runs completed successfully, including full-project TypeScript and required verify checks; required Contract verifiers is still running. No blocking review, merge, completion learning or kaizen completion is claimed.
+
+**Evidence:** complete six-file recovery diff inspected. Original reader reproduces earned 10 → 9; a reader-only correction still permits an invalid 100-cable checkpoint. The repair preserves earned 10–99 and caps real score awards at the existing strict save limit, without changing Workbench purchases (nine) or accepting malformed saves. Full independent 35-cabinet engine command, strict scoped TypeScript, ESLint/Prettier and nine native browser input/localStorage/repeated Continue cases at 390/768/1440 pass. Durable screenshots are in the PR. Staged kit/byte setup and real score-award calls establish persistence/render behavior, not human campaign duration or deployment acceptance.
+
+**Coordination:** verified claim and review events for session 20261014T003039Z-cable-t065-d7p2; canonical t-065 remains review. Original #3593 is already merged. Keep historical quality pass 1 and active retry context until verified repair merge; later slice t-066 remains waiting. This recovery does not count toward the already-complete October13 daily five or the independent Daily Dream.
+
+**Next step:** inspect actual completed Contract verifiers for this exact head, refresh reviews and live head, merge with expected SHA only when green, verify main, then append one bounded shared-cabinet/Workbench retirement follow-up, update implementation metadata and queue verified session-matched closeout/learning/projection. Do not bypass checks or issue a second overlapping claim.
