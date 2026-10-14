@@ -1,0 +1,9 @@
+version: 1
+project: interface-vision
+task: t-143
+operation: ready
+owner: worker
+session: 2026-10-14T054450Z-interface-vision-t143-c91f
+updated: '2026-10-14T06:07:30Z'
+note: >-
+  Scoped sitewide public-play viewport slice shipped in Kind Robots PR #3677 (merged as 406e81d3eeceb5e403bb4f501cbda353f94e419e) from exact-head 5c3dd8fc61dc3841a73bef9231e84c04f168f2fd, with all 31 exact-head workflows completed successfully including TypeScript, Layout Contract, Contract Tests (all four shards), ESLint and Prettier. Root cause: Arcade route stacked high-score/review content below cabinet at phone/tablet widths, causing whole-page scrolling. Used kr-panes/kr-pane-scroll for both hall and cabinet/score panes; game visible by default, scores via mobile switch; kept all score/review/AMF interactions. New source assertions, direct ?game= responsive audit URL and tutorial instructions. Initial one-scroll mix caught by layout CI and corrected, then test formatting caught by Prettier and corrected with repository formatter. Temporary formatting workflows removed. No browser screenshot or deployed self-host check; t-143 remains open for other public game routes. No gameplay engine, public route, account, database, deployment or ArtJob changes.
