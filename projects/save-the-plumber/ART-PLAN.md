@@ -86,3 +86,10 @@ Round 2 (`*-v2-*`): adult proportions spelled out (about seven heads tall, long 
 categorically different poses rather than a smooth cycle, and every figure in its own section of the
 sheet with a wide white gap. The engine tweens between key poses with bob and squash, so four strong
 run poses are enough. Rolling enemies rotate a single sprite in code rather than painting a cycle.
+
+**Prompt wording for sheets.** Never write "frame" in a prompt ("six frames", "every frame", "frame
+one"): kind_robots' prompt contract rejects it (`frame-noun`), because Krea paints a picture frame.
+Round 1 lost seven sheets and round 2 lost three to 422s this way. Say "poses" and "figures" ("six
+poses of ...", "the same character repeated in every pose", "every figure the same scale", "first
+pose ..."). Before pushing new rows, run `python scripts/check_art_prompts_live_contract.py --project
+save-the-plumber` (needs a kind_robots checkout beside conductor).
