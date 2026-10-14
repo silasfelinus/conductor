@@ -1,0 +1,9 @@
+version: 1
+project: interface-vision
+task: t-143
+operation: claim
+owner: worker
+session: 2026-10-14T073700Z-interface-vision-t143-fit-c7e2
+updated: '2026-10-14T07:37:00Z'
+note: >-
+  Fix proven desktop Battery Maze single-screen failure: PR 3677 bounded Arcade panes, but its cabinet still uses natural-height marquee, art, and control panel with a 62svh-based screen width. The user provided screenshots showing controls below viewport. Implement true container-aware playfield scaling, retain controls, and add geometry validation at responsive widths without changing unrelated Arcade game engines.
