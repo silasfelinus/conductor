@@ -25,15 +25,30 @@ CHECKPOINT_LANES = {
         "scheduler": "karras",
         "style": "expressive anthropomorphic animal folk, illustrated character design, rich color",
     },
+    # Shifting Desks uses two distinct treatments of Arthemy, not the
+    # rejected furrytoonmix/Dilbert-like or nihilmania visual pitches.
+    "corporate-noir": {
+        "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors",
+        "steps": 30, "cfg": 5.0, "sampler": "euler_ancestral",
+        "scheduler": "normal",
+        "style": "masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics (style), dramatic graphic novel, deep dark ink shadows, expressive body language, strong silhouettes, cinematic color contrast, moody green phosphor glow",
+    },
+    "western-cartoon": {
+        "checkpoint": "Illustrious/arthemyWesternArt_v30.safetensors",
+        "steps": 30, "cfg": 5.0, "sampler": "euler_ancestral",
+        "scheduler": "normal",
+        "style": "masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics (style), toon (style), premium western animated feature key art, polished expressive character designs, warm orange rim lighting against emerald green office fluorescents, glossy inked shell highlights, strong theatrical gestures, cinematic low angle, rich stylized cel painting, inviting character warmth, playful institutional dread",
+    },
 }
 ENGINE = "sdxl-checkpoint"
-SUPPORTED_PROJECTS = ("zuzu-gamebook", "emperor-of-dust")
+SUPPORTED_PROJECTS = ("zuzu-gamebook", "emperor-of-dust", "shifting-desks")
+SHIFTING_DESKS_FAMILIES = {"corporate-noir", "western-cartoon"}
 
 
 def resolve_registered_checkpoint(family: str, resource_index: dict) -> str:
     """Resolve exact catalog CHECKPOINT identity; NEVER silently use a default."""
     if family not in CHECKPOINT_LANES:
-        raise ValueError(f"unsupported Zuzu checkpoint family: {family!r}")
+        raise ValueError(f"unsupported checkpoint family: {family!r}")
     expected = CHECKPOINT_LANES[family]["checkpoint"]
     filename = expected.rsplit("/", 1)[-1]
     registered = resource_index.get("CHECKPOINT", {}).get(filename.lower())
@@ -55,7 +70,9 @@ def make_checkpoint_job(entry: dict[str, Any], core) -> dict[str, Any]:
     family = str(entry.get("checkpoint_family") or "").strip().lower()
     project = str(entry.get("project_target") or "").strip()
     if project not in SUPPORTED_PROJECTS:
-        raise ValueError("Zuzu checkpoint ArtJobs require a known project_target")
+        raise ValueError("checkpoint ArtJobs require a known project_target")
+    if (project == "shifting-desks") != (family in SHIFTING_DESKS_FAMILIES):
+        raise ValueError("checkpoint family is reserved for its own project")
     checkpoint = resolve_registered_checkpoint(family, core._load_resource_index())
     lane = CHECKPOINT_LANES[family]
     width, height = core.parse_size(entry.get("size"))
@@ -97,10 +114,10 @@ def make_checkpoint_job(entry: dict[str, Any], core) -> dict[str, Any]:
             "samples": ["5", 0], "vae": ["1", 2],
         }},
         "7": {"class_type": "SaveImage", "inputs": {
-            "filename_prefix": f"daily_zuzu_{family}", "images": ["6", 0],
+            "filename_prefix": f"{project.replace('-', '_')}_{family}", "images": ["6", 0],
         }},
     }
-    return {
+    job = {
         "engine": "COMFY",
         "projectSlug": project,
         "resolvedSeed": seed,
@@ -110,10 +127,16 @@ def make_checkpoint_job(entry: dict[str, Any], core) -> dict[str, Any]:
             "width": width, "height": height,
             "steps": steps, "cfg": cfg,
             "workflow": graph,
-            "collection": "dream-cycle",
+            "collection": project if project == "shifting-desks" else "dream-cycle",
             "resources": {
                 "checkpointName": checkpoint,
                 "checkpointFamily": family,
             },
         },
     }
+
+    # Keep non-Dream checkpoint jobs in the ordinary ArtJob priority lane,
+    # ahead of no one else's Daily Dream submissions.
+    if project == "shifting-desks" and entry.get("priority") is not None:
+        job["priority"] = int(entry["priority"])
+    return job
