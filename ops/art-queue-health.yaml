@@ -1,4 +1,13 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: kr-failed-jobs
+  target: ArtJob 39285
+  kind: kr-job-failed
+  rules:
+  - frame-noun
+  detail: 'engine=COMFY; error=ArtJob validation failed before claim: Art prompt rejected by the prompt
+    contract (1 violation): [frame-noun] "A ring of swirling dust and impact sparks frames him like an
+    emblem." uses "frame" where no frame is meant. …'
+  first_seen: '2026-10-15'
