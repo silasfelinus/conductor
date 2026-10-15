@@ -30,14 +30,23 @@ def test_style_manifest_and_242_live_queue_requests_are_bijective():
     assert len(set(ids)) == len(set(targets)) == 242
     assert all(e["source"] == "shifting-desks" and e["variant"] == "image" for e in entries)
     assert all(e["project_target"] == e["project_slug"] == "shifting-desks" for e in entries)
-    assert all(e["engine"] == "sdxl-checkpoint" for e in entries)
+    # 2026-10-15: Noir moved to Krea 2 film-noir prose; Western Cartoon stays Illustrious.
+    noir = [e for e in entries if e.get("style_family") == "corporate-noir"]
+    cartoon = [e for e in entries if e.get("checkpoint_family") == "western-cartoon"]
+    assert len(noir) == len(cartoon) == 121
+    assert all(e["engine"] == "krea2" and "checkpoint_family" not in e for e in noir)
+    assert all(e["engine"] == "sdxl-checkpoint" for e in cartoon)
+    assert all(e["prompt"].startswith("Black-and-white 1940s film noir") for e in noir)
+    assert all("monochrome with no color" in e["prompt"] for e in noir)
+    assert all("western comics" not in e["prompt"] and "masterpiece" not in e["prompt"] for e in noir)
+    assert all("color" in e["negative_prompt"] and "nudity" in e["negative_prompt"] for e in noir)
     assert all(e["status"] in ("pending", "done") for e in entries)
     assert all(e.get("priority") == 10 for e in entries)
     assert all("mid-century safety-manual illustration" not in e["prompt"].lower() for e in entries)
     assert all(e["source_url"] == "https://media.acrocatranch.com/" + e["image_path"][len("public/"):] for e in entries)
     assert all(not e["image_path"].startswith("public/images/shifting-desks/cards/") for e in entries)
 
-    counts = Counter(e["checkpoint_family"] for e in entries)
+    counts = Counter(e.get("checkpoint_family") or e["style_family"] for e in entries)
     assert counts == {"corporate-noir": 121, "western-cartoon": 121}
     expected = {
         f"public/images/shifting-desks/styles/{style}/{s['classicImage'][len('/images/shifting-desks/'):]}"

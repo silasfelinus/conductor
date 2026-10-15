@@ -47,3 +47,11 @@ Silas, after playing the Illustrious editions: *"the new art is actually worse t
 - **Default.** New players start in **Classic** (Krea 2), and it leads the picker. Kind Robots bumps the preference key to `shifting-desks-art-style-v3` so visitors saved on Western Cartoon while it was the default land on Classic. **Western Cartoon** and **Noir** remain choices; their queued renders (including the clothed Jam in Tube 14 re-render, #6168) still land.
 - **Front page.** The art-first front desk is one giant hero painted in the chosen style, so the default hero is now the Classic orientation art.
 - Do not flip the default back to an Illustrious edition without a new decision from Silas.
+
+## 2026-10-15 PT: Noir rebuilt on Krea 2
+
+Silas: *"noir never really hit the mark. I think the checkpoint chosen was wrong. It's too much like western cartoon. I need something that really feels like noir. Maybe try krea2? I want the entire set to be rewritten and resubmitted."*
+
+- **Why it missed.** Noir and Western Cartoon shared one checkpoint (`Illustrious/arthemyWesternArt_v30`), so the toon look won whatever the tags said.
+- **New lane.** All 121 Noir requests now run on **Krea 2** (`engine: krea2`, `style_family: corporate-noir`) with prose prompts: *Black-and-white 1940s film noir movie still*, the scene, then hard low-key single-source light, inky blacks and silver highlights, venetian-blind shadows, smoke haze, rain-slick floors, low angles, silver gelatin grain, monochrome with no color. Palette phrases and color adjectives were stripped from every scene; the negative prompt bans color, cartoon/toon/cel looks and nudity.
+- **Resubmitted.** Every row is `pending` with `force: true` and no `last_art_job_id`, on the same image paths, so each new render replaces its Illustrious predecessor in place and Kind Robots needs no path change. Western Cartoon is untouched.
