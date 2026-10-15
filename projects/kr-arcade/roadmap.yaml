@@ -1303,7 +1303,7 @@ tasks:
   - id: t-066
     milestone: m8
     title: "Cable Crawler depth slice 3: The Sound Card and the Graphics Card"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-065
@@ -1316,10 +1316,17 @@ tasks:
       improvements, they should not just be thin veneers of the old games. But newer, better, even more
       awesome."
       PART 1 2026-10-14: the Sound Card (beat gates, speaker cones, echo, noise gnats, Equaliser, the Subwoofer, five mazes, music, art) in silasfelinus/kind_robots#3690. REMAINING for this task: the Graphics Card (picture-reveal boards, scanlines, glitch sprite, z-fighter wall, Paint Screensaver, The Glitch rival-cable boss). Keep ready until that part ships.
+
+      PART 2 2026-10-15: the Graphics Card (picture boards, scanline, glitch sprites,
+      z-fighter walls, Paint, The Glitch rival-cable boss) shipped in
+      silasfelinus/kind_robots#3695 after all 17 CI checks passed (squash 0b132a5). Pilot-
+      validated mazes; new verifyCabinetCableCrawlerGraphicsCard test. Slice 3 complete (Sound
+      Card #3690 + Graphics Card).
     owner: worker
     claimed_by: 2026-10-14T23:30:00Z-cc-gfxcard
     claimed_at: '2026-10-14T23:49:30Z'
-    updated: '2026-10-14T23:49:30Z'
+    updated: '2026-10-15T00:14:06Z'
+    implementation_pr: 'silasfelinus/kind_robots#3695'
 
   - id: t-067
     milestone: m8
