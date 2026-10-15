@@ -262,7 +262,7 @@ tasks:
 - id: t-010
   milestone: m1
   title: "Polish and upgrade Coat Dance front-end surface"
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -275,8 +275,9 @@ tasks:
     Silas explicitly requested a video-generator tab for full-length Coat Dance upload, style selection and resumable background production. This supersedes t-010's old no-op assumption, without approving the separate creative-treatment gate.
 
     Added an admin-only video restyle studio linked from Video Gen, private MP4/MOV/WebM upload with persistent on-disk manifest, segmented motion-preserving render recipe, six styles and independent job history. The actual GPU render worker is explicitly unimplemented; staged jobs do not pretend to run. Kind Robots implementation commit ce062471675df5f652fbdf5f21cef465b8cc7a17. Opening PR and checking CI.
-  updated: '2026-10-15T21:24:00Z'
-  owner: worker
+
+    Kind Robots PR #3722 was confirmed merged at 2bb2a79586b60fef535b97c84d856e1a3079dd8b. This closes only the staged frontend/upload milestone; no claim that the motion-conditioned GPU renderer exists. Screenshot follow-up is PR #3723 on t-011.
+  updated: '2026-10-15T22:46:01Z'
   claimed_by: 20261015T211452Z-coat-dance-ui-b3f1
   claimed_at: '2026-10-15T21:14:52Z'
 - id: t-011
