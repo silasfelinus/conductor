@@ -283,7 +283,7 @@ tasks:
 - id: t-011
   milestone: m3
   title: 'Straight animated version: same angle, original footage as mocap, Illustrious checkpoint'
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -301,7 +301,12 @@ tasks:
     Opened Kind Robots PR #3724 with a real Wan VACE-1.3B video-conditioned 24-second pilot runner (source 2:38–3:02), owner-scoped pilot queue, durable progress and result playback. Python CI verifies frame stitching, graph wiring, ffmpeg extraction and source-audio restoration. This is not the final task: local Comfy worker/model setup, actual pilot render and verdict, Illustrious reference-anchor art, full 5:32 reconstruction and ArtJob relay/notification integration remain unfinished.
 
     Merged Kind Robots PR #3724 at 8d272905d4c58116b3d356a1cb72f6f362421a8b after all 20 CI workflows passed. Added an admin-queued 24s 2:38-3:02 VACE motion-control pilot, private progress/result playback and a stdlib GPU-host worker with measured ffmpeg frame/audio tests, overlap-safe stitching, restart recovery and missing-model gates. No GPU render was executed and no final video exists yet. Keep t-011 READY for: verify GPU native Comfy nodes and install VACE-1.3B model on the actual host under the operator's physical-access gate; map PRIVATE_PATH and ComfyUI/input and start worker; obtain a pilot with Illustrious checkpoint-painted anchor frame; have Silas examine motion and continuity; complete full 5:32 ArtJob integration, original soundtrack export and notification. No subjective approval or outward publication inferred.
-  updated: '2026-10-15T22:58:30Z'
+
+    User observed queued pilot absent from ArtJob dashboard, and unreadable header/notice on Coat Dance and Video Gen. Add idempotent ArtJob registry entry/backfill and compatibility-safe relay exclusion; fix UI contrast. The actual GPU worker setup and final render remain pending.
+  updated: '2026-10-15T23:31:10Z'
+  owner: worker
+  claimed_by: 20261015T233110Z-coat-queue-ui-9c71
+  claimed_at: '2026-10-15T23:31:10Z'
 - id: t-012
   milestone: m3
   title: 'FOR SILAS: verdict on the straight animated version'
