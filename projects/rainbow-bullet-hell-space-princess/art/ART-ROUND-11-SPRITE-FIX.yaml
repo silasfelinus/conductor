@@ -1,0 +1,81 @@
+# Rainbow Space Princess art round 11 (t-022, 2026-10-15 PT): one targeted Kontext fix for the in-game sprites.
+# Round 9's Halo Fin sprites (ArtImages 247490/247491) read as a saucer on a wheel with a floor shadow; the other
+# three ships only needed a flip or a level, which the keyer does. Sources are the round-9 sprite outputs.
+# Submit/refresh with scripts/enqueue_art_requests.py. Private.
+round: 11
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+lanes:
+- key: kontext
+  label: Flux Kontext dev (fp8), edits from round-9 sprite outputs
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: r11-sprite-halo-fin-1
+  title: halo-fin in-game sprite, hovering
+  ticket: A-PILOT-SHIP
+  size: 1216x832
+  seed: 491001
+  source_image_id: 247490
+  prompt_prose: Remove the wheel and the pink shadow underneath. Make this butter-yellow flying saucer hover in
+    empty space, seen from the side and slightly above, with a glowing gold halo ring around its rim and a small
+    cyan cockpit dome on top, the whole ship centred with space around it on a flat solid magenta background, as
+    a crisp game sprite. Keep the same flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 39424
+  art:
+    kontext:
+      status: RUNNING
+      art_image_id: null
+- key: r11-sprite-halo-fin-2
+  title: halo-fin in-game sprite, hovering
+  ticket: A-PILOT-SHIP
+  size: 1216x832
+  seed: 491002
+  source_image_id: 247490
+  prompt_prose: Remove the wheel and the pink shadow underneath. Make this butter-yellow flying saucer hover in
+    empty space, seen from the side and slightly above, with a glowing gold halo ring around its rim and a small
+    cyan cockpit dome on top, the whole ship centred with space around it on a flat solid magenta background, as
+    a crisp game sprite. Keep the same flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 39425
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: r11-sprite-halo-fin-3
+  title: halo-fin in-game sprite, hovering
+  ticket: A-PILOT-SHIP
+  size: 1216x832
+  seed: 491003
+  source_image_id: 247491
+  prompt_prose: Remove the wheel and the pink shadow underneath. Make this butter-yellow flying saucer hover in
+    empty space, seen from the side and slightly above, with a glowing gold halo ring around its rim and a small
+    cyan cockpit dome on top, the whole ship centred with space around it on a flat solid magenta background, as
+    a crisp game sprite. Keep the same flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 39426
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: r11-sprite-halo-fin-4
+  title: halo-fin in-game sprite, hovering
+  ticket: A-PILOT-SHIP
+  size: 1216x832
+  seed: 491004
+  source_image_id: 247491
+  prompt_prose: Remove the wheel and the pink shadow underneath. Make this butter-yellow flying saucer hover in
+    empty space, seen from the side and slightly above, with a glowing gold halo ring around its rim and a small
+    cyan cockpit dome on top, the whole ship centred with space around it on a flat solid magenta background, as
+    a crisp game sprite. Keep the same flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 39427
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
