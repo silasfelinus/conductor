@@ -1,0 +1,9 @@
+version: 1
+project: coat-dance
+task: t-011
+operation: ready
+owner: worker
+session: 20261015T224230Z-coat-motion-worker-c49f
+updated: '2026-10-15T22:58:30Z'
+note: >-
+  Merged Kind Robots PR #3724 at 8d272905d4c58116b3d356a1cb72f6f362421a8b after all 20 CI workflows passed. Added an admin-queued 24s 2:38-3:02 VACE motion-control pilot, private progress/result playback and a stdlib GPU-host worker with measured ffmpeg frame/audio tests, overlap-safe stitching, restart recovery and missing-model gates. No GPU render was executed and no final video exists yet. Keep t-011 READY for: verify GPU native Comfy nodes and install VACE-1.3B model on the actual host under the operator's physical-access gate; map PRIVATE_PATH and ComfyUI/input and start worker; obtain a pilot with Illustrious checkpoint-painted anchor frame; have Silas examine motion and continuity; complete full 5:32 ArtJob integration, original soundtrack export and notification. No subjective approval or outward publication inferred.
