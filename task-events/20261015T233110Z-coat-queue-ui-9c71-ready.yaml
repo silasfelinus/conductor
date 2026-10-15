@@ -1,0 +1,18 @@
+version: 1
+project: coat-dance
+task: t-011
+operation: ready
+owner: worker
+session: 20261015T233110Z-coat-queue-ui-9c71
+updated: '2026-10-15T23:58:00Z'
+note: >-
+  Fixed the user's PILOT_QUEUED / ArtJob discrepancy via Kind Robots PR #3726,
+  merged at bb534bc3e3c5990a91c2442b112aafbaa72801b9 with all 20
+  workflows passed. Existing saved Coat Dance pilots automatically register
+  as private ArtJobs when the admin studio loads; the ArtJob card links back
+  to the VACE studio, and ordinary relays explicitly skip incompatible
+  motion-control jobs. Status/progress mirrors from job.json on studio refresh.
+  Also fixed the unreadable transparent top header, status notice, and Video
+  Gen restyle link. This is a merged integration/contrast fix, not the
+  finished 5:32 animation. Keep task ready for physical GPU VACE worker
+  deployment, actual Illustrious-motion pilot, review and full export.
