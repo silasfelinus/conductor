@@ -2544,3 +2544,41 @@ tasks:
       the remaining priority-cabinet cues. Done when someone has heard at least one
       ACE recording in a cabinet, including the crossfade, ducking and oscillator
       fallback.
+  - id: t-156
+    milestone: m8
+    title: "Achievements: three per game with badge art, an achievements section, and a refreshed jellybean catalog"
+    status: done
+    passes: 1
+    stakes: reversible
+    approved_by_human: true
+    note: >-
+      Silas, 2026-10-15: "our arcade needs support for achievements ... 3 achievements
+      for each game, with art, and an achievements section. This should extend to any of
+      our other games: Zuzu experiences, shifting desks, etc. I fully authorize making new
+      art for anything." Shipped in silasfelinus/kind_robots#3700 (merge ca4997a): 117
+      game achievements across 39 games (32 cabinets judged from score/level/mastery at
+      run end; Zuzu Showdown, Gamebook, Shifting Lands, Shifting Desks, Zuzu's Lair and
+      Emperor of Dust fired at the deed; Zuzu Pinball through a new table feats channel),
+      the cabinet pane and game sidebars list each game's three, /achievements gains
+      section chips, and 14 outdated site jellybeans were re-pointed or replaced (retired
+      rows deactivated, earned records kept). achievement-catalog-maintenance.yml seeds
+      the rows and queues entity-backed Krea 2 badge art on merge. Rendered-art and
+      live-earn verification is t-157.
+    updated: '2026-10-15T03:50:00Z'
+
+  - id: t-157
+    milestone: m8
+    title: "Verify game achievement art rendered and one achievement earns live after deploy"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-156
+    note: >-
+      Follow-up to kind_robots#3700. Queued is not rendered: confirm the Achievement
+      Catalog Maintenance run seeded 142 rows (117 game + 25 site) and queued ArtJobs,
+      then that each new Achievement has a non-empty imagePath whose URL fetches from
+      production (repair failed jobs by reusing their ArtJob ids). After Alexandria
+      deploys the merge, earn one arcade achievement (e.g. Gloom Invaders sunny-skies)
+      and one event achievement while signed in, and confirm the popup, the cabinet
+      pane's earned state and the /achievements?section=arcade chip counts at 390/768/1440.
+    updated: '2026-10-15T03:50:00Z'
