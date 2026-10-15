@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-14T21:47:33.354961+00:00",
+  "generated_at": "2026-10-15T04:50:55.374246+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 28,
+    "roadmap_warnings": 27,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 276.39,
+    "hours_since": 283.45,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -23,9 +23,9 @@
   "intent_review": {
     "due": false,
     "upcoming": false,
-    "last_report": "INTENT-AUDIT-2026-10-13.md",
-    "days_since": 1,
-    "days_until_due": 2.0,
+    "last_report": "INTENT-AUDIT-2026-10-15.md",
+    "days_since": 0,
+    "days_until_due": 3.0,
     "stale_days": 3.0,
     "failed_attempt": null
   },
@@ -35,20 +35,20 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-14T21:47:33.354967+00:00",
+    "generated_at": "2026-10-15T04:50:55.374251+00:00",
     "summary": {
       "roadmaps": 83,
       "active_projects": 23,
       "continuous_projects": 3,
-      "tasks": 2373,
-      "ready": 168,
-      "waiting": 188,
+      "tasks": 2375,
+      "ready": 170,
+      "waiting": 186,
       "needs_human": 37,
-      "in_progress": 17,
-      "done": 1947,
+      "in_progress": 14,
+      "done": 1952,
       "errors": 0,
-      "warnings": 28,
-      "info": 84
+      "warnings": 27,
+      "info": 85
     },
     "errors": [],
     "warnings": [
@@ -71,7 +71,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "art-archive",
         "task": "t-033",
-        "message": "Task has remained claimed for 11 days."
+        "message": "Task has remained claimed for 12 days."
       },
       {
         "severity": "warning",
@@ -106,7 +106,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "kind-economy",
         "task": "t-011",
-        "message": "Task has remained claimed for 8 days."
+        "message": "Task has remained claimed for 9 days."
       },
       {
         "severity": "warning",
@@ -180,24 +180,17 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "kr-arcade",
+        "task": "t-150",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "mandarin-tutor",
         "task": "t-030",
         "message": "Task has remained claimed for 11 days."
-      },
-      {
-        "severity": "warning",
-        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-        "project": "save-the-plumber",
-        "task": "t-018",
-        "message": "Claimed/review task has no parseable updated timestamp."
-      },
-      {
-        "severity": "warning",
-        "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-        "project": "save-the-plumber",
-        "task": "t-019",
-        "message": "Claimed/review task has no parseable updated timestamp."
       },
       {
         "severity": "warning",
@@ -239,7 +232,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "zuzu-shifting-lands",
         "task": "t-004",
-        "message": "Task has remained review for 4 days."
+        "message": "Task has remained review for 5 days."
       },
       {
         "severity": "warning",
