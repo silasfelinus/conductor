@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-15T04:50:55.374246+00:00",
+  "generated_at": "2026-10-15T11:41:17.686326+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 27,
+    "roadmap_warnings": 30,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 283.45,
+    "hours_since": 290.29,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,19 +35,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-15T04:50:55.374251+00:00",
+    "generated_at": "2026-10-15T11:41:17.686331+00:00",
     "summary": {
       "roadmaps": 83,
       "active_projects": 23,
       "continuous_projects": 3,
       "tasks": 2375,
-      "ready": 170,
-      "waiting": 186,
+      "ready": 167,
+      "waiting": 185,
       "needs_human": 37,
-      "in_progress": 14,
-      "done": 1952,
+      "in_progress": 15,
+      "done": 1955,
       "errors": 0,
-      "warnings": 27,
+      "warnings": 30,
       "info": 85
     },
     "errors": [],
@@ -78,7 +78,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "art-archive",
         "task": "t-044",
-        "message": "Task has remained claimed for 11 days."
+        "message": "Task has remained claimed for 12 days."
       },
       {
         "severity": "warning",
@@ -120,21 +120,21 @@
         "code": "STALE_IN_PROGRESS",
         "project": "kind-robots",
         "task": "t-127",
-        "message": "Task has remained review for 10 days."
+        "message": "Task has remained review for 11 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "kind-robots",
         "task": "t-131",
-        "message": "Task has remained review for 8 days."
+        "message": "Task has remained review for 9 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "kind-robots",
         "task": "t-133",
-        "message": "Task has remained review for 7 days."
+        "message": "Task has remained review for 8 days."
       },
       {
         "severity": "warning",
@@ -182,6 +182,20 @@
         "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "kr-arcade",
+        "task": "t-067",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "kr-arcade",
+        "task": "t-075",
+        "message": "Task has remained claimed for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "kr-arcade",
         "task": "t-150",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
@@ -191,6 +205,13 @@
         "project": "mandarin-tutor",
         "task": "t-030",
         "message": "Task has remained claimed for 11 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "rainbow-bullet-hell-space-princess",
+        "task": "t-002",
+        "message": "Task has remained review for 3 days."
       },
       {
         "severity": "warning",
@@ -225,7 +246,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "zuzu-lair",
         "task": "t-014",
-        "message": "Task has remained review for 4 days."
+        "message": "Task has remained review for 5 days."
       },
       {
         "severity": "warning",
