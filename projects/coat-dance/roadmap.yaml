@@ -282,7 +282,7 @@ tasks:
 - id: t-011
   milestone: m3
   title: 'Straight animated version: same angle, original footage as mocap, Illustrious checkpoint'
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -291,7 +291,9 @@ tasks:
     Turn the whole 5:32 performance (coat dance_x264.mp4, 720x480, synced audio) into an animated film with NO camera, angle, framing or timing changes: the original footage is the motion source, frame for frame. Render through our own ComfyUI box as ArtJobs, in an Illustrious checkpoint lane (the comic house lane il-arthemy / arthemyWesternArt is the default; note the choice and why). Suggested path: extract pose + depth (or lineart) per frame from the source, stylize anchor keyframes with the Illustrious checkpoint under ControlNet, then carry them through the clip with a pose/depth-controlled video model (e.g. WAN VACE) in overlapping chunks, keeping the performer and the coat consistent. Prove it on a 20-30 s excerpt including the row-16/17 coat-flourish climax first, then do the full length. Keep the original audio. Deliver one MP4 as a private ArtImage, plus a side-by-side excerpt against the source, and park t-012 for Silas's verdict.
 
     Silas uploaded his 5:32 source and showed the staged project screen; work toward the straight animation stage starts with fixing the empty desktop panel behavior, restoring private source playback on return, and editable render parameters. The GPU-worker and actual preview remain outstanding.
-  updated: '2026-10-15T22:03:15Z'
+
+    User's real 5:32 upload exposed an empty desktop canvas: v-show hid two of three panes even on lg screens. Fixed responsive visibility, added private authenticated playback of saved source and ability to edit the staged style/quality without re-upload. Implemented regression assertions. This is partial t-011 groundwork only; the Comfy motion-conditioned GPU renderer, sample clip and final movie are still not implemented.
+  updated: '2026-10-15T22:13:00Z'
   claimed_by: 20261015T220315Z-coat-dance-motion-ux-f7c4
   claimed_at: '2026-10-15T22:03:15Z'
 - id: t-012
