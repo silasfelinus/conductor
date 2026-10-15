@@ -283,8 +283,7 @@ tasks:
 - id: t-011
   milestone: m3
   title: 'Straight animated version: same angle, original footage as mocap, Illustrious checkpoint'
-  status: review
-  owner: worker
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -294,9 +293,9 @@ tasks:
     Silas uploaded his 5:32 source and showed the staged project screen; work toward the straight animation stage starts with fixing the empty desktop panel behavior, restoring private source playback on return, and editable render parameters. The GPU-worker and actual preview remain outstanding.
 
     User's real 5:32 upload exposed an empty desktop canvas: v-show hid two of three panes even on lg screens. Fixed responsive visibility, added private authenticated playback of saved source and ability to edit the staged style/quality without re-upload. Implemented regression assertions. This is partial t-011 groundwork only; the Comfy motion-conditioned GPU renderer, sample clip and final movie are still not implemented.
-  updated: '2026-10-15T22:13:00Z'
-  claimed_by: 20261015T220315Z-coat-dance-motion-ux-f7c4
-  claimed_at: '2026-10-15T22:03:15Z'
+
+    Shipped Kind Robots PR #3723, merged as 09fa2ce0ba874f41c9c1774fde1465b251d0abc9, after all 18 CI workflows passed: fixed the empty desktop studio, added owner-scoped streaming preview for existing uploaded video and editable staged render settings. This is groundwork only. Keep t-011 READY for the actual motion-conditioned GPU worker, a 20-30 second Illustrious sample, continuous choreography QA, and the final 5:32 movie with original audio. No media has been rendered yet.
+  updated: '2026-10-15T22:18:20Z'
 - id: t-012
   milestone: m3
   title: 'FOR SILAS: verdict on the straight animated version'
