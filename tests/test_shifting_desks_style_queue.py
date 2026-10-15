@@ -1,5 +1,6 @@
 """Selected Shifting Desks art skins must cover every published station safely."""
 import json
+import re
 from collections import Counter
 from pathlib import Path
 
@@ -38,6 +39,9 @@ def test_style_manifest_and_242_live_queue_requests_are_bijective():
     assert all(e["engine"] == "sdxl-checkpoint" for e in cartoon)
     assert all(e["prompt"].startswith("Black-and-white 1940s film noir") for e in noir)
     assert all("monochrome with no color" in e["prompt"] for e in noir)
+    # Kind Robots' prompt contract rejects "frame" for composition (frame-noun):
+    # Krea paints a picture frame. 83 Noir enqueues 422'd on it, 2026-10-15.
+    assert all(not re.search(r"\bframe\b", e["prompt"]) for e in noir)
     assert all("western comics" not in e["prompt"] and "masterpiece" not in e["prompt"] for e in noir)
     assert all("color" in e["negative_prompt"] and "nudity" in e["negative_prompt"] for e in noir)
     assert all(e["status"] in ("pending", "done") for e in entries)
