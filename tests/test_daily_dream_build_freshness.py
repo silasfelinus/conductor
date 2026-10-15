@@ -104,6 +104,10 @@ def backlog(tmp_path, monkeypatch):
     root.mkdir()
     monkeypatch.setattr(runner.core, "BACKLOG", root)
     monkeypatch.setattr(runner.creative_contract, "validate_path", lambda path: [])
+    # These fixtures are six-asset proposals; from the 2026-10-13 cutover a "recent" date
+    # (today minus 2 days) is a v3 day and would be rejected as an old buffered draft, so pin
+    # the cutover off to keep testing freshness rather than the bundle version.
+    monkeypatch.setattr(runner.core, "is_v3_day", lambda day: False)
     return root
 
 
