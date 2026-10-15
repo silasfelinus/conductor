@@ -2222,3 +2222,36 @@ pitches:
           - kind_robots CI green; 34 checks green; merged to main (squash 081bbae)
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+
+  - id: origami-crane-migration
+    title: Origami Crane Migration
+    status: candidate
+    priority: 43
+    surprise: |
+      A V of folded paper cranes flaps across a layered paper sunset.
+    passive_loop: |
+      Nine cranes cross the screen once per 50 second loop, wings opening and folding, with no interaction needed.
+    optional_interaction: |
+      Hovering parts the flock around the pointer; a rate-limited click briefly scatters the cranes.
+    technique: |
+      One canvas, crane polygons and flock offsets as pure functions of time, capped DPR, ResizeObserver sizing.
+    reduced_motion: |
+      Draws a single static frame with no flapping, parting or scatter.
+    performance_risk: |
+      Low: nine small polygon groups per frame.
+    novelty: |
+      First paper-craft flying flock in the catalog; distinct from lanterns, fireflies and butterflies.
+    acceptance:
+      - cranes cross and flap without interaction
+      - hovering parts the flock near the pointer
+      - clicking scatters at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/origami-crane-migration.vue
+        pull_request: silasfelinus/kind_robots#3710
+        released_at: '2026-10-15T12:00:00Z'
+        verification:
+          - kind_robots CI green (17 checks); merged to main (squash dd28883)
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
