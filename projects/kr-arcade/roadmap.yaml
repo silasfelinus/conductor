@@ -1154,7 +1154,7 @@ tasks:
   - id: t-067
     milestone: m8
     title: "Cable Crawler depth slice 4: The CPU Core, the BIOS and the endings"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-066
@@ -1166,10 +1166,17 @@ tasks:
       2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
       improvements, they should not just be thin veneers of the old games. But newer, better, even more
       awesome."
+
+      PART 1 SHIPPED (kind_robots#3712, merged 7788778): CPU Core component (5 mazes, clock
+      cycles, interrupts, rival cables, Sleepy Kernel, boot ending, no Screensaver). REMAINING
+      for t-067: the secret BIOS component (3 green-screen mazes, text-mode self-rewriting
+      walls, Boot Loader true boss, unlocked by all golden bytes), the true ending, and
+      medals/medal boards (No Bites, Big Surge, Battery Saver).
     owner: worker
     claimed_by: 01KCLPDxKZ6T41CgfXQEoXZk
     claimed_at: '2026-10-15T10:47:03Z'
-    updated: '2026-10-15T10:47:03Z'
+    updated: '2026-10-15T11:14:50Z'
+    implementation_pr: 'silasfelinus/kind_robots#3712'
 
   - id: t-068
     milestone: m8
