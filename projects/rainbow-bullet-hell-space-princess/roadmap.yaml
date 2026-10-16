@@ -498,7 +498,7 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Verify Nemi rescue and missed-beacon outcomes through actual eligible pilot inputs."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-004]
@@ -512,10 +512,25 @@ tasks:
       to avoid overlapping implementation and preserve authored timing/private
       ADMIN placement. t-015/t-018 cover cabinet inputs and t-019 boss warnings,
       so this narrow rescue-consumer scope does not duplicate them.
+
+      Done 2026-10-16: kind_robots#3765 merged (all required checks green; the non-required
+      production image build was cancelled, test-only change). verifyRainbowNemiRescue flies
+      ordinary-input crews (no demo immortality, no snapshot edits; continues via #3760) into
+      Act II and reads Nemi and the A02.TURN line from what the real render() draws. Rescue: a
+      living pilot in her lane brings her aboard (she leaves the field that frame, +750 score,
+      +20 charge to every active seat, TURN says 'Nemi is aboard.'). Missed beacon: the pilot
+      keeps clear, she is drawn across the whole field until expiry, no reward, TURN says 'We
+      lost the Nemi beacon.' Fallen seat: pilot 2 dies in her lane at (140,157); the wreck
+      stays put and she drifts over it unrescued; a later continue rewinds to the 1500
+      checkpoint and the restored pilot rescues her on replay. Benched seat: pilot 2 parked in
+      her lane and benched with setPlayers(1) before she arrives; she drifts past, and on
+      rejoin its charge is unchanged. Mutations (dead or benched ships may rescue) both fail
+      the test. Isolated engine/render evidence; cabinet/device proof stays with t-015/t-018.
     owner: worker
     claimed_by: 2026-10-16T150500Z-rainbow-t021-nemi-p8w3
     claimed_at: '2026-10-16T15:09:09Z'
-    updated: '2026-10-16T15:09:09Z'
+    updated: '2026-10-16T15:59:46Z'
+    implementation_pr: 'silasfelinus/kind_robots#3765'
   - id: t-022
     milestone: m4
     title: "Kontext pass: recolour off-model frames, compose cutscenes and group art, and build layout-guided stage planes"
