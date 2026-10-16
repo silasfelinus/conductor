@@ -283,7 +283,7 @@ tasks:
 - id: t-011
   milestone: m3
   title: 'Straight animated version: same angle, original footage as mocap, Illustrious checkpoint'
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -313,7 +313,12 @@ tasks:
     User requests KR Relay should automatically execute queued VACE Coat Dance ArtJob #39479. Integrate native VACE capability into conductor/ops/home-server/relay_agent.py and corresponding Kind Robots claim/completion transport, preserve queue safety, test, open and merge green cross-repo PRs. Do not require an independent worker.
 
     Implemented KR Relay VACE integration across both repositories and merged Kind Robots PR #3728 (927e947aac0d6e9836cc68789c88ac56aa19dd2d, 22/22 green checks) before Conductor PR #6211 (23f38c306aaa5f5882ac567a1f60d43c8ce69f2f, 5/5 green workflows). The existing PM2 relay_media_agent.py now has a VACE-capable claim path with background checks for Wan VACE model, native ComfyUI nodes, ffmpeg, and input directory, avoiding legacy false claims. It fetches the private source via claim-scoped API and posts GPU window progress and checksum-verified private pilot output to the same ArtJob. No separate GPU worker or token is needed. Verified both main branches and old branch cleanup. Important: no live Windows PM2 reload, ComfyUI inventory, render, private video output, or self-hosted deployment was verified. Keep t-011 READY for host deployment/model verification, actual 24s pilot render, Illustrious art review, full 5:32 output with original soundtrack, and user approval before outward publication.
-  updated: '2026-10-16T02:21:00Z'
+
+    Investigate almost-two-hour VACE pilot stalled after first ComfyUI SaveVideo prompt finished in 571.75 seconds. Inspect relay SaveVideo result extraction and optimize failure/progress observability without changing output quality, source media or production host while the live job runs.
+  updated: '2026-10-16T04:47:30Z'
+  owner: worker
+  claimed_by: 20261016T044730Z-coat-vace-output-b48d
+  claimed_at: '2026-10-16T04:47:30Z'
 - id: t-012
   milestone: m3
   title: 'FOR SILAS: verdict on the straight animated version'
