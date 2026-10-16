@@ -150,3 +150,19 @@ remembers her.
   with an explicit boot-to-fist gap; until it lands she steps between two action poses.
 - Wired into kind_robots silasfelinus/kind_robots#3676 (casting picker, painted faces, sheets per heroine).
 
+### Level-building batch (2026-10-16)
+
+Queued for World 1 and the worlds after it (30 rows):
+
+- `anim/heroine-marisol-run-v3`: her run failed twice with one connected shape. Her description
+  carried "about seven heads tall" from Heroine A, which makes krea2 paint six large overlapping
+  figures; the other heroines' descriptions do not, and their sheets slice. v3 drops it and asks for
+  figures about a third of the image height.
+- `anim/heroine-<key>-moves` for all eight heroines: wrench wind-up, wrench strike with a splash,
+  lift overhead, throw, cheer, dazed. The game uses them for the tool, carrying (Pocket Lift),
+  stage clear and losing a life.
+- `tiles/world-<n>-ledge` and `tiles/world-<n>-block` for all eight worlds, in each world's ground
+  palette: one-way ledges and solid walls, so a level is more than one floor texture.
+- World 1 props: `steam-vent` (hazard), `pipe-door` (secret room entrance), `valve-switch`,
+  `brass-lift` (moving platform) and `boss-gate`.
+
