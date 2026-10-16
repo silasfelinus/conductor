@@ -5,6 +5,17 @@
 # word that painted text, C09 control handoff from Maribel's cockpit (246427) and C14 liberation from the C02 fleet
 # plate (247740), since takes from the title card 247508 kept its composition. Shipped files stay until a take passes
 # CAST-QA.md. Submit/refresh with scripts/enqueue_art_requests.py. Private.
+# Review 2026-10-16 PT against CAST-QA.md: 20/20 done.
+# - Pass: Azure turnaround 247795 (coat now cyan; 247796 near-identical), Vivi clean-tee lock 247799, Solenne
+#   cut-in 247803 (broad shoulders, muscular arms, halo ring), frustrated Maribel 247805, Azure 247806 and
+#   Solenne 247807, C03 247809 (no painted text), C14 247814.
+# - Shipped in kind_robots#3772: cutins/solenne.webp from 247803, comms/vivi.webp from 247799, previewed in
+#   the engine at 390, 768 and 1440 px.
+# - Partial: Vivi turnaround 247798 has streaks in the front views only; round 23 fixes the side view.
+# - Fail (line 6): Vivi cut-ins 247801/247802 and frustrated 247808 painted shirt lettering again, because
+#   they were made from the old lock. Round 23 rerolls them from 247799.
+# - Provisional: C09 247811 reads as a car cockpit (247812 has dashboard lettering); round 23 rebuilds it
+#   as a starship cockpit.
 round: 22
 project_slug: rainbow-bullet-hell-space-princess
 designer: Rainbow Space Princess art bay
@@ -28,6 +39,10 @@ subjects:
     braid, undercut, skin, tall body, poses and everything else exactly the same.
   jobs:
     kontext: 39671
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247795
 - key: r22-azure-turnaround-cyan-2
   title: Azure turnaround, cyan coat (CAST-QA reconciliation)
   ticket: A-CAST-QA
@@ -38,6 +53,10 @@ subjects:
     braid, undercut, skin, tall body, poses and everything else exactly the same.
   jobs:
     kontext: 39672
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247796
 - key: r22-vivi-turnaround-streaks-1
   title: Vivi turnaround, lilac streaks (CAST-QA reconciliation)
   ticket: A-CAST-QA
@@ -48,6 +67,10 @@ subjects:
     visible. Keep her face, curvy body, outfit and poses exactly the same.
   jobs:
     kontext: 39673
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247797
 - key: r22-vivi-turnaround-streaks-2
   title: Vivi turnaround, lilac streaks (CAST-QA reconciliation)
   ticket: A-CAST-QA
@@ -58,6 +81,10 @@ subjects:
     visible. Keep her face, curvy body, outfit and poses exactly the same.
   jobs:
     kontext: 39674
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247798
 - key: r22-vivi-lock-plain-tee-1
   title: Vivi menu portrait, clean tee (CAST-QA reconciliation)
   ticket: A-CAST-QA
@@ -68,6 +95,10 @@ subjects:
     hair, curvy body, jacket, keytar, pose and background exactly the same.
   jobs:
     kontext: 39675
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247799
 - key: r22-vivi-lock-plain-tee-2
   title: Vivi menu portrait, clean tee (CAST-QA reconciliation)
   ticket: A-CAST-QA
@@ -78,6 +109,10 @@ subjects:
     hair, curvy body, jacket, keytar, pose and background exactly the same.
   jobs:
     kontext: 39676
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247800
 - key: r22-vivi-cutin-curvy-1
   title: Vivi super cut-in, build kept (CAST-QA reconciliation)
   ticket: A-CUTIN
@@ -91,6 +126,10 @@ subjects:
     Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated series.
   jobs:
     kontext: 39677
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247801
 - key: r22-vivi-cutin-curvy-2
   title: Vivi super cut-in, build kept (CAST-QA reconciliation)
   ticket: A-CUTIN
@@ -104,6 +143,10 @@ subjects:
     Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated series.
   jobs:
     kontext: 39678
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247802
 - key: r22-solenne-cutin-muscle-1
   title: Solenne super cut-in, build kept (CAST-QA reconciliation)
   ticket: A-CUTIN
@@ -118,6 +161,10 @@ subjects:
     series.
   jobs:
     kontext: 39679
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247803
 - key: r22-solenne-cutin-muscle-2
   title: Solenne super cut-in, build kept (CAST-QA reconciliation)
   ticket: A-CUTIN
@@ -132,6 +179,10 @@ subjects:
     series.
   jobs:
     kontext: 39680
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247804
 - key: r22-comms-maribel-frustrated
   title: Maribel comms portrait, frustrated
   ticket: A-COMMS
@@ -145,6 +196,10 @@ subjects:
     bold outlines, like a modern animated series.
   jobs:
     kontext: 39681
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247805
 - key: r22-comms-azure-frustrated
   title: Azure comms portrait, frustrated
   ticket: A-COMMS
@@ -158,6 +213,10 @@ subjects:
     bold outlines, like a modern animated series.
   jobs:
     kontext: 39682
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247806
 - key: r22-comms-solenne-frustrated
   title: Solenne comms portrait, frustrated
   ticket: A-COMMS
@@ -171,6 +230,10 @@ subjects:
     with clean bold outlines, like a modern animated series.
   jobs:
     kontext: 39683
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247807
 - key: r22-comms-vivi-frustrated
   title: Vivi comms portrait, frustrated
   ticket: A-COMMS
@@ -184,6 +247,10 @@ subjects:
     bold outlines, like a modern animated series.
   jobs:
     kontext: 39684
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247808
 - key: r22-c03-alarm-1
   title: C03 mirror-glass alarm (reroll without painted text)
   ticket: A-CINEMA
@@ -195,6 +262,10 @@ subjects:
     art style with clean bold outlines, like a modern animated series.
   jobs:
     kontext: 39685
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247809
 - key: r22-c03-alarm-2
   title: C03 mirror-glass alarm (reroll without painted text)
   ticket: A-CINEMA
@@ -206,6 +277,10 @@ subjects:
     art style with clean bold outlines, like a modern animated series.
   jobs:
     kontext: 39686
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247810
 - key: r22-c09-handoff-1
   title: C09 player control handoff
   ticket: A-CINEMA
@@ -217,6 +292,10 @@ subjects:
     western cartoon art style with clean bold outlines, like a modern animated series.
   jobs:
     kontext: 39687
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247811
 - key: r22-c09-handoff-2
   title: C09 player control handoff
   ticket: A-CINEMA
@@ -228,6 +307,10 @@ subjects:
     western cartoon art style with clean bold outlines, like a modern animated series.
   jobs:
     kontext: 39688
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247812
 - key: r22-c14-liberation-1
   title: C14 liberation
   ticket: A-CINEMA
@@ -239,6 +322,10 @@ subjects:
     flat-colour western cartoon art style with clean bold outlines, like a modern animated series.
   jobs:
     kontext: 39689
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247813
 - key: r22-c14-liberation-2
   title: C14 liberation
   ticket: A-CINEMA
@@ -250,3 +337,7 @@ subjects:
     flat-colour western cartoon art style with clean bold outlines, like a modern animated series.
   jobs:
     kontext: 39690
+  art:
+    kontext:
+      status: DONE
+      art_image_id: 247814
