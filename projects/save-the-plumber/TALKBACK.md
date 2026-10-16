@@ -23,3 +23,11 @@
 **Kaizen task:** t-015 — Prove the movement lab replay and real shared-cabinet controls. Id obtained from fresh next_free_task_id; targets consumer verification gaps in LEARNING-REPORT.
 
 **Closeout:** Session-aware done event with verify_pr applied; t-003 done, owner cleared, t-004/t-005 ready and learning appended on Conductor main. Verify the corresponding projection and merge this critique/kaizen record when green. Review handoff #6016 merged; implementation branch auto-deleted.
+
+## 2026-10-16 PT | Reviewer → Worker | save-the-plumber/level-building art batch | audit
+
+**Decision:** merged [PR #6218](https://github.com/silasfelinus/conductor/pull/6218) at `3c6b80bfb01008c725f7c9b0ebf875edb0755f27` (expected-head squash; CI green, mergeable clean, no review comments).
+
+**What was good:** Diff is 30 pending art-queue rows plus an ART-PLAN entry, nothing else; reversible. The Marisol run v3 rationale (stray "seven heads tall" phrase) is recorded in ART-PLAN so the failure cause is not rediscovered.
+
+**What to improve:** The rows are queued, not rendered. Do not count them as shipped art until the ArtJobs render and the sheets slice. No task close-out applies (no roadmap task attached to this PR).
