@@ -397,7 +397,7 @@ tasks:
   - id: t-018
     milestone: m2
     title: "Commit real-cabinet touch event replay for pointer capture, cancellation and resize boundaries."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-003
@@ -412,10 +412,26 @@ tasks:
       remaining help/input scope first when shared consumer work overlaps.
       Measure input-to-frame sampling, preserve other games' geometry and controls,
       and keep synthetic pointer evidence distinct from physical touch testing.
+
+      Done 2026-10-16: kind_robots#3767 merged green (all 18 checks, including the Rainbow
+      Cabinet Browser Contract workflow that now runs both browser tests). Reuses t-015's
+      fixture, extracted to utils/scripts/arcadeCabinetFixture.mjs.
+      verifyRainbowTouch.browser.test.mjs dispatches touch pointer events on the actual
+      cabinet's on-screen d-pads in a coarse-pointer Chromium page and reads back the
+      cabinet's held state and the real Rainbow engine: pointerdown/move/up, pointercancel and
+      lostpointercapture all release; a second finger cannot steal or release the owning
+      finger's pad; a resize mid-hold (844x390 to 1024x768) is re-measured on the next move
+      with nothing stuck; two fingers on two pads fly two pilots independently on a tablet;
+      Space Princess's compact dead zone answers a near-centre touch that Hedgehog Crossing's
+      generic dead zone ignores (other games' geometry unchanged). Touch-to-engine response
+      measured in the page: 1 engine frame. Mutations (second finger may steal; generic dead
+      zone for Space Princess) both fail. Synthetic pointers, not physical-touch evidence;
+      real iPad/phone checks remain a device task.
     owner: worker
     claimed_by: 2026-10-16T164000Z-rainbow-t018-touch-b9q4
     claimed_at: '2026-10-16T16:35:47Z'
-    updated: '2026-10-16T16:35:47Z'
+    updated: '2026-10-16T16:48:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#3767'
 
   - id: t-019
     milestone: m2
