@@ -17820,3 +17820,15 @@ records:
     hit lands in the target lane leaves a wreck exactly where the check needs it, and the cabinet's own
     setPlayers benches a seat mid-run; then observe the outcome through what render() draws, mutate the
     eligibility rule to prove the test bites, and keep avoid-paths from crossing the lane they avoid.
+- date: '2026-10-16'
+  project: rainbow-bullet-hell-space-princess
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: To prove a Nuxt component in a real browser without the app, compile the SFCs with esbuild and stub only
+    the stores - but set each component's __scopeId (compileScript does not) and add the site's border-box reset,
+    or the fixture fails on layout the real site never has. Driving the real cabinet surfaced a product gap
+    (no gamepad pause mid-run) that engine-only tests could not.
