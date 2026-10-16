@@ -130,7 +130,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
-    status: waiting
+    status: done
     depends_on: [t-004, t-005]
     owner: null
     passes: 0
@@ -140,6 +140,17 @@ tasks:
       with ramping jumps, enemy combinations, hidden alternate room
       and a fully attackable boss. This is the vertical slice quality bar:
       no reused 15-second procedural platform shuffle.
+
+      2026-10-16: merged silasfelinus/kind_robots#3735 at
+      7c160c17eb571c5520ee74905c96b5eab4489479. Four authored tile-map stages (1-1 Rainy
+      Courtyard, 1-2 Copper Greenhouses, 1-3 Buried Meter, 1-4 The Pump Tower) with ledges,
+      crates, valve-opened water gates, steam vents, springsteps, pistons, brass lifts,
+      checkpoints, two pipe-door secret rooms, pumpbugs and rivet rollers (stun then kick),
+      hearts and lives, and a three-hit Madame Pressure boss with a gauge tell and steam
+      waves. A predictive autopilot clears every stage in verifySavePlumberLevels.test.ts.
+      Powerup tracks remain t-005.
+    updated: '2026-10-16T09:02:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#3735'
   - id: t-007
     milestone: m3
     title: "Build Worlds 2–3: eight new levels and two bosses"
