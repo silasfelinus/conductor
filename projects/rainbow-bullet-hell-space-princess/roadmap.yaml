@@ -379,7 +379,7 @@ tasks:
   - id: t-019
     milestone: m2
     title: "Prove boss phase warnings through real player damage and rendered cue boundaries."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-004]
@@ -394,10 +394,24 @@ tasks:
       warning ticks and readable cue at phone/tablet/desktop; preserve original pacing.
       Distinguish isolated engine/render evidence from full shared-cabinet/device proof.
       Reuse existing Pinkwake fixtures and avoid overlapping t-007 implementation.
+
+      Done 2026-10-16: kind_robots#3764 merged green (all 19 checks). verifyRainbowBossCue
+      plays 1/2/3/4-seat seeded crews with ordinary inputs (no demo immortality, no
+      snapshot/HP edits; continues via #3760 where they fall) through Act I to B01 and earns
+      both HP crossings with real shots. Every boss frame is drawn by the real render() into a
+      recording canvas: the drawn cue matches the 36-frame warning window on every frame and
+      precedes each volley by >=36 drawn frames; each of the 100/50 HP boundaries is crossed
+      both mid-warning (interrupted cue restarts from scratch, next volley 72 frames out) and
+      outside one; phase follows HP one step later (damage-after-step); defeat clears shots,
+      craft and pod and keeps lives/shield/power/charge into Act II. Mutations (post-crossing
+      warning 20 frames; drawn window 20 frames) both fail the test. Ring readability: warning
+      rings now pulse 50-100% at 4px (were down to 10%); renders checked at 390/768/1440.
+      Isolated engine/render evidence; shared-cabinet/device proof remains separate.
     owner: worker
     claimed_by: 2026-10-16T145500Z-rainbow-t019-bosscue-h4r2
     claimed_at: '2026-10-16T14:53:30Z'
-    updated: '2026-10-16T14:53:30Z'
+    updated: '2026-10-16T15:31:42Z'
+    implementation_pr: 'silasfelinus/kind_robots#3764'
   - id: t-020
     milestone: m1
     title: "Pick the house Illustrious checkpoint with a front-end bake-off, then flood the art queue with it"
