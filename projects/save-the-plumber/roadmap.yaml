@@ -96,7 +96,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Implement run-stable heroine generator, animations and opening"
-    status: ready
+    status: done
     depends_on: [t-003]
     owner: null
     passes: 0
@@ -119,7 +119,15 @@ tasks:
       random), and the choice saved in the cabinet's resume save and starred on the front
       page. The engine draws the chosen roster heroine's sheets. Remaining: the opening
       cutscene (intro-discovery / intro-capture art exists) and the plumber's cutscene agency.
-    updated: '2026-10-16T09:02:49Z'
+
+      2026-10-16: the opening cutscene shipped and merged (silasfelinus/kind_robots#3756). A
+      new game opens with three painted story panels: Teo sees the rivers rise, then brass
+      claws snatch him; he jams his wrench in their gears and scatters brass tokens as the
+      trail the heroine follows. A turns the page, START skips, and Continue goes straight to
+      the saved stage. With the in-cabinet heroine select (#3735), the seeded roster and the
+      rescue finale (#3754), t-004 is complete.
+    updated: '2026-10-16T14:20:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#3756'
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
