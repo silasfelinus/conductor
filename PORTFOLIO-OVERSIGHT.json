@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-16T16:45:55.027344+00:00",
+  "generated_at": "2026-10-16T21:21:28.288891+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 32,
+    "roadmap_warnings": 33,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 319.37,
+    "hours_since": 323.96,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,29 +35,36 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-16T16:45:55.027351+00:00",
+    "generated_at": "2026-10-16T21:21:28.288896+00:00",
     "summary": {
       "roadmaps": 83,
       "active_projects": 23,
       "continuous_projects": 3,
       "tasks": 2379,
-      "ready": 158,
-      "waiting": 179,
+      "ready": 159,
+      "waiting": 178,
       "needs_human": 37,
-      "in_progress": 21,
-      "done": 1968,
+      "in_progress": 19,
+      "done": 1970,
       "errors": 0,
-      "warnings": 32,
+      "warnings": 33,
       "info": 85
     },
     "errors": [],
     "warnings": [
       {
         "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "animation-manager",
+        "task": "t-007",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "animation-manager",
         "task": "t-022",
-        "message": "Task has remained claimed for 22 days."
+        "message": "Task has remained claimed for 23 days."
       },
       {
         "severity": "warning",
@@ -78,7 +85,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "coloring-book",
         "task": "t-058",
-        "message": "Task has remained claimed for 18 days."
+        "message": "Task has remained claimed for 19 days."
       },
       {
         "severity": "warning",
