@@ -319,8 +319,8 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Prove private flight-deck help and controls through the actual shared cabinet"
-    status: claimed
-    updated: '2026-10-16T16:09:32Z'
+    status: done
+    updated: '2026-10-16T16:35:18Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -329,7 +329,21 @@ tasks:
       Scoped Space Princess touch-D-pad responsiveness fix and pure eight-way input tests committed in Kind Robots branch. This does not yet satisfy t-015's full browser fixture requirement; leave task ready after merging the partial UX improvement.
 
       Reviewer accepted the partial touch-control improvement on October 12, 2026 at 3:51 AM PT. kind_robots#3588 merged at 405f8f4cdca65c38d7f912dc62b52b0d92272cbb after all 30 checks completed green at fdfd06f8a3bf5116a99c198d48c5ac1e5d071d63. Full three-file diff and formatting-only ratchet repair inspected. Independent full branch arcade command passed 23 cabinet suites and preview checks. Actual extracted cabinet handlers/CSS in native browser fixtures at phone/tablet/desktop verified continuous diagonal drag, secondary-finger rejection, cancel/lostcapture release and the unchanged generic dead zone. This isolated handler proof does not complete the actual shared-cabinet/help integration fixture required by t-015. Return it to ready, clear ownership and retain implementation provenance; finish the original remaining scope in a new focused continuation, without duplicate fixture work. No deployment, publication or new human gate.
-    implementation_pr: 'silasfelinus/kind_robots#3588'
+
+      Done 2026-10-16: kind_robots#3766 merged green (all 21 checks, including the new Rainbow
+      Cabinet Browser Contract workflow). verifyRainbowCabinet.browser.test.mjs compiles the
+      actual arcade-cabinet.vue and tutorial-flyer.vue (scoped styles included) and mounts
+      them in Chromium with only the stores stubbed, the real admin tab content resolved
+      through resolveChannels, and the real Rainbow engine. At 390/768/1440px the flyer shows
+      the help headings and the cabinet fits with no sideways scroll; Enter starts, P/Escape
+      and gamepad Start pause and resume without refilling anything; two pilots split the
+      keyboard (S moves only P1, up-arrow only P2); with three pilots and one pad the pad
+      drives only P3. Fixed a real gap it found: gamepad players could not pause mid-run, so
+      games that never read Start in play can now opt in with ArcadeGameMeta.startPauses
+      (Rainbow does; other cabinets unchanged). Updated the stale how-to card (B REPAIR
+      SHIELD), blurb and admin help (checkpoints and continues). Synthetic input, not
+      physical-device evidence; touch replay stays with t-018. Private admin route unchanged.
+    implementation_pr: 'silasfelinus/kind_robots#3766'
     owner: worker
     claimed_by: 2026-10-16T161500Z-rainbow-t015-cabinet-r7c1
     claimed_at: '2026-10-16T16:09:32Z'
