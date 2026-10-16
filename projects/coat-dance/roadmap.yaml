@@ -283,7 +283,7 @@ tasks:
 - id: t-011
   milestone: m3
   title: 'Straight animated version: same angle, original footage as mocap, Illustrious checkpoint'
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -315,10 +315,9 @@ tasks:
     Implemented KR Relay VACE integration across both repositories and merged Kind Robots PR #3728 (927e947aac0d6e9836cc68789c88ac56aa19dd2d, 22/22 green checks) before Conductor PR #6211 (23f38c306aaa5f5882ac567a1f60d43c8ce69f2f, 5/5 green workflows). The existing PM2 relay_media_agent.py now has a VACE-capable claim path with background checks for Wan VACE model, native ComfyUI nodes, ffmpeg, and input directory, avoiding legacy false claims. It fetches the private source via claim-scoped API and posts GPU window progress and checksum-verified private pilot output to the same ArtJob. No separate GPU worker or token is needed. Verified both main branches and old branch cleanup. Important: no live Windows PM2 reload, ComfyUI inventory, render, private video output, or self-hosted deployment was verified. Keep t-011 READY for host deployment/model verification, actual 24s pilot render, Illustrious art review, full 5:32 output with original soundtrack, and user approval before outward publication.
 
     Investigate almost-two-hour VACE pilot stalled after first ComfyUI SaveVideo prompt finished in 571.75 seconds. Inspect relay SaveVideo result extraction and optimize failure/progress observability without changing output quality, source media or production host while the live job runs.
-  updated: '2026-10-16T04:47:30Z'
-  owner: worker
-  claimed_by: 20261016T044730Z-coat-vace-output-b48d
-  claimed_at: '2026-10-16T04:47:30Z'
+
+    Merged Conductor PR #6214 as c674a96608459efe1f6b808b9fa00c252e50be6e after four of four complete, green GitHub workflows including full Python test suite. The native ComfyUI SaveVideo output can be emitted in the history images bucket even for .mp4 files. The existing KR VACE worker read only videos/gifs, silently polling for up to three hours after the prompt had finished. It now accepts video files in images/videos/gifs, fails fast when a completed prompt has no saved-video metadata, scans exact project-and-window-matched finished Comfy history before expensive rerendering, and logs prompt IDs and saved/reported windows. No diffusion steps, output resolution, audio, privacy, or source video changed. Verified Conductor main and branch cleanup. No live Windows PM2 restart, final MP4, or currently active ArtJob status was verified. Keep milestone READY for the actual pilot and final 5:32 film. Do not restart an active render until queue and relay state are checked.
+  updated: '2026-10-16T05:04:00Z'
 - id: t-012
   milestone: m3
   title: 'FOR SILAS: verdict on the straight animated version'
