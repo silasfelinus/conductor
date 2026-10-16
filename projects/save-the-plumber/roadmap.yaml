@@ -247,7 +247,7 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Finish map progression, lives, secrets, challenge and save system"
-    status: waiting
+    status: ready
     depends_on: [t-006, t-010]
     owner: null
     passes: 0
@@ -257,6 +257,13 @@ tasks:
       coin-equivalent reward economy, save/continue, difficulty assists,
       score and speedrun splits. Every planned secret is mechanically
       discoverable in a blind run; no impossible dead-end levels.
+
+      2026-10-16: unblocked. All 32 stages are playable (t-006 to t-010 done). Already in
+      place: per-stage checkpoints, three hearts and lives, cabinet save/continue, secret pipe
+      rooms in 1-1, 2-2 and 3-2, and tokens with an extra life every 100. Still to build: map
+      exits/warps, achievements, difficulty assists, speedrun splits, a secret ending, and a
+      blind-run secrets audit.
+    updated: '2026-10-16T14:04:32Z'
   - id: t-012
     milestone: m4
     title: "Produce illustrated world art, enemy animation, sound and cinematics"
