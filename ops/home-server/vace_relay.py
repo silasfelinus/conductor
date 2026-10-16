@@ -12,6 +12,7 @@ from pathlib import Path
 import re
 import shutil
 import tempfile
+import threading
 import time
 import urllib.error
 import urllib.parse
@@ -30,13 +31,12 @@ _last_ok = False
 _last_reason = ""
 
 
-def capable():
-    """Safe claim gate. An unprepared Comfy host never burns the pilot attempt."""
-    global _last_check, _last_ok, _last_reason
-    now = time.monotonic()
-    if _last_check > 0 and now - _last_check < CAPABILITY_TTL:
-        return _last_ok
-    _last_check = now
+_probe_thread = None
+
+
+def _probe_capability():
+    """Run potentially slow /object_info off the normal ArtJob polling thread."""
+    global _last_ok, _last_reason
     try:
         for command in ("ffmpeg", "ffprobe"):
             if not shutil.which(command):
@@ -50,7 +50,24 @@ def capable():
         _last_ok = False
         _last_reason = str(error)[:400]
         relay.log(f"VACE capability pending: {_last_reason}")
-    return _last_ok
+
+
+def capable():
+    """Return only *verified, fresh* support; schedule probes without blocking KR Relay."""
+    global _last_check, _last_ok, _last_reason, _probe_thread
+    now = time.monotonic()
+    if _last_check > 0 and now - _last_check < CAPABILITY_TTL:
+        return _last_ok
+    if _probe_thread is not None and _probe_thread.is_alive():
+        return False
+    _last_check = now
+    _last_ok = False
+    _last_reason = "checking ComfyUI VACE capability"
+    _probe_thread = threading.Thread(
+        target=_probe_capability, name="vace-capability", daemon=True,
+    )
+    _probe_thread.start()
+    return False
 
 
 def _path(restyle_id, endpoint):

@@ -20,12 +20,14 @@ def test_relay_preflight_requires_models_and_no_additional_daemon(monkeypatch, t
     monkeypatch.setattr(vace, "INPUT_ROOT", tmp_path)
     monkeypatch.setattr(vace.shutil, "which", lambda name: f"/bin/{name}")
     monkeypatch.setattr(vace.vace, "check_comfy", lambda base: True)
+    vace._probe_capability()
     assert vace.capable()
     assert vace._last_ok
     monkeypatch.setattr(vace, "_last_check", 0)
     monkeypatch.setattr(vace.vace, "check_comfy", lambda base: (_ for _ in ()).throw(
         RuntimeError("GPU model missing: wan2.1_vace_1.3B_fp16.safetensors")
     ))
+    vace._probe_capability()
     assert vace.capable() is False
     assert "GPU model missing" in vace._last_reason
 
@@ -34,6 +36,7 @@ def test_unavailable_ffmpeg_never_advertises_vace(monkeypatch, tmp_path):
     vace = setup_modules(monkeypatch)
     monkeypatch.setattr(vace, "INPUT_ROOT", tmp_path)
     monkeypatch.setattr(vace.shutil, "which", lambda name: None)
+    vace._probe_capability()
     assert vace.capable() is False
     assert "ffmpeg" in vace._last_reason
 
@@ -104,3 +107,19 @@ def test_vace_renderer_uploads_result_and_does_not_complete_still_image(monkeypa
     assert reports[0] == ("progress", 0)
     assert uploaded[0][0] == 7
     assert b"ftyp" in uploaded[0][1]
+
+def test_vace_capability_probe_never_blocks_normal_claim(monkeypatch):
+    vace = setup_modules(monkeypatch)
+    called = []
+    class FakeThread:
+        def __init__(self, target, **kwargs):
+            self.target = target
+        def is_alive(self):
+            return True
+        def start(self):
+            called.append("scheduled")
+    monkeypatch.setattr(vace.threading, "Thread", FakeThread)
+    assert vace.capable() is False
+    assert called == ["scheduled"]
+    assert vace.capable() is False
+    assert called == ["scheduled"]
