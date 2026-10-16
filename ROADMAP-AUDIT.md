@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-10-16T14:54:46.701568+00:00`
+Generated: `2026-10-16T15:15:54.833060+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **83** roadmaps, **23** active + **3** continuous projects, **2378** tasks
-- **162 ready**, **179 waiting**, **37 needs-human**, **21 claimed/review**, **1963 done**
+- **83** roadmaps, **23** active + **3** continuous projects, **2379** tasks
+- **162 ready**, **179 waiting**, **37 needs-human**, **22 claimed/review**, **1963 done**
 - Findings: **0 errors**, **32 warnings**, **85 informational**
 
 ## Project inventory
@@ -36,7 +36,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 20 | `emperor-of-dust` | active | software | 4 | 7 | 1 | 0 | 6 / 18 |
 | 21 | `rainbow-bullet-hell-space-princess` | active | software | 5 | 8 | 0 | 4 | 5 / 22 |
 | 22 | `save-the-plumber` | active | software | 4 | 3 | 0 | 0 | 12 / 19 |
-| 23 | `shifting-desks` | active | software | 5 | 0 | 0 | 2 | 22 / 29 |
+| 23 | `shifting-desks` | active | software | 5 | 0 | 0 | 3 | 22 / 30 |
 | 24 | `tzaddik-gallery` | finished | software | 1 | 1 | 1 | 0 | 31 / 34 |
 | 25 | `scene-animator` | finished | software | 0 | 0 | 0 | 0 | 11 / 11 |
 | 26 | `text-generation` | finished | software | 0 | 0 | 0 | 0 | 9 / 9 |
