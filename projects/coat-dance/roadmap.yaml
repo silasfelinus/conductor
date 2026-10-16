@@ -283,7 +283,7 @@ tasks:
 - id: t-011
   milestone: m3
   title: 'Straight animated version: same angle, original footage as mocap, Illustrious checkpoint'
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -317,7 +317,10 @@ tasks:
     Investigate almost-two-hour VACE pilot stalled after first ComfyUI SaveVideo prompt finished in 571.75 seconds. Inspect relay SaveVideo result extraction and optimize failure/progress observability without changing output quality, source media or production host while the live job runs.
 
     Merged Conductor PR #6214 as c674a96608459efe1f6b808b9fa00c252e50be6e after four of four complete, green GitHub workflows including full Python test suite. The native ComfyUI SaveVideo output can be emitted in the history images bucket even for .mp4 files. The existing KR VACE worker read only videos/gifs, silently polling for up to three hours after the prompt had finished. It now accepts video files in images/videos/gifs, fails fast when a completed prompt has no saved-video metadata, scans exact project-and-window-matched finished Comfy history before expensive rerendering, and logs prompt IDs and saved/reported windows. No diffusion steps, output resolution, audio, privacy, or source video changed. Verified Conductor main and branch cleanup. No live Windows PM2 restart, final MP4, or currently active ArtJob status was verified. Keep milestone READY for the actual pilot and final 5:32 film. Do not restart an active render until queue and relay state are checked.
-  updated: '2026-10-16T05:04:00Z'
+  updated: '2026-10-16T09:37:00Z'
+  owner: worker
+  claimed_by: 2026-10-16T093700Z-coat-continuity-6c42
+  claimed_at: '2026-10-16T09:37:00Z'
 - id: t-012
   milestone: m3
   title: 'FOR SILAS: verdict on the straight animated version'
