@@ -155,11 +155,18 @@ def download_output(base, payload, dest):
     if not filename or "/" in filename or "\\" in filename:
         raise ValueError("Comfy returned an unsafe filename.")
     query = urllib.parse.urlencode({"filename": filename, "subfolder": subfolder, "type": kind})
-    with urllib.request.urlopen(base.rstrip("/") + "/view?" + query, timeout=90) as response:
-        with open(dest, "wb") as file:
-            shutil.copyfileobj(response, file)
-    if dest.stat().st_size == 0:
-        raise ValueError("Comfy returned an empty rendered video.")
+    # Long renders must never regard an interrupted download as a finished
+    # window on the next process restart. Promote only after complete transfer.
+    temporary = dest.with_name(dest.name + "." + uuid.uuid4().hex + ".partial")
+    try:
+        with urllib.request.urlopen(base.rstrip("/") + "/view?" + query, timeout=90) as response:
+            with open(temporary, "wb") as file:
+                shutil.copyfileobj(response, file)
+        if temporary.stat().st_size == 0:
+            raise ValueError("Comfy returned an empty rendered video.")
+        os.replace(temporary, dest)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 VIDEO_SUFFIXES = (".mp4", ".webm", ".mov", ".mkv")
@@ -371,7 +378,7 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
             if not rendered.is_file() or rendered.stat().st_size == 0:
                 guide = cache_dir / f"motion_control_{index:03d}.mp4"
                 extract_window(source, pilot["startSec"] + start_frame / FPS, guide)
-                input_name = f"coatdance_{job['id']}_{index:03d}.mp4"
+                input_name = f"coatdance_{job['id']}_{signature}_{index:03d}.mp4"
                 staged = args.comfy_input / input_name
                 if not staged.exists():
                     shutil.copyfile(guide, staged)
