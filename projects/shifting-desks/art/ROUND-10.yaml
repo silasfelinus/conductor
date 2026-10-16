@@ -1,0 +1,101 @@
+# Shifting Desks art round 10 (overnight free-rein build, 2026-10-16): the The Consent Window: Morning Rounds desk and its
+# applicants in encounters/WELLNESS-12.json window_shift, prompts copied word for word from each art.brief.
+# Status values: requested -> rendered -> delivered (media_url answers 200). Generated internal art is
+# pre-approved (AGENTS.md); Krea 2 on the self-hosted render box, nothing published. Western Cartoon and Noir
+# editions ride the shifting-desks-style-v2- lane (STYLE-CATALOG.json).
+round: shifting-desks-10
+project_slug: shifting-desks
+task: window-shift
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-16T10:30:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render,
+  blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: consent-window-rounds
+  kind: window-desk
+  department: wellness
+  title: 'The Consent Window: Morning Rounds'
+  card: consent-window-rounds
+  source_ref: encounters/WELLNESS-12.json window_shift.art.brief
+  request_id: shifting-desks-r10-window-consent-window-rounds
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 60001
+  target_path: kind_robots public/images/shifting-desks/window/consent-window-rounds.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/consent-window-rounds.webp
+  prompt: A small frosted service window set into a gleaming tiled wall beside tall bubbling glass tanks, a clerk
+    behind the glass holding a heavy rubber stamp over a consent form, a smiling nurse with a pencil and a round
+    humming vault door in the distance, mid-century safety-manual illustration, screen-printed gouache with halftone
+    grain, fluorescent-tube green and manila palette, every surface bare and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: kevin-from-tank-nine
+  kind: window-applicant
+  department: wellness
+  title: Kevin, from Tank Nine
+  card: kevin-from-tank-nine
+  source_ref: encounters/WELLNESS-12.json window_shift.applicants[kevin-from-tank-nine].art.brief
+  request_id: shifting-desks-r10-window-kevin-from-tank-nine
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 60002
+  target_path: kind_robots public/images/shifting-desks/window/kevin-from-tank-nine.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/kevin-from-tank-nine.webp
+  prompt: A friendly man floating in a frosted glass tank with a small clear circle wiped in the frost, one palm
+    pressed hopefully to the glass beside a consent form held against it, a plaque on the tank base, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, fluorescent-tube green and manila palette,
+    every surface bare and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: doris-sleepwalking
+  kind: window-applicant
+  department: wellness
+  title: Doris, from Accounting
+  card: doris-sleepwalking
+  source_ref: encounters/WELLNESS-12.json window_shift.applicants[doris-sleepwalking].art.brief
+  request_id: shifting-desks-r10-window-doris-sleepwalking
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 60003
+  target_path: kind_robots public/images/shifting-desks/window/doris-sleepwalking.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/doris-sleepwalking.webp
+  prompt: A gentle older woman in a dressing gown and slippers standing at a frosted service window with her eyes
+    peacefully closed, holding a pen over a consent form, a small sleeping mask pushed up on her forehead, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, fluorescent-tube green and manila palette,
+    every surface bare and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: marguerite-volunteers
+  kind: window-applicant
+  department: wellness
+  title: Marguerite, night janitor
+  card: marguerite-volunteers
+  source_ref: encounters/WELLNESS-12.json window_shift.applicants[marguerite-volunteers].art.brief
+  request_id: shifting-desks-r10-window-marguerite-volunteers
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 60004
+  target_path: kind_robots public/images/shifting-desks/window/marguerite-volunteers.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/marguerite-volunteers.webp
+  prompt: A wiry night janitor in a coverall and headlamp at a frosted service window, signing a consent form with
+    a stub of pencil, a coil of rope and a rolled-up paper map tucked under her arm, mid-century safety-manual illustration,
+    screen-printed gouache with halftone grain, fluorescent-tube green and manila palette, every surface bare and
+    unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
