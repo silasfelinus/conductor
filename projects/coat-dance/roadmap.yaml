@@ -283,7 +283,7 @@ tasks:
 - id: t-011
   milestone: m3
   title: 'Straight animated version: same angle, original footage as mocap, Illustrious checkpoint'
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -311,10 +311,9 @@ tasks:
     Merged Kind Robots PR #3727 at 06361a650ce24c595c3ac2064d9fd7789b81ac2a after all 22 CI workflows succeeded. Root cause of absent ArtJob was the previously merged client store still making read-only GET /api/video-restyle, never calling the new POST /api/video-restyle/reconcile route. Restored the actual authenticated POST on studio mount/refresh/poll, with explicit registration errors and manual retry, preserving the saved video through read-only GET fallback. Added a direct ArtJob ID deep link and single-job focused queue view so the low-priority pilot remains findable, and added CI regression tests for client-to-backend connection. Verified merge on main and branch cleanup. Production self-host deployment and authenticated registration were not independently verified, and no motion-conditioned render has run. Keep t-011 ready for actual local VACE worker execution, 24s video pilot and full 5:32 animation.
 
     User requests KR Relay should automatically execute queued VACE Coat Dance ArtJob #39479. Integrate native VACE capability into conductor/ops/home-server/relay_agent.py and corresponding Kind Robots claim/completion transport, preserve queue safety, test, open and merge green cross-repo PRs. Do not require an independent worker.
-  updated: '2026-10-16T01:45:00Z'
-  owner: worker
-  claimed_by: 20261016T014500Z-coat-vace-relay-6e92
-  claimed_at: '2026-10-16T01:45:00Z'
+
+    Implemented KR Relay VACE integration across both repositories and merged Kind Robots PR #3728 (927e947aac0d6e9836cc68789c88ac56aa19dd2d, 22/22 green checks) before Conductor PR #6211 (23f38c306aaa5f5882ac567a1f60d43c8ce69f2f, 5/5 green workflows). The existing PM2 relay_media_agent.py now has a VACE-capable claim path with background checks for Wan VACE model, native ComfyUI nodes, ffmpeg, and input directory, avoiding legacy false claims. It fetches the private source via claim-scoped API and posts GPU window progress and checksum-verified private pilot output to the same ArtJob. No separate GPU worker or token is needed. Verified both main branches and old branch cleanup. Important: no live Windows PM2 reload, ComfyUI inventory, render, private video output, or self-hosted deployment was verified. Keep t-011 READY for host deployment/model verification, actual 24s pilot render, Illustrious art review, full 5:32 output with original soundtrack, and user approval before outward publication.
+  updated: '2026-10-16T02:21:00Z'
 - id: t-012
   milestone: m3
   title: 'FOR SILAS: verdict on the straight animated version'
