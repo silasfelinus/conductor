@@ -1,0 +1,9 @@
+version: 1
+project: coat-dance
+task: t-011
+operation: ready
+owner: worker
+session: 20261016T001930Z-coat-reconcile-ui-a7b2
+updated: '2026-10-16T00:33:00Z'
+note: >-
+  Merged Kind Robots PR #3727 at 06361a650ce24c595c3ac2064d9fd7789b81ac2a after all 22 CI workflows succeeded. Root cause of absent ArtJob was the previously merged client store still making read-only GET /api/video-restyle, never calling the new POST /api/video-restyle/reconcile route. Restored the actual authenticated POST on studio mount/refresh/poll, with explicit registration errors and manual retry, preserving the saved video through read-only GET fallback. Added a direct ArtJob ID deep link and single-job focused queue view so the low-priority pilot remains findable, and added CI regression tests for client-to-backend connection. Verified merge on main and branch cleanup. Production self-host deployment and authenticated registration were not independently verified, and no motion-conditioned render has run. Keep t-011 ready for actual local VACE worker execution, 24s video pilot and full 5:32 animation.
