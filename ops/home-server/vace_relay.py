@@ -34,7 +34,7 @@ def capable():
     """Safe claim gate. An unprepared Comfy host never burns the pilot attempt."""
     global _last_check, _last_ok, _last_reason
     now = time.monotonic()
-    if now - _last_check < CAPABILITY_TTL:
+    if _last_check > 0 and now - _last_check < CAPABILITY_TTL:
         return _last_ok
     _last_check = now
     try:

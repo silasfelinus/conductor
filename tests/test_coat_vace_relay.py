@@ -70,7 +70,7 @@ def test_report_success_and_failure_are_owner_scoped_to_claim(monkeypatch):
         calls.append((url, body))
         return 200, {"success": True, "data": {"status": "PILOT_RUNNING"}}
     monkeypatch.setattr(vace.relay, "http_json", fake_post)
-    key = "c927a107-ec44-4002-a862-3b7b65d3abe"
+    key = "c927a107-ec44-4002-a862-03b7b65d3abe"
     vace._report(key, 39479, "progress", 2)
     assert calls[-1][0].endswith(f"/api/video-restyle/{key}/pilot/report")
     assert calls[-1][1]["artJobId"] == 39479
@@ -96,7 +96,7 @@ def test_vace_renderer_uploads_result_and_does_not_complete_still_image(monkeypa
     job = {"id": 39479, "userId": 1, "payload": {
         "media": "video-restyle-vace",
         "videoRestyle": {
-            "id": "c927a107-ec44-4002-a862-3b7b65d3abe",
+            "id": "c927a107-ec44-4002-a862-03b7b65d3abe",
             "phase": "pilot", "startSec": 158, "durationSec": 24, "totalSegments": 7,
         },
     }}
