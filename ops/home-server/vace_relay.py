@@ -36,7 +36,8 @@ _probe_thread = None
 
 def _probe_capability():
     """Run potentially slow /object_info off the normal ArtJob polling thread."""
-    global _last_ok, _last_reason
+    global _last_check, _last_ok, _last_reason
+    _last_check = time.monotonic()
     try:
         for command in ("ffmpeg", "ffprobe"):
             if not shutil.which(command):
