@@ -179,7 +179,7 @@ tasks:
     milestone: m3
     title: "Author and integrate stages 1–2 with complete tutorial and bosses"
     status: ready
-    updated: '2026-10-16T15:15:18Z'
+    updated: '2026-10-16T20:49:35Z'
     depends_on: [t-004]
     passes: 1
     retry_context: >-
@@ -213,10 +213,20 @@ tasks:
       beats B01 at frame 15,834 (about 4.4 min) and clears Act II by frame 30,944 with one
       pilot. Remaining: full 10-15-minute measured first clear per Act, and actual 1/4-player
       shared-cabinet/device acceptance. Ready, not done.
+
+      Progress 2026-10-16 PT (kind_robots#3770 at 2b3ca7a6, #3771 at ec047fe9, both merged
+      green): boss hulls scale with the crew (2.5 base shares for the first pilot, 4 for each
+      after) with phases at two thirds and one third; a continue mid-fight keeps the damage
+      dealt; Act I gains Coral chicane, Urchin nursery and Tidal crescendo and Act II gains
+      Bell canyon, Relay storm and Bell veil (eleven sections and thirteen checkpoints each).
+      verifyRainbowFirstClear measures ordinary pilots: solo Act I 8.53 / Act II 8.87 min with
+      continues, four pilots 6.25 / 6.71 min; clean demo 6.7 / 6.5 min. The bible's 10-15
+      minute per-Act target (excluding retries) still needs about three more sections per Act;
+      ACT_FLOOR_MINUTES is a ratchet at 6. Device play remains Silas's on-main check.
     owner: worker
     claimed_by: null
     claimed_at: null
-    implementation_pr: 'silasfelinus/kind_robots#3763'
+    implementation_pr: 'silasfelinus/kind_robots#3771'
   - id: t-008
     milestone: m3
     title: "Author branching stages 3–5 and three distinct bosses"
