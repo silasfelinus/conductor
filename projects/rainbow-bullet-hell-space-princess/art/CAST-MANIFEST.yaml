@@ -1,0 +1,351 @@
+# Per-pilot ArtJob manifest (rainbow t-016). Every shipped pilot asset with its ArtImage, ledger entry,
+# ArtJob, engine, seed and source image, plus coverage of the CAST-BIBLE base deliverables. Identity QA
+# findings and the contract an asset must pass before it is marked ready are in ../CAST-QA.md.
+manifest: Rainbow Space Princess per-pilot ArtJob manifest (Conductor rainbow t-016)
+generated: '2026-10-16'
+generated_from: projects/rainbow-bullet-hell-space-princess/art/ART-ROUND-*.yaml and kind_robots commit history
+contract: ../CAST-QA.md
+pilots:
+- id: P1
+  pilot: Maribel Rowan
+  colour: pink
+  ship: Petal Wing
+  identity_lock: 246030
+  shipped:
+  - asset: menu-portrait
+    path: public/rainbow-princess-portraits/p1-maribel.webp
+    shipped_in: kind_robots#3619
+    art_image_id: 246030
+    ledger: ART-ROUND-1-CHECKPOINTS.yaml
+    ledger_key: r1-pilot-maribel
+    art_job: 37894
+    engine: comfy
+    checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+    seed: 410002
+    source_image_id: null
+  - asset: comms-portrait
+    path: public/rainbow-princess-art/comms/maribel.webp
+    shipped_in: kind_robots#3706
+    art_image_id: 247448
+    ledger: ART-ROUND-9-KONTEXT.yaml
+    ledger_key: r9-comms-maribel-speaking
+    art_job: 39307
+    engine: kontext
+    checkpoint: null
+    seed: 490002
+    source_image_id: 246030
+  - asset: ship-sprite
+    path: public/rainbow-princess-art/ships/petal-wing.webp
+    shipped_in: kind_robots#3706
+    art_image_id: 247486
+    ledger: ART-ROUND-9-KONTEXT.yaml
+    ledger_key: r9-sprite-petal-wing-1
+    art_job: 39345
+    engine: kontext
+    checkpoint: null
+    seed: 490040
+    source_image_id: 246198
+  - asset: super-cutin
+    path: public/rainbow-princess-art/cutins/maribel.webp
+    shipped_in: kind_robots#3742
+    art_image_id: 247644
+    ledger: ART-ROUND-14-CUTINS-BOSSES-FORE.yaml
+    ledger_key: r14-cutin-maribel-1
+    art_job: 39504
+    engine: kontext
+    checkpoint: null
+    seed: 494001
+    source_image_id: 246030
+  deliverable_coverage:
+    full-body turnaround:
+    - r2 r2-maribel-turnaround -> 246133
+    - r8 r8-maribel-turnaround -> 246426
+    expression sheet (neutral):
+    - r2 r2-maribel-expr-neutral -> 246137
+    - r9 r9-comms-maribel-neutral -> 247447
+    expression sheet (delighted):
+    - r2 r2-maribel-expr-delighted -> 246138
+    - r8 r8-maribel-expr-delighted -> 246428
+    - r9 r9-comms-maribel-delighted -> 247449
+    expression sheet (fearful):
+    - r2 r2-maribel-expr-fearful -> 246139
+    - r8 r8-maribel-expr-fearful -> 246429
+    - r9 r9-comms-maribel-worried -> 247450
+    expression sheet (confident):
+    - r2 r2-maribel-expr-confident -> 246140
+    - r8 r8-maribel-expr-confident -> 246430
+    - r9 r9-comms-maribel-determined -> 247451
+    expression sheet (frustrated):
+    - r2 r2-maribel-expr-frustrated -> 246141
+    expression sheet (laughing):
+    - r2 r2-maribel-expr-laughing -> 246142
+    - r9 r9-comms-maribel-laughing -> 247452
+    waist-up comms portrait:
+    - r2 r2-maribel-comms -> 246135
+    - r9 r9-comms-maribel-speaking -> 247448
+    seated cockpit pose:
+    - r2 r2-maribel-cockpit -> 246134
+    - r8 r8-maribel-cockpit -> 246427
+    off-duty outfit:
+    - r2 r2-maribel-offduty -> 246136
+    narrative scene (C04 intro):
+    - r6 r6-c04-maribel -> 246326
+    - r8 r8-c04-maribel -> 246548
+    helmet on/off: MISSING
+    6-frame action key animation: MISSING
+    colour/material callout: MISSING
+- id: P2
+  pilot: Azure Lin
+  colour: cyan
+  ship: Prism Lance
+  identity_lock: 246031
+  shipped:
+  - asset: menu-portrait
+    path: public/rainbow-princess-portraits/p2-azure.webp
+    shipped_in: kind_robots#3619
+    art_image_id: 246031
+    ledger: ART-ROUND-1-CHECKPOINTS.yaml
+    ledger_key: r1-pilot-azure
+    art_job: 37899
+    engine: comfy
+    checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+    seed: 410003
+    source_image_id: null
+  - asset: comms-portrait
+    path: public/rainbow-princess-art/comms/azure.webp
+    shipped_in: kind_robots#3706
+    art_image_id: 247454
+    ledger: ART-ROUND-9-KONTEXT.yaml
+    ledger_key: r9-comms-azure-speaking
+    art_job: 39313
+    engine: kontext
+    checkpoint: null
+    seed: 490008
+    source_image_id: 246031
+  - asset: ship-sprite
+    path: public/rainbow-princess-art/ships/prism-lance.webp
+    shipped_in: kind_robots#3706
+    art_image_id: 247488
+    ledger: ART-ROUND-9-KONTEXT.yaml
+    ledger_key: r9-sprite-prism-lance-1
+    art_job: 39347
+    engine: kontext
+    checkpoint: null
+    seed: 490042
+    source_image_id: 246201
+  - asset: super-cutin
+    path: public/rainbow-princess-art/cutins/azure.webp
+    shipped_in: kind_robots#3742
+    art_image_id: 247649
+    ledger: ART-ROUND-14-CUTINS-BOSSES-FORE.yaml
+    ledger_key: r14-cutin-azure-3
+    art_job: 39509
+    engine: kontext
+    checkpoint: null
+    seed: 494006
+    source_image_id: 246031
+  deliverable_coverage:
+    full-body turnaround:
+    - r2 r2-azure-turnaround -> 246145
+    - r8 r8-azure-turnaround -> 246432
+    expression sheet (neutral):
+    - r2 r2-azure-expr-neutral -> 246149
+    - r9 r9-comms-azure-neutral -> 247453
+    expression sheet (delighted):
+    - r2 r2-azure-expr-delighted -> 246150
+    - r8 r8-azure-expr-delighted -> 246434
+    - r9 r9-comms-azure-delighted -> 247455
+    expression sheet (fearful):
+    - r2 r2-azure-expr-fearful -> 246151
+    - r8 r8-azure-expr-fearful -> 246435
+    - r9 r9-comms-azure-worried -> 247456
+    expression sheet (confident):
+    - r2 r2-azure-expr-confident -> 246152
+    - r9 r9-comms-azure-determined -> 247457
+    expression sheet (frustrated):
+    - r2 r2-azure-expr-frustrated -> 246153
+    - r8 r8-azure-expr-frustrated -> 246436
+    expression sheet (laughing):
+    - r2 r2-azure-expr-laughing -> 246154
+    - r8 r8-azure-expr-laughing -> 246437
+    - r9 r9-comms-azure-laughing -> 247458
+    waist-up comms portrait:
+    - r2 r2-azure-comms -> 246147
+    - r9 r9-comms-azure-speaking -> 247454
+    seated cockpit pose:
+    - r2 r2-azure-cockpit -> 246146
+    - r8 r8-azure-cockpit -> 246433
+    off-duty outfit:
+    - r2 r2-azure-offduty -> 246148
+    - r8 r8-azure-offduty -> 246438
+    narrative scene (C04 intro):
+    - r6 r6-c04-azure -> 246327
+    helmet on/off: MISSING
+    6-frame action key animation: MISSING
+    colour/material callout: MISSING
+- id: P3
+  pilot: Solenne Adisa
+  colour: yellow/gold
+  ship: Halo Fin
+  identity_lock: 246032
+  shipped:
+  - asset: menu-portrait
+    path: public/rainbow-princess-portraits/p3-solenne.webp
+    shipped_in: kind_robots#3619
+    art_image_id: 246032
+    ledger: ART-ROUND-1-CHECKPOINTS.yaml
+    ledger_key: r1-pilot-solenne
+    art_job: 37904
+    engine: comfy
+    checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+    seed: 410004
+    source_image_id: null
+  - asset: comms-portrait
+    path: public/rainbow-princess-art/comms/solenne.webp
+    shipped_in: kind_robots#3706
+    art_image_id: 247460
+    ledger: ART-ROUND-9-KONTEXT.yaml
+    ledger_key: r9-comms-solenne-speaking
+    art_job: 39319
+    engine: kontext
+    checkpoint: null
+    seed: 490014
+    source_image_id: 246032
+  - asset: ship-sprite
+    path: public/rainbow-princess-art/ships/halo-fin.webp
+    shipped_in: kind_robots#3709
+    art_image_id: 247566
+    ledger: ART-ROUND-11-SPRITE-FIX.yaml
+    ledger_key: r11-sprite-halo-fin-2
+    art_job: 39425
+    engine: kontext
+    checkpoint: null
+    seed: 491002
+    source_image_id: 247490
+  - asset: super-cutin
+    path: public/rainbow-princess-art/cutins/solenne.webp
+    shipped_in: kind_robots#3742
+    art_image_id: 247652
+    ledger: ART-ROUND-14-CUTINS-BOSSES-FORE.yaml
+    ledger_key: r14-cutin-solenne-3
+    art_job: 39512
+    engine: kontext
+    checkpoint: null
+    seed: 494009
+    source_image_id: 246032
+  deliverable_coverage:
+    full-body turnaround:
+    - r2 r2-solenne-turnaround -> 246157
+    expression sheet (neutral):
+    - r2 r2-solenne-expr-neutral -> 246161
+    - r9 r9-comms-solenne-neutral -> 247459
+    expression sheet (delighted):
+    - r2 r2-solenne-expr-delighted -> 246162
+    - r9 r9-comms-solenne-delighted -> 247461
+    expression sheet (fearful):
+    - r2 r2-solenne-expr-fearful -> 246163
+    - r9 r9-comms-solenne-worried -> 247462
+    expression sheet (confident):
+    - r2 r2-solenne-expr-confident -> 246164
+    - r9 r9-comms-solenne-determined -> 247463
+    expression sheet (frustrated):
+    - r2 r2-solenne-expr-frustrated -> 246165
+    expression sheet (laughing):
+    - r2 r2-solenne-expr-laughing -> 246166
+    - r9 r9-comms-solenne-laughing -> 247464
+    waist-up comms portrait:
+    - r2 r2-solenne-comms -> 246159
+    - r9 r9-comms-solenne-speaking -> 247460
+    seated cockpit pose:
+    - r2 r2-solenne-cockpit -> 246158
+    off-duty outfit:
+    - r2 r2-solenne-offduty -> 246160
+    narrative scene (C04 intro):
+    - r6 r6-c04-solenne -> 246328
+    helmet on/off: MISSING
+    6-frame action key animation: MISSING
+    colour/material callout: MISSING
+- id: P4
+  pilot: Vivi Reyes
+  colour: lilac
+  ship: Comet Crown
+  identity_lock: 246033
+  shipped:
+  - asset: menu-portrait
+    path: public/rainbow-princess-portraits/p4-vivi.webp
+    shipped_in: kind_robots#3619
+    art_image_id: 246033
+    ledger: ART-ROUND-1-CHECKPOINTS.yaml
+    ledger_key: r1-pilot-vivi
+    art_job: 37909
+    engine: comfy
+    checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+    seed: 410005
+    source_image_id: null
+  - asset: comms-portrait
+    path: public/rainbow-princess-art/comms/vivi.webp
+    shipped_in: kind_robots#3706
+    art_image_id: 247466
+    ledger: ART-ROUND-9-KONTEXT.yaml
+    ledger_key: r9-comms-vivi-speaking
+    art_job: 39325
+    engine: kontext
+    checkpoint: null
+    seed: 490020
+    source_image_id: 246033
+  - asset: ship-sprite
+    path: public/rainbow-princess-art/ships/comet-crown.webp
+    shipped_in: kind_robots#3706
+    art_image_id: 247492
+    ledger: ART-ROUND-9-KONTEXT.yaml
+    ledger_key: r9-sprite-comet-crown-1
+    art_job: 39351
+    engine: kontext
+    checkpoint: null
+    seed: 490046
+    source_image_id: 246448
+  - asset: super-cutin
+    path: public/rainbow-princess-art/cutins/vivi.webp
+    shipped_in: kind_robots#3742
+    art_image_id: 247655
+    ledger: ART-ROUND-14-CUTINS-BOSSES-FORE.yaml
+    ledger_key: r14-cutin-vivi-3
+    art_job: 39515
+    engine: kontext
+    checkpoint: null
+    seed: 494012
+    source_image_id: 246033
+  deliverable_coverage:
+    full-body turnaround:
+    - r2 r2-vivi-turnaround -> 246169
+    - r8 r8-vivi-turnaround -> 246442
+    expression sheet (neutral):
+    - r2 r2-vivi-expr-neutral -> 246173
+    - r9 r9-comms-vivi-neutral -> 247465
+    expression sheet (delighted):
+    - r2 r2-vivi-expr-delighted -> 246174
+    - r9 r9-comms-vivi-delighted -> 247467
+    expression sheet (fearful):
+    - r2 r2-vivi-expr-fearful -> 246175
+    - r9 r9-comms-vivi-worried -> 247468
+    expression sheet (confident):
+    - r2 r2-vivi-expr-confident -> 246176
+    - r9 r9-comms-vivi-determined -> 247469
+    expression sheet (frustrated):
+    - r2 r2-vivi-expr-frustrated -> 246177
+    expression sheet (laughing):
+    - r2 r2-vivi-expr-laughing -> 246178
+    - r9 r9-comms-vivi-laughing -> 247470
+    waist-up comms portrait:
+    - r2 r2-vivi-comms -> 246171
+    - r9 r9-comms-vivi-speaking -> 247466
+    seated cockpit pose:
+    - r2 r2-vivi-cockpit -> 246170
+    off-duty outfit:
+    - r2 r2-vivi-offduty -> 246172
+    - r8 r8-vivi-offduty -> 246441
+    narrative scene (C04 intro):
+    - r6 r6-c04-vivi -> 246329
+    helmet on/off: MISSING
+    6-frame action key animation: MISSING
+    colour/material callout: MISSING
