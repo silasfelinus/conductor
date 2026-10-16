@@ -110,3 +110,9 @@ Quality pass1; precise reproduction and phase-safe scheduling/regression request
 **What to improve:** reconcile against live main, preserve the already merged Act II and active-seat pickup protection, implement actual setPlayers/activePlayers/bench and earned-Halo consumer semantics, exercise ordinary-input bench/rejoin/revive behavior, and trigger/verify completed checks for the final head. Do not weaken helper/consumer tests or close the whole t005 on a partial slice. PR comments6152374162/6152390763 preserve exact failure evidence; no unrelated worker was reassigned.
 
 **Kaizen:** deferred while the rescue remains unmerged; existing t015/t018 cover consumer verification. No done learning or task transition is warranted. Public release, device acceptance and publication gates remain untouched.
+
+## 2026-10-16 — Reviewer: PR #6224 (t-022 round 17 art manifest) merged
+
+Data-only private ART-ROUND-17 manifest (Act III E09-E12 sprites, B03 Clawburst bases, S01/S02 mid layers); CI green, reversible, scoped, no gates touched. Squash-merged (0a5a6f3). Worker pattern: prompts reuse source_image_id with distinct seeds, which is good; verify rendered keyed outputs before wiring into t-008/t-011.
+
+**Kaizen:** deferred; existing t-008/t-011 consume these layers once rendered.
