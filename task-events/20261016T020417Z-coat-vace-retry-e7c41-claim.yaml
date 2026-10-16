@@ -1,0 +1,12 @@
+version: 1
+project: coat-dance
+task: t-011
+operation: claim
+owner: worker
+session: 20261016T020417Z-coat-vace-retry-e7c41
+updated: '2026-10-16T02:04:17Z'
+note: >-
+  User shows ArtJob #39479 failed with WinError 10061 during ComfyUI startup and
+  cannot requeue via generic failed-page recovery. Fix VACE-specific in-place
+  retry to preserve the source and ArtJob identity, reconcile queue/manifest
+  status correctly, and test without requiring a second service.
