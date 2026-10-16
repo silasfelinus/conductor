@@ -8,6 +8,7 @@ home relay has successfully written a Kind Robots target to the media share.
 """
 
 import os
+import email.utils
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -92,6 +93,26 @@ def _media_exists(image_path):
             return 200 <= response.status < 300
     except (urllib.error.URLError, TimeoutError, OSError):
         return False
+
+
+def _media_modified_at(image_path):
+    """Last-Modified of the live media file as an aware datetime, else None."""
+    request = urllib.request.Request(_media_url(image_path), method="HEAD")
+    try:
+        with urllib.request.urlopen(
+            request, timeout=MEDIA_EXISTS_TIMEOUT_SECONDS
+        ) as response:
+            if not 200 <= response.status < 300:
+                return None
+            stamp = response.headers.get("Last-Modified")
+    except (urllib.error.URLError, TimeoutError, OSError):
+        return None
+    if not stamp:
+        return None
+    try:
+        return email.utils.parsedate_to_datetime(stamp)
+    except (TypeError, ValueError):
+        return None
 
 
 def patch_consumer(consumer, default_target_repo):

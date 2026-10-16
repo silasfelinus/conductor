@@ -102,3 +102,64 @@ def test_unforced_kindrobots_media_target_still_checks_the_media_host(
     }
     assert to_media_module.already_satisfied(entry) is True
     assert calls == ["public/images/ruler-hooked/fish/choirfish.webp"]
+
+
+def _forced_with_job(job_id=4242):
+    return {
+        "target_repo": "silasfelinus/kind_robots",
+        "image_path": "public/images/shifting-desks/styles/corporate-noir/departments/orientation.webp",
+        "force": True,
+        "last_art_job_id": job_id,
+    }
+
+
+def _fake_job(monkeypatch, module, job):
+    monkeypatch.setattr(module.requests, "fetch_job", lambda job_id, timeout=20: job)
+
+
+def test_forced_row_closes_once_its_own_render_is_live(to_media_module, monkeypatch):
+    """2026-10-16: the regeneration's DONE job wrote the media after it was
+    created, so the forced row is fulfilled and can be marked done."""
+    from datetime import datetime, timezone
+
+    _fake_job(monkeypatch, to_media_module, {
+        "status": "DONE", "artImageId": 247132, "createdAt": "2026-10-15T01:00:00.000Z",
+    })
+    monkeypatch.setattr(
+        to_media_module, "_media_modified_at",
+        lambda path: datetime(2026, 10, 15, 1, 4, tzinfo=timezone.utc),
+    )
+    assert to_media_module.already_satisfied(_forced_with_job()) is True
+
+
+def test_forced_row_waits_while_the_media_is_the_stale_render(to_media_module, monkeypatch):
+    """A DONE job whose media predates it never delivered: still pending."""
+    from datetime import datetime, timezone
+
+    _fake_job(monkeypatch, to_media_module, {
+        "status": "DONE", "artImageId": 247132, "createdAt": "2026-10-15T01:00:00.000Z",
+    })
+    monkeypatch.setattr(
+        to_media_module, "_media_modified_at",
+        lambda path: datetime(2026, 10, 14, 6, 20, tzinfo=timezone.utc),
+    )
+    assert to_media_module.already_satisfied(_forced_with_job()) is False
+
+
+def test_forced_row_with_running_job_never_checks_the_media_host(to_media_module, monkeypatch):
+    def boom(path):
+        raise AssertionError("must not HEAD-check while the regeneration renders")
+
+    _fake_job(monkeypatch, to_media_module, {"status": "RUNNING", "createdAt": "2026-10-15T01:00:00Z"})
+    monkeypatch.setattr(to_media_module, "_media_modified_at", boom)
+    assert to_media_module.already_satisfied(_forced_with_job()) is False
+
+
+def test_forced_row_without_a_recorded_job_stays_pending(to_media_module, monkeypatch):
+    def boom(*args, **kwargs):
+        raise AssertionError("no job recorded: nothing to look up")
+
+    monkeypatch.setattr(to_media_module.requests, "fetch_job", boom)
+    entry = _forced_with_job()
+    entry.pop("last_art_job_id")
+    assert to_media_module.already_satisfied(entry) is False
