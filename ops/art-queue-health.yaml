@@ -1,4 +1,24 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: requests
+  target: public/images/shifting-desks/window/hoppity-the-rabbit.webp
+  kind: timeout
+  detail: job 39595 timed out after 300s (still queued/running)
+  first_seen: '2026-10-16'
+- source: requests
+  target: public/images/shifting-desks/window/recall-desk-friday.webp
+  kind: timeout
+  detail: job 39594 timed out after 300s (still queued/running)
+  first_seen: '2026-10-16'
+- source: requests
+  target: public/images/shifting-desks/window/sentinel-mk-zero.webp
+  kind: timeout
+  detail: job 39602 timed out after 300s (still queued/running)
+  first_seen: '2026-10-16'
+- source: requests
+  target: public/images/shifting-desks/window/the-curious-robot.webp
+  kind: timeout
+  detail: job 39603 timed out after 300s (still queued/running)
+  first_seen: '2026-10-16'
