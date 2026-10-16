@@ -181,3 +181,86 @@ def test_recover_completed_window_only_matches_exact_subfolder_and_file(monkeypa
     assert not worker.recover_saved_window("http://127.0.0.1:8188",
                                             prefix.replace("pilot_000", "pilot_001"),
                                             tmp_path / "pilot_001.mp4")
+
+
+def test_vace_continuity_windows_share_seed_and_reference_precise_overlap(monkeypatch, tmp_path):
+    worker = setup_modules(monkeypatch).vace
+    restyle_id = "c927a107-ec44-4002-a862-03b7b65d3abe"
+    job_dir = tmp_path / "1" / restyle_id
+    job_dir.mkdir(parents=True)
+    (job_dir / "source.mp4").write_bytes(b"source-media")
+    input_dir = tmp_path / "comfy-input"
+    input_dir.mkdir()
+    state = {
+        "id": restyle_id, "userId": 1, "sourceFile": "source.mp4",
+        "status": "PILOT_QUEUED", "quality": "720p",
+        "renderRecipe": {"stylePrompt": "Painted animation"},
+        "pilot": {"startSec": 0, "durationSec": 8, "totalSegments": 3,
+                  "completedSegments": 0},
+    }
+    import json
+    job_path = job_dir / "job.json"
+    job_path.write_text(json.dumps(state))
+    monkeypatch.setattr(worker, "probe", lambda src: {
+        "duration": 10, "width": 720, "height": 480, "audio": True})
+    monkeypatch.setattr(worker, "check_comfy", lambda base: True)
+    monkeypatch.setattr(worker, "extract_window",
+                        lambda src, start, dest: dest.write_bytes(b"motion"))
+    refs = []
+    def extract_ref(video, index, dest):
+        refs.append((video, index, dest))
+        dest.write_bytes(b"png-anchor")
+    monkeypatch.setattr(worker, "extract_reference_frame", extract_ref)
+    monkeypatch.setattr(worker, "recover_saved_window", lambda *a: False)
+    graphs = []
+    def execute(base, graph, result, timeout):
+        graphs.append(graph)
+        result.write_bytes(b"generated-video" * 100)
+    monkeypatch.setattr(worker, "execute_comfy", execute)
+    def assemble(job_dir, *args):
+        (job_dir / "pilot.mp4").write_bytes(b"rendered-pilot" * 100)
+    monkeypatch.setattr(worker, "assemble", assemble)
+    args = SimpleNamespace(comfy_url="http://localhost:8188", comfy_input=input_dir,
+                           timeout_seconds=100, dry_run=False)
+    worker.render(job_path, args)
+    assert len(graphs) == 3
+    assert [g["sample"]["inputs"]["seed"] for g in graphs] == [worker.CONTINUITY_SEED] * 3
+    assert "reference" not in graphs[0]
+    assert all("reference" in graph for graph in graphs[1:])
+    assert len(refs) == 2
+    assert all(index == worker.STEP for _, index, _ in refs)
+    assert refs[0][0].name == "pilot_window_000.mp4"
+    assert refs[1][0].name == "pilot_window_001.mp4"
+    for graph in graphs[1:]:
+        name = graph["reference"]["inputs"]["image"]
+        assert (input_dir / name).read_bytes() == b"png-anchor"
+        assert graph["control"]["inputs"]["reference_image"] == ["reference", 0]
+    assert "new props" in worker.NEGATIVE
+    assert json.loads(job_path.read_text())["status"] == "REVIEW"
+
+    # Same recipe may reuse completed windows, but a renderer revision cannot
+    # accidentally replay old generations from local files or Comfy history.
+    state["status"] = "PILOT_QUEUED"
+    job_path.write_text(json.dumps(state))
+    worker.render(job_path, args)
+    assert len(graphs) == 3
+    state["status"] = "PILOT_QUEUED"
+    job_path.write_text(json.dumps(state))
+    monkeypatch.setattr(worker, "CONTINUITY_VERSION", "new-graph-v2")
+    worker.render(job_path, args)
+    assert len(graphs) == 6
+    assert graphs[0]["save"]["inputs"]["filename_prefix"] != graphs[3]["save"]["inputs"]["filename_prefix"]
+
+
+def test_continuity_reference_extraction_uses_source_aligned_frame(monkeypatch, tmp_path):
+    worker = setup_modules(monkeypatch).vace
+    called = []
+    def fake_run(argv):
+        called.append(argv)
+        tmp_path.joinpath("reference.png").write_bytes(b"frame")
+    monkeypatch.setattr(worker, "run", fake_run)
+    worker.extract_reference_frame(tmp_path / "previous.mp4", worker.STEP,
+                                   tmp_path / "reference.png")
+    command = called[0]
+    assert "select=eq(n\\,57)" in command
+    assert command[command.index("-frames:v") + 1] == "1"
