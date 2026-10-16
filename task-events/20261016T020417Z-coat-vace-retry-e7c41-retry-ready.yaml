@@ -1,0 +1,18 @@
+version: 1
+project: coat-dance
+task: t-011
+operation: ready
+owner: worker
+updated: '2026-10-16T02:17:00Z'
+note: >-
+  Repaired Coat Dance ArtJob #39479 retry handling after WinError 10061
+  while ComfyUI was starting. Kind Robots PR #3729 merged as
+  ed3e3cacab6bc8170a92aeb2df8162a73746ec66 with 21/21 green
+  workflows and verified on main. Both failed-page bulk requeue and
+  single-job requeue now route VACE pilots to a specialized in-place retry
+  that resets the same ArtJob and its private manifest without new uploads,
+  duplicate job IDs or still-image workflow normalization. Coat Dance Studio
+  also offers an explicit retry action and safely displays database FAILED
+  even if the stored manifest still says queued. No production retry,
+  ComfyUI GPU render, or live deployment was independently executed here;
+  retain t-011 READY for running and reviewing the 24s pilot and complete 5:32 film.
