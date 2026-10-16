@@ -36,7 +36,7 @@ ENCODER = "umt5-xxl-encoder-Q5_K_M.gguf"
 NEGATIVE = (
     "flicker, frame jumps, deformed hands, duplicate performer, "
     "camera movement, changed choreography, distorted coat silhouette, "
-    "new props, changing wardrobe, different scenery, new people, ""
+    "new props, changing wardrobe, different scenery, new people, "
     "unreadable faces, artifacts, subtitles, low quality"
 )
 UUID_RE = re.compile(r"^[a-f0-9-]{36}$", re.I)
