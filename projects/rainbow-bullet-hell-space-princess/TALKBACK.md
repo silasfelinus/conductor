@@ -122,3 +122,9 @@ Data-only private ART-ROUND-17 manifest (Act III E09-E12 sprites, B03 Clawburst 
 Data-only private art manifests: rounds 16/18 results recorded, round 20 (B03 phases, S03-S08 foreground strips) and round 21 (E12 skate txt2img) submitted. CI green, reversible, scoped, no gates touched. Squash-merged (75231a5). Worker pattern: review notes in manifest headers are useful; keep verifying keyed outputs before wiring into t-008/t-011.
 
 **Kaizen:** deferred; t-008/t-011 consume the round 20/21 renders once reviewed.
+
+## 2026-10-16 — Reviewer: PR #6254 (t-022 round 23 recorded, round 24 queued) merged
+
+Data/docs-only: round 23 results recorded against CAST-QA (Vivi cut-in 247844 and frustrated 247847 approved), CAST-MANIFEST regenerated, ART-ROUND-24 guardian sprites and round-23 follow-ups queued. CI green, reversible, scoped, no gates touched. Squash-merged (65b1a29). Minor: CAST-MANIFEST lists rejected Vivi helmet 247857 under helmet coverage; mark it rejected or drop it once r24 passes.
+
+**Kaizen:** deferred; r24 results get recorded next pass.
