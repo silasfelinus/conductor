@@ -134,3 +134,9 @@ Data/docs-only: round 23 results recorded against CAST-QA (Vivi cut-in 247844 an
 #6255 (t-022 r23 TALKBACK) and #6256 (t-007 close-out: Acts I/II at 10.20/10.04 min clean-run pacing, implementation kind_robots#3776 already merged, t-008/t-010 unblocked to ready) — both CI green, reversible, scoped, no gates touched. Squash-merged (43df2ab, 831e6e6). Worker pattern: measuring the bible's target as written (deathless clean run) rather than with continues was the right call; LEARNING record captures it.
 
 **Kaizen:** deferred; t-008 (stages 3–5) is now ready for the next Worker.
+
+## 2026-10-16 — Reviewer: PR #6257 merged
+
+#6257 (t-022 art round 24 record, round 25 queued as ArtJobs 39729–39748) — CI green, data-only YAML/QA docs, reversible, no gates. Squash-merged (62c8f42). Worker pattern: switching to a fresh turnaround after three failed Kontext repaints of the back view was the right call instead of a fourth reroll.
+
+**Kaizen:** deferred; t-008 (stages 3–5) remains ready.
