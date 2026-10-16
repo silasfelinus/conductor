@@ -9,6 +9,7 @@ order aligned with the eventual ArtJob priority so time-sensitive Daily Dream wo
 cannot sit behind older generic repair requests before it reaches Kind Robots.
 """
 
+from datetime import datetime
 import sys
 from pathlib import Path
 
@@ -22,6 +23,7 @@ from art_request_staging_priority import (  # noqa: E402
     should_consume_after_submission,
 )
 from media_direct_consumer import (  # noqa: E402
+    _media_modified_at,
     KIND_ROBOTS_REPO,
     _is_kindrobots_media_target,
     _media_exists,
@@ -45,10 +47,42 @@ def already_satisfied(entry):
     # since that branch never reaches original_already_satisfied() (and so
     # never reaches its own regeneration_forced() check) at all.
     if requests.regeneration_forced(entry):
-        return False
+        return forced_render_delivered(entry)
     if _is_kindrobots_media_target(entry, KIND_ROBOTS_REPO):
         return _media_exists(_image_path(entry, KIND_ROBOTS_REPO))
     return original_already_satisfied(entry)
+
+
+def forced_render_delivered(entry):
+    """True once a forced regeneration's own render is live at its path.
+
+    2026-10-16: a forced kind_robots media row never closed. Its stale file
+    must not count (t-192), so already_satisfied() returned False forever,
+    even after the corrected render landed; 121 Shifting Desks Noir rows and
+    the Jam in Tube 14 re-render sat "pending" with DONE ArtJobs. Staging a
+    force clears last_art_job_id, so a recorded job is the regeneration's
+    own. It is delivered when that job is DONE with an ArtImage and the live
+    media file was written after the job was created (the relay writes these
+    targets directly); an older file is the stale render and still waits.
+    """
+    if not _is_kindrobots_media_target(entry, KIND_ROBOTS_REPO):
+        return False
+    job_id = requests.positive_job_id(entry.get("last_art_job_id"))
+    if job_id is None:
+        return False
+    job = requests.fetch_job(job_id)
+    if not job or str(job.get("status") or "").upper() != "DONE":
+        return False
+    if requests.positive_job_id(job.get("artImageId")) is None:
+        return False
+    try:
+        created = datetime.fromisoformat(
+            str(job.get("createdAt") or "").replace("Z", "+00:00")
+        )
+    except ValueError:
+        return False
+    modified = _media_modified_at(_image_path(entry, KIND_ROBOTS_REPO))
+    return modified is not None and modified >= created
 
 
 def prioritized_load_requests():
