@@ -158,12 +158,53 @@ def download_output(base, payload, dest):
         raise ValueError("Comfy returned an empty rendered video.")
 
 
+VIDEO_SUFFIXES = (".mp4", ".webm", ".mov", ".mkv")
+
+
+def saved_video_files(entry):
+    """Comfy core SaveVideo may report MP4s as images, not videos."""
+    outputs = entry.get("outputs") or {}
+    save = outputs.get("save") or {}
+    for category in ("videos", "gifs", "images"):
+        for file in save.get(category) or []:
+            if (isinstance(file, dict) and
+                    str(file.get("filename", "")).lower().endswith(VIDEO_SUFFIXES)):
+                yield file
+
+
+def recover_saved_window(base, prefix, destination):
+    """Reuse an already-finished SaveVideo file after a crashed relay poll.
+
+    Matching BOTH subfolder and filename prefix prevents accidentally
+    borrowing a video from another generation or another user's pilot.
+    A history lookup error is non-fatal; normal generation remains available.
+    """
+    try:
+        history = send_json(base, "/history?max_items=100", timeout=30)
+    except (OSError, TimeoutError, ValueError) as error:
+        print(f"VACE history recovery unavailable: {error}", flush=True)
+        return False
+    folder, filename_prefix = prefix.replace("\\", "/").rsplit("/", 1)
+    for entry in history.values():
+        if entry.get("status", {}).get("status_str") != "success":
+            continue
+        for video in saved_video_files(entry):
+            if (str(video.get("subfolder", "")).replace("\\", "/").strip("/") == folder
+                    and str(video.get("filename", "")).startswith(filename_prefix + "_")):
+                download_output(base, video, destination)
+                print(f"VACE reused completed Comfy output: {prefix}", flush=True)
+                return True
+    return False
+
+
 def execute_comfy(base, workflow, result, timeout_seconds=10800):
     queued = send_json(base, "/prompt", {"prompt": workflow, "client_id": uuid.uuid4().hex})
     if not queued.get("prompt_id"):
         raise RuntimeError(f"Comfy rejected workflow: {queued.get('node_errors', queued)}")
     prompt_id = queued["prompt_id"]
+    print(f"VACE Comfy prompt queued: {prompt_id}", flush=True)
     deadline = time.monotonic() + timeout_seconds
+    last_notice = time.monotonic()
     while time.monotonic() < deadline:
         history = send_json(base, "/history/" + urllib.parse.quote(prompt_id))
         entry = history.get(prompt_id)
@@ -171,11 +212,19 @@ def execute_comfy(base, workflow, result, timeout_seconds=10800):
             status = entry.get("status", {})
             if status.get("status_str") == "error":
                 raise RuntimeError("Comfy execution failed: " + str(status.get("messages", []))[-1500:])
-            files = entry.get("outputs", {}).get("save", {})
-            videos = files.get("videos") or files.get("gifs") or []
+            videos = list(saved_video_files(entry))
             if videos:
                 download_output(base, videos[0], result)
+                print(f"VACE retrieved completed video for prompt {prompt_id}", flush=True)
                 return prompt_id
+            if status.get("status_str") == "success":
+                raise RuntimeError(
+                    f"Comfy finished prompt {prompt_id} but SaveVideo returned no MP4 metadata; "
+                    f"output keys: {list((entry.get('outputs') or {}).keys())}"
+                )
+        if time.monotonic() - last_notice >= 60:
+            print(f"VACE waiting on Comfy prompt {prompt_id} (render or output transfer)", flush=True)
+            last_notice = time.monotonic()
         time.sleep(8)
     raise TimeoutError(f"Comfy pilot window timed out, prompt {prompt_id}.")
 
@@ -303,9 +352,11 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
                     image_name = f"coatdance_{job['id']}_reference.png"
                     if not (args.comfy_input / image_name).exists():
                         shutil.copyfile(job_dir / "reference.png", args.comfy_input / image_name)
+                prefix = f"coatdance/{job['id']}/pilot_{index:03d}"
                 workflow = graph(input_name, 3451900 + index, prompt,
-                                 f"coatdance/{job['id']}/pilot_{index:03d}", image_name)
-                execute_comfy(args.comfy_url, workflow, rendered, args.timeout_seconds)
+                                 prefix, image_name)
+                if not recover_saved_window(args.comfy_url, prefix, rendered):
+                    execute_comfy(args.comfy_url, workflow, rendered, args.timeout_seconds)
             pilot["completedSegments"] = index + 1
             pilot["totalSegments"] = len(spans)
             update(job_path, job, pilot=pilot,
