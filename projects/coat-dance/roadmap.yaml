@@ -283,7 +283,7 @@ tasks:
 - id: t-011
   milestone: m3
   title: 'Straight animated version: same angle, original footage as mocap, Illustrious checkpoint'
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -307,10 +307,9 @@ tasks:
     Fixed the user's PILOT_QUEUED / ArtJob discrepancy via Kind Robots PR #3726, merged at bb534bc3e3c5990a91c2442b112aafbaa72801b9 with all 20 workflows passed. Existing saved Coat Dance pilots automatically register as private ArtJobs when the admin studio loads; the ArtJob card links back to the VACE studio, and ordinary relays explicitly skip incompatible motion-control jobs. Status/progress mirrors from job.json on studio refresh. Also fixed the unreadable transparent top header, status notice, and Video Gen restyle link. This is a merged integration/contrast fix, not the finished 5:32 animation. Keep task ready for physical GPU VACE worker deployment, actual Illustrious-motion pilot, review and full export.
 
     User confirms previous ArtJob fix failed. Root cause: frontend store remained on old GET /api/video-restyle; merged POST /api/video-restyle/reconcile was never called, because later tree edit overwrote the intended change. Repair the actual data path and add regression verifying frontend calls the correct endpoint and visibly reports sync errors. Original 5:32 source remains intact.
-  updated: '2026-10-16T00:19:30Z'
-  owner: worker
-  claimed_by: 20261016T001930Z-coat-reconcile-ui-a7b2
-  claimed_at: '2026-10-16T00:19:30Z'
+
+    Merged Kind Robots PR #3727 at 06361a650ce24c595c3ac2064d9fd7789b81ac2a after all 22 CI workflows succeeded. Root cause of absent ArtJob was the previously merged client store still making read-only GET /api/video-restyle, never calling the new POST /api/video-restyle/reconcile route. Restored the actual authenticated POST on studio mount/refresh/poll, with explicit registration errors and manual retry, preserving the saved video through read-only GET fallback. Added a direct ArtJob ID deep link and single-job focused queue view so the low-priority pilot remains findable, and added CI regression tests for client-to-backend connection. Verified merge on main and branch cleanup. Production self-host deployment and authenticated registration were not independently verified, and no motion-conditioned render has run. Keep t-011 ready for actual local VACE worker execution, 24s video pilot and full 5:32 animation.
+  updated: '2026-10-16T00:33:00Z'
 - id: t-012
   milestone: m3
   title: 'FOR SILAS: verdict on the straight animated version'
