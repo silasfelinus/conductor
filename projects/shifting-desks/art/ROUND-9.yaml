@@ -1,0 +1,122 @@
+# Shifting Desks art round 9 (overnight free-rein build, 2026-10-16): the Toy Division Recall Desk and
+# its four applicants in encounters/TOY-DIVISION-12.json window_shift, prompts copied word for word from
+# each art.brief. Style rules live in ../ART-DIRECTION.md. Status values: requested -> rendered ->
+# delivered (media_url answers 200). Generated internal art is pre-approved (AGENTS.md); Krea 2 on the
+# self-hosted render box, nothing published. Western Cartoon and Noir editions ride the
+# shifting-desks-style-v2- lane (STYLE-CATALOG.json).
+round: shifting-desks-9
+project_slug: shifting-desks
+task: recall-desk
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-16T09:00:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render,
+  blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: recall-desk-friday
+  kind: window-desk
+  department: toy-division
+  title: 'The Recall Desk: Shipping Friday'
+  card: recall-desk-friday
+  source_ref: encounters/TOY-DIVISION-12.json window_shift.art.brief
+  request_id: shifting-desks-r9-window-recall-desk-friday
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 59001
+  target_path: kind_robots public/images/shifting-desks/window/recall-desk-friday.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/recall-desk-friday.webp
+  prompt: A square hatch cut into a padded test-range wall with a counter and a heavy two-faced rubber stamp, a
+    queue of toy designers holding plush prototypes stretching back under tall floodlights, a quiet man with a clipboard
+    standing behind the clerk, mid-century safety-manual illustration, screen-printed gouache with halftone grain,
+    safety orange and carbon-paper blue palette, every surface bare and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: hoppity-the-rabbit
+  kind: window-applicant
+  department: toy-division
+  title: Wendell and Hoppity
+  card: hoppity-the-rabbit
+  source_ref: encounters/TOY-DIVISION-12.json window_shift.applicants[hoppity-the-rabbit].art.brief
+  request_id: shifting-desks-r9-window-hoppity-the-rabbit
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 59002
+  target_path: kind_robots public/images/shifting-desks/window/hoppity-the-rabbit.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/hoppity-the-rabbit.webp
+  prompt: An eager toy designer in a cardigan holding up a soft plush rabbit with floppy ears at a padded counter
+    hatch, a tiny brass dial visible in the rabbit's back, mid-century safety-manual illustration, screen-printed
+    gouache with halftone grain, safety orange and carbon-paper blue palette, every surface bare and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: pips-lunch-bear
+  kind: window-applicant
+  department: toy-division
+  title: Intern Pip
+  card: pips-lunch-bear
+  source_ref: encounters/TOY-DIVISION-12.json window_shift.applicants[pips-lunch-bear].art.brief
+  request_id: shifting-desks-r9-window-pips-lunch-bear
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 59003
+  target_path: kind_robots public/images/shifting-desks/window/pips-lunch-bear.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/pips-lunch-bear.webp
+  prompt: A nervous young intern in an oversized lanyard offering a small hand-sewn teddy bear with mismatched button
+    eyes across a padded counter hatch, a sewing kit tucked under one arm, mid-century safety-manual illustration,
+    screen-printed gouache with halftone grain, safety orange and carbon-paper blue palette, every surface bare
+    and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: sentinel-mk-zero
+  kind: window-applicant
+  department: toy-division
+  title: The Supervisor's assistant
+  card: sentinel-mk-zero
+  source_ref: encounters/TOY-DIVISION-12.json window_shift.applicants[sentinel-mk-zero].art.brief
+  request_id: shifting-desks-r9-window-sentinel-mk-zero
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 59004
+  target_path: kind_robots public/images/shifting-desks/window/sentinel-mk-zero.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/sentinel-mk-zero.webp
+  prompt: A crisp executive assistant setting a plush bear in a quilted vest on a padded counter hatch, its paw
+    button covered by a tiny satin cap, the quiet man with the clipboard leaning in, mid-century safety-manual illustration,
+    screen-printed gouache with halftone grain, safety orange and carbon-paper blue palette, every surface bare
+    and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-curious-robot
+  kind: window-applicant
+  department: toy-division
+  title: A wind-up robot
+  card: the-curious-robot
+  source_ref: encounters/TOY-DIVISION-12.json window_shift.applicants[the-curious-robot].art.brief
+  request_id: shifting-desks-r9-window-the-curious-robot
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 59005
+  target_path: kind_robots public/images/shifting-desks/window/the-curious-robot.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/the-curious-robot.webp
+  prompt: A small tin wind-up robot with a turning key in its back standing on a padded counter hatch beside a neat
+    stack of its own paperwork, looking up hopefully at the clerk, mid-century safety-manual illustration, screen-printed
+    gouache with halftone grain, safety orange and carbon-paper blue palette, every surface bare and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
