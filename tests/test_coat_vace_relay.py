@@ -264,3 +264,90 @@ def test_continuity_reference_extraction_uses_source_aligned_frame(monkeypatch, 
     command = called[0]
     assert "select=eq(n\\,57)" in command
     assert command[command.index("-frames:v") + 1] == "1"
+
+
+def test_full_film_uses_independent_phase_and_24_second_pilot_is_untouched(monkeypatch, tmp_path):
+    worker = setup_modules(monkeypatch)
+    monkeypatch.setattr(worker, "WORK_ROOT", tmp_path)
+    monkeypatch.setattr(worker, "capable", lambda: True)
+    monkeypatch.setattr(worker, "_source", lambda rid, aid, dest: dest.write_bytes(b"media"))
+    progress = []
+    monkeypatch.setattr(worker, "_report",
+                        lambda rid, aid, kind, completed, **kw: progress.append((kind, completed)))
+    uploaded = []
+    monkeypatch.setattr(worker, "_submit_full",
+                        lambda rid, aid, count, path: uploaded.append((aid, count)))
+    monkeypatch.setattr(worker, "_submit_video",
+                        lambda *args: pytest.fail("Pilot transport used for the whole film"))
+    import json
+    def fake_render(job_path, args):
+        state = json.loads(job_path.read_text())
+        assert state["pilot"]["startSec"] == 0
+        assert state["pilot"]["durationSec"] == 332
+        (job_path.parent / "pilot.mp4").write_bytes(b"fake-film")
+        state["status"] = "REVIEW"
+        job_path.write_text(json.dumps(state))
+    monkeypatch.setattr(worker.vace, "render", fake_render)
+    worker.process({"id": 50001, "userId": 1, "payload": {
+        "media": "video-restyle-vace",
+        "videoRestyle": {
+            "id": "c927a107-ec44-4002-a862-03b7b65d3abe",
+            "phase": "full", "startSec": 0, "durationSec": 332,
+            "totalSegments": len(worker.vace.windows(332 * worker.vace.FPS)),
+        },
+    }})
+    assert uploaded[0][0] == 50001
+    assert uploaded[0][1] == len(worker.vace.windows(332 * worker.vace.FPS))
+    assert progress[0] == ("progress", 0)
+
+
+def test_full_film_uploaded_in_bounded_resumable_chunks(monkeypatch, tmp_path):
+    worker = setup_modules(monkeypatch)
+    mp4 = tmp_path / "full.mp4"
+    mp4.write_bytes(b"0" * (4 * 1024 * 1024 * 2 + 37))
+    calls = []
+    import json
+    class FakeResponse:
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            pass
+        def read(self):
+            return json.dumps({"success": True}).encode()
+    def fake_request(req, timeout=None):
+        assert len(req.data) <= 4 * 1024 * 1024
+        calls.append((req.headers["X-vace-chunk-index"], len(req.data)))
+        return FakeResponse()
+    monkeypatch.setattr(worker.urllib.request, "urlopen", fake_request)
+    final = []
+    monkeypatch.setattr(worker.relay, "http_json",
+                        lambda method, url, body, **kw: (
+                            final.append((url, body)) or (200, {"data": {"status": "DONE"}})))
+    worker._submit_full("c927a107-ec44-4002-a862-03b7b65d3abe", 50001, 94, mp4)
+    assert calls == [("0", 4 * 1024 * 1024), ("1", 4 * 1024 * 1024), ("2", 37)]
+    assert final[0][1]["chunkCount"] == 3
+    assert final[0][1]["fileBytes"] == mp4.stat().st_size
+    import hashlib
+    assert final[0][1]["sha256"] == hashlib.sha256(mp4.read_bytes()).hexdigest()
+
+
+def test_interrupted_comfy_download_does_not_leave_false_completed_window(monkeypatch, tmp_path):
+    worker = setup_modules(monkeypatch).vace
+    dest = tmp_path / "pilot_window_000.mp4"
+    dest.write_bytes(b"prior-safe-window")
+    class Response:
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            pass
+    monkeypatch.setattr(worker.urllib.request, "urlopen", lambda *a, **k: Response())
+    def fail_halfway(response, output):
+        output.write(b"partial")
+        raise ConnectionError("Interrupted mid-window download")
+    monkeypatch.setattr(worker.shutil, "copyfileobj", fail_halfway)
+    with pytest.raises(ConnectionError):
+        worker.download_output("http://127.0.0.1:8188",
+                               {"filename": "window.mp4", "subfolder": "x", "type": "output"},
+                               dest)
+    assert dest.read_bytes() == b"prior-safe-window"
+    assert not list(tmp_path.glob("*.partial"))
