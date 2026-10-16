@@ -225,7 +225,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Build World 8: four final levels, fortress and rescue finale boss"
-    status: waiting
+    status: done
     depends_on: [t-009]
     owner: null
     passes: 0
@@ -235,6 +235,15 @@ tasks:
       World 8 has its own four authored stages, multiple mechanical
       callbacks, legible final boss and real playable rescue.
       Distinct victory and continued-play/secret ending paths.
+
+      2026-10-16: World 8 and the rescue finale shipped and merged
+      (silasfelinus/kind_robots#3754): four Stardrain Citadel stages calling back every
+      earlier mechanic, Lady Spigot (the hissing valve marks the side her water jet fires
+      from), and a finale over the painted finale-reversal art that saves the campaign as
+      cleared. The autopilot test plays all 32 stages through. A secret or continued-play
+      ending path is not built; that and the wider secrets work sit with t-011.
+    updated: '2026-10-16T14:04:17Z'
+    implementation_pr: 'silasfelinus/kind_robots#3754'
   - id: t-011
     milestone: m3
     title: "Finish map progression, lives, secrets, challenge and save system"
