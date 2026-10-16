@@ -113,6 +113,13 @@ tasks:
       stores/savePlumberStore.ts, driving the front page. Remaining: use
       the kept seed in the game engine's sprite, New Game reroll in-cabinet,
       and the opening cutscene.
+
+      2026-10-16: the heroine is now chosen in the cabinet (silasfelinus/kind_robots#3735):
+      title screen with New Game / Continue, an eight-heroine painted select (B picks at
+      random), and the choice saved in the cabinet's resume save and starred on the front
+      page. The engine draws the chosen roster heroine's sheets. Remaining: the opening
+      cutscene (intro-discovery / intro-capture art exists) and the plumber's cutscene agency.
+    updated: '2026-10-16T09:02:49Z'
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
@@ -130,7 +137,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
-    status: waiting
+    status: done
     depends_on: [t-004, t-005]
     owner: null
     passes: 0
@@ -140,10 +147,21 @@ tasks:
       with ramping jumps, enemy combinations, hidden alternate room
       and a fully attackable boss. This is the vertical slice quality bar:
       no reused 15-second procedural platform shuffle.
+
+      2026-10-16: merged silasfelinus/kind_robots#3735 at
+      7c160c17eb571c5520ee74905c96b5eab4489479. Four authored tile-map stages (1-1 Rainy
+      Courtyard, 1-2 Copper Greenhouses, 1-3 Buried Meter, 1-4 The Pump Tower) with ledges,
+      crates, valve-opened water gates, steam vents, springsteps, pistons, brass lifts,
+      checkpoints, two pipe-door secret rooms, pumpbugs and rivet rollers (stun then kick),
+      hearts and lives, and a three-hit Madame Pressure boss with a gauge tell and steam
+      waves. A predictive autopilot clears every stage in verifySavePlumberLevels.test.ts.
+      Powerup tracks remain t-005.
+    updated: '2026-10-16T09:02:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#3735'
   - id: t-007
     milestone: m3
     title: "Build Worlds 2–3: eight new levels and two bosses"
-    status: waiting
+    status: ready
     depends_on: [t-006]
     owner: null
     passes: 0
@@ -153,6 +171,12 @@ tasks:
       platforms, overhead fruit levers and reversals; authored 2-1 to
       3-4 levels, distinct foes, alternate exits and unique boss
       patterns, escalating checkpoint spacing.
+
+      2026-10-16: unblocked by t-006 (World 1 playable, silasfelinus/kind_robots#3735). The
+      stage format, engine and autopilot playthrough test in savePlumberLevels.ts /
+      savePlumberPreview.ts are ready for Worlds 2 and 3; tonight's art batch queues their
+      ledge and block textures.
+    updated: '2026-10-16T09:04:24Z'
   - id: t-008
     milestone: m3
     title: "Build Worlds 4–5: eight new levels and two bosses"
