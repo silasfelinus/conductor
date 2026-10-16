@@ -201,6 +201,7 @@ def process(job):
         if new_count > complete_count and new_count <= metadata["pilot"]["totalSegments"]:
             _report(restyle_id, art_id, "progress", new_count)
             complete_count = new_count
+            relay.log(f"job {art_id}: VACE window {new_count}/{metadata['pilot']['totalSegments']} saved and reported")
 
     vace.update = traced_update
     try:
