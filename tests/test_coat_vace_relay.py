@@ -250,6 +250,9 @@ def test_vace_continuity_windows_share_seed_and_reference_precise_overlap(monkey
     worker.render(job_path, args)
     assert len(graphs) == 6
     assert graphs[0]["save"]["inputs"]["filename_prefix"] != graphs[3]["save"]["inputs"]["filename_prefix"]
+    guides = sorted(input_dir.glob(f"coatdance_{restyle_id}_*_000.mp4"))
+    assert len(guides) == 2  # A new recipe never reuses an old motion source.
+
 
 
 def test_continuity_reference_extraction_uses_source_aligned_frame(monkeypatch, tmp_path):
@@ -351,3 +354,12 @@ def test_interrupted_comfy_download_does_not_leave_false_completed_window(monkey
                                dest)
     assert dest.read_bytes() == b"prior-safe-window"
     assert not list(tmp_path.glob("*.partial"))
+
+
+def test_full_film_has_contiguous_94_windows_and_original_audio_map():
+    worker = setup_modules(__import__("pytest").MonkeyPatch()).vace
+    total = round(332 * worker.FPS)
+    spans = worker.windows(total)
+    assert len(spans) == 94
+    pieces = worker.accepted_frames(total)
+    assert sum(high - low for _, low, high in pieces) == total
