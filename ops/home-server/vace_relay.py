@@ -11,7 +11,6 @@ import os
 from pathlib import Path
 import re
 import shutil
-import tempfile
 import threading
 import time
 import urllib.error
