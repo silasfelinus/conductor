@@ -161,7 +161,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Build Worlds 2–3: eight new levels and two bosses"
-    status: waiting
+    status: ready
     depends_on: [t-006]
     owner: null
     passes: 0
@@ -171,6 +171,12 @@ tasks:
       platforms, overhead fruit levers and reversals; authored 2-1 to
       3-4 levels, distinct foes, alternate exits and unique boss
       patterns, escalating checkpoint spacing.
+
+      2026-10-16: unblocked by t-006 (World 1 playable, silasfelinus/kind_robots#3735). The
+      stage format, engine and autopilot playthrough test in savePlumberLevels.ts /
+      savePlumberPreview.ts are ready for Worlds 2 and 3; tonight's art batch queues their
+      ledge and block textures.
+    updated: '2026-10-16T09:04:24Z'
   - id: t-008
     milestone: m3
     title: "Build Worlds 4–5: eight new levels and two bosses"
