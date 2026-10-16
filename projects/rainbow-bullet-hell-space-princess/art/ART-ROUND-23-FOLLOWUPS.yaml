@@ -1,0 +1,189 @@
+# Rainbow Space Princess art round 23 (t-022 with the t-016 CAST-QA reconciliation table, 2026-10-16 PT). Follows up
+# the round-22 review: Vivi's cut-in and frustrated portrait rerolled from the clean-tee 247799 (the round-22 takes,
+# made from the old lock, painted shirt lettering again), the side view of her turnaround 247798 given lilac streaks,
+# C09 rebuilt from 247811 as a starship cockpit rather than a car, and C17 from a new source (the C14 liberation plate
+# 247814). Also the helmet-on deliverable that CAST-QA lists as missing for all four pilots. Shipped files stay until
+# a take passes CAST-QA.md. Submit/refresh with scripts/enqueue_art_requests.py. Private.
+round: 23
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+lanes:
+- key: kontext
+  label: Flux Kontext dev (fp8), round-22 follow-ups and helmet deliverables
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: r23-vivi-cutin-curvy-1
+  title: Vivi super cut-in from the clean-tee lock (CAST-QA reconciliation)
+  ticket: A-CUTIN
+  size: 1216x832
+  seed: 503001
+  source_image_id: 247799
+  prompt_prose: Show the same curvy woman with full round hips, a soft belly and full arms, the shaved side, dark
+    hair with lilac streaks and her holographic lilac jacket, in a dramatic action pose for her special attack,
+    leaning toward the viewer with one hand thrust forward as a parade of tiny rainbow comets bursts from her palm,
+    fierce joyful grin, framed from the waist up on a plain deep violet background with bold radiating speed lines.
+    Her dark T-shirt is plain apart from one simple lilac comet shape. Keep the same flat-colour western cartoon
+    art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39705
+- key: r23-vivi-cutin-curvy-2
+  title: Vivi super cut-in from the clean-tee lock (CAST-QA reconciliation)
+  ticket: A-CUTIN
+  size: 1216x832
+  seed: 503002
+  source_image_id: 247799
+  prompt_prose: Show the same curvy woman with full round hips, a soft belly and full arms, the shaved side, dark
+    hair with lilac streaks and her holographic lilac jacket, in a dramatic action pose for her special attack,
+    leaning toward the viewer with one hand thrust forward as a parade of tiny rainbow comets bursts from her palm,
+    fierce joyful grin, framed from the waist up on a plain deep violet background with bold radiating speed lines.
+    Her dark T-shirt is plain apart from one simple lilac comet shape. Keep the same flat-colour western cartoon
+    art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39706
+- key: r23-comms-vivi-frustrated-1
+  title: Vivi comms portrait, frustrated, from the clean-tee lock
+  ticket: A-COMMS
+  size: 1024x1024
+  seed: 503003
+  source_image_id: 247799
+  prompt_prose: Make this a head-and-shoulders comms portrait of the same curvy woman with the shaved side and dark
+    hair with lilac streaks, the same face, skin and holographic lilac jacket. She is frustrated, jaw set and brows
+    pulled down in exasperation. Frame her from the chest up, centred and facing the viewer, on a plain dark navy
+    background with a faint cyan hologram glow. Her dark T-shirt is plain apart from one simple lilac comet shape.
+    Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39707
+- key: r23-comms-vivi-frustrated-2
+  title: Vivi comms portrait, frustrated, from the clean-tee lock
+  ticket: A-COMMS
+  size: 1024x1024
+  seed: 503004
+  source_image_id: 247799
+  prompt_prose: Make this a head-and-shoulders comms portrait of the same curvy woman with the shaved side and dark
+    hair with lilac streaks, the same face, skin and holographic lilac jacket. She is frustrated, jaw set and brows
+    pulled down in exasperation. Frame her from the chest up, centred and facing the viewer, on a plain dark navy
+    background with a faint cyan hologram glow. Her dark T-shirt is plain apart from one simple lilac comet shape.
+    Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39708
+- key: r23-vivi-turnaround-side-1
+  title: Vivi turnaround, streaks in every view (CAST-QA reconciliation)
+  ticket: A-CAST-QA
+  size: 1344x768
+  seed: 503005
+  source_image_id: 247798
+  prompt_prose: Give the third figure the same purple hair with bold lilac streaks as the first two figures, and
+    keep the shaved side visible. Keep every face, curvy body, outfit and pose exactly the same.
+  jobs:
+    kontext: 39709
+- key: r23-vivi-turnaround-side-2
+  title: Vivi turnaround, streaks in every view (CAST-QA reconciliation)
+  ticket: A-CAST-QA
+  size: 1344x768
+  seed: 503006
+  source_image_id: 247798
+  prompt_prose: Give the third figure the same purple hair with bold lilac streaks as the first two figures, and
+    keep the shaved side visible. Keep every face, curvy body, outfit and pose exactly the same.
+  jobs:
+    kontext: 39710
+- key: r23-c09-handoff-starship-1
+  title: C09 player control handoff, starship cockpit
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 503007
+  source_image_id: 247811
+  prompt_prose: Replace the car steering wheel and dashboard with a starship flight yoke and glowing holographic
+    flight displays made only of abstract glowing shapes and light. Keep the same pilot, her face, hair, pink jacket,
+    grin and the pink cloud sea ahead exactly the same. Keep the same flat-colour western cartoon art style with
+    clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39711
+- key: r23-c09-handoff-starship-2
+  title: C09 player control handoff, starship cockpit
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 503008
+  source_image_id: 247811
+  prompt_prose: Replace the car steering wheel and dashboard with a starship flight yoke and glowing holographic
+    flight displays made only of abstract glowing shapes and light. Keep the same pilot, her face, hair, pink jacket,
+    grin and the pink cloud sea ahead exactly the same. Keep the same flat-colour western cartoon art style with
+    clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39712
+- key: r23-c17-credits-parade-1
+  title: 'C17 credits parade (new source: the C14 liberation plate)'
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 503009
+  source_image_id: 247814
+  prompt_prose: Add four small bright starships, one pink, one cyan, one gold and one lilac, flying in a proud parade
+    line across the dawn sky above the pearl palace, trailing rainbow ribbons, with gentle fireworks blooming over
+    the sea and the freed creatures leaping below. Joyful wide cinematic ending shot. Keep the same flat-colour
+    western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39713
+- key: r23-c17-credits-parade-2
+  title: 'C17 credits parade (new source: the C14 liberation plate)'
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 503010
+  source_image_id: 247814
+  prompt_prose: Add four small bright starships, one pink, one cyan, one gold and one lilac, flying in a proud parade
+    line across the dawn sky above the pearl palace, trailing rainbow ribbons, with gentle fireworks blooming over
+    the sea and the freed creatures leaping below. Joyful wide cinematic ending shot. Keep the same flat-colour
+    western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39714
+- key: r23-helmet-maribel
+  title: Maribel helmet on (CAST-QA open deliverable)
+  ticket: A-CAST-QA
+  size: 1024x1024
+  seed: 503011
+  source_image_id: 246030
+  prompt_prose: Put a sleek rose-pink flight helmet on her with the clear visor raised so her whole face stays visible.
+    Keep her face, skin, build, outfit and pose exactly the same, framed from the chest up on a plain dark navy
+    background. Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated
+    series.
+  jobs:
+    kontext: 39715
+- key: r23-helmet-azure
+  title: Azure helmet on (CAST-QA open deliverable)
+  ticket: A-CAST-QA
+  size: 1024x1024
+  seed: 503012
+  source_image_id: 246031
+  prompt_prose: Put a sleek powder-cyan flight helmet on her with the clear visor raised so her whole face stays
+    visible. Keep her face, skin, build, outfit and pose exactly the same, framed from the chest up on a plain dark
+    navy background. Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern
+    animated series.
+  jobs:
+    kontext: 39716
+- key: r23-helmet-solenne
+  title: Solenne helmet on (CAST-QA open deliverable)
+  ticket: A-CAST-QA
+  size: 1024x1024
+  seed: 503013
+  source_image_id: 246032
+  prompt_prose: Put a sleek gold flight helmet on her with the clear visor raised so her whole face stays visible.
+    Keep her face, skin, build, outfit and pose exactly the same, framed from the chest up on a plain dark navy
+    background. Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated
+    series.
+  jobs:
+    kontext: 39717
+- key: r23-helmet-vivi
+  title: Vivi helmet on (CAST-QA open deliverable)
+  ticket: A-CAST-QA
+  size: 1024x1024
+  seed: 503014
+  source_image_id: 246033
+  prompt_prose: Put a sleek lilac flight helmet on her with the clear visor raised so her whole face stays visible.
+    Keep her face, skin, build, outfit and pose exactly the same, framed from the chest up on a plain dark navy
+    background. Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated
+    series.
+  jobs:
+    kontext: 39718
