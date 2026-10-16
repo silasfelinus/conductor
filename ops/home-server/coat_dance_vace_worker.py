@@ -378,7 +378,7 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
             if not rendered.is_file() or rendered.stat().st_size == 0:
                 guide = cache_dir / f"motion_control_{index:03d}.mp4"
                 extract_window(source, pilot["startSec"] + start_frame / FPS, guide)
-                input_name = f"coatdance_{job['id']}_{index:03d}.mp4"
+                input_name = f"coatdance_{job['id']}_{signature}_{index:03d}.mp4"
                 staged = args.comfy_input / input_name
                 if not staged.exists():
                     shutil.copyfile(guide, staged)
