@@ -23,7 +23,9 @@ import coat_dance_vace_worker as vace
 import relay_agent as relay
 
 CAPABILITY_TTL = 180.0
-WORK_ROOT = Path(os.environ.get("KR_VACE_WORK_ROOT") or Path(tempfile.gettempdir()) / "kindrobots-vace")
+# Windows TEMP may be wiped by maintenance/reboots during a 10+ hour film.
+# Keep generated windows on durable user storage unless explicitly overridden.
+WORK_ROOT = Path(os.environ.get("KR_VACE_WORK_ROOT") or Path.home() / "KindRobots" / "vace-work")
 INPUT_ROOT = Path(os.environ.get("KR_VACE_INPUT_DIR") or "D:/comfy/comfy-fast/input")
 _UUID = re.compile(r"^[a-f0-9]{8}-[a-f0-9]{4}-[1-8][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$", re.I)
 _last_check = 0.0
