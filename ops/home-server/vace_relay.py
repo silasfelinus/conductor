@@ -256,7 +256,22 @@ def process(job):
             complete_count = new_count
             relay.log(f"job {art_id}: VACE window {new_count}/{metadata['pilot']['totalSegments']} saved and reported")
 
+    # Each VACE window can run longer than the global 15-minute ArtJob
+    # stale-claim threshold. Refresh the same claimed lease every four minutes.
+    heartbeat_stop = threading.Event()
+
+    def heartbeat():
+        while not heartbeat_stop.wait(240):
+            try:
+                _report(restyle_id, art_id, "progress", complete_count)
+            except Exception as error:
+                relay.log(f"job {art_id}: VACE heartbeat warning: {error}")
+
+    heartbeat_thread = threading.Thread(
+        target=heartbeat, name=f"vace-heartbeat-{art_id}", daemon=True,
+    )
     vace.update = traced_update
+    heartbeat_thread.start()
     try:
         vace.render(prior, args)
         final = json.loads(prior.read_text(encoding="utf-8"))
@@ -278,4 +293,6 @@ def process(job):
             # Fall through to the parent relay's existing normal failed-job handling.
             raise RuntimeError(f"VACE error {error}; server error report also failed: {report_error}") from error
     finally:
+        heartbeat_stop.set()
+        heartbeat_thread.join(timeout=2)
         vace.update = original_update
