@@ -116,3 +116,9 @@ Quality pass1; precise reproduction and phase-safe scheduling/regression request
 Data-only private ART-ROUND-17 manifest (Act III E09-E12 sprites, B03 Clawburst bases, S01/S02 mid layers); CI green, reversible, scoped, no gates touched. Squash-merged (0a5a6f3). Worker pattern: prompts reuse source_image_id with distinct seeds, which is good; verify rendered keyed outputs before wiring into t-008/t-011.
 
 **Kaizen:** deferred; existing t-008/t-011 consume these layers once rendered.
+
+## 2026-10-16 — Reviewer: PR #6235 (t-022 rounds 16/18 recorded, rounds 20/21 submitted) merged
+
+Data-only private art manifests: rounds 16/18 results recorded, round 20 (B03 phases, S03-S08 foreground strips) and round 21 (E12 skate txt2img) submitted. CI green, reversible, scoped, no gates touched. Squash-merged (75231a5). Worker pattern: review notes in manifest headers are useful; keep verifying keyed outputs before wiring into t-008/t-011.
+
+**Kaizen:** deferred; t-008/t-011 consume the round 20/21 renders once reviewed.
