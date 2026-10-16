@@ -1,9 +1,0 @@
-version: 1
-project: coat-dance
-task: t-011
-operation: claim
-owner: worker
-session: 20261016T001930Z-coat-reconcile-ui-a7b2
-updated: '2026-10-16T00:19:30Z'
-note: >-
-  User confirms previous ArtJob fix failed. Root cause: frontend store remained on old GET /api/video-restyle; merged POST /api/video-restyle/reconcile was never called, because later tree edit overwrote the intended change. Repair the actual data path and add regression verifying frontend calls the correct endpoint and visibly reports sync errors. Original 5:32 source remains intact.
