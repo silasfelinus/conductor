@@ -110,64 +110,64 @@ Two changes got it there:
 
 | Policy | Finished | Eliminated | Successors lost / run | Endings seen |
 |---|---:|---:|---:|---:|
-| The Complier | 75.4% | 24.6% | 5.20 | 3 of 10 |
-| The Rebel | 62.0% | 38.0% | 5.53 | 3 of 10 |
-| The Coward | 100.0% | 0.1% | 2.68 | 3 of 10 |
-| The Saint | 75.8% | 24.3% | 5.36 | 9 of 10 |
-| The Schemer | 55.5% | 44.5% | 5.80 | 8 of 10 |
-| Random baseline | 86.8% | 13.3% | 4.72 | 10 of 10 |
+| The Complier | 73.7% | 26.4% | 5.21 | 3 of 10 |
+| The Rebel | 58.3% | 41.7% | 5.55 | 3 of 10 |
+| The Coward | 100.0% | 0.0% | 2.45 | 2 of 10 |
+| The Saint | 73.0% | 27.1% | 5.45 | 9 of 10 |
+| The Schemer | 52.4% | 47.6% | 5.84 | 8 of 10 |
+| Random baseline | 84.6% | 15.4% | 4.86 | 10 of 10 |
 
 ### Successors lost per run, by department
 
 | Policy | Orientation | Records & Forms | Toy Division | Wellness & Testing | Sub-Level Zero |
 |---|---:|---:|---:|---:|---:|
-| The Complier | 0.72 | 1.86 | 0.95 | 0.80 | 0.89 |
-| The Rebel | 1.10 | 0.70 | 1.64 | 1.10 | 0.99 |
-| The Coward | 0.51 | 0.21 | 0.48 | 0.55 | 0.93 |
-| The Saint | 0.45 | 1.16 | 1.47 | 1.08 | 1.19 |
-| The Schemer | 1.18 | 0.54 | 1.69 | 1.03 | 1.36 |
-| Random baseline | 0.77 | 0.67 | 1.16 | 0.98 | 1.14 |
+| The Complier | 0.72 | 1.86 | 0.97 | 0.84 | 0.84 |
+| The Rebel | 1.10 | 0.70 | 1.87 | 0.99 | 0.90 |
+| The Coward | 0.51 | 0.21 | 0.48 | 0.43 | 0.82 |
+| The Saint | 0.45 | 1.16 | 1.64 | 1.12 | 1.09 |
+| The Schemer | 1.18 | 0.54 | 1.87 | 0.94 | 1.31 |
+| Random baseline | 0.77 | 0.67 | 1.35 | 0.93 | 1.14 |
 
 ### Endings (share of runs)
 
 | Ending | The Complier | The Rebel | The Coward | The Saint | The Schemer | Random baseline |
 |---|---:|---:|---:|---:|---:|---:|
-| Employee of the Month | 36.1% | · | 49.5% | 0.8% | 0.3% | 21.8% |
-| Promoted to Management | · | 58.1% | · | · | 13.7% | 22.1% |
-| Escape Through the Ducts | · | · | · | 0.8% | 14.2% | 1.6% |
-| Roach Union General Strike | · | · | · | 22.4% | · | 2.0% |
+| Employee of the Month | 39.8% | · | 69.5% | 1.1% | 0.2% | 24.3% |
+| Promoted to Management | · | 54.8% | · | · | 13.9% | 19.8% |
+| Escape Through the Ducts | · | · | · | 1.1% | 11.9% | 1.8% |
+| Roach Union General Strike | · | · | · | 21.0% | · | 2.1% |
 | Society Coup | · | · | · | 3.1% | · | 1.1% |
-| Whistleblower | · | · | · | 5.5% | 2.1% | 2.5% |
-| Early Retirement | 39.3% | · | 50.4% | 37.9% | 21.9% | 34.3% |
-| The Kind Rewrite | · | · | · | 1.9% | 1.6% | 0.3% |
-| Position Eliminated | 24.6% | 28.3% | 0.1% | 21.8% | 32.6% | 12.3% |
-| The Department of Posthumous Affairs | · | 9.8% | · | 2.5% | 11.9% | 0.9% |
+| Whistleblower | · | · | · | 5.5% | 2.4% | 2.5% |
+| Early Retirement | 33.9% | · | 30.4% | 36.0% | 20.3% | 32.1% |
+| The Kind Rewrite | · | · | · | 1.9% | 1.2% | 0.2% |
+| Position Eliminated | 26.4% | 30.6% | · | 24.4% | 34.8% | 14.1% |
+| The Department of Posthumous Affairs | · | 11.1% | · | 2.7% | 12.8% | 1.4% |
 
 ### Meter limits hit per run
 
-| Policy | clearance:max | composure:max | composure:min | forms:min | successors:min | suspicion:max | suspicion:min |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| The Complier | 5.67 | 0.01 | 3.24 | 1.96 | 0.17 | 0.09 | 4.20 |
-| The Rebel | 4.95 | 0.14 | 0.61 | 0.35 | 0.04 | 3.94 | 0.89 |
-| The Coward | 4.83 | 0.16 | 0.97 | 0.63 | 0.00 | 0.64 | 2.99 |
-| The Saint | 1.24 | 0.38 | 0.43 | 1.02 | 0.08 | 3.72 | 0.42 |
-| The Schemer | 2.26 | 0.29 | 1.11 | 0.53 | 0.13 | 3.42 | 1.00 |
-| Random baseline | 4.54 | 0.08 | 1.44 | 0.78 | 0.07 | 1.79 | 1.50 |
+| Policy | clearance:max | clearance:min | composure:max | composure:min | forms:min | successors:min | suspicion:max | suspicion:min |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| The Complier | 6.51 | 0.00 | 0.01 | 3.29 | 3.40 | 0.17 | 0.14 | 4.12 |
+| The Rebel | 4.64 | 0.00 | 0.14 | 0.44 | 0.28 | 0.02 | 4.21 | 0.89 |
+| The Coward | 4.36 | 0.00 | 0.48 | 0.90 | 1.70 | 0.00 | 0.69 | 2.93 |
+| The Saint | 1.12 | 0.05 | 0.85 | 0.36 | 1.59 | 0.09 | 3.91 | 0.41 |
+| The Schemer | 2.02 | 0.02 | 0.31 | 0.93 | 0.49 | 0.13 | 3.70 | 0.99 |
+| Random baseline | 4.86 | 0.01 | 0.11 | 1.26 | 1.25 | 0.07 | 2.15 | 1.48 |
 
 ### Top causes of termination
 
 | Policy | Causes (per run) |
 |---|---:|
-| The Complier | Nervous breakdown 3.16; The Form That Requires Itself 0.84; The Board 0.43; The Guard Who Is Also You 0.24 |
-| The Rebel | A short, friendly conversation 3.59; Your 90-Day Review, Today at 3 0.89; Nervous breakdown 0.59; The Successor Waiting Room 0.19 |
-| The Coward | Nervous breakdown 0.97; A short, friendly conversation 0.64; The Board 0.50; Your 90-Day Review, Today at 3 0.27 |
-| The Saint | A short, friendly conversation 3.56; The Board 0.44; Nervous breakdown 0.39; The Drop Test 0.32 |
-| The Schemer | A short, friendly conversation 3.13; Nervous breakdown 0.98; Your 90-Day Review, Today at 3 0.76; The Board 0.32 |
-| Random baseline | A short, friendly conversation 1.73; Nervous breakdown 1.41; Your 90-Day Review, Today at 3 0.47; The Board 0.39 |
+| The Complier | Nervous breakdown 3.19; The Form That Requires Itself 0.84; The Board 0.38; The Guard Who Is Also You 0.24 |
+| The Rebel | A short, friendly conversation 3.82; Your 90-Day Review, Today at 3 0.89; Nervous breakdown 0.43; The Successor Waiting Room 0.18 |
+| The Coward | Nervous breakdown 0.90; A short, friendly conversation 0.69; The Board 0.30; Your 90-Day Review, Today at 3 0.27 |
+| The Saint | A short, friendly conversation 3.73; The Board 0.43; The Drop Test 0.33; Nervous breakdown 0.32 |
+| The Schemer | A short, friendly conversation 3.37; Nervous breakdown 0.82; Your 90-Day Review, Today at 3 0.76; The Board 0.30 |
+| Random baseline | A short, friendly conversation 2.07; Nervous breakdown 1.24; Your 90-Day Review, Today at 3 0.47; The Board 0.38 |
 
 ### Choice health
 
 - Dominant choices (every temperament makes the same call): none.
-- Choices no bot ever picked: none.
-- Rarest choices (picks across every policy): `the-admin-terminal/type-kevins-password` 1, `the-listening-room/switch-off-the-bears` 1, `tank-nine/call-in-kevins-favor` 5, `the-spare-mustaches/return-the-mustaches` 6, `next-years-menu/order-off-the-boards-menu` 14.
+- Choices no bot ever picked: `the-admin-terminal/type-kevins-password`.
+- Rarest choices (picks across every policy): `the-listening-room/switch-off-the-bears` 1, `the-spare-mustaches/return-the-mustaches` 1, `tank-nine/call-in-kevins-favor` 3, `next-years-menu/order-off-the-boards-menu` 22, `the-union-archive/ask-for-your-file` 26.
 <!-- /generated:balance -->
