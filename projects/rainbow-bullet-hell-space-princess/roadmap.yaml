@@ -380,7 +380,7 @@ tasks:
   - id: t-018
     milestone: m2
     title: "Commit real-cabinet touch event replay for pointer capture, cancellation and resize boundaries."
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-003
@@ -395,6 +395,10 @@ tasks:
       remaining help/input scope first when shared consumer work overlaps.
       Measure input-to-frame sampling, preserve other games' geometry and controls,
       and keep synthetic pointer evidence distinct from physical touch testing.
+    owner: worker
+    claimed_by: 2026-10-16T164000Z-rainbow-t018-touch-b9q4
+    claimed_at: '2026-10-16T16:35:47Z'
+    updated: '2026-10-16T16:35:47Z'
 
   - id: t-019
     milestone: m2
