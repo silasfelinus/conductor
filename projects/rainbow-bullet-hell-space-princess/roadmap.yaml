@@ -178,8 +178,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Author and integrate stages 1–2 with complete tutorial and bosses"
-    status: ready
-    updated: '2026-10-16T20:49:35Z'
+    status: done
+    updated: '2026-10-16T22:34:01Z'
     depends_on: [t-004]
     passes: 1
     retry_context: >-
@@ -223,10 +223,22 @@ tasks:
       continues, four pilots 6.25 / 6.71 min; clean demo 6.7 / 6.5 min. The bible's 10-15
       minute per-Act target (excluding retries) still needs about three more sections per Act;
       ACT_FLOOR_MINUTES is a ratchet at 6. Device play remains Silas's on-main check.
+
+      Done 2026-10-16 PT. Acts I and II meet the world bible's pacing as written: a clean solo
+      run (deathless demo, retries excluded) takes 10.20 and 10.04 minutes per Act, asserted
+      10-15 in verifyRainbowFirstClear. Ordinary pilots with continues: solo 12.18 / 14.85,
+      four pilots 10.00 / 10.83. Delivered across kind_robots#3770 (boss hulls scale with the
+      crew, continues keep boss damage), #3771 and #3773 (authored sections), #3774 (Urchin
+      and Lantern mid-Act guardians), #3776 (three more sections per Act; squash 082ff35e).
+      Each Act: eighteen sections including a guardian, twenty checkpoints, two three-phase
+      bosses with 36-frame telegraphs, wave school bonuses, breakable coral cover, pickups,
+      tutorial in the admin tab. 1- and 4-player clears are tested in engine and in the shared
+      cabinet (Chromium fixtures for keyboard, gamepad and four touch pilots); physical-device
+      play is Silas's normal on-main check.
     owner: worker
     claimed_by: null
     claimed_at: null
-    implementation_pr: 'silasfelinus/kind_robots#3771'
+    implementation_pr: 'silasfelinus/kind_robots#3776'
   - id: t-008
     milestone: m3
     title: "Author branching stages 3–5 and three distinct bosses"
