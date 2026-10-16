@@ -334,15 +334,28 @@ tasks:
   - id: t-016
     milestone: m1
     title: "Add a per-pilot ArtJob manifest and cast-identity QA contract before any atlas is marked ready"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Reviewer kaizen after Conductor PR #6021: check portrait identity/colour consistency, body-silhouette diversity, facial consistency across cinematics and rights/provenance against CAST-BIBLE.md. Docs only; do not overwrite approved art.
+
+      Done 2026-10-16: added art/CAST-MANIFEST.yaml (every shipped pilot asset with ArtImage,
+      ledger key, ArtJob, engine/checkpoint, seed and source image, generated from the ART-
+      ROUND ledgers and the kind_robots commits that shipped them, plus coverage of the CAST-
+      BIBLE base deliverables) and CAST-QA.md (a 10-line contract an asset must pass before it
+      is marked ready, inspection findings, monochrome silhouette test at 96/256px, and a
+      reconciliation table). Findings: identity holds across lock/comms/cut-in for all four
+      (Kontext from the menu ID lock); flags for the Azure r8 turnaround olive coat, Vivi's
+      missing lilac streaks (r8), gibberish shirt lettering (246033/247466), under-read builds
+      in Vivi comms/cut-in and the Solenne cut-in; all four existing group plates rejected as
+      non-canon. Missing for all pilots: helmet on/off, 6-frame action keys, colour callouts.
+      Docs only; no approved art overwritten; model licences for public release flagged for a
+      human.
     owner: worker
     claimed_by: 2026-10-16T160500Z-rainbow-t016-castqa-m2k8
     claimed_at: '2026-10-16T16:00:36Z'
-    updated: '2026-10-16T16:00:36Z'
+    updated: '2026-10-16T16:04:53Z'
 
   - id: t-017
     milestone: m2
