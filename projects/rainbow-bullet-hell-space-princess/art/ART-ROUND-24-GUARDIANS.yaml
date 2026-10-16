@@ -1,0 +1,137 @@
+# Rainbow Space Princess art round 24 (t-007 guardians and t-022 with the t-016 CAST-QA table, 2026-10-16 PT).
+# Painted sprites for the new mid-Act guardians (kind_robots#3774 draws the scout sprites at 2.3x until these
+# ship): an armoured Urchin guardian from the E04 sprite 247497 and a Lantern guardian from the E05 sprite 247498.
+# Round-23 follow-ups: Vivi's helmet from the clean-tee 247799 (247857 came from the old lock and painted shirt
+# lettering), C09 with a flight yoke instead of the car wheel (from 247850), and the back view of Vivi's turnaround
+# (Kontext left the third figure unchanged in round 23). Submit/refresh with scripts/enqueue_art_requests.py. Private.
+round: 24
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+lanes:
+- key: kontext
+  label: Flux Kontext dev (fp8), guardian sprites and round-23 follow-ups
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: r24-guardian-urchin-1
+  title: Urchin guardian sprite (mid-Act I guardian)
+  ticket: A-ENEMY-04
+  size: 1216x832
+  seed: 504001
+  source_image_id: 247497
+  prompt_prose: 'Make this pearl urchin craft a huge armoured guardian: heavy pearl armour plates rimmed in gold,
+    a crown of longer glowing violet spines, a fierce glowing yellow eye and a cracked pearl core. Keep it facing
+    left, the whole craft centred, on a flat solid magenta background with no shadow, glow or stars, as a crisp
+    game sprite. Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated
+    series.'
+  jobs:
+    kontext: 39719
+- key: r24-guardian-urchin-2
+  title: Urchin guardian sprite (mid-Act I guardian)
+  ticket: A-ENEMY-04
+  size: 1216x832
+  seed: 504002
+  source_image_id: 247497
+  prompt_prose: 'Make this pearl urchin craft a huge armoured guardian: heavy pearl armour plates rimmed in gold,
+    a crown of longer glowing violet spines, a fierce glowing yellow eye and a cracked pearl core. Keep it facing
+    left, the whole craft centred, on a flat solid magenta background with no shadow, glow or stars, as a crisp
+    game sprite. Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated
+    series.'
+  jobs:
+    kontext: 39720
+- key: r24-guardian-lantern-1
+  title: Lantern guardian sprite (mid-Act II guardian)
+  ticket: A-ENEMY-05
+  size: 1216x832
+  seed: 504003
+  source_image_id: 247498
+  prompt_prose: 'Make this moonjelly lantern craft a huge guardian: a larger double bell with a ring of glowing
+    gold lamps, longer rainbow tendrils braided with light, and a bright central lantern heart. Keep it facing left,
+    the whole craft centred, on a flat solid magenta background with no shadow, glow or stars, as a crisp game sprite.
+    Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated series.'
+  jobs:
+    kontext: 39721
+- key: r24-guardian-lantern-2
+  title: Lantern guardian sprite (mid-Act II guardian)
+  ticket: A-ENEMY-05
+  size: 1216x832
+  seed: 504004
+  source_image_id: 247498
+  prompt_prose: 'Make this moonjelly lantern craft a huge guardian: a larger double bell with a ring of glowing
+    gold lamps, longer rainbow tendrils braided with light, and a bright central lantern heart. Keep it facing left,
+    the whole craft centred, on a flat solid magenta background with no shadow, glow or stars, as a crisp game sprite.
+    Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated series.'
+  jobs:
+    kontext: 39722
+- key: r24-helmet-vivi-1
+  title: Vivi helmet on, from the clean-tee portrait (CAST-QA open deliverable)
+  ticket: A-CAST-QA
+  size: 832x1216
+  seed: 504005
+  source_image_id: 247799
+  prompt_prose: Put a sleek lilac flight helmet on her with the clear visor raised so her whole face stays visible.
+    Keep her face, skin, curvy build, holographic jacket, keytar, pose and background exactly the same. Her dark
+    T-shirt is plain apart from one simple lilac comet shape. Keep the same flat-colour western cartoon art style
+    with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39723
+- key: r24-helmet-vivi-2
+  title: Vivi helmet on, from the clean-tee portrait (CAST-QA open deliverable)
+  ticket: A-CAST-QA
+  size: 832x1216
+  seed: 504006
+  source_image_id: 247799
+  prompt_prose: Put a sleek lilac flight helmet on her with the clear visor raised so her whole face stays visible.
+    Keep her face, skin, curvy build, holographic jacket, keytar, pose and background exactly the same. Her dark
+    T-shirt is plain apart from one simple lilac comet shape. Keep the same flat-colour western cartoon art style
+    with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39724
+- key: r24-c09-handoff-yoke-1
+  title: C09 player control handoff, flight yoke
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 504007
+  source_image_id: 247850
+  prompt_prose: Replace the round steering wheel with a twin-handled starship flight yoke in glowing pink and gold.
+    Keep the same pilot, her face, hair, pink jacket, grin, holographic displays and the pink cloud sea ahead exactly
+    the same. Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated
+    series.
+  jobs:
+    kontext: 39725
+- key: r24-c09-handoff-yoke-2
+  title: C09 player control handoff, flight yoke
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 504008
+  source_image_id: 247850
+  prompt_prose: Replace the round steering wheel with a twin-handled starship flight yoke in glowing pink and gold.
+    Keep the same pilot, her face, hair, pink jacket, grin, holographic displays and the pink cloud sea ahead exactly
+    the same. Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated
+    series.
+  jobs:
+    kontext: 39726
+- key: r24-vivi-turnaround-back-1
+  title: Vivi turnaround, streaks in the back view (CAST-QA reconciliation)
+  ticket: A-CAST-QA
+  size: 1344x768
+  seed: 504009
+  source_image_id: 247848
+  prompt_prose: Give the figure seen from behind the same purple hair with bold lilac streaks as the figures seen
+    from the front, with the shaved side showing. Keep every body, outfit and pose exactly the same.
+  jobs:
+    kontext: 39727
+- key: r24-vivi-turnaround-back-2
+  title: Vivi turnaround, streaks in the back view (CAST-QA reconciliation)
+  ticket: A-CAST-QA
+  size: 1344x768
+  seed: 504010
+  source_image_id: 247848
+  prompt_prose: Give the figure seen from behind the same purple hair with bold lilac streaks as the figures seen
+    from the front, with the shaved side showing. Keep every body, outfit and pose exactly the same.
+  jobs:
+    kontext: 39728
