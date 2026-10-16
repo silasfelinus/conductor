@@ -9,6 +9,7 @@ queued from the admin studio; it never changes the original source file.
 from __future__ import annotations
 
 import argparse
+import hashlib
 from datetime import datetime, timezone
 import json
 import math
@@ -27,12 +28,15 @@ import uuid
 FPS = 16
 WINDOW = 65  # Wan temporal alignment: 4n + 1 frames
 STEP = 57    # 8-frame overlap, divided equally at stitching
+CONTINUITY_VERSION = "chained-reference-v1"
+CONTINUITY_SEED = 3451900
 MODEL = "wan2.1_vace_1.3B_fp16.safetensors"
 VAE = "wan_2.1_vae.safetensors"
 ENCODER = "umt5-xxl-encoder-Q5_K_M.gguf"
 NEGATIVE = (
     "flicker, frame jumps, deformed hands, duplicate performer, "
     "camera movement, changed choreography, distorted coat silhouette, "
+    "new props, changing wardrobe, different scenery, new people, "
     "unreadable faces, artifacts, subtitles, low quality"
 )
 UUID_RE = re.compile(r"^[a-f0-9-]{36}$", re.I)
@@ -91,7 +95,7 @@ def graph(video_name, seed, prompt, prefix, reference_name=None):
         "neg": node("CLIPTextEncode", clip=["encoder", 0], text=NEGATIVE),
         "video": node("LoadVideo", file=video_name),
         "frames": node("GetVideoComponents", video=["video", 0]),
-        "edges": node("Canny", image=["frames", 0], low_threshold=0.4, high_threshold=0.8),
+        "edges": node("Canny", image=["frames", 0], low_threshold=0.2, high_threshold=0.45),
         "control": node("WanVaceToVideo",
                         positive=["pos", 0], negative=["neg", 0], vae=["vae", 0],
                         width=720, height=480, length=WINDOW, batch_size=1,
@@ -127,7 +131,7 @@ def send_json(base, resource, payload=None, timeout=90):
 def check_comfy(base):
     info = send_json(base, "/object_info")
     required = ["UNETLoader", "CLIPLoaderGGUF", "WanVaceToVideo", "LoadVideo",
-                "GetVideoComponents", "Canny", "TrimVideoLatent", "CreateVideo",
+                "GetVideoComponents", "Canny", "LoadImage", "TrimVideoLatent", "CreateVideo",
                 "SaveVideo", "ModelSamplingSD3", "VAELoader", "KSampler"]
     missing = [name for name in required if name not in info]
     if missing:
@@ -255,6 +259,32 @@ def extract_window(source, start_time, dest):
          "-pix_fmt", "yuv420p", str(dest)])
 
 
+def render_cache_key(source, job, pilot, reference):
+    """Versioned cache identity: never reintroduce windows from another recipe."""
+    source_sha = hashlib.sha256()
+    with source.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            source_sha.update(chunk)
+    ref_sha = hashlib.sha256(reference.read_bytes()).hexdigest() if reference.is_file() else None
+    recipe = {
+        "revision": CONTINUITY_VERSION, "source": source_sha.hexdigest(),
+        "reference": ref_sha, "style": job["renderRecipe"]["stylePrompt"],
+        "start": pilot["startSec"], "duration": pilot["durationSec"],
+        "quality": job["quality"], "seed": CONTINUITY_SEED,
+        "model": MODEL, "fps": FPS, "window": WINDOW, "step": STEP,
+    }
+    return hashlib.sha256(json.dumps(recipe, sort_keys=True).encode()).hexdigest()[:20]
+
+
+def extract_reference_frame(video, frame_index, destination):
+    """Capture the exact overlapping SOURCE-time frame from the prior stylized window."""
+    run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+         "-i", str(video), "-vf", f"select=eq(n\\,{frame_index})",
+         "-frames:v", "1", str(destination)])
+    if not destination.is_file() or destination.stat().st_size == 0:
+        raise RuntimeError(f"Could not extract continuity frame {frame_index} from {video}")
+
+
 def assemble(job_dir, source, pilot, outputs, frame_count, quality):
     retained = accepted_frames(frame_count)
     inputs = [part for part in outputs]
@@ -330,12 +360,16 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
     job_dir = job_path.parent
     try:
         update(job_path, job, status="PILOT_RUNNING", stage="Verifying and preparing motion guides")
+        master_reference = job_dir / "reference.png"
+        signature = render_cache_key(source, job, pilot, master_reference)
+        cache_dir = job_dir / "render-cache" / signature
+        cache_dir.mkdir(parents=True, exist_ok=True)
         clips = []
         for index, start_frame, count in spans:
-            rendered = job_dir / f"pilot_window_{index:03d}.mp4"
+            rendered = cache_dir / f"pilot_window_{index:03d}.mp4"
             clips.append(rendered)
             if not rendered.is_file() or rendered.stat().st_size == 0:
-                guide = job_dir / f"motion_control_{index:03d}.mp4"
+                guide = cache_dir / f"motion_control_{index:03d}.mp4"
                 extract_window(source, pilot["startSec"] + start_frame / FPS, guide)
                 input_name = f"coatdance_{job['id']}_{index:03d}.mp4"
                 staged = args.comfy_input / input_name
@@ -343,17 +377,28 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
                     shutil.copyfile(guide, staged)
                 prompt = (
                     job["renderRecipe"]["stylePrompt"] +
-                    ". Fixed wide stage camera, one performer, a black coat moving "
-                    "in exact correspondence with the Canny-controlled original video. "
-                    "Retain timing, posture, silhouette and all gestures."
+                    ". Fixed wide stage camera and unchanged original performance. "
+                    "One recognizable dancer, one black coat, one stable physical stage. "
+                    "Treat the original Canny video as a precise motion and set guide. "
+                    "Retain the same coat silhouette, performer identity, lighting, "
+                    "set architecture and drawn animation style across every shot. "
+                    "Do not introduce props, actors, costumes, objects or camera changes. "
+                    "Preserve timing, posture and every original gesture."
                 )
+                reference = master_reference if master_reference.is_file() else None
+                if index > 0:
+                    # Align at frame 57, where the following source window starts,
+                    # rather than at frame 64 (the end of the overlap).
+                    reference = cache_dir / f"continuity_{index:03d}.png"
+                    if not reference.is_file() or reference.stat().st_size == 0:
+                        extract_reference_frame(clips[index - 1], STEP, reference)
                 image_name = None
-                if (job_dir / "reference.png").is_file():
-                    image_name = f"coatdance_{job['id']}_reference.png"
+                if reference is not None:
+                    image_name = f"coatdance_{job['id']}_{signature}_ref_{index:03d}.png"
                     if not (args.comfy_input / image_name).exists():
-                        shutil.copyfile(job_dir / "reference.png", args.comfy_input / image_name)
-                prefix = f"coatdance/{job['id']}/pilot_{index:03d}"
-                workflow = graph(input_name, 3451900 + index, prompt,
+                        shutil.copyfile(reference, args.comfy_input / image_name)
+                prefix = f"coatdance/{job['id']}/{signature}/pilot_{index:03d}"
+                workflow = graph(input_name, CONTINUITY_SEED, prompt,
                                  prefix, image_name)
                 if not recover_saved_window(args.comfy_url, prefix, rendered):
                     execute_comfy(args.comfy_url, workflow, rendered, args.timeout_seconds)
