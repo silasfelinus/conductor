@@ -33,6 +33,7 @@ from pathlib import Path, PurePosixPath
 
 import relay_agent as relay
 import lora_import_agent as lora
+import vace_relay
 
 KIND_ROBOTS_REPO = "silasfelinus/kind_robots"
 MEDIA_ROOT_VALUE = (
@@ -452,6 +453,9 @@ def run_comfy_with_recovery(payload):
 
 
 def process_with_media(job):
+    payload = job_payload(job)
+    if payload.get("media") == "video-restyle-vace":
+        return vace_relay.process(job)
     target = direct_media_target(job)
     if target is None:
         return ORIGINAL_PROCESS(job)
@@ -493,6 +497,7 @@ def process_with_media(job):
     )
 
 
+relay.supports_video_restyle = vace_relay.capable
 relay.run_comfy = run_comfy_with_recovery
 relay.process = process_with_media
 

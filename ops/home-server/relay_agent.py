@@ -494,6 +494,12 @@ def claim_job():
             # kind_robots holds payload.media == "audio" jobs back from any
             # relay that does not say this (music-video/t-020 claim gate).
             "supportsAudio": True,
+            # The running relay_media_agent wrapper supplies a *live* preflight
+            # callback. Unknown/older relays must never claim VACE work.
+            "supportsVideoRestyle": bool(
+                callable(globals().get("supports_video_restyle"))
+                and supports_video_restyle()
+            ),
             "supportsCompletionProof": True,
             # claim.post.ts defaults this on (only an explicit false means FIFO);
             # sent anyway so model-affinity scheduling never depends on that default.
