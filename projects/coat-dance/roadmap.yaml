@@ -283,7 +283,7 @@ tasks:
 - id: t-011
   milestone: m3
   title: 'Straight animated version: same angle, original footage as mocap, Illustrious checkpoint'
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -319,10 +319,9 @@ tasks:
     Merged Conductor PR #6214 as c674a96608459efe1f6b808b9fa00c252e50be6e after four of four complete, green GitHub workflows including full Python test suite. The native ComfyUI SaveVideo output can be emitted in the history images bucket even for .mp4 files. The existing KR VACE worker read only videos/gifs, silently polling for up to three hours after the prompt had finished. It now accepts video files in images/videos/gifs, fails fast when a completed prompt has no saved-video metadata, scans exact project-and-window-matched finished Comfy history before expensive rerendering, and logs prompt IDs and saved/reported windows. No diffusion steps, output resolution, audio, privacy, or source video changed. Verified Conductor main and branch cleanup. No live Windows PM2 restart, final MP4, or currently active ArtJob status was verified. Keep milestone READY for the actual pilot and final 5:32 film. Do not restart an active render until queue and relay state are checked.
 
     Implemented VACE window continuity with aligned preceding-frame references, fixed seed, denser motion edges and a recipe-versioned cache; opening tested Conductor implementation PR. Full runtime GPU test and human review of the next pilot are still pending.
-  updated: '2026-10-16T09:42:00Z'
-  owner: worker
-  claimed_by: 2026-10-16T093700Z-coat-continuity-6c42
-  claimed_at: '2026-10-16T09:37:00Z'
+
+    User confirmed the first 24-second VACE pilot rendered, but the seven independently seeded windows shifted style and manufactured scene elements. Merged Conductor PR #6222 at 807cba39 after 4/4 green workflows (including complete Python suite): aligned previous-window VACE reference conditioning, fixed seed, denser Canny structure and versioned render cache. Merged companion Kind Robots PR #3738 at 91fd4e22 after 19/19 completed green workflows: REVIEW pilot rerender queues a new ArtJob revision, archives the previous private result and provides compare playback. No Windows PM2 reload or second live GPU render performed, and self-host deployment is not verified. Leave t-011 READY for a new continuity pilot and creative/motion QA, followed by the full 5:32 film with source audio and Illustrious checkpoint-painted anchor work.
+  updated: '2026-10-16T09:55:45Z'
 - id: t-012
   milestone: m3
   title: 'FOR SILAS: verdict on the straight animated version'
