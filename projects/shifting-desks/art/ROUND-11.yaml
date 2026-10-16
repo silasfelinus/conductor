@@ -1,0 +1,102 @@
+# Shifting Desks art round 11 (overnight free-rein build, 2026-10-16): the The Antechamber Sign-In: Board Day desk and its
+# applicants in encounters/SUBLEVEL-ZERO-12.json window_shift, prompts copied word for word from each art.brief.
+# Status values: requested -> rendered -> delivered (media_url answers 200). Generated internal art is
+# pre-approved (AGENTS.md); Krea 2 on the self-hosted render box, nothing published. Western Cartoon and Noir
+# editions ride the shifting-desks-style-v2- lane (STYLE-CATALOG.json).
+round: shifting-desks-11
+project_slug: shifting-desks
+task: window-shift
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-16T15:00:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render,
+  blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: antechamber-sign-in
+  kind: window-desk
+  department: sub-level-zero
+  title: 'The Antechamber Sign-In: Board Day'
+  card: antechamber-sign-in
+  source_ref: encounters/SUBLEVEL-ZERO-12.json window_shift.art.brief
+  request_id: shifting-desks-r11-window-antechamber-sign-in
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 61001
+  target_path: kind_robots public/images/shifting-desks/window/antechamber-sign-in.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/antechamber-sign-in.webp
+  prompt: A grand wood-paneled reception desk before a tall double door glowing at its edges, a clerk behind the
+    desk holding a heavy rubber stamp over an open sign-in ledger, four oval portraits of the same mustached man
+    on the paneling and deep leather chairs in the half-light, mid-century safety-manual illustration, screen-printed
+    gouache with halftone grain, limited palette of manila, carbon-paper blue, fluorescent-tube green and oxblood,
+    every surface bare and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-founders-head
+  kind: window-applicant
+  department: sub-level-zero
+  title: The Founder's head, on a tea cart
+  card: the-founders-head
+  source_ref: encounters/SUBLEVEL-ZERO-12.json window_shift.applicants[the-founders-head].art.brief
+  request_id: shifting-desks-r11-window-the-founders-head
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 61002
+  target_path: kind_robots public/images/shifting-desks/window/the-founders-head.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/the-founders-head.webp
+  prompt: A distinguished elderly mustached head floating in a glowing glass jar on a polished brass tea cart, parked
+    before a grand reception desk, an executive assistant in pearls standing politely behind the cart with one hand
+    on its handle, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette
+    of manila, carbon-paper blue, fluorescent-tube green and oxblood, every surface bare and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: dale-in-the-mustache
+  kind: window-applicant
+  department: sub-level-zero
+  title: Dale, from Compliance, in a mustache
+  card: dale-in-the-mustache
+  source_ref: encounters/SUBLEVEL-ZERO-12.json window_shift.applicants[dale-in-the-mustache].art.brief
+  request_id: shifting-desks-r11-window-dale-in-the-mustache
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 61003
+  target_path: kind_robots public/images/shifting-desks/window/dale-in-the-mustache.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/dale-in-the-mustache.webp
+  prompt: A smiling compliance officer in a pressed suit leaning on a grand reception desk, wearing an enormous
+    obviously false white mustache slightly crooked on his lip, one finger raised importantly, an empty brass display
+    stand tucked under his arm, mid-century safety-manual illustration, screen-printed gouache with halftone grain,
+    limited palette of manila, carbon-paper blue, fluorescent-tube green and oxblood, every surface bare and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: roach-delegate-six
+  kind: window-applicant
+  department: sub-level-zero
+  title: Delegate Six, Roach Union
+  card: roach-delegate-six
+  source_ref: encounters/SUBLEVEL-ZERO-12.json window_shift.applicants[roach-delegate-six].art.brief
+  request_id: shifting-desks-r11-window-roach-delegate-six
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 61004
+  target_path: kind_robots public/images/shifting-desks/window/roach-delegate-six.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/roach-delegate-six.webp
+  prompt: A dignified cockroach wearing a tiny knitted tie standing upright on an open sign-in ledger at a grand
+    reception desk, holding a tiny rolled scroll, a clerk leaning down with a rubber stamp and a polite expression,
+    mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila,
+    carbon-paper blue, fluorescent-tube green and oxblood, every surface bare and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null

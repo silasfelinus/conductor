@@ -110,60 +110,60 @@ Two changes got it there:
 
 | Policy | Finished | Eliminated | Successors lost / run | Endings seen |
 |---|---:|---:|---:|---:|
-| The Complier | 76.2% | 23.8% | 5.04 | 3 of 10 |
-| The Rebel | 52.5% | 47.5% | 5.70 | 3 of 10 |
-| The Coward | 100.0% | 0.0% | 2.00 | 2 of 10 |
-| The Saint | 69.4% | 30.6% | 5.49 | 9 of 10 |
-| The Schemer | 52.0% | 48.0% | 5.83 | 8 of 10 |
-| Random baseline | 82.8% | 17.3% | 4.91 | 10 of 10 |
+| The Complier | 75.5% | 24.4% | 5.13 | 3 of 10 |
+| The Rebel | 50.6% | 49.4% | 5.77 | 3 of 10 |
+| The Coward | 100.0% | 0.0% | 2.01 | 2 of 10 |
+| The Saint | 62.5% | 37.5% | 5.69 | 9 of 10 |
+| The Schemer | 50.8% | 49.3% | 5.89 | 8 of 10 |
+| Random baseline | 78.4% | 21.6% | 5.04 | 10 of 10 |
 
 ### Successors lost per run, by department
 
 | Policy | Orientation | Records & Forms | Toy Division | Wellness & Testing | Sub-Level Zero |
 |---|---:|---:|---:|---:|---:|
-| The Complier | 0.72 | 1.86 | 0.97 | 0.62 | 0.88 |
-| The Rebel | 1.10 | 0.70 | 1.87 | 1.20 | 0.84 |
-| The Coward | 0.51 | 0.21 | 0.48 | 0.30 | 0.50 |
-| The Saint | 0.45 | 1.16 | 1.64 | 1.21 | 1.04 |
-| The Schemer | 1.18 | 0.54 | 1.87 | 0.96 | 1.28 |
-| Random baseline | 0.77 | 0.67 | 1.35 | 1.04 | 1.08 |
+| The Complier | 0.72 | 1.86 | 0.97 | 0.62 | 0.97 |
+| The Rebel | 1.10 | 0.70 | 1.87 | 1.20 | 0.90 |
+| The Coward | 0.51 | 0.21 | 0.48 | 0.30 | 0.51 |
+| The Saint | 0.45 | 1.16 | 1.64 | 1.21 | 1.24 |
+| The Schemer | 1.18 | 0.54 | 1.87 | 0.96 | 1.34 |
+| Random baseline | 0.77 | 0.67 | 1.35 | 1.04 | 1.21 |
 
 ### Endings (share of runs)
 
 | Ending | The Complier | The Rebel | The Coward | The Saint | The Schemer | Random baseline |
 |---|---:|---:|---:|---:|---:|---:|
-| Employee of the Month | 38.8% | · | 92.8% | 1.6% | 0.2% | 23.4% |
-| Promoted to Management | · | 49.5% | · | · | 13.1% | 19.1% |
-| Escape Through the Ducts | · | · | · | 1.4% | 12.1% | 1.4% |
-| Roach Union General Strike | · | · | · | 20.1% | · | 1.9% |
-| Society Coup | · | · | · | 2.6% | · | 0.8% |
-| Whistleblower | · | · | · | 4.5% | 2.3% | 2.0% |
-| Early Retirement | 37.5% | · | 7.2% | 34.0% | 20.4% | 33.1% |
-| The Kind Rewrite | · | · | · | 2.1% | 1.4% | 0.3% |
-| Position Eliminated | 23.8% | 35.3% | · | 27.3% | 35.2% | 16.1% |
-| The Department of Posthumous Affairs | · | 12.2% | · | 3.4% | 12.8% | 1.1% |
+| Employee of the Month | 39.0% | · | 96.6% | 0.8% | 1.9% | 22.9% |
+| Promoted to Management | · | 47.2% | · | · | 11.8% | 19.6% |
+| Escape Through the Ducts | · | · | · | 1.4% | 12.8% | 1.4% |
+| Roach Union General Strike | · | · | · | 18.9% | · | 2.0% |
+| Society Coup | · | · | · | 2.8% | · | 0.9% |
+| Whistleblower | · | · | · | 4.2% | 2.1% | 1.9% |
+| Early Retirement | 36.6% | · | 3.4% | 29.6% | 18.3% | 28.8% |
+| The Kind Rewrite | · | · | · | 1.9% | 1.3% | 0.1% |
+| Position Eliminated | 24.4% | 36.5% | · | 33.3% | 35.6% | 19.9% |
+| The Department of Posthumous Affairs | · | 12.8% | · | 4.3% | 13.6% | 1.8% |
 
 ### Meter limits hit per run
 
 | Policy | clearance:max | clearance:min | composure:max | composure:min | forms:min | successors:min | suspicion:max | suspicion:min |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| The Complier | 6.54 | 0.00 | 0.05 | 3.02 | 5.87 | 0.16 | 0.18 | 4.10 |
-| The Rebel | 4.53 | 0.00 | 0.15 | 0.39 | 0.28 | 0.02 | 4.49 | 0.88 |
-| The Coward | 4.84 | 0.00 | 0.73 | 0.72 | 4.31 | 0.00 | 0.65 | 2.91 |
-| The Saint | 1.11 | 0.05 | 1.07 | 0.25 | 2.60 | 0.10 | 4.10 | 0.40 |
-| The Schemer | 2.00 | 0.02 | 0.31 | 0.88 | 0.54 | 0.12 | 3.74 | 0.98 |
-| Random baseline | 4.80 | 0.01 | 0.18 | 1.05 | 2.03 | 0.07 | 2.42 | 1.47 |
+| The Complier | 6.55 | 0.00 | 0.05 | 3.12 | 7.44 | 0.17 | 0.17 | 4.29 |
+| The Rebel | 4.51 | 0.00 | 0.15 | 0.46 | 0.28 | 0.02 | 4.52 | 0.94 |
+| The Coward | 4.87 | 0.00 | 0.73 | 0.73 | 6.09 | 0.00 | 0.69 | 2.97 |
+| The Saint | 1.11 | 0.05 | 1.16 | 0.20 | 3.24 | 0.14 | 4.36 | 0.40 |
+| The Schemer | 2.00 | 0.02 | 0.31 | 1.06 | 1.38 | 0.15 | 3.57 | 1.10 |
+| Random baseline | 4.80 | 0.01 | 0.19 | 1.04 | 2.65 | 0.10 | 2.59 | 1.50 |
 
 ### Top causes of termination
 
 | Policy | Causes (per run) |
 |---|---:|
-| The Complier | Nervous breakdown 2.95; The Form That Requires Itself 0.84; The Board 0.41; The Guard Who Is Also You 0.24 |
-| The Rebel | A short, friendly conversation 4.04; Your 90-Day Review, Today at 3 0.89; Nervous breakdown 0.38; The Successor Waiting Room 0.17 |
-| The Coward | Nervous breakdown 0.72; A short, friendly conversation 0.65; Your 90-Day Review, Today at 3 0.27; The Guard Who Is Also You 0.23 |
-| The Saint | A short, friendly conversation 3.88; The Board 0.41; The Drop Test 0.33; Nervous breakdown 0.22 |
-| The Schemer | A short, friendly conversation 3.40; Nervous breakdown 0.78; Your 90-Day Review, Today at 3 0.76; The Board 0.29 |
-| Random baseline | A short, friendly conversation 2.32; Nervous breakdown 1.02; Your 90-Day Review, Today at 3 0.47; The Board 0.39 |
+| The Complier | Nervous breakdown 3.04; The Form That Requires Itself 0.84; The Board 0.40; The Guard Who Is Also You 0.24 |
+| The Rebel | A short, friendly conversation 4.05; Your 90-Day Review, Today at 3 0.89; Nervous breakdown 0.44; The Successor Waiting Room 0.17 |
+| The Coward | Nervous breakdown 0.73; A short, friendly conversation 0.69; Your 90-Day Review, Today at 3 0.27; The Guard Who Is Also You 0.23 |
+| The Saint | A short, friendly conversation 4.12; The Board 0.41; The Drop Test 0.33; Nervous breakdown 0.19 |
+| The Schemer | A short, friendly conversation 3.29; Nervous breakdown 0.95; Your 90-Day Review, Today at 3 0.76; The Board 0.30 |
+| Random baseline | A short, friendly conversation 2.48; Nervous breakdown 1.01; Your 90-Day Review, Today at 3 0.47; The Board 0.38 |
 
 ### Choice health
 

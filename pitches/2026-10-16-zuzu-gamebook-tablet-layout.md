@@ -11,7 +11,7 @@ The Zuzu Gamebook keeps a single solid toolbar and fits each story section, its 
 ## Evidence
 PR: https://github.com/silasfelinus/kind_robots/pull/3736
 Checks: https://github.com/silasfelinus/kind_robots/actions/runs/38878598580
-Verified: Merged PR's aggregate 'Contract verifiers' check run completed with conclusion success on the final head (Shifting Desks gameplay contract, balance and layout contract included); merge commit confirmed on main. Screens measured at 390, 768, 820 and 1440 px on a local dev build before merge. Merged is not deployed: live on kindrobots.org only after the next Alexandria deploy.
+Verified: Merged PR's aggregate 'Contract verifiers' check run completed with conclusion success on the final head (Zuzu Gamebook contract and layout contract included); merge commit confirmed on main. The section screen was measured at 390, 768, 820x1060, 1180x710 and 1440 px on a local dev build before merge: no page scroll, one toolbar row, the phone story pane scrolls inside its own bounds by design. Merged is not deployed: live on kindrobots.org only after the next Alexandria deploy.
 Art: not-required
 Merge: b0c6b7aeebbaa4990e289367a7999cd5c44406ae
 Playable preview: https://kindrobots.org/play/zuzu-gamebook
