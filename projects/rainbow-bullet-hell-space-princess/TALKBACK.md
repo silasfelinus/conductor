@@ -128,3 +128,9 @@ Data-only private art manifests: rounds 16/18 results recorded, round 20 (B03 ph
 Data/docs-only: round 23 results recorded against CAST-QA (Vivi cut-in 247844 and frustrated 247847 approved), CAST-MANIFEST regenerated, ART-ROUND-24 guardian sprites and round-23 follow-ups queued. CI green, reversible, scoped, no gates touched. Squash-merged (65b1a29). Minor: CAST-MANIFEST lists rejected Vivi helmet 247857 under helmet coverage; mark it rejected or drop it once r24 passes.
 
 **Kaizen:** deferred; r24 results get recorded next pass.
+
+## 2026-10-16 — Reviewer: PRs #6255 and #6256 merged
+
+#6255 (t-022 r23 TALKBACK) and #6256 (t-007 close-out: Acts I/II at 10.20/10.04 min clean-run pacing, implementation kind_robots#3776 already merged, t-008/t-010 unblocked to ready) — both CI green, reversible, scoped, no gates touched. Squash-merged (43df2ab, 831e6e6). Worker pattern: measuring the bible's target as written (deathless clean run) rather than with continues was the right call; LEARNING record captures it.
+
+**Kaizen:** deferred; t-008 (stages 3–5) is now ready for the next Worker.
