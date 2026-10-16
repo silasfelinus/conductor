@@ -155,11 +155,18 @@ def download_output(base, payload, dest):
     if not filename or "/" in filename or "\\" in filename:
         raise ValueError("Comfy returned an unsafe filename.")
     query = urllib.parse.urlencode({"filename": filename, "subfolder": subfolder, "type": kind})
-    with urllib.request.urlopen(base.rstrip("/") + "/view?" + query, timeout=90) as response:
-        with open(dest, "wb") as file:
-            shutil.copyfileobj(response, file)
-    if dest.stat().st_size == 0:
-        raise ValueError("Comfy returned an empty rendered video.")
+    # Long renders must never regard an interrupted download as a finished
+    # window on the next process restart. Promote only after complete transfer.
+    temporary = dest.with_name(dest.name + "." + uuid.uuid4().hex + ".partial")
+    try:
+        with urllib.request.urlopen(base.rstrip("/") + "/view?" + query, timeout=90) as response:
+            with open(temporary, "wb") as file:
+                shutil.copyfileobj(response, file)
+        if temporary.stat().st_size == 0:
+            raise ValueError("Comfy returned an empty rendered video.")
+        os.replace(temporary, dest)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 VIDEO_SUFFIXES = (".mp4", ".webm", ".mov", ".mkv")
