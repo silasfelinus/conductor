@@ -12510,3 +12510,7 @@ Worker pattern: good — root cause came from real run logs, and the PR calls ou
 ## 2026-10-16 — Reviewer: conductor#6210 (gate triage: zuzu t-002 re-stamp, coat-dance m1 status)
 Approved and squash-merged (b46eb5f). Two one-line roadmap edits: gate_rechecked stamp on a soft-gated task and a milestone status that matched its all-done tasks. Reversible, scoped, CI green on head, no review-claim marker from another session.
 Worker pattern: good — small, evidenced bookkeeping fix. Not done: no kaizen task (bookkeeping-only); the sweep's prowlarr/nzb.life 522 container-log signatures and 20 pending Tzaddik suggestions remain for Silas.
+
+## 2026-10-16 — Reviewer: conductor#6216 (kr-arcade/t-072 part 1 close-out)
+Approved and squash-merged (bba5018). Roadmap-only close recording kind_robots#3732 (Storm Shelf + Thunderhead) and re-arming t-072 as ready. Reversible, CI green on the latest head (the one early "Validate Worker PR handoff" failure was superseded by a passing rerun), no review-claim marker from another session.
+Worker pattern: good — partial progress recorded honestly with the remaining scope listed. Not done: no kaizen task (bookkeeping-only; the Worker's close_task.py PR-body-headings suggestion is minor and the first handoff check failure suggests it is real, but t-072 itself stays ready). Sweep still shows prowlarr/nzb.life 522 container-log signatures and 20 pending Tzaddik suggestions for Silas.
