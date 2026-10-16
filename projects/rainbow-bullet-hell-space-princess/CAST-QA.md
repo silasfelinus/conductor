@@ -88,14 +88,14 @@ by Kontext from the approved locks instead (the t-022 pass), and then checked ag
 | Asset | Conflict | Reason | Proposed fix | Status |
 | --- | --- | --- | --- | --- |
 | 246432 Azure turnaround (r8) | Olive-green coat | Breaks the cyan fixed link | Kontext recolour to powder cyan, the same method as 247504 | approved: 247795 (r22) |
-| 246442 Vivi turnaround (r8) | No lilac streaks | Bible: lilac/coral streaks | Kontext recolour, the same method as 247505 and 247506 | partial: 247798 (r22) fixes the front views; r23 left the back view unchanged; r24 targets it by name |
+| 246442 Vivi turnaround (r8) | No lilac streaks | Bible: lilac/coral streaks | Kontext recolour, the same method as 247505 and 247506 | partial: 247798 (r22) fixes the front views; Kontext left the back view unchanged in r23 and r24, so r25 draws a fresh turnaround from 247799 |
 | 246033 / 247466 Vivi lock and comms | Gibberish shirt lettering | Line 6 | Kontext edit to a plain or patterned tee; keep the shipped files until a clean take is approved | approved: 247799 (r22), shipped as the comms portrait in kind_robots#3772; the menu lock 246033 stays the identity reference |
 | 247466 / 247655 Vivi comms and cut-in | Curvy build under-read | Line 5 | Reroll with explicit full hips and soft belly | approved: comms 247799 (r22) and cut-in 247844 (r23, from 247799), both shipped (kind_robots#3772, #3775) |
 | 247652 Solenne cut-in | Slimmed build | Line 5 | Reroll from 246032 with explicitly broad, muscular shoulders and arms | approved: 247803 (r22), shipped in kind_robots#3772 and previewed in the engine at 390/768/1440 px |
 | 246078, 246128–246130 group plates | Wrong cast, flattened bodies | Lines 2, 5 and 7 | Not canon; compose CAST-GROUP from the locks | rejected |
 | 247744 (r19 C03 take 2) | Gibberish screen text | Line 6 | Use 247742 provisionally; reroll | rejected; replaced by 247809 (r22, no painted text) |
 | 247801 / 247802 / 247808 (r22 Vivi cut-in and frustrated) | Shirt lettering again | Line 6 | Reroll from the clean-tee 247799 (r23) | rejected; replaced by 247844 and 247847 (r23) |
-| 247857 (r23 Vivi helmet) | Shirt lettering (made from the old lock) | Line 6 | Reroll from 247799 (r24) | rejected |
+| 247857 (r23 Vivi helmet) | Shirt lettering (made from the old lock) | Line 6 | Reroll from 247799 (r24) | rejected; replaced by 247862 (r24) |
 
 Approving a proposed fix needs the fixed asset to pass this contract and a reviewer sign-off in the manifest.
 Shipped files stay in place until their replacement is approved.
@@ -103,7 +103,7 @@ Shipped files stay in place until their replacement is approved.
 ## Open work (not ready)
 
 - **Missing for all four pilots:** a six-frame action key animation and a colour/material callout. Helmet-on
-  portraits passed for Maribel 247854, Azure 247855 and Solenne 247856 (round 23); Vivi's is rerolled in round 24.
+  portraits passed for Maribel 247854, Azure 247855 and Solenne 247856 (round 23) and Vivi 247862 (round 24).
 - The frustrated expression: round 22 passed Maribel 247805, Azure 247806 and Solenne 247807, and round 23 passed
   Vivi 247847. The cabinet draws one portrait per speaker today, so these are
   inventory until it shows expressions.
