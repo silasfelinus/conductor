@@ -191,6 +191,9 @@ module.exports = {
       env: {
         KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
         KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || '',
+        // Reuse the running ComfyUI's input directory: no second worker,
+        // API token, or daemon is required for VACE motion pilots.
+        KR_VACE_INPUT_DIR: process.env.KR_VACE_INPUT_DIR || `${COMFY_DIR}/input`,
         KR_BASE_URL: 'https://kindrobots.org',
         // Fast enough to feel immediate without changing the relay's pull-only model.
         // Windows picks stdout's encoding from the console codepage (cp1252)

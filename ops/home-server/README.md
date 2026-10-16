@@ -242,6 +242,37 @@ nothing to do — the config is already persistent.
 
 ## The relay agent (kr-relay) — enable after t-010 deploys
 
+### Coat Dance VACE pilots use the same kr-relay process
+
+`kr-relay` (pm2 `relay_media_agent.py`) claims Coat Dance `video-restyle-vace`
+ArtJobs through the normal `/api/art/queue/claim` pull loop. It is **not**
+a separate service. The relay's one-slot queue serializes motion-control work
+with existing image, audio, and video jobs.
+
+On each capability refresh, it checks the actual ComfyUI `/object_info` for
+native video nodes and `wan2.1_vace_1.3B_fp16.safetensors`, the WAN VAE and
+UMT5 encoder, plus FFmpeg and the local ComfyUI input folder. The new claim
+field `supportsVideoRestyle: true` is sent **only** if all requirements are
+ready. If they are absent, the pilot stays PENDING without burning attempts,
+and the kr-relay log explains which dependency is missing. A standard relay
+cannot claim it.
+
+The existing PM2 ecosystem derives `KR_VACE_INPUT_DIR` from `COMFY_DIR`
+so no new token or sidecar worker needs installing. The relay downloads the
+privately stored original source via a claim-authorized URL, executes its native
+65-frame Comfy VACE windows, splices the sample with FFmpeg, preserves the
+source audio, and sends progress/result back to Kind Robots. Failed GPU jobs
+are reported; source bytes remain untouched.
+
+**Operational caveat:** changes to `conductor` GitHub do not automatically
+prove that the Windows pm2 process has reloaded the new files. Verify the
+actual relay build, Comfy inventory, and host log after normal agent
+deployment. We have not installed models or restarted the Windows process
+from a cloud-only GitHub session. Do not mark the pilot rendered until its
+private MP4 is playable.
+
+
+
 `relay_agent.py` closes the autonomous loop: it polls the kind_robots ArtJob
 queue outward (claim → generate on localhost → upload via
 `/api/art/save-generated` → complete). Pull model, so nothing dials into your
