@@ -17808,3 +17808,15 @@ records:
     make that reachable without demo immortality), record what render() actually strokes each frame, and assert
     the drawn cue against every volley; mutate the window and the post-crossing delay to show the test bites,
     and render at phone width because a pulsing alpha can dip below readable.
+- date: '2026-10-16'
+  project: rainbow-bullet-hell-space-princess
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Stage eligibility edge cases through play instead of state edits - a seat that rams craft until its last
+    hit lands in the target lane leaves a wreck exactly where the check needs it, and the cabinet's own
+    setPlayers benches a seat mid-run; then observe the outcome through what render() draws, mutate the
+    eligibility rule to prove the test bites, and keep avoid-paths from crossing the lane they avoid.
