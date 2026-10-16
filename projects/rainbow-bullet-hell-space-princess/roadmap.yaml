@@ -468,7 +468,7 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Verify Nemi rescue and missed-beacon outcomes through actual eligible pilot inputs."
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: [t-004]
@@ -482,6 +482,10 @@ tasks:
       to avoid overlapping implementation and preserve authored timing/private
       ADMIN placement. t-015/t-018 cover cabinet inputs and t-019 boss warnings,
       so this narrow rescue-consumer scope does not duplicate them.
+    owner: worker
+    claimed_by: 2026-10-16T150500Z-rainbow-t021-nemi-p8w3
+    claimed_at: '2026-10-16T15:09:09Z'
+    updated: '2026-10-16T15:09:09Z'
   - id: t-022
     milestone: m4
     title: "Kontext pass: recolour off-model frames, compose cutscenes and group art, and build layout-guided stage planes"
