@@ -1,0 +1,252 @@
+# Rainbow Space Princess art round 22 (t-022 with the t-016 CAST-QA reconciliation table, 2026-10-16 PT). Fixes the
+# CAST-QA.md flags: Azure's turnaround coat back to cyan (246432), lilac streaks on Vivi's turnaround (246442), a
+# clean tee for Vivi's menu ID (246033, gibberish lettering), cut-ins that keep Vivi's curves and Solenne's muscle,
+# plus the missing frustrated comms expression for all four pilots. Cutscene redos from round 19: C03 without the
+# word that painted text, C09 control handoff from Maribel's cockpit (246427) and C14 liberation from the C02 fleet
+# plate (247740), since takes from the title card 247508 kept its composition. Shipped files stay until a take passes
+# CAST-QA.md. Submit/refresh with scripts/enqueue_art_requests.py. Private.
+round: 22
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+lanes:
+- key: kontext
+  label: Flux Kontext dev (fp8), CAST-QA reconciliation and cutscene redos
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: r22-azure-turnaround-cyan-1
+  title: Azure turnaround, cyan coat (CAST-QA reconciliation)
+  ticket: A-CAST-QA
+  size: 1344x768
+  seed: 502001
+  source_image_id: 246432
+  prompt_prose: Recolour her long olive green coat to powder cyan with white seams in every pose. Keep her face,
+    braid, undercut, skin, tall body, poses and everything else exactly the same.
+  jobs:
+    kontext: 39671
+- key: r22-azure-turnaround-cyan-2
+  title: Azure turnaround, cyan coat (CAST-QA reconciliation)
+  ticket: A-CAST-QA
+  size: 1344x768
+  seed: 502002
+  source_image_id: 246432
+  prompt_prose: Recolour her long olive green coat to powder cyan with white seams in every pose. Keep her face,
+    braid, undercut, skin, tall body, poses and everything else exactly the same.
+  jobs:
+    kontext: 39672
+- key: r22-vivi-turnaround-streaks-1
+  title: Vivi turnaround, lilac streaks (CAST-QA reconciliation)
+  ticket: A-CAST-QA
+  size: 1344x768
+  seed: 502003
+  source_image_id: 246442
+  prompt_prose: Add bold lilac and coral streaks through her dark hair in every pose and keep the shaved side clearly
+    visible. Keep her face, curvy body, outfit and poses exactly the same.
+  jobs:
+    kontext: 39673
+- key: r22-vivi-turnaround-streaks-2
+  title: Vivi turnaround, lilac streaks (CAST-QA reconciliation)
+  ticket: A-CAST-QA
+  size: 1344x768
+  seed: 502004
+  source_image_id: 246442
+  prompt_prose: Add bold lilac and coral streaks through her dark hair in every pose and keep the shaved side clearly
+    visible. Keep her face, curvy body, outfit and poses exactly the same.
+  jobs:
+    kontext: 39674
+- key: r22-vivi-lock-plain-tee-1
+  title: Vivi menu portrait, clean tee (CAST-QA reconciliation)
+  ticket: A-CAST-QA
+  size: 832x1216
+  seed: 502005
+  source_image_id: 246033
+  prompt_prose: Replace the lettering on her dark T-shirt with a single simple lilac comet shape. Keep her face,
+    hair, curvy body, jacket, keytar, pose and background exactly the same.
+  jobs:
+    kontext: 39675
+- key: r22-vivi-lock-plain-tee-2
+  title: Vivi menu portrait, clean tee (CAST-QA reconciliation)
+  ticket: A-CAST-QA
+  size: 832x1216
+  seed: 502006
+  source_image_id: 246033
+  prompt_prose: Replace the lettering on her dark T-shirt with a single simple lilac comet shape. Keep her face,
+    hair, curvy body, jacket, keytar, pose and background exactly the same.
+  jobs:
+    kontext: 39676
+- key: r22-vivi-cutin-curvy-1
+  title: Vivi super cut-in, build kept (CAST-QA reconciliation)
+  ticket: A-CUTIN
+  size: 1216x832
+  seed: 502007
+  source_image_id: 246033
+  prompt_prose: Show the same curvy woman with full round hips, a soft belly and full arms, the shaved side, dark
+    hair with lilac streaks and her lilac jacket, in a dramatic action pose for her special attack, leaning toward
+    the viewer with one hand thrust forward as a parade of tiny rainbow comets bursts from her palm, hair whipping,
+    fierce joyful grin, framed from the waist up on a plain deep violet background with bold radiating speed lines.
+    Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39677
+- key: r22-vivi-cutin-curvy-2
+  title: Vivi super cut-in, build kept (CAST-QA reconciliation)
+  ticket: A-CUTIN
+  size: 1216x832
+  seed: 502008
+  source_image_id: 246033
+  prompt_prose: Show the same curvy woman with full round hips, a soft belly and full arms, the shaved side, dark
+    hair with lilac streaks and her lilac jacket, in a dramatic action pose for her special attack, leaning toward
+    the viewer with one hand thrust forward as a parade of tiny rainbow comets bursts from her palm, hair whipping,
+    fierce joyful grin, framed from the waist up on a plain deep violet background with bold radiating speed lines.
+    Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39678
+- key: r22-solenne-cutin-muscle-1
+  title: Solenne super cut-in, build kept (CAST-QA reconciliation)
+  ticket: A-CUTIN
+  size: 1216x832
+  seed: 502009
+  source_image_id: 246032
+  prompt_prose: Show the same broad, heavily muscular woman with very dark skin, big powerful shoulders and thick
+    strong arms, twists and her butter-yellow and gold flight suit, in a dramatic action pose for her special attack,
+    leaning toward the viewer with one hand thrust forward as a wide golden ring of protective light bursts from
+    her palm, fierce joyful grin, framed from the waist up on a plain deep indigo background with bold radiating
+    speed lines. Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated
+    series.
+  jobs:
+    kontext: 39679
+- key: r22-solenne-cutin-muscle-2
+  title: Solenne super cut-in, build kept (CAST-QA reconciliation)
+  ticket: A-CUTIN
+  size: 1216x832
+  seed: 502010
+  source_image_id: 246032
+  prompt_prose: Show the same broad, heavily muscular woman with very dark skin, big powerful shoulders and thick
+    strong arms, twists and her butter-yellow and gold flight suit, in a dramatic action pose for her special attack,
+    leaning toward the viewer with one hand thrust forward as a wide golden ring of protective light bursts from
+    her palm, fierce joyful grin, framed from the waist up on a plain deep indigo background with bold radiating
+    speed lines. Keep the same flat-colour western cartoon art style with clean bold outlines, like a modern animated
+    series.
+  jobs:
+    kontext: 39680
+- key: r22-comms-maribel-frustrated
+  title: Maribel comms portrait, frustrated
+  ticket: A-COMMS
+  size: 1024x1024
+  seed: 502011
+  source_image_id: 246030
+  prompt_prose: Make this a head-and-shoulders comms portrait of the same short freckled woman with the cropped
+    copper hair, the same face, skin and rose-pink flight jacket. She is frustrated, jaw set and brows pulled down
+    in exasperation. Frame her from the chest up, centred and facing the viewer, on a plain dark navy background
+    with a faint cyan hologram glow at the edges. Keep the same flat-colour western cartoon art style with clean
+    bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39681
+- key: r22-comms-azure-frustrated
+  title: Azure comms portrait, frustrated
+  ticket: A-COMMS
+  size: 1024x1024
+  seed: 502012
+  source_image_id: 246031
+  prompt_prose: Make this a head-and-shoulders comms portrait of the same tall woman with the long black braid and
+    side undercut, the same face, skin and powder-cyan flight coat. She is frustrated, jaw set and brows pulled
+    down in exasperation. Frame her from the chest up, centred and facing the viewer, on a plain dark navy background
+    with a faint cyan hologram glow at the edges. Keep the same flat-colour western cartoon art style with clean
+    bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39682
+- key: r22-comms-solenne-frustrated
+  title: Solenne comms portrait, frustrated
+  ticket: A-COMMS
+  size: 1024x1024
+  seed: 502013
+  source_image_id: 246032
+  prompt_prose: Make this a head-and-shoulders comms portrait of the same powerfully muscular woman with very dark
+    skin and twists, the same face and butter-yellow and gold flight suit. She is frustrated, jaw set and brows
+    pulled down in exasperation. Frame her from the chest up, centred and facing the viewer, on a plain dark navy
+    background with a faint cyan hologram glow at the edges. Keep the same flat-colour western cartoon art style
+    with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39683
+- key: r22-comms-vivi-frustrated
+  title: Vivi comms portrait, frustrated
+  ticket: A-COMMS
+  size: 1024x1024
+  seed: 502014
+  source_image_id: 246033
+  prompt_prose: Make this a head-and-shoulders comms portrait of the same curvy woman with the shaved side and dark
+    hair with purple streaks, the same face, skin and lilac jacket. She is frustrated, jaw set and brows pulled
+    down in exasperation. Frame her from the chest up, centred and facing the viewer, on a plain dark navy background
+    with a faint cyan hologram glow at the edges. Keep the same flat-colour western cartoon art style with clean
+    bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39684
+- key: r22-c03-alarm-1
+  title: C03 mirror-glass alarm (reroll without painted text)
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 502015
+  source_image_id: 247473
+  prompt_prose: Show the same worried pearl-glass liaison standing before a huge cracked mirror-glass screen pulsing
+    with jagged red light in a dim control room, wide cinematic shot. Keep the same flat-colour western cartoon
+    art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39685
+- key: r22-c03-alarm-2
+  title: C03 mirror-glass alarm (reroll without painted text)
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 502016
+  source_image_id: 247473
+  prompt_prose: Show the same worried pearl-glass liaison standing before a huge cracked mirror-glass screen pulsing
+    with jagged red light in a dim control room, wide cinematic shot. Keep the same flat-colour western cartoon
+    art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39686
+- key: r22-c09-handoff-1
+  title: C09 player control handoff
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 502017
+  source_image_id: 246427
+  prompt_prose: Show this same pilot gripping the flight controls as her cockpit lights flare to life around her
+    and the canopy opens onto a pink cloud sea ahead, determined grin, wide cinematic shot. Keep the same flat-colour
+    western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39687
+- key: r22-c09-handoff-2
+  title: C09 player control handoff
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 502018
+  source_image_id: 246427
+  prompt_prose: Show this same pilot gripping the flight controls as her cockpit lights flare to life around her
+    and the canopy opens onto a pink cloud sea ahead, determined grin, wide cinematic shot. Keep the same flat-colour
+    western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39688
+- key: r22-c14-liberation-1
+  title: C14 liberation
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 502019
+  source_image_id: 247740
+  prompt_prose: Show these same sea creatures freed and leaping joyfully through the glowing ocean around a pearl
+    palace at dawn, while four small starships circle overhead, joyful wide cinematic ending shot. Keep the same
+    flat-colour western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39689
+- key: r22-c14-liberation-2
+  title: C14 liberation
+  ticket: A-CINEMA
+  size: 1344x768
+  seed: 502020
+  source_image_id: 247740
+  prompt_prose: Show these same sea creatures freed and leaping joyfully through the glowing ocean around a pearl
+    palace at dawn, while four small starships circle overhead, joyful wide cinematic ending shot. Keep the same
+    flat-colour western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39690
