@@ -2255,3 +2255,35 @@ pitches:
           - kind_robots CI green (17 checks); merged to main (squash dd28883)
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+  - id: glowworm-grotto
+    title: Glowworm Grotto
+    status: candidate
+    priority: 44
+    surprise: |
+      Seventy glowworm threads under a cave ceiling pulse in a travelling wave of light.
+    passive_loop: |
+      The pulse wave sweeps the grotto and loops exactly every 60 seconds with no interaction needed.
+    optional_interaction: |
+      Hovering brightens nearby worms; a rate-limited click flashes the grotto.
+    technique: |
+      One canvas, worm threads and pulse phase as pure functions of time, capped DPR, ResizeObserver sizing.
+    reduced_motion: |
+      Holds a single static frame with no pulse, hover or flash.
+    performance_risk: |
+      Low: seventy small thread draws per frame.
+    novelty: |
+      First cave-lit bioluminescent ceiling in the catalog.
+    acceptance:
+      - the pulse wave travels and loops without interaction
+      - hovering brightens nearby worms
+      - clicking flashes at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/glowworm-grotto.vue
+        pull_request: silasfelinus/kind_robots#3741
+        released_at: '2026-10-16T12:00:00Z'
+        verification:
+          - kind_robots PR #3741 merged to main 2026-10-16T11:50:04Z
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
