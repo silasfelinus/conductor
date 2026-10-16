@@ -17832,3 +17832,14 @@ records:
     the stores - but set each component's __scopeId (compileScript does not) and add the site's border-box reset,
     or the fixture fails on layout the real site never has. Driving the real cabinet surfaced a product gap
     (no gamepad pause mid-run) that engine-only tests could not.
+- date: '2026-10-16'
+  project: rainbow-bullet-hell-space-princess
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Extract a browser fixture into a shared helper before a second test needs it, and measure input latency
+    inside the page (dispatch, then sample the engine on animation frames) - polling from the test runner added two
+    frames of round-trip noise that would have made a 1-frame response look like a flaky 3.
