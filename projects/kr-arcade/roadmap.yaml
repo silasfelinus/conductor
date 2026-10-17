@@ -1159,7 +1159,7 @@ tasks:
   - id: t-067
     milestone: m8
     title: "Cable Crawler depth slice 4: The CPU Core, the BIOS and the endings"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-066
@@ -1177,16 +1177,22 @@ tasks:
       for t-067: the secret BIOS component (3 green-screen mazes, text-mode self-rewriting
       walls, Boot Loader true boss, unlocked by all golden bytes), the true ending, and
       medals/medal boards (No Bites, Big Surge, Battery Saver).
+
+      PART 2 SHIPPED 2026-10-17 (kind_robots#3792, squash 63f53db, CI green): secret BIOS
+      component (3 green-screen mazes, Boot Loader boss with 3 checksum sockets and line-by-
+      line wall rewrites, opened by all 30 golden bytes), true ending, and No Bites / Big
+      Surge / Battery Saver maze medals saved with the run. Test:
+      utils/scripts/verifyCabinetCableCrawlerBios.test.ts.
     owner: worker
     claimed_by: 01KCLPDxKZ6T41CgfXQEoXZk
     claimed_at: '2026-10-15T10:47:03Z'
-    updated: '2026-10-15T11:14:50Z'
-    implementation_pr: 'silasfelinus/kind_robots#3712'
+    updated: '2026-10-17T04:03:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#3792'
 
   - id: t-068
     milestone: m8
     title: "Cable Crawler depth slice 5: Multiplayer and the extra modes"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-067
