@@ -326,7 +326,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Add balanced 4-ship loadouts, upgrade matrix and replay incentives"
-    status: claimed
+    status: done
     depends_on: [t-005, t-007]
     owner: worker
     passes: 0
@@ -346,9 +346,21 @@ tasks:
       leaderboard stays fair. Remaining: ship loadouts and weapon
       families, the upgrade matrix, medals and no-hit goals, and
       save/continue across sessions.
+
+      Done 2026-10-17 PT. Difficulty (Cadet/Pilot/Ace) #3796; focused weapon families per ship
+      (Rose Needle, piercing Prism Thread, converging Halo Link, wall-glancing Comet Arc),
+      gold/silver/bronze Act medals, a 7-rung mastery ladder (First Light, Gold Wing, The End,
+      Guardian Breaker, No One Left Behind, Every Ending, secret Ace) and Act-start saves with
+      a Flight Log continue/new menu in #3798; U12 Recovery Cache (the lost power level waits
+      4 s for its pilot) in #3803; the pilot and difficulty select Silas asked for in his
+      first playtest follows in the playtest PR series. Every default ship flies the whole
+      campaign in the demo verifiers. Upgrade catalog still open for later slices: U03 Tide
+      Tracker, U05 Echo Charge, U07 Repair Pearl, U09 Rescue Beacon, U10 Mirror Lens, U11
+      Score Coral.
     claimed_by: 2026-10-17T0515Z-rainbow-t010-difficulty-d7q3
     claimed_at: '2026-10-17T05:57:25Z'
-    updated: '2026-10-17T05:57:25Z'
+    updated: '2026-10-17T09:47:06Z'
+    implementation_pr: 'silasfelinus/kind_robots#3798'
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
