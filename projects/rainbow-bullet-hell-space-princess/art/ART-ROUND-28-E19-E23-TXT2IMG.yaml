@@ -2,6 +2,11 @@
 # from scratch: Kontext from the round-3 and round-12 sources kept turning them into sharks and fish (rounds 26-27),
 # so txt2img with the round-21 E12 skate method: shark, fish and teeth negated, magenta background for the keyer.
 # Submit/refresh with scripts/enqueue_art_requests.py. Private.
+# Review 2026-10-17 PT: 6/6 done; the house checkpoint ignored the magenta background (teal, pink and pale cyan
+# instead), which the corner-sampling keyer handles. Picks: E19 247959 (a dark blue manta carrier seen from
+# above, turned 235 degrees to face left) and E23 247963 (a crystal-lens squid, turned so its tentacles trail);
+# 247961/247962 read as fish and 247958/247960 as thin darts. Shipped as enemies/brood.webp and squid.webp in
+# the kind_robots Act VIII PR (RAINBOW_ACT_SIX/SEVEN_ENEMY_SPRITES).
 round: 28
 project_slug: rainbow-bullet-hell-space-princess
 designer: Rainbow Space Princess art bay
@@ -40,6 +45,10 @@ subjects:
     centered, full shot, simple background, flat magenta background
   jobs:
     house: 39819
+  art:
+    house:
+      status: DONE
+      art_image_id: 247958
 - key: r28-e19-manta-broodship-2
   title: E19 Manta Broodship enemy craft
   ticket: A-ENEMY-19
@@ -59,6 +68,10 @@ subjects:
     game asset, single object, centered, full shot, simple background, flat magenta background
   jobs:
     house: 39820
+  art:
+    house:
+      status: DONE
+      art_image_id: 247959
 - key: r28-e19-manta-broodship-3
   title: E19 Manta Broodship enemy craft
   ticket: A-ENEMY-19
@@ -78,6 +91,10 @@ subjects:
     full shot, simple background, flat magenta background
   jobs:
     house: 39821
+  art:
+    house:
+      status: DONE
+      art_image_id: 247960
 - key: r28-e23-crystal-squid-1
   title: E23 Crystal Squid enemy craft
   ticket: A-ENEMY-23
@@ -97,6 +114,10 @@ subjects:
     object, centered, full shot, simple background, flat magenta background
   jobs:
     house: 39822
+  art:
+    house:
+      status: DONE
+      art_image_id: 247961
 - key: r28-e23-crystal-squid-2
   title: E23 Crystal Squid enemy craft
   ticket: A-ENEMY-23
@@ -116,6 +137,10 @@ subjects:
     game asset, single object, centered, full shot, simple background, flat magenta background
   jobs:
     house: 39823
+  art:
+    house:
+      status: DONE
+      art_image_id: 247962
 - key: r28-e23-crystal-squid-3
   title: E23 Crystal Squid enemy craft
   ticket: A-ENEMY-23
@@ -135,3 +160,7 @@ subjects:
     asset, single object, centered, full shot, simple background, flat magenta background
   jobs:
     house: 39824
+  art:
+    house:
+      status: DONE
+      art_image_id: 247963
