@@ -1,0 +1,38 @@
+# Rainbow Space Princess art round 31a (t-009, t-022, 2026-10-17 PT). The round-30 captive whale 247968 with its
+# collar ring and chain removed, so the engine can draw the collar (the only part that takes damage) over a clean
+# hull at the hitbox. Submit/refresh with scripts/enqueue_art_requests.py. Private.
+round: 31
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+lanes:
+- key: kontext
+  label: Flux Kontext dev (fp8), captive hull clean-up
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: r31-captive-whale-clean-1
+  title: Captive whale hull without its collar (Act VIII captive)
+  ticket: A-ENEMY-25
+  size: 1216x832
+  seed: 511001
+  source_image_id: 247968
+  prompt_prose: Remove the pink ring and its chain completely, leaving only this same pale whale ship, facing left,
+    the whole whale centred on the same flat solid magenta background, as a crisp game sprite. Keep the same flat-colour
+    western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39965
+- key: r31-captive-whale-clean-2
+  title: Captive whale hull without its collar (Act VIII captive)
+  ticket: A-ENEMY-25
+  size: 1216x832
+  seed: 511002
+  source_image_id: 247968
+  prompt_prose: Remove the pink ring and its chain completely, leaving only this same pale whale ship, facing left,
+    the whole whale centred on the same flat solid magenta background, as a crisp game sprite. Keep the same flat-colour
+    western cartoon art style with clean bold outlines, like a modern animated series.
+  jobs:
+    kontext: 39966
