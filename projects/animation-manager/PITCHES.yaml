@@ -2287,3 +2287,35 @@ pitches:
           - kind_robots PR #3741 merged to main 2026-10-16T11:50:04Z
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+  - id: dune-wind-ripples
+    title: Dune Wind Ripples
+    status: candidate
+    priority: 45
+    surprise: |
+      Layered desert dunes creep under a low sun while wind-blown grains skim the crests.
+    passive_loop: |
+      The dunes creep and the sun arcs, looping exactly every 60 seconds with no interaction needed.
+    optional_interaction: |
+      Hovering lifts grains near the pointer; a rate-limited click sends a strong gust.
+    technique: |
+      One canvas, ridge heights and grain positions as pure functions of time, capped DPR, ResizeObserver sizing.
+    reduced_motion: |
+      Holds a single static frame with no creep, hover or gust.
+    performance_risk: |
+      Low: six ridge paths and ninety grain rects per frame.
+    novelty: |
+      First desert dune landscape in the catalog.
+    acceptance:
+      - the dunes creep and loop without interaction
+      - hovering lifts nearby grains
+      - clicking sends at most one gust per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/dune-wind-ripples.vue
+        pull_request: silasfelinus/kind_robots#3797
+        released_at: "2026-10-17T08:00:00Z"
+        verification:
+          - kind_robots PR #3797 merged to main (squash 9f24c72), 18/18 checks green
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
