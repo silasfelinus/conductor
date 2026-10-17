@@ -88,7 +88,7 @@ by Kontext from the approved locks instead (the t-022 pass), and then checked ag
 | Asset | Conflict | Reason | Proposed fix | Status |
 | --- | --- | --- | --- | --- |
 | 246432 Azure turnaround (r8) | Olive-green coat | Breaks the cyan fixed link | Kontext recolour to powder cyan, the same method as 247504 | approved: 247795 (r22) |
-| 246442 Vivi turnaround (r8) | No lilac streaks | Bible: lilac/coral streaks | Kontext recolour, the same method as 247505 and 247506 | partial: 247798 (r22) fixes the front views; Kontext left the back view unchanged in r23 and r24, so r25 draws a fresh turnaround from 247799 |
+| 246442 Vivi turnaround (r8) | No lilac streaks | Bible: lilac/coral streaks | Kontext recolour, the same method as 247505 and 247506 | approved: 247887 (r25, a fresh turnaround from the clean-tee 247799 with front, three-quarter, side and back views); 247798 (r22) stays as the front-view reference |
 | 246033 / 247466 Vivi lock and comms | Gibberish shirt lettering | Line 6 | Kontext edit to a plain or patterned tee; keep the shipped files until a clean take is approved | approved: 247799 (r22), shipped as the comms portrait in kind_robots#3772; the menu lock 246033 stays the identity reference |
 | 247466 / 247655 Vivi comms and cut-in | Curvy build under-read | Line 5 | Reroll with explicit full hips and soft belly | approved: comms 247799 (r22) and cut-in 247844 (r23, from 247799), both shipped (kind_robots#3772, #3775) |
 | 247652 Solenne cut-in | Slimmed build | Line 5 | Reroll from 246032 with explicitly broad, muscular shoulders and arms | approved: 247803 (r22), shipped in kind_robots#3772 and previewed in the engine at 390/768/1440 px |
