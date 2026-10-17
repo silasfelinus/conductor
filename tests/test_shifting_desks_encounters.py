@@ -42,9 +42,9 @@ def test_every_committed_pack_is_valid(path):
 
 def test_orientation_pack_shape(pack):
     assert len(pack["locations"]) == 3
-    assert all(len(loc["encounter_ids"]) == 4 for loc in pack["locations"])
+    assert all(len(loc["encounter_ids"]) == 8 for loc in pack["locations"])
     polarity = [e["polarity"] for e in pack["encounters"]]
-    assert {p: polarity.count(p) for p in set(polarity)} == {"good": 4, "bad": 4, "mixed": 4}
+    assert {p: polarity.count(p) for p in set(polarity)} == {"good": 8, "bad": 8, "mixed": 8}
     assert len(pack["boss"]["choices"]) >= 3
 
 
@@ -55,9 +55,9 @@ def test_records_pack_shape():
     assert [loc["location_id"] for loc in records["locations"]] == [
         "pneumatic-tube-exchange", "sub-archive", "window-9",
     ]
-    assert all(len(loc["encounter_ids"]) == 4 for loc in records["locations"])
+    assert all(len(loc["encounter_ids"]) == 8 for loc in records["locations"])
     polarity = [e["polarity"] for e in records["encounters"]]
-    assert {p: polarity.count(p) for p in set(polarity)} == {"good": 4, "bad": 4, "mixed": 4}
+    assert {p: polarity.count(p) for p in set(polarity)} == {"good": 8, "bad": 8, "mixed": 8}
     lead = [e for e in records["encounters"] if vp.LEAD_TAGS & set(e["tags"])]
     assert len(lead) >= 9
     assert 4 <= len(records["boss"]["choices"]) <= 7
@@ -371,9 +371,9 @@ def test_toy_division_pack_shape():
     assert toys["department"]["id"] == "toy-division"
     assert toys["department"]["order"] == 3
     assert [loc["location_id"] for loc in toys["locations"]] == ["concept-lab", "focus-group-room", "proving-grounds"]
-    assert all(len(loc["encounter_ids"]) == 4 for loc in toys["locations"])
+    assert all(len(loc["encounter_ids"]) == 8 for loc in toys["locations"])
     polarity = [e["polarity"] for e in toys["encounters"]]
-    assert {p: polarity.count(p) for p in set(polarity)} == {"good": 4, "bad": 4, "mixed": 4}
+    assert {p: polarity.count(p) for p in set(polarity)} == {"good": 8, "bad": 8, "mixed": 8}
     assert toys["boss"]["id"] == "snuggle-sentinels-launch-party"
     assert toys["boss"]["department_outcomes"][-1]["id"] == "back-to-the-drawing-board"
 
