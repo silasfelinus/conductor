@@ -326,7 +326,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Add balanced 4-ship loadouts, upgrade matrix and replay incentives"
-    status: claimed
+    status: done
     depends_on: [t-005, t-007]
     owner: worker
     passes: 0
@@ -346,9 +346,21 @@ tasks:
       leaderboard stays fair. Remaining: ship loadouts and weapon
       families, the upgrade matrix, medals and no-hit goals, and
       save/continue across sessions.
+
+      Done 2026-10-17 PT. Difficulty (Cadet/Pilot/Ace) #3796; focused weapon families per ship
+      (Rose Needle, piercing Prism Thread, converging Halo Link, wall-glancing Comet Arc),
+      gold/silver/bronze Act medals, a 7-rung mastery ladder (First Light, Gold Wing, The End,
+      Guardian Breaker, No One Left Behind, Every Ending, secret Ace) and Act-start saves with
+      a Flight Log continue/new menu in #3798; U12 Recovery Cache (the lost power level waits
+      4 s for its pilot) in #3803; the pilot and difficulty select Silas asked for in his
+      first playtest follows in the playtest PR series. Every default ship flies the whole
+      campaign in the demo verifiers. Upgrade catalog still open for later slices: U03 Tide
+      Tracker, U05 Echo Charge, U07 Repair Pearl, U09 Rescue Beacon, U10 Mirror Lens, U11
+      Score Coral.
     claimed_by: 2026-10-17T0515Z-rainbow-t010-difficulty-d7q3
     claimed_at: '2026-10-17T05:57:25Z'
-    updated: '2026-10-17T05:57:25Z'
+    updated: '2026-10-17T09:47:06Z'
+    implementation_pr: 'silasfelinus/kind_robots#3798'
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
@@ -363,9 +375,18 @@ tasks:
       tells, particles, lens/bloom budget and cinematic explosions. Set
       projectile outlines and luminance contrast independent of backgrounds;
       performance budgets, colorblind-safe and reduced-motion modes.
+
+      Progress 2026-10-17 PT: explosions as sparks within a 160-spark budget (bosses and
+      guardians burst bigger with a shockwave), calm motion (the arcade's still-camera choice,
+      which follows reduced motion: no full-screen flashes or shockwaves, fewer sparks,
+      scenery at 30% drift) with a cabinet Motion switch that applies mid-game, and a dark
+      halo under every solid hostile pellet merged in kind_robots#3802. After Silas's first
+      Act I playtest: hit flash on damaged craft, craft shockwaves, pickup collect bursts and
+      bobbing pickups, ship banking (#3805). Open: painted scenery planes per stage, sprite
+      rigs, lens/bloom.
     claimed_by: 2026-10-17T0630Z-rainbow-t-011-k8m2
     claimed_at: '2026-10-17T08:08:56Z'
-    updated: '2026-10-17T08:08:56Z'
+    updated: '2026-10-17T09:47:21Z'
   - id: t-012
     milestone: m4
     title: "Produce opening, between-stage dialogue, endings, sound and score"
@@ -393,9 +414,18 @@ tasks:
       distinct victory/failure and route endings, skippable credits,
       voice-optional subtitle treatment, original cleared sound rights,
       layered music and shot/hit/cue mixing. No copyrighted music/sample reuse.
+
+      Progress 2026-10-17 PT: an original layered chiptune score (each Act's key, mode and
+      lead; drums for a guardian, drums and an arpeggio for a boss; ending and failure loops),
+      Lilt's failure ending when the CONTINUE? countdown runs out, and A to skip the credits
+      merged in kind_robots#3803. After Silas's first playtest (a solo Act I felt silent):
+      Lilt calls out every Act I section with a pilot reply (#3806), and a pilot select
+      renames the crew in Lilt's lines to the pilots flown. Open: the 15 composition banter
+      tracks with a 4-bit pilot mask, between-stage dialogue for Acts II-VIII at the same
+      density, voice-optional subtitle treatment, cinematic ending boards.
     claimed_by: 2026-10-17T0630Z-rainbow-t-012-k8m2
     claimed_at: '2026-10-17T08:08:58Z'
-    updated: '2026-10-17T08:08:58Z'
+    updated: '2026-10-17T09:47:24Z'
   - id: t-013
     milestone: m5
     title: "Deterministic combat fairness, multiplayer soak and campaign QA"
@@ -726,3 +756,21 @@ tasks:
     claimed_by: 2026-10-15T063000Z-rainbow-kontext-r9-m4q8
     claimed_at: '2026-10-15T06:30:51Z'
     updated: '2026-10-15T06:30:51Z'
+  - id: t-023
+    milestone: m4
+    title: "Recut Acts II-VIII to the playtest pacing: shorter, denser, obstacles, repeat fire, callouts"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: [t-009]
+    note: >-
+      Silas's first Act I playtest, 2026-10-17 PT: "First level to mini boss was too easy and too long ...
+      It grew monotonous. We need obstacles, in stage elements to be maneuvered around, and enemies that take
+      multiple hits. There must be more variation in combat." Act I was recut in kind_robots#3806 (eight
+      dense sections, guardian at 1:25, boss at 3:30, clean solo 4.7 min; repeat fire, divers, coral spires,
+      tougher craft, Lilt callouts every section) and every guardian beaten early now hands its Act on
+      (#3805). This supersedes the WORLD-BIBLE 10-15 minute per-Act target for the remaining Acts: give each
+      of Acts II-VIII the same treatment one Act per PR, about 4-6 minutes clean solo each, with at least
+      one terrain or obstacle feature of its own, craft that keep firing, a section callout from Lilt for
+      every section (solo lines included), and its per-Act verifier's pacing window tightened to match.
+    owner: null
