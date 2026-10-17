@@ -4,9 +4,9 @@
     {
       "slug": "adventures-lantern-moths-ending",
       "title": "Adventures: the Lantern Moths secret ending",
-      "target": "kr-adventures",
+      "target": "zuzu-gamebook",
       "kind": "gamebook branch",
-      "summary": "The fixture gamebook's attic now offers a flag-gated choice, Play the tune you wound, that opens a fourth secret ending, The Lantern Moths, with validator tests.",
+      "summary": "(Gamebook engine fixture; kr-adventures is retired so it is filed under the active gamebook project.) The fixture gamebook's attic now offers a flag-gated choice, Play the tune you wound, that opens a fourth secret ending, The Lantern Moths, with validator tests.",
       "status": "shipped",
       "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3800",
       "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/39018799626",
@@ -52,6 +52,41 @@
       "merge_sha": "b44ef3c3050fa79c2e2940962a7299fb696085d0",
       "checks": "passed",
       "preview_url": "https://kindrobots.org/play/brick-bloom"
+    },
+    {
+      "slug": "shifting-lands-peddlers-wagon",
+      "title": "Shifting Lands: the Peddler's Wagon card",
+      "target": "zuzu-shifting-lands",
+      "kind": "shifting lands card",
+      "summary": "A fourth Homestead card, The Peddler's Wagon, joins the deck with its own reward and penalty; the visited counter now follows the deck size.",
+      "status": "shipped",
+      "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3808",
+      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/39022382352",
+      "merge_sha": "55c421fc66249ae22224a9e7a30d66d8ec0fabf1",
+      "checks": "passed",
+      "verification": "All 21 check runs on head d41854b completed success (Contract shards 1-4, TypeScript, Prettier, layout-contract); squash merge confirmed. Merged is not deployed.",
+      "art": {
+        "status": "not-required",
+        "note": "Reuses the existing wagon.webp scene."
+      },
+      "preview_url": "https://kindrobots.org/play/zuzu-shifting-lands"
+    },
+    {
+      "slug": "emperor-of-dust-day-three-incidents",
+      "title": "Emperor of Dust: Day 3 incidents and briefings",
+      "target": "emperor-of-dust",
+      "kind": "encounter data",
+      "summary": "Three Day 3 incidents (The Bell That Rang Alone, The Vanishing Toll, Lanterns in the Fen), three briefings with one false, and a Komodo hint, with a contract test.",
+      "status": "shipped",
+      "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3809",
+      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/39022451505",
+      "merge_sha": "44befafa3cea4ca8835dbaeec66a2abec64c7c6e",
+      "checks": "passed",
+      "verification": "All 18 check runs on the PR head completed success, including Contract verifiers and the emperor dispatch contract; squash merge confirmed. Data-only, not wired into the admin UI, so no playable preview.",
+      "art": {
+        "status": "not-required",
+        "note": "No new assets."
+      }
     }
   ]
 }
