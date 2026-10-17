@@ -378,7 +378,7 @@ tasks:
 - id: t-015
   milestone: m3
   title: 'Restyle studio: expanded look library with art-queue preview images'
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -391,7 +391,12 @@ tasks:
     flung wide, warm hanging lights, a blurred crowd. Admin actions: Generate / Regenerate preview, Generate
     missing (n). Failed previews requeue in place. Merged at 1f0522ca after 24/24 green checks, live on
     kindrobots.org (GET /api/video-restyle/previews 200). All 33 previews were queued through the new route
-    as ArtJobs 39767-39799. Remaining: confirm the renders land on the cards, and get Silas's visual pass.
-  updated: '2026-10-17T00:16:29Z'
+    as ArtJobs 39767-39799, and all 33 rendered DONE with no failures (verified by downloading each final
+    image). After a visual check, kind_robots#3786 (merged 32fe9980) tightened three preview clauses: the felt,
+    clay and puppet looks had drawn a photoreal dancer. Those were regenerated as ArtJobs 39816-39818: clay and
+    felt now render the dancer in the material; puppet stage is only partly fixed (the crowd are marionettes,
+    but the dancer still reads as human). Open for Silas: a visual pass on the 33 cards, plus Regenerate or edit
+    any look he dislikes.
+  updated: '2026-10-17T02:18:48Z'
 goal: Develop Coat Dance into its intended polished creative work, with the roadmap’s authored concept, assets, and 
   delivery package complete.
