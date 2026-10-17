@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-10-17T03:26:14Z
+Generated: 2026-10-17T04:06:24Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1278**
-- Outcomes: blocked: 19, cancelled: 2, done: 1257
+- Closed tasks recorded: **1279**
+- Outcomes: blocked: 19, cancelled: 2, done: 1258
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -60,7 +60,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | music-video | 2 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
-| rainbow-bullet-hell-space-princess | 11 | 100% |
+| rainbow-bullet-hell-space-princess | 12 | 100% |
 | rainbow-butterflies | 21 | 100% |
 | ruler-hooked | 29 | 100% |
 | save-the-plumber | 1 | 100% |
@@ -84,7 +84,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 18 | 50% |
-| software | 1260 | 99% |
+| software | 1261 | 99% |
 
 ## Failure categories
 
@@ -106,6 +106,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-10-17 `rainbow-bullet-hell-space-princess/t-009` — A finale is not one more Act. Its choice and escape happen after the boss falls, at times the Act clock cannot checkpoint, so give them their own counters and make a continue restart the escape rather than rewind the clock. Keep the crew safe while it chooses, and stop the invulnerability blink there so every pilot can see where it is flying. Have the attract demo make each choice by crew size, so one verifier plays the whole campaign to THE END for every ending. Keep YAML front matter free of bare colons in prose.
 - 2026-10-17 `rainbow-bullet-hell-space-princess/t-008` — An Act is a director module plus a boss module plus one engine block, and every new Act repeats the same seams (currentAct, checkpoints, resume, snapshot, render chains), so script those edits with anchored replacements and let a full demo run per crew size prove them. Make the attract demo pick routes on purpose (odd crews one way, even the other) so the verifier flies every branch deterministically, and re-check a stacked PR after its base squash-merges - merging main with --ours is only safe when the base commit is the only change to the conflicted files.
 - 2026-10-16 `rainbow-bullet-hell-space-princess/t-007` — Read a pacing target as written before measuring it - the bible said 10-15 minutes per Act excluding retries, and an early measure of both Acts together with continues looked done when it was not. Measure the clean run with a deathless pilot, keep ordinary-pilot times as a ratchet, and grow length through new encounters (guardians) as well as more waves. Every inserted section moves timeline-pinned tests; anchor them to section names, not ticks.
 - 2026-10-16 `rainbow-bullet-hell-space-princess/t-005` — Co-op acceptance needs a negative proof per rule - stack pilots on one spot and assert damage never exceeds the hazards that arrived, then mutate the rule (a ram hits every overlapping pilot) to show the test bites. For simultaneous supers, assert the order-dependent tick (59 or 60) rather than a single value, and measure load on the densest authored stretch with every frame drawn, not on an empty field.
@@ -115,7 +116,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-10-16 `rainbow-bullet-hell-space-princess/t-019` — Prove a telegraph through the consumer, not the helper - drive ordinary-input crews to the boss (continues make that reachable without demo immortality), record what render() actually strokes each frame, and assert the drawn cue against every volley; mutate the window and the post-crossing delay to show the test bites, and render at phone width because a pulsing alpha can dip below readable.
 - 2026-10-13 `kr-arcade/t-065` — Separate purchase ceilings from earned gameplay and bounded save domains; exercise actual score awards, checkpoint serialization and public Continue at boundary counts, including loss and re-earn, and verify exact-head completed CI before closure.
 - 2026-10-14 `rainbow-bullet-hell-space-princess/t-020` — Bake off checkpoints on the hardest real subjects before a flood, and keep palette words out of a lane-wide suffix because they recolour every outfit; txt2img plateaus on multi-element scenes, so stage planes and cutscenes need reference-driven Kontext or layout-guided passes rather than more rerolls.
-- 2026-10-13 `kr-arcade/t-057` — Initialize earned profile history before the first checkpoint write independently of Continue eligibility. Test actual New Season input and step-zero reload separately; validate unknown serialized data with the game reader before inspecting fields and verify completed checks for the repaired exact head.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-17T03:26:14Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-17T04:06:24Z_
