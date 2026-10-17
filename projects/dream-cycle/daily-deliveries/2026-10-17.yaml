@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-17",
+  "entries": [
+    {
+      "slug": "adventures-lantern-moths-ending",
+      "title": "Adventures: the Lantern Moths secret ending",
+      "target": "kr-adventures",
+      "kind": "gamebook branch",
+      "summary": "The fixture gamebook's attic now offers a flag-gated choice, Play the tune you wound, that opens a fourth secret ending, The Lantern Moths, with validator tests.",
+      "status": "shipped",
+      "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3800",
+      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/39018799626",
+      "merge_sha": "d668f7d6aa2acf3e59a63251bb92f635d6cd6ccc",
+      "checks": "passed",
+      "verification": "All 17 check runs on head 8a8d5ad completed success (Contract shards 1-4, TypeScript, Prettier, layout-contract); squash merge confirmed. Fixture and test only; merged is not deployed.",
+      "art": {"status": "not-required", "note": "References a placeholder lullaby.webp with a prompt only; nothing queued."}
+    },
+    {
+      "slug": "emperor-of-dust-day-two-incidents",
+      "title": "Emperor of Dust: Day 2 incidents and briefings",
+      "target": "emperor-of-dust",
+      "kind": "encounter data",
+      "summary": "Three Day 2 incidents (Drowning Grain Cart, A Bargain in Rain, The Mole Ledger), three briefings with one false, and a Komodo hint, with a dispatch and deadline contract test.",
+      "status": "shipped",
+      "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3799",
+      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/39019065572",
+      "merge_sha": "b3a1d6e3780c6a3fa9379e093fe79aac936d3305",
+      "checks": "passed",
+      "verification": "Contract verifiers and all shards completed success on head 502c4a7; also removed a stale workflow trigger path that failed the first run. Data-only, not yet wired into the admin UI, so no playable preview.",
+      "art": {"status": "not-required", "note": "No new assets."}
+    },
+    {
+      "slug": "brick-bloom-pollen-mites",
+      "title": "Brick Bloom: pollen mites in the Seedling House",
+      "target": "kr-arcade",
+      "kind": "arcade enemy",
+      "summary": "A line of three pollen mites sways down in Seedling House walls 2-9; ball contact pops them and clearing the line pays a petal chain.",
+      "status": "in-progress",
+      "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3801",
+      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/39019181511",
+      "next_step": "The TypeScript check failed on head 008a2c6; read the typescript-diagnostics artifact, fix the type error, push, then merge once green.",
+      "verification": "Not verified: TypeScript failed; other checks passed or were running at last look.",
+      "art": {"status": "not-required", "note": "Procedural sprite, no new assets."}
+    }
+  ]
+}
