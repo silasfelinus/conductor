@@ -13,7 +13,10 @@
       "merge_sha": "d668f7d6aa2acf3e59a63251bb92f635d6cd6ccc",
       "checks": "passed",
       "verification": "All 17 check runs on head 8a8d5ad completed success (Contract shards 1-4, TypeScript, Prettier, layout-contract); squash merge confirmed. Fixture and test only; merged is not deployed.",
-      "art": {"status": "not-required", "note": "References a placeholder lullaby.webp with a prompt only; nothing queued."}
+      "art": {
+        "status": "not-required",
+        "note": "References a placeholder lullaby.webp with a prompt only; nothing queued."
+      }
     },
     {
       "slug": "emperor-of-dust-day-two-incidents",
@@ -27,7 +30,10 @@
       "merge_sha": "b3a1d6e3780c6a3fa9379e093fe79aac936d3305",
       "checks": "passed",
       "verification": "Contract verifiers and all shards completed success on head 502c4a7; also removed a stale workflow trigger path that failed the first run. Data-only, not yet wired into the admin UI, so no playable preview.",
-      "art": {"status": "not-required", "note": "No new assets."}
+      "art": {
+        "status": "not-required",
+        "note": "No new assets."
+      }
     },
     {
       "slug": "brick-bloom-pollen-mites",
@@ -35,12 +41,17 @@
       "target": "kr-arcade",
       "kind": "arcade enemy",
       "summary": "A line of three pollen mites sways down in Seedling House walls 2-9; ball contact pops them and clearing the line pays a petal chain.",
-      "status": "in-progress",
+      "status": "shipped",
       "pull_request": "https://github.com/silasfelinus/kind_robots/pull/3801",
-      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/39019181511",
-      "next_step": "The TypeScript check failed on head 008a2c6; read the typescript-diagnostics artifact, fix the type error, push, then merge once green.",
-      "verification": "Not verified: TypeScript failed; other checks passed or were running at last look.",
-      "art": {"status": "not-required", "note": "Procedural sprite, no new assets."}
+      "checks_url": "https://github.com/silasfelinus/kind_robots/actions/runs/39019893828",
+      "verification": "First head failed TypeScript (TS2339 in the new test); fixed and re-run, all 18 check runs green on the final head, squash merge confirmed merged 09:12Z. Merged is not deployed.",
+      "art": {
+        "status": "not-required",
+        "note": "Procedural sprite, no new assets."
+      },
+      "merge_sha": "b44ef3c3050fa79c2e2940962a7299fb696085d0",
+      "checks": "passed",
+      "preview_url": "https://kindrobots.org/play/brick-bloom"
     }
   ]
 }
