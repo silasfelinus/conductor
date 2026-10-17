@@ -500,6 +500,12 @@ def claim_job():
                 callable(globals().get("supports_video_restyle"))
                 and supports_video_restyle()
             ),
+            # Coat Dance Grab bag jobs carry one look per motion window. Only
+            # a relay whose VACE worker honours that schedule may claim them.
+            "supportsVideoRestyleGrabBag": bool(
+                callable(globals().get("supports_video_restyle"))
+                and supports_video_restyle()
+            ),
             "supportsCompletionProof": True,
             # claim.post.ts defaults this on (only an explicit false means FIFO);
             # sent anyway so model-affinity scheduling never depends on that default.

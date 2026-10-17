@@ -67,6 +67,7 @@ def test_claim_advertises_strict_completion_proof(monkeypatch):
         "supportsInputImages": True,
         "supportsAudio": True,
         "supportsVideoRestyle": False,
+        "supportsVideoRestyleGrabBag": False,
         "supportsCompletionProof": True,
         "smartQueue": True,
     }

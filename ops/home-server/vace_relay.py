@@ -227,7 +227,14 @@ def process(job):
         "id": restyle_id, "userId": user_id, "sourceFile": "source.mp4",
         "status": "PILOT_QUEUED", "sourceBytes": source.stat().st_size,
         "quality": video.get("quality") if video.get("quality") in ("720p", "1080p") else "1080p",
-        "renderRecipe": {"stylePrompt": payload.get("promptString") or "Hand-painted Japanese cel animation"},
+        "renderRecipe": {
+            "stylePrompt": payload.get("promptString") or "Hand-painted Japanese cel animation",
+            # Grab bag: Kind Robots' persisted per-window look, passed through
+            # untouched so the worker never re-derives or reshuffles it.
+            **({"styleSchedule": video["styleSchedule"],
+                "stylePrompts": video.get("stylePrompts") or {}}
+               if video.get("styleSchedule") else {}),
+        },
         "pilot": {
             "startSec": float(video.get("startSec")),
             "durationSec": float(video.get("durationSec")),

@@ -400,5 +400,25 @@ tasks:
     but the dancer still reads as human). Open for Silas: a visual pass on the 33 cards, plus Regenerate or edit
     any look he dislikes.
   updated: '2026-10-17T02:18:48Z'
+- id: t-016
+  milestone: m3
+  title: 'Restyle studio: Grab bag look that rotates styles every motion window'
+  status: review
+  owner: worker
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/kind_robots#3820'
+  note: >-
+    Silas, 2026-10-17: add a Grab bag option that changes look every segment on purpose and loops through the
+    chosen looks, so he can see a version that swaps style deliberately. Kind Robots PR #3820 adds the Grab bag
+    card (4-tile preview collage), lets the gallery pick 2-12 looks in rotation order, and offers "Loop in listed
+    order" and "Shuffle once, then lock". It saves variantStyleIds and variantMode, and a source-time-anchored
+    styleSchedule on each pilot and full pass, so re-renders, retries and the full film never reshuffle. Grab bag
+    ArtJobs are claimable only by a relay that declares supportsVideoRestyleGrabBag. This conductor PR updates
+    ops/home-server (vace_relay.py, relay_agent.py, coat_dance_vace_worker.py): per-window prompts, no chained
+    continuity reference across a look change, and cache signatures unchanged for single-look jobs. Ferngrotto must
+    git pull and restart kr-relay before a Grab bag pilot will be claimed. Open for Silas: queue a Grab bag pilot
+    and judge the swaps.
+  updated: '2026-10-17T23:30:00Z'
 goal: Develop Coat Dance into its intended polished creative work, with the roadmap’s authored concept, assets, and 
   delivery package complete.

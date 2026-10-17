@@ -363,3 +363,134 @@ def test_full_film_has_contiguous_94_windows_and_original_audio_map():
     assert len(spans) == 94
     pieces = worker.accepted_frames(total)
     assert sum(high - low for _, low, high in pieces) == total
+
+
+def _grab_bag_job(tmp_path, schedule, prompts):
+    import json
+    restyle_id = "c927a107-ec44-4002-a862-03b7b65d3abe"
+    job_dir = tmp_path / "1" / restyle_id
+    job_dir.mkdir(parents=True)
+    (job_dir / "source.mp4").write_bytes(b"source-media")
+    (job_dir / "reference.png").write_bytes(b"single-look-master")
+    input_dir = tmp_path / "comfy-input"
+    input_dir.mkdir()
+    state = {
+        "id": restyle_id, "userId": 1, "sourceFile": "source.mp4",
+        "status": "PILOT_QUEUED", "quality": "720p",
+        "renderRecipe": {"stylePrompt": "Grab bag rotation",
+                         "styleSchedule": schedule, "stylePrompts": prompts},
+        "pilot": {"startSec": 0, "durationSec": 8, "totalSegments": 3,
+                  "completedSegments": 0},
+    }
+    job_path = job_dir / "job.json"
+    job_path.write_text(json.dumps(state))
+    return job_path, input_dir
+
+
+def _fake_comfy(monkeypatch, worker):
+    monkeypatch.setattr(worker, "probe", lambda src: {
+        "duration": 10, "width": 720, "height": 480, "audio": True})
+    monkeypatch.setattr(worker, "check_comfy", lambda base: True)
+    monkeypatch.setattr(worker, "extract_window",
+                        lambda src, start, dest: dest.write_bytes(b"motion"))
+    monkeypatch.setattr(worker, "extract_reference_frame",
+                        lambda *a: pytest.fail("Grab bag chained a previous look across the cut"))
+    monkeypatch.setattr(worker, "recover_saved_window", lambda *a: False)
+    graphs = []
+    def execute(base, graph, result, timeout):
+        graphs.append(graph)
+        result.write_bytes(b"generated-video" * 100)
+    monkeypatch.setattr(worker, "execute_comfy", execute)
+    monkeypatch.setattr(worker, "assemble", lambda job_dir, *a: (
+        job_dir / "pilot.mp4").write_bytes(b"rendered-pilot" * 100))
+    return graphs
+
+
+def test_grab_bag_renders_each_window_in_its_saved_look(monkeypatch, tmp_path):
+    import json
+    worker = setup_modules(monkeypatch).vace
+    schedule = [{"index": 0, "styleId": "noir"},
+                {"index": 1, "styleId": "paper-cut"},
+                {"index": 2, "styleId": "noir"}]
+    prompts = {"noir": "Expressionist animated noir", "paper-cut": "Layered paper cut-out"}
+    job_path, input_dir = _grab_bag_job(tmp_path, schedule, prompts)
+    graphs = _fake_comfy(monkeypatch, worker)
+    args = SimpleNamespace(comfy_url="http://localhost:8188", comfy_input=input_dir,
+                           timeout_seconds=100, dry_run=False)
+    worker.render(job_path, args)
+    texts = [graph["pos"]["inputs"]["text"] for graph in graphs]
+    assert [text.split(".")[0] for text in texts] == [
+        "Expressionist animated noir", "Layered paper cut-out", "Expressionist animated noir"]
+    assert all("changes on purpose" in text for text in texts)
+    assert all("drawn animation style across every shot" not in text for text in texts)
+    assert all("reference" not in graph for graph in graphs)
+    assert [g["sample"]["inputs"]["seed"] for g in graphs] == [worker.CONTINUITY_SEED] * 3
+    final = json.loads(job_path.read_text())
+    assert final["status"] == "REVIEW"
+    assert final["stage"] != "Pilot render failed"
+
+
+def test_grab_bag_schedule_mismatch_fails_instead_of_guessing(monkeypatch, tmp_path):
+    import json
+    worker = setup_modules(monkeypatch).vace
+    job_path, input_dir = _grab_bag_job(
+        tmp_path, [{"index": 0, "styleId": "noir"}, {"index": 1, "styleId": "noir"}],
+        {"noir": "Expressionist animated noir"})
+    graphs = _fake_comfy(monkeypatch, worker)
+    args = SimpleNamespace(comfy_url="http://localhost:8188", comfy_input=input_dir,
+                           timeout_seconds=100, dry_run=False)
+    with pytest.raises(ValueError, match="2 windows; this pass renders 3"):
+        worker.render(job_path, args)
+    assert graphs == []
+    assert json.loads(job_path.read_text())["status"] == "PILOT_FAILED"
+
+
+def test_single_look_cache_signature_is_unchanged_by_grab_bag_support(monkeypatch, tmp_path):
+    worker = setup_modules(monkeypatch).vace
+    source = tmp_path / "source.mp4"
+    source.write_bytes(b"media")
+    job = {"renderRecipe": {"stylePrompt": "Painted animation"}, "quality": "720p"}
+    pilot = {"startSec": 0, "durationSec": 8}
+    reference = tmp_path / "reference.png"
+    plain = worker.render_cache_key(source, job, pilot, reference)
+    assert worker.render_cache_key(source, job, pilot, reference, None) == plain
+    assert worker.render_cache_key(source, job, pilot, reference, ["a", "b"]) != plain
+    assert worker.window_style_prompts(job, 3) is None
+
+
+def test_relay_passes_grab_bag_schedule_and_declares_support(monkeypatch, tmp_path):
+    import json
+    vace = setup_modules(monkeypatch)
+    monkeypatch.setattr(vace, "WORK_ROOT", tmp_path)
+    monkeypatch.setattr(vace, "capable", lambda: True)
+    monkeypatch.setattr(vace, "_source", lambda rid, aid, dest: dest.write_bytes(b"source"))
+    monkeypatch.setattr(vace, "_report", lambda *a, **k: None)
+    monkeypatch.setattr(vace, "_submit_video", lambda *a: None)
+    seen = []
+    def fake_render(job_path, args):
+        state = json.loads(job_path.read_text())
+        seen.append(state["renderRecipe"])
+        (job_path.parent / "pilot.mp4").write_bytes(b"\x00\x00\x00\x18ftypmp42animated")
+        state["status"] = "REVIEW"
+        job_path.write_text(json.dumps(state))
+    monkeypatch.setattr(vace.vace, "render", fake_render)
+    schedule = [{"index": i, "styleId": ("noir", "paper-cut")[i % 2]} for i in range(7)]
+    prompts = {"noir": "Noir", "paper-cut": "Paper"}
+    vace.process({"id": 7, "userId": 1, "payload": {
+        "media": "video-restyle-vace", "promptString": "Grab bag rotation",
+        "videoRestyle": {"id": "c927a107-ec44-4002-a862-03b7b65d3abe",
+                         "phase": "pilot", "startSec": 158, "durationSec": 24,
+                         "totalSegments": 7, "styleSchedule": schedule,
+                         "stylePrompts": prompts}}})
+    assert seen[0]["styleSchedule"] == schedule
+    assert seen[0]["stylePrompts"] == prompts
+
+    captured = []
+    monkeypatch.setattr(vace.relay, "http_json", lambda method, url, body, **kw: (
+        captured.append(body) or (200, {"success": True, "data": {"job": None}})))
+    monkeypatch.setattr(vace.relay, "supports_video_restyle", lambda: True, raising=False)
+    vace.relay.claim_job()
+    assert captured[-1]["supportsVideoRestyleGrabBag"] is True
+    monkeypatch.setattr(vace.relay, "supports_video_restyle", lambda: False)
+    vace.relay.claim_job()
+    assert captured[-1]["supportsVideoRestyleGrabBag"] is False

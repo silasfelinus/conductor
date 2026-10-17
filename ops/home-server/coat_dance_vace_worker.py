@@ -266,7 +266,57 @@ def extract_window(source, start_time, dest):
          "-pix_fmt", "yuv420p", str(dest)])
 
 
-def render_cache_key(source, job, pilot, reference):
+def window_style_prompts(job, window_count):
+    """Grab bag: the look Kind Robots saved for each motion window, or None.
+
+    The schedule is resolved and persisted server-side so pilots, retries and
+    the full film never reshuffle. A schedule that does not match this pass's
+    windows is a contract error, never something to wrap or guess around.
+    """
+    recipe = job.get("renderRecipe") or {}
+    schedule = recipe.get("styleSchedule")
+    if not schedule:
+        return None
+    prompts = recipe.get("stylePrompts") or {}
+    if len(schedule) != window_count:
+        raise ValueError(
+            f"Grab bag schedule has {len(schedule)} windows; this pass renders {window_count}."
+        )
+    resolved = []
+    for expected, entry in enumerate(schedule):
+        prompt = str(prompts.get(entry.get("styleId")) or "").strip()
+        if int(entry.get("index", -1)) != expected or not prompt:
+            raise ValueError(f"Grab bag window {expected} has no saved look.")
+        resolved.append(prompt)
+    return resolved
+
+
+def window_prompt(style_prompt, grab_bag):
+    if grab_bag:
+        return (
+            style_prompt +
+            ". Fixed wide stage camera and unchanged original performance. "
+            "One recognizable dancer, one black coat, one stable physical stage. "
+            "Treat the original Canny video as a precise motion and set guide. "
+            "Render this whole shot in this one look; the look changes on purpose "
+            "between shots, but keep the same coat silhouette, performer identity "
+            "and set architecture. "
+            "Do not introduce props, actors, costumes, objects or camera changes. "
+            "Preserve timing, posture and every original gesture."
+        )
+    return (
+        style_prompt +
+        ". Fixed wide stage camera and unchanged original performance. "
+        "One recognizable dancer, one black coat, one stable physical stage. "
+        "Treat the original Canny video as a precise motion and set guide. "
+        "Retain the same coat silhouette, performer identity, lighting, "
+        "set architecture and drawn animation style across every shot. "
+        "Do not introduce props, actors, costumes, objects or camera changes. "
+        "Preserve timing, posture and every original gesture."
+    )
+
+
+def render_cache_key(source, job, pilot, reference, styles=None):
     """Versioned cache identity: never reintroduce windows from another recipe."""
     source_sha = hashlib.sha256()
     with source.open("rb") as stream:
@@ -280,6 +330,10 @@ def render_cache_key(source, job, pilot, reference):
         "quality": job["quality"], "seed": CONTINUITY_SEED,
         "model": MODEL, "fps": FPS, "window": WINDOW, "step": STEP,
     }
+    if styles is not None:
+        # Added only for Grab bag so single-look signatures (and their saved
+        # windows from an in-flight film) stay byte-identical.
+        recipe["windowStyles"] = styles
     return hashlib.sha256(json.dumps(recipe, sort_keys=True).encode()).hexdigest()[:20]
 
 
@@ -342,7 +396,9 @@ def render(job_path, args):
     spans = windows(frame_count)
     if args.dry_run:
         print(json.dumps({"source": str(source), "verified": meta, "pilot": pilot,
-                          "windowCount": len(spans), "model": MODEL}, indent=2))
+                          "windowCount": len(spans), "model": MODEL,
+                          "grabBag": window_style_prompts(job, len(spans)) is not None},
+                         indent=2))
         return
     try:
         check_comfy(args.comfy_url)
@@ -368,7 +424,8 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
     try:
         update(job_path, job, status="PILOT_RUNNING", stage="Verifying and preparing motion guides")
         master_reference = job_dir / "reference.png"
-        signature = render_cache_key(source, job, pilot, master_reference)
+        styles = window_style_prompts(job, len(spans))
+        signature = render_cache_key(source, job, pilot, master_reference, styles)
         cache_dir = job_dir / "render-cache" / signature
         cache_dir.mkdir(parents=True, exist_ok=True)
         clips = []
@@ -382,18 +439,17 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
                 staged = args.comfy_input / input_name
                 if not staged.exists():
                     shutil.copyfile(guide, staged)
-                prompt = (
-                    job["renderRecipe"]["stylePrompt"] +
-                    ". Fixed wide stage camera and unchanged original performance. "
-                    "One recognizable dancer, one black coat, one stable physical stage. "
-                    "Treat the original Canny video as a precise motion and set guide. "
-                    "Retain the same coat silhouette, performer identity, lighting, "
-                    "set architecture and drawn animation style across every shot. "
-                    "Do not introduce props, actors, costumes, objects or camera changes. "
-                    "Preserve timing, posture and every original gesture."
+                prompt = window_prompt(
+                    styles[index] if styles else job["renderRecipe"]["stylePrompt"],
+                    styles is not None,
                 )
                 reference = master_reference if master_reference.is_file() else None
-                if index > 0:
+                if styles is not None:
+                    # Each Grab bag window is a different look. Chaining the
+                    # previous stylized frame would drag the old look across
+                    # the cut, so the Canny motion guide alone carries it.
+                    reference = None
+                elif index > 0:
                     # Align at frame 57, where the following source window starts,
                     # rather than at frame 64 (the end of the overlap).
                     reference = cache_dir / f"continuity_{index:03d}.png"
@@ -413,7 +469,8 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
             pilot["totalSegments"] = len(spans)
             update(job_path, job, pilot=pilot,
                    progress=round(100 * (index + 1) / (len(spans) + 1)),
-                   stage=f"Motion-conditioned window {index + 1}/{len(spans)} complete")
+                   stage=f"Motion-conditioned window {index + 1}/{len(spans)} complete"
+                         + (" (Grab bag)" if styles else ""))
         update(job_path, job, stage="Assembling sample and restoring source audio")
         assemble(job_dir, source, pilot, clips, frame_count, job["quality"])
         result = job_dir / "pilot.mp4"
