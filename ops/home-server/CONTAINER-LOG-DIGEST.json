@@ -1,105 +1,123 @@
 {
-  "generated_at": "2026-10-16T14:00:02.026750+00:00",
+  "generated_at": "2026-10-17T14:00:01.406868+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
-      "container": "sonarr",
-      "count": 22,
-      "fingerprint": "63711c394701",
-      "sample": "[Error] EventAggregator: HistoryService failed while processing [EpisodeGrabbedEvent]",
+      "container": "jellyfin",
+      "count": 14,
+      "fingerprint": "2a8268ca1053",
+      "sample": "Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 5: 'unable to delete/modify collation sequence due to active statements'.",
       "severity": "error",
-      "skeleton": "[error] eventaggregator: historyservice failed while processing [episodegrabbedevent]"
+      "skeleton": "microsoft.data.sqlite.sqliteexception (<hex>): sqlite error <num>: <str>."
     },
     {
       "baseline": null,
-      "container": "sonarr",
-      "count": 22,
-      "fingerprint": "752cf0a98af9",
-      "sample": "[Error] EventAggregator: DownloadHistoryService failed while processing [EpisodeGrabbedEvent]",
+      "container": "jellyfin",
+      "count": 7,
+      "fingerprint": "b97bb9391a6c",
+      "sample": "[05:55:45] [ERR] [97] Microsoft.EntityFrameworkCore.Database.Connection: An error occurred using the connection to database 'main' on server '/config/data/jellyfin.db'.",
       "severity": "error",
-      "skeleton": "[error] eventaggregator: downloadhistoryservice failed while processing [episodegrabbedevent]"
+      "skeleton": "[<ts>] [err] [<num>] microsoft.entityframeworkcore.database.connection: an error occurred using the connection to database <str> on server '<path>"
     },
     {
       "baseline": null,
-      "container": "sonarr",
-      "count": 2,
-      "fingerprint": "cf2fe05ea729",
-      "sample": "[Error] EventAggregator: PendingReleaseService failed while processing [EpisodeGrabbedEvent]",
+      "container": "jellyfin",
+      "count": 7,
+      "fingerprint": "e027c99d5bca",
+      "sample": "[05:55:45] [ERR] [97] Jellyfin.Api.Middleware.ExceptionMiddleware: Error processing request. URL GET <REDACTED-BLOB>.",
       "severity": "error",
-      "skeleton": "[error] eventaggregator: pendingreleaseservice failed while processing [episodegrabbedevent]"
+      "skeleton": "[<ts>] [err] [<num>] jellyfin.api.middleware.exceptionmiddleware: error processing request. url get <redacted-blob>."
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 5,
+      "fingerprint": "53d87643173a",
+      "sample": "[05:55:45] [ERR] [141] Microsoft.EntityFrameworkCore.Query: An exception occurred while iterating over the results of a query for context type 'Jellyfin.Database.Implementations.JellyfinDbContext'.",
+      "severity": "error",
+      "skeleton": "[<ts>] [err] [<num>] microsoft.entityframeworkcore.query: an exception occurred while iterating over the results of a query for context type <str>."
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 3,
+      "fingerprint": "a57f34b8b43f",
+      "sample": "Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 5: 'database is locked For more information on this error code see https://www.sqlite.org/rescode.html'.",
+      "severity": "error",
+      "skeleton": "microsoft.data.sqlite.sqliteexception (<hex>): sqlite error <num>: 'database is locked for more information on this error code see <url>"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "c166db62db4c",
-      "sample": "[2026-10-15 10:59:19.634] INFO: [SocketAuthority] Socket OoczCA0A9ti50VJqAAAy disconnected from client \"superkate\" after 120413ms (Reason: ping timeout)",
+      "fingerprint": "d81c19fb4685",
+      "sample": "[2026-10-16 08:28:48.495] INFO: [SocketAuthority] Socket vKx92i6hmwhSSKveAABG disconnected from client \"superkate\" after 95043ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket ooczca0a9ti50vjqaaay disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket vkx92i6hmwhsskveaabg disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "cc4ff678cef1",
-      "sample": "[2026-10-15 11:02:38.655] INFO: [SocketAuthority] Socket vRGJH-0hbtVz7tJMAAA0 disconnected from client \"superkate\" after 69980ms (Reason: ping timeout)",
+      "fingerprint": "e335532d1264",
+      "sample": "[2026-10-16 12:46:22.650] INFO: [SocketAuthority] Unauth socket TqUQNzXpz2zwgdjtAABI disconnected (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket vrgjh-0hbtvz7tjmaaa0 disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] unauth socket tquqnzxpz2zwgdjtaabi disconnected (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "63b18ed302e3",
-      "sample": "[2026-10-15 11:03:02.639] INFO: [SocketAuthority] Socket HnTH2vyJfb04w9grAAA2 disconnected from client \"superkate\" after 44908ms (Reason: ping timeout)",
+      "fingerprint": "ff16fefa2ce6",
+      "sample": "[2026-10-16 16:05:59.282] INFO: [SocketAuthority] Socket oEfouIHuWW6Dgzy2AABK disconnected from client \"superkate\" after 220962ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket hnth2vyjfb04w9graaa2 disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket oefouihuww6dgzy2aabk disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "0a2a5b80f30c",
-      "sample": "[2026-10-15 13:09:37.824] INFO: [SocketAuthority] Socket pepk2oKitrO-CdRQAAA4 disconnected from client \"superkate\" after 245404ms (Reason: ping timeout)",
+      "fingerprint": "5a607e90b879",
+      "sample": "[2026-10-16 16:09:50.684] INFO: [SocketAuthority] Socket lopMG6x-EPgSlX0bAABO disconnected from client \"superkate\" after 44984ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket pepk2okitro-cdrqaaa4 disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket lopmg6x-epgslx0baabo disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "ad0ba5e1a53c",
-      "sample": "[2026-10-15 17:16:08.198] INFO: [SocketAuthority] Socket kT9ynRIj43J35Y_OAAA6 disconnected from client \"superkate\" after 247034ms (Reason: ping timeout)",
+      "fingerprint": "a92fb9f02c7d",
+      "sample": "[2026-10-16 19:43:47.156] INFO: [SocketAuthority] Socket jCBESa55z9AW0K_bAABQ disconnected from client \"superkate\" after 221016ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket kt9ynrij43j35y_oaaa6 disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket jcbesa55z9aw0k_baabq disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "55d570ee218e",
-      "sample": "[2026-10-15 17:59:50.574] INFO: [SocketAuthority] Socket 4XXGP2WxBnLgqoTMAABA disconnected from client \"superkate\" after 195828ms (Reason: ping timeout)",
+      "fingerprint": "62134d137d09",
+      "sample": "[2026-10-16 20:34:27.093] INFO: [SocketAuthority] Socket Q_VsR9cLGmOhUZ5fAABS disconnected from client \"superkate\" after 120264ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 4xxgp2wxbnlgqotmaaba disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket q_vsr9clgmohuz5faabs disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "54e647d7da11",
-      "sample": "[2026-10-15 18:02:13.910] INFO: [SocketAuthority] Socket L7LEyVmPCxNxGwMoAABC disconnected from client \"superkate\" after 96268ms (Reason: ping timeout)",
+      "fingerprint": "590bbfc010fb",
+      "sample": "[2026-10-16 21:59:22.186] INFO: [SocketAuthority] Socket W1a-IGJGqOaVxohzAABU disconnected from client \"superkate\" after 220546ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket l7leyvmpcxnxgwmoaabc disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket w1a-igjgqoavxohzaabu disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "af27e5b901dd",
-      "sample": "[2026-10-15 19:27:59.355] INFO: [SocketAuthority] Socket EXdOS87Y1XyRFHHbAABE disconnected from client \"superkate\" after 296098ms (Reason: ping timeout)",
+      "fingerprint": "39e0ca8973c8",
+      "sample": "[2026-10-16 22:02:34.379] INFO: [SocketAuthority] Socket flL_agwrHXixTKGAAABW disconnected from client \"superkate\" after 95039ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket exdos87y1xyrfhhbaabe disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket fll_agwrhxixtkgaaabw disconnected from client <str> after <num> (reason: ping timeout)"
     }
   ],
   "quiet": [
@@ -111,24 +129,6 @@
       "sample": "WARN  2026-10-15T04:27:53.814 QObject: Cannot create children for a parent that is in a different thread.",
       "severity": "warn",
       "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
-    },
-    {
-      "baseline": 13.0,
-      "container": "KindRobots",
-      "count": 0,
-      "fingerprint": "3d84f1a8fd12",
-      "sample": "Operation rejected: {",
-      "severity": "other",
-      "skeleton": "operation rejected: {"
-    },
-    {
-      "baseline": 13.0,
-      "container": "KindRobots",
-      "count": 0,
-      "fingerprint": "bb9501289941",
-      "sample": "name: 'Error',",
-      "severity": "error",
-      "skeleton": "name: <str>,"
     },
     {
       "baseline": 12.0,
@@ -145,16 +145,16 @@
     "containers_scanned": 44,
     "containers_total": 44,
     "high_cardinality": [],
-    "lines_matched": 1129,
-    "lines_read": 140783,
-    "signatures_total": 118,
+    "lines_matched": 1908,
+    "lines_read": 137046,
+    "signatures_total": 109,
     "truncated": []
   },
   "spiking": [
     {
       "baseline": 0.0,
       "container": "sonarr",
-      "count": 47,
+      "count": 31,
       "fingerprint": "86dd8b493a0a",
       "sample": "[Error] TaskExtensions: Task Error",
       "severity": "error",
@@ -164,10 +164,19 @@
   "top": [
     {
       "baseline": null,
+      "container": "scoopspress",
+      "count": 700,
+      "fingerprint": "6497ddc377f6",
+      "sample": "[Fri Oct 16 07:14:26.094893 2026] [php:warn] [pid 1075:tid 1075] [client 66.132.172.204:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "severity": "warn",
+      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
+    },
+    {
+      "baseline": null,
       "container": "proxysql",
-      "count": 305,
+      "count": 441,
       "fingerprint": "a9cfc33818b3",
-      "sample": "2026-10-15 10:15:46 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:55804 , user 'kindrobot_migrate' , hostgroup 30 , connection 100969",
+      "sample": "2026-10-16 07:10:42 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:39630 , user 'kindrobot_migrate' , hostgroup 30 , connection 142271",
       "severity": "warn",
       "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
     },
@@ -176,14 +185,14 @@
       "container": "requests",
       "count": 114,
       "fingerprint": "b0b22d3dd961",
-      "sample": "2026-10-16T11:34:20.145Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 322438\",\"title\"",
+      "sample": "2026-10-17T11:34:07.262Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 280234\",\"title\"",
       "severity": "error",
       "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
     },
     {
       "baseline": null,
       "container": "radarr",
-      "count": 91,
+      "count": 88,
       "fingerprint": "53883f24d246",
       "sample": "[Error] DownloadMonitoringService: Couldn't process tracked download The Home 2025 1080p AMZN WEB-DL DDP5.1 Atmos x265-TBMovies",
       "severity": "error",
@@ -192,43 +201,52 @@
     {
       "baseline": null,
       "container": "netdata",
-      "count": 75,
+      "count": 76,
       "fingerprint": "2107195e439a",
-      "sample": "2026-10-16T01:31:14.744247Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
+      "sample": "2026-10-17T01:41:06.020907Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
       "severity": "error",
       "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 69,
+      "count": 67,
+      "fingerprint": "24756dae8afd",
+      "sample": "time=2026-10-16T18:41:15.847-07:00 comm=spawn-unnamed source=collector level=warning tid=3665127  msg=\"SPAWN SERVER: child with pid 3665128 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 53,
       "fingerprint": "8ef3774a1987",
-      "sample": "time=2026-10-15T18:53:28.304-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=2033013  msg=\"Cannot process /host/proc/2337257/cgroup (command 'mariadbd-safe-h')\"",
+      "sample": "time=2026-10-16T18:49:05.520-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=3662547  msg=\"Cannot process /host/proc/3767727/limits (command 'sed')\"",
       "severity": "error",
       "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 65,
-      "fingerprint": "24756dae8afd",
-      "sample": "time=2026-10-15T18:31:23.754-07:00 comm=spawn-unnamed source=collector level=warning tid=2035531  msg=\"SPAWN SERVER: child with pid 2035532 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
+      "count": 39,
+      "fingerprint": "29a758d0ae5d",
+      "sample": "time=2026-10-16T18:41:04.117-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=3662618 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
       "severity": "warn",
-      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
+      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
     },
     {
       "baseline": null,
       "container": "scoopspress",
-      "count": 55,
-      "fingerprint": "6497ddc377f6",
-      "sample": "[Thu Oct 15 08:49:29.148246 2026] [php:warn] [pid 1075:tid 1075] [client 217.113.194.135:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "count": 36,
+      "fingerprint": "4798ff1f70e0",
+      "sample": "[Fri Oct 16 11:14:31.906954 2026] [php:warn] [pid 1086:tid 1086] [client 114.119.139.123:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, r",
       "severity": "warn",
-      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
+      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>, referer: <url>"
     },
     {
       "baseline": null,
       "container": "sonarr",
-      "count": 47,
+      "count": 31,
       "fingerprint": "86dd8b493a0a",
       "sample": "[Error] TaskExtensions: Task Error",
       "severity": "error",
@@ -237,92 +255,83 @@
     {
       "baseline": null,
       "container": "netdata",
-      "count": 39,
-      "fingerprint": "29a758d0ae5d",
-      "sample": "time=2026-10-15T18:31:12.631-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=2033071 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 26,
+      "count": 28,
       "fingerprint": "b4a4f3c0319b",
-      "sample": "time=2026-10-15T18:31:12.584-07:00 comm=spawn-plugins source=collector level=warning tid=2031601  msg=\"SPAWN SERVER: child with pid 2033027 (request 7) exited with exit code 1: /bin/sh -c \\\"exec /usr/",
+      "sample": "time=2026-10-16T18:41:04.069-07:00 comm=spawn-plugins source=collector level=warning tid=3661278  msg=\"SPAWN SERVER: child with pid 3662588 (request 9) exited with exit code 1: /bin/sh -c \\\"exec /usr/",
       "severity": "warn",
       "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
-      "container": "sonarr",
-      "count": 22,
-      "fingerprint": "63711c394701",
-      "sample": "[Error] EventAggregator: HistoryService failed while processing [EpisodeGrabbedEvent]",
-      "severity": "error",
-      "skeleton": "[error] eventaggregator: historyservice failed while processing [episodegrabbedevent]"
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 22,
-      "fingerprint": "752cf0a98af9",
-      "sample": "[Error] EventAggregator: DownloadHistoryService failed while processing [EpisodeGrabbedEvent]",
-      "severity": "error",
-      "skeleton": "[error] eventaggregator: downloadhistoryservice failed while processing [episodegrabbedevent]"
-    },
-    {
-      "baseline": null,
       "container": "netdata",
-      "count": 13,
-      "fingerprint": "28346e8a5fd3",
-      "sample": "time=2026-10-15T19:43:57.847-07:00 comm=netdata source=health level=warning tid=2032990 thread=HEALTH <REDACTED-BLOB> node=4d4e03fa2097 instance=net_drops.shim-br0 context=net.drops code=0 alert_id=17",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.shim-br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=err"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 11,
+      "count": 14,
       "fingerprint": "435f030e9489",
-      "sample": "time=2026-10-15T20:27:57.663-07:00 comm=netdata source=health level=warning tid=2032990 thread=HEALTH <REDACTED-BLOB> node=4d4e03fa2097 instance=net_drops.br0 context=net.drops code=0 alert_id=1787278",
+      "sample": "time=2026-10-16T19:27:49.463-07:00 comm=netdata source=health level=warning tid=3662537 thread=HEALTH <REDACTED-BLOB> node=3ab2f0040411 instance=net_drops.br0 context=net.drops code=0 alert_id=1787278",
       "severity": "warn",
       "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=errors a"
     },
     {
       "baseline": null,
+      "container": "netdata",
+      "count": 14,
+      "fingerprint": "28346e8a5fd3",
+      "sample": "time=2026-10-16T19:27:49.465-07:00 comm=netdata source=health level=warning tid=3662537 thread=HEALTH <REDACTED-BLOB> node=3ab2f0040411 instance=net_drops.shim-br0 context=net.drops code=0 alert_id=17",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.shim-br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=err"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 14,
+      "fingerprint": "2a8268ca1053",
+      "sample": "Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 5: 'unable to delete/modify collation sequence due to active statements'.",
+      "severity": "error",
+      "skeleton": "microsoft.data.sqlite.sqliteexception (<hex>): sqlite error <num>: <str>."
+    },
+    {
+      "baseline": null,
       "container": "proxysql",
-      "count": 10,
+      "count": 12,
       "fingerprint": "9caf510b320a",
-      "sample": "2026-10-15 11:04:55 MySQL_Session.cpp:5667:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,101209): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_ke",
+      "sample": "2026-10-16 09:07:34 MySQL_Session.cpp:5667:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,145730): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_ke",
       "severity": "warn",
       "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [warning] error during query on (<num>,mariadb-kindrobots2,<num>,<num>): <num>, duplicate entry <str> for key <str>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "381cf7bc9913",
-      "sample": "time=2026-10-15T19:10:55.001-07:00 level=error msg=\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/info\\\": context deadline exceeded\" plugin=go.d collector=docker job=local config_source=\"stock/file re",
+      "container": "subtitles",
+      "count": 11,
+      "fingerprint": "1aa12506e86d",
+      "sample": "2026-10-16 22:54:04,200 - root                             (152e2320db30) :  ERROR (download:138) - BAZARR Error saving Subtitles file to disk for this file /pc/tv/anime/disastrous life of saiki k/s01",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str><url> context deadline exceeded<str>stock/file reader\""
+      "skeleton": "<ts> - root (<hex>) : error (download:<num>) - bazarr error saving subtitles file to disk for this file <path>"
     },
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 8,
-      "fingerprint": "8da141147da1",
-      "sample": "2026-10-15 07:11:02 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:38482 , user 'unknown' , hostgroup -1 , connection 0",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
+      "container": "hairpress",
+      "count": 10,
+      "fingerprint": "b32e674d9dd1",
+      "sample": "[Fri Oct 16 07:12:36.466338 2026] [autoindex:error] [pid 25:tid 25] [client 74.225.146.100:0] AH01276: Cannot serve directory /var/www/html/wp-includes/block-supports/: No matching DirectoryIndex (ind",
+      "severity": "error",
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
     },
     {
       "baseline": null,
       "container": "jellyfin",
-      "count": 6,
-      "fingerprint": "140f403e0c24",
-      "sample": "[01:22:12] [ERR] [146] Jellyfin.Api.Middleware.ExceptionMiddleware: Error processing request: Token is required. URL GET /socket.",
+      "count": 7,
+      "fingerprint": "b97bb9391a6c",
+      "sample": "[05:55:45] [ERR] [97] Microsoft.EntityFrameworkCore.Database.Connection: An error occurred using the connection to database 'main' on server '/config/data/jellyfin.db'.",
       "severity": "error",
-      "skeleton": "[<ts>] [err] [<num>] jellyfin.api.middleware.exceptionmiddleware: error processing request: token is required. url get /socket."
+      "skeleton": "[<ts>] [err] [<num>] microsoft.entityframeworkcore.database.connection: an error occurred using the connection to database <str> on server '<path>"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 7,
+      "fingerprint": "e027c99d5bca",
+      "sample": "[05:55:45] [ERR] [97] Jellyfin.Api.Middleware.ExceptionMiddleware: Error processing request. URL GET <REDACTED-BLOB>.",
+      "severity": "error",
+      "skeleton": "[<ts>] [err] [<num>] jellyfin.api.middleware.exceptionmiddleware: error processing request. url get <redacted-blob>."
     },
     {
       "baseline": null,
@@ -335,57 +344,48 @@
     },
     {
       "baseline": null,
+      "container": "netdata",
+      "count": 5,
+      "fingerprint": "381cf7bc9913",
+      "sample": "time=2026-10-16T20:10:57.010-07:00 level=error msg=\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/info\\\": context deadline exceeded\" plugin=go.d collector=docker job=local config_source=\"stock/file re",
+      "severity": "error",
+      "skeleton": "time=<ts> level=error msg=<str><url> context deadline exceeded<str>stock/file reader\""
+    },
+    {
+      "baseline": null,
       "container": "sonarr",
       "count": 5,
       "fingerprint": "54c436eb197b",
-      "sample": "[Warn] Newznab: Indexer Nzb.su (Prowlarr) rss sync didn't cover the period between 10/16/2026 02:12:26 and 10/16/2026 03:39:49 UTC. Search may be required.",
+      "sample": "[Warn] Newznab: Indexer Nzb.su (Prowlarr) rss sync didn't cover the period between 10/17/2026 03:17:17 and 10/17/2026 04:26:31 UTC. Search may be required.",
       "severity": "warn",
       "skeleton": "[warn] newznab: indexer nzb.su (prowlarr) rss sync didn't cover the period between <num>/<num>/<num> <ts> and <num>/<num>/<num> <ts> utc. search may be required."
     },
     {
       "baseline": null,
+      "container": "jellyfin",
+      "count": 5,
+      "fingerprint": "53d87643173a",
+      "sample": "[05:55:45] [ERR] [141] Microsoft.EntityFrameworkCore.Query: An exception occurred while iterating over the results of a query for context type 'Jellyfin.Database.Implementations.JellyfinDbContext'.",
+      "severity": "error",
+      "skeleton": "[<ts>] [err] [<num>] microsoft.entityframeworkcore.query: an exception occurred while iterating over the results of a query for context type <str>."
+    },
+    {
+      "baseline": null,
       "container": "netdata",
       "count": 4,
-      "fingerprint": "39a858d67d7c",
-      "sample": "time=2026-10-15T19:52:54.363-07:00 comm=apps.plugin source=collector level=error tid=2033013  msg=\"Cannot process /host/proc/3155144/limits (command 'mariadbd-safe')\"",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error tid=<num> msg=\"cannot process <path>"
+      "fingerprint": "5f57a703482e",
+      "sample": "time=2026-10-17T04:40:08.481-07:00 comm=apps.plugin source=collector level=warning tid=3662547  msg=\"pid 2874320 get_trashsizes states parent 2874273, but the later does not exist.\"",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=apps.plugin source=collector level=warning tid=<num> msg=<str>"
     },
     {
       "baseline": null,
       "container": "scoopspress",
       "count": 4,
-      "fingerprint": "4798ff1f70e0",
-      "sample": "[Thu Oct 15 09:24:17.970650 2026] [php:warn] [pid 1081:tid 1081] [client 114.119.153.91:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, re",
-      "severity": "warn",
-      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>, referer: <url>"
-    },
-    {
-      "baseline": null,
-      "container": "prowlarr",
-      "count": 4,
-      "fingerprint": "5dcec9bc3591",
-      "sample": "[Warn] AllowedHostsCheck: Allowed Hosts is not configured, requests for any hostname will be accepted. You can set this via settings or the config file",
-      "severity": "warn",
-      "skeleton": "[warn] allowedhostscheck: allowed hosts is not configured, requests for any hostname will be accepted. you can set this via settings or the config file"
-    },
-    {
-      "baseline": null,
-      "container": "prowlarr",
-      "count": 4,
-      "fingerprint": "b82b8e45dbb2",
-      "sample": "{\"status\": \"error\", \"message\": \"Error: Error solving the challenge. Timeout after 60.0 seconds.\", \"startTimestamp\": 1792102345173, \"endTimestamp\": 1792102409949, \"version\": \"3.5.2\"}",
+      "fingerprint": "b7cfe92bdfa7",
+      "sample": "[Fri Oct 16 07:36:54.490812 2026] [authz_core:error] [pid 2182:tid 2182] [client 157.245.105.107:0] AH01630: client denied by server configuration: /var/www/html/server-status",
       "severity": "error",
-      "skeleton": "{<str>: <str>, <str>: <str>, <str>: <hex>, <str>: <hex>, <str>: <str>}"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 3,
-      "fingerprint": "0bebe0045345",
-      "sample": "time=2026-10-15T18:31:13.439-07:00 comm=netdata source=collector level=error errno=\"2, No such file or directory\" tid=2033007 thread=P[proc] module=proc.plugin[/proc/pressure] msg=\"Cannot read pressur",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=netdata source=collector level=error errno=<str> tid=<num> thread=p[proc] module=proc.plugin[<path>"
+      "skeleton": "[<ts>] [authz_core:error] [pid <num>:tid <num>] [client <ip>] ah01630: client denied by server configuration: <path>"
     }
   ],
   "version": 1,
