@@ -242,7 +242,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Author branching stages 3–5 and three distinct bosses"
-    status: claimed
+    status: done
     depends_on: [t-007]
     owner: worker
     passes: 0
@@ -261,13 +261,23 @@ tasks:
       dialogue. Round-25 art (E13-E18, the Clawstrike guardian and B04/B05
       phases) is in #3781. Next are Act IV (S04 Rosefin Express: E13-E15,
       the courier escort and B04 Delphion) and then Act V.
+
+      Done 2026-10-17 PT. Acts III-V and their bosses are on kind_robots main. Act III (#3777,
+      #3779, #3780) has the salvage-vault versus safe-passage route, which sets
+      securedSalvage. Act IV (#3783) is the Rosefin Express: E13-E15, the courier escort
+      (rescuedCourier) and B04 Delphion, with the salvage dock as the intermission into it.
+      Act V (#3784) is the Blossom Wreckyard: E16-E18, a scrap field, the 40-second depot-or-
+      armory fork (freedDepot) and B05 Sawtooth Regent, ending on the memorial. The verifiers
+      fly every route; clean solo runs are 10.12, 10.19 and 11.09 min. Every boss telegraphs
+      all three phases.
     claimed_by: 2026-10-16T2300Z-rainbow-t008-acts3-5-r7k1
     claimed_at: '2026-10-16T23:04:08Z'
-    updated: '2026-10-16T23:04:08Z'
+    updated: '2026-10-17T01:43:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#3784'
   - id: t-009
     milestone: m3
     title: "Author stages 6–8, route convergence and final boss"
-    status: waiting
+    status: ready
     depends_on: [t-008]
     owner: null
     passes: 0
