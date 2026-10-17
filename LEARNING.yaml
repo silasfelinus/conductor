@@ -17868,3 +17868,17 @@ records:
     clean run with a deathless pilot, keep ordinary-pilot times as a ratchet, and grow length through new
     encounters (guardians) as well as more waves. Every inserted section moves timeline-pinned tests; anchor them
     to section names, not ticks.
+- date: '2026-10-17'
+  project: rainbow-bullet-hell-space-princess
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: An Act is a director module plus a boss module plus one engine block, and every new Act repeats the
+    same seams (currentAct, checkpoints, resume, snapshot, render chains), so script those edits with anchored
+    replacements and let a full demo run per crew size prove them. Make the attract demo pick routes on purpose
+    (odd crews one way, even the other) so the verifier flies every branch deterministically, and re-check a
+    stacked PR after its base squash-merges - merging main with --ours is only safe when the base commit is the
+    only change to the conflicted files.
