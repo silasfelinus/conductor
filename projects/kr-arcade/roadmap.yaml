@@ -1199,13 +1199,11 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: t-067
-    note: >-
-      CABINETS.md section 8, Cable Crawler (Nibbler riff), slice 5 of 5: Multiplayer and the extra modes. The
-      upgrade is "The Mainframe Odyssey". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's
-      section first; this slice's scope is item 5 under its '#### Slices', and 'Rules for every slice' at the
-      top applies. Code: kind_robots utils/arcade/games/ (registry slug cable-crawler). Silas, 2026-10-11: "I
-      need an assessment done of the other arcade games. I want the same level of quality improvements, they
-      should not just be thin veneers of the old games. But newer, better, even more awesome."
+    note: |-
+      CABINETS.md section 8, Cable Crawler (Nibbler riff), slice 5 of 5: Multiplayer and the extra modes. The upgrade is "The Mainframe Odyssey". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 5 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug cable-crawler). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      PART 1 SHIPPED 2026-10-18 (kind_robots#3844, squash 2701210, 18/18 checks green): mode select (selectScreen), Marathon (33-maze cycle, speed ramp, shrinking clock, nine-digit counter, Odyssey save untouched) and Maze Trials (time attack on cleared mazes, best times in the save). Test: utils/scripts/verifyCabinetCableCrawlerModes.test.ts. REMAINING for t-068: Tangle (2-4 cables, Team and Race through players frames, registry maxPlayers), then the registry blurb, howTo and games.yaml entry.
+    updated: '2026-10-18T14:03:35+00:00'
 
   - id: t-069
     milestone: m8
