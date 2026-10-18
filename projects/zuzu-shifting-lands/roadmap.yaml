@@ -595,59 +595,60 @@ tasks:
   - id: t-031
     milestone: m2
     title: "V6 deck engine: certain, gated and costed choices, moral ledger, 8-card pools, V6 save"
-    status: claimed
-    claimed_by: claude-session-01A1gxboeuGjcf6N5Aj7oq6e
-    claimed_at: '2026-10-18T10:30:00Z'
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-030]
     source: silas-2026-10-18
     note: |-
       Match Shifting Desks' card mechanics (DEPTH-ASSESSMENT-2026-10-18.md): choices may be certain (roll null, success only), gated on shared deed flags (requires.anyFlags, shown locked with the reason), and carry an up-front hp/provisions cost; outcomes record moral marks (mercy, honesty, courage, cunning, ruthlessness). One reducer for all five lands, pools of 8 per location, new kr.shiftingLands.journeyLedger.v6 key with full replay verification. V2-V5 saves keep the frozen 48-card / two-choice rules (additions carry since: 6). Board shows locked routes, costs and the Risky-N chip for every kind of choice.
-    updated: '2026-10-18T10:30:00Z'
+      Done 2026-10-18: kind_robots#3836 merged as 6d6852433b5c6be80f34eb42300022f8ed40784a after 20/20 green checks. deckV6.ts (certain/gated/costed choices, choiceLock reasons, marks ledger, validator incl. every card keeps a free route), saveLedgerV6.ts (journeyLedger.v6, full replay, prose-tolerant), board chips for Certain / costs / locked routes. verifyShiftingV6.test.ts in CI: 320 seeded runs over four policies, forged dice/marks rejected, deck-rules fingerprint pinned (bump schemaVersion on any rules change).
+    updated: '2026-10-18T11:15:00Z'
   - id: t-032
     milestone: m3
     title: "Author 24 cards per land (72 new) and a third/fourth choice on the existing 48"
-    status: claimed
-    claimed_by: claude-session-01A1gxboeuGjcf6N5Aj7oq6e
-    claimed_at: '2026-10-18T10:30:00Z'
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-031]
     source: silas-2026-10-18
     note: |-
       Eight cards per location in every land (Homestead +12, other lands +15 each), 3-4 choices per card, at least half the cards with a certain sacrifice/refusal choice, about a third with a route gated on the ten shared deed flags, in the 2026-10-18 voice: hard decisions, the cost of sacrifice, doing good that is not always rewarded. Second person, hero-agnostic. Each new card ships an art brief for t-033.
-    updated: '2026-10-18T10:30:00Z'
+      Done 2026-10-18 in kind_robots#3836 (6d6852433b5c6be80f34eb42300022f8ed40784a): 72 new cards (8 per location, 120 total), 81 added choices on the original 48, 444 choices; 108 cards with a certain route, 43 gated on the ten deed flags. Balance at merge (400 seeds): V5 random 29% complete; V6 random 40%, cautious 45%, ruthless 46%, kind 28% (kindness costs, by design; t-034 should make it pay in endings). Art briefs: art/V6-CARD-BRIEFS.json.
+    updated: '2026-10-18T11:15:00Z'
   - id: t-033
     milestone: m3
     title: "Art round 4: paint the 72 new cards; re-render Three Cups; audit titles vs paintings"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-032]
     source: silas-2026-10-18
     note: |-
       Silas, 2026-10-18: "the challenge is three cups on the table, and the picture only shows a mouse and an empty table." The ROUND-1 keeper public/shifting-lands/cards/three-cups-on-the-table.webp has a cook, a lantern and a bare table: no cups. Re-render it with the three cups explicit and countable, audit all 48 existing card paintings for every object their titles promise, and paint the 72 V6 cards from the art briefs shipped with t-032 (fixed cast per card, the traveler out of frame or seen from behind, no lettering), same house checkpoint and exporter as ROUND-1/2.
-    updated: '2026-10-18T10:30:00Z'
+      Ready 2026-10-18: art/V6-CARD-BRIEFS.json holds one brief per V6 card (72) written with the card, plus the Three Cups re-render brief. The new cards currently fall back to their location painting (sceneArt encounterArt), so the board never shows an empty slot; a keeper exported to public/shifting-lands/cards/<id>.webp and listed in BESPOKE_CARDS replaces it.
+    updated: '2026-10-18T11:15:00Z'
   - id: t-034
     milestone: m3
     title: "Endings from the moral ledger and trial outcomes (Desks-level ending variety)"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-031]
     source: silas-2026-10-18
     note: |-
       Shifting Desks has 10 authored endings with variants and 6-9 outcomes per department boss; Shifting Lands has victory / fallen / retired. Read the V6 marks ledger and trial results into authored endings so a merciful run that falls and a ruthless run that wins read differently, in the voice of sacrifice and unrewarded good. Trials may gain ledger-aware outcomes under the V6 rules version.
-    updated: '2026-10-18T10:30:00Z'
+      Ready 2026-10-18 (V6 merged). Inputs: JourneyStateV6.marks and flags. Deck writers' notes: Homestead V6 cards earn Abbess evidence flags not yet in her trial's requiredAnyFlags (the-infirmarys-last-cot-empty-wing, the-guest-book-on-the-lectern-page-taken, the-guest-book-on-the-lectern-blank-departures, the-refuge-lantern-at-midnight-cart-track, gate-midnight-cart-seen, dormitory-chalked-name); Tablelands outcomes hint the missing travelers are held at the Warden's bridge. Extending trial gates changes V5-pinned trial rules, so do it as a V6-only trial layer with a deck schemaVersion bump.
+    updated: '2026-10-18T11:15:00Z'
   - id: t-035
     milestone: m5
     title: "V6 balance report: survival, death causes and gate reachability by land"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-032]
     source: silas-2026-10-18
     note: |-
       Port the idea of kind_robots utils/scripts/shiftingDesksBalanceReport.ts: simulate many seeds with simple policies (always kind, always safe, greedy, random), report survival per land, the cards that kill most, how often each gated route is reachable, and provisions curves; tune targets/costs where a land is a cliff.
-    updated: '2026-10-18T10:30:00Z'
+      Ready 2026-10-18: kind runs complete 28% vs ruthless 46% at V6 merge; a starting harness lived in the session scratchpad (policy by marks/targets, 400 seeds each). Decide with t-034 how much of the kindness penalty is tone and how much is a cliff.
+    updated: '2026-10-18T11:15:00Z'
