@@ -251,3 +251,14 @@ def test_zuzu_world_title_alone_does_not_put_zuzu_in_the_frame():
     positive, negative = compose_checkpoint_prompt(heron, "arthemy", "zuzu-gamebook")
     assert ZUZU_CANON_TAGS not in positive and "lanky" not in negative
     assert "set in the Weird West, where anthropomorphic animal folk" in positive
+
+
+def test_portrait_of_someone_else_keeps_zuzu_out_of_the_frame():
+    gofun = ("Gofun the Badger Scribe, a badger archivist, This badger wants to sell Zuzu "
+             "one clean page of the past, " + CHECKPOINT_LANES["arthemy"]["style"])
+    positive, _ = compose_checkpoint_prompt(gofun, "arthemy", "zuzu-gamebook",
+                                            portrait_of="Gofun the Badger Scribe")
+    assert ZUZU_CANON_TAGS not in positive
+    zuzu, _ = compose_checkpoint_prompt(gofun, "arthemy", "zuzu-gamebook",
+                                        portrait_of="Zuzu at Rest")
+    assert ZUZU_CANON_TAGS in zuzu
