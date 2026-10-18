@@ -759,7 +759,7 @@ tasks:
   - id: t-023
     milestone: m4
     title: "Recut Acts II-VIII to the playtest pacing: shorter, denser, obstacles, repeat fire, callouts"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-009]
@@ -773,7 +773,18 @@ tasks:
       of Acts II-VIII the same treatment one Act per PR, about 4-6 minutes clean solo each, with at least
       one terrain or obstacle feature of its own, craft that keep firing, a section callout from Lilt for
       every section (solo lines included), and its per-Act verifier's pacing window tightened to match.
+
+      Done 2026-10-18 in kind_robots#3841 (merge 6a07ceb). One PR for all seven Acts, not one
+      per Act: they share the recutTimeline helper (rainbowPacing.ts) and the cross-Act
+      verifiers run the whole campaign. Each Act keeps its teaching sections, guardian,
+      forks/rescues/reveals and two or three escalations; clean solo 4.5-6.1 min (II 4.53, III
+      4.93, IV 5.00, V 6.06, VI 5.81, VII 5.62, VIII 5.40), windows tightened 3-15 to 3.5-7.
+      Reinforcement schools lift craft/min (V-VIII ~15 to ~50). Plain II/III/VIII craft repeat
+      fire (slower than Act I's). Lilt callouts every section with solo replies
+      (rainbowActBeats.ts); per-Act terrain in Act colours. Act VIII now has 13 captives (was
+      25). New verifyRainbowActBeats. Next: Silas playtests the recut Acts on main.
     owner: worker
     claimed_by: 2026-10-18T0000Z-rainbow-t023-recut
     claimed_at: '2026-10-18T12:12:26Z'
-    updated: '2026-10-18T12:12:26Z'
+    updated: '2026-10-18T12:55:12Z'
+    implementation_pr: 'silasfelinus/kind_robots#3841'
