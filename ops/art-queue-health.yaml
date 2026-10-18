@@ -2,8 +2,8 @@
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
 failures:
-- source: kr-failed-jobs
-  target: ArtJob 40097
-  kind: kr-job-failed
-  detail: 'engine=COMFY; error=VACE did not render a pilot: None'
+- source: requests
+  target: public/images/channels/arcade/save-the-plumber.webp
+  kind: timeout
+  detail: job 40285 timed out after 300s (still queued/running)
   first_seen: '2026-10-18'
