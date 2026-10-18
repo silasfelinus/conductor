@@ -46,6 +46,13 @@ ENGINE = "sdxl-checkpoint"
 SUPPORTED_PROJECTS = ("zuzu-gamebook", "emperor-of-dust", "shifting-desks")
 SHIFTING_DESKS_FAMILIES = {"corporate-noir", "western-cartoon"}
 ZUZU_PROJECTS = ("zuzu-gamebook", "emperor-of-dust")
+# furrytoonmix (the "illustrious" lane) turned every female or unspecified
+# figure in Emperor of Dust into a buxom pin-up in latex on a tarot-card frame,
+# from prompts as plain as "a broad female bison in her forties" (ArtJobs
+# 40169, 40257, 40265, 40270; Silas 2026-10-18: "furrytoon is probably the
+# wrong checkpoint for this"). Proposals and queued rows still say
+# "illustrious", so the swap happens here, at submission.
+ZUZU_RENDER_FAMILY = {"illustrious": "arthemy"}
 
 # kind_robots utils/comicLanes.ts ILLUSTRIOUS_PREFIX. Illustrious checkpoints
 # are tag-trained and expect the quality tags first; the 2026-10-13..17 Zuzu
@@ -69,8 +76,13 @@ ZUZU_CANON_NEGATIVE = (
 ZUZU_NEGATIVE = (
     "(nude:1.4), (naked:1.3), nsfw, suggestive, lowres, worst quality, bad anatomy, "
     "bad hands, extra limbs, deformed, blurry, jpeg artifacts, human, text, english lettering, "
-    "watermark, signature, logo"
+    "watermark, signature, logo, cleavage, large breasts, huge breasts, wide hips, thick thighs, "
+    "voluptuous, latex, bodysuit, skin tight, pin-up, seductive, tarot card, ornate border"
 )
+# A figure in a Zuzu-world portrait or scene is dressed for the road, stated
+# positively as well as in the negative. Not on items or places, where naming
+# clothing invites a figure into an empty frame.
+CLOTHED = "(fully clothed:1.3), modest practical clothing"
 DEFAULT_NEGATIVE = "low quality, blurry, bad anatomy, disfigured, writing, text, watermark"
 
 # VIDEO-GUARDRAILS.md: words the house checkpoint draws literally, and the
@@ -133,8 +145,13 @@ def sdxl_render_size(width: int, height: int) -> tuple[int, int]:
     return min(SDXL_BUCKETS, key=lambda wh: abs(math.log((wh[0] / wh[1]) / aspect)))
 
 
+def render_family(family: str, project: str) -> str:
+    """The lane a row actually renders on (see ZUZU_RENDER_FAMILY)."""
+    return ZUZU_RENDER_FAMILY.get(family, family) if project in ZUZU_PROJECTS else family
+
+
 def compose_checkpoint_prompt(prompt: str, family: str, project: str,
-                              portrait_of: str = "") -> tuple[str, str]:
+                              portrait_of: str = "", figures: bool = False) -> tuple[str, str]:
     """Positive and default negative prompt for one checkpoint ArtJob.
 
     The dream-cycle builder ends every prompt with the lane style; this used to
@@ -146,10 +163,10 @@ def compose_checkpoint_prompt(prompt: str, family: str, project: str,
     Badger Scribe "wants to sell Zuzu one clean page" and would have been
     drawn beside a koala (2026-10-18).
     """
-    lane = CHECKPOINT_LANES[family]
-    style = lane["style"]
+    authored = CHECKPOINT_LANES[family]["style"]
+    style = CHECKPOINT_LANES[render_family(family, project)]["style"]
     body = " ".join(str(prompt or "").split())
-    body = body.replace(f", {style}", "").replace(style, "").strip(" ,")
+    body = body.replace(f", {authored}", "").replace(authored, "").strip(" ,")
     negative = DEFAULT_NEGATIVE
     canon = ""
     if project in ZUZU_PROJECTS:
@@ -165,8 +182,9 @@ def compose_checkpoint_prompt(prompt: str, family: str, project: str,
                 body = re.sub(pattern, replacement, body, flags=re.IGNORECASE)
             canon = ZUZU_CANON_TAGS
             negative = f"{ZUZU_NEGATIVE}, {ZUZU_CANON_NEGATIVE}"
+    clothed = CLOTHED if project in ZUZU_PROJECTS and figures and not canon else ""
     prefix = "" if style.startswith(ILLUSTRIOUS_PREFIX) else ILLUSTRIOUS_PREFIX
-    positive = ", ".join(part for part in (prefix, style, canon, body) if part)
+    positive = ", ".join(part for part in (prefix, style, canon, clothed, body) if part)
     return positive, negative
 
 
@@ -217,6 +235,8 @@ def make_checkpoint_job(entry: dict[str, Any], core) -> dict[str, Any]:
         raise ValueError("checkpoint ArtJobs require a known project_target")
     if (project == "shifting-desks") != (family in SHIFTING_DESKS_FAMILIES):
         raise ValueError("checkpoint family is reserved for its own project")
+    authored_family = family
+    family = render_family(family, project)
     checkpoint = resolve_registered_checkpoint(family, core._load_resource_index())
     lane = CHECKPOINT_LANES[family]
     width, height = sdxl_render_size(*core.parse_size(entry.get("size")))
@@ -224,7 +244,8 @@ def make_checkpoint_job(entry: dict[str, Any], core) -> dict[str, Any]:
         raise ValueError("checkpoint ArtJob requires a non-empty prompt")
     portrait_of = str(entry.get("label") or "") if entry.get("entity_type") == "character" else ""
     prompt, default_negative = compose_checkpoint_prompt(
-        entry.get("prompt"), family, project, portrait_of=portrait_of)
+        entry.get("prompt"), authored_family, project, portrait_of=portrait_of,
+        figures=entry.get("entity_type") in ("character", "scenario"))
     negative = " ".join(str(entry.get("negative_prompt") or default_negative).split())
     steps = int(entry.get("steps") or lane["steps"])
     cfg = float(entry.get("cfg") or lane["cfg"])

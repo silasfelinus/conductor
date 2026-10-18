@@ -7,7 +7,7 @@ from scripts import consume_art_queue as queue
 from scripts import consume_art_queue_core as core
 from scripts.dream_sdxl_checkpoint_art import (
     CHECKPOINT_LANES, ENGINE, ILLUSTRIOUS_PREFIX, ZUZU_CANON_TAGS, compose_checkpoint_prompt,
-    make_checkpoint_job, resolve_registered_checkpoint, sdxl_render_size,
+    make_checkpoint_job, render_family, resolve_registered_checkpoint, sdxl_render_size,
 )
 
 
@@ -40,6 +40,7 @@ def test_artjob_workflow_uses_exact_registered_checkpoint(family, monkeypatch):
     monkeypatch.setattr(core, "resolve_seed", lambda *_: 123456)
     job = queue.entry_to_job(_entry(family, project_target="emperor-of-dust"))
     graph = job["payload"]["workflow"]
+    family = render_family(family, "emperor-of-dust")
     assert job["engine"] == "COMFY"
     assert job["projectSlug"] == "emperor-of-dust"
     assert job["priority"] == queue.DAILY_DREAM_PRIORITY
@@ -176,7 +177,8 @@ def test_zuzu_prompt_leads_with_quality_and_style_exactly_once(family, project, 
     monkeypatch.setattr(core, "_load_resource_index", lambda: deepcopy(CATALOG))
     job = make_checkpoint_job(_entry(family, project_target=project, prompt=prompt), core)
     positive = job["payload"]["promptString"]
-    style = CHECKPOINT_LANES[family]["style"]
+    assert CHECKPOINT_LANES["illustrious"]["style"] not in positive
+    style = CHECKPOINT_LANES[render_family(family, project)]["style"]
     assert positive.startswith(ILLUSTRIOUS_PREFIX + ", " + style)
     assert positive.count(style) == 1
     assert job["payload"]["workflow"]["2"]["inputs"]["text"] == positive
@@ -262,3 +264,31 @@ def test_portrait_of_someone_else_keeps_zuzu_out_of_the_frame():
     zuzu, _ = compose_checkpoint_prompt(gofun, "arthemy", "zuzu-gamebook",
                                         portrait_of="Zuzu at Rest")
     assert ZUZU_CANON_TAGS in zuzu
+
+
+OBSIDIA = (
+    "character portrait of Obsidia Vane, A broad female bison in her forties with a shaggy "
+    "soot-streaked mane, wearing a brass-riveted ash-grey coat, set in the world of Emperor of "
+    "Dust, pre-Zuzu kingdom of ash and brass, " + CHECKPOINT_LANES["illustrious"]["style"]
+)
+
+
+def test_emperor_never_renders_on_furrytoonmix(monkeypatch):
+    """ArtJob 40265 drew this bison as a buxom pin-up in latex (Silas, 2026-10-18)."""
+    monkeypatch.setattr(core, "_load_resource_index", lambda: deepcopy(CATALOG))
+    job = make_checkpoint_job(_entry(
+        "illustrious", project_target="emperor-of-dust", prompt=OBSIDIA,
+        entity_type="character", label="Obsidia Vane"), core)
+    graph = job["payload"]["workflow"]
+    assert "furrytoonmix" not in graph["1"]["inputs"]["ckpt_name"]
+    assert graph["1"]["inputs"]["ckpt_name"] == CHECKPOINT_LANES["arthemy"]["checkpoint"]
+    positive = job["payload"]["promptString"]
+    assert "(fully clothed:1.3), modest practical clothing" in positive
+    assert CHECKPOINT_LANES["illustrious"]["style"] not in positive
+    for tag in ("cleavage", "large breasts", "latex", "pin-up"):
+        assert tag in graph["3"]["inputs"]["text"]
+
+
+def test_clothing_tag_stays_off_objects_and_places():
+    positive, _ = compose_checkpoint_prompt("a brass lantern on a bare table", "illustrious", "emperor-of-dust")
+    assert "clothed" not in positive
