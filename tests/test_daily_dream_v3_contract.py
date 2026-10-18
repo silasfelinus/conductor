@@ -334,3 +334,30 @@ def test_v3_markdown_uses_real_newlines_so_silas_notes_stay_a_heading():
     assert "\\n" not in md
     assert "\n## Notes from Silas" in md
     assert "\n## Eight additional Zuzu-world creations" in md
+
+
+def test_zuzu_art_is_not_staged_at_an_unrelated_location_or_led_by_a_medium_label(monkeypatch):
+    # 2026-10-17: "The Clay Guest Will Not Leave" (a potter's kiln) rendered
+    # "staged at Venomglass Orchard", and a location prompt opened with its
+    # authored medium label instead of its subject (Silas, 2026-10-18).
+    from scripts import build_dream_records as builder
+
+    proposal = example_v3()
+    loc = proposal["zuzu_assets"]["locations"][0]
+    loc["art_direction"] = "Edo woodblock line work with ink wash: an orchard of glass trees"
+    next_id = 700
+
+    def fake_http(method, url, body=None, timeout=60):
+        nonlocal next_id
+        next_id += 1
+        return 201, {"data": {"id": next_id}}
+
+    monkeypatch.setattr(builder, "http_json", fake_http)
+    _built, _results, art = builder.build_records(proposal, proposal["slug"], "2026-10-13", False)
+    by_id = {entry.split("\n", 1)[0]: entry for entry in art}
+    location = next(v for k, v in by_id.items() if "zuzu-zuzu-gamebook-mirror-orchard" in k
+                    or "zuzu-zuzu-gamebook-ashwater-cut" in k)
+    assert "prompt: 'an orchard of glass trees" in location
+    assert "Edo woodblock" not in location
+    scenario = next(v for k, v in by_id.items() if "zuzu-zuzu-gamebook" in k and k.endswith("-scenario"))
+    assert "staged at" not in scenario

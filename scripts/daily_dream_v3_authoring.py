@@ -90,6 +90,15 @@ def extend_brief(brief: dict[str, Any], catalog: dict[str, list[dict[str, Any]]]
         "tradeoff, immediate_consequence and later_consequence, not a good/evil coin flip.",
         "Art directions for Zuzu should describe active Illustrious/Arthemy checkpoint "
         "subjects; do not repurpose the unique Daily Dream's Krea art direction.",
+        "Zuzu art directions and looks describe SUBJECTS ONLY: never open with a medium, "
+        "palette or style label (the checkpoint lane supplies the style). When Zuzu "
+        "appears he is a short, stocky koala in a rust-brown poncho and conical straw "
+        "kasa with a katana across his back, never a straw boater, cowboy hat, cloak "
+        "or cape (VIDEO-GUARDRAILS.md). Never write human, people or post-human (say "
+        "townsfolk or name the species), and never 'muzzle' or 'duster', which the "
+        "checkpoint draws literally.",
+        "A Zuzu scenario setup that takes place at that project's Zuzu location names "
+        "the location; otherwise its art is staged where the setup says, not there.",
     ])
     return out
 
