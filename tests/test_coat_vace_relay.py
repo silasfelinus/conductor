@@ -418,9 +418,11 @@ def test_grab_bag_renders_each_window_in_its_saved_look(monkeypatch, tmp_path):
     args = SimpleNamespace(comfy_url="http://localhost:8188", comfy_input=input_dir,
                            timeout_seconds=100, dry_run=False)
     worker.render(job_path, args)
+    looks = {int(graph["video"]["inputs"]["file"][-7:-4]): graph["pos"]["inputs"]["text"].split(".")[0]
+             for graph in graphs}
+    assert looks == {0: "Expressionist animated noir", 1: "Layered paper cut-out",
+                     2: "Expressionist animated noir"}
     texts = [graph["pos"]["inputs"]["text"] for graph in graphs]
-    assert [text.split(".")[0] for text in texts] == [
-        "Expressionist animated noir", "Layered paper cut-out", "Expressionist animated noir"]
     assert all("changes on purpose" in text for text in texts)
     assert all("drawn animation style across every shot" not in text for text in texts)
     assert all("reference" not in graph for graph in graphs)
@@ -428,6 +430,39 @@ def test_grab_bag_renders_each_window_in_its_saved_look(monkeypatch, tmp_path):
     final = json.loads(job_path.read_text())
     assert final["status"] == "REVIEW"
     assert final["stage"] != "Pilot render failed"
+
+
+def test_grab_bag_groups_windows_by_look_so_prompts_encode_once(monkeypatch, tmp_path):
+    import json
+    worker = setup_modules(monkeypatch).vace
+    schedule = [{"index": 0, "styleId": "noir"},
+                {"index": 1, "styleId": "paper-cut"},
+                {"index": 2, "styleId": "noir"}]
+    prompts = {"noir": "Expressionist animated noir", "paper-cut": "Layered paper cut-out"}
+    job_path, input_dir = _grab_bag_job(tmp_path, schedule, prompts)
+    graphs = _fake_comfy(monkeypatch, worker)
+    reported = []
+    original_update = worker.update
+    def update(path, job, **fields):
+        original_update(path, job, **fields)
+        if "pilot" in fields:
+            reported.append(fields["pilot"]["completedSegments"])
+    monkeypatch.setattr(worker, "update", update)
+    args = SimpleNamespace(comfy_url="http://localhost:8188", comfy_input=input_dir,
+                           timeout_seconds=100, dry_run=False)
+    worker.render(job_path, args)
+    assert [graph["video"]["inputs"]["file"][-7:-4] for graph in graphs] == ["000", "002", "001"]
+    texts = [graph["pos"]["inputs"]["text"] for graph in graphs]
+    assert texts[0] == texts[1] != texts[2]
+    assert reported == [1, 2, 3]
+    final = json.loads(job_path.read_text())
+    assert final["status"] == "REVIEW"
+
+
+def test_single_look_windows_stay_sequential():
+    worker = setup_modules(__import__("pytest").MonkeyPatch()).vace
+    spans = worker.windows(200)
+    assert worker.render_order(spans, None) == spans
 
 
 def test_grab_bag_schedule_mismatch_fails_instead_of_guessing(monkeypatch, tmp_path):
