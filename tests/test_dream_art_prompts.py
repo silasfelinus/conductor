@@ -283,3 +283,13 @@ def test_overlong_prompt_keeps_style_and_no_text_tail():
     assert len(prompt) <= dap.MAX_PROMPT_CHARS
     assert prompt.endswith("Mexican alebrije folk-art painted wood carving, fiesta palette, " + dap.NO_TEXT)
     assert prompt.startswith("character portrait of Zapote Kimani")
+
+
+def test_zuzu_lane_skill_honours_an_authored_look_with_figures():
+    # Mirror Parley (2026-10-17) staged two negotiators, then the crop said
+    # only one pair of hands; the Zuzu SDXL lane drops the crop.
+    look = "a mirror shield held between two animal-folk negotiators across a table"
+    prompt = dap.reward_prompt("Mirror Parley", "SKILL", look, "It reflects demands.", "RARE",
+                               "Emperor of Dust", "Ash and brass.", style="s", crop_skill=False)
+    assert look in prompt and "pair of hands" not in prompt
+    assert "pair of hands" in dap.reward_prompt(**SEASONING)
