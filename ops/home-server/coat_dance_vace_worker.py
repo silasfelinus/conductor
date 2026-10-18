@@ -291,6 +291,23 @@ def window_style_prompts(job, window_count):
     return resolved
 
 
+def render_order(spans, styles):
+    """Grab bag windows grouped by look, so ComfyUI encodes each prompt once.
+
+    A changed prompt makes ComfyUI move the umt5 text encoder onto the GPU,
+    evicting the VACE model, then reload VACE for sampling - on every window
+    when looks alternate. Grab bag windows share no continuity reference, so
+    rendering them out of order yields the identical files. Single-look
+    windows chain the previous window's frame and must stay sequential.
+    """
+    if styles is None:
+        return list(spans)
+    first_seen = {}
+    for index, _, _ in spans:
+        first_seen.setdefault(styles[index], len(first_seen))
+    return sorted(spans, key=lambda span: (first_seen[styles[span[0]]], span[0]))
+
+
 def window_prompt(style_prompt, grab_bag):
     if grab_bag:
         return (
@@ -428,10 +445,9 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
         signature = render_cache_key(source, job, pilot, master_reference, styles)
         cache_dir = job_dir / "render-cache" / signature
         cache_dir.mkdir(parents=True, exist_ok=True)
-        clips = []
-        for index, start_frame, count in spans:
-            rendered = cache_dir / f"pilot_window_{index:03d}.mp4"
-            clips.append(rendered)
+        clips = [cache_dir / f"pilot_window_{index:03d}.mp4" for index, _, _ in spans]
+        for done, (index, start_frame, count) in enumerate(render_order(spans, styles), 1):
+            rendered = clips[index]
             if not rendered.is_file() or rendered.stat().st_size == 0:
                 guide = cache_dir / f"motion_control_{index:03d}.mp4"
                 extract_window(source, pilot["startSec"] + start_frame / FPS, guide)
@@ -465,11 +481,11 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
                                  prefix, image_name)
                 if not recover_saved_window(args.comfy_url, prefix, rendered):
                     execute_comfy(args.comfy_url, workflow, rendered, args.timeout_seconds)
-            pilot["completedSegments"] = index + 1
+            pilot["completedSegments"] = done
             pilot["totalSegments"] = len(spans)
             update(job_path, job, pilot=pilot,
-                   progress=round(100 * (index + 1) / (len(spans) + 1)),
-                   stage=f"Motion-conditioned window {index + 1}/{len(spans)} complete"
+                   progress=round(100 * done / (len(spans) + 1)),
+                   stage=f"Motion-conditioned window {done}/{len(spans)} complete"
                          + (" (Grab bag)" if styles else ""))
         update(job_path, job, stage="Assembling sample and restoring source audio")
         assemble(job_dir, source, pilot, clips, frame_count, job["quality"])
