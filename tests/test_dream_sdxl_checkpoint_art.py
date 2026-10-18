@@ -217,3 +217,37 @@ def test_shifting_desks_prompt_and_negative_are_unchanged_apart_from_dedup():
     positive, negative = compose_checkpoint_prompt("Gus at the shop desk, people waiting", "western-cartoon", "shifting-desks")
     assert positive == f"{style}, Gus at the shop desk, people waiting"
     assert negative == "low quality, blurry, bad anatomy, disfigured, writing, text, watermark"
+
+
+ZUZU_WORLD = (
+    "set in the world of Zuzu Koala Assassin, a samurai wanderer in the Weird West, "
+    "where anthropomorphic animal folk, Edo samurai and Weird West, strange landscapes"
+)
+GLACIER_CLOCK = (
+    "establishing scene art for the moment titled The Glacier Clock Forest, Zuzu crosses a "
+    "clockwork forest whose ice-shard glacier is melting and winding the trees, "
+    + ZUZU_WORLD + ", vertical 2:3 portrait composition, a single decisive moment with one "
+    "clear focal action, foreground figures reacting, uncluttered staging so the event reads "
+    "at a glance, cast the figures who appear naturally across many species, ages, body sizes, "
+    "body shapes, and gender presentations, " + CHECKPOINT_LANES["arthemy"]["style"]
+    + ", every surface bare and unmarked"
+)
+
+
+def test_zuzu_scenario_drops_krea_clauses_that_commission_a_second_koala():
+    """ArtJob 40269 (2026-10-18) drew a small koala riding Zuzu's hat."""
+    positive, _ = compose_checkpoint_prompt(GLACIER_CLOCK, "arthemy", "zuzu-gamebook")
+    for clause in ("figures", "species, ages", "establishing scene art", "2:3",
+                   "bare and unmarked", "Koala Assassin"):
+        assert clause not in positive
+    assert positive.lower().count("koala") == 1
+    assert "The Glacier Clock Forest, Zuzu crosses a clockwork forest" in positive
+    assert ZUZU_CANON_TAGS in positive
+
+
+def test_zuzu_world_title_alone_does_not_put_zuzu_in_the_frame():
+    heron = ("Mara Quill, a heron ferrywoman in a reed coat, " + ZUZU_WORLD
+             + ", " + CHECKPOINT_LANES["arthemy"]["style"])
+    positive, negative = compose_checkpoint_prompt(heron, "arthemy", "zuzu-gamebook")
+    assert ZUZU_CANON_TAGS not in positive and "lanky" not in negative
+    assert "set in the Weird West, where anthropomorphic animal folk" in positive
