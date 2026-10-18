@@ -6,7 +6,8 @@ import pytest
 from scripts import consume_art_queue as queue
 from scripts import consume_art_queue_core as core
 from scripts.dream_sdxl_checkpoint_art import (
-    CHECKPOINT_LANES, ENGINE, make_checkpoint_job, resolve_registered_checkpoint,
+    CHECKPOINT_LANES, ENGINE, ILLUSTRIOUS_PREFIX, ZUZU_CANON_TAGS, compose_checkpoint_prompt,
+    make_checkpoint_job, resolve_registered_checkpoint, sdxl_render_size,
 )
 
 
@@ -152,3 +153,67 @@ def test_shifting_desks_rejects_conflicting_catalog_record():
             "western-cartoon",
             {"CHECKPOINT": {"arthemywesternart_v30.safetensors": "SDXL/something-else.safetensors"}},
         )
+
+
+# The 2026-10-17 Bloomrig Jubilee Zuzu prompts, verbatim in the parts that
+# went wrong (Silas, 2026-10-18).
+FARRIER = (
+    "Ash, Brass and the Last Hundred Days palette: a roadside forge, a grey-muzzled badger smith "
+    "at an anvil, set in the world of Emperor of Dust, a post-human shrine where people gather, "
+    + CHECKPOINT_LANES["illustrious"]["style"] + ", every surface bare and unmarked"
+)
+ORCHARD = (
+    "an orchard of glass trees, a koala samurai traveller in a straw hat and travel cloak reaching up, "
+    "Zuzu hums a nonsense tune, " + CHECKPOINT_LANES["arthemy"]["style"]
+)
+
+
+@pytest.mark.parametrize("family,project,prompt", [
+    ("illustrious", "emperor-of-dust", FARRIER),
+    ("arthemy", "zuzu-gamebook", ORCHARD),
+])
+def test_zuzu_prompt_leads_with_quality_and_style_exactly_once(family, project, prompt, monkeypatch):
+    monkeypatch.setattr(core, "_load_resource_index", lambda: deepcopy(CATALOG))
+    job = make_checkpoint_job(_entry(family, project_target=project, prompt=prompt), core)
+    positive = job["payload"]["promptString"]
+    style = CHECKPOINT_LANES[family]["style"]
+    assert positive.startswith(ILLUSTRIOUS_PREFIX + ", " + style)
+    assert positive.count(style) == 1
+    assert job["payload"]["workflow"]["2"]["inputs"]["text"] == positive
+
+
+def test_sd15_card_size_renders_at_native_sdxl_bucket(monkeypatch):
+    monkeypatch.setattr(core, "_load_resource_index", lambda: deepcopy(CATALOG))
+    job = make_checkpoint_job(_entry(), core)
+    assert (job["payload"]["width"], job["payload"]["height"]) == (832, 1216)
+    latent = job["payload"]["workflow"]["4"]["inputs"]
+    assert (latent["width"], latent["height"]) == (832, 1216)
+    assert sdxl_render_size(1216, 832) == (1216, 832)
+    assert sdxl_render_size(512, 512) == (1024, 1024)
+
+
+def test_literal_words_and_banned_terms_are_rewritten_for_zuzu_world():
+    positive, negative = compose_checkpoint_prompt(FARRIER, "illustrious", "emperor-of-dust")
+    assert "grey-snouted badger" in positive
+    for word in ("muzzle", "post-human", "people", " human"):
+        assert word not in positive
+    assert "townsfolk" in positive and "human" in negative
+
+
+def test_zuzu_in_frame_gets_canon_tags_costume_and_negatives():
+    positive, negative = compose_checkpoint_prompt(ORCHARD, "arthemy", "zuzu-gamebook")
+    assert ZUZU_CANON_TAGS in positive
+    assert "straw hat" not in positive and "cloak" not in positive
+    assert "conical straw kasa" in positive and "poncho" in positive
+    for tag in ("straw boater", "cloak", "cape", "lanky"):
+        assert tag in negative
+    # A Zuzu-world asset with no koala in it keeps the generic Zuzu negatives only.
+    _, plain = compose_checkpoint_prompt("a heron courier", "arthemy", "zuzu-gamebook")
+    assert "lanky" not in plain and "human" in plain
+
+
+def test_shifting_desks_prompt_and_negative_are_unchanged_apart_from_dedup():
+    style = CHECKPOINT_LANES["western-cartoon"]["style"]
+    positive, negative = compose_checkpoint_prompt("Gus at the shop desk, people waiting", "western-cartoon", "shifting-desks")
+    assert positive == f"{style}, Gus at the shop desk, people waiting"
+    assert negative == "low quality, blurry, bad anatomy, disfigured, writing, text, watermark"

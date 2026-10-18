@@ -92,11 +92,23 @@ def _clean(value: object) -> str:
 
 
 def _join(*parts: object) -> str:
-    prompt = ", ".join(p for p in (_clean(x) for x in parts) if p)
-    if len(prompt) <= MAX_PROMPT_CHARS:
-        return prompt
-    cut = prompt.rfind(", ", 0, MAX_PROMPT_CHARS)
-    return prompt[: cut if cut > 0 else MAX_PROMPT_CHARS].rstrip(" ,")
+    """Comma-join parts within MAX_PROMPT_CHARS.
+
+    Over the limit, trim the longest part at a word boundary rather than
+    cutting the end: the end carries the style and NO_TEXT, and an end cut
+    left the 2026-10-17 Zapote Kimani portrait with half a style and no
+    no-text clause (Silas, 2026-10-18).
+    """
+    kept = [p for p in (_clean(x) for x in parts) if p]
+    overflow = len(", ".join(kept)) - MAX_PROMPT_CHARS
+    if overflow <= 0:
+        return ", ".join(kept)
+    longest = max(range(len(kept)), key=lambda i: len(kept[i]))
+    target = max(len(kept[longest]) - overflow, 0)
+    cut = kept[longest].rfind(" ", 0, target + 1)
+    kept[longest] = kept[longest][: cut if cut > 0 else target].rstrip(" ,;:—-")
+    prompt = ", ".join(p for p in kept if p)
+    return prompt[:MAX_PROMPT_CHARS].rstrip(" ,")
 
 
 def _a(name: str) -> str:

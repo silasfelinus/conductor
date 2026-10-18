@@ -976,6 +976,13 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         zuzu_location_titles: dict[str, str] = {}
         built["records"]["zuzu"] = created
 
+        def zuzu_art_direction(text: str) -> str:
+            """Drop a leading medium/palette label ("Edo woodblock line work
+            with Weird West ink wash: ..."). The checkpoint lane owns the
+            medium, and the label otherwise leads the prompt and fights it."""
+            head, sep, rest = str(text).partition(": ")
+            return rest if sep and len(head) <= 80 and rest.strip() else str(text)
+
         def zuzu_style(row: dict[str, Any]) -> tuple[str, str, str, str]:
             project = row["project_target"]
             family = str(row["checkpoint_family"]).lower()
@@ -999,7 +1006,8 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                 "known_for", "local_rule", "best_scene"
             ))
             art_prompt = location_prompt(
-                loc["title"], loc["art_direction"], loc["known_for"], loc["best_scene"],
+                loc["title"], zuzu_art_direction(loc["art_direction"]),
+                loc["known_for"], loc["best_scene"],
                 scene_world, tone, style=CHECKPOINT_LANES[family]["style"],
             )
             rec = card_dream(
@@ -1122,8 +1130,16 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                     "model": "Scenario", "id": rec.get("id"), "title": sc["title"],
                     "project_target": project, "choices": sc["choices"],
                 })
+            # Stage the art at the day's Zuzu location only when the setup is
+            # actually set there. "The Clay Guest Will Not Leave" (a potter's
+            # kiln) rendered "staged at Venomglass Orchard" on 2026-10-17.
+            staged_at = (
+                location_title
+                if location_title and location_title.casefold() in setup.casefold()
+                else ""
+            )
             art_prompt = scenario_prompt(
-                sc["title"], setup, location_title, scene_world, tone,
+                sc["title"], setup, staged_at, scene_world, tone,
                 style=CHECKPOINT_LANES[family]["style"],
             )
             queue_art(el, "zuzu-scenario", sc["title"], art_prompt,

@@ -269,3 +269,17 @@ def test_gloomy_worlds_are_occasional_not_a_third_of_the_catalog():
 def test_remaster_variant_always_moves_a_world_off_its_default_style():
     world = "Tar and Fresh Plank"
     assert dap.style_for_world(world, 1) != dap.style_for_world(world)
+
+
+def test_overlong_prompt_keeps_style_and_no_text_tail():
+    # 2026-10-17 Zapote Kimani: an end cut dropped half the style and NO_TEXT.
+    from scripts import dream_art_prompts as dap
+
+    prompt = dap.character_prompt(
+        "Zapote Kimani", "a very small brindled yokai cat " * 60, "They keep the peace.",
+        "A chalk slate on a cord.", "Bloomrig Jubilee", "Every ship was grown.",
+        style="Mexican alebrije folk-art painted wood carving, fiesta palette",
+    )
+    assert len(prompt) <= dap.MAX_PROMPT_CHARS
+    assert prompt.endswith("Mexican alebrije folk-art painted wood carving, fiesta palette, " + dap.NO_TEXT)
+    assert prompt.startswith("character portrait of Zapote Kimani")
