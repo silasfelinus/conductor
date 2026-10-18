@@ -12514,3 +12514,7 @@ Worker pattern: good — small, evidenced bookkeeping fix. Not done: no kaizen t
 ## 2026-10-16 — Reviewer: conductor#6216 (kr-arcade/t-072 part 1 close-out)
 Approved and squash-merged (bba5018). Roadmap-only close recording kind_robots#3732 (Storm Shelf + Thunderhead) and re-arming t-072 as ready. Reversible, CI green on the latest head (the one early "Validate Worker PR handoff" failure was superseded by a passing rerun), no review-claim marker from another session.
 Worker pattern: good — partial progress recorded honestly with the remaining scope listed. Not done: no kaizen task (bookkeeping-only; the Worker's close_task.py PR-body-headings suggestion is minor and the first handoff check failure suggests it is real, but t-072 itself stays ready). Sweep still shows prowlarr/nzb.life 522 container-log signatures and 20 pending Tzaddik suggestions for Silas.
+
+## 2026-10-18 — Reviewer: conductor#6304 (coat-dance: clear a VACE lock left by an interrupted relay)
+Approved and squash-merged (c5ea7df). Scoped to `vace_relay.process` plus two tests; removing a stale `pilot.lock` is safe because the ArtJob claim already makes the relay the sole owner. CI green on head, no review-claim marker from another session. Failure message now names status as well as stage.
+Worker pattern: good — root cause traced from the real ArtJob 40097 failure. Not done: no kaizen task; ArtJob 40097 still needs Silas to pull, restart kr-relay and press "Resume full film using saved windows" (the sweep's art_queue_health flag stays until then).
