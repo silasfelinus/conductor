@@ -264,7 +264,7 @@ def scene_prompt(scene: str, world_title: str, vibe_line: str,
 
 def reward_prompt(name: str, reward_type: str, look: str, grants: str,
                   rarity: str, world_title: str, vibe_line: str,
-                  style: str | None = None) -> str:
+                  style: str | None = None, crop_skill: bool = True) -> str:
     kind = str(reward_type or "ITEM").upper()
     look = _clean(look)
     grants = _clean(grants)
@@ -284,7 +284,11 @@ def reward_prompt(name: str, reward_type: str, look: str, grants: str,
             CARD_FRAMING,
             # "no full figure, no faces, no onlookers" put three people nouns in
             # positive conditioning on 68 SKILL rewards. The positive form of
-            # the same intent is a crop: say where the frame stops.
+            # the same intent is a crop: say where the frame stops. The Zuzu
+            # SDXL lane passes crop_skill=False: its negative prompt works, and
+            # the crop contradicted authored looks that stage figures ("two
+            # negotiators across a table", Mirror Parley, 2026-10-17).
+            "tight centered composition on the effect" if not crop_skill else
             "tight centered composition on the effect, cropped close so that only one "
             "pair of hands enters at the very edge to work it, "
             "wrists cropped tightly",

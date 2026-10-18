@@ -1070,6 +1070,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             art_prompt = reward_prompt(
                 rw["name"], kind, rw["look"], rw["grants"],
                 rarity, scene_world, tone, style=CHECKPOINT_LANES[family]["style"],
+                crop_skill=False,
             )
             body = {
                 "name": rw["name"], "isPublic": True,
