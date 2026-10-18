@@ -86,6 +86,28 @@ LITERAL_WORD_SUBSTITUTIONS = (
     (r"\bpeople\b", "townsfolk"),
 )
 ZUZU_MENTION = re.compile(r"\b(zuzu|koala)\b", re.IGNORECASE)
+# dream_art_prompts.py writes for Krea 2 at cfg 1, where the negative prompt is
+# inert. These clauses are its workarounds and do harm on a tag-trained
+# checkpoint whose negative prompt works. "foreground figures reacting" and the
+# cast line ("across many species, ages, body sizes") commission extra bodies,
+# and with "koala" in the tags they came out as a second, smaller koala riding
+# Zuzu's hat (The Glacier Clock Forest, ArtJob 40269, Silas 2026-10-18). The
+# framing and no-text lines repeat what the render size and negative cover.
+# The world title named "Zuzu Koala Assassin" in every zuzu-gamebook prompt, so
+# ZUZU_MENTION matched every asset and drew Zuzu's canon into a heron's
+# portrait; the world is the setting, so the title stays out of the frame.
+KREA_ONLY_CLAUSES = (
+    (r"\bestablishing scene art for the moment titled\s+", ""),
+    (r",?\s*foreground figures reacting,\s*uncluttered staging so the event reads at a glance", ""),
+    (r",?\s*cast the (?:figures|people) who appear naturally across many species, ages, "
+     r"body sizes, body shapes,(?: and)? gender presentations"
+     r"(?:, and levels of conventional attractiveness)?", ""),
+    (r",?\s*vertical 2:3 portrait composition", ""),
+    (r",?\s*every surface bare and unmarked", ""),
+    (r"\bset in the world of Zuzu Koala Assassin, a samurai wanderer in the Weird West\b",
+     "set in the Weird West"),
+    (r"\bpre-Zuzu kingdom\b", "an older kingdom"),
+)
 # A koala in the authored art direction is Zuzu; his canon hat is a kasa and
 # he wears a poncho, never a straw boater or cloak (VIDEO-GUARDRAILS.md).
 ZUZU_COSTUME_SUBSTITUTIONS = (
@@ -125,6 +147,9 @@ def compose_checkpoint_prompt(prompt: str, family: str, project: str) -> tuple[s
     negative = DEFAULT_NEGATIVE
     canon = ""
     if project in ZUZU_PROJECTS:
+        for pattern, replacement in KREA_ONLY_CLAUSES:
+            body = re.sub(pattern, replacement, body, flags=re.IGNORECASE)
+        body = body.strip(" ,")
         for pattern, replacement in LITERAL_WORD_SUBSTITUTIONS:
             body = re.sub(pattern, replacement, body, flags=re.IGNORECASE)
         negative = ZUZU_NEGATIVE
