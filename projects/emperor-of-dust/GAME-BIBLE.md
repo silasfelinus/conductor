@@ -1,7 +1,15 @@
-# Emperor of Dust: One Hundred Days
-## Zuzu-world game bible v0.2 (October 12, 2026 PT)
+# Emperor of Dust
+## Zuzu-world game bible v0.2 (October 12, 2026 PT), superseded in part by v0.3
 
-**Current detailed system rules:** [SYSTEMS-V02.md](SYSTEMS-V02.md) defines the numerical Horde, leaders, time clock, 100-character pool, three-image baseline, reports, relics and Mole Revolutionaries. It takes precedence over prototyping examples where this summary is less detailed.
+> **2026-10-18 PT: [SYSTEMS-V03.md](SYSTEMS-V03.md) is now the governing design.** It removes the Horde,
+> replaces the hour clock with game days (quests take 1–3 days, 1–4 followers), cuts the campaign to
+> **50 days / five acts** and **20 followers**, adds the Fortress (throne room, quest room, barracks,
+> market, map room), brass currency, 5 local + 10 kingdom factions, Young Komodo's Day 40 betrayal
+> and the Act V hideout. Read this bible for premise, tone, continuity and faction character; wherever
+> it mentions the Horde, hours, Prosperity/Popularity, 100 days or 100 followers, v0.3 wins.
+> [DAY-PLAN.md](DAY-PLAN.md) is the new 50-day calendar.
+
+**Earlier system rules:** [SYSTEMS-V02.md](SYSTEMS-V02.md) (superseded) defined the numerical Horde, leaders, time clock, 100-character pool, three-image baseline, reports, relics and Mole Revolutionaries.
 
 **Premise:** *Before the bell stopped ringing, someone had to answer it.* A pre-Zuzu, alternate-play strategy drama. The player rules a small, precarious wasteland territory for exactly 100 authored days. Every morning the map fills with petitions, and every night its inhabitants remember what the ruler did, and what they left undone.
 
