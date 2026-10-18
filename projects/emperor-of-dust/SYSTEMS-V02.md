@@ -1,4 +1,6 @@
-# Emperor of Dust — Systems Design v0.2
+# Emperor of Dust — Systems Design v0.2 (SUPERSEDED)
+> **Superseded 2026-10-18 PT by [SYSTEMS-V03.md](SYSTEMS-V03.md).** The Horde, hour clock, 100-day/100-follower scale and three-image baseline below no longer apply. Kept for history and for the parts v0.3 explicitly retains (briefings, Items of Power, Mole Revolutionaries).
+
 *User direction, 2026-10-12 PT. This document supersedes conflicting early values in GAME-BIBLE.md; implementation and playtest tuning remain outstanding.*
 
 ## Non-negotiable model: Horde versus follower

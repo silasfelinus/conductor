@@ -1,16 +1,44 @@
-# Zuzu-world prequel: the emperor's one hundred days.
+# Zuzu-world prequel: the emperor's fifty days (v0.3 fortress redesign, 2026-10-18 PT).
 project: emperor-of-dust
 kind: software
 autonomous: true
 goal: >-
-  Deliver a map-led, 100-day original wasteland dispatch/strategy game in
-  the Zuzu universe before Book One: 100 authored daily incident sets,
-  zero-to-three follower assignments, skill odds and consequential moral
-  choices, injury and permanent death, Prosperity-funded recruiting,
-  a numerical Horde led by individual commanders, Popularity, eight-faction tension and wars,
-  hidden low-resource recovery questlines and multiple endings. Begin
-  in Admin; full Play launch requires explicit publication approval.
+  Deliver an art-led, 50-day wasteland ruler game in the Zuzu universe before
+  Book One (SYSTEMS-V03.md): a Fortress with throne room audiences, quest
+  room, barracks, market and map room; quests lasting 1-3 game days with
+  1-4 of 20 named followers who carry secret skills, weaknesses, hidden
+  allegiances and one unique ability; brass currency, 5 local and 10
+  kingdom factions, act-end map changes, Young Komodo's Day 40 betrayal and
+  an Act V hideout, injury and rare death, romance and multiple endings.
+  Begin in Admin; full Play launch requires explicit publication approval.
 notes_from_silas: |
+  2026-10-18 PT redesign (supersedes the Horde, hour clock and 100-day/100-follower
+  scale below; full spec projects/emperor-of-dust/SYSTEMS-V03.md):
+  Sovereign Tower is the flow reference, not a style to copy: scripted and
+  randomized elements on a day cycle, quests taking 1+ days, named followers with
+  unique designs, romanceable characters, injury and death, moral and flavor
+  choices, a world map, kingdom and local factions, a straightforward coin system,
+  art-driven interactions with stylish simple text and a speed-up text stream.
+  Remove the Horde. Followers have stats, secret skills and weaknesses revealed
+  when relevant and remembered across games, one fully unique ability, faction
+  modifiers, an origin that may hide a different allegiance, an illustrated mode
+  (happy, excited, sad, angry, neutral) and a portrait mode (neutral, injured,
+  dead). Track game days, not hours: quests take 1-3 days with 1-4 followers and
+  expire, possibly with consequences. Fortress view: throne room (daily
+  encounters, recruiting, wasteland issues opening new paths, solutions gated by
+  money, allegiances or faction-support thresholds), map room (factions, taxes,
+  affinity), barracks (talk to followers, upgradeable capacity), market (items
+  for stat bonuses or powers), quest room (assign, then Finish; animated
+  day/night; next morning shows results, with quest-specific responses in the
+  throne room and barracks). 4-6 local fortress factions, 8-12 location/race
+  kingdom factions. NPCs get illustrated reactions, no portraits for small
+  choices. 50 days and 20 followers to begin. Young Komodo is the advisor, not
+  romanceable, and betrays the emperor at Day 40+, starting the final act along
+  with kingdom-wide war and unleashed cosmic horrors. The map changes about every
+  10 days (factions taking territory, wipe-outs, new locations). The final act
+  moves from the fortress to a hideout with revolutionaries whose location
+  depends on the factions supported. Money must not be dollars or gold (v0.3
+  proposes brass).
   2026-10-12 PT clarification (supersedes the 2026-10-11 Support Hoard idea):
   The Horde is a headcount that grows/shrinks through events, recruitment and loss.
   Named followers command portions of this Horde on missions, not a support-token
@@ -51,7 +79,7 @@ milestones:
     weight: 20
     status: in-progress
   - id: m4
-    title: "STORY — all 100 scripted days, political and hidden branches"
+    title: "STORY — all 50 scripted days, five acts, betrayal and hideout branches"
     weight: 30
     status: not-started
   - id: m5
@@ -111,35 +139,44 @@ tasks:
       First ten follower profiles and five starter leaders, gated Prosperity recruitment, one-day arrival, multi-day wound unavailability, explicitly authored and forewarned fatality memorials, defensive versioned local campaign saves and Pinia orchestration. Kind Robots PR #3603 merged as 32e4172007f4daf1bdfeb219611f509b1f01351c after all 29 exact-head GitHub Actions workflows passed. No images rendered, public Play changes, migrations or live deployment. Next: t-015 private map clock.
   - id: t-005
     milestone: m4
-    title: "Script full incident graphs Days 001–025"
-    status: ready
-    depends_on: t-003
+    title: "Script Act I, Days 01–10, as fortress days (briefing, audiences, quests)"
+    status: waiting
+    depends_on: t-019
     passes: 0
     stakes: reversible
+    note: >-
+      Rescoped 2026-10-18 for SYSTEMS-V03.md. Days 1-4 exist in kind_robots
+      utils/emperorOfDust/day*.ts in the v0.2 Horde/hour format: convert them to
+      throne-room audiences plus 1-3 day quests rather than discarding the
+      writing. Follow DAY-PLAN.md anchors and its [A]/[Q]/[K]/[M] marks.
   - id: t-006
     milestone: m4
-    title: "Script Days 026–050 and hidden recovery lines"
+    title: "Script Act II (Days 11–20) and Act III (Days 21–30) with the Rustline and Black Verge reveals"
     status: waiting
     depends_on: t-005
     passes: 0
     stakes: reversible
   - id: t-007
     milestone: m4
-    title: "Script Days 051–075 with faction wars and difficult alliances"
+    title: "Script Act IV (Days 31–40) faction wars and Young Komodo's Day 40 betrayal"
     status: waiting
     depends_on: t-006
     passes: 0
     stakes: reversible
   - id: t-008
     milestone: m4
-    title: "Script Days 076–100 and eight alternate ending families"
+    title: "Script Act V hideout (Days 41–50) and the eight ending families"
     status: waiting
     depends_on: t-007
     passes: 0
     stakes: reversible
+    note: >-
+      Hideout variants per SYSTEMS-V03.md (Mole tunnels, Crow cave, Bell cellars,
+      Jackalwire wagons, caravan, Freehold barn, Rustline station, fallback cave),
+      each changing Act V quests, market and ending options.
   - id: t-009
     milestone: m5
-    title: "Verify three-image follower baseline, artwork pipeline, full-run balance and responsive QA"
+    title: "Verify eight-image follower set, NPC moods, full 50-day balance and responsive QA"
     status: waiting
     depends_on: t-008
     passes: 0
@@ -158,35 +195,40 @@ tasks:
     gate_rechecked: '2026-10-14'
   - id: t-011
     milestone: m4
-    title: "Author 100 distinctive follower bios, loyalties, three stats and art briefs"
+    title: "Author 20 followers in the v0.3 schema (stats, secret traits, unique ability, allegiance, art briefs)"
     status: ready
     passes: 0
     stakes: reversible
     note: >-
-      100 recruitable leaders, not 100 starting deployments. Preserve original
-      named followers, individual arcs and faction nuance. Produce ten-character
-      editorial batches with the baseline portrait/injured/splash visual brief
-      per leader. Follow SYSTEMS-V02.md.
+      Rescoped 2026-10-18 from 100 leaders to 20 followers (SYSTEMS-V03.md).
+      Re-express F001-F010 from FOLLOWERS-PILOT-01.md and author F011-F020:
+      five 0-10 stats, 1-2 secret skills and weaknesses with reveal triggers,
+      one unique ability, per-faction modifiers, origin vs true allegiance,
+      romanceable flag (about 6), recruitment route, and a design sheet brief
+      for the eight images. Two editorial batches of ten.
   - id: t-012
     milestone: m5
-    title: "Deliver three baseline character art assets each; modular emotions later"
+    title: "Deliver eight images per follower (five illustrated moods, three portrait states) and NPC moods"
     status: waiting
     depends_on: t-011
     passes: 0
     stakes: reversible
     note: >-
-      Deliver 300 verified assets for 100 cast members via durable ArtJobs
-      and a state/asset manifest; initial three are healthy roster,
-      injured roster and large splash. Modular 1-20 images/follower;
-      no mass generation of twenty each. Do not claim queued art delivered.
+      Rescoped 2026-10-18: 160 follower assets (illustrated neutral, happy,
+      excited, sad, angry; portrait neutral, injured, dead as a memorial
+      treatment) plus five moods for each of ~12-16 major NPCs and Komodo's
+      betrayal image, via durable ArtJobs and a manifest. Batch in fives from a
+      locked design sheet. Do not claim queued art delivered.
   - id: t-013
     milestone: m4
-    title: "Write all 100 three-report briefings with Young Komodo clues"
+    title: "Write all 50 three-report briefings with Young Komodo clues and his own seeded lies"
     status: ready
     depends_on: t-003
     passes: 0
     stakes: reversible
     note: >-
+      Rescoped 2026-10-18 to 50 days; some false reports are Komodo's own lies,
+      readable in hindsight after the Day 40 betrayal (DAY-PLAN.md [K] days).
       Every scripted day: two true and one false intelligence snippets;
       author-known metadata, rotating lie position and conditional variants.
       Allow early lies to be erroneous flavor without unfair punishment.
@@ -225,7 +267,7 @@ tasks:
     updated: '2026-10-13T02:14:50Z'
   - id: t-016
     milestone: m4
-    title: "Develop Mole Revolutionary faction and anti-witch choices"
+    title: "Develop Mole Revolutionary faction, anti-witch choices and the Mole tunnel hideout"
     status: waiting
     depends_on: t-005
     passes: 0
@@ -233,21 +275,20 @@ tasks:
     note: >-
       Eighth faction, opposes empire and swamp witches, with meaningful
       reconciliation arc, named leaders, authored tension effects and
-      Day 100 ending variants; maintain pre-Zuzu continuity.
+      Day 50 ending variants; maintain pre-Zuzu continuity.
   - id: t-017
     milestone: m2
-    title: "Build private art-first follower roster and injured state previews"
+    title: "Build the barracks: follower grid, illustrated view, Talk scenes and capacity upgrades"
     status: waiting
-    depends_on: t-011
+    depends_on: t-020
     passes: 0
     stakes: reversible
     note: >-
-      Extend /admin/emperor-of-dust with a gallery for the authored
-      recruitment pool, not just a flat text list. Healthy/injured portraits,
-      large splash panels, biographies, Might/Diplomacy/Ingenuity bars,
-      faction ties, assignment availability and visible X-day wound
-      countdowns. Prefer existing art UI primitives and asset fallback
-      rules; only use actually delivered images. Keep the /play gate closed.
+      Rescoped 2026-10-18 from the art-first roster gallery. Portrait grid by
+      state (ready, on quest, injured, dead memorial row), full illustrated view
+      with stat wheel, equipment, known traits, unique ability and faction
+      modifiers, limited daily Talk conversations, 6 beds upgradeable to 9 and
+      12. Only use delivered images, with fallbacks. Keep the /play gate closed.
 
   - id: t-018
     milestone: m3
@@ -268,3 +309,102 @@ tasks:
       and repair that boundary without disabling warnings or granting permissions.
       Keep t-005/t-013's later authored discovery branches independent and
       preserve private ADMIN scope; no account creation or production mutation.
+  - id: t-019
+    milestone: m3
+    title: "Rebuild the engine for v0.3: remove Horde and hours, day-based quests, brass, factions"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kind Robots utils/emperorOfDust + stores/emperorOfDustStore.ts. Remove all
+      Horde, troop and hour/travel state; add Day/Act, quests with 1-3 day
+      duration, 1-4 slots, expiry with consequences, five-stat bands with hidden
+      requirements, lethal markers, seeded deterministic resolution, brass
+      (taxes, wages, debt), 5 local supports and 10 kingdom affinities with
+      strength, follower state (ready, on quest, injured, dead) and a new save
+      version that discards v0.2 pilot saves with a notice. Keep relic vault and
+      injury/death rules. Contract tests per SYSTEMS-V03.md acceptance.
+  - id: t-020
+    milestone: m2
+    title: "Build the Fortress shell: five rooms, HUD strip, Finish and animated day/night/dawn report"
+    status: waiting
+    depends_on: t-019
+    passes: 0
+    stakes: reversible
+    note: >-
+      Replace the map-first admin preview with a Fortress view: throne room,
+      quest room, barracks, market, map room; top HUD (day, act, five local
+      meters, brass); Finish with warnings that never block; day/night animation
+      and dawn report cards. Phone: one room per screen with bottom room bar.
+  - id: t-021
+    milestone: m3
+    title: "Throne room audiences with gated solutions and the art-led dialogue box with streamed text"
+    status: waiting
+    depends_on: t-020
+    passes: 0
+    stakes: reversible
+    note: >-
+      Audience records (authored, consequence-driven and seeded minor
+      petitions); options gated by brass, local support, affinity tier,
+      follower or flag, shown locked with requirement. Dialogue box with
+      nameplate, 2-4 choices, log, typewriter stream with tap-to-complete and a
+      persisted speed setting (normal, fast, instant).
+  - id: t-022
+    milestone: m3
+    title: "Quest room board: assignment slots, requirement bands, preview odds and expiry"
+    status: waiting
+    depends_on: t-020
+    passes: 0
+    stakes: reversible
+  - id: t-023
+    milestone: m3
+    title: "Follower secret traits, unique abilities, faction modifiers, hidden allegiance and the persistent Codex"
+    status: waiting
+    depends_on: t-019
+    passes: 0
+    stakes: reversible
+    note: >-
+      Reveal on first relevance, persist revealed traits and allegiance in a
+      meta-save Codex across runs (never items, brass or relationships), apply
+      hidden modifiers silently until revealed.
+  - id: t-024
+    milestone: m3
+    title: "Market with rotating per-run equipment (two slots), healing and barracks upgrades"
+    status: waiting
+    depends_on: t-020
+    passes: 0
+    stakes: reversible
+  - id: t-025
+    milestone: m3
+    title: "Map room: territories, taxes, affinity tiers, act-end map events and telegraphed faction wipe-outs"
+    status: waiting
+    depends_on: t-019
+    passes: 0
+    stakes: reversible
+    note: >-
+      Days 10/20/30/40 events; Rustline revealed end of Act I, Black Verge end
+      of Act II; wipe-outs only at act ends and warned one act ahead.
+  - id: t-026
+    milestone: m4
+    title: "Romance arcs for about six followers, never Young Komodo"
+    status: waiting
+    depends_on: t-011
+    passes: 0
+    stakes: reversible
+  - id: t-027
+    milestone: m4
+    title: "Author the major NPC cast (~12-16) with five-mood art briefs, including Komodo's betrayal set"
+    status: ready
+    passes: 0
+    stakes: reversible
+  - id: t-028
+    milestone: m3
+    title: "Young Komodo betrayal track and Act V hideout selection engine"
+    status: waiting
+    depends_on: t-025
+    passes: 0
+    stakes: reversible
+    note: >-
+      Betrayal always fires on Day 40; buyer, departing followers and hideout
+      location depend on state; fallback revolutionary cave guarantees no
+      softlock.

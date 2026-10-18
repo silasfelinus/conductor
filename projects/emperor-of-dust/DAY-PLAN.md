@@ -1,157 +1,89 @@
-# Emperor of Dust: fixed 100-day anchor calendar
+# Emperor of Dust: fixed 50-day anchor calendar
 
-These are one hundred **authored daily concepts**, not one hundred implemented or fully scripted interactive events. Every day needs 2–5 complete petition/dispatch records, option/outcome text, night messages, resource/faction consequences and branch conditions before it can count as playable content. No procedural substitution for the calendar.
+*Rewritten 2026-10-18 PT for SYSTEMS-V03.md (50 days, five acts of ten, fortress loop, Komodo's
+Day 40 betrayal). The earlier 100-day calendar is in git history; titles below reuse the best of
+it. These are **anchors, not playable days**. A day counts as playable content only when it has its
+Komodo briefing (two truths, one lie), 2–4 throne-room audiences, 2–5 posted quests (1–2 authored,
+the rest from seeded templates), outcome text, faction/brass effects and barracks chatter hooks.*
 
-## Act 1: Days 1–10
+Marks: **[A]** authored throne-room audience, **[Q]** authored quest, **[K]** Komodo clue
+(something that reads differently after Day 40), **[M]** map-room change.
 
-Narrative arc: Founding the imperial court; taxation and first aid.
+## Act I · The Crown of Salvage (Days 1–10)
+Founding the court. Four followers, empty coffers, five local factions testing the new emperor.
 
-- **Day 001 · First Bell.** Founding the imperial court; taxation and first aid; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 002 · Dust Tax.** Founding the imperial court; taxation and first aid; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 003 · Three Wells.** Founding the imperial court; taxation and first aid; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 004 · Letter From Bell.** Founding the imperial court; taxation and first aid; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 005 · Raider's Toll.** Founding the imperial court; taxation and first aid; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 006 · The Empty Stable.** Founding the imperial court; taxation and first aid; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 007 · A Crow's Warning.** Founding the imperial court; taxation and first aid; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 008 · A Family of Five.** Founding the imperial court; taxation and first aid; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 009 · Iron on the Road.** Founding the imperial court; taxation and first aid; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 010 · Oath of the Gate.** Founding the imperial court; taxation and first aid; authored fixed petition anchor with conditional faction, shortage and follower variants.
+- **Day 01 · First Bell.** [A] Mara Reedbell asks what the crown will do for Hollow Bell. [Q] Clear the well road. Tutorial for the quest room and Finish.
+- **Day 02 · Dust Tax.** [A] The Ledger and the Yard argue the first tax rate; the map room opens with regional taxes.
+- **Day 03 · Three Wells.** [Q] Three villages, one water crew: a 1–4 follower split.
+- **Day 04 · Letter From Bell.** [A] First recruitable follower at the throne. Barracks Talk introduced.
+- **Day 05 · Raider's Toll.** [A] A Jackalwire captain demands a toll; pay brass, negotiate, or post a quest.
+- **Day 06 · The Empty Stable.** [Q] Missing mounts; a first secret skill reveal is guaranteed here. Market opens.
+- **Day 07 · A Crow's Warning.** [A] A Storm Crow envoy offers a forecast for a favor. [K] Komodo's lie today is his own.
+- **Day 08 · A Family of Five.** [A] Refugees from the Freeholds; the Abbey offers to take the children. First Abbey shadow.
+- **Day 09 · Iron on the Road.** [Q] Lethal-marked convoy defense, explained by Komodo: the first time death is possible.
+- **Day 10 · Oath of the Gate.** [A] The Gate Watch asks for an oath. [M] Fog lifts over the Rustline; the Act I raid/defense resolves on the map.
 
-## Act 2: Days 11–20
+## Act II · Rain Debt (Days 11–20)
+Drought, rain bargains and food; the Storm Crows' price; the Rustline's salvage market.
 
-Narrative arc: Drought, rain debt and food.
+- **Day 11 · The Rainmaker.** [A] A Crow rainmaker sells rain against a covenant.
+- **Day 12 · Lanterns at Mirefen.** [Q] The Mire Mothers ask for protection from raiders. True, and not the whole truth.
+- **Day 13 · The Saffron Deal.** [A] Saffron Kett's old bandmates want a water engine fixed.
+- **Day 14 · A Sick Courier.** [Q] Medicine run; Wisp Fen's unique ability shines.
+- **Day 15 · Glass Feathers.** [A] Rustline salvagers arrive with relic tools for the market.
+- **Day 16 · Three Haystacks.** [Q] Hidden grain; a "?" requirement only a scholar or a trait can reveal.
+- **Day 17 · Midnight Choir.** [A] Mole Revolutionaries leave a manifesto at the gate. [K]
+- **Day 18 · No Water for Strangers.** [A] Freeholds turn refugees away; the Yard and the Old Houses split.
+- **Day 19 · Hollow Bell Votes.** [A] The Bell votes on imperial protection; affinity thresholds matter.
+- **Day 20 · The Levy.** [A] A war levy is demanded. [M] The weather turns the map: the Mirefen spreads or dries, Crow covenants claim land, funded projects appear; the Black Verge Court is revealed.
 
-- **Day 011 · The Rainmaker.** Drought, rain debt and food; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 012 · Lanterns at Mirefen.** Drought, rain debt and food; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 013 · The Saffron Deal.** Drought, rain debt and food; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 014 · A Sick Courier.** Drought, rain debt and food; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 015 · The Missing Wheel.** Drought, rain debt and food; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 016 · Three Haystacks.** Drought, rain debt and food; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 017 · Midnight Choir.** Drought, rain debt and food; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 018 · No Water for Strangers.** Drought, rain debt and food; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 019 · Hollow Bell Votes.** Drought, rain debt and food; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 020 · The Levy.** Drought, rain debt and food; authored fixed petition anchor with conditional faction, shortage and follower variants.
+## Act III · Kind Roads (Days 21–30)
+Smuggling, raids, the Abbey's hospitality and the first hard evidence about missing children.
 
-## Act 3: Days 21–30
+- **Day 21 · A Captain's Promise.** [A] A Jackalwire captain offers to switch sides.
+- **Day 22 · Bodies at the Ford.** [Q] Investigation; the wrong party can make it worse.
+- **Day 23 · The Blue Lantern.** [Q] Smugglers' route; Guile and Lore checks.
+- **Day 24 · The Mother's Petition.** [A] A mother asks after a child last seen on the mission road.
+- **Day 25 · A Visitor from the Mission.** [A] The Abbess herself attends court, warm and generous. [K]
+- **Day 26 · A Friendly Raid.** [Q] Raiders ask for help against a worse band.
+- **Day 27 · The Trial of Flint.** [A] Duchess Flint is accused; the court judges.
+- **Day 28 · Charms Against Rot.** [Q] Black Verge envoys trade in cures with conditions.
+- **Day 29 · The Mayor's Secret.** [A] Mara Reedbell's ledger hides a terrible compromise.
+- **Day 30 · Terms of Shelter.** [A] Who shelters whom when the wars start. [M] Faction wars resolve on the map; a faction at zero strength is wiped out (telegraphed since Day 20).
 
-Narrative arc: Smuggling, dangerous routes and raid consequences.
+## Act IV · The Long Table (Days 31–40)
+Open faction war, alliances, and Komodo's clues tightening. The player is building the coalition
+that will decide where they hide in Act V, whether they know it or not.
 
-- **Day 021 · Glass Feathers.** Smuggling, dangerous routes and raid consequences; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 022 · A Captain's Promise.** Smuggling, dangerous routes and raid consequences; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 023 · Bodies at the Ford.** Smuggling, dangerous routes and raid consequences; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 024 · The Blue Lantern.** Smuggling, dangerous routes and raid consequences; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 025 · Food Without Receipts.** Smuggling, dangerous routes and raid consequences; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 026 · The Mother's Petition.** Smuggling, dangerous routes and raid consequences; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 027 · A Broken Road.** Smuggling, dangerous routes and raid consequences; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 028 · A Friendly Raid.** Smuggling, dangerous routes and raid consequences; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 029 · The Trial of Flint.** Smuggling, dangerous routes and raid consequences; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 030 · Terms of Shelter.** Smuggling, dangerous routes and raid consequences; authored fixed petition anchor with conditional faction, shortage and follower variants.
+- **Day 31 · Iron Rain.** [Q] The first war quest with real losses; injuries pile up.
+- **Day 32 · A Name in the Ledger.** [A] The Lamplight Archive finds a page that does not add up. [K]
+- **Day 33 · Wolves at Noon.** [Q] Defend a Freehold or a Saltroad stop, not both.
+- **Day 34 · A Storm Crow Debt.** [A] The rain covenant comes due.
+- **Day 35 · Two Bridges.** [Q] Saffron's bridge or the Mole tunnel: one route survives the war.
+- **Day 36 · The Silent Bell Rehearsal.** [Q] Evidence inside the Abbey; lethal-marked.
+- **Day 37 · The Market That Closed.** [A] The Ledger threatens to stop lending.
+- **Day 38 · A Pardon for a Thief.** [A] A Mole prisoner offers a trade: a name for freedom. [K]
+- **Day 39 · Saltroad Congress.** [A] Every kingdom faction at one table; Komodo seats the guests.
+- **Day 40 · The Keep's Empty Chairs.** **Young Komodo betrays the emperor.** The fortress falls to his chosen buyer, followers loyal to him leave, the horror wakes beneath the Abbey and war covers the kingdom. [M] The map darkens.
 
-## Act 4: Days 31–40
+## Act V · The Hideout (Days 41–50)
+On the run. The hideout location follows the strongest ally (SYSTEMS-V03.md); the nameless cave
+with a few revolutionaries is the fallback.
 
-Narrative arc: Mission hospitality and conflicting evidence.
+- **Day 41 · Ash Under the Grain.** Waking in the hideout; who came with you, who did not.
+- **Day 42 · Lost Without a Banner.** [A] The host faction sets its terms.
+- **Day 43 · Defectors' Hymn.** [A] Followers who left with Komodo send word; some can be won back.
+- **Day 44 · The Crow's Real Name.** [Q] Learn what Komodo bargained for. [K] resolved.
+- **Day 45 · Aid to an Enemy.** [A] An old enemy faction asks for help against the horror.
+- **Day 46 · The Well That Spoke.** [Q] Lore-heavy expedition toward the Abbey crypt.
+- **Day 47 · Oaths and Knives.** [A] Romances and personal arcs pay off or break.
+- **Day 48 · The Bell's Lost Clapper.** [Q] The last relic quest; Items of Power can be earned.
+- **Day 49 · Whose Peace?** [A] The coalition decides the terms of victory.
+- **Day 50 · The Last Dispatch.** Final confrontation with Komodo's patron and the horror; ending family and epilogue, every dead follower named.
 
-- **Day 031 · Iron Rain.** Mission hospitality and conflicting evidence; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 032 · A Name in the Ledger.** Mission hospitality and conflicting evidence; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 033 · Wolves at Noon.** Mission hospitality and conflicting evidence; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 034 · A Visitor from the Mission.** Mission hospitality and conflicting evidence; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 035 · Two Bridges.** Mission hospitality and conflicting evidence; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 036 · Charms Against Rot.** Mission hospitality and conflicting evidence; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 037 · The Market That Closed.** Mission hospitality and conflicting evidence; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 038 · A Pardon for a Thief.** Mission hospitality and conflicting evidence; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 039 · The Mayor's Secret.** Mission hospitality and conflicting evidence; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 040 · Saltroad Congress.** Mission hospitality and conflicting evidence; authored fixed petition anchor with conditional faction, shortage and follower variants.
+## Continuity contract
 
-## Act 5: Days 41–50
-
-Narrative arc: The costs of earlier compromises.
-
-- **Day 041 · The Red Orchard.** The costs of earlier compromises; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 042 · Witnesses of Smoke.** The costs of earlier compromises; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 043 · A Storm Crow Debt.** The costs of earlier compromises; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 044 · A Job for the Young.** The costs of earlier compromises; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 045 · No Cure but Time.** The costs of earlier compromises; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 046 · The Banner Left Behind.** The costs of earlier compromises; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 047 · A Courier's Truth.** The costs of earlier compromises; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 048 · The Silent Bell Rehearsal.** The costs of earlier compromises; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 049 · Medicine for Raiders.** The costs of earlier compromises; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 050 · The Keep's Empty Chairs.** The costs of earlier compromises; authored fixed petition anchor with conditional faction, shortage and follower variants.
-
-## Act 6: Days 51–60
-
-Narrative arc: Faction raids and open war.
-
-- **Day 051 · A Bell in the Marsh.** Faction raids and open war; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 052 · The Wrong Convoy.** Faction raids and open war; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 053 · A Better Kind of Outlaw.** Faction raids and open war; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 054 · The Painted Cart.** Faction raids and open war; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 055 · Three New Graves.** Faction raids and open war; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 056 · The Hungry Observatory.** Faction raids and open war; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 057 · Feathers Under Doors.** Faction raids and open war; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 058 · Shelter Price.** Faction raids and open war; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 059 · The Witch's Map.** Faction raids and open war; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 060 · War Council.** Faction raids and open war; authored fixed petition anchor with conditional faction, shortage and follower variants.
-
-## Act 7: Days 61–70
-
-Narrative arc: Famine, attrition and recovery branches.
-
-- **Day 061 · The Sand Census.** Famine, attrition and recovery branches; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 062 · Lost Without a Banner.** Famine, attrition and recovery branches; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 063 · Ash Under the Grain.** Famine, attrition and recovery branches; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 064 · Five Hours of Rain.** Famine, attrition and recovery branches; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 065 · The Mission's Candle.** Famine, attrition and recovery branches; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 066 · The Longest Patrol.** Famine, attrition and recovery branches; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 067 · Mutiny at the Mill.** Famine, attrition and recovery branches; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 068 · Names Unanswered.** Famine, attrition and recovery branches; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 069 · The Road of Teeth.** Famine, attrition and recovery branches; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 070 · The White Flag.** Famine, attrition and recovery branches; authored fixed petition anchor with conditional faction, shortage and follower variants.
-
-## Act 8: Days 71–80
-
-Narrative arc: Negotiated peace and uncertain alliances.
-
-- **Day 071 · The Night Price.** Negotiated peace and uncertain alliances; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 072 · Emperor's Procession.** Negotiated peace and uncertain alliances; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 073 · The Unopened Crate.** Negotiated peace and uncertain alliances; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 074 · The Crow's Real Name.** Negotiated peace and uncertain alliances; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 075 · Aid to an Enemy.** Negotiated peace and uncertain alliances; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 076 · The Well That Spoke.** Negotiated peace and uncertain alliances; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 077 · The Ration Riots.** Negotiated peace and uncertain alliances; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 078 · Defectors' Hymn.** Negotiated peace and uncertain alliances; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 079 · A Letter Without Ink.** Negotiated peace and uncertain alliances; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 080 · The Pact.** Negotiated peace and uncertain alliances; authored fixed petition anchor with conditional faction, shortage and follower variants.
-
-## Act 9: Days 81–90
-
-Narrative arc: Accusations, records and legacy.
-
-- **Day 081 · The Cost of Knowing.** Accusations, records and legacy; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 082 · The Last Caravan.** Accusations, records and legacy; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 083 · Two Mothers at the Door.** Accusations, records and legacy; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 084 · No More Tolls.** Accusations, records and legacy; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 085 · Oaths and Knives.** Accusations, records and legacy; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 086 · A Grave for Everyone.** Accusations, records and legacy; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 087 · The Bell's Lost Clapper.** Accusations, records and legacy; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 088 · Seven Empty Seats.** Accusations, records and legacy; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 089 · The People's Bargain.** Accusations, records and legacy; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 090 · The Ninth Decree.** Accusations, records and legacy; authored fixed petition anchor with conditional faction, shortage and follower variants.
-
-## Act 10: Days 91–100
-
-Narrative arc: Reckoning, ending conditions and epilogues.
-
-- **Day 091 · A Hundred Days of Dust.** Reckoning, ending conditions and epilogues; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 092 · The Unmarked Convoy.** Reckoning, ending conditions and epilogues; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 093 · Whose Peace?.** Reckoning, ending conditions and epilogues; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 094 · A Child's Footprint.** Reckoning, ending conditions and epilogues; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 095 · The Last Hoard.** Reckoning, ending conditions and epilogues; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 096 · Unwritten Names.** Reckoning, ending conditions and epilogues; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 097 · The Empire's Witness.** Reckoning, ending conditions and epilogues; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 098 · The Last Dispatch.** Reckoning, ending conditions and epilogues; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 099 · Before Zuzu.** Reckoning, ending conditions and epilogues; authored fixed petition anchor with conditional faction, shortage and follower variants.
-- **Day 100 · The Hundredth Bell.** Reckoning, ending conditions and epilogues; authored fixed petition anchor with conditional faction, shortage and follower variants.
-
-## Expansion and continuity contract
-
-Every date needs an authored morning report, at least two independently meaningful missions (target 2–5), at least one response involving a moral choice, 0-follower consequences, skill checks only where uncertainty is appropriate, night feedback, hazard warnings, and cross-day event flags. Every tenth day should alter policy or faction politics. Build day bundles in 25-day milestones with automated graph reachability checks; underpowered run seeds must reach meaningful Day 100 outcomes. Revisit early issues on later days, especially Days 047, 076 and 098. Endings must recognize followers who died and avoid attributing Hollow Bell's later canonical tragedy.
+Every act end (Days 10, 20, 30, 40) changes the map. Early choices must echo later, especially
+Days 08, 24 and 36 (the Abbey), Days 13 and 35 (Saffron), and every [K] day. Underpowered runs must
+still reach Day 50 with a meaningful ending through the fallback hideout. Endings never name the
+culprit of Hollow Bell's later destruction in Book One.
