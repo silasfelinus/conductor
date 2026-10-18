@@ -4,10 +4,11 @@
 failures:
 - source: requests
   target: public/images/dreams/moss-over-warm-iron/ochre-plate-card.webp
-  kind: contract-rejected
-  rules:
-  - frame-noun
-  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
-    "a single Ochre Plate, one object alone, A palm-sized plate of pitted black cursed iron polished at
-    its centre to a grey photographic surface, …'
+  kind: timeout
+  detail: job 40284 timed out after 300s (still queued/running)
+  first_seen: '2026-10-18'
+- source: kr-failed-jobs
+  target: ArtJob 40097
+  kind: kr-job-failed
+  detail: 'engine=COMFY; error=VACE did not render a pilot: None'
   first_seen: '2026-10-18'
