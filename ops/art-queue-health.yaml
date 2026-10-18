@@ -2,8 +2,12 @@
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
 failures:
-- source: kr-failed-jobs
-  target: ArtJob 40097
-  kind: kr-job-failed
-  detail: engine=COMFY; error=Malformed Coat Dance pilot payload
-  first_seen: '2026-10-17'
+- source: requests
+  target: public/images/dreams/moss-over-warm-iron/ochre-plate-card.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a single Ochre Plate, one object alone, A palm-sized plate of pitted black cursed iron polished at
+    its centre to a grey photographic surface, …'
+  first_seen: '2026-10-18'
