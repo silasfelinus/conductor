@@ -645,3 +645,46 @@ def test_relay_fast_draft_capability_and_pass_through(monkeypatch, tmp_path):
     monkeypatch.setattr(vace.relay, "supports_video_restyle_fast", lambda: False)
     vace.relay.claim_job()
     assert captured[-1]["supportsVideoRestyleFast"] is False
+
+
+def test_relay_clears_lock_left_by_interrupted_render(monkeypatch, tmp_path):
+    import json
+    vace = setup_modules(monkeypatch)
+    monkeypatch.setattr(vace, "WORK_ROOT", tmp_path)
+    monkeypatch.setattr(vace, "capable", lambda: True)
+    monkeypatch.setattr(vace, "_source", lambda rid, aid, dest: dest.write_bytes(b"source"))
+    monkeypatch.setattr(vace, "_report", lambda *a, **k: None)
+    monkeypatch.setattr(vace, "_submit_full", lambda *a: None)
+    restyle_id = "c927a107-ec44-4002-a862-03b7b65d3abe"
+    job_dir = tmp_path / "1" / restyle_id
+    job_dir.mkdir(parents=True)
+    (job_dir / "pilot.lock").write_text("2026-10-18T09:00:00Z")
+    seen_lock = []
+    def fake_render(job_path, args):
+        seen_lock.append((job_path.parent / "pilot.lock").exists())
+        state = json.loads(job_path.read_text())
+        (job_path.parent / "pilot.mp4").write_bytes(b"\x00\x00\x00\x18ftypmp42animated")
+        state["status"] = "REVIEW"
+        job_path.write_text(json.dumps(state))
+    monkeypatch.setattr(vace.vace, "render", fake_render)
+    vace.process({"id": 40097, "userId": 1, "payload": {
+        "media": "video-restyle-vace", "promptString": "Storybook",
+        "videoRestyle": {"id": restyle_id, "phase": "full", "startSec": 0,
+                         "durationSec": 332, "totalSegments": 94}}})
+    assert seen_lock == [False]
+
+
+def test_relay_names_status_when_render_returns_without_result(monkeypatch, tmp_path):
+    vace = setup_modules(monkeypatch)
+    monkeypatch.setattr(vace, "WORK_ROOT", tmp_path)
+    monkeypatch.setattr(vace, "capable", lambda: True)
+    monkeypatch.setattr(vace, "_source", lambda rid, aid, dest: dest.write_bytes(b"source"))
+    failures = []
+    monkeypatch.setattr(vace, "_report", lambda rid, aid, kind, done, **k: (
+        failures.append(k.get("error")) if kind == "failed" else None))
+    monkeypatch.setattr(vace.vace, "render", lambda job_path, args: None)
+    vace.process({"id": 40097, "userId": 1, "payload": {
+        "media": "video-restyle-vace", "promptString": "Storybook",
+        "videoRestyle": {"id": "c927a107-ec44-4002-a862-03b7b65d3abe", "phase": "full",
+                         "startSec": 0, "durationSec": 332, "totalSegments": 94}}})
+    assert failures and "PILOT_QUEUED" in failures[0]

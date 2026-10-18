@@ -292,10 +292,19 @@ def process(job):
     vace.update = traced_update
     heartbeat_thread.start()
     try:
+        # The ArtJob claim is the real ownership: this relay holds the only
+        # slot for this job. A pilot.lock still on disk was left by a relay
+        # killed mid-render (pm2 restart, reboot), whose finally never ran.
+        # Kept, it made every resume return at once without rendering.
+        stale_lock = job_dir / "pilot.lock"
+        if stale_lock.exists():
+            relay.log(f"job {art_id}: clearing stale VACE lock from an interrupted render")
+            stale_lock.unlink(missing_ok=True)
         vace.render(prior, args)
         final = json.loads(prior.read_text(encoding="utf-8"))
         if final.get("status") != "REVIEW":
-            raise RuntimeError(f"VACE did not render a pilot: {final.get('stage')}")
+            raise RuntimeError(
+                f"VACE did not render: {final.get('status')}: {final.get('stage')}")
         result = job_dir / "pilot.mp4"
         if not result.is_file():
             raise RuntimeError("VACE result MP4 not found")
