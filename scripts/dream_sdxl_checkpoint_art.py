@@ -99,9 +99,9 @@ ZUZU_MENTION = re.compile(r"\b(zuzu|koala)\b", re.IGNORECASE)
 KREA_ONLY_CLAUSES = (
     (r"\bestablishing scene art for the moment titled\s+", ""),
     (r",?\s*foreground figures reacting,\s*uncluttered staging so the event reads at a glance", ""),
-    (r",?\s*cast the (?:figures|people) who appear naturally across many species, ages, "
-     r"body sizes, body shapes,(?: and)? gender presentations"
-     r"(?:, and levels of conventional attractiveness)?", ""),
+    ((r",?\s*cast the (?:figures|people) who appear naturally across many species, ages, "
+      r"body sizes, body shapes,(?: and)? gender presentations"
+      r"(?:, and levels of conventional attractiveness)?"), ""),
     (r",?\s*vertical 2:3 portrait composition", ""),
     (r",?\s*every surface bare and unmarked", ""),
     (r"\bset in the world of Zuzu Koala Assassin, a samurai wanderer in the Weird West\b",
@@ -133,12 +133,18 @@ def sdxl_render_size(width: int, height: int) -> tuple[int, int]:
     return min(SDXL_BUCKETS, key=lambda wh: abs(math.log((wh[0] / wh[1]) / aspect)))
 
 
-def compose_checkpoint_prompt(prompt: str, family: str, project: str) -> tuple[str, str]:
+def compose_checkpoint_prompt(prompt: str, family: str, project: str,
+                              portrait_of: str = "") -> tuple[str, str]:
     """Positive and default negative prompt for one checkpoint ArtJob.
 
     The dream-cycle builder ends every prompt with the lane style; this used to
     prepend it a second time. Strip it from the body and lead with quality tags
     and style once, then canon tags when Zuzu is in the frame.
+
+    `portrait_of` names the subject of a character portrait. A portrait of
+    someone else keeps Zuzu out even when its prose mentions him: Gofun the
+    Badger Scribe "wants to sell Zuzu one clean page" and would have been
+    drawn beside a koala (2026-10-18).
     """
     lane = CHECKPOINT_LANES[family]
     style = lane["style"]
@@ -153,7 +159,8 @@ def compose_checkpoint_prompt(prompt: str, family: str, project: str) -> tuple[s
         for pattern, replacement in LITERAL_WORD_SUBSTITUTIONS:
             body = re.sub(pattern, replacement, body, flags=re.IGNORECASE)
         negative = ZUZU_NEGATIVE
-        if project == "zuzu-gamebook" and ZUZU_MENTION.search(body):
+        zuzu_portrait = not portrait_of or ZUZU_MENTION.search(portrait_of)
+        if project == "zuzu-gamebook" and zuzu_portrait and ZUZU_MENTION.search(body):
             for pattern, replacement in ZUZU_COSTUME_SUBSTITUTIONS:
                 body = re.sub(pattern, replacement, body, flags=re.IGNORECASE)
             canon = ZUZU_CANON_TAGS
@@ -215,7 +222,9 @@ def make_checkpoint_job(entry: dict[str, Any], core) -> dict[str, Any]:
     width, height = sdxl_render_size(*core.parse_size(entry.get("size")))
     if not str(entry.get("prompt") or "").strip():
         raise ValueError("checkpoint ArtJob requires a non-empty prompt")
-    prompt, default_negative = compose_checkpoint_prompt(entry.get("prompt"), family, project)
+    portrait_of = str(entry.get("label") or "") if entry.get("entity_type") == "character" else ""
+    prompt, default_negative = compose_checkpoint_prompt(
+        entry.get("prompt"), family, project, portrait_of=portrait_of)
     negative = " ".join(str(entry.get("negative_prompt") or default_negative).split())
     steps = int(entry.get("steps") or lane["steps"])
     cfg = float(entry.get("cfg") or lane["cfg"])
