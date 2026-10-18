@@ -318,7 +318,7 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Rebuild the engine for v0.3: remove Horde and hours, day-based quests, brass, factions"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: >-
@@ -330,10 +330,15 @@ tasks:
       strength, follower state (ready, on quest, injured, dead) and a new save
       version that discards v0.2 pilot saves with a notice. Keep relic vault and
       injury/death rules. Contract tests per SYSTEMS-V03.md acceptance.
+
+      Engine, store, Days 1-4 conversion, F001-F010 in the v0.3 schema and rewindable saves in
+      kind_robots#3846. Built alongside the v0.2 pilot; t-020 swaps the /play UI over and
+      retires the v0.2 modules.
     owner: worker
     claimed_by: 2026-10-18T223500Z-emperor-t019-b7r
     claimed_at: '2026-10-18T22:33:19Z'
-    updated: '2026-10-18T22:33:19Z'
+    updated: '2026-10-18T22:48:23Z'
+    implementation_pr: 'silasfelinus/kind_robots#3846'
   - id: t-020
     milestone: m2
     title: "Build the Fortress shell: five rooms, HUD strip, Finish and animated day/night/dawn report"
