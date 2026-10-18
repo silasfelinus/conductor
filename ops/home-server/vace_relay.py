@@ -30,6 +30,7 @@ _UUID = re.compile(r"^[a-f0-9]{8}-[a-f0-9]{4}-[1-8][a-f0-9]{3}-[89ab][a-f0-9]{3}
 _last_check = 0.0
 _last_ok = False
 _last_reason = ""
+_last_fast_ok = False
 
 
 _probe_thread = None
@@ -37,7 +38,7 @@ _probe_thread = None
 
 def _probe_capability():
     """Run potentially slow /object_info off the normal ArtJob polling thread."""
-    global _last_check, _last_ok, _last_reason
+    global _last_check, _last_ok, _last_reason, _last_fast_ok
     _last_check = time.monotonic()
     try:
         for command in ("ffmpeg", "ffprobe"):
@@ -45,11 +46,13 @@ def _probe_capability():
                 raise RuntimeError(f"{command} not available on KR Relay PATH")
         if not INPUT_ROOT.is_dir():
             raise RuntimeError(f"ComfyUI input folder missing: {INPUT_ROOT}")
-        vace.check_comfy(relay.COMFY_URL)
+        info = vace.check_comfy(relay.COMFY_URL)
+        _last_fast_ok = vace.fast_draft_available(info)
         _last_ok = True
         _last_reason = ""
     except (RuntimeError, OSError, ValueError, urllib.error.URLError, TimeoutError) as error:
         _last_ok = False
+        _last_fast_ok = False
         _last_reason = str(error)[:400]
         relay.log(f"VACE capability pending: {_last_reason}")
 
@@ -70,6 +73,11 @@ def capable():
     )
     _probe_thread.start()
     return False
+
+
+def fast_capable():
+    """Fast draft jobs need verified VACE support plus the CausVid LoRA."""
+    return capable() and _last_fast_ok
 
 
 def _path(restyle_id, endpoint):
@@ -218,6 +226,9 @@ def process(job):
     user_id = int(job["userId"])
     if not capable():
         raise RuntimeError(f"VACE capability became unavailable: {_last_reason}")
+    fast = video.get("renderSpeed") == "fast"
+    if fast and not _last_fast_ok:
+        raise RuntimeError(f"Fast draft LoRA unavailable: {vace.FAST_LORA}")
     job_dir = WORK_ROOT / str(user_id) / restyle_id
     job_dir.mkdir(parents=True, exist_ok=True)
     source = job_dir / "source.mp4"
@@ -234,6 +245,7 @@ def process(job):
             **({"styleSchedule": video["styleSchedule"],
                 "stylePrompts": video.get("stylePrompts") or {}}
                if video.get("styleSchedule") else {}),
+            **({"renderSpeed": "fast"} if fast else {}),
         },
         "pilot": {
             "startSec": float(video.get("startSec")),

@@ -33,6 +33,14 @@ CONTINUITY_SEED = 3451900
 MODEL = "wan2.1_vace_1.3B_fp16.safetensors"
 VAE = "wan_2.1_vae.safetensors"
 ENCODER = "umt5-xxl-encoder-Q5_K_M.gguf"
+# Fast draft: the CausVid distillation LoRA for Wan 2.1 1.3B samples in 8 steps
+# at cfg 1 (one model pass per step, not two) - about a fifth of the standard
+# 20-step cfg-6 work per window. Strength and steps are starting points to tune
+# against a pilot. Lives in ComfyUI models/Lora, at the folder root.
+FAST_LORA = "Wan21_CausVid_bidirect2_T2V_1_3B_lora_rank32.safetensors"
+FAST_LORA_STRENGTH = 0.6
+FAST_STEPS = 8
+FAST_CFG = 1.0
 NEGATIVE = (
     "flicker, frame jumps, deformed hands, duplicate performer, "
     "camera movement, changed choreography, distorted coat silhouette, "
@@ -84,11 +92,11 @@ def probe(path):
             "audio": any(s.get("codec_type") == "audio" for s in streams)}
 
 
-def graph(video_name, seed, prompt, prefix, reference_name=None):
+def graph(video_name, seed, prompt, prefix, reference_name=None, fast=False):
     node = lambda cls, **inputs: {"class_type": cls, "inputs": inputs}
     workflow = {
         "model": node("UNETLoader", unet_name=MODEL, weight_dtype="default"),
-        "sampling": node("ModelSamplingSD3", model=["model", 0], shift=8),
+        "sampling": node("ModelSamplingSD3", model=["lora" if fast else "model", 0], shift=8),
         "encoder": node("CLIPLoaderGGUF", clip_name=ENCODER, type="wan"),
         "vae": node("VAELoader", vae_name=VAE),
         "pos": node("CLIPTextEncode", clip=["encoder", 0], text=prompt),
@@ -114,6 +122,10 @@ def graph(video_name, seed, prompt, prefix, reference_name=None):
     if reference_name:
         workflow["reference"] = node("LoadImage", image=reference_name)
         workflow["control"]["inputs"]["reference_image"] = ["reference", 0]
+    if fast:
+        workflow["lora"] = node("LoraLoaderModelOnly", model=["model", 0],
+                                lora_name=FAST_LORA, strength_model=FAST_LORA_STRENGTH)
+        workflow["sample"]["inputs"].update(steps=FAST_STEPS, cfg=FAST_CFG)
     return workflow
 
 
@@ -145,7 +157,20 @@ def check_comfy(base):
         listed = node.get(field, [[], {}])[0]
         if isinstance(listed, list) and expected not in listed:
             raise RuntimeError(f"GPU model missing: {expected}. Install it on the ComfyUI host before retrying.")
-    return True
+    return info
+
+
+def fast_draft_available(info):
+    """True only when ComfyUI lists the CausVid LoRA a Fast draft needs."""
+    if not isinstance(info, dict):
+        return False
+    node = (info.get("LoraLoaderModelOnly") or {}).get("input", {}).get("required", {})
+    listed = node.get("lora_name", [[], {}])[0]
+    return isinstance(listed, list) and FAST_LORA in listed
+
+
+def is_fast_draft(job):
+    return (job.get("renderRecipe") or {}).get("renderSpeed") == "fast"
 
 
 def download_output(base, payload, dest):
@@ -347,6 +372,10 @@ def render_cache_key(source, job, pilot, reference, styles=None):
         "quality": job["quality"], "seed": CONTINUITY_SEED,
         "model": MODEL, "fps": FPS, "window": WINDOW, "step": STEP,
     }
+    if is_fast_draft(job):
+        # Added only for Fast draft so standard signatures stay byte-identical.
+        recipe["fast"] = {"lora": FAST_LORA, "strength": FAST_LORA_STRENGTH,
+                          "steps": FAST_STEPS, "cfg": FAST_CFG}
     if styles is not None:
         # Added only for Grab bag so single-look signatures (and their saved
         # windows from an in-flight film) stay byte-identical.
@@ -414,11 +443,14 @@ def render(job_path, args):
     if args.dry_run:
         print(json.dumps({"source": str(source), "verified": meta, "pilot": pilot,
                           "windowCount": len(spans), "model": MODEL,
-                          "grabBag": window_style_prompts(job, len(spans)) is not None},
+                          "grabBag": window_style_prompts(job, len(spans)) is not None,
+                          "fastDraft": is_fast_draft(job)},
                          indent=2))
         return
     try:
-        check_comfy(args.comfy_url)
+        info = check_comfy(args.comfy_url)
+        if is_fast_draft(job) and not fast_draft_available(info):
+            raise RuntimeError(f"Fast draft needs {FAST_LORA} in ComfyUI models/Lora.")
     except (RuntimeError, urllib.error.URLError) as error:
         update(job_path, job, status="PILOT_BLOCKED", stage=str(error), error=str(error))
         return
@@ -478,7 +510,7 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
                         shutil.copyfile(reference, args.comfy_input / image_name)
                 prefix = f"coatdance/{job['id']}/{signature}/pilot_{index:03d}"
                 workflow = graph(input_name, CONTINUITY_SEED, prompt,
-                                 prefix, image_name)
+                                 prefix, image_name, is_fast_draft(job))
                 if not recover_saved_window(args.comfy_url, prefix, rendered):
                     execute_comfy(args.comfy_url, workflow, rendered, args.timeout_seconds)
             pilot["completedSegments"] = done
