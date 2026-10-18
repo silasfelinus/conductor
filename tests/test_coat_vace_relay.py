@@ -529,3 +529,119 @@ def test_relay_passes_grab_bag_schedule_and_declares_support(monkeypatch, tmp_pa
     monkeypatch.setattr(vace.relay, "supports_video_restyle", lambda: False)
     vace.relay.claim_job()
     assert captured[-1]["supportsVideoRestyleGrabBag"] is False
+
+
+def _lora_info(names):
+    return {"LoraLoaderModelOnly": {"input": {"required": {"lora_name": [names, {}]}}}}
+
+
+def test_fast_draft_graph_adds_causvid_lora_and_standard_graph_is_unchanged(monkeypatch):
+    worker = setup_modules(monkeypatch).vace
+    standard = worker.graph("in.mp4", 1, "Painted", "prefix")
+    assert "lora" not in standard
+    assert standard["sampling"]["inputs"]["model"] == ["model", 0]
+    assert (standard["sample"]["inputs"]["steps"], standard["sample"]["inputs"]["cfg"]) == (20, 6)
+    fast = worker.graph("in.mp4", 1, "Painted", "prefix", fast=True)
+    assert fast["lora"]["inputs"] == {"model": ["model", 0], "lora_name": worker.FAST_LORA,
+                                      "strength_model": worker.FAST_LORA_STRENGTH}
+    assert fast["sampling"]["inputs"]["model"] == ["lora", 0]
+    assert fast["sample"]["inputs"]["steps"] == worker.FAST_STEPS
+    assert fast["sample"]["inputs"]["cfg"] == worker.FAST_CFG
+
+
+def test_fast_draft_gets_its_own_cache_signature(monkeypatch, tmp_path):
+    worker = setup_modules(monkeypatch).vace
+    source = tmp_path / "source.mp4"
+    source.write_bytes(b"media")
+    pilot = {"startSec": 0, "durationSec": 8}
+    reference = tmp_path / "reference.png"
+    standard = {"renderRecipe": {"stylePrompt": "Painted animation"}, "quality": "720p"}
+    fast = {"renderRecipe": {"stylePrompt": "Painted animation", "renderSpeed": "fast"},
+            "quality": "720p"}
+    explicit = {"renderRecipe": {"stylePrompt": "Painted animation", "renderSpeed": "standard"},
+                "quality": "720p"}
+    plain = worker.render_cache_key(source, standard, pilot, reference)
+    assert worker.render_cache_key(source, explicit, pilot, reference) == plain
+    assert worker.render_cache_key(source, fast, pilot, reference) != plain
+
+
+def test_fast_draft_lora_must_be_listed_by_comfy(monkeypatch):
+    worker = setup_modules(monkeypatch).vace
+    assert worker.fast_draft_available(_lora_info([worker.FAST_LORA, "other.safetensors"]))
+    assert not worker.fast_draft_available(_lora_info(["other.safetensors"]))
+    assert not worker.fast_draft_available({})
+    assert not worker.fast_draft_available(True)
+
+
+def test_fast_draft_blocks_without_lora_and_renders_with_it(monkeypatch, tmp_path):
+    import json
+    worker = setup_modules(monkeypatch).vace
+    schedule = [{"index": i, "styleId": "noir"} for i in range(3)]
+    job_path, input_dir = _grab_bag_job(tmp_path, schedule, {"noir": "Expressionist animated noir"})
+    state = json.loads(job_path.read_text())
+    state["renderRecipe"]["renderSpeed"] = "fast"
+    job_path.write_text(json.dumps(state))
+    graphs = _fake_comfy(monkeypatch, worker)
+    args = SimpleNamespace(comfy_url="http://localhost:8188", comfy_input=input_dir,
+                           timeout_seconds=100, dry_run=False)
+    monkeypatch.setattr(worker, "check_comfy", lambda base: _lora_info([]))
+    worker.render(job_path, args)
+    blocked = json.loads(job_path.read_text())
+    assert blocked["status"] == "PILOT_BLOCKED"
+    assert worker.FAST_LORA in blocked["stage"]
+    assert graphs == []
+    monkeypatch.setattr(worker, "check_comfy", lambda base: _lora_info([worker.FAST_LORA]))
+    blocked["status"] = "PILOT_QUEUED"
+    job_path.write_text(json.dumps(blocked))
+    worker.render(job_path, args)
+    assert len(graphs) == 3
+    assert all(graph["lora"]["inputs"]["lora_name"] == worker.FAST_LORA for graph in graphs)
+    assert json.loads(job_path.read_text())["status"] == "REVIEW"
+
+
+def test_relay_fast_draft_capability_and_pass_through(monkeypatch, tmp_path):
+    import json
+    vace = setup_modules(monkeypatch)
+    monkeypatch.setattr(vace, "INPUT_ROOT", tmp_path)
+    monkeypatch.setattr(vace.shutil, "which", lambda name: f"/bin/{name}")
+    monkeypatch.setattr(vace.vace, "check_comfy", lambda base: _lora_info([]))
+    vace._probe_capability()
+    assert vace.capable() and not vace.fast_capable()
+    monkeypatch.setattr(vace, "_last_check", 0)
+    monkeypatch.setattr(vace.vace, "check_comfy", lambda base: _lora_info([vace.vace.FAST_LORA]))
+    vace._probe_capability()
+    assert vace.fast_capable()
+
+    monkeypatch.setattr(vace, "WORK_ROOT", tmp_path)
+    monkeypatch.setattr(vace, "_source", lambda rid, aid, dest: dest.write_bytes(b"source"))
+    monkeypatch.setattr(vace, "_report", lambda *a, **k: None)
+    monkeypatch.setattr(vace, "_submit_video", lambda *a: None)
+    seen = []
+    def fake_render(job_path, args):
+        state = json.loads(job_path.read_text())
+        seen.append(state["renderRecipe"])
+        (job_path.parent / "pilot.mp4").write_bytes(b"\x00\x00\x00\x18ftypmp42animated")
+        state["status"] = "REVIEW"
+        job_path.write_text(json.dumps(state))
+    monkeypatch.setattr(vace.vace, "render", fake_render)
+    def job(speed=None):
+        video = {"id": "c927a107-ec44-4002-a862-03b7b65d3abe", "phase": "pilot",
+                 "startSec": 158, "durationSec": 24, "totalSegments": 7}
+        if speed:
+            video["renderSpeed"] = speed
+        return {"id": 7, "userId": 1, "payload": {
+            "media": "video-restyle-vace", "promptString": "Painted", "videoRestyle": video}}
+    vace.process(job("fast"))
+    vace.process(job())
+    assert seen[0]["renderSpeed"] == "fast"
+    assert "renderSpeed" not in seen[1]
+
+    captured = []
+    monkeypatch.setattr(vace.relay, "http_json", lambda method, url, body, **kw: (
+        captured.append(body) or (200, {"success": True, "data": {"job": None}})))
+    monkeypatch.setattr(vace.relay, "supports_video_restyle_fast", lambda: True, raising=False)
+    vace.relay.claim_job()
+    assert captured[-1]["supportsVideoRestyleFast"] is True
+    monkeypatch.setattr(vace.relay, "supports_video_restyle_fast", lambda: False)
+    vace.relay.claim_job()
+    assert captured[-1]["supportsVideoRestyleFast"] is False

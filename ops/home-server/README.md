@@ -271,6 +271,22 @@ deployment. We have not installed models or restarted the Windows process
 from a cloud-only GitHub session. Do not mark the pilot rendered until its
 private MP4 is playable.
 
+**Fast draft (optional).** Coat Dance projects set to *Render speed: Fast
+draft* sample each window in 8 steps at cfg 1 with the CausVid distillation
+LoRA, instead of 20 steps at cfg 6 — about a fifth of the GPU work per window.
+It needs one 91 MB file, placed at the root of the local LoRA folder:
+
+```
+D:\comfy\comfy-fast\models\Lora\Wan21_CausVid_bidirect2_T2V_1_3B_lora_rank32.safetensors
+```
+
+from `https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan21_CausVid_bidirect2_T2V_1_3B_lora_rank32.safetensors`.
+Restart ComfyUI so its LoRA list includes it, then kr-relay. The relay sends
+`supportsVideoRestyleFast: true` only while ComfyUI lists that exact filename.
+Until then, Fast draft jobs wait PENDING and standard jobs are unaffected.
+Strength (0.6) and steps (8) are starting points in `coat_dance_vace_worker.py`.
+Judge them on a pilot before trusting a full film.
+
 
 
 `relay_agent.py` closes the autonomous loop: it polls the kind_robots ArtJob

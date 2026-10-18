@@ -506,6 +506,12 @@ def claim_job():
                 callable(globals().get("supports_video_restyle"))
                 and supports_video_restyle()
             ),
+            # Coat Dance Fast draft jobs sample with the CausVid LoRA. Only a
+            # relay whose ComfyUI lists that LoRA may claim them.
+            "supportsVideoRestyleFast": bool(
+                callable(globals().get("supports_video_restyle_fast"))
+                and supports_video_restyle_fast()
+            ),
             "supportsCompletionProof": True,
             # claim.post.ts defaults this on (only an explicit false means FIFO);
             # sent anyway so model-affinity scheduling never depends on that default.

@@ -498,6 +498,7 @@ def process_with_media(job):
 
 
 relay.supports_video_restyle = vace_relay.capable
+relay.supports_video_restyle_fast = vace_relay.fast_capable
 relay.run_comfy = run_comfy_with_recovery
 relay.process = process_with_media
 
