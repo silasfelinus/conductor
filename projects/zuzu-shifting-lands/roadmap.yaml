@@ -45,6 +45,22 @@ notes_from_silas: |
   Agents are authorized to build reversible code and internal art drafts
   without another scope-confirmation wait. Internal generation must still
   respect actual resource, mana, rights and privacy restrictions.
+  2026-10-18 PT (iPad, after playing Three Cups on the Table): "Zuzu shifting
+  lands feels like it's lost some polish since we've been working on Shifting
+  Desks. The writing feels stilted. We should be presenting it in second person,
+  the zuzu lines are stilted (and will make it so we can't let players
+  eventually run the same quest with different characters). The layout feels
+  cluttered, takes up extra screens when we should just have a single page
+  display with all relevant info. It's ok to have a new tab for journal or
+  character sheet, but generally we want all info to be on one page. ... the
+  challenge is three cups on the table, and the picture only shows a mouse and an
+  empty table. ... Our shifting desks game has 24 random encounters for each
+  level, five levels. I want an assessment of what shifting lands has, and aim
+  for that level of complexity or better. We've also done work with simplifying
+  and clarifying skill checks. While desks is more about weirdness and oddities,
+  the world of zuzu should be about making tough decisions and facing the
+  consequences of sacrifice and doing good in a world that doesn't always
+  reward it." Assessment: DEPTH-ASSESSMENT-2026-10-18.md; tasks t-030..t-035.
 milestones:
   - id: m1
     title: "SHAPE — design brief, world rules, resource taxonomy, encounter schema"
@@ -565,3 +581,73 @@ tasks:
 
       Reviewed and merged partial implementation PR silasfelinus/conductor#6129 at aa6841439e6976a33447d4a279df6aa0352fb278 after25 completed current-head checks (23 successful,2 intentional skips); local33 enqueue tests pass. All69 existing ArtJobs38518–38586 retained with approved ROUND1 source IDs, valid denoise and prompts. Probe38518/ArtImage246660 remains explicitly rejected. This does NOT complete22 outcome plates. Next worker must claim this task on live main, refresh existing job statuses without duplicate enqueue, visually curate one keeper per outcome against fixed cast/consequence, export and merge a green focused Kind Robots BESPOKE_OUTCOMES adoption PR; verify final delivered files before done. No deployment or publication was performed.
     updated: '2026-10-13T16:32:00Z'
+  - id: t-030
+    milestone: m5
+    title: "Second-person, hero-agnostic prose; one-screen reader; Risky-N dice chip"
+    status: done
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    source: silas-2026-10-18
+    note: |-
+      Silas, 2026-10-18 (see notes_from_silas). kind_robots#3830: all 48 cards, 5 trials and journal lines in second person, present tense, never naming/gendering the hero; boilerplate intents and mechanical risk lines replaced; flavors show what titles promise. Restores compare mechanics not prose (sameReplay) so V3-V5 saves survive; trial rules fingerprinted. Readers fit one screen with the whole painting (contained over a blurred fill); dice chip reads "Risky 7" (difficulty word + dice needed, tap explains). Verified with all 10 verifyShifting* contracts and screenshots at 1180x820, 1440x900, 390x844, 844x390. Merged 2026-10-18 as kind_robots 89c419cba46331d86fe7ea761621c07698580a92 after 21/21 green checks.
+    updated: '2026-10-18T10:30:00Z'
+  - id: t-031
+    milestone: m2
+    title: "V6 deck engine: certain, gated and costed choices, moral ledger, 8-card pools, V6 save"
+    status: claimed
+    claimed_by: claude-session-01A1gxboeuGjcf6N5Aj7oq6e
+    claimed_at: '2026-10-18T10:30:00Z'
+    passes: 0
+    stakes: reversible
+    depends_on: [t-030]
+    source: silas-2026-10-18
+    note: |-
+      Match Shifting Desks' card mechanics (DEPTH-ASSESSMENT-2026-10-18.md): choices may be certain (roll null, success only), gated on shared deed flags (requires.anyFlags, shown locked with the reason), and carry an up-front hp/provisions cost; outcomes record moral marks (mercy, honesty, courage, cunning, ruthlessness). One reducer for all five lands, pools of 8 per location, new kr.shiftingLands.journeyLedger.v6 key with full replay verification. V2-V5 saves keep the frozen 48-card / two-choice rules (additions carry since: 6). Board shows locked routes, costs and the Risky-N chip for every kind of choice.
+    updated: '2026-10-18T10:30:00Z'
+  - id: t-032
+    milestone: m3
+    title: "Author 24 cards per land (72 new) and a third/fourth choice on the existing 48"
+    status: claimed
+    claimed_by: claude-session-01A1gxboeuGjcf6N5Aj7oq6e
+    claimed_at: '2026-10-18T10:30:00Z'
+    passes: 0
+    stakes: reversible
+    depends_on: [t-031]
+    source: silas-2026-10-18
+    note: |-
+      Eight cards per location in every land (Homestead +12, other lands +15 each), 3-4 choices per card, at least half the cards with a certain sacrifice/refusal choice, about a third with a route gated on the ten shared deed flags, in the 2026-10-18 voice: hard decisions, the cost of sacrifice, doing good that is not always rewarded. Second person, hero-agnostic. Each new card ships an art brief for t-033.
+    updated: '2026-10-18T10:30:00Z'
+  - id: t-033
+    milestone: m3
+    title: "Art round 4: paint the 72 new cards; re-render Three Cups; audit titles vs paintings"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-032]
+    source: silas-2026-10-18
+    note: |-
+      Silas, 2026-10-18: "the challenge is three cups on the table, and the picture only shows a mouse and an empty table." The ROUND-1 keeper public/shifting-lands/cards/three-cups-on-the-table.webp has a cook, a lantern and a bare table: no cups. Re-render it with the three cups explicit and countable, audit all 48 existing card paintings for every object their titles promise, and paint the 72 V6 cards from the art briefs shipped with t-032 (fixed cast per card, the traveler out of frame or seen from behind, no lettering), same house checkpoint and exporter as ROUND-1/2.
+    updated: '2026-10-18T10:30:00Z'
+  - id: t-034
+    milestone: m3
+    title: "Endings from the moral ledger and trial outcomes (Desks-level ending variety)"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-031]
+    source: silas-2026-10-18
+    note: |-
+      Shifting Desks has 10 authored endings with variants and 6-9 outcomes per department boss; Shifting Lands has victory / fallen / retired. Read the V6 marks ledger and trial results into authored endings so a merciful run that falls and a ruthless run that wins read differently, in the voice of sacrifice and unrewarded good. Trials may gain ledger-aware outcomes under the V6 rules version.
+    updated: '2026-10-18T10:30:00Z'
+  - id: t-035
+    milestone: m5
+    title: "V6 balance report: survival, death causes and gate reachability by land"
+    status: waiting
+    passes: 0
+    stakes: reversible
+    depends_on: [t-032]
+    source: silas-2026-10-18
+    note: |-
+      Port the idea of kind_robots utils/scripts/shiftingDesksBalanceReport.ts: simulate many seeds with simple policies (always kind, always safe, greedy, random), report survival per land, the cards that kill most, how often each gated route is reachable, and provisions curves; tune targets/costs where a land is a cliff.
+    updated: '2026-10-18T10:30:00Z'
