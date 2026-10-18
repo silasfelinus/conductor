@@ -17,3 +17,9 @@
 **Recorded as:** SYSTEMS-V03.md (governing), DAY-PLAN.md rewritten to 50 days, v0.2 docs marked superseded, roadmap rescoped (t-005–t-013, t-016, t-017) and t-019–t-028 added. Engine rebuild is t-019; the existing v0.2 Day 1–4 data in kind_robots is to be converted, not discarded.
 
 **Agent design calls Silas may overrule (all reversible):** currency named *brass*; five stats Might/Guile/Wits/Heart/Lore at 0–10 replacing the three 0–5 stats; five local factions (Ledger, Old Houses, Yard, Lamplight Archive, Gate Watch); two new kingdom factions (the Rustline salvagers, the Black Verge Court) revealed at act ends; Komodo's motive as a bargain with the Abbess's order; Prosperity/Popularity folded into brass and local support.
+
+## 2026-10-18 PT | Silas → Worker | design | v0.3 approved; saves and rewind added
+
+**Decision:** Silas approved every v0.3 design call: "love everything, especially brass. all approved". Brass, the five stats, the five local and ten kingdom factions and Komodo's motive are no longer provisional.
+
+**New direction:** "given the nature of passing and failing quests, we should have a robust load/save system, and allow the player the option to rewind to previous days (though random events will stay random, another pass will not create the same events necessarily)". Recorded in SYSTEMS-V03.md "Saves, load and rewind": autosave, a dawn snapshot per day, rewind to any earlier dawn on a new random branch, three manual slots, Codex and Items of Power never rolled back, validated saves that never overwrite unreadable data. Built into t-019's engine.

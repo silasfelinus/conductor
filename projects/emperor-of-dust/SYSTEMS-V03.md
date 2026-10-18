@@ -316,6 +316,28 @@ Restored, Open Roads, Iron Peace, the Crow's Bargain, the Witchwater Throne, Tun
 Councils (Mole settlement), the Long Night (the horror wins, the survivors scatter), and A
 Hundred Candles (heavy losses, every dead follower named).
 
+## Saves, load and rewind
+
+Silas, 2026-10-18: *"given the nature of passing and failing quests, we should have a robust
+load/save system, and allow the player the option to rewind to previous days (though random
+events will stay random, another pass will not create the same events necessarily)."*
+
+- **Autosave** after every action (an audience answered, a quest assigned, Finish).
+- **Dawn snapshots:** the save keeps the run as it stood at the start of every day so far.
+- **Rewind** to the dawn of any earlier day (or restart today). Later days are discarded.
+- **Rewinding starts a new branch.** Seeded events after that point roll fresh: the dawn's random
+  chores, quest results, injuries and deaths can all come out differently. Authored content
+  (the day's script, the audiences, the quests your answers post) stays the same, and your
+  choices still decide what is offered.
+- **Manual slots** (three to start) with a label and timestamp, each holding the full run and its
+  dawn snapshots, so a slot can be rewound too.
+- **Meta progress survives rewinds and reloads:** the Codex (revealed traits and allegiances) and
+  Items of Power are never rolled back. A player who learned a secret on a failed branch keeps it.
+- **Robustness:** every save is validated before it is written and when it is read (known ids,
+  bounded values, no double-booked follower). An unreadable save is never overwritten; the game
+  says so and offers a new run or a slot. Storage that is blocked or full is reported, not
+  ignored.
+
 ## Items of Power (persistent, kept from v0.2, travel items reworked)
 
 One slot per run at first, a second unlocked by progress. The Eye of the Elder Crow highlights the
@@ -348,5 +370,8 @@ also persistent but is not an Item of Power and uses no slot.
 - Act-end map events fire on Days 10/20/30/40; wipe-outs telegraphed one act ahead.
 - Komodo's betrayal fires on Day 40 in every run; the hideout always resolves to a location.
 - Text streaming with instant-complete and a persisted speed setting.
-- Deterministic replays (seed + choices → same run); responsive at 390 / 768 / 1440.
+- Deterministic within a branch (seed + branch + choices → same run, for tests); a rewind
+  advances the branch so replayed days roll fresh. Autosave, dawn snapshots for every day, three
+  manual slots, validated saves that never overwrite unreadable data.
+- Responsive at 390 / 768 / 1440.
 - Still private Admin only; public `/play` remains Silas's explicit release gate (t-010).

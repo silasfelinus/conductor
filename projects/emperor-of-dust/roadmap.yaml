@@ -12,6 +12,12 @@ goal: >-
   an Act V hideout, injury and rare death, romance and multiple endings.
   Begin in Admin; full Play launch requires explicit publication approval.
 notes_from_silas: |
+  2026-10-18 PT (later): "given the nature of passing and failing quests, we should have
+  a robust load/save system, and allow the player the option to rewind to previous days
+  (though random events will stay random, another pass will not create the same events
+  necessarily)". Spec: SYSTEMS-V03.md "Saves, load and rewind". Silas approved every
+  v0.3 design call (brass, five stats, factions, Komodo's motive): "love everything,
+  especially brass. all approved".
   2026-10-18 PT redesign (supersedes the Horde, hour clock and 100-day/100-follower
   scale below; full spec projects/emperor-of-dust/SYSTEMS-V03.md):
   Sovereign Tower is the flow reference, not a style to copy: scripted and
@@ -140,7 +146,7 @@ tasks:
   - id: t-005
     milestone: m4
     title: "Script Act I, Days 01–10, as fortress days (briefing, audiences, quests)"
-    status: waiting
+    status: ready
     depends_on: t-019
     passes: 0
     stakes: reversible
@@ -312,7 +318,7 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Rebuild the engine for v0.3: remove Horde and hours, day-based quests, brass, factions"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -324,14 +330,25 @@ tasks:
       strength, follower state (ready, on quest, injured, dead) and a new save
       version that discards v0.2 pilot saves with a notice. Keep relic vault and
       injury/death rules. Contract tests per SYSTEMS-V03.md acceptance.
+
+      Engine, store, Days 1-4 conversion, F001-F010 in the v0.3 schema and rewindable saves in
+      kind_robots#3846. Built alongside the v0.2 pilot; t-020 swaps the /play UI over and
+      retires the v0.2 modules.
+
+      Merged kind_robots#3846 as c2e120f03b4249cc86173bc176ea669d66d92624 after all 19 checks
+      passed on head 784210258d64a166dc5d4efb1ae3b04bba968e56 (TypeScript, Seeded dispatch and
+      recovery contract, contract shards, layout-contract, Changed-file Prettier). Local full
+      vue-tsc also clean. The /play page still runs the v0.2 pilot until t-020; F011-F020
+      remain t-011; Days 5-50 remain t-005..t-008.
     owner: worker
     claimed_by: 2026-10-18T223500Z-emperor-t019-b7r
     claimed_at: '2026-10-18T22:33:19Z'
-    updated: '2026-10-18T22:33:19Z'
+    updated: '2026-10-18T22:56:01Z'
+    implementation_pr: 'silasfelinus/kind_robots#3846'
   - id: t-020
     milestone: m2
     title: "Build the Fortress shell: five rooms, HUD strip, Finish and animated day/night/dawn report"
-    status: waiting
+    status: ready
     depends_on: t-019
     passes: 0
     stakes: reversible
@@ -363,7 +380,7 @@ tasks:
   - id: t-023
     milestone: m3
     title: "Follower secret traits, unique abilities, faction modifiers, hidden allegiance and the persistent Codex"
-    status: waiting
+    status: ready
     depends_on: t-019
     passes: 0
     stakes: reversible
@@ -381,7 +398,7 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Map room: territories, taxes, affinity tiers, act-end map events and telegraphed faction wipe-outs"
-    status: waiting
+    status: ready
     depends_on: t-019
     passes: 0
     stakes: reversible
