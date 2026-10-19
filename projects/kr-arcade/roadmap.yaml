@@ -1708,7 +1708,7 @@ tasks:
   - id: t-098
     milestone: m8
     title: "Rover Ramble depth slice 1: Course engine and Moon 1"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -1719,10 +1719,18 @@ tasks:
       need an assessment done of the other arcade games. I want the same level of quality improvements, they
       should not just be thin veneers of the old games. But newer, better, even more awesome."
 
+      Slice 1 shipped (kind_robots#3854, squash 460ecc2): authored A-Z course
+      (roverRamble/course.ts) replacing ROVER_CURVES, outpost reports with stamps, course end
+      at Z, rear-view HUD and pursuers, landmines, tanks, bomber and zig saucers, moon
+      creepers, dust devils, ramps with big-air, boulder stomp. Moons 2-5 reuse the threats on
+      harder scripts until slices 2-4. CI green (57 cabinet suites).
+    updated: '2026-10-19T07:11:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#3854'
+
   - id: t-099
     milestone: m8
     title: "Rover Ramble depth slice 2: The Tow Train, outposts, Rime and Cinder"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-098
@@ -1734,6 +1742,9 @@ tasks:
       2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
       improvements, they should not just be thin veneers of the old games. But newer, better, even more
       awesome."
+
+      Unblocked: t-098 (slice 1) shipped in kind_robots#3854.
+    updated: '2026-10-19T07:14:37Z'
 
   - id: t-100
     milestone: m8
