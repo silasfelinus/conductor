@@ -112,3 +112,11 @@ type JourneyState = {
 8. One-screen mobile/tablet/desktop game board survives all cards, crossroad decisions, dice UI, Companion/Journal/Endings tabs and the 32-slot gallery. Only internal bounded panes scroll.
 9. The ten civic future motifs remain optional world-state settings. Real historical atrocities and Luna's record never change. Existing cultural boundaries remain.
 10. Preserve user creative gates: text/design is allowed; **no art queue, unapproved gameplay deployment or publication**.
+
+## Optional finite detours during the companion journey (2026-10-19)
+
+Silas added **three voluntary Other Roads mini-adventures**, Cocaine / Meth / MDMA, whose fictional stories end *before* the grand county-fate convergence. They are available at a separate festival entry **instead** of the four main opening states, or as a few authored **mid-run off-ramps**. The current main loop still begins Sober→Mara, Tipsy→Kit, Stoned→Juniper, Tripping→Cedar, then seeded side cards and guaranteed **Stay / Follow** crossroads: no fifth guide and no free initial leader picker.
+
+**If choosing a later detour:** present a clear opt-in and an explicit Keep Following the County choice, explain that accepting this short story ends the current main run early, and preserve the original opening, last followed companion and relationship history only for this side-story callback. Record route_kind=detour / detour_source=mid_run and stop the main finale resolver. **If declining:** the seeded journey and all 32 finale outcomes remain available. **If choosing a detour at the festival instead:** do not assign a false opening_state or first companion.
+
+A detour end may be personally heartening, particularly MDMA's connection story, but **cannot award a main good or bad county ending, an X/32 unlock, or the shared main-ending badges**. No players are involuntarily given drugs; no drug route is required for core evidence. Each short scripted arc has its own terminal vignette, separate optional Journal discovery and accessible one-screen play. This is storytelling, not clinical claims that cocaine, meth, or MDMA inevitably cause behavior or doom. Source of truth: [OPTIONAL-DETOURS.md](OPTIONAL-DETOURS.md).

@@ -194,14 +194,20 @@ tasks:
   - id: t-007
     milestone: m4
     title: "Script Act IV (Days 31–40) faction wars and Young Komodo's Day 40 betrayal"
-    status: ready
+    status: done
     depends_on: t-006
     passes: 0
     stakes: reversible
+    note: >-
+      Act IV (Days 31-40) shipped in kind_robots#3867: ten authored days, six quests (two
+      lethal), Komodo's [K] clues on Days 32 and 38, three more of his own lies (Days 32, 37,
+      40) and a Day 40 audience with Komodo before the betrayal fires at dawn.
+    updated: '2026-10-19T11:44:25Z'
+    implementation_pr: 'silasfelinus/kind_robots#3867'
   - id: t-008
     milestone: m4
     title: "Script Act V hideout (Days 41–50) and the eight ending families"
-    status: waiting
+    status: done
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -209,10 +215,19 @@ tasks:
       Hideout variants per SYSTEMS-V03.md (Mole tunnels, Crow cave, Bell cellars,
       Jackalwire wagons, caravan, Freehold barn, Rustline station, fallback cave),
       each changing Act V quests, market and ending options.
+
+      Act V (Days 41-50) and the eight ending families shipped in kind_robots#3869: hideout
+      flag on betrayal, eight Day 42 host audiences and quests, Keeper Vellum's briefings, Day
+      49 peace choice, Day 50 last dispatch (front door, well road, bell tower), endings.ts
+      and the end screen naming every lost follower. Left for t-028: hideout income and
+      departing followers; for t-024: a hideout market. Sims (200 varied runs) reached 7 of 8
+      endings and 3 of 8 hideouts; balance goes to t-009.
+    updated: '2026-10-19T12:10:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#3869'
   - id: t-009
     milestone: m5
     title: "Verify eight-image follower set, NPC moods, full 50-day balance and responsive QA"
-    status: waiting
+    status: ready
     depends_on: t-008
     passes: 0
     stakes: reversible
@@ -260,7 +275,7 @@ tasks:
   - id: t-012
     milestone: m5
     title: "Deliver eight images per follower (five illustrated moods, three portrait states) and NPC moods"
-    status: claimed
+    status: done
     depends_on: t-011
     passes: 0
     stakes: reversible
@@ -281,10 +296,15 @@ tasks:
       lists what was exported). kind_robots#3866 exports 232 of 246; 14 rejected
       on review are rerolling as -v3 subjects. Close once those are approved and
       exported.
+
+      Delivered 246/246 on 2026-10-19: kind_robots#3866 (232) and #3868 (the last 14 v3
+      rerolls). castArt.ts lists all 246 and the contract asserts the count; NPC reactions in
+      the throne room and Komodo's betrayal at the Day 41 dawn use the moods.
     owner: worker
     claimed_by: 2026-10-19T0700-emperor-t012-art
     claimed_at: '2026-10-19T07:02:38Z'
-    updated: '2026-10-19T07:02:38Z'
+    updated: '2026-10-19T11:50:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#3868'
   - id: t-013
     milestone: m4
     title: "Write all 50 three-report briefings with Young Komodo clues and his own seeded lies"
