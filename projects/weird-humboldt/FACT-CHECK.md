@@ -49,3 +49,19 @@ Additional grounded inspiration: the Humboldt Juggling Society's festival progra
 - **Wildlife, marsh and working landscape:** Humboldt Bay refuge and altered historic marsh habitat provide strong grounded ecology, not blanket claims that all restoration has been completed. https://www.fws.gov/refuge/humboldt-bay/about-us
 
 **Speculative story-only:** tech utopia/dystopia, secret forecasting machine, magical future-overlap, corporate villains, sabotaging anarchist faction, enormous rail corridor, permanent ecological sanctuary, all ten endings. Mark these as future inventions. Research actual disadvantaged communities as living residents with agency, not 'meth and poverty' horror set dressing. Use careful outside cultural review before writing real tribal political positions or culture-specific narratives into the game.
+
+## Luna and the timber-era conflicts (2026-10-19)
+
+**Julia Butterfly Hill and Luna, documented:** Hill occupied the ancient coast redwood **Luna** on a ridge above **Stafford, Humboldt County, for 738 days between December 10, 1997 and December 18, 1999**. A negotiated conservation agreement protected Luna and a buffer zone. The local nonprofit **Sanctuary Forest** monitors this preservation covenant. In November 2000 a vandal cut into Luna's trunk with a chainsaw; the tree survived after conservation intervention. **Luna is not publicly accessible** and must not be placed inside Headwaters Forest Reserve.
+
+**Primary/local sources:**
+- Julia Butterfly Hill, biography and stewardship: https://juliabutterflyhill.com/luna/
+- Sanctuary Forest, covenant, repair and restricted access: https://sanctuaryforest.org/programs/land-conservation/luna/
+- Humboldt Area Peoples Archive on tree sitting: https://humboldtareaarchive.org/tree-sitting/
+- Trees Foundation historical interview: https://treesfoundation.org/2021/07/julia-butterfly-hill/
+
+**Timber Wars and Earth First!:** Tree spiking was a dangerous tactic promoted by some radical environmentalists. A 1987 spiked saw log severely injured sawmill worker George Alexander in **Cloverdale (Mendocino region)**. The culprit of that specific incident was not conclusively established: do not assert a named activist's culpability. Some Northern California Earth First! factions publicly **renounced tree spiking on April 11, 1990**, while disagreements continued. Contemporary sources: https://ecology.iww.org/node/87 ; Judi Bari's account from interviews with the injured worker: https://ecology.iww.org/texts/JudiBari/The%20Secret%20History%20of%20Tree%20Spiking%20-%20Part%201 ; California mill report https://www.latimes.com/archives/la-xpm-1990-08-10-mn-303-story.html .
+
+**Lived local perspective from Silas:** As a child his family displayed **a green antenna ribbon**; yellow and green ribbons were loaded and complicated social markers in the timber/environmental divide. "Earth First!" could be an **insult** in local speech, but the organization and any particular ribbon color were not interchangeable with the whole forest-protection movement, with cannabis growers, or with every timber worker's political beliefs. Specific meanings varied with household and era, and are not to be standardized as historical proof without local sources.
+
+**Fictional use:** younger country companion Cedar (working name) has a fictional grower-family parent and timber-family parent who fell in love across the era's division. As a child he witnessed family debates over Julia Butterfly Hill and Luna; **do not** claim his invented relatives actually participated in her campaign. Later radio anomalies concern **invented possible futures** rather than retroactively changing, sensationalizing or privatizing this historical record. Avoid access directions to Luna.
