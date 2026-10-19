@@ -32,11 +32,11 @@
 
 **Possible flags:** `juniper_habitat_verified`, `juniper_human_allies_trusted`, `juniper_shared_canopy_kept`.
 
-### Kit: The Living Return (Tipsy first-meeting, all states)
+### Kit: The Chosen Home (Tipsy first-meeting, all states)
 
-**Need:** She chose to return to Eureka generations after her fictional ancestors' expulsion in the documented **1885** anti-Chinese violence. She wants a creative life that belongs to her, without making grief her only biography or becoming a corporate marketing mascot.
+**Need:** (Heritage revised 2026-10-19 PT: Kit is Hmong American; the earlier 1885 Eureka family line is withdrawn.) She came to Humboldt by choice, far from where her family's community is centered. She wants a creative life that belongs to her, without making grief her only biography or becoming a corporate marketing mascot.
 
-**Three earned beats:** (a) take seriously both Kit's Old Town family memories and her joyous new kinetic-art ambitions; (b) prevent a fictional arts venue or communal workshop from being sold off as décor or from becoming inaccessible through rising rents; (c) work with artists, apprentices, neighbors and builders to stage a deliberately collaborative public performance.
+**Three earned beats:** (a) take seriously both Kit's family ties (story open for Silas) and her joyous new kinetic-art ambitions; (b) prevent a fictional arts venue or communal workshop from being sold off as décor or from becoming inaccessible through rising rents; (c) work with artists, apprentices, neighbors and builders to stage a deliberately collaborative public performance.
 
 **Hard decision:** sacrifice a chance at private celebrity/exclusive ownership of an impossible machine for a sustainable, accessible arts space that can pay participants fairly. Other self-respecting choices also exist.
 

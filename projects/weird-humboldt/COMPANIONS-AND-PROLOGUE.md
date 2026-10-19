@@ -27,33 +27,29 @@ At an invented composite festival, an adult player explicitly opts for **Sober**
 - **Shared mystery:** the strange repeating symbol appears in natural growth patterns. The forest itself isn't a Native spiritual tradition in disguise.
 - **Other routes:** sober, tipsy and tripping players can encounter her magic and choose to help her later.
 
-## 2. Kit — Chinese American kinetic sculptor, juggler and physical-theatre performer (Tipsy introduction)
+## 2. Kit — Hmong American kinetic sculptor, juggler and physical-theatre performer (Tipsy introduction)
 
-**Confirmed companion, expanded background (Silas, 2026-10-19).** Kit is a Chinese American adult woman (she/her; gender-expansive stage presence), charismatic, theatrically quick and physically inventive; she makes spectacle out of a broken bike, a folding ladder and a bad idea. Her voice is playful, outrageous and occasionally vulnerable, without making her the default comic drunk.
+**Heritage changed (Silas, 2026-10-19 PT, later):** *"Our juggler is now Hmong American, not Chinese."* This **supersedes** the earlier Chinese American background and the proposed 1885 Eureka-expulsion family line. That history stays in FACT-CHECK.md as county history, but it is no longer Kit's family story. The Old Town "absent storefront" scene that depended on it is **withdrawn**.
 
-**Recommended family chronology, fictional genealogy grounded in local history:** Kit's great-great-grandparents lived in Eureka's Chinatown and were **forced out in February 1885** with hundreds of other Chinese residents. Their descendants built lives elsewhere in California. Kit grew up hearing fragments of the family story, then **chose to return to Humboldt** as a student at **Humboldt State University in the late 2010s** (renamed Cal Poly Humboldt in January 2022), gravitating toward physical theatre and **Dell'Arte's Blue Lake arts community** before joining kinetic sculpture and juggling circles. Her exact school years and theatre training remain fictional biography rather than an assertion about a real student or institute records.
+**Confirmed companion.** Kit is a Hmong American adult woman (she/her; gender-expansive stage presence), charismatic, theatrically quick and physically inventive; she makes spectacle out of a broken bike, a folding ladder and a bad idea. Her voice is playful, outrageous and occasionally vulnerable, without making her the default comic drunk.
 
-**Timeline, carefully distinguished:** Eureka's mass expulsion was **1885**. Chinese American return began in the **mid-1950s**, although some Chinese residents remained in the wider county through the exclusionary decades. Kit's ancestors are **not** asserted to be descendants or relatives of a named historical person. Do not invent an identifiable shop or personal document and attribute it to a real victim.
+**Grounding to respect, not to lecture with:** Hmong Americans are a distinct Southeast Asian people, not interchangeable with Chinese, Lao or Vietnamese Americans. Most Hmong American families trace their arrival in the United States to refugee resettlement after 1975, following the US-backed war in Laos. California's largest Hmong communities are in the Central Valley and Sacramento. Treat these as background facts to verify against community-authored sources before publication. **Kit's own family history is open for Silas**: where she grew up, how her parents or grandparents came, which clan and community ties she carries. Do not assign her a refugee-trauma storyline, clan details, shamanic practice or traditional textiles (paj ntaub / story cloth) as plot devices by default.
 
-**Beyond ancestral trauma:** She loves comedy, mechanical oddities, volunteering on build crews, impossible performances and an excellent prank. She sometimes uses spectacle to dodge difficult conversations. Chinese ancestry is **not** a psychic talent, an exotic archetype or a reason to force her into exposition; she is a fully realized contemporary local.
+**Working biography:** she came up to Humboldt for school (Humboldt State / Cal Poly Humboldt era; the renaming was January 2022), found physical theatre in Blue Lake's Dell'Arte community and stayed for the kinetic-sculpture and juggling crowd. School years and training remain fiction, not claims about real students or records.
+
+**Beyond heritage:** She loves comedy, mechanical oddities, volunteering on build crews, impossible performances and an excellent prank. She sometimes uses spectacle to dodge difficult conversations. Hmong heritage is **not** a psychic talent, an exotic archetype or a reason to force her into exposition; she is a fully realized contemporary local.
 
 - **Public world:** juggling circles, handmade sculptures, theatre workshops, volunteer build crews and grassroots festivals; community relationships are chosen and reciprocal, not automatic from heritage.
-- **Private world:** their latest contraption incorporates a mechanism Kit never designed that pulses with the same anomalous frequency.
-- **Arc:** choose between acclaim for an ambitious sculpture and sacrificing the machine to protect someone; separately, face the complicated pleasure of belonging in a place her family was once driven from, without having to represent every Chinese American in Humboldt.
+- **Private world:** her latest contraption incorporates a mechanism Kit never designed that pulses with the same anomalous frequency.
+- **Arc:** choose between acclaim for an ambitious sculpture and sacrificing the machine to protect someone; separately, make a home and a working life far from where her family's community is centered, without having to represent every Hmong American.
 - **Special entry:** a dancing, laughing festival crowd is an easy first connection for a tipsy player; non-drinkers can befriend Kit through repair work or stagecraft.
-- **Relationship:** Kit jokes about Mara's precision and respects it fiercely in an emergency. Kit's Chinese American family history and Mara's contemporary tribal upbringing are **different**, not interchangeable stories of exclusion; their bond develops through working together as artists.
+- **Relationship:** Kit jokes about Mara's precision and respects it fiercely in an emergency. Kit's family story and Mara's contemporary tribal upbringing are **different**, not interchangeable; their bond develops through working together as artists.
 
-### Kit's optional personal encounter: the absent storefront (text-only draft)
-
-As you pass an Old Town intersection, Kit takes a worn photocopy from her bag, looks at a block of buildings, and goes very quiet. Her family has an old account of a shop near this spot, from before their forced departure. She has read the public historical interpretation but hasn't stood here with someone she trusts before. Then a kid riding a homemade unicycle goes by and Kit immediately starts critiquing its steering. Both parts of her are real.
-
-- **Ask about the family story** (Rizz 7): success earns a personal, voluntary disclosure; failure is a repairable conversational mistake, not a requirement to interrogate her.
-- **Compare the block to public historical records** (Wits 9): corroborate documented geography; failure still permits finding a trustworthy source later.
-- **Offer quiet company** (no roll, spend a little time): let her decide what to share; create a friendship callback rather than turning inherited pain into a clue currency.
-
-A separate supernatural anomaly may affect a *modern* kinetic contraption, but **must not rewrite the true history, fabricate a secret occult cause of the expulsion, or turn actual victims into horror props**. The scene is fundamentally about memory, chosen return and an artist's living agency.
+**Personal encounter: to be re-authored.** The withdrawn Old Town scene should be replaced by one built on whatever family story Silas chooses. A safe default until then is a scene about her craft and chosen home (a family call during a build, a relative who thinks juggling is not a job), with no invented historical trauma.
 
 ## 3. Cedar (working name) — the child of two ribbons (Tripping Balls introduction)
+
+**Heritage (Silas, 2026-10-19 PT, later):** *"our conspiracy theorist is half Hispanic."* Cedar is half Hispanic. Which parent's family is Hispanic (the logging side or the growing side) is **open for Silas**; neither livelihood is tied to ethnicity, and his heritage is not a stat, a stereotype or a punchline. Hispanic/Latino families are a long-standing part of rural Northern California life, timber and agricultural work included; keep specifics source-checked before publication.
 
 **Silas's revised character direction, 2026-10-19:** This is **no longer an older hippie, former grower, dispensary owner or massage therapist**. Those details are withdrawn. Cedar is a **placeholder name** for an early-to-mid-thirties rural Humboldt man with a more redneck/country presentation: beat-up work boots, an oil-stained jacket, tools in his pickup, lively and occasionally ridiculous CB-radio conspiracy theories, a practical mind, and an excellent memory for backroads. He jokes about cosmic forces but isn't stupid or a parody of working-class people. His current occupation is **open for creative selection** (machinery repair, arboriculture, trades, etc. are possibilities, not fixed canon).
 
@@ -112,7 +108,7 @@ Mara may accept a shared route, decline, or arrange to meet later. **The signal 
 All four have encountered the same impossible repeated sign or frequency, in independent human contexts:
 
 - **Mara:** a modern flash design appears twice before she creates it.
-- **Kit:** her kinetic machine diagram contains the same form; this modern anomaly is unrelated to her family's documented displacement.
+- **Kit:** her kinetic machine diagram contains the same form; this modern anomaly has nothing to do with her family or heritage.
 - **Juniper:** the forest repeats a shape it should not make.
 - **Cedar:** his present-day CB signal carries the same symbol, separate from real historic recordings.
 
