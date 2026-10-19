@@ -15,6 +15,26 @@ goal: >-
   one-screen Play experience. Final art direction and any public release remain
   subject to Silas's later explicit creative approval.
 notes_from_silas: |
+  NEWEST 2026-10-19 PT STORY LOOP: Voluntary Sober/Tipsy/Stoned/
+  Tripping opener maps directly to first follower Mara/Kit/Juniper/
+  Cedar. No independent companion picker at prelude. Between fixed
+  companion-crossroads deal seeded randomized authored Humboldt side
+  encounters which change five skills, clues, relationships and
+  future consequences. Meet the remaining three main companions at
+  guaranteed increasingly personal story beats in a seeded varying
+  order; at each, player may STAY with current or leave them to FOLLOW
+  newcomer. Previous guide has independent offscreen agency. Log
+  encounter and follow order for meaningful later callbacks and
+  narrative flavor; allow late switches to reach deep personal arcs.
+  Immutable opening_state decides initial lens and collectible axis;
+  mutable current_state/clarity affects subsequent interactions.
+  The last actually FOLLOWED companion and hope/dark result earned
+  from accumulated choices and visible dice produce exactly 32
+  endings (16 hopeful, 16 dark), not an initial lead menu. Existing
+  10 county scenarios only color these outcomes. Cedar good path
+  centers locally accountable technoutopia and his parents always
+  stay married. One-screen X/32 gallery and achievements unchanged.
+  See JOURNEY-LOOP-CONTRACT.md and ECOTONE-32-ENDINGS.md; no art/publish.
   2026-10-19 PT: New project, Weird Humboldt. Shifting Sands/Lands and Shifting
   Desks-like experiential cards with skill checks; Humboldt County locations,
   events and locals. Play journalist, student, rower, lifelong local, Native
@@ -221,13 +241,15 @@ tasks:
     milestone: m3
     title: "Prototype deterministic reducer and isolated saveable text-only journey"
     status: waiting
-    depends_on: t-002
+    depends_on: [t-002, t-019]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Once the story/encounter contract exists, prototype 2d6 rules, eligibility,
-      unique seeded draws, flags, fair failure paths, evidence ledger and save
+      unique seeded side-card draws between guaranteed companion beats,
+      opening-mapped first guide, active companion, follow_history,
+      meeting_order, flags, fair failures, evidence ledger and save
       versioning in tests without publishing a Play page. Reuse shared stateless
       card primitives but do not inherit Shifting Lands/Desks stores.
   - id: t-006
@@ -479,16 +501,20 @@ tasks:
       background county motifs and four companion journal threads. No art or public release.
   - id: t-019
     milestone: m1
-    title: "Validate 32-outcome architecture and independent lead selection"
+    title: "Validate 32 fates through prelude-mapped guides and companion crossroads"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Define 32 stable lead.opening.fate IDs, 16 hopeful/16 dark.
-      Establish lead selection independent of first festival state,
-      guaranteed chapter anchors for all 16 lead/opening pairs and
-      two meaningful resolution paths each. No substance-as-morality
+      Opening state maps to initial Mara/Kit/Juniper/Cedar encounter;
+      there is NO independent initial companion picker. Three
+      guaranteed later first meetings of remaining main characters
+      arrive in seeded variable order; at each, choose stay or
+      leave previous guide to FOLLOW the newcomer. This yields
+      16 final companion x opening combinations with meaningful
+      both hopeful and dark resolutions and saved route order. No substance-as-morality
       mechanics, no extra 10 collectible county motifs. Cedar's
       four optimistic storylines explicitly build ethical high-tech
       infrastructure with local ownership, jobs and forest care.
@@ -513,16 +539,42 @@ tasks:
     milestone: m3
     title: "Test every one of 32 earned endings and gallery persistence"
     status: waiting
-    depends_on: [t-019, t-020, t-005, t-018]
+    depends_on: [t-019, t-020, t-005, t-018, t-022]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Seeded real choices/checks must reach both fates for each
-      lead x opening state, including nondefault lead meetings and
-      failure-repair paths. Assert exactly 32 IDs, 16 hope/16 dark,
+      final lead x opening lens, via real stay/follow decisions
+      after the correct initial companion and mandatory encounters
+      with other main characters in varied order. Reproduce side
+      draws, stat changes, save/reload and failure-repair paths. Assert exactly 32 IDs, 16 hope/16 dark,
       eight per lead and eight per opening. Prove reload/new-run
       unlock dedupe, locked-spoiler safety, epilogue recall,
       parents-together invariant, sober positive routes and shared
       global 32/32 achievement. Coordinate t-016 one-screen
       browser QA, and preserve art/publication gates.
+  - id: t-022
+    milestone: m3
+    title: "Build seeded random side-stories between stay/follow companion crossroads"
+    status: waiting
+    depends_on: [t-005, t-009, t-019]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Prelude opens with mapped first companion, NOT a leader picker.
+      Draw roughly 2-4 eligible individually authored Humboldt
+      encounter cards between major character meetings, with real
+      randomized choices, stats, clues and dice consequences.
+      Encounter each of the three other main characters at guaranteed
+      story crossroads in reproducibly shuffled order. Each gives
+      an in-character stay/follow choice; prior companion leaves to
+      continue their own work. Persist immutable opening_state,
+      mutable current_state/clarity, active_lead, meeting_order,
+      follow_history, seen card IDs, personal and civic flags.
+      Earlier follower order changes later dialogue and epilogues;
+      late follower swaps must offer deepening/catch-up opportunities.
+      Same seed, saved choices and rolls reproduce the same run.
+      Prove a full route to every final follower from all four
+      opening lenses; human art/publishing gate still applies.
