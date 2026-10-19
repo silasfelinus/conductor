@@ -1,5 +1,7 @@
 # Weird Humboldt / working title ECOTONE — regional future-shaping comedy-horror adventure (Silas, 2026-10-19 PT)
 # New design-first project. No image generation or art queue creation until specifically requested.
+# 2026-10-19 PT later: Silas requested it in session ("get a front end, pointed to Play, and submit the art
+# prompts"): art round 1 (t-006) is queued and the Play front page is t-029.
 project: weird-humboldt
 kind: software
 autonomous: true
@@ -16,6 +18,15 @@ goal: >-
   one-screen Play experience. Final art direction and any public release remain
   subject to Silas's later explicit creative approval.
 notes_from_silas: |
+  2026-10-19 PT (afternoon), Silas in session, verbatim: "We've made some
+  strong backend work on the new Ecotone project, can you help me get a
+  front end, pointed to Play, and submit the art prompts". This opens
+  the Play route (/play/ecotone, Work in progress) and the art gate for
+  foundation art: project icon/card/hero, title, four companions, six
+  chapter regions, prologue, sample encounters, card back
+  (art/ROUND-1.yaml). The 56 ending signature prompts still go through
+  Keep/Modify/Reject review before generation; release beyond the WIP
+  Play page and final canon approval (t-004) stay his calls.
   NEWEST 2026-10-19 PT STORY LOOP: Voluntary Sober/Tipsy/Stoned/
   Tripping opener maps directly to first follower Mara/Kit/Juniper/
   Cedar. No independent companion picker at prelude. Between fixed
@@ -227,7 +238,7 @@ milestones:
   - id: m4
     title: "DESIGN — approved bespoke art and coherent responsive card experience"
     weight: 10
-    status: not-started
+    status: in-progress
   - id: m5
     title: "ACCEPT — narrative quality, balance, device QA, release approval"
     weight: 10
@@ -316,16 +327,23 @@ tasks:
   - id: t-006
     milestone: m4
     title: "Develop art direction and queue project icon, card, hero and encounter art"
-    status: waiting
-    depends_on: t-004
-    owner: null
+    status: review
+    owner: reviewer
+    claimed_by: 2026-10-19T20:11:47Z-ecotone-play
+    claimed_at: '2026-10-19T20:11:47Z'
+    approved_by_human: true
     passes: 0
     stakes: reversible
     note: >-
-      Explicitly held by Silas's design-before-art request. Only after the
-      creative direction gate: write bespoke card-art contract and ART-PROMPTS
-      entries, queue traceable ArtJobs, and begin consistent illustration. Do
-      not generate or submit artwork before approval.
+      Silas opened the art gate in session on 2026-10-19 PT ("submit the art
+      prompts"), so this no longer waits on t-004. Round 1 is
+      art/ROUND-1.yaml: 24 house-lane (Arthemy) cells, ArtJobs 40841-40864,
+      covering project icon/card/hero, Play title art, Mara/Kit/Juniper/Cedar
+      (two seeds each), the six chapter regions, the prologue meadow, WH-006,
+      WH-021, WH-061 and a card back. Next: --status, review keepers, export
+      them to kind_robots public/ecotone/ (the /play/ecotone board overlays
+      them on its drawn scenes) and projects/images/weird-humboldt-*.webp.
+      Ending-signature art stays behind Keep/Modify/Reject prompt review.
   - id: t-007
     milestone: m5
     title: "Deliver integrated preview, simulated balance, accessibility and launch review"
@@ -758,3 +776,24 @@ tasks:
       ideology or substance morality gates, Cedar family
       invariant and 56/56 gallery completion. No art
       or public release approval.
+  - id: t-029
+    milestone: m4
+    title: "Ship the Ecotone Play front page and playable prologue slice"
+    status: review
+    owner: reviewer
+    claimed_by: 2026-10-19T20:11:47Z-ecotone-play
+    claimed_at: '2026-10-19T20:11:47Z'
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas, 2026-10-19 PT: "get a front end, pointed to Play". kind_robots
+      /play/ecotone in the Play (arcade) channel, labelled Work in progress:
+      one-screen board with code-drawn redwood/fog scenes (painted art from
+      t-006 overlays as it lands), the four voluntary festival lenses mapping
+      to Mara/Kit/Juniper/Cedar, seeded 2d6 checks on the three sample cards
+      (WH-006, WH-021, WH-061), five skills, Clarity, journal, the six-chapter
+      county map and a locked Endings 0/56 gallery that grants nothing until
+      real finales exist. Text from SAMPLE-CARDS.md and
+      COMPANIONS-AND-PROLOGUE.md. The full engine (t-005/t-022) and 120 cards
+      (t-003) replace this slice later.

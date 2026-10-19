@@ -1,0 +1,332 @@
+# Ecotone (weird-humboldt) art round 1, t-006. Silas, 2026-10-19 PT, in session: "help me get a front end,
+# pointed to Play, and submit the art prompts". That request opens the art gate for these foundation images only:
+# project icon/card/hero, the Play title art, the four companions (two seeds each), the six chapter regions,
+# the festival prologue, the three sample encounters (WH-006, WH-021, WH-061) and a card back. The 56 ending
+# signatures and their prompts still go through the Keep/Modify/Reject review in ECOTONE-ENDING-GRAMMAR.md.
+# House lane (Arthemy Western Art v3.0), painted as a foggy North Coast comic: Twin Peaks / X-Files mood, warm
+# and funny, never grim. Care rules from COMPANIONS-AND-PROLOGUE.md and FACT-CHECK.md: Mara wears modern studio
+# clothes and her own flash designs (no regalia, feathers or sacred designs); Kit is a contemporary performer
+# (no costume-shop "oriental" styling); Juniper is fully clothed and nonsexual; Cedar is a capable working
+# local, not a joke. No real businesses' signage, no Houdini likeness, no readable text anywhere.
+# Keepers export to kind_robots public/ecotone/<asset>.webp (the /play/ecotone board overlays them on its drawn
+# scenes) and, for the three project subjects, to projects/images/weird-humboldt-{icon,card,hero}.webp.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: ecotone-1
+project_slug: weird-humboldt
+designer: Ecotone
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: house
+  label: Arthemy Western Art v3.0 (house)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics (style), painterly,
+    cinematic lighting, moody atmosphere, rich detail
+  suffix: north coast california, coastal fog, deep redwood greens, teal and amber palette, soft eerie glow
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eco1-project-icon
+  asset: project/icon
+  title: Project icon
+  size: 1024x1024
+  seed: 61901
+  negative: text, letters, words, watermark, signature, logo, humans, people, person, lowres, worst quality, blurry,
+    jpeg artifacts, frame, border, multiple views
+  prompt_tags: app icon, centered emblem, a single giant redwood tree whose roots become a glowing radio wave, a
+    crescent moon behind it, fog band across the trunk, bold simple silhouette, strong contrast, dark teal background
+  jobs:
+    house: 40841
+- key: eco1-project-card
+  asset: project/card
+  title: Project card
+  size: 832x1216
+  seed: 61902
+  negative: text, letters, words, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts, frame,
+    border, bad anatomy, bad hands, extra limbs, (nude:1.4), nsfw, multiple views
+  prompt_tags: vertical key art, four adult friends seen from behind on a forest trail at night, looking up at towering
+    redwoods, a ribbon of green light running through the trees like a radio signal, festival lanterns far below,
+    a pickup truck's headlights in the fog, sense of wonder and mild dread
+  jobs:
+    house: 40842
+- key: eco1-project-hero
+  asset: project/hero
+  title: Project hero
+  size: 1344x768
+  seed: 61903
+  negative: text, letters, words, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts, frame,
+    border, (nude:1.4), nsfw
+  prompt_tags: wide establishing shot, humboldt bay at dusk seen from a redwood ridge, fog rolling in over the water,
+    a small town's lights along the shore, a hand-built kinetic sculpture vehicle crossing the tide flats, a faint
+    second skyline shimmering in the clouds like an alternate future, aurora-green static in the sky
+  jobs:
+    house: 40843
+- key: eco1-title-1
+  asset: title/key-art
+  title: Play title art (seed 1)
+  size: 1344x768
+  seed: 61911
+  negative: text, letters, words, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts, frame,
+    border, (nude:1.4), nsfw, bad anatomy
+  prompt_tags: wide shot, a forest-edge festival meadow at night, a huge handmade wooden puppet draped in moss,
+    string lights, distant juggler silhouette, the redwood tree line glowing faintly from within, a shaft of green
+    light in the fog, an old pickup with a radio antenna, magical realism, uncanny but welcoming
+  jobs:
+    house: 40844
+- key: eco1-title-2
+  asset: title/key-art
+  title: Play title art (seed 2)
+  size: 1344x768
+  seed: 61912
+  negative: text, letters, words, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts, frame,
+    border, (nude:1.4), nsfw, bad anatomy
+  prompt_tags: wide shot, a forest-edge festival meadow at night, a huge handmade wooden puppet draped in moss,
+    string lights, distant juggler silhouette, the redwood tree line glowing faintly from within, a shaft of green
+    light in the fog, an old pickup with a radio antenna, magical realism, uncanny but welcoming
+  jobs:
+    house: 40845
+- key: eco1-mara-1
+  asset: companions/mara
+  title: Mara, sober guide (seed 1)
+  size: 832x1216
+  seed: 61921
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, extra limbs, deformed,
+    watermark, signature, text, letters, words, logo, headdress, feathers, war paint, costume, beads, blurry, multiple
+    views, character sheet
+  prompt_tags: solo, adult woman, indigenous californian woman in her thirties, (fully clothed:1.2), long black
+    hair tied back, sleeves of modern fine-line tattoos on both forearms, black t-shirt and canvas shop apron, pencil
+    behind her ear, sketchbook of bird flash designs, dry knowing half smile, sitting at a festival tattoo flash
+    table under string lights, cowboy shot, warm lamplight, redwood forest behind
+  jobs:
+    house: 40846
+- key: eco1-mara-2
+  asset: companions/mara
+  title: Mara, sober guide (seed 2)
+  size: 832x1216
+  seed: 61922
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, extra limbs, deformed,
+    watermark, signature, text, letters, words, logo, headdress, feathers, war paint, costume, beads, blurry, multiple
+    views, character sheet
+  prompt_tags: solo, adult woman, indigenous californian woman in her thirties, (fully clothed:1.2), long black
+    hair tied back, sleeves of modern fine-line tattoos on both forearms, black t-shirt and canvas shop apron, pencil
+    behind her ear, sketchbook of bird flash designs, dry knowing half smile, sitting at a festival tattoo flash
+    table under string lights, cowboy shot, warm lamplight, redwood forest behind
+  jobs:
+    house: 40847
+- key: eco1-kit-1
+  asset: companions/kit
+  title: Kit, tipsy guide (seed 1)
+  size: 832x1216
+  seed: 61931
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, extra limbs, deformed,
+    watermark, signature, text, letters, words, logo, qipao, conical hat, costume, blurry, multiple views, character
+    sheet
+  prompt_tags: solo, adult woman, chinese american woman in her late twenties, (fully clothed:1.2), short asymmetric
+    black hair, paint-splattered mechanic coveralls with bright fabric patches, juggling three clubs mid-air, laughing,
+    athletic stance, beside a whimsical pedal-powered kinetic sculpture with brass gears and a papier mache sea
+    serpent head, festival lights, dynamic pose, cowboy shot
+  jobs:
+    house: 40848
+- key: eco1-kit-2
+  asset: companions/kit
+  title: Kit, tipsy guide (seed 2)
+  size: 832x1216
+  seed: 61932
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, extra limbs, deformed,
+    watermark, signature, text, letters, words, logo, qipao, conical hat, costume, blurry, multiple views, character
+    sheet
+  prompt_tags: solo, adult woman, chinese american woman in her late twenties, (fully clothed:1.2), short asymmetric
+    black hair, paint-splattered mechanic coveralls with bright fabric patches, juggling three clubs mid-air, laughing,
+    athletic stance, beside a whimsical pedal-powered kinetic sculpture with brass gears and a papier mache sea
+    serpent head, festival lights, dynamic pose, cowboy shot
+  jobs:
+    house: 40849
+- key: eco1-juniper-1
+  asset: companions/juniper
+  title: Juniper, stoned guide (seed 1)
+  size: 832x1216
+  seed: 61941
+  negative: (nude:1.4), (cleavage:1.2), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, extra
+    limbs, deformed, watermark, signature, text, letters, words, logo, elf ears, wings, blurry, multiple views,
+    character sheet
+  prompt_tags: solo, adult woman, young woman in her twenties, curvy, (fully clothed:1.3), layered thrift-store
+    sweater and long patchwork skirt, messy auburn hair with a green ribbon and tiny ferns growing in it, freckles,
+    warm teasing smile, barefoot on moss among giant redwood roots, her reflection in a puddle has branches growing
+    from its head, soft green forest glow, cowboy shot
+  jobs:
+    house: 40850
+- key: eco1-juniper-2
+  asset: companions/juniper
+  title: Juniper, stoned guide (seed 2)
+  size: 832x1216
+  seed: 61942
+  negative: (nude:1.4), (cleavage:1.2), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, extra
+    limbs, deformed, watermark, signature, text, letters, words, logo, elf ears, wings, blurry, multiple views,
+    character sheet
+  prompt_tags: solo, adult woman, young woman in her twenties, curvy, (fully clothed:1.3), layered thrift-store
+    sweater and long patchwork skirt, messy auburn hair with a green ribbon and tiny ferns growing in it, freckles,
+    warm teasing smile, barefoot on moss among giant redwood roots, her reflection in a puddle has branches growing
+    from its head, soft green forest glow, cowboy shot
+  jobs:
+    house: 40851
+- key: eco1-cedar-1
+  asset: companions/cedar
+  title: Cedar, tripping guide (seed 1)
+  size: 832x1216
+  seed: 61951
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, extra limbs, deformed,
+    watermark, signature, text, letters, words, logo, gun, rifle, blurry, multiple views, character sheet
+  prompt_tags: solo, adult man, rural working man in his early thirties, (fully clothed:1.2), stubble, worn trucker
+    cap, oil-stained canvas work jacket, scuffed work boots, holding a vintage cb radio handset with a coiled cord,
+    mischievous confident grin, leaning on an old pickup truck with a faded green ribbon tied to its antenna, toolbox
+    in the bed, redwood backroad at dusk, cowboy shot
+  jobs:
+    house: 40852
+- key: eco1-cedar-2
+  asset: companions/cedar
+  title: Cedar, tripping guide (seed 2)
+  size: 832x1216
+  seed: 61952
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, extra limbs, deformed,
+    watermark, signature, text, letters, words, logo, gun, rifle, blurry, multiple views, character sheet
+  prompt_tags: solo, adult man, rural working man in his early thirties, (fully clothed:1.2), stubble, worn trucker
+    cap, oil-stained canvas work jacket, scuffed work boots, holding a vintage cb radio handset with a coiled cord,
+    mischievous confident grin, leaning on an old pickup truck with a faded green ribbon tied to its antenna, toolbox
+    in the bed, redwood backroad at dusk, cowboy shot
+  jobs:
+    house: 40853
+- key: eco1-ch1-arcata
+  asset: chapters/arcata-after-hours
+  title: Chapter 1, Arcata After Hours
+  size: 1344x768
+  seed: 61961
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw
+  prompt_tags: wide shot, a small-town college plaza at midnight, a central statue on a lawn, palm and redwood trees,
+    old brick storefronts with warm windows, an empty art deco cinema marquee glowing, fog, a single streetlight
+    flickering green, scattered late-night people, cozy and uncanny
+  jobs:
+    house: 40854
+- key: eco1-ch2-coast
+  asset: chapters/coast-of-improbable-tides
+  title: Chapter 2, Coast of Improbable Tides
+  size: 1344x768
+  seed: 61962
+  negative: text, letters, words, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts, frame,
+    border, (nude:1.4), nsfw
+  prompt_tags: wide shot, a wide sandy beach at a creek mouth with huge dark sea stacks, morning fog, the tide flowing
+    backward out to sea leaving shimmering ripples, a picnic blanket and cooler abandoned on the sand, enormous
+    footprints leading to the rocks, wistful and strange
+  jobs:
+    house: 40855
+- key: eco1-ch3-eureka
+  asset: chapters/eureka-and-the-bay
+  title: Chapter 3, Eureka and the Bay
+  size: 1344x768
+  seed: 61963
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw
+  prompt_tags: wide shot, an ornate victorian old town waterfront on a working bay, painted gingerbread mansion,
+    fishing boats at a wooden pier, gulls, overcast silver light, a crowd in homemade costumes at the water's edge,
+    a marching band, a faint green static shimmer on the water, civic and absurd
+  jobs:
+    house: 40856
+- key: eco1-ch4-backroads
+  asset: chapters/backroads-and-bad-reception
+  title: Chapter 4, Backroads and Bad Reception
+  size: 1344x768
+  seed: 61964
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw
+  prompt_tags: wide shot, a winding two-lane mountain highway through dark forested ridges at night, a lone roadside
+    diner with a giant carved wooden sasquatch statue, a radio tower blinking red on the ridge, strange lights hovering
+    above the trees, a pickup pulled over with headlights on, cryptid country mood
+  jobs:
+    house: 40857
+- key: eco1-ch5-older-roads
+  asset: chapters/southern-humboldt-older-roads
+  title: Chapter 5, Southern Humboldt and Older Roads
+  size: 1344x768
+  seed: 61965
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw
+  prompt_tags: wide shot, a narrow road through a cathedral grove of ancient giant redwoods, shafts of golden light
+    through mist, a river glinting below, a tiny old car dwarfed by the trunks, ferns, a hush of deep time, rural
+    surrealism, one tree trunk bearing a door that should not be there
+  jobs:
+    house: 40858
+- key: eco1-ch6-festival
+  asset: chapters/the-impossible-festival
+  title: Chapter 6, The Impossible Festival
+  size: 1344x768
+  seed: 61966
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw
+  prompt_tags: wide shot, a parade of fantastical human-powered kinetic sculpture vehicles racing across sand dunes
+    toward the bay, crowds cheering, costumes, two different skies meeting overhead, one sunny and green, one stormy
+    with industrial silhouettes, converging timelines, joyful chaos and high stakes
+  jobs:
+    house: 40859
+- key: eco1-prologue
+  asset: scenes/prologue-meadow
+  title: Prologue, the woman who knows the trail
+  size: 1344x768
+  seed: 61971
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw, bad anatomy
+  prompt_tags: wide shot, a forest-edge festival meadow at twilight, a hand-painted wooden sign at the trail head,
+    a young woman with a green ribbon in her hair waiting by the path, a puddle reflecting her with branches growing
+    from her head, juggler with clubs in the background, string lights, moss-covered giant puppet
+  jobs:
+    house: 40860
+- key: eco1-wh006-minor
+  asset: encounters/wh-006-last-exit
+  title: WH-006, The Last Houdini Exit
+  size: 1344x768
+  seed: 61981
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw, ghost face, gore
+  prompt_tags: wide shot, an empty old art deco movie theater stage after midnight, red velvet curtain, a trapdoor
+    lifted one inch with a white-gloved hand pushing up a folded note, dusty spotlight beam, empty seats, warm gold
+    and deep red, comedic eerie mood
+  jobs:
+    house: 40861
+- key: eco1-wh021-picnic
+  asset: encounters/wh-021-bigfoot-picnic
+  title: WH-021, Bigfoot Family Picnic
+  size: 1344x768
+  seed: 61982
+  negative: text, letters, words, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts, frame,
+    border, (nude:1.4), nsfw, gore
+  prompt_tags: wide shot, a family of three enormous gentle sasquatches in sun hats having a beach picnic among
+    sea stacks, a checked blanket, a cooler, a platter piled with deviled eggs, the youngest holding up a phone
+    for a selfie, the tide flowing backward, foggy morning, wholesome and absurd
+  jobs:
+    house: 40862
+- key: eco1-wh061-plunge
+  asset: encounters/wh-061-perilous-plunge
+  title: WH-061, The Perilous Plunge into Monday
+  size: 1344x768
+  seed: 61983
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw
+  prompt_tags: wide shot, a waterfront charity plunge on a cold bay, costumed jumpers queued on a dock, a volunteer
+    in a homemade squid costume surfacing holding a soggy newspaper aloft, a marching band, a steaming hot tub,
+    overcast morning, a faint clock-shaped ripple in the water, joyful civic absurdity
+  jobs:
+    house: 40863
+- key: eco1-card-back
+  asset: ui/card-back
+  title: Card back
+  size: 832x1216
+  seed: 61991
+  negative: text, letters, words, watermark, signature, logo, humans, people, person, lowres, worst quality, blurry,
+    jpeg artifacts
+  prompt_tags: ornamental card back design, symmetrical, a redwood tree in the center with roots and branches mirrored,
+    a crescent moon, concentric radio-wave rings, dark teal and antique gold, art nouveau border, centered
+  jobs:
+    house: 40864
