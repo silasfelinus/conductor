@@ -1,4 +1,7 @@
-# Weird Humboldt: design exploration (v0.1)
+# Weird Humboldt: design exploration (v0.1 + festival update)
+
+> **2026-10-19 PT update supersedes the original draft stat names and opening assumption.** The protagonist starts at an **unnamed fictional composite festival**, voluntarily choosing sober/tipsy/stoned/tripping-balls perspectives. New stable stats: **Rizz, Burly, Wits, Local Lore, Psyche**. Sobriety/Clarity change over time; shared supernatural facts don't change by intoxication. Forest nymph guide possible in all routes; PG-13, no sexual content or forced dosing. `PRELUDE-STATE-CONTRACT.md` is the design authority for these changes. Real festival brands belong to source metadata, not initial player exposition. No artwork yet.
+
 
 Date: 2026-10-19 PT · Status: **design-first / no art generation authorized in this phase**
 Owner: Conductor `weird-humboldt` · Proposed eventual Kind Robots destination: Play, not Admin (not implemented or published).
@@ -26,7 +29,7 @@ Recommended **optional mystery / mandatory experience** hybrid. Each chapter beg
 
 ## Player archetypes (fictional, contemporary, optional names)
 
-Five skills, each 0–3: **Grit** (physical resolve/rowing/trekking), **Read the Room** (empathy/social), **Know-How** (fieldcraft, electronics, investigation), **Local Lore** (maps, history, stories, contacts), **Odd Sense** (noticing metaphysical discontinuities). All use the same six starting skill points with different distributions and one modest perk. No ethnicity, origin, body type or disability carries a numeric penalty. Personality and affiliations matter through flags, dialogue and relationships.
+Five **persistent** skills, each 0–3: **Rizz** (charm, connection, improvisation), **Burly** (physical resolve, rowing, stamina), **Wits** (reason, observation, machines), **Local Lore** (history, places and connections), **Psyche** (psychic affinity and uncanny patterns). All use the same six starting skill points with different distributions and one perk. **Sobriety is a temporary changing state and Clarity condition**, not a sixth permanent stat; see PRELUDE-STATE-CONTRACT.md. No ethnicity, origin, body type or disability carries a numeric penalty. Personality and affiliations matter through flags, dialogue and relationships.
 
 | Archetype | Vantage / dramatic weakness | Distinct perk |
 | --- | --- | --- |
