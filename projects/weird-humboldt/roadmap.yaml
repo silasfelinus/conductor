@@ -1,0 +1,149 @@
+# Weird Humboldt — regional wacky comedy-horror card adventure (Silas, 2026-10-19 PT)
+# New design-first project. No image generation or art queue creation until specifically requested.
+project: weird-humboldt
+kind: software
+autonomous: true
+goal: >-
+  A replayable, illustrated, second-person, dark-comic Humboldt County card adventure
+  built on the best deterministic authored-deck mechanics of Shifting Lands and
+  Shifting Desks. At least 120 fully written encounter cards across six regional
+  chapters with 2-4 meaningful choices, visible 2d6 skill checks, persistent
+  consequences, distinct Humboldt archetypes, a seeded save/resume system,
+  optional overarching mystery, multiple endings and a polished responsive
+  one-screen Play experience. Final art direction and any public release remain
+  subject to Silas's later explicit creative approval.
+notes_from_silas: |
+  2026-10-19 PT: New project, Weird Humboldt. Shifting Sands/Lands and Shifting
+  Desks-like experiential cards with skill checks; Humboldt County locations,
+  events and locals. Play journalist, student, rower, lifelong local, Native
+  character and other Humboldt archetypes. At least 120 randomized encounters
+  over stages, wacky comedy horror (X-Files x Twin Peaks x Weekly World News x
+  High Times), real Moonstone Beach, Arcata Plaza, Redwood Park, Minor Theatre,
+  Perilous Plunge and Kinetic Sculpture Race. Stories: Bigfoot's family, alien
+  abductions, fictional pagan rituals, weed patches, ghost of Harry Houdini;
+  surreal unexpected turns. Decide whether an overarching goal is needed.
+  Explicit instruction: explore the premise *before committing to art*.
+  Research warning: Minor Theatre/Houdini trapdoor is owner testimony and
+  disputed local lore, not verified historical fact; separate Perilous Plunge
+  from the Kinetic Grand Championship. Modern Native characters deserve
+  independent lives, not mystical stereotypes; no appropriation of rituals.
+  DESIGN-BRIEF.md and PITCHES.md are recommendations, not accepted final canon.
+milestones:
+  - id: m1
+    title: "EXPLORE — local research, six-chapter structure, archetypes, pitch alternatives"
+    weight: 20
+    status: in-progress
+  - id: m2
+    title: "AUTHOR — 120 complete consequence-rich card stories and provenance"
+    weight: 35
+    status: not-started
+  - id: m3
+    title: "ENGINE — seeded deck, 2d6, flags, archetypes, journal, save/resume"
+    weight: 25
+    status: not-started
+  - id: m4
+    title: "DESIGN — approved bespoke art and coherent responsive card experience"
+    weight: 10
+    status: not-started
+  - id: m5
+    title: "ACCEPT — narrative quality, balance, device QA, release approval"
+    weight: 10
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Explore core direction, local facts, 120 distinct encounter seeds and voice samples"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-19T08:44:00Z'
+    note: >-
+      Initial design-first intake on 2026-10-19 PT: DESIGN-BRIEF.md, PITCHES.md,
+      FACT-CHECK.md, SAMPLE-CARDS.md and ENCOUNTER-SEEDS.md. 120 ideas are
+      seeds, NOT full authored/validated encounter records. No art jobs or app
+      gameplay was created.
+  - id: t-002
+    milestone: m1
+    title: "Build v1 encounter contract, seeded deck schema and 18 complete text cards"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Implement Conductor-only JSON Schema/validator with 2d6 options, success/fail
+      prose, provenance tiers, flags and dependencies, archetype-specific reactivity,
+      and a text-only hand-playtest. Use 18 different encounter seeds spanning six
+      chapters, human-edit for comedic timing, retain fixed authored cast per card.
+      No Kind Robots runtime changes or art generation in this task.
+  - id: t-003
+    milestone: m2
+    title: "Author and test all 120 complete encounter records, callbacks and chapter anchors"
+    status: waiting
+    depends_on: t-002
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Convert all 120 seeds to scene + >=2 choices + check/visible stakes + authored
+      success/failure/complication text + persistent consequences. Include 6 chapter
+      anchors, 10+ endings, 8 playable archetype reactions, no-dead-end proof and
+      writing review for humor, cultural care and variety. No art jobs.
+  - id: t-004
+    milestone: m1
+    title: "Creative review: optional mystery, stage rhythm, comedy-horror register and cast"
+    status: needs-human
+    gate_human: true
+    gate_reason: creative-approval
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      FOR SILAS: Review projects/weird-humboldt/DESIGN-BRIEF.md, PITCHES.md and
+      SAMPLE-CARDS.md. Choose or revise the suggested optional mystery, six
+      chapters, eight archetypes and PG-13 comic-horror tone. This is an explicit
+      creative acceptance checkpoint requested before committing to art. TO
+      APPROVE: respond with direction in chat or set approved_by_human: true
+      and status: done. Art direction, generation and selection (t-006) remain
+      blocked until this gate; text-only writing and research may continue.
+  - id: t-005
+    milestone: m3
+    title: "Prototype deterministic reducer and isolated saveable text-only journey"
+    status: waiting
+    depends_on: t-002
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Once the story/encounter contract exists, prototype 2d6 rules, eligibility,
+      unique seeded draws, flags, fair failure paths, evidence ledger and save
+      versioning in tests without publishing a Play page. Reuse shared stateless
+      card primitives but do not inherit Shifting Lands/Desks stores.
+  - id: t-006
+    milestone: m4
+    title: "Develop art direction and queue project icon, card, hero and encounter art"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Explicitly held by Silas's design-before-art request. Only after the
+      creative direction gate: write bespoke card-art contract and ART-PROMPTS
+      entries, queue traceable ArtJobs, and begin consistent illustration. Do
+      not generate or submit artwork before approval.
+  - id: t-007
+    milestone: m5
+    title: "Deliver integrated preview, simulated balance, accessibility and launch review"
+    status: waiting
+    depends_on: [t-003, t-005, t-006]
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    note: >-
+      Fully playable Play integration requires presentation metadata owned by
+      Kind Robots, full phone/tablet/desktop checks, 120 authored encounters,
+      content/art review, explicit permission before anything outward-facing
+      or live is published. Production deploy is not authorized by this intake.
