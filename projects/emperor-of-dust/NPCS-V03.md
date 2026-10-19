@@ -18,6 +18,9 @@ Asset ids: `npcs/<slug>/illustrated/<mood>`. The `npc` field on an audience in K
 - Harm to children is stakes, never spectacle (WORLD-GUIDE.md). The Abbey's rooms are shown as
   neat, empty cots, never anything worse.
 - Hollow Bell is still standing in this era. Nothing here names who destroys it in Book One.
+- No two named characters share a species, NPCs and followers together (Silas, 2026-10-19).
+  Kind Robots keeps the list in `utils/emperorOfDust/fortress/npcs.ts` and tests it. Book One's
+  otter nuns stay otters as unnamed extras; Sister Marrow is a goat among them.
 - Species never decides morality. Young Komodo looks friendly, and his look must not telegraph the
   betrayal.
 
@@ -28,12 +31,12 @@ Asset ids: `npcs/<slug>/illustrated/<mood>`. The `npc` field on an audience in K
 | `young-komodo` | **Young Komodo** | Komodo dragon, the emperor's advisor, he/him | Day 1 | Morning briefings and hints. His own lies are seeded from Day 7. **Betrays the throne on Day 40.** Never romanceable. |
 | `mara-reedbell` | **Mara Reedbell** | Grey-muzzled mule, Mayor of Hollow Bell, she/her | Day 1 | Genial and protective of her town. Her ledgers hide terrible compromises (Day 29). |
 | `the-abbess` | **The Abbess** | Elderly otter, head of the Abbey of the Silent Bell, she/her | Day 25 (in person) | Canon antagonist. Warm, generous and feeding something under the crypt. Becomes the patron of Komodo's betrayal. |
-| `sister-marrow` | **Sister Marrow** | Otter nun of the Abbey, she/her | Day 8 | The Abbess's smiling hands in the world. Counts beds. |
+| `sister-marrow` | **Sister Marrow** | White goat, a nun of the Abbey, she/her | Day 8 | The Abbess's smiling hands in the world. Counts beds. |
 | `sister-reedlight` | **Sister Reedlight** | Heron-witch of the Mire Mothers, she/her | Day 1 | The coven's gentle public face. Her lantern never flickers. |
 | `gristle-vane` | **Captain Gristle Vane** | Hyena raider captain of the Jackalwire Pack, he/him | Day 1 (unnamed), Day 5 | Flamboyant extortionist with an excellent coat. Can become a rival, an ally or a corpse. |
 | `oriel-saltmarsh` | **Oriel Saltmarsh** | Pelican caravan master of the Saltroad, she/her | Day 9 | Blunt, fair and ruthless about cargo. The Saltroad's voice at the Day 39 Congress. |
-| `ferro-dunmark` | **Captain Ferro Dunmark** | Badger captain of the Gate Watch, he/him | Day 10 | Asks what the crown swears back. Holds the throne to its oath. |
-| `ottoline-vask` | **Lady Ottoline Vask** | Silver fox of the Old Houses, she/her | Day 7 | Precise, proud and patient about power. Her house may back Komodo. |
+| `ferro-dunmark` | **Captain Ferro Dunmark** | Grey wolf, captain of the Gate Watch, he/him | Day 10 | Asks what the crown swears back. Holds the throne to its oath. |
+| `ottoline-vask` | **Lady Ottoline Vask** | Black swan of the Old Houses, she/her | Day 7 | Precise, proud and patient about power. Her house may back Komodo. |
 | `marisol-tallow` | **Factor Marisol Tallow** | Raccoon factor of the Ledger, she/her | Day 2 | Drafts charters before anyone asks. The Ledger's loans come with her handwriting. |
 | `dunmore-ash` | **Foreman Dunmore Ash** | Boar foreman of the Yard, he/him | Day 2 | Says little, means all of it. Speaks for a hungry Yard. |
 | `elder-corvane` | **Elder Corvane** | Ancient storm crow of the Conclave, he/him | Day 4 (silent), Act II | Sells rain, keeps bonded runners, and sees further than most. |
@@ -91,7 +94,8 @@ to her belt and a hand-bell on a cord.
 - sad: a performed sorrow
 - angry: the smile gone flat, which is the most frightening image in the game
 
-**Sister Marrow:** a younger otter in grey Abbey robes with a counting cord at her belt.
+**Sister Marrow:** a young white goat in grey Abbey robes, with a counting cord at her belt and
+calm, rectangular-pupilled eyes.
 - neutral: patient smile
 - happy: gathering children's hands
 - excited: counting beds
@@ -122,15 +126,16 @@ goggles on her brow.
 - sad: an empty road
 - angry: wings spread
 
-**Captain Ferro Dunmark:** a broad grey badger in a dented gorget and Watch tabard, with a scarred
-muzzle.
+**Captain Ferro Dunmark:** a broad grey wolf in a dented gorget and Watch tabard, with a scarred
+muzzle and one torn ear.
 - neutral: at attention
 - happy: a rare salute to the emperor
 - excited: rallying the Watch
 - sad: a list of names
 - angry: the gate barred
 
-**Lady Ottoline Vask:** an elegant silver fox in a high-collared house coat with heirloom rings.
+**Lady Ottoline Vask:** an elegant black swan in a high-collared house coat, with heirloom rings
+on her wingtips and a red bill.
 - neutral: an inclined head
 - happy: a thin smile
 - excited: a council seat won
