@@ -32,19 +32,19 @@
 
 **Possible flags:** `juniper_habitat_verified`, `juniper_human_allies_trusted`, `juniper_shared_canopy_kept`.
 
-### Kit: The Living Return (Tipsy first-meeting, all states)
+### Kit: The Living Stage (Tipsy first-meeting, all states)
 
-**Need:** She chose to return to Eureka generations after her fictional ancestors' expulsion in the documented **1885** anti-Chinese violence. She wants a creative life that belongs to her, without making grief her only biography or becoming a corporate marketing mascot.
+**Need:** Contemporary **Hmong American** kinetic artist Kit seeks a life of joyful, ambitious performance in Humboldt, with a fair and affordable community workspace. Her previous invented ancestral ties to the **1885 Chinese expulsion are withdrawn**; that documented event deserves a *separate Chinese American historical story*. Her Hmong family's particulars are not set and must not be fabricated as settled canon.
 
-**Three earned beats:** (a) take seriously both Kit's Old Town family memories and her joyous new kinetic-art ambitions; (b) prevent a fictional arts venue or communal workshop from being sold off as décor or from becoming inaccessible through rising rents; (c) work with artists, apprentices, neighbors and builders to stage a deliberately collaborative public performance.
+**Three earned beats:** (a) recognize Kit's kinetic ingenuity and hear genuine contemporary family and collaborator concerns; (b) investigate threats to an affordable studio/venue, fair artist pay and attribution; (c) stage a community performance with shared authorship and sustainable space.
 
-**Hard decision:** sacrifice a chance at private celebrity/exclusive ownership of an impossible machine for a sustainable, accessible arts space that can pay participants fairly. Other self-respecting choices also exist.
+**Hard decision:** resist becoming a single sponsor's exotic local brand while not requiring her to reject individual artistic recognition. Let talent and negotiation, not ethnicity, drive outcomes.
 
-**Optimal result:** Kit's work thrives, apprentices and audiences can participate, and she knows she can *choose* to build a future here. A living institution remains open in a decade, not just one moment of applause. **Tradeoff:** the best work of a community is more chaotic than her tightly controlled masterpiece.
+**Optimal result:** Kit's work flourishes; her collaborators retain credit and viable careers in an open maker/theatre space. Different neighbors, including Hmong artists where naturally appropriate, can participate without being cultural exhibits.
 
-**Non-optimal dignity:** she may leave for an opportunity elsewhere, build a smaller independent studio, or decline a compromised commission. This is not a judgement on people who must relocate.
+**Non-optimal dignity:** Kit may choose a paid outside residency, smaller studio or a serious independent commission. That is her personal decision, not an ethnic failure.
 
-**Possible flags:** `kit_history_heard`, `kit_workshop_kept_public`, `kit_living_return_shared`.
+**Working flags:** `kit_collaborator_credit_kept`, `kit_workshop_kept_public`, `kit_living_stage_shared`. Supersede draft-only `kit_history_heard` / `kit_living_return_shared` tied to the abandoned Chinese-ancestry plot. Keep stable `kit.*.hope|dark` ending IDs unchanged.
 
 ### Mara (working name): Lines That Last (Sober first-meeting, all states)
 
@@ -64,7 +64,7 @@
 
 ### Cedar (working name): Two Ribbons, One Home (Tripping first-meeting, all states)
 
-**Immutable present-day family canon:** **His parents are together. They stayed together through the era's bitter logging-versus-environmental tensions and are still a couple at the start of the game.** One was raised by timber workers, the other by growers. Their love is imperfect, funny, durable, and they can still have arguments about forests, job losses and Julia Butterfly Hill's **1997–99** tree-sit in Luna. Neither historically was necessarily an Earth First! activist; the green/yellow ribbons had complicated meanings. **Do not invent a separation or make their marriage conditional on a lucky roll, specific ideology, player drug choice, or completion of Cedar's route.** In nonoptimal futures, the wider economy and community may suffer, but do not casually break this relationship for drama.
+**Immutable present-day family canon:** **Cedar's father is Hispanic**; his particular family origin and whether he is from the logging or grower side remain open. **His parents are together. They stayed together through the era's bitter logging-versus-environmental tensions and are still a couple at the start of the game.** One was raised by timber workers, the other by growers. Their love is imperfect, funny, durable, and they can still have arguments about forests, job losses and Julia Butterfly Hill's **1997–99** tree-sit in Luna. Neither historically was necessarily an Earth First! activist; the green/yellow ribbons had complicated meanings. **Do not invent a separation or make their marriage conditional on a lucky roll, specific ideology, player drug choice, or completion of Cedar's route.** In nonoptimal futures, the wider economy and community may suffer, but do not casually break this relationship for drama.
 
 **Need:** He has inherited two histories and jokes that everyone is running a conspiracy; he finds practical repairs easier than admitting that loving people who disagree gives him a responsibility.
 
@@ -92,7 +92,7 @@ Treat companion arcs as **bounded four-beat authored threads**, not relationship
 
 **RNG guarantee:** Each companion needs **anchor slots** in the six-chapter journey. It cannot depend on randomly drawing one particular card from all 120 seeds to complete a chosen optimal arc. Re-encounters, retries through *different* practical approaches and deterministic route eligibility must exist. A focused run should be able to pursue **one** companion's full route from any opening perception; help on other routes is possible subject to meaningful time/decision consequences. Do not fake that all four optimal paths are automatically complete in one run.
 
-**Ending separation:** A **county ending family** (10 distinct futures) is a separate dimension from companion path outcome (optimal / other dignified outcome / unresolved). Reaching Cedar's personal optimal arc does not require a particular "hippie paradise" or "techno-utopia". Some very bleak county outcomes may still cause local consequences that his parents endure, but the parents remain together. The future choice cannot magically change the actual 1885 expulsion or Luna history.
+**Ending separation:** A **county ending family** (10 distinct futures) is a separate dimension from companion path outcome (optimal / other dignified outcome / unresolved). Reaching Cedar's personal optimal arc does not require a particular "hippie paradise" or "techno-utopia". Some very bleak county outcomes may still cause local consequences that his parents endure, but the parents remain together. The future choice cannot magically change the actual 1885 Chinese expulsion (a separate historical story, not Kit's ancestry) or Luna history.
 
 **Achievement/UI integration:** Add four personal thread outcome flags to a **journal/Companions view** (using the existing single-surface tabs; no page scroll), with spoiler-safe "unfinished" hints and authored completion summaries. **Do not** silently create four new global achievement badge definitions or queue badge art on this design pass; the global three-badge contract and ten-family Endings gallery remain unchanged until Silas asks for more.
 
