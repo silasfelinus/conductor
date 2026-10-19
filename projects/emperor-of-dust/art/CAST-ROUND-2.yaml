@@ -1,0 +1,2626 @@
+# Emperor of Dust cast art, round 2 (emperor-of-dust t-012): every other image, from the keepers.
+# Each round-1 keeper (CAST-ROUND-1.yaml `keepers`) is repainted on the same Arthemy checkpoint by
+# sdxl-img2img: four illustrated moods (denoise 0.6), and for followers three portraits from a bust
+# crop of the keeper (neutral 0.35, injured 0.5, dead/memorial 0.6); Young Komodo also gets his
+# betrayal image (0.7). Keepers and these renders together make the 246 approved images.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: emperor-cast-2
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: house-i2i
+  label: Arthemy Western Art v3.0 img2img from the round-1 keeper
+  engine: sdxl-img2img
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    weathered, grimy, dramatic lighting
+  suffix: ash-grey sky, kiln ochre and tarnished brass palette, salvage, dusty, wasteland
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eod2-f001-illustrated-happy
+  lane: house-i2i
+  title: F001 illustrated-happy
+  character: F001
+  group: followers
+  asset: followers/F001/illustrated/happy
+  size: 832x1216
+  seed: 53001
+  denoise: 0.6
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, laughing with ears up,
+    wind in the scarf, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40407
+- key: eod2-f001-illustrated-excited
+  lane: house-i2i
+  title: F001 illustrated-excited
+  character: F001
+  group: followers
+  asset: followers/F001/illustrated/excited
+  size: 832x1216
+  seed: 53002
+  denoise: 0.6
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, crouched, pointing at
+    fresh wagon tracks, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40408
+- key: eod2-f001-illustrated-sad
+  lane: house-i2i
+  title: F001 illustrated-sad
+  character: F001
+  group: followers
+  asset: followers/F001/illustrated/sad
+  size: 832x1216
+  seed: 53003
+  denoise: 0.6
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, ears drooping, holding
+    the brass compass close, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40409
+- key: eod2-f001-illustrated-angry
+  lane: house-i2i
+  title: F001 illustrated-angry
+  character: F001
+  group: followers
+  asset: followers/F001/illustrated/angry
+  size: 832x1216
+  seed: 53004
+  denoise: 0.6
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, ears flat, glaring, hand
+    on a knife hilt, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40410
+- key: eod2-f001-portrait-neutral
+  lane: house-i2i
+  title: F001 portrait-neutral
+  character: F001
+  group: followers
+  asset: followers/F001/portrait/neutral
+  size: 1024x1024
+  seed: 53005
+  denoise: 0.35
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, head and shoulders portrait,
+    close-up, calm, warm side light, dusty ochre wasteland setting
+  source_crop: &id001
+  - 0.15
+  - 0.02
+  - 0.85
+  - 0.5
+  jobs:
+    house-i2i: 40411
+- key: eod2-f001-portrait-injured
+  lane: house-i2i
+  title: F001 portrait-injured
+  character: F001
+  group: followers
+  asset: followers/F001/portrait/injured
+  size: 1024x1024
+  seed: 53006
+  denoise: 0.5
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, head and shoulders portrait,
+    close-up, injured, one ear bandaged, arm in a sling, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40412
+- key: eod2-f001-portrait-dead
+  lane: house-i2i
+  title: F001 portrait-dead
+  character: F001
+  group: followers
+  asset: followers/F001/portrait/dead
+  size: 1024x1024
+  seed: 53007
+  denoise: 0.6
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, memorial portrait in
+    an ornate tarnished brass frame, candlelight, a brass compass before the frame, sepia tones, solemn, head and
+    shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40413
+- key: eod2-f002-illustrated-happy
+  lane: house-i2i
+  title: F002 illustrated-happy
+  character: F002
+  group: followers
+  asset: followers/F002/illustrated/happy
+  size: 832x1216
+  seed: 53021
+  denoise: 0.6
+  source_image_id: 248252
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro golden jackal, female, lean, big pointed ears, welding scar across
+    the muzzle, machinist goggles pushed up on the forehead, oil-dark leather apron, copper-wire tool belt, battered
+    toolbox, triumphant grin beside a repaired bridge pulley, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40414
+- key: eod2-f002-illustrated-excited
+  lane: house-i2i
+  title: F002 illustrated-excited
+  character: F002
+  group: followers
+  asset: followers/F002/illustrated/excited
+  size: 832x1216
+  seed: 53022
+  denoise: 0.6
+  source_image_id: 248252
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro golden jackal, female, lean, big pointed ears, welding scar across
+    the muzzle, machinist goggles pushed up on the forehead, oil-dark leather apron, copper-wire tool belt, battered
+    toolbox, sparks flying from her welding torch, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40415
+- key: eod2-f002-illustrated-sad
+  lane: house-i2i
+  title: F002 illustrated-sad
+  character: F002
+  group: followers
+  asset: followers/F002/illustrated/sad
+  size: 832x1216
+  seed: 53023
+  denoise: 0.6
+  source_image_id: 248252
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro golden jackal, female, lean, big pointed ears, welding scar across
+    the muzzle, machinist goggles pushed up on the forehead, oil-dark leather apron, copper-wire tool belt, battered
+    toolbox, staring into her open toolbox lid, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40416
+- key: eod2-f002-illustrated-angry
+  lane: house-i2i
+  title: F002 illustrated-angry
+  character: F002
+  group: followers
+  asset: followers/F002/illustrated/angry
+  size: 832x1216
+  seed: 53024
+  denoise: 0.6
+  source_image_id: 248252
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro golden jackal, female, lean, big pointed ears, welding scar across
+    the muzzle, machinist goggles pushed up on the forehead, oil-dark leather apron, copper-wire tool belt, battered
+    toolbox, snarling, wrench raised, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40417
+- key: eod2-f002-portrait-neutral
+  lane: house-i2i
+  title: F002 portrait-neutral
+  character: F002
+  group: followers
+  asset: followers/F002/portrait/neutral
+  size: 1024x1024
+  seed: 53025
+  denoise: 0.35
+  source_image_id: 248252
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro golden jackal, female, lean, big pointed ears, welding scar across
+    the muzzle, machinist goggles pushed up on the forehead, oil-dark leather apron, copper-wire tool belt, battered
+    toolbox, head and shoulders portrait, close-up, calm, warm side light, dusty ochre wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40418
+- key: eod2-f002-portrait-injured
+  lane: house-i2i
+  title: F002 portrait-injured
+  character: F002
+  group: followers
+  asset: followers/F002/portrait/injured
+  size: 1024x1024
+  seed: 53026
+  denoise: 0.5
+  source_image_id: 248252
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro golden jackal, female, lean, big pointed ears, welding scar across
+    the muzzle, machinist goggles pushed up on the forehead, oil-dark leather apron, copper-wire tool belt, battered
+    toolbox, head and shoulders portrait, close-up, injured, goggles cracked, hand in a splint, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40419
+- key: eod2-f002-portrait-dead
+  lane: house-i2i
+  title: F002 portrait-dead
+  character: F002
+  group: followers
+  asset: followers/F002/portrait/dead
+  size: 1024x1024
+  seed: 53027
+  denoise: 0.6
+  source_image_id: 248252
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro golden jackal, female, lean, big pointed ears, welding scar across
+    the muzzle, machinist goggles pushed up on the forehead, oil-dark leather apron, copper-wire tool belt, battered
+    toolbox, memorial portrait in an ornate tarnished brass frame, candlelight, machinist goggles before the frame,
+    sepia tones, solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40420
+- key: eod2-f006-illustrated-happy
+  lane: house-i2i
+  title: F006 illustrated-happy
+  character: F006
+  group: followers
+  asset: followers/F006/illustrated/happy
+  size: 832x1216
+  seed: 53101
+  denoise: 0.6
+  source_image_id: 248260
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro storm petrel, bird, female, small sooty-dark seabird, white rump
+    patch, hooked black bill, storm-grey scholar coat with copper weather pins, storm-glass pendant on a chain,
+    smiling up into the first rain, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40421
+- key: eod2-f006-illustrated-excited
+  lane: house-i2i
+  title: F006 illustrated-excited
+  character: F006
+  group: followers
+  asset: followers/F006/illustrated/excited
+  size: 832x1216
+  seed: 53102
+  denoise: 0.6
+  source_image_id: 248260
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro storm petrel, bird, female, small sooty-dark seabird, white rump
+    patch, hooked black bill, storm-grey scholar coat with copper weather pins, storm-glass pendant on a chain,
+    feathers streaming in a rising storm wind, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40422
+- key: eod2-f006-illustrated-sad
+  lane: house-i2i
+  title: F006 illustrated-sad
+  character: F006
+  group: followers
+  asset: followers/F006/illustrated/sad
+  size: 832x1216
+  seed: 53103
+  denoise: 0.6
+  source_image_id: 248260
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro storm petrel, bird, female, small sooty-dark seabird, white rump
+    patch, hooked black bill, storm-grey scholar coat with copper weather pins, storm-glass pendant on a chain,
+    holding a wilted seedling, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40423
+- key: eod2-f006-illustrated-angry
+  lane: house-i2i
+  title: F006 illustrated-angry
+  character: F006
+  group: followers
+  asset: followers/F006/illustrated/angry
+  size: 832x1216
+  seed: 53104
+  denoise: 0.6
+  source_image_id: 248260
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro storm petrel, bird, female, small sooty-dark seabird, white rump
+    patch, hooked black bill, storm-grey scholar coat with copper weather pins, storm-glass pendant on a chain,
+    feathers ruffled, bill open in cold argument, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40424
+- key: eod2-f006-portrait-neutral
+  lane: house-i2i
+  title: F006 portrait-neutral
+  character: F006
+  group: followers
+  asset: followers/F006/portrait/neutral
+  size: 1024x1024
+  seed: 53105
+  denoise: 0.35
+  source_image_id: 248260
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro storm petrel, bird, female, small sooty-dark seabird, white rump
+    patch, hooked black bill, storm-grey scholar coat with copper weather pins, storm-glass pendant on a chain,
+    head and shoulders portrait, close-up, calm, warm side light, dusty ochre wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40425
+- key: eod2-f006-portrait-injured
+  lane: house-i2i
+  title: F006 portrait-injured
+  character: F006
+  group: followers
+  asset: followers/F006/portrait/injured
+  size: 1024x1024
+  seed: 53106
+  denoise: 0.5
+  source_image_id: 248260
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro storm petrel, bird, female, small sooty-dark seabird, white rump
+    patch, hooked black bill, storm-grey scholar coat with copper weather pins, storm-glass pendant on a chain,
+    head and shoulders portrait, close-up, injured, wing bound in bandages, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40426
+- key: eod2-f006-portrait-dead
+  lane: house-i2i
+  title: F006 portrait-dead
+  character: F006
+  group: followers
+  asset: followers/F006/portrait/dead
+  size: 1024x1024
+  seed: 53107
+  denoise: 0.6
+  source_image_id: 248260
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro storm petrel, bird, female, small sooty-dark seabird, white rump
+    patch, hooked black bill, storm-grey scholar coat with copper weather pins, storm-glass pendant on a chain,
+    memorial portrait in an ornate tarnished brass frame, candlelight, a storm-glass before the frame, sepia tones,
+    solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40427
+- key: eod2-f007-illustrated-happy
+  lane: house-i2i
+  title: F007 illustrated-happy
+  character: F007
+  group: followers
+  asset: followers/F007/illustrated/happy
+  size: 832x1216
+  seed: 53121
+  denoise: 0.6
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, laughing, tossing a letter into the
+    air, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40428
+- key: eod2-f007-illustrated-excited
+  lane: house-i2i
+  title: F007 illustrated-excited
+  character: F007
+  group: followers
+  asset: followers/F007/illustrated/excited
+  size: 832x1216
+  seed: 53122
+  denoise: 0.6
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, running with the satchel, ears streaming
+    back, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40429
+- key: eod2-f007-illustrated-sad
+  lane: house-i2i
+  title: F007 illustrated-sad
+  character: F007
+  group: followers
+  asset: followers/F007/illustrated/sad
+  size: 832x1216
+  seed: 53123
+  denoise: 0.6
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, holding an unopened letter, ears
+    low, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40430
+- key: eod2-f007-illustrated-angry
+  lane: house-i2i
+  title: F007 illustrated-angry
+  character: F007
+  group: followers
+  asset: followers/F007/illustrated/angry
+  size: 832x1216
+  seed: 53124
+  denoise: 0.6
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, ears pinned back, crumpling a forged
+    permit, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40431
+- key: eod2-f007-portrait-neutral
+  lane: house-i2i
+  title: F007 portrait-neutral
+  character: F007
+  group: followers
+  asset: followers/F007/portrait/neutral
+  size: 1024x1024
+  seed: 53125
+  denoise: 0.35
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, head and shoulders portrait, close-up,
+    calm, warm side light, dusty ochre wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40432
+- key: eod2-f007-portrait-injured
+  lane: house-i2i
+  title: F007 portrait-injured
+  character: F007
+  group: followers
+  asset: followers/F007/portrait/injured
+  size: 1024x1024
+  seed: 53126
+  denoise: 0.5
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, head and shoulders portrait, close-up,
+    injured, ear bandaged, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40433
+- key: eod2-f007-portrait-dead
+  lane: house-i2i
+  title: F007 portrait-dead
+  character: F007
+  group: followers
+  asset: followers/F007/portrait/dead
+  size: 1024x1024
+  seed: 53127
+  denoise: 0.6
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, memorial portrait in an ornate tarnished
+    brass frame, candlelight, a red sash before the frame, sepia tones, solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40434
+- key: eod2-f008-illustrated-happy
+  lane: house-i2i
+  title: F008 illustrated-happy
+  character: F008
+  group: followers
+  asset: followers/F008/illustrated/happy
+  size: 832x1216
+  seed: 53141
+  denoise: 0.6
+  source_image_id: 248264
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro water buffalo, male, large, powerful, dark brown hide, worn horn
+    tips, teal-lined field coat, wooden ration abacus, leather pack, grinning over a full ration wagon, cowboy shot,
+    warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40435
+- key: eod2-f008-illustrated-excited
+  lane: house-i2i
+  title: F008 illustrated-excited
+  character: F008
+  group: followers
+  asset: followers/F008/illustrated/excited
+  size: 832x1216
+  seed: 53142
+  denoise: 0.6
+  source_image_id: 248264
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro water buffalo, male, large, powerful, dark brown hide, worn horn
+    tips, teal-lined field coat, wooden ration abacus, leather pack, bracing behind a shield, roaring, cowboy shot,
+    warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40436
+- key: eod2-f008-illustrated-sad
+  lane: house-i2i
+  title: F008 illustrated-sad
+  character: F008
+  group: followers
+  asset: followers/F008/illustrated/sad
+  size: 832x1216
+  seed: 53143
+  denoise: 0.6
+  source_image_id: 248264
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro water buffalo, male, large, powerful, dark brown hide, worn horn
+    tips, teal-lined field coat, wooden ration abacus, leather pack, sitting alone by an empty pot, cowboy shot,
+    warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40437
+- key: eod2-f008-illustrated-angry
+  lane: house-i2i
+  title: F008 illustrated-angry
+  character: F008
+  group: followers
+  asset: followers/F008/illustrated/angry
+  size: 832x1216
+  seed: 53144
+  denoise: 0.6
+  source_image_id: 248264
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro water buffalo, male, large, powerful, dark brown hide, worn horn
+    tips, teal-lined field coat, wooden ration abacus, leather pack, snorting, horns lowered, cowboy shot, warm
+    side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40438
+- key: eod2-f008-portrait-neutral
+  lane: house-i2i
+  title: F008 portrait-neutral
+  character: F008
+  group: followers
+  asset: followers/F008/portrait/neutral
+  size: 1024x1024
+  seed: 53145
+  denoise: 0.35
+  source_image_id: 248264
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro water buffalo, male, large, powerful, dark brown hide, worn horn
+    tips, teal-lined field coat, wooden ration abacus, leather pack, head and shoulders portrait, close-up, calm,
+    warm side light, dusty ochre wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40439
+- key: eod2-f008-portrait-injured
+  lane: house-i2i
+  title: F008 portrait-injured
+  character: F008
+  group: followers
+  asset: followers/F008/portrait/injured
+  size: 1024x1024
+  seed: 53146
+  denoise: 0.5
+  source_image_id: 248264
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro water buffalo, male, large, powerful, dark brown hide, worn horn
+    tips, teal-lined field coat, wooden ration abacus, leather pack, head and shoulders portrait, close-up, injured,
+    one horn wrapped, ribs bandaged, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40440
+- key: eod2-f008-portrait-dead
+  lane: house-i2i
+  title: F008 portrait-dead
+  character: F008
+  group: followers
+  asset: followers/F008/portrait/dead
+  size: 1024x1024
+  seed: 53147
+  denoise: 0.6
+  source_image_id: 248264
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro water buffalo, male, large, powerful, dark brown hide, worn horn
+    tips, teal-lined field coat, wooden ration abacus, leather pack, memorial portrait in an ornate tarnished brass
+    frame, candlelight, a wooden abacus before the frame, sepia tones, solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40441
+- key: eod2-f009-illustrated-happy
+  lane: house-i2i
+  title: F009 illustrated-happy
+  character: F009
+  group: followers
+  asset: followers/F009/illustrated/happy
+  size: 832x1216
+  seed: 53161
+  denoise: 0.6
+  source_image_id: 248267
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro armadillo, androgynous, banded armadillo shell plates scuffed from
+    tunnel walls, stitched orange work vest, surveyor chain over the shoulder, head-lamp, brass lantern, pleased,
+    lantern held over a new tunnel junction, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40442
+- key: eod2-f009-illustrated-excited
+  lane: house-i2i
+  title: F009 illustrated-excited
+  character: F009
+  group: followers
+  asset: followers/F009/illustrated/excited
+  size: 832x1216
+  seed: 53162
+  denoise: 0.6
+  source_image_id: 248267
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro armadillo, androgynous, banded armadillo shell plates scuffed from
+    tunnel walls, stitched orange work vest, surveyor chain over the shoulder, head-lamp, brass lantern, unrolling
+    a charcoal blueprint, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40443
+- key: eod2-f009-illustrated-sad
+  lane: house-i2i
+  title: F009 illustrated-sad
+  character: F009
+  group: followers
+  asset: followers/F009/illustrated/sad
+  size: 832x1216
+  seed: 53163
+  denoise: 0.6
+  source_image_id: 248267
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro armadillo, androgynous, banded armadillo shell plates scuffed from
+    tunnel walls, stitched orange work vest, surveyor chain over the shoulder, head-lamp, brass lantern, standing
+    knee-deep in a flooded burrow, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40444
+- key: eod2-f009-illustrated-angry
+  lane: house-i2i
+  title: F009 illustrated-angry
+  character: F009
+  group: followers
+  asset: followers/F009/illustrated/angry
+  size: 832x1216
+  seed: 53164
+  denoise: 0.6
+  source_image_id: 248267
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro armadillo, androgynous, banded armadillo shell plates scuffed from
+    tunnel walls, stitched orange work vest, surveyor chain over the shoulder, head-lamp, brass lantern, scowling,
+    jabbing a finger at a map, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40445
+- key: eod2-f009-portrait-neutral
+  lane: house-i2i
+  title: F009 portrait-neutral
+  character: F009
+  group: followers
+  asset: followers/F009/portrait/neutral
+  size: 1024x1024
+  seed: 53165
+  denoise: 0.35
+  source_image_id: 248267
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro armadillo, androgynous, banded armadillo shell plates scuffed from
+    tunnel walls, stitched orange work vest, surveyor chain over the shoulder, head-lamp, brass lantern, head and
+    shoulders portrait, close-up, calm, warm side light, dusty ochre wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40446
+- key: eod2-f009-portrait-injured
+  lane: house-i2i
+  title: F009 portrait-injured
+  character: F009
+  group: followers
+  asset: followers/F009/portrait/injured
+  size: 1024x1024
+  seed: 53166
+  denoise: 0.5
+  source_image_id: 248267
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro armadillo, androgynous, banded armadillo shell plates scuffed from
+    tunnel walls, stitched orange work vest, surveyor chain over the shoulder, head-lamp, brass lantern, head and
+    shoulders portrait, close-up, injured, dirt-streaked head wrap, splinted hand, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40447
+- key: eod2-f009-portrait-dead
+  lane: house-i2i
+  title: F009 portrait-dead
+  character: F009
+  group: followers
+  asset: followers/F009/portrait/dead
+  size: 1024x1024
+  seed: 53167
+  denoise: 0.6
+  source_image_id: 248267
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro armadillo, androgynous, banded armadillo shell plates scuffed from
+    tunnel walls, stitched orange work vest, surveyor chain over the shoulder, head-lamp, brass lantern, memorial
+    portrait in an ornate tarnished brass frame, candlelight, a brass lantern before the frame, sepia tones, solemn,
+    head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40448
+- key: eod2-f011-illustrated-happy
+  lane: house-i2i
+  title: F011 illustrated-happy
+  character: F011
+  group: followers
+  asset: followers/F011/illustrated/happy
+  size: 832x1216
+  seed: 53201
+  denoise: 0.6
+  source_image_id: 248270
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro gecko, female, slim olive-gold gecko, large eyes, climbing wraps
+    on hands and feet, storm-grey runner sash with tally knots, one torn earring, grin on a high ledge, cowboy shot,
+    warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40449
+- key: eod2-f011-illustrated-excited
+  lane: house-i2i
+  title: F011 illustrated-excited
+  character: F011
+  group: followers
+  asset: followers/F011/illustrated/excited
+  size: 832x1216
+  seed: 53202
+  denoise: 0.6
+  source_image_id: 248270
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro gecko, female, slim olive-gold gecko, large eyes, climbing wraps
+    on hands and feet, storm-grey runner sash with tally knots, one torn earring, mid-leap between rooftops, cowboy
+    shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40450
+- key: eod2-f011-illustrated-sad
+  lane: house-i2i
+  title: F011 illustrated-sad
+  character: F011
+  group: followers
+  asset: followers/F011/illustrated/sad
+  size: 832x1216
+  seed: 53203
+  denoise: 0.6
+  source_image_id: 248270
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro gecko, female, slim olive-gold gecko, large eyes, climbing wraps
+    on hands and feet, storm-grey runner sash with tally knots, one torn earring, picking at the old tally knots,
+    cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40451
+- key: eod2-f011-illustrated-angry
+  lane: house-i2i
+  title: F011 illustrated-angry
+  character: F011
+  group: followers
+  asset: followers/F011/illustrated/angry
+  size: 832x1216
+  seed: 53204
+  denoise: 0.6
+  source_image_id: 248270
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro gecko, female, slim olive-gold gecko, large eyes, climbing wraps
+    on hands and feet, storm-grey runner sash with tally knots, one torn earring, tail lashing, sash torn off, cowboy
+    shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40452
+- key: eod2-f011-portrait-neutral
+  lane: house-i2i
+  title: F011 portrait-neutral
+  character: F011
+  group: followers
+  asset: followers/F011/portrait/neutral
+  size: 1024x1024
+  seed: 53205
+  denoise: 0.35
+  source_image_id: 248270
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro gecko, female, slim olive-gold gecko, large eyes, climbing wraps
+    on hands and feet, storm-grey runner sash with tally knots, one torn earring, head and shoulders portrait, close-up,
+    calm, warm side light, dusty ochre wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40453
+- key: eod2-f011-portrait-injured
+  lane: house-i2i
+  title: F011 portrait-injured
+  character: F011
+  group: followers
+  asset: followers/F011/portrait/injured
+  size: 1024x1024
+  seed: 53206
+  denoise: 0.5
+  source_image_id: 248270
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro gecko, female, slim olive-gold gecko, large eyes, climbing wraps
+    on hands and feet, storm-grey runner sash with tally knots, one torn earring, head and shoulders portrait, close-up,
+    injured, bandaged hand, splinted tail, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40454
+- key: eod2-f011-portrait-dead
+  lane: house-i2i
+  title: F011 portrait-dead
+  character: F011
+  group: followers
+  asset: followers/F011/portrait/dead
+  size: 1024x1024
+  seed: 53207
+  denoise: 0.6
+  source_image_id: 248270
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro gecko, female, slim olive-gold gecko, large eyes, climbing wraps
+    on hands and feet, storm-grey runner sash with tally knots, one torn earring, memorial portrait in an ornate
+    tarnished brass frame, candlelight, a runner sash laid across before the frame, sepia tones, solemn, head and
+    shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40455
+- key: eod2-f012-illustrated-happy
+  lane: house-i2i
+  title: F012 illustrated-happy
+  character: F012
+  group: followers
+  asset: followers/F012/illustrated/happy
+  size: 832x1216
+  seed: 53221
+  denoise: 0.6
+  source_image_id: 248272
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro capybara, male, round and unhurried, grey novice robe with the
+    hood cut off, ladle on a cord, ink-stained fingers, serving soup with a big smile, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40456
+- key: eod2-f012-illustrated-excited
+  lane: house-i2i
+  title: F012 illustrated-excited
+  character: F012
+  group: followers
+  asset: followers/F012/illustrated/excited
+  size: 832x1216
+  seed: 53222
+  denoise: 0.6
+  source_image_id: 248272
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro capybara, male, round and unhurried, grey novice robe with the
+    hood cut off, ladle on a cord, ink-stained fingers, laughing at his own joke, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40457
+- key: eod2-f012-illustrated-sad
+  lane: house-i2i
+  title: F012 illustrated-sad
+  character: F012
+  group: followers
+  asset: followers/F012/illustrated/sad
+  size: 832x1216
+  seed: 53223
+  denoise: 0.6
+  source_image_id: 248272
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro capybara, male, round and unhurried, grey novice robe with the
+    hood cut off, ladle on a cord, ink-stained fingers, holding an unsent letter, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40458
+- key: eod2-f012-illustrated-angry
+  lane: house-i2i
+  title: F012 illustrated-angry
+  character: F012
+  group: followers
+  asset: followers/F012/illustrated/angry
+  size: 832x1216
+  seed: 53224
+  denoise: 0.6
+  source_image_id: 248272
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro capybara, male, round and unhurried, grey novice robe with the
+    hood cut off, ladle on a cord, ink-stained fingers, ladle thrown down, furious, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40459
+- key: eod2-f012-portrait-neutral
+  lane: house-i2i
+  title: F012 portrait-neutral
+  character: F012
+  group: followers
+  asset: followers/F012/portrait/neutral
+  size: 1024x1024
+  seed: 53225
+  denoise: 0.35
+  source_image_id: 248272
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro capybara, male, round and unhurried, grey novice robe with the
+    hood cut off, ladle on a cord, ink-stained fingers, head and shoulders portrait, close-up, calm, warm side light,
+    dusty ochre wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40460
+- key: eod2-f012-portrait-injured
+  lane: house-i2i
+  title: F012 portrait-injured
+  character: F012
+  group: followers
+  asset: followers/F012/portrait/injured
+  size: 1024x1024
+  seed: 53226
+  denoise: 0.5
+  source_image_id: 248272
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro capybara, male, round and unhurried, grey novice robe with the
+    hood cut off, ladle on a cord, ink-stained fingers, head and shoulders portrait, close-up, injured, arm in a
+    sling, still smiling, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40461
+- key: eod2-f012-portrait-dead
+  lane: house-i2i
+  title: F012 portrait-dead
+  character: F012
+  group: followers
+  asset: followers/F012/portrait/dead
+  size: 1024x1024
+  seed: 53227
+  denoise: 0.6
+  source_image_id: 248272
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro capybara, male, round and unhurried, grey novice robe with the
+    hood cut off, ladle on a cord, ink-stained fingers, memorial portrait in an ornate tarnished brass frame, candlelight,
+    a candle and an unopened letter before the frame, sepia tones, solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40462
+- key: eod2-f013-illustrated-happy
+  lane: house-i2i
+  title: F013 illustrated-happy
+  character: F013
+  group: followers
+  asset: followers/F013/illustrated/happy
+  size: 832x1216
+  seed: 53241
+  denoise: 0.6
+  source_image_id: 248275
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rhinoceros, female, broad grey rhino, dented brass gorget, iron-capped
+    horn, spear wrapped in prayer ribbons, laughing with the Watch, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40463
+- key: eod2-f013-illustrated-excited
+  lane: house-i2i
+  title: F013 illustrated-excited
+  character: F013
+  group: followers
+  asset: followers/F013/illustrated/excited
+  size: 832x1216
+  seed: 53242
+  denoise: 0.6
+  source_image_id: 248275
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rhinoceros, female, broad grey rhino, dented brass gorget, iron-capped
+    horn, spear wrapped in prayer ribbons, charging with the spear, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40464
+- key: eod2-f013-illustrated-sad
+  lane: house-i2i
+  title: F013 illustrated-sad
+  character: F013
+  group: followers
+  asset: followers/F013/illustrated/sad
+  size: 832x1216
+  seed: 53243
+  denoise: 0.6
+  source_image_id: 248275
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rhinoceros, female, broad grey rhino, dented brass gorget, iron-capped
+    horn, spear wrapped in prayer ribbons, polishing a fallen friend's helmet, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40465
+- key: eod2-f013-illustrated-angry
+  lane: house-i2i
+  title: F013 illustrated-angry
+  character: F013
+  group: followers
+  asset: followers/F013/illustrated/angry
+  size: 832x1216
+  seed: 53244
+  denoise: 0.6
+  source_image_id: 248275
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rhinoceros, female, broad grey rhino, dented brass gorget, iron-capped
+    horn, spear wrapped in prayer ribbons, slamming a gate shut, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40466
+- key: eod2-f013-portrait-neutral
+  lane: house-i2i
+  title: F013 portrait-neutral
+  character: F013
+  group: followers
+  asset: followers/F013/portrait/neutral
+  size: 1024x1024
+  seed: 53245
+  denoise: 0.35
+  source_image_id: 248275
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rhinoceros, female, broad grey rhino, dented brass gorget, iron-capped
+    horn, spear wrapped in prayer ribbons, head and shoulders portrait, close-up, calm, warm side light, dusty ochre
+    wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40467
+- key: eod2-f013-portrait-injured
+  lane: house-i2i
+  title: F013 portrait-injured
+  character: F013
+  group: followers
+  asset: followers/F013/portrait/injured
+  size: 1024x1024
+  seed: 53246
+  denoise: 0.5
+  source_image_id: 248275
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rhinoceros, female, broad grey rhino, dented brass gorget, iron-capped
+    horn, spear wrapped in prayer ribbons, head and shoulders portrait, close-up, injured, cracked horn cap, bandaged
+    head, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40468
+- key: eod2-f013-portrait-dead
+  lane: house-i2i
+  title: F013 portrait-dead
+  character: F013
+  group: followers
+  asset: followers/F013/portrait/dead
+  size: 1024x1024
+  seed: 53247
+  denoise: 0.6
+  source_image_id: 248275
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rhinoceros, female, broad grey rhino, dented brass gorget, iron-capped
+    horn, spear wrapped in prayer ribbons, memorial portrait in an ornate tarnished brass frame, candlelight, a
+    spear laid across before the frame, sepia tones, solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40469
+- key: eod2-f014-illustrated-happy
+  lane: house-i2i
+  title: F014 illustrated-happy
+  character: F014
+  group: followers
+  asset: followers/F014/illustrated/happy
+  size: 832x1216
+  seed: 53261
+  denoise: 0.6
+  source_image_id: 248276
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rat, male, wiry brown rat, patchwork coat with dozens of pockets,
+    lens on a chain, rail spike used as a walking stick, holding up a jackpot relic, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40470
+- key: eod2-f014-illustrated-excited
+  lane: house-i2i
+  title: F014 illustrated-excited
+  character: F014
+  group: followers
+  asset: followers/F014/illustrated/excited
+  size: 832x1216
+  seed: 53262
+  denoise: 0.6
+  source_image_id: 248276
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rat, male, wiry brown rat, patchwork coat with dozens of pockets,
+    lens on a chain, rail spike used as a walking stick, digging eagerly in rubble, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40471
+- key: eod2-f014-illustrated-sad
+  lane: house-i2i
+  title: F014 illustrated-sad
+  character: F014
+  group: followers
+  asset: followers/F014/illustrated/sad
+  size: 832x1216
+  seed: 53263
+  denoise: 0.6
+  source_image_id: 248276
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rat, male, wiry brown rat, patchwork coat with dozens of pockets,
+    lens on a chain, rail spike used as a walking stick, a relic crumbling in his paws, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40472
+- key: eod2-f014-illustrated-angry
+  lane: house-i2i
+  title: F014 illustrated-angry
+  character: F014
+  group: followers
+  asset: followers/F014/illustrated/angry
+  size: 832x1216
+  seed: 53264
+  denoise: 0.6
+  source_image_id: 248276
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rat, male, wiry brown rat, patchwork coat with dozens of pockets,
+    lens on a chain, rail spike used as a walking stick, shouting, cheated at the counter, cowboy shot, warm side
+    light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40473
+- key: eod2-f014-portrait-neutral
+  lane: house-i2i
+  title: F014 portrait-neutral
+  character: F014
+  group: followers
+  asset: followers/F014/portrait/neutral
+  size: 1024x1024
+  seed: 53265
+  denoise: 0.35
+  source_image_id: 248276
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rat, male, wiry brown rat, patchwork coat with dozens of pockets,
+    lens on a chain, rail spike used as a walking stick, head and shoulders portrait, close-up, calm, warm side
+    light, dusty ochre wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40474
+- key: eod2-f014-portrait-injured
+  lane: house-i2i
+  title: F014 portrait-injured
+  character: F014
+  group: followers
+  asset: followers/F014/portrait/injured
+  size: 1024x1024
+  seed: 53266
+  denoise: 0.5
+  source_image_id: 248276
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rat, male, wiry brown rat, patchwork coat with dozens of pockets,
+    lens on a chain, rail spike used as a walking stick, head and shoulders portrait, close-up, injured, crushed
+    paw in a splint, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40475
+- key: eod2-f014-portrait-dead
+  lane: house-i2i
+  title: F014 portrait-dead
+  character: F014
+  group: followers
+  asset: followers/F014/portrait/dead
+  size: 1024x1024
+  seed: 53267
+  denoise: 0.6
+  source_image_id: 248276
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rat, male, wiry brown rat, patchwork coat with dozens of pockets,
+    lens on a chain, rail spike used as a walking stick, memorial portrait in an ornate tarnished brass frame, candlelight,
+    a humming glass shard before the frame, sepia tones, solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40476
+- key: eod2-f015-illustrated-happy
+  lane: house-i2i
+  title: F015 illustrated-happy
+  character: F015
+  group: followers
+  asset: followers/F015/illustrated/happy
+  size: 832x1216
+  seed: 53281
+  denoise: 0.6
+  source_image_id: 248278
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro newt, female, dappled orange newt, reed crown, damp green shawl,
+    lantern of green glass, lanterns lit around her, smiling, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40477
+- key: eod2-f015-illustrated-excited
+  lane: house-i2i
+  title: F015 illustrated-excited
+  character: F015
+  group: followers
+  asset: followers/F015/illustrated/excited
+  size: 832x1216
+  seed: 53282
+  denoise: 0.6
+  source_image_id: 248278
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro newt, female, dappled orange newt, reed crown, damp green shawl,
+    lantern of green glass, reading an omen in the water, eyes wide, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40478
+- key: eod2-f015-illustrated-sad
+  lane: house-i2i
+  title: F015 illustrated-sad
+  character: F015
+  group: followers
+  asset: followers/F015/illustrated/sad
+  size: 832x1216
+  seed: 53283
+  denoise: 0.6
+  source_image_id: 248278
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro newt, female, dappled orange newt, reed crown, damp green shawl,
+    lantern of green glass, watching a reed crown float away, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40479
+- key: eod2-f015-illustrated-angry
+  lane: house-i2i
+  title: F015 illustrated-angry
+  character: F015
+  group: followers
+  asset: followers/F015/illustrated/angry
+  size: 832x1216
+  seed: 53284
+  denoise: 0.6
+  source_image_id: 248278
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro newt, female, dappled orange newt, reed crown, damp green shawl,
+    lantern of green glass, the green lantern flaring, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40480
+- key: eod2-f015-portrait-neutral
+  lane: house-i2i
+  title: F015 portrait-neutral
+  character: F015
+  group: followers
+  asset: followers/F015/portrait/neutral
+  size: 1024x1024
+  seed: 53285
+  denoise: 0.35
+  source_image_id: 248278
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro newt, female, dappled orange newt, reed crown, damp green shawl,
+    lantern of green glass, head and shoulders portrait, close-up, calm, warm side light, dusty ochre wasteland
+    setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40481
+- key: eod2-f015-portrait-injured
+  lane: house-i2i
+  title: F015 portrait-injured
+  character: F015
+  group: followers
+  asset: followers/F015/portrait/injured
+  size: 1024x1024
+  seed: 53286
+  denoise: 0.5
+  source_image_id: 248278
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro newt, female, dappled orange newt, reed crown, damp green shawl,
+    lantern of green glass, head and shoulders portrait, close-up, injured, burned shawl, bandaged arm, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40482
+- key: eod2-f015-portrait-dead
+  lane: house-i2i
+  title: F015 portrait-dead
+  character: F015
+  group: followers
+  asset: followers/F015/portrait/dead
+  size: 1024x1024
+  seed: 53287
+  denoise: 0.6
+  source_image_id: 248278
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro newt, female, dappled orange newt, reed crown, damp green shawl,
+    lantern of green glass, memorial portrait in an ornate tarnished brass frame, candlelight, a drowned green lantern
+    before the frame, sepia tones, solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40483
+- key: eod2-f017-illustrated-happy
+  lane: house-i2i
+  title: F017 illustrated-happy
+  character: F017
+  group: followers
+  asset: followers/F017/illustrated/happy
+  size: 832x1216
+  seed: 53321
+  denoise: 0.6
+  source_image_id: 248282
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro badger, male, stocky, patched overalls, straw hat with a burn hole,
+    pitchfork with a bent tine, harvest in, grinning, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40484
+- key: eod2-f017-illustrated-excited
+  lane: house-i2i
+  title: F017 illustrated-excited
+  character: F017
+  group: followers
+  asset: followers/F017/illustrated/excited
+  size: 832x1216
+  seed: 53322
+  denoise: 0.6
+  source_image_id: 248282
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro badger, male, stocky, patched overalls, straw hat with a burn hole,
+    pitchfork with a bent tine, hammering at a barn raising, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40485
+- key: eod2-f017-illustrated-sad
+  lane: house-i2i
+  title: F017 illustrated-sad
+  character: F017
+  group: followers
+  asset: followers/F017/illustrated/sad
+  size: 832x1216
+  seed: 53323
+  denoise: 0.6
+  source_image_id: 248282
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro badger, male, stocky, patched overalls, straw hat with a burn hole,
+    pitchfork with a bent tine, standing in ashes, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40486
+- key: eod2-f017-illustrated-angry
+  lane: house-i2i
+  title: F017 illustrated-angry
+  character: F017
+  group: followers
+  asset: followers/F017/illustrated/angry
+  size: 832x1216
+  seed: 53324
+  denoise: 0.6
+  source_image_id: 248282
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro badger, male, stocky, patched overalls, straw hat with a burn hole,
+    pitchfork with a bent tine, pitchfork levelled, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40487
+- key: eod2-f017-portrait-neutral
+  lane: house-i2i
+  title: F017 portrait-neutral
+  character: F017
+  group: followers
+  asset: followers/F017/portrait/neutral
+  size: 1024x1024
+  seed: 53325
+  denoise: 0.35
+  source_image_id: 248282
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro badger, male, stocky, patched overalls, straw hat with a burn hole,
+    pitchfork with a bent tine, head and shoulders portrait, close-up, calm, warm side light, dusty ochre wasteland
+    setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40488
+- key: eod2-f017-portrait-injured
+  lane: house-i2i
+  title: F017 portrait-injured
+  character: F017
+  group: followers
+  asset: followers/F017/portrait/injured
+  size: 1024x1024
+  seed: 53326
+  denoise: 0.5
+  source_image_id: 248282
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro badger, male, stocky, patched overalls, straw hat with a burn hole,
+    pitchfork with a bent tine, head and shoulders portrait, close-up, injured, bandaged snout, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40489
+- key: eod2-f017-portrait-dead
+  lane: house-i2i
+  title: F017 portrait-dead
+  character: F017
+  group: followers
+  asset: followers/F017/portrait/dead
+  size: 1024x1024
+  seed: 53327
+  denoise: 0.6
+  source_image_id: 248282
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro badger, male, stocky, patched overalls, straw hat with a burn hole,
+    pitchfork with a bent tine, memorial portrait in an ornate tarnished brass frame, candlelight, a burned straw
+    hat before the frame, sepia tones, solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40490
+- key: eod2-f018-illustrated-happy
+  lane: house-i2i
+  title: F018 illustrated-happy
+  character: F018
+  group: followers
+  asset: followers/F018/illustrated/happy
+  size: 832x1216
+  seed: 53341
+  denoise: 0.6
+  source_image_id: 248284
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro ferret, female, sleek cream-and-sable ferret, red sash, scorched
+    gloves, three fire-juggling clubs, bowing to a crowd, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40491
+- key: eod2-f018-illustrated-excited
+  lane: house-i2i
+  title: F018 illustrated-excited
+  character: F018
+  group: followers
+  asset: followers/F018/illustrated/excited
+  size: 832x1216
+  seed: 53342
+  denoise: 0.6
+  source_image_id: 248284
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro ferret, female, sleek cream-and-sable ferret, red sash, scorched
+    gloves, three fire-juggling clubs, mid-juggle, flames high, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40492
+- key: eod2-f018-illustrated-sad
+  lane: house-i2i
+  title: F018 illustrated-sad
+  character: F018
+  group: followers
+  asset: followers/F018/illustrated/sad
+  size: 832x1216
+  seed: 53343
+  denoise: 0.6
+  source_image_id: 248284
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro ferret, female, sleek cream-and-sable ferret, red sash, scorched
+    gloves, three fire-juggling clubs, holding an empty hat, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40493
+- key: eod2-f018-illustrated-angry
+  lane: house-i2i
+  title: F018 illustrated-angry
+  character: F018
+  group: followers
+  asset: followers/F018/illustrated/angry
+  size: 832x1216
+  seed: 53344
+  denoise: 0.6
+  source_image_id: 248284
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro ferret, female, sleek cream-and-sable ferret, red sash, scorched
+    gloves, three fire-juggling clubs, snuffing the clubs, angry, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40494
+- key: eod2-f018-portrait-neutral
+  lane: house-i2i
+  title: F018 portrait-neutral
+  character: F018
+  group: followers
+  asset: followers/F018/portrait/neutral
+  size: 1024x1024
+  seed: 53345
+  denoise: 0.35
+  source_image_id: 248284
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro ferret, female, sleek cream-and-sable ferret, red sash, scorched
+    gloves, three fire-juggling clubs, head and shoulders portrait, close-up, calm, warm side light, dusty ochre
+    wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40495
+- key: eod2-f018-portrait-injured
+  lane: house-i2i
+  title: F018 portrait-injured
+  character: F018
+  group: followers
+  asset: followers/F018/portrait/injured
+  size: 1024x1024
+  seed: 53346
+  denoise: 0.5
+  source_image_id: 248284
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro ferret, female, sleek cream-and-sable ferret, red sash, scorched
+    gloves, three fire-juggling clubs, head and shoulders portrait, close-up, injured, burned paw wrapped, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40496
+- key: eod2-f018-portrait-dead
+  lane: house-i2i
+  title: F018 portrait-dead
+  character: F018
+  group: followers
+  asset: followers/F018/portrait/dead
+  size: 1024x1024
+  seed: 53347
+  denoise: 0.6
+  source_image_id: 248284
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro ferret, female, sleek cream-and-sable ferret, red sash, scorched
+    gloves, three fire-juggling clubs, memorial portrait in an ornate tarnished brass frame, candlelight, three
+    cold juggling clubs before the frame, sepia tones, solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40497
+- key: eod2-f019-illustrated-happy
+  lane: house-i2i
+  title: F019 illustrated-happy
+  character: F019
+  group: followers
+  asset: followers/F019/illustrated/happy
+  size: 832x1216
+  seed: 53361
+  denoise: 0.6
+  source_image_id: 248287
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro barn owl, bird, male, old grey-brown barn owl, tiny round spectacles,
+    scroll case on a strap, ink-stained flight feathers, delighted over a rediscovered road on a map, cowboy shot,
+    warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40498
+- key: eod2-f019-illustrated-excited
+  lane: house-i2i
+  title: F019 illustrated-excited
+  character: F019
+  group: followers
+  asset: followers/F019/illustrated/excited
+  size: 832x1216
+  seed: 53362
+  denoise: 0.6
+  source_image_id: 248287
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro barn owl, bird, male, old grey-brown barn owl, tiny round spectacles,
+    scroll case on a strap, ink-stained flight feathers, maps spread out on a table, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40499
+- key: eod2-f019-illustrated-sad
+  lane: house-i2i
+  title: F019 illustrated-sad
+  character: F019
+  group: followers
+  asset: followers/F019/illustrated/sad
+  size: 832x1216
+  seed: 53363
+  denoise: 0.6
+  source_image_id: 248287
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro barn owl, bird, male, old grey-brown barn owl, tiny round spectacles,
+    scroll case on a strap, ink-stained flight feathers, standing in a burned archive, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40500
+- key: eod2-f019-illustrated-angry
+  lane: house-i2i
+  title: F019 illustrated-angry
+  character: F019
+  group: followers
+  asset: followers/F019/illustrated/angry
+  size: 832x1216
+  seed: 53364
+  denoise: 0.6
+  source_image_id: 248287
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro barn owl, bird, male, old grey-brown barn owl, tiny round spectacles,
+    scroll case on a strap, ink-stained flight feathers, feathers up over a forged record, cowboy shot, warm side
+    light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40501
+- key: eod2-f019-portrait-neutral
+  lane: house-i2i
+  title: F019 portrait-neutral
+  character: F019
+  group: followers
+  asset: followers/F019/portrait/neutral
+  size: 1024x1024
+  seed: 53365
+  denoise: 0.35
+  source_image_id: 248287
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro barn owl, bird, male, old grey-brown barn owl, tiny round spectacles,
+    scroll case on a strap, ink-stained flight feathers, head and shoulders portrait, close-up, calm, warm side
+    light, dusty ochre wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40502
+- key: eod2-f019-portrait-injured
+  lane: house-i2i
+  title: F019 portrait-injured
+  character: F019
+  group: followers
+  asset: followers/F019/portrait/injured
+  size: 1024x1024
+  seed: 53366
+  denoise: 0.5
+  source_image_id: 248287
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro barn owl, bird, male, old grey-brown barn owl, tiny round spectacles,
+    scroll case on a strap, ink-stained flight feathers, head and shoulders portrait, close-up, injured, wing bound,
+    tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40503
+- key: eod2-f019-portrait-dead
+  lane: house-i2i
+  title: F019 portrait-dead
+  character: F019
+  group: followers
+  asset: followers/F019/portrait/dead
+  size: 1024x1024
+  seed: 53367
+  denoise: 0.6
+  source_image_id: 248287
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro barn owl, bird, male, old grey-brown barn owl, tiny round spectacles,
+    scroll case on a strap, ink-stained flight feathers, memorial portrait in an ornate tarnished brass frame, candlelight,
+    a closed folio before the frame, sepia tones, solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40504
+- key: eod2-f020-illustrated-happy
+  lane: house-i2i
+  title: F020 illustrated-happy
+  character: F020
+  group: followers
+  asset: followers/F020/illustrated/happy
+  size: 832x1216
+  seed: 53381
+  denoise: 0.6
+  source_image_id: 248288
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro opossum, androgynous, grey-white opossum, headscarf, flour-dusted
+    apron, ladle and wooden spoon tucked in the belt, ladling stew for a crowd, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40505
+- key: eod2-f020-illustrated-excited
+  lane: house-i2i
+  title: F020 illustrated-excited
+  character: F020
+  group: followers
+  asset: followers/F020/illustrated/excited
+  size: 832x1216
+  seed: 53382
+  denoise: 0.6
+  source_image_id: 248288
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro opossum, androgynous, grey-white opossum, headscarf, flour-dusted
+    apron, ladle and wooden spoon tucked in the belt, tasting a new recipe, eyes wide, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40506
+- key: eod2-f020-illustrated-sad
+  lane: house-i2i
+  title: F020 illustrated-sad
+  character: F020
+  group: followers
+  asset: followers/F020/illustrated/sad
+  size: 832x1216
+  seed: 53383
+  denoise: 0.6
+  source_image_id: 248288
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro opossum, androgynous, grey-white opossum, headscarf, flour-dusted
+    apron, ladle and wooden spoon tucked in the belt, beside empty pots, cowboy shot, warm side light, dusty ochre
+    wasteland setting
+  jobs:
+    house-i2i: 40507
+- key: eod2-f020-illustrated-angry
+  lane: house-i2i
+  title: F020 illustrated-angry
+  character: F020
+  group: followers
+  asset: followers/F020/illustrated/angry
+  size: 832x1216
+  seed: 53384
+  denoise: 0.6
+  source_image_id: 248288
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro opossum, androgynous, grey-white opossum, headscarf, flour-dusted
+    apron, ladle and wooden spoon tucked in the belt, wooden spoon slammed down, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40508
+- key: eod2-f020-portrait-neutral
+  lane: house-i2i
+  title: F020 portrait-neutral
+  character: F020
+  group: followers
+  asset: followers/F020/portrait/neutral
+  size: 1024x1024
+  seed: 53385
+  denoise: 0.35
+  source_image_id: 248288
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro opossum, androgynous, grey-white opossum, headscarf, flour-dusted
+    apron, ladle and wooden spoon tucked in the belt, head and shoulders portrait, close-up, calm, warm side light,
+    dusty ochre wasteland setting
+  source_crop: *id001
+  jobs:
+    house-i2i: 40509
+- key: eod2-f020-portrait-injured
+  lane: house-i2i
+  title: F020 portrait-injured
+  character: F020
+  group: followers
+  asset: followers/F020/portrait/injured
+  size: 1024x1024
+  seed: 53386
+  denoise: 0.5
+  source_image_id: 248288
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro opossum, androgynous, grey-white opossum, headscarf, flour-dusted
+    apron, ladle and wooden spoon tucked in the belt, head and shoulders portrait, close-up, injured, burned arm
+    wrapped, tired
+  source_crop: *id001
+  jobs:
+    house-i2i: 40510
+- key: eod2-f020-portrait-dead
+  lane: house-i2i
+  title: F020 portrait-dead
+  character: F020
+  group: followers
+  asset: followers/F020/portrait/dead
+  size: 1024x1024
+  seed: 53387
+  denoise: 0.6
+  source_image_id: 248288
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro opossum, androgynous, grey-white opossum, headscarf, flour-dusted
+    apron, ladle and wooden spoon tucked in the belt, memorial portrait in an ornate tarnished brass frame, candlelight,
+    a ladle before the frame, sepia tones, solemn, head and shoulders
+  source_crop: *id001
+  jobs:
+    house-i2i: 40511
+- key: eod2-young-komodo-illustrated-happy
+  lane: house-i2i
+  title: young-komodo illustrated-happy
+  character: young-komodo
+  group: npcs
+  asset: npcs/young-komodo/illustrated/happy
+  size: 832x1216
+  seed: 53401
+  denoise: 0.6
+  source_image_id: 248290
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro komodo dragon, lizard, male, young, lanky, patched brass-buttoned
+    long coat, ledger under one arm, clever quick eyes, rare open grin over good news, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40512
+- key: eod2-young-komodo-illustrated-excited
+  lane: house-i2i
+  title: young-komodo illustrated-excited
+  character: young-komodo
+  group: npcs
+  asset: npcs/young-komodo/illustrated/excited
+  size: 832x1216
+  seed: 53402
+  denoise: 0.6
+  source_image_id: 248290
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro komodo dragon, lizard, male, young, lanky, patched brass-buttoned
+    long coat, ledger under one arm, clever quick eyes, pacing, long coat swinging, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40513
+- key: eod2-young-komodo-illustrated-sad
+  lane: house-i2i
+  title: young-komodo illustrated-sad
+  character: young-komodo
+  group: npcs
+  asset: npcs/young-komodo/illustrated/sad
+  size: 832x1216
+  seed: 53403
+  denoise: 0.6
+  source_image_id: 248290
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro komodo dragon, lizard, male, young, lanky, patched brass-buttoned
+    long coat, ledger under one arm, clever quick eyes, looking away, quiet, ledger held against his chest, cowboy
+    shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40514
+- key: eod2-young-komodo-illustrated-angry
+  lane: house-i2i
+  title: young-komodo illustrated-angry
+  character: young-komodo
+  group: npcs
+  asset: npcs/young-komodo/illustrated/angry
+  size: 832x1216
+  seed: 53404
+  denoise: 0.6
+  source_image_id: 248290
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro komodo dragon, lizard, male, young, lanky, patched brass-buttoned
+    long coat, ledger under one arm, clever quick eyes, cold still stare, ledger snapped shut, cowboy shot, warm
+    side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40515
+- key: eod2-young-komodo-illustrated-betrayal
+  lane: house-i2i
+  title: young-komodo illustrated-betrayal
+  character: young-komodo
+  group: npcs
+  asset: npcs/young-komodo/illustrated/betrayal
+  size: 832x1216
+  seed: 53405
+  denoise: 0.7
+  source_image_id: 248290
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro komodo dragon, lizard, male, young, lanky, patched brass-buttoned
+    long coat, ledger under one arm, clever quick eyes, standing in a throne room doorway, grey abbey robe over
+    his coat, holding a brass imperial seal, sad and certain expression, cowboy shot, dim light
+  jobs:
+    house-i2i: 40516
+- key: eod2-the-abbess-illustrated-happy
+  lane: house-i2i
+  title: the-abbess illustrated-happy
+  character: the-abbess
+  group: npcs
+  asset: npcs/the-abbess/illustrated/happy
+  size: 832x1216
+  seed: 53441
+  denoise: 0.6
+  source_image_id: 248322
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, welcoming a traveller with open arms, cowboy shot, warm side light, dusty ochre
+    wasteland setting
+  loras: &id002
+  - resource_id: 4595
+    strength: 0.8
+  jobs:
+    house-i2i: 40517
+- key: eod2-the-abbess-illustrated-excited
+  lane: house-i2i
+  title: the-abbess illustrated-excited
+  character: the-abbess
+  group: npcs
+  asset: npcs/the-abbess/illustrated/excited
+  size: 832x1216
+  seed: 53442
+  denoise: 0.6
+  source_image_id: 248322
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, listening at a dark crypt stair, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  loras: *id002
+  jobs:
+    house-i2i: 40518
+- key: eod2-the-abbess-illustrated-sad
+  lane: house-i2i
+  title: the-abbess illustrated-sad
+  character: the-abbess
+  group: npcs
+  asset: npcs/the-abbess/illustrated/sad
+  size: 832x1216
+  seed: 53443
+  denoise: 0.6
+  source_image_id: 248322
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, a performed sorrow, hand on heart, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  loras: *id002
+  jobs:
+    house-i2i: 40519
+- key: eod2-the-abbess-illustrated-angry
+  lane: house-i2i
+  title: the-abbess illustrated-angry
+  character: the-abbess
+  group: npcs
+  asset: npcs/the-abbess/illustrated/angry
+  size: 832x1216
+  seed: 53444
+  denoise: 0.6
+  source_image_id: 248322
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, smile gone flat, cold eyes, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  loras: *id002
+  jobs:
+    house-i2i: 40520
+- key: eod2-sister-marrow-illustrated-happy
+  lane: house-i2i
+  title: sister-marrow illustrated-happy
+  character: sister-marrow
+  group: npcs
+  asset: npcs/sister-marrow/illustrated/happy
+  size: 832x1216
+  seed: 53461
+  denoise: 0.6
+  source_image_id: 248294
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro goat, female, young white goat, small horns, grey nun robes, counting
+    cord at her belt, rectangular pupils, smiling, beckoning with open hands, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40521
+- key: eod2-sister-marrow-illustrated-excited
+  lane: house-i2i
+  title: sister-marrow illustrated-excited
+  character: sister-marrow
+  group: npcs
+  asset: npcs/sister-marrow/illustrated/excited
+  size: 832x1216
+  seed: 53462
+  denoise: 0.6
+  source_image_id: 248294
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro goat, female, young white goat, small horns, grey nun robes, counting
+    cord at her belt, rectangular pupils, counting a row of neat empty cots, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40522
+- key: eod2-sister-marrow-illustrated-sad
+  lane: house-i2i
+  title: sister-marrow illustrated-sad
+  character: sister-marrow
+  group: npcs
+  asset: npcs/sister-marrow/illustrated/sad
+  size: 832x1216
+  seed: 53463
+  denoise: 0.6
+  source_image_id: 248294
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro goat, female, young white goat, small horns, grey nun robes, counting
+    cord at her belt, rectangular pupils, a mask of sympathy, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40523
+- key: eod2-sister-marrow-illustrated-angry
+  lane: house-i2i
+  title: sister-marrow illustrated-angry
+  character: sister-marrow
+  group: npcs
+  asset: npcs/sister-marrow/illustrated/angry
+  size: 832x1216
+  seed: 53464
+  denoise: 0.6
+  source_image_id: 248294
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro goat, female, young white goat, small horns, grey nun robes, counting
+    cord at her belt, rectangular pupils, smile unchanged, eyes cold, cowboy shot, warm side light, dusty ochre
+    wasteland setting
+  jobs:
+    house-i2i: 40524
+- key: eod2-sister-reedlight-illustrated-happy
+  lane: house-i2i
+  title: sister-reedlight illustrated-happy
+  character: sister-reedlight
+  group: npcs
+  asset: npcs/sister-reedlight/illustrated/happy
+  size: 832x1216
+  seed: 53481
+  denoise: 0.6
+  source_image_id: 248296
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro grey heron, bird, female, slender, long neck, cloak of woven reeds,
+    lantern of green glass with a perfectly still flame, lanterns floating on dark water, cowboy shot, warm side
+    light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40525
+- key: eod2-sister-reedlight-illustrated-excited
+  lane: house-i2i
+  title: sister-reedlight illustrated-excited
+  character: sister-reedlight
+  group: npcs
+  asset: npcs/sister-reedlight/illustrated/excited
+  size: 832x1216
+  seed: 53482
+  denoise: 0.6
+  source_image_id: 248296
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro grey heron, bird, female, slender, long neck, cloak of woven reeds,
+    lantern of green glass with a perfectly still flame, the green lantern flaring, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40526
+- key: eod2-sister-reedlight-illustrated-sad
+  lane: house-i2i
+  title: sister-reedlight illustrated-sad
+  character: sister-reedlight
+  group: npcs
+  asset: npcs/sister-reedlight/illustrated/sad
+  size: 832x1216
+  seed: 53483
+  denoise: 0.6
+  source_image_id: 248296
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro grey heron, bird, female, slender, long neck, cloak of woven reeds,
+    lantern of green glass with a perfectly still flame, the lantern dimming, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40527
+- key: eod2-sister-reedlight-illustrated-angry
+  lane: house-i2i
+  title: sister-reedlight illustrated-angry
+  character: sister-reedlight
+  group: npcs
+  asset: npcs/sister-reedlight/illustrated/angry
+  size: 832x1216
+  seed: 53484
+  denoise: 0.6
+  source_image_id: 248296
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro grey heron, bird, female, slender, long neck, cloak of woven reeds,
+    lantern of green glass with a perfectly still flame, reeds bending toward her, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40528
+- key: eod2-marisol-tallow-illustrated-happy
+  lane: house-i2i
+  title: marisol-tallow illustrated-happy
+  character: marisol-tallow
+  group: npcs
+  asset: npcs/marisol-tallow/illustrated/happy
+  size: 832x1216
+  seed: 53581
+  denoise: 0.6
+  source_image_id: 248307
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro raccoon, female, sharp-eyed, brass-buttoned waistcoat, ink-stained
+    fingers, pen behind her ear, counting brass coins, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40529
+- key: eod2-marisol-tallow-illustrated-excited
+  lane: house-i2i
+  title: marisol-tallow illustrated-excited
+  character: marisol-tallow
+  group: npcs
+  asset: npcs/marisol-tallow/illustrated/excited
+  size: 832x1216
+  seed: 53582
+  denoise: 0.6
+  source_image_id: 248307
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro raccoon, female, sharp-eyed, brass-buttoned waistcoat, ink-stained
+    fingers, pen behind her ear, shaking on a deal, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40530
+- key: eod2-marisol-tallow-illustrated-sad
+  lane: house-i2i
+  title: marisol-tallow illustrated-sad
+  character: marisol-tallow
+  group: npcs
+  asset: npcs/marisol-tallow/illustrated/sad
+  size: 832x1216
+  seed: 53583
+  denoise: 0.6
+  source_image_id: 248307
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro raccoon, female, sharp-eyed, brass-buttoned waistcoat, ink-stained
+    fingers, pen behind her ear, reading a defaulted loan, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40531
+- key: eod2-marisol-tallow-illustrated-angry
+  lane: house-i2i
+  title: marisol-tallow illustrated-angry
+  character: marisol-tallow
+  group: npcs
+  asset: npcs/marisol-tallow/illustrated/angry
+  size: 832x1216
+  seed: 53584
+  denoise: 0.6
+  source_image_id: 248307
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro raccoon, female, sharp-eyed, brass-buttoned waistcoat, ink-stained
+    fingers, pen behind her ear, snapping her pen, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40532
+- key: eod2-dunmore-ash-illustrated-happy
+  lane: house-i2i
+  title: dunmore-ash illustrated-happy
+  character: dunmore-ash
+  group: npcs
+  asset: npcs/dunmore-ash/illustrated/happy
+  size: 832x1216
+  seed: 53601
+  denoise: 0.6
+  source_image_id: 248308
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro boar, male, heavy, tusks, flour-dusted apron, rolled-up sleeves,
+    ladle at his belt, ovens lit, satisfied, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40533
+- key: eod2-dunmore-ash-illustrated-excited
+  lane: house-i2i
+  title: dunmore-ash illustrated-excited
+  character: dunmore-ash
+  group: npcs
+  asset: npcs/dunmore-ash/illustrated/excited
+  size: 832x1216
+  seed: 53602
+  denoise: 0.6
+  source_image_id: 248308
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro boar, male, heavy, tusks, flour-dusted apron, rolled-up sleeves,
+    ladle at his belt, beside a full larder, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40534
+- key: eod2-dunmore-ash-illustrated-sad
+  lane: house-i2i
+  title: dunmore-ash illustrated-sad
+  character: dunmore-ash
+  group: npcs
+  asset: npcs/dunmore-ash/illustrated/sad
+  size: 832x1216
+  seed: 53603
+  denoise: 0.6
+  source_image_id: 248308
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro boar, male, heavy, tusks, flour-dusted apron, rolled-up sleeves,
+    ladle at his belt, among empty flour sacks, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40535
+- key: eod2-dunmore-ash-illustrated-angry
+  lane: house-i2i
+  title: dunmore-ash illustrated-angry
+  character: dunmore-ash
+  group: npcs
+  asset: npcs/dunmore-ash/illustrated/angry
+  size: 832x1216
+  seed: 53604
+  denoise: 0.6
+  source_image_id: 248308
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro boar, male, heavy, tusks, flour-dusted apron, rolled-up sleeves,
+    ladle at his belt, ladle slammed down, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40536
+- key: eod2-elder-corvane-illustrated-happy
+  lane: house-i2i
+  title: elder-corvane illustrated-happy
+  character: elder-corvane
+  group: npcs
+  asset: npcs/elder-corvane/illustrated/happy
+  size: 832x1216
+  seed: 53621
+  denoise: 0.6
+  source_image_id: 248310
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro crow, bird, male, ancient, feathers faded to grey-blue, mantle
+    hung with tiny copper chimes, clouded pale eyes, rain falling, pleased, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40537
+- key: eod2-elder-corvane-illustrated-excited
+  lane: house-i2i
+  title: elder-corvane illustrated-excited
+  character: elder-corvane
+  group: npcs
+  asset: npcs/elder-corvane/illustrated/excited
+  size: 832x1216
+  seed: 53622
+  denoise: 0.6
+  source_image_id: 248310
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro crow, bird, male, ancient, feathers faded to grey-blue, mantle
+    hung with tiny copper chimes, clouded pale eyes, copper chimes ringing, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40538
+- key: eod2-elder-corvane-illustrated-sad
+  lane: house-i2i
+  title: elder-corvane illustrated-sad
+  character: elder-corvane
+  group: npcs
+  asset: npcs/elder-corvane/illustrated/sad
+  size: 832x1216
+  seed: 53623
+  denoise: 0.6
+  source_image_id: 248310
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro crow, bird, male, ancient, feathers faded to grey-blue, mantle
+    hung with tiny copper chimes, clouded pale eyes, under a dry sky, cowboy shot, warm side light, dusty ochre
+    wasteland setting
+  jobs:
+    house-i2i: 40539
+- key: eod2-elder-corvane-illustrated-angry
+  lane: house-i2i
+  title: elder-corvane illustrated-angry
+  character: elder-corvane
+  group: npcs
+  asset: npcs/elder-corvane/illustrated/angry
+  size: 832x1216
+  seed: 53624
+  denoise: 0.6
+  source_image_id: 248310
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro crow, bird, male, ancient, feathers faded to grey-blue, mantle
+    hung with tiny copper chimes, clouded pale eyes, glaring, chimes silent, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40540
+- key: eod2-hester-plowright-illustrated-happy
+  lane: house-i2i
+  title: hester-plowright illustrated-happy
+  character: hester-plowright
+  group: npcs
+  asset: npcs/hester-plowright/illustrated/happy
+  size: 832x1216
+  seed: 53661
+  denoise: 0.6
+  source_image_id: 248314
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hen, chicken, bird, female, broad speckled brown hen, mud-hemmed
+    skirt, farm coat, brass chain of office, egg basket on her arm, holding a full egg basket, cowboy shot, warm
+    side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40541
+- key: eod2-hester-plowright-illustrated-excited
+  lane: house-i2i
+  title: hester-plowright illustrated-excited
+  character: hester-plowright
+  group: npcs
+  asset: npcs/hester-plowright/illustrated/excited
+  size: 832x1216
+  seed: 53662
+  denoise: 0.6
+  source_image_id: 248314
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hen, chicken, bird, female, broad speckled brown hen, mud-hemmed
+    skirt, farm coat, brass chain of office, egg basket on her arm, rain on the fields, cowboy shot, warm side light,
+    dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40542
+- key: eod2-hester-plowright-illustrated-sad
+  lane: house-i2i
+  title: hester-plowright illustrated-sad
+  character: hester-plowright
+  group: npcs
+  asset: npcs/hester-plowright/illustrated/sad
+  size: 832x1216
+  seed: 53663
+  denoise: 0.6
+  source_image_id: 248314
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hen, chicken, bird, female, broad speckled brown hen, mud-hemmed
+    skirt, farm coat, brass chain of office, egg basket on her arm, beside an empty well, cowboy shot, warm side
+    light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40543
+- key: eod2-hester-plowright-illustrated-angry
+  lane: house-i2i
+  title: hester-plowright illustrated-angry
+  character: hester-plowright
+  group: npcs
+  asset: npcs/hester-plowright/illustrated/angry
+  size: 832x1216
+  seed: 53664
+  denoise: 0.6
+  source_image_id: 248314
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hen, chicken, bird, female, broad speckled brown hen, mud-hemmed
+    skirt, farm coat, brass chain of office, egg basket on her arm, feathers up, wings out, cowboy shot, warm side
+    light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40544
+- key: eod2-abelard-vellum-illustrated-happy
+  lane: house-i2i
+  title: abelard-vellum illustrated-happy
+  character: abelard-vellum
+  group: npcs
+  asset: npcs/abelard-vellum/illustrated/happy
+  size: 832x1216
+  seed: 53701
+  denoise: 0.6
+  source_image_id: 248319
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro three-toed sloth, male, slow, shaggy fur with a faint green tint,
+    ink-dark archivist robes, tiny spectacles, ring of brass keys, unrolling a recovered map, cowboy shot, warm
+    side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40545
+- key: eod2-abelard-vellum-illustrated-excited
+  lane: house-i2i
+  title: abelard-vellum illustrated-excited
+  character: abelard-vellum
+  group: npcs
+  asset: npcs/abelard-vellum/illustrated/excited
+  size: 832x1216
+  seed: 53702
+  denoise: 0.6
+  source_image_id: 248319
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro three-toed sloth, male, slow, shaggy fur with a faint green tint,
+    ink-dark archivist robes, tiny spectacles, ring of brass keys, half a smile, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40546
+- key: eod2-abelard-vellum-illustrated-sad
+  lane: house-i2i
+  title: abelard-vellum illustrated-sad
+  character: abelard-vellum
+  group: npcs
+  asset: npcs/abelard-vellum/illustrated/sad
+  size: 832x1216
+  seed: 53703
+  denoise: 0.6
+  source_image_id: 248319
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro three-toed sloth, male, slow, shaggy fur with a faint green tint,
+    ink-dark archivist robes, tiny spectacles, ring of brass keys, holding a burned page, cowboy shot, warm side
+    light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40547
+- key: eod2-abelard-vellum-illustrated-angry
+  lane: house-i2i
+  title: abelard-vellum illustrated-angry
+  character: abelard-vellum
+  group: npcs
+  asset: npcs/abelard-vellum/illustrated/angry
+  size: 832x1216
+  seed: 53704
+  denoise: 0.6
+  source_image_id: 248319
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro three-toed sloth, male, slow, shaggy fur with a faint green tint,
+    ink-dark archivist robes, tiny spectacles, ring of brass keys, perfectly still, keys silent, cowboy shot, warm
+    side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40548
