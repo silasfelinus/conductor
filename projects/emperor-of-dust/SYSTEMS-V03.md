@@ -134,6 +134,7 @@ traits do not, so they can surprise.
   tier**, and current tensions with neighbors.
 - Act-end changes are shown here first (see "Acts and the changing map").
 - The map is information and choice context; quests are still assigned in the quest room.
+- Geography, fortress floor plan and act overlays for the map art: [MAP-LAYOUT.md](MAP-LAYOUT.md).
 
 *Phone layout: one room per screen with a bottom room bar. Desktop: the room fills the stage, with
 the HUD strip (day, act, five local meters, brass) on top.*
