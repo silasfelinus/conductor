@@ -4,6 +4,10 @@
 # crop of the keeper (neutral 0.35, injured 0.5, dead/memorial 0.6); Young Komodo also gets his
 # betrayal image (0.7). Keepers and these renders together make the 246 approved images.
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# Spot-check 2026-10-19: at denoise 0.6 the moods are on-model but too subtle (sad/excited barely move),
+# and injured/dead portraits show no bandages or frame. `-v2` subjects probe stronger settings on
+# Rook and Ash (moods 0.72 with weighted emotion tags; injured 0.65; memorial 0.78).
+# `approved` lists the renders reviewed and exported to kind_robots (castArt.ts).
 round: emperor-cast-2
 project_slug: emperor-of-dust
 designer: Comic Studio
@@ -41,6 +45,10 @@ subjects:
     wind in the scarf, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40407
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248350
 - key: eod2-f001-illustrated-excited
   lane: house-i2i
   title: F001 illustrated-excited
@@ -59,6 +67,10 @@ subjects:
     fresh wagon tracks, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40408
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248351
 - key: eod2-f001-illustrated-sad
   lane: house-i2i
   title: F001 illustrated-sad
@@ -77,6 +89,10 @@ subjects:
     the brass compass close, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40409
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248352
 - key: eod2-f001-illustrated-angry
   lane: house-i2i
   title: F001 illustrated-angry
@@ -95,6 +111,10 @@ subjects:
     on a knife hilt, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40410
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248353
 - key: eod2-f001-portrait-neutral
   lane: house-i2i
   title: F001 portrait-neutral
@@ -118,6 +138,10 @@ subjects:
   - 0.5
   jobs:
     house-i2i: 40411
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248354
 - key: eod2-f001-portrait-injured
   lane: house-i2i
   title: F001 portrait-injured
@@ -137,6 +161,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40412
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248355
 - key: eod2-f001-portrait-dead
   lane: house-i2i
   title: F001 portrait-dead
@@ -157,6 +185,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40413
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248356
 - key: eod2-f002-illustrated-happy
   lane: house-i2i
   title: F002 illustrated-happy
@@ -176,6 +208,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40414
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248357
 - key: eod2-f002-illustrated-excited
   lane: house-i2i
   title: F002 illustrated-excited
@@ -194,6 +230,10 @@ subjects:
     toolbox, sparks flying from her welding torch, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40415
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248358
 - key: eod2-f002-illustrated-sad
   lane: house-i2i
   title: F002 illustrated-sad
@@ -212,6 +252,10 @@ subjects:
     toolbox, staring into her open toolbox lid, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40416
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248359
 - key: eod2-f002-illustrated-angry
   lane: house-i2i
   title: F002 illustrated-angry
@@ -230,6 +274,10 @@ subjects:
     toolbox, snarling, wrench raised, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40417
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248360
 - key: eod2-f002-portrait-neutral
   lane: house-i2i
   title: F002 portrait-neutral
@@ -249,6 +297,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40418
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248361
 - key: eod2-f002-portrait-injured
   lane: house-i2i
   title: F002 portrait-injured
@@ -268,6 +320,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40419
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248362
 - key: eod2-f002-portrait-dead
   lane: house-i2i
   title: F002 portrait-dead
@@ -288,6 +344,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40420
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248363
 - key: eod2-f006-illustrated-happy
   lane: house-i2i
   title: F006 illustrated-happy
@@ -306,6 +366,10 @@ subjects:
     smiling up into the first rain, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40421
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248364
 - key: eod2-f006-illustrated-excited
   lane: house-i2i
   title: F006 illustrated-excited
@@ -324,6 +388,10 @@ subjects:
     feathers streaming in a rising storm wind, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40422
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248365
 - key: eod2-f006-illustrated-sad
   lane: house-i2i
   title: F006 illustrated-sad
@@ -342,6 +410,10 @@ subjects:
     holding a wilted seedling, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40423
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248366
 - key: eod2-f006-illustrated-angry
   lane: house-i2i
   title: F006 illustrated-angry
@@ -360,6 +432,10 @@ subjects:
     feathers ruffled, bill open in cold argument, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40424
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248367
 - key: eod2-f006-portrait-neutral
   lane: house-i2i
   title: F006 portrait-neutral
@@ -379,6 +455,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40425
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248368
 - key: eod2-f006-portrait-injured
   lane: house-i2i
   title: F006 portrait-injured
@@ -398,6 +478,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40426
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248369
 - key: eod2-f006-portrait-dead
   lane: house-i2i
   title: F006 portrait-dead
@@ -418,6 +502,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40427
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248370
 - key: eod2-f007-illustrated-happy
   lane: house-i2i
   title: F007 illustrated-happy
@@ -436,6 +524,10 @@ subjects:
     air, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40428
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248371
 - key: eod2-f007-illustrated-excited
   lane: house-i2i
   title: F007 illustrated-excited
@@ -454,6 +546,10 @@ subjects:
     back, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40429
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248372
 - key: eod2-f007-illustrated-sad
   lane: house-i2i
   title: F007 illustrated-sad
@@ -472,6 +568,10 @@ subjects:
     low, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40430
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248373
 - key: eod2-f007-illustrated-angry
   lane: house-i2i
   title: F007 illustrated-angry
@@ -490,6 +590,10 @@ subjects:
     permit, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40431
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248374
 - key: eod2-f007-portrait-neutral
   lane: house-i2i
   title: F007 portrait-neutral
@@ -509,6 +613,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40432
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248375
 - key: eod2-f007-portrait-injured
   lane: house-i2i
   title: F007 portrait-injured
@@ -528,6 +636,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40433
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248376
 - key: eod2-f007-portrait-dead
   lane: house-i2i
   title: F007 portrait-dead
@@ -547,6 +659,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40434
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248377
 - key: eod2-f008-illustrated-happy
   lane: house-i2i
   title: F008 illustrated-happy
@@ -565,6 +681,10 @@ subjects:
     warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40435
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248378
 - key: eod2-f008-illustrated-excited
   lane: house-i2i
   title: F008 illustrated-excited
@@ -583,6 +703,10 @@ subjects:
     warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40436
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248379
 - key: eod2-f008-illustrated-sad
   lane: house-i2i
   title: F008 illustrated-sad
@@ -601,6 +725,10 @@ subjects:
     warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40437
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248380
 - key: eod2-f008-illustrated-angry
   lane: house-i2i
   title: F008 illustrated-angry
@@ -619,6 +747,10 @@ subjects:
     side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40438
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248381
 - key: eod2-f008-portrait-neutral
   lane: house-i2i
   title: F008 portrait-neutral
@@ -638,6 +770,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40439
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248382
 - key: eod2-f008-portrait-injured
   lane: house-i2i
   title: F008 portrait-injured
@@ -657,6 +793,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40440
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248383
 - key: eod2-f008-portrait-dead
   lane: house-i2i
   title: F008 portrait-dead
@@ -676,6 +816,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40441
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248384
 - key: eod2-f009-illustrated-happy
   lane: house-i2i
   title: F009 illustrated-happy
@@ -694,6 +838,10 @@ subjects:
     lantern held over a new tunnel junction, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40442
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248385
 - key: eod2-f009-illustrated-excited
   lane: house-i2i
   title: F009 illustrated-excited
@@ -712,6 +860,10 @@ subjects:
     a charcoal blueprint, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40443
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248386
 - key: eod2-f009-illustrated-sad
   lane: house-i2i
   title: F009 illustrated-sad
@@ -730,6 +882,10 @@ subjects:
     knee-deep in a flooded burrow, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40444
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248387
 - key: eod2-f009-illustrated-angry
   lane: house-i2i
   title: F009 illustrated-angry
@@ -748,6 +904,10 @@ subjects:
     jabbing a finger at a map, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40445
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248388
 - key: eod2-f009-portrait-neutral
   lane: house-i2i
   title: F009 portrait-neutral
@@ -767,6 +927,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40446
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248389
 - key: eod2-f009-portrait-injured
   lane: house-i2i
   title: F009 portrait-injured
@@ -786,6 +950,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40447
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248390
 - key: eod2-f009-portrait-dead
   lane: house-i2i
   title: F009 portrait-dead
@@ -806,6 +974,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40448
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248391
 - key: eod2-f011-illustrated-happy
   lane: house-i2i
   title: F011 illustrated-happy
@@ -824,6 +996,10 @@ subjects:
     warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40449
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248392
 - key: eod2-f011-illustrated-excited
   lane: house-i2i
   title: F011 illustrated-excited
@@ -842,6 +1018,10 @@ subjects:
     shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40450
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248393
 - key: eod2-f011-illustrated-sad
   lane: house-i2i
   title: F011 illustrated-sad
@@ -860,6 +1040,10 @@ subjects:
     cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40451
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248394
 - key: eod2-f011-illustrated-angry
   lane: house-i2i
   title: F011 illustrated-angry
@@ -878,6 +1062,10 @@ subjects:
     shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40452
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248395
 - key: eod2-f011-portrait-neutral
   lane: house-i2i
   title: F011 portrait-neutral
@@ -897,6 +1085,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40453
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248396
 - key: eod2-f011-portrait-injured
   lane: house-i2i
   title: F011 portrait-injured
@@ -916,6 +1108,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40454
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248397
 - key: eod2-f011-portrait-dead
   lane: house-i2i
   title: F011 portrait-dead
@@ -936,6 +1132,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40455
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248398
 - key: eod2-f012-illustrated-happy
   lane: house-i2i
   title: F012 illustrated-happy
@@ -954,6 +1154,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40456
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248399
 - key: eod2-f012-illustrated-excited
   lane: house-i2i
   title: F012 illustrated-excited
@@ -972,6 +1176,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40457
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248400
 - key: eod2-f012-illustrated-sad
   lane: house-i2i
   title: F012 illustrated-sad
@@ -990,6 +1198,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40458
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248401
 - key: eod2-f012-illustrated-angry
   lane: house-i2i
   title: F012 illustrated-angry
@@ -1008,6 +1220,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40459
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248402
 - key: eod2-f012-portrait-neutral
   lane: house-i2i
   title: F012 portrait-neutral
@@ -1027,6 +1243,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40460
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248403
 - key: eod2-f012-portrait-injured
   lane: house-i2i
   title: F012 portrait-injured
@@ -1046,6 +1266,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40461
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248404
 - key: eod2-f012-portrait-dead
   lane: house-i2i
   title: F012 portrait-dead
@@ -1065,6 +1289,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40462
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248405
 - key: eod2-f013-illustrated-happy
   lane: house-i2i
   title: F013 illustrated-happy
@@ -1083,6 +1311,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40463
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248406
 - key: eod2-f013-illustrated-excited
   lane: house-i2i
   title: F013 illustrated-excited
@@ -1101,6 +1333,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40464
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248407
 - key: eod2-f013-illustrated-sad
   lane: house-i2i
   title: F013 illustrated-sad
@@ -1119,6 +1355,10 @@ subjects:
     ochre wasteland setting
   jobs:
     house-i2i: 40465
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248408
 - key: eod2-f013-illustrated-angry
   lane: house-i2i
   title: F013 illustrated-angry
@@ -1137,6 +1377,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40466
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248409
 - key: eod2-f013-portrait-neutral
   lane: house-i2i
   title: F013 portrait-neutral
@@ -1156,6 +1400,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40467
+  art:
+    house-i2i:
+      status: DONE
+      art_image_id: 248410
 - key: eod2-f013-portrait-injured
   lane: house-i2i
   title: F013 portrait-injured
@@ -1175,6 +1423,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40468
+  art:
+    house-i2i:
+      status: RUNNING
+      art_image_id: null
 - key: eod2-f013-portrait-dead
   lane: house-i2i
   title: F013 portrait-dead
@@ -1194,6 +1446,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40469
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f014-illustrated-happy
   lane: house-i2i
   title: F014 illustrated-happy
@@ -1212,6 +1468,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40470
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f014-illustrated-excited
   lane: house-i2i
   title: F014 illustrated-excited
@@ -1230,6 +1490,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40471
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f014-illustrated-sad
   lane: house-i2i
   title: F014 illustrated-sad
@@ -1248,6 +1512,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40472
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f014-illustrated-angry
   lane: house-i2i
   title: F014 illustrated-angry
@@ -1266,6 +1534,10 @@ subjects:
     light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40473
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f014-portrait-neutral
   lane: house-i2i
   title: F014 portrait-neutral
@@ -1285,6 +1557,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40474
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f014-portrait-injured
   lane: house-i2i
   title: F014 portrait-injured
@@ -1304,6 +1580,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40475
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f014-portrait-dead
   lane: house-i2i
   title: F014 portrait-dead
@@ -1323,6 +1603,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40476
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f015-illustrated-happy
   lane: house-i2i
   title: F015 illustrated-happy
@@ -1341,6 +1625,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40477
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f015-illustrated-excited
   lane: house-i2i
   title: F015 illustrated-excited
@@ -1359,6 +1647,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40478
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f015-illustrated-sad
   lane: house-i2i
   title: F015 illustrated-sad
@@ -1377,6 +1669,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40479
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f015-illustrated-angry
   lane: house-i2i
   title: F015 illustrated-angry
@@ -1394,6 +1690,10 @@ subjects:
     lantern of green glass, the green lantern flaring, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40480
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f015-portrait-neutral
   lane: house-i2i
   title: F015 portrait-neutral
@@ -1413,6 +1713,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40481
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f015-portrait-injured
   lane: house-i2i
   title: F015 portrait-injured
@@ -1431,6 +1735,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40482
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f015-portrait-dead
   lane: house-i2i
   title: F015 portrait-dead
@@ -1450,6 +1758,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40483
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f017-illustrated-happy
   lane: house-i2i
   title: F017 illustrated-happy
@@ -1467,6 +1779,10 @@ subjects:
     pitchfork with a bent tine, harvest in, grinning, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40484
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f017-illustrated-excited
   lane: house-i2i
   title: F017 illustrated-excited
@@ -1485,6 +1801,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40485
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f017-illustrated-sad
   lane: house-i2i
   title: F017 illustrated-sad
@@ -1502,6 +1822,10 @@ subjects:
     pitchfork with a bent tine, standing in ashes, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40486
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f017-illustrated-angry
   lane: house-i2i
   title: F017 illustrated-angry
@@ -1519,6 +1843,10 @@ subjects:
     pitchfork with a bent tine, pitchfork levelled, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40487
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f017-portrait-neutral
   lane: house-i2i
   title: F017 portrait-neutral
@@ -1538,6 +1866,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40488
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f017-portrait-injured
   lane: house-i2i
   title: F017 portrait-injured
@@ -1556,6 +1888,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40489
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f017-portrait-dead
   lane: house-i2i
   title: F017 portrait-dead
@@ -1575,6 +1911,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40490
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f018-illustrated-happy
   lane: house-i2i
   title: F018 illustrated-happy
@@ -1592,6 +1932,10 @@ subjects:
     gloves, three fire-juggling clubs, bowing to a crowd, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40491
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f018-illustrated-excited
   lane: house-i2i
   title: F018 illustrated-excited
@@ -1610,6 +1954,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40492
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f018-illustrated-sad
   lane: house-i2i
   title: F018 illustrated-sad
@@ -1628,6 +1976,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40493
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f018-illustrated-angry
   lane: house-i2i
   title: F018 illustrated-angry
@@ -1646,6 +1998,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40494
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f018-portrait-neutral
   lane: house-i2i
   title: F018 portrait-neutral
@@ -1665,6 +2021,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40495
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f018-portrait-injured
   lane: house-i2i
   title: F018 portrait-injured
@@ -1683,6 +2043,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40496
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f018-portrait-dead
   lane: house-i2i
   title: F018 portrait-dead
@@ -1702,6 +2066,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40497
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f019-illustrated-happy
   lane: house-i2i
   title: F019 illustrated-happy
@@ -1720,6 +2088,10 @@ subjects:
     warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40498
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f019-illustrated-excited
   lane: house-i2i
   title: F019 illustrated-excited
@@ -1738,6 +2110,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40499
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f019-illustrated-sad
   lane: house-i2i
   title: F019 illustrated-sad
@@ -1756,6 +2132,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40500
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f019-illustrated-angry
   lane: house-i2i
   title: F019 illustrated-angry
@@ -1774,6 +2154,10 @@ subjects:
     light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40501
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f019-portrait-neutral
   lane: house-i2i
   title: F019 portrait-neutral
@@ -1793,6 +2177,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40502
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f019-portrait-injured
   lane: house-i2i
   title: F019 portrait-injured
@@ -1812,6 +2200,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40503
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f019-portrait-dead
   lane: house-i2i
   title: F019 portrait-dead
@@ -1831,6 +2223,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40504
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f020-illustrated-happy
   lane: house-i2i
   title: F020 illustrated-happy
@@ -1849,6 +2245,10 @@ subjects:
     ochre wasteland setting
   jobs:
     house-i2i: 40505
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f020-illustrated-excited
   lane: house-i2i
   title: F020 illustrated-excited
@@ -1867,6 +2267,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40506
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f020-illustrated-sad
   lane: house-i2i
   title: F020 illustrated-sad
@@ -1885,6 +2289,10 @@ subjects:
     wasteland setting
   jobs:
     house-i2i: 40507
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f020-illustrated-angry
   lane: house-i2i
   title: F020 illustrated-angry
@@ -1903,6 +2311,10 @@ subjects:
     ochre wasteland setting
   jobs:
     house-i2i: 40508
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f020-portrait-neutral
   lane: house-i2i
   title: F020 portrait-neutral
@@ -1922,6 +2334,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40509
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f020-portrait-injured
   lane: house-i2i
   title: F020 portrait-injured
@@ -1941,6 +2357,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40510
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-f020-portrait-dead
   lane: house-i2i
   title: F020 portrait-dead
@@ -1960,6 +2380,10 @@ subjects:
   source_crop: *id001
   jobs:
     house-i2i: 40511
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-young-komodo-illustrated-happy
   lane: house-i2i
   title: young-komodo illustrated-happy
@@ -1978,6 +2402,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40512
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-young-komodo-illustrated-excited
   lane: house-i2i
   title: young-komodo illustrated-excited
@@ -1996,6 +2424,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40513
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-young-komodo-illustrated-sad
   lane: house-i2i
   title: young-komodo illustrated-sad
@@ -2014,6 +2446,10 @@ subjects:
     shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40514
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-young-komodo-illustrated-angry
   lane: house-i2i
   title: young-komodo illustrated-angry
@@ -2032,6 +2468,10 @@ subjects:
     side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40515
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-young-komodo-illustrated-betrayal
   lane: house-i2i
   title: young-komodo illustrated-betrayal
@@ -2050,6 +2490,10 @@ subjects:
     his coat, holding a brass imperial seal, sad and certain expression, cowboy shot, dim light
   jobs:
     house-i2i: 40516
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-the-abbess-illustrated-happy
   lane: house-i2i
   title: the-abbess illustrated-happy
@@ -2071,6 +2515,10 @@ subjects:
     strength: 0.8
   jobs:
     house-i2i: 40517
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-the-abbess-illustrated-excited
   lane: house-i2i
   title: the-abbess illustrated-excited
@@ -2090,6 +2538,10 @@ subjects:
   loras: *id002
   jobs:
     house-i2i: 40518
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-the-abbess-illustrated-sad
   lane: house-i2i
   title: the-abbess illustrated-sad
@@ -2109,6 +2561,10 @@ subjects:
   loras: *id002
   jobs:
     house-i2i: 40519
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-the-abbess-illustrated-angry
   lane: house-i2i
   title: the-abbess illustrated-angry
@@ -2128,6 +2584,10 @@ subjects:
   loras: *id002
   jobs:
     house-i2i: 40520
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-sister-marrow-illustrated-happy
   lane: house-i2i
   title: sister-marrow illustrated-happy
@@ -2146,6 +2606,10 @@ subjects:
     ochre wasteland setting
   jobs:
     house-i2i: 40521
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-sister-marrow-illustrated-excited
   lane: house-i2i
   title: sister-marrow illustrated-excited
@@ -2164,6 +2628,10 @@ subjects:
     ochre wasteland setting
   jobs:
     house-i2i: 40522
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-sister-marrow-illustrated-sad
   lane: house-i2i
   title: sister-marrow illustrated-sad
@@ -2182,6 +2650,10 @@ subjects:
     setting
   jobs:
     house-i2i: 40523
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-sister-marrow-illustrated-angry
   lane: house-i2i
   title: sister-marrow illustrated-angry
@@ -2200,6 +2672,10 @@ subjects:
     wasteland setting
   jobs:
     house-i2i: 40524
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-sister-reedlight-illustrated-happy
   lane: house-i2i
   title: sister-reedlight illustrated-happy
@@ -2218,6 +2694,10 @@ subjects:
     light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40525
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-sister-reedlight-illustrated-excited
   lane: house-i2i
   title: sister-reedlight illustrated-excited
@@ -2236,6 +2716,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40526
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-sister-reedlight-illustrated-sad
   lane: house-i2i
   title: sister-reedlight illustrated-sad
@@ -2254,6 +2738,10 @@ subjects:
     ochre wasteland setting
   jobs:
     house-i2i: 40527
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-sister-reedlight-illustrated-angry
   lane: house-i2i
   title: sister-reedlight illustrated-angry
@@ -2272,6 +2760,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40528
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-marisol-tallow-illustrated-happy
   lane: house-i2i
   title: marisol-tallow illustrated-happy
@@ -2289,6 +2781,10 @@ subjects:
     fingers, pen behind her ear, counting brass coins, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40529
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-marisol-tallow-illustrated-excited
   lane: house-i2i
   title: marisol-tallow illustrated-excited
@@ -2306,6 +2802,10 @@ subjects:
     fingers, pen behind her ear, shaking on a deal, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40530
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-marisol-tallow-illustrated-sad
   lane: house-i2i
   title: marisol-tallow illustrated-sad
@@ -2323,6 +2823,10 @@ subjects:
     fingers, pen behind her ear, reading a defaulted loan, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40531
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-marisol-tallow-illustrated-angry
   lane: house-i2i
   title: marisol-tallow illustrated-angry
@@ -2340,6 +2844,10 @@ subjects:
     fingers, pen behind her ear, snapping her pen, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40532
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-dunmore-ash-illustrated-happy
   lane: house-i2i
   title: dunmore-ash illustrated-happy
@@ -2357,6 +2865,10 @@ subjects:
     ladle at his belt, ovens lit, satisfied, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40533
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-dunmore-ash-illustrated-excited
   lane: house-i2i
   title: dunmore-ash illustrated-excited
@@ -2374,6 +2886,10 @@ subjects:
     ladle at his belt, beside a full larder, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40534
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-dunmore-ash-illustrated-sad
   lane: house-i2i
   title: dunmore-ash illustrated-sad
@@ -2391,6 +2907,10 @@ subjects:
     ladle at his belt, among empty flour sacks, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40535
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-dunmore-ash-illustrated-angry
   lane: house-i2i
   title: dunmore-ash illustrated-angry
@@ -2408,6 +2928,10 @@ subjects:
     ladle at his belt, ladle slammed down, cowboy shot, warm side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40536
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-elder-corvane-illustrated-happy
   lane: house-i2i
   title: elder-corvane illustrated-happy
@@ -2426,6 +2950,10 @@ subjects:
     ochre wasteland setting
   jobs:
     house-i2i: 40537
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-elder-corvane-illustrated-excited
   lane: house-i2i
   title: elder-corvane illustrated-excited
@@ -2444,6 +2972,10 @@ subjects:
     ochre wasteland setting
   jobs:
     house-i2i: 40538
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-elder-corvane-illustrated-sad
   lane: house-i2i
   title: elder-corvane illustrated-sad
@@ -2462,6 +2994,10 @@ subjects:
     wasteland setting
   jobs:
     house-i2i: 40539
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-elder-corvane-illustrated-angry
   lane: house-i2i
   title: elder-corvane illustrated-angry
@@ -2480,6 +3016,10 @@ subjects:
     ochre wasteland setting
   jobs:
     house-i2i: 40540
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-hester-plowright-illustrated-happy
   lane: house-i2i
   title: hester-plowright illustrated-happy
@@ -2498,6 +3038,10 @@ subjects:
     side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40541
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-hester-plowright-illustrated-excited
   lane: house-i2i
   title: hester-plowright illustrated-excited
@@ -2516,6 +3060,10 @@ subjects:
     dusty ochre wasteland setting
   jobs:
     house-i2i: 40542
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-hester-plowright-illustrated-sad
   lane: house-i2i
   title: hester-plowright illustrated-sad
@@ -2534,6 +3082,10 @@ subjects:
     light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40543
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-hester-plowright-illustrated-angry
   lane: house-i2i
   title: hester-plowright illustrated-angry
@@ -2552,6 +3104,10 @@ subjects:
     light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40544
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-abelard-vellum-illustrated-happy
   lane: house-i2i
   title: abelard-vellum illustrated-happy
@@ -2570,6 +3126,10 @@ subjects:
     side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40545
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-abelard-vellum-illustrated-excited
   lane: house-i2i
   title: abelard-vellum illustrated-excited
@@ -2588,6 +3148,10 @@ subjects:
     ochre wasteland setting
   jobs:
     house-i2i: 40546
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-abelard-vellum-illustrated-sad
   lane: house-i2i
   title: abelard-vellum illustrated-sad
@@ -2606,6 +3170,10 @@ subjects:
     light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40547
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
 - key: eod2-abelard-vellum-illustrated-angry
   lane: house-i2i
   title: abelard-vellum illustrated-angry
@@ -2624,3 +3192,1156 @@ subjects:
     side light, dusty ochre wasteland setting
   jobs:
     house-i2i: 40548
+  art:
+    house-i2i:
+      status: PENDING
+      art_image_id: null
+- key: eod2-f003-illustrated-happy
+  lane: house-i2i
+  title: F003 illustrated-happy
+  character: F003
+  group: followers
+  asset: followers/F003/illustrated/happy
+  size: 832x1216
+  seed: 53041
+  denoise: 0.6
+  source_image_id: 248324
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, grey coat, brown coat, wide eyes, goofy
+  prompt_tags: solo, (fully clothed:1.3), anthro koala, female, adult, mother, small sturdy grey koala, round face,
+    big fluffy tufted ears, large dark nose, (faded indigo blue travelling coat:1.4), foreign cut coat with a patched
+    hem, copper kettle hanging from her belt, needle case, small wooden toy in her coat pocket, laughing as a small
+    grey blur runs past her, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40555
+- key: eod2-f003-illustrated-excited
+  lane: house-i2i
+  title: F003 illustrated-excited
+  character: F003
+  group: followers
+  asset: followers/F003/illustrated/excited
+  size: 832x1216
+  seed: 53042
+  denoise: 0.6
+  source_image_id: 248324
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, grey coat, brown coat, wide eyes, goofy
+  prompt_tags: solo, (fully clothed:1.3), anthro koala, female, adult, mother, small sturdy grey koala, round face,
+    big fluffy tufted ears, large dark nose, (faded indigo blue travelling coat:1.4), foreign cut coat with a patched
+    hem, copper kettle hanging from her belt, needle case, small wooden toy in her coat pocket, clasping her paws
+    in delight, eyes bright, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40556
+- key: eod2-f003-illustrated-sad
+  lane: house-i2i
+  title: F003 illustrated-sad
+  character: F003
+  group: followers
+  asset: followers/F003/illustrated/sad
+  size: 832x1216
+  seed: 53043
+  denoise: 0.6
+  source_image_id: 248324
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, grey coat, brown coat, wide eyes, goofy
+  prompt_tags: solo, (fully clothed:1.3), anthro koala, female, adult, mother, small sturdy grey koala, round face,
+    big fluffy tufted ears, large dark nose, (faded indigo blue travelling coat:1.4), foreign cut coat with a patched
+    hem, copper kettle hanging from her belt, needle case, small wooden toy in her coat pocket, looking out to sea
+    from a high wall at dusk, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40557
+- key: eod2-f003-illustrated-angry
+  lane: house-i2i
+  title: F003 illustrated-angry
+  character: F003
+  group: followers
+  asset: followers/F003/illustrated/angry
+  size: 832x1216
+  seed: 53044
+  denoise: 0.6
+  source_image_id: 248324
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, grey coat, brown coat, wide eyes, goofy
+  prompt_tags: solo, (fully clothed:1.3), anthro koala, female, adult, mother, small sturdy grey koala, round face,
+    big fluffy tufted ears, large dark nose, (faded indigo blue travelling coat:1.4), foreign cut coat with a patched
+    hem, copper kettle hanging from her belt, needle case, small wooden toy in her coat pocket, arms spread, blocking
+    the infirmary door, fierce, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40558
+- key: eod2-f003-portrait-neutral
+  lane: house-i2i
+  title: F003 portrait-neutral
+  character: F003
+  group: followers
+  asset: followers/F003/portrait/neutral
+  size: 1024x1024
+  seed: 53045
+  denoise: 0.35
+  source_image_id: 248324
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, grey coat, brown coat, wide eyes, goofy
+  prompt_tags: solo, (fully clothed:1.3), anthro koala, female, adult, mother, small sturdy grey koala, round face,
+    big fluffy tufted ears, large dark nose, (faded indigo blue travelling coat:1.4), foreign cut coat with a patched
+    hem, copper kettle hanging from her belt, needle case, small wooden toy in her coat pocket, head and shoulders
+    portrait, close-up, calm, warm side light, dusty ochre wasteland setting
+  source_crop: &id003
+  - 0.15
+  - 0.02
+  - 0.85
+  - 0.5
+  jobs:
+    house-i2i: 40559
+- key: eod2-f003-portrait-injured
+  lane: house-i2i
+  title: F003 portrait-injured
+  character: F003
+  group: followers
+  asset: followers/F003/portrait/injured
+  size: 1024x1024
+  seed: 53046
+  denoise: 0.5
+  source_image_id: 248324
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, grey coat, brown coat, wide eyes, goofy
+  prompt_tags: solo, (fully clothed:1.3), anthro koala, female, adult, mother, small sturdy grey koala, round face,
+    big fluffy tufted ears, large dark nose, (faded indigo blue travelling coat:1.4), foreign cut coat with a patched
+    hem, copper kettle hanging from her belt, needle case, small wooden toy in her coat pocket, head and shoulders
+    portrait, close-up, injured, arm bandaged in a sling, tired
+  source_crop: *id003
+  jobs:
+    house-i2i: 40560
+- key: eod2-f003-portrait-dead
+  lane: house-i2i
+  title: F003 portrait-dead
+  character: F003
+  group: followers
+  asset: followers/F003/portrait/dead
+  size: 1024x1024
+  seed: 53047
+  denoise: 0.6
+  source_image_id: 248324
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, grey coat, brown coat, wide eyes, goofy
+  prompt_tags: solo, (fully clothed:1.3), anthro koala, female, adult, mother, small sturdy grey koala, round face,
+    big fluffy tufted ears, large dark nose, (faded indigo blue travelling coat:1.4), foreign cut coat with a patched
+    hem, copper kettle hanging from her belt, needle case, small wooden toy in her coat pocket, memorial portrait
+    in an ornate tarnished brass frame, candlelight, a copper kettle and a small wooden toy before the frame, sepia
+    tones, solemn, head and shoulders
+  source_crop: *id003
+  jobs:
+    house-i2i: 40561
+- key: eod2-f005-illustrated-happy
+  lane: house-i2i
+  title: F005 illustrated-happy
+  character: F005
+  group: followers
+  asset: followers/F005/illustrated/happy
+  size: 832x1216
+  seed: 53081
+  denoise: 0.6
+  source_image_id: 248328
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, rabbit, hare, mammal, long ears, whiskers
+  prompt_tags: solo, (fully clothed:1.3), (anthro moth:1.4), insect, fuzzy moth, big dark compound eyes, ink-black
+    feathery antennae, (large dusky brown moth wings:1.3), fluffy white collar fluff, androgynous, ochre waistcoat,
+    spectacles on a chain, small leather folio, wings fluttering, delighted over a found page, cowboy shot, warm
+    side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40562
+- key: eod2-f005-illustrated-excited
+  lane: house-i2i
+  title: F005 illustrated-excited
+  character: F005
+  group: followers
+  asset: followers/F005/illustrated/excited
+  size: 832x1216
+  seed: 53082
+  denoise: 0.6
+  source_image_id: 248328
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, rabbit, hare, mammal, long ears, whiskers
+  prompt_tags: solo, (fully clothed:1.3), (anthro moth:1.4), insect, fuzzy moth, big dark compound eyes, ink-black
+    feathery antennae, (large dusky brown moth wings:1.3), fluffy white collar fluff, androgynous, ochre waistcoat,
+    spectacles on a chain, small leather folio, scribbling notes quickly, antennae raised, cowboy shot, warm side
+    light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40563
+- key: eod2-f005-illustrated-sad
+  lane: house-i2i
+  title: F005 illustrated-sad
+  character: F005
+  group: followers
+  asset: followers/F005/illustrated/sad
+  size: 832x1216
+  seed: 53083
+  denoise: 0.6
+  source_image_id: 248328
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, rabbit, hare, mammal, long ears, whiskers
+  prompt_tags: solo, (fully clothed:1.3), (anthro moth:1.4), insect, fuzzy moth, big dark compound eyes, ink-black
+    feathery antennae, (large dusky brown moth wings:1.3), fluffy white collar fluff, androgynous, ochre waistcoat,
+    spectacles on a chain, small leather folio, holding a torn ledger page, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40564
+- key: eod2-f005-illustrated-angry
+  lane: house-i2i
+  title: F005 illustrated-angry
+  character: F005
+  group: followers
+  asset: followers/F005/illustrated/angry
+  size: 832x1216
+  seed: 53084
+  denoise: 0.6
+  source_image_id: 248328
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, rabbit, hare, mammal, long ears, whiskers
+  prompt_tags: solo, (fully clothed:1.3), (anthro moth:1.4), insect, fuzzy moth, big dark compound eyes, ink-black
+    feathery antennae, (large dusky brown moth wings:1.3), fluffy white collar fluff, androgynous, ochre waistcoat,
+    spectacles on a chain, small leather folio, wings spread wide, pointing at a forged record, cowboy shot, warm
+    side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40565
+- key: eod2-f005-portrait-neutral
+  lane: house-i2i
+  title: F005 portrait-neutral
+  character: F005
+  group: followers
+  asset: followers/F005/portrait/neutral
+  size: 1024x1024
+  seed: 53085
+  denoise: 0.35
+  source_image_id: 248328
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, rabbit, hare, mammal, long ears, whiskers
+  prompt_tags: solo, (fully clothed:1.3), (anthro moth:1.4), insect, fuzzy moth, big dark compound eyes, ink-black
+    feathery antennae, (large dusky brown moth wings:1.3), fluffy white collar fluff, androgynous, ochre waistcoat,
+    spectacles on a chain, small leather folio, head and shoulders portrait, close-up, calm, warm side light, dusty
+    ochre wasteland setting
+  source_crop: *id003
+  jobs:
+    house-i2i: 40566
+- key: eod2-f005-portrait-injured
+  lane: house-i2i
+  title: F005 portrait-injured
+  character: F005
+  group: followers
+  asset: followers/F005/portrait/injured
+  size: 1024x1024
+  seed: 53086
+  denoise: 0.5
+  source_image_id: 248328
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, rabbit, hare, mammal, long ears, whiskers
+  prompt_tags: solo, (fully clothed:1.3), (anthro moth:1.4), insect, fuzzy moth, big dark compound eyes, ink-black
+    feathery antennae, (large dusky brown moth wings:1.3), fluffy white collar fluff, androgynous, ochre waistcoat,
+    spectacles on a chain, small leather folio, head and shoulders portrait, close-up, injured, torn wing tip bound
+    with cloth, tired
+  source_crop: *id003
+  jobs:
+    house-i2i: 40567
+- key: eod2-f005-portrait-dead
+  lane: house-i2i
+  title: F005 portrait-dead
+  character: F005
+  group: followers
+  asset: followers/F005/portrait/dead
+  size: 1024x1024
+  seed: 53087
+  denoise: 0.6
+  source_image_id: 248328
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, rabbit, hare, mammal, long ears, whiskers
+  prompt_tags: solo, (fully clothed:1.3), (anthro moth:1.4), insect, fuzzy moth, big dark compound eyes, ink-black
+    feathery antennae, (large dusky brown moth wings:1.3), fluffy white collar fluff, androgynous, ochre waistcoat,
+    spectacles on a chain, small leather folio, memorial portrait in an ornate tarnished brass frame, candlelight,
+    spectacles on a chain before the frame, sepia tones, solemn, head and shoulders
+  source_crop: *id003
+  jobs:
+    house-i2i: 40568
+- key: eod2-f016-illustrated-happy
+  lane: house-i2i
+  title: F016 illustrated-happy
+  character: F016
+  group: followers
+  asset: followers/F016/illustrated/happy
+  size: 832x1216
+  seed: 53301
+  denoise: 0.6
+  source_image_id: 248332
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, brown coat, orange coat
+  prompt_tags: solo, (fully clothed:1.3), anthro black leopard, panther, androgynous, tall and lean, faint rosettes
+    in the black fur, (moth-eaten dark plum purple court coat:1.4), white gloves, single dark earring, dry smile
+    over a cup of tea, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40569
+- key: eod2-f016-illustrated-excited
+  lane: house-i2i
+  title: F016 illustrated-excited
+  character: F016
+  group: followers
+  asset: followers/F016/illustrated/excited
+  size: 832x1216
+  seed: 53302
+  denoise: 0.6
+  source_image_id: 248332
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, brown coat, orange coat
+  prompt_tags: solo, (fully clothed:1.3), anthro black leopard, panther, androgynous, tall and lean, faint rosettes
+    in the black fur, (moth-eaten dark plum purple court coat:1.4), white gloves, single dark earring, dancing a
+    court dance, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40570
+- key: eod2-f016-illustrated-sad
+  lane: house-i2i
+  title: F016 illustrated-sad
+  character: F016
+  group: followers
+  asset: followers/F016/illustrated/sad
+  size: 832x1216
+  seed: 53303
+  denoise: 0.6
+  source_image_id: 248332
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, brown coat, orange coat
+  prompt_tags: solo, (fully clothed:1.3), anthro black leopard, panther, androgynous, tall and lean, faint rosettes
+    in the black fur, (moth-eaten dark plum purple court coat:1.4), white gloves, single dark earring, turning a
+    hand mirror away, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40571
+- key: eod2-f016-illustrated-angry
+  lane: house-i2i
+  title: F016 illustrated-angry
+  character: F016
+  group: followers
+  asset: followers/F016/illustrated/angry
+  size: 832x1216
+  seed: 53304
+  denoise: 0.6
+  source_image_id: 248332
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, brown coat, orange coat
+  prompt_tags: solo, (fully clothed:1.3), anthro black leopard, panther, androgynous, tall and lean, faint rosettes
+    in the black fur, (moth-eaten dark plum purple court coat:1.4), white gloves, single dark earring, pulling off
+    one white glove, cold anger, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40572
+- key: eod2-f016-portrait-neutral
+  lane: house-i2i
+  title: F016 portrait-neutral
+  character: F016
+  group: followers
+  asset: followers/F016/portrait/neutral
+  size: 1024x1024
+  seed: 53305
+  denoise: 0.35
+  source_image_id: 248332
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, brown coat, orange coat
+  prompt_tags: solo, (fully clothed:1.3), anthro black leopard, panther, androgynous, tall and lean, faint rosettes
+    in the black fur, (moth-eaten dark plum purple court coat:1.4), white gloves, single dark earring, head and
+    shoulders portrait, close-up, calm, warm side light, dusty ochre wasteland setting
+  source_crop: *id003
+  jobs:
+    house-i2i: 40573
+- key: eod2-f016-portrait-injured
+  lane: house-i2i
+  title: F016 portrait-injured
+  character: F016
+  group: followers
+  asset: followers/F016/portrait/injured
+  size: 1024x1024
+  seed: 53306
+  denoise: 0.5
+  source_image_id: 248332
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, brown coat, orange coat
+  prompt_tags: solo, (fully clothed:1.3), anthro black leopard, panther, androgynous, tall and lean, faint rosettes
+    in the black fur, (moth-eaten dark plum purple court coat:1.4), white gloves, single dark earring, head and
+    shoulders portrait, close-up, injured, fevered, collar loosened, tired
+  source_crop: *id003
+  jobs:
+    house-i2i: 40574
+- key: eod2-f016-portrait-dead
+  lane: house-i2i
+  title: F016 portrait-dead
+  character: F016
+  group: followers
+  asset: followers/F016/portrait/dead
+  size: 1024x1024
+  seed: 53307
+  denoise: 0.6
+  source_image_id: 248332
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, brown coat, orange coat
+  prompt_tags: solo, (fully clothed:1.3), anthro black leopard, panther, androgynous, tall and lean, faint rosettes
+    in the black fur, (moth-eaten dark plum purple court coat:1.4), white gloves, single dark earring, memorial
+    portrait in an ornate tarnished brass frame, candlelight, a single white glove before the frame, sepia tones,
+    solemn, head and shoulders
+  source_crop: *id003
+  jobs:
+    house-i2i: 40575
+- key: eod2-mara-reedbell-illustrated-happy
+  lane: house-i2i
+  title: mara-reedbell illustrated-happy
+  character: mara-reedbell
+  group: npcs
+  asset: npcs/mara-reedbell/illustrated/happy
+  size: 832x1216
+  seed: 53421
+  denoise: 0.6
+  source_image_id: 248334
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, helmet, armor, armour, horns, knight
+  prompt_tags: solo, (fully clothed:1.3), (anthro mule:1.3), long donkey ears, long face, bare head, female, grey
+    muzzle, mended mayoral sash, plain town dress, ink-stained hooves, ledger chained to her belt, hand-bell on
+    a cord, laughing at a town fair, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40576
+- key: eod2-mara-reedbell-illustrated-excited
+  lane: house-i2i
+  title: mara-reedbell illustrated-excited
+  character: mara-reedbell
+  group: npcs
+  asset: npcs/mara-reedbell/illustrated/excited
+  size: 832x1216
+  seed: 53422
+  denoise: 0.6
+  source_image_id: 248334
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, helmet, armor, armour, horns, knight
+  prompt_tags: solo, (fully clothed:1.3), (anthro mule:1.3), long donkey ears, long face, bare head, female, grey
+    muzzle, mended mayoral sash, plain town dress, ink-stained hooves, ledger chained to her belt, hand-bell on
+    a cord, arms raised at news of water, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40577
+- key: eod2-mara-reedbell-illustrated-sad
+  lane: house-i2i
+  title: mara-reedbell illustrated-sad
+  character: mara-reedbell
+  group: npcs
+  asset: npcs/mara-reedbell/illustrated/sad
+  size: 832x1216
+  seed: 53423
+  denoise: 0.6
+  source_image_id: 248334
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, helmet, armor, armour, horns, knight
+  prompt_tags: solo, (fully clothed:1.3), (anthro mule:1.3), long donkey ears, long face, bare head, female, grey
+    muzzle, mended mayoral sash, plain town dress, ink-stained hooves, ledger chained to her belt, hand-bell on
+    a cord, by a closed door at night, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40578
+- key: eod2-mara-reedbell-illustrated-angry
+  lane: house-i2i
+  title: mara-reedbell illustrated-angry
+  character: mara-reedbell
+  group: npcs
+  asset: npcs/mara-reedbell/illustrated/angry
+  size: 832x1216
+  seed: 53424
+  denoise: 0.6
+  source_image_id: 248334
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, helmet, armor, armour, horns, knight
+  prompt_tags: solo, (fully clothed:1.3), (anthro mule:1.3), long donkey ears, long face, bare head, female, grey
+    muzzle, mended mayoral sash, plain town dress, ink-stained hooves, ledger chained to her belt, hand-bell on
+    a cord, slamming the ledger down, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40579
+- key: eod2-gristle-vane-illustrated-happy
+  lane: house-i2i
+  title: gristle-vane illustrated-happy
+  character: gristle-vane
+  group: npcs
+  asset: npcs/gristle-vane/illustrated/happy
+  size: 832x1216
+  seed: 53501
+  denoise: 0.6
+  source_image_id: 248337
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, plain coat, military coat
+  prompt_tags: solo, (fully clothed:1.3), anthro spotted hyena, male, (magnificent greatcoat covered in colourful
+    feathers:1.4), painted leather vest, chain earrings, flamboyant raider captain, cackling on a wagon roof, cowboy
+    shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40580
+- key: eod2-gristle-vane-illustrated-excited
+  lane: house-i2i
+  title: gristle-vane illustrated-excited
+  character: gristle-vane
+  group: npcs
+  asset: npcs/gristle-vane/illustrated/excited
+  size: 832x1216
+  seed: 53502
+  denoise: 0.6
+  source_image_id: 248337
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, plain coat, military coat
+  prompt_tags: solo, (fully clothed:1.3), anthro spotted hyena, male, (magnificent greatcoat covered in colourful
+    feathers:1.4), painted leather vest, chain earrings, flamboyant raider captain, brandishing a toll ledger, cowboy
+    shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40581
+- key: eod2-gristle-vane-illustrated-sad
+  lane: house-i2i
+  title: gristle-vane illustrated-sad
+  character: gristle-vane
+  group: npcs
+  asset: npcs/gristle-vane/illustrated/sad
+  size: 832x1216
+  seed: 53503
+  denoise: 0.6
+  source_image_id: 248337
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, plain coat, military coat
+  prompt_tags: solo, (fully clothed:1.3), anthro spotted hyena, male, (magnificent greatcoat covered in colourful
+    feathers:1.4), painted leather vest, chain earrings, flamboyant raider captain, before a burned wagon, cowboy
+    shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40582
+- key: eod2-gristle-vane-illustrated-angry
+  lane: house-i2i
+  title: gristle-vane illustrated-angry
+  character: gristle-vane
+  group: npcs
+  asset: npcs/gristle-vane/illustrated/angry
+  size: 832x1216
+  seed: 53504
+  denoise: 0.6
+  source_image_id: 248337
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, plain coat, military coat
+  prompt_tags: solo, (fully clothed:1.3), anthro spotted hyena, male, (magnificent greatcoat covered in colourful
+    feathers:1.4), painted leather vest, chain earrings, flamboyant raider captain, all teeth, cowboy shot, warm
+    side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40583
+- key: eod2-oriel-saltmarsh-illustrated-happy
+  lane: house-i2i
+  title: oriel-saltmarsh illustrated-happy
+  character: oriel-saltmarsh
+  group: npcs
+  asset: npcs/oriel-saltmarsh/illustrated/happy
+  size: 832x1216
+  seed: 53521
+  denoise: 0.6
+  source_image_id: 248339
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, gull, goose, duck, swan
+  prompt_tags: solo, (fully clothed:1.3), (anthro pelican:1.4), bird, female, big white pelican, (long flat bill
+    with a large throat pouch:1.3), weathered caravan coat, goggles on her brow, beside a full convoy of wagons,
+    cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40584
+- key: eod2-oriel-saltmarsh-illustrated-excited
+  lane: house-i2i
+  title: oriel-saltmarsh illustrated-excited
+  character: oriel-saltmarsh
+  group: npcs
+  asset: npcs/oriel-saltmarsh/illustrated/excited
+  size: 832x1216
+  seed: 53522
+  denoise: 0.6
+  source_image_id: 248339
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, gull, goose, duck, swan
+  prompt_tags: solo, (fully clothed:1.3), (anthro pelican:1.4), bird, female, big white pelican, (long flat bill
+    with a large throat pouch:1.3), weathered caravan coat, goggles on her brow, unrolling a map, cowboy shot, warm
+    side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40585
+- key: eod2-oriel-saltmarsh-illustrated-sad
+  lane: house-i2i
+  title: oriel-saltmarsh illustrated-sad
+  character: oriel-saltmarsh
+  group: npcs
+  asset: npcs/oriel-saltmarsh/illustrated/sad
+  size: 832x1216
+  seed: 53523
+  denoise: 0.6
+  source_image_id: 248339
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, gull, goose, duck, swan
+  prompt_tags: solo, (fully clothed:1.3), (anthro pelican:1.4), bird, female, big white pelican, (long flat bill
+    with a large throat pouch:1.3), weathered caravan coat, goggles on her brow, on an empty road, cowboy shot,
+    warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40586
+- key: eod2-oriel-saltmarsh-illustrated-angry
+  lane: house-i2i
+  title: oriel-saltmarsh illustrated-angry
+  character: oriel-saltmarsh
+  group: npcs
+  asset: npcs/oriel-saltmarsh/illustrated/angry
+  size: 832x1216
+  seed: 53524
+  denoise: 0.6
+  source_image_id: 248339
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, gull, goose, duck, swan
+  prompt_tags: solo, (fully clothed:1.3), (anthro pelican:1.4), bird, female, big white pelican, (long flat bill
+    with a large throat pouch:1.3), weathered caravan coat, goggles on her brow, wings spread wide, cowboy shot,
+    warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40587
+- key: eod2-ferro-dunmark-illustrated-happy
+  lane: house-i2i
+  title: ferro-dunmark illustrated-happy
+  character: ferro-dunmark
+  group: npcs
+  asset: npcs/ferro-dunmark/illustrated/happy
+  size: 832x1216
+  seed: 53541
+  denoise: 0.6
+  source_image_id: 248340
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, muzzle guard, mask, muzzle cage, helmet
+  prompt_tags: solo, (fully clothed:1.3), anthro grey wolf, male, broad, bare face, dented steel gorget, gate watch
+    tabard, (scar across his snout:1.2), one torn ear, a rare salute, cowboy shot, warm side light, dusty ochre
+    wasteland setting
+  jobs:
+    house-i2i: 40588
+- key: eod2-ferro-dunmark-illustrated-excited
+  lane: house-i2i
+  title: ferro-dunmark illustrated-excited
+  character: ferro-dunmark
+  group: npcs
+  asset: npcs/ferro-dunmark/illustrated/excited
+  size: 832x1216
+  seed: 53542
+  denoise: 0.6
+  source_image_id: 248340
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, muzzle guard, mask, muzzle cage, helmet
+  prompt_tags: solo, (fully clothed:1.3), anthro grey wolf, male, broad, bare face, dented steel gorget, gate watch
+    tabard, (scar across his snout:1.2), one torn ear, rallying the Watch, cowboy shot, warm side light, dusty ochre
+    wasteland setting
+  jobs:
+    house-i2i: 40589
+- key: eod2-ferro-dunmark-illustrated-sad
+  lane: house-i2i
+  title: ferro-dunmark illustrated-sad
+  character: ferro-dunmark
+  group: npcs
+  asset: npcs/ferro-dunmark/illustrated/sad
+  size: 832x1216
+  seed: 53543
+  denoise: 0.6
+  source_image_id: 248340
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, muzzle guard, mask, muzzle cage, helmet
+  prompt_tags: solo, (fully clothed:1.3), anthro grey wolf, male, broad, bare face, dented steel gorget, gate watch
+    tabard, (scar across his snout:1.2), one torn ear, reading a list of names, cowboy shot, warm side light, dusty
+    ochre wasteland setting
+  jobs:
+    house-i2i: 40590
+- key: eod2-ferro-dunmark-illustrated-angry
+  lane: house-i2i
+  title: ferro-dunmark illustrated-angry
+  character: ferro-dunmark
+  group: npcs
+  asset: npcs/ferro-dunmark/illustrated/angry
+  size: 832x1216
+  seed: 53544
+  denoise: 0.6
+  source_image_id: 248340
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, muzzle guard, mask, muzzle cage, helmet
+  prompt_tags: solo, (fully clothed:1.3), anthro grey wolf, male, broad, bare face, dented steel gorget, gate watch
+    tabard, (scar across his snout:1.2), one torn ear, barring the gate, cowboy shot, warm side light, dusty ochre
+    wasteland setting
+  jobs:
+    house-i2i: 40591
+- key: eod2-ottoline-vask-illustrated-happy
+  lane: house-i2i
+  title: ottoline-vask illustrated-happy
+  character: ottoline-vask
+  group: npcs
+  asset: npcs/ottoline-vask/illustrated/happy
+  size: 832x1216
+  seed: 53561
+  denoise: 0.6
+  source_image_id: 248342
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, red feathers, parrot, eagle, hawk
+  prompt_tags: solo, (fully clothed:1.3), (anthro black swan:1.4), bird, female, elegant, glossy black feathers,
+    long curved neck, bright red bill, high-collared house coat, heirloom rings on her wingtips, thin satisfied
+    smile, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40592
+- key: eod2-ottoline-vask-illustrated-excited
+  lane: house-i2i
+  title: ottoline-vask illustrated-excited
+  character: ottoline-vask
+  group: npcs
+  asset: npcs/ottoline-vask/illustrated/excited
+  size: 832x1216
+  seed: 53562
+  denoise: 0.6
+  source_image_id: 248342
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, red feathers, parrot, eagle, hawk
+  prompt_tags: solo, (fully clothed:1.3), (anthro black swan:1.4), bird, female, elegant, glossy black feathers,
+    long curved neck, bright red bill, high-collared house coat, heirloom rings on her wingtips, a council seat
+    won, wings raised, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40593
+- key: eod2-ottoline-vask-illustrated-sad
+  lane: house-i2i
+  title: ottoline-vask illustrated-sad
+  character: ottoline-vask
+  group: npcs
+  asset: npcs/ottoline-vask/illustrated/sad
+  size: 832x1216
+  seed: 53563
+  denoise: 0.6
+  source_image_id: 248342
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, red feathers, parrot, eagle, hawk
+  prompt_tags: solo, (fully clothed:1.3), (anthro black swan:1.4), bird, female, elegant, glossy black feathers,
+    long curved neck, bright red bill, high-collared house coat, heirloom rings on her wingtips, in an empty portrait
+    gallery, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40594
+- key: eod2-ottoline-vask-illustrated-angry
+  lane: house-i2i
+  title: ottoline-vask illustrated-angry
+  character: ottoline-vask
+  group: npcs
+  asset: npcs/ottoline-vask/illustrated/angry
+  size: 832x1216
+  seed: 53564
+  denoise: 0.6
+  source_image_id: 248342
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, red feathers, parrot, eagle, hawk
+  prompt_tags: solo, (fully clothed:1.3), (anthro black swan:1.4), bird, female, elegant, glossy black feathers,
+    long curved neck, bright red bill, high-collared house coat, heirloom rings on her wingtips, tapping her rings
+    on a table, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40595
+- key: eod2-jinx-coupler-illustrated-happy
+  lane: house-i2i
+  title: jinx-coupler illustrated-happy
+  character: jinx-coupler
+  group: npcs
+  asset: npcs/jinx-coupler/illustrated/happy
+  size: 832x1216
+  seed: 53681
+  denoise: 0.6
+  source_image_id: 248347
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, blue jay, teal head, crest, parrot
+  prompt_tags: solo, (fully clothed:1.3), (anthro magpie:1.4), bird, androgynous, glossy black head and chest, white
+    belly and white shoulder patches, long iridescent blue-green tail, long coat sewn all over with bottle caps,
+    jeweller loupe on a chain, prying open a crate, cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40596
+- key: eod2-jinx-coupler-illustrated-excited
+  lane: house-i2i
+  title: jinx-coupler illustrated-excited
+  character: jinx-coupler
+  group: npcs
+  asset: npcs/jinx-coupler/illustrated/excited
+  size: 832x1216
+  seed: 53682
+  denoise: 0.6
+  source_image_id: 248347
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, blue jay, teal head, crest, parrot
+  prompt_tags: solo, (fully clothed:1.3), (anthro magpie:1.4), bird, androgynous, glossy black head and chest, white
+    belly and white shoulder patches, long iridescent blue-green tail, long coat sewn all over with bottle caps,
+    jeweller loupe on a chain, something humming in the dark, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40597
+- key: eod2-jinx-coupler-illustrated-sad
+  lane: house-i2i
+  title: jinx-coupler illustrated-sad
+  character: jinx-coupler
+  group: npcs
+  asset: npcs/jinx-coupler/illustrated/sad
+  size: 832x1216
+  seed: 53683
+  denoise: 0.6
+  source_image_id: 248347
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, blue jay, teal head, crest, parrot
+  prompt_tags: solo, (fully clothed:1.3), (anthro magpie:1.4), bird, androgynous, glossy black head and chest, white
+    belly and white shoulder patches, long iridescent blue-green tail, long coat sewn all over with bottle caps,
+    jeweller loupe on a chain, in a yard flooded with rust-water, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40598
+- key: eod2-jinx-coupler-illustrated-angry
+  lane: house-i2i
+  title: jinx-coupler illustrated-angry
+  character: jinx-coupler
+  group: npcs
+  asset: npcs/jinx-coupler/illustrated/angry
+  size: 832x1216
+  seed: 53684
+  denoise: 0.6
+  source_image_id: 248347
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, blue jay, teal head, crest, parrot
+  prompt_tags: solo, (fully clothed:1.3), (anthro magpie:1.4), bird, androgynous, glossy black head and chest, white
+    belly and white shoulder patches, long iridescent blue-green tail, long coat sewn all over with bottle caps,
+    jeweller loupe on a chain, coat bristling, caps rattling, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40599
+- key: eod2-the-verge-envoy-illustrated-happy
+  lane: house-i2i
+  title: the-verge-envoy illustrated-happy
+  character: the-verge-envoy
+  group: npcs
+  asset: npcs/the-verge-envoy/illustrated/happy
+  size: 832x1216
+  seed: 53721
+  denoise: 0.6
+  source_image_id: 248348
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, brown coat, orange coat, tan coat
+  prompt_tags: solo, (fully clothed:1.3), anthro gorilla, androgynous, tall, silver-grey fur, (immaculate dark plum
+    purple coat:1.4), white gloves, faint pallor, accepting a gift, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40600
+- key: eod2-the-verge-envoy-illustrated-excited
+  lane: house-i2i
+  title: the-verge-envoy illustrated-excited
+  character: the-verge-envoy
+  group: npcs
+  asset: npcs/the-verge-envoy/illustrated/excited
+  size: 832x1216
+  seed: 53722
+  denoise: 0.6
+  source_image_id: 248348
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, brown coat, orange coat, tan coat
+  prompt_tags: solo, (fully clothed:1.3), anthro gorilla, androgynous, tall, silver-grey fur, (immaculate dark plum
+    purple coat:1.4), white gloves, faint pallor, leaning forward eagerly, cowboy shot, warm side light, dusty ochre
+    wasteland setting
+  jobs:
+    house-i2i: 40601
+- key: eod2-the-verge-envoy-illustrated-sad
+  lane: house-i2i
+  title: the-verge-envoy illustrated-sad
+  character: the-verge-envoy
+  group: npcs
+  asset: npcs/the-verge-envoy/illustrated/sad
+  size: 832x1216
+  seed: 53723
+  denoise: 0.6
+  source_image_id: 248348
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, brown coat, orange coat, tan coat
+  prompt_tags: solo, (fully clothed:1.3), anthro gorilla, androgynous, tall, silver-grey fur, (immaculate dark plum
+    purple coat:1.4), white gloves, faint pallor, refused, quietly, cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40602
+- key: eod2-the-verge-envoy-illustrated-angry
+  lane: house-i2i
+  title: the-verge-envoy illustrated-angry
+  character: the-verge-envoy
+  group: npcs
+  asset: npcs/the-verge-envoy/illustrated/angry
+  size: 832x1216
+  seed: 53724
+  denoise: 0.6
+  source_image_id: 248348
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person, brown coat, orange coat, tan coat
+  prompt_tags: solo, (fully clothed:1.3), anthro gorilla, androgynous, tall, silver-grey fur, (immaculate dark plum
+    purple coat:1.4), white gloves, faint pallor, removing one glove, cowboy shot, warm side light, dusty ochre
+    wasteland setting
+  jobs:
+    house-i2i: 40603
+- key: eod2-f001-illustrated-happy-v2
+  lane: house-i2i
+  title: F001 illustrated-happy (v2 probe)
+  character: F001
+  group: followers
+  asset: followers/F001/illustrated/happy
+  size: 832x1216
+  seed: 53001
+  denoise: 0.72
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, laughing with ears up,
+    wind in the scarf, (beaming smile:1.3), cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40604
+- key: eod2-f001-illustrated-excited-v2
+  lane: house-i2i
+  title: F001 illustrated-excited (v2 probe)
+  character: F001
+  group: followers
+  asset: followers/F001/illustrated/excited
+  size: 832x1216
+  seed: 53002
+  denoise: 0.72
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, crouched, pointing at
+    fresh wagon tracks, (excited, wide eyes, open mouth:1.3), cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40605
+- key: eod2-f001-illustrated-sad-v2
+  lane: house-i2i
+  title: F001 illustrated-sad (v2 probe)
+  character: F001
+  group: followers
+  asset: followers/F001/illustrated/sad
+  size: 832x1216
+  seed: 53003
+  denoise: 0.72
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, ears drooping, holding
+    the brass compass close, (sad, teary eyes, downcast:1.3), cowboy shot, warm side light, dusty ochre wasteland
+    setting
+  jobs:
+    house-i2i: 40606
+- key: eod2-f001-illustrated-angry-v2
+  lane: house-i2i
+  title: F001 illustrated-angry (v2 probe)
+  character: F001
+  group: followers
+  asset: followers/F001/illustrated/angry
+  size: 832x1216
+  seed: 53004
+  denoise: 0.72
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, ears flat, glaring, hand
+    on a knife hilt, (furious scowl, bared teeth:1.3), cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40607
+- key: eod2-f001-portrait-injured-v2
+  lane: house-i2i
+  title: F001 portrait-injured (v2 probe)
+  character: F001
+  group: followers
+  asset: followers/F001/portrait/injured
+  size: 1024x1024
+  seed: 53006
+  denoise: 0.65
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, head and shoulders portrait,
+    close-up, injured, one ear bandaged, arm in a sling, tired, (bandages wrapped around the head and arm:1.4),
+    bruised, scratches
+  source_crop: *id001
+  jobs:
+    house-i2i: 40608
+- key: eod2-f001-portrait-dead-v2
+  lane: house-i2i
+  title: F001 portrait-dead (v2 probe)
+  character: F001
+  group: followers
+  asset: followers/F001/portrait/dead
+  size: 1024x1024
+  seed: 53007
+  denoise: 0.78
+  source_image_id: 248250
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, (painted memorial portrait
+    inside an ornate oval tarnished brass picture frame:1.4), candlelight, a brass compass before the frame, sepia
+    tones, solemn, head and shoulders, (sepia monochrome:1.3), dried flowers
+  source_crop: *id001
+  jobs:
+    house-i2i: 40609
+- key: eod2-f007-illustrated-happy-v2
+  lane: house-i2i
+  title: F007 illustrated-happy (v2 probe)
+  character: F007
+  group: followers
+  asset: followers/F007/illustrated/happy
+  size: 832x1216
+  seed: 53121
+  denoise: 0.72
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, laughing, tossing a letter into the
+    air, (beaming smile:1.3), cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40610
+- key: eod2-f007-illustrated-excited-v2
+  lane: house-i2i
+  title: F007 illustrated-excited (v2 probe)
+  character: F007
+  group: followers
+  asset: followers/F007/illustrated/excited
+  size: 832x1216
+  seed: 53122
+  denoise: 0.72
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, running with the satchel, ears streaming
+    back, (excited, wide eyes, open mouth:1.3), cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40611
+- key: eod2-f007-illustrated-sad-v2
+  lane: house-i2i
+  title: F007 illustrated-sad (v2 probe)
+  character: F007
+  group: followers
+  asset: followers/F007/illustrated/sad
+  size: 832x1216
+  seed: 53123
+  denoise: 0.72
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, holding an unopened letter, ears
+    low, (sad, teary eyes, downcast:1.3), cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40612
+- key: eod2-f007-illustrated-angry-v2
+  lane: house-i2i
+  title: F007 illustrated-angry (v2 probe)
+  character: F007
+  group: followers
+  asset: followers/F007/illustrated/angry
+  size: 832x1216
+  seed: 53124
+  denoise: 0.72
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, ears pinned back, crumpling a forged
+    permit, (furious scowl, bared teeth:1.3), cowboy shot, warm side light, dusty ochre wasteland setting
+  jobs:
+    house-i2i: 40613
+- key: eod2-f007-portrait-injured-v2
+  lane: house-i2i
+  title: F007 portrait-injured (v2 probe)
+  character: F007
+  group: followers
+  asset: followers/F007/portrait/injured
+  size: 1024x1024
+  seed: 53126
+  denoise: 0.65
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, head and shoulders portrait, close-up,
+    injured, ear bandaged, tired, (bandages wrapped around the head and arm:1.4), bruised, scratches
+  source_crop: *id001
+  jobs:
+    house-i2i: 40614
+- key: eod2-f007-portrait-dead-v2
+  lane: house-i2i
+  title: F007 portrait-dead (v2 probe)
+  character: F007
+  group: followers
+  asset: followers/F007/portrait/dead
+  size: 1024x1024
+  seed: 53127
+  denoise: 0.78
+  source_image_id: 248262
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, (painted memorial portrait inside
+    an ornate oval tarnished brass picture frame:1.4), candlelight, a red sash before the frame, sepia tones, solemn,
+    head and shoulders, (sepia monochrome:1.3), dried flowers
+  source_crop: *id001
+  jobs:
+    house-i2i: 40615
+approved:
+- eod2-f001-portrait-neutral
+- eod2-f002-portrait-neutral
+- eod2-f006-portrait-neutral
+- eod2-f007-portrait-neutral
+- eod2-f008-portrait-neutral
+- eod2-f009-portrait-neutral
+- eod2-f011-portrait-neutral
+- eod2-f012-portrait-neutral
+- eod2-f013-portrait-neutral
