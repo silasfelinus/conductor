@@ -9,8 +9,8 @@ goal: >-
   Shifting Desks. At least 120 fully written encounter cards across six regional
   chapters with 2-4 meaningful choices, visible 2d6 skill checks, persistent
   consequences, distinct Humboldt archetypes, a seeded save/resume system,
-  a county-wide fate-shaping story with optional hidden mystery, multiple
-  divergent futures and a polished responsive
+  a county-wide fate-shaping story with optional hidden mystery, 32
+  earned companion/lens/fate endings and a polished responsive
   one-screen Play experience. Final art direction and any public release remain
   subject to Silas's later explicit creative approval.
 notes_from_silas: |
@@ -57,6 +57,25 @@ notes_from_silas: |
   no supernatural power or stat bonus. Four independent companions remain
   available in all runs. COMPANIONS-AND-PROLOGUE.md owns character details.
   NO ART or public release authorized.
+  NEWEST 2026-10-19 PT: Player chooses ONE voluntary opening sobriety
+  lens; Sober/Mara, Tipsy/Kit, Stoned/Juniper, Tripping/Cedar meet first.
+  NO independent first companion picker. Then randomized authored cards
+  (changing stats, evidence and relationships) interleave with three
+  mandatory increasingly personal meetings with other main characters,
+  in seeded variable order. At every meeting choose STAY with current
+  or FOLLOW newcomer, leaving prior guide behind but remembering
+  companions met and follow order. Immutable opening_state persists;
+  current_state/Clarity change during the journey and can influence
+  future interaction, not moral outcome. Final followed companion x
+  original lens x choices-and-rolls-earned hope/dark = exactly 32
+  collectible endings, 16 hopeful/16 dark, each with 1/10/30-year
+  scenes. 10 older civic-future ideas are only palettes, not extra IDs.
+  Cedar optimistic endings prominently involve ethical TECHNOUTOPIA
+  (community fiber, skilled rural tech work, forest watershed sensing);
+  parents always married. Gallery Endings X/32 and global achievement
+  32/32. Source JOURNEY-LOOP-CONTRACT.md and ECOTONE-32-ENDINGS.md;
+  all art/public-release creative gates remain closed.
+
   2026-10-19 PT LATEST HOPE AND COMPANION-ARC DIRECTION: This is
   ultimately an OPTIMISTIC fantasy/scifi/horror game because the
   protagonist and community can steer Humboldt toward better futures,
@@ -70,7 +89,7 @@ notes_from_silas: |
   STILL TOGETHER in the present and throughout the ending variants,
   especially his optimum. Their marriage is NOT a player-dependent
   rescue objective. Reference COMPANION-OPTIMAL-PATHS.md, retain
-  the 10 separate county futures and Endings X/10 gallery, one-screen
+  ten county future motifs (noncollectible) and Endings X/32 gallery, one-screen
   UI, art and publication human gates.
 
   2026-10-19 PT LATEST CHARACTER REWRITE: The Tripping-route companion
@@ -93,10 +112,10 @@ notes_from_silas: |
   gameplay view is a single non-page-scroll visual surface, as in Shifting
   Lands' journey board and Shifting Desks' desk. Use compact tabs and bounded
   inner scroll only for long journals/endings, never document scrolling.
-  Show an always-reachable Endings X/10 entry; track ten stable, distinct
+  Show an always-reachable Endings X/32 entry; track ten stable, distinct
   completed future families persistently across fresh runs; locked slots must
   not reveal spoilers. Also integrate standard Kind Robots achievements,
-  including first ending, collaborative paths and completing all ten.
+  including first ending, collaborative paths and completing all 32.
   Test at phone/tablet/desktop landscape/portrait viewports, with actual
   mounted-browser geometry and save/reload persistence. UI and badge art
   remain gated until creative approval. See VIEWPORT-ACHIEVEMENTS-CONTRACT.md.
@@ -172,14 +191,14 @@ tasks:
     milestone: m2
     title: "Author and test all 120 complete encounter records, callbacks and chapter anchors"
     status: waiting
-    depends_on: t-002
+    depends_on: [t-002, t-019]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Convert all 120 seeds to scene + >=2 choices + check/visible stakes + authored
       success/failure/complication text + persistent consequences. Include 6 chapter
-      anchors, 10+ endings, 8 playable archetype reactions, no-dead-end proof and
+      anchors, mandatory stay/follow meetings, 32 endings, 8 playable archetype reactions, no-dead-end proof and
       writing review for humor, cultural care and variety. Ensure choices
       also create human-scale civic future flags, recurring commitments and
       different ecological and economic costs per ECOTONE-CORE.md. No art jobs.
@@ -205,13 +224,14 @@ tasks:
     milestone: m3
     title: "Prototype deterministic reducer and isolated saveable text-only journey"
     status: waiting
-    depends_on: t-002
+    depends_on: [t-002, t-019]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Once the story/encounter contract exists, prototype 2d6 rules, eligibility,
-      unique seeded draws, flags, fair failure paths, evidence ledger and save
+      seeded random draws between guaranteed crossroad beats,
+      follow_history, meeting_order, active_lead, flags, fair failure paths, evidence ledger and save
       versioning in tests without publishing a Play page. Reuse shared stateless
       card primitives but do not inherit Shifting Lands/Desks stores.
   - id: t-006
@@ -231,7 +251,7 @@ tasks:
     milestone: m5
     title: "Deliver integrated preview, simulated balance, accessibility and launch review"
     status: waiting
-    depends_on: [t-003, t-005, t-006, t-016, t-018]
+    depends_on: [t-003, t-005, t-006, t-016, t-018, t-021]
     owner: null
     passes: 0
     stakes: outward-facing
@@ -326,22 +346,19 @@ tasks:
       all archetypes, 120 encounter seed IDs and characters remain. No art.
   - id: t-012
     milestone: m2
-    title: "Draft ten multi-cost Ecotone future epilogues and consequence callbacks"
+    title: "Design 32 companion-lens earned endings and civic consequence callbacks"
     status: waiting
-    depends_on: t-011
+    depends_on: [t-011, t-019]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Expand ECOTONE-ENDINGS.md into validated authored 1-/10-/30-year
       variants: ecology, housing, livelihoods, local agency and reality
-      stability with character-specific payoff. Stabilize ten immutable
-      ending-family IDs and unlock condition provenance so the site can
-      maintain a cross-run endings gallery per VIEWPORT-ACHIEVEMENTS-CONTRACT.md. Avoid an ideological
-      virtue meter or a single magical override of collective rights.
-      Integrate personal optimal thread variants and earned positive
-      callbacks without expanding ten ending-family IDs, per
-      COMPANION-OPTIMAL-PATHS.md. Integrate with t-003 complete cards
+      stability with character-specific payoff. The ten county futures are noncollectible setting palettes.
+      Author 32 final-companion x immutable-opening x earned-hope/dark
+      records with unique IDs, 16/16 and follow-order/stat callbacks.
+      Preserve optimistic companion threads per COMPANION-OPTIMAL-PATHS.md. Integrate with t-003 complete cards
       and t-008 perspective tests.
       No image pipeline or publication.
   - id: t-013
@@ -358,7 +375,7 @@ tasks:
       solving the secret transmitter mystery; no ethnicity- or
       substance-gated endings. Preserve tribal consent as a story
       constraint, not a bonus roll. Require no unreachable endings,
-      no single faction always winning, and callback consequences from
+      32 endings actually reachable, no single faction always winning, and callback consequences from
       personal cards across the region. Also test that all four
       personal optimal outcomes are reachable by story play without
       a fixed opening perception, and that Cedar's parents remain
@@ -382,18 +399,18 @@ tasks:
       No Kind Robots deploy or new artwork on this design task.
   - id: t-015
     milestone: m4
-    title: "Build persistent ten-ending gallery and Kind Robots achievements"
+    title: "Build persistent 32-ending gallery and Kind Robots achievements"
     status: waiting
-    depends_on: [t-005, t-012, t-014]
+    depends_on: [t-005, t-012, t-014, t-020]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Implement in Kind Robots when engine/endings contract is ready.
-      Show Endings X/10 in compact game toolbar and an accessible
-      per-viewport single-surface tab/dialog: locked silhouette hints,
-      unlocked title/epilogue/replay, ten stable ID families with variants
-      not falsely counted as additional endings. Persist a separate
+      Show Endings X/32 in the compact game toolbar and an accessible
+      single-surface gallery: eight final-companion slots per lead,
+      four opening lens pairs, each with one hope and one dark earned
+      1/10/30-year story. Ten county motifs are NOT extra endings. Persist a separate
       versioned unlock ledger across refresh/new run, with deduplication
       and no spoiler leaks. Integrate three game achievements into the
       shared achievements catalog, not a bespoke rewards backend.
@@ -403,18 +420,18 @@ tasks:
     milestone: m5
     title: "Verify viewport-first layout and achievements through mounted browser tests"
     status: waiting
-    depends_on: [t-014, t-015]
+    depends_on: [t-014, t-015, t-021]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Extend Kind Robots Cypress/browser verification to use real
-      engine-reached saves covering all ten endings and every initial
-      perception state, across phone 320/375/390, tablet 768/820,
+      engine-reached saves covering all 32 ending combos, including each opening-state/final-lead
+      pairing with both hope/dark and varied switch histories, across phone 320/375/390, tablet 768/820,
       short-landscape 1024/1280 and desktop 1440/1920 sizes. No
       document-level vertical/horizontal scroll on any main tab,
       choice/outcome or endings gallery screen; long text may scroll
-      solely inside controlled bounded panels. Verify unlock count,
+      solely inside controlled bounded panels. Verify 32 unique endings and 16/16 balance,
       locked spoilers, persistent across new runs/localStorage reload,
       duplicate award prevention, keyboard/touch/focus, reduced motion,
       art failure fallback. Do not treat static CSS inspection or
@@ -423,7 +440,7 @@ tasks:
     milestone: m2
     title: "Author four optimistic companion routes and personal epilogues"
     status: waiting
-    depends_on: [t-002, t-009, t-011]
+    depends_on: [t-002, t-009, t-011, t-019]
     owner: null
     passes: 0
     stakes: reversible
@@ -462,3 +479,70 @@ tasks:
       including meaningful hopeful repair amid horror or dystopia.
       The ten canonical Endings gallery slots stay distinct from
       four personal-optimal journal threads. No art or public release.
+  - id: t-019
+    milestone: m1
+    title: "Design seeded main-character crossroad graph and 32 outcomes"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Implementable authoring contract for opening state to first guide
+      mapping, shuffled guaranteed introductions to all other three
+      companions, stay/follow choices, departures and remembered order.
+      Define 32 stable final-lead x opening-lens x hope/dark endings
+      and 16/16 balance, distinct from ten noncollectible future motifs.
+      Current state may change and does not dictate success.
+      See JOURNEY-LOOP-CONTRACT.md and ECOTONE-32-ENDINGS.md.
+      No art or release.
+  - id: t-020
+    milestone: m2
+    title: "Fully write 32 endings with chapter history and 1/10/30-year codas"
+    status: waiting
+    depends_on: [t-019, t-012, t-017]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Produce 32 distinctive complete hopeful/dark ending stories,
+      not an adjective template; each includes immediate, ten-year and
+      thirty-year outcomes and flags from randomized side encounters
+      and order of actively followed companions. Every opening and
+      final lead combination has an earned good and bad future.
+      Cedar's hopeful technoutopia includes accountable rural networks,
+      skilled work and ecological infrastructure. Parents stay together.
+  - id: t-021
+    milestone: m3
+    title: "Test all 32 reachable fates, varied follower orders and persistence"
+    status: waiting
+    depends_on: [t-005, t-018, t-020, t-022]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Run real seeded cards, choices, 2d6 and stay/follow crossroads to
+      prove 32 endings and 16/16 good/dark. Test all 16 cross-pairs,
+      each main companion encountered, different meeting permutations,
+      continued original lens, changing current state, side stat
+      consequences, late follower catch-up, failure/repair and first
+      declines. Verify no deadlocked anchor, save/reload same draws,
+      honest X/32 progress, global achievement at 32/32,
+      spoiler hiding and no page-level scroll. No art or publish.
+  - id: t-022
+    milestone: m3
+    title: "Build seeded random adventure interludes and stay/follow mechanics"
+    status: waiting
+    depends_on: [t-005, t-009, t-019]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Between mandatory main-character crossroads deal 2-4 eligible
+      randomly seeded authored Humboldt encounters that can change
+      five skills, evidence, factions and relationships. Guarantee
+      meeting each remaining main character in a shuffled order.
+      At each meeting stay with current companion or follow newcomer,
+      preserving intro, meeting_order, follow_history and active_lead;
+      the former guide remains in the world. Later big beats deepen
+      companion motivation and all late switches have viable earned
+      optimal arcs. Full card/roll determinism, no live publication.
