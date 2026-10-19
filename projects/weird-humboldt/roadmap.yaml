@@ -74,11 +74,23 @@ notes_from_silas: |
   Illuminatus!, Burning Man, the juggling festival, Dell'Arte, and older
   Gravity Falls. PG-13 drug references, no covert dosing; NO ART YET.
   PRELUDE-STATE-CONTRACT.md is the authoring reference.
-  2026-10-19 PT: Kit is Chinese American. Proposed family history: her distant
-  ancestors were among Eureka residents expelled in 1885; Kit returned
-  generations later to attend HSU and pursue Blue Lake physical theatre.
-  The mid-1950s mark Chinese American return, not the original expulsion.
-  Preserve factual history, local cultural specificity and Kit's agency.
+  2026-10-19 PT LATEST CAST CORRECTION: Kit is Hmong American,
+  NOT Chinese American. Withdraw the invented ancestral expulsion
+  family story. Preserve the real 1885 Eureka Chinese expulsion and
+  mid-1950s Chinese American return as a SEPARATE well-sourced
+  county-history encounter, not attributed to Hmong ancestors.
+  Local Hmong life is documented by Cal Poly Humboldt; develop Kit's
+  actual family, training and community connections through sensitive
+  contemporary research rather than ethnic stereotypes.
+  Cedar's FATHER IS HISPANIC; his family's national/regional history
+  and whether he belongs to logger or grower side remain undecided.
+  Parents are still together. His rural competence and technoutopia
+  remain intact. Both identities must be reflected in character
+  prose, prompt/portrait briefs, ending callbacks and future QA.
+  Art round 1 legacy jobs for Kit 40848/40849 and Cedar 40852/40853
+  contain superseded briefs. Do not export them as canon; requeue
+  approved foundation replacements from corrected ROUND-1.yaml.
+  No change to 56 ending IDs, the single-screen UI or public gate.
   2026-10-19 PT, LATEST: Juniper and Kit confirmed as distinct companions.
   Replace sober dispatcher with Indigenous Humboldt tattoo artist raised on
   her reservation, whose studio began with a casino-revenue-funded tribal
@@ -337,13 +349,17 @@ tasks:
     note: >-
       Silas opened the art gate in session on 2026-10-19 PT ("submit the art
       prompts"), so this no longer waits on t-004. Round 1 is
-      art/ROUND-1.yaml: 24 house-lane (Arthemy) cells, ArtJobs 40841-40864,
+      art/ROUND-1.yaml: 24 house-lane (Arthemy) cells, ArtJobs 40841-40864 originally submitted,
       covering project icon/card/hero, Play title art, Mara/Kit/Juniper/Cedar
       (two seeds each), the six chapter regions, the prologue meadow, WH-006,
       WH-021, WH-061 and a card back. Next: --status, review keepers, export
       them to kind_robots public/ecotone/ (the /play/ecotone board overlays
       them on its drawn scenes) and projects/images/weird-humboldt-*.webp.
-      Ending-signature art stays behind Keep/Modify/Reject prompt review.
+      **Corrections:** Kit 40848/40849 depicted the former Chinese-American brief,
+      Cedar 40852/40853 predate Hispanic-father character direction. Mark these
+      old portrait jobs not-for-canon, requeue revised cells under t-030 and
+      verify replacement portraits before export. Ending-signature art
+      stays behind Keep/Modify/Reject prompt review.
   - id: t-007
     milestone: m5
     title: "Deliver integrated preview, simulated balance, accessibility and launch review"
@@ -376,7 +392,7 @@ tasks:
       nymph guide across all four branches. Text-only, no art or deployment.
   - id: t-009
     milestone: m1
-    title: "Write four companion intros and historically grounded Kit and Mara stories"
+    title: "Write four companion intros with Hmong Kit and grounded Mara stories"
     status: ready
     owner: null
     passes: 0
@@ -398,14 +414,15 @@ tasks:
       logging and growing parents. Include historic green/yellow ribbon
       complexity, worker safety concerns and Julia Butterfly Hill/Luna
       (1997-99) as fixed documented history; an *invented* modern CB
-      signal handles the paranormal plot. Kit has Chinese ancestry; in proposed fictional
-      biography her family was expelled from Eureka in February 1885, while
-      Kit herself returned to Humboldt State and the Dell'Arte performance
-      community much later. Cross-check the history with HAPI, Humboldt
-      Special Collections, and the Historical Society. The 1950s mark the
-      return rather than the expulsion. Do not turn victims into occult plot
-      props; keep the family's invented details distinct from real archival
-      sources. No art or publishing.
+      signal handles the paranormal plot. Kit is now HMONG AMERICAN with contemporary local Hmong community
+      context. The previous Chinese-American genealogy and expulsion
+      ancestors are cancelled. Keep the real 1885 Eureka Chinese expulsion
+      and 1950s Chinese American return in their OWN sourced encounter
+      (HAPI, Cal Poly Humboldt archives, Historical Society). Develop
+      Kit's individual family/arts story without stereotypes or inventing
+      Hmong ancestral ties to Chinese history. Cedar's father is HISPANIC;
+      specific background and his side of timber/grower lineage TBD.
+      Do not turn ethnic identity or historic victims into occult plots. No art or publishing.
   - id: t-010
     milestone: m3
     title: "Validate companion and perception continuity across all routes"
@@ -795,5 +812,30 @@ tasks:
       (WH-006, WH-021, WH-061), five skills, Clarity, journal, the six-chapter
       county map and a locked Endings 0/56 gallery that grants nothing until
       real finales exist. Text from SAMPLE-CARDS.md and
-      COMPANIONS-AND-PROLOGUE.md. The full engine (t-005/t-022) and 120 cards
+      COMPANIONS-AND-PROLOGUE.md. Ensure frontend character copy says
+      Hmong American for Kit and Hispanic father for Cedar; never repeat
+      Kit's withdrawn 1885 ancestry or show retired 40848/40849 portraits. The full engine (t-005/t-022) and 120 cards
       (t-003) replace this slice later.
+  - id: t-030
+    milestone: m4
+    title: "Requeue Kit and Cedar foundation portraits after heritage correction"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Latest user-approved cast correction: Kit is Hmong American,
+      not Chinese American or descended from 1885 Chinese expulsion
+      families. Cedar has a Hispanic father, with his particular
+      origins and logger/grower lineage deliberately undetermined.
+      art/ROUND-1.yaml portrait prompts revised; original queued
+      Kit 40848/40849 and Cedar 40852/40853 are obsolete and their
+      jobs mappings deliberately removed. Under the existing
+      t-006 foundation-art authorization, submit ONLY missing
+      revised portrait cells through the standard --live workflow,
+      then verify completed ArtJobs and character consistency
+      before choosing keeper exports or updating Play assets.
+      Do not reuse or approve old renders as canon. No automatic
+      56-ending-signature art, final release or speculative cultural
+      costume prompts. Collaborate with t-006 reviewer and avoid
+      duplicate submissions; check queue status first.
