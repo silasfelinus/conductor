@@ -6,6 +6,14 @@
 Date: 2026-10-19 PT · Status: **design-first / no art generation authorized in this phase**
 Owner: Conductor `weird-humboldt` · Proposed eventual Kind Robots destination: Play, not Admin (not implemented or published).
 
+## Revised central thesis: Ecotone (user direction, 2026-10-19)
+
+**Working title:** `Ecotone`, with `Weird Humboldt: Ecotone` as another possibility; **no project slug or Kind Robots display-title change is authorized yet**. The player spends one singular, surreal festival weekend seeing **competing futures for Humboldt** bleed through an already changing place. Their actions help decide the county's long-term fate, followed by a 1-/10-/30-year community and companion epilogue. The big civic consequence is **no longer optional**; examining the frequency's secret origin **is** optional.
+
+**Narrative values:** changing ecosystems, living Indigenous sovereignty, colonization's harms, extraction, logging, cannabis, art, college life, poverty, housing, modern technology, fragile habitats and all kinds of belonging. Preserve the real historical record; don't erase living communities into sequential eras. No universal 'tech good/evil' or 'nature good/evil' score. New technology can benefit local workers and remote residents or accelerate displacement; grassroots groups can protect a habitat or make damaging decisions. The user explicitly wants hopeful hippy and techno-utopias alongside multiple dystopian outcomes.
+
+**Design authority for this newest direction:** [ECOTONE-CORE.md](ECOTONE-CORE.md), [ECOTONE-ENDINGS.md](ECOTONE-ENDINGS.md). These supersede the earlier `optional overarching mystery` as the overall structure but retain `PRELUDE-STATE-CONTRACT.md`'s sober parity, existing cast, 120 seeds, authored cards and **no-art gate**. The exact supernatural mechanism and final public title await further creative review.
+
 ## Promise and tone
 
 A wacky comedy-horror, location-rooted, **single-player card adventure** through Humboldt County. Explore gorgeous, ordinary places; meet eccentric but recognizably human locals; make messy decisions; roll 2d6; discover that folklore, misunderstood science and actual supernatural anomalies are intersecting. Touchstones: the playfulness of the strangest *X-Files* episodes, *Twin Peaks*' affectionate unsettling small-town mystery, tabloid absurdism and Northern California backwoods counterculture. Original characters, words, twists and gameplay: references are tonal inspiration, not licensed adaptation.
@@ -57,9 +65,9 @@ The `Tribal Community Organizer` is a **candidate to be developed carefully, not
 - **Pacing:** reveal animated card front that stays readable; persistent compact one-screen layout across phone/tablet/desktop with scroll confined to card/journal overlays. Map tracks only selected points; character sheet/journal accessible without leaving run. Reduced motion and keyboard/gamepad touch accessibility.
 - **Production:** no LLM in live dice or canonical narrative resolver. Seeded deterministic content, versioned saves, explicit provenance. Reuse only stateless shared card UI from Shifting Lands/Desks; keep stores, decks and decisions isolated.
 
-## Mystery: keep the answer optional until user review
+## The mystery: future-shaping stakes mandatory, secret origin optional
 
-See PITCHES.md. Recommended hybrid is **The County Has a Frequency**: brief recurring static on radios, festival PA systems, cinema speakers and the bay reveals that **several possible Humboldts overlap**. A daft regional agency tries to contain it with forms. Who is causing it remains deliberately undecided. You can complete a run with no interest in solving it; investigators find 3+ evidence categories and can attempt an additional revelation ending. The game's heart remains unexpected local encounters, not collecting mandatory MacGuffins.
+See PITCHES.md. Earlier draft was **The County Has a Frequency**, now a symptom of the **Ecotone**. As a possible clue: brief recurring static on radios, festival PA systems, cinema speakers and the bay reveals that **several possible Humboldts overlap**. A daft regional agency tries to contain it with forms. Who is causing it remains deliberately undecided. You can complete a run with no interest in solving it; investigators find 3+ evidence categories and can attempt an additional revelation ending. The game's heart remains unexpected local encounters and consequential commitments, not collecting mandatory MacGuffins. Every run affects future outcomes even without deciphering the transmission.
 
 ## Quality and story constraints
 

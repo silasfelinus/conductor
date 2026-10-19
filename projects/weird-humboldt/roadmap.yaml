@@ -1,4 +1,4 @@
-# Weird Humboldt — regional wacky comedy-horror card adventure (Silas, 2026-10-19 PT)
+# Weird Humboldt / working title ECOTONE — regional future-shaping comedy-horror adventure (Silas, 2026-10-19 PT)
 # New design-first project. No image generation or art queue creation until specifically requested.
 project: weird-humboldt
 kind: software
@@ -9,7 +9,8 @@ goal: >-
   Shifting Desks. At least 120 fully written encounter cards across six regional
   chapters with 2-4 meaningful choices, visible 2d6 skill checks, persistent
   consequences, distinct Humboldt archetypes, a seeded save/resume system,
-  optional overarching mystery, multiple endings and a polished responsive
+  a county-wide fate-shaping story with optional hidden mystery, multiple
+  divergent futures and a polished responsive
   one-screen Play experience. Final art direction and any public release remain
   subject to Silas's later explicit creative approval.
 notes_from_silas: |
@@ -56,6 +57,21 @@ notes_from_silas: |
   no supernatural power or stat bonus. Four independent companions remain
   available in all runs. COMPANIONS-AND-PROLOGUE.md owns character details.
   NO ART or public release authorized.
+  2026-10-19 PT NEW THEMATIC THESIS: Ecotone is a candidate game title and
+  metaphor for the junction of living ecosystems, histories, populations,
+  economic transitions and multiple futures. Humboldt's Indigenous nations
+  remain sovereign living communities, not a vanished historical era. Forest,
+  logging, fisheries, cannabis boom/bust, college life, arts, housing,
+  homelessness, technology and evolving labor possibilities intersect. User
+  wants the player to help decide Humboldt's collective fate through one
+  psychedelic/strange festival weekend, then see 1/10/30-year alternate
+  epilogues: hippy paradise, tech utopia, corporate dystopia, anarchy, slow
+  decline, ecological refuge, hybrid futures, and more. Avoid a pro- or
+  anti-tech editorial verdict; include fictional exploitative developers,
+  flawed anti-development splinters and nuanced workers/residents. Fate
+  stakes are mandatory; deep metaphysical explanation may remain optional.
+  Preserve existing 120 seeds, four voluntary perception states and cast.
+  See ECOTONE-CORE.md and ECOTONE-ENDINGS.md; no art/publish authorization.
 milestones:
   - id: m1
     title: "EXPLORE — local research, six-chapter structure, archetypes, pitch alternatives"
@@ -121,7 +137,9 @@ tasks:
       Convert all 120 seeds to scene + >=2 choices + check/visible stakes + authored
       success/failure/complication text + persistent consequences. Include 6 chapter
       anchors, 10+ endings, 8 playable archetype reactions, no-dead-end proof and
-      writing review for humor, cultural care and variety. No art jobs.
+      writing review for humor, cultural care and variety. Ensure choices
+      also create human-scale civic future flags, recurring commitments and
+      different ecological and economic costs per ECOTONE-CORE.md. No art jobs.
   - id: t-004
     milestone: m1
     title: "Creative review: optional mystery, stage rhythm, comedy-horror register and cast"
@@ -134,7 +152,8 @@ tasks:
     note: >-
       FOR SILAS: Review projects/weird-humboldt/DESIGN-BRIEF.md, PITCHES.md and
       SAMPLE-CARDS.md. Choose or revise the suggested optional mystery, six
-      chapters, eight archetypes and PG-13 comic-horror tone. This is an explicit
+      chapters, eight archetypes, Ecotone alternate futures, hidden mystery
+      mechanism and PG-13 comic-horror tone. This is an explicit
       creative acceptance checkpoint requested before committing to art. TO
       APPROVE: respond with direction in chat or set approved_by_human: true
       and status: done. Art direction, generation and selection (t-006) remain
@@ -235,3 +254,49 @@ tasks:
       recoverable Clarity. Every required clue and hopeful ending remains
       available sober; no drug-required victory or cultural identity bonuses.
       Coordinate with t-008; do not duplicate its seeded lens tests.
+  - id: t-011
+    milestone: m1
+    title: "Design Ecotone civic-fate core, competing factions and future consequences"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Text-only design follow-up based on Silas's 2026-10-19 direction.
+      Prototype the one-weekend convergence and decision/flag contract in
+      ECOTONE-CORE.md; distinguish actual Humboldt governance and proposals
+      from fictional predictions. Develop morally complex fictional corporate,
+      grassroots, ecological and workers' factions; retain contemporary tribal
+      self-determination and consultation boundaries. Four opening states,
+      all archetypes, 120 encounter seed IDs and characters remain. No art.
+  - id: t-012
+    milestone: m2
+    title: "Draft ten multi-cost Ecotone future epilogues and consequence callbacks"
+    status: waiting
+    depends_on: t-011
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Expand ECOTONE-ENDINGS.md into validated authored 1-/10-/30-year
+      variants: ecology, housing, livelihoods, local agency and reality
+      stability with character-specific payoff. Avoid an ideological
+      virtue meter or a single magical override of collective rights.
+      Integrate with t-003 complete cards and t-008 perspective tests.
+      No image pipeline or publication.
+  - id: t-013
+    milestone: m3
+    title: "Test future-state branching, sober parity and no forced ideal outcome"
+    status: waiting
+    depends_on: [t-011, t-012]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Text-only deterministic tests proving that all initial perception
+      states and archetypes can shape a meaningful county fate without
+      solving the secret transmitter mystery; no ethnicity- or
+      substance-gated endings. Preserve tribal consent as a story
+      constraint, not a bonus roll. Require no unreachable endings,
+      no single faction always winning, and callback consequences from
+      personal cards across the region. No art or Play deployment.
