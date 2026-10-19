@@ -1,5 +1,12 @@
 # Emperor of Dust: map and fortress layout (proposal)
 
+> **2026-10-19: drawn.** Silas's concept pack, made from this brief with ChatGPT, is archived in
+> [art/concepts/](art/concepts/): the wasteland base and labelled reference maps, the Day 41
+> overlay, the fortress cutaway and six room-screen studies (SVG with PNG previews). Kind Robots'
+> map room now uses `wasteland-base.svg` as its stage, drawing markers, fog and labels live over
+> the art (kind_robots `public/emperor-of-dust/map/`). The screen studies are layout direction,
+> not character art.
+
 *2026-10-19 PT. Silas is drawing the maps with ChatGPT; this is the layout brief to draw from.
 Compass facts already in canon are kept: Storm Crow Heights west, the Mirefen north, the Jackalwire
 rail canyon south, the Rustline's sunken rail yards east (SYSTEMS-V03.md), and Hollow Bell with its
