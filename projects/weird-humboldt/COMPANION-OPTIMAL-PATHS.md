@@ -12,6 +12,10 @@
 6. **A good ending is not a prize for making someone suffer:** Avoid using illness, sobriety, family breakups, poverty, ethnic background or sacred knowledge as capricious levers. Real historic injustice is unchangeable by magic; present and future relationships can change through work.
 7. **Endings remain optimistic overall even if an individual run is bleak:** At least one convincing hope or seed of repair, linked to an actual earlier decision, should be visible even in most dystopian epilogues. Don't soften horrific events into jokes; don't condemn Humboldt to doomed inevitability.
 
+## Four value tensions without companion stereotypes (2026-10-19)
+
+[IDEOLOGICAL-ECOTONES.md](IDEOLOGICAL-ECOTONES.md) proposes **Autonomy ↔ Solidarity; Continuity ↔ Reinvention; Ecology ↔ Engineering; Agency ↔ Fate**. Juniper's arguments involve ecosystem protection and shared human stewardship, Kit's history and ambitious new art, Mara's voluntary creative independence and apprenticeship, and Cedar's generational rural roots combined with accountable technoutopia and CB forecasts. **No companion permanently "is" a single pole; every one can surprise the player and have genuine counterarguments.** The initial sobriety lens is not assigned an ideological position, and character success or dark fate results from evidenced choices/dice/repair, not party score. These are *writing guides*, not extra collectible endings or player alignment stats.
+
 ## Four optimal companion routes: initial creative direction
 
 ### Juniper: The Shared Canopy (Stoned first-meeting, all states)
