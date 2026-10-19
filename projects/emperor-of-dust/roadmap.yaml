@@ -146,7 +146,7 @@ tasks:
   - id: t-005
     milestone: m4
     title: "Script Act I, Days 01–10, as fortress days (briefing, audiences, quests)"
-    status: claimed
+    status: done
     depends_on: t-019
     passes: 0
     stakes: reversible
@@ -155,10 +155,20 @@ tasks:
       utils/emperorOfDust/day*.ts in the v0.2 Horde/hour format: convert them to
       throne-room audiences plus 1-3 day quests rather than discarding the
       writing. Follow DAY-PLAN.md anchors and its [A]/[Q]/[K]/[M] marks.
+
+      Merged kind_robots#3849 as b615b93355a8e7bac590b4905f1901f1b109b3db after all 20 checks
+      passed on head 55569309739ede99a84953fd2b637594a4757c41. Act I Days 1-10 scripted:
+      Vane's toll (grudge variant), the empty stable (each starter reveals a secret), the Crow
+      warning with Komodo's first own lie (komodoLie), the Coldbrook family and the Abbey's
+      offer, the first lethal convoy, the Gate Watch oath and the Thistledown raid moving
+      faction strength. Wages 4->6 after a 200-run simulation (avg brass 380 -> ~290 at Day 10
+      before spending; ~2 injuries, 0.05 deaths per Act I run). Chromium check at
+      390/768/1440.
     owner: worker
     claimed_by: 2026-10-19T000500Z-emperor-t005-act1
     claimed_at: '2026-10-19T02:56:33Z'
-    updated: '2026-10-19T02:56:33Z'
+    updated: '2026-10-19T03:17:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#3849'
   - id: t-006
     milestone: m4
     title: "Script Act II (Days 11–20) and Act III (Days 21–30) with the Rustline and Black Verge reveals"
