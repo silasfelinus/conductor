@@ -1,6 +1,6 @@
 # Weird Humboldt: directions to explore before art
 
-2026-10-19 PT · None is approved canon. **Recommendation:** combine A's structure with B's interpersonal payoff, leave C as a rare ending and D as a recurring phenomenon.
+2026-10-19 PT · None is approved canon. **Updated recommendation (2026-10-19):** `ECOTONE-CORE.md` is the new player-directed central frame: competing versions of Humboldt's possible future. Preserve A as an unexplained radio symptom, B as emotional consequence, C as chronology distortion, D as occasional regional satire. Earlier pitches are historical alternatives, not the current creative mission.
 
 ## A. The County Has a Frequency (recommended spine)
 A low, impossible radio frequency turns up at the Minor, on Kinetic race PA systems, in car radios on 299 and even in a shell held to an ear. Recordings predict different endings to one conversation. No single conspirator explains it; evidence slowly reveals multiple Humboldts lying on top of each other. You can tune the frequency, help stop it, exploit it, or ignore it and have a perfectly satisfying run of bizarre experiences.
@@ -59,3 +59,10 @@ A fictional cannabis/counterculture festival opens the journey. The adult player
 **Selected:** Juniper the curvy, natural-haired forest nymph (Stoned), and Kit the kinetic performer (Tipsy). **User-directed replacements:** an Indigenous tattoo artist raised on her reservation, supported in opening her shop through casino-revenue grant funding and sober by personal choice (working name Mara), plus an older male ex-grower who now runs a dispensary, works as a licensed massage therapist and jokes about cosmic conspiracies while retaining ties to backwoods cultivation (working name Cedar). These are four independent adults, not four mood settings on the nymph. Their tribes, histories and independent paths must be written with care; Mara is not a supernatural Indigenous symbol decoder. See [COMPANIONS-AND-PROLOGUE.md](COMPANIONS-AND-PROLOGUE.md).
 
 **Still open:** whether the festival’s four-way pairing is rigid on first meeting, or a strong probability with player choice. All four eventually appear on every route. Preserve `PRELUDE-STATE-CONTRACT.md`’s canonical facts and meaningful sober path. No art phase approval is implied.
+
+
+## G. ECOTONE — the county's contested futures (user-directed thematic spine, 2026-10-19)
+
+The region is a human and ecological transition zone: living tribal nations and land restoration, historic colonization and extraction, logging, fishing, marijuana boom/bust, artists and universities, poverty and resilience, threatened habitats, possible new data infrastructure and a future no one agrees on. This isn't a nostalgic referendum on the single 'real Humboldt': **the protagonist's commitments during an impossible festival weekend contribute to competing long-term futures**. The spirit of the county survives, but whom it can support and which relationships endure changes.
+
+**Mystery bifurcates:** the *fate of the county* is always at stake; the exact cause of layered future timelines is optional detective work. For details, competing mechanism options, six-chapter moral turns and social factions see [ECOTONE-CORE.md](ECOTONE-CORE.md). For 10 alternate future families and scene-level epilogue conditions see [ECOTONE-ENDINGS.md](ECOTONE-ENDINGS.md). Do not turn actual historical dispossession or contemporary tribal nation rights into supernatural metaphors that erase facts. `Ecotone` is a proposed title, NOT a changed project slug or publication mandate; art remains gated.
