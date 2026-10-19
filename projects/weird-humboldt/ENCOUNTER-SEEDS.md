@@ -63,6 +63,7 @@
 - **WH-038 · Trail Detour to Yesterday:** An orange detour sign leads to the same path twenty years earlier.
 - **WH-039 · The Secret Tide Committee:** Locals with clipboards are trying to vote the moon out of office.
 - **WH-040 · The Kayak in the Tree:** An upside-down kayak drips saltwater and asks for directions home.
+- **WH-121 · The Latitude Argument (added 2026-10-19, history thread):** The 1849 Gregg party is still arguing at the river mouth about whether to stop and measure the latitude. Single-source history (L. K. Wood); see HISTORY-THREADS.md.
 
 ## 3 · Eureka and the bay | Old Town Eureka
 - **WH-041 · The Victorian with Too Many Windows:** A building adds one window whenever a secret is spoken nearby.
@@ -176,4 +177,4 @@
 - **WH-119 · Every Version of the Winner:** Five parallel champions arrive, all insisting they already met the player.
 - **WH-120 · The County Finally Votes:** The player's relationships, evidence and choices determine the surviving ending.
 
-**Count:** 120 seeds. These are commissioning-ready *writing prompts*, not live assets or generated image jobs.
+**Count:** 120 seeds, plus WH-121 (history thread, 2026-10-19). These are commissioning-ready *writing prompts*, not live assets or generated image jobs.

@@ -79,3 +79,7 @@ Additional grounded inspiration: the Humboldt Juggling Society's festival progra
 **Lived local perspective from Silas:** As a child his family displayed **a green antenna ribbon**; yellow and green ribbons were loaded and complicated social markers in the timber/environmental divide. "Earth First!" could be an **insult** in local speech, but the organization and any particular ribbon color were not interchangeable with the whole forest-protection movement, with cannabis growers, or with every timber worker's political beliefs. Specific meanings varied with household and era, and are not to be standardized as historical proof without local sources.
 
 **Fictional use:** Cedar is the son of a **Hispanic logger father** and a **grower-community activist mother imagined as a volunteer in the real Luna sit's wider support effort**. As a child he witnessed their family debates. Her participation is fictional, **not a historical claim that an identifiable real person belonged to the crew**, and neither parent is presumed to be a tree spiker. Later radio anomalies concern **invented possible futures** rather than retroactively changing, sensationalizing or privatizing this historical record. Avoid access directions to Luna.
+
+## Tuluwat 1860 and the Mad River naming (2026-10-19)
+
+Sourced summaries, the hat-by-the-door telling (unverified so far; Robert Gunther's documented account is the grounded parallel) and the publication rules (consult the Wiyot Tribe first) are in [HISTORY-THREADS.md](HISTORY-THREADS.md).
