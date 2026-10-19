@@ -97,7 +97,7 @@ Treat companion arcs as **bounded four-beat authored threads**, not relationship
 - Each of 4 personal optimal flags must be provably reachable through real deterministic seeded decisions, **not arbitrary injected flags**.
 - Cedar's `parents_together` is invariant across **all** routes and future epilogues; only relational arguments, safety and economic outcomes vary. Distinguish this from a variable `cedar_two_ribbons_home` optimal-path completion.
 - Failure in at least one key companion dice check has an authored recovery path.
-- Ten ending-family slots remain ten even when companion routes give variant prose; achievement awards remain deduped.
+- Thirty-two collectible lead/opening/fate ending slots remain 32, while the ten county-future themes remain noncollectible backdrops; achievement awards remain deduped.
 - Keep all views single-surface on mobile/tablet/desktop; the journal/Companions tab is a bounded pane.
 - Historical and culture-specific verification/cultural review gates remain intact; no art or publication authorization.
 
