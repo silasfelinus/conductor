@@ -1,5 +1,7 @@
 # Weird Humboldt: 120 encounter seeds
 
+**2026-10-19 PT lens design note:** A separate voluntary festival prologue establishes a sober/tipsy/stoned/tripping-balls **opening perception**, not a fifth chapter encounter or four copies of every card. Exactly 120 *canonical* seed premises remain. Pivotal cards may add authored state-specific narration, options and check adjustments; each state must still reach essential clues and endings. Use sensory event experiences without up-front festival name labels. See [PRELUDE-STATE-CONTRACT.md](PRELUDE-STATE-CONTRACT.md).
+
 **Status:** 2026-10-19 PT, editorial seed catalog. Exactly **120 distinct premises** across six chapters × four location/event pools × five cards. **NOT 120 completed gameplay cards**; a card is complete only when it has scene prose, 2–4 actions, visible check parameters, success/failure/partial passages, state effects, provenance tier and optional art brief. The 120-card production task is explicitly open.
 
 **Run shape:** roughly 2 selected locations per chapter; draw a complete card from its eligible pool using a saved seed, plus a chapter turn/optional anchor event. Some repeated locations (Plaza, bay and Ferndale) intentionally appear both during ordinary time and during the impossible festival. The festival's date bending is fiction, not an assertion that real March, May and October events coincide.
