@@ -7,17 +7,16 @@
 
 > **2026-10-19: drawn.** Silas's concept pack, made from this brief with ChatGPT, is archived in
 > [art/concepts/](art/concepts/): the wasteland base and labelled reference maps, the Day 41
-> overlay, the fortress cutaway and six room-screen studies (SVG with PNG previews). Kind Robots'
-> map room now uses `wasteland-base.svg` as its stage, drawing markers, fog and labels live over
-> the art (kind_robots `public/emperor-of-dust/map/`). The screen studies are layout direction,
-> not character art.
+> overlay, the fortress cutaway and six room-screen studies (SVG with PNG previews). The map room
+> briefly used `wasteland-base.svg` as its stage; the painted canon map replaced it the same day.
+> The screen studies are layout direction, not character art.
 >
 > **2026-10-19: geography changed and target look set (Silas).** Hollow Bell is **southern** and a
 > **small town**, not a single great tower; the **Abbey is above it**; **Thistledown is above the
-> Abbey**. The place notes, grid and hideouts below follow that, and so does the served base map.
-> Silas's painted references (`art/concepts/painted-*.webp`: the wasteland, the fortress cutaway and
-> the six room screens) are the expected finish for the maps and screens. Their geography predates
-> this change, and their labels are baked in, so they are style targets rather than assets.
+> Abbey**. The place notes, grid and hideouts below follow that, and so does the canon painting.
+> Silas's earlier painted references (`art/concepts/painted-wasteland.webp`, the fortress cutaway
+> and the six room screens) are the expected finish for the maps and screens. Their geography
+> predates this change, so they are style targets rather than assets.
 
 *2026-10-19 PT. Silas is drawing the maps with ChatGPT; this is the layout brief to draw from.
 Compass facts already in canon are kept: Storm Crow Heights west, the Mirefen north, the Jackalwire
