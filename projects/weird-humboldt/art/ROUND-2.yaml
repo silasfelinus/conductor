@@ -1,0 +1,189 @@
+# Ecotone (weird-humboldt) art round 2, t-031: the six new playable cards. Silas, 2026-10-19 PT: "let's go ahead
+# and build more of this" (the location atlas and history threads). Same house lane as ROUND-1.yaml.
+# Cards: Arcata Marsh, Fickle Hill, WH-121 Mad River (the 1849 latitude argument), the zoo tribute performed by
+# actors (Silas: past zoo animals appear only as performance or vision, so the art shows performers in masks and
+# costumes, never the real Bill), the Bayshore Mall after hours, and the graffiti behind the mall at dusk.
+# Care: no real tenant or store signage, no readable graffiti text, and no people shown using drugs.
+# Keepers export to kind_robots public/ecotone/<asset>.webp.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: ecotone-2
+project_slug: weird-humboldt
+designer: Ecotone
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: house
+  label: Arthemy Western Art v3.0 (house)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics (style), painterly,
+    cinematic lighting, moody atmosphere, rich detail
+  suffix: north coast california, coastal fog, deep redwood greens, teal and amber palette, soft eerie glow
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eco2-marsh
+  asset: encounters/arcata-marsh
+  title: Arcata Marsh, the marsh that eats its words
+  size: 1344x768
+  seed: 63101
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw
+  prompt_tags: wide shot, a tidal freshwater marsh at golden dusk, still ponds with reflections, tall reeds and
+    cattails, a wooden boardwalk path, egrets and ducks, a heron standing in the shallows, a distant small town
+    and bay beyond, faint green radio-wave ripples glowing across the water, serene and quietly uncanny
+  jobs:
+    house: 40875
+  art:
+    house:
+      status: DONE
+      art_image_id: 248818
+- key: eco2-fickle-hill
+  asset: encounters/fickle-hill
+  title: Fickle Hill, bad reception
+  size: 1344x768
+  seed: 63102
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw
+  prompt_tags: wide shot, a narrow ridge road climbing through second-growth redwoods at night, thick fog pouring
+    over the ridge, an old pickup truck parked on the shoulder with its dome light on, a cb radio antenna with a
+    faded green ribbon, the lights of a small college town glowing far below through a gap in the fog, a thin beam
+    of green light rising from the radio
+  jobs:
+    house: 40876
+  art:
+    house:
+      status: DONE
+      art_image_id: 248819
+- key: eco2-latitude-1
+  asset: encounters/wh-121-latitude-argument
+  title: WH-121, The Latitude Argument (seed 1)
+  size: 1344x768
+  seed: 63111
+  negative: text, letters, words, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts, frame,
+    border, (nude:1.4), nsfw, gore, gun
+  prompt_tags: wide shot, (a ragged group of 1849 frontier explorers:1.2) in worn coats and battered hats at a foggy
+    river mouth on the pacific coast, one bearded man stubbornly kneeling with a brass sextant and a notebook, the
+    other exhausted men gesturing angrily toward the far bank, pack mules, driftwood, cold surf, comic exasperation,
+    the fog faintly glowing as if from another century
+  jobs:
+    house: 40877
+  art:
+    house:
+      status: DONE
+      art_image_id: 248820
+- key: eco2-latitude-2
+  asset: encounters/wh-121-latitude-argument
+  title: WH-121, The Latitude Argument (seed 2)
+  size: 1344x768
+  seed: 63112
+  negative: text, letters, words, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts, frame,
+    border, (nude:1.4), nsfw, gore, gun
+  prompt_tags: wide shot, (a ragged group of 1849 frontier explorers:1.2) in worn coats and battered hats at a foggy
+    river mouth on the pacific coast, one bearded man stubbornly kneeling with a brass sextant and a notebook, the
+    other exhausted men gesturing angrily toward the far bank, pack mules, driftwood, cold surf, comic exasperation,
+    the fog faintly glowing as if from another century
+  jobs:
+    house: 40878
+  art:
+    house:
+      status: DONE
+      art_image_id: 248821
+- key: eco2-friends-1
+  asset: encounters/friends-who-arent-here
+  title: The Friends Who Aren't Here (seed 1)
+  size: 1344x768
+  seed: 63121
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw, cage, bars, real chimpanzee
+  prompt_tags: wide shot, an outdoor physical theatre performance at night in a redwood park clearing lit by lanterns,
+    (performers in handmade masks and costumes:1.3), one actor in a chimpanzee mask and furry coat pacing playfully,
+    one actor in a sleek river otter costume running beside a laughing child, several small actors in prairie dog
+    hoods popping up from behind hay bales, a small delighted audience, warm magical tribute mood
+  jobs:
+    house: 40879
+  art:
+    house:
+      status: DONE
+      art_image_id: 248822
+- key: eco2-friends-2
+  asset: encounters/friends-who-arent-here
+  title: The Friends Who Aren't Here (seed 2)
+  size: 1344x768
+  seed: 63122
+  negative: text, letters, words, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    frame, border, (nude:1.4), nsfw, cage, bars, real chimpanzee
+  prompt_tags: wide shot, an outdoor physical theatre performance at night in a redwood park clearing lit by lanterns,
+    (performers in handmade masks and costumes:1.3), one actor in a chimpanzee mask and furry coat pacing playfully,
+    one actor in a sleek river otter costume running beside a laughing child, several small actors in prairie dog
+    hoods popping up from behind hay bales, a small delighted audience, warm magical tribute mood
+  jobs:
+    house: 40880
+  art:
+    house:
+      status: DONE
+      art_image_id: 248823
+- key: eco2-anchor-stores-1
+  asset: encounters/anchor-stores
+  title: Anchor Stores, the mall after hours (seed 1)
+  size: 1344x768
+  seed: 63131
+  negative: text, letters, words, sign text, store names, logos, brand names, watermark, signature, lowres, worst
+    quality, blurry, jpeg artifacts, frame, border, (nude:1.4), nsfw
+  prompt_tags: wide shot, the interior of a half-empty 1980s shopping mall at night, dim skylights, a dry fountain,
+    potted palms, rows of dark shuttered storefronts, but three of the storefronts glow with impossible scenes,
+    one opens onto a green forest town with solar roofs, one onto a gleaming corporate warehouse, one onto a foggy
+    abandoned food court, liminal and eerie and funny
+  jobs:
+    house: 40881
+  art:
+    house:
+      status: DONE
+      art_image_id: 248824
+- key: eco2-anchor-stores-2
+  asset: encounters/anchor-stores
+  title: Anchor Stores, the mall after hours (seed 2)
+  size: 1344x768
+  seed: 63132
+  negative: text, letters, words, sign text, store names, logos, brand names, watermark, signature, lowres, worst
+    quality, blurry, jpeg artifacts, frame, border, (nude:1.4), nsfw
+  prompt_tags: wide shot, the interior of a half-empty 1980s shopping mall at night, dim skylights, a dry fountain,
+    potted palms, rows of dark shuttered storefronts, but three of the storefronts glow with impossible scenes,
+    one opens onto a green forest town with solar roofs, one onto a gleaming corporate warehouse, one onto a foggy
+    abandoned food court, liminal and eerie and funny
+  jobs:
+    house: 40882
+  art:
+    house:
+      status: DONE
+      art_image_id: 248825
+- key: eco2-behind-the-mall
+  asset: encounters/behind-the-mall
+  title: Behind the Mall, the graffiti by the water
+  size: 1344x768
+  seed: 63141
+  negative: text, letters, words, readable graffiti, sign text, watermark, signature, logo, lowres, worst quality,
+    blurry, jpeg artifacts, frame, border, (nude:1.4), nsfw, needles, drugs, gore
+  prompt_tags: wide shot, a concrete wall covered in colorful abstract graffiti murals beside a quiet bay slough
+    at dusk, tall reeds, a student film crew with a camera on a tripod and a boom microphone, a homemade rubber
+    monster costume standing in the reeds looking surprisingly real, string of work lights, purple and orange sky,
+    comedic horror
+  jobs:
+    house: 40883
+  art:
+    house:
+      status: DONE
+      art_image_id: 248826
+keepers:
+  # Reviewed 2026-10-19 PT; exported to kind_robots public/ecotone/<asset>.webp.
+  # Weaker matches worth a later reroll: latitude (a lone explorer, not the arguing party), friends (costumed
+  # performers, but no chimp), anchor-stores (eerie lit mall; the futures behind the gates aren't visible).
+  encounters/arcata-marsh: eco2-marsh (248818)
+  encounters/fickle-hill: eco2-fickle-hill (248819)
+  encounters/wh-121-latitude-argument: eco2-latitude-2 (248821)
+  encounters/friends-who-arent-here: eco2-friends-2 (248823)
+  encounters/anchor-stores: eco2-anchor-stores-1 (248824)
+  encounters/behind-the-mall: eco2-behind-the-mall (248826)
