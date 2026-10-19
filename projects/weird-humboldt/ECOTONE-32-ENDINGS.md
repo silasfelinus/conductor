@@ -2,6 +2,8 @@
 
 **Updated 2026-10-19 PT.** Silas's current direction is **4 lead companions × 4 voluntary opening states × 2 earned fates = 32 collectible endings: exactly 16 hopeful and 16 dark**. This replaces the older **ten ending-family collectible** concept. Those ten county futures in `ECOTONE-ENDINGS.md` remain **noncollectible world-state motifs**, available to color these 32 stories. This matrix is **design treatments only**, not 32 fully authored 1/10/30-year epilogues or live features. No art or publication authorized.
 
+**New thematic layer (2026-10-19):** Four tension axes [IDEOLOGICAL-ECOTONES.md](IDEOLOGICAL-ECOTONES.md) give each of the 16 companion×opening intersections philosophical nuance (individual/community; tradition/change; nature/technology; free will/fate). This **does not** expand the 32-ending count, prescribe a chemical's politics, or turn axis extremes into the good/bad resolver. Each ending must trace human choices and consequences rather than a political compass test.
+
 ## Authoritative cross-product contract
 
 - **Four independent leads:** Juniper, Kit, Mara (working name), Cedar (working name). All four exist in every route. Sober→Mara, Tipsy→Kit, Stoned→Juniper and Tripping Balls→Cedar are *suggested first introductions only*. A player can choose or commit to **any lead companion after initial meetings** via guaranteed authored chapter anchors. Other companions can still participate in scenes; one chosen lead frames each finale.
