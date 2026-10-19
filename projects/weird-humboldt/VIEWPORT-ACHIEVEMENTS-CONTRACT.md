@@ -41,33 +41,15 @@ At minimum render and measure:
 
 ## Two progression systems, both required
 
-### A. In-game **Endings on File** (ten complete future families)
+### A. In-game **Endings on File** (32 story endings; 16 hopeful, 16 dark)
 
-**Canonical source:** `ECOTONE-ENDINGS.md`, with at least the current ten named future families, 1/10/30-year epilogues and variations. **Count all ten stable canonical family IDs**, not every possible prose variant as a separate ending. Use stable lowercase IDs; no hardcoded index-based unlocks. A sample stable registry:
+**Canonical ledger:** [ECOTONE-32-ENDINGS.md](ECOTONE-32-ENDINGS.md) requires 32 unique `final_lead.opening_lens.hope|dark` strings, 8 per lead companion and 8 per opening lens, with 16 of each fate. `opening_state` comes from the voluntary festival choice and determines the first encounter, while `current_state` may change; **the final companion results from active stay/follow decisions at fixed meetings**, not an upfront independent character picker. Outcome comes from persistent stats, choices, evidence, relationships and dice checks, never substance morality. The prior ten county futures are only **scenario motifs** and do not create gallery slots.
 
-```text
-redwood-commons
-silicon-estuary
-global-terminal
-beautiful-museum
-free-county
-barricaded-county
-worktown
-tidelands-accord
-redwood-sanctuary
-split-county
-```
+**Persistent unlocks:** after a genuine, fully resolved end scene, record its single `endingId` and chronological follow/encounter provenance in a schema-versioned deduplicated **browser-local ledger separate from the current run**. Refresh, save/reload, New Game, later route switch and closing/reopening a modal must preserve unlocks; a pre-existing old prototype future-family ID must **not** silently grant any of the new 32. **No awards from simply reading a gallery entry.**
 
-The final ID mapping must be frozen before Kind Robots import, validated against `ECOTONE-ENDINGS.md`, and migration-aware if names change. **All ten** should have eligible rules, a dated unlocked epilogue, a compact summary, and secret/hidden spoiler policy.
+**One-screen gallery:** a visible compact `Endings X/32` button on the game board opens a bounded tab/modal with four companion groups, eight items per companion, each showing two fate slots for each of the four opening lenses. Optional `Hope X/16 · Dark Y/16` progress counters do not expose locked titles. Each undiscovered card shows a silhouette/neutral hint with no spoiler-bearing art, alt text or detail. Each discovered card shows the earned unique title, 1/10/30-year story, optional date/flag callbacks, and a safe replay path. **Long collections scroll only within a bounded inner pane**, never the page; Escape/Close restores focus and the exact active journey. Enforce the same 375×667, 390×844, 768×1024, 820×1180, 1024×768, 1440×900 etc viewport contracts with **32 cards**, not the old 10.
 
-**Persistent account-independent ledger:** after a *real completed ending*, the authored outcome resolver emits exactly one canonical ending ID and variant provenance. Add to a **versioned, deduplicated browser-local unlock ledger** separate from the in-progress run/save. Starting over, losing a character, replaying another route, changing initial intoxication, reopening the page, or migrating save formats must **not** erase previously earned endings. Resolved ending IDs cannot be forged from a simple tab click, automatically granted from sample scenes, or recorded before the finale. Local-only v1 matches the proven Shifting Desks approach; account synchronization is a future *optional* enhancement, not a prerequisite for unlocked content.
-
-**Player-facing Endings gallery:** a visible progress affordance on the main board, e.g. `Endings: 3 / 10`, opens a single-surface gallery or modal with all ten **slots**:
-- **Discovered:** recognizable title and thumbnail (when art exists), spoiler-safe epilogue summary, timestamp/first completion if available, accessible **Read ending** and **Replay journey** actions. Show variants/callbacks through details without counting them as separate families.
-- **Undiscovered:** tasteful mystery silhouette / blurred illustrative treatment (once art approved); `Undiscovered` label and subtle thematic hint, **no hidden title, ending description or art-alt-text leak**, unless the title is intentionally public. A fully secret ending can be more deeply concealed, but the count stays honest.
-- **Modal UX:** close/back returns to exact current game state, focus restores, Escape works, touch gestures never accidentally start a new run, and list rows scroll internally when the 10 cards exceed dialog space. Meaningful empty state before any completion and satisfying 10/10 state afterward.
-
-**No achievements are earned simply by scrolling the ending gallery or selecting a locked item.**
+**Separate timeline metadata:** Two runs might unlock the same ID but have completely different intervening randomized cards, follow history and local consequences; display earned variant provenance / best-known callback optionally, but do not count a new unlock unless the actual `endingId` differs.
 
 ### B. **Kind Robots global Achievement system**
 
@@ -79,7 +61,7 @@ Reuse existing shared catalog/award flow, not a conflicting one-off achievement 
 **Proposed three initial Ecotone badges** (story unlock conditions to refine, all achievable through any initial sobriety state):
 1. **The First Tomorrow** (tier 1): complete one genuine Ecotone finale, receive a 1-/10-/30-year epilogue, and record its ending ID.
 2. **A County of Voices** (tier 2): during real authored gameplay, fulfill **meaningful commitments with distinct groups** and reach a future reflecting those collaborations, *without* forcing a single political position.
-3. **All the Possible Humboldts** (tier 3): legitimately discover all **ten** distinct future families, across any number of full runs. No grind through four forced substance states.
+3. **All the Possible Humboldts** (tier 3): legitimately complete **all 32** distinct `final_companion.opening_lens.outcome` endings across multiple runs, without drug-required successes or any real-world intake.
 
 Implementation may add more *in-game* milestones in a separate expanded gallery (Bigfoot kindness, habitat rescue, companion trust, historical truth, eccentric route) **only after scoped approval**. Ensure cross-run dedupe, source rule IDs, safe replay, unlock toast with nonintrusive dismissal and reduced-motion support. Do not enqueue badge art while Silas's art gate is closed.
 
@@ -87,17 +69,18 @@ Implementation may add more *in-game* milestones in a separate expanded gallery 
 
 | Contract | Required proof |
 | --- | --- |
-| Ten futures are distinct | Static enum/registry check: exactly 10 unique stable IDs and no uncategorized finale |
-| Ten naturally reachable endings | Engine-generated seeded test runs exercise **every** ending family with real, valid choices; don't manufacture a save that assumes already-earned IDs |
+| 32 endings are distinct | 32 stable collectible IDs: 4 final leads × 4 openings × 2 earned fates, 16 hopeful/16 dark, no extra ten county-future slots |
+| 32 endings are naturally reachable | Real seeded gameplay reaches every combo via the **correct fixed initial companion** and actual stay/switch meetings, with both earned hopeful and dark choices/rolls; no injected flags |
 | Endings persist across runs | Real localStorage save/reload and new-game cycle preserve unlocked IDs and progress count |
 | No spoilers | Locked endings hide specific title, detail, descriptive alt text and unrevealed conclusion |
 | Award exactly once | Repeated finale/save restores do not duplicate ending ledger or global achievements |
 | Global integration | Three canonical game achievement definitions and expected section appear in shared achievement gallery when legitimately earned |
-| All states fair | Sober/tipsy/stoned/tripping initial branches have meaningful endings and access to the gallery; ancestry isn't a mechanical gate |
+| Opening states fair | Every lens has four hopeful/four dark outcomes and can follow any companion, including Cedar technoutopia. Ancestry and consumption aren't mechanically required to be good |
 | Phone/tablet/desktop surface | For each viewport listed above, test opening, encounter, outcome, endings gallery, character/journal tabs and lengthy content with **no page-level scroll** |
 | Accessible interaction | Keyboard navigation, touch size, labelled tabs, roving focus, focus restore, screen reader announcements, reduced motion, no modal keyboard trap |
 | Assets fail gracefully | Empty/404/unapproved art leaves all information and buttons legible without page stretching |
 | No publication shortcut | App preview and art go through existing human gates; **a green PR alone does not authorize publication** |
+| Companion order and randomized stats matter | Browser gameplay demonstrates stay/follow history, seeded distinct side-card draws, stat changes and callbacks within a shared ending ID, all without page scrolling |
 
 ## Roadmap handoffs and ownership
 
