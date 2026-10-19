@@ -6,7 +6,7 @@
 
 An unnamed, entirely **fictional composite** Humboldt festival opens the game with music, horticulture, jugglers, physical theatre, costumes, handmade kinetic sculptures and a trail leading into the trees. The protagonist does not initially hear announcements like "Cannifest," "Kinetic Grand Championship," "Reggae on the River," "Humboldt Juggling Festival" or "Dell'Arte." The **source ledger** can name actual inspirations, while the story reveals only what the protagonist experiences and learns. Events may be disconnected in real time; the game's fiction bends chronology.
 
-A young adult woman smoking cannabis with a green ribbon in her hair may eventually be revealed as a **forest nymph**. Working name: **Wren** (not canon). She has independent motives, can refuse requests and may become a recurring guide **in every branch**, including sober. Her supernatural origin is original fantasy, not a depiction of local Indigenous beliefs. No sexual content.
+A young adult woman smoking cannabis with a green ribbon in her hair may eventually be revealed as a **forest nymph**. Name chosen by Silas: **Juniper**. She has independent motives, can refuse requests and may become a recurring guide **in every branch**, including sober. Her supernatural origin is original fantasy, not a depiction of local Indigenous beliefs. No sexual content.
 
 ## Voluntary four-way festival choice
 
@@ -59,3 +59,7 @@ For each pivotal encounter verify: four interesting perspectives where warranted
 Other **inspirations, not IP to reuse**: *Fear and Loathing in Las Vegas*, Church of the SubGenius, *Illuminatus!* (also conspiracy-card-game absurdity), Burning Man, and a more mature *Gravity Falls*. Preserve the warmth, strangeness, satire and unexpected consequences, but write an original Humboldt story.
 
 **Still exploratory:** Whether the mysterious frequency comes from layered realities, whether Wren is trying to fix or exploit it, which four-lens scenes deserve bespoke variations, the exact Clarity and skill balance, and final art. The user has not approved generation or publication.
+
+## Companion character follow-up (2026-10-19 PT)
+
+Four distinct recurring introductions are now preferred: **Sober → Mara** (Indigenous tattoo artist raised on a Humboldt reservation; casino-revenue grant helped start her studio; declines cannabis for precision), **Tipsy → Kit** (kinetic performer), **Stoned → Juniper** (forest nymph), **Tripping Balls → Cedar** (older ex-grower, dispensary owner, licensed massage therapist, conspiratorial wag). Juniper and Kit are selected concepts; Mara and Cedar are working names. The studio grant is **character fiction**, not proof of a named tribal casino grant program. For narratives and archetype-specific checks see [COMPANIONS-AND-PROLOGUE.md](COMPANIONS-AND-PROLOGUE.md). Festival choice never blocks any companion from later contact, and cannot establish a character's actual skills or culture. No image requests or publication yet.

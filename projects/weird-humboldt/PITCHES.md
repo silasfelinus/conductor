@@ -52,3 +52,10 @@ A fictional cannabis/counterculture festival opens the journey. The adult player
 **Name rule:** The protagonist *sees* dancing, juggling, mechanical sculptures, theatrical masks, reggae crowds and forest gatherings, not a list of named events. Cannifest, kinetic race, Reggae on the River, Humboldt Juggling Festival, Dell'Arte and Burning Man are editorial references, not necessarily diegetic labels. Satirical inspirations: *Fear and Loathing in Las Vegas*, the Church of the SubGenius, *Illuminatus!* and conspiracy card games, and a more mature *Gravity Falls*. Invent the details.
 
 **Risk:** If the entire adventure is "just a high," the beautiful Humboldt premise collapses. Prove objective evidence and character relationships remain meaningful from sobriety. Full contract: [PRELUDE-STATE-CONTRACT.md](PRELUDE-STATE-CONTRACT.md).
+
+
+## F. Four Humboldt companions, divergent festival entrances (2026-10-19 update)
+
+**Selected:** Juniper the curvy, natural-haired forest nymph (Stoned), and Kit the kinetic performer (Tipsy). **User-directed replacements:** an Indigenous tattoo artist raised on her reservation, supported in opening her shop through casino-revenue grant funding and sober by personal choice (working name Mara), plus an older male ex-grower who now runs a dispensary, works as a licensed massage therapist and jokes about cosmic conspiracies while retaining ties to backwoods cultivation (working name Cedar). These are four independent adults, not four mood settings on the nymph. Their tribes, histories and independent paths must be written with care; Mara is not a supernatural Indigenous symbol decoder. See [COMPANIONS-AND-PROLOGUE.md](COMPANIONS-AND-PROLOGUE.md).
+
+**Still open:** whether the festival’s four-way pairing is rigid on first meeting, or a strong probability with player choice. All four eventually appear on every route. Preserve `PRELUDE-STATE-CONTRACT.md`’s canonical facts and meaningful sober path. No art phase approval is implied.
