@@ -52,3 +52,16 @@ A fictional cannabis/counterculture festival opens the journey. The adult player
 **Name rule:** The protagonist *sees* dancing, juggling, mechanical sculptures, theatrical masks, reggae crowds and forest gatherings, not a list of named events. Cannifest, kinetic race, Reggae on the River, Humboldt Juggling Festival, Dell'Arte and Burning Man are editorial references, not necessarily diegetic labels. Satirical inspirations: *Fear and Loathing in Las Vegas*, the Church of the SubGenius, *Illuminatus!* and conspiracy card games, and a more mature *Gravity Falls*. Invent the details.
 
 **Risk:** If the entire adventure is "just a high," the beautiful Humboldt premise collapses. Prove objective evidence and character relationships remain meaningful from sobriety. Full contract: [PRELUDE-STATE-CONTRACT.md](PRELUDE-STATE-CONTRACT.md).
+
+
+## E. Four companions, one impossible night (new, recommended character structure)
+
+**Silas's 2026-10-19 direction:** Festival opening with an active choice to stay sober or become tipsy, stoned, or `tripping balls`; that state materially affects scenes, choices and the initial companion. Forest nymph concept: curvy, natural body hair, pot-smoking Humboldt hippie, down-to-earth and alluring across genders without becoming a sexualized male-gaze personality. PG-13 with drug references, no explicit sex.
+
+**Recommendation:** four **different** adult companion leads rather than the nymph remixed into four personalities. They have independently motivated arcs, different biases and reveal the same deeper reality from different angles. Juniper / Mae / Kit / Cal are working names. Four companion introductions and state-aware narrative overlays live in `COMPANIONS-AND-PROLOGUE.md`. They can later rejoin, argue, help each other or leave the party. Sober path remains fully magical and valid.
+
+**Why this fits Pitch A:** the same radio signal emerges through a dispatcher log, a contraption, the woods and analog radio static. It is mysterious even to the people who know the county. None of the intoxication states is the 'true' filter.
+
+**Alternative not chosen:** one guide with four subjective versions of herself. Cheaper to write, but less replayable and reduces a woman with an independent life to the player's altered perceptions. It can survive as a deliberate rare scene where people genuinely perceive Juniper differently, **without replacing her constant core personality**.
+
+**Presentation:** scenes introduce experiences in second person; don't call out real festival/venue labels to the player. Internal encounter metadata retains real identities for fact-checking, not for a narrator to explain.
