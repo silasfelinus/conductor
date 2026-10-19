@@ -1,4 +1,9 @@
-# Emperor of Dust: map and fortress layout (proposal)
+# Emperor of Dust: map and fortress layout
+
+> **Canon (Silas, 2026-10-19): [`art/concepts/painted-wasteland-canon.webp`](art/concepts/painted-wasteland-canon.webp)
+> is the geography bible** ("I'm ok if this is the bible"). Where this brief and the painting
+> differ, the painting wins. Kind Robots' map room shows it (cropped below the baked Day 1 status
+> box) with live affinity markers on each region.
 
 > **2026-10-19: drawn.** Silas's concept pack, made from this brief with ChatGPT, is archived in
 > [art/concepts/](art/concepts/): the wasteland base and labelled reference maps, the Day 41
