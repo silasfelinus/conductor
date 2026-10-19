@@ -46,15 +46,31 @@ As you pass an Old Town intersection, Kit takes a worn photocopy from her bag, l
 
 A separate supernatural anomaly may affect a *modern* kinetic contraption, but **must not rewrite the true history, fabricate a secret occult cause of the expulsion, or turn actual victims into horror props**. The scene is fundamentally about memory, chosen return and an artist's living agency.
 
-## 3. Cedar — backwoods ex-grower, dispensary proprietor and massage therapist (Tripping Balls introduction)
+## 3. Cedar (working name) — the child of two ribbons (Tripping Balls introduction)
 
-**Silas-directed replacement for Cal; name provisional.** An older male Humboldt hippie who remembers the pre-legalization cannabis economy when his growing operation brought in serious money. Legalization and the changing market disrupted the livelihood and status he knew. He still runs a licensed dispensary, but he's no longer getting rich and the economics are complicated; he also works as a **licensed massage therapist** and remains connected to local backwoods growers.
+**Silas's revised character direction, 2026-10-19:** This is **no longer an older hippie, former grower, dispensary owner or massage therapist**. Those details are withdrawn. Cedar is a **placeholder name** for an early-to-mid-thirties rural Humboldt man with a more redneck/country presentation: beat-up work boots, an oil-stained jacket, tools in his pickup, lively and occasionally ridiculous CB-radio conspiracy theories, a practical mind, and an excellent memory for backroads. He jokes about cosmic forces but isn't stupid or a parody of working-class people. His current occupation is **open for creative selection** (machinery repair, arboriculture, trades, etc. are possibilities, not fixed canon).
 
-- **Voice:** talks easily about chakras, Mercury retrograde, ley lines, meditation and cosmic plots, usually with a sly wink. He knows some ideas are nonsense, and is clever enough to exploit the gap between genuine insight and funny salesmanship. Do not reduce him to a burned-out stoner stereotype.
-- **Private truth:** decades of informal grower networks produced a map of places that seem to slip out of ordinary time. He once bought a radio from a mysterious traveler whose voice still interrupts his old recordings.
-- **Arc:** old money and nostalgia versus the livelihoods of friends dealing with the changed cannabis market; decide whether to reveal something that could harm people he cares about.
-- **Mystery role:** one theory in ten is astonishingly useful, but he is not the final oracle. His advice can be funny, wrong and caring in the same sentence.
-- **Non-drug route:** he can supply background history and human connections to the sober player without pressuring anyone to consume.
+**Parents: a Humboldt Romeo and Juliet.** One grew up in a logging/timber family, the other in a backwoods cannabis-growing family. They fell in love during the era of intense timber-worker-versus-environmental-activist tensions, and built a family whose loyalties were never neatly sorted. **Growers and Earth First! activists were not synonymous**, nor was every logger against conservation. The parents may each carry complicated love for the forest and fear for local livelihoods.
+
+**The car-antenna ribbons:** Silas recalls a **green ribbon** on his family vehicle growing up. Green and yellow ribbons around the late-1980s/1990s timber conflicts were contentious *local* social signals, not a universal binary membership code. Calling somebody "Earth First!" could be pejorative in his community. The real **Earth First!** was a radical movement whose controversial tree-spiking advocacy must be handled as serious history; spiking endangered sawmill workers. Some Northern California Earth First! organizers publicly renounced the tactic in **April 1990**. Do not flatten this into a cute green-versus-yellow sports rivalry or give any fictional family a documented real person's guilt.
+
+**Julia Butterfly Hill as the family's historical hinge:** Julia Butterfly Hill's **738-day tree-sit in Luna, from December 10, 1997 to December 18, 1999**, near Stafford brought national attention to old-growth logging. Hill descended after an agreement protecting Luna and a surrounding buffer. Sanctuary Forest still monitors the protected tree, which survived a **November 2000 chainsaw attack**. **Luna is not a public-access destination**. Cedar was a young child during the tree-sit. His parents remember the event, its costs and its consequences in different ways, which taught him to distrust anyone claiming one simple explanation.
+
+- **Voice:** mischievously confident country banter, clever with engines, bad at admitting vulnerability, conspiracy-curious rather than credulous. His own facts should be verifiable independently of sobriety or a lucky Psyche roll.
+- **Mystery:** His vintage CB receiver picks up a **new fictional broadcast from a possible future Humboldt**, which is *not* an alteration of Julia's actual history. Sometimes the transmission is wrong.
+- **Arc:** a choice between cynicism and doing the work of keeping both livelihoods and habitats viable. A fictional reckless anti-development plot may test whether he protects endangered workers even when he opposes a corporation.
+- **Tripping introduction:** the protagonist may be tripping, but Cedar need not be intoxicated. He is fixing festival equipment when the CB broadcasts a line from a future he doesn't recognize. Sober routes can verify and follow exactly the same phenomenon.
+- **Relationships:** Juniper challenges his oversimplifications about forests, Mara spots holes in his theories, Kit values his mechanical help. Each can disagree with him without reducing him to a punchline.
+
+### The green ribbon and Luna: prototype scene
+
+Cedar retrieves a faded green ribbon, a strand of yellow thread and a cassette dated **1998** from a tin beneath the passenger seat. The cassette contains a fictional local family's recording of radio coverage about the woman living high in the redwood near Stafford. Cedar grew up hearing his parents disagree over that tree.
+
+> “Everybody in my family remembers the same tree. None of 'em remembers the same argument.”
+
+The player may **ask what each parent feared losing** (Rizz 7), **check documented accounts of the Luna vigil** (Wits 9), or **help fix the modern CB** (no roll; time cost). Only a *separate, present-day fictional transmission* depicts a future county that never existed. No conclusion requires Julia to have been supernatural; neither the tree-sit nor the conservation agreement changes.
+
+**Editorial boundary:** never imply the player can visit Luna, invent participation or wrongdoing by Hill, absolve or accuse real people of unspecified tree spiking, or make Indigenous land dispossession an occult mechanism. Keep actual family conflict fictional, and treat workers' safety and the protected redwood as real stakes.
 
 ## 4. Mara — Indigenous Humboldt tattoo artist (Sober introduction)
 
@@ -91,7 +107,7 @@ All four have encountered the same impossible repeated sign or frequency, in ind
 - **Mara:** a modern flash design appears twice before she creates it.
 - **Kit:** her kinetic machine diagram contains the same form; this modern anomaly is unrelated to her family's documented displacement.
 - **Juniper:** the forest repeats a shape it should not make.
-- **Cedar:** a decades-old photo or radio recording carries the same signature.
+- **Cedar:** his present-day CB signal carries the same symbol, separate from real historic recordings.
 
 The player can bring any pair together; their accounts disagree on meaning but agree on concrete details. Later introductions should change companionship and optional endings without negating earlier cards.
 
@@ -99,6 +115,6 @@ The player can bring any pair together; their accounts disagree on meaning but a
 
 - **Four introductions, one canonical event**: prelude changes how the event is perceived, not whether supernatural anomalies exist.
 - **Save:** preserve opening/current state, Clarity, companion relationships, evidence provenance and choice/roll history. No reroll on refresh or retroactive state shifts.
-- **Competence is earned and contextual:** Mara's knowledge comes from her specific life and skills; Juniper's magic from her fictional nature; Cedar's connections from decades of work; Kit's ingenuity from making things. No person is a decorative stereotype.
+- **Competence is earned and contextual:** Mara's knowledge comes from her specific life and skills; Juniper's magic from her fictional nature; Cedar's country repair skills and cross-family perspective; Kit's ingenuity from making things. No person is a decorative stereotype.
 - **Review:** text-only authoring and mechanical tests may proceed; source/local review needed before any detailed culturally specific material or outward-facing release; **no artwork, ArtJobs, image commissions or publishing** without Silas's separately requested approval.
 - **Names:** Juniper and Kit selected; Cedar and Mara remain working names, available for renaming.
