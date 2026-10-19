@@ -14,7 +14,7 @@ Reconcile design with the currently implemented patterns rather than re-inventin
 ### Ecotone's proposed surface
 
 **Main board (always one surface):**
-1. **One compact top bar:** current region / chapter, the five skill stats via one small character control, Clarity/status, Menu/Help, and a persistent **Endings 0/10** progress button. Avoid a second header with a full redundant game title. Site navigation can remain separate but consumes known usable viewport height.
+1. **One compact top bar:** current region / chapter, the five skill stats via one small character control, Clarity/status, Menu/Help, and a persistent **Endings 0/32** progress button. Avoid a second header with a full redundant game title. Site navigation can remain separate but consumes known usable viewport height.
 2. **Primary card:** illustrated location/encounter face, concise narrative and optional small character/cast badge. Card art scales with the container; do not let an intrinsic image force page height.
 3. **Decision area:** 2–4 large enough choice controls with visible stat/check target and consequences; outcome overlay sits within the same bounded stage and has a Continue action that remains visible.
 4. **Secondary tabs/overlays:** Journey, Character, Journal, Map, Achievements, **Endings** and optional Settings/Tutorial. Do not print every tab's contents stacked vertically under the board.
