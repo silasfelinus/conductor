@@ -20,15 +20,31 @@ At an invented composite festival, an adult player explicitly opts for **Sober**
 - **Shared mystery:** the strange repeating symbol appears in natural growth patterns. The forest itself isn't a Native spiritual tradition in disguise.
 - **Other routes:** sober, tipsy and tripping players can encounter her magic and choose to help her later.
 
-## 2. Kit — kinetic sculptor, juggler and physical-theatre performer (Tipsy introduction)
+## 2. Kit — Chinese American kinetic sculptor, juggler and physical-theatre performer (Tipsy introduction)
 
-**Confirmed concept.** Charismatic, gender-expansive, theatrically quick and physically inventive; makes spectacle out of a broken bike, a folding ladder and a bad idea. The voice is playful, outrageous and occasionally vulnerable, without being a default comic drunk.
+**Confirmed companion, expanded background (Silas, 2026-10-19).** Kit is a Chinese American adult woman (she/her; gender-expansive stage presence), charismatic, theatrically quick and physically inventive; she makes spectacle out of a broken bike, a folding ladder and a bad idea. Her voice is playful, outrageous and occasionally vulnerable, without making her the default comic drunk.
 
-- **Public world:** juggling circles, handmade sculptures, performance workshops, volunteer build crews and the region's grassroots festivals.
+**Recommended family chronology, fictional genealogy grounded in local history:** Kit's great-great-grandparents lived in Eureka's Chinatown and were **forced out in February 1885** with hundreds of other Chinese residents. Their descendants built lives elsewhere in California. Kit grew up hearing fragments of the family story, then **chose to return to Humboldt** as a student at **Humboldt State University in the late 2010s** (renamed Cal Poly Humboldt in January 2022), gravitating toward physical theatre and **Dell'Arte's Blue Lake arts community** before joining kinetic sculpture and juggling circles. Her exact school years and theatre training remain fictional biography rather than an assertion about a real student or institute records.
+
+**Timeline, carefully distinguished:** Eureka's mass expulsion was **1885**. Chinese American return began in the **mid-1950s**, although some Chinese residents remained in the wider county through the exclusionary decades. Kit's ancestors are **not** asserted to be descendants or relatives of a named historical person. Do not invent an identifiable shop or personal document and attribute it to a real victim.
+
+**Beyond ancestral trauma:** She loves comedy, mechanical oddities, volunteering on build crews, impossible performances and an excellent prank. She sometimes uses spectacle to dodge difficult conversations. Chinese ancestry is **not** a psychic talent, an exotic archetype or a reason to force her into exposition; she is a fully realized contemporary local.
+
+- **Public world:** juggling circles, handmade sculptures, theatre workshops, volunteer build crews and grassroots festivals; community relationships are chosen and reciprocal, not automatic from heritage.
 - **Private world:** their latest contraption incorporates a mechanism Kit never designed that pulses with the same anomalous frequency.
-- **Arc:** choose between acclaim for an ambitious sculpture and sacrificing the machine to protect someone.
+- **Arc:** choose between acclaim for an ambitious sculpture and sacrificing the machine to protect someone; separately, face the complicated pleasure of belonging in a place her family was once driven from, without having to represent every Chinese American in Humboldt.
 - **Special entry:** a dancing, laughing festival crowd is an easy first connection for a tipsy player; non-drinkers can befriend Kit through repair work or stagecraft.
-- **Relationship:** Kit cracks jokes about the tattoo artist's precision and respects it fiercely once a real emergency demands technical care.
+- **Relationship:** Kit jokes about Mara's precision and respects it fiercely in an emergency. Kit's Chinese American family history and Mara's contemporary tribal upbringing are **different**, not interchangeable stories of exclusion; their bond develops through working together as artists.
+
+### Kit's optional personal encounter: the absent storefront (text-only draft)
+
+As you pass an Old Town intersection, Kit takes a worn photocopy from her bag, looks at a block of buildings, and goes very quiet. Her family has an old account of a shop near this spot, from before their forced departure. She has read the public historical interpretation but hasn't stood here with someone she trusts before. Then a kid riding a homemade unicycle goes by and Kit immediately starts critiquing its steering. Both parts of her are real.
+
+- **Ask about the family story** (Rizz 7): success earns a personal, voluntary disclosure; failure is a repairable conversational mistake, not a requirement to interrogate her.
+- **Compare the block to public historical records** (Wits 9): corroborate documented geography; failure still permits finding a trustworthy source later.
+- **Offer quiet company** (no roll, spend a little time): let her decide what to share; create a friendship callback rather than turning inherited pain into a clue currency.
+
+A separate supernatural anomaly may affect a *modern* kinetic contraption, but **must not rewrite the true history, fabricate a secret occult cause of the expulsion, or turn actual victims into horror props**. The scene is fundamentally about memory, chosen return and an artist's living agency.
 
 ## 3. Cedar — backwoods ex-grower, dispensary proprietor and massage therapist (Tripping Balls introduction)
 
@@ -73,7 +89,7 @@ Mara may accept a shared route, decline, or arrange to meet later. **The signal 
 All four have encountered the same impossible repeated sign or frequency, in independent human contexts:
 
 - **Mara:** a modern flash design appears twice before she creates it.
-- **Kit:** a machine diagram contains the same form.
+- **Kit:** her kinetic machine diagram contains the same form; this modern anomaly is unrelated to her family's documented displacement.
 - **Juniper:** the forest repeats a shape it should not make.
 - **Cedar:** a decades-old photo or radio recording carries the same signature.
 
