@@ -2319,3 +2319,35 @@ pitches:
           - kind_robots PR #3797 merged to main (squash 9f24c72), 18/18 checks green
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+  - id: misty-mountain-ferry
+    title: Misty Mountain Ferry
+    status: candidate
+    priority: 46
+    surprise: |
+      Layered ink-wash mountains with drifting mist while a lantern ferry crosses the lake.
+    passive_loop: |
+      Mist drifts and the ferry crosses once every 90 seconds with no interaction needed.
+    optional_interaction: |
+      Hovering thins the mist nearby; a rate-limited click sounds the ferry horn.
+    technique: |
+      One canvas, silhouettes and mist as pure functions of time, capped DPR, ResizeObserver sizing.
+    reduced_motion: |
+      Holds a single static frame with no drift, hover or horn.
+    performance_risk: |
+      Low: five range paths, four mist gradients and one ferry per frame.
+    novelty: |
+      First misty ink-wash mountain lake scene in the catalog.
+    acceptance:
+      - the mist drifts and the ferry crosses without interaction
+      - hovering thins nearby mist
+      - clicking sounds at most one horn per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/misty-mountain-ferry.vue
+        pull_request: silasfelinus/kind_robots#3848
+        released_at: "2026-10-18T08:00:00Z"
+        verification:
+          - kind_robots PR #3848 merged to main (squash b102986), 18/18 checks green
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
