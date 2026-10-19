@@ -41,33 +41,15 @@ At minimum render and measure:
 
 ## Two progression systems, both required
 
-### A. In-game **Endings on File** (ten complete future families)
+### A. In-game **Endings on File** (32 earned outcomes, 16 hopeful and 16 dark)
 
-**Canonical source:** `ECOTONE-ENDINGS.md`, with at least the current ten named future families, 1/10/30-year epilogues and variations. **Count all ten stable canonical family IDs**, not every possible prose variant as a separate ending. Use stable lowercase IDs; no hardcoded index-based unlocks. A sample stable registry:
+**Story registry:** [ECOTONE-32-ENDINGS.md](ECOTONE-32-ENDINGS.md). Collect exactly **4 lead companions × 4 fictional voluntary opening lenses × 2 earned fates = 32** unique IDs `lead.opening.hope|dark`. Lead is selected independently from first festival companion; `opening_state` remains immutable while `current_state` evolves. Fate is cumulative choice, verified evidence and skill/dice outcome, not a value judgment on sobriety. Old ten county futures are world-state motifs, not bonus collectibles.
 
-```text
-redwood-commons
-silicon-estuary
-global-terminal
-beautiful-museum
-free-county
-barricaded-county
-worktown
-tidelands-accord
-redwood-sanctuary
-split-county
-```
+**Persistent ledger:** award exactly one finale ID after actual completed play, locally versioned and deduped separately from active save; keep unlocks across new games, browser reload and current-state changes. Don't convert unshipped 10-family design motifs into fake earned 32-family slots. No points for simply visiting the gallery.
 
-The final ID mapping must be frozen before Kind Robots import, validated against `ECOTONE-ENDINGS.md`, and migration-aware if names change. **All ten** should have eligible rules, a dated unlocked epilogue, a compact summary, and secret/hidden spoiler policy.
+**Single-surface gallery:** toolbar `Endings X/32`, accessible tab/dialog grouped by four companions (8 slots each), four opening-state pairs (one hopeful and one dark per pair); spoiler-neutral `Hope X/16 · Dark X/16` totals optional. Undiscovered slots hide plot-specific titles, art descriptions, metadata and endings. Earned slots display individually authored title, 1/10/30-year epilogue, callbacks, first-completion and replay. All 32 in a bounded internal scroll pane when needed; **document never scrolls** on phone/tablet/desktop. Modal close/Escape restores saved game and keyboard focus.
 
-**Persistent account-independent ledger:** after a *real completed ending*, the authored outcome resolver emits exactly one canonical ending ID and variant provenance. Add to a **versioned, deduplicated browser-local unlock ledger** separate from the in-progress run/save. Starting over, losing a character, replaying another route, changing initial intoxication, reopening the page, or migrating save formats must **not** erase previously earned endings. Resolved ending IDs cannot be forged from a simple tab click, automatically granted from sample scenes, or recorded before the finale. Local-only v1 matches the proven Shifting Desks approach; account synchronization is a future *optional* enhancement, not a prerequisite for unlocked content.
-
-**Player-facing Endings gallery:** a visible progress affordance on the main board, e.g. `Endings: 3 / 10`, opens a single-surface gallery or modal with all ten **slots**:
-- **Discovered:** recognizable title and thumbnail (when art exists), spoiler-safe epilogue summary, timestamp/first completion if available, accessible **Read ending** and **Replay journey** actions. Show variants/callbacks through details without counting them as separate families.
-- **Undiscovered:** tasteful mystery silhouette / blurred illustrative treatment (once art approved); `Undiscovered` label and subtle thematic hint, **no hidden title, ending description or art-alt-text leak**, unless the title is intentionally public. A fully secret ending can be more deeply concealed, but the count stays honest.
-- **Modal UX:** close/back returns to exact current game state, focus restores, Escape works, touch gestures never accidentally start a new run, and list rows scroll internally when the 10 cards exceed dialog space. Meaningful empty state before any completion and satisfying 10/10 state afterward.
-
-**No achievements are earned simply by scrolling the ending gallery or selecting a locked item.**
+**Parity:** Each opening has four hopeful and four dark ending IDs across companions; each companion has four good/four bad. Sobriety-first can achieve any companion's positive personal path and county progress. Completionists explore all four *fictional* optional starting perspectives over multiple runs, not real-life substances.
 
 ### B. **Kind Robots global Achievement system**
 
@@ -79,7 +61,7 @@ Reuse existing shared catalog/award flow, not a conflicting one-off achievement 
 **Proposed three initial Ecotone badges** (story unlock conditions to refine, all achievable through any initial sobriety state):
 1. **The First Tomorrow** (tier 1): complete one genuine Ecotone finale, receive a 1-/10-/30-year epilogue, and record its ending ID.
 2. **A County of Voices** (tier 2): during real authored gameplay, fulfill **meaningful commitments with distinct groups** and reach a future reflecting those collaborations, *without* forcing a single political position.
-3. **All the Possible Humboldts** (tier 3): legitimately discover all **ten** distinct future families, across any number of full runs. No grind through four forced substance states.
+3. **All the Possible Humboldts** (tier 3): legitimately discover all **32** authored companion×opening×fate endings across multiple full runs. No real-world substances or coerced in-game intake.
 
 Implementation may add more *in-game* milestones in a separate expanded gallery (Bigfoot kindness, habitat rescue, companion trust, historical truth, eccentric route) **only after scoped approval**. Ensure cross-run dedupe, source rule IDs, safe replay, unlock toast with nonintrusive dismissal and reduced-motion support. Do not enqueue badge art while Silas's art gate is closed.
 
@@ -87,13 +69,13 @@ Implementation may add more *in-game* milestones in a separate expanded gallery 
 
 | Contract | Required proof |
 | --- | --- |
-| Ten futures are distinct | Static enum/registry check: exactly 10 unique stable IDs and no uncategorized finale |
-| Ten naturally reachable endings | Engine-generated seeded test runs exercise **every** ending family with real, valid choices; don't manufacture a save that assumes already-earned IDs |
+| 32 endings are distinct | Exactly 32 stable IDs, 16 hopeful / 16 dark, 8 per lead and 8 per opening; ten scenario motifs do not count |
+| 32 naturally reachable endings | Real seeded engine choices/checks produce both results for each of 16 lead×opening combinations, including initially unpaired lead companions |
 | Endings persist across runs | Real localStorage save/reload and new-game cycle preserve unlocked IDs and progress count |
 | No spoilers | Locked endings hide specific title, detail, descriptive alt text and unrevealed conclusion |
 | Award exactly once | Repeated finale/save restores do not duplicate ending ledger or global achievements |
 | Global integration | Three canonical game achievement definitions and expected section appear in shared achievement gallery when legitimately earned |
-| All states fair | Sober/tipsy/stoned/tripping initial branches have meaningful endings and access to the gallery; ancestry isn't a mechanical gate |
+| All states fair | Each opening can earn four positive and four dark endings without a drug-induced moral outcome bias or ancestry-based gate |
 | Phone/tablet/desktop surface | For each viewport listed above, test opening, encounter, outcome, endings gallery, character/journal tabs and lengthy content with **no page-level scroll** |
 | Accessible interaction | Keyboard navigation, touch size, labelled tabs, roving focus, focus restore, screen reader announcements, reduced motion, no modal keyboard trap |
 | Assets fail gracefully | Empty/404/unapproved art leaves all information and buttons legible without page stretching |
