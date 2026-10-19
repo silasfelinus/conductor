@@ -1,0 +1,61 @@
+# Weird Humboldt: Festival Prelude and Four Perception Lenses
+
+**Date:** 2026-10-19 PT. **Stage:** Text-only creative design. **No art, live code or publishing.** This document captures Silas's latest direction and provisional implementation recommendations.
+
+## Experience, not an event calendar
+
+An unnamed, entirely **fictional composite** Humboldt festival opens the game with music, horticulture, jugglers, physical theatre, costumes, handmade kinetic sculptures and a trail leading into the trees. The protagonist does not initially hear announcements like "Cannifest," "Kinetic Grand Championship," "Reggae on the River," "Humboldt Juggling Festival" or "Dell'Arte." The **source ledger** can name actual inspirations, while the story reveals only what the protagonist experiences and learns. Events may be disconnected in real time; the game's fiction bends chronology.
+
+A young adult woman smoking cannabis with a green ribbon in her hair may eventually be revealed as a **forest nymph**. Working name: **Wren** (not canon). She has independent motives, can refuse requests and may become a recurring guide **in every branch**, including sober. Her supernatural origin is original fantasy, not a depiction of local Indigenous beliefs. No sexual content.
+
+## Voluntary four-way festival choice
+
+The protagonist is an **adult** and chooses what to consume, or nothing. A fictional enchanted brownie is clearly identified as such, never a surprise spiking. No real quantities, dosage instructions, drug preparation or impaired-driving gameplay. PG-13 references to substances are permitted. The choices alter narration, available solutions, NPC reactions and certain conditional checks, not whether the supernatural world is real.
+
+| State | Explicit player choice | Distinct narrative opportunity | Real story tradeoff |
+| --- | --- | --- | --- |
+| **Sober** (`sober`) | Water/food, remain clearheaded | Observe contradictions, preserve witness statements, ask precise questions | Harder to win instant intimacy with a wary stranger, but no excluded mystery or ending |
+| **Tipsy** (`tipsy`) | Voluntary social drink | Rizz-driven introductions, improvised dance and conversational leads | Impulsiveness can lose a detail; careful alternative routes available |
+| **Stoned** (`stoned`) | Adult voluntarily chooses cannabis | Sensory analogies, philosophical comedy, optional Psyche interpretations | Confusing impressions need corroboration; timed tasks offer slower solutions |
+| **Tripping Balls** (`tripping_balls`) | Deliberately try a clearly magical **fictional** brownie | Surreal spatial scenes, dream-logic pathways, novel Psyche interpretations | False leads and symbolic misreadings; grounding and factual evidence available |
+
+**None is a power-up tier.** The protagonist may be mistaken in any state. Even a lucid sober witness may miss evidence; an altered-state character may have an accurate insight but must verify it. Do not end with "it was just a psychedelic trip": the anomalies are real, and every necessary clue and ending is accessible sober.
+
+## Character sheet
+
+Permanent skills, proposed 0–3 with six starting points: **Rizz** (charm, connection, improv), **Burly** (stamina, rowing, physical resolve), **Wits** (reason, investigation, mechanics), **Local Lore** (history, geography, community), **Psyche** (uncanny perception and psychic affinity). These replace the draft Grit/Read the Room/Know-How/Odd Sense names. No identity, heritage or body type implies a bonus, psychic talent or penalty.
+
+**Sobriety is a changing state, not a permanent character stat or moral judgment.** Persist `opening_state` (initial choice/callback flag), `current_state` (may fade or change with the story) and provisional `clarity` (0–3, temporary recall/attention; recoverable in authored quiet/rest scenes). The baseline values 3/2/2/1 for sober/tipsy/stoned/tripping are **playtest hypotheses**, not medical facts or guaranteed final balance. Clarity can change through fatigue or weirdness, too. Never offer real-world advice that water/food/rest reverses intoxication.
+
+Check remains visible **2d6 + chosen skill + context modifier vs 7/9/11**, with target/risk disclosed before commitment. A state might offer a different choice or situational modifier, not blanket bonuses. Save seed, exact authored card revision, choice, roll, observable result, relationship flags, current state and Clarity.
+
+## One canonical reality, four authored lenses
+
+1. Saved seed chooses **one** complete encounter and its consistent facts.
+2. State selects optional authored `narration_by_state`, `choices_by_state`, `check_modifiers_by_state`, with a shared fallback; no live LLM or random actor/cast mixing.
+3. The player chooses among two or more meaningful options, rolls if needed, and persists the state and journal; those actions may actually change outcomes.
+4. A statement the *player thinks they saw* is separate from a corroborated clue. A drug-related impression is neither automatic evidence nor proof a paranormal sighting was fake.
+5. Every required mystery fact and ending stays reachable from sober; allow gradual changing or recovery of current state without erasing opening choice.
+
+**120 authored canonical cards remain 120**, even if pivotal cards have four substantially different narrated/choice variants. Do not call that 480 complete encounters.
+
+### Same encounter: Bigfoot's family picnic at Moonstone Beach
+
+**Canon:** A Sasquatch relative is missing, a fourth person appears in a photo of three, and the tide moves backward.
+
+- **Sober:** Wits can prove a timestamp anomaly and document the fourth figure.
+- **Tipsy:** Rizz may negotiate a family reconciliation and accidentally become part of the photo.
+- **Stoned:** A surf rhythm recalls an impossible festival song; Psyche supplies a lead that can be corroborated.
+- **Tripping balls:** The picnic blanket resembles a moving county map; Psyche discovers a route or a funny false lead. The original camera photo remains obtainable.
+
+A sober protagonist may still meet the nymph, Bigfoot and aliens and solve the frequency mystery. The state changes **how the journey unfolds**, not who exists.
+
+## Authoring quality and safety tests
+
+For each pivotal encounter verify: four interesting perspectives where warranted, two viable choices per state, no forced consumption, no secretly medicated food, no sexual content, no literal festival allegations, compatible PG-13 humor, no irreversible sober dead ends, no drug path that dominates every check. Balance smoke-test across all playable archetypes and changing clarity; save/reload preserves facts and rolls. Provide text-only design review **before any ArtJobs**.
+
+**Real-world source reminders:** Cannifest's official 2026 dates were Sept. 12–13 at Arcata Ballpark (https://www.cannifest.com/). Reporting described **no on-site consumption zones** in 2026 (https://lostcoastoutpost.com/2026/feb/10/dellarte-was-excited-bring-cannifest-blue-lake-the/). The fictional festival is not an assertion that Cannifest distributes intoxicants. Juggling festival: https://humboldtjugglingsociety.org/Schedule.htm ; Dell'Arte event history: https://dellarte.com/past-events .
+
+Other **inspirations, not IP to reuse**: *Fear and Loathing in Las Vegas*, Church of the SubGenius, *Illuminatus!* (also conspiracy-card-game absurdity), Burning Man, and a more mature *Gravity Falls*. Preserve the warmth, strangeness, satire and unexpected consequences, but write an original Humboldt story.
+
+**Still exploratory:** Whether the mysterious frequency comes from layered realities, whether Wren is trying to fix or exploit it, which four-lens scenes deserve bespoke variations, the exact Clarity and skill balance, and final art. The user has not approved generation or publication.
