@@ -1,0 +1,1535 @@
+# Emperor of Dust cast art, round 1 (emperor-of-dust t-012): the design lock.
+# Silas approved all cast art on 2026-10-19 ("All art approved"). The 246 images are 20 followers x 8
+# (five illustrated moods, three portraits) plus 17 NPCs x 5 moods plus Young Komodo's betrayal image.
+# This round renders ONE image per character, the illustrated neutral mood, at two seeds. A keeper is
+# picked per character, and round 2 derives that character's other moods and portraits from it by
+# sdxl-img2img on the same checkpoint, so species, costume and palette hold across all eight images
+# (the zuzu-shifting-lands t-029 method; Silas: "arthemy was the default for a reason").
+# Design tags come from FOLLOWERS-V03.md and NPCS-V03.md, plus FOLLOWERS-PILOT-01.md for F001, F002,
+# F004, F005 and F008 (2026-10-19 species swaps applied).
+# cast_loras is off: the series' auto LoRAs would put Zuzu's LoRA on Kiyo ("koala") and the fennec
+# toddler's on any "toddler" line. Only the Abbess carries one, her canon zkaabbess (4595, 0.8).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: emperor-cast-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    weathered, grimy, dramatic lighting
+  suffix: ash-grey sky, kiln ochre and tarnished brass palette, salvage, dusty, wasteland
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eod1-f001-a
+  lane: arthemy-house
+  title: F001 design lock, illustrated neutral (seed a)
+  character: F001
+  group: followers
+  size: 832x1216
+  seed: 51001
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, alert sideways glance,
+    dust on the scarf, ears upright, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter
+    view
+  jobs:
+    arthemy-house: 40307
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248250
+- key: eod1-f001-b
+  lane: arthemy-house
+  title: F001 design lock, illustrated neutral (seed b)
+  character: F001
+  group: followers
+  size: 832x1216
+  seed: 51002
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hare, androgynous, rangy sand-brown hare, long asymmetrical ears
+    with one bent tip, patched outrider jacket, blue trail scarf, brass compass on a cord, alert sideways glance,
+    dust on the scarf, ears upright, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter
+    view
+  jobs:
+    arthemy-house: 40308
+  art:
+    arthemy-house:
+      status: RUNNING
+      art_image_id: null
+- key: eod1-f002-a
+  lane: arthemy-house
+  title: F002 design lock, illustrated neutral (seed a)
+  character: F002
+  group: followers
+  size: 832x1216
+  seed: 51011
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro golden jackal, female, lean, big pointed ears, welding scar across
+    the muzzle, machinist goggles pushed up on the forehead, oil-dark leather apron, copper-wire tool belt, battered
+    toolbox, curious grin, grease smudge on one cheek, wrench in hand, plain dusty ochre plaster wall background,
+    warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40309
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f002-b
+  lane: arthemy-house
+  title: F002 design lock, illustrated neutral (seed b)
+  character: F002
+  group: followers
+  size: 832x1216
+  seed: 51012
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro golden jackal, female, lean, big pointed ears, welding scar across
+    the muzzle, machinist goggles pushed up on the forehead, oil-dark leather apron, copper-wire tool belt, battered
+    toolbox, curious grin, grease smudge on one cheek, wrench in hand, plain dusty ochre plaster wall background,
+    warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40310
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f003-a
+  lane: arthemy-house
+  title: F003 design lock, illustrated neutral (seed a)
+  character: F003
+  group: followers
+  size: 832x1216
+  seed: 51021
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro koala, female, adult, mother, small sturdy grey koala, round face,
+    big fluffy tufted ears, large dark nose, faded indigo travelling coat with a foreign cut and a patched hem,
+    copper kettle and a needle case on her belt, small wooden toy in her coat pocket, kind tired smile, rolling
+    a bandage between her paws, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter
+    view
+  jobs:
+    arthemy-house: 40311
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f003-b
+  lane: arthemy-house
+  title: F003 design lock, illustrated neutral (seed b)
+  character: F003
+  group: followers
+  size: 832x1216
+  seed: 51022
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro koala, female, adult, mother, small sturdy grey koala, round face,
+    big fluffy tufted ears, large dark nose, faded indigo travelling coat with a foreign cut and a patched hem,
+    copper kettle and a needle case on her belt, small wooden toy in her coat pocket, kind tired smile, rolling
+    a bandage between her paws, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter
+    view
+  jobs:
+    arthemy-house: 40312
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f004-a
+  lane: arthemy-house
+  title: F004 design lock, illustrated neutral (seed a)
+  character: F004
+  group: followers
+  size: 832x1216
+  seed: 51031
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro tortoise, female, elderly, dark shell mended with gold repair seams,
+    layered travel shawl, modest signet ring on a cord, walking stick, patient searching eyes, chin tilted, both
+    hands resting on the walking stick, plain dusty ochre plaster wall background, warm side light, cowboy shot,
+    three-quarter view
+  jobs:
+    arthemy-house: 40313
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f004-b
+  lane: arthemy-house
+  title: F004 design lock, illustrated neutral (seed b)
+  character: F004
+  group: followers
+  size: 832x1216
+  seed: 51032
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro tortoise, female, elderly, dark shell mended with gold repair seams,
+    layered travel shawl, modest signet ring on a cord, walking stick, patient searching eyes, chin tilted, both
+    hands resting on the walking stick, plain dusty ochre plaster wall background, warm side light, cowboy shot,
+    three-quarter view
+  jobs:
+    arthemy-house: 40314
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f005-a
+  lane: arthemy-house
+  title: F005 design lock, illustrated neutral (seed a)
+  character: F005
+  group: followers
+  size: 832x1216
+  seed: 51041
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro moth, androgynous, broad dusky brown moth wings worn like a cloak,
+    ink-black feathery antennae, fuzzy body, ochre waistcoat, spectacles on a chain, small leather folio, careful
+    small smile, folio held to the chest, plain dusty ochre plaster wall background, warm side light, cowboy shot,
+    three-quarter view
+  jobs:
+    arthemy-house: 40315
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f005-b
+  lane: arthemy-house
+  title: F005 design lock, illustrated neutral (seed b)
+  character: F005
+  group: followers
+  size: 832x1216
+  seed: 51042
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro moth, androgynous, broad dusky brown moth wings worn like a cloak,
+    ink-black feathery antennae, fuzzy body, ochre waistcoat, spectacles on a chain, small leather folio, careful
+    small smile, folio held to the chest, plain dusty ochre plaster wall background, warm side light, cowboy shot,
+    three-quarter view
+  jobs:
+    arthemy-house: 40316
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f006-a
+  lane: arthemy-house
+  title: F006 design lock, illustrated neutral (seed a)
+  character: F006
+  group: followers
+  size: 832x1216
+  seed: 51051
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro storm petrel, bird, female, small sooty-dark seabird, white rump
+    patch, hooked black bill, storm-grey scholar coat with copper weather pins, storm-glass pendant on a chain,
+    polite controlled expression, wind lifting her feathers, plain dusty ochre plaster wall background, warm side
+    light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40317
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f006-b
+  lane: arthemy-house
+  title: F006 design lock, illustrated neutral (seed b)
+  character: F006
+  group: followers
+  size: 832x1216
+  seed: 51052
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro storm petrel, bird, female, small sooty-dark seabird, white rump
+    patch, hooked black bill, storm-grey scholar coat with copper weather pins, storm-glass pendant on a chain,
+    polite controlled expression, wind lifting her feathers, plain dusty ochre plaster wall background, warm side
+    light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40318
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f007-a
+  lane: arthemy-house
+  title: F007 design lock, illustrated neutral (seed a)
+  character: F007
+  group: followers
+  size: 832x1216
+  seed: 51061
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, cheerful grin, holding up a sealed
+    letter, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40319
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f007-b
+  lane: arthemy-house
+  title: F007 design lock, illustrated neutral (seed b)
+  character: F007
+  group: followers
+  size: 832x1216
+  seed: 51062
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro fennec fox, androgynous, tiny sand-coloured fennec, enormous ears,
+    courier satchel stuffed with letters, ink-stained paws, cheerful red sash, cheerful grin, holding up a sealed
+    letter, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40320
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f008-a
+  lane: arthemy-house
+  title: F008 design lock, illustrated neutral (seed a)
+  character: F008
+  group: followers
+  size: 832x1216
+  seed: 51071
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro water buffalo, male, large, powerful, dark brown hide, worn horn
+    tips, teal-lined field coat, wooden ration abacus, leather pack, relaxed square posture, counting on the abacus
+    under his breath, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40321
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f008-b
+  lane: arthemy-house
+  title: F008 design lock, illustrated neutral (seed b)
+  character: F008
+  group: followers
+  size: 832x1216
+  seed: 51072
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro water buffalo, male, large, powerful, dark brown hide, worn horn
+    tips, teal-lined field coat, wooden ration abacus, leather pack, relaxed square posture, counting on the abacus
+    under his breath, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40322
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f009-a
+  lane: arthemy-house
+  title: F009 design lock, illustrated neutral (seed a)
+  character: F009
+  group: followers
+  size: 832x1216
+  seed: 51081
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro armadillo, androgynous, banded armadillo shell plates scuffed from
+    tunnel walls, stitched orange work vest, surveyor chain over the shoulder, head-lamp, brass lantern, direct
+    skeptical glance, brass lantern held high, plain dusty ochre plaster wall background, warm side light, cowboy
+    shot, three-quarter view
+  jobs:
+    arthemy-house: 40323
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f009-b
+  lane: arthemy-house
+  title: F009 design lock, illustrated neutral (seed b)
+  character: F009
+  group: followers
+  size: 832x1216
+  seed: 51082
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro armadillo, androgynous, banded armadillo shell plates scuffed from
+    tunnel walls, stitched orange work vest, surveyor chain over the shoulder, head-lamp, brass lantern, direct
+    skeptical glance, brass lantern held high, plain dusty ochre plaster wall background, warm side light, cowboy
+    shot, three-quarter view
+  jobs:
+    arthemy-house: 40324
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f010-a
+  lane: arthemy-house
+  title: F010 design lock, illustrated neutral (seed a)
+  character: F010
+  group: followers
+  size: 832x1216
+  seed: 51091
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro prairie dog, female, upright and alert, sandy fur, patched community-hall
+    sash covered in hand-stitched names, speaking trumpet made from a tin funnel, warm open expression, one paw
+    raised in greeting, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40325
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f010-b
+  lane: arthemy-house
+  title: F010 design lock, illustrated neutral (seed b)
+  character: F010
+  group: followers
+  size: 832x1216
+  seed: 51092
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro prairie dog, female, upright and alert, sandy fur, patched community-hall
+    sash covered in hand-stitched names, speaking trumpet made from a tin funnel, warm open expression, one paw
+    raised in greeting, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40326
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f011-a
+  lane: arthemy-house
+  title: F011 design lock, illustrated neutral (seed a)
+  character: F011
+  group: followers
+  size: 832x1216
+  seed: 51101
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro gecko, female, slim olive-gold gecko, large eyes, climbing wraps
+    on hands and feet, storm-grey runner sash with tally knots, one torn earring, wary, back pressed to a wall,
+    glancing sideways, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40327
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f011-b
+  lane: arthemy-house
+  title: F011 design lock, illustrated neutral (seed b)
+  character: F011
+  group: followers
+  size: 832x1216
+  seed: 51102
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro gecko, female, slim olive-gold gecko, large eyes, climbing wraps
+    on hands and feet, storm-grey runner sash with tally knots, one torn earring, wary, back pressed to a wall,
+    glancing sideways, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40328
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f012-a
+  lane: arthemy-house
+  title: F012 design lock, illustrated neutral (seed a)
+  character: F012
+  group: followers
+  size: 832x1216
+  seed: 51111
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro capybara, male, round and unhurried, grey novice robe with the
+    hood cut off, ladle on a cord, ink-stained fingers, hands folded, gentle smile, plain dusty ochre plaster wall
+    background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40329
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f012-b
+  lane: arthemy-house
+  title: F012 design lock, illustrated neutral (seed b)
+  character: F012
+  group: followers
+  size: 832x1216
+  seed: 51112
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro capybara, male, round and unhurried, grey novice robe with the
+    hood cut off, ladle on a cord, ink-stained fingers, hands folded, gentle smile, plain dusty ochre plaster wall
+    background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40330
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f013-a
+  lane: arthemy-house
+  title: F013 design lock, illustrated neutral (seed a)
+  character: F013
+  group: followers
+  size: 832x1216
+  seed: 51121
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rhinoceros, female, broad grey rhino, dented brass gorget, iron-capped
+    horn, spear wrapped in prayer ribbons, standing square and immovable, spear grounded, plain dusty ochre plaster
+    wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40331
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f013-b
+  lane: arthemy-house
+  title: F013 design lock, illustrated neutral (seed b)
+  character: F013
+  group: followers
+  size: 832x1216
+  seed: 51122
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rhinoceros, female, broad grey rhino, dented brass gorget, iron-capped
+    horn, spear wrapped in prayer ribbons, standing square and immovable, spear grounded, plain dusty ochre plaster
+    wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40332
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f014-a
+  lane: arthemy-house
+  title: F014 design lock, illustrated neutral (seed a)
+  character: F014
+  group: followers
+  size: 832x1216
+  seed: 51131
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rat, male, wiry brown rat, patchwork coat with dozens of pockets,
+    lens on a chain, rail spike used as a walking stick, sly grin, peering through the lens, plain dusty ochre plaster
+    wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40333
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f014-b
+  lane: arthemy-house
+  title: F014 design lock, illustrated neutral (seed b)
+  character: F014
+  group: followers
+  size: 832x1216
+  seed: 51132
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro rat, male, wiry brown rat, patchwork coat with dozens of pockets,
+    lens on a chain, rail spike used as a walking stick, sly grin, peering through the lens, plain dusty ochre plaster
+    wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40334
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f015-a
+  lane: arthemy-house
+  title: F015 design lock, illustrated neutral (seed a)
+  character: F015
+  group: followers
+  size: 832x1216
+  seed: 51141
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro newt, female, dappled orange newt, reed crown, damp green shawl,
+    lantern of green glass, serene, head tilted as if listening to water, plain dusty ochre plaster wall background,
+    warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40335
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f015-b
+  lane: arthemy-house
+  title: F015 design lock, illustrated neutral (seed b)
+  character: F015
+  group: followers
+  size: 832x1216
+  seed: 51142
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro newt, female, dappled orange newt, reed crown, damp green shawl,
+    lantern of green glass, serene, head tilted as if listening to water, plain dusty ochre plaster wall background,
+    warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40336
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f016-a
+  lane: arthemy-house
+  title: F016 design lock, illustrated neutral (seed a)
+  character: F016
+  group: followers
+  size: 832x1216
+  seed: 51151
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro black leopard, panther, androgynous, tall and lean, faint rosettes
+    in the fur, moth-eaten dark plum court coat, white gloves, single dark earring, impeccable small bow, gloved
+    hand on the chest, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40337
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f016-b
+  lane: arthemy-house
+  title: F016 design lock, illustrated neutral (seed b)
+  character: F016
+  group: followers
+  size: 832x1216
+  seed: 51152
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro black leopard, panther, androgynous, tall and lean, faint rosettes
+    in the fur, moth-eaten dark plum court coat, white gloves, single dark earring, impeccable small bow, gloved
+    hand on the chest, plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40338
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f017-a
+  lane: arthemy-house
+  title: F017 design lock, illustrated neutral (seed a)
+  character: F017
+  group: followers
+  size: 832x1216
+  seed: 51161
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro badger, male, stocky, patched overalls, straw hat with a burn hole,
+    pitchfork with a bent tine, stoic, leaning on the pitchfork, plain dusty ochre plaster wall background, warm
+    side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40339
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f017-b
+  lane: arthemy-house
+  title: F017 design lock, illustrated neutral (seed b)
+  character: F017
+  group: followers
+  size: 832x1216
+  seed: 51162
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro badger, male, stocky, patched overalls, straw hat with a burn hole,
+    pitchfork with a bent tine, stoic, leaning on the pitchfork, plain dusty ochre plaster wall background, warm
+    side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40340
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f018-a
+  lane: arthemy-house
+  title: F018 design lock, illustrated neutral (seed a)
+  character: F018
+  group: followers
+  size: 832x1216
+  seed: 51171
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro ferret, female, sleek cream-and-sable ferret, red sash, scorched
+    gloves, three fire-juggling clubs, showy grin, twirling a club, plain dusty ochre plaster wall background, warm
+    side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40341
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f018-b
+  lane: arthemy-house
+  title: F018 design lock, illustrated neutral (seed b)
+  character: F018
+  group: followers
+  size: 832x1216
+  seed: 51172
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro ferret, female, sleek cream-and-sable ferret, red sash, scorched
+    gloves, three fire-juggling clubs, showy grin, twirling a club, plain dusty ochre plaster wall background, warm
+    side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40342
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f019-a
+  lane: arthemy-house
+  title: F019 design lock, illustrated neutral (seed a)
+  character: F019
+  group: followers
+  size: 832x1216
+  seed: 51181
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro barn owl, bird, male, old grey-brown barn owl, tiny round spectacles,
+    scroll case on a strap, ink-stained flight feathers, reading a small map, spectacles low, plain dusty ochre
+    plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40343
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f019-b
+  lane: arthemy-house
+  title: F019 design lock, illustrated neutral (seed b)
+  character: F019
+  group: followers
+  size: 832x1216
+  seed: 51182
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro barn owl, bird, male, old grey-brown barn owl, tiny round spectacles,
+    scroll case on a strap, ink-stained flight feathers, reading a small map, spectacles low, plain dusty ochre
+    plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40344
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f020-a
+  lane: arthemy-house
+  title: F020 design lock, illustrated neutral (seed a)
+  character: F020
+  group: followers
+  size: 832x1216
+  seed: 51191
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro opossum, androgynous, grey-white opossum, headscarf, flour-dusted
+    apron, ladle and wooden spoon tucked in the belt, warm grin, arms crossed over the apron, plain dusty ochre
+    plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40345
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-f020-b
+  lane: arthemy-house
+  title: F020 design lock, illustrated neutral (seed b)
+  character: F020
+  group: followers
+  size: 832x1216
+  seed: 51192
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro opossum, androgynous, grey-white opossum, headscarf, flour-dusted
+    apron, ladle and wooden spoon tucked in the belt, warm grin, arms crossed over the apron, plain dusty ochre
+    plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40346
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-young-komodo-a
+  lane: arthemy-house
+  title: young-komodo design lock, illustrated neutral (seed a)
+  character: young-komodo
+  group: npcs
+  size: 832x1216
+  seed: 51001
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro komodo dragon, lizard, male, young, lanky, patched brass-buttoned
+    long coat, ledger under one arm, clever quick eyes, ledger open, one claw raised mid-point, dry half-smile,
+    plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40347
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-young-komodo-b
+  lane: arthemy-house
+  title: young-komodo design lock, illustrated neutral (seed b)
+  character: young-komodo
+  group: npcs
+  size: 832x1216
+  seed: 51002
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro komodo dragon, lizard, male, young, lanky, patched brass-buttoned
+    long coat, ledger under one arm, clever quick eyes, ledger open, one claw raised mid-point, dry half-smile,
+    plain dusty ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40348
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-mara-reedbell-a
+  lane: arthemy-house
+  title: mara-reedbell design lock, illustrated neutral (seed a)
+  character: mara-reedbell
+  group: npcs
+  size: 832x1216
+  seed: 51011
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro mule, female, grey muzzle, mended mayoral sash, ink-stained hooves,
+    ledger chained to her belt, hand-bell on a cord, genial smile above a closed ledger, plain dusty ochre plaster
+    wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40349
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-mara-reedbell-b
+  lane: arthemy-house
+  title: mara-reedbell design lock, illustrated neutral (seed b)
+  character: mara-reedbell
+  group: npcs
+  size: 832x1216
+  seed: 51012
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro mule, female, grey muzzle, mended mayoral sash, ink-stained hooves,
+    ledger chained to her belt, hand-bell on a cord, genial smile above a closed ledger, plain dusty ochre plaster
+    wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40350
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-the-abbess-a
+  lane: arthemy-house
+  title: the-abbess design lock, illustrated neutral (seed a)
+  character: the-abbess
+  group: npcs
+  size: 832x1216
+  seed: 51021
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, hands folded, warm gracious smile, plain dusty ochre plaster wall background, warm
+    side light, cowboy shot, three-quarter view
+  loras:
+  - resource_id: 4595
+    strength: 0.8
+  jobs:
+    arthemy-house: 40351
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-the-abbess-b
+  lane: arthemy-house
+  title: the-abbess design lock, illustrated neutral (seed b)
+  character: the-abbess
+  group: npcs
+  size: 832x1216
+  seed: 51022
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), zkaabbess, anthro otter, female, elderly, nun, black habit, white wimple,
+    flat round face, brown fur, hands folded, warm gracious smile, plain dusty ochre plaster wall background, warm
+    side light, cowboy shot, three-quarter view
+  loras:
+  - resource_id: 4595
+    strength: 0.8
+  jobs:
+    arthemy-house: 40352
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-sister-marrow-a
+  lane: arthemy-house
+  title: sister-marrow design lock, illustrated neutral (seed a)
+  character: sister-marrow
+  group: npcs
+  size: 832x1216
+  seed: 51031
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro goat, female, young white goat, small horns, grey nun robes, counting
+    cord at her belt, rectangular pupils, patient fixed smile, plain dusty ochre plaster wall background, warm side
+    light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40353
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-sister-marrow-b
+  lane: arthemy-house
+  title: sister-marrow design lock, illustrated neutral (seed b)
+  character: sister-marrow
+  group: npcs
+  size: 832x1216
+  seed: 51032
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro goat, female, young white goat, small horns, grey nun robes, counting
+    cord at her belt, rectangular pupils, patient fixed smile, plain dusty ochre plaster wall background, warm side
+    light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40354
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-sister-reedlight-a
+  lane: arthemy-house
+  title: sister-reedlight design lock, illustrated neutral (seed a)
+  character: sister-reedlight
+  group: npcs
+  size: 832x1216
+  seed: 51041
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro grey heron, bird, female, slender, long neck, cloak of woven reeds,
+    lantern of green glass with a perfectly still flame, a slow graceful bow, lantern held low, plain dusty ochre
+    plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40355
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-sister-reedlight-b
+  lane: arthemy-house
+  title: sister-reedlight design lock, illustrated neutral (seed b)
+  character: sister-reedlight
+  group: npcs
+  size: 832x1216
+  seed: 51042
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro grey heron, bird, female, slender, long neck, cloak of woven reeds,
+    lantern of green glass with a perfectly still flame, a slow graceful bow, lantern held low, plain dusty ochre
+    plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40356
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-gristle-vane-a
+  lane: arthemy-house
+  title: gristle-vane design lock, illustrated neutral (seed a)
+  character: gristle-vane
+  group: npcs
+  size: 832x1216
+  seed: 51051
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro spotted hyena, male, magnificent patched greatcoat trimmed with
+    feathers, painted leathers, jangling chain earrings, low theatrical bow, toothy grin, plain dusty ochre plaster
+    wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40357
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-gristle-vane-b
+  lane: arthemy-house
+  title: gristle-vane design lock, illustrated neutral (seed b)
+  character: gristle-vane
+  group: npcs
+  size: 832x1216
+  seed: 51052
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro spotted hyena, male, magnificent patched greatcoat trimmed with
+    feathers, painted leathers, jangling chain earrings, low theatrical bow, toothy grin, plain dusty ochre plaster
+    wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40358
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-oriel-saltmarsh-a
+  lane: arthemy-house
+  title: oriel-saltmarsh design lock, illustrated neutral (seed a)
+  character: oriel-saltmarsh
+  group: npcs
+  size: 832x1216
+  seed: 51061
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro pelican, bird, female, big white pelican, weathered caravan coat,
+    goggles on her brow, ledger tucked in her throat pouch, appraising stare, counting on her wingtips, plain dusty
+    ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40359
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-oriel-saltmarsh-b
+  lane: arthemy-house
+  title: oriel-saltmarsh design lock, illustrated neutral (seed b)
+  character: oriel-saltmarsh
+  group: npcs
+  size: 832x1216
+  seed: 51062
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro pelican, bird, female, big white pelican, weathered caravan coat,
+    goggles on her brow, ledger tucked in her throat pouch, appraising stare, counting on her wingtips, plain dusty
+    ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40360
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-ferro-dunmark-a
+  lane: arthemy-house
+  title: ferro-dunmark design lock, illustrated neutral (seed a)
+  character: ferro-dunmark
+  group: npcs
+  size: 832x1216
+  seed: 51071
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro grey wolf, male, broad, dented steel gorget, gate watch tabard,
+    scarred muzzle, one torn ear, standing at attention, spear at his side, plain dusty ochre plaster wall background,
+    warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40361
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-ferro-dunmark-b
+  lane: arthemy-house
+  title: ferro-dunmark design lock, illustrated neutral (seed b)
+  character: ferro-dunmark
+  group: npcs
+  size: 832x1216
+  seed: 51072
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro grey wolf, male, broad, dented steel gorget, gate watch tabard,
+    scarred muzzle, one torn ear, standing at attention, spear at his side, plain dusty ochre plaster wall background,
+    warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40362
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-ottoline-vask-a
+  lane: arthemy-house
+  title: ottoline-vask design lock, illustrated neutral (seed a)
+  character: ottoline-vask
+  group: npcs
+  size: 832x1216
+  seed: 51081
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro black swan, bird, female, elegant, red bill, high-collared house
+    coat, heirloom rings on her wingtips, head inclined, cool appraising look, plain dusty ochre plaster wall background,
+    warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40363
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-ottoline-vask-b
+  lane: arthemy-house
+  title: ottoline-vask design lock, illustrated neutral (seed b)
+  character: ottoline-vask
+  group: npcs
+  size: 832x1216
+  seed: 51082
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro black swan, bird, female, elegant, red bill, high-collared house
+    coat, heirloom rings on her wingtips, head inclined, cool appraising look, plain dusty ochre plaster wall background,
+    warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40364
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-marisol-tallow-a
+  lane: arthemy-house
+  title: marisol-tallow design lock, illustrated neutral (seed a)
+  character: marisol-tallow
+  group: npcs
+  size: 832x1216
+  seed: 51091
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro raccoon, female, sharp-eyed, brass-buttoned waistcoat, ink-stained
+    fingers, pen behind her ear, holding out a rolled charter, businesslike smile, plain dusty ochre plaster wall
+    background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40365
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-marisol-tallow-b
+  lane: arthemy-house
+  title: marisol-tallow design lock, illustrated neutral (seed b)
+  character: marisol-tallow
+  group: npcs
+  size: 832x1216
+  seed: 51092
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro raccoon, female, sharp-eyed, brass-buttoned waistcoat, ink-stained
+    fingers, pen behind her ear, holding out a rolled charter, businesslike smile, plain dusty ochre plaster wall
+    background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40366
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-dunmore-ash-a
+  lane: arthemy-house
+  title: dunmore-ash design lock, illustrated neutral (seed a)
+  character: dunmore-ash
+  group: npcs
+  size: 832x1216
+  seed: 51101
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro boar, male, heavy, tusks, flour-dusted apron, rolled-up sleeves,
+    ladle at his belt, arms folded, unreadable, plain dusty ochre plaster wall background, warm side light, cowboy
+    shot, three-quarter view
+  jobs:
+    arthemy-house: 40367
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-dunmore-ash-b
+  lane: arthemy-house
+  title: dunmore-ash design lock, illustrated neutral (seed b)
+  character: dunmore-ash
+  group: npcs
+  size: 832x1216
+  seed: 51102
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro boar, male, heavy, tusks, flour-dusted apron, rolled-up sleeves,
+    ladle at his belt, arms folded, unreadable, plain dusty ochre plaster wall background, warm side light, cowboy
+    shot, three-quarter view
+  jobs:
+    arthemy-house: 40368
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-elder-corvane-a
+  lane: arthemy-house
+  title: elder-corvane design lock, illustrated neutral (seed a)
+  character: elder-corvane
+  group: npcs
+  size: 832x1216
+  seed: 51111
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro crow, bird, male, ancient, feathers faded to grey-blue, mantle
+    hung with tiny copper chimes, clouded pale eyes, perched on a stool, silent and watchful, plain dusty ochre
+    plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40369
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-elder-corvane-b
+  lane: arthemy-house
+  title: elder-corvane design lock, illustrated neutral (seed b)
+  character: elder-corvane
+  group: npcs
+  size: 832x1216
+  seed: 51112
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro crow, bird, male, ancient, feathers faded to grey-blue, mantle
+    hung with tiny copper chimes, clouded pale eyes, perched on a stool, silent and watchful, plain dusty ochre
+    plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40370
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-granny-umber-a
+  lane: arthemy-house
+  title: granny-umber design lock, illustrated neutral (seed a)
+  character: granny-umber
+  group: npcs
+  size: 832x1216
+  seed: 51121
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro mole, female, elderly, thick round spectacles, quilted vest pinned
+    with meeting notices, cane made from old pipe, skeptical squint, plain dusty ochre plaster wall background,
+    warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40371
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-granny-umber-b
+  lane: arthemy-house
+  title: granny-umber design lock, illustrated neutral (seed b)
+  character: granny-umber
+  group: npcs
+  size: 832x1216
+  seed: 51122
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro mole, female, elderly, thick round spectacles, quilted vest pinned
+    with meeting notices, cane made from old pipe, skeptical squint, plain dusty ochre plaster wall background,
+    warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40372
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-hester-plowright-a
+  lane: arthemy-house
+  title: hester-plowright design lock, illustrated neutral (seed a)
+  character: hester-plowright
+  group: npcs
+  size: 832x1216
+  seed: 51131
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hen, chicken, bird, female, broad speckled brown hen, mud-hemmed
+    skirt, farm coat, brass chain of office, egg basket on her arm, planted firmly, chin up, stubborn, plain dusty
+    ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40373
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-hester-plowright-b
+  lane: arthemy-house
+  title: hester-plowright design lock, illustrated neutral (seed b)
+  character: hester-plowright
+  group: npcs
+  size: 832x1216
+  seed: 51132
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro hen, chicken, bird, female, broad speckled brown hen, mud-hemmed
+    skirt, farm coat, brass chain of office, egg basket on her arm, planted firmly, chin up, stubborn, plain dusty
+    ochre plaster wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40374
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-jinx-coupler-a
+  lane: arthemy-house
+  title: jinx-coupler design lock, illustrated neutral (seed a)
+  character: jinx-coupler
+  group: npcs
+  size: 832x1216
+  seed: 51141
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro magpie, bird, androgynous, black and white plumage, long iridescent
+    blue-green tail, long coat sewn all over with bottle caps and rail spikes, jeweller loupe on a chain, weighing
+    a glowing relic in one hand, sharp grin, plain dusty ochre plaster wall background, warm side light, cowboy
+    shot, three-quarter view
+  jobs:
+    arthemy-house: 40375
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-jinx-coupler-b
+  lane: arthemy-house
+  title: jinx-coupler design lock, illustrated neutral (seed b)
+  character: jinx-coupler
+  group: npcs
+  size: 832x1216
+  seed: 51142
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro magpie, bird, androgynous, black and white plumage, long iridescent
+    blue-green tail, long coat sewn all over with bottle caps and rail spikes, jeweller loupe on a chain, weighing
+    a glowing relic in one hand, sharp grin, plain dusty ochre plaster wall background, warm side light, cowboy
+    shot, three-quarter view
+  jobs:
+    arthemy-house: 40376
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-abelard-vellum-a
+  lane: arthemy-house
+  title: abelard-vellum design lock, illustrated neutral (seed a)
+  character: abelard-vellum
+  group: npcs
+  size: 832x1216
+  seed: 51151
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro three-toed sloth, male, slow, shaggy fur with a faint green tint,
+    ink-dark archivist robes, tiny spectacles, ring of brass keys, mid-blink, very calm, plain dusty ochre plaster
+    wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40377
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-abelard-vellum-b
+  lane: arthemy-house
+  title: abelard-vellum design lock, illustrated neutral (seed b)
+  character: abelard-vellum
+  group: npcs
+  size: 832x1216
+  seed: 51152
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro three-toed sloth, male, slow, shaggy fur with a faint green tint,
+    ink-dark archivist robes, tiny spectacles, ring of brass keys, mid-blink, very calm, plain dusty ochre plaster
+    wall background, warm side light, cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40378
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-the-verge-envoy-a
+  lane: arthemy-house
+  title: the-verge-envoy design lock, illustrated neutral (seed a)
+  character: the-verge-envoy
+  group: npcs
+  size: 832x1216
+  seed: 51161
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro gorilla, androgynous, tall, immaculate dark plum coat, white gloves,
+    faint pallor, formal bow, gloved hands clasped, plain dusty ochre plaster wall background, warm side light,
+    cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40379
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eod1-the-verge-envoy-b
+  lane: arthemy-house
+  title: the-verge-envoy design lock, illustrated neutral (seed b)
+  character: the-verge-envoy
+  group: npcs
+  size: 832x1216
+  seed: 51162
+  shape: portrait
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, kawaii,
+    glossy, multiple views, character sheet, person
+  prompt_tags: solo, (fully clothed:1.3), anthro gorilla, androgynous, tall, immaculate dark plum coat, white gloves,
+    faint pallor, formal bow, gloved hands clasped, plain dusty ochre plaster wall background, warm side light,
+    cowboy shot, three-quarter view
+  jobs:
+    arthemy-house: 40380
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
