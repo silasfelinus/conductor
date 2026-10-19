@@ -13,6 +13,12 @@ An **ecotone** is an ecological transition where adjacent habitats meet. Humbold
 
 **Tone:** PG-13 dark comedy-horror with affectionate, tender human stakes; festival weirdness; Bigfoot as a plausible, messy adult/family culture, not a giant toddler aspiring to theatre stardom. Sasquatches, nymphs, ghosts, aliens and conspiracy radio can coexist with actual poverty, art, history and environmental conflict, but never explain away documented historic injustices.
 
+## Emotional contract: the future can be changed for the better (2026-10-19 direction)
+
+**Ecotone is ultimately hopeful, despite its speculative horror, fantasy, sci-fi, failure states and dystopian ending families.** The point of exposing the county's terrible possible futures is that people's choices and solidarity can change what comes to pass. Avoid fatalism, compulsory misery, and "all endings are secretly bad" cynicism. Hope should be **earned through particular human actions**, without claiming any one future ideology is the universal ideal. Distinguish a humane cost from cynical punishment.
+
+**Four independent optimal companion exploration routes are required:** Juniper's shared ecological stewardship, Kit's public living arts/belonging, Mara's own long-lived studio and apprenticeships, and Cedar's viable forest-and-livelihood future. They are possible on *every* initial Sober/Tipsy/Stoned/Tripping route, even after declining an introduction, and do not force a particular 10-family civic ending. **Cedar's grower-family and logger-family parents are still together throughout the story** and his happiest personal arc closes with their lived-in, imperfect and enduring love, not a marriage the player "repairs". Character optimal routes should be authored chapter-anchored adventures, not randomized rare draws. [COMPANION-OPTIMAL-PATHS.md](COMPANION-OPTIMAL-PATHS.md) owns the detailed provisional arcs, continuity invariants and gameplay acceptance tests.
+
 ## The two mysteries, distinct but entangled
 
 1. **Visible mission, now essential:** What **future of Humboldt** will its people help construct? The player's accumulated choices, coalitions, protections and betrayals shape the dawn convergence and far-future epilogue, even if they deliberately skip investigating why time is unstable. Agency has been exercised through small community decisions all weekend.
