@@ -49,6 +49,14 @@ def test_lead_projects_are_the_ones_silas_named():
     Cthulhuquarium and Kind Economy are now fifth and sixth rather than first and second. No agent
     invented that ordering; it is his list followed by the old list.
 
+    Updated 2026-10-19 after Silas spent an extended story-design session on Ecotone:
+    "for it to be a high priority on conductor agent work." This is an explicit NEW
+    human priority direction. Ecotone is placed fifth immediately after the
+    four previously pinned arcade/Zuzu projects, preserving their exact order;
+    Cthulhuquarium and Kind Economy move to sixth and seventh respectively.
+    Projects with older high-priority intent are not reordered relative to
+    each other, and scheduled commitments still preempt the finite queue.
+
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -56,16 +64,29 @@ def test_lead_projects_are_the_ones_silas_named():
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
     order = data.get("order") or []
 
-    assert len(order) >= 6
-    assert order[:4] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
-    assert order[4] == "cthulhuquarium"
-    assert order[5] == "kind-economy"
+    assert len(order) >= 7
+    assert order[:5] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown", "weird-humboldt"]
+    assert order[5] == "cthulhuquarium"
+    assert order[6] == "kind-economy"
     for finished in ("kapowarr", "ai-art-academy"):
         assert finished not in order
 
     # Reopened 2026-09-19 (see docstring): present, but not the lead.
     assert "mandarin-tutor" in order
     assert order.index("mandarin-tutor") > order.index("art-archive")
+
+
+def test_ecotone_high_priority_is_registered_and_pickable():
+    """Silas 2026-10-19: continued Ecotone creative development is high-priority work."""
+    priority = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
+    order = priority.get("order") or []
+    assert order.count("weird-humboldt") == 1
+    assert order.index("weird-humboldt") == 4
+
+    raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
+    overrides = {item["slug"]: item for item in raw.get("overrides", [])}
+    assert overrides["weird-humboldt"]["status"] == "active"
+    assert overrides["weird-humboldt"]["priority"] == "high"
 
 
 def test_control_priority_band_matches_priority_queue():
