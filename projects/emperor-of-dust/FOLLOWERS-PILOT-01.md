@@ -1,5 +1,5 @@
 # Emperor of Dust — follower cast pilot, characters F001–F010
-> **2026-10-18 PT:** these ten stay in the cast as the first ten of the **20 followers** in [SYSTEMS-V03.md](SYSTEMS-V03.md). Their Horde command, 0–5 three-stat ratings and three-image art plan are superseded: re-express each in the v0.3 schema (five 0–10 stats, secret skills/weaknesses, one unique ability, faction modifiers and true allegiance, eight images).
+> **2026-10-19 PT:** the v0.3 cast of twenty is [FOLLOWERS-V03.md](FOLLOWERS-V03.md). **2026-10-18 PT:** these ten stay in the cast as the first ten of the **20 followers** in [SYSTEMS-V03.md](SYSTEMS-V03.md). Their Horde command, 0–5 three-stat ratings and three-image art plan are superseded: re-express each in the v0.3 schema (five 0–10 stats, secret skills/weaknesses, one unique ability, faction modifiers and true allegiance, eight images).
 *Preproduction writing, 2026-10-12 PT. Creative prototypes, not ten completed playable leaders. These ten are a **quality bar** for the commissioned 100-character pool, not a substitute for the remaining ninety. None of the three art variants per character has been generated or delivered.*
 
 ## Design ground rules
