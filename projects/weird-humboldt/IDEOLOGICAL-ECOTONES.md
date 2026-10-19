@@ -20,7 +20,7 @@
 | Lead | Especially active tensions | Character's live contradiction |
 | --- | --- | --- |
 | **Juniper** | Ecology ↔ Engineering; Autonomy ↔ Solidarity | Forest nymph who protects living forest but must decide what shared stewardship and human livelihoods mean; humans cannot simply be excluded as invaders |
-| **Kit** | Continuity ↔ Reinvention; Autonomy ↔ Solidarity | Creative reinvention without erasing recorded 1885 injustice or allowing arts to become marketing and displacement; artist's vision versus apprentices' access |
+| **Kit** | Continuity ↔ Reinvention; Autonomy ↔ Solidarity | As a Hmong American contemporary artist, creative reinvention without reductive cultural branding; artist's independence versus collaborators' fair access and payment. Humboldt's 1885 Chinese expulsion is a separate historical episode, not Kit's family |
 | **Mara** (working name) | Autonomy ↔ Solidarity; Continuity ↔ Reinvention | Independent tattoo artist sustaining her real creative ownership while voluntarily growing mentorship, new practices and economic security; Indigenous identity is neither her axis nor a mystical shortcut |
 | **Cedar** (working name) | Continuity ↔ Reinvention; Ecology ↔ Engineering; Agency ↔ Fate | Rural son of a logging family and a growing family, both parents still together, enthusiastic about a locally accountable technoutopia. His radio offers apparently certain futures; he learns to verify the transmission and work to change what it predicts |
 
