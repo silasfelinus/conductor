@@ -178,3 +178,5 @@
 - **WH-120 · The County Finally Votes:** The player's relationships, evidence and choices determine the surviving ending.
 
 **Count:** 120 seeds, plus WH-121 (history thread, 2026-10-19). These are commissioning-ready *writing prompts*, not live assets or generated image jobs.
+
+Silas's location atlas (2026-10-19): Arcata Marsh, Bayshore Mall, Sequoia Park Zoo (Bill the Chimp), Fickle Hill, Luffenholtz, Heartwood, Ferndale's village and cemetery, casinos and Hupa have hooks and care rules in [LOCATIONS.md](LOCATIONS.md) (roadmap t-031).
