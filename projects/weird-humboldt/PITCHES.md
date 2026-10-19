@@ -2,6 +2,8 @@
 
 2026-10-19 PT · None is approved canon. **Updated recommendation (2026-10-19):** `ECOTONE-CORE.md` is the new player-directed central frame: competing versions of Humboldt's possible future. Preserve A as an unexplained radio symptom, B as emotional consequence, C as chronology distortion, D as occasional regional satire. Earlier pitches are historical alternatives, not the current creative mission.
 
+> **Later 2026-10-19 direction:** The ten historical ending ideas below are earlier pitches, **not collectible gallery slots**. The current goal is **32 endings (4 leads × 4 opening states × hopeful/dark)**, with a technoutopia central to Cedar's best path. See [ECOTONE-32-ENDINGS.md](ECOTONE-32-ENDINGS.md).
+
 ## A. The County Has a Frequency (recommended spine)
 A low, impossible radio frequency turns up at the Minor, on Kinetic race PA systems, in car radios on 299 and even in a shell held to an ear. Recordings predict different endings to one conversation. No single conspirator explains it; evidence slowly reveals multiple Humboldts lying on top of each other. You can tune the frequency, help stop it, exploit it, or ignore it and have a perfectly satisfying run of bizarre experiences.
 
