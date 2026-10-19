@@ -20,3 +20,18 @@ Sources checked 2026-10-19 PT. URLs support place/event grounding, **not** super
 Cannifest's official site lists its 2026 event on September 12–13 at Arcata Ballpark (https://www.cannifest.com/). A local 2026 report discussed plans **without on-site consumption zones** (https://lostcoastoutpost.com/2026/feb/10/dellarte-was-excited-bring-cannifest-blue-lake-the/). Our enchanted-brownie prologue is an **invented composite festival, not a scene at the real Cannifest**, and it does not allege real organizers supplied drugs or dosed anyone. The protagonist encounters sensations and scenes rather than an event name list.
 
 Additional grounded inspiration: the Humboldt Juggling Society's festival programming (https://humboldtjugglingsociety.org/Schedule.htm) and Dell'Arte theatre events (https://dellarte.com/past-events). All fantastic behavior and characters are original fiction; event brands stay in source/provenance metadata except when earned organically through later dialogue.
+
+## Chinese Humboldt history and Kit's return (verified 2026-10-19)
+
+**1885: documented mass expulsion, not folklore.** In February 1885, Eureka's Chinese residents were forced out after racist mob organizing following the accidental killing of a city councilmember. Hundreds were sent away; further expulsions occurred in the county. Some Chinese residents managed to remain in the region despite organized exclusion. Do not present the expulsion as supernatural fiction or portray it as a justified policy.
+
+**1950s: beginning of return, not time of expulsion.** Chinese American residents began returning to Eureka in the mid-1950s, notably the restaurant business established by Ben Chin; accounts vary on the exact 1954/1955 framing. Use 'mid-1950s' unless a date is needed and verified. Modern Chinese Humboldt community efforts preserve this history.
+
+**Sources:**
+- HAPI / Eureka Chinatown Project (community-led): https://www.hapihumboldt.org/eureka-chinatown-project
+- Cal Poly Humboldt Special Collections: https://www.humboldt.edu/special-collections/aiding-eureka-chinatown-research
+- Humboldt County Historical Society: https://www.humboldthistory.org/history-nuggets/2022/1/14/humboldts-darker-past-the-chinese-expulsion
+- KQED's account of the remembrance work: https://www.kqed.org/news/11891987/chinese-immigrants-were-forced-out-of-eureka-in-1885-heres-how-locals-are-making-that-history-known
+- University renamed January 26, 2022: https://www.humboldt.edu/about/polytechnic
+
+**Character fiction (not a claim about actual victims or alumni):** Kit is proposed as a Chinese American woman whose distant family members were expelled in 1885. Later generations settled elsewhere; Kit chose to return for an HSU-era education and found physical theatre in Blue Lake's Dell'Arte community. Individual ancestor identities, family records and academic attendance are original fictional details. Respect the existing real commemoration; never replace it with an invented conspiracy or familial psychic legacy. Community-authored histories and cultural review should guide publication-ready scripts.
