@@ -43,7 +43,7 @@
 
 Keep the current **Rizz, Burly, Wits, Local Lore, Psyche** stats and dice; four fault lines are **authoring metadata**, not replacement skills or morality points.
 
-Every substantial choice can carry:
+Every substantial stay/follow crossroad or side-encounter choice can carry:
 - `tensions`: zero to two named axis IDs, each with **both values in genuine tension** (e.g. `autonomy-solidarity`).
 - `stakes`: *which specific person, habitat, institution or future commitment is affected*, for example `worker_apprenticeship`, `forest_easement`, `community_fiber_ownership`.
 - `decision_flags`: concrete persistent player actions (consulted residents, disclosed uncertainty, preserved evidence, cut corners).

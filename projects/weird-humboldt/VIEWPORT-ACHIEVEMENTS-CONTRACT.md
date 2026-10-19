@@ -39,6 +39,10 @@ At minimum render and measure:
 
 **Hard checks:** `documentElement.scrollHeight <= visualViewport.height + tolerance` **for the surface owner** (accounting for site header and browser chrome), `documentElement.scrollWidth <= viewport width + tolerance`, no unreachable buttons, no unintended document/body/root scrolling, no scroll-trap on modals, and all active controls visible or reachable in an explicit **inner** scroll region. Verify actual pixels and pointer/keyboard behavior in mounted browser tests, not only CSS class regexes or static screenshots. On narrow screens main stage should still show an active illustration/text/choice, not a blank page. Endings dialog reflows without spilling its grid.
 
+## Companion follow history on a single visual surface
+
+The first companion is supplied by the chosen prelude perspective; **do not place a free companion picker on the prelude or persistent toolbar**. Crossroad cards temporarily show a legible, accessible **Stay / Follow** choice, after which the active portrait and route-specific card content change without expanding beyond the viewport. The protagonist meets each other main character at an authored guaranteed stage in randomized order; game UI, Journal and companion info must retain the chronological `meeting_order` and `follow_history` and show which companion was left behind, without turning the cast into a four-character traveling party. Dice and stat changes from side cards must be reflected immediately in visible bounded widgets; no page scrolling for outcomes or gallery. Read [JOURNEY-LOOP-CONTRACT.md](JOURNEY-LOOP-CONTRACT.md). The ending gallery remains 32 slots, categorized by **final followed companion**, original opening lens and earned hope/dark fate; variations caused by order are callbacks, not extra unlocks.
+
 ## Two progression systems, both required
 
 ### A. In-game **Endings on File** (32 earned outcomes, 16 hopeful and 16 dark)

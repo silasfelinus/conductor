@@ -6,6 +6,10 @@ This document **extends** [PRELUDE-STATE-CONTRACT.md](PRELUDE-STATE-CONTRACT.md)
 
 **Silas confirmed Juniper and Kit as companions, then redirected the other two into locally grounded characters.** The recommended distinct-companion structure remains a proposal, not an approval to commission art. Cedar and Mara are **working names**, while their professions/backgrounds are Silas-directed. All four characters exist in every playthrough; the festival choice determines only who the protagonist first travels with, never who actually exists.
 
+## Companion crossings, not a selectable party
+
+The adult protagonist starts by choosing a voluntary perception state, automatically meeting **Sober/Mara, Tipsy/Kit, Stoned/Juniper, Tripping/Cedar**. They experience seeded randomized local stories between guaranteed first-time meetings with each other member of the four. At the meeting they can **stay with their current companion** or **leave to follow the newcomer**, with the previous companion continuing their own independent mission. Choosing a different companion alters the adventure, not merely the portrait; the `meeting_order`, `follow_history`, stats and evidence affect dialogue and epilogue callbacks. Even late-followed companions must have an authored deepening/repair route. All four are met every run in changing order; one active follower at a time. Original opening perspective stays fixed for 32 collectible endings while mutable current state may change. See [JOURNEY-LOOP-CONTRACT.md](JOURNEY-LOOP-CONTRACT.md).
+
 ## The shared rule
 
 **2026-10-19 character-arc amendment:** each of the four companions receives a **distinct achievable optimal personal exploration route**, independent of opening intoxication/perception. These are earned human-scale, optimistic resolutions, not a one-click perfect-world reward or exclusive endings. **Cedar's logger-family and grower-family parents are still together at the start and stay together; do not make their breakup a dramatic branch.** See [COMPANION-OPTIMAL-PATHS.md](COMPANION-OPTIMAL-PATHS.md) for the four provisional arcs, recovered missed meetings, persistent flags and personal epilogue variants.
