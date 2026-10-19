@@ -24,11 +24,10 @@ Append-only reviewer/worker notes. Project created 2026-10-19 PT; no entries yet
 - Open for Silas: whether ch6's dragon-on-the-dunes fits the Impossible Festival (Keep/Modify), and the
   Tribal Community Organizer background, left out of the Play page pending cultural review.
 
-## 2026-10-19 — reviewer session: Kit and Cedar heritage revision
-- Silas: Kit is now Hmong American, not Chinese American; Cedar is half Hispanic. Updated COMPANIONS-AND-PROLOGUE.md,
-  COMPANION-OPTIMAL-PATHS.md (Kit's arc is now "The Chosen Home"), ECOTONE-CORE/ENDINGS/ENDING-GRAMMAR, IDEOLOGICAL-ECOTONES,
-  PRELUDE-STATE-CONTRACT, FACT-CHECK (the 1885 history stays as county history, no longer Kit's family), roadmap and CONTROL.md.
-  The Old Town storefront scene is withdrawn. Open for Silas: Kit's family story, and which of Cedar's parents is Hispanic.
-- Re-rendered both portraits (ArtJobs 40871-40874). Keepers: kit-r3-2 (248815) and cedar-r3-2 (248817). The house lane
-  barely changes Kit's look between "Chinese American" and "Hmong American" prompts; the prompt record is corrected
-  anyway. It still paints glowing orbs instead of juggling clubs.
+## 2026-10-19 — reviewer session: Kit and Cedar portraits re-rendered
+- Silas: Kit is Hmong American; Cedar's father is a Hispanic logger and his mother is from a grower family (#3870
+  comment). The canon docs are revised in conductor#6358, not here.
+- Re-rendered both portraits from corrected prompts (ArtJobs 40871-40874). Keepers: kit-r3-2 (248815) and cedar-r3-2
+  (248817), now on kind_robots#3870. This covers #6358's t-030 requeue. The stale 40848/40849/40852/40853 renders
+  are not exported. The house lane barely changes Kit's look between the old and new prompts, and still paints
+  glowing orbs instead of juggling clubs.

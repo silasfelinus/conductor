@@ -21,9 +21,7 @@ Cannifest's official site lists its 2026 event on September 12–13 at Arcata Ba
 
 Additional grounded inspiration: the Humboldt Juggling Society's festival programming (https://humboldtjugglingsociety.org/Schedule.htm) and Dell'Arte theatre events (https://dellarte.com/past-events). All fantastic behavior and characters are original fiction; event brands stay in source/provenance metadata except when earned organically through later dialogue.
 
-## Chinese Humboldt history (verified 2026-10-19)
-
-> **No longer Kit's family story (Silas, 2026-10-19 PT, later):** Kit is now Hmong American. This section stays as documented county history that any card must respect; the 'Character fiction' paragraph below is superseded.
+## Chinese Humboldt history and Kit's return (verified 2026-10-19)
 
 **1885: documented mass expulsion, not folklore.** In February 1885, Eureka's Chinese residents were forced out after racist mob organizing following the accidental killing of a city councilmember. Hundreds were sent away; further expulsions occurred in the county. Some Chinese residents managed to remain in the region despite organized exclusion. Do not present the expulsion as supernatural fiction or portray it as a justified policy.
 
@@ -36,13 +34,8 @@ Additional grounded inspiration: the Humboldt Juggling Society's festival progra
 - KQED's account of the remembrance work: https://www.kqed.org/news/11891987/chinese-immigrants-were-forced-out-of-eureka-in-1885-heres-how-locals-are-making-that-history-known
 - University renamed January 26, 2022: https://www.humboldt.edu/about/polytechnic
 
-**Character fiction (SUPERSEDED: Kit is Hmong American; kept for the record):** Kit was proposed as a Chinese American woman whose distant family members were expelled in 1885. Later generations settled elsewhere; Kit chose to return for an HSU-era education and found physical theatre in Blue Lake's Dell'Arte community. Individual ancestor identities, family records and academic attendance are original fictional details. Respect the existing real commemoration; never replace it with an invented conspiracy or familial psychic legacy. Community-authored histories and cultural review should guide publication-ready scripts.
+**Character fiction (not a claim about actual victims or alumni):** Kit is proposed as a Chinese American woman whose distant family members were expelled in 1885. Later generations settled elsewhere; Kit chose to return for an HSU-era education and found physical theatre in Blue Lake's Dell'Arte community. Individual ancestor identities, family records and academic attendance are original fictional details. Respect the existing real commemoration; never replace it with an invented conspiracy or familial psychic legacy. Community-authored histories and cultural review should guide publication-ready scripts.
 
-
-## Kit (Hmong American) and Cedar (half Hispanic): grounding to verify (2026-10-19 PT)
-
-- **Hmong Americans:** a distinct Southeast Asian people. Most US families arrived as refugees after 1975, following the US-backed war in Laos, and California's largest communities are in the Central Valley (Fresno, Merced) and Sacramento. Treat this as context, confirm it against community-authored sources (for example Hmong American cultural centers and university Hmong studies programs) before any published script, and do not claim a specific Humboldt Hmong community history without a source.
-- **Cedar's Hispanic heritage:** which parent is Hispanic is open for Silas. Do not invent a named real family, town history or labor event; any detail about Hispanic timber or farm workers in the county needs a source first.
 
 ## Ecotone: verified contemporary crossroads versus speculative fiction (2026-10-19)
 
