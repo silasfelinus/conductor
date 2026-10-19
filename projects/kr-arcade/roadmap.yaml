@@ -2621,13 +2621,19 @@ tasks:
   - id: t-155
     milestone: m8
     title: "Turn on ACE arcade soundtrack generation, ingest the first approved track, and listen to it in a cabinet"
-    status: needs-human
-    gate_human: true
-    gate_reason: money
-    gate_rechecked: '2026-10-14'
+    status: ready
     passes: 0
-    stakes: outward-facing
+    stakes: reversible
+    approved_by_human: true
     note: >-
+      Silas, 2026-10-19, verbatim: "generating better audio should absolutely not require human
+      approval, fyi". The money gate is lifted: agents queue ACE-Step renders themselves through
+      /api/art/enqueue (enqueueArcadeSoundtrack.ts, enqueueRainbowScore.ts; Rainbow's 21 score cues
+      went in as ArtJobs #40796-#40816 the same day while the render box's queue was idle). Remaining
+      agent work: drop the per-cue approval and ARCADE_AUDIO_JOBS_ENABLED gates from POST
+      /api/arcade/audio-jobs (or retire it for the direct path), then ingest renders as below. A
+      production env var still only Silas sets; nothing here needs one any more.
+
       Remainder of silasfelinus/kind_robots#3606 that needs Silas. Human steps:
       confirm the kr-relay build advertises supportsAudio with the ACE-Step model
       installed (GET /api/arcade/audio-jobs then reports the relay ready), and set

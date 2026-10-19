@@ -788,3 +788,49 @@ tasks:
     claimed_at: '2026-10-18T12:12:26Z'
     updated: '2026-10-18T12:55:12Z'
     implementation_pr: 'silasfelinus/kind_robots#3841'
+  - id: t-024
+    milestone: m4
+    title: "Second playtest: faster ship, tougher guardians, mortars, livelier craft"
+    status: done
+    passes: 1
+    stakes: reversible
+    approved_by_human: true
+    depends_on: [t-023]
+    note: >-
+      Silas, 2026-10-19 PT, after playing the recut: "first level has much more dynamic play. ship
+      should move faster. The miniboss died too quick, really quick. we need more variety in bullets:
+      perhaps something that launches something else that explodes? Unless already planned, everything
+      just sits and floats. it's easy and a little unexciting." Done in kind_robots#3864 (merge
+      a781972): ship 2.6 -> 3.4; guardian base hull 24 -> 50 (125 solo) with guardian sections
+      stretched 17-22 s (recutTimeline `stretch`; Act I's director now runs through it); mortars in
+      every Act lob a ringed shell that bursts into three bomblets and again into fans; plain craft rush
+      in, brake and slide toward a pilot's lane from range. Demo guardians now last 29-36 s (13-17
+      before); the ordinary first-clear pilot needs 39 continues for Acts I-II (24 before). New
+      verifyRainbowPlaytestTwo. Next: Silas plays it.
+    owner: worker
+    claimed_by: 2026-10-19T1030Z-rainbow-playtest-2
+    claimed_at: '2026-10-19T10:30:00Z'
+    updated: '2026-10-19T11:15:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3864'
+  - id: t-025
+    milestone: m4
+    title: "A space-opera score: orchestral renditions of every cue, then ACE-Step takes"
+    status: claimed
+    passes: 0
+    stakes: reversible
+    approved_by_human: true
+    depends_on: [t-012]
+    note: >-
+      Silas, 2026-10-19 PT: "we REALLY need better music. think space opera, and more than a midi 8
+      note on repeat." kind_robots#3865: 21 cues (nine flights, nine bosses, guardians, ending,
+      failure) rendered offline by scripts/rainbow-score (numpy orchestra, hand-written Act themes,
+      seamless loops, -18 LUFS) under public/rainbow-princess-audio/, played by the cabinet mixer as a
+      MusicLoop's recorded rendition with the sequenced chiptune as fallback. The same 21 cues are
+      queued as ACE-Step ArtJobs #40796-#40816 (rainbowRecordedScore.ts briefs); when they render,
+      review each take and swap it in (source 'ace', its ArtJob id). Done when the orchestral score is on
+      main; the ACE swap is its own follow-up.
+    owner: worker
+    claimed_by: 2026-10-19T1030Z-rainbow-playtest-2
+    claimed_at: '2026-10-19T10:30:00Z'
+    updated: '2026-10-19T11:15:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3865'
