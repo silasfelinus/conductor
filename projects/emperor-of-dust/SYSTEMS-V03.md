@@ -164,7 +164,7 @@ Neutral or better. Each also has a hidden **strength** used for act-end map reso
 
 | Faction | Home | Visible from |
 |---|---|---|
-| **Hollow Bell** (the Bell) | Border town, bell tower, Mayor Mara Reedbell | Day 1 |
+| **Hollow Bell** (the Bell) | Small southern town around a chapel bell, Mayor Mara Reedbell | Day 1 |
 | **The Abbey** (the convent of the Silent Bell, the Abbess's otter nuns) | Mission road, adobe walls | Day 1 |
 | **Storm Crow Conclave** | Cave heights, west | Day 1 |
 | **Mire Mothers** (swamp witches) | Mirefen wetlands, north | Day 1 |
@@ -300,7 +300,7 @@ depends on which kingdom faction the player built up most, with the highest affi
 
 - Mole tunnels under the badlands (Mole Revolutionaries)
 - A Storm Crow cave (Storm Crow Conclave)
-- Hollow Bell's cellars beneath the bell tower (Hollow Bell)
+- Hollow Bell's cellars beneath its chapel (Hollow Bell)
 - A painted wagon circle in the rail canyon (Jackalwire Pack)
 - A moving caravan (Saltroad Caravans)
 - A hidden barn and root cellar (Border Freeholds)
