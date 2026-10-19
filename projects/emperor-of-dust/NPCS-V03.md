@@ -21,6 +21,13 @@ Asset ids: `npcs/<slug>/illustrated/<mood>`. The `npc` field on an audience in K
 - No two named characters share a species, NPCs and followers together (Silas, 2026-10-19).
   Kind Robots keeps the list in `utils/emperorOfDust/fortress/npcs.ts` and tests it. Book One's
   otter nuns stay otters as unnamed extras; Sister Marrow is a goat among them.
+- **Every faction has a named voice** (Silas, 2026-10-19): all five local and ten kingdom factions
+  have at least one NPC who speaks at court, and Kind Robots tests this. Hester, Jinx and Keeper
+  Vellum were added for the Freeholds, the Rustline and the Lamplight Archive.
+- **The one shared family:** Jinx (a magpie) and Elder Corvane (a crow) are both corvids. Silas
+  allowed same-family pairs when there is a reason and the designs differ sharply. Here the
+  Rustline are canonically magpie salvagers, and a pied, glittering magpie looks nothing like an
+  ancient grey-blue crow.
 - Species never decides morality. Young Komodo looks friendly, and his look must not telegraph the
   betrayal.
 
@@ -41,6 +48,9 @@ Asset ids: `npcs/<slug>/illustrated/<mood>`. The `npc` field on an audience in K
 | `dunmore-ash` | **Foreman Dunmore Ash** | Boar foreman of the Yard, he/him | Day 2 | Says little, means all of it. Speaks for a hungry Yard. |
 | `elder-corvane` | **Elder Corvane** | Ancient storm crow of the Conclave, he/him | Day 4 (silent), Act II | Sells rain, keeps bonded runners, and sees further than most. |
 | `granny-umber` | **Granny Umber** | Elderly mole, a founder of the Mole Revolutionaries, she/her | Act II | Wants the throne gone, not burned. Can be reasoned with by deeds. |
+| `hester-plowright` | **Hester Plowright** | Speckled hen, reeve of the Border Freeholds, she/her | Day 18 | Plain-spoken and stubborn: counts eggs, wells and grudges. Waters Freeholders first, and isn't ashamed of it. |
+| `jinx-coupler` | **Jinx Coupler** | Magpie, Yardboss of the Rustline, they/them | Day 15 | A swaggering salvage boss who prices everything and loves anything that glitters or hums. Pell Quickmarrow is their best salvager. |
+| `abelard-vellum` | **Keeper Abelard Vellum** | Three-toed sloth, Keeper of the Lamplight Archive, he/him | Day 14 | Will not be hurried, by anyone. Guards the record as if it were alive, and wants relics studied rather than sold. |
 | `the-verge-envoy` | **The Envoy of the Black Verge** | Gorilla courtier in white gloves, they/them | Act II end | Polite, patient and hungry. Wants Sable back. |
 
 ## Young Komodo
@@ -173,6 +183,30 @@ cane of old pipe.
 - excited: tunnels lit
 - sad: a flooded burrow
 - angry: the cane raised
+
+**Hester Plowright:** a broad, speckled brown hen in a mud-hemmed skirt and a farm coat, with a
+reeve's brass chain of office and a basket on her arm.
+- neutral: planted like a fence post
+- happy: a full egg basket
+- excited: rain on the fields
+- sad: an empty well
+- angry: feathers up, wings out
+
+**Jinx Coupler:** a sleek black-and-white magpie with an iridescent blue-green tail, in a long coat
+sewn all over with bottle caps and rail spikes, with a jeweller's loupe on a chain.
+- neutral: weighing a relic in one hand
+- happy: a crate pried open
+- excited: something humming in the dark
+- sad: a yard flooded with rust-water
+- angry: the coat bristling and the caps rattling
+
+**Keeper Abelard Vellum:** a three-toed sloth in ink-dark archivist robes, with tiny spectacles,
+algae-green tints in his fur and a ring of archive keys.
+- neutral: mid-blink, very slow
+- happy: a recovered map unrolled
+- excited: half a smile, which for him is dancing
+- sad: a burned page
+- angry: perfectly still, the keys silent
 
 **The Envoy of the Black Verge:** a tall gorilla courtier in a dark plum coat and white gloves, with
 a faint pallor (a condition, not a species trait).
