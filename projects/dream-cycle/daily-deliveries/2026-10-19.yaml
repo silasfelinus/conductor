@@ -1,0 +1,72 @@
+date: '2026-10-19'
+entries:
+- slug: ribbon-riders-switchyard
+  title: 'Ribbon Riders: The Switchyard, an eighth midway arena'
+  target: kr-arcade
+  kind: arcade stage
+  summary: A new violet-floor arena, mirrored across x, with pillar walls, a beat gate and a turn pad, facing a pacer, copycat and cutter crew.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3857
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39226070443
+  merge_sha: 47480b4af6adbbbbacac0394e89d45af71fc2e10
+  checks: passed
+  verification: 18 check runs passed; verifyCabinetRibbonRiders checks arena count, mirror, gate and clear spawns. Merged is not deployed.
+  art:
+    status: not-required
+    note: Arenas are data and procedural.
+- slug: shifting-lands-canyon-rim
+  title: 'Shifting Lands: the Canyon Rim joins the Homestead deck'
+  target: zuzu-shifting-lands
+  kind: shifting lands card
+  summary: A sixth Homestead card, The Canyon Rim, restores one health on reward and costs one on penalty, with the page heading now reading six roads.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3858
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39226145594
+  merge_sha: 3bd1ec5db968ebd7c9f6173ce259acc7f3c8483b
+  checks: passed
+  verification: 21 check runs passed; verifyShiftingLands counts updated and new card id checked. Merged is not deployed.
+  art:
+    status: not-required
+    note: Uses existing canyon.webp.
+- slug: hyena-bone-sweep
+  title: 'Zuzu Showdown: Hyena Matriarch gets Bone Sweep'
+  target: zuzu-showdown
+  kind: fighter move
+  summary: The Hyena Matriarch gains Bone Sweep (DP+K), a low sweep that knocks a standing opponent down, with input-map and hit/knockdown tests.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3859
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39226456644
+  merge_sha: 19de0353f82de53dfaa21218266e2aead9fe5008
+  checks: passed
+  verification: 17 check runs passed; Hyena and related verifiers pass. The conductor fighters.yaml mirror was not updated. Merged is not deployed.
+  art:
+    status: blocked
+    note: bone_sweep reuses crouch_hk frames as a placeholder; dedicated art still needed.
+- slug: gamebook-wren-lamp-ending
+  title: 'Zuzu gamebook: Wren''s Lamp ending from the tower'
+  target: zuzu-gamebook
+  kind: gamebook branch
+  summary: A bittersweet Act IX ending opens from the bell tower when Wren is an ally, proven by a scripted locked/open test.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3860
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39226593847
+  merge_sha: d7fbd03e6ebf03d8066919df59727e4219eb09c9
+  checks: passed
+  verification: 17 check runs passed; verifyZuzuGamebook passes with 377 sections and 15 endings. Merged is not deployed.
+  art:
+    status: not-required
+    note: Reuses the bell-tower plate.
+- slug: emperor-day5-flour-quest
+  title: 'Emperor of Dust: Day 5 flour-barrel quest'
+  target: emperor-of-dust
+  kind: encounter
+  summary: Adds the q-d05-flour-barrels haggling quest for the Yard's failing flour and posts it at dawn on Day 5, which had none.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3861
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39227950857
+  merge_sha: fcef834c446509cb2613255b07987d16180dc396
+  checks: passed
+  verification: 17 check runs passed on head c3c4236 after fixing a faction id type error from the first push. Merged is not deployed.
+  art:
+    status: not-required
+    note: Data only.
