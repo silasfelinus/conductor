@@ -27,15 +27,9 @@ Recommended **optional mystery / mandatory experience** hybrid. Each chapter beg
 
 **Calendar fiction:** Perilous Plunge (spring fundraiser), Kinetic Grand Championship (Memorial Day), and seasonal *Rocky Horror* screenings are distinct real-world occurrences. They overlap only because **the fictional weirdness has scrambled the calendar**. Do not present a single weekend of these events as local fact.
 
-## Festival prelude and four companion trajectories (2026-10-19 exploratory update)
+## Festival companions (2026-10-19 PT, updated cast)
 
-**New input from Silas:** Open with an adult character voluntarily choosing a sober, tipsy, stoned, or tripping experience at a counterculture gathering. That choice determines a distinctive **first companion**, the subjective tone of scenes and some choices, while the county's underlying anomalies remain independently real. All events should feel discovered rather than announced by festival brand name.
-
-**Recommendation:** Four original, independent companions, not a single forest nymph whose whole personality shifts for the protagonist. Working cast: **Juniper** (stoned-opening woodland nymph), **Mae** (sober-opening dispatcher), **Kit** (tipsy-opening kinetic performer) and **Cal** (tripping-opening radio sleuth). Each reappears in every run, can disagree or leave, and has their own commitments, secrets and path. Juniper is an appealing, naturally hairy, curvy Humboldt hippie with bodily ease and adult sensual charm, **never** a camera object, a reward, or sexually explicit. See [COMPANIONS-AND-PROLOGUE.md](COMPANIONS-AND-PROLOGUE.md) for full pitch, independent agendas and four-way fairness.
-
-**Skill naming revision (prototype, subject to playtesting):** **Rizz**, **Burly**, **Savvy**, **Local Lore**, **Psychic Affinity (Psi)** replace the earlier Grit/Read the Room/Know-How/Local Lore/Odd Sense. The `sober|tipsy|stoned|tripping` choice is a state/perspective, **not** a moral score or a fixed sixth skill; it doesn't irreversibly strengthen or weaken stats. Original 2d6 checks remain. Old sample-card skill labels should be interpreted through this mapping.
-
-**No forced dosing:** the player chooses voluntarily; no potency, dosage, drug-making or consumption technique. Every route gets real evidence, meaningful companions and positive endings. Unnamed festival experiences, strong factual provenance behind the scenes, and a clearly PG-13 adult context. No art yet.
+Silas confirmed **Juniper** and **Kit**; replaced the previous sober dispatcher and psychedelic radio-hunter suggestions with a deeply rooted Indigenous Humboldt tattoo artist (working name **Mara**) and an older former cannabis grower / dispensary proprietor / licensed massage therapist with conspiratorial humor (working name **Cedar**). Each offers a first route (Sober/Mara, Tipsy/Kit, Stoned/Juniper, Tripping/Cedar) while remaining independently available in all runs. **Mara was raised on a local reservation and founded her studio with a small-business grant funded by tribal casino revenue; her tribal nation and specific grant program are not yet defined.** Her personal abstinence from cannabis is about linework, not moral superiority. Her heritage is not an occult shortcut or a skill modifier. See [COMPANIONS-AND-PROLOGUE.md](COMPANIONS-AND-PROLOGUE.md) for full bios and a test scene. The [PRELUDE-STATE-CONTRACT.md](PRELUDE-STATE-CONTRACT.md) is authoritative for skills, mutable `current_state`, and Clarity. No art yet.
 
 ## Player archetypes (fictional, contemporary, optional names)
 

@@ -1,6 +1,6 @@
 # Weird Humboldt: three narrative prototypes
 
-These are **playable-text design samples**, not imported cards. Values, prose and balance are provisional; die rolls are 2d6+named skill vs target. Skill names reflect the 2026-10-19 Rizz/Burly/Savvy/Local Lore/Psi proposal; opening companion and perception overlays are drafted separately in COMPANIONS-AND-PROLOGUE.md. Outcomes illustrate distinct consequences, including on failure.
+These are **playable-text design samples**, not imported cards. Values, prose and balance are provisional; die rolls are 2d6+named skill vs target. Outcomes illustrate distinct consequences, including on failure.
 
 ## WH-006 — The Last Houdini Exit · Minor Theatre
 

@@ -1,104 +1,88 @@
-# Weird Humboldt: festival prologue and four companion routes (design v0.2)
+# Weird Humboldt: four companion routes and character bible (design v0.3)
 
-**Date:** 2026-10-19 PT
-**Status:** proposed design direction from Silas's iterative notes; **four distinct companions recommended, not approved final canon**.
-**Art rule:** no generated art, ArtJobs, visual prompts, art queue entries, or character-portrait commitments yet. This document is **narrative design only**.
+**2026-10-19 PT · character exploration; text only · art remains on hold.**
 
-## Design principle
+This document **extends** [PRELUDE-STATE-CONTRACT.md](PRELUDE-STATE-CONTRACT.md), the authority for `opening_state`, `current_state`, `clarity`, the five skills **Rizz, Burly, Wits, Local Lore, Psyche**, seeded canonical events and four authored narrative lenses. It does not replace that contract or require a particular intoxication to access the mystery.
 
-**The protagonist's freely selected festival experience changes who becomes their first companion, not whether they can discover the real supernatural mystery.** A sober run is a full, funny, weird experience. An intoxicated run is not a shortcut to enlightenment, a moral failure, or a prerequisite for psychic access. All four tracks receive written opportunities, weaknesses, comedy, companions, and evidence.
+**Silas confirmed Juniper and Kit as companions, then redirected the other two into locally grounded characters.** The recommended distinct-companion structure remains a proposal, not an approval to commission art. Cedar and Mara are **working names**, while their professions/backgrounds are Silas-directed. All four characters exist in every playthrough; the festival choice determines only who the protagonist first travels with, never who actually exists.
 
-The prelude offers four adult, informed, voluntary choices: **Sober, Tipsy, Stoned, Tripping Balls**. A non-substance reason for comparable strange perception can also be supported in accessibility/story options, without falsely representing the experience as pharmacologically identical. No one is secretly dosed; no potion recipe, edible potency, dose or substance-use technique is described. The effects are heightened fictional storytelling, not medical claims.
+## The shared rule
 
-The chosen opening state selects **one of four first companions**, changes the perspective and available optional risk/choice text for scene families, and optionally opens state-specific encounter cards. Companionship persists as a relationship even if the character's current state changes later. Later sober-up, hangover, fatigue, recovery and psychedelic afterimages are **narrative conditions**, not a game-ending penalty or a mandatory maintenance minigame.
+At an invented composite festival, an adult player explicitly opts for **Sober**, **Tipsy**, **Stoned** or **Tripping Balls** (clearly identified fictional enchanted brownie for the surreal option). Each path meets one particularly well-positioned companion, who can be accepted, declined or met later. Nothing is a surprise dose, a drug how-to, or a mandatory psychedelic key. If the character's current state changes, their personal history, accumulated clues, and relationships do **not** reset. Every route has meaningful checks, corroborated weirdness, and reachable hopeful outcomes.
 
-## Four adult companions with autonomous goals
+## 1. Juniper — forest honey, possible woodland nymph (Stoned introduction)
 
-### Juniper — the forest honey / woodland nymph (Stoned introduction)
-An alluring, earthy, slightly curvy, adult Humboldt hippie. Natural body hair, including visible armpit hair; easy, relaxed movement, sun-worn practical clothing, occasional cannabis use, warm laugh. **Attractiveness is neither a stat nor a seduction challenge.** Her appeal includes her humor, ease with people, refusal to be owned, fierce conservation ethic, and lack of interest in impressing anyone. She is not written as a male-gaze accessory or an automatic romantic reward.
+**Confirmed concept.** A charming, slightly curvy adult Humboldt hippie with naturally hairy armpits, lived-in thrift-store clothes, an easy smile and a warm, teasing manner. She smokes cannabis, recognizes people without demanding explanations and feels unusually at home around redwoods. Her sensual confidence appeals across genders without ever turning into voyeuristic framing or an automatic romance. Her own goals and boundaries come first.
 
-- **Public role:** a beloved eccentric who knows forest trails, potlucks, and who needs a ride home.
-- **Private truth:** she is a forest nymph, though the nature and limitations of her magic remain mysterious. The forest and she do not always agree.
-- **Arc:** decide whether to intervene in a threatened woodland community and whether to tell the human player why she needs help; a friend with her own non-player commitments, capable of disagreeing and leaving.
-- **Gameplay voice:** amused, practical, quietly insightful, sometimes evasive. She often solves human conflicts socially and **cannot** automatically fix every environmental problem with magic.
-- **No sexual content:** adult allure in clothing, body language and personality only; optional chemistry stays playful/PG-13, non-transactional and never a romance minigame.
-- **Shared-world rule:** sober players can meet her, recognize her magic, and pursue her quests; opening Stoned simply lets the friendship begin early and changes the dialogue.
+- **Public world:** friends at camps, growers' potlucks, garden collectives and forest gatherings. She can be funny, evasive, very practical and occasionally wrong about humans.
+- **Private world:** a real forest nymph, not merely a drug hallucination. She has a complicated relationship with the forest, which doesn't always cooperate.
+- **Arc:** protecting a living place versus telling her human friends everything; she can refuse to guide, argue, or pursue a mission without the player.
+- **Shared mystery:** the strange repeating symbol appears in natural growth patterns. The forest itself isn't a Native spiritual tradition in disguise.
+- **Other routes:** sober, tipsy and tripping players can encounter her magic and choose to help her later.
 
-### Mae — the night dispatcher (Sober introduction)
-A quick-minded adult county overnight logistics dispatcher with a meticulous incident notebook and deadpan humor. Fictional role and employer; no invented claim about an actual agency. She can organize a rescue from a bizarre circumstance and is tired of people asking whether she's 'the boring one'.
+## 2. Kit — kinetic sculptor, juggler and physical-theatre performer (Tipsy introduction)
 
-- **Private truth:** she has personally witnessed multiple versions of one missing-person call and has physical evidence her dispatch system refuses to retain.
-- **Arc:** choose between exposing a pattern and protecting vulnerable people whose privacy her records contain.
-- **Voice:** dry humor, competence and humane impatience; sometimes so attached to evidence that she misjudges people's motives.
-- **Special route payoff:** the sober route detects the impossible **more reliably**, including false phenomena that intoxicated interpretations overlook.
+**Confirmed concept.** Charismatic, gender-expansive, theatrically quick and physically inventive; makes spectacle out of a broken bike, a folding ladder and a bad idea. The voice is playful, outrageous and occasionally vulnerable, without being a default comic drunk.
 
-### Kit — the kinetic troubadour (Tipsy introduction)
-A charismatic adult, gender-expansive sculptor, juggler and physical-theatre performer with colorful repairable outfits and stagecraft skills. Funny, confident and frequently reckless, but not a generic comic drunk.
+- **Public world:** juggling circles, handmade sculptures, performance workshops, volunteer build crews and the region's grassroots festivals.
+- **Private world:** their latest contraption incorporates a mechanism Kit never designed that pulses with the same anomalous frequency.
+- **Arc:** choose between acclaim for an ambitious sculpture and sacrificing the machine to protect someone.
+- **Special entry:** a dancing, laughing festival crowd is an easy first connection for a tipsy player; non-drinkers can befriend Kit through repair work or stagecraft.
+- **Relationship:** Kit cracks jokes about the tattoo artist's precision and respects it fiercely once a real emergency demands technical care.
 
-- **Private truth:** their latest kinetic sculpture contains a mechanism they did not install; it seems to synchronize with an impossible radio signal.
-- **Arc:** risk the sculpture and public reputation to safeguard people, or keep the mechanism hidden and win the competition.
-- **Voice:** flirty with *everyone* in a lightweight, non-assuming PG-13 way, skilled at improvising a believable cover story, capable of deep embarrassment.
-- **Special route payoff:** event-based social openings and physical-stage solutions others don't immediately spot; tipsiness also brings regrettable assumptions.
+## 3. Cedar — backwoods ex-grower, dispensary proprietor and massage therapist (Tripping Balls introduction)
 
-### Cal — the frequency hunter (Tripping Balls introduction)
-An adult amateur radio collector and relentless documenter of fringe phenomena. Eccentric, earnest, wry, with a bag of analog recording devices and theories that sound more absurd than their field evidence.
+**Silas-directed replacement for Cal; name provisional.** An older male Humboldt hippie who remembers the pre-legalization cannabis economy when his growing operation brought in serious money. Legalization and the changing market disrupted the livelihood and status he knew. He still runs a licensed dispensary, but he's no longer getting rich and the economics are complicated; he also works as a **licensed massage therapist** and remains connected to local backwoods growers.
 
-- **Private truth:** their favorite voice on the static belongs to someone the county insists never existed, possibly a future version of themself.
-- **Arc:** distinguish valuable contact from exploitative noise and choose whom to warn before sharing impossible information.
-- **Voice:** brilliant tangents and cosmic jokes; their strongest flaw is narrativizing coincidences into conspiracies.
-- **Special route payoff:** hears an unusually clear *version* of the frequency, but the decoded meaning is often wrong until corroborated.
+- **Voice:** talks easily about chakras, Mercury retrograde, ley lines, meditation and cosmic plots, usually with a sly wink. He knows some ideas are nonsense, and is clever enough to exploit the gap between genuine insight and funny salesmanship. Do not reduce him to a burned-out stoner stereotype.
+- **Private truth:** decades of informal grower networks produced a map of places that seem to slip out of ordinary time. He once bought a radio from a mysterious traveler whose voice still interrupts his old recordings.
+- **Arc:** old money and nostalgia versus the livelihoods of friends dealing with the changed cannabis market; decide whether to reveal something that could harm people he cares about.
+- **Mystery role:** one theory in ten is astonishingly useful, but he is not the final oracle. His advice can be funny, wrong and caring in the same sentence.
+- **Non-drug route:** he can supply background history and human connections to the sober player without pressuring anyone to consume.
 
-### Why distinct characters beat one mood-swapping guide
+## 4. Mara — Indigenous Humboldt tattoo artist (Sober introduction)
 
-One nymph with four intoxication-sensitive personalities can make her seem like a hallucinated accessory. **Four independently motivated people** build replayable relationships, divergent consequences, distinct arcs, and a meaningful party of supporting cast. They appear **in every run**; only the early companion and vantage differ. Juniper remains the forest nymph rather than changing her essence to fit a player state.
+**Silas-directed background; name provisional.** An adult Indigenous woman, born and raised in Humboldt County, **raised on her family's reservation**. She's heavily tattooed, meticulous, understated and dryly funny, with a busy independent studio. **Her tattoo business began thanks to a small-business grant funded by tribal casino revenues**, giving her the means to purchase equipment, establish a space and grow her practice. This is a **fictional character and fictionalized grant history**, not a factual assertion about any specific tribal casino program.
 
-## Intro sequence: the gathering without naming its brand
+- **Specificity to resolve thoughtfully:** Her **tribal nation, reservation and family/community setting remain unset**. The writer must choose a geographically and historically coherent specific community, ground modern life in that community's own published sources, and seek suitable cultural review before publication of detailed culture-specific material. Do not conflate Wiyot, Yurok, Hoopa/Hupa, Karuk, Tolowa or other peoples, or infer that tribal casino funding works identically across nations.
+- **Work ethic:** She personally avoids smoking cannabis because she finds it interferes with steady hands and fine, precise tattoo lines. This is her experience, **not** a medical claim or disdain for cannabis users. She can enjoy the gathering sober.
+- **Independence:** Proud of building her business and deeply aware that support came through her community's economic resources. She has regular customers, bills, friends and obligations and needn't be grateful to outsiders for permission to be successful. The grant isn't her entire personality or a patronizing rescue story.
+- **Humor and flaws:** low tolerance for performance without substance; a sharp eye for inconsistent stories; prone to relying on an observation she's already drawn rather than hearing the person explaining it.
+- **Mystery arc:** A client requests a modern, ordinary custom design that Mara has never drawn before, yet that identical design appears in an old photograph, in a kinetic machine schematic and later in an impossible radio printout. **It is not a sacred tribal motif, ceremonial design or appropriated Indigenous symbolism.** She wants to find out who is copying her work and why, and must decide whether uncovering the truth exposes a client.
+- **Sober-route reward:** grounded pattern recognition, reliable visual documentation, community relationships earned through real interactions. Her heritage gives her **no automatic psychic stat bonus or mystic 'tribal knowledge' ability**, and ancestry never locks other players out of understanding the symbol.
+- **A possible line:** “I don't need to be high to know that tree just moved.” Warm humor underneath serious craft.
+- **Placement in the wider cast:** If the player chooses the separate playable Tribal Community Organizer archetype, respect its different background and personality. Do not merge all Indigenous characters into a single representative or assume they share a tribe.
 
-**Beat 1 · Character + objective:** player chooses a Humboldt archetype; an errand, gig or favor has brought them to a freewheeling gathering near the redwoods. Have readable sensory cues: hemp smoke, folding vendor tables, old buses, borrowed power strips, colored lanterns and someone repairing a broken juggling club.
+### Mara's first meeting: the sober festival path (prototype, not a completed card)
 
-**Beat 2 · Choice:** player **voluntarily** chooses Sober, Tipsy, Stoned or Tripping Balls, with tone and a brief non-numerical warning that perception and risks differ. Every option must be framed as equally valid. For Sober, the character might take sparkling water, tea or a plate of food. Avoid safety/health advice, dosages and how-to intoxication directions.
+You walk past a table full of temporary tattoo stencils, handwritten price tags and bold new flash designs. The artist behind the table looks up from a sketch, ink winding down both forearms. She's drawing a bird with six wings, except you're fairly sure it had four when you looked a second ago. You point this out.
 
-**Beat 3 · Companion introduction:** four different original first-contact scenes (one per choice) with Juniper / Mae / Kit / Cal, each featuring three materially different actions and a chance to reject companionship or pause exploration without being punished.
+“There's a reason I don't smoke when I'm working,” she says, tapping the pencil on the paper. “I like my lines where I left them.”
 
-**Beat 4 · Anomaly:** everyone, including sober witnesses, hears a fragment of impossible feedback. Same **canonical objective world event**, four **subjective renderings** and four corroboration opportunities. The symbol or phrase appears on a radio, in a broken theater projector, and later in a creature's family photo. Persistent evidence can be collected in each route.
+Then she compares the newest drawing against an earlier page. Her humor vanishes for an instant. The extra wings are on **both** pages, but the older sketch is dated next week.
 
-**Beat 5 · Choice to journey:** the player decides which nearby place to visit. Introduce the optional frequency mystery as an invitation, not a railroad. A suspiciously helpful companion can be declined; the main campaign still functions.
+**Three early player choices:**
+1. **Compare the dates** (Wits 7): preserve documentary evidence; failure reveals a more limited but independently verifiable inconsistency.
+2. **Ask why she came to this event** (Rizz 7): learn about her studio, customers and personal stakes rather than prompting an expositional lecture on her ancestry; failure creates a socially awkward but recoverable introduction.
+3. **Offer to help mind the table while she checks the original sketch** (no roll, give up time): earn trust through doing something useful; she can decline and continue her own work.
 
-## Stats and perception model
+Mara may accept a shared route, decline, or arrange to meet later. **The signal mystery begins whether or not she joins.** The sketch discrepancy is an original fantastic event, not a suggestion that tribal designs or practices are occult clues.
 
-**Five base skills** (static archetype spread; no moral labels): **Rizz** (social creativity/reading people), **Burly** (strength, endurance and bodily action, not body shape), **Savvy** (reasoning and practical troubleshooting), **Local Lore** (place/history/relationships; can be learned by newcomers), and **Psychic Affinity / Psi** (attention to uncanny patterns without guaranteed truth). Use familiar 2d6 + relevant skill versus 7 / 9 / 11. The opening four-way choice **does not change the skills permanently**.
+## Shared arc: one physical reality, four viewpoints
 
-**Intoxication/clarity is a current narrative state, not a permanent sixth ability score.** Track initial `perception_state` as one of `sober|tipsy|stoned|tripping`, plus optional chapter-long conditions and the first companion route. Don't equate sober with virtue, stoned with wisdom, tipsy with Rizz competence, or tripping with psychic truth. Do not represent disability or mental health as a funny penalty.
+All four have encountered the same impossible repeated sign or frequency, in independent human contexts:
 
-### Same canonical event; differing lens
+- **Mara:** a modern flash design appears twice before she creates it.
+- **Kit:** a machine diagram contains the same form.
+- **Juniper:** the forest repeats a shape it should not make.
+- **Cedar:** a decades-old photo or radio recording carries the same signature.
 
-| State | Scene lens | Possible upside | Possible cost / verification need |
-| --- | --- | --- | --- |
-| Sober | Concrete physical details and contradictions | Evidence can be confirmed, practical routes stay obvious | Easy to dismiss people or miss metaphorical clues |
-| Tipsy | Social attention, confidence, performative interpretations | Reveal a lie or make a useful connection | Misread motives, overpromise, put companions in awkward spots |
-| Stoned | Sensory associations, emotion and ecology | Notice overlooked links and social temperature | Drift from urgent logistical details and lose track of time |
-| Tripping Balls | Surreal symbolic correspondences and pattern overload | Hear the frequency in unfamiliar ways | Confuse signals with interpretations; seek outside corroboration |
+The player can bring any pair together; their accounts disagree on meaning but agree on concrete details. Later introductions should change companionship and optional endings without negating earlier cards.
 
-**Fairness contract:** each route has comparable positive outcomes and negative-but-continuable consequences. The same evidence categories must be solvable in every opening track; no single companion or substance gate may be mandatory for a best or hopeful ending. Author different descriptions, interventions and some exclusive scenes, **not four incompatible games**. State can vary later; do not reroll history or rewrite previous canonical events.
+## Writing, testing and publication boundaries
 
-## Cross-route mystery and character re-encounters
-
-All four have encountered the same odd symbol, each in a different context: Mae in erased call logs, Kit in a machine diagram, Juniper in the living patterns of the forest, and Cal in a strip of magnetic tape. Each holds **a fragment**, none is the exclusive key. Meeting others later reveals their own agendas and can change an ending. The protagonist can challenge a guide, leave them, make a different friend or go alone.
-
-**Example shared event:** a wooden sign near a forest path says 'CLOSED FOR MAINTENANCE UNTIL YESTERDAY.' It is real and remains real in every route. Mae photographs the date; Kit sees a stage reset; Juniper hears the trail object; Cal hears an inverted station ID. All can solve the underlying practical problem. Any player can choose to help a stranded person instead of pursuing the clue.
-
-## Authoring and QA checklist for next text-only iteration
-
-1. Write four full playable-text prologues with 2–4 authored decisions, clear check targets, distinct success/fail results and companionship opt-out.
-2. For the same two encounter seeds, write four state-sensitive descriptive lenses plus independent companion comments. Underlying event ID, flags and factual outcomes must remain shared.
-3. Playtest **8 archetypes × 4 initial states × four companion introductions**, including no-companion branch; verify each route has a meaningful evidence path and a hopeful ending. Cross route should not force consumption.
-4. Assert source contract separates `canonical_event` from `presentation_lens`; rerenders and saves must not mutate prior story facts. Mark speculative magical/dosing interpretations as subjectivity rather than factual claims.
-5. Keep PG-13, explicitly adult context, voluntary consumption, no intoxication instructions, no sex scenes or sexualized minor characters. Include recovery/leave-festival options. Age-appropriate content notice at eventual publication, but **do not publish yet**.
-6. Revise encounter scripts to **avoid naming real events directly in player-facing exposition**. Keep documented names and source links in editor provenance only (e.g. community cannabis gathering, amphibious sculpture race, theatrical midnight screening).
-
-## Decisions left open
-
-- Companion routing: recommend **four unique companions** over one nymph with alternate personas; Silas may choose otherwise.
-- Initial consumption: four options are explicit choice, **not four moral alignments**; precise mechanics and story outcomes need playtesting.
-- Whether Juniper is the eventual central supernatural guide, with the other three as equally important co-leads, remains a creative decision.
-- Art direction is on hold, by explicit instruction. Do not infer approval from design enthusiasm.
+- **Four introductions, one canonical event**: prelude changes how the event is perceived, not whether supernatural anomalies exist.
+- **Save:** preserve opening/current state, Clarity, companion relationships, evidence provenance and choice/roll history. No reroll on refresh or retroactive state shifts.
+- **Competence is earned and contextual:** Mara's knowledge comes from her specific life and skills; Juniper's magic from her fictional nature; Cedar's connections from decades of work; Kit's ingenuity from making things. No person is a decorative stereotype.
+- **Review:** text-only authoring and mechanical tests may proceed; source/local review needed before any detailed culturally specific material or outward-facing release; **no artwork, ArtJobs, image commissions or publishing** without Silas's separately requested approval.
+- **Names:** Juniper and Kit selected; Cedar and Mara remain working names, available for renaming.
