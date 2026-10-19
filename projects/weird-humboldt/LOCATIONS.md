@@ -38,7 +38,7 @@ This atlas maps each place to a chapter (DESIGN-BRIEF.md) and suggests a story h
 - **Hook:** after closing time, each dark storefront opens onto one of the county's possible futures: the co-op broadband office, the corporate fulfillment hub, the abandoned food court of a slow decline. This is where Ecotone's ten county motifs (ECOTONE-ENDINGS.md) become walkable: a dead-mall horror-comedy and a preview of the finale.
 - **Care:** no current tenant or owner is the villain; the futures are fictional.
 
-### Sequoia Park Zoo: "Bill's Last Painting" and the friends who aren't there (Ch 3)
+### Sequoia Park Zoo: Bill, Snerfy and the prairie dogs (Ch 3)
 
 **Silas, 2026-10-19 PT, verbatim:** *"Snerf (aka Snerfy) was a river otter back when they had a simpler pen setup. When I was a young kid, I'd run back and forth and snerfy would run with me. We'd stop at each side and share an excited moment when we'd meet. This feels like it could be a story shared by Kit. The groundhogs (actually think they were prairie dogs?) used to be in the center when you first entered the zoo. They had such personality, always popping up out of their holes."* And on Bill: *"Bill's story is complicated and bittersweet. He lived with a human for years, and then was transferred to the zoo. He was the oldest chimp in captivity before he died. He would pace back and forth blowing raspberries. He and I would occasionally just chill out together. He occassionally throw his own poo at troublemakers."*
 
@@ -51,13 +51,44 @@ This atlas maps each place to a chapter (DESIGN-BRIEF.md) and suggests a story h
   - He lived with a human for years before the zoo. The sources found so far mention the circus; the home may have come before it or alongside it, so check before stating either as fact.
   - He was often called the oldest chimp in captivity. Phrase that as reported or remembered unless a source confirms it.
   - He paced and blew raspberries, sat companionably with a kid who came to chill with him, and threw poo at troublemakers.
-- **Bill's card should be bittersweet, as Silas asked.** It holds joy and the hard truth together: a life lived among people, then in a cage, and a town that loved him. The raspberries and the well-aimed poo are affectionate, earned comedy; he is a character with opinions, never a punchline. The unsold finger painting showing a Humboldt that hasn't happened yet stays the gentle bit of magic. Let the companions wonder, without lecturing, about what we owed him.
-  - **Choice: sit with Bill a while** (no roll). He paces, blows a raspberry at you, then sits down near the glass. (`sat_with_bill`)
-  - **Choice: tell off the teenagers rattling the fence** (Rizz 7). Success: they leave. Failure: Bill handles it himself, with excellent aim.
-- **Snerfy, as Kit's memory.** Kit grew up in Arcata, so this is her childhood: running the length of the old otter pen with Snerfy keeping pace on the other side of the fence, both of them stopping at the end to celebrate, then racing back. She tells it on the zoo card or a quiet campfire beat, and it is one of the moments that shows who she is under the performance. Silas has offered this memory for Kit; credit it in the project notes.
-  - The otters now live in the newer Watershed Heroes habitat with an underwater viewing tunnel. Kit can notice how much the place has changed, fondly.
-- **The prairie dogs.** Silas remembers them (first as groundhogs, then probably prairie dogs) in the middle of the zoo's entrance, always popping up out of their holes. Use them as a recurring sight gag, a crowd of tiny heads that pop up at exactly the wrong moments, and confirm the species before naming it in player-facing text.
-- **Care:** these are real animals and real memories. Tender and funny, never cruel. Bill's card carries the honest bittersweetness; the otter and prairie-dog moments are joy.
+**Who is actually there (Silas, 2026-10-19 PT):** *"Neither prairie dogs or bill are current members of the zoo. I'm ok making up Bigfoot families and aliens, but the player shouldn't see past zoo animals unless they are having a mystical experience. It could be a journey that kit takes the player on, or one presented by actors. I could imagine the scene involving del' arte actors performing as the zoo animals, but depending on the player's inebriation, they might not perceive that they are actors."*
+
+- **The rule:** in ordinary waking reality, the zoo has only its **current** residents (river otters in the Watershed Heroes habitat, and so on; check the roster before naming any). Bill, Snerfy and the prairie dogs are gone. They appear only through **performance** or a **mystical experience**, never as if they still lived there.
+- **Invented creatures are different.** Bigfoot families and aliens are Ecotone's own fiction and can appear anywhere. Real animals who died stay remembered, not resurrected.
+
+### "The Friends Who Aren't Here" (Ch 3, Kit's card)
+
+**Canonical event (one reality, per PRELUDE-STATE-CONTRACT.md):** after closing, Kit and her physical-theatre friends from Blue Lake stage an unsanctioned tribute in Sequoia Park, just outside the zoo. They play the zoo's lost animals in masks and movement:
+- **Bill**, pacing and blowing raspberries.
+- **Snerfy**, racing a child along an invisible fence.
+- **A crowd of prairie dogs**, popping up from behind hay bales.
+
+Kit organized it because of Snerfy, and the guide who brings you here could be her or the friend you're following. The troupe is fictional and inspired by the Blue Lake physical-theatre scene; it is never presented as an official Dell'Arte production or endorsement.
+
+**What the player perceives depends on their current state** (truth invariant: they are actors in every lens):
+
+| Lens | What you see |
+| --- | --- |
+| Sober | Brilliant physical theatre. You can spot the seams in the masks and admire them anyway. Kit explains who each animal was. |
+| Tipsy | You know they're actors, mostly. Bill's raspberry gets you square in the face and you laugh too hard to care. |
+| Stoned | The actors keep slipping away. For long moments it is just an otter and a kid, running. |
+| Tripping | You do not see actors. You see Bill, Snerfy and the prairie dogs, alive in the dark. Only afterwards, when the masks come off, do you learn they were performers, and you may not believe it. |
+
+**Choices:**
+- **Sit with "Bill" a while** (no roll). He paces, blows a raspberry at you, then sits down near you. Sober players see an actor holding stillness beautifully; tripping players see Bill. (`sat_with_bill`)
+- **Run the fence with "Snerfy"** (Burly 7). Success: you and the otter-player race the length of the clearing and stop at the end, delighted. Kit goes quiet, then tells you the real story. Failure: you trip over a prairie dog, who is outraged in a very small voice.
+- **Shoo off the teenagers heckling the show** (Rizz 7). Success: they leave, or join in. Failure: "Bill" handles it, with a very convincing prop, and excellent aim.
+
+**After the performance:**
+- Kit tells Snerfy's story in her own words: the old pen, the running, the excited moment at each end.
+- One honest note about Bill: a life among people, then a circus, then about fifty years behind glass, and a town that loved him anyway. It is bittersweet, without a lecture.
+- The finger painting: the actor playing Bill hands you a finger painting "he" made, which shows a Humboldt that hasn't happened yet. That is the card's one sliver of real magic, and it is the same in every lens.
+
+### Optional: Kit's mystical journey
+
+A quieter alternative for players who have earned Kit's trust (her optimal-path thread): she takes you to the newer otter habitat after dark, and on a mystical night you glimpse the old pen and a small otter keeping pace with her younger self. It is a vision, signposted as one, and never treated as the animals literally returning.
+
+- **Care:** these are real animals and real memories, and the scene should be tender and funny, never cruel or grim about captivity. Bill's part carries the honest bittersweetness; Snerfy and the prairie dogs are joy. Silas's memories are credited in the project notes.
 
 ### Luffenholtz and Baker Beach: "Dress Code" (Ch 2)
 - **The place:** Luffenholtz is a rocky cove south of Trinidad, with tide pools and surfing. The clothing-optional beach is **Baker Beach**, half a mile north (confirmed by Silas).
