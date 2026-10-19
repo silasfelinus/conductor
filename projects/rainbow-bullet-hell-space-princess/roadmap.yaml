@@ -815,7 +815,7 @@ tasks:
   - id: t-025
     milestone: m4
     title: "A space-opera score: orchestral renditions of every cue, then ACE-Step takes"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     approved_by_human: true
@@ -829,8 +829,12 @@ tasks:
       queued as ACE-Step ArtJobs #40796-#40816 (rainbowRecordedScore.ts briefs); when they render,
       review each take and swap it in (source 'ace', its ArtJob id). Done when the orchestral score is on
       main; the ACE swap is its own follow-up.
+
+      Done 2026-10-19: kind_robots#3865 merged (654ec2d); all 21 orchestral cues play in the
+      cabinet with the chiptune as fallback. ACE-Step takes #40796-#40816 still PENDING
+      (render box idle); swapping them in is a follow-up once rendered.
     owner: worker
     claimed_by: 2026-10-19T1030Z-rainbow-playtest-2
     claimed_at: '2026-10-19T10:30:00Z'
-    updated: '2026-10-19T11:15:00Z'
+    updated: '2026-10-19T11:14:22Z'
     implementation_pr: 'silasfelinus/kind_robots#3865'
