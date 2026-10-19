@@ -92,3 +92,7 @@ Implementation may add more *in-game* milestones in a separate expanded gallery 
 - The eventual consumer feature work **must** derive from the reusable Shifting Lands/Desks primitives, not clone their Pinia stores/ID namespaces, and should add an Ecotone-specific browser test for both the board and endings.
 - Existing `t-004` creative/art gate and `t-007` publish gate remain; these requirements do **not** authorize generating badge/icon/ending images.
 - These are work acceptance criteria, not a claim that Ecotone currently has a public playable screen or working achievements.
+
+## Other Roads discovery remains separate from Endings X/32 (2026-10-19)
+
+Cocaine, meth, and MDMA are voluntary adult narrative detours that deliberately **stop before** county-fate resolution. In any viewport, the player may find an accessible compact **Other Roads** Journal/Extras entry with three spoiler-safe mini-adventures, separately tracking any actually completed side vignette. **Never inflate Endings X/32** or the global main-final-ending achievements; detour completion is not main ending completion, and selecting a chemical must not auto-award site badges. Distinct optional festival choice or clearly warned mid-run off-ramp; retaining main route if declined; one bounded screen, no page scroll, safe Close/Continue/New Game controls. Full authoring and engine contract: [OPTIONAL-DETOURS.md](OPTIONAL-DETOURS.md).
