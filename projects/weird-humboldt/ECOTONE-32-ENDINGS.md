@@ -20,7 +20,7 @@
 | **juniper** | tipsy | **Common Ground Jubilee** · `juniper.tipsy.hope`: Festival alliance endows open shared forest space | **Festival Fence** · `juniper.tipsy.dark`: Forest access sold to a luxury venue |
 | **juniper** | stoned | **Living Patchwork** · `juniper.stoned.hope`: Restoration and local livelihoods grow together | **Evergreen Dream** · `juniper.stoned.dark`: Pretty pledges hide runoff and neglected habitat |
 | **juniper** | tripping | **Doors in the Roots** · `juniper.tripping.hope`: Verified magical crossings protected for all neighbors | **Mirror Grove** · `juniper.tripping.dark`: Private gatekeepers strand people between forests |
-| **kit** | sober | **Workshop Charter** · `kit.sober.hope`: Fair-paid public arts workshop preserves real history | **Museum of Return** · `kit.sober.dark`: Plaques survive as artists lose housing |
+| **kit** | sober | **Workshop Charter** · `kit.sober.hope`: Fair-paid public arts workshop preserves real history | **Museum Without Makers** · `kit.sober.dark`: Plaques survive as artists lose housing |
 | **kit** | tipsy | **Carnival of Makers** · `kit.tipsy.hope`: Kinetic performance grows into a durable local institution | **Sponsored Spectacle** · `kit.tipsy.dark`: A corporation buys the party's identity |
 | **kit** | stoned | **Handmade City** · `kit.stoned.hope`: Artists secure cooperative housing and build space | **Creative Exodus** · `kit.stoned.dark`: Their artistry is repackaged as luxury branding |
 | **kit** | tripping | **Machine of Belonging** · `kit.tripping.hope`: Impossible kinetic art reveals choices without rewriting history | **Perfect Replica** · `kit.tripping.dark`: A counterfeit Humboldt displaces living culture |
