@@ -31,3 +31,8 @@ Append-only reviewer/worker notes. Project created 2026-10-19 PT; no entries yet
   (248817), now on kind_robots#3870. This covers #6358's t-030 requeue. The stale 40848/40849/40852/40853 renders
   are not exported. The house lane barely changes Kit's look between the old and new prompts, and still paints
   glowing orbs instead of juggling clubs.
+
+## 2026-10-19 reviewer: #6358 (Hmong Kit, Hispanic father for Cedar) merged
+- Branch conflicted with main (#6357/#6359 had already rendered and exported the revised Kit/Cedar portraits). Resolved by keeping main's ArtJobs/keepers ledger, keeping the PR's revised prompts and cast-canon docs, and dropping the now-moot t-030 requeue task.
+- Pattern: worker branches that touch `art/ROUND-1.yaml` and `roadmap.yaml` collide with concurrent art close-outs; fetch main before writing art-ledger notes.
+- Left open on purpose: #6321 (Emperor of Dust concept art) holds an explicit human art-direction gate for Silas.
