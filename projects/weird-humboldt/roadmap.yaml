@@ -327,7 +327,7 @@ tasks:
   - id: t-006
     milestone: m4
     title: "Develop art direction and queue project icon, card, hero and encounter art"
-    status: review
+    status: done
     owner: reviewer
     claimed_by: 2026-10-19T20:11:47Z-ecotone-play
     claimed_at: '2026-10-19T20:11:47Z'
@@ -344,6 +344,11 @@ tasks:
       them to kind_robots public/ecotone/ (the /play/ecotone board overlays
       them on its drawn scenes) and projects/images/weird-humboldt-*.webp.
       Ending-signature art stays behind Keep/Modify/Reject prompt review.
+      DONE 2026-10-19 PT: all 30 cells rendered (6 were rerolls, ArtJobs
+      40865-40870). 19 reviewed keepers (art/ROUND-1.yaml `keepers:`) are
+      live in kind_robots#3870 under public/ecotone/, and project
+      icon/card/hero are in projects/images/. The ch6 dragon is a
+      provisional keeper.
   - id: t-007
     milestone: m5
     title: "Deliver integrated preview, simulated balance, accessibility and launch review"
@@ -797,3 +802,6 @@ tasks:
       real finales exist. Text from SAMPLE-CARDS.md and
       COMPANIONS-AND-PROLOGUE.md. The full engine (t-005/t-022) and 120 cards
       (t-003) replace this slice later.
+      2026-10-19 PT: kind_robots#3870 open with art round 1 overlaid.
+      Playwright at 390x844, 768x1024 and 1440x900 showed 0 document
+      overflow in every state, and the run survives a reload.
