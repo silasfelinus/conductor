@@ -1,6 +1,6 @@
 # Ecotone: the seeded journey loop and companion crossroads
 
-**Authoritative user-directed structure, 2026-10-19 PT. Design only; no art, Play implementation or publication authorized.** This replaces any suggestion that the player selects an arbitrary companion as soon as the prelude ends. The *initial companion is determined by the freely chosen opening state*. Later companion changes happen only during **authored encounters** with the other companions.
+**Updated seven-lens user-directed structure, 2026-10-19 PT. Design only; no art, Play implementation or publication authorized.** This replaces any suggestion that the player selects an arbitrary companion as soon as the prelude ends. The *first companion is introduced by the freely chosen opening state and its scripted scene*, then later changes happen through authored crossroads. The original four opening-to-guide mappings are retained; the three added openings need their own written first-guide meetings. Later companion changes happen only during **authored encounters** with the other companions.
 
 ## One adventure, two layers
 
@@ -16,6 +16,9 @@
 | Tipsy | Kit |
 | Stoned | Juniper |
 | Tripping Balls | Cedar (working name) |
+| Cocaine | One established companion, introduced through a newly authored scene (TBD) |
+| Meth | One established companion, introduced through a newly authored scene (TBD) |
+| MDMA | One established companion, introduced through a newly authored scene (TBD) |
 
 These are **initial meetings, not permanent lead assignments**. The protagonist chooses whether to accompany this character as the initial guide; declining must still launch a playable solo/catch-up track and produce opportunities to join companions later. `opening_state` stays fixed as the story lens and collectible-ending dimension. `current_state` and `clarity` can evolve naturally; the user does not have to remain intoxicated, and all essential facts, hopeful trajectories and potential followers are reachable when the player is sober.
 
@@ -68,7 +71,7 @@ Both players **finish with Cedar** and both eventually achieve a locally account
 
 Those four paths have **four different collectible Cedar hopeful ending IDs** because their `opening_state` differs, but should also vary internally based on **meeting order and side-card flags**. Two runs with the **same** opening and final lead still get recognizable different callback paragraphs, people and civic details based on their encounter order; such variation is not a 33rd collectible ending.
 
-## How 32 endings resolve
+## How 56 journey signatures resolve
 
 `ending_id = final_lead + "." + opening_lens + "." + outcome`, with 4 active final leads × 4 opening lenses × earned hope/dark = **32 stable collectible outcomes (16 of each)**. `final_lead` means the **last actively followed companion**, not the companion initially introduced. A solo path must get an authored, explicit rejoin/commit choice before the finale, or define a deterministic compatible fallback without inventing a new 33rd ending; do not silently assign an unseen lead. The screenplay must make the commitment legible.
 
@@ -105,18 +108,14 @@ type JourneyState = {
 1. All four first meetings are correct for the prelude; no separate initial companion picker. The next three first-time companion meetings form one consistent shuffled permutation of the *remaining three*, never a duplicate in the mandatory beats.
 2. Stay, switch and leave-behind decisions persist and alter the next authored chapter and finale. Every `opening_state × final_lead` is naturally reachable via offered companion meetings, and both hope/dark are reachable through valid choices/rolls.
 3. Two journeys with the same seed and choices produce the same encounter/meeting order/check outcomes after save/reload. Different seeds demonstrably produce varied side encounters and multiple companion permutations without deadlocked anchor beats.
-4. All 32 ending IDs are naturally reachable (and 16/16 hopeful/dark), not injected into a fake save; every lens still has hopeful paths and no substance-specific universal penalty.
+4. All 56 ending IDs are naturally reachable (and 28/28 hopeful/dark), not injected into a fake save; every lens still has hopeful paths and no substance-specific universal penalty.
 5. Stats and earned resources change through side cards and affect later rolls, reactions and outcome eligibility, while all reachable story content remains authored and no massive stat inflation bypasses decisions.
 6. Nondefault companion order/relationships yield real different dialogue/callbacks at later fixed scenes and in 1/10/30-year epilogues, **without** multiplying the collectible ending count.
 7. Each companion has a realistic full personal arc even when followed at the last guaranteed crossroad; if content needs extra deterministic anchor scenes, include them.
-8. One-screen mobile/tablet/desktop game board survives all cards, crossroad decisions, dice UI, Companion/Journal/Endings tabs and the 32-slot gallery. Only internal bounded panes scroll.
+8. One-screen mobile/tablet/desktop game board survives all cards, crossroad decisions, dice UI, Companion/Journal/Endings tabs and the 56-slot gallery. Only internal bounded panes scroll.
 9. The ten civic future motifs remain optional world-state settings. Real historical atrocities and Luna's record never change. Existing cultural boundaries remain.
 10. Preserve user creative gates: text/design is allowed; **no art queue, unapproved gameplay deployment or publication**.
 
-## Optional finite detours during the companion journey (2026-10-19)
+## Three additional full opening lenses and optional choice-driven short roads (2026-10-19)
 
-Silas added **three voluntary Other Roads mini-adventures**, Cocaine / Meth / MDMA, whose fictional stories end *before* the grand county-fate convergence. They are available at a separate festival entry **instead** of the four main opening states, or as a few authored **mid-run off-ramps**. The current main loop still begins Sober→Mara, Tipsy→Kit, Stoned→Juniper, Tripping→Cedar, then seeded side cards and guaranteed **Stay / Follow** crossroads: no fifth guide and no free initial leader picker.
-
-**If choosing a later detour:** present a clear opt-in and an explicit Keep Following the County choice, explain that accepting this short story ends the current main run early, and preserve the original opening, last followed companion and relationship history only for this side-story callback. Record route_kind=detour / detour_source=mid_run and stop the main finale resolver. **If declining:** the seeded journey and all 32 finale outcomes remain available. **If choosing a detour at the festival instead:** do not assign a false opening_state or first companion.
-
-A detour end may be personally heartening, particularly MDMA's connection story, but **cannot award a main good or bad county ending, an X/32 unlock, or the shared main-ending badges**. No players are involuntarily given drugs; no drug route is required for core evidence. Each short scripted arc has its own terminal vignette, separate optional Journal discovery and accessible one-screen play. This is storytelling, not clinical claims that cocaine, meth, or MDMA inevitably cause behavior or doom. Source of truth: [OPTIONAL-DETOURS.md](OPTIONAL-DETOURS.md).
+**Supersedes the mandatory detour design.** Cocaine, meth and MDMA are now three **full valid opening lenses**, not three forced terminal side stories. Their first guide is revealed through an authored scene featuring one of the four companions; the remaining three companions still appear through seeded guaranteed Stay/Follow encounters. All three openings can lead to any final companion and either hope/dark fate. A voluntary **short road** may be taken from any opening when it is earned by decisions and clearly offered, but the opening drug never automatically ends the journey. The new total is **56** main collectible IDs (28 hopeful/dark), with **8 curated core finales + 56 distinct paragraph/image-prompt signatures + selected real-choice callbacks**. Do not require 56 full independent 1/10/30-year epilogue sequences. See [ECOTONE-ENDING-GRAMMAR.md](ECOTONE-ENDING-GRAMMAR.md) and revised [OPTIONAL-DETOURS.md](OPTIONAL-DETOURS.md). Single-screen, art and publication gates unchanged.
