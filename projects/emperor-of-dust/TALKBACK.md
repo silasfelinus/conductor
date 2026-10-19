@@ -23,3 +23,9 @@
 **Decision:** Silas approved every v0.3 design call: "love everything, especially brass. all approved". Brass, the five stats, the five local and ten kingdom factions and Komodo's motive are no longer provisional.
 
 **New direction:** "given the nature of passing and failing quests, we should have a robust load/save system, and allow the player the option to rewind to previous days (though random events will stay random, another pass will not create the same events necessarily)". Recorded in SYSTEMS-V03.md "Saves, load and rewind": autosave, a dawn snapshot per day, rewind to any earlier dawn on a new random branch, three manual slots, Codex and Items of Power never rolled back, validated saves that never overwrite unreadable data. Built into t-019's engine.
+
+## 2026-10-19 | Reviewer → Silas | review | PR #6321 concept-art gallery (held for human art gate)
+
+**Audit:** 12 new files, all under `projects/emperor-of-dust/concept-art/` (11 SVGs + README). No `<script>`, event handlers or external hrefs in any SVG; no runtime, data, ArtJob, deploy or publication change. Reversible and scoped, and README handoff matches MAP-LAYOUT.md / SYSTEMS-V03.md.
+
+**Decision:** not merged. The PR declares subjective art-direction approval reserved for Silas (content/outward-facing gate); t-010 also keeps public Play release separate. Leave open until Silas accepts or modifies the compositions. Approval here does not approve the 246-image t-012 batch.
