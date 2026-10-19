@@ -9,8 +9,9 @@ goal: >-
   Shifting Desks. At least 120 fully written encounter cards across six regional
   chapters with 2-4 meaningful choices, visible 2d6 skill checks, persistent
   consequences, distinct Humboldt archetypes, a seeded save/resume system,
-  a county-wide fate-shaping story with optional hidden mystery, 32 authored
-  endings (16 hopeful and 16 dark) by lead companion and opening lens,
+  a county-wide fate-shaping story with optional hidden mystery, 56 collectible
+  journey signatures (28 hopeful and 28 dark) assembled from curated core
+  futures, opening/final companion text-art callbacks and earned choices,
   and a polished responsive
   one-screen Play experience. Final art direction and any public release remain
   subject to Silas's later explicit creative approval.
@@ -78,6 +79,27 @@ notes_from_silas: |
   no supernatural power or stat bonus. Four independent companions remain
   available in all runs. COMPANIONS-AND-PROLOGUE.md owns character details.
   NO ART or public release authorized.
+  LATEST 2026-10-19 PT: Seven adult fictional opening choices
+  (sober/tipsy/stoned/tripping/cocaine/meth/mdma) all permit the
+  full companion Stay/Follow journey and BOTH earned fates.
+  Exactly 7 x 4 x 2 = 56 collectible IDs, split 28 hopeful/dark;
+  preserve all 32 original IDs and add 24. Replace former
+  obligatory three chemical dead ends with legitimate routes.
+  EFFICIENT FINALE GRAMMAR: 8 fully authored companion x fate
+  core epilogues with 1/10/30-year beats, 56 signature PARAGRAPHS
+  and separately reviewed visual/art prompts (24 new), and 0-2
+  truthful causally important callback moments. Only selected
+  interacting 2-choice flags deserve four (2x2) payoff cases.
+  These variations do NOT add extra collectible ending IDs.
+  Keep 120+ curated side cards and true seeded Stay/Follow history.
+  LLMs can propose many unexpected hopeful/dark ideas; use
+  automatic dedupe/validation, actual path simulations and
+  human Keep/Modify/Reject review of finales and prompts.
+  Art may be cheap but concept, prompt continuity, and QA are
+  real editorial/computational debts. No ART or release approval.
+  Contract: ECOTONE-ENDING-GRAMMAR.md. UI Endings X/56,
+  completion badge 56/56, one viewport surface all devices.
+
   NEWEST 2026-10-19 OPTIONAL CHEMICAL DETOURS: Cocaine, meth and MDMA
   may be chosen voluntarily as an Other Roads off-ramp INSTEAD OF the
   canonical four-way beginning OR later from a clear main-run opt-in.
@@ -402,7 +424,7 @@ tasks:
       all archetypes, 120 encounter seed IDs and characters remain. No art.
   - id: t-012
     milestone: m2
-    title: "Design 32 distinct Ecotone outcomes and ten scenario motifs"
+    title: "Design 56 modular outcome signatures and ten county motifs"
     status: waiting
     depends_on: t-011
     owner: null
@@ -412,7 +434,7 @@ tasks:
       Expand ECOTONE-ENDINGS.md into validated authored 1-/10-/30-year
       variants: ecology, housing, livelihoods, local agency and reality
       stability with character-specific payoff. Ten older future
-      scenarios are noncollectible backdrops. Define 32 distinct
+      scenarios are noncollectible backdrops. Define 56 distinct
       lead/opening/hope-or-dark IDs and outcome callbacks per
       ECOTONE-32-ENDINGS.md, not an ideological virtue meter.
       Integrate companion optimal arcs and earned callbacks per
@@ -457,7 +479,7 @@ tasks:
       No Kind Robots deploy or new artwork on this design task.
   - id: t-015
     milestone: m4
-    title: "Build persistent 32-ending gallery and Kind Robots achievements"
+    title: "Build persistent 56-signature gallery and Kind Robots achievements"
     status: waiting
     depends_on: [t-005, t-012, t-014, t-020]
     owner: null
@@ -465,10 +487,10 @@ tasks:
     stakes: reversible
     note: >-
       Implement in Kind Robots when engine/endings contract is ready.
-      Show Endings X/32 in compact game toolbar and a single-screen
-      accessible tab/dialog, eight slots per lead and two per opening,
-      16 hopeful and 16 dark; unlocked 1/10/30-year epilogues and
-      secret-safe silhouettes, with stable ECOTONE-32-ENDINGS.md IDs. Persist a separate
+      Show Endings X/56 in compact game toolbar and a single-screen
+      accessible tab/dialog, fourteen slots per lead and two per opening,
+      28 hopeful and 28 dark; unlocked 1/10/30-year epilogues and
+      secret-safe silhouettes, with stable ECOTONE-ENDING-GRAMMAR.md IDs. Persist a separate
       versioned unlock ledger across refresh/new run, with deduplication
       and no spoiler leaks. Integrate three game achievements into the
       shared achievements catalog, not a bespoke rewards backend.
@@ -484,12 +506,12 @@ tasks:
     stakes: reversible
     note: >-
       Extend Kind Robots Cypress/browser verification to use real
-      engine-reached saves covering all 32 endings and every
+      engine-reached saves covering all 56 endings and all seven opening lenses and every
       lead x opening pairing with both fates, across phone 320/375/390, tablet 768/820,
       short-landscape 1024/1280 and desktop 1440/1920 sizes. No
       document-level vertical/horizontal scroll on any main tab,
       choice/outcome or endings gallery screen; long text may scroll
-      solely inside controlled bounded panels. Verify unlock count,
+      solely inside controlled bounded panels. Verify 56/56 unlock count and conditional callbacks,
       locked spoilers, persistent across new runs/localStorage reload,
       duplicate award prevention, keyboard/touch/focus, reduced motion,
       art failure fallback. Do not treat static CSS inspection or
@@ -526,7 +548,7 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Exercise four companion optimum paths across the four festival
+      Exercise four companion optimum paths across all seven festival
       starting states and eight archetypes in seeded full runs,
       including declining the initial introduction and later meeting.
       Proof must use naturally resolved decisions, real flags
@@ -535,23 +557,25 @@ tasks:
       county ending and personal epilogue, never dependent on a
       check or intoxication. Every run's choices affect the future,
       including meaningful hopeful repair amid horror or dystopia.
-      The 32 canonical Endings gallery slots are distinct from ten
+      The 56 canonical Endings gallery slots are distinct from ten
       background county motifs and four companion journal threads. No art or public release.
   - id: t-019
     milestone: m1
-    title: "Validate 32 fates through prelude-mapped guides and companion crossroads"
+    title: "Validate 56 fates through seven opening lenses and companion crossroads"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Define 32 stable lead.opening.fate IDs, 16 hopeful/16 dark.
-      Opening state maps to initial Mara/Kit/Juniper/Cedar encounter;
+      Define 56 stable lead.opening.fate IDs, 28 hopeful/28 dark.
+      The original 4 states map to Mara/Kit/Juniper/Cedar;
+      three new lenses each receive an authored first guide
+      introduction without forcing one of the four.
       there is NO independent initial companion picker. Three
       guaranteed later first meetings of remaining main characters
       arrive in seeded variable order; at each, choose stay or
       leave previous guide to FOLLOW the newcomer. This yields
-      16 final companion x opening combinations with meaningful
+      28 final companion x opening combinations with meaningful
       both hopeful and dark resolutions and saved route order. No substance-as-morality
       mechanics, no extra 10 collectible county motifs. Cedar's
       four optimistic storylines explicitly build ethical high-tech
@@ -559,38 +583,43 @@ tasks:
       See ECOTONE-32-ENDINGS.md. Design only, no art.
   - id: t-020
     milestone: m2
-    title: "Author 32 independent companion-lens fate epilogues"
+    title: "Author 8 core futures and 56 short ending signature paragraphs"
     status: waiting
     depends_on: [t-019, t-012, t-017]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Turn the 32 matrix pitches into separate complete story records:
-      each has named finale and 1/10/30-year coda (96 time beats).
+      Author eight complete companion x fate core epilogue spines,
+      each with a 1/10/30-year coda (24 core beats), plus 56
+      distinctly meaningful opening/final-companion/fate paragraph
+      signatures and reviewed image prompt BRIEFS (24 new variants).
       Avoid copy/paste adjective swaps. Show companion motivations,
       habitat and jobs, background motifs and specific choices.
-      Four Cedar good paths center distinct ethical technoutopias;
-      four dark ones portray distinct extractive-tech failures.
-      His parents remain together. No new art or release.
+      Seven Cedar good paths center distinct ethical technoutopias;
+      seven dark ones portray distinct extractive-tech failures.
+      His parents remain together. No image generation or release until creative approval.
+      Signature paragraphs must honor actual route histories;
+      authors design unique images/prompts only for meaningful beats.
   - id: t-021
     milestone: m3
-    title: "Test every one of 32 earned endings and gallery persistence"
+    title: "Test all 56 earned signature endings and causal callbacks"
     status: waiting
     depends_on: [t-019, t-020, t-005, t-018, t-022]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Seeded real choices/checks must reach both fates for each
-      final lead x opening lens, via real stay/follow decisions
+      Seeded real choices/checks must reach both fates for each of seven openings x four
+      final companions, via real stay/follow decisions
       after the correct initial companion and mandatory encounters
       with other main characters in varied order. Reproduce side
-      draws, stat changes, save/reload and failure-repair paths. Assert exactly 32 IDs, 16 hope/16 dark,
-      eight per lead and eight per opening. Prove reload/new-run
+      draws, stat changes, save/reload and failure-repair paths. Assert exactly 56 IDs, 28 hope/28 dark,
+      fourteen per lead and eight per opening. Prove reload/new-run
       unlock dedupe, locked-spoiler safety, epilogue recall,
       parents-together invariant, sober positive routes and shared
-      global 32/32 achievement. Coordinate t-016 one-screen
+      global 56/56 achievement. Verify 2x2 payoff combinations from saved choice flags and
+      no invented callbacks. Coordinate t-016 one-screen
       browser QA, and preserve art/publication gates.
   - id: t-022
     milestone: m3
@@ -618,7 +647,7 @@ tasks:
       opening lenses; human art/publishing gate still applies.
   - id: t-024
     milestone: m2
-    title: "Author optional cocaine, meth and MDMA detour experiences"
+    title: "Author full cocaine, meth and MDMA opening-lens journeys"
     status: waiting
     depends_on: [t-005, t-019, t-022]
   - id: t-023
@@ -630,40 +659,37 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Text-first roadmap work per OPTIONAL-DETOURS.md. For each
-      of three adult-only voluntary routes, write 3-7 distinct
-      authored side-cards with real choice/check alternatives,
-      a short terminal vignette and optional human-scale closure
-      variations. Offer as a separate festival Other Roads entry
-      or a clearly warned mid-run opt-in; all three stop before
-      the county-fate convergence and cannot yield any of the
-      32 main endings. MDMA may yield meaningful emotional growth
-      or kindness without completing the civic mission. No
+      Text-first roadmap work per OPTIONAL-DETOURS.md. For each of the three voluntary adult opening lenses, author
+      a full route to the county-fate convergence with its own
+      first-companion introduction and seeded Stay/Follow junctions.
+      Each of the 3 x 4 lead combinations can reach either fate,
+      contributing 24 real new signature endings. Optional early
+      story conclusions are allowed only by the actual player's
+      choices, not assigned to a chemical. MDMA may be heartfelt,
+      cocaine or meth paths can support ethical and hopeful futures. No
       demonization of meth users, class stereotypes, forced
       dosing, consumption guides, clinical claims or moral scores.
       Preserve 120 main cards; no art or public release.
   - id: t-025
     milestone: m3
-    title: "Test detour route isolation, truthful unlocks and one-screen UI"
+    title: "Test new opening-lens reachability, callbacks and one-screen UI"
     status: waiting
-    depends_on: [t-024, t-016]
+    depends_on: [t-024, t-016, t-027]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Route_kind detour carries independent detour_id/source,
-      previous opening/companion for mid-run callback only.
-      A direct festival detour must not fabricate an official
-      opening state or initial follower. Reject an offered
-      detour and all 32 main finales remain naturally
-      reachable. Accept one and the short seeded route
-      terminates with no main ending ID, hope/dark fate,
-      global first-ending badge or all-32 collection badge.
-      Optional Other Roads discovery cannot inflate X/32.
-      Cover replay/save/reload, spoiler-safe journal, informed
-      irreversible decision, touch/keyboard affordances and
-      a viewport-fitted no-document-scroll surface on mobile,
-      tablet and desktop. No art or deployment bypass.
+      For each cocaine/meth/mdma opening, verify all four final
+      companions and both hope/dark resolution paths using actual
+      authored seeded choices and rolls. No drug is forced into
+      an early terminal state. A mid-run chemical choice changes
+      current_state but not immutable opening_state or signature ID.
+      Across all 56 prove saved-route callback integrity, 2x2
+      pair-case reachability, no fabricated follow history, no
+      false awards, correct 56/56 collection ledger and absence
+      of spoilers. All epilogue panels remain one-screen on phone,
+      tablet and desktop with only bounded inner scroll.
+      Maintain art and publication human gates.
       Use IDEOLOGICAL-ECOTONES.md to write and check value conflicts:
       Autonomy/Solidarity, Continuity/Reinvention, Ecology/Engineering,
       Agency/Fate. Each companion crosses at least two tensions with
@@ -671,9 +697,63 @@ tasks:
       substance or chosen companion a mandatory political ideology.
       The four voluntary opening-state lenses foreground distinct
       questions, never force a stance or good/dark outcome. All
-      sixteen lead x opening paths need a credible two-sided stakes
+      all 56 lead x opening x final paths need a credible two-sided stakes
       scene and an earned hybrid choice or meaningful counterargument.
-      Track concrete civic commitments and verified evidence rather
-      than hidden party or virtue points. Keep the 32-ending registry,
-      Cedar technoutopia, parents' marriage, sober parity, one-screen
-      interface and no-art/no-release approvals unchanged.
+  - id: t-026
+    milestone: m2
+    title: "Specify modular finale assembly and 56 ending signatures"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Apply ECOTONE-ENDING-GRAMMAR.md. Keep 8 fully written
+      final companion x hope/dark 1/10/30-year core spines,
+      56 distinct opening x final companion x fate signature
+      paragraphs with art concept prompts, and a small verified
+      selection of optional causal callbacks. The older 32
+      IDs remain stable; 24 new lens variants are added.
+      Scope value-to-debt, conditional truth provenance and
+      one-screen montage. Do not impose 56 triple epilogues
+      or generate images without the human art gate.
+  - id: t-027
+    milestone: m2
+    title: "Generate and curate high-value middle encounters and art briefs"
+    status: waiting
+    depends_on: [t-026, t-022]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Let an LLM generate diverse unexpected ethical/moral
+      counterexamples, short encounter candidates and
+      conclusion image prompt briefs outside gameplay.
+      Convert to inspectable stable records with prerequisites,
+      two to four consequences, verified choice provenance and
+      Keep/Modify/Reject curation. Auto-dedupe, check political
+      or chemical stereotypes and factual/historical boundaries.
+      Select cards and image prompts by narrative leverage
+      against editorial and computational debt, rather
+      than quantity. Never publish generated prose or
+      enqueue image generation without creative approval.
+  - id: t-028
+    milestone: m3
+    title: "Validate 2x2 ending callbacks and eight-core composition"
+    status: waiting
+    depends_on: [t-026, t-027, t-021]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      For selected genuinely interacting pairs of binary
+      choices, prove all four actual earned flag combinations
+      yield the matching line, prompt selection and alt text;
+      no impossible or contradictory combinations. Each of
+      56 main ending IDs resolves exactly one eight-core
+      future with its earned signature and at most two
+      source-backed callbacks, with no extra unlocks for
+      alternate images/paragraphs. Validate saved provenance,
+      dynamic-length and one-screen visual layout, no
+      ideology or substance morality gates, Cedar family
+      invariant and 56/56 gallery completion. No art
+      or public release approval.
