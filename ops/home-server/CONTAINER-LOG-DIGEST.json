@@ -1,1818 +1,504 @@
 {
-  "generated_at": "2026-10-18T14:00:02.237456+00:00",
+  "generated_at": "2026-10-19T14:00:01.482928+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 3280,
-      "fingerprint": "ac0e30c87dd9",
-      "sample": "time=2026-10-18T06:59:39.489-07:00 level=error msg=\"check failed: error on HTTP request to 'http://172.21.0.26:80/status': Get \\\"http://172.21.0.26:80/status\\\": jobmgr containment: attempt superseded\"",
+      "container": "qbit",
+      "count": 160,
+      "fingerprint": "b51302f9d222",
+      "sample": "Mon Oct 19 00:12:53 2026 RESOLVE: Cannot resolve host address: us-california.privacy.network:1197 (Temporary failure in name resolution)",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str><url> jobmgr containment: attempt superseded\" plugin=go.d collector=nginx job=docker_media config_source=discovered/sd:docker"
+      "skeleton": "<ts> resolve: cannot resolve host address: us-california.privacy.network:<num> (temporary failure in name resolution)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 19,
-      "fingerprint": "e3a5ac6f15b7",
-      "sample": "time=2026-10-18T06:59:41.134-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564085 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num> error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 12,
-      "fingerprint": "353cd2aadd3b",
-      "sample": "time=2026-10-18T06:59:39.654-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563470 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.858\u00b5s error=<str>"
+      "container": "qbit",
+      "count": 80,
+      "fingerprint": "d00417be0245",
+      "sample": "Mon Oct 19 00:13:11 2026 Could not determine IPv4/IPv6 protocol",
+      "severity": "other",
+      "skeleton": "<ts> could not determine ipv4/ipv6 protocol"
     },
     {
       "baseline": null,
       "container": "netdata",
       "count": 10,
-      "fingerprint": "986000065919",
-      "sample": "time=2026-10-18T06:59:40.103-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563560 run_generation=1 resource=nginx_docker_media state=job co",
+      "fingerprint": "4ca12755cdfb",
+      "sample": "time=2026-10-19T06:59:42.212-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51347833 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.354\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.121\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 10,
-      "fingerprint": "c6e1fb896426",
-      "sample": "time=2026-10-18T06:59:40.159-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563572 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.46\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 10,
-      "fingerprint": "f97998b877e5",
-      "sample": "time=2026-10-18T06:59:41.269-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564267 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.244\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 10,
-      "fingerprint": "eecd57d6713c",
-      "sample": "time=2026-10-18T06:59:41.371-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564415 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.794\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 10,
-      "fingerprint": "b2b59f280228",
-      "sample": "time=2026-10-18T06:59:41.822-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564794 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.844\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 9,
-      "fingerprint": "08a73ff2d63e",
-      "sample": "time=2026-10-18T06:59:40.177-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563575 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.224\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 9,
-      "fingerprint": "454d99c25572",
-      "sample": "time=2026-10-18T06:59:44.168-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565301 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.916\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 9,
-      "fingerprint": "1410dca7d5f0",
-      "sample": "time=2026-10-18T06:59:46.334-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566463 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.269\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 9,
-      "fingerprint": "db11dc8b9397",
-      "sample": "time=2026-10-18T06:59:46.779-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566559 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.067\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "9978eb236bfd",
-      "sample": "time=2026-10-18T06:59:39.948-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563527 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.575\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "3f6e4d5a254e",
-      "sample": "time=2026-10-18T06:59:40.939-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563842 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.477\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "30a78e24ef70",
-      "sample": "time=2026-10-18T06:59:40.985-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563907 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.984\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "8e635aaecde2",
-      "sample": "time=2026-10-18T06:59:41.203-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564176 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.811\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "20a2d743e651",
-      "sample": "time=2026-10-18T06:59:41.263-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564258 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.393\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "49e7cf43fcaf",
-      "sample": "time=2026-10-18T06:59:41.749-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564776 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.745\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "018d7514bc1f",
-      "sample": "time=2026-10-18T06:59:43.719-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565211 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.642\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "d88398592cef",
-      "sample": "time=2026-10-18T06:59:45.458-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566172 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.047\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "29967b71817d",
-      "sample": "time=2026-10-18T06:59:40.332-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563614 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.926\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "e74b76997698",
-      "sample": "time=2026-10-18T06:59:40.496-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563644 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.172\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "61f9940499e6",
-      "sample": "time=2026-10-18T06:59:40.574-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563662 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.993\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "3a5dc5c4b71c",
-      "sample": "time=2026-10-18T06:59:40.901-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563776 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.552\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "b7a9ee934604",
-      "sample": "time=2026-10-18T06:59:40.916-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563803 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.322\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "89a2f6979939",
-      "sample": "time=2026-10-18T06:59:40.942-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563848 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.991\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "444112ccab3f",
-      "sample": "time=2026-10-18T06:59:40.962-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563873 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.588\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "b36589f56068",
-      "sample": "time=2026-10-18T06:59:40.972-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563888 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.582\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "5938fefa6b63",
-      "sample": "time=2026-10-18T06:59:40.974-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563891 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.288\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "906df677c20a",
-      "sample": "time=2026-10-18T06:59:40.976-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563894 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.624\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "02b942338944",
-      "sample": "time=2026-10-18T06:59:40.997-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563923 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.353\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "107a3f520a24",
-      "sample": "time=2026-10-18T06:59:41.014-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563941 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.105\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "e1f938dff12c",
-      "sample": "time=2026-10-18T06:59:41.243-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564231 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.54\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "01f5d587cd21",
-      "sample": "time=2026-10-18T06:59:41.439-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564512 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.153\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "f49e06322bad",
-      "sample": "time=2026-10-18T06:59:41.772-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564782 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.254\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "a6005f07eb36",
-      "sample": "time=2026-10-18T06:59:42.100-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564863 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.835\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "619d20a82c3b",
-      "sample": "time=2026-10-18T06:59:43.045-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565061 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.391\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "73c3cc040d54",
-      "sample": "time=2026-10-18T06:59:43.401-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565145 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.051\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "eec052d69541",
-      "sample": "time=2026-10-18T06:59:43.649-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565193 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.317\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "31d16a3f4690",
-      "sample": "time=2026-10-18T06:59:44.620-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565409 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.083\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "e7d5a1c4c051",
-      "sample": "time=2026-10-18T06:59:44.873-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565460 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.293\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "851dee6f9d49",
-      "sample": "time=2026-10-18T06:59:44.986-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565511 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.803\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "140bfa5be973",
-      "sample": "time=2026-10-18T06:59:45.013-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565556 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.45\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "c294bb66bf6c",
-      "sample": "time=2026-10-18T06:59:45.127-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565742 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.623\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "0f735fdc077e",
-      "sample": "time=2026-10-18T06:59:45.256-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565937 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.507\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "b5f83591bcaa",
-      "sample": "time=2026-10-18T06:59:45.466-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566187 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.349\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "54317038e7c6",
-      "sample": "time=2026-10-18T06:59:46.690-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566541 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.358\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "b0c3c2ae5082",
-      "sample": "time=2026-10-18T06:59:49.462-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17567720 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.12\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 7,
-      "fingerprint": "b93dbd4e1f73",
-      "sample": "time=2026-10-18T06:59:53.157-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17568753 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.279\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "9180bb246001",
-      "sample": "time=2026-10-18T06:59:39.505-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563437 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.665\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "a7f12476f612",
-      "sample": "time=2026-10-18T06:59:39.519-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563440 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.866\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "d1180c4e3606",
-      "sample": "time=2026-10-18T06:59:39.541-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563446 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.348\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "1fb08de62adf",
-      "sample": "time=2026-10-18T06:59:39.584-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563455 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.77\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "9a21c9d8baf1",
-      "sample": "time=2026-10-18T06:59:39.668-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563473 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.407\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "5c35093ce23d",
-      "sample": "time=2026-10-18T06:59:39.682-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563476 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.506\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "edf95b70dc20",
-      "sample": "time=2026-10-18T06:59:39.764-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563494 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.789\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "ba3421a668b2",
-      "sample": "time=2026-10-18T06:59:39.964-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563530 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.917\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "347e90c1325c",
-      "sample": "time=2026-10-18T06:59:40.204-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563581 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.639\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "9977da25ef9d",
-      "sample": "time=2026-10-18T06:59:40.359-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563620 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.513\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "1ac663216d3f",
-      "sample": "time=2026-10-18T06:59:40.535-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563653 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.659\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "533093f2258a",
-      "sample": "time=2026-10-18T06:59:40.604-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563668 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.961\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "66d5b1f5b52d",
-      "sample": "time=2026-10-18T06:59:40.719-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563695 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.534\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "9334489b0d22",
-      "sample": "time=2026-10-18T06:59:40.739-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563701 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.271\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "60000db8f182",
-      "sample": "time=2026-10-18T06:59:40.899-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563773 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.167\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "bd862356b360",
-      "sample": "time=2026-10-18T06:59:40.907-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563788 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.51\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "455378d5e39c",
-      "sample": "time=2026-10-18T06:59:40.913-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563797 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.91\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "15aa5a23a79f",
-      "sample": "time=2026-10-18T06:59:40.953-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563861 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.076\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "430eef31bd16",
-      "sample": "time=2026-10-18T06:59:40.966-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563876 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.593\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "6d391ce43934",
-      "sample": "time=2026-10-18T06:59:40.992-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563919 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.611\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "8df4461ee53c",
-      "sample": "time=2026-10-18T06:59:41.031-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563965 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.237\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "1f244edb86ad",
-      "sample": "time=2026-10-18T06:59:41.064-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564004 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.694\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "287b91af3ea0",
-      "sample": "time=2026-10-18T06:59:41.103-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564052 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.52\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "989fef711a97",
-      "sample": "time=2026-10-18T06:59:41.106-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564055 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.614\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "5ec8f59a51ba",
-      "sample": "time=2026-10-18T06:59:41.109-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564058 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.647\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "b7ac859fe037",
-      "sample": "time=2026-10-18T06:59:41.128-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564079 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.663\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "4d1dfaacfb9f",
-      "sample": "time=2026-10-18T06:59:41.130-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564082 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.864\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "0c15336aeb20",
-      "sample": "time=2026-10-18T06:59:41.153-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564104 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.022\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "ea4a027a4f60",
-      "sample": "time=2026-10-18T06:59:41.164-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564119 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.201\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "1a0ff175a948",
-      "sample": "time=2026-10-18T06:59:41.232-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564213 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.472\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "2d07e8398a53",
-      "sample": "time=2026-10-18T06:59:41.273-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564273 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.057\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "a2b8700415f2",
-      "sample": "time=2026-10-18T06:59:41.298-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564306 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.672\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "a0a7f0c17155",
-      "sample": "time=2026-10-18T06:59:41.312-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564330 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.361\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "af746c29c6db",
-      "sample": "time=2026-10-18T06:59:41.328-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564357 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.595\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "6d241744fa94",
-      "sample": "time=2026-10-18T06:59:41.375-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564421 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.955\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "451152013be9",
-      "sample": "time=2026-10-18T06:59:41.425-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564491 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.586\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "1afaa065f09e",
-      "sample": "time=2026-10-18T06:59:41.510-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564620 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.594\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "3b423417e3f3",
-      "sample": "time=2026-10-18T06:59:41.512-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564623 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.425\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "d08136307cda",
-      "sample": "time=2026-10-18T06:59:41.519-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564632 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.078\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "e032f96aad21",
-      "sample": "time=2026-10-18T06:59:41.532-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564653 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.216\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "89768db6fb4e",
-      "sample": "time=2026-10-18T06:59:41.538-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564665 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.028\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "c83031074215",
-      "sample": "time=2026-10-18T06:59:41.566-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564710 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.891\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "842f163b780d",
-      "sample": "time=2026-10-18T06:59:42.014-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564842 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.434\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "fa04c95bd115",
-      "sample": "time=2026-10-18T06:59:42.048-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564851 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.723\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "f43648f7ad52",
-      "sample": "time=2026-10-18T06:59:42.210-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564890 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.422\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "8d8195d5c955",
-      "sample": "time=2026-10-18T06:59:42.424-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564932 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.245\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "a5f95fdd8d1a",
-      "sample": "time=2026-10-18T06:59:43.171-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565091 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.198\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "2d68e3946071",
-      "sample": "time=2026-10-18T06:59:43.256-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565109 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.192\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "929b76b92cf2",
-      "sample": "time=2026-10-18T06:59:43.550-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565169 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.236\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "feec22843ce0",
-      "sample": "time=2026-10-18T06:59:44.150-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565298 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.175\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "4ad57d9ea431",
-      "sample": "time=2026-10-18T06:59:44.807-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565445 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.555\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "8a166583cdd1",
-      "sample": "time=2026-10-18T06:59:44.961-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565481 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.233\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "b4fb57bd132e",
-      "sample": "time=2026-10-18T06:59:45.052-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565613 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.02\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "52be440fa54e",
-      "sample": "time=2026-10-18T06:59:45.060-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565628 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.638\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "1ef4dd10c5f0",
-      "sample": "time=2026-10-18T06:59:45.125-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565739 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.934\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "2fa961ad2893",
-      "sample": "time=2026-10-18T06:59:45.155-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565787 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.149\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "255fe0e3d16c",
-      "sample": "time=2026-10-18T06:59:45.186-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565838 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.791\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "4a954b214b32",
-      "sample": "time=2026-10-18T06:59:45.243-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565922 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.712\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "3ce485aa4d73",
-      "sample": "time=2026-10-18T06:59:45.262-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565943 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.975\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "02a7c82794a3",
-      "sample": "time=2026-10-18T06:59:45.301-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565992 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.89\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "e1bd32e6701e",
-      "sample": "time=2026-10-18T06:59:45.513-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566259 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.214\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "1233b5f91327",
-      "sample": "time=2026-10-18T06:59:45.522-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566271 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.571\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "bf70072c09da",
-      "sample": "time=2026-10-18T06:59:45.607-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566292 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.103\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "df85459f4023",
-      "sample": "time=2026-10-18T06:59:45.815-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566346 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.544\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "83c36b7d9339",
-      "sample": "time=2026-10-18T06:59:46.748-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566553 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.546\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "3b902fe68adb",
-      "sample": "time=2026-10-18T06:59:46.794-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566562 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.887\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "be304eec75c9",
-      "sample": "time=2026-10-18T06:59:47.190-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566649 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.878\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "6ecd767c5e9a",
-      "sample": "time=2026-10-18T06:59:47.306-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566676 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.927\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "16ba24a90375",
-      "sample": "time=2026-10-18T06:59:48.637-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566976 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.622\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "18a4748cd3e4",
-      "sample": "time=2026-10-18T06:59:49.070-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17567087 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.334\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "7e00d39037ab",
-      "sample": "time=2026-10-18T06:59:51.668-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17568420 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.246\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "99215e45c990",
-      "sample": "time=2026-10-18T06:59:52.526-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17568609 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.812\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 6,
-      "fingerprint": "9e23ad3be213",
-      "sample": "time=2026-10-18T06:59:54.839-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17570009 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.37\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "6ebb78f5ff68",
-      "sample": "time=2026-10-18T06:59:39.806-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563500 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.229\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "404590d64c70",
-      "sample": "time=2026-10-18T06:59:39.870-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563512 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.519\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "dd32834f1f3e",
-      "sample": "time=2026-10-18T06:59:39.887-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563515 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.765\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "958a19d5732f",
-      "sample": "time=2026-10-18T06:59:40.007-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563539 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.547\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "705427c0ab1f",
-      "sample": "time=2026-10-18T06:59:40.049-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563548 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.673\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "743fe02eea96",
-      "sample": "time=2026-10-18T06:59:40.072-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563554 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.232\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "2949a7a6e30e",
-      "sample": "time=2026-10-18T06:59:40.087-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563557 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.733\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "4377a38586b6",
-      "sample": "time=2026-10-18T06:59:40.145-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563569 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.34\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "99a10ee54b80",
-      "sample": "time=2026-10-18T06:59:40.238-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563590 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.971\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "2586ca56525b",
-      "sample": "time=2026-10-18T06:59:40.258-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563596 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.294\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "44900f925aae",
-      "sample": "time=2026-10-18T06:59:40.410-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563629 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.655\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "3e391f4098e1",
-      "sample": "time=2026-10-18T06:59:40.509-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563647 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.633\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "92f78b315734",
-      "sample": "time=2026-10-18T06:59:40.640-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563677 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.528\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "b30575aaf536",
-      "sample": "time=2026-10-18T06:59:40.765-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563707 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.306\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "0a9d20e67f19",
-      "sample": "time=2026-10-18T06:59:40.823-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563719 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.758\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "3142033e420f",
-      "sample": "time=2026-10-18T06:59:40.886-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563758 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.445\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "9ffd15d53574",
-      "sample": "time=2026-10-18T06:59:40.888-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563761 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.128\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "2d9d6ded57bb",
-      "sample": "time=2026-10-18T06:59:40.915-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563800 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.764\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "6601b1122803",
-      "sample": "time=2026-10-18T06:59:40.918-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563806 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.165\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "e3f98ac741c7",
-      "sample": "time=2026-10-18T06:59:40.926-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563821 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.056\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "8e2b0b2ce506",
-      "sample": "time=2026-10-18T06:59:40.936-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563836 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.801\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "69bede140a2a",
-      "sample": "time=2026-10-18T06:59:40.970-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563885 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.772\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "46732f85f27d",
-      "sample": "time=2026-10-18T06:59:41.016-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563944 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.81\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "7786e2e7fcaf",
-      "sample": "time=2026-10-18T06:59:41.024-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563956 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.297\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "1585ff57c6fe",
-      "sample": "time=2026-10-18T06:59:41.035-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563971 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.746\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "5554f46a6fe9",
-      "sample": "time=2026-10-18T06:59:41.043-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563977 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.584\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "9fe2b88bb962",
-      "sample": "time=2026-10-18T06:59:41.060-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563998 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 6,
+      "fingerprint": "c17af004efc1",
+      "sample": "time=2026-10-19T06:59:38.525-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346186 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.841\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.402\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "f027c4ba0aaf",
-      "sample": "time=2026-10-18T06:59:41.101-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564049 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 6,
+      "fingerprint": "f39a26448177",
+      "sample": "time=2026-10-19T06:59:38.527-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346189 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.179\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.514\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "0ec020e197a5",
-      "sample": "time=2026-10-18T06:59:41.175-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564137 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 6,
+      "fingerprint": "0eb9ff91d44a",
+      "sample": "time=2026-10-19T06:59:39.851-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346874 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.9\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.573\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
       "count": 5,
-      "fingerprint": "175187807142",
-      "sample": "time=2026-10-18T06:59:41.180-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564143 run_generation=1 resource=nginx_docker_media state=job co",
+      "fingerprint": "826af2a8d096",
+      "sample": "time=2026-10-19T06:59:39.113-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346691 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.913\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.096\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
       "count": 5,
-      "fingerprint": "60ac90c58865",
-      "sample": "time=2026-10-18T06:59:41.186-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564152 run_generation=1 resource=nginx_docker_media state=job co",
+      "fingerprint": "1ff9cbd4334f",
+      "sample": "time=2026-10-19T06:59:42.425-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51348152 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.516\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.13\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "a5e77dcc917f",
-      "sample": "time=2026-10-18T06:59:41.201-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564173 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 4,
+      "fingerprint": "6722abe972be",
+      "sample": "time=2026-10-19T06:59:38.653-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346388 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.027\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.264\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "67704b6daecb",
-      "sample": "time=2026-10-18T06:59:41.242-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564228 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 4,
+      "fingerprint": "03e129e10879",
+      "sample": "time=2026-10-19T06:59:39.081-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346682 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.095\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.747\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "3e78e6823808",
-      "sample": "time=2026-10-18T06:59:41.265-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564261 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 4,
+      "fingerprint": "2d23eee5bd22",
+      "sample": "time=2026-10-19T06:59:39.145-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346700 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.01\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.043\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "00113c323d2b",
-      "sample": "time=2026-10-18T06:59:41.267-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564264 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 4,
+      "fingerprint": "581dfc105012",
+      "sample": "time=2026-10-19T06:59:42.551-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51348353 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.262\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.823\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "a51b5b574f8d",
-      "sample": "time=2026-10-18T06:59:41.284-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564288 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 4,
+      "fingerprint": "1b8ee81b1821",
+      "sample": "time=2026-10-19T06:59:43.148-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51348522 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.769\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.658\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "6c2e94ebc4fd",
-      "sample": "time=2026-10-18T06:59:41.285-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564291 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 4,
+      "fingerprint": "fe3883fb2ae3",
+      "sample": "time=2026-10-19T06:59:45.078-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51348963 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.821\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.753\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "7bd411f08d21",
-      "sample": "time=2026-10-18T06:59:41.287-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564294 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 4,
+      "fingerprint": "7fae268d8af3",
+      "sample": "time=2026-10-19T06:59:45.254-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51349005 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.084\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.836\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "f00d0ffdc1b9",
-      "sample": "time=2026-10-18T06:59:41.343-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564384 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 4,
+      "fingerprint": "bba9a9939fb3",
+      "sample": "time=2026-10-19T06:59:45.552-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51349080 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.857\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.97\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "2d322ab7976c",
-      "sample": "time=2026-10-18T06:59:41.348-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564390 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 4,
+      "fingerprint": "b1ca22336230",
+      "sample": "time=2026-10-19T06:59:46.206-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51349522 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.158\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.609\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "6451fcab2a0b",
-      "sample": "time=2026-10-18T06:59:41.365-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564409 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 4,
+      "fingerprint": "de0ad3f26794",
+      "sample": "time=2026-10-19T06:59:48.598-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51350686 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.308\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.732\u00b5s error=<str>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "06a17ce79aa6",
-      "sample": "time=2026-10-18T06:59:41.368-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564412 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.632\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 4,
+      "fingerprint": "e56c9008fa78",
+      "sample": "[2026-10-18 16:15:44.487] INFO: [Audnexus] Searching for author \"https://api.audnex.us/authors?name=the+forbidden+library+series%2C+book+4\"",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [audnexus] searching for author \"<url>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "f4bb4f9ecda3",
-      "sample": "time=2026-10-18T06:59:41.396-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564446 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.697\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 4,
+      "fingerprint": "630e77cda474",
+      "sample": "[2026-10-18 16:31:20.518] INFO: [Scanner] quickMatchBookBuildUpdatePayload: Added series \"The Forbidden Library\" to \"The Fall of the Readers - The Forbidden Library Series, Book 4\"",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [scanner] quickmatchbookbuildupdatepayload: added series <str> to <str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "c9baf7df3b1d",
-      "sample": "time=2026-10-18T06:59:41.400-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564452 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 3,
+      "fingerprint": "84ed5c2956b5",
+      "sample": "time=2026-10-19T06:59:38.922-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346652 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.339\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.037\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "8c96465dd684",
-      "sample": "time=2026-10-18T06:59:41.406-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564461 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 3,
+      "fingerprint": "6520113f541e",
+      "sample": "time=2026-10-19T06:59:42.499-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51348278 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.455\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.413\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "d75d0664405a",
-      "sample": "time=2026-10-18T06:59:41.413-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564470 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 3,
+      "fingerprint": "f62e4e6cab4b",
+      "sample": "time=2026-10-19T06:59:42.560-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51348362 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.627\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.301\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "acd6cc37ad35",
-      "sample": "time=2026-10-18T06:59:41.433-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564503 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 3,
+      "fingerprint": "cf593b329317",
+      "sample": "time=2026-10-19T06:59:45.995-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51349179 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.654\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.404\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "f25ceb44a961",
-      "sample": "time=2026-10-18T06:59:41.453-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564530 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 3,
+      "fingerprint": "e27a3d5deddf",
+      "sample": "time=2026-10-19T06:59:46.139-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51349425 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.778\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.521\u00b5s error=<str>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "e2533d2310f4",
-      "sample": "time=2026-10-18T06:59:41.462-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564542 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.606\u00b5s error=<str>"
+      "container": "qbit",
+      "count": 3,
+      "fingerprint": "e96fa9ca6bbe",
+      "sample": "Mon Oct 19 00:10:20 2026 [UNDEF] Inactivity timeout (--ping-restart), restarting",
+      "severity": "other",
+      "skeleton": "<ts> [undef] inactivity timeout (--ping-restart), restarting"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "960395511eb1",
-      "sample": "time=2026-10-18T06:59:41.466-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564548 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 2,
+      "fingerprint": "bfc496b0407a",
+      "sample": "time=2026-10-19T06:59:38.635-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346364 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.481\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.387\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "da77431640d1",
-      "sample": "time=2026-10-18T06:59:41.468-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564551 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 2,
+      "fingerprint": "dd5b1408ea93",
+      "sample": "time=2026-10-19T06:59:42.087-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51347611 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.467\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.335\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "0e36bb0dc35d",
-      "sample": "time=2026-10-18T06:59:41.493-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564590 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 2,
+      "fingerprint": "a2730ffc33ab",
+      "sample": "time=2026-10-19T06:59:42.413-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51348134 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.677\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.133\u00b5s error=<str>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "caa67a8095aa",
-      "sample": "time=2026-10-18T06:59:41.514-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564626 run_generation=1 resource=nginx_docker_media state=job co",
+      "container": "audiobookshelf",
+      "count": 2,
+      "fingerprint": "cbd19f51465d",
+      "sample": "[2026-10-18 16:27:17.120] ERROR: [Auth] Failed to refresh token. No refresh token <REDACTED>",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.535\u00b5s error=<str>"
+      "skeleton": "[<ts>] error: [auth] failed to refresh token. no refresh token <redacted>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "80b55e9e3abf",
-      "sample": "time=2026-10-18T06:59:41.537-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564662 run_generation=1 resource=nginx_docker_media state=job co",
+      "container": "KindRobots",
+      "count": 1,
+      "fingerprint": "6f779ffb2f4c",
+      "sample": "[request error] [unhandled] [POST] https://kindrobots.org/api/auth",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.161\u00b5s error=<str>"
+      "skeleton": "[request error] [unhandled] [post] <url>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "4643222169c9",
-      "sample": "time=2026-10-18T06:59:41.553-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564689 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 1,
+      "fingerprint": "da25f76c56c6",
+      "sample": "time=2026-10-19T06:59:42.326-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51348017 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.462\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.962\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "35d9d1cf403b",
-      "sample": "time=2026-10-18T06:59:41.557-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564695 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 1,
+      "fingerprint": "099b9dac74c6",
+      "sample": "time=2026-10-19T06:59:46.907-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51350299 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.39\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=270\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "db7c9c8caab2",
-      "sample": "time=2026-10-18T06:59:41.582-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564731 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 1,
+      "fingerprint": "58a042a86af7",
+      "sample": "time=2026-10-19T06:59:50.591-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51351766 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.397\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.735\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 5,
-      "fingerprint": "a8405c8b4d90",
-      "sample": "time=2026-10-18T06:59:41.612-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564749 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 1,
+      "fingerprint": "94a5a2b4cd18",
+      "sample": "time=2026-10-19T06:59:57.355-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51354411 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.799\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.43\u00b5s error=<str>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "6e5aaa17d0f1",
-      "sample": "time=2026-10-18T06:59:41.704-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564767 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.47\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "9d81f3a02484",
+      "sample": "[2026-10-18 07:19:16.408] INFO: [SocketAuthority] Socket XStu4WIEKpbgSUuQAAB0 disconnected from client \"superkate\" after 120073ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket xstu4wiekpbgsuuqaab0 disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "1a76b8171aa9",
-      "sample": "time=2026-10-18T06:59:41.736-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564773 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.847\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "eeacd9f6b82f",
+      "sample": "[2026-10-18 08:08:14.032] INFO: [SocketAuthority] Socket rjqJv-seY39EnJOIAAB2 disconnected from client \"superkate\" after 220646ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket rjqjv-sey39enjoiaab2 disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "deed8d277f95",
-      "sample": "time=2026-10-18T06:59:41.800-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564788 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.06\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "c7dbe9ca46d2",
+      "sample": "[2026-10-18 08:19:55.699] INFO: [SocketAuthority] Socket Cr5dxTKvcqgYdRKJAAB4 disconnected from client \"superkate\" after 145237ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket cr5dxtkvcqgydrkjaab4 disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "7e3d045a9df6",
-      "sample": "time=2026-10-18T06:59:41.811-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564791 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.727\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "9f0671aa87d8",
+      "sample": "[2026-10-18 08:32:57.027] INFO: [SocketAuthority] Socket S9400QotR2Tn4pM6AAB6 disconnected from client \"superkate\" after 95163ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket s9400qotr2tn4pm6aab6 disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "49015111ff5e",
-      "sample": "time=2026-10-18T06:59:41.987-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564836 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.041\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "5bd5575fbc81",
+      "sample": "[2026-10-18 11:29:29.159] INFO: [SocketAuthority] Socket -RtIURpgoqdvOABqAAB8 disconnected from client \"superkate\" after 70151ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket -rtiurpgoqdvoabqaab8 disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "c7e9e7fefce2",
-      "sample": "time=2026-10-18T06:59:42.659-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564983 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.905\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "8cb0876c7722",
+      "sample": "[2026-10-18 11:31:45.435] INFO: [SocketAuthority] Socket AZGu7ewoZONVLCVFAAB- disconnected from client \"superkate\" after 147584ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket azgu7ewozonvlcvfaab- disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "e346ecd52bcb",
-      "sample": "time=2026-10-18T06:59:42.701-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564992 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.767\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "15f785204b56",
+      "sample": "[2026-10-18 11:38:56.225] INFO: [SocketAuthority] Socket 3LDETO1XyXaj5o_RAACA disconnected from client \"superkate\" after 170675ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 3ldeto1xyxaj5o_raaca disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "3789a67ce9f9",
-      "sample": "time=2026-10-18T06:59:42.824-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565019 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.424\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "cfc03e8a20fc",
+      "sample": "[2026-10-18 16:31:21.806] INFO: [CoverManager] Downloaded libraryItem cover \"/audiobooks/django wexler/Django Wexler - The Forbidden Library/cover.jpg\" from url \"https://m.media-amazon.com/images/I/81",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [covermanager] downloaded libraryitem cover \"<path>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "292d30df99d4",
-      "sample": "time=2026-10-18T06:59:42.845-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565022 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.265\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "a46351a90b56",
+      "sample": "[2026-10-18 17:31:39.239] INFO: [SocketAuthority] Socket 8h1QXlczeBQrZaPQAACG disconnected from client \"superkate\" after 145498ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 8h1qxlczebqrzapqaacg disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "650dc4da5c48",
-      "sample": "time=2026-10-18T06:59:42.882-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565028 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.255\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "75c99ea0a6c4",
+      "sample": "[2026-10-18 17:56:45.962] INFO: [SocketAuthority] Socket EfJ3jvdqTJTIptPwAACI disconnected from client \"superkate\" after 220733ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket efj3jvdqtjtiptpwaaci disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "dc15c4e28338",
-      "sample": "time=2026-10-18T06:59:43.007-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565052 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.263\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "d75ade62e256",
+      "sample": "[2026-10-18 18:03:06.950] INFO: [SocketAuthority] Socket -DBxbR0Q1AY1ZQaVAACK disconnected from client \"superkate\" after 95140ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket -dbxbr0q1ay1zqavaack disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "09484c019f53",
-      "sample": "time=2026-10-18T06:59:43.086-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565070 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.75\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "65b4e89ebe0a",
+      "sample": "[2026-10-18 19:17:55.755] INFO: [SocketAuthority] Socket rgTXhGI1pFbPYel1AACW disconnected from client \"silasfelinus\" after 44994ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket rgtxhgi1pfbpyel1aacw disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "da9d936d56be",
-      "sample": "time=2026-10-18T06:59:43.116-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565079 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.615\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "6ebb42742852",
+      "sample": "[2026-10-18 19:24:51.373] INFO: [SocketAuthority] Socket xtRqwqiibBUwca7XAACa disconnected from client \"superkate\" after 246307ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket xtrqwqiibbuwca7xaaca disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "f92b72d18f57",
-      "sample": "time=2026-10-18T06:59:43.290-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565118 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.22\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "48b64f43b2f6",
+      "sample": "[2026-10-18 19:43:16.726] INFO: [SocketAuthority] Socket 97vXKLGhEeFWfPvuAACg disconnected from client \"superkate\" after 95107ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 97vxklgheefwfpvuaacg disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "06ed98723659",
-      "sample": "time=2026-10-18T06:59:43.350-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565133 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.688\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "f3c93a0a6b08",
+      "sample": "[2026-10-18 21:14:08.280] INFO: [SocketAuthority] Socket NmeMQJj5hdITYzs3AACi disconnected from client \"superkate\" after 221273ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket nmemqjj5hdityzs3aaci disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "db1b86849ab6",
-      "sample": "time=2026-10-18T06:59:43.377-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565139 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.355\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "9ba207d11fbc",
+      "sample": "[2026-10-18 21:31:13.922] INFO: [SocketAuthority] Socket GA7JRiUX8RSKeyxeAACk disconnected from client \"superkate\" after 95017ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket ga7jriux8rskeyxeaack disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "0ddfa56725c7",
-      "sample": "time=2026-10-18T06:59:43.742-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565217 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.072\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "21b4e04c798f",
+      "sample": "[2026-10-19 06:30:47.397] INFO: [SocketAuthority] Socket C6u8oPV3njfgK5AMAADX disconnected from client \"superkate\" after 403695ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket c6u8opv3njfgk5amaadx disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "b77d5ef8bbe9",
-      "sample": "time=2026-10-18T06:59:43.757-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565220 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.005\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "9cc4cdf1272d",
+      "sample": "[2026-10-19 06:37:38.893] INFO: [SocketAuthority] Socket Cu_hCGa1rKJHaQVjAADZ disconnected from client \"superkate\" after 120149ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket cu_hcga1rkjhaqvjaadz disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "2cb21fb68a19",
-      "sample": "time=2026-10-18T06:59:44.233-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565316 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.292\u00b5s error=<str>"
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "4e1522eefc3a",
+      "sample": "[2026-10-19 06:40:03.104] INFO: [SocketAuthority] Socket pccMoYsd0hl8k6vxAADb disconnected from client \"superkate\" after 95050ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket pccmoysd0hl8k6vxaadb disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "6120ccbcdcce",
-      "sample": "time=2026-10-18T06:59:44.249-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565319 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.318\u00b5s error=<str>"
+      "container": "qbit",
+      "count": 1,
+      "fingerprint": "129a643de168",
+      "sample": "Mon Oct 19 00:09:15 2026 [losangeles432] Inactivity timeout (--ping-restart), restarting",
+      "severity": "other",
+      "skeleton": "<ts> [losangeles432] inactivity timeout (--ping-restart), restarting"
     }
   ],
   "quiet": [
-    {
-      "baseline": 121.0,
-      "container": "yac",
-      "count": 0,
-      "fingerprint": "22365e849ef3",
-      "sample": "WARN  2026-10-15T04:27:53.814 QObject: Cannot create children for a parent that is in a different thread.",
-      "severity": "warn",
-      "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
-    },
     {
       "baseline": 73.0,
       "container": "netdata",
@@ -1821,6 +507,15 @@
       "sample": "2026-10-17T01:41:06.020907Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
       "severity": "error",
       "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
+    },
+    {
+      "baseline": 71.0,
+      "container": "yac",
+      "count": 0,
+      "fingerprint": "22365e849ef3",
+      "sample": "WARN  2026-10-15T04:27:53.814 QObject: Cannot create children for a parent that is in a different thread.",
+      "severity": "warn",
+      "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
     },
     {
       "baseline": 65.0,
@@ -1868,13 +563,22 @@
       "skeleton": "[<ts>] error (library) worker-<num> an unexpected error occurred while organizing file none [<hex>][v0].nsp: <str> object is not iterable"
     },
     {
-      "baseline": 12.0,
+      "baseline": 11.0,
       "container": "netdata",
       "count": 0,
       "fingerprint": "28346e8a5fd3",
       "sample": "time=2026-10-16T19:27:49.465-07:00 comm=netdata source=health level=warning tid=3662537 thread=HEALTH <REDACTED-BLOB> node=3ab2f0040411 instance=net_drops.shim-br0 context=net.drops code=0 alert_id=17",
       "severity": "warn",
       "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.shim-br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=err"
+    },
+    {
+      "baseline": 11.0,
+      "container": "proxysql",
+      "count": 0,
+      "fingerprint": "8da141147da1",
+      "sample": "2026-10-18 06:19:35 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:55266 , user 'unknown' , hostgroup -1 , connection 0",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
     },
     {
       "baseline": 10.0,
@@ -1893,81 +597,126 @@
     "high_cardinality": [
       "netdata"
     ],
-    "lines_matched": 14129,
-    "lines_read": 149965,
-    "signatures_total": 1057,
+    "lines_matched": 15360,
+    "lines_read": 150596,
+    "signatures_total": 1048,
     "truncated": []
   },
   "spiking": [
     {
       "baseline": 1.0,
       "container": "netdata",
-      "count": 6735,
+      "count": 6724,
       "fingerprint": "7d1394e6bd47",
-      "sample": "time=2026-10-18T06:59:39.489-07:00 level=error msg=\"check failed: GET 'http://172.21.0.26:80/nginx_status' returned HTTP status code: 404\" plugin=go.d collector=nginx job=docker_media config_source=di",
+      "sample": "time=2026-10-19T06:59:38.448-07:00 level=error msg=\"check failed: GET 'http://172.21.0.26:80/basic_status' returned HTTP status code: 404\" plugin=go.d collector=nginx job=docker_media config_source=di",
       "severity": "error",
       "skeleton": "time=<ts> level=error msg=<str> plugin=go.d collector=nginx job=docker_media config_source=discovered/sd:docker"
     },
     {
       "baseline": 0.0,
+      "container": "qbit",
+      "count": 537,
+      "fingerprint": "46d08c635a8f",
+      "sample": "Sun Oct 18 16:20:07 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #730761577 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --",
+      "severity": "error",
+      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<hex> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
+    },
+    {
+      "baseline": 0.0,
+      "container": "auth",
+      "count": 44,
+      "fingerprint": "c0197fc71f93",
+      "sample": "time=\"2026-10-19T02:32:38-07:00\" level=error msg=\"Target URL '/blog/' has an insecure scheme '', only the 'https' and 'wss' schemes are supported so session cookies can be transmitted securely\" method",
+      "severity": "error",
+      "skeleton": "time=<str> level=error msg=\"target url '<path>"
+    },
+    {
+      "baseline": 0.0,
       "container": "sonarr",
-      "count": 26,
+      "count": 41,
       "fingerprint": "86dd8b493a0a",
       "sample": "[Error] TaskExtensions: Task Error",
       "severity": "error",
       "skeleton": "[error] taskextensions: task error"
+    },
+    {
+      "baseline": 0.0,
+      "container": "audiobookshelf",
+      "count": 22,
+      "fingerprint": "ca78d2160a96",
+      "sample": "[2026-10-19 02:16:13.951] ERROR: Cannot validate socket - token expired",
+      "severity": "error",
+      "skeleton": "[<ts>] error: cannot validate socket - token expired"
     }
   ],
   "top": [
     {
       "baseline": null,
       "container": "netdata",
-      "count": 6735,
+      "count": 6724,
       "fingerprint": "7d1394e6bd47",
-      "sample": "time=2026-10-18T06:59:39.489-07:00 level=error msg=\"check failed: GET 'http://172.21.0.26:80/nginx_status' returned HTTP status code: 404\" plugin=go.d collector=nginx job=docker_media config_source=di",
+      "sample": "time=2026-10-19T06:59:38.448-07:00 level=error msg=\"check failed: GET 'http://172.21.0.26:80/basic_status' returned HTTP status code: 404\" plugin=go.d collector=nginx job=docker_media config_source=di",
       "severity": "error",
       "skeleton": "time=<ts> level=error msg=<str> plugin=go.d collector=nginx job=docker_media config_source=discovered/sd:docker"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 3280,
+      "count": 3291,
       "fingerprint": "ac0e30c87dd9",
-      "sample": "time=2026-10-18T06:59:39.489-07:00 level=error msg=\"check failed: error on HTTP request to 'http://172.21.0.26:80/status': Get \\\"http://172.21.0.26:80/status\\\": jobmgr containment: attempt superseded\"",
+      "sample": "time=2026-10-19T06:59:38.447-07:00 level=error msg=\"check failed: error on HTTP request to 'http://172.21.0.26:80/status': Get \\\"http://172.21.0.26:80/status\\\": jobmgr containment: attempt superseded\"",
       "severity": "error",
       "skeleton": "time=<ts> level=error msg=<str><url> jobmgr containment: attempt superseded\" plugin=go.d collector=nginx job=docker_media config_source=discovered/sd:docker"
     },
     {
       "baseline": null,
+      "container": "qbit",
+      "count": 537,
+      "fingerprint": "46d08c635a8f",
+      "sample": "Sun Oct 18 16:20:07 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #730761577 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --",
+      "severity": "error",
+      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<hex> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
+    },
+    {
+      "baseline": null,
+      "container": "scoopspress",
+      "count": 510,
+      "fingerprint": "6497ddc377f6",
+      "sample": "[Sun Oct 18 07:39:09.444462 2026] [php:warn] [pid 4318:tid 4318] [client 93.123.109.230:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "severity": "warn",
+      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
+    },
+    {
+      "baseline": null,
       "container": "proxysql",
-      "count": 242,
+      "count": 236,
       "fingerprint": "a9cfc33818b3",
-      "sample": "2026-10-17 07:00:49 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:35842 , user 'kindrobot_migrate' , hostgroup 30 , connection 190828",
+      "sample": "2026-10-18 07:10:50 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:47404 , user 'kindrobot_migrate' , hostgroup 30 , connection 237836",
       "severity": "warn",
       "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
     },
     {
       "baseline": null,
-      "container": "scoopspress",
-      "count": 186,
-      "fingerprint": "6497ddc377f6",
-      "sample": "[Sat Oct 17 07:00:48.084247 2026] [php:warn] [pid 3280:tid 3280] [client 141.98.253.30:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
-      "severity": "warn",
-      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
+      "container": "qbit",
+      "count": 160,
+      "fingerprint": "b51302f9d222",
+      "sample": "Mon Oct 19 00:12:53 2026 RESOLVE: Cannot resolve host address: us-california.privacy.network:1197 (Temporary failure in name resolution)",
+      "severity": "error",
+      "skeleton": "<ts> resolve: cannot resolve host address: us-california.privacy.network:<num> (temporary failure in name resolution)"
     },
     {
       "baseline": null,
       "container": "requests",
       "count": 114,
       "fingerprint": "b0b22d3dd961",
-      "sample": "2026-10-18T11:34:29.646Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 280234\",\"title\"",
+      "sample": "2026-10-19T11:34:48.767Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 322438\",\"title\"",
       "severity": "error",
       "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
     },
     {
       "baseline": null,
       "container": "radarr",
-      "count": 84,
+      "count": 82,
       "fingerprint": "53883f24d246",
       "sample": "[Error] DownloadMonitoringService: Couldn't process tracked download The Home 2025 1080p AMZN WEB-DL DDP5.1 Atmos x265-TBMovies",
       "severity": "error",
@@ -1975,8 +724,26 @@
     },
     {
       "baseline": null,
+      "container": "qbit",
+      "count": 80,
+      "fingerprint": "d00417be0245",
+      "sample": "Mon Oct 19 00:13:11 2026 Could not determine IPv4/IPv6 protocol",
+      "severity": "other",
+      "skeleton": "<ts> could not determine ipv4/ipv6 protocol"
+    },
+    {
+      "baseline": null,
+      "container": "auth",
+      "count": 44,
+      "fingerprint": "c0197fc71f93",
+      "sample": "time=\"2026-10-19T02:32:38-07:00\" level=error msg=\"Target URL '/blog/' has an insecure scheme '', only the 'https' and 'wss' schemes are supported so session cookies can be transmitted securely\" method",
+      "severity": "error",
+      "skeleton": "time=<str> level=error msg=\"target url '<path>"
+    },
+    {
+      "baseline": null,
       "container": "sonarr",
-      "count": 26,
+      "count": 41,
       "fingerprint": "86dd8b493a0a",
       "sample": "[Error] TaskExtensions: Task Error",
       "severity": "error",
@@ -1984,165 +751,129 @@
     },
     {
       "baseline": null,
-      "container": "netdata",
+      "container": "audiobookshelf",
+      "count": 22,
+      "fingerprint": "ca78d2160a96",
+      "sample": "[2026-10-19 02:16:13.951] ERROR: Cannot validate socket - token expired",
+      "severity": "error",
+      "skeleton": "[<ts>] error: cannot validate socket - token expired"
+    },
+    {
+      "baseline": null,
+      "container": "hairpress",
       "count": 19,
+      "fingerprint": "b32e674d9dd1",
+      "sample": "[Sun Oct 18 08:55:07.657752 2026] [autoindex:error] [pid 2788:tid 2788] [client 74.225.146.100:0] AH01276: Cannot serve directory /var/www/html/wp-admin/maint/: No matching DirectoryIndex (index.php,i",
+      "severity": "error",
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 18,
       "fingerprint": "e3a5ac6f15b7",
-      "sample": "time=2026-10-18T06:59:41.134-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564085 run_generation=1 resource=nginx_docker_media state=job co",
+      "sample": "time=2026-10-19T06:59:41.434-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51347231 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
       "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num> error=<str>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 12,
-      "fingerprint": "353cd2aadd3b",
-      "sample": "time=2026-10-18T06:59:39.654-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563470 run_generation=1 resource=nginx_docker_media state=job co",
+      "container": "audiobookshelf",
+      "count": 14,
+      "fingerprint": "169b24fc60a1",
+      "sample": "[2026-10-18 18:29:45.849] WARN: [Utils] Failed to get ino for path \"/audiobooks/tad williams/1993b - Caliban's Hour (Perlman) 64k 04.29.02 {124mb}\" [Error: ENOENT: no such file or directory, stat '/au",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.858\u00b5s error=<str>"
+      "skeleton": "[<ts>] warn: [utils] failed to get ino for path \"<path>"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 14,
+      "fingerprint": "968287eba9a2",
+      "sample": "errno: -2,",
+      "severity": "error",
+      "skeleton": "errno: -<num>,"
     },
     {
       "baseline": null,
       "container": "proxysql",
       "count": 12,
       "fingerprint": "9caf510b320a",
-      "sample": "2026-10-17 09:51:36 MySQL_Session.cpp:5667:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,191178): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_ke",
+      "sample": "2026-10-18 10:07:48 MySQL_Session.cpp:5667:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,237957): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_ke",
       "severity": "warn",
       "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [warning] error during query on (<num>,mariadb-kindrobots2,<num>,<num>): <num>, duplicate entry <str> for key <str>"
     },
     {
       "baseline": null,
-      "container": "books",
-      "count": 10,
-      "fingerprint": "e46d2fea9b5a",
-      "sample": "update-alternatives: warning: skip creation of /usr/share/man/man1/lzma.1.gz because associated file /usr/share/man/man1/xz.1.gz (of link group lzma) doesn't exist",
-      "severity": "warn",
-      "skeleton": "update-alternatives: warning: skip creation of <path>"
-    },
-    {
-      "baseline": null,
       "container": "netdata",
-      "count": 10,
-      "fingerprint": "986000065919",
-      "sample": "time=2026-10-18T06:59:40.103-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563560 run_generation=1 resource=nginx_docker_media state=job co",
+      "count": 11,
+      "fingerprint": "5938fefa6b63",
+      "sample": "time=2026-10-19T06:59:38.492-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346131 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.354\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.288\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
       "count": 10,
-      "fingerprint": "c6e1fb896426",
-      "sample": "time=2026-10-18T06:59:40.159-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563572 run_generation=1 resource=nginx_docker_media state=job co",
+      "fingerprint": "92817a20b6e8",
+      "sample": "time=2026-10-19T06:59:38.554-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346232 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.46\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.766\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
       "count": 10,
-      "fingerprint": "f97998b877e5",
-      "sample": "time=2026-10-18T06:59:41.269-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564267 run_generation=1 resource=nginx_docker_media state=job co",
+      "fingerprint": "e22e200a3847",
+      "sample": "time=2026-10-19T06:59:38.640-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346370 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.244\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.777\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
       "count": 10,
-      "fingerprint": "eecd57d6713c",
-      "sample": "time=2026-10-18T06:59:41.371-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564415 run_generation=1 resource=nginx_docker_media state=job co",
+      "fingerprint": "b93dbd4e1f73",
+      "sample": "time=2026-10-19T06:59:38.820-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51346610 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.794\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.279\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
       "count": 10,
-      "fingerprint": "b2b59f280228",
-      "sample": "time=2026-10-18T06:59:41.822-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564794 run_generation=1 resource=nginx_docker_media state=job co",
+      "fingerprint": "4ca12755cdfb",
+      "sample": "time=2026-10-19T06:59:42.212-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51347833 run_generation=1 resource=nginx_docker_media state=job co",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.844\u00b5s error=<str>"
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.121\u00b5s error=<str>"
     },
     {
       "baseline": null,
       "container": "netdata",
+      "count": 10,
+      "fingerprint": "455378d5e39c",
+      "sample": "time=2026-10-19T06:59:44.380-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51348804 run_generation=1 resource=nginx_docker_media state=job co",
+      "severity": "error",
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.91\u00b5s error=<str>"
+    },
+    {
+      "baseline": null,
+      "container": "KindRobots",
       "count": 9,
-      "fingerprint": "08a73ff2d63e",
-      "sample": "time=2026-10-18T06:59:40.177-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563575 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.224\u00b5s error=<str>"
+      "fingerprint": "3d84f1a8fd12",
+      "sample": "Operation rejected: {",
+      "severity": "other",
+      "skeleton": "operation rejected: {"
     },
     {
       "baseline": null,
-      "container": "netdata",
+      "container": "KindRobots",
       "count": 9,
-      "fingerprint": "454d99c25572",
-      "sample": "time=2026-10-18T06:59:44.168-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17565301 run_generation=1 resource=nginx_docker_media state=job co",
+      "fingerprint": "bb9501289941",
+      "sample": "name: 'Error',",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.916\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 9,
-      "fingerprint": "1410dca7d5f0",
-      "sample": "time=2026-10-18T06:59:46.334-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566463 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.269\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 9,
-      "fingerprint": "db11dc8b9397",
-      "sample": "time=2026-10-18T06:59:46.779-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17566559 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.067\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "9978eb236bfd",
-      "sample": "time=2026-10-18T06:59:39.948-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563527 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.575\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "3f6e4d5a254e",
-      "sample": "time=2026-10-18T06:59:40.939-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563842 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.477\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "30a78e24ef70",
-      "sample": "time=2026-10-18T06:59:40.985-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17563907 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.984\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "8e635aaecde2",
-      "sample": "time=2026-10-18T06:59:41.203-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564176 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.811\u00b5s error=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 8,
-      "fingerprint": "20a2d743e651",
-      "sample": "time=2026-10-18T06:59:41.263-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=17564258 run_generation=1 resource=nginx_docker_media state=job co",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num>.393\u00b5s error=<str>"
+      "skeleton": "name: <str>,"
     }
   ],
   "version": 1,
