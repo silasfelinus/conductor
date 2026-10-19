@@ -42,3 +42,13 @@ You do a mundane errand and encounter something inexplicable; each episode resol
 - Perilous Plunge: a festival volunteer swims into a different day; saving their memory costs the player a clue.
 
 See SAMPLE-CARDS.md. None of these is an image commission.
+
+## E. The Festival Is the Lens (latest user-led direction)
+
+A fictional cannabis/counterculture festival opens the journey. The adult player chooses **sober**, **tipsy**, **stoned** or **tripping balls**, deliberately and clearly. A cannabis-smoking woman with a green ribbon is perhaps a forest nymph, potentially a recurring guide in all four branches. Each choice alters observations, choices and comic/psychic complications but **does not produce a different canonical reality**. Sober is an equally rich path. The radio-frequency mystery is real independently of intake and remains optionally solvable.
+
+**Mechanic:** A `current_state` that can fade or shift, immutable `opening_state` callbacks, recoverable Clarity, stable Rizz/Burly/Wits/Local Lore/Psyche stats and state-specific authored dialogue. No covert dose, quantitative drug instructions or sex. Author four real experiences in pivotal cards, not filler prose and not 480 inflated card counts.
+
+**Name rule:** The protagonist *sees* dancing, juggling, mechanical sculptures, theatrical masks, reggae crowds and forest gatherings, not a list of named events. Cannifest, kinetic race, Reggae on the River, Humboldt Juggling Festival, Dell'Arte and Burning Man are editorial references, not necessarily diegetic labels. Satirical inspirations: *Fear and Loathing in Las Vegas*, the Church of the SubGenius, *Illuminatus!* and conspiracy card games, and a more mature *Gravity Falls*. Invent the details.
+
+**Risk:** If the entire adventure is "just a high," the beautiful Humboldt premise collapses. Prove objective evidence and character relationships remain meaningful from sobriety. Full contract: [PRELUDE-STATE-CONTRACT.md](PRELUDE-STATE-CONTRACT.md).
