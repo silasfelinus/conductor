@@ -24,7 +24,7 @@
 - **Mara (sober route optional, present in all):** her tattoo studio may stay locally owned, be squeezed out, move to a thriving cooperative district, or inspire apprentices. She is not appointed "representative of all tribes"; governance remains with specific nations and communities whose consent and priorities exist independently.
 - **Kit:** her kinetic sculpture finds a thriving grassroots circuit, gets swallowed as branding by a conglomerate, or becomes a public memorial to chosen return; her family history in 1885 is fixed truth, not a timeline that can be magicked away.
 - **Juniper:** survives with a thriving, complicated living forest, learns to share stewardship rather than insist on no change, or chooses to retreat with nonhuman neighbors; she always retains autonomy.
-- **Cedar:** transforms his dispensary into an ethical cooperative, loses his business and finds meaning teaching craft/land-care, or sells out friends for a last chance at his old prosperity; none is guaranteed by the starting consumption choice.
+- **Cedar (working name):** child of a timber-worker and a cannabis-grower, who might become a connector between safe skilled jobs and living forest restoration, might sell out to a fictional developer, might stop a reckless sabotage plot or might withdraw into suspicion. His green-ribbon family memory matters; the actual 1997–99 Luna tree-sit is fixed history and not an alternate timeline toy.
 
 ### One quiet scene for each ending
 
