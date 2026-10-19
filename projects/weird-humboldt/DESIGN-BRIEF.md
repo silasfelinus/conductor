@@ -14,6 +14,12 @@ Owner: Conductor `weird-humboldt` · Proposed eventual Kind Robots destination: 
 
 **Design authority for this newest direction:** [ECOTONE-CORE.md](ECOTONE-CORE.md), [ECOTONE-ENDINGS.md](ECOTONE-ENDINGS.md). These supersede the earlier `optional overarching mystery` as the overall structure but retain `PRELUDE-STATE-CONTRACT.md`'s sober parity, existing cast, 120 seeds, authored cards and **no-art gate**. The exact supernatural mechanism and final public title await further creative review.
 
+## Viewport-first gameplay and completed endings (Silas, 2026-10-19)
+
+**Must ship:** one **non-page-scrolling visual surface** on mobile, tablet and desktop. The game board displays the active encounter, choice/check area and a compact navigation/progress row. Other information exists in switchable tabs or bounded modals, **not** in vertically stacked page sections. Only lengthy text, journal entries and achievement/endings collections can scroll *inside their own constrained pane*. See [VIEWPORT-ACHIEVEMENTS-CONTRACT.md](VIEWPORT-ACHIEVEMENTS-CONTRACT.md) for all viewport sizes, accessibility/browser proofs and the Shifting Lands/Desks existing implementation patterns.
+
+**Must ship:** separate persistent ten-ending progress gallery (locked/earned future cards, epilogue playback, X/10 toolbar entry) **and** global Kind Robots achievements. At least three initial integrated badges; all ten canonically distinct future families reachable, with unlocks retained through replay/reload. No new badge images until the art gate is cleared. This is a product requirement, **not** a claim the game has shipped.
+
 ## Promise and tone
 
 A wacky comedy-horror, location-rooted, **single-player card adventure** through Humboldt County. Explore gorgeous, ordinary places; meet eccentric but recognizably human locals; make messy decisions; roll 2d6; discover that folklore, misunderstood science and actual supernatural anomalies are intersecting. Touchstones: the playfulness of the strangest *X-Files* episodes, *Twin Peaks*' affectionate unsettling small-town mystery, tabloid absurdism and Northern California backwoods counterculture. Original characters, words, twists and gameplay: references are tonal inspiration, not licensed adaptation.
