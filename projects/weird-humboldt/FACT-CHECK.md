@@ -21,7 +21,7 @@ Cannifest's official site lists its 2026 event on September 12–13 at Arcata Ba
 
 Additional grounded inspiration: the Humboldt Juggling Society's festival programming (https://humboldtjugglingsociety.org/Schedule.htm) and Dell'Arte theatre events (https://dellarte.com/past-events). All fantastic behavior and characters are original fiction; event brands stay in source/provenance metadata except when earned organically through later dialogue.
 
-## Chinese Humboldt history and Kit's return (verified 2026-10-19)
+## Humboldt's Chinese expulsion: independent local history (verified 2026-10-19)
 
 **1885: documented mass expulsion, not folklore.** In February 1885, Eureka's Chinese residents were forced out after racist mob organizing following the accidental killing of a city councilmember. Hundreds were sent away; further expulsions occurred in the county. Some Chinese residents managed to remain in the region despite organized exclusion. Do not present the expulsion as supernatural fiction or portray it as a justified policy.
 
@@ -34,8 +34,18 @@ Additional grounded inspiration: the Humboldt Juggling Society's festival progra
 - KQED's account of the remembrance work: https://www.kqed.org/news/11891987/chinese-immigrants-were-forced-out-of-eureka-in-1885-heres-how-locals-are-making-that-history-known
 - University renamed January 26, 2022: https://www.humboldt.edu/about/polytechnic
 
-**Character fiction (not a claim about actual victims or alumni):** Kit is proposed as a Chinese American woman whose distant family members were expelled in 1885. Later generations settled elsewhere; Kit chose to return for an HSU-era education and found physical theatre in Blue Lake's Dell'Arte community. Individual ancestor identities, family records and academic attendance are original fictional details. Respect the existing real commemoration; never replace it with an invented conspiracy or familial psychic legacy. Community-authored histories and cultural review should guide publication-ready scripts.
+**Latest user correction: character genealogy is not historical evidence.** Kit is **Hmong American** and her earlier Chinese ancestry / invented expulsion-family genealogy is **withdrawn**. Keep the 1885 Eureka Chinese expulsion and the mid-1950s Chinese American return as independently documented county history, told through trustworthy archives, community-led remembrance, and optionally a well-researched Chinese American character. Hmong ethnicity cannot stand in for Chinese ancestry. Community-authored histories and cultural review must guide publishable scenes.
 
+
+## Hmong life in Humboldt and Cedar's Hispanic father (2026-10-19)
+
+**Grounded local Hmong presence:** Cal Poly Humboldt profiles Bao Syphanthong, a Hmong translator and interpreter in Humboldt, who describes a locally established Hmong community with contemporary cultural events, family networks and language-access needs: https://www.humboldt.edu/ccrp/projects/redwood-region-rise/about/humans-redwoods/bao-syphanthong . This is a grounded local perspective, not a description of every Hmong household.
+
+**Population context, use cautiously:** A secondary 2025 ACS-based private compilation estimates about 1,500 Hmong residents in Humboldt County, particularly Eureka and Arcata: https://www.neilsberg.com/insights/lists/hmong-population-in-humboldt-county-ca-by-city/ . Do **not** place that precise figure in dialogue without source-methodology verification. California-specific historical/cultural context is covered by https://camodelcurricula.ucdavis.edu/hmong-history-and-cultural-studies/hmong-communities-california .
+
+**Character invention and representation boundary:** Kit is a contemporary Hmong American performer. Her family's migration route, local roots, languages, names, faith and individual practices are **not yet determined**. Hmong people are not ethnically Chinese and do not inherit the 1885 Eureka Chinese expulsion as a family story. Avoid treating her heritage as a mechanical/mystical advantage, dressing her in decorative cultural markers, or making her a generic interpreter for all Asian communities. For culturally specific finished writing and art, obtain appropriate Hmong review.
+
+**Cedar's father:** Silas explicitly establishes his father as **Hispanic**. The father's nationality, family culture, language use and which of the original timber/grower households he comes from remain open, not mechanically assigned. Cedar's other parent and Hispanic father **remain together in all futures**, respecting the longstanding Romeo-and-Juliet romance. Do not portray 'Hispanic' as a single nationality, appearance, accent or political allegiance.
 
 ## Ecotone: verified contemporary crossroads versus speculative fiction (2026-10-19)
 
