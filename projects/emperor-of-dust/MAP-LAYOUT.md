@@ -6,12 +6,18 @@
 > map room now uses `wasteland-base.svg` as its stage, drawing markers, fog and labels live over
 > the art (kind_robots `public/emperor-of-dust/map/`). The screen studies are layout direction,
 > not character art.
+>
+> **2026-10-19: geography changed and target look set (Silas).** Hollow Bell is **southern** and a
+> **small town**, not a single great tower; the **Abbey is above it**; **Thistledown is above the
+> Abbey**. The place notes, grid and hideouts below follow that, and so does the served base map.
+> Silas's painted references (`art/concepts/painted-*.webp`: the wasteland, the fortress cutaway and
+> the six room screens) are the expected finish for the maps and screens. Their geography predates
+> this change, and their labels are baked in, so they are style targets rather than assets.
 
 *2026-10-19 PT. Silas is drawing the maps with ChatGPT; this is the layout brief to draw from.
 Compass facts already in canon are kept: Storm Crow Heights west, the Mirefen north, the Jackalwire
-rail canyon south, the Rustline's sunken rail yards east (SYSTEMS-V03.md), and Hollow Bell with its
-damaged aqueduct east of the fortress (GAME-BIBLE.md v0.2). Everything else here is a proposal.
-No map images exist yet.*
+rail canyon south and the Rustline's sunken rail yards east (SYSTEMS-V03.md). Hollow Bell and its
+damaged aqueduct were east in GAME-BIBLE.md v0.2; Silas moved the town south on 2026-10-19.*
 
 Style for both maps: DAILY-DREAM-VIBE.md (ash, brass, kiln ochre, salvage), a hand-inked
 cartographic look, the Zuzu world before its fall. Hollow Bell is whole and busy, and nothing is
@@ -24,43 +30,46 @@ North is up. On a 5×5 grid, columns A–E run west to east and rows 1–5 run n
 
 ```
         A                B               C                D                E
-  1  Storm Crow     ~ ~ ~ ~ ~ ~ MIREFEN WETLANDS ~ ~ ~ ~    ABBEY OF THE     ░ BLACK
-     HEIGHTS          ~ reeds, lanterns, stilt huts ~      SILENT BELL      ░ VERGE
-     (caves,              ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~         (adobe, bell)     ░ (fog
-  2  roosts)  .nameless   Black Stones    THE FORTRESS ════ aqueduct ══ HOLLOW BELL  ░ to D21)
-     cliffs   cave        watering hole   on its mesa      (Mission Road)  (bell tower)░
-  3  Heights foothills ══ SALTROAD ═══════ market ════════ EASTERN FORD ═══╝         ░
-                          villages        villages          (river crossing)
-  4  SALT FLATS ══╝    BADLANDS            | Drywater       THISTLEDOWN     ▒ SUNKEN
-     (salt pans)       hoodoos, chimneys   | river          homesteads      ▒ RAIL YARDS
-  5                    ┄┄ Mole tunnels ┄┄  JACKALWIRE RAIL CANYON ═ old rail ═▒ (fog to D11)
-                       (beneath)           (wagon camps, trestles)
+  1  Storm Crow     ~ ~ ~ ~ ~ ~ MIREFEN WETLANDS ~ ~ ~ ~    THISTLEDOWN      ░ BLACK
+     HEIGHTS          ~ reeds, lanterns, stilt huts ~      homesteads       ░ VERGE
+     (caves,              ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~                           ░ (fog
+  2  roosts)  .nameless   Black Stones    THE FORTRESS ══ Mission Road ══ ABBEY OF THE ░ to D21)
+     cliffs   cave        watering hole   on its mesa      ┊ aqueduct     SILENT BELL ░
+  3  Heights foothills ══ SALTROAD ═══════ market ════════ EASTERN FORD ═╗            ░
+                          villages        villages         (river crossing)║
+  4  SALT FLATS ══╝    BADLANDS            | Drywater       HOLLOW BELL ═══╝ small town,
+     (salt pans)       hoodoos, chimneys   | river          (chapel bell)    ▒ SUNKEN
+  5                    ┄┄ Mole tunnels ┄┄  JACKALWIRE RAIL CANYON ═ old rail ═▒ RAIL YARDS
+                       (beneath)           (wagon camps, trestles)           ▒ (fog to D11)
 ```
 
 **The land, place by place:**
 
 - **The Fortress (C2).** A walled tower on a flat-topped mesa just north of centre, with straight
   roads radiating from its gate, as in v0.2. It overlooks the Saltroad to the south, the Mirefen
-  to the north and Hollow Bell's aqueduct to the east.
+  to the north and the Mission Road running east to the Abbey.
 - **Mirefen (B1–D1).** A long band of wetland across the north: reeds, still green lanterns, stilt
   huts and the Mire Mothers' coven-house. The **Drywater river** leaves its southern edge.
 - **Black Stones watering hole (B2).** Standing black rocks around a pool on the fen's dry edge.
   Strangers meet here, since water is wealth (WORLD-GUIDE.md).
-- **The Abbey of the Silent Bell (D1).** Adobe walls and a bell tower with no clapper, where the
-  fen gives way to dry hills, at the north end of the **Mission Road** from the fortress. Its crypt
-  is where the Day 40 horror rises, so leave room around it for the overlay.
-- **Hollow Bell (E2).** The border town under its great bell tower. A stone **aqueduct** runs to it
-  from the Mirefen; one span is broken in Act I and can be repaired in Act II. Beyond the town is
-  the far border.
+- **Thistledown (D1–E1).** The north-eastern Freehold homesteads, above the Abbey, past the
+  fen's eastern edge: farms on the last good soil before the Verge.
+- **The Abbey of the Silent Bell (D2–E2).** Adobe walls and a bell tower with no clapper on the dry
+  hills east of the fortress, at the end of the **Mission Road**, above Hollow Bell. Its crypt is
+  where the Day 40 horror rises, so leave room around it for the overlay.
+- **Hollow Bell (D4).** A **small southern town**: a cluster of homes, a market square and a modest
+  chapel whose bell gives the town its name. Not a single great tower. A stone **aqueduct** carries
+  Mirefen water south along the Drywater to it; one span is broken in Act I and can be repaired in
+  Act II. It sits just north of the sunken rail yards.
 - **The Black Verge (east edge, E1–E3).** Dark, high country of black pines and ruined manors past
-  Hollow Bell. Fogged until Day 21.
+  Thistledown and the Abbey. Fogged until Day 21.
 - **Storm Crow Heights (A1–A3).** Cliffs and caves along the west, with roosts on the ledges. The
   crows face east, toward the rail yards (an Act I clue).
 - **The Saltroad (row 3).** The trade road runs from the **salt flats** (A4) north-east, then due
   east past the fortress's market villages (B3–C3). It crosses the Drywater at the **Eastern Ford**
-  (D3) and ends at Hollow Bell. Its villages are strung along it.
-- **The Border Freeholds (D3–D4).** Farmland along the Drywater: the Eastern Ford and, south of it,
-  the homesteads of **Thistledown**. They sit close to the canyon, which is why they get raided.
+  (D3) and turns south to end at Hollow Bell. Its villages are strung along it.
+- **The Border Freeholds (D3, D1–E1).** Farmland along the Drywater at the **Eastern Ford**, and the
+  north-eastern homesteads of **Thistledown**.
 - **The Badlands (B4–B5).** Eroded hoodoos and stone chimneys south-west of the fortress. The
   **Mole tunnels** run beneath them. Draw them as dotted lines or a cutaway reaching north under the
   Saltroad toward the fortress and the fen's edge, where floods are a threat.
@@ -76,7 +85,7 @@ land:
 |---|---|
 | Mole tunnels | Beneath the badlands |
 | Crow cave | The Heights |
-| Bell cellars | Under Hollow Bell's tower |
+| Bell cellars | Under Hollow Bell's chapel |
 | Wagon circle | In the canyon |
 | Moving caravan | Anywhere on the Saltroad |
 | Freehold barn and root cellar | Thistledown |
