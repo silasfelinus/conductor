@@ -14,3 +14,9 @@ Sources checked 2026-10-19 PT. URLs support place/event grounding, **not** super
 | Bigfoot relatives, extraterrestrials, time loops, ghost animals, sentient cannabis and pagan book club | **Original fiction**, some drawing on broad cryptid folklore | None needed for claims of truth | Label as fictional; distinguish historical folklore citations from modern original twists |
 
 **Editorial rule:** factual sources can be cited in an optional gallery encyclopedia, but gameplay prose stays dramatically immediate. If a documented claim is contested (Minor/Houdini), preserve uncertainty, never falsely certify it. If an encounter uses a real organization's name, its staff, crimes, conspiracies, beliefs, monsters and conspiratorial conduct are **entirely invented**; prefer fictional stand-ins for organizations acting as antagonists.
+
+## Real festivals vs the fictional opening (2026-10-19 PT)
+
+Cannifest's official site lists its 2026 event on September 12–13 at Arcata Ballpark (https://www.cannifest.com/). A local 2026 report discussed plans **without on-site consumption zones** (https://lostcoastoutpost.com/2026/feb/10/dellarte-was-excited-bring-cannifest-blue-lake-the/). Our enchanted-brownie prologue is an **invented composite festival, not a scene at the real Cannifest**, and it does not allege real organizers supplied drugs or dosed anyone. The protagonist encounters sensations and scenes rather than an event name list.
+
+Additional grounded inspiration: the Humboldt Juggling Society's festival programming (https://humboldtjugglingsociety.org/Schedule.htm) and Dell'Arte theatre events (https://dellarte.com/past-events). All fantastic behavior and characters are original fiction; event brands stay in source/provenance metadata except when earned organically through later dialogue.
