@@ -52,3 +52,10 @@ A final newspaper clipping, tattoo sketch, kinetic miniature or letter, authored
 6. Is the final decision about the *mechanism* (how many timelines may exist) or the *community* (who controls the future), or both through different options?
 
 Text only. Neither final art direction nor publishing is approved.
+
+
+## Cross-run endings gallery and achievement requirements (Silas, 2026-10-19)
+
+Every one of the ten named future **families** in this file must have a single stable canonical ending ID and one earned/unearned display slot; nested 1-/10-/30-year epilogue and companion variants are **not** inflated ending counts. The player should see **Endings X/10** from the main board and can open a single-surface tab or modal to inspect unlocked epilogue scenes, with locked future identities concealed or hinted without spoilers. The unlocked ledger persists across page reload, starting a new run and revisiting old runs; save versioning and migration preserve identity. An epilogue must be earned by the real authored finale engine and recorded exactly once per ending family; opening the gallery never grants one.
+
+In addition, introduce ordinary Kind Robots achievement integration. Suggested first three site badges: **The First Tomorrow** (first completed ending), **A County of Voices** (cross-community commitments concretely influence an ending) and **All the Possible Humboldts** (all ten families earned). All four initial voluntary perception states and all archetypes can reach hopeful futures. See [VIEWPORT-ACHIEVEMENTS-CONTRACT.md](VIEWPORT-ACHIEVEMENTS-CONTRACT.md) for stable IDs, hidden-state accessibility, localStorage flow, UI bounds and native browser QA. Art production and publication remain gated.

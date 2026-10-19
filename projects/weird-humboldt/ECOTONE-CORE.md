@@ -98,3 +98,8 @@ The antagonist tries to *lock* a future by controlling a fictional forecasting t
 ## Explicit boundaries
 
 This is story planning, not a committed art direction, a land-use endorsement, a representation of real institutions as villains, or a replacement for the full authored deck. Preserve the creative review gate t-004, 120-card target, companion details and eventual release gate. No generated artwork or uploaded ArtJobs yet.
+
+
+## Front-end delivery guard (Silas, 2026-10-19)
+
+The entire Ecotone game runs within one **viewport-sized static visual surface** per phone/tablet/desktop view, with a compact tabbed board. The choice buttons remain usable and every non-gameplay screen (Journal, Character, Map, Achievements, Endings) is an overlay or tab, not a scroll-down section. Only overflow content *inside* bounded panes may scroll. Maintain a 10-slot cross-run endings gallery and three site-level achievement badges; expose **Endings X/10** in the main toolbar. Implementation specifications and real-browser checks are in [VIEWPORT-ACHIEVEMENTS-CONTRACT.md](VIEWPORT-ACHIEVEMENTS-CONTRACT.md). These requirements are mandatory acceptance criteria, not approval for art or public deployment.
