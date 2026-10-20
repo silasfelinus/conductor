@@ -387,7 +387,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Build the barracks: follower grid, illustrated view, Talk scenes and capacity upgrades"
-    status: claimed
+    status: done
     depends_on: t-020
     passes: 0
     stakes: reversible
@@ -397,10 +397,25 @@ tasks:
       with stat wheel, equipment, known traits, unique ability and faction
       modifiers, limited daily Talk conversations, 6 beds upgradeable to 9 and
       12. Only use delivered images, with fallbacks. Keep the /play gate closed.
+
+      Merged kind_robots#3920 as 9bbd2574bfae23eb8cc1b7ed50fb648bd0ad8d21 after all 21 checks
+      passed on head 57214f9fd2a98097d7f9a60522baef19f41104aa. Barracks Talk scenes: one
+      conversation a day with a ready or injured follower, played as a branching scene
+      (TalkDef, talkFor/talkScene/chooseTalkOption; heard:<id> and talk:<id>:<opt> flags; an
+      open talk closes heard at dawn; saves validate talksHeard/talkDay/talkOpen). Roster dot
+      for followers with something to say, Sit-with button (heart for romance steps), story-
+      gated answers hidden. 63 talks across all 20 followers in stark prose, fortress talks
+      close at the Day 41 betrayal and seven Act V talks open in the hideout; ~40 callbacks to
+      throne-room flags; talk-teodor-letters, talk-isolde-coven and talk-sable-flight now
+      revealable. Chromium 1440/390 from an injected Day 2 save: Rook's talk, beat and close,
+      no page errors or horizontal scroll. Remaining scope not built: barracks capacity is
+      still the existing 6/9/12 bed purchase; no stat wheel. F010 Lumen still has no
+      recruitment route, so her talks wait.
     owner: worker
     claimed_by: 2026-10-20T120500Z-eod-talk-scenes
     claimed_at: '2026-10-20T11:21:58Z'
-    updated: '2026-10-20T11:21:58Z'
+    updated: '2026-10-20T12:35:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#3920'
 
   - id: t-018
     milestone: m3
