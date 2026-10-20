@@ -448,7 +448,7 @@ tasks:
   - id: t-018
     milestone: m3
     title: "Verify relic vault through actual Pinia restart and storage-failure boundaries."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-014
@@ -464,10 +464,20 @@ tasks:
       and repair that boundary without disabling warnings or granting permissions.
       Keep t-005/t-013's later authored discovery branches independent and
       preserve private ADMIN scope; no account creation or production mutation.
+
+      Shipped in kind_robots#3934 (5ce02a7f). verifyEmperorFortressStore.test.ts runs the real
+      Pinia store in Node with a fake localStorage that can quota-fail or throw (wired into
+      the Emperor contract workflow). It reproduced and fixed six persistence bugs: a good
+      autosave cleared the vault-unreadable warning; an unreadable autosave was overwritten by
+      the next order; an unreadable Codex was overwritten by the next reveal; a throwing
+      getItem read as empty; unreadable slots showed as Empty and could be overwritten
+      (Chronicle now shows Unreadable with Clear); a refused Codex write was lost (now
+      retried). The typeof localStorage boundary was already safe via storage().
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-018
     claimed_at: '2026-10-20T21:07:49Z'
-    updated: '2026-10-20T21:07:49Z'
+    updated: '2026-10-20T22:21:10Z'
+    implementation_pr: 'silasfelinus/kind_robots#3934'
   - id: t-019
     milestone: m3
     title: "Rebuild the engine for v0.3: remove Horde and hours, day-based quests, brass, factions"
