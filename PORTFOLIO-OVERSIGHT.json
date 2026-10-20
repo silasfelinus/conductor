@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-20T11:49:04.755712+00:00",
+  "generated_at": "2026-10-20T17:18:47.416954+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 410.42,
+    "hours_since": 415.91,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,17 +35,17 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-20T11:49:04.755716+00:00",
+    "generated_at": "2026-10-20T17:18:47.416961+00:00",
     "summary": {
       "roadmaps": 84,
       "active_projects": 24,
       "continuous_projects": 3,
-      "tasks": 2454,
-      "ready": 173,
+      "tasks": 2460,
+      "ready": 177,
       "waiting": 186,
       "needs_human": 37,
-      "in_progress": 26,
-      "done": 2016,
+      "in_progress": 21,
+      "done": 2023,
       "errors": 0,
       "warnings": 36,
       "info": 105
@@ -99,7 +99,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "conductor",
         "task": "t-203",
-        "message": "Task has remained claimed for 18 days."
+        "message": "Task has remained claimed for 19 days."
       },
       {
         "severity": "warning",
@@ -211,7 +211,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "mandarin-tutor",
         "task": "t-030",
-        "message": "Task has remained claimed for 16 days."
+        "message": "Task has remained claimed for 17 days."
       },
       {
         "severity": "warning",
@@ -233,6 +233,13 @@
         "project": "rainbow-bullet-hell-space-princess",
         "task": "t-022",
         "message": "Task has remained claimed for 5 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "shifting-desks",
+        "task": "t-032",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
@@ -282,13 +289,6 @@
         "project": "zuzu-lair",
         "task": "t-014",
         "message": "Task has remained review for 10 days."
-      },
-      {
-        "severity": "warning",
-        "code": "DUPLICATE_YAML_KEY",
-        "project": "zuzu-shifting-lands",
-        "task": null,
-        "message": "Duplicate key 'updated' at line 634 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
       },
       {
         "severity": "warning",
