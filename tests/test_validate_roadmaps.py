@@ -235,3 +235,21 @@ def test_task_status_enum_matches_the_advisory_audit(_isolate_root):
     spec.loader.exec_module(module)
 
     assert validate_roadmaps.VALID_TASK_STATUSES == module.VALID_STATUS
+
+
+def test_duplicate_key_within_a_task_fails(_isolate_root, capsys):
+    write_roadmap(
+        _isolate_root,
+        "demo",
+        "project: demo\nkind: software\ntasks:\n- id: t-001\n  status: claimed\n  updated: '2026-10-20T11:27:00Z'\n"
+        "  stakes: reversible\n  updated: '2026-10-20T10:20:00Z'\n",
+    )
+
+    assert validate_roadmaps.main() == 1
+    err = capsys.readouterr().err
+    assert "duplicate key 'updated'" in err and "lines 6 and 8" in err
+
+
+def test_duplicate_mapping_keys_function_directly():
+    assert validate_roadmaps.duplicate_mapping_keys("a: 1\nb:\n  c: 2\n  c: 3\n") == [("c", 3, 4)]
+    assert validate_roadmaps.duplicate_mapping_keys("tasks:\n- id: t-001\n- id: t-002\n") == []
