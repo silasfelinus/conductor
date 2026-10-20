@@ -428,7 +428,7 @@ tasks:
   - id: t-018
     milestone: m3
     title: "Verify relic vault through actual Pinia restart and storage-failure boundaries."
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-014
@@ -444,6 +444,10 @@ tasks:
       and repair that boundary without disabling warnings or granting permissions.
       Keep t-005/t-013's later authored discovery branches independent and
       preserve private ADMIN scope; no account creation or production mutation.
+    owner: worker
+    claimed_by: 2026-10-20T134500Z-eod-t-018
+    claimed_at: '2026-10-20T21:07:49Z'
+    updated: '2026-10-20T21:07:49Z'
   - id: t-019
     milestone: m3
     title: "Rebuild the engine for v0.3: remove Horde and hours, day-based quests, brass, factions"
