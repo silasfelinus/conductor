@@ -1821,11 +1821,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: claimed
-  owner: worker
-  claimed_by: '20261020T112256Z-nav-zuzu-t105-74ae'
-  claimed_at: '2026-10-20T11:22:56Z'
-  updated: '2026-10-20T11:22:56Z'
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1854,7 +1850,6 @@ tasks:
     LoRA Triage now exposes model Library/Discover navigation, opaque actions, compact mobile stats, and a bounded scroll owner. Changes on Kind Robots worker/interface-vision-t105-lora-triage-20261020-4d91c2, awaiting PR checks.
 
     Merged silasfelinus/kind_robots#3909 as cef8fd03f8bcbc27c2d198410a8e2cbb5238b6bd. All 16 exact-head GitHub Actions completed successfully, including Navigation Consolidation, Layout, MDC Scroll Ownership, Changed-file Prettier, TypeScript and all Contract Tests shards. Admin LoRA Triage exposes Library and Discover/download links, toolbar gains opaque backing, and bounded scrolling makes gallery rows reachable. No database/API changes or manual deployment. Return recurring page-polish task to ready.
-  updated: '2026-10-20T10:20:00Z'
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
@@ -2551,3 +2546,18 @@ tasks:
     Optional: index the Showdown boss/ending/map art and arcade title art; make "pin
     version" a validated ArtImage/ArtJob reference. The studio stays admin-only; any
     public surface needs Silas's separate publication decision.
+
+- id: t-149
+  milestone: m6
+  title: "Consolidate World of Zuzu games into Play and feature direct homepage destinations"
+  status: review
+  owner: worker
+  claimed_by: '20261020T112256Z-nav-zuzu-t105-74ae'
+  claimed_at: '2026-10-20T11:31:59Z'
+  updated: '2026-10-20T11:33:11Z'
+  passes: 0
+  stakes: reversible
+  note: |-
+    Direct request from Silas on 2026-10-20 PT: retire the separate Zuzu channel and world-hub homepage link, move its game tabs to Play without changing permission boundaries, and show independent homepage cards for Emperor of Dust, Zuzu Pinball, Zuzu Shifting Lands, Zuzu Gamebook and Ecotone. Preserve public game routes, the admin-only Zuzu Lair preview, artwork and tutorial/route contracts. Code work: silasfelinus/kind_robots branch worker/interface-vision-t105-zuzu-play-20261020-74ae.
+
+    Silas-directed navigation consolidation implemented on worker/interface-vision-t105-zuzu-play-20261020-74ae in Kind Robots. Direct homepage links for Emperor of Dust, Zuzu Pinball, Shifting Lands, Gamebook, and Ecotone, Zuzu tabs now under Play, removed dedicated Zuzu channel, retained admin-only Lair access, and updated navigation tests. PR/CI follow.

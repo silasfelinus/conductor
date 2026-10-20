@@ -10,6 +10,9 @@
 # (concepts/painted-wasteland-canon.webp) with live pins over it.
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
 # `keepers` names the seed exported to kind_robots public/emperor-of-dust/rooms/<room>.webp.
+# Review 2026-10-20 (t-029): keepers exported in kind_robots#3915 (rooms.ts ROOM_ART). `rejected` says why the
+# other seed lost; `pending` lists the barracks -v2 rerolls (stronger no-figures negative), still queued
+# behind a multi-hour art backlog. When one lands, compare it with barracks-a and swap the keeper if cleaner.
 round: emperor-rooms-1
 project_slug: emperor-of-dust
 designer: Comic Studio
@@ -46,8 +49,8 @@ subjects:
     arthemy-house: 40949
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 248876
 - key: eodr-throne-b
   lane: arthemy-house
   title: Throne room backdrop (seed b)
@@ -64,8 +67,8 @@ subjects:
     arthemy-house: 40950
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 248877
 - key: eodr-quests-a
   lane: arthemy-house
   title: Quest room backdrop (seed a)
@@ -82,8 +85,8 @@ subjects:
     arthemy-house: 40951
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 248878
 - key: eodr-quests-b
   lane: arthemy-house
   title: Quest room backdrop (seed b)
@@ -100,8 +103,8 @@ subjects:
     arthemy-house: 40952
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 248879
 - key: eodr-barracks-a
   lane: arthemy-house
   title: Barracks backdrop (seed a)
@@ -117,8 +120,8 @@ subjects:
     arthemy-house: 40953
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 248880
 - key: eodr-barracks-b
   lane: arthemy-house
   title: Barracks backdrop (seed b)
@@ -134,8 +137,8 @@ subjects:
     arthemy-house: 40954
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 248881
 - key: eodr-market-a
   lane: arthemy-house
   title: Market court backdrop (seed a)
@@ -152,8 +155,8 @@ subjects:
     arthemy-house: 40955
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 248882
 - key: eodr-market-b
   lane: arthemy-house
   title: Market court backdrop (seed b)
@@ -170,8 +173,8 @@ subjects:
     arthemy-house: 40956
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 248883
 - key: eodr-map-a
   lane: arthemy-house
   title: Map room backdrop (seed a)
@@ -187,8 +190,8 @@ subjects:
     arthemy-house: 40957
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 248884
 - key: eodr-map-b
   lane: arthemy-house
   title: Map room backdrop (seed b)
@@ -204,8 +207,8 @@ subjects:
     arthemy-house: 40958
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 248885
 - key: eodr-chronicle-a
   lane: arthemy-house
   title: Chronicle backdrop (seed a)
@@ -221,8 +224,8 @@ subjects:
     arthemy-house: 40959
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 248886
 - key: eodr-chronicle-b
   lane: arthemy-house
   title: Chronicle backdrop (seed b)
@@ -238,5 +241,59 @@ subjects:
     arthemy-house: 40960
   art:
     arthemy-house:
+      status: DONE
+      art_image_id: 248887
+- key: eodr-barracks-a-v2
+  lane: arthemy-house
+  title: Barracks backdrop (a v2, no figures)
+  room: barracks
+  size: 1344x768
+  seed: 61023
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed, people, person, figure, figures,
+    soldier, guard, character, silhouette, animal, creature, 1boy, 1girl, solo
+  prompt_tags: (empty hall:1.3), (deserted:1.3), scenery only, deserted and unpeopled, long timber barracks hall
+    in a stone fortress, rows of bunks with patched blankets, weapon racks with spears and shields, travel packs
+    and boots, crimson banners, tall windows with warm late afternoon light, hanging brass lanterns, wooden beams,
+    a lived-in, cosy, battered room
+  jobs:
+    arthemy-house: 42158
+  art:
+    arthemy-house:
       status: PENDING
       art_image_id: null
+- key: eodr-barracks-b-v2
+  lane: arthemy-house
+  title: Barracks backdrop (b v2, no figures)
+  room: barracks
+  size: 1344x768
+  seed: 61024
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed, people, person, figure, figures,
+    soldier, guard, character, silhouette, animal, creature, 1boy, 1girl, solo
+  prompt_tags: (empty hall:1.3), (deserted:1.3), scenery only, deserted and unpeopled, long timber barracks hall
+    in a stone fortress, rows of bunks with patched blankets, weapon racks with spears and shields, travel packs
+    and boots, crimson banners, tall windows with warm late afternoon light, hanging brass lanterns, wooden beams,
+    a lived-in, cosy, battered room
+  jobs:
+    arthemy-house: 42159
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+keepers:
+  throne: a
+  quests: b
+  barracks: a
+  market: a
+  map: b
+  chronicle: a
+rejected:
+  eodr-quests-a: baked lettering on the notice board
+  eodr-barracks-b: a standing human figure in the middle of an unpeopled room
+  eodr-market-b: a standing human figure in the doorway
+  eodr-chronicle-b: three moons in the sky
+pending:
+  eodr-barracks-a-v2: reroll with no figures (barracks-a ships meanwhile with two small figures in the back tunnel);
+    ArtJob 42158
+  eodr-barracks-b-v2: reroll with no figures; ArtJob 42159

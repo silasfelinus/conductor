@@ -31,6 +31,13 @@ project as having no claimable work and fell through to lower-priority recurring
 polish tasks. audit_roadmaps.py had been reporting all 8 as INVALID_STATUS errors
 the whole time, advisorily, exactly like DUPLICATE_TASK_ID before it.
 
+A duplicate key inside one mapping is the same shape again. yaml.safe_load keeps
+the last value silently, but set_task_field.py refuses to edit a task whose block
+carries a field twice (conductor/t-197), so the task-events processor fails on
+main and on every open PR until someone deletes the line by hand. Hand-written
+claim commits that add `updated:` above an existing one did this twice in fifteen
+minutes on 2026-10-20 (interface-vision/t-105, zuzu-shifting-lands/t-033).
+
 Usage: python scripts/validate_roadmaps.py
 """
 from __future__ import annotations
@@ -73,6 +80,32 @@ def duplicate_task_ids(tasks: list) -> list[str]:
     return sorted(task_id for task_id, count in counts.items() if count > 1)
 
 
+class _DuplicateKeyLoader(yaml.SafeLoader):
+    """SafeLoader that records every mapping key seen twice in one mapping."""
+
+    def construct_mapping(self, node, deep=False):
+        seen: dict = {}
+        for key_node, _value in node.value:
+            key = self.construct_object(key_node, deep=deep)
+            line = key_node.start_mark.line + 1
+            if key in seen:
+                self.duplicates.append((str(key), seen[key], line))
+            else:
+                seen[key] = line
+        return super().construct_mapping(node, deep=deep)
+
+
+def duplicate_mapping_keys(text: str) -> list[tuple[str, int, int]]:
+    """(key, first line, repeated line) for each key a mapping in `text` repeats."""
+    loader = _DuplicateKeyLoader(text)
+    loader.duplicates = []
+    try:
+        loader.get_single_data()
+    finally:
+        loader.dispose()
+    return loader.duplicates
+
+
 def main() -> int:
     ok = True
     overrides_path = ROOT / "project-overrides.yaml"
@@ -105,6 +138,14 @@ def main() -> int:
         if raw_kind is not None and str(raw_kind) not in VALID_PROJECT_KINDS:
             print(
                 f"invalid project kind for {slug}: {raw_kind!r} -- expected one of {', '.join(sorted(VALID_PROJECT_KINDS))}",
+                file=sys.stderr,
+            )
+            ok = False
+
+        for key, first, again in duplicate_mapping_keys(path.read_text(encoding="utf-8")):
+            print(
+                f"duplicate key {key!r} in {path} at lines {first} and {again} "
+                "-- YAML keeps the last one silently and set_task_field.py refuses to edit the task; delete one",
                 file=sys.stderr,
             )
             ok = False

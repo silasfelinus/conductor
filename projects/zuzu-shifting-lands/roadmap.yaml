@@ -619,11 +619,8 @@ tasks:
   - id: t-033
     milestone: m3
     title: "Art round 4: paint the 72 new cards; re-render Three Cups; audit titles vs paintings"
-    status: claimed
-    owner: worker
-    claimed_by: 2026-10-20T112700Z-zsl-t033-gpt6-47c9
-    claimed_at: '2026-10-20T11:27:00Z'
-    updated: '2026-10-20T11:27:00Z'
+    status: ready
+    updated: '2026-10-20T11:47:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-032]
@@ -631,7 +628,8 @@ tasks:
     note: |-
       Silas, 2026-10-18: "the challenge is three cups on the table, and the picture only shows a mouse and an empty table." The ROUND-1 keeper public/shifting-lands/cards/three-cups-on-the-table.webp has a cook, a lantern and a bare table: no cups. Re-render it with the three cups explicit and countable, audit all 48 existing card paintings for every object their titles promise, and paint the 72 V6 cards from the art briefs shipped with t-032 (fixed cast per card, the traveler out of frame or seen from behind, no lettering), same house checkpoint and exporter as ROUND-1/2.
       Ready 2026-10-18: art/V6-CARD-BRIEFS.json holds one brief per V6 card (72) written with the card, plus the Three Cups re-render brief. The new cards currently fall back to their location painting (sceneArt encounterArt), so the board never shows an empty slot; a keeper exported to public/shifting-lands/cards/<id>.webp and listed in BESPOKE_CARDS replaces it.
-    updated: '2026-10-18T11:15:00Z'
+
+      Source art round four shipped in conductor PR 6401 (57b514f): 72 V6 cards plus two Three Cups prompts, with full CI green. Work still pending: queue, review rendered images, export card keepers and verify delivered URLs. Return to ready for next owner; this is not a completed art-delivery task.
   - id: t-034
     milestone: m3
     title: "Endings from the moral ledger and trial outcomes (Desks-level ending variety)"
@@ -656,3 +654,29 @@ tasks:
       Port the idea of kind_robots utils/scripts/shiftingDesksBalanceReport.ts: simulate many seeds with simple policies (always kind, always safe, greedy, random), report survival per land, the cards that kill most, how often each gated route is reachable, and provisions curves; tune targets/costs where a land is a cliff.
       Ready 2026-10-18: kind runs complete 28% vs ruthless 46% at V6 merge; a starting harness lived in the session scratchpad (policy by marks/targets, 400 seeds each). Decide with t-034 how much of the kindness penalty is tone and how much is a cliff.
     updated: '2026-10-18T11:15:00Z'
+  - id: t-036
+    title: "Shifting Lands V6: comprehensive encounter line edit for voice, stakes and readable choices"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#3917"
+    updated: '2026-10-20'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#3917 (https://github.com/silasfelinus/kind_robots/issues/3917), opened by @silasfelinus on 2026-10-20. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3917`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      ## Direction (Silas, 2026-10-20 PT)
+      Accelerate Shifting Lands beyond quantity toward **finished creative content**, including polished second-person narrative text, engagement, and art fidelity. Art prompt production is under conductor PR #6401. This issue covers the separate **runtime/player-visible** writing pass, not a discussion-only style proposal.
+
+      ## Scope
+      - Audit all **120 authored encounter cards / 444 choices** for repetitive formulations, stilted dialogue, flat outcomes and mismatch with art. Include five major trials and player-facing journal lines where necessary.
+      - Keep the narrator **second person, present tense, hero-agnostic**. Zuzu's distinctive values can inform world reactions without tying every line to his name/pronouns; eventual alternate protagonists must fit.
+      - For each encounter: a concrete opening image, a morally consequential dilemma, action-led concise choice labels, outcomes that pay off what was promised and reveal consequences. Prioritize sacrifice, kindness with costs, broken bargains, earned trust and consequences carried across lands. Avoid moral lectures and identical 'choose/decide' boilerplate.
+      - Edit prose only unless explicitly versioning new mechanics. Preserve card IDs, choice IDs, roll targets, costs, deed flags, marks, eligibility, schema and save replay; verify V2–V6 restorations. Existing source-authored species/cast stay fixed.
+      - Compare story descriptions to ROUND-4 art anchors and titles. The 'Three Cups on the Table' scene must explicitly show three cups both in the text and its rendered illustration. Leave art rendering and keeper exports to Conductor t-033.
+      - Ship edits in **reviewable batches by land**, with focused playbook/contract tests and real examples of before/after writing quality. Merge each green batch, not a single giant unreviewed blob. No publication or deployment without its separate gate.
+
+      ## Creative acceptance
+      Do not mark complete when only a style guide or new tasks exist. Gameplay text itself must be edited and replay-tested; player can tell what each choice does, whom it affects, and why the outcome feels different from another choice.
+
+      Linked project: `zuzu-shifting-lands`, editorial counterpart of conductor t-034 (ledger-aware endings).
