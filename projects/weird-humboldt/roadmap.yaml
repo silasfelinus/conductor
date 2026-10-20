@@ -1009,8 +1009,8 @@ tasks:
   - id: t-033
     milestone: m4
     title: "Playbook Manager: admin view of Ecotone beats as chained choices, with edits, comments and art requests"
-    status: review
-    owner: worker
+    status: done
+    owner: reviewer
     claimed_by: 2026-10-20T00:22:16Z-ecotone-playbook
     claimed_at: '2026-10-20T00:22:16Z'
     approved_by_human: true
@@ -1027,3 +1027,32 @@ tasks:
       Schema-affecting (additive tables).
       2026-10-20 PT: implementation PR kind_robots#3875 (schema-affecting:
       additive PlaybookEdit and PlaybookNote tables), merging when CI is green.
+      DONE 2026-10-20 PT: kind_robots#3875 squash-merged (51af450), all 30 checks
+      green including the MariaDB migration replay. /admin/playbook-manager with
+      an Admin tab: route chains, fork pools, crossroads, finale and the five
+      ending storylines; filters by route, day, companion, lens variation and
+      status; edit text, choices, variations and add choices; draft, live
+      (applied in /play/ecotone via /api/playbook/ecotone/live) or revert;
+      comments, image flags and submissions, art requests with job status;
+      JSON export. Schema-affecting: additive PlaybookEdit and PlaybookNote,
+      deployed by the normal Unraid migration step.
+  - id: t-034
+    milestone: m4
+    title: "Finish the checkpoint bake-off and review art round 3 (zoo tribute re-render, seven new story beats)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Art/CHECKPOINT-BAKEOFF.yaml review (2026-10-20 PT): Z-Image Turbo is the
+      provisional Ecotone house lane for people and places, Krea 2 the alternate;
+      Arthemy is retired for Ecotone. The art worker stalled about 01:16 UTC with
+      ArtJob 40891 (flux2, Mara) stuck RUNNING, so Flux 2 and most tag-lane
+      settings are still pending (ck-grove/krea2 resubmitted as 40962). When the
+      queue moves: run --status on CHECKPOINT-BAKEOFF.yaml and ROUND-3.yaml,
+      compare Flux 2 and the remaining settings, confirm or change the house lane,
+      then review ROUND-3 (ArtJobs 40963-40970: the WH-124 zoo tribute with adult
+      performers, GR-2, GR-4, GR-5, KN-2, KN-4, KN-5, KN-6), export keepers to
+      kind_robots public/ecotone/<asset>.webp, add them to ECOTONE_ART and the
+      cards' art fields, and PR it. If Silas prefers another lane, the Playbook
+      Manager's art lanes (utils/playbook/artLanes.ts) should follow.
