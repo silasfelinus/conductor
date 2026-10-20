@@ -702,7 +702,7 @@ tasks:
   - id: t-028
     milestone: m3
     title: "Young Komodo betrayal track and Act V hideout selection engine"
-    status: claimed
+    status: done
     depends_on: t-025
     passes: 0
     stakes: reversible
@@ -717,10 +717,26 @@ tasks:
       chosen from state; (2) no followers depart with Komodo (no loyalty/hidden-allegiance
       departure, romance or finished arc protection); (3) hideout income is not modelled (Act
       V still collects regional taxes instead of the host's share).
-    updated: '2026-10-20T22:33:31Z'
+
+      Merged kind_robots#3947 as 2ffecc397286c249586378c9ce6ebb84a6b45d1b (22/22 checks).
+      betrayal.ts: the buyer is chosen from state (buyer:<id>): the Abbey by default; the
+      Black Verge when it stands stronger than the Abbey and the crown slighted it 3+ times or
+      is Hostile; House Vask when Old Houses support <= 3; Verge outranks Vask; the Abbess is
+      always the patron. SceneVariant swaps only the lines naming the tower's holder (Days
+      41/42/43/45/49). Departures: hidden allegiance to the buyer, or 10+ days unvisited while
+      their own people were crossed; never estranged followers, sealed romances, finished arcs
+      or followers away on quests; max 3 leave, min 4 stay; departed followers are alive but
+      gone (talks, quests, wages stop; kit returns), shown on a Day 41 betrayal page and a
+      Gone with Komodo barracks row with one-line reasons, plus a departed epilogue variant
+      for all 20 followers. Hideout income: no region pays from Day 41; the host shares
+      strength x3/x2/x1 by tier (cave 3) and wages are halved (HIDEOUT_WAGE, a design call
+      Silas may overrule). Saves validated; old post-Day-41 saves read the Abbey. Balance ok;
+      Chromium 1440/390.
+    updated: '2026-10-20T23:57:28Z'
     owner: worker
     claimed_by: 2026-10-20T223500Z-eod-t-028
     claimed_at: '2026-10-20T22:33:31Z'
+    implementation_pr: 'silasfelinus/kind_robots#3947'
   - id: t-029
     milestone: m5
     title: "Art-direction pass: bring the fortress front end to the painted drafts"
