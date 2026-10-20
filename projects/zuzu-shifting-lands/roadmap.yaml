@@ -619,11 +619,8 @@ tasks:
   - id: t-033
     milestone: m3
     title: "Art round 4: paint the 72 new cards; re-render Three Cups; audit titles vs paintings"
-    status: claimed
-    owner: worker
-    claimed_by: 2026-10-20T112700Z-zsl-t033-gpt6-47c9
-    claimed_at: '2026-10-20T11:27:00Z'
-    updated: '2026-10-20T11:27:00Z'
+    status: ready
+    updated: '2026-10-20T11:47:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-032]
@@ -631,6 +628,8 @@ tasks:
     note: |-
       Silas, 2026-10-18: "the challenge is three cups on the table, and the picture only shows a mouse and an empty table." The ROUND-1 keeper public/shifting-lands/cards/three-cups-on-the-table.webp has a cook, a lantern and a bare table: no cups. Re-render it with the three cups explicit and countable, audit all 48 existing card paintings for every object their titles promise, and paint the 72 V6 cards from the art briefs shipped with t-032 (fixed cast per card, the traveler out of frame or seen from behind, no lettering), same house checkpoint and exporter as ROUND-1/2.
       Ready 2026-10-18: art/V6-CARD-BRIEFS.json holds one brief per V6 card (72) written with the card, plus the Three Cups re-render brief. The new cards currently fall back to their location painting (sceneArt encounterArt), so the board never shows an empty slot; a keeper exported to public/shifting-lands/cards/<id>.webp and listed in BESPOKE_CARDS replaces it.
+
+      Source art round four shipped in conductor PR 6401 (57b514f): 72 V6 cards plus two Three Cups prompts, with full CI green. Work still pending: queue, review rendered images, export card keepers and verify delivered URLs. Return to ready for next owner; this is not a completed art-delivery task.
   - id: t-034
     milestone: m3
     title: "Endings from the moral ledger and trial outcomes (Desks-level ending variety)"
