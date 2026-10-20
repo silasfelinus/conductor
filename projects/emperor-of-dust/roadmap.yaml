@@ -330,7 +330,7 @@ tasks:
   - id: t-013
     milestone: m4
     title: "Write all 50 three-report briefings with Young Komodo clues and his own seeded lies"
-    status: claimed
+    status: done
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -341,10 +341,19 @@ tasks:
       author-known metadata, rotating lie position and conditional variants.
       Allow early lies to be erroneous flavor without unfair punishment.
       Eye of the Elder Crow highlights the false report when equipped.
+
+      Merged kind_robots#3929 as 001b8b0ffd3ca3771f723d9f92e59bde4431b32a (21/21 checks).
+      Conditional briefing variants (Briefing.variants, briefings.ts; 35 variants on 18 days
+      keyed on earlier-day flags; truth never varies so the Eye still marks one lie), lie
+      slots rotated (14/20/16), Day 38 made Komodo's own lie (8 total), hindsight lines and a
+      post-betrayal 'His own reports, read again' list in the briefing. Contract: rotation,
+      [K] days carry Komodo lies, variant determinism across audience/reload/rewind, Eye marks
+      exactly one. Chromium 1440/390.
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-013
     claimed_at: '2026-10-20T21:07:43Z'
-    updated: '2026-10-20T21:07:43Z'
+    updated: '2026-10-20T22:21:01Z'
+    implementation_pr: 'silasfelinus/kind_robots#3929'
   - id: t-014
     milestone: m3
     title: "Implement persistent Items of Power with one or two run slots"
@@ -380,7 +389,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Develop Mole Revolutionary faction, anti-witch choices and the Mole tunnel hideout"
-    status: claimed
+    status: done
     depends_on: t-005
     passes: 0
     stakes: reversible
@@ -388,10 +397,21 @@ tasks:
       Eighth faction, opposes empire and swamp witches, with meaningful
       reconciliation arc, named leaders, authored tension effects and
       Day 50 ending variants; maintain pre-Zuzu continuity.
+
+      Merged kind_robots#3937 as 8b383514b216ca319aec5d44d666a7ff7b87de00 (19/19 checks).
+      moles.ts: leaders Umber, Keel, Lumen plus Coal Harrow (hardline sapper captain) and
+      Tobin Umber (courier); a reconciliation track of 23 concession and 9 grievance flags
+      with moleAccord(); generic Requirement.standing / EpilogueCondition.standing (at least N
+      of these flags). Five new audiences (Day 21 weir vs the Mothers, Day 32 reform list that
+      finally makes F010 Lumen recruitable, Day 33 sappers in the fen, Day 44 two kegs in the
+      tunnels, Day 50 the burrows turn out) and Mole epilogue variants. Balance unchanged;
+      patron:moles 10/10 tunnels and Tunnels and Councils. Coal and Tobin have no portrait art
+      yet.
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-016
     claimed_at: '2026-10-20T21:07:46Z'
-    updated: '2026-10-20T21:07:46Z'
+    updated: '2026-10-20T22:21:04Z'
+    implementation_pr: 'silasfelinus/kind_robots#3937'
   - id: t-017
     milestone: m2
     title: "Build the barracks: follower grid, illustrated view, Talk scenes and capacity upgrades"
@@ -428,7 +448,7 @@ tasks:
   - id: t-018
     milestone: m3
     title: "Verify relic vault through actual Pinia restart and storage-failure boundaries."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-014
@@ -444,10 +464,20 @@ tasks:
       and repair that boundary without disabling warnings or granting permissions.
       Keep t-005/t-013's later authored discovery branches independent and
       preserve private ADMIN scope; no account creation or production mutation.
+
+      Shipped in kind_robots#3934 (5ce02a7f). verifyEmperorFortressStore.test.ts runs the real
+      Pinia store in Node with a fake localStorage that can quota-fail or throw (wired into
+      the Emperor contract workflow). It reproduced and fixed six persistence bugs: a good
+      autosave cleared the vault-unreadable warning; an unreadable autosave was overwritten by
+      the next order; an unreadable Codex was overwritten by the next reveal; a throwing
+      getItem read as empty; unreadable slots showed as Empty and could be overwritten
+      (Chronicle now shows Unreadable with Clear); a refused Codex write was lost (now
+      retried). The typeof localStorage boundary was already safe via storage().
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-018
     claimed_at: '2026-10-20T21:07:49Z'
-    updated: '2026-10-20T21:07:49Z'
+    updated: '2026-10-20T22:21:10Z'
+    implementation_pr: 'silasfelinus/kind_robots#3934'
   - id: t-019
     milestone: m3
     title: "Rebuild the engine for v0.3: remove Horde and hours, day-based quests, brass, factions"
@@ -614,17 +644,28 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Map room: territories, taxes, affinity tiers, act-end map events and telegraphed faction wipe-outs"
-    status: claimed
+    status: done
     depends_on: t-019
     passes: 0
     stakes: reversible
     note: >-
       Days 10/20/30/40 events; Rustline revealed end of Act I, Black Verge end
       of Act II; wipe-outs only at act ends and warned one act ahead.
+
+      Merged kind_robots#3938 as 5ecc5218afd0393eb5feaae0002f33f4d7cf1beb (21/21 checks). Act-
+      end map: wipe-outs and raids only at act-end dawns and only after an honest warning one
+      act ahead (banner on map, strength <= 2, weakenable), rivalries (RIVALRIES) move
+      territory (run.controllers), wiped factions' quests close; tier taxes (Wary/Hostile 0,
+      Allied +50% tithe) with regionTax matching the map room; act-end dawn opens on a map
+      page of stark event cards; map room warnings panel, threatened pins, region cards, What
+      changed history; briefing map-room line; ledger taxes/wages. Freeholds-patron loans fell
+      4.1 -> 1.9. Follow-ups for content: allegiance shifts and refugee audiences after a
+      wipe-out.
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-025
     claimed_at: '2026-10-20T21:08:01Z'
-    updated: '2026-10-20T21:08:01Z'
+    updated: '2026-10-20T22:21:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#3938'
   - id: t-026
     milestone: m4
     title: "Romance arcs for about six followers, never Young Komodo"
@@ -661,7 +702,7 @@ tasks:
   - id: t-028
     milestone: m3
     title: "Young Komodo betrayal track and Act V hideout selection engine"
-    status: waiting
+    status: claimed
     depends_on: t-025
     passes: 0
     stakes: reversible
@@ -669,6 +710,17 @@ tasks:
       Betrayal always fires on Day 40; buyer, departing followers and hideout
       location depend on state; fallback revolutionary cave guarantees no
       softlock.
+
+      Unblocked 2026-10-20 by t-025 (kind_robots#3938). Audit in that PR's worker report:
+      betrayal always fires (Day 41 dawn), selectHideout + nameless-cave fallback and Act V
+      host gating exist and are tested. Missing: (1) the buyer is always the Abbey, never
+      chosen from state; (2) no followers depart with Komodo (no loyalty/hidden-allegiance
+      departure, romance or finished arc protection); (3) hideout income is not modelled (Act
+      V still collects regional taxes instead of the host's share).
+    updated: '2026-10-20T22:33:31Z'
+    owner: worker
+    claimed_by: 2026-10-20T223500Z-eod-t-028
+    claimed_at: '2026-10-20T22:33:31Z'
   - id: t-029
     milestone: m5
     title: "Art-direction pass: bring the fortress front end to the painted drafts"
@@ -772,7 +824,7 @@ tasks:
   - id: t-032
     milestone: m3
     title: "Keep a finished campaign's saves well under the browser storage quota"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -784,7 +836,15 @@ tasks:
       or delta-encode dawns. Must keep the SYSTEMS-V03 save rules: validated saves, never
       overwrite unreadable data, rewind to any dawn. Add a contract test bounding a full run's
       encoded size.
+
+      Merged kind_robots#3934 as 5ce02a7f64557d9e2d55c0393ce24a73e9430d83 (21/21 checks). v4
+      save format packs each dawn's accumulated lists as shared-prefix + tail; full 50-day
+      books 680-952 KB -> 92-116 KB (~8x); v3 books/slots migrate on read; tampered packing
+      rejected. Contract bounds a full book under 250 KB and proves packed rewinds equal full
+      rewinds at dawns 1/2/17/33/50. Caveat: during a deploy an old-code tab would read a v4
+      autosave as unreadable.
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-032
     claimed_at: '2026-10-20T21:08:04Z'
-    updated: '2026-10-20T21:08:04Z'
+    updated: '2026-10-20T22:21:07Z'
+    implementation_pr: 'silasfelinus/kind_robots#3934'
