@@ -101,6 +101,7 @@ First pack: [ORIENTATION-12.json](encounters/ORIENTATION-12.json). It has 3 loca
 
 - **Darkly comic, PG-13**, the register of Paranoia, Portal or Hitchhiker's. Silas's kids are 11 and 14, and this should be a game they would laugh at.
 - Deaths are **slapstick or offscreen** (crushed by a falling org chart, reassigned to the moon). There is no gore spectacle.
+- **The tone ladder escalates by floor** (Silas, 2026-10-20 PT): the surface floors keep one impossible thing treated as normal (Gus, the giant cockroach, is the benchmark), and the Vault and Sub-Level Zero grow steadily more Cronenbergian, until the office has become a polite, upholstered organism. It is body-horror *texture*, not body harm: no blood, wounds or exposed organs. ART-DIRECTION.md "Tone ladder" has the per-floor rules.
 - **Punch up at systems**: procedure, surveillance, optimization, corporate euphemism. Don't punch down at coworkers' identities. The cast is diverse and queer-positive as a matter of course, never as a punchline.
 - "Termination" and "reassignment" are the comic death register. **No suicide or self-harm jokes**: never phrase anything as "voluntary termination" of the self.
 - The nuclear toys **never detonate on a child**. The stakes stay implied and the comedy comes from the corporate cheer around them.

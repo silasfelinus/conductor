@@ -1,0 +1,196 @@
+# Shifting Desks art round 14 (t-033 tone ladder, 2026-10-20 PT). Silas: "In later levels, things might get
+# more cronenbergian. I loved the giant cockroach appearance in the first act." Re-renders the station art that
+# sets each lower floor's mood (the department arrival, the three location card backs, and the Board) one rung
+# up the tone ladder in ../ART-DIRECTION.md: the Vault's furniture starts to breathe and Sub-Level Zero becomes
+# one polite, upholstered organism. The flesh stays smooth, glossy and tidy, with no blood, wounds or exposed organs.
+# Each prompt replaces its pack art.brief; force: true overwrites the earlier render at the same path. The
+# replaced prompt and seed stay in ROUND-5/6, so reverting is one forced request. Status values:
+# requested -> rendered -> delivered (media_url answers 200). Generated internal art is pre-approved (AGENTS.md).
+round: shifting-desks-14
+project_slug: shifting-desks
+task: t-033
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-20T19:30:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render, blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: wellness
+  kind: department
+  department: wellness
+  title: 'Wellness & Testing arrival'
+  source_ref: encounters/WELLNESS-12.json department.arrival_art.brief
+  replaces: ROUND-5 wellness (seed 55017)
+  tone_rung: 'wellness: the body starts doing paperwork'
+  request_id: shifting-desks-r14-wellness
+  engine: krea2
+  size: 1248x936
+  aspect: 4:3 landscape
+  seed: 64001
+  target_path: kind_robots public/images/shifting-desks/departments/wellness.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/departments/wellness.webp
+  prompt: 'Elevator doors opening onto a gleaming white testing level deep underground, long corridors of identical doors whose white doorways swell and settle gently like the ribs of a sleeping animal, ribbed pale ceiling ducts running overhead like soft windpipes, glass tanks glowing green at the far end, a single welcome mat at the elevator''s edge, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, horizontal 4:3 composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: nutrition-studies
+  kind: location
+  department: wellness
+  title: 'Nutrition Studies'
+  source_ref: encounters/WELLNESS-12.json locations[nutrition-studies].art.brief
+  replaces: ROUND-5 nutrition-studies (seed 55014)
+  tone_rung: 'wellness: the body starts doing paperwork'
+  request_id: shifting-desks-r14-nutrition-studies
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 64002
+  target_path: kind_robots public/images/shifting-desks/locations/nutrition-studies.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/nutrition-studies.webp
+  prompt: 'A long steel cafeteria under a curved glass ceiling, numbered trays sliding along a conveyor belt of smooth glossy pink ridges that ripples like a swallowing throat, each tray holding a neat scoop of identical green paste, a wide observation window with clipboards pressed to it, a single potted plant thriving in a corner, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: cognitive-testing-chamber
+  kind: location
+  department: wellness
+  title: 'Cognitive Testing Chamber'
+  source_ref: encounters/WELLNESS-12.json locations[cognitive-testing-chamber].art.brief
+  replaces: ROUND-5 cognitive-testing-chamber (seed 55015)
+  tone_rung: 'wellness: the body starts doing paperwork'
+  request_id: shifting-desks-r14-cognitive-testing-chamber
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 64003
+  target_path: kind_robots public/images/shifting-desks/locations/cognitive-testing-chamber.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/cognitive-testing-chamber.webp
+  prompt: 'A bright white room nested inside a larger white room, a single chair and table at the center, the chair''s padded cream upholstery gently rising and falling as if breathing, a dark one-way window along one wall, a corridor of identical doors glimpsed through an archway, a glowing round speaker grille ringed with fine soft cilia leaning toward the chair, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-suite
+  kind: location
+  department: wellness
+  title: 'Mutation Suite'
+  source_ref: encounters/WELLNESS-12.json locations[mutation-suite].art.brief
+  replaces: ROUND-5 mutation-suite (seed 55016)
+  tone_rung: 'wellness: the body starts doing paperwork'
+  request_id: shifting-desks-r14-mutation-suite
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 64004
+  target_path: kind_robots public/images/shifting-desks/locations/mutation-suite.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/mutation-suite.webp
+  prompt: 'A tiled clinical hall lined with tall glass tanks of softly glowing green liquid, each tank holding a calm floating office worker with one small cheerful mutation, an extra blinking eye on a cheek, a third hand politely holding a pen, skin with a faint green phosphor glow, a smiling nurse''s trolley of paper cups, a huge round steel vault door set into the far wall, rising bubbles catching the light, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: sub-level-zero
+  kind: department
+  department: sub-level-zero
+  title: 'Sub-Level Zero arrival'
+  source_ref: encounters/SUBLEVEL-ZERO-12.json department.arrival_art.brief
+  replaces: ROUND-6 sub-level-zero (seed 56017)
+  tone_rung: 'sub-level-zero: corporate biology'
+  request_id: shifting-desks-r14-sub-level-zero
+  engine: krea2
+  size: 1248x936
+  aspect: 4:3 landscape
+  seed: 64005
+  target_path: kind_robots public/images/shifting-desks/departments/sub-level-zero.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/departments/sub-level-zero.webp
+  prompt: 'Elevator doors opening at the very bottom of the Vault onto a plush executive corridor whose dark wood walls bulge with slow glossy oxblood veins of leather, the carpet a warm ribbed runner like a long tongue, portraits of a mustached man at four different ages whose painted eyes all follow the elevator, a round boardroom door glowing at the far end like an iris, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, horizontal 4:3 composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: boardroom-antechamber
+  kind: location
+  department: sub-level-zero
+  title: 'Boardroom Antechamber'
+  source_ref: encounters/SUBLEVEL-ZERO-12.json locations[boardroom-antechamber].art.brief
+  replaces: ROUND-6 boardroom-antechamber (seed 56014)
+  tone_rung: 'sub-level-zero: corporate biology'
+  request_id: shifting-desks-r14-boardroom-antechamber
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 64006
+  target_path: kind_robots public/images/shifting-desks/locations/boardroom-antechamber.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/boardroom-antechamber.webp
+  prompt: 'A hushed wood-paneled waiting room with deep oxblood leather chairs whose plump cushions have grown softly into the walls and floor like living roots, four oval portraits of the same mustached man at different ages, a horseshoe of typing desks where the typewriters have smooth glossy beetle shells and fine feeler antennae, a tall double door glowing at its edges, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: founders-office
+  kind: location
+  department: sub-level-zero
+  title: 'The Founder''s Office'
+  source_ref: encounters/SUBLEVEL-ZERO-12.json locations[founders-office].art.brief
+  replaces: ROUND-6 founders-office (seed 56015)
+  tone_rung: 'sub-level-zero: corporate biology'
+  request_id: shifting-desks-r14-founders-office
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 64007
+  target_path: kind_robots public/images/shifting-desks/locations/founders-office.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/founders-office.webp
+  prompt: 'An old suburban garage rebuilt deep underground, a cluttered workbench under a hanging lamp, a glowing glass jar on the bench holding a calm mustached head whose ribbed pale cables run out of the jar lid and along the bench like vines into a humming radio set, four spare mustaches on the shelf creeping slowly like woolly caterpillars, a faded blueprint pinned to the wall, a wooden desk in the corner, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: server-room-zero
+  kind: location
+  department: sub-level-zero
+  title: 'Server Room Zero'
+  source_ref: encounters/SUBLEVEL-ZERO-12.json locations[server-room-zero].art.brief
+  replaces: ROUND-6 server-room-zero (seed 56016)
+  tone_rung: 'sub-level-zero: corporate biology'
+  request_id: shifting-desks-r14-server-room-zero
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 64008
+  target_path: kind_robots public/images/shifting-desks/locations/server-room-zero.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/server-room-zero.webp
+  prompt: 'A cold blue server room of tall humming cabinets in long rows, the cabinets joined by thick glossy ribbed cables that pulse faintly like veins and sag between them like tendons, each cabinet fitted with a small glowing round speaker grille that puckers and relaxes like a soft mouth, a single green terminal at the center with a smooth fleshy keyboard, tape reels on high shelves, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-board
+  kind: boss-face
+  department: sub-level-zero
+  title: 'The Board'
+  card: the-board
+  source_ref: encounters/SUBLEVEL-ZERO-12.json boss.art.brief
+  replaces: ROUND-6 the-board (seed 56013)
+  tone_rung: 'sub-level-zero: corporate biology'
+  request_id: shifting-desks-r14-the-board
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 64009
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-board.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-board.webp
+  prompt: 'Mid-century safety-manual illustration of a vast perfectly round boardroom under a single great hanging lamp, eleven smiling executives grown together into one long body in a single enormous grey suit that wraps the whole round table, eleven heads on one shared shoulder line and one very long striped tie, one empty chair facing them, a glowing head in a jar at the head of the table, a small worker standing at the empty chair with a folded paper, oxblood and manila palette, halftone grain, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null

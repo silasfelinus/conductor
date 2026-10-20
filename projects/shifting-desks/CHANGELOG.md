@@ -40,3 +40,7 @@
 - Visual review of all 184 delivered renders from rounds 2-12 against their briefs: 159 keep, 25 sent back. Verdicts are recorded in ROUND-2 through ROUND-12, and rounds 9-12 are marked delivered.
 - encounters/link_art.py links each pack slot to the path kind_robots `stationArt()` serves (`verified-repository-art`, art_ref = public path) when its latest ledger row is delivered and kept: 143/163 linked. validate_pack.py requires that path shape, and tests/test_shifting_desks_art_link.py keeps the packs and ledgers in agreement.
 - ROUND-13.yaml queues 25 forced Krea 2 re-renders with prompts rewritten to each review note, all passing the live contract. Rounds 9-12 briefs take the new prompts. t-032 lands, reviews and links them.
+
+## 2026-10-20 PT (later)
+- Tone ladder (t-033, Silas: "In later levels, things might get more cronenbergian. I loved the giant cockroach appearance in the first act."). ART-DIRECTION.md sets the register per floor: one impossible thing treated as normal on the surface, toys a little too alive, the body starting to do paperwork in the Vault, and corporate biology in Sub-Level Zero. Flesh is always smooth and upholstered, with no blood, wounds or exposed organs.
+- Art round 14 queues nine renders that take the Wellness and Sub-Level Zero arrivals, location card backs and the Board one rung up. t-034 carries the ladder into card text.
