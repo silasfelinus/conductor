@@ -1146,7 +1146,7 @@ tasks:
   - id: t-037
     milestone: m4
     title: "Playbook content layer: live text edits in Shifting Lands, Shifting Desks, the Zuzu gamebook and Emperor of Dust"
-    status: claimed
+    status: done
     owner: worker
     claimed_by: 2026-10-20T02:57:00Z-playbook-content-layer
     claimed_at: '2026-10-20T02:57:00Z'
@@ -1163,3 +1163,13 @@ tasks:
       authored, and seeded play is unchanged. Touches those games' lookup
       functions and stores in a few lines each (cross-project: zuzu-shifting-
       lands, shifting-desks, zuzu-gamebook, emperor-of-dust).
+
+      DONE 2026-10-20 PT: kind_robots#3880 squash-merged (06cc4fe), all checks green. Shifting
+      Lands (v6Card, trialForLand), Shifting Desks (encounterById, windowApplicant, boss), the
+      Zuzu gamebook (scene) and Emperor of Dust (questDef, dayDef with audiences) read a live
+      text overlay loaded from /api/playbook/<game>/live, so Save and go live works in every
+      game. Words only; ids, rolls, effects and links stay authored. verifyPlaybook proves the
+      round trip for every editable beat in all four games. The image-first manager layout
+      Silas asked for next follows in kind_robots#3881.
+    updated: '2026-10-20T03:52:03Z'
+    implementation_pr: 'silasfelinus/kind_robots#3880'
