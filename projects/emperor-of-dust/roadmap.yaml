@@ -545,14 +545,21 @@ tasks:
     note: >-
       Silas, 2026-10-19 PT, with the painted drafts attached: "I want us to work on the
       discrepancy between our current front end and the idealized drafts." Gap table:
-      FRONTEND-GAP.md. Slice 1 (kind_robots#3873): scoped ink-and-gilt `emperor` theme, HUD
-      with crest, act/day and meter chips, gilt room tabs, room stage with medallion, title
-      plate and tagline, throne room as scene plus petition card. Room backdrops queued as
-      ArtJobs 40949-40960 (art/ROOMS-ROUND-1.yaml); queued is not delivered. Remaining: export
-      the room keepers into ROOM_ART, then art-led layouts for the quest board, barracks,
-      market, map crests/legend and chronicle. Close when every room matches its draft's
-      composition at 390/768/1440 and the six backdrops are live. Visual acceptance stays t-010.
+      FRONTEND-GAP.md. Shipped: kind_robots#3873 (merged b17d945473e3e4ff5c54c97824f215540022c44b,
+      21/21 checks) gave the fortress a scoped ink-and-gilt `emperor` theme, the crest HUD
+      with meter chips, gilt room tabs, room stages with medallion/plate/tagline, and
+      art-led throne (petitioner in scene + petition card), quest board (pinned notices,
+      party slots), barracks (roster, follower in scene, stat pips, trait chips), market
+      (filter, price pills) and chronicle (dawn list, parchment rewind card); kind_robots#3876
+      (merged 47632f50d97e0db8f19d945f923ed3fb46e275b7, 20/20 checks) added map-room stance
+      banners and the legend. Verified in Chromium at 1440 and 390 with a full Day 1 loop, no
+      page errors or horizontal scroll. Remaining: the six room backdrops (ArtJobs
+      40949-40960, art/ROOMS-ROUND-1.yaml) were still PENDING at the render relay on
+      2026-10-20T01:30Z; queued is not delivered. Pick keepers, export to
+      public/emperor-of-dust/rooms and list them in ROOM_ART, then close. Item and
+      quest-notice art are follow-ups. Visual acceptance stays t-010.
     owner: worker
     claimed_by: 2026-10-20T005630Z-emperor-t029-gilt
     claimed_at: '2026-10-20T00:56:30Z'
-    implementation_pr: 'silasfelinus/kind_robots#3873'
+    updated: '2026-10-20T01:31:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3876'
