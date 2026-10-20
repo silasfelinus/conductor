@@ -583,7 +583,7 @@ tasks:
   - id: t-029
     milestone: m5
     title: "Art-direction pass: bring the fortress front end to the painted drafts"
-    status: claimed
+    status: done
     depends_on: t-020
     passes: 0
     stakes: reversible
@@ -617,8 +617,19 @@ tasks:
       more check-ins were armed. When they render: pick keepers, export to
       public/emperor-of-dust/rooms and list them in ROOM_ART, then close. Item and
       quest-notice art are follow-ups. Visual acceptance stays t-010.
+
+      2026-10-20 PT: all 12 room renders and 231 quest renders were DONE. kind_robots#3915
+      merged as 787757b3068e791e0313d5550d0affe71c5b6279 (18/18 checks): six painted room
+      backdrops (keepers throne a, quests b, barracks a, market a, map b, chronicle a;
+      briefing keeps its gradient) in ROOM_ART, and 228 of 231 quest images in QUEST_ART.
+      Ledgers in conductor#6405 (3e7f6dee). Rejected and rerolling, not yet delivered:
+      barracks backdrop v2 (ArtJobs 42158, 42159; seed a ships with two small background
+      figures) and q-d42-cave-forage notice/success/failure (42160-42162; crow-roost tags
+      overpowered the cave). Those fall back to the map crop until exported; pick up with
+      enqueue_art_requests.py --status on ROOMS-ROUND-1/QUESTS-ROUND-1. Visual acceptance
+      stays t-010.
     owner: worker
     claimed_by: 2026-10-20T005630Z-emperor-t029-gilt
     claimed_at: '2026-10-20T00:56:30Z'
-    updated: '2026-10-20T03:59:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#3885'
+    updated: '2026-10-20T12:16:07Z'
+    implementation_pr: 'silasfelinus/kind_robots#3915'
