@@ -564,14 +564,24 @@ tasks:
   - id: t-026
     milestone: m4
     title: "Romance arcs for about six followers, never Young Komodo"
-    status: claimed
+    status: done
     depends_on: t-011
     passes: 0
     stakes: reversible
     owner: worker
     claimed_by: 2026-10-20T123000Z-eod-romance
     claimed_at: '2026-10-20T11:41:54Z'
-    updated: '2026-10-20T11:41:54Z'
+    updated: '2026-10-20T12:35:16Z'
+    note: >-
+      Shipped in kind_robots#3920 (9bbd2574). Six romance arcs, never Young Komodo: Rook
+      (rook-2, rook-3), Saffron, Nera, Ash, Sable and Vesper (three steps each, romance:
+      true), final steps Days 27-38. Accepting sets romance-<name>, the last step
+      romance-<name>-sealed; every step can be declined kindly (<name>-friendship, clears the
+      arc). Only one romance can be sealed (courting() notFlags on rivals' sealed flags);
+      three final steps are written jealousy dilemmas, shown only while the rival is alive and
+      at court. Romance costs: a pass that bends Watch law, a lethal walk into the Abbey, the
+      Verge offering war help for Sable, Rook's scout facing the gallows (rook-heartbroken).
+    implementation_pr: 'silasfelinus/kind_robots#3920'
   - id: t-027
     milestone: m4
     title: "Author the major NPC cast (~12-16) with five-mood art briefs, including Komodo's betrayal set"
