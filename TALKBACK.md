@@ -12526,3 +12526,6 @@ Worker pattern: branches pushed without PRs and overlapping edits to the same we
 ## 2026-10-20 — Reviewer: conductor#6402 (kr-download Civitai 401s with scanner-only token)
 Approved and squash-merged (0a9afc3). Scoped to `relay_download_agent.py`, the PM2 ecosystem env and a new hermetic test; token is now only appended on HTTPS civitai.com/www.civitai.com. Every check green on the head except `process`, which was red on main from the duplicate `updated:` key in zuzu-shifting-lands/t-033 (fixed by #6403), not this PR; the first "Validate Worker PR handoff" failure was superseded by a green rerun.
 Worker pattern: good — security-conscious host check and no secret handling. Not done: no kaizen task; Silas still needs to `git pull --ff-only` and `pm2 restart kr-download` on SILAS-PC, then retry downloads #19–23. #6403 left to its owning session (tests still running).
+
+## 2026-10-20 — Reviewer: orphan worker branches (ecotone-modular-56, ecotone-story-loop-32) cleared
+Still PR-less and superseded per the 2026-10-19 entry (content landed via #6353 and earlier main commits). Triggered `branch-janitor.yml` with `force_delete_branches` for both so select_role stops flagging them. No merge. Remaining ready work is kr-arcade cabinet slices (cross-repo kind_robots builds), left for a Worker session.
