@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-20T17:18:47.416954+00:00",
+  "generated_at": "2026-10-20T21:42:48.655845+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 415.91,
+    "hours_since": 420.31,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,17 +35,17 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-20T17:18:47.416961+00:00",
+    "generated_at": "2026-10-20T21:42:48.655851+00:00",
     "summary": {
       "roadmaps": 84,
       "active_projects": 24,
       "continuous_projects": 3,
       "tasks": 2460,
-      "ready": 177,
-      "waiting": 186,
+      "ready": 168,
+      "waiting": 184,
       "needs_human": 37,
-      "in_progress": 21,
-      "done": 2023,
+      "in_progress": 30,
+      "done": 2025,
       "errors": 0,
       "warnings": 36,
       "info": 105
@@ -64,7 +64,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "animation-manager",
         "task": "t-022",
-        "message": "Task has remained claimed for 26 days."
+        "message": "Task has remained claimed for 27 days."
       },
       {
         "severity": "warning",
@@ -85,7 +85,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "coloring-book",
         "task": "t-058",
-        "message": "Task has remained claimed for 22 days."
+        "message": "Task has remained claimed for 23 days."
       },
       {
         "severity": "warning",
@@ -173,13 +173,6 @@
       },
       {
         "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "kr-arcade",
-        "task": "t-072",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "kr-arcade",
         "task": "t-075",
@@ -197,6 +190,13 @@
         "code": "STALE_CLAIM_FIELDS",
         "project": "kr-arcade",
         "task": "t-088",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "kr-arcade",
+        "task": "t-102",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
