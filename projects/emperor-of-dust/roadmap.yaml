@@ -330,7 +330,7 @@ tasks:
   - id: t-013
     milestone: m4
     title: "Write all 50 three-report briefings with Young Komodo clues and his own seeded lies"
-    status: claimed
+    status: done
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -341,10 +341,19 @@ tasks:
       author-known metadata, rotating lie position and conditional variants.
       Allow early lies to be erroneous flavor without unfair punishment.
       Eye of the Elder Crow highlights the false report when equipped.
+
+      Merged kind_robots#3929 as 001b8b0ffd3ca3771f723d9f92e59bde4431b32a (21/21 checks).
+      Conditional briefing variants (Briefing.variants, briefings.ts; 35 variants on 18 days
+      keyed on earlier-day flags; truth never varies so the Eye still marks one lie), lie
+      slots rotated (14/20/16), Day 38 made Komodo's own lie (8 total), hindsight lines and a
+      post-betrayal 'His own reports, read again' list in the briefing. Contract: rotation,
+      [K] days carry Komodo lies, variant determinism across audience/reload/rewind, Eye marks
+      exactly one. Chromium 1440/390.
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-013
     claimed_at: '2026-10-20T21:07:43Z'
-    updated: '2026-10-20T21:07:43Z'
+    updated: '2026-10-20T22:21:01Z'
+    implementation_pr: 'silasfelinus/kind_robots#3929'
   - id: t-014
     milestone: m3
     title: "Implement persistent Items of Power with one or two run slots"
