@@ -1,0 +1,366 @@
+# Emperor of Dust market item icons, round 1 (t-024 follow-up, 2026-10-20 PT).
+# kind_robots#3936 shipped 30 market items with placeholder glyphs; ITEM_ART in
+# utils/emperorOfDust/fortress/items.ts switches an item to public/emperor-of-dust/items/<id>.webp
+# once a keeper is exported. One seed per item; reroll rejects as -v2 subjects. Square icons, a single object,
+# no text, the cast's house checkpoint and palette so items sit with the rooms and portraits.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: emperor-items-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    weathered, dramatic lighting, still life, single object, centered, item icon, object focus
+  suffix: kiln ochre, deep crimson and tarnished brass palette, warm candlelight, dark plain background, salvage,
+    wasteland
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eodi-old-road-crowbar
+  lane: arthemy-house
+  title: 'Market item: old-road-crowbar'
+  item: old-road-crowbar
+  size: 1024x1024
+  seed: 71001
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: pitted salvaged steel crowbar, road grit on it, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42323
+- key: eodi-lockpick-roll
+  lane: arthemy-house
+  title: 'Market item: lockpick-roll'
+  item: lockpick-roll
+  size: 1024x1024
+  seed: 71002
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: leather roll open on twelve thin picks, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42324
+- key: eodi-surveyors-glass
+  lane: arthemy-house
+  title: 'Market item: surveyors-glass'
+  item: surveyors-glass
+  size: 1024x1024
+  seed: 71003
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: brass-ringed surveyor's lens on a cord, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42325
+- key: eodi-storm-glass-vial
+  lane: arthemy-house
+  title: 'Market item: storm-glass-vial'
+  item: storm-glass-vial
+  size: 1024x1024
+  seed: 71004
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: corked vial with a grey storm cloud inside, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42326
+- key: eodi-field-kit
+  lane: arthemy-house
+  title: 'Market item: field-kit'
+  item: field-kit
+  size: 1024x1024
+  seed: 71005
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: canvas kit with bandages, a needle and a bitter tincture bottle, resting on a dark worn wooden surface,
+    soft rim light
+  jobs:
+    arthemy-house: 42327
+- key: eodi-courier-spurs
+  lane: arthemy-house
+  title: 'Market item: courier-spurs'
+  item: courier-spurs
+  size: 1024x1024
+  seed: 71006
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: worn courier's spurs with dusty rowels, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42328
+- key: eodi-bell-clapper
+  lane: arthemy-house
+  title: 'Market item: bell-clapper'
+  item: bell-clapper
+  size: 1024x1024
+  seed: 71007
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: cracked iron bell clapper, chapel rust, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42329
+- key: eodi-brass-bell-charm
+  lane: arthemy-house
+  title: 'Market item: brass-bell-charm'
+  item: brass-bell-charm
+  size: 1024x1024
+  seed: 71008
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: small brass bell charm on a red string, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42330
+- key: eodi-saltroad-waybill
+  lane: arthemy-house
+  title: 'Market item: saltroad-waybill'
+  item: saltroad-waybill
+  size: 1024x1024
+  seed: 71009
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: folded salt-crusted travel pass tied with string and sealed with red wax, resting on a dark worn
+    wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42331
+- key: eodi-caravan-salve
+  lane: arthemy-house
+  title: 'Market item: caravan-salve'
+  item: caravan-salve
+  size: 1024x1024
+  seed: 71010
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: dented tin of tallow-and-salt salve, lid ajar, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42332
+- key: eodi-road-lantern
+  lane: arthemy-house
+  title: 'Market item: road-lantern'
+  item: road-lantern
+  size: 1024x1024
+  seed: 71011
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: hooded tin road lantern, the light cast downward, resting on a dark worn wooden surface, soft rim
+    light
+  jobs:
+    arthemy-house: 42333
+- key: eodi-rustline-cutters
+  lane: arthemy-house
+  title: 'Market item: rustline-cutters'
+  item: rustline-cutters
+  size: 1024x1024
+  seed: 71012
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: heavy bolt-cutters of lost-human steel, rail rust, resting on a dark worn wooden surface, soft rim
+    light
+  jobs:
+    arthemy-house: 42334
+- key: eodi-signal-coil
+  lane: arthemy-house
+  title: 'Market item: signal-coil'
+  item: signal-coil
+  size: 1024x1024
+  seed: 71013
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: copper wire wound on a spool, a faint hum glow, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42335
+- key: eodi-magpie-scales
+  lane: arthemy-house
+  title: 'Market item: magpie-scales'
+  item: magpie-scales
+  size: 1024x1024
+  seed: 71014
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: tiny brass balance scales with a magpie feather, resting on a dark worn wooden surface, soft rim
+    light
+  jobs:
+    arthemy-house: 42336
+- key: eodi-lost-human-gauntlet
+  lane: arthemy-house
+  title: 'Market item: lost-human-gauntlet'
+  item: lost-human-gauntlet
+  size: 1024x1024
+  seed: 71015
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: plated, wired glove of old-world make, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42337
+- key: eodi-crow-glass-eye
+  lane: arthemy-house
+  title: 'Market item: crow-glass-eye'
+  item: crow-glass-eye
+  size: 1024x1024
+  seed: 71016
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: disc of thin-ground black glass on a thong, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42338
+- key: eodi-rain-feather
+  lane: arthemy-house
+  title: 'Market item: rain-feather'
+  item: rain-feather
+  size: 1024x1024
+  seed: 71017
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: oiled black crow pinion feather, beaded with rain, resting on a dark worn wooden surface, soft rim
+    light
+  jobs:
+    arthemy-house: 42339
+- key: eodi-reed-poppet
+  lane: arthemy-house
+  title: 'Market item: reed-poppet'
+  item: reed-poppet
+  size: 1024x1024
+  seed: 71018
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: wet reed-and-hair poppet tied with twine, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42340
+- key: eodi-witchwater-phial
+  lane: arthemy-house
+  title: 'Market item: witchwater-phial'
+  item: witchwater-phial
+  size: 1024x1024
+  seed: 71019
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: phial of cloudy green bog water that never settles, resting on a dark worn wooden surface, soft rim
+    light
+  jobs:
+    arthemy-house: 42341
+- key: eodi-abbey-candle
+  lane: arthemy-house
+  title: 'Market item: abbey-candle'
+  item: abbey-candle
+  size: 1024x1024
+  seed: 71020
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: half-burned beeswax candle stub with a grey wax seal, resting on a dark worn wooden surface, soft
+    rim light
+  jobs:
+    arthemy-house: 42342
+- key: eodi-silent-bell-rosary
+  lane: arthemy-house
+  title: 'Market item: silent-bell-rosary'
+  item: silent-bell-rosary
+  size: 1024x1024
+  seed: 71021
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: rosary of matte beads with a clapperless bell, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42343
+- key: eodi-snare-kit
+  lane: arthemy-house
+  title: 'Market item: snare-kit'
+  item: snare-kit
+  size: 1024x1024
+  seed: 71022
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: coil of rail wire with a hook, knotted cord, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42344
+- key: eodi-hyena-tooth
+  lane: arthemy-house
+  title: 'Market item: hyena-tooth'
+  item: hyena-tooth
+  size: 1024x1024
+  seed: 71023
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: hyena tooth on a leather thong, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42345
+- key: eodi-freehold-spade
+  lane: arthemy-house
+  title: 'Market item: freehold-spade'
+  item: freehold-spade
+  size: 1024x1024
+  seed: 71024
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: ash-handled spade, mended twice with wire, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42346
+- key: eodi-carbide-lamp
+  lane: arthemy-house
+  title: 'Market item: carbide-lamp'
+  item: carbide-lamp
+  size: 1024x1024
+  seed: 71025
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: miner's carbide lamp, blue flame, cracked lens, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42347
+- key: eodi-verge-signet
+  lane: arthemy-house
+  title: 'Market item: verge-signet'
+  item: verge-signet
+  size: 1024x1024
+  seed: 71026
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: heavy gold signet ring with a black stone, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42348
+- key: eodi-night-draught
+  lane: arthemy-house
+  title: 'Market item: night-draught'
+  item: night-draught
+  size: 1024x1024
+  seed: 71027
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: small black glass bottle of cordial, velvet stopper, resting on a dark worn wooden surface, soft
+    rim light
+  jobs:
+    arthemy-house: 42349
+- key: eodi-watch-buckler
+  lane: arthemy-house
+  title: 'Market item: watch-buckler'
+  item: watch-buckler
+  size: 1024x1024
+  seed: 71028
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: dented round buckler shield, iron rim, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42350
+- key: eodi-ledger-abacus
+  lane: arthemy-house
+  title: 'Market item: ledger-abacus'
+  item: ledger-abacus
+  size: 1024x1024
+  seed: 71029
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: brass-bead abacus on a wire frame, resting on a dark worn wooden surface, soft rim light
+  jobs:
+    arthemy-house: 42351
+- key: eodi-lamplight-folio
+  lane: arthemy-house
+  title: 'Market item: lamplight-folio'
+  item: lamplight-folio
+  size: 1024x1024
+  seed: 71030
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, hands, person, character, multiple objects, cluttered
+  prompt_tags: ruled blank leather folio, an oil lamp emblem tooled in the cover, resting on a dark worn wooden
+    surface, soft rim light
+  jobs:
+    arthemy-house: 42352
