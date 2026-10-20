@@ -562,7 +562,7 @@ tasks:
   - id: t-023
     milestone: m3
     title: "Follower secret traits, unique abilities, faction modifiers, hidden allegiance and the persistent Codex"
-    status: claimed
+    status: done
     depends_on: t-019
     passes: 0
     stakes: reversible
@@ -570,10 +570,21 @@ tasks:
       Reveal on first relevance, persist revealed traits and allegiance in a
       meta-save Codex across runs (never items, brass or relationships), apply
       hidden modifiers silently until revealed.
+
+      Shipped in kind_robots#3940 (c94cf4e0). codex.ts (trait index, allegiancesKnown,
+      howLearned, codexPages, revealLine); decode/merge keep only follower trait ids (never
+      items, brass or relationships); quest rewards that set an allegiance flag reveal it at
+      dawn; allegiances absorbed on load; reveal moments (EmperorFortressCodexNote) in
+      barracks and throne room; Chronicle Codex section, one page per follower, N of 46
+      secrets with how each was learned; all six talk allegiance flags reach the Codex; writes
+      go through the saves worker's persistCodex guard. Not built: keyword highlights in quest
+      text and the remaining ? reveal sources (follower secret skills, market maps, Komodo's
+      hint).
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-023
     claimed_at: '2026-10-20T21:07:55Z'
-    updated: '2026-10-20T21:07:55Z'
+    updated: '2026-10-20T22:44:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#3940'
   - id: t-024
     milestone: m3
     title: "Market with rotating per-run equipment (two slots), healing and barracks upgrades"
