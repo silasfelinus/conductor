@@ -666,7 +666,7 @@ tasks:
   - id: t-028
     milestone: m3
     title: "Young Komodo betrayal track and Act V hideout selection engine"
-    status: waiting
+    status: ready
     depends_on: t-025
     passes: 0
     stakes: reversible
@@ -674,6 +674,14 @@ tasks:
       Betrayal always fires on Day 40; buyer, departing followers and hideout
       location depend on state; fallback revolutionary cave guarantees no
       softlock.
+
+      Unblocked 2026-10-20 by t-025 (kind_robots#3938). Audit in that PR's worker report:
+      betrayal always fires (Day 41 dawn), selectHideout + nameless-cave fallback and Act V
+      host gating exist and are tested. Missing: (1) the buyer is always the Abbey, never
+      chosen from state; (2) no followers depart with Komodo (no loyalty/hidden-allegiance
+      departure, romance or finished arc protection); (3) hideout income is not modelled (Act
+      V still collects regional taxes instead of the host's share).
+    updated: '2026-10-20T22:21:16Z'
   - id: t-029
     milestone: m5
     title: "Art-direction pass: bring the fortress front end to the painted drafts"
