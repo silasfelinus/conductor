@@ -739,13 +739,18 @@ tasks:
   - id: t-031
     milestone: m3
     title: 'Double every encounter deck: 24 cards per department, 8 per location'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     approved_by_human: true
-    updated: '2026-10-17T16:30:00Z'
+    updated: '2026-10-20T11:20:37Z'
     note: |-
       Silas, 2026-10-17: "I like the pacing of 3 encounters before boss. What I want to do is double the encounters, so we have a possible 24 per." A run still deals one card from each of a floor's three locations, so pacing is unchanged; every location's pool is now 8 deep instead of 4. 60 new encounters (12 per department, 4 per location, polarity 4/4/4 each, every card graded): Orientation (Refreshments Are Served, The Red Stapler, Fumigation Thursday...), Records (The Tube That Goes Up, The Founding Charter, Forty-Two Years Overdue...), Toy Division (My First Reactor, The Robot Panel, The Hug Test...), Wellness (The Taste Panel, The Graduates' Lounge, Form M: Declaration of Powers...), Sub-Level Zero (Item Four, The Fifth Jar, Kevin's Cabinet, Ticket Number Two...). 40 new choices pay off earlier-floor flags, and 15 new ENDINGS variants read the strongest new flags (42 variants total); FLAG-MAP regenerated. Balance: halving the old deathtraps' draw rate dropped the Coward below its two-Successor floor, so the classic deathtrap cards keep their old frequency through doubled weights (Orientation x4, Jam in Tube 14, Thursday Door and Successor Waiting Room to 6), free paperwork picks now cost composure, and the new cards' -2 Suspicion reliefs are -1. Every threshold holds with more margin than before (Rebel 47.1%, Schemer 44.0%, Saint 35.1%, Complier 21.6%). Art round 12 (ROUND-12.yaml): 60 Classic Krea 2 card faces plus Western Cartoon and Noir rows (STYLE-CATALOG 194 subjects, 388 style rows); all 180 prompts pass the live checkArtPromptContract. Kind Robots kind_robots#3793 merged (188b6ec): the 24-card snapshot plus a denser four-route desk (four-route cards one size down, locked routes fold into lock chips) so the longer new cards fit at 390/768/820/1180/1440. Remaining: art round 12 delivery, then close.
+
+      2026-10-20 PT: art delivery verified on claude/shifting-desks-art-link. Every render
+      this task queued answers 200 image/webp on the media host in Classic, Western Cartoon
+      and Noir. Classic verdicts are recorded in its round ledger, and sent-back renders are
+      re-queued in ROUND-13 (t-032).
   - id: t-032
     milestone: m3
     title: 'Land, review and link the 25 art round 13 re-renders'
