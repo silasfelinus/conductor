@@ -1,0 +1,3552 @@
+# Emperor of Dust quest art, round 1 (t-029, Silas 2026-10-19 PT: "there should be images for all
+# choices and outcomes. Each quest should have an image to present it and then at the day's close,
+# we should see full displays with the image and outcome for each quest").
+# Three images per quest, generated from the authored quest text (scratchpad generator; titles,
+# summaries and success/failure lines as of kind_robots main 29f1bef): a notice image that presents
+# the quest on the board and in its detail card, and a success and a failure scene for the dawn
+# report (triumph shows success, partial shows failure). Notices are listed first so they render
+# first. Exports go to kind_robots public/emperor-of-dust/quests/<asset>.webp and into QUEST_ART;
+# until then the game crops Silas's painted map around the quest's region.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: emperor-quests-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    weathered, dramatic lighting, painterly, wide shot
+  suffix: kiln ochre, deep crimson and tarnished brass palette, ash-grey sky, salvage, dusty wasteland, every surface
+    bare and unmarked
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eodq-q-d01-well-road-notice
+  lane: arthemy-house
+  title: Clear the Well Road (notice)
+  quest: q-d01-well-road
+  variant: notice
+  asset: quests/q-d01-well-road
+  size: 1344x768
+  seed: 62000
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Clear
+    the Well Road: Rockfall blocks the cart road to the tower well. Clear it before the water barrels run dry, a
+    shallow river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 40974
+- key: eodq-q-d01-aqueduct-repair-notice
+  lane: arthemy-house
+  title: The Broken Aqueduct (notice)
+  quest: q-d01-aqueduct-repair
+  variant: notice
+  asset: quests/q-d01-aqueduct-repair
+  size: 1344x768
+  seed: 62003
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Broken Aqueduct: Hollow Bell''s aqueduct is leaking into the old roadbed. Send engineers to repair the channel,
+    a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 40975
+- key: eodq-q-d01-toll-parley-notice
+  lane: arthemy-house
+  title: Painted Wagons at the Toll (notice)
+  quest: q-d01-toll-parley
+  variant: notice
+  asset: quests/q-d01-toll-parley
+  size: 1344x768
+  seed: 62006
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Painted
+    Wagons at the Toll: Offer the Jackalwire wagons safe passage in exchange for an armistice at the southern toll
+    bridge, a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 40976
+- key: eodq-q-d01-toll-break-notice
+  lane: arthemy-house
+  title: Break the Blockade (notice)
+  quest: q-d01-toll-break
+  variant: notice
+  asset: quests/q-d01-toll-break
+  size: 1344x768
+  seed: 62009
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Break
+    the Blockade: Clear the Jackalwire wagons from the southern toll bridge by force, a deep red rail canyon spanned
+    by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 40977
+- key: eodq-q-d01-mirefen-escort-notice
+  lane: arthemy-house
+  title: Lanterns on the Mirefen Road (notice)
+  quest: q-d01-mirefen-escort
+  variant: notice
+  asset: quests/q-d01-mirefen-escort
+  size: 1344x768
+  seed: 62012
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Lanterns
+    on the Mirefen Road: Escort the swamp refugees past the raider scouts without asking their secrets, misty wetlands
+    of black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 40978
+- key: eodq-q-d01-mirefen-inspect-notice
+  lane: arthemy-house
+  title: Count the Lanterns (notice)
+  quest: q-d01-mirefen-inspect
+  variant: notice
+  asset: quests/q-d01-mirefen-inspect
+  size: 1344x768
+  seed: 62015
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Count
+    the Lanterns: Inspect the refugee lanterns on the Mirefen road and record every traveler, misty wetlands of
+    black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 40979
+- key: eodq-q-d02-grain-cart-notice
+  lane: arthemy-house
+  title: The Drowning Grain Cart (notice)
+  quest: q-d02-grain-cart
+  variant: notice
+  asset: quests/q-d02-grain-cart
+  size: 1344x768
+  seed: 62018
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Drowning Grain Cart: A grain cart is stuck midstream at the Eastern Ford and the water is still rising, a shallow
+    river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 40980
+- key: eodq-q-d02-crow-contract-notice
+  lane: arthemy-house
+  title: The Fine Print (notice)
+  quest: q-d02-crow-contract
+  variant: notice
+  asset: quests/q-d02-crow-contract
+  size: 1344x768
+  seed: 62021
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Fine Print: Have the archivists comb the Storm Crow rain contract for loopholes before anyone signs, jagged
+    grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 40981
+- key: eodq-q-d02-mole-audit-notice
+  lane: arthemy-house
+  title: The Mole Ledger (notice)
+  quest: q-d02-mole-audit
+  variant: notice
+  asset: quests/q-d02-mole-audit
+  size: 1344x768
+  seed: 62024
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Mole Ledger: Send quiet auditors into the tunnels to count the tithe the Moles claim to have paid, badlands
+    of red rock spires riddled with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 40982
+- key: eodq-q-d03-three-wells-notice
+  lane: arthemy-house
+  title: Three Wells (notice)
+  quest: q-d03-three-wells
+  variant: notice
+  asset: quests/q-d03-three-wells
+  size: 1344x768
+  seed: 62027
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Three
+    Wells: Three villages, one water crew. Split the work so none of the wells goes dry, a shallow river ford with
+    stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 40983
+- key: eodq-q-d03-bell-vigil-notice
+  lane: arthemy-house
+  title: The Bell That Rang Alone (notice)
+  quest: q-d03-bell-vigil
+  variant: notice
+  asset: quests/q-d03-bell-vigil
+  size: 1344x768
+  seed: 62030
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Bell That Rang Alone: Post a quiet vigil in Hollow Bell''s old chapel and wait for the rope to move, a small
+    southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 40984
+- key: eodq-q-d03-bell-search-notice
+  lane: arthemy-house
+  title: Muffle the Bell (notice)
+  quest: q-d03-bell-search
+  variant: notice
+  asset: quests/q-d03-bell-search
+  size: 1344x768
+  seed: 62033
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Muffle
+    the Bell: Muffle the clapper and search the bell tower stairs for whoever is ringing it, a small southern chapel
+    town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 40985
+- key: eodq-q-d03-toll-audit-notice
+  lane: arthemy-house
+  title: The Vanishing Toll (notice)
+  quest: q-d03-toll-audit
+  variant: notice
+  asset: quests/q-d03-toll-audit
+  size: 1344x768
+  seed: 62036
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Vanishing Toll: Count every cart through the Jackalwire gate and compare it to the toll ledger, a deep red rail
+    canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 40986
+- key: eodq-q-d03-fen-ambush-notice
+  lane: arthemy-house
+  title: Ambush in the Reeds (notice)
+  quest: q-d03-fen-ambush
+  variant: notice
+  asset: quests/q-d03-fen-ambush
+  size: 1344x768
+  seed: 62039
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Ambush
+    in the Reeds: Hide in the reeds and ambush the lanterns marching through the empty fen, misty wetlands of black
+    reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 40987
+- key: eodq-q-d03-fen-hail-notice
+  lane: arthemy-house
+  title: Hail the Lanterns (notice)
+  quest: q-d03-fen-hail
+  variant: notice
+  asset: quests/q-d03-fen-hail
+  size: 1344x768
+  seed: 62042
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Hail
+    the Lanterns: Light a lantern of your own and hail the marching lights across the water, misty wetlands of black
+    reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 40988
+- key: eodq-q-d04-survey-flags-notice
+  lane: arthemy-house
+  title: Flags on the Far Bank (notice)
+  quest: q-d04-survey-flags
+  variant: notice
+  asset: quests/q-d04-survey-flags
+  size: 1344x768
+  seed: 62045
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Flags
+    on the Far Bank: Follow the clean-booted surveyors back from the Eastern Ford and read whose seal is on their
+    maps, a shallow river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 40989
+- key: eodq-q-d04-crow-elders-notice
+  lane: arthemy-house
+  title: Sit With the Elders (notice)
+  quest: q-d04-crow-elders
+  variant: notice
+  asset: quests/q-d04-crow-elders
+  size: 1344x768
+  seed: 62048
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Sit
+    With the Elders: Sit with the Storm Crow elders on the cold ledge until someone speaks, jagged grey mountain
+    peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 40990
+- key: eodq-q-d04-crow-roost-notice
+  lane: arthemy-house
+  title: Climb to the High Roost (notice)
+  quest: q-d04-crow-roost
+  variant: notice
+  asset: quests/q-d04-crow-roost
+  size: 1344x768
+  seed: 62051
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Climb
+    to the High Roost: Climb to the high roost and see what the silent crows are watching, jagged grey mountain
+    peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 40991
+- key: eodq-q-d04-feast-armed-notice
+  lane: arthemy-house
+  title: A Feast Under Painted Wagons (notice)
+  quest: q-d04-feast-armed
+  variant: notice
+  asset: quests/q-d04-feast-armed
+  size: 1344x768
+  seed: 62054
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, A
+    Feast Under Painted Wagons: Attend the Jackalwire feast with blades hidden in the supply carts, just in case,
+    a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 40992
+- key: eodq-q-d05-flour-barrels-notice
+  lane: arthemy-house
+  title: Flour Before the Wages Fail (notice)
+  quest: q-d05-flour-barrels
+  variant: notice
+  asset: quests/q-d05-flour-barrels
+  size: 1344x768
+  seed: 62057
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Flour
+    Before the Wages Fail: The Yard''s kitchens are three days from empty. Haggle flour barrels out of the Saltroad
+    carts before the foreman''s patience runs out, a long caravan road across cracked ochre salt flats with waystations
+    and watchtowers'
+  jobs:
+    arthemy-house: 40993
+- key: eodq-q-d05-toll-standoff-notice
+  lane: arthemy-house
+  title: Hold the Toll Bridge (notice)
+  quest: q-d05-toll-standoff
+  variant: notice
+  asset: quests/q-d05-toll-standoff
+  size: 1344x768
+  seed: 62060
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Hold
+    the Toll Bridge: Captain Gristle Vane''s wagons are back at the southern bridge. Hold it open for the Saltroad
+    carts without starting a war, a deep red rail canyon spanned by wooden trestles, painted caravan wagons and
+    salvage'
+  jobs:
+    arthemy-house: 40994
+- key: eodq-q-d05-saltroad-escort-notice
+  lane: arthemy-house
+  title: Raiders for Hire (notice)
+  quest: q-d05-saltroad-escort
+  variant: notice
+  asset: quests/q-d05-saltroad-escort
+  size: 1344x768
+  seed: 62063
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Raiders
+    for Hire: Pay the Jackalwire to guard the Saltroad carts they used to rob. Someone has to make sure they actually
+    do it, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 40995
+- key: eodq-q-d06-empty-stable-notice
+  lane: arthemy-house
+  title: The Empty Stable (notice)
+  quest: q-d06-empty-stable
+  variant: notice
+  asset: quests/q-d06-empty-stable
+  size: 1344x768
+  seed: 62066
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Empty Stable: Every mount in the fortress stable is gone: the gate was opened from the inside, a horse came
+    back lame, and the stablehands are not talking, a shallow river ford with stone arch bridges, freehold farmsteads
+    and windmills among red mesas'
+  jobs:
+    arthemy-house: 40996
+- key: eodq-q-d07-crow-favor-notice
+  lane: arthemy-house
+  title: The Crows’ Errand (notice)
+  quest: q-d07-crow-favor
+  variant: notice
+  asset: quests/q-d07-crow-favor
+  size: 1344x768
+  seed: 62069
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Crows'' Errand: The Conclave''s price for its storm warning: carry a sealed parcel to the Mirefen and do not
+    open it, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 40997
+- key: eodq-q-d08-escort-to-bell-notice
+  lane: arthemy-house
+  title: A Family of Five (notice)
+  quest: q-d08-escort-to-bell
+  variant: notice
+  asset: quests/q-d08-escort-to-bell
+  size: 1344x768
+  seed: 62072
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, A
+    Family of Five: Walk a Freehold family to Hollow Bell, past the raider scouts, and see them settled with someone
+    who will not lose track of them, a small southern chapel town of adobe and timber around a brass bell tower,
+    dry hills'
+  jobs:
+    arthemy-house: 40998
+- key: eodq-q-d09-iron-convoy-notice
+  lane: arthemy-house
+  title: Iron on the Road (notice)
+  quest: q-d09-iron-convoy
+  variant: notice
+  asset: quests/q-d09-iron-convoy
+  size: 1344x768
+  seed: 62075
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Iron
+    on the Road: A Saltroad convoy of salvaged iron must cross the rail canyon at night. Three bands want it. Whoever
+    goes may not all come back, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 40999
+- key: eodq-q-d10-freehold-raid-notice
+  lane: arthemy-house
+  title: Smoke Over Thistledown (notice)
+  quest: q-d10-freehold-raid
+  variant: notice
+  asset: quests/q-d10-freehold-raid
+  size: 1344x768
+  seed: 62078
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Smoke
+    Over Thistledown: The Jackalwire are raiding Thistledown, the largest Freehold village. Whatever happens there
+    will be on the map tomorrow, a shallow river ford with stone arch bridges, freehold farmsteads and windmills
+    among red mesas'
+  jobs:
+    arthemy-house: 41000
+- key: eodq-q-d12-mirefen-defense-notice
+  lane: arthemy-house
+  title: Hold the Mirefen Edge (notice)
+  quest: q-d12-mirefen-defense
+  variant: notice
+  asset: quests/q-d12-mirefen-defense
+  size: 1344x768
+  seed: 62081
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Hold
+    the Mirefen Edge: Raiders are camped at the edge of the Mirefen. Sister Reedlight asks the crown to drive them
+    off before they reach the lantern-houses, misty wetlands of black reeds, crooked trees and stilt huts over still
+    dark water'
+  jobs:
+    arthemy-house: 41001
+- key: eodq-q-d12-mirefen-cellars-notice
+  lane: arthemy-house
+  title: What Is Under the Lantern-Houses (notice)
+  quest: q-d12-mirefen-cellars
+  variant: notice
+  asset: quests/q-d12-mirefen-cellars
+  size: 1344x768
+  seed: 62084
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, What
+    Is Under the Lantern-Houses: While the Mothers ask for soldiers, slip into the lantern-houses and see what they
+    keep in the cellars, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41002
+- key: eodq-q-d13-water-engine-notice
+  lane: arthemy-house
+  title: The Pack’s Water Engine (notice)
+  quest: q-d13-water-engine
+  variant: notice
+  asset: quests/q-d13-water-engine
+  size: 1344x768
+  seed: 62087
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Pack''s Water Engine: Saffron''s old bandmates have a broken water engine and a canyon full of thirsty raiders.
+    Only Saffron knows how it was built, a deep red rail canyon spanned by wooden trestles, painted caravan wagons
+    and salvage'
+  jobs:
+    arthemy-house: 41003
+- key: eodq-q-d13-engine-sabotage-notice
+  lane: arthemy-house
+  title: Fix It to Fail (notice)
+  quest: q-d13-engine-sabotage
+  variant: notice
+  asset: quests/q-d13-engine-sabotage
+  size: 1344x768
+  seed: 62090
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Fix
+    It to Fail: Repair the Pack''s water engine so that it breaks in a month, when the raiders are counting on it,
+    a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41004
+- key: eodq-q-d14-sick-courier-notice
+  lane: arthemy-house
+  title: A Sick Courier (notice)
+  quest: q-d14-sick-courier
+  variant: notice
+  asset: quests/q-d14-sick-courier
+  size: 1344x768
+  seed: 62093
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, A
+    Sick Courier: A Saltroad courier collapsed at the Eastern Ford with a fever and a satchel nobody is allowed
+    to open. Reach them before the fever does, a shallow river ford with stone arch bridges, freehold farmsteads
+    and windmills among red mesas'
+  jobs:
+    arthemy-house: 41005
+- key: eodq-q-d15-study-glass-notice
+  lane: arthemy-house
+  title: Glass Feathers (notice)
+  quest: q-d15-study-glass
+  variant: notice
+  asset: quests/q-d15-study-glass
+  size: 1344x768
+  seed: 62096
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Glass
+    Feathers: The Rustline salvagers have brought a crate of old-world glass shaped like feathers. Study it before
+    anyone sells it, sunken rusted rail yards half drowned in fog, iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41006
+- key: eodq-q-d16-hidden-grain-notice
+  lane: arthemy-house
+  title: Three Haystacks (notice)
+  quest: q-d16-hidden-grain
+  variant: notice
+  asset: quests/q-d16-hidden-grain
+  size: 1344x768
+  seed: 62099
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Three
+    Haystacks: Somebody is hiding grain in the middle of a drought. Three haystacks on the Freehold road are heavier
+    than hay should be, a shallow river ford with stone arch bridges, freehold farmsteads and windmills among red
+    mesas'
+  jobs:
+    arthemy-house: 41007
+- key: eodq-q-d17-who-lies-notice
+  lane: arthemy-house
+  title: Who Has Been Lying? (notice)
+  quest: q-d17-who-lies
+  variant: notice
+  asset: quests/q-d17-who-lies
+  size: 1344x768
+  seed: 62102
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Who
+    Has Been Lying?: For two weeks some of the morning reports have been wrong in the same careful way. Trace the
+    false reports to their source, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41008
+- key: eodq-q-d18-refugee-road-notice
+  lane: arthemy-house
+  title: No Water for Strangers (notice)
+  quest: q-d18-refugee-road
+  variant: notice
+  asset: quests/q-d18-refugee-road
+  size: 1344x768
+  seed: 62105
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, No
+    Water for Strangers: Walk the turned-away refugees to the Hollow Bell wells and make sure they are let in, a
+    small southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41009
+- key: eodq-q-d19-bell-speech-notice
+  lane: arthemy-house
+  title: Speak to Hollow Bell (notice)
+  quest: q-d19-bell-speech
+  variant: notice
+  asset: quests/q-d19-bell-speech
+  size: 1344x768
+  seed: 62108
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Speak
+    to Hollow Bell: Hollow Bell votes tomorrow on whether to accept the crown''s protection. Someone has to make
+    the case in the square, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41010
+- key: eodq-q-d20-ford-dam-notice
+  lane: arthemy-house
+  title: Before the Rains (notice)
+  quest: q-d20-ford-dam
+  variant: notice
+  asset: quests/q-d20-ford-dam
+  size: 1344x768
+  seed: 62111
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Before
+    the Rains: The rains are coming, by covenant or not. Shore up the old dam at the Eastern Ford before the river
+    decides where to go, a shallow river ford with stone arch bridges, freehold farmsteads and windmills among red
+    mesas'
+  jobs:
+    arthemy-house: 41011
+- key: eodq-q-d22-ford-bodies-notice
+  lane: arthemy-house
+  title: Bodies at the Ford (notice)
+  quest: q-d22-ford-bodies
+  variant: notice
+  asset: quests/q-d22-ford-bodies
+  size: 1344x768
+  seed: 62114
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Bodies
+    at the Ford: Three travellers were pulled from the Eastern Ford at dawn. The Old Houses are already blaming
+    the Moles. Find out who they were before someone hangs the wrong people, a shallow river ford with stone arch
+    bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41012
+- key: eodq-q-d23-blue-lantern-notice
+  lane: arthemy-house
+  title: Follow the Blue Lantern (notice)
+  quest: q-d23-blue-lantern
+  variant: notice
+  asset: quests/q-d23-blue-lantern
+  size: 1344x768
+  seed: 62117
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Follow
+    the Blue Lantern: A blue lantern moves along the old rail line every third night. Smugglers, the Ledger says.
+    Follow it and see where it goes, sunken rusted rail yards half drowned in fog, iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41013
+- key: eodq-q-d24-mission-road-notice
+  lane: arthemy-house
+  title: The Mission Road (notice)
+  quest: q-d24-mission-road
+  variant: notice
+  asset: quests/q-d24-mission-road
+  size: 1344x768
+  seed: 62120
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Mission Road: A Freehold mother last saw her son on the mission road, walking toward the Abbey with a sister
+    in grey. Walk it and see what the road remembers, a dusty pilgrim road climbing toward a cliffside abbey with
+    a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41014
+- key: eodq-q-d24-coldbrook-visit-notice
+  lane: arthemy-house
+  title: A Visit to the Children (notice)
+  quest: q-d24-coldbrook-visit
+  variant: notice
+  asset: quests/q-d24-coldbrook-visit
+  size: 1344x768
+  seed: 62123
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, A
+    Visit to the Children: Wenna Coldbrook has not been allowed to see the children she gave to the Abbey. Go with
+    her and insist, a dusty pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41015
+- key: eodq-q-d26-dry-well-notice
+  lane: arthemy-house
+  title: A Friendly Raid (notice)
+  quest: q-d26-dry-well
+  variant: notice
+  asset: quests/q-d26-dry-well
+  size: 1344x768
+  seed: 62126
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, A
+    Friendly Raid: Gristle Vane asks for help against a worse band: the jackals of the dry well, who take people,
+    not goats, a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41016
+- key: eodq-q-d27-flint-evidence-notice
+  lane: arthemy-house
+  title: The Case Against Flint (notice)
+  quest: q-d27-flint-evidence
+  variant: notice
+  asset: quests/q-d27-flint-evidence
+  size: 1344x768
+  seed: 62129
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Case Against Flint: The Old Houses say Duchess Flint has been passing grain to the Moles. Read the ledgers before
+    the court passes judgment, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41017
+- key: eodq-q-d28-rot-cure-notice
+  lane: arthemy-house
+  title: Charms Against Rot (notice)
+  quest: q-d28-rot-cure
+  variant: notice
+  asset: quests/q-d28-rot-cure
+  size: 1344x768
+  seed: 62132
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Charms
+    Against Rot: The Black Verge envoys offer a cure for the grain rot spreading in the Yard''s stores. Test it
+    before anyone eats it, a fog-drowned ruin city of black towers at the edge of the world'
+  jobs:
+    arthemy-house: 41018
+- key: eodq-q-d30-hold-the-line-notice
+  lane: arthemy-house
+  title: Hold the Border Line (notice)
+  quest: q-d30-hold-the-line
+  variant: notice
+  asset: quests/q-d30-hold-the-line
+  size: 1344x768
+  seed: 62135
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Hold
+    the Border Line: War is coming between the factions, and the map will change tomorrow. Stand with the weakest
+    of the court''s friends, a shallow river ford with stone arch bridges, freehold farmsteads and windmills among
+    red mesas'
+  jobs:
+    arthemy-house: 41019
+- key: eodq-q-d31-iron-rain-notice
+  lane: arthemy-house
+  title: Iron Rain at the Ford (notice)
+  quest: q-d31-iron-rain
+  variant: notice
+  asset: quests/q-d31-iron-rain
+  size: 1344x768
+  seed: 62138
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Iron
+    Rain at the Ford: Riders in plum are trying to take the Eastern Ford, and the Freehold militia cannot hold it
+    alone. This is a war, not a chore: send people who can come home hurt, a shallow river ford with stone arch
+    bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41020
+- key: eodq-q-d33-thistledown-notice
+  lane: arthemy-house
+  title: 'Wolves at Noon: Thistledown (notice)'
+  quest: q-d33-thistledown
+  variant: notice
+  asset: quests/q-d33-thistledown
+  size: 1344x768
+  seed: 62141
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Wolves
+    at Noon: Thistledown: Plum riders were seen above Thistledown at first light, and they attack at midday when
+    the farmers are in the fields. Get there before noon, a shallow river ford with stone arch bridges, freehold
+    farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41021
+- key: eodq-q-d33-waystation-notice
+  lane: arthemy-house
+  title: 'Wolves at Noon: the Saltroad Stop (notice)'
+  quest: q-d33-waystation
+  variant: notice
+  asset: quests/q-d33-waystation
+  size: 1344x768
+  seed: 62144
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Wolves
+    at Noon: the Saltroad Stop: The same riders are circling the Saltroad waystation at the salt flats, where a
+    caravan is resting with half the Saltroad''s winter stock. Get there before noon, a long caravan road across
+    cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41022
+- key: eodq-q-d35-trestle-notice
+  lane: arthemy-house
+  title: Hold Saffron’s Trestle (notice)
+  quest: q-d35-trestle
+  variant: notice
+  asset: quests/q-d35-trestle
+  size: 1344x768
+  seed: 62147
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Hold
+    Saffron''s Trestle: The trestle bridge over the Jackalwire canyon is the last road south that the war has not
+    cut. Saffron Kett welded half of it. Hold it, or it burns, a deep red rail canyon spanned by wooden trestles,
+    painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41023
+- key: eodq-q-d35-tunnel-notice
+  lane: arthemy-house
+  title: Hold the Mole Tunnel (notice)
+  quest: q-d35-tunnel
+  variant: notice
+  asset: quests/q-d35-tunnel
+  size: 1344x768
+  seed: 62150
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Hold
+    the Mole Tunnel: The Moles'' long tunnel under the badlands runs all the way to the fen''s edge. Hold its mouth
+    and the war has a road underneath it, badlands of red rock spires riddled with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 41024
+- key: eodq-q-d36-bell-rehearsal-notice
+  lane: arthemy-house
+  title: The Silent Bell Rehearsal (notice)
+  quest: q-d36-bell-rehearsal
+  variant: notice
+  asset: quests/q-d36-bell-rehearsal
+  size: 1344x768
+  seed: 62153
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Silent Bell Rehearsal: Tonight the Abbey holds a rehearsal for a bell that has no clapper. Everyone will be
+    in the chapel. Get into the cellars below it and bring back proof of what is down there, a dusty pilgrim road
+    climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41025
+- key: eodq-q-d41-stragglers-notice
+  lane: arthemy-house
+  title: Find the Stragglers (notice)
+  quest: q-d41-stragglers
+  variant: notice
+  asset: quests/q-d41-stragglers
+  size: 1344x768
+  seed: 62156
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Find
+    the Stragglers: Half the court scattered when the fortress fell. Some are hiding in ditches between here and
+    the tower. Bring them in before the plum riders find them, a long caravan road across cracked ochre salt flats
+    with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41026
+- key: eodq-q-d42-tunnel-props-notice
+  lane: arthemy-house
+  title: Shore Up the Tunnels (notice)
+  quest: q-d42-tunnel-props
+  variant: notice
+  asset: quests/q-d42-tunnel-props
+  size: 1344x768
+  seed: 62159
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Shore
+    Up the Tunnels: Granny Umber''s price for shelter: help prop the long tunnel before the badlands drop it on
+    everyone, badlands of red rock spires riddled with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 41027
+- key: eodq-q-d42-crow-watch-notice
+  lane: arthemy-house
+  title: Stand the Crow Watch (notice)
+  quest: q-d42-crow-watch
+  variant: notice
+  asset: quests/q-d42-crow-watch
+  size: 1344x768
+  seed: 62162
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Stand
+    the Crow Watch: Elder Corvane wants the court''s eyes on the ledges at night. Every crow will be watching the
+    Abbey road. So will you, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41028
+- key: eodq-q-d42-bell-water-notice
+  lane: arthemy-house
+  title: Water for the Bell (notice)
+  quest: q-d42-bell-water
+  variant: notice
+  asset: quests/q-d42-bell-water
+  size: 1344x768
+  seed: 62165
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Water
+    for the Bell: Hollow Bell is sheltering the court in its chapel cellars and running out of water. The aqueduct
+    needs hands, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41029
+- key: eodq-q-d42-wagon-wheels-notice
+  lane: arthemy-house
+  title: Wheels for the Wagon Circle (notice)
+  quest: q-d42-wagon-wheels
+  variant: notice
+  asset: quests/q-d42-wagon-wheels
+  size: 1344x768
+  seed: 62168
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Wheels
+    for the Wagon Circle: Gristle Vane will hide the court among the painted wagons, if the court helps him keep
+    them rolling, a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41030
+- key: eodq-q-d42-caravan-guard-notice
+  lane: arthemy-house
+  title: Ride With the Caravan (notice)
+  quest: q-d42-caravan-guard
+  variant: notice
+  asset: quests/q-d42-caravan-guard
+  size: 1344x768
+  seed: 62171
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Ride
+    With the Caravan: The safest place in the kingdom is the one that never stops moving. Oriel Saltmarsh wants
+    guards for the night road, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41031
+- key: eodq-q-d42-barn-harvest-notice
+  lane: arthemy-house
+  title: Bring In the Harvest (notice)
+  quest: q-d42-barn-harvest
+  variant: notice
+  asset: quests/q-d42-barn-harvest
+  size: 1344x768
+  seed: 62174
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Bring
+    In the Harvest: Hester Plowright hides the court in her root cellar. In exchange, the court brings in the last
+    field before the riders burn it, a shallow river ford with stone arch bridges, freehold farmsteads and windmills
+    among red mesas'
+  jobs:
+    arthemy-house: 41032
+- key: eodq-q-d42-rail-salvage-notice
+  lane: arthemy-house
+  title: Salvage for the Station (notice)
+  quest: q-d42-rail-salvage
+  variant: notice
+  asset: quests/q-d42-rail-salvage
+  size: 1344x768
+  seed: 62177
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Salvage
+    for the Station: Jinx Coupler shelters the court in the collapsed rail station, and wants the court''s help
+    stripping an engine before anyone else does, sunken rusted rail yards half drowned in fog, iron gantries and
+    derelict engines'
+  jobs:
+    arthemy-house: 41033
+- key: eodq-q-d42-cave-forage-notice
+  lane: arthemy-house
+  title: Forage for the Cave (notice)
+  quest: q-d42-cave-forage
+  variant: notice
+  asset: quests/q-d42-cave-forage
+  size: 1344x768
+  seed: 62180
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Forage
+    for the Cave: Nobody is sheltering the court. A handful of revolutionaries and a cold cave are what is left.
+    Find food, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41034
+- key: eodq-q-d44-komodo-bargain-notice
+  lane: arthemy-house
+  title: What Komodo Bought (notice)
+  quest: q-d44-komodo-bargain
+  variant: notice
+  asset: quests/q-d44-komodo-bargain
+  size: 1344x768
+  seed: 62183
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, What
+    Komodo Bought: Komodo traded the fortress for something. Find out what, from the ledgers he left behind and
+    the people he left them with, a dusty pilgrim road climbing toward a cliffside abbey with a silent bell tower,
+    wayside shrines'
+  jobs:
+    arthemy-house: 41035
+- key: eodq-q-d46-well-that-spoke-notice
+  lane: arthemy-house
+  title: The Well That Spoke (notice)
+  quest: q-d46-well-that-spoke
+  variant: notice
+  asset: quests/q-d46-well-that-spoke
+  size: 1344x768
+  seed: 62186
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Well That Spoke: There is a dry well halfway up the mission road that the pilgrims say answers back. It runs
+    down toward the Abbey crypt. Find the way through, a dusty pilgrim road climbing toward a cliffside abbey with
+    a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41036
+- key: eodq-q-d48-bell-clapper-notice
+  lane: arthemy-house
+  title: The Bell’s Lost Clapper (notice)
+  quest: q-d48-bell-clapper
+  variant: notice
+  asset: quests/q-d48-bell-clapper
+  size: 1344x768
+  seed: 62189
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Bell''s Lost Clapper: The Silent Bell has no clapper because someone took it, long ago, to stop it ringing.
+    The Archive thinks it knows where. Bring it home, misty wetlands of black reeds, crooked trees and stilt huts
+    over still dark water'
+  jobs:
+    arthemy-house: 41037
+- key: eodq-q-d50-last-dispatch-notice
+  lane: arthemy-house
+  title: The Last Dispatch (notice)
+  quest: q-d50-last-dispatch
+  variant: notice
+  asset: quests/q-d50-last-dispatch
+  size: 1344x768
+  seed: 62192
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Last Dispatch: The Abbess has called down whatever sleeps beneath her crypt. Go to the Abbey, face her, and
+    put it back to sleep. Everyone who goes knows they may not come back, a dusty pilgrim road climbing toward a
+    cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41038
+- key: eodq-q-d50-crypt-path-notice
+  lane: arthemy-house
+  title: The Way Through the Well (notice)
+  quest: q-d50-crypt-path
+  variant: notice
+  asset: quests/q-d50-crypt-path
+  size: 1344x768
+  seed: 62195
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Way Through the Well: The well on the mission road runs to the crypt''s back door. A small party can reach the
+    Abbess before she knows anyone is coming, a dusty pilgrim road climbing toward a cliffside abbey with a silent
+    bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41039
+- key: eodq-q-d50-ring-the-bell-notice
+  lane: arthemy-house
+  title: Ring the Silent Bell (notice)
+  quest: q-d50-ring-the-bell
+  variant: notice
+  asset: quests/q-d50-ring-the-bell
+  size: 1344x768
+  seed: 62198
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Ring
+    the Silent Bell: The clapper is home. Carry it up the Abbey tower and ring the bell that has not rung in a hundred
+    years. The Archive believes the sound is what sent the thing to sleep the first time, a dusty pilgrim road climbing
+    toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41040
+- key: eodq-r-bandit-sighting-notice
+  lane: arthemy-house
+  title: Bandits on the Saltroad (notice)
+  quest: r-bandit-sighting
+  variant: notice
+  asset: quests/r-bandit-sighting
+  size: 1344x768
+  seed: 62201
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Bandits
+    on the Saltroad: A caravan master reports armed strangers shadowing the trade road. Drive them off before they
+    pick a target, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41041
+- key: eodq-r-sick-herd-notice
+  lane: arthemy-house
+  title: A Sick Herd (notice)
+  quest: r-sick-herd
+  variant: notice
+  asset: quests/r-sick-herd
+  size: 1344x768
+  seed: 62204
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, A
+    Sick Herd: A Freehold herd is coughing blood. Find out why before it spreads, a shallow river ford with stone
+    arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41042
+- key: eodq-r-lost-caravan-notice
+  lane: arthemy-house
+  title: The Late Caravan (notice)
+  quest: r-lost-caravan
+  variant: notice
+  asset: quests/r-lost-caravan
+  size: 1344x768
+  seed: 62207
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, The
+    Late Caravan: A Saltroad caravan is three days late. Find the tracks before the wind does, a long caravan road
+    across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41043
+- key: eodq-r-boundary-dispute-notice
+  lane: arthemy-house
+  title: A Fence in the Wrong Place (notice)
+  quest: r-boundary-dispute
+  variant: notice
+  asset: quests/r-boundary-dispute
+  size: 1344x768
+  seed: 62210
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, A
+    Fence in the Wrong Place: Two Hollow Bell families both claim the same well, and one of them has built a fence
+    around it, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41044
+- key: eodq-r-strange-relic-notice
+  lane: arthemy-house
+  title: Glass That Does Not Break (notice)
+  quest: r-strange-relic
+  variant: notice
+  asset: quests/r-strange-relic
+  size: 1344x768
+  seed: 62213
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Glass
+    That Does Not Break: Salvagers dug up a pane of old-world glass that will not shatter. The Archive wants it
+    studied before it is sold, sunken rusted rail yards half drowned in fog, iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41045
+- key: eodq-r-roost-storm-notice
+  lane: arthemy-house
+  title: A Roost in the Storm (notice)
+  quest: r-roost-storm
+  variant: notice
+  asset: quests/r-roost-storm
+  size: 1344x768
+  seed: 62216
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, A
+    Roost in the Storm: Lightning split a Storm Crow roost on the Heights, and the fledglings are on the ledge below
+    it. The Crows will not ask for help. Go anyway, jagged grey mountain peaks wreathed in storm cloud, crow roosts
+    on cliff ledges'
+  jobs:
+    arthemy-house: 41046
+- key: eodq-r-fen-lantern-notice
+  lane: arthemy-house
+  title: A Lantern Gone Out (notice)
+  quest: r-fen-lantern
+  variant: notice
+  asset: quests/r-fen-lantern
+  size: 1344x768
+  seed: 62219
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, A
+    Lantern Gone Out: One of the green lanterns on the Mirefen causeway has gone dark, and travellers are walking
+    off the path. Relight it before someone drowns, misty wetlands of black reeds, crooked trees and stilt huts
+    over still dark water'
+  jobs:
+    arthemy-house: 41047
+- key: eodq-r-wagon-escort-notice
+  lane: arthemy-house
+  title: An Escort for the Painted Wagons (notice)
+  quest: r-wagon-escort
+  variant: notice
+  asset: quests/r-wagon-escort
+  size: 1344x768
+  seed: 62222
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, An
+    Escort for the Painted Wagons: A Jackalwire wagon wants to cross Freehold land to sell scrap at the Ford, and
+    nobody will let it pass without a crown escort, a deep red rail canyon spanned by wooden trestles, painted caravan
+    wagons and salvage'
+  jobs:
+    arthemy-house: 41048
+- key: eodq-r-tunnel-rescue-notice
+  lane: arthemy-house
+  title: A Tunnel Caved In (notice)
+  quest: r-tunnel-rescue
+  variant: notice
+  asset: quests/r-tunnel-rescue
+  size: 1344x768
+  seed: 62225
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, A
+    Tunnel Caved In: A side tunnel under the badlands came down in the night with two Mole diggers behind it. The
+    Moles are digging. They need more hands, badlands of red rock spires riddled with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 41049
+- key: eodq-r-salvage-claim-notice
+  lane: arthemy-house
+  title: A Disputed Salvage Claim (notice)
+  quest: r-salvage-claim
+  variant: notice
+  asset: quests/r-salvage-claim
+  size: 1344x768
+  seed: 62228
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, A
+    Disputed Salvage Claim: Two Rustline crews both say they found the same derailed engine first. Settle it before
+    they settle it with crowbars, sunken rusted rail yards half drowned in fog, iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41050
+- key: eodq-q-d01-well-road-success
+  lane: arthemy-house
+  title: Clear the Well Road (success)
+  quest: q-d01-well-road
+  variant: success
+  asset: quests/q-d01-well-road-success
+  size: 1344x768
+  seed: 62001
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Clear
+    the Well Road: The well road is clear by evening. The water barrels roll again, a shallow river ford with stone
+    arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41051
+- key: eodq-q-d01-aqueduct-repair-success
+  lane: arthemy-house
+  title: The Broken Aqueduct (success)
+  quest: q-d01-aqueduct-repair
+  variant: success
+  asset: quests/q-d01-aqueduct-repair-success
+  size: 1344x768
+  seed: 62004
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Broken
+    Aqueduct: Clear water runs toward Hollow Bell again. Mara Reedbell sends a barrel of pickled plums and a very
+    long thank-you, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41052
+- key: eodq-q-d01-toll-parley-success
+  lane: arthemy-house
+  title: Painted Wagons at the Toll (success)
+  quest: q-d01-toll-parley
+  variant: success
+  asset: quests/q-d01-toll-parley-success
+  size: 1344x768
+  seed: 62007
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Painted
+    Wagons at the Toll: The Pack accepts the armistice and plays a terrible song in the emperor''s honor, a deep
+    red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41053
+- key: eodq-q-d01-toll-break-success
+  lane: arthemy-house
+  title: Break the Blockade (success)
+  quest: q-d01-toll-break
+  variant: success
+  asset: quests/q-d01-toll-break-success
+  size: 1344x768
+  seed: 62010
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Break
+    the Blockade: The bridge is open. The Pack withdrew, and they will remember who pushed, a deep red rail canyon
+    spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41054
+- key: eodq-q-d01-mirefen-escort-success
+  lane: arthemy-house
+  title: Lanterns on the Mirefen Road (success)
+  quest: q-d01-mirefen-escort
+  variant: success
+  asset: quests/q-d01-mirefen-escort-success
+  size: 1344x768
+  seed: 62013
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Lanterns
+    on the Mirefen Road: Every lantern reached the far side. The refugees left a sprig of bog myrtle on the escort''s
+    saddle, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41055
+- key: eodq-q-d01-mirefen-inspect-success
+  lane: arthemy-house
+  title: Count the Lanterns (success)
+  quest: q-d01-mirefen-inspect
+  variant: success
+  asset: quests/q-d01-mirefen-inspect-success
+  size: 1344x768
+  seed: 62016
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Count
+    the Lanterns: There were more travelers than lanterns, and some of the lanterns had no one under them. The Archive
+    has the list, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41056
+- key: eodq-q-d02-grain-cart-success
+  lane: arthemy-house
+  title: The Drowning Grain Cart (success)
+  quest: q-d02-grain-cart
+  variant: success
+  asset: quests/q-d02-grain-cart-success
+  size: 1344x768
+  seed: 62019
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Drowning
+    Grain Cart: The cart is out and the grain is dry. Mostly, a shallow river ford with stone arch bridges, freehold
+    farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41057
+- key: eodq-q-d02-crow-contract-success
+  lane: arthemy-house
+  title: The Fine Print (success)
+  quest: q-d02-crow-contract
+  variant: success
+  asset: quests/q-d02-crow-contract-success
+  size: 1344x768
+  seed: 62022
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Fine
+    Print: Clause nine gives the Conclave the right to name the favor after the rain falls. The court strikes it,
+    and the Crows pretend to be impressed, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff
+    ledges'
+  jobs:
+    arthemy-house: 41058
+- key: eodq-q-d02-mole-audit-success
+  lane: arthemy-house
+  title: The Mole Ledger (success)
+  quest: q-d02-mole-audit
+  variant: success
+  asset: quests/q-d02-mole-audit-success
+  size: 1344x768
+  seed: 62025
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Mole
+    Ledger: The tithe was never paid, and the Moles never claimed it was. The clerk invented it. The Moles appreciate
+    being counted honestly, badlands of red rock spires riddled with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 41059
+- key: eodq-q-d03-three-wells-success
+  lane: arthemy-house
+  title: Three Wells (success)
+  quest: q-d03-three-wells
+  variant: success
+  asset: quests/q-d03-three-wells-success
+  size: 1344x768
+  seed: 62028
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Three
+    Wells: All three wells run. One of them tastes of iron, a shallow river ford with stone arch bridges, freehold
+    farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41060
+- key: eodq-q-d03-bell-vigil-success
+  lane: arthemy-house
+  title: The Bell That Rang Alone (success)
+  quest: q-d03-bell-vigil
+  variant: success
+  asset: quests/q-d03-bell-vigil-success
+  size: 1344x768
+  seed: 62031
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Bell
+    That Rang Alone: At the third hour the rope moved. Nobody was holding it. The watchers will not say more in
+    front of the court, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41061
+- key: eodq-q-d03-bell-search-success
+  lane: arthemy-house
+  title: Muffle the Bell (success)
+  quest: q-d03-bell-search
+  variant: success
+  asset: quests/q-d03-bell-search-success
+  size: 1344x768
+  seed: 62034
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Muffle
+    the Bell: The stairs were dusty and the dust was undisturbed. Hollow Bell resents the muffled bell, a small
+    southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41062
+- key: eodq-q-d03-toll-audit-success
+  lane: arthemy-house
+  title: The Vanishing Toll (success)
+  quest: q-d03-toll-audit
+  variant: success
+  asset: quests/q-d03-toll-audit-success
+  size: 1344x768
+  seed: 62037
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Vanishing
+    Toll: The toll was never lifted. The clerk was skimming the difference. Saltroad caravans are delighted, a deep
+    red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41063
+- key: eodq-q-d03-fen-ambush-success
+  lane: arthemy-house
+  title: Ambush in the Reeds (success)
+  quest: q-d03-fen-ambush
+  variant: success
+  asset: quests/q-d03-fen-ambush-success
+  size: 1344x768
+  seed: 62040
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Ambush
+    in the Reeds: The lanterns scattered like startled fish. Under the ones the party caught, there was nothing
+    at all, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41064
+- key: eodq-q-d03-fen-hail-success
+  lane: arthemy-house
+  title: Hail the Lanterns (success)
+  quest: q-d03-fen-hail
+  variant: success
+  asset: quests/q-d03-fen-hail-success
+  size: 1344x768
+  seed: 62043
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Hail
+    the Lanterns: The lanterns stopped. A voice answered in a language nobody at court can read, and then, politely,
+    in ours, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41065
+- key: eodq-q-d04-survey-flags-success
+  lane: arthemy-house
+  title: Flags on the Far Bank (success)
+  quest: q-d04-survey-flags
+  variant: success
+  asset: quests/q-d04-survey-flags-success
+  size: 1344x768
+  seed: 62046
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Flags
+    on the Far Bank: The maps carry a seal nobody at court has seen before: a bell with no clapper, a shallow river
+    ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41066
+- key: eodq-q-d04-crow-elders-success
+  lane: arthemy-house
+  title: Sit With the Elders (success)
+  quest: q-d04-crow-elders
+  variant: success
+  asset: quests/q-d04-crow-elders-success
+  size: 1344x768
+  seed: 62049
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Sit With
+    the Elders: On the second night an elder spoke: the crows went silent because something to the east stopped
+    singing first, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41067
+- key: eodq-q-d04-crow-roost-success
+  lane: arthemy-house
+  title: Climb to the High Roost (success)
+  quest: q-d04-crow-roost
+  variant: success
+  asset: quests/q-d04-crow-roost-success
+  size: 1344x768
+  seed: 62052
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Climb
+    to the High Roost: From the roost every crow is facing the same way: east, toward the sunken rail yards, jagged
+    grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41068
+- key: eodq-q-d04-feast-armed-success
+  lane: arthemy-house
+  title: A Feast Under Painted Wagons (success)
+  quest: q-d04-feast-armed
+  variant: success
+  asset: quests/q-d04-feast-armed-success
+  size: 1344x768
+  seed: 62055
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, A Feast
+    Under Painted Wagons: The feast was an ambush, and the hidden blades were not. The party came home with a captured
+    banner, a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41069
+- key: eodq-q-d05-flour-barrels-success
+  lane: arthemy-house
+  title: Flour Before the Wages Fail (success)
+  quest: q-d05-flour-barrels
+  variant: success
+  asset: quests/q-d05-flour-barrels-success
+  size: 1344x768
+  seed: 62058
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Flour
+    Before the Wages Fail: The barrels roll in at dusk, cheaper than the foreman feared. The kitchens sing for a
+    full night, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41070
+- key: eodq-q-d05-toll-standoff-success
+  lane: arthemy-house
+  title: Hold the Toll Bridge (success)
+  quest: q-d05-toll-standoff
+  variant: success
+  asset: quests/q-d05-toll-standoff-success
+  size: 1344x768
+  seed: 62061
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Hold
+    the Toll Bridge: The carts crossed. Gristle Vane watched every one of them and counted, a deep red rail canyon
+    spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41071
+- key: eodq-q-d05-saltroad-escort-success
+  lane: arthemy-house
+  title: Raiders for Hire (success)
+  quest: q-d05-saltroad-escort
+  variant: success
+  asset: quests/q-d05-saltroad-escort-success
+  size: 1344x768
+  seed: 62064
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Raiders
+    for Hire: The Pack guarded the carts, and only ate one goat that was not theirs. The Saltroad calls that a pact,
+    a long caravan road across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41072
+- key: eodq-q-d06-empty-stable-success
+  lane: arthemy-house
+  title: The Empty Stable (success)
+  quest: q-d06-empty-stable
+  variant: success
+  asset: quests/q-d06-empty-stable-success
+  size: 1344x768
+  seed: 62067
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Empty
+    Stable: The mounts were found grazing two valleys over. The stable gate''s latch was filed through, carefully,
+    by someone who knew the fortress, a shallow river ford with stone arch bridges, freehold farmsteads and windmills
+    among red mesas'
+  jobs:
+    arthemy-house: 41073
+- key: eodq-q-d07-crow-favor-success
+  lane: arthemy-house
+  title: The Crows’ Errand (success)
+  quest: q-d07-crow-favor
+  variant: success
+  asset: quests/q-d07-crow-favor-success
+  size: 1344x768
+  seed: 62070
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Crows''
+    Errand: The parcel was delivered to a witch who did not seem surprised. It ticked, faintly, the whole way. A
+    Storm Crow who had followed the courier asks to see the emperor about what was inside, misty wetlands of black
+    reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41074
+- key: eodq-q-d08-escort-to-bell-success
+  lane: arthemy-house
+  title: A Family of Five (success)
+  quest: q-d08-escort-to-bell
+  variant: success
+  asset: quests/q-d08-escort-to-bell-success
+  size: 1344x768
+  seed: 62073
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, A Family
+    of Five: The family is lodged above the Hollow Bell bakery. The youngest gave the escort a drawing of a horse
+    that is mostly legs, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41075
+- key: eodq-q-d09-iron-convoy-success
+  lane: arthemy-house
+  title: Iron on the Road (success)
+  quest: q-d09-iron-convoy
+  variant: success
+  asset: quests/q-d09-iron-convoy-success
+  size: 1344x768
+  seed: 62076
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Iron
+    on the Road: The iron reached the far side. The escort did not sleep, a long caravan road across cracked ochre
+    salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41076
+- key: eodq-q-d10-freehold-raid-success
+  lane: arthemy-house
+  title: Smoke Over Thistledown (success)
+  quest: q-d10-freehold-raid
+  variant: success
+  asset: quests/q-d10-freehold-raid-success
+  size: 1344x768
+  seed: 62079
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Smoke
+    Over Thistledown: Thistledown held. Its granary did not, a shallow river ford with stone arch bridges, freehold
+    farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41077
+- key: eodq-q-d12-mirefen-defense-success
+  lane: arthemy-house
+  title: Hold the Mirefen Edge (success)
+  quest: q-d12-mirefen-defense
+  variant: success
+  asset: quests/q-d12-mirefen-defense-success
+  size: 1344x768
+  seed: 62082
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Hold
+    the Mirefen Edge: The camp is scattered. A newt-witch named Isolde thanks the party, then asks to speak with
+    the emperor alone, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41078
+- key: eodq-q-d12-mirefen-cellars-success
+  lane: arthemy-house
+  title: What Is Under the Lantern-Houses (success)
+  quest: q-d12-mirefen-cellars
+  variant: success
+  asset: quests/q-d12-mirefen-cellars-success
+  size: 1344x768
+  seed: 62085
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, What
+    Is Under the Lantern-Houses: The cellars are full of jars, labelled in a neat hand with dates and the names
+    of villages. Some of the jars are very small. The party took the ledger and left the jars, misty wetlands of
+    black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41079
+- key: eodq-q-d13-water-engine-success
+  lane: arthemy-house
+  title: The Pack’s Water Engine (success)
+  quest: q-d13-water-engine
+  variant: success
+  asset: quests/q-d13-water-engine-success
+  size: 1344x768
+  seed: 62088
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Pack''s
+    Water Engine: The engine runs. The Pack cheered Saffron like a returning captain, and she wept and then denied
+    it. Hollow Bell''s stream is a little lower this week, a deep red rail canyon spanned by wooden trestles, painted
+    caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41080
+- key: eodq-q-d13-engine-sabotage-success
+  lane: arthemy-house
+  title: Fix It to Fail (success)
+  quest: q-d13-engine-sabotage
+  variant: success
+  asset: quests/q-d13-engine-sabotage-success
+  size: 1344x768
+  seed: 62091
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Fix It
+    to Fail: The engine runs beautifully. In a month it will not. Nobody in the canyon suspects a thing, a deep
+    red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41081
+- key: eodq-q-d14-sick-courier-success
+  lane: arthemy-house
+  title: A Sick Courier (success)
+  quest: q-d14-sick-courier
+  variant: success
+  asset: quests/q-d14-sick-courier-success
+  size: 1344x768
+  seed: 62094
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, A Sick
+    Courier: Ash Quill will live. Their satchel held a brass hourglass addressed to Young Komodo; he waved it away
+    and said the court should have it, a shallow river ford with stone arch bridges, freehold farmsteads and windmills
+    among red mesas'
+  jobs:
+    arthemy-house: 41082
+- key: eodq-q-d15-study-glass-success
+  lane: arthemy-house
+  title: Glass Feathers (success)
+  quest: q-d15-study-glass
+  variant: success
+  asset: quests/q-d15-study-glass-success
+  size: 1344x768
+  seed: 62097
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Glass
+    Feathers: The feathers ring when struck, all on the same note as the Hollow Bell. The rat salvager who brought
+    them, Pell, wants to know what the court learned, and whether the court is hiring, sunken rusted rail yards
+    half drowned in fog, iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41083
+- key: eodq-q-d16-hidden-grain-success
+  lane: arthemy-house
+  title: Three Haystacks (success)
+  quest: q-d16-hidden-grain
+  variant: success
+  asset: quests/q-d16-hidden-grain-success
+  size: 1344x768
+  seed: 62100
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Three
+    Haystacks: Two haystacks were full of grain sacks stamped with an Old House crest. The third was full of hay,
+    and a very surprised goat, a shallow river ford with stone arch bridges, freehold farmsteads and windmills among
+    red mesas'
+  jobs:
+    arthemy-house: 41084
+- key: eodq-q-d17-who-lies-success
+  lane: arthemy-house
+  title: Who Has Been Lying? (success)
+  quest: q-d17-who-lies
+  variant: success
+  asset: quests/q-d17-who-lies-success
+  size: 1344x768
+  seed: 62103
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Who Has
+    Been Lying?: The trail of false reports led through a Crow dead-drop to somewhere inside the fortress. In the
+    dead-drop: a dead elder crow''s glass eye, which shows a lie for what it is, jagged grey mountain peaks wreathed
+    in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41085
+- key: eodq-q-d18-refugee-road-success
+  lane: arthemy-house
+  title: No Water for Strangers (success)
+  quest: q-d18-refugee-road
+  variant: success
+  asset: quests/q-d18-refugee-road-success
+  size: 1344x768
+  seed: 62106
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, No Water
+    for Strangers: Hollow Bell let them in. Mara Reedbell wrote every name in her ledger, a small southern chapel
+    town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41086
+- key: eodq-q-d19-bell-speech-success
+  lane: arthemy-house
+  title: Speak to Hollow Bell (success)
+  quest: q-d19-bell-speech
+  variant: success
+  asset: quests/q-d19-bell-speech-success
+  size: 1344x768
+  seed: 62109
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Speak
+    to Hollow Bell: Hollow Bell voted yes, by eleven hands. The bell rang, and somebody was holding the rope, a
+    small southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41087
+- key: eodq-q-d20-ford-dam-success
+  lane: arthemy-house
+  title: Before the Rains (success)
+  quest: q-d20-ford-dam
+  variant: success
+  asset: quests/q-d20-ford-dam-success
+  size: 1344x768
+  seed: 62112
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Before
+    the Rains: The dam held. The map room has a new blue line where the reservoir will be, a shallow river ford
+    with stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41088
+- key: eodq-q-d22-ford-bodies-success
+  lane: arthemy-house
+  title: Bodies at the Ford (success)
+  quest: q-d22-ford-bodies
+  variant: success
+  asset: quests/q-d22-ford-bodies-success
+  size: 1344x768
+  seed: 62115
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Bodies
+    at the Ford: They were not Moles and not killed by Moles. Each carried a mission-road travel token, the kind
+    the Abbey gives to families it sends home. None of them had been sent home, a shallow river ford with stone
+    arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41089
+- key: eodq-q-d23-blue-lantern-success
+  lane: arthemy-house
+  title: Follow the Blue Lantern (success)
+  quest: q-d23-blue-lantern
+  variant: success
+  asset: quests/q-d23-blue-lantern-success
+  size: 1344x768
+  seed: 62118
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Follow
+    the Blue Lantern: The lantern carries medicine past the Ledger''s tolls to the Freehold farms. The court now
+    knows the route, and so does its purse, sunken rusted rail yards half drowned in fog, iron gantries and derelict
+    engines'
+  jobs:
+    arthemy-house: 41090
+- key: eodq-q-d24-mission-road-success
+  lane: arthemy-house
+  title: The Mission Road (success)
+  quest: q-d24-mission-road
+  variant: success
+  asset: quests/q-d24-mission-road-success
+  size: 1344x768
+  seed: 62121
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Mission
+    Road: The road was swept clean, but not well enough. There are small footprints going toward the Abbey gate,
+    many of them, and none coming back, a dusty pilgrim road climbing toward a cliffside abbey with a silent bell
+    tower, wayside shrines'
+  jobs:
+    arthemy-house: 41091
+- key: eodq-q-d24-coldbrook-visit-success
+  lane: arthemy-house
+  title: A Visit to the Children (success)
+  quest: q-d24-coldbrook-visit
+  variant: success
+  asset: quests/q-d24-coldbrook-visit-success
+  size: 1344x768
+  seed: 62124
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, A Visit
+    to the Children: Sister Marrow showed them the dormitory: four neat cots, made tight, with nothing under the
+    blankets. They are at lessons, she said. They were not at lessons, a dusty pilgrim road climbing toward a cliffside
+    abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41092
+- key: eodq-q-d26-dry-well-success
+  lane: arthemy-house
+  title: A Friendly Raid (success)
+  quest: q-d26-dry-well
+  variant: success
+  asset: quests/q-d26-dry-well-success
+  size: 1344x768
+  seed: 62127
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, A Friendly
+    Raid: The dry-well jackals are scattered. Vane threw a feast, and this time nobody brought knives, a deep red
+    rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41093
+- key: eodq-q-d27-flint-evidence-success
+  lane: arthemy-house
+  title: The Case Against Flint (success)
+  quest: q-d27-flint-evidence
+  variant: success
+  asset: quests/q-d27-flint-evidence-success
+  size: 1344x768
+  seed: 62130
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Case
+    Against Flint: The grain went to the Moles, yes: from the Old Houses'' own granary, sold at three times the
+    market price. Flint had been trying to stop it, a small southern chapel town of adobe and timber around a brass
+    bell tower, dry hills'
+  jobs:
+    arthemy-house: 41094
+- key: eodq-q-d28-rot-cure-success
+  lane: arthemy-house
+  title: Charms Against Rot (success)
+  quest: q-d28-rot-cure
+  variant: success
+  asset: quests/q-d28-rot-cure-success
+  size: 1344x768
+  seed: 62133
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Charms
+    Against Rot: The charm works on rot. It also leaves the grain faintly cold to the touch, always. The Yard eats
+    it anyway, a fog-drowned ruin city of black towers at the edge of the world'
+  jobs:
+    arthemy-house: 41095
+- key: eodq-q-d30-hold-the-line-success
+  lane: arthemy-house
+  title: Hold the Border Line (success)
+  quest: q-d30-hold-the-line
+  variant: success
+  asset: quests/q-d30-hold-the-line-success
+  size: 1344x768
+  seed: 62136
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Hold
+    the Border Line: The line held, a shallow river ford with stone arch bridges, freehold farmsteads and windmills
+    among red mesas'
+  jobs:
+    arthemy-house: 41096
+- key: eodq-q-d31-iron-rain-success
+  lane: arthemy-house
+  title: Iron Rain at the Ford (success)
+  quest: q-d31-iron-rain
+  variant: success
+  asset: quests/q-d31-iron-rain-success
+  size: 1344x768
+  seed: 62139
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Iron
+    Rain at the Ford: The Ford held. Nobody who fought there will call it a victory, but the farms behind it are
+    still standing, a shallow river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41097
+- key: eodq-q-d33-thistledown-success
+  lane: arthemy-house
+  title: 'Wolves at Noon: Thistledown (success)'
+  quest: q-d33-thistledown
+  variant: success
+  asset: quests/q-d33-thistledown-success
+  size: 1344x768
+  seed: 62142
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Wolves
+    at Noon: Thistledown: The riders came over the ridge at noon and found the fields full of people with pitchforks
+    and the crown''s colours. They did not stay, a shallow river ford with stone arch bridges, freehold farmsteads
+    and windmills among red mesas'
+  jobs:
+    arthemy-house: 41098
+- key: eodq-q-d33-waystation-success
+  lane: arthemy-house
+  title: 'Wolves at Noon: the Saltroad Stop (success)'
+  quest: q-d33-waystation
+  variant: success
+  asset: quests/q-d33-waystation-success
+  size: 1344x768
+  seed: 62145
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Wolves
+    at Noon: the Saltroad Stop: The caravan rolled out at dusk with every crate. Oriel Saltmarsh''s factor paid
+    the party in brass and in salt, which on the Saltroad means the same thing, a long caravan road across cracked
+    ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41099
+- key: eodq-q-d35-trestle-success
+  lane: arthemy-house
+  title: Hold Saffron’s Trestle (success)
+  quest: q-d35-trestle
+  variant: success
+  asset: quests/q-d35-trestle-success
+  size: 1344x768
+  seed: 62148
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Hold
+    Saffron''s Trestle: The trestle stands. The Pack''s wagons rolled across it all night, and somebody painted
+    the crown''s colours on the first span, a deep red rail canyon spanned by wooden trestles, painted caravan wagons
+    and salvage'
+  jobs:
+    arthemy-house: 41100
+- key: eodq-q-d35-tunnel-success
+  lane: arthemy-house
+  title: Hold the Mole Tunnel (success)
+  quest: q-d35-tunnel
+  variant: success
+  asset: quests/q-d35-tunnel-success
+  size: 1344x768
+  seed: 62151
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Hold
+    the Mole Tunnel: The tunnel mouth held. Granny Umber sent a jar of honey and a note that said only: Good. Again
+    tomorrow, badlands of red rock spires riddled with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 41101
+- key: eodq-q-d36-bell-rehearsal-success
+  lane: arthemy-house
+  title: The Silent Bell Rehearsal (success)
+  quest: q-d36-bell-rehearsal
+  variant: success
+  asset: quests/q-d36-bell-rehearsal-success
+  size: 1344x768
+  seed: 62154
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Silent
+    Bell Rehearsal: Under the chapel there is a door older than the Abbey, and in front of it a row of small shoes
+    set out neatly, toes to the wall. The party brought one back. Nobody at court can stop looking at it, a dusty
+    pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41102
+- key: eodq-q-d41-stragglers-success
+  lane: arthemy-house
+  title: Find the Stragglers (success)
+  quest: q-d41-stragglers
+  variant: success
+  asset: quests/q-d41-stragglers-success
+  size: 1344x768
+  seed: 62157
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Find
+    the Stragglers: Eleven cooks, four guards and a very angry goat came in out of the dark. The Yard is cooking
+    again, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41103
+- key: eodq-q-d42-tunnel-props-success
+  lane: arthemy-house
+  title: Shore Up the Tunnels (success)
+  quest: q-d42-tunnel-props
+  variant: success
+  asset: quests/q-d42-tunnel-props-success
+  size: 1344x768
+  seed: 62160
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Shore
+    Up the Tunnels: The props hold. Granny Umber knocks on one and listens, satisfied, badlands of red rock spires
+    riddled with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 41104
+- key: eodq-q-d42-crow-watch-success
+  lane: arthemy-house
+  title: Stand the Crow Watch (success)
+  quest: q-d42-crow-watch
+  variant: success
+  asset: quests/q-d42-crow-watch-success
+  size: 1344x768
+  seed: 62163
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Stand
+    the Crow Watch: Three nights on the ledges. On the third, a line of lanterns went up the Abbey road and none
+    came down, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41105
+- key: eodq-q-d42-bell-water-success
+  lane: arthemy-house
+  title: Water for the Bell (success)
+  quest: q-d42-bell-water
+  variant: success
+  asset: quests/q-d42-bell-water-success
+  size: 1344x768
+  seed: 62166
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Water
+    for the Bell: The aqueduct runs. Mara Reedbell rings the chapel bell once, very quietly, for the court, a small
+    southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41106
+- key: eodq-q-d42-wagon-wheels-success
+  lane: arthemy-house
+  title: Wheels for the Wagon Circle (success)
+  quest: q-d42-wagon-wheels
+  variant: success
+  asset: quests/q-d42-wagon-wheels-success
+  size: 1344x768
+  seed: 62169
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Wheels
+    for the Wagon Circle: Every wagon rolls. Vane paints a tiny crown on the axle of his own, a deep red rail canyon
+    spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41107
+- key: eodq-q-d42-caravan-guard-success
+  lane: arthemy-house
+  title: Ride With the Caravan (success)
+  quest: q-d42-caravan-guard
+  variant: success
+  asset: quests/q-d42-caravan-guard-success
+  size: 1344x768
+  seed: 62172
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Ride
+    With the Caravan: The caravan made the salt flats by dawn without losing a wheel or a guest, a long caravan
+    road across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41108
+- key: eodq-q-d42-barn-harvest-success
+  lane: arthemy-house
+  title: Bring In the Harvest (success)
+  quest: q-d42-barn-harvest
+  variant: success
+  asset: quests/q-d42-barn-harvest-success
+  size: 1344x768
+  seed: 62175
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Bring
+    In the Harvest: The field is in. Hester gives every reaper an egg, warm, as if it were a medal, a shallow river
+    ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41109
+- key: eodq-q-d42-rail-salvage-success
+  lane: arthemy-house
+  title: Salvage for the Station (success)
+  quest: q-d42-rail-salvage
+  variant: success
+  asset: quests/q-d42-rail-salvage-success
+  size: 1344x768
+  seed: 62178
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Salvage
+    for the Station: The engine is stripped to the bolts. Jinx keeps the shiniest ones, sunken rusted rail yards
+    half drowned in fog, iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41110
+- key: eodq-q-d42-cave-forage-success
+  lane: arthemy-house
+  title: Forage for the Cave (success)
+  quest: q-d42-cave-forage
+  variant: success
+  asset: quests/q-d42-cave-forage-success
+  size: 1344x768
+  seed: 62181
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Forage
+    for the Cave: Roots, a snared hare and a sack of someone''s abandoned flour. Tonight, nobody is hungry, jagged
+    grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41111
+- key: eodq-q-d44-komodo-bargain-success
+  lane: arthemy-house
+  title: What Komodo Bought (success)
+  quest: q-d44-komodo-bargain
+  variant: success
+  asset: quests/q-d44-komodo-bargain-success
+  size: 1344x768
+  seed: 62184
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, What
+    Komodo Bought: It is all in his own neat hand. The Abbess promised that what sleeps under the Abbey would sleep
+    through every life now living, if the throne were handed to her order and the payments continued. Komodo wrote
+    the price in the margin and underlined it twice: Cheaper than war, a dusty pilgrim road climbing toward a cliffside
+    abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41112
+- key: eodq-q-d46-well-that-spoke-success
+  lane: arthemy-house
+  title: The Well That Spoke (success)
+  quest: q-d46-well-that-spoke
+  variant: success
+  asset: quests/q-d46-well-that-spoke-success
+  size: 1344x768
+  seed: 62187
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Well
+    That Spoke: The well does speak. It only repeats what you say, a heartbeat late, in a voice nearly like yours.
+    Forty steps down there is a door with no lock on this side. The party marked the way, a dusty pilgrim road climbing
+    toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41113
+- key: eodq-q-d48-bell-clapper-success
+  lane: arthemy-house
+  title: The Bell’s Lost Clapper (success)
+  quest: q-d48-bell-clapper
+  variant: success
+  asset: quests/q-d48-bell-clapper-success
+  size: 1344x768
+  seed: 62190
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Bell''s
+    Lost Clapper: The clapper was sunk in the deepest pool of the Mirefen, wrapped in prayer cloth older than the
+    Abbey. It is heavy, and it hums when nobody is touching it, misty wetlands of black reeds, crooked trees and
+    stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41114
+- key: eodq-q-d50-last-dispatch-success
+  lane: arthemy-house
+  title: The Last Dispatch (success)
+  quest: q-d50-last-dispatch
+  variant: success
+  asset: quests/q-d50-last-dispatch-success
+  size: 1344x768
+  seed: 62193
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Last
+    Dispatch: The crypt door is shut. Whatever was keeping time beneath the floor has stopped. The Abbess is gone,
+    and the sisters will not say where, a dusty pilgrim road climbing toward a cliffside abbey with a silent bell
+    tower, wayside shrines'
+  jobs:
+    arthemy-house: 41115
+- key: eodq-q-d50-crypt-path-success
+  lane: arthemy-house
+  title: The Way Through the Well (success)
+  quest: q-d50-crypt-path
+  variant: success
+  asset: quests/q-d50-crypt-path-success
+  size: 1344x768
+  seed: 62196
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Way
+    Through the Well: The back door led to the right room. The crypt is shut, a dusty pilgrim road climbing toward
+    a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41116
+- key: eodq-q-d50-ring-the-bell-success
+  lane: arthemy-house
+  title: Ring the Silent Bell (success)
+  quest: q-d50-ring-the-bell
+  variant: success
+  asset: quests/q-d50-ring-the-bell-success
+  size: 1344x768
+  seed: 62199
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Ring
+    the Silent Bell: The Silent Bell rang once. Under the Abbey, something went quiet, a dusty pilgrim road climbing
+    toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41117
+- key: eodq-r-bandit-sighting-success
+  lane: arthemy-house
+  title: Bandits on the Saltroad (success)
+  quest: r-bandit-sighting
+  variant: success
+  asset: quests/r-bandit-sighting-success
+  size: 1344x768
+  seed: 62202
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Bandits
+    on the Saltroad: The strangers fled into the hills, leaving a cookpot and a very good hat, a long caravan road
+    across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41118
+- key: eodq-r-sick-herd-success
+  lane: arthemy-house
+  title: A Sick Herd (success)
+  quest: r-sick-herd
+  variant: success
+  asset: quests/r-sick-herd-success
+  size: 1344x768
+  seed: 62205
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, A Sick
+    Herd: Bad water from a cracked cistern. The herd will live, a shallow river ford with stone arch bridges, freehold
+    farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41119
+- key: eodq-r-lost-caravan-success
+  lane: arthemy-house
+  title: The Late Caravan (success)
+  quest: r-lost-caravan
+  variant: success
+  asset: quests/r-lost-caravan-success
+  size: 1344x768
+  seed: 62208
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, The Late
+    Caravan: The caravan is found, minus two wagons, a long caravan road across cracked ochre salt flats with waystations
+    and watchtowers'
+  jobs:
+    arthemy-house: 41120
+- key: eodq-r-boundary-dispute-success
+  lane: arthemy-house
+  title: A Fence in the Wrong Place (success)
+  quest: r-boundary-dispute
+  variant: success
+  asset: quests/r-boundary-dispute-success
+  size: 1344x768
+  seed: 62211
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, A Fence
+    in the Wrong Place: The fence is now a gate, and both families have a key, a small southern chapel town of adobe
+    and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41121
+- key: eodq-r-strange-relic-success
+  lane: arthemy-house
+  title: Glass That Does Not Break (success)
+  quest: r-strange-relic
+  variant: success
+  asset: quests/r-strange-relic-success
+  size: 1344x768
+  seed: 62214
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Glass
+    That Does Not Break: The glass is catalogued. It hums, very faintly, when the bell rings, sunken rusted rail
+    yards half drowned in fog, iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41122
+- key: eodq-r-roost-storm-success
+  lane: arthemy-house
+  title: A Roost in the Storm (success)
+  quest: r-roost-storm
+  variant: success
+  asset: quests/r-roost-storm-success
+  size: 1344x768
+  seed: 62217
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, A Roost
+    in the Storm: Every fledgling is back in a dry nest. An old crow watched the whole climb and said nothing, which
+    from a Crow is thanks, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41123
+- key: eodq-r-fen-lantern-success
+  lane: arthemy-house
+  title: A Lantern Gone Out (success)
+  quest: r-fen-lantern
+  variant: success
+  asset: quests/r-fen-lantern-success
+  size: 1344x768
+  seed: 62220
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, A Lantern
+    Gone Out: The lantern burns green again. Nobody saw who filled it, but the reeds bent toward the tower all evening,
+    misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41124
+- key: eodq-r-wagon-escort-success
+  lane: arthemy-house
+  title: An Escort for the Painted Wagons (success)
+  quest: r-wagon-escort
+  variant: success
+  asset: quests/r-wagon-escort-success
+  size: 1344x768
+  seed: 62223
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, An Escort
+    for the Painted Wagons: The wagon reached the Ford, sold everything, and left before anyone could change their
+    mind. The Pack sends a painted hubcap by way of thanks, a deep red rail canyon spanned by wooden trestles, painted
+    caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41125
+- key: eodq-r-tunnel-rescue-success
+  lane: arthemy-house
+  title: A Tunnel Caved In (success)
+  quest: r-tunnel-rescue
+  variant: success
+  asset: quests/r-tunnel-rescue-success
+  size: 1344x768
+  seed: 62226
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, A Tunnel
+    Caved In: Both diggers came out blinking and furious about the delay. Granny Umber sent a jar of honey up to
+    the tower, badlands of red rock spires riddled with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 41126
+- key: eodq-r-salvage-claim-success
+  lane: arthemy-house
+  title: A Disputed Salvage Claim (success)
+  quest: r-salvage-claim
+  variant: success
+  asset: quests/r-salvage-claim-success
+  size: 1344x768
+  seed: 62229
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, A Disputed
+    Salvage Claim: The engine was split down the middle, exactly, with a chalk line. Both crews say they were cheated,
+    which means it was fair, sunken rusted rail yards half drowned in fog, iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41127
+- key: eodq-q-d01-well-road-failure
+  lane: arthemy-house
+  title: Clear the Well Road (failure)
+  quest: q-d01-well-road
+  variant: failure
+  asset: quests/q-d01-well-road-failure
+  size: 1344x768
+  seed: 62002
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Clear the Well Road: The rockfall shifted again. The Yard hauls water by hand, a shallow river ford with stone
+    arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41128
+- key: eodq-q-d01-aqueduct-repair-failure
+  lane: arthemy-house
+  title: The Broken Aqueduct (failure)
+  quest: q-d01-aqueduct-repair
+  variant: failure
+  asset: quests/q-d01-aqueduct-repair-failure
+  size: 1344x768
+  seed: 62005
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Broken Aqueduct: The channel collapsed under the engineers. Hollow Bell is drier than before, a small southern
+    chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41129
+- key: eodq-q-d01-toll-parley-failure
+  lane: arthemy-house
+  title: Painted Wagons at the Toll (failure)
+  quest: q-d01-toll-parley
+  variant: failure
+  asset: quests/q-d01-toll-parley-failure
+  size: 1344x768
+  seed: 62008
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Painted Wagons at the Toll: The parley ended in insults. The toll is still closed, a deep red rail canyon spanned
+    by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41130
+- key: eodq-q-d01-toll-break-failure
+  lane: arthemy-house
+  title: Break the Blockade (failure)
+  quest: q-d01-toll-break
+  variant: failure
+  asset: quests/q-d01-toll-break-failure
+  size: 1344x768
+  seed: 62011
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Break the Blockade: The Pack held the bridge. The Gate Watch is muttering, a deep red rail canyon spanned by
+    wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41131
+- key: eodq-q-d01-mirefen-escort-failure
+  lane: arthemy-house
+  title: Lanterns on the Mirefen Road (failure)
+  quest: q-d01-mirefen-escort
+  variant: failure
+  asset: quests/q-d01-mirefen-escort-failure
+  size: 1344x768
+  seed: 62014
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Lanterns on the Mirefen Road: Raider scouts scattered the column, misty wetlands of black reeds, crooked trees
+    and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41132
+- key: eodq-q-d01-mirefen-inspect-failure
+  lane: arthemy-house
+  title: Count the Lanterns (failure)
+  quest: q-d01-mirefen-inspect
+  variant: failure
+  asset: quests/q-d01-mirefen-inspect-failure
+  size: 1344x768
+  seed: 62017
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Count the Lanterns: The refugees refused to be counted and the witches took offense, misty wetlands of black
+    reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41133
+- key: eodq-q-d02-grain-cart-failure
+  lane: arthemy-house
+  title: The Drowning Grain Cart (failure)
+  quest: q-d02-grain-cart
+  variant: failure
+  asset: quests/q-d02-grain-cart-failure
+  size: 1344x768
+  seed: 62020
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Drowning Grain Cart: The river took the cart, a shallow river ford with stone arch bridges, freehold farmsteads
+    and windmills among red mesas'
+  jobs:
+    arthemy-house: 41134
+- key: eodq-q-d02-crow-contract-failure
+  lane: arthemy-house
+  title: The Fine Print (failure)
+  quest: q-d02-crow-contract
+  variant: failure
+  asset: quests/q-d02-crow-contract-failure
+  size: 1344x768
+  seed: 62023
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Fine Print: The readers were caught annotating the Conclave''s sacred margins, jagged grey mountain peaks
+    wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41135
+- key: eodq-q-d02-mole-audit-failure
+  lane: arthemy-house
+  title: The Mole Ledger (failure)
+  quest: q-d02-mole-audit
+  variant: failure
+  asset: quests/q-d02-mole-audit-failure
+  size: 1344x768
+  seed: 62026
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Mole Ledger: The auditors were escorted out of the tunnels, blindfolded, badlands of red rock spires riddled
+    with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 41136
+- key: eodq-q-d03-three-wells-failure
+  lane: arthemy-house
+  title: Three Wells (failure)
+  quest: q-d03-three-wells
+  variant: failure
+  asset: quests/q-d03-three-wells-failure
+  size: 1344x768
+  seed: 62029
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Three Wells: The wells silted over again, a shallow river ford with stone arch bridges, freehold farmsteads
+    and windmills among red mesas'
+  jobs:
+    arthemy-house: 41137
+- key: eodq-q-d03-bell-vigil-failure
+  lane: arthemy-house
+  title: The Bell That Rang Alone (failure)
+  quest: q-d03-bell-vigil
+  variant: failure
+  asset: quests/q-d03-bell-vigil-failure
+  size: 1344x768
+  seed: 62032
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Bell That Rang Alone: The watchers fell asleep in the pews, a small southern chapel town of adobe and timber
+    around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41138
+- key: eodq-q-d03-bell-search-failure
+  lane: arthemy-house
+  title: Muffle the Bell (failure)
+  quest: q-d03-bell-search
+  variant: failure
+  asset: quests/q-d03-bell-search-failure
+  size: 1344x768
+  seed: 62035
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Muffle the Bell: The searchers were caught on the stairs by an angry sexton, a small southern chapel town of
+    adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41139
+- key: eodq-q-d03-toll-audit-failure
+  lane: arthemy-house
+  title: The Vanishing Toll (failure)
+  quest: q-d03-toll-audit
+  variant: failure
+  asset: quests/q-d03-toll-audit-failure
+  size: 1344x768
+  seed: 62038
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Vanishing Toll: The counters lost track somewhere around the four-hundredth goat, a deep red rail canyon
+    spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41140
+- key: eodq-q-d03-fen-ambush-failure
+  lane: arthemy-house
+  title: Ambush in the Reeds (failure)
+  quest: q-d03-fen-ambush
+  variant: failure
+  asset: quests/q-d03-fen-ambush-failure
+  size: 1344x768
+  seed: 62041
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Ambush in the Reeds: Something in the reeds ambushed the ambushers, misty wetlands of black reeds, crooked trees
+    and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41141
+- key: eodq-q-d03-fen-hail-failure
+  lane: arthemy-house
+  title: Hail the Lanterns (failure)
+  quest: q-d03-fen-hail
+  variant: failure
+  asset: quests/q-d03-fen-hail-failure
+  size: 1344x768
+  seed: 62044
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Hail the Lanterns: The lanterns went dark, and the hailing lantern went out on its own, misty wetlands of black
+    reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41142
+- key: eodq-q-d04-survey-flags-failure
+  lane: arthemy-house
+  title: Flags on the Far Bank (failure)
+  quest: q-d04-survey-flags
+  variant: failure
+  asset: quests/q-d04-survey-flags-failure
+  size: 1344x768
+  seed: 62047
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Flags on the Far Bank: The surveyors noticed they were followed and burned their maps, a shallow river ford
+    with stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41143
+- key: eodq-q-d04-crow-elders-failure
+  lane: arthemy-house
+  title: Sit With the Elders (failure)
+  quest: q-d04-crow-elders
+  variant: failure
+  asset: quests/q-d04-crow-elders-failure
+  size: 1344x768
+  seed: 62050
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Sit With the Elders: The envoys fidgeted. The elders turned their backs, jagged grey mountain peaks wreathed
+    in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41144
+- key: eodq-q-d04-crow-roost-failure
+  lane: arthemy-house
+  title: Climb to the High Roost (failure)
+  quest: q-d04-crow-roost
+  variant: failure
+  asset: quests/q-d04-crow-roost-failure
+  size: 1344x768
+  seed: 62053
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Climb to the High Roost: The roost guards were not as silent as the rest, jagged grey mountain peaks wreathed
+    in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41145
+- key: eodq-q-d04-feast-armed-failure
+  lane: arthemy-house
+  title: A Feast Under Painted Wagons (failure)
+  quest: q-d04-feast-armed
+  variant: failure
+  asset: quests/q-d04-feast-armed-failure
+  size: 1344x768
+  seed: 62056
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    A Feast Under Painted Wagons: The Pack found the hidden blades before dessert, a deep red rail canyon spanned
+    by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41146
+- key: eodq-q-d05-flour-barrels-failure
+  lane: arthemy-house
+  title: Flour Before the Wages Fail (failure)
+  quest: q-d05-flour-barrels
+  variant: failure
+  asset: quests/q-d05-flour-barrels-failure
+  size: 1344x768
+  seed: 62059
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Flour Before the Wages Fail: The carts wanted more than the tower could pay. The Yard tightens its belts and
+    its jaws, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41147
+- key: eodq-q-d05-toll-standoff-failure
+  lane: arthemy-house
+  title: Hold the Toll Bridge (failure)
+  quest: q-d05-toll-standoff
+  variant: failure
+  asset: quests/q-d05-toll-standoff-failure
+  size: 1344x768
+  seed: 62062
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Hold the Toll Bridge: The Pack held the bridge and laughed about it all night, a deep red rail canyon spanned
+    by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41148
+- key: eodq-q-d05-saltroad-escort-failure
+  lane: arthemy-house
+  title: Raiders for Hire (failure)
+  quest: q-d05-saltroad-escort
+  variant: failure
+  asset: quests/q-d05-saltroad-escort-failure
+  size: 1344x768
+  seed: 62065
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Raiders for Hire: The escort vanished on the second night, along with three crates, a long caravan road across
+    cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41149
+- key: eodq-q-d06-empty-stable-failure
+  lane: arthemy-house
+  title: The Empty Stable (failure)
+  quest: q-d06-empty-stable
+  variant: failure
+  asset: quests/q-d06-empty-stable-failure
+  size: 1344x768
+  seed: 62068
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Empty Stable: The trail went cold at the ford, a shallow river ford with stone arch bridges, freehold farmsteads
+    and windmills among red mesas'
+  jobs:
+    arthemy-house: 41150
+- key: eodq-q-d07-crow-favor-failure
+  lane: arthemy-house
+  title: The Crows’ Errand (failure)
+  quest: q-d07-crow-favor
+  variant: failure
+  asset: quests/q-d07-crow-favor-failure
+  size: 1344x768
+  seed: 62071
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Crows'' Errand: The parcel was lost in the reeds. Something in the reeds kept it, misty wetlands of black
+    reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41151
+- key: eodq-q-d08-escort-to-bell-failure
+  lane: arthemy-house
+  title: A Family of Five (failure)
+  quest: q-d08-escort-to-bell
+  variant: failure
+  asset: quests/q-d08-escort-to-bell-failure
+  size: 1344x768
+  seed: 62074
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    A Family of Five: Raider scouts scattered the family on the road. Four were found by nightfall. Searchers are
+    still looking for the fifth, a small southern chapel town of adobe and timber around a brass bell tower, dry
+    hills'
+  jobs:
+    arthemy-house: 41152
+- key: eodq-q-d09-iron-convoy-failure
+  lane: arthemy-house
+  title: Iron on the Road (failure)
+  quest: q-d09-iron-convoy
+  variant: failure
+  asset: quests/q-d09-iron-convoy-failure
+  size: 1344x768
+  seed: 62077
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Iron on the Road: The canyon took the convoy, and not only the iron, a long caravan road across cracked ochre
+    salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41153
+- key: eodq-q-d10-freehold-raid-failure
+  lane: arthemy-house
+  title: Smoke Over Thistledown (failure)
+  quest: q-d10-freehold-raid
+  variant: failure
+  asset: quests/q-d10-freehold-raid-failure
+  size: 1344x768
+  seed: 62080
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Smoke Over Thistledown: Thistledown burned. Its people walked to the Eastern Ford with what they could carry,
+    a shallow river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41154
+- key: eodq-q-d12-mirefen-defense-failure
+  lane: arthemy-house
+  title: Hold the Mirefen Edge (failure)
+  quest: q-d12-mirefen-defense
+  variant: failure
+  asset: quests/q-d12-mirefen-defense-failure
+  size: 1344x768
+  seed: 62083
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Hold the Mirefen Edge: The party was driven off. Lanterns burned in the fen all night, and not all of them were
+    the Mothers'', misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41155
+- key: eodq-q-d12-mirefen-cellars-failure
+  lane: arthemy-house
+  title: What Is Under the Lantern-Houses (failure)
+  quest: q-d12-mirefen-cellars
+  variant: failure
+  asset: quests/q-d12-mirefen-cellars-failure
+  size: 1344x768
+  seed: 62086
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    What Is Under the Lantern-Houses: The Mothers caught the party on the stairs and smiled at them all the way
+    out, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41156
+- key: eodq-q-d13-water-engine-failure
+  lane: arthemy-house
+  title: The Pack’s Water Engine (failure)
+  quest: q-d13-water-engine
+  variant: failure
+  asset: quests/q-d13-water-engine-failure
+  size: 1344x768
+  seed: 62089
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Pack''s Water Engine: The engine exploded, gently. Nobody is speaking to anybody, a deep red rail canyon
+    spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41157
+- key: eodq-q-d13-engine-sabotage-failure
+  lane: arthemy-house
+  title: Fix It to Fail (failure)
+  quest: q-d13-engine-sabotage
+  variant: failure
+  asset: quests/q-d13-engine-sabotage-failure
+  size: 1344x768
+  seed: 62092
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Fix It to Fail: Gristle Vane found the filed bolt himself. He kept it, and he will show it to people, a deep
+    red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41158
+- key: eodq-q-d14-sick-courier-failure
+  lane: arthemy-house
+  title: A Sick Courier (failure)
+  quest: q-d14-sick-courier
+  variant: failure
+  asset: quests/q-d14-sick-courier-failure
+  size: 1344x768
+  seed: 62095
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    A Sick Courier: The fever won, a shallow river ford with stone arch bridges, freehold farmsteads and windmills
+    among red mesas'
+  jobs:
+    arthemy-house: 41159
+- key: eodq-q-d15-study-glass-failure
+  lane: arthemy-house
+  title: Glass Feathers (failure)
+  quest: q-d15-study-glass
+  variant: failure
+  asset: quests/q-d15-study-glass-failure
+  size: 1344x768
+  seed: 62098
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Glass Feathers: One feather cracked, and the salvagers took the rest home, sunken rusted rail yards half drowned
+    in fog, iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41160
+- key: eodq-q-d16-hidden-grain-failure
+  lane: arthemy-house
+  title: Three Haystacks (failure)
+  quest: q-d16-hidden-grain
+  variant: failure
+  asset: quests/q-d16-hidden-grain-failure
+  size: 1344x768
+  seed: 62101
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Three Haystacks: The haystacks were hay. Nobody believes it, a shallow river ford with stone arch bridges, freehold
+    farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41161
+- key: eodq-q-d17-who-lies-failure
+  lane: arthemy-house
+  title: Who Has Been Lying? (failure)
+  quest: q-d17-who-lies
+  variant: failure
+  asset: quests/q-d17-who-lies-failure
+  size: 1344x768
+  seed: 62104
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Who Has Been Lying?: The runners vanished before they could be followed, jagged grey mountain peaks wreathed
+    in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41162
+- key: eodq-q-d18-refugee-road-failure
+  lane: arthemy-house
+  title: No Water for Strangers (failure)
+  quest: q-d18-refugee-road
+  variant: failure
+  asset: quests/q-d18-refugee-road-failure
+  size: 1344x768
+  seed: 62107
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    No Water for Strangers: The Bell''s gate stayed shut, and the party slept outside it with the refugees, a small
+    southern chapel town of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41163
+- key: eodq-q-d19-bell-speech-failure
+  lane: arthemy-house
+  title: Speak to Hollow Bell (failure)
+  quest: q-d19-bell-speech
+  variant: failure
+  asset: quests/q-d19-bell-speech-failure
+  size: 1344x768
+  seed: 62110
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Speak to Hollow Bell: Hollow Bell voted no. Mara was very polite about it, a small southern chapel town of adobe
+    and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41164
+- key: eodq-q-d20-ford-dam-failure
+  lane: arthemy-house
+  title: Before the Rains (failure)
+  quest: q-d20-ford-dam
+  variant: failure
+  asset: quests/q-d20-ford-dam-failure
+  size: 1344x768
+  seed: 62113
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Before the Rains: The dam failed and the Ford flooded two villages, a shallow river ford with stone arch bridges,
+    freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41165
+- key: eodq-q-d22-ford-bodies-failure
+  lane: arthemy-house
+  title: Bodies at the Ford (failure)
+  quest: q-d22-ford-bodies
+  variant: failure
+  asset: quests/q-d22-ford-bodies-failure
+  size: 1344x768
+  seed: 62116
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Bodies at the Ford: The party came back with nothing, and the Old Houses filled the silence: the Moles did it.
+    The burrows will not forget, a shallow river ford with stone arch bridges, freehold farmsteads and windmills
+    among red mesas'
+  jobs:
+    arthemy-house: 41166
+- key: eodq-q-d23-blue-lantern-failure
+  lane: arthemy-house
+  title: Follow the Blue Lantern (failure)
+  quest: q-d23-blue-lantern
+  variant: failure
+  asset: quests/q-d23-blue-lantern-failure
+  size: 1344x768
+  seed: 62119
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Follow the Blue Lantern: The lantern went out, and the party walked home in the dark, sunken rusted rail yards
+    half drowned in fog, iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41167
+- key: eodq-q-d24-mission-road-failure
+  lane: arthemy-house
+  title: The Mission Road (failure)
+  quest: q-d24-mission-road
+  variant: failure
+  asset: quests/q-d24-mission-road-failure
+  size: 1344x768
+  seed: 62122
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Mission Road: Two sisters in grey met the party on the road and walked them, kindly, all the way home, a
+    dusty pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41168
+- key: eodq-q-d24-coldbrook-visit-failure
+  lane: arthemy-house
+  title: A Visit to the Children (failure)
+  quest: q-d24-coldbrook-visit
+  variant: failure
+  asset: quests/q-d24-coldbrook-visit-failure
+  size: 1344x768
+  seed: 62125
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    A Visit to the Children: The sisters were so sorry, but the children were sleeping, a dusty pilgrim road climbing
+    toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41169
+- key: eodq-q-d26-dry-well-failure
+  lane: arthemy-house
+  title: A Friendly Raid (failure)
+  quest: q-d26-dry-well
+  variant: failure
+  asset: quests/q-d26-dry-well-failure
+  size: 1344x768
+  seed: 62128
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    A Friendly Raid: The dry well held, and two Freehold farms were emptied that night, a deep red rail canyon spanned
+    by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41170
+- key: eodq-q-d27-flint-evidence-failure
+  lane: arthemy-house
+  title: The Case Against Flint (failure)
+  quest: q-d27-flint-evidence
+  variant: failure
+  asset: quests/q-d27-flint-evidence-failure
+  size: 1344x768
+  seed: 62131
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Case Against Flint: The ledgers say what the Old Houses wanted them to say, a small southern chapel town
+    of adobe and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41171
+- key: eodq-q-d28-rot-cure-failure
+  lane: arthemy-house
+  title: Charms Against Rot (failure)
+  quest: q-d28-rot-cure
+  variant: failure
+  asset: quests/q-d28-rot-cure-failure
+  size: 1344x768
+  seed: 62134
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Charms Against Rot: The cure did something to the testers'' dreams. They will not say what, a fog-drowned ruin
+    city of black towers at the edge of the world'
+  jobs:
+    arthemy-house: 41172
+- key: eodq-q-d30-hold-the-line-failure
+  lane: arthemy-house
+  title: Hold the Border Line (failure)
+  quest: q-d30-hold-the-line
+  variant: failure
+  asset: quests/q-d30-hold-the-line-failure
+  size: 1344x768
+  seed: 62137
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Hold the Border Line: The line broke, and the Freeholds paid for it, a shallow river ford with stone arch bridges,
+    freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41173
+- key: eodq-q-d31-iron-rain-failure
+  lane: arthemy-house
+  title: Iron Rain at the Ford (failure)
+  quest: q-d31-iron-rain
+  variant: failure
+  asset: quests/q-d31-iron-rain-failure
+  size: 1344x768
+  seed: 62140
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Iron Rain at the Ford: The Ford fell. The Freehold militia is camped in the tower''s outer court now, counting
+    who is missing, a shallow river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41174
+- key: eodq-q-d33-thistledown-failure
+  lane: arthemy-house
+  title: 'Wolves at Noon: Thistledown (failure)'
+  quest: q-d33-thistledown
+  variant: failure
+  asset: quests/q-d33-thistledown-failure
+  size: 1344x768
+  seed: 62143
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Wolves at Noon: Thistledown: The party was late, and Thistledown paid for it in barns and seed grain, a shallow
+    river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41175
+- key: eodq-q-d33-waystation-failure
+  lane: arthemy-house
+  title: 'Wolves at Noon: the Saltroad Stop (failure)'
+  quest: q-d33-waystation
+  variant: failure
+  asset: quests/q-d33-waystation-failure
+  size: 1344x768
+  seed: 62146
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Wolves at Noon: the Saltroad Stop: The party arrived to smoke. The caravan scattered into the salt flats, a
+    long caravan road across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41176
+- key: eodq-q-d35-trestle-failure
+  lane: arthemy-house
+  title: Hold Saffron’s Trestle (failure)
+  quest: q-d35-trestle
+  variant: failure
+  asset: quests/q-d35-trestle-failure
+  size: 1344x768
+  seed: 62149
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Hold Saffron''s Trestle: The trestle burned. From the canyon rim it looked like a long orange comb, and then
+    like nothing, a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41177
+- key: eodq-q-d35-tunnel-failure
+  lane: arthemy-house
+  title: Hold the Mole Tunnel (failure)
+  quest: q-d35-tunnel
+  variant: failure
+  asset: quests/q-d35-tunnel-failure
+  size: 1344x768
+  seed: 62152
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Hold the Mole Tunnel: The Moles brought the tunnel down themselves rather than lose it. A whole road, gone under
+    the badlands, badlands of red rock spires riddled with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 41178
+- key: eodq-q-d36-bell-rehearsal-failure
+  lane: arthemy-house
+  title: The Silent Bell Rehearsal (failure)
+  quest: q-d36-bell-rehearsal
+  variant: failure
+  asset: quests/q-d36-bell-rehearsal-failure
+  size: 1344x768
+  seed: 62155
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Silent Bell Rehearsal: Sister Marrow found them on the cellar stair and walked them out with a lamp, very
+    kindly. She asked after the emperor''s health three times, a dusty pilgrim road climbing toward a cliffside
+    abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41179
+- key: eodq-q-d41-stragglers-failure
+  lane: arthemy-house
+  title: Find the Stragglers (failure)
+  quest: q-d41-stragglers
+  variant: failure
+  asset: quests/q-d41-stragglers-failure
+  size: 1344x768
+  seed: 62158
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Find the Stragglers: The ditches were empty, or the people in them did not want to be found, a long caravan
+    road across cracked ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41180
+- key: eodq-q-d42-tunnel-props-failure
+  lane: arthemy-house
+  title: Shore Up the Tunnels (failure)
+  quest: q-d42-tunnel-props
+  variant: failure
+  asset: quests/q-d42-tunnel-props-failure
+  size: 1344x768
+  seed: 62161
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Shore Up the Tunnels: A section came down. Nobody was under it, this time, badlands of red rock spires riddled
+    with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 41181
+- key: eodq-q-d42-crow-watch-failure
+  lane: arthemy-house
+  title: Stand the Crow Watch (failure)
+  quest: q-d42-crow-watch
+  variant: failure
+  asset: quests/q-d42-crow-watch-failure
+  size: 1344x768
+  seed: 62164
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Stand the Crow Watch: The watch fell asleep. The crows did not, and they told Corvane, jagged grey mountain
+    peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41182
+- key: eodq-q-d42-bell-water-failure
+  lane: arthemy-house
+  title: Water for the Bell (failure)
+  quest: q-d42-bell-water
+  variant: failure
+  asset: quests/q-d42-bell-water-failure
+  size: 1344x768
+  seed: 62167
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Water for the Bell: The leak beat the party. The town is rationing again, a small southern chapel town of adobe
+    and timber around a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41183
+- key: eodq-q-d42-wagon-wheels-failure
+  lane: arthemy-house
+  title: Wheels for the Wagon Circle (failure)
+  quest: q-d42-wagon-wheels
+  variant: failure
+  asset: quests/q-d42-wagon-wheels-failure
+  size: 1344x768
+  seed: 62170
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Wheels for the Wagon Circle: Two wagons are still on blocks, and Vane is counting, a deep red rail canyon spanned
+    by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41184
+- key: eodq-q-d42-caravan-guard-failure
+  lane: arthemy-house
+  title: Ride With the Caravan (failure)
+  quest: q-d42-caravan-guard
+  variant: failure
+  asset: quests/q-d42-caravan-guard-failure
+  size: 1344x768
+  seed: 62173
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Ride With the Caravan: Riders took two wagons on the night road, a long caravan road across cracked ochre salt
+    flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41185
+- key: eodq-q-d42-barn-harvest-failure
+  lane: arthemy-house
+  title: Bring In the Harvest (failure)
+  quest: q-d42-barn-harvest
+  variant: failure
+  asset: quests/q-d42-barn-harvest-failure
+  size: 1344x768
+  seed: 62176
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Bring In the Harvest: Half the field burned before the sheaves were up, a shallow river ford with stone arch
+    bridges, freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41186
+- key: eodq-q-d42-rail-salvage-failure
+  lane: arthemy-house
+  title: Salvage for the Station (failure)
+  quest: q-d42-rail-salvage
+  variant: failure
+  asset: quests/q-d42-rail-salvage-failure
+  size: 1344x768
+  seed: 62179
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Salvage for the Station: Someone else got to the engine first, sunken rusted rail yards half drowned in fog,
+    iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41187
+- key: eodq-q-d42-cave-forage-failure
+  lane: arthemy-house
+  title: Forage for the Cave (failure)
+  quest: q-d42-cave-forage
+  variant: failure
+  asset: quests/q-d42-cave-forage-failure
+  size: 1344x768
+  seed: 62182
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Forage for the Cave: The hills were bare. The cave ate the last of the bread, jagged grey mountain peaks wreathed
+    in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41188
+- key: eodq-q-d44-komodo-bargain-failure
+  lane: arthemy-house
+  title: What Komodo Bought (failure)
+  quest: q-d44-komodo-bargain
+  variant: failure
+  asset: quests/q-d44-komodo-bargain-failure
+  size: 1344x768
+  seed: 62185
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    What Komodo Bought: The ledgers were gone, and so was everyone who had held them, a dusty pilgrim road climbing
+    toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41189
+- key: eodq-q-d46-well-that-spoke-failure
+  lane: arthemy-house
+  title: The Well That Spoke (failure)
+  quest: q-d46-well-that-spoke
+  variant: failure
+  asset: quests/q-d46-well-that-spoke-failure
+  size: 1344x768
+  seed: 62188
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Well That Spoke: The rope came back up without the bucket and without the knot, a dusty pilgrim road climbing
+    toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41190
+- key: eodq-q-d48-bell-clapper-failure
+  lane: arthemy-house
+  title: The Bell’s Lost Clapper (failure)
+  quest: q-d48-bell-clapper
+  variant: failure
+  asset: quests/q-d48-bell-clapper-failure
+  size: 1344x768
+  seed: 62191
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Bell''s Lost Clapper: The fen kept it. The fen keeps most things, misty wetlands of black reeds, crooked
+    trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41191
+- key: eodq-q-d50-last-dispatch-failure
+  lane: arthemy-house
+  title: The Last Dispatch (failure)
+  quest: q-d50-last-dispatch
+  variant: failure
+  asset: quests/q-d50-last-dispatch-failure
+  size: 1344x768
+  seed: 62194
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Last Dispatch: The party came back up the stair without closing the door. Behind them, the singing has not
+    stopped, a dusty pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41192
+- key: eodq-q-d50-crypt-path-failure
+  lane: arthemy-house
+  title: The Way Through the Well (failure)
+  quest: q-d50-crypt-path
+  variant: failure
+  asset: quests/q-d50-crypt-path-failure
+  size: 1344x768
+  seed: 62197
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Way Through the Well: The well led somewhere. It was not the crypt, and the party came back with nothing
+    to say, a dusty pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41193
+- key: eodq-q-d50-ring-the-bell-failure
+  lane: arthemy-house
+  title: Ring the Silent Bell (failure)
+  quest: q-d50-ring-the-bell
+  variant: failure
+  asset: quests/q-d50-ring-the-bell-failure
+  size: 1344x768
+  seed: 62200
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Ring the Silent Bell: The clapper struck, and the bell cracked down its whole length without a sound, a dusty
+    pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
+  jobs:
+    arthemy-house: 41194
+- key: eodq-r-bandit-sighting-failure
+  lane: arthemy-house
+  title: Bandits on the Saltroad (failure)
+  quest: r-bandit-sighting
+  variant: failure
+  asset: quests/r-bandit-sighting-failure
+  size: 1344x768
+  seed: 62203
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Bandits on the Saltroad: The strangers were better armed than the report said, a long caravan road across cracked
+    ochre salt flats with waystations and watchtowers'
+  jobs:
+    arthemy-house: 41195
+- key: eodq-r-sick-herd-failure
+  lane: arthemy-house
+  title: A Sick Herd (failure)
+  quest: r-sick-herd
+  variant: failure
+  asset: quests/r-sick-herd-failure
+  size: 1344x768
+  seed: 62206
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    A Sick Herd: Nobody could say what was wrong. The herd was burned, a shallow river ford with stone arch bridges,
+    freehold farmsteads and windmills among red mesas'
+  jobs:
+    arthemy-house: 41196
+- key: eodq-r-lost-caravan-failure
+  lane: arthemy-house
+  title: The Late Caravan (failure)
+  quest: r-lost-caravan
+  variant: failure
+  asset: quests/r-lost-caravan-failure
+  size: 1344x768
+  seed: 62209
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    The Late Caravan: The wind took the tracks, a long caravan road across cracked ochre salt flats with waystations
+    and watchtowers'
+  jobs:
+    arthemy-house: 41197
+- key: eodq-r-boundary-dispute-failure
+  lane: arthemy-house
+  title: A Fence in the Wrong Place (failure)
+  quest: r-boundary-dispute
+  variant: failure
+  asset: quests/r-boundary-dispute-failure
+  size: 1344x768
+  seed: 62212
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    A Fence in the Wrong Place: The fence is now a wall, a small southern chapel town of adobe and timber around
+    a brass bell tower, dry hills'
+  jobs:
+    arthemy-house: 41198
+- key: eodq-r-strange-relic-failure
+  lane: arthemy-house
+  title: Glass That Does Not Break (failure)
+  quest: r-strange-relic
+  variant: failure
+  asset: quests/r-strange-relic-failure
+  size: 1344x768
+  seed: 62215
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Glass That Does Not Break: The salvagers sold it before anyone arrived, sunken rusted rail yards half drowned
+    in fog, iron gantries and derelict engines'
+  jobs:
+    arthemy-house: 41199
+- key: eodq-r-roost-storm-failure
+  lane: arthemy-house
+  title: A Roost in the Storm (failure)
+  quest: r-roost-storm
+  variant: failure
+  asset: quests/r-roost-storm-failure
+  size: 1344x768
+  seed: 62218
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    A Roost in the Storm: The ledge was slicker than it looked. The Crows took it from there, jagged grey mountain
+    peaks wreathed in storm cloud, crow roosts on cliff ledges'
+  jobs:
+    arthemy-house: 41200
+- key: eodq-r-fen-lantern-failure
+  lane: arthemy-house
+  title: A Lantern Gone Out (failure)
+  quest: r-fen-lantern
+  variant: failure
+  asset: quests/r-fen-lantern-failure
+  size: 1344x768
+  seed: 62221
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    A Lantern Gone Out: The wick would not take. The causeway stays dark, misty wetlands of black reeds, crooked
+    trees and stilt huts over still dark water'
+  jobs:
+    arthemy-house: 41201
+- key: eodq-r-wagon-escort-failure
+  lane: arthemy-house
+  title: An Escort for the Painted Wagons (failure)
+  quest: r-wagon-escort
+  variant: failure
+  asset: quests/r-wagon-escort-failure
+  size: 1344x768
+  seed: 62224
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    An Escort for the Painted Wagons: A Freehold farmer and a Pack driver came to blows at the gate, a deep red
+    rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
+  jobs:
+    arthemy-house: 41202
+- key: eodq-r-tunnel-rescue-failure
+  lane: arthemy-house
+  title: A Tunnel Caved In (failure)
+  quest: r-tunnel-rescue
+  variant: failure
+  asset: quests/r-tunnel-rescue-failure
+  size: 1344x768
+  seed: 62227
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    A Tunnel Caved In: The roof came down again before anyone reached them, badlands of red rock spires riddled
+    with lantern-lit burrow entrances'
+  jobs:
+    arthemy-house: 41203
+- key: eodq-r-salvage-claim-failure
+  lane: arthemy-house
+  title: A Disputed Salvage Claim (failure)
+  quest: r-salvage-claim
+  variant: failure
+  asset: quests/r-salvage-claim-failure
+  size: 1344x768
+  seed: 62230
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    A Disputed Salvage Claim: The crowbars came out anyway, sunken rusted rail yards half drowned in fog, iron gantries
+    and derelict engines'
+  jobs:
+    arthemy-house: 41204
