@@ -1589,6 +1589,16 @@ def completion_provenance(payload, media):
     }
 
 
+class FinalJobFailure(RuntimeError):
+    """A failure no retry can fix: /complete FAILs the job instead of requeueing it.
+
+    Kind Robots answers save-generated with 413 when the finished file cannot fit in
+    an ArtImage row. Requeueing that re-renders the same oversize clip: ArtJob 40972
+    (a 1280x720 animated WebP) rendered three times on 2026-10-20 before running out
+    of attempts, each failure reported only as "An unknown error occurred."
+    """
+
+
 def upload_result(job, media):
     payload = job.get("payload") or {}
     body = {
@@ -1621,6 +1631,11 @@ def upload_result(job, media):
         bearer=KR_RELAY_TOKEN,
         timeout=180,
     )
+    if status == 413:
+        raise FinalJobFailure(
+            f"save-generated refused the file: HTTP 413 "
+            f"{response and response.get('message')}"
+        )
     if status != 201 or not response or not response.get("success"):
         raise RuntimeError(
             f"save-generated failed: HTTP {status} "
@@ -1668,8 +1683,12 @@ def write_local_copy(job, art_image_id, media):
         log(f"local copy failed (job still DONE): {error}")
 
 
-def complete_job(job_id, success, art_image_id=None, error=None, provenance=None):
+def complete_job(
+    job_id, success, art_image_id=None, error=None, provenance=None, final=False
+):
     body = {"success": success}
+    if final:
+        body["final"] = True
     if art_image_id:
         body["artImageId"] = art_image_id
     if error:
@@ -1814,7 +1833,12 @@ def main():
             _in_flight_job_id = None
             if job:
                 try:
-                    complete_job(job["id"], False, error=error)
+                    complete_job(
+                        job["id"],
+                        False,
+                        error=error,
+                        final=isinstance(error, FinalJobFailure),
+                    )
                 except Exception as report_error:  # noqa: BLE001
                     log(f"could not report failure: {report_error}")
         time.sleep(POLL_SECONDS)
