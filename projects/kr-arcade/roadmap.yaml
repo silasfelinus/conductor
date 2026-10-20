@@ -2494,7 +2494,7 @@ tasks:
   - id: t-149
     milestone: m8
     title: "Verify Sink Suds earned records through the shared cabinet keepSave and retirement lifecycle."
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-046
@@ -2509,10 +2509,17 @@ tasks:
       scoped browser fixtures and storage boundary; fix only a reproduced integration gap.
       Preserve auth, alerts, validators, required checks and score ceilings. Keep staged fixture
       evidence distinct from deployment or human campaign timing.
+
+      RAN 2026-10-20: added utils/scripts/verifyCabinetSinkSudsSaves.test.ts
+      (kind_robots#3892): New Wash -> Squeaky Clean -> leave/return through
+      withSave/JSON/sanitizeSaves keeps new+old times, medals, reached, skin, golden, clear;
+      checkpoint resets; slower run keeps best; immediate exit after New Wash covered. No
+      integration gap found; test-only.
     owner: worker
     claimed_by: 2026-10-20T0600-sinksuds-verify
     claimed_at: '2026-10-20T06:51:11Z'
-    updated: '2026-10-20T06:51:11Z'
+    updated: '2026-10-20T06:54:48Z'
+    implementation_pr: 'silasfelinus/kind_robots#3892'
 
   - id: t-150
     milestone: m8
