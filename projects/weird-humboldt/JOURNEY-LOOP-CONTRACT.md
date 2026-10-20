@@ -1,5 +1,7 @@
 # Ecotone: the seeded journey loop and companion crossroads
 
+> **Superseded in part, 2026-10-20 PT:** the opening (event choice, then area, offer and companion or nobody), the two routes and the 70 endings are now in [OPENING-AND-ROUTES.md](OPENING-AND-ROUTES.md). Where this doc maps an opening lens straight to a first companion, that doc wins.
+
 **Updated seven-lens user-directed structure, 2026-10-19 PT. Design only; no art, Play implementation or publication authorized.** This replaces any suggestion that the player selects an arbitrary companion as soon as the prelude ends. The *first companion is introduced by the freely chosen opening state and its scripted scene*, then later changes happen through authored crossroads. The original four opening-to-guide mappings are retained; the three added openings need their own written first-guide meetings. Later companion changes happen only during **authored encounters** with the other companions.
 
 ## One adventure, two layers
