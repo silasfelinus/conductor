@@ -8,6 +8,8 @@ import base64
 import importlib.util
 from pathlib import Path
 
+import pytest
+
 RELAY_PATH = Path(__file__).resolve().parents[1] / "ops" / "home-server" / "relay_agent.py"
 
 spec = importlib.util.spec_from_file_location("relay_agent", RELAY_PATH)
@@ -141,3 +143,50 @@ def test_upload_result_forwards_video_file_type(monkeypatch):
     assert captured["body"]["fileType"] == "mp4"
     assert captured["body"]["imageBase64"] == MP4_B64
     assert captured["body"]["promptString"] == "wink and grin"
+
+
+def test_oversize_upload_fails_the_job_once(monkeypatch):
+    # ArtJob 40972 re-rendered three times because every save failure looked
+    # retryable. A 413 from save-generated is final, and /complete is told so.
+    monkeypatch.setattr(
+        relay,
+        "http_json",
+        lambda method, url, body=None, bearer=None, timeout=60: (
+            413,
+            {"success": False, "message": "The generated WEBP file is 15.0 MB"},
+        ),
+    )
+    job = {"id": 7, "payload": {"promptString": "wink", "media": "video"}}
+    media = {"data_b64": MP4_B64, "file_type": "webp", "is_video": True}
+    with pytest.raises(relay.FinalJobFailure, match="15.0 MB"):
+        relay.upload_result(job, media)
+
+
+def test_complete_job_sends_final_only_when_asked(monkeypatch):
+    sent = []
+
+    def fake_http_json(method, url, body=None, bearer=None, timeout=60):
+        sent.append(body)
+        return 200, {"success": True, "data": {"job": {}}}
+
+    monkeypatch.setattr(relay, "http_json", fake_http_json)
+    relay.complete_job(7, False, error="too big", final=True)
+    relay.complete_job(8, False, error="comfy hiccup")
+    assert sent[0]["final"] is True
+    assert "final" not in sent[1]
+
+
+def test_other_save_failures_stay_retryable(monkeypatch):
+    monkeypatch.setattr(
+        relay,
+        "http_json",
+        lambda method, url, body=None, bearer=None, timeout=60: (
+            500,
+            {"success": False, "message": "Database connection lost"},
+        ),
+    )
+    job = {"id": 7, "payload": {"promptString": "wink", "media": "video"}}
+    media = {"data_b64": MP4_B64, "file_type": "mp4", "is_video": True}
+    with pytest.raises(RuntimeError) as raised:
+        relay.upload_result(job, media)
+    assert not isinstance(raised.value, relay.FinalJobFailure)
