@@ -27,8 +27,8 @@ Task: t-029. Ledger for room art: `art/ROOMS-ROUND-1.yaml`.
 ## Art the drafts need that doesn't exist yet
 
 - Six room backdrops (`public/emperor-of-dust/rooms/<room>.webp`). Queued, `ROOMS-ROUND-1.yaml`.
+- Quest notice, success and failure images (231). Queued, `QUESTS-ROUND-1.yaml`; map crops stand in.
 - Item icons for the market and equipment slots. Not queued.
-- Quest notice vignettes (one per quest family). Not queued.
 - Faction crests for the map room. Not queued; can start as live CSS/SVG banners.
 
 ## Rules kept
