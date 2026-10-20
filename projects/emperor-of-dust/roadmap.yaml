@@ -541,14 +541,24 @@ tasks:
   - id: t-022
     milestone: m3
     title: "Quest room board: assignment slots, requirement bands, preview odds and expiry"
-    status: claimed
+    status: done
     depends_on: t-020
     passes: 0
     stakes: reversible
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-022
     claimed_at: '2026-10-20T21:07:52Z'
-    updated: '2026-10-20T21:07:52Z'
+    updated: '2026-10-20T22:44:34Z'
+    note: >-
+      Merged kind_robots#3940 as c94cf4e003152df8466d5b7a7e4b26f5af3dbb66 (22/22 checks).
+      Notices show requirement bands, Lethal and a countdown; the quest card states reward,
+      the expiry consequence, danger with wound range, per-stat party total vs need (hidden as
+      ?), never fogged factions or hidden strength. previewQuest adds injuryRisk, injuryDays
+      and deathChance from the night-roll tables (matched against 400 seeds). Party slots,
+      per-follower contribution, a What-counts list, non-blocking warnings beside Send, Call
+      back restores the notice; Lamplight support 20 reveals every ? (LAMPLIGHT_SIGHT).
+      Chromium 1440/390.
+    implementation_pr: 'silasfelinus/kind_robots#3940'
   - id: t-023
     milestone: m3
     title: "Follower secret traits, unique abilities, faction modifiers, hidden allegiance and the persistent Codex"
