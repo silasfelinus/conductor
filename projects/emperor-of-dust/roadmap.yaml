@@ -633,3 +633,38 @@ tasks:
     claimed_at: '2026-10-20T00:56:30Z'
     updated: '2026-10-20T12:16:07Z'
     implementation_pr: 'silasfelinus/kind_robots#3915'
+  - id: t-030
+    milestone: m4
+    title: "Afterwards: a consequences epilogue after Day 50 that remembers what the emperor did"
+    status: claimed
+    passes: 0
+    stakes: reversible
+    owner: worker
+    claimed_by: 2026-10-20T123500Z-eod-epilogue
+    claimed_at: '2026-10-20T12:35:00Z'
+    updated: '2026-10-20T12:35:00Z'
+    note: >-
+      GAME-BIBLE promises "an ending and a consequences epilogue"; the end screen only showed
+      the ending family and the names of the dead. epilogue.ts holds subjects (followers,
+      NPCs, places, Komodo) with flag/ending/alive/dead-gated variants, first match wins;
+      EmperorFortressEpilogue.vue plays them as an art-led slideshow under the ending.
+      Contract: every flag an epilogue reads is set somewhere (audiences, quests, talks,
+      engine). Branch worker/emperor-of-dust-t030-epilogue in kind_robots; stark prose per
+      SCENE-WRITING-GUIDE.md.
+  - id: t-031
+    milestone: m5
+    title: "Stark-prose pass over all fifty days (King / Joe Hill / Lone Wolf and Cub)"
+    status: done
+    passes: 0
+    stakes: reversible
+    owner: worker
+    updated: '2026-10-20T12:33:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3919'
+    note: >-
+      Silas 2026-10-20 PT: "we want crisp stark prose. Stephen King or his son Joe Hill, lone
+      wolf and cub". kind_robots#3919 merged as f73f0a1df0effe9d6a3d132b13fa8ccde4bf1385
+      (18/18 checks): 2,591 prose strings across the six act files rewritten, about 16% fewer
+      words, every fact, clue, Komodo tell and callback kept. A structure guard proved ids,
+      effects, requirements, beats, quests, flags and line/option counts identical to main;
+      contract, balance and playbook tests pass. Talks (t-017/t-026) were written to the same
+      register.
