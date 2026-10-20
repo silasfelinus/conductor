@@ -1,0 +1,109 @@
+# Ecotone (weird-humboldt) art round 3, on the bake-off's provisional house lane (Z-Image Turbo; see
+# CHECKPOINT-BAKEOFF.yaml review). Two jobs:
+# 1. Re-render the zoo tribute (WH-124). Silas, 2026-10-19 PT, on the round-2 render: "What's with the animal kids in
+#    the center. This isn't an anthro game." Past zoo animals appear only as performance or vision, so the prompt
+#    asks for adult human performers whose faces show under handmade masks.
+# 2. The seven new story beats from the event-opening rebuild (t-032, kind_robots#3872) that have no art: GR-2, GR-4,
+#    GR-5, KN-2, KN-4, KN-5, KN-6. Care: no readable signage, no real race teams, and nobody shown using drugs.
+# Keepers export to kind_robots public/ecotone/<asset>.webp. Submit/refresh with scripts/enqueue_art_requests.py
+# (dry run by default; --live; --status). Private.
+round: ecotone-3
+project_slug: weird-humboldt
+designer: Ecotone
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: zimage
+  label: Z-Image Turbo (provisional house lane)
+  engine: zimage
+  prompt: prose
+  suffix: painterly illustration, coastal fog, redwood greens, teal and amber light
+subjects:
+- key: eco3-friends
+  asset: encounters/friends-who-arent-here
+  title: The Friends Who Aren't Here, actors in a lantern-lit clearing
+  size: 1344x768
+  seed: 65101
+  prompt_prose: At night in a lantern-lit redwood park clearing, a troupe of adult human physical-theatre performers
+    puts on a tribute show for a small delighted audience sitting on blankets. One grown man wears a handmade papier-mache
+    chimpanzee mask pushed up on his forehead and a shaggy costume coat, blowing a raspberry; a grown woman in a
+    sleek painted otter costume runs along a wooden fence beside a laughing child; three adult actors in knitted
+    prairie dog hoods pop up from behind hay bales. Their human faces show clearly, theatrical, warm and bittersweet.
+  jobs:
+    zimage: 40963
+- key: eco3-gr2
+  asset: encounters/gr-2-something-to-share
+  title: GR-2 Something to Share, the acrobats' blanket
+  size: 1344x768
+  seed: 65102
+  prompt_prose: A sunny festival lawn at the edge of a redwood forest. A group of circus acrobats rests on a big
+    patchwork blanket sharing water bottles, sandwiches and a basket of food; a huge bearded man with a gentle smile
+    holds out a wax-paper parcel. In the background a woman in patched coveralls balances upside down on a partner's
+    shoulders, and a giant moss-covered wooden puppet towers over the crowd.
+  jobs:
+    zimage: 40964
+- key: eco3-gr4
+  asset: encounters/gr-4-path-behind-the-stage
+  title: GR-4 The Path Behind the Stage, the looping trail
+  size: 1344x768
+  seed: 65103
+  prompt_prose: A narrow trail runs straight into old-growth redwoods, marked with green ribbons tied at eye level.
+    A fallen mossy log and a fern curled like a question mark sit beside the path, and in the foreground a bright
+    yellow banana slug wearing a tiny racing helmet crosses a root. Soft mist, the same log and ribbons repeating
+    faintly into the distance, quietly uncanny.
+  jobs:
+    zimage: 40965
+- key: eco3-gr5
+  asset: encounters/gr-5-closing-bonfire
+  title: GR-5 The Closing Bonfire, the last night of the fair
+  size: 1344x768
+  seed: 65104
+  prompt_prose: The last night of a forest-edge festival. A tall wicker sculpture of a redwood tree burns in a great
+    bonfire in a meadow while a crowd watches, silhouetted. A giant moss-covered puppet bows beside the fire, two
+    folding tables hold clipboards and lanterns, and the smoke rising over the flames forms the faint outline of
+    a coastline.
+  jobs:
+    zimage: 40966
+- key: eco3-kn2
+  asset: encounters/kn-2-the-afterparty
+  title: KN-2 The Afterparty, the waterfront warehouse
+  size: 1344x768
+  seed: 65105
+  prompt_prose: An old timber warehouse on a foggy bay waterfront at night, turned into a party. A brass band plays
+    under strings of bulbs while dancers in wild homemade race costumes whirl past a pedal-powered sculpture parked
+    inside. Through the open doors a pickup truck waits with its tailgate down and a CB antenna tied with a green
+    ribbon.
+  jobs:
+    zimage: 40967
+- key: eco3-kn4
+  asset: encounters/kn-4-conscripted
+  title: KN-4 Conscripted, the Banana Slug Express
+  size: 1344x768
+  seed: 65106
+  prompt_prose: Morning on a foggy bay waterfront. A twelve-foot yellow banana slug sculpture on bicycle wheels
+    waits at the water's edge. A woman sits on a cooler with a bag of frozen peas on her ankle, pointing a crutch
+    at the viewer with a grin, while her costumed race crew holds out a bicycle helmet with springy antennae on
+    it.
+  jobs:
+    zimage: 40968
+- key: eco3-kn5
+  asset: encounters/kn-5-the-bay-crossing
+  title: KN-5 The Bay Crossing, slug and octopus in the fog
+  size: 1344x768
+  seed: 65107
+  prompt_prose: A pedal-powered yellow banana slug sculpture floats and paddle-wheels across a wide foggy bay beside
+    a pedal-powered purple octopus sculpture, both crewed by people in costumes. Small spectator boats follow, curious
+    harbor seals watch from the water, and a bell buoy rings in a bank of fog ahead.
+  jobs:
+    zimage: 40969
+- key: eco3-kn6
+  asset: encounters/kn-6-the-ferndale-finish
+  title: KN-6 The Ferndale Finish, Main Street and the cemetery hill
+  size: 1344x768
+  seed: 65108
+  prompt_prose: A Victorian village main street lined with ornate painted gingerbread houses and cheering crowds.
+    A muddy yellow banana slug sculpture on bicycle wheels rolls toward a finish banner. On the green hillside above
+    town, among old white headstones in an oak-shaded cemetery, a man in a black frock coat waves a checkered flag.
+  jobs:
+    zimage: 40970
