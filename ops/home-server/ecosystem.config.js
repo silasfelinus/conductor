@@ -318,7 +318,10 @@ module.exports = {
         // themselves; this also covers the tools they subprocess out to.
         PYTHONIOENCODING: 'utf-8',
         KR_DOWNLOAD_POLL_SECONDS: process.env.KR_DOWNLOAD_POLL_SECONDS || '30',
-        KR_CIVITAI_TOKEN: process.env.KR_CIVITAI_TOKEN || ''
+        // Follow the same credential precedence as lora_import_agent.py.
+        // Older Windows installs already set CIVITAI_TOKEN for the scanner.
+        KR_CIVITAI_TOKEN:
+          process.env.CIVITAI_TOKEN || process.env.KR_CIVITAI_TOKEN || ''
       },
       out_file: `${LOG_DIR}/kr-download.out.log`,
       error_file: `${LOG_DIR}/kr-download.err.log`,

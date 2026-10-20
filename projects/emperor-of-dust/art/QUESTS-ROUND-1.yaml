@@ -8,6 +8,10 @@
 # first. Exports go to kind_robots public/emperor-of-dust/quests/<asset>.webp and into QUEST_ART;
 # until then the game crops Silas's painted map around the quest's region.
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# Review 2026-10-20 (t-029): `approved` lists the 228 renders reviewed on contact sheets and exported to kind_robots
+# (questArt.ts QUEST_ART, 960x548 WebP) in kind_robots#3915. q-d42-cave-forage is held back (`rejected`); its -v2
+# rerolls drop the crow-roost region tags and were still queued behind the art backlog (`pending`). Until
+# they are approved and exported, that quest shows the painted-map crop.
 round: emperor-quests-1
 project_slug: emperor-of-dust
 designer: Comic Studio
@@ -43,6 +47,10 @@ subjects:
     shallow river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 40974
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248909
 - key: eodq-q-d01-aqueduct-repair-notice
   lane: arthemy-house
   title: The Broken Aqueduct (notice)
@@ -58,6 +66,10 @@ subjects:
     a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 40975
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248910
 - key: eodq-q-d01-toll-parley-notice
   lane: arthemy-house
   title: Painted Wagons at the Toll (notice)
@@ -73,6 +85,10 @@ subjects:
     bridge, a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 40976
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248911
 - key: eodq-q-d01-toll-break-notice
   lane: arthemy-house
   title: Break the Blockade (notice)
@@ -88,6 +104,10 @@ subjects:
     by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 40977
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248912
 - key: eodq-q-d01-mirefen-escort-notice
   lane: arthemy-house
   title: Lanterns on the Mirefen Road (notice)
@@ -103,6 +123,10 @@ subjects:
     of black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 40978
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248913
 - key: eodq-q-d01-mirefen-inspect-notice
   lane: arthemy-house
   title: Count the Lanterns (notice)
@@ -118,6 +142,10 @@ subjects:
     black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 40979
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248914
 - key: eodq-q-d02-grain-cart-notice
   lane: arthemy-house
   title: The Drowning Grain Cart (notice)
@@ -133,6 +161,10 @@ subjects:
     river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 40980
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248915
 - key: eodq-q-d02-crow-contract-notice
   lane: arthemy-house
   title: The Fine Print (notice)
@@ -148,6 +180,10 @@ subjects:
     grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 40981
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248916
 - key: eodq-q-d02-mole-audit-notice
   lane: arthemy-house
   title: The Mole Ledger (notice)
@@ -163,6 +199,10 @@ subjects:
     of red rock spires riddled with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 40982
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248917
 - key: eodq-q-d03-three-wells-notice
   lane: arthemy-house
   title: Three Wells (notice)
@@ -178,6 +218,10 @@ subjects:
     stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 40983
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248918
 - key: eodq-q-d03-bell-vigil-notice
   lane: arthemy-house
   title: The Bell That Rang Alone (notice)
@@ -193,6 +237,10 @@ subjects:
     southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 40984
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248919
 - key: eodq-q-d03-bell-search-notice
   lane: arthemy-house
   title: Muffle the Bell (notice)
@@ -208,6 +256,10 @@ subjects:
     town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 40985
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248920
 - key: eodq-q-d03-toll-audit-notice
   lane: arthemy-house
   title: The Vanishing Toll (notice)
@@ -223,6 +275,10 @@ subjects:
     canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 40986
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248921
 - key: eodq-q-d03-fen-ambush-notice
   lane: arthemy-house
   title: Ambush in the Reeds (notice)
@@ -238,6 +294,10 @@ subjects:
     reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 40987
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248922
 - key: eodq-q-d03-fen-hail-notice
   lane: arthemy-house
   title: Hail the Lanterns (notice)
@@ -253,6 +313,10 @@ subjects:
     reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 40988
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248923
 - key: eodq-q-d04-survey-flags-notice
   lane: arthemy-house
   title: Flags on the Far Bank (notice)
@@ -268,6 +332,10 @@ subjects:
     maps, a shallow river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 40989
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248924
 - key: eodq-q-d04-crow-elders-notice
   lane: arthemy-house
   title: Sit With the Elders (notice)
@@ -283,6 +351,10 @@ subjects:
     peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 40990
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248925
 - key: eodq-q-d04-crow-roost-notice
   lane: arthemy-house
   title: Climb to the High Roost (notice)
@@ -298,6 +370,10 @@ subjects:
     peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 40991
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248926
 - key: eodq-q-d04-feast-armed-notice
   lane: arthemy-house
   title: A Feast Under Painted Wagons (notice)
@@ -313,6 +389,10 @@ subjects:
     a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 40992
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248927
 - key: eodq-q-d05-flour-barrels-notice
   lane: arthemy-house
   title: Flour Before the Wages Fail (notice)
@@ -329,6 +409,10 @@ subjects:
     and watchtowers'
   jobs:
     arthemy-house: 40993
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248928
 - key: eodq-q-d05-toll-standoff-notice
   lane: arthemy-house
   title: Hold the Toll Bridge (notice)
@@ -345,6 +429,10 @@ subjects:
     salvage'
   jobs:
     arthemy-house: 40994
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248929
 - key: eodq-q-d05-saltroad-escort-notice
   lane: arthemy-house
   title: Raiders for Hire (notice)
@@ -360,6 +448,10 @@ subjects:
     do it, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 40995
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248930
 - key: eodq-q-d06-empty-stable-notice
   lane: arthemy-house
   title: The Empty Stable (notice)
@@ -376,6 +468,10 @@ subjects:
     and windmills among red mesas'
   jobs:
     arthemy-house: 40996
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248931
 - key: eodq-q-d07-crow-favor-notice
   lane: arthemy-house
   title: The Crows’ Errand (notice)
@@ -391,6 +487,10 @@ subjects:
     open it, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 40997
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248932
 - key: eodq-q-d08-escort-to-bell-notice
   lane: arthemy-house
   title: A Family of Five (notice)
@@ -407,6 +507,10 @@ subjects:
     dry hills'
   jobs:
     arthemy-house: 40998
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248933
 - key: eodq-q-d09-iron-convoy-notice
   lane: arthemy-house
   title: Iron on the Road (notice)
@@ -422,6 +526,10 @@ subjects:
     goes may not all come back, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 40999
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248934
 - key: eodq-q-d10-freehold-raid-notice
   lane: arthemy-house
   title: Smoke Over Thistledown (notice)
@@ -438,6 +546,10 @@ subjects:
     among red mesas'
   jobs:
     arthemy-house: 41000
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248935
 - key: eodq-q-d12-mirefen-defense-notice
   lane: arthemy-house
   title: Hold the Mirefen Edge (notice)
@@ -454,6 +566,10 @@ subjects:
     dark water'
   jobs:
     arthemy-house: 41001
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248936
 - key: eodq-q-d12-mirefen-cellars-notice
   lane: arthemy-house
   title: What Is Under the Lantern-Houses (notice)
@@ -469,6 +585,10 @@ subjects:
     keep in the cellars, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41002
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248937
 - key: eodq-q-d13-water-engine-notice
   lane: arthemy-house
   title: The Pack’s Water Engine (notice)
@@ -485,6 +605,10 @@ subjects:
     and salvage'
   jobs:
     arthemy-house: 41003
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248938
 - key: eodq-q-d13-engine-sabotage-notice
   lane: arthemy-house
   title: Fix It to Fail (notice)
@@ -500,6 +624,10 @@ subjects:
     a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41004
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248939
 - key: eodq-q-d14-sick-courier-notice
   lane: arthemy-house
   title: A Sick Courier (notice)
@@ -516,6 +644,10 @@ subjects:
     and windmills among red mesas'
   jobs:
     arthemy-house: 41005
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248940
 - key: eodq-q-d15-study-glass-notice
   lane: arthemy-house
   title: Glass Feathers (notice)
@@ -531,6 +663,10 @@ subjects:
     anyone sells it, sunken rusted rail yards half drowned in fog, iron gantries and derelict engines'
   jobs:
     arthemy-house: 41006
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248941
 - key: eodq-q-d16-hidden-grain-notice
   lane: arthemy-house
   title: Three Haystacks (notice)
@@ -547,6 +683,10 @@ subjects:
     mesas'
   jobs:
     arthemy-house: 41007
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248942
 - key: eodq-q-d17-who-lies-notice
   lane: arthemy-house
   title: Who Has Been Lying? (notice)
@@ -562,6 +702,10 @@ subjects:
     false reports to their source, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41008
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248943
 - key: eodq-q-d18-refugee-road-notice
   lane: arthemy-house
   title: No Water for Strangers (notice)
@@ -577,6 +721,10 @@ subjects:
     small southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41009
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248944
 - key: eodq-q-d19-bell-speech-notice
   lane: arthemy-house
   title: Speak to Hollow Bell (notice)
@@ -592,6 +740,10 @@ subjects:
     the case in the square, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41010
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248945
 - key: eodq-q-d20-ford-dam-notice
   lane: arthemy-house
   title: Before the Rains (notice)
@@ -608,6 +760,10 @@ subjects:
     mesas'
   jobs:
     arthemy-house: 41011
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248946
 - key: eodq-q-d22-ford-bodies-notice
   lane: arthemy-house
   title: Bodies at the Ford (notice)
@@ -624,6 +780,10 @@ subjects:
     bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41012
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248947
 - key: eodq-q-d23-blue-lantern-notice
   lane: arthemy-house
   title: Follow the Blue Lantern (notice)
@@ -639,6 +799,10 @@ subjects:
     Follow it and see where it goes, sunken rusted rail yards half drowned in fog, iron gantries and derelict engines'
   jobs:
     arthemy-house: 41013
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248948
 - key: eodq-q-d24-mission-road-notice
   lane: arthemy-house
   title: The Mission Road (notice)
@@ -655,6 +819,10 @@ subjects:
     a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41014
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248949
 - key: eodq-q-d24-coldbrook-visit-notice
   lane: arthemy-house
   title: A Visit to the Children (notice)
@@ -670,6 +838,10 @@ subjects:
     her and insist, a dusty pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41015
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248950
 - key: eodq-q-d26-dry-well-notice
   lane: arthemy-house
   title: A Friendly Raid (notice)
@@ -685,6 +857,10 @@ subjects:
     not goats, a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41016
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248951
 - key: eodq-q-d27-flint-evidence-notice
   lane: arthemy-house
   title: The Case Against Flint (notice)
@@ -700,6 +876,10 @@ subjects:
     the court passes judgment, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41017
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248952
 - key: eodq-q-d28-rot-cure-notice
   lane: arthemy-house
   title: Charms Against Rot (notice)
@@ -715,6 +895,10 @@ subjects:
     before anyone eats it, a fog-drowned ruin city of black towers at the edge of the world'
   jobs:
     arthemy-house: 41018
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248953
 - key: eodq-q-d30-hold-the-line-notice
   lane: arthemy-house
   title: Hold the Border Line (notice)
@@ -731,6 +915,10 @@ subjects:
     red mesas'
   jobs:
     arthemy-house: 41019
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248954
 - key: eodq-q-d31-iron-rain-notice
   lane: arthemy-house
   title: Iron Rain at the Ford (notice)
@@ -747,6 +935,10 @@ subjects:
     bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41020
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248955
 - key: eodq-q-d33-thistledown-notice
   lane: arthemy-house
   title: 'Wolves at Noon: Thistledown (notice)'
@@ -763,6 +955,10 @@ subjects:
     farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41021
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248956
 - key: eodq-q-d33-waystation-notice
   lane: arthemy-house
   title: 'Wolves at Noon: the Saltroad Stop (notice)'
@@ -779,6 +975,10 @@ subjects:
     cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41022
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248957
 - key: eodq-q-d35-trestle-notice
   lane: arthemy-house
   title: Hold Saffron’s Trestle (notice)
@@ -795,6 +995,10 @@ subjects:
     painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41023
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248958
 - key: eodq-q-d35-tunnel-notice
   lane: arthemy-house
   title: Hold the Mole Tunnel (notice)
@@ -810,6 +1014,10 @@ subjects:
     and the war has a road underneath it, badlands of red rock spires riddled with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 41024
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248959
 - key: eodq-q-d36-bell-rehearsal-notice
   lane: arthemy-house
   title: The Silent Bell Rehearsal (notice)
@@ -826,6 +1034,10 @@ subjects:
     climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41025
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248960
 - key: eodq-q-d41-stragglers-notice
   lane: arthemy-house
   title: Find the Stragglers (notice)
@@ -842,6 +1054,10 @@ subjects:
     with waystations and watchtowers'
   jobs:
     arthemy-house: 41026
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248961
 - key: eodq-q-d42-tunnel-props-notice
   lane: arthemy-house
   title: Shore Up the Tunnels (notice)
@@ -857,6 +1073,10 @@ subjects:
     everyone, badlands of red rock spires riddled with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 41027
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248962
 - key: eodq-q-d42-crow-watch-notice
   lane: arthemy-house
   title: Stand the Crow Watch (notice)
@@ -872,6 +1092,10 @@ subjects:
     Abbey road. So will you, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41028
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248963
 - key: eodq-q-d42-bell-water-notice
   lane: arthemy-house
   title: Water for the Bell (notice)
@@ -887,6 +1111,10 @@ subjects:
     needs hands, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41029
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248964
 - key: eodq-q-d42-wagon-wheels-notice
   lane: arthemy-house
   title: Wheels for the Wagon Circle (notice)
@@ -902,6 +1130,10 @@ subjects:
     them rolling, a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41030
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248965
 - key: eodq-q-d42-caravan-guard-notice
   lane: arthemy-house
   title: Ride With the Caravan (notice)
@@ -917,6 +1149,10 @@ subjects:
     guards for the night road, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41031
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248966
 - key: eodq-q-d42-barn-harvest-notice
   lane: arthemy-house
   title: Bring In the Harvest (notice)
@@ -933,6 +1169,10 @@ subjects:
     among red mesas'
   jobs:
     arthemy-house: 41032
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248967
 - key: eodq-q-d42-rail-salvage-notice
   lane: arthemy-house
   title: Salvage for the Station (notice)
@@ -949,6 +1189,10 @@ subjects:
     derelict engines'
   jobs:
     arthemy-house: 41033
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248968
 - key: eodq-q-d42-cave-forage-notice
   lane: arthemy-house
   title: Forage for the Cave (notice)
@@ -964,6 +1208,10 @@ subjects:
     Find food, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41034
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248969
 - key: eodq-q-d44-komodo-bargain-notice
   lane: arthemy-house
   title: What Komodo Bought (notice)
@@ -980,6 +1228,10 @@ subjects:
     wayside shrines'
   jobs:
     arthemy-house: 41035
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248970
 - key: eodq-q-d46-well-that-spoke-notice
   lane: arthemy-house
   title: The Well That Spoke (notice)
@@ -996,6 +1248,10 @@ subjects:
     a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41036
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248971
 - key: eodq-q-d48-bell-clapper-notice
   lane: arthemy-house
   title: The Bell’s Lost Clapper (notice)
@@ -1012,6 +1268,10 @@ subjects:
     over still dark water'
   jobs:
     arthemy-house: 41037
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248972
 - key: eodq-q-d50-last-dispatch-notice
   lane: arthemy-house
   title: The Last Dispatch (notice)
@@ -1028,6 +1288,10 @@ subjects:
     cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41038
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248973
 - key: eodq-q-d50-crypt-path-notice
   lane: arthemy-house
   title: The Way Through the Well (notice)
@@ -1044,6 +1308,10 @@ subjects:
     bell tower, wayside shrines'
   jobs:
     arthemy-house: 41039
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248974
 - key: eodq-q-d50-ring-the-bell-notice
   lane: arthemy-house
   title: Ring the Silent Bell (notice)
@@ -1060,6 +1328,10 @@ subjects:
     toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41040
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248975
 - key: eodq-r-bandit-sighting-notice
   lane: arthemy-house
   title: Bandits on the Saltroad (notice)
@@ -1075,6 +1347,10 @@ subjects:
     pick a target, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41041
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248976
 - key: eodq-r-sick-herd-notice
   lane: arthemy-house
   title: A Sick Herd (notice)
@@ -1090,6 +1366,10 @@ subjects:
     arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41042
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248977
 - key: eodq-r-lost-caravan-notice
   lane: arthemy-house
   title: The Late Caravan (notice)
@@ -1105,6 +1385,10 @@ subjects:
     across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41043
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248978
 - key: eodq-r-boundary-dispute-notice
   lane: arthemy-house
   title: A Fence in the Wrong Place (notice)
@@ -1120,6 +1404,10 @@ subjects:
     around it, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41044
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248979
 - key: eodq-r-strange-relic-notice
   lane: arthemy-house
   title: Glass That Does Not Break (notice)
@@ -1135,6 +1423,10 @@ subjects:
     studied before it is sold, sunken rusted rail yards half drowned in fog, iron gantries and derelict engines'
   jobs:
     arthemy-house: 41045
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248980
 - key: eodq-r-roost-storm-notice
   lane: arthemy-house
   title: A Roost in the Storm (notice)
@@ -1151,6 +1443,10 @@ subjects:
     on cliff ledges'
   jobs:
     arthemy-house: 41046
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248981
 - key: eodq-r-fen-lantern-notice
   lane: arthemy-house
   title: A Lantern Gone Out (notice)
@@ -1167,6 +1463,10 @@ subjects:
     over still dark water'
   jobs:
     arthemy-house: 41047
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248982
 - key: eodq-r-wagon-escort-notice
   lane: arthemy-house
   title: An Escort for the Painted Wagons (notice)
@@ -1183,6 +1483,10 @@ subjects:
     wagons and salvage'
   jobs:
     arthemy-house: 41048
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248983
 - key: eodq-r-tunnel-rescue-notice
   lane: arthemy-house
   title: A Tunnel Caved In (notice)
@@ -1198,6 +1502,10 @@ subjects:
     Moles are digging. They need more hands, badlands of red rock spires riddled with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 41049
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248984
 - key: eodq-r-salvage-claim-notice
   lane: arthemy-house
   title: A Disputed Salvage Claim (notice)
@@ -1213,6 +1521,10 @@ subjects:
     they settle it with crowbars, sunken rusted rail yards half drowned in fog, iron gantries and derelict engines'
   jobs:
     arthemy-house: 41050
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248985
 - key: eodq-q-d01-well-road-success
   lane: arthemy-house
   title: Clear the Well Road (success)
@@ -1228,6 +1540,10 @@ subjects:
     arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41051
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248986
 - key: eodq-q-d01-aqueduct-repair-success
   lane: arthemy-house
   title: The Broken Aqueduct (success)
@@ -1243,6 +1559,10 @@ subjects:
     long thank-you, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41052
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248987
 - key: eodq-q-d01-toll-parley-success
   lane: arthemy-house
   title: Painted Wagons at the Toll (success)
@@ -1258,6 +1578,10 @@ subjects:
     red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41053
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248988
 - key: eodq-q-d01-toll-break-success
   lane: arthemy-house
   title: Break the Blockade (success)
@@ -1273,6 +1597,10 @@ subjects:
     spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41054
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248989
 - key: eodq-q-d01-mirefen-escort-success
   lane: arthemy-house
   title: Lanterns on the Mirefen Road (success)
@@ -1288,6 +1616,10 @@ subjects:
     saddle, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41055
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248990
 - key: eodq-q-d01-mirefen-inspect-success
   lane: arthemy-house
   title: Count the Lanterns (success)
@@ -1303,6 +1635,10 @@ subjects:
     has the list, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41056
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248991
 - key: eodq-q-d02-grain-cart-success
   lane: arthemy-house
   title: The Drowning Grain Cart (success)
@@ -1318,6 +1654,10 @@ subjects:
     farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41057
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248992
 - key: eodq-q-d02-crow-contract-success
   lane: arthemy-house
   title: The Fine Print (success)
@@ -1334,6 +1674,10 @@ subjects:
     ledges'
   jobs:
     arthemy-house: 41058
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248993
 - key: eodq-q-d02-mole-audit-success
   lane: arthemy-house
   title: The Mole Ledger (success)
@@ -1349,6 +1693,10 @@ subjects:
     being counted honestly, badlands of red rock spires riddled with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 41059
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248994
 - key: eodq-q-d03-three-wells-success
   lane: arthemy-house
   title: Three Wells (success)
@@ -1364,6 +1712,10 @@ subjects:
     farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41060
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248995
 - key: eodq-q-d03-bell-vigil-success
   lane: arthemy-house
   title: The Bell That Rang Alone (success)
@@ -1379,6 +1731,10 @@ subjects:
     front of the court, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41061
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248996
 - key: eodq-q-d03-bell-search-success
   lane: arthemy-house
   title: Muffle the Bell (success)
@@ -1394,6 +1750,10 @@ subjects:
     southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41062
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248997
 - key: eodq-q-d03-toll-audit-success
   lane: arthemy-house
   title: The Vanishing Toll (success)
@@ -1409,6 +1769,10 @@ subjects:
     red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41063
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248998
 - key: eodq-q-d03-fen-ambush-success
   lane: arthemy-house
   title: Ambush in the Reeds (success)
@@ -1424,6 +1788,10 @@ subjects:
     at all, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41064
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 248999
 - key: eodq-q-d03-fen-hail-success
   lane: arthemy-house
   title: Hail the Lanterns (success)
@@ -1439,6 +1807,10 @@ subjects:
     in ours, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41065
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249000
 - key: eodq-q-d04-survey-flags-success
   lane: arthemy-house
   title: Flags on the Far Bank (success)
@@ -1454,6 +1826,10 @@ subjects:
     ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41066
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249001
 - key: eodq-q-d04-crow-elders-success
   lane: arthemy-house
   title: Sit With the Elders (success)
@@ -1469,6 +1845,10 @@ subjects:
     singing first, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41067
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249002
 - key: eodq-q-d04-crow-roost-success
   lane: arthemy-house
   title: Climb to the High Roost (success)
@@ -1484,6 +1864,10 @@ subjects:
     grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41068
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249003
 - key: eodq-q-d04-feast-armed-success
   lane: arthemy-house
   title: A Feast Under Painted Wagons (success)
@@ -1499,6 +1883,10 @@ subjects:
     banner, a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41069
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249004
 - key: eodq-q-d05-flour-barrels-success
   lane: arthemy-house
   title: Flour Before the Wages Fail (success)
@@ -1514,6 +1902,10 @@ subjects:
     full night, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41070
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249005
 - key: eodq-q-d05-toll-standoff-success
   lane: arthemy-house
   title: Hold the Toll Bridge (success)
@@ -1529,6 +1921,10 @@ subjects:
     spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41071
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249006
 - key: eodq-q-d05-saltroad-escort-success
   lane: arthemy-house
   title: Raiders for Hire (success)
@@ -1544,6 +1940,10 @@ subjects:
     a long caravan road across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41072
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249007
 - key: eodq-q-d06-empty-stable-success
   lane: arthemy-house
   title: The Empty Stable (success)
@@ -1560,6 +1960,10 @@ subjects:
     among red mesas'
   jobs:
     arthemy-house: 41073
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249008
 - key: eodq-q-d07-crow-favor-success
   lane: arthemy-house
   title: The Crows’ Errand (success)
@@ -1576,6 +1980,10 @@ subjects:
     reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41074
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249009
 - key: eodq-q-d08-escort-to-bell-success
   lane: arthemy-house
   title: A Family of Five (success)
@@ -1591,6 +1999,10 @@ subjects:
     that is mostly legs, a small southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41075
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249010
 - key: eodq-q-d09-iron-convoy-success
   lane: arthemy-house
   title: Iron on the Road (success)
@@ -1606,6 +2018,10 @@ subjects:
     salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41076
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249011
 - key: eodq-q-d10-freehold-raid-success
   lane: arthemy-house
   title: Smoke Over Thistledown (success)
@@ -1621,6 +2037,10 @@ subjects:
     farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41077
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249012
 - key: eodq-q-d12-mirefen-defense-success
   lane: arthemy-house
   title: Hold the Mirefen Edge (success)
@@ -1636,6 +2056,10 @@ subjects:
     the emperor alone, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41078
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249013
 - key: eodq-q-d12-mirefen-cellars-success
   lane: arthemy-house
   title: What Is Under the Lantern-Houses (success)
@@ -1652,6 +2076,10 @@ subjects:
     black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41079
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249014
 - key: eodq-q-d13-water-engine-success
   lane: arthemy-house
   title: The Pack’s Water Engine (success)
@@ -1668,6 +2096,10 @@ subjects:
     caravan wagons and salvage'
   jobs:
     arthemy-house: 41080
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249015
 - key: eodq-q-d13-engine-sabotage-success
   lane: arthemy-house
   title: Fix It to Fail (success)
@@ -1683,6 +2115,10 @@ subjects:
     red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41081
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249016
 - key: eodq-q-d14-sick-courier-success
   lane: arthemy-house
   title: A Sick Courier (success)
@@ -1699,6 +2135,10 @@ subjects:
     among red mesas'
   jobs:
     arthemy-house: 41082
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249017
 - key: eodq-q-d15-study-glass-success
   lane: arthemy-house
   title: Glass Feathers (success)
@@ -1715,6 +2155,10 @@ subjects:
     half drowned in fog, iron gantries and derelict engines'
   jobs:
     arthemy-house: 41083
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249018
 - key: eodq-q-d16-hidden-grain-success
   lane: arthemy-house
   title: Three Haystacks (success)
@@ -1731,6 +2175,10 @@ subjects:
     red mesas'
   jobs:
     arthemy-house: 41084
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249019
 - key: eodq-q-d17-who-lies-success
   lane: arthemy-house
   title: Who Has Been Lying? (success)
@@ -1747,6 +2195,10 @@ subjects:
     in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41085
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249020
 - key: eodq-q-d18-refugee-road-success
   lane: arthemy-house
   title: No Water for Strangers (success)
@@ -1762,6 +2214,10 @@ subjects:
     town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41086
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249021
 - key: eodq-q-d19-bell-speech-success
   lane: arthemy-house
   title: Speak to Hollow Bell (success)
@@ -1777,6 +2233,10 @@ subjects:
     small southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41087
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249022
 - key: eodq-q-d20-ford-dam-success
   lane: arthemy-house
   title: Before the Rains (success)
@@ -1792,6 +2252,10 @@ subjects:
     with stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41088
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249023
 - key: eodq-q-d22-ford-bodies-success
   lane: arthemy-house
   title: Bodies at the Ford (success)
@@ -1808,6 +2272,10 @@ subjects:
     arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41089
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249024
 - key: eodq-q-d23-blue-lantern-success
   lane: arthemy-house
   title: Follow the Blue Lantern (success)
@@ -1824,6 +2292,10 @@ subjects:
     engines'
   jobs:
     arthemy-house: 41090
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249025
 - key: eodq-q-d24-mission-road-success
   lane: arthemy-house
   title: The Mission Road (success)
@@ -1840,6 +2312,10 @@ subjects:
     tower, wayside shrines'
   jobs:
     arthemy-house: 41091
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249026
 - key: eodq-q-d24-coldbrook-visit-success
   lane: arthemy-house
   title: A Visit to the Children (success)
@@ -1856,6 +2332,10 @@ subjects:
     abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41092
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249027
 - key: eodq-q-d26-dry-well-success
   lane: arthemy-house
   title: A Friendly Raid (success)
@@ -1871,6 +2351,10 @@ subjects:
     rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41093
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249028
 - key: eodq-q-d27-flint-evidence-success
   lane: arthemy-house
   title: The Case Against Flint (success)
@@ -1887,6 +2371,10 @@ subjects:
     bell tower, dry hills'
   jobs:
     arthemy-house: 41094
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249029
 - key: eodq-q-d28-rot-cure-success
   lane: arthemy-house
   title: Charms Against Rot (success)
@@ -1902,6 +2390,10 @@ subjects:
     it anyway, a fog-drowned ruin city of black towers at the edge of the world'
   jobs:
     arthemy-house: 41095
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249030
 - key: eodq-q-d30-hold-the-line-success
   lane: arthemy-house
   title: Hold the Border Line (success)
@@ -1917,6 +2409,10 @@ subjects:
     among red mesas'
   jobs:
     arthemy-house: 41096
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249031
 - key: eodq-q-d31-iron-rain-success
   lane: arthemy-house
   title: Iron Rain at the Ford (success)
@@ -1932,6 +2428,10 @@ subjects:
     still standing, a shallow river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41097
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249032
 - key: eodq-q-d33-thistledown-success
   lane: arthemy-house
   title: 'Wolves at Noon: Thistledown (success)'
@@ -1948,6 +2448,10 @@ subjects:
     and windmills among red mesas'
   jobs:
     arthemy-house: 41098
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249033
 - key: eodq-q-d33-waystation-success
   lane: arthemy-house
   title: 'Wolves at Noon: the Saltroad Stop (success)'
@@ -1964,6 +2468,10 @@ subjects:
     ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41099
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249034
 - key: eodq-q-d35-trestle-success
   lane: arthemy-house
   title: Hold Saffron’s Trestle (success)
@@ -1980,6 +2488,10 @@ subjects:
     and salvage'
   jobs:
     arthemy-house: 41100
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249035
 - key: eodq-q-d35-tunnel-success
   lane: arthemy-house
   title: Hold the Mole Tunnel (success)
@@ -1995,6 +2507,10 @@ subjects:
     tomorrow, badlands of red rock spires riddled with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 41101
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249036
 - key: eodq-q-d36-bell-rehearsal-success
   lane: arthemy-house
   title: The Silent Bell Rehearsal (success)
@@ -2011,6 +2527,10 @@ subjects:
     pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41102
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249037
 - key: eodq-q-d41-stragglers-success
   lane: arthemy-house
   title: Find the Stragglers (success)
@@ -2026,6 +2546,10 @@ subjects:
     again, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41103
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249038
 - key: eodq-q-d42-tunnel-props-success
   lane: arthemy-house
   title: Shore Up the Tunnels (success)
@@ -2041,6 +2565,10 @@ subjects:
     riddled with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 41104
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249039
 - key: eodq-q-d42-crow-watch-success
   lane: arthemy-house
   title: Stand the Crow Watch (success)
@@ -2056,6 +2584,10 @@ subjects:
     came down, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41105
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249040
 - key: eodq-q-d42-bell-water-success
   lane: arthemy-house
   title: Water for the Bell (success)
@@ -2071,6 +2603,10 @@ subjects:
     southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41106
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249041
 - key: eodq-q-d42-wagon-wheels-success
   lane: arthemy-house
   title: Wheels for the Wagon Circle (success)
@@ -2086,6 +2622,10 @@ subjects:
     spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41107
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249042
 - key: eodq-q-d42-caravan-guard-success
   lane: arthemy-house
   title: Ride With the Caravan (success)
@@ -2101,6 +2641,10 @@ subjects:
     road across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41108
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249043
 - key: eodq-q-d42-barn-harvest-success
   lane: arthemy-house
   title: Bring In the Harvest (success)
@@ -2116,6 +2660,10 @@ subjects:
     ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41109
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249044
 - key: eodq-q-d42-rail-salvage-success
   lane: arthemy-house
   title: Salvage for the Station (success)
@@ -2131,6 +2679,10 @@ subjects:
     half drowned in fog, iron gantries and derelict engines'
   jobs:
     arthemy-house: 41110
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249045
 - key: eodq-q-d42-cave-forage-success
   lane: arthemy-house
   title: Forage for the Cave (success)
@@ -2146,6 +2698,10 @@ subjects:
     grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41111
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249046
 - key: eodq-q-d44-komodo-bargain-success
   lane: arthemy-house
   title: What Komodo Bought (success)
@@ -2163,6 +2719,10 @@ subjects:
     abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41112
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249047
 - key: eodq-q-d46-well-that-spoke-success
   lane: arthemy-house
   title: The Well That Spoke (success)
@@ -2179,6 +2739,10 @@ subjects:
     toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41113
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249048
 - key: eodq-q-d48-bell-clapper-success
   lane: arthemy-house
   title: The Bell’s Lost Clapper (success)
@@ -2195,6 +2759,10 @@ subjects:
     stilt huts over still dark water'
   jobs:
     arthemy-house: 41114
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249049
 - key: eodq-q-d50-last-dispatch-success
   lane: arthemy-house
   title: The Last Dispatch (success)
@@ -2211,6 +2779,10 @@ subjects:
     tower, wayside shrines'
   jobs:
     arthemy-house: 41115
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249050
 - key: eodq-q-d50-crypt-path-success
   lane: arthemy-house
   title: The Way Through the Well (success)
@@ -2226,6 +2798,10 @@ subjects:
     a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41116
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249051
 - key: eodq-q-d50-ring-the-bell-success
   lane: arthemy-house
   title: Ring the Silent Bell (success)
@@ -2241,6 +2817,10 @@ subjects:
     toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41117
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249052
 - key: eodq-r-bandit-sighting-success
   lane: arthemy-house
   title: Bandits on the Saltroad (success)
@@ -2256,6 +2836,10 @@ subjects:
     across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41118
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249053
 - key: eodq-r-sick-herd-success
   lane: arthemy-house
   title: A Sick Herd (success)
@@ -2271,6 +2855,10 @@ subjects:
     farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41119
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249054
 - key: eodq-r-lost-caravan-success
   lane: arthemy-house
   title: The Late Caravan (success)
@@ -2286,6 +2874,10 @@ subjects:
     and watchtowers'
   jobs:
     arthemy-house: 41120
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249055
 - key: eodq-r-boundary-dispute-success
   lane: arthemy-house
   title: A Fence in the Wrong Place (success)
@@ -2301,6 +2893,10 @@ subjects:
     and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41121
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249056
 - key: eodq-r-strange-relic-success
   lane: arthemy-house
   title: Glass That Does Not Break (success)
@@ -2316,6 +2912,10 @@ subjects:
     yards half drowned in fog, iron gantries and derelict engines'
   jobs:
     arthemy-house: 41122
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249057
 - key: eodq-r-roost-storm-success
   lane: arthemy-house
   title: A Roost in the Storm (success)
@@ -2331,6 +2931,10 @@ subjects:
     from a Crow is thanks, jagged grey mountain peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41123
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249058
 - key: eodq-r-fen-lantern-success
   lane: arthemy-house
   title: A Lantern Gone Out (success)
@@ -2346,6 +2950,10 @@ subjects:
     misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41124
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249059
 - key: eodq-r-wagon-escort-success
   lane: arthemy-house
   title: An Escort for the Painted Wagons (success)
@@ -2362,6 +2970,10 @@ subjects:
     caravan wagons and salvage'
   jobs:
     arthemy-house: 41125
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249060
 - key: eodq-r-tunnel-rescue-success
   lane: arthemy-house
   title: A Tunnel Caved In (success)
@@ -2377,6 +2989,10 @@ subjects:
     the tower, badlands of red rock spires riddled with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 41126
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249061
 - key: eodq-r-salvage-claim-success
   lane: arthemy-house
   title: A Disputed Salvage Claim (success)
@@ -2392,6 +3008,10 @@ subjects:
     which means it was fair, sunken rusted rail yards half drowned in fog, iron gantries and derelict engines'
   jobs:
     arthemy-house: 41127
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249062
 - key: eodq-q-d01-well-road-failure
   lane: arthemy-house
   title: Clear the Well Road (failure)
@@ -2407,6 +3027,10 @@ subjects:
     arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41128
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249063
 - key: eodq-q-d01-aqueduct-repair-failure
   lane: arthemy-house
   title: The Broken Aqueduct (failure)
@@ -2422,6 +3046,10 @@ subjects:
     chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41129
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249064
 - key: eodq-q-d01-toll-parley-failure
   lane: arthemy-house
   title: Painted Wagons at the Toll (failure)
@@ -2437,6 +3065,10 @@ subjects:
     by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41130
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249065
 - key: eodq-q-d01-toll-break-failure
   lane: arthemy-house
   title: Break the Blockade (failure)
@@ -2452,6 +3084,10 @@ subjects:
     wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41131
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249066
 - key: eodq-q-d01-mirefen-escort-failure
   lane: arthemy-house
   title: Lanterns on the Mirefen Road (failure)
@@ -2467,6 +3103,10 @@ subjects:
     and stilt huts over still dark water'
   jobs:
     arthemy-house: 41132
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249067
 - key: eodq-q-d01-mirefen-inspect-failure
   lane: arthemy-house
   title: Count the Lanterns (failure)
@@ -2482,6 +3122,10 @@ subjects:
     reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41133
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249068
 - key: eodq-q-d02-grain-cart-failure
   lane: arthemy-house
   title: The Drowning Grain Cart (failure)
@@ -2497,6 +3141,10 @@ subjects:
     and windmills among red mesas'
   jobs:
     arthemy-house: 41134
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249069
 - key: eodq-q-d02-crow-contract-failure
   lane: arthemy-house
   title: The Fine Print (failure)
@@ -2512,6 +3160,10 @@ subjects:
     wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41135
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249070
 - key: eodq-q-d02-mole-audit-failure
   lane: arthemy-house
   title: The Mole Ledger (failure)
@@ -2527,6 +3179,10 @@ subjects:
     with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 41136
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249071
 - key: eodq-q-d03-three-wells-failure
   lane: arthemy-house
   title: Three Wells (failure)
@@ -2542,6 +3198,10 @@ subjects:
     and windmills among red mesas'
   jobs:
     arthemy-house: 41137
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249072
 - key: eodq-q-d03-bell-vigil-failure
   lane: arthemy-house
   title: The Bell That Rang Alone (failure)
@@ -2557,6 +3217,10 @@ subjects:
     around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41138
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249073
 - key: eodq-q-d03-bell-search-failure
   lane: arthemy-house
   title: Muffle the Bell (failure)
@@ -2572,6 +3236,10 @@ subjects:
     adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41139
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249074
 - key: eodq-q-d03-toll-audit-failure
   lane: arthemy-house
   title: The Vanishing Toll (failure)
@@ -2587,6 +3255,10 @@ subjects:
     spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41140
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249075
 - key: eodq-q-d03-fen-ambush-failure
   lane: arthemy-house
   title: Ambush in the Reeds (failure)
@@ -2602,6 +3274,10 @@ subjects:
     and stilt huts over still dark water'
   jobs:
     arthemy-house: 41141
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249076
 - key: eodq-q-d03-fen-hail-failure
   lane: arthemy-house
   title: Hail the Lanterns (failure)
@@ -2617,6 +3293,10 @@ subjects:
     reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41142
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249077
 - key: eodq-q-d04-survey-flags-failure
   lane: arthemy-house
   title: Flags on the Far Bank (failure)
@@ -2632,6 +3312,10 @@ subjects:
     with stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41143
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249078
 - key: eodq-q-d04-crow-elders-failure
   lane: arthemy-house
   title: Sit With the Elders (failure)
@@ -2647,6 +3331,10 @@ subjects:
     in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41144
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249079
 - key: eodq-q-d04-crow-roost-failure
   lane: arthemy-house
   title: Climb to the High Roost (failure)
@@ -2662,6 +3350,10 @@ subjects:
     in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41145
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249080
 - key: eodq-q-d04-feast-armed-failure
   lane: arthemy-house
   title: A Feast Under Painted Wagons (failure)
@@ -2677,6 +3369,10 @@ subjects:
     by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41146
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249081
 - key: eodq-q-d05-flour-barrels-failure
   lane: arthemy-house
   title: Flour Before the Wages Fail (failure)
@@ -2692,6 +3388,10 @@ subjects:
     its jaws, a long caravan road across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41147
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249082
 - key: eodq-q-d05-toll-standoff-failure
   lane: arthemy-house
   title: Hold the Toll Bridge (failure)
@@ -2707,6 +3407,10 @@ subjects:
     by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41148
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249083
 - key: eodq-q-d05-saltroad-escort-failure
   lane: arthemy-house
   title: Raiders for Hire (failure)
@@ -2722,6 +3426,10 @@ subjects:
     cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41149
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249084
 - key: eodq-q-d06-empty-stable-failure
   lane: arthemy-house
   title: The Empty Stable (failure)
@@ -2737,6 +3445,10 @@ subjects:
     and windmills among red mesas'
   jobs:
     arthemy-house: 41150
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249085
 - key: eodq-q-d07-crow-favor-failure
   lane: arthemy-house
   title: The Crows’ Errand (failure)
@@ -2752,6 +3464,10 @@ subjects:
     reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41151
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249086
 - key: eodq-q-d08-escort-to-bell-failure
   lane: arthemy-house
   title: A Family of Five (failure)
@@ -2768,6 +3484,10 @@ subjects:
     hills'
   jobs:
     arthemy-house: 41152
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249087
 - key: eodq-q-d09-iron-convoy-failure
   lane: arthemy-house
   title: Iron on the Road (failure)
@@ -2783,6 +3503,10 @@ subjects:
     salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41153
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249088
 - key: eodq-q-d10-freehold-raid-failure
   lane: arthemy-house
   title: Smoke Over Thistledown (failure)
@@ -2798,6 +3522,10 @@ subjects:
     a shallow river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41154
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249089
 - key: eodq-q-d12-mirefen-defense-failure
   lane: arthemy-house
   title: Hold the Mirefen Edge (failure)
@@ -2813,6 +3541,10 @@ subjects:
     the Mothers'', misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41155
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249090
 - key: eodq-q-d12-mirefen-cellars-failure
   lane: arthemy-house
   title: What Is Under the Lantern-Houses (failure)
@@ -2828,6 +3560,10 @@ subjects:
     out, misty wetlands of black reeds, crooked trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41156
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249091
 - key: eodq-q-d13-water-engine-failure
   lane: arthemy-house
   title: The Pack’s Water Engine (failure)
@@ -2843,6 +3579,10 @@ subjects:
     spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41157
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249092
 - key: eodq-q-d13-engine-sabotage-failure
   lane: arthemy-house
   title: Fix It to Fail (failure)
@@ -2858,6 +3598,10 @@ subjects:
     red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41158
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249093
 - key: eodq-q-d14-sick-courier-failure
   lane: arthemy-house
   title: A Sick Courier (failure)
@@ -2873,6 +3617,10 @@ subjects:
     among red mesas'
   jobs:
     arthemy-house: 41159
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249094
 - key: eodq-q-d15-study-glass-failure
   lane: arthemy-house
   title: Glass Feathers (failure)
@@ -2888,6 +3636,10 @@ subjects:
     in fog, iron gantries and derelict engines'
   jobs:
     arthemy-house: 41160
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249095
 - key: eodq-q-d16-hidden-grain-failure
   lane: arthemy-house
   title: Three Haystacks (failure)
@@ -2903,6 +3655,10 @@ subjects:
     farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41161
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249096
 - key: eodq-q-d17-who-lies-failure
   lane: arthemy-house
   title: Who Has Been Lying? (failure)
@@ -2918,6 +3674,10 @@ subjects:
     in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41162
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249097
 - key: eodq-q-d18-refugee-road-failure
   lane: arthemy-house
   title: No Water for Strangers (failure)
@@ -2933,6 +3693,10 @@ subjects:
     southern chapel town of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41163
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249098
 - key: eodq-q-d19-bell-speech-failure
   lane: arthemy-house
   title: Speak to Hollow Bell (failure)
@@ -2948,6 +3712,10 @@ subjects:
     and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41164
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249099
 - key: eodq-q-d20-ford-dam-failure
   lane: arthemy-house
   title: Before the Rains (failure)
@@ -2963,6 +3731,10 @@ subjects:
     freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41165
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249100
 - key: eodq-q-d22-ford-bodies-failure
   lane: arthemy-house
   title: Bodies at the Ford (failure)
@@ -2979,6 +3751,10 @@ subjects:
     among red mesas'
   jobs:
     arthemy-house: 41166
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249101
 - key: eodq-q-d23-blue-lantern-failure
   lane: arthemy-house
   title: Follow the Blue Lantern (failure)
@@ -2994,6 +3770,10 @@ subjects:
     half drowned in fog, iron gantries and derelict engines'
   jobs:
     arthemy-house: 41167
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249102
 - key: eodq-q-d24-mission-road-failure
   lane: arthemy-house
   title: The Mission Road (failure)
@@ -3009,6 +3789,10 @@ subjects:
     dusty pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41168
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249103
 - key: eodq-q-d24-coldbrook-visit-failure
   lane: arthemy-house
   title: A Visit to the Children (failure)
@@ -3024,6 +3808,10 @@ subjects:
     toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41169
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249104
 - key: eodq-q-d26-dry-well-failure
   lane: arthemy-house
   title: A Friendly Raid (failure)
@@ -3039,6 +3827,10 @@ subjects:
     by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41170
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249105
 - key: eodq-q-d27-flint-evidence-failure
   lane: arthemy-house
   title: The Case Against Flint (failure)
@@ -3054,6 +3846,10 @@ subjects:
     of adobe and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41171
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249107
 - key: eodq-q-d28-rot-cure-failure
   lane: arthemy-house
   title: Charms Against Rot (failure)
@@ -3069,6 +3865,10 @@ subjects:
     city of black towers at the edge of the world'
   jobs:
     arthemy-house: 41172
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249108
 - key: eodq-q-d30-hold-the-line-failure
   lane: arthemy-house
   title: Hold the Border Line (failure)
@@ -3084,6 +3884,10 @@ subjects:
     freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41173
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249109
 - key: eodq-q-d31-iron-rain-failure
   lane: arthemy-house
   title: Iron Rain at the Ford (failure)
@@ -3099,6 +3903,10 @@ subjects:
     who is missing, a shallow river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41174
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249110
 - key: eodq-q-d33-thistledown-failure
   lane: arthemy-house
   title: 'Wolves at Noon: Thistledown (failure)'
@@ -3114,6 +3922,10 @@ subjects:
     river ford with stone arch bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41175
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249111
 - key: eodq-q-d33-waystation-failure
   lane: arthemy-house
   title: 'Wolves at Noon: the Saltroad Stop (failure)'
@@ -3129,6 +3941,10 @@ subjects:
     long caravan road across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41176
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249112
 - key: eodq-q-d35-trestle-failure
   lane: arthemy-house
   title: Hold Saffron’s Trestle (failure)
@@ -3144,6 +3960,10 @@ subjects:
     like nothing, a deep red rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41177
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249113
 - key: eodq-q-d35-tunnel-failure
   lane: arthemy-house
   title: Hold the Mole Tunnel (failure)
@@ -3159,6 +3979,10 @@ subjects:
     the badlands, badlands of red rock spires riddled with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 41178
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249114
 - key: eodq-q-d36-bell-rehearsal-failure
   lane: arthemy-house
   title: The Silent Bell Rehearsal (failure)
@@ -3175,6 +3999,10 @@ subjects:
     abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41179
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249115
 - key: eodq-q-d41-stragglers-failure
   lane: arthemy-house
   title: Find the Stragglers (failure)
@@ -3190,6 +4018,10 @@ subjects:
     road across cracked ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41180
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249116
 - key: eodq-q-d42-tunnel-props-failure
   lane: arthemy-house
   title: Shore Up the Tunnels (failure)
@@ -3205,6 +4037,10 @@ subjects:
     with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 41181
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249117
 - key: eodq-q-d42-crow-watch-failure
   lane: arthemy-house
   title: Stand the Crow Watch (failure)
@@ -3220,6 +4056,10 @@ subjects:
     peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41182
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249118
 - key: eodq-q-d42-bell-water-failure
   lane: arthemy-house
   title: Water for the Bell (failure)
@@ -3235,6 +4075,10 @@ subjects:
     and timber around a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41183
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249119
 - key: eodq-q-d42-wagon-wheels-failure
   lane: arthemy-house
   title: Wheels for the Wagon Circle (failure)
@@ -3250,6 +4094,10 @@ subjects:
     by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41184
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249120
 - key: eodq-q-d42-caravan-guard-failure
   lane: arthemy-house
   title: Ride With the Caravan (failure)
@@ -3265,6 +4113,10 @@ subjects:
     flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41185
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249121
 - key: eodq-q-d42-barn-harvest-failure
   lane: arthemy-house
   title: Bring In the Harvest (failure)
@@ -3280,6 +4132,10 @@ subjects:
     bridges, freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41186
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249122
 - key: eodq-q-d42-rail-salvage-failure
   lane: arthemy-house
   title: Salvage for the Station (failure)
@@ -3295,6 +4151,10 @@ subjects:
     iron gantries and derelict engines'
   jobs:
     arthemy-house: 41187
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249123
 - key: eodq-q-d42-cave-forage-failure
   lane: arthemy-house
   title: Forage for the Cave (failure)
@@ -3310,6 +4170,10 @@ subjects:
     in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41188
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249124
 - key: eodq-q-d44-komodo-bargain-failure
   lane: arthemy-house
   title: What Komodo Bought (failure)
@@ -3325,6 +4189,10 @@ subjects:
     toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41189
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249125
 - key: eodq-q-d46-well-that-spoke-failure
   lane: arthemy-house
   title: The Well That Spoke (failure)
@@ -3340,6 +4208,10 @@ subjects:
     toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41190
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249126
 - key: eodq-q-d48-bell-clapper-failure
   lane: arthemy-house
   title: The Bell’s Lost Clapper (failure)
@@ -3355,6 +4227,10 @@ subjects:
     trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41191
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249127
 - key: eodq-q-d50-last-dispatch-failure
   lane: arthemy-house
   title: The Last Dispatch (failure)
@@ -3370,6 +4246,10 @@ subjects:
     stopped, a dusty pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41192
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249128
 - key: eodq-q-d50-crypt-path-failure
   lane: arthemy-house
   title: The Way Through the Well (failure)
@@ -3385,6 +4265,10 @@ subjects:
     to say, a dusty pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41193
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249129
 - key: eodq-q-d50-ring-the-bell-failure
   lane: arthemy-house
   title: Ring the Silent Bell (failure)
@@ -3400,6 +4284,10 @@ subjects:
     pilgrim road climbing toward a cliffside abbey with a silent bell tower, wayside shrines'
   jobs:
     arthemy-house: 41194
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249130
 - key: eodq-r-bandit-sighting-failure
   lane: arthemy-house
   title: Bandits on the Saltroad (failure)
@@ -3415,6 +4303,10 @@ subjects:
     ochre salt flats with waystations and watchtowers'
   jobs:
     arthemy-house: 41195
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249131
 - key: eodq-r-sick-herd-failure
   lane: arthemy-house
   title: A Sick Herd (failure)
@@ -3430,6 +4322,10 @@ subjects:
     freehold farmsteads and windmills among red mesas'
   jobs:
     arthemy-house: 41196
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249132
 - key: eodq-r-lost-caravan-failure
   lane: arthemy-house
   title: The Late Caravan (failure)
@@ -3445,6 +4341,10 @@ subjects:
     and watchtowers'
   jobs:
     arthemy-house: 41197
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249133
 - key: eodq-r-boundary-dispute-failure
   lane: arthemy-house
   title: A Fence in the Wrong Place (failure)
@@ -3460,6 +4360,10 @@ subjects:
     a brass bell tower, dry hills'
   jobs:
     arthemy-house: 41198
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249134
 - key: eodq-r-strange-relic-failure
   lane: arthemy-house
   title: Glass That Does Not Break (failure)
@@ -3475,6 +4379,10 @@ subjects:
     in fog, iron gantries and derelict engines'
   jobs:
     arthemy-house: 41199
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249135
 - key: eodq-r-roost-storm-failure
   lane: arthemy-house
   title: A Roost in the Storm (failure)
@@ -3490,6 +4398,10 @@ subjects:
     peaks wreathed in storm cloud, crow roosts on cliff ledges'
   jobs:
     arthemy-house: 41200
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249136
 - key: eodq-r-fen-lantern-failure
   lane: arthemy-house
   title: A Lantern Gone Out (failure)
@@ -3505,6 +4417,10 @@ subjects:
     trees and stilt huts over still dark water'
   jobs:
     arthemy-house: 41201
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249137
 - key: eodq-r-wagon-escort-failure
   lane: arthemy-house
   title: An Escort for the Painted Wagons (failure)
@@ -3520,6 +4436,10 @@ subjects:
     rail canyon spanned by wooden trestles, painted caravan wagons and salvage'
   jobs:
     arthemy-house: 41202
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249138
 - key: eodq-r-tunnel-rescue-failure
   lane: arthemy-house
   title: A Tunnel Caved In (failure)
@@ -3535,6 +4455,10 @@ subjects:
     with lantern-lit burrow entrances'
   jobs:
     arthemy-house: 41203
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249139
 - key: eodq-r-salvage-claim-failure
   lane: arthemy-house
   title: A Disputed Salvage Claim (failure)
@@ -3550,3 +4474,306 @@ subjects:
     and derelict engines'
   jobs:
     arthemy-house: 41204
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 249140
+- key: eodq-q-d42-cave-forage-notice-v2
+  lane: arthemy-house
+  title: 'Forage for the Cave (notice, v2: the cave, not crow roosts)'
+  quest: q-d42-cave-forage
+  variant: notice
+  asset: quests/q-d42-cave-forage
+  size: 1344x768
+  seed: 62300
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views, crow, raven, bird
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Forage
+    for the Cave: a shallow cave mouth in a bare grey mountainside under storm cloud, cold wind, a small camp of
+    ragged anthro animal revolutionaries, a tiny guttering campfire, empty cooking pot, foragers setting out down
+    the slope with baskets, jagged grey mountain peaks'
+  jobs:
+    arthemy-house: 42160
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodq-q-d42-cave-forage-success-v2
+  lane: arthemy-house
+  title: 'Forage for the Cave (success, v2: the cave, not crow roosts)'
+  quest: q-d42-cave-forage
+  variant: success
+  asset: quests/q-d42-cave-forage-success
+  size: 1344x768
+  seed: 62301
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views, crow, raven, bird
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm hopeful dawn light, Forage
+    for the Cave: a shallow cave mouth in a bare grey mountainside under storm cloud, cold wind, a small camp of
+    ragged anthro animal revolutionaries, gathered around a bright campfire sharing food, roots and a sack of flour,
+    a cooking pot steaming, jagged grey mountain peaks'
+  jobs:
+    arthemy-house: 42161
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodq-q-d42-cave-forage-failure-v2
+  lane: arthemy-house
+  title: 'Forage for the Cave (failure, v2: the cave, not crow roosts)'
+  quest: q-d42-cave-forage
+  variant: failure
+  asset: quests/q-d42-cave-forage-failure
+  size: 1344x768
+  seed: 62302
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views, crow, raven, bird
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold dusk light, drifting dust and smoke,
+    Forage for the Cave: a shallow cave mouth in a bare grey mountainside under storm cloud, cold wind, a small
+    camp of ragged anthro animal revolutionaries, huddled hungry around dying embers, an empty cooking pot, bare
+    hills, jagged grey mountain peaks'
+  jobs:
+    arthemy-house: 42162
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+approved:
+- eodq-q-d01-well-road-notice
+- eodq-q-d01-aqueduct-repair-notice
+- eodq-q-d01-toll-parley-notice
+- eodq-q-d01-toll-break-notice
+- eodq-q-d01-mirefen-escort-notice
+- eodq-q-d01-mirefen-inspect-notice
+- eodq-q-d02-grain-cart-notice
+- eodq-q-d02-crow-contract-notice
+- eodq-q-d02-mole-audit-notice
+- eodq-q-d03-three-wells-notice
+- eodq-q-d03-bell-vigil-notice
+- eodq-q-d03-bell-search-notice
+- eodq-q-d03-toll-audit-notice
+- eodq-q-d03-fen-ambush-notice
+- eodq-q-d03-fen-hail-notice
+- eodq-q-d04-survey-flags-notice
+- eodq-q-d04-crow-elders-notice
+- eodq-q-d04-crow-roost-notice
+- eodq-q-d04-feast-armed-notice
+- eodq-q-d05-flour-barrels-notice
+- eodq-q-d05-toll-standoff-notice
+- eodq-q-d05-saltroad-escort-notice
+- eodq-q-d06-empty-stable-notice
+- eodq-q-d07-crow-favor-notice
+- eodq-q-d08-escort-to-bell-notice
+- eodq-q-d09-iron-convoy-notice
+- eodq-q-d10-freehold-raid-notice
+- eodq-q-d12-mirefen-defense-notice
+- eodq-q-d12-mirefen-cellars-notice
+- eodq-q-d13-water-engine-notice
+- eodq-q-d13-engine-sabotage-notice
+- eodq-q-d14-sick-courier-notice
+- eodq-q-d15-study-glass-notice
+- eodq-q-d16-hidden-grain-notice
+- eodq-q-d17-who-lies-notice
+- eodq-q-d18-refugee-road-notice
+- eodq-q-d19-bell-speech-notice
+- eodq-q-d20-ford-dam-notice
+- eodq-q-d22-ford-bodies-notice
+- eodq-q-d23-blue-lantern-notice
+- eodq-q-d24-mission-road-notice
+- eodq-q-d24-coldbrook-visit-notice
+- eodq-q-d26-dry-well-notice
+- eodq-q-d27-flint-evidence-notice
+- eodq-q-d28-rot-cure-notice
+- eodq-q-d30-hold-the-line-notice
+- eodq-q-d31-iron-rain-notice
+- eodq-q-d33-thistledown-notice
+- eodq-q-d33-waystation-notice
+- eodq-q-d35-trestle-notice
+- eodq-q-d35-tunnel-notice
+- eodq-q-d36-bell-rehearsal-notice
+- eodq-q-d41-stragglers-notice
+- eodq-q-d42-tunnel-props-notice
+- eodq-q-d42-crow-watch-notice
+- eodq-q-d42-bell-water-notice
+- eodq-q-d42-wagon-wheels-notice
+- eodq-q-d42-caravan-guard-notice
+- eodq-q-d42-barn-harvest-notice
+- eodq-q-d42-rail-salvage-notice
+- eodq-q-d44-komodo-bargain-notice
+- eodq-q-d46-well-that-spoke-notice
+- eodq-q-d48-bell-clapper-notice
+- eodq-q-d50-last-dispatch-notice
+- eodq-q-d50-crypt-path-notice
+- eodq-q-d50-ring-the-bell-notice
+- eodq-r-bandit-sighting-notice
+- eodq-r-sick-herd-notice
+- eodq-r-lost-caravan-notice
+- eodq-r-boundary-dispute-notice
+- eodq-r-strange-relic-notice
+- eodq-r-roost-storm-notice
+- eodq-r-fen-lantern-notice
+- eodq-r-wagon-escort-notice
+- eodq-r-tunnel-rescue-notice
+- eodq-r-salvage-claim-notice
+- eodq-q-d01-well-road-success
+- eodq-q-d01-aqueduct-repair-success
+- eodq-q-d01-toll-parley-success
+- eodq-q-d01-toll-break-success
+- eodq-q-d01-mirefen-escort-success
+- eodq-q-d01-mirefen-inspect-success
+- eodq-q-d02-grain-cart-success
+- eodq-q-d02-crow-contract-success
+- eodq-q-d02-mole-audit-success
+- eodq-q-d03-three-wells-success
+- eodq-q-d03-bell-vigil-success
+- eodq-q-d03-bell-search-success
+- eodq-q-d03-toll-audit-success
+- eodq-q-d03-fen-ambush-success
+- eodq-q-d03-fen-hail-success
+- eodq-q-d04-survey-flags-success
+- eodq-q-d04-crow-elders-success
+- eodq-q-d04-crow-roost-success
+- eodq-q-d04-feast-armed-success
+- eodq-q-d05-flour-barrels-success
+- eodq-q-d05-toll-standoff-success
+- eodq-q-d05-saltroad-escort-success
+- eodq-q-d06-empty-stable-success
+- eodq-q-d07-crow-favor-success
+- eodq-q-d08-escort-to-bell-success
+- eodq-q-d09-iron-convoy-success
+- eodq-q-d10-freehold-raid-success
+- eodq-q-d12-mirefen-defense-success
+- eodq-q-d12-mirefen-cellars-success
+- eodq-q-d13-water-engine-success
+- eodq-q-d13-engine-sabotage-success
+- eodq-q-d14-sick-courier-success
+- eodq-q-d15-study-glass-success
+- eodq-q-d16-hidden-grain-success
+- eodq-q-d17-who-lies-success
+- eodq-q-d18-refugee-road-success
+- eodq-q-d19-bell-speech-success
+- eodq-q-d20-ford-dam-success
+- eodq-q-d22-ford-bodies-success
+- eodq-q-d23-blue-lantern-success
+- eodq-q-d24-mission-road-success
+- eodq-q-d24-coldbrook-visit-success
+- eodq-q-d26-dry-well-success
+- eodq-q-d27-flint-evidence-success
+- eodq-q-d28-rot-cure-success
+- eodq-q-d30-hold-the-line-success
+- eodq-q-d31-iron-rain-success
+- eodq-q-d33-thistledown-success
+- eodq-q-d33-waystation-success
+- eodq-q-d35-trestle-success
+- eodq-q-d35-tunnel-success
+- eodq-q-d36-bell-rehearsal-success
+- eodq-q-d41-stragglers-success
+- eodq-q-d42-tunnel-props-success
+- eodq-q-d42-crow-watch-success
+- eodq-q-d42-bell-water-success
+- eodq-q-d42-wagon-wheels-success
+- eodq-q-d42-caravan-guard-success
+- eodq-q-d42-barn-harvest-success
+- eodq-q-d42-rail-salvage-success
+- eodq-q-d44-komodo-bargain-success
+- eodq-q-d46-well-that-spoke-success
+- eodq-q-d48-bell-clapper-success
+- eodq-q-d50-last-dispatch-success
+- eodq-q-d50-crypt-path-success
+- eodq-q-d50-ring-the-bell-success
+- eodq-r-bandit-sighting-success
+- eodq-r-sick-herd-success
+- eodq-r-lost-caravan-success
+- eodq-r-boundary-dispute-success
+- eodq-r-strange-relic-success
+- eodq-r-roost-storm-success
+- eodq-r-fen-lantern-success
+- eodq-r-wagon-escort-success
+- eodq-r-tunnel-rescue-success
+- eodq-r-salvage-claim-success
+- eodq-q-d01-well-road-failure
+- eodq-q-d01-aqueduct-repair-failure
+- eodq-q-d01-toll-parley-failure
+- eodq-q-d01-toll-break-failure
+- eodq-q-d01-mirefen-escort-failure
+- eodq-q-d01-mirefen-inspect-failure
+- eodq-q-d02-grain-cart-failure
+- eodq-q-d02-crow-contract-failure
+- eodq-q-d02-mole-audit-failure
+- eodq-q-d03-three-wells-failure
+- eodq-q-d03-bell-vigil-failure
+- eodq-q-d03-bell-search-failure
+- eodq-q-d03-toll-audit-failure
+- eodq-q-d03-fen-ambush-failure
+- eodq-q-d03-fen-hail-failure
+- eodq-q-d04-survey-flags-failure
+- eodq-q-d04-crow-elders-failure
+- eodq-q-d04-crow-roost-failure
+- eodq-q-d04-feast-armed-failure
+- eodq-q-d05-flour-barrels-failure
+- eodq-q-d05-toll-standoff-failure
+- eodq-q-d05-saltroad-escort-failure
+- eodq-q-d06-empty-stable-failure
+- eodq-q-d07-crow-favor-failure
+- eodq-q-d08-escort-to-bell-failure
+- eodq-q-d09-iron-convoy-failure
+- eodq-q-d10-freehold-raid-failure
+- eodq-q-d12-mirefen-defense-failure
+- eodq-q-d12-mirefen-cellars-failure
+- eodq-q-d13-water-engine-failure
+- eodq-q-d13-engine-sabotage-failure
+- eodq-q-d14-sick-courier-failure
+- eodq-q-d15-study-glass-failure
+- eodq-q-d16-hidden-grain-failure
+- eodq-q-d17-who-lies-failure
+- eodq-q-d18-refugee-road-failure
+- eodq-q-d19-bell-speech-failure
+- eodq-q-d20-ford-dam-failure
+- eodq-q-d22-ford-bodies-failure
+- eodq-q-d23-blue-lantern-failure
+- eodq-q-d24-mission-road-failure
+- eodq-q-d24-coldbrook-visit-failure
+- eodq-q-d26-dry-well-failure
+- eodq-q-d27-flint-evidence-failure
+- eodq-q-d28-rot-cure-failure
+- eodq-q-d30-hold-the-line-failure
+- eodq-q-d31-iron-rain-failure
+- eodq-q-d33-thistledown-failure
+- eodq-q-d33-waystation-failure
+- eodq-q-d35-trestle-failure
+- eodq-q-d35-tunnel-failure
+- eodq-q-d36-bell-rehearsal-failure
+- eodq-q-d41-stragglers-failure
+- eodq-q-d42-tunnel-props-failure
+- eodq-q-d42-crow-watch-failure
+- eodq-q-d42-bell-water-failure
+- eodq-q-d42-wagon-wheels-failure
+- eodq-q-d42-caravan-guard-failure
+- eodq-q-d42-barn-harvest-failure
+- eodq-q-d42-rail-salvage-failure
+- eodq-q-d44-komodo-bargain-failure
+- eodq-q-d46-well-that-spoke-failure
+- eodq-q-d48-bell-clapper-failure
+- eodq-q-d50-last-dispatch-failure
+- eodq-q-d50-crypt-path-failure
+- eodq-q-d50-ring-the-bell-failure
+- eodq-r-bandit-sighting-failure
+- eodq-r-sick-herd-failure
+- eodq-r-lost-caravan-failure
+- eodq-r-boundary-dispute-failure
+- eodq-r-strange-relic-failure
+- eodq-r-roost-storm-failure
+- eodq-r-fen-lantern-failure
+- eodq-r-wagon-escort-failure
+- eodq-r-tunnel-rescue-failure
+- eodq-r-salvage-claim-failure
+rejected:
+  eodq-q-d42-cave-forage-notice: 'region tags won: a crow on a cliff ledge, not the cold cave and the foragers'
+  eodq-q-d42-cave-forage-success: a crow on a cliff ledge; no food, no camp
+  eodq-q-d42-cave-forage-failure: a crow on a cliff ledge; no cave, no hunger
+pending:
+  eodq-q-d42-cave-forage-notice-v2: ArtJob 42160
+  eodq-q-d42-cave-forage-success-v2: ArtJob 42161
+  eodq-q-d42-cave-forage-failure-v2: ArtJob 42162
+export_notes:
+  eodq-q-d30-hold-the-line-success: thin black frame baked in; cropped (12, 12, 1334, 767) before resize
