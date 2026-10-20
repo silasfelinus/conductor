@@ -476,7 +476,7 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Throne room audiences with gated solutions and the art-led dialogue box with streamed text"
-    status: claimed
+    status: done
     depends_on: t-020
     passes: 0
     stakes: reversible
@@ -486,10 +486,25 @@ tasks:
       follower or flag, shown locked with requirement. Dialogue box with
       nameplate, 2-4 choices, log, typewriter stream with tap-to-complete and a
       persisted speed setting (normal, fast, instant).
+
+      Merged kind_robots#3914 as 815fa731b4eff46cd1ab37ce2b65e0eb22cc43ab after all 21 checks
+      passed on head b79ea712689bb78c7de2eb81d2ce839b33ee4717. Silas 2026-10-20 PT asked for a
+      verbose visual-novel style with frequent morally testing choices. Audiences are now
+      branching scenes: options with next lead into beats (AudienceBeat), lines can be handed
+      to other speakers ({who, npc, text}) with nameplate and portrait, story-gated answers
+      (flags, absent followers) are hidden rather than shown locked, mid-scene state saves and
+      closes at dawn. All 50 days rewritten (98 audiences, 88 scenes, 139 beats, 956 answers,
+      ~56k words, ~100 callback answers and a dozen callback audiences reading earlier flags;
+      Komodo tells on lie days; Day 40 quiet word three beats deep with five evidence routes).
+      Original ids/effects/quests preserved; balance test and 40-seed report hold (8/8
+      endings; rustline patron 33/40; freeholds loans 4.1/run). Chromium at 1440 and 390 on a
+      local dev server: no page errors or horizontal scroll. Writing contract:
+      projects/emperor-of-dust/SCENE-WRITING-GUIDE.md.
     owner: worker
     claimed_by: 2026-10-20T113000Z-eod-vn-scenes
     claimed_at: '2026-10-20T11:14:02Z'
-    updated: '2026-10-20T11:14:02Z'
+    updated: '2026-10-20T12:01:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#3914'
   - id: t-022
     milestone: m3
     title: "Quest room board: assignment slots, requirement bands, preview odds and expiry"
