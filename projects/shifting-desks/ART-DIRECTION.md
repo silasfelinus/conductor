@@ -10,6 +10,19 @@ The visual rules for every Shifting Desks card. The world is in [DESIGN-BRIEF.md
 - **World texture:** pneumatic tubes, endless cubicle horizons, silver ducts overhead, beige terminals with green phosphor glow, fluorescent tube banks, wood-paneled executive gloom the deeper you go.
 - **Mood:** sunny company optimism with something wrong on the second look. Darkly comic, PG-13 (see the brief's tone guardrails). Deaths stay offscreen or slapstick.
 
+## Tone ladder: the deeper you go, the more the building is alive
+
+Silas, 2026-10-20 PT: *"In later levels, things might get more cronenbergian. I loved the giant cockroach appearance in the first act. Great tone."* Each floor keeps the poster look; what changes is how much of the office has quietly become a body.
+
+| Floor | Register | What the art may show |
+| --- | --- | --- |
+| Orientation, Records & Forms | **One impossible thing, treated as normal.** The benchmark is Gus: a cockroach as tall as a man, in a cardigan and reading glasses, filing a grievance. | Ordinary offices. The strangeness is a single creature or object that everyone politely accepts. |
+| Toy Division | **Toys a little too alive.** | Plush that seems to breathe, a bear with a warm heartbeat glow. Nothing organic on anything a child would hold, and no children (brief guardrail). |
+| Wellness & Testing | **The body starts doing paperwork.** | Small, cheerful, clinical mutations on staff (an extra blinking eye, a third hand holding a pen, a phosphor glow under the skin); furniture and ducts with ribs, breath and cilia. |
+| Sub-Level Zero | **Corporate biology.** The building is one organism and the Board is its face. | Walls veined with leather, cables like tendons, grilles that pucker like mouths, typewriters grown shells and feelers, eleven executives fused into one long suit. |
+
+The flesh is always **smooth, glossy, upholstered and tidy**, like expensive furniture. That keeps it funny rather than gross, and keeps it in the register an 11- and 14-year-old would laugh at. Never show blood, wounds, open or exposed organs, gore, pain, nudity or anyone in distress. People react with office politeness: the horror is that nobody minds. Cronenberg is a register, not a source, so copy none of his creatures or props (Original designs only, below).
+
 ## Palette
 
 Five inks plus paper. Each card leads with two of them; the rest appear only as accents.

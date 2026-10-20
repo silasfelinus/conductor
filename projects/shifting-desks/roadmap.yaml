@@ -49,6 +49,12 @@ notes_from_silas: |
   playable game lives at public /play/shifting-desks with a Projects tab, and grows there. Applied in DESIGN-BRIEF.md "Decided world" and PITCHES.md
   "Decision".
 
+  2026-10-20 PT: "And since this is our dark comedy bureaucracy adventure novel game, we
+  should make sure we're properly setting tone. So far so good. In later levels, things
+  might get more cronenbergian. I loved the giant cockroach appearance in the first act.
+  Great tone." Applied as the per-floor tone ladder in ART-DIRECTION.md and DESIGN-BRIEF.md
+  "Tone guardrails" (t-033).
+
   2026-10-12 PT: "priority: front end interaction. not in admin, in play. that means it
   needs to be up to standard for a five minute, multi stage expeirence demo." And: "all
   stations need an image. to be clear. we are making a demo, so i;s cool, but final result
@@ -753,7 +759,7 @@ tasks:
       re-queued in ROUND-13 (t-032).
   - id: t-032
     milestone: m3
-    title: 'Land, review and link the 25 art round 13 re-renders'
+    title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
     status: ready
     depends_on: t-015
     owner: null
@@ -762,5 +768,32 @@ tasks:
     updated: '2026-10-20T18:50:00Z'
     note: |-
       From t-015's 2026-10-20 PT art pass: all 184 delivered renders (rounds 2-12) were reviewed against their briefs; 159 keep, 25 sent back for garbled lettering on the focal prop (The Safe-Distance Memo, The Founder's Desk, Which Office Supply Are You?), a missing core gag (The Hungry Detector's teeth, Dale's false mustache, the precognition echo tripping, the Suppression Drill fog) or an off-style render (Security Desk). Mail for Kevin rendered its capsules as ammunition with one held to the worker's temple. ROUND-13.yaml queues 25 forced Krea 2 re-renders at the same paths with prompts rewritten to each review note (all pass the live checkArtPromptContract). To finish: once Auto Art Generate fulfills shifting-desks-r13-*, GET each media_url, record delivery_check and art_job_id, view each render against its prompt and set verdict keep/redo, then run python projects/shifting-desks/encounters/link_art.py --write --probe (20 pack slots link; the other 5 are job, mutation and ending art) and commit. Western Cartoon and Noir editions of these 25 subjects were rendered from the old prompts and were not reviewed here.
+
+      2026-10-20 PT: art round 14 (t-033) adds nine tone-ladder renders for the Wellness and Sub-Level Zero department arrivals, six locations and the Board. Review them the same way, and also against ART-DIRECTION.md "Tone ladder": body-horror texture that stays smooth and upholstered is a keep, while blood, wounds, exposed organs or anyone in distress is a redo. Then run link_art.py --write (all 29 pending slots link once kept).
+    claimed_by: null
+    claimed_at: null
+  - id: t-033
+    milestone: m3
+    title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-20T19:30:00Z'
+    note: |-
+      Silas, 2026-10-20 PT: "In later levels, things might get more cronenbergian. I loved the giant cockroach appearance in the first act. Great tone." ART-DIRECTION.md now carries a per-floor tone ladder: one impossible thing treated as normal on the surface (Gus is the benchmark), toys a little too alive in Toy Division, the body starting to do paperwork in the Vault, and corporate biology in Sub-Level Zero. Its limits are no blood, wounds, exposed organs, pain, nudity or distress, and flesh that is always smooth and upholstered. DESIGN-BRIEF "Tone guardrails" points to it. Art round 14 (ROUND-14.yaml) queues nine forced Krea 2 renders, all passing the live checkArtPromptContract: the Wellness and Sub-Level Zero department arrivals, their six location card backs, and the Board grown into one long suit. The pack briefs take the new prompts, and the replaced prompts and seeds stay in ROUND-5/6 for a one-request revert. Delivery and review ride t-032; card text follows in t-034.
+    claimed_by: null
+    claimed_at: null
+  - id: t-034
+    milestone: m3
+    title: 'Tone ladder text pass: Wellness and Sub-Level Zero card flavor'
+    status: ready
+    depends_on: t-033
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-20T19:30:00Z'
+    note: |-
+      Carry the t-033 tone ladder into the words players actually read. The 48 Wellness and Sub-Level Zero encounter cards, both reviews and both window shifts should gain body-horror texture in their flavor_text and outcome text, in the ART-DIRECTION.md "Tone ladder" register: PAL's grilles that lean in, furniture that breathes, mutations reported cheerfully by HR, and the Board as one organism. Change no mechanics, ids, flags or grades, so BALANCE-REPORT and FLAG-MAP stay byte-identical, which proves it. Keep the brief's tone guardrails (no blood, wounds or self-harm). Mirror the text into the kind_robots utils/shiftingDesks/wellness.json and sub-level-zero.json snapshots (art_prompt too, so the nine t-033 station prompts and the Western Cartoon/Noir STYLE-CATALOG rows can follow), then check the desk at 390 and 1440.
     claimed_by: null
     claimed_at: null
