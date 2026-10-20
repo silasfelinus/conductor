@@ -722,3 +722,16 @@ tasks:
     updated: '2026-10-17T16:30:00Z'
     note: |-
       Silas, 2026-10-17: "I like the pacing of 3 encounters before boss. What I want to do is double the encounters, so we have a possible 24 per." A run still deals one card from each of a floor's three locations, so pacing is unchanged; every location's pool is now 8 deep instead of 4. 60 new encounters (12 per department, 4 per location, polarity 4/4/4 each, every card graded): Orientation (Refreshments Are Served, The Red Stapler, Fumigation Thursday...), Records (The Tube That Goes Up, The Founding Charter, Forty-Two Years Overdue...), Toy Division (My First Reactor, The Robot Panel, The Hug Test...), Wellness (The Taste Panel, The Graduates' Lounge, Form M: Declaration of Powers...), Sub-Level Zero (Item Four, The Fifth Jar, Kevin's Cabinet, Ticket Number Two...). 40 new choices pay off earlier-floor flags, and 15 new ENDINGS variants read the strongest new flags (42 variants total); FLAG-MAP regenerated. Balance: halving the old deathtraps' draw rate dropped the Coward below its two-Successor floor, so the classic deathtrap cards keep their old frequency through doubled weights (Orientation x4, Jam in Tube 14, Thursday Door and Successor Waiting Room to 6), free paperwork picks now cost composure, and the new cards' -2 Suspicion reliefs are -1. Every threshold holds with more margin than before (Rebel 47.1%, Schemer 44.0%, Saint 35.1%, Complier 21.6%). Art round 12 (ROUND-12.yaml): 60 Classic Krea 2 card faces plus Western Cartoon and Noir rows (STYLE-CATALOG 194 subjects, 388 style rows); all 180 prompts pass the live checkArtPromptContract. Kind Robots kind_robots#3793 merged (188b6ec): the 24-card snapshot plus a denser four-route desk (four-route cards one size down, locked routes fold into lock chips) so the longer new cards fit at 390/768/820/1180/1440. Remaining: art round 12 delivery, then close.
+  - id: t-032
+    milestone: m3
+    title: 'Land, review and link the 25 art round 13 re-renders'
+    status: ready
+    depends_on: t-015
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-20T18:50:00Z'
+    note: |-
+      From t-015's 2026-10-20 PT art pass: all 184 delivered renders (rounds 2-12) were reviewed against their briefs; 159 keep, 25 sent back for garbled lettering on the focal prop (The Safe-Distance Memo, The Founder's Desk, Which Office Supply Are You?), a missing core gag (The Hungry Detector's teeth, Dale's false mustache, the precognition echo tripping, the Suppression Drill fog) or an off-style render (Security Desk). Mail for Kevin rendered its capsules as ammunition with one held to the worker's temple. ROUND-13.yaml queues 25 forced Krea 2 re-renders at the same paths with prompts rewritten to each review note (all pass the live checkArtPromptContract). To finish: once Auto Art Generate fulfills shifting-desks-r13-*, GET each media_url, record delivery_check and art_job_id, view each render against its prompt and set verdict keep/redo, then run python projects/shifting-desks/encounters/link_art.py --write --probe (20 pack slots link; the other 5 are job, mutation and ending art) and commit. Western Cartoon and Noir editions of these 25 subjects were rendered from the old prompts and were not reviewed here.
+    claimed_by: null
+    claimed_at: null
