@@ -1,0 +1,463 @@
+# Ecotone checkpoint bake-off (weird-humboldt). Silas, 2026-10-19 PT, looking at the zoo-tribute card: "What's with
+# the animal kids in the center. This isn't an anthro game. We might want a different checkpoint. How about we do some
+# tests with different checkpoints. Our art queue is open. Focus on the four companions. Actually, do some settings
+# around Humboldt's as well, let's see how the various checkpoints work with setting. We may want to use actual photos
+# when there are settings taking place in real locations, but that's later. Still, seeing how they do sequoias and
+# Bigfoot may be helpful."
+# The house lane (Arthemy Western Art) leans anthro: it is the Zuzu checkpoint. This compares it with seven non-anthro
+# candidates on the same eight subjects: Mara, Kit, Juniper and Cedar (current canon), and four Humboldt settings
+# (a redwood grove in Sequoia Park, a Bigfoot family picnic at Moonstone Beach, Arcata Plaza at night, and the Old
+# Town Eureka waterfront).
+# Each subject has one seed shared across all lanes. Tag lanes share a prefix/suffix; prose lanes get the same scene
+# as plain positive prose. The winner (or a split: one lane for people, one for places) becomes the Ecotone house
+# lane. Nothing here is a final asset.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: ecotone-checkpoints
+project_slug: weird-humboldt
+designer: Ecotone
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy
+  label: Arthemy Western Art v3.0 (current house, baseline)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, painterly, cinematic lighting
+  suffix: north coast california, coastal fog, redwood greens, teal and amber light
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: illustrij
+  label: Illustrij v2.1
+  engine: comfy
+  checkpoint: Illustrious/illustrij_v21.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, painterly, cinematic lighting
+  suffix: north coast california, coastal fog, redwood greens, teal and amber light
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: novacomic
+  label: Nova Comic XL v2.0
+  engine: comfy
+  checkpoint: Illustrious/novaComicXL_v20.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, painterly, cinematic lighting
+  suffix: north coast california, coastal fog, redwood greens, teal and amber light
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: realism
+  label: Realism Illustrious v5.5
+  engine: comfy
+  checkpoint: Illustrious/realismIllustriousBy_v55FP16.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, realistic, cinematic lighting
+  suffix: north coast california, coastal fog, redwood greens, teal and amber light
+  steps: 28
+  cfg: 5
+  sampler: euler_ancestral
+- key: nihilmania
+  label: SDXL Unstable Diffusers nihilmania
+  engine: comfy
+  checkpoint: SDXL/sdxlUnstableDiffusers_nihilmania.safetensors
+  prompt: prose
+  suffix: painterly illustration, coastal fog, redwood greens, teal and amber light
+- key: krea2
+  label: Krea 2
+  engine: krea2
+  prompt: prose
+  suffix: painterly illustration, coastal fog, redwood greens, teal and amber light
+- key: zimage
+  label: Z-Image Turbo
+  engine: zimage
+  prompt: prose
+  suffix: painterly illustration, coastal fog, redwood greens, teal and amber light
+- key: flux2
+  label: Flux 2 Klein
+  engine: flux2
+  prompt: prose
+  suffix: painterly illustration, coastal fog, redwood greens, teal and amber light
+subjects:
+- key: ck-mara
+  title: Mara, tattoo artist (sober guide)
+  size: 832x1216
+  seed: 64101
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, logo, headdress, feathers, war paint, costume, anthro, furry, animal ears, blurry,
+    multiple views
+  prompt_tags: solo, 1girl, adult woman, indigenous californian woman in her thirties, human, long black hair tied
+    back, sleeves of fine-line tattoos on both forearms, black t-shirt, canvas shop apron, pencil behind her ear,
+    sketchbook of bird designs, dry knowing half smile, sitting at a festival tattoo table under string lights,
+    redwood forest behind, cowboy shot
+  prompt_prose: A Native Californian woman in her thirties with long black hair tied back and fine-line tattoos
+    down both forearms sits at a festival tattoo table under string lights. She wears a black t-shirt and a canvas
+    shop apron, a pencil tucked behind her ear, a sketchbook of bird designs open in front of her, and gives a dry,
+    knowing half smile. Redwood forest behind her at dusk.
+  jobs:
+    arthemy: 40884
+    illustrij: 40885
+    novacomic: 40886
+    realism: 40887
+    nihilmania: 40888
+    krea2: 40889
+    zimage: 40890
+    flux2: 40891
+  art:
+    arthemy:
+      status: DONE
+      art_image_id: 248827
+    illustrij:
+      status: DONE
+      art_image_id: 248831
+    novacomic:
+      status: PENDING
+      art_image_id: null
+    realism:
+      status: PENDING
+      art_image_id: null
+    nihilmania:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+    flux2:
+      status: PENDING
+      art_image_id: null
+- key: ck-kit
+  title: Kit, kinetic sculptor and juggler (tipsy guide)
+  size: 832x1216
+  seed: 64102
+  negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
+    signature, text, letters, logo, qipao, kimono, conical hat, costume, anthro, furry, animal ears, blurry, multiple
+    views
+  prompt_tags: solo, 1girl, adult woman, hmong american woman in her late twenties, human, short asymmetric black
+    hair, paint-splattered mechanic coveralls with bright fabric patches, (juggling three wooden juggling clubs:1.2),
+    laughing, athletic stance, beside a pedal-powered kinetic sculpture with brass gears and a papier mache sea
+    serpent head, festival lights, cowboy shot
+  prompt_prose: A Hmong American woman in her late twenties with short asymmetric black hair, wearing paint-splattered
+    mechanic coveralls covered in bright fabric patches, laughs as she juggles three wooden juggling clubs beside
+    a pedal-powered kinetic sculpture with brass gears and a papier mache sea serpent head, festival lights glowing
+    around her.
+  jobs:
+    arthemy: 40892
+    illustrij: 40893
+    novacomic: 40894
+    realism: 40895
+    nihilmania: 40896
+    krea2: 40897
+    zimage: 40898
+    flux2: 40899
+  art:
+    arthemy:
+      status: DONE
+      art_image_id: 248828
+    illustrij:
+      status: RUNNING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
+    realism:
+      status: PENDING
+      art_image_id: null
+    nihilmania:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+    flux2:
+      status: PENDING
+      art_image_id: null
+- key: ck-juniper
+  title: Juniper, forest guide (stoned guide)
+  size: 832x1216
+  seed: 64103
+  negative: (nude:1.4), (cleavage:1.2), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed,
+    watermark, signature, text, letters, logo, elf ears, wings, anthro, furry, animal ears, blurry, multiple views
+  prompt_tags: solo, 1girl, adult woman, young woman in her twenties, human, curvy, (fully clothed:1.3), layered
+    thrift-store sweater, long patchwork skirt, messy auburn hair with a green ribbon and tiny ferns growing in
+    it, freckles, warm teasing smile, barefoot on moss among giant redwood roots, soft green forest glow, cowboy
+    shot
+  prompt_prose: A curvy young woman in her twenties with messy auburn hair, freckles and a warm teasing smile stands
+    barefoot on moss among giant redwood roots. She wears a layered thrift-store sweater and a long patchwork skirt,
+    with a green ribbon and tiny ferns growing in her hair, lit by a soft green forest glow.
+  jobs:
+    arthemy: 40900
+    illustrij: 40901
+    novacomic: 40902
+    realism: 40903
+    nihilmania: 40904
+    krea2: 40905
+    zimage: 40906
+    flux2: 40907
+  art:
+    arthemy:
+      status: DONE
+      art_image_id: 248829
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
+    realism:
+      status: PENDING
+      art_image_id: null
+    nihilmania:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+    flux2:
+      status: PENDING
+      art_image_id: null
+- key: ck-cedar
+  title: Cedar, backroads mechanic (tripping guide)
+  size: 832x1216
+  seed: 64104
+  negative: (1girl:1.4), (female:1.3), woman, (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra
+    fingers, deformed, watermark, signature, text, letters, logo, gun, rifle, sombrero, poncho, costume, anthro,
+    furry, animal ears, blurry, multiple views
+  prompt_tags: 1boy, solo, (male focus:1.3), human, rugged rural man in his thirties, mixed latino heritage, warm
+    light brown skin, dark hair, short beard stubble, worn trucker cap, oil-stained canvas work jacket, scuffed
+    work boots, holding a vintage cb radio handset on a coiled cord, mischievous grin, leaning on an old pickup
+    truck with a faded green ribbon tied to its antenna, redwood backroad at dusk, cowboy shot
+  prompt_prose: A rugged rural man in his thirties with warm light brown skin, dark hair and short beard stubble,
+    in a worn trucker cap, an oil-stained canvas work jacket and scuffed work boots, grins mischievously while holding
+    a vintage CB radio handset on a coiled cord. He leans on an old pickup truck with a faded green ribbon tied
+    to its antenna on a redwood backroad at dusk.
+  jobs:
+    arthemy: 40908
+    illustrij: 40909
+    novacomic: 40910
+    realism: 40911
+    nihilmania: 40912
+    krea2: 40913
+    zimage: 40914
+    flux2: 40915
+  art:
+    arthemy:
+      status: DONE
+      art_image_id: 248830
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
+    realism:
+      status: PENDING
+      art_image_id: null
+    nihilmania:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+    flux2:
+      status: PENDING
+      art_image_id: null
+- key: ck-grove
+  title: Setting, redwood grove in Sequoia Park
+  size: 1344x768
+  seed: 64201
+  negative: text, letters, sign text, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts,
+    people, anthro
+  prompt_tags: scenery, wide shot, an old-growth coast redwood grove, enormous red-brown trunks rising out of frame,
+    ferns and sorrel on the forest floor, a winding dirt path, shafts of misty light, a small wooden footbridge
+    over a creek, quiet and ancient
+  prompt_prose: An old-growth coast redwood grove with enormous red-brown trunks rising out of frame, ferns and
+    redwood sorrel covering the forest floor, a winding dirt path and a small wooden footbridge over a creek, shafts
+    of misty light falling between the trees. Quiet and ancient.
+  jobs:
+    arthemy: 40916
+    illustrij: 40917
+    novacomic: 40918
+    realism: 40919
+    nihilmania: 40920
+    krea2: 40921
+    zimage: 40922
+    flux2: 40923
+  art:
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
+    realism:
+      status: PENDING
+      art_image_id: null
+    nihilmania:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+    flux2:
+      status: PENDING
+      art_image_id: null
+- key: ck-bigfoot
+  title: Setting, Bigfoot family picnic at Moonstone Beach
+  size: 1344x768
+  seed: 64202
+  negative: text, letters, watermark, signature, logo, lowres, worst quality, blurry, jpeg artifacts, human, person,
+    nsfw, gore
+  prompt_tags: wide shot, (three sasquatches:1.3), bigfoot family, huge gentle hairy brown creatures in straw sun
+    hats, sitting on a checked picnic blanket on a wide sandy beach, a platter of deviled eggs, a blue cooler, the
+    smallest one holding up a smartphone for a selfie, dark sea stacks in the surf, foggy morning, wholesome and
+    funny
+  prompt_prose: A family of three huge, gentle, shaggy brown sasquatches wearing straw sun hats sits on a checked
+    picnic blanket on a wide sandy beach beside dark sea stacks on a foggy morning. There is a platter of deviled
+    eggs and a blue cooler, and the smallest sasquatch holds up a smartphone for a family selfie. Wholesome and
+    funny.
+  jobs:
+    arthemy: 40924
+    illustrij: 40925
+    novacomic: 40926
+    realism: 40927
+    nihilmania: 40928
+    krea2: 40929
+    zimage: 40930
+    flux2: 40931
+  art:
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
+    realism:
+      status: PENDING
+      art_image_id: null
+    nihilmania:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+    flux2:
+      status: PENDING
+      art_image_id: null
+- key: ck-plaza
+  title: Setting, Arcata Plaza at night
+  size: 1344x768
+  seed: 64203
+  negative: text, letters, sign text, store names, logos, watermark, signature, lowres, worst quality, blurry, jpeg
+    artifacts, anthro
+  prompt_tags: scenery, wide shot, a small-town college plaza at night, a lawn square with a bronze statue in the
+    middle, palm trees and redwoods, two-story brick and wooden storefronts with warm lit windows, an art deco cinema
+    marquee glowing, light fog, a few people on the sidewalks, cozy and slightly uncanny
+  prompt_prose: A small-town college plaza at night, with a lawn square and a bronze statue in the middle, palm
+    trees and redwoods, two-story brick and wooden storefronts with warm lit windows, and an art deco cinema marquee
+    glowing down the block. Light fog, a few people on the sidewalks. Cozy and slightly uncanny.
+  jobs:
+    arthemy: 40932
+    illustrij: 40933
+    novacomic: 40934
+    realism: 40935
+    nihilmania: 40936
+    krea2: 40937
+    zimage: 40938
+    flux2: 40939
+  art:
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
+    realism:
+      status: PENDING
+      art_image_id: null
+    nihilmania:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+    flux2:
+      status: PENDING
+      art_image_id: null
+- key: ck-oldtown
+  title: Setting, Old Town Eureka waterfront
+  size: 1344x768
+  seed: 64204
+  negative: text, letters, sign text, store names, logos, watermark, signature, lowres, worst quality, blurry, jpeg
+    artifacts, anthro
+  prompt_tags: scenery, wide shot, a victorian old town on a working bay, ornate painted gingerbread houses and
+    brick storefronts, a wooden boardwalk along the water, fishing boats at a pier, gulls, overcast silver light,
+    a faint green shimmer on the water
+  prompt_prose: A Victorian old town on a working bay, with ornate painted gingerbread houses and brick storefronts,
+    a wooden boardwalk along the water, fishing boats tied up at a pier and gulls overhead, under overcast silver
+    light with a faint green shimmer on the water.
+  jobs:
+    arthemy: 40940
+    illustrij: 40941
+    novacomic: 40942
+    realism: 40943
+    nihilmania: 40944
+    krea2: 40945
+    zimage: 40946
+    flux2: 40947
+  art:
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    illustrij:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
+    realism:
+      status: PENDING
+      art_image_id: null
+    nihilmania:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+    flux2:
+      status: PENDING
+      art_image_id: null

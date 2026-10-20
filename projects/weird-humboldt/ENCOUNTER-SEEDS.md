@@ -180,3 +180,5 @@
 **Count:** 120 seeds, plus WH-121 (history thread, 2026-10-19). These are commissioning-ready *writing prompts*, not live assets or generated image jobs.
 
 Silas's location atlas (2026-10-19): Arcata Marsh, Bayshore Mall, Sequoia Park Zoo (Bill the Chimp), Fickle Hill, Luffenholtz, Heartwood, Ferndale's village and cemetery, casinos and Hupa have hooks and care rules in [LOCATIONS.md](LOCATIONS.md) (roadmap t-031).
+
+Playable location cards (2026-10-19, kind_robots#3871): WH-122 The Marsh That Eats Its Words, WH-123 Bad Reception, WH-124 The Friends Who Aren't Here, WH-125 Anchor Stores, WH-126 Behind the Mall. WH-121 The Latitude Argument is playable too.
