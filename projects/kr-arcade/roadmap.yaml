@@ -1789,7 +1789,7 @@ tasks:
   - id: t-102
     milestone: m8
     title: "Hedgehog Crossing depth slice 1: Lanes as data and the Family Parade"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: >-
@@ -1800,10 +1800,19 @@ tasks:
       2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality
       improvements, they should not just be thin veneers of the old games. But newer, better, even more
       awesome."
+
+      Part 1 shipped in silasfelinus/kind_robots#3925 (merge 593fc5a): escalation table with
+      no plateau (rules.ts), grass snake with tongue-flick tell, lost hoglet + Family Parade
+      (follow-the-leader, bump-back, Parade Bonus), Bristle Dash, cabinet suite
+      verifyCabinetHedgehogCrossing. Verified: test:arcade-engine, eslint/prettier, vue-tsc,
+      pilot probe seeds 1-6, Chromium render, 18 CI checks green. REMAINING for t-102:
+      snapping log (eyes open before it yawns; ride tail half), heron (shadow sweeps a creek
+      column), delivery bot (blinker before lane change), lanes-as-data refactor of LANES.
     owner: worker
     claimed_by: 011v6xMWs4WURVrQehnDAPY7
     claimed_at: '2026-10-20T19:47:49Z'
-    updated: '2026-10-20T19:47:49Z'
+    updated: '2026-10-20T20:13:19Z'
+    implementation_pr: 'silasfelinus/kind_robots#3925'
 
   - id: t-103
     milestone: m8
