@@ -1821,7 +1821,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1848,13 +1848,12 @@ tasks:
     User-reported mobile LoRA Triage contrast, Resources discovery, and clipped gallery regression.
 
     LoRA Triage now exposes model Library/Discover navigation, opaque actions, compact mobile stats, and a bounded scroll owner. Changes on Kind Robots worker/interface-vision-t105-lora-triage-20261020-4d91c2, awaiting PR checks.
-  updated: '2026-10-20T10:10:00Z'
+
+    Merged silasfelinus/kind_robots#3909 as cef8fd03f8bcbc27c2d198410a8e2cbb5238b6bd. All 16 exact-head GitHub Actions completed successfully, including Navigation Consolidation, Layout, MDC Scroll Ownership, Changed-file Prettier, TypeScript and all Contract Tests shards. Admin LoRA Triage exposes Library and Discover/download links, toolbar gains opaque backing, and bounded scrolling makes gallery rows reachable. No database/API changes or manual deployment. Return recurring page-polish task to ready.
+  updated: '2026-10-20T10:20:00Z'
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
   min_rest_hours: 24
-  owner: worker
-  claimed_by: 20261020T100000Z-interface-vision-t105-lora-4d91c2
-  claimed_at: '2026-10-20T10:00:00Z'
 
 - id: t-106
   milestone: m6
