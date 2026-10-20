@@ -392,11 +392,11 @@ def extract_reference_frame(video, frame_index, destination):
         raise RuntimeError(f"Could not extract continuity frame {frame_index} from {video}")
 
 
-def overwrite_fraction(job):
+def overwrite_strength(job):
     strength = job.get("renderRecipe", {}).get("overwriteStrength", 100)
     if isinstance(strength, bool) or not isinstance(strength, int) or not 0 <= strength <= 100:
         raise ValueError("Overwrite strength must be an integer from 0 to 100")
-    return strength / 100
+    return strength
 
 
 def assemble(job_dir, source, pilot, outputs, frame_count, quality, overwrite_strength=100):
@@ -540,7 +540,7 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
                          + (" (Grab bag)" if styles else ""))
         update(job_path, job, stage="Assembling sample and restoring source audio")
         assemble(job_dir, source, pilot, clips, frame_count, job["quality"],
-                 int(overwrite_fraction(job) * 100))
+                 overwrite_strength(job))
         result = job_dir / "pilot.mp4"
         if not result.is_file() or result.stat().st_size < 1000:
             raise RuntimeError("Pilot render assembly produced no playable output.")
