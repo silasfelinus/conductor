@@ -1,0 +1,195 @@
+# Shifting Desks art round 15 (t-032, 2026-10-20 PT): third attempts at the nine ROUND-13 re-renders whose
+# gag still did not land (the robot looking up, Kevin's palm print, Dale's fake mustache, the shared pudding
+# bowl, the drill's fog, the tube bulge and three mutation cards). Adding detail failed twice, so each prompt
+# recomposes the card around its one joke: a closer crop, a single gesture, the gag as the main subject. force: true
+# overwrites at the same path. Status values: requested -> rendered -> delivered. Generated internal art is
+# pre-approved (AGENTS.md).
+round: shifting-desks-15
+project_slug: shifting-desks
+task: t-032
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-20T20:10:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render, blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: the-curious-robot
+  kind: window-applicant
+  department: toy-division
+  title: 'A wind-up robot'
+  card: the-curious-robot
+  source_ref: encounters/TOY-DIVISION-12.json window_shift.applicants[the-curious-robot].art.brief
+  replaces: ROUND-13 the-curious-robot (seed 63001)
+  review_note: 'redo: the garbled text is gone and the bespectacled clerk now appears, but the robot still stands in profile facing left, away from the clerk, with its head level rather than tilted back to look up hopefully (the review_note problem persists); its chest is also covered in dials and panels rather than plain smooth tin'
+  request_id: shifting-desks-r15-the-curious-robot
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 65001
+  target_path: kind_robots public/images/shifting-desks/window/the-curious-robot.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/the-curious-robot.webp
+  prompt: 'Low-angle view from countertop level of a tiny plain smooth tin wind-up robot with a brass key in its back, its round head tipped all the way back so its two round eyes gaze straight up at the face of a kindly bespectacled clerk leaning down over the counter toward it, a small neat stack of blank pale paper beside its feet, mid-century safety-manual illustration, screen-printed gouache with halftone grain, safety orange and carbon-paper blue palette, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: kevin-from-tank-nine
+  kind: window-applicant
+  department: wellness
+  title: 'Kevin, from Tank Nine'
+  card: kevin-from-tank-nine
+  source_ref: encounters/WELLNESS-12.json window_shift.applicants[kevin-from-tank-nine].art.brief
+  replaces: ROUND-13 kevin-from-tank-nine (seed 63002)
+  review_note: 'redo: the plaque text is fixed (plain brass band) and there is some frost, but he still waves with an open hand instead of pressing his palm flat to the glass, and there is no wiped clear circle around his face (the review_note problems persist)'
+  request_id: shifting-desks-r15-kevin-from-tank-nine
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 65002
+  target_path: kind_robots public/images/shifting-desks/window/kevin-from-tank-nine.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/kevin-from-tank-nine.webp
+  prompt: 'Close-up of the front of a tall glass tank fogged solid white with frost, one round clear circle wiped in the frost and a friendly man''s smiling face peering out through it, his open hand pressed flat against the inside of the glass beside the circle leaving a clear palm-shaped print in the frost, mid-century safety-manual illustration, screen-printed gouache with halftone grain, fluorescent-tube green and manila palette, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: dale-in-the-mustache
+  kind: window-applicant
+  department: sub-level-zero
+  title: 'Dale, from Compliance, in a mustache'
+  card: dale-in-the-mustache
+  source_ref: encounters/SUBLEVEL-ZERO-12.json window_shift.applicants[dale-in-the-mustache].art.brief
+  replaces: ROUND-13 dale-in-the-mustache (seed 63003)
+  review_note: 'redo: the core gag is still missing; Dale again has a small, natural dark pencil mustache, not a huge, crooked, obviously fake white handlebar one (finger raised and brass stand under his arm are present)'
+  request_id: shifting-desks-r15-dale-in-the-mustache
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 65003
+  target_path: kind_robots public/images/shifting-desks/window/dale-in-the-mustache.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/dale-in-the-mustache.webp
+  prompt: 'Head-and-shoulders portrait of a smiling compliance officer in a pressed suit, wearing a gigantic fluffy snow-white walrus mustache twice as wide as his face, obviously fake, held on by a thin elastic string looped over both ears and hanging crooked so one end droops past his chin, one finger raised importantly, a grand reception desk behind him, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, fluorescent-tube green and oxblood, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-taste-panel
+  kind: card-face
+  department: wellness
+  title: 'The Taste Panel'
+  card: the-taste-panel
+  source_ref: encounters/WELLNESS-12.json encounters[the-taste-panel].art.brief
+  replaces: ROUND-13 the-taste-panel (seed 63008)
+  review_note: 'redo: the review_note problem persists; everyone still has their own plate (a shared bowl is added, but not everyone is dipping into it), and all four tasters are smiling with no sour grimace, so the holdout beat is still missing; the palette is also sepia rather than oxblood'
+  request_id: shifting-desks-r15-the-taste-panel
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 65004
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-taste-panel.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-taste-panel.webp
+  prompt: 'Mid-century safety-manual illustration seen from straight ahead of one enormous round bowl of pink pudding in the middle of a long bench, four employees leaning in around that single bowl with their spoons all dipped into it together, three of them grinning and nodding eagerly, a mustached man in a clip-on tie nodding hardest, and the woman at the far right pulling a big sour face with her tongue stuck out, a technician with a raised pencil behind them, oxblood, manila and bright pink palette, halftone grain, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-suppression-drill
+  kind: card-face
+  department: sub-level-zero
+  title: 'The Suppression Drill'
+  card: the-suppression-drill
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-suppression-drill].art.brief
+  replaces: ROUND-13 the-suppression-drill (seed 63009)
+  review_note: 'redo: the white swirl along the floor reads as rushing floodwater (the janitor mopping it reinforces that) rather than billowing knee-deep fog, and the crouched worker beside the desk still isn''t puffing his cheeks to hold his breath; he holds something to his face instead'
+  request_id: shifting-desks-r15-the-suppression-drill
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 65005
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-suppression-drill.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-suppression-drill.webp
+  prompt: 'Mid-century safety-manual illustration of a server room where thick puffy white smoke clouds billow up out of the floor vents and hang in the air at waist height between the cabinets, a worker crouched under a steel desk with both cheeks puffed out round like balloons and eyes squeezed shut, a calm janitor in a headscarf with big headphones on dusting a cabinet at the far end, spinning amber beacons overhead, fluorescent green and carbon-paper blue palette, halftone grain, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-jam-in-tube-14
+  kind: card-face
+  department: records
+  title: 'The Jam in Tube 14'
+  card: the-jam-in-tube-14
+  replaces: ROUND-13 the-jam-in-tube-14 (seed 63012)
+  review_note: 'redo: a diagonal brass tube, steam, a flare-lamp and a striped towel are now present, but the tube has no round swollen bulge (instead a windowed gauge with a cylinder inside), and the worker isn''t pressing his ear to it; two figures, one a black silhouette duplicate, huddle facing each other instead'
+  request_id: shifting-desks-r15-the-jam-in-tube-14
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 65006
+  target_path: kind_robots public/images/shifting-desks/cards/records/the-jam-in-tube-14.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/the-jam-in-tube-14.webp
+  prompt: 'A single fat shiny brass pneumatic pipe running straight across a beige wall at head height, one big round swelling in its middle like a snake that swallowed a ball, a worker in a rumpled beige suit standing on tiptoe with one ear pressed flat against the swelling and a hand cupped behind the other ear, safety orange and manila dominant colors, mid-century corporate safety-manual illustration, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-four-second-precognition
+  kind: mutation
+  title: 'Four-Second Precognition'
+  source_ref: encounters/DECKS.json mutations[four-second-precognition].art_prompt
+  replaces: ROUND-13 mutation-four-second-precognition (seed 63017)
+  review_note: 'redo: core gag still missing; the pale green ghost walks upright with no stumble or fall, and the real worker strides on normally without lifting a foot over the cable'
+  request_id: shifting-desks-r15-mutation-four-second-precognition
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 65007
+  target_path: kind_robots public/images/shifting-desks/mutations/four-second-precognition.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/four-second-precognition.webp
+  prompt: 'Mid-century safety-manual illustration of an office corridor with a black cable across the floor, a pale glowing see-through ghost of an office worker lying flat on its face on the floor just past the cable with arms flung out, and behind it the solid real worker in the same suit calmly stepping high over the cable with a knowing smile, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, screen-printed gouache with halftone grain, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-empathic-static
+  kind: mutation
+  title: 'Empathic Static'
+  source_ref: encounters/DECKS.json mutations[empathic-static].art_prompt
+  replaces: ROUND-13 mutation-empathic-static (seed 63018)
+  review_note: 'redo: there is still no golden static arc between the temples, the coworkers'' eyes are open and they are looking at each other; only the lifted hair and floating papers hint at the charge (the floating sheets also carry faint text lines)'
+  request_id: shifting-desks-r15-mutation-empathic-static
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 65008
+  target_path: kind_robots public/images/shifting-desks/mutations/empathic-static.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/empathic-static.webp
+  prompt: 'Mid-century safety-manual illustration in profile of two coworkers sitting face to face at a desk with their eyes closed and foreheads tilted toward each other, a bright jagged golden lightning bolt of static electricity leaping directly from one forehead to the other, both of their hairdos standing straight up on end and loose papers floating up between them, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, screen-printed gouache with halftone grain, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-eyes-in-the-back-of-your-head
+  kind: mutation
+  title: 'Eyes in the Back of Your Head'
+  source_ref: encounters/DECKS.json mutations[eyes-in-the-back-of-your-head].art_prompt
+  replaces: ROUND-13 mutation-eyes-in-the-back-of-your-head (seed 63019)
+  review_note: 'redo: there are still no eyes on the back of the bob haircut, and the coworker behind is smiling and waving mid-stride rather than frozen mid-tiptoe looking guilty; the mutation is still absent'
+  request_id: shifting-desks-r15-mutation-eyes-in-the-back-of-your-head
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 65009
+  target_path: kind_robots public/images/shifting-desks/mutations/eyes-in-the-back-of-your-head.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/eyes-in-the-back-of-your-head.webp
+  prompt: 'Mid-century safety-manual illustration close behind an office worker at a desk, the back of her head with a neat glossy black bob haircut large in the foreground, two large calm wide-open eyes looking out of the back of her hair straight at a coworker who is frozen on tiptoe behind her holding a stolen stapler with a guilty startled face, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, screen-printed gouache with halftone grain, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
