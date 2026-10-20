@@ -1,0 +1,242 @@
+# Emperor of Dust room backdrops, round 1 (frontend art-direction pass, 2026-10-19 PT).
+# Silas asked to close the gap between the shipped fortress UI and the painted drafts
+# (concepts/painted-screens.webp, painted-fortress-cutaway.webp). Those drafts are art-led:
+# each room is a full painted scene with the interface laid over it. These six backdrops are
+# that scene layer, one per room, at two seeds each, on the cast's house checkpoint so the
+# rooms and the 246 cast images share one palette. Scenes keep the centre-left open and the
+# right third quiet, because the room panels sit there. No text in the art: every name,
+# number and label stays live HTML.
+# The map room's table map is NOT rendered here: the map room shows Silas's painted canon map
+# (concepts/painted-wasteland-canon.webp) with live pins over it.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# `keepers` names the seed exported to kind_robots public/emperor-of-dust/rooms/<room>.webp.
+round: emperor-rooms-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    weathered, dramatic lighting, painterly background art, scenery, wide establishing shot
+  suffix: kiln ochre, deep crimson and tarnished brass palette, warm candlelight against dusty gold haze, salvage,
+    wasteland fortress, every surface bare and unmarked
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eodr-throne-a
+  lane: arthemy-house
+  title: Throne room backdrop (seed a)
+  room: throne
+  size: 1344x768
+  seed: 61001
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, interior of a grand stone throne hall, tall arched windows
+    with shafts of dusty golden sunlight, long crimson banners with a gold sun sigil hanging from high beams, an
+    empty carved wooden throne on a stepped dais, crimson carpet up the steps, iron candle stands with lit candles,
+    stone pillars, dust motes, deep perspective, warm shadows in the foreground
+  jobs:
+    arthemy-house: 40949
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodr-throne-b
+  lane: arthemy-house
+  title: Throne room backdrop (seed b)
+  room: throne
+  size: 1344x768
+  seed: 61002
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, interior of a grand stone throne hall, tall arched windows
+    with shafts of dusty golden sunlight, long crimson banners with a gold sun sigil hanging from high beams, an
+    empty carved wooden throne on a stepped dais, crimson carpet up the steps, iron candle stands with lit candles,
+    stone pillars, dust motes, deep perspective, warm shadows in the foreground
+  jobs:
+    arthemy-house: 40950
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodr-quests-a
+  lane: arthemy-house
+  title: Quest room backdrop (seed a)
+  room: quests
+  size: 1344x768
+  seed: 61011
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, candlelit timber war room inside a fortress, a large wooden
+    notice board on the wall covered in pinned blank parchment notices and rough ink sketches of roads and ruins,
+    red pins and string, a heavy table with rolled maps, brass lanterns, candles on iron sconces, a narrow window
+    with dusk light, shadowed corners
+  jobs:
+    arthemy-house: 40951
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodr-quests-b
+  lane: arthemy-house
+  title: Quest room backdrop (seed b)
+  room: quests
+  size: 1344x768
+  seed: 61012
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, candlelit timber war room inside a fortress, a large wooden
+    notice board on the wall covered in pinned blank parchment notices and rough ink sketches of roads and ruins,
+    red pins and string, a heavy table with rolled maps, brass lanterns, candles on iron sconces, a narrow window
+    with dusk light, shadowed corners
+  jobs:
+    arthemy-house: 40952
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodr-barracks-a
+  lane: arthemy-house
+  title: Barracks backdrop (seed a)
+  room: barracks
+  size: 1344x768
+  seed: 61021
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, long timber barracks hall in a stone fortress, rows of bunks
+    with patched blankets, weapon racks with spears and shields, travel packs and boots, crimson banners, tall windows
+    with warm late afternoon light, hanging brass lanterns, wooden beams, a lived-in, cosy, battered room
+  jobs:
+    arthemy-house: 40953
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodr-barracks-b
+  lane: arthemy-house
+  title: Barracks backdrop (seed b)
+  room: barracks
+  size: 1344x768
+  seed: 61022
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, long timber barracks hall in a stone fortress, rows of bunks
+    with patched blankets, weapon racks with spears and shields, travel packs and boots, crimson banners, tall windows
+    with warm late afternoon light, hanging brass lanterns, wooden beams, a lived-in, cosy, battered room
+  jobs:
+    arthemy-house: 40954
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodr-market-a
+  lane: arthemy-house
+  title: Market court backdrop (seed a)
+  room: market
+  size: 1344x768
+  seed: 61031
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, open market court inside fortress walls, stalls under crimson
+    and cream canvas awnings, hanging brass lanterns and charms, copper pots, crates of salvage, a brass scale on
+    a counter, a desert city of towers and mesas beyond the wall in hazy sunset light, long shadows, dust in the
+    air
+  jobs:
+    arthemy-house: 40955
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodr-market-b
+  lane: arthemy-house
+  title: Market court backdrop (seed b)
+  room: market
+  size: 1344x768
+  seed: 61032
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, open market court inside fortress walls, stalls under crimson
+    and cream canvas awnings, hanging brass lanterns and charms, copper pots, crates of salvage, a brass scale on
+    a counter, a desert city of towers and mesas beyond the wall in hazy sunset light, long shadows, dust in the
+    air
+  jobs:
+    arthemy-house: 40956
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodr-map-a
+  lane: arthemy-house
+  title: Map room backdrop (seed a)
+  room: map
+  size: 1344x768
+  seed: 61041
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, top floor map room of a fortress tower, a wide wooden map table
+    under a lamp, brass compasses, dividers and candles, shelves of scroll cases, tall open arches looking out over
+    a vast orange desert of mesas and canyons, evening light, banners stirring in the wind
+  jobs:
+    arthemy-house: 40957
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodr-map-b
+  lane: arthemy-house
+  title: Map room backdrop (seed b)
+  room: map
+  size: 1344x768
+  seed: 61042
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, top floor map room of a fortress tower, a wide wooden map table
+    under a lamp, brass compasses, dividers and candles, shelves of scroll cases, tall open arches looking out over
+    a vast orange desert of mesas and canyons, evening light, banners stirring in the wind
+  jobs:
+    arthemy-house: 40958
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodr-chronicle-a
+  lane: arthemy-house
+  title: Chronicle backdrop (seed a)
+  room: chronicle
+  size: 1344x768
+  seed: 61051
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, a high stone fortress balcony at dusk, looking out over a wasteland
+    of mesas and spires, a huge pale sun sinking into dust haze, a thin crescent moon above, scattered distant towers,
+    iron railings, a brazier with a low flame, melancholy, quiet, wide sky
+  jobs:
+    arthemy-house: 40959
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodr-chronicle-b
+  lane: arthemy-house
+  title: Chronicle backdrop (seed b)
+  room: chronicle
+  size: 1344x768
+  seed: 61052
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, close-up, portrait, deformed
+  prompt_tags: scenery only, deserted and unpeopled, a high stone fortress balcony at dusk, looking out over a wasteland
+    of mesas and spires, a huge pale sun sinking into dust haze, a thin crescent moon above, scattered distant towers,
+    iron railings, a brazier with a low flame, melancholy, quiet, wide sky
+  jobs:
+    arthemy-house: 40960
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
