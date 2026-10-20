@@ -661,13 +661,13 @@ tasks:
   - id: t-030
     milestone: m4
     title: "Afterwards: a consequences epilogue after Day 50 that remembers what the emperor did"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
     claimed_by: 2026-10-20T123500Z-eod-epilogue
     claimed_at: '2026-10-20T12:35:00Z'
-    updated: '2026-10-20T12:35:00Z'
+    updated: '2026-10-20T13:22:13Z'
     note: >-
       GAME-BIBLE promises "an ending and a consequences epilogue"; the end screen only showed
       the ending family and the names of the dead. epilogue.ts holds subjects (followers,
@@ -676,6 +676,18 @@ tasks:
       Contract: every flag an epilogue reads is set somewhere (audiences, quests, talks,
       engine). Branch worker/emperor-of-dust-t030-epilogue in kind_robots; stark prose per
       SCENE-WRITING-GUIDE.md.
+
+      Merged kind_robots#3921 as 93190f58f6d1bf870ee5883b073c15129b180500 after all 22 checks
+      passed on head c431c29ddce1fd00d12c33fdd5c1273483bf9150. epilogue.ts: 42 subjects, 307
+      stark-prose variants (all 20 followers, the NPCs, factions, places, the hideout and
+      Komodo last), first matching variant told; peace-only kingdom variants keep the Long
+      Night dark. EmperorFortressEpilogue.vue slideshow with Read all, text-only cards where a
+      subject has no art. Contract: every flag read is settable (audiences, beats, quests,
+      talks, engine). 13 policies x 8 seeds: 21-30 entries per run. Chromium 1440/390 with an
+      injected finished crows-bargain campaign: no page errors or horizontal scroll. Also
+      fixed the Day 1 informant's pronoun on Day 4 (she, as Days 16 and 42). Follow-up: t-032
+      save size.
+    implementation_pr: 'silasfelinus/kind_robots#3921'
   - id: t-031
     milestone: m5
     title: "Stark-prose pass over all fifty days (King / Joe Hill / Lone Wolf and Cub)"
@@ -693,3 +705,18 @@ tasks:
       effects, requirements, beats, quests, flags and line/option counts identical to main;
       contract, balance and playbook tests pass. Talks (t-017/t-026) were written to the same
       register.
+  - id: t-032
+    milestone: m3
+    title: "Keep a finished campaign's saves well under the browser storage quota"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Found 2026-10-20 while verifying t-030: a seeded full 50-day run's autosave book is about
+      1 MB (318 flags; every dawn snapshot repeats the full `reports` history, so size grows
+      roughly quadratically with days). decodeBook allows 3 MB, but autosave plus three manual
+      slots (each a whole book) can approach the ~5 MB localStorage quota. Options: store dawn
+      snapshots without the accumulated reports (rebuild them from the current run on rewind),
+      or delta-encode dawns. Must keep the SYSTEMS-V03 save rules: validated saves, never
+      overwrite unreadable data, rewind to any dawn. Add a contract test bounding a full run's
+      encoded size.
