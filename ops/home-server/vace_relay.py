@@ -246,6 +246,8 @@ def process(job):
                 "stylePrompts": video.get("stylePrompts") or {}}
                if video.get("styleSchedule") else {}),
             **({"renderSpeed": "fast"} if fast else {}),
+            **({"overwriteStrength": video["overwriteStrength"]}
+               if "overwriteStrength" in video else {}),
         },
         "pilot": {
             "startSec": float(video.get("startSec")),

@@ -392,7 +392,14 @@ def extract_reference_frame(video, frame_index, destination):
         raise RuntimeError(f"Could not extract continuity frame {frame_index} from {video}")
 
 
-def assemble(job_dir, source, pilot, outputs, frame_count, quality):
+def overwrite_strength(job):
+    strength = job.get("renderRecipe", {}).get("overwriteStrength", 100)
+    if isinstance(strength, bool) or not isinstance(strength, int) or not 0 <= strength <= 100:
+        raise ValueError("Overwrite strength must be an integer from 0 to 100")
+    return strength
+
+
+def assemble(job_dir, source, pilot, outputs, frame_count, quality, overwrite_strength=100):
     retained = accepted_frames(frame_count)
     inputs = [part for part in outputs]
     filters = []
@@ -401,8 +408,20 @@ def assemble(job_dir, source, pilot, outputs, frame_count, quality):
     joined = "".join(f"[v{k}]" for k in range(len(retained)))
     filters.append(f"{joined}concat=n={len(retained)}:v=1:a=0[joined]")
     video_map = "[joined]"
+    if overwrite_strength < 100:
+        amount = overwrite_strength / 100
+        original = len(inputs)
+        filters.append(
+            f"[{original}:v]fps={FPS},scale=720:480:flags=lanczos,"
+            "setsar=1,setpts=PTS-STARTPTS[original]"
+        )
+        filters.append(
+            f"[original][joined]blend=all_expr='A*{1 - amount:.2f}+B*{amount:.2f}':"
+            "shortest=1[mixed]"
+        )
+        video_map = "[mixed]"
     if quality == "1080p":
-        filters.append("[joined]scale=1620:1080:flags=lanczos[out]")
+        filters.append(f"{video_map}scale=1620:1080:flags=lanczos[out]")
         video_map = "[out]"
     command = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y"]
     for path in inputs:
@@ -520,7 +539,8 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
                    stage=f"Motion-conditioned window {done}/{len(spans)} complete"
                          + (" (Grab bag)" if styles else ""))
         update(job_path, job, stage="Assembling sample and restoring source audio")
-        assemble(job_dir, source, pilot, clips, frame_count, job["quality"])
+        assemble(job_dir, source, pilot, clips, frame_count, job["quality"],
+                 overwrite_strength(job))
         result = job_dir / "pilot.mp4"
         if not result.is_file() or result.stat().st_size < 1000:
             raise RuntimeError("Pilot render assembly produced no playable output.")
