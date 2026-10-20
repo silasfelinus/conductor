@@ -1,14 +1,4 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures:
-- source: requests
-  target: public/images/channels/admin/art-review.webp
-  kind: timeout
-  detail: job 41207 timed out after 300s (still queued/running)
-  first_seen: '2026-10-20'
-- source: kr-failed-jobs
-  target: ArtJob 40972
-  kind: kr-job-failed
-  detail: 'engine=COMFY; error=save-generated failed: HTTP 500 An unknown error occurred.'
-  first_seen: '2026-10-20'
+failures: []
