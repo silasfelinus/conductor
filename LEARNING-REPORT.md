@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-10-20T07:18:00Z
+Generated: 2026-10-20T10:06:19Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1280**
-- Outcomes: blocked: 19, cancelled: 2, done: 1259
+- Closed tasks recorded: **1282**
+- Outcomes: blocked: 19, cancelled: 2, done: 1261
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -75,6 +75,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | taskmaster | 3 | 100% |
 | text-generation | 8 | 100% |
 | tzaddik-gallery | 26 | 100% |
+| weird-humboldt | 2 | 100% |
 | zuzu-pinball | 4 | 100% |
 | zuzu-shifting-lands | 2 | 100% |
 | zuzu-showdown | 9 | 100% |
@@ -84,7 +85,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 18 | 50% |
-| software | 1262 | 99% |
+| software | 1264 | 99% |
 
 ## Failure categories
 
@@ -106,6 +107,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-10-20 `weird-humboldt/t-046` — A complete 120-seed manuscript can still be mechanically repetitive; preserve canonical IDs and layer precise third choices, lens-specific narration, and verified long-term callbacks instead of regenerating all prose.
+- 2026-10-20 `weird-humboldt/t-026` — Add interaction-uniqueness and seeded consequence audits after draft coverage; content completeness is not the same thing as narrative gameplay variety.
 - 2026-10-20 `coat-dance/t-017` — For connector-only UI settings spanning Kind Robots and home-server relays, gate non-default jobs on relay capabilities and avoid whitespace-sensitive source-code assertions after Prettier.
 - 2026-10-17 `rainbow-bullet-hell-space-princess/t-009` — A finale is not one more Act. Its choice and escape happen after the boss falls, at times the Act clock cannot checkpoint, so give them their own counters and make a continue restart the escape rather than rewind the clock. Keep the crew safe while it chooses, and stop the invulnerability blink there so every pilot can see where it is flying. Have the attract demo make each choice by crew size, so one verifier plays the whole campaign to THE END for every ending. Keep YAML front matter free of bare colons in prose.
 - 2026-10-17 `rainbow-bullet-hell-space-princess/t-008` — An Act is a director module plus a boss module plus one engine block, and every new Act repeats the same seams (currentAct, checkpoints, resume, snapshot, render chains), so script those edits with anchored replacements and let a full demo run per crew size prove them. Make the attract demo pick routes on purpose (odd crews one way, even the other) so the verifier flies every branch deterministically, and re-check a stacked PR after its base squash-merges - merging main with --ours is only safe when the base commit is the only change to the conflicted files.
@@ -114,8 +117,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-10-16 `rainbow-bullet-hell-space-princess/t-018` — Extract a browser fixture into a shared helper before a second test needs it, and measure input latency inside the page (dispatch, then sample the engine on animation frames) - polling from the test runner added two frames of round-trip noise that would have made a 1-frame response look like a flaky 3.
 - 2026-10-16 `rainbow-bullet-hell-space-princess/t-015` — To prove a Nuxt component in a real browser without the app, compile the SFCs with esbuild and stub only the stores - but set each component's __scopeId (compileScript does not) and add the site's border-box reset, or the fixture fails on layout the real site never has. Driving the real cabinet surfaced a product gap (no gamepad pause mid-run) that engine-only tests could not.
 - 2026-10-16 `rainbow-bullet-hell-space-princess/t-021` — Stage eligibility edge cases through play instead of state edits - a seat that rams craft until its last hit lands in the target lane leaves a wreck exactly where the check needs it, and the cabinet's own setPlayers benches a seat mid-run; then observe the outcome through what render() draws, mutate the eligibility rule to prove the test bites, and keep avoid-paths from crossing the lane they avoid.
-- 2026-10-16 `rainbow-bullet-hell-space-princess/t-019` — Prove a telegraph through the consumer, not the helper - drive ordinary-input crews to the boss (continues make that reachable without demo immortality), record what render() actually strokes each frame, and assert the drawn cue against every volley; mutate the window and the post-crossing delay to show the test bites, and render at phone width because a pulsing alpha can dip below readable.
-- 2026-10-13 `kr-arcade/t-065` — Separate purchase ceilings from earned gameplay and bounded save domains; exercise actual score awards, checkpoint serialization and public Continue at boundary counts, including loss and re-earn, and verify exact-head completed CI before closure.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-20T07:18:00Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-20T10:06:19Z_

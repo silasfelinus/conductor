@@ -763,11 +763,8 @@ tasks:
   - id: t-019
     milestone: m1
     title: "Validate 56 fates through seven opening lenses and companion crossroads"
-    status: claimed
-    owner: worker
-    claimed_by: 2026-10-20T072030Z-ecotone-pr3889-fix-7r6k
-    claimed_at: '2026-10-20T07:20:30Z'
-    updated: '2026-10-20T07:20:30Z'
+    status: ready
+    updated: '2026-10-20T07:43:08Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -776,6 +773,8 @@ tasks:
       Draft PR 3889 needs integration and CI fixes; file writes blocked.
 
       Partial implementation exists as draft kind_robots PR #3889. Before new work, inspect that PR and finish formatting, gameplay reachability, TypeScript and finale integration. No merge or public release yet.
+
+      Merged kind_robots PR #3889 after 15/15 CI workflows passed, including gameplay, TypeScript, formatting and full contract tests. Added nine quest cards, four follower-specific scenes, three staged substance-lens scenes, 36 authored ending signatures, multi-era bookends and earned callbacks. Quest prerequisites now flow through the single canonical Playbook deck. Original t-019 objective remains open: three additional adult opening lenses still need authored, playable introductions and reachability tests across all 56 core companion outcomes. No new art generation or public launch approval was granted.
   - id: t-020
     milestone: m2
     title: "Author 8 core futures and 56 short ending signature paragraphs"
@@ -897,20 +896,18 @@ tasks:
   - id: t-026
     milestone: m2
     title: "Specify modular finale assembly and 56 ending signatures"
-    status: ready
-    owner: null
+    status: done
+    claimed_by: 2026-10-20T092145Z-ecotone-quests-kaizen-p9q2
+    claimed_at: '2026-10-20T09:21:45Z'
+    updated: '2026-10-20T09:44:30Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Apply ECOTONE-ENDING-GRAMMAR.md. Keep 8 fully written
-      final companion x hope/dark 1/10/30-year core spines,
-      56 distinct opening x final companion x fate signature
-      paragraphs with art concept prompts, and a small verified
-      selection of optional causal callbacks. The older 32
-      IDs remain stable; 24 new lens variants are added.
-      Scope value-to-debt, conditional truth provenance and
-      one-screen montage. Do not impose 56 triple epilogues
-      or generate images without the human art gate.
+    note: |-
+      Apply ECOTONE-ENDING-GRAMMAR.md. Keep 8 fully written final companion x hope/dark 1/10/30-year core spines, 56 distinct opening x final companion x fate signature paragraphs with art concept prompts, and a small verified selection of optional causal callbacks. The older 32 IDs remain stable; 24 new lens variants are added. Scope value-to-debt, conditional truth provenance and one-screen montage. Do not impose 56 triple epilogues or generate images without the human art gate.
+
+      Completed a 120-card Ecotone authored quest / finale iteration with companion- and substance-specific sidequests, 56 companion signatures, 1/10/30-year future bookends and causal callbacks. Repairing confirmed PR #3903 gameplay reachability and formatting regressions before merging; Silas authorized publishing iterative content on 2026-10-20 PT while keeping editorial review open.
+
+      Implemented and merged kind_robots PR #3903 (e5bc799792eff4511d32d6eed941c7d1ffdd61e5). Authored first manuscript of 120 canonical encounter seeds, distinct narrative lenses, companion signatures, 1/10/30-year modular futures, and earned callbacks. All 13 final GitHub checks passed. Further second-draft editorial uniqueness and migration checks are explicitly separate follow-up work. Silas approved iterative content release.
   - id: t-027
     milestone: m2
     title: "Generate and curate high-value middle encounters and art briefs"
@@ -1417,3 +1414,62 @@ tasks:
       under the art standard (t-042) 14 pictures x 4 styles. Keep existing saves and
       the single-lead endings intact; seeded-replay tests cover reaching each new
       line.
+  - id: t-046
+    milestone: m2
+    title: "Second draft I: make high-leverage regional decisions genuinely distinct"
+    status: done
+    claimed_by: 2026-10-20T095000Z-ecotone-revisions-n7t4
+    claimed_at: '2026-10-20T09:50:00Z'
+    updated: '2026-10-20T10:05:10Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas (2026-10-20 PT): publish/review/iterate, 80% improve and test vs 20% targeted new prose. Audit 120 authored encounters for mechanical sameness. Replace the invest-or-help boilerplate at 10+ pivotal cards across the six regions with third/fourth specific alternatives, authored outcomes, surprising failures, persistent distinct flags and earned callbacks. Preserve the 2d6/save/art-slot schema, no mandatory moral/substance verdict, 2-4 choices, history/cultural gates, and add deterministic tests for uniqueness and reachability.
+
+      Scoped user-approved second-draft implementation adds 13 region-spanning bespoke third alternatives, six complete seven-lens narrated encounters, six uniquely earned future callbacks and conditional ballot/journey memory. Kind Robots PR forthcoming; retain active editing/review loop and no historical/tribal publication waiver.
+
+      Merged kind_robots PR #3908 as 8932bb0659c103e1f14c9a7b31eaf5578ede8520. Added 13 bespoke third choices across all six regional chapters, six seven-lens passages (42 path-specific asides), six earned future callbacks and conditional county ballot acknowledgments. All 13 current head workflows passed including Ecotone gameplay, TypeScript, Prettier, and full contract shards. Editorial examples are distinct wry narrative, not imitation of named authors.
+  - id: t-047
+    milestone: m2
+    title: "Second draft II: companion continuity and chosen-family optional scenes"
+    status: review
+    depends_on: t-046
+    owner: worker
+    claimed_by: 2026-10-20T100710Z-ecotone-former-guides-h8r5
+    claimed_at: '2026-10-20T10:07:10Z'
+    updated: '2026-10-20T10:13:45Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Audit every lead/lens encounter and stay/follow relationship for contradictions; create bespoke recurring callbacks, optional scenes with former companions, and earned found-family outcomes without forcing romance or implying unseen meetings. Coordinate with t-045 chosen-family design and preserve the existing 56 primary companion signatures and 84 overall solo/Wild Way gallery slots.
+
+      Implemented four individually gated former-guide meetings and an optional two-meet community potluck, with consequential choices, seven-lens potluck narration, six earned future callbacks, and seeded-eligibility regression tests. This independent portion intentionally does not overwrite the separate pending t-045 chosen-family design from Conductor PR #6394. Kind Robots PR forthcoming.
+  - id: t-048
+    milestone: m3
+    title: "Second draft III: thousands of seeded journeys and save compatibility"
+    status: waiting
+    depends_on: t-047
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Simulate seeded campaigns across openings, routes, archetypes and switches to
+      prove all reachable endings, safe choice offers, coherent flags, no duplicate
+      cards, no phantom callbacks, replay variety and 45-75 minute pacing.
+      Explicitly protect legacy WH-004/WH-037/WH-058 save IDs as LX variant cards
+      replaced these bonus identifiers. Add regression coverage for recoverable
+      failures, gallery counts and art-outcome identity.
+  - id: t-049
+    milestone: m5
+    title: "Second draft IV: prose, history, culture and quality redline"
+    status: waiting
+    depends_on: t-048
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Run chapter-by-chapter editorial review for humor, character agency, distinct
+      mood, source provenance, sober parity, diverse lived-in identities and real-world
+      historical care. Human consultation is required before Tuluwat/Wiyot historical
+      player-facing text ships; do not randomize atrocity or frame history as occult
+      explanation. Leave final publication and creative acceptance gates intact.
