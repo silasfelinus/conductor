@@ -651,8 +651,7 @@ tasks:
   - id: t-035
     milestone: m5
     title: "V6 balance report: survival, death causes and gate reachability by land"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 20261020T232129Z-zsl-t035-gpt6-c4ad
     claimed_at: '2026-10-20T23:21:29Z'
     passes: 0
@@ -664,7 +663,9 @@ tasks:
       Ready 2026-10-18: kind runs complete 28% vs ruthless 46% at V6 merge; a starting harness lived in the session scratchpad (policy by marks/targets, 400 seeds each). Decide with t-034 how much of the kindness penalty is tone and how much is a cliff.
 
       Built deterministic V6 real-engine balance harness across kind, safe, greedy, ruthless, and random policies, with 300 seeded journeys per policy in the Shifting Lands CI contract. Measures per-land arrivals, trial reach/clearance, deaths, provisions/health curves, deed-gated routes, evidence choices, and top fatal choices. CI and final measured report pending; all V6 gameplay rules and save schema untouched.
-    updated: '2026-10-20T23:26:16Z'
+
+      Completed real V6 balance simulation in Kind Robots PR #3944, merged fc7bb4d490b620eaff719035947b1033e784fa91 after all 13 latest-head workflows green (including Shifting Lands gameplay, TypeScript, formatting, and full four-shard contracts). Authored script utils/scripts/shiftingLandsV6BalanceReport.ts, CI command runs 300 seeds each for five kind/safe/greedy/ruthless/random heuristics, and committed measured tables and editorial findings in docs/shifting-lands/V6-BALANCE-REPORT.md. Completion 42.3/59.3/36.0/41.7/39.3 percent by policy, respectively; 524 of 844 deaths in Verge, 44.4 percent of final-land arrivals falling there. Very low deed-gated and investigative trial route availability for several policies. Follow-up replay-safe, explicitly versioned V7 tuning in kind_robots issue #3946. No runtime mechanics, saved-game schema, art or production deploy touched. One-line unrelated Conductor validation repair PR #6423 unblocked review transition, preserving other worker claim. Leave t-036 prose and t-033 art independent.
+    updated: '2026-10-20T23:41:51Z'
   - id: t-036
     title: "Shifting Lands V6: comprehensive encounter line edit for voice, stakes and readable choices"
     status: claimed
