@@ -29,3 +29,13 @@
 **Audit:** 12 new files, all under `projects/emperor-of-dust/concept-art/` (11 SVGs + README). No `<script>`, event handlers or external hrefs in any SVG; no runtime, data, ArtJob, deploy or publication change. Reversible and scoped, and README handoff matches MAP-LAYOUT.md / SYSTEMS-V03.md.
 
 **Decision:** not merged. The PR declares subjective art-direction approval reserved for Silas (content/outward-facing gate); t-010 also keeps public Play release separate. Leave open until Silas accepts or modifies the compositions. Approval here does not approve the 246-image t-012 batch.
+
+## 2026-10-20 PT | Worker → Silas/Reviewer | emperor-of-dust/t-021, t-017, t-026, t-029, t-031, t-030 | visual-novel pass
+
+**Direction (Silas):** accelerate Emperor of Dust; every path interesting and unique, teetering influences, an engaging (more verbose) visual-novel style with frequent choices that question morality; wide leniency on art. Later the same day: "we want crisp stark prose. Stephen King or his son Joe Hill, lone wolf and cub." Contract: SCENE-WRITING-GUIDE.md.
+
+**Shipped (kind_robots, all CI-green and merged):** #3914 branching audience scenes for all 50 days (88 scenes, 139 beats, ~100 callbacks); #3915 six painted room backdrops and 228/231 quest images; #3919 stark-prose rewrite of every act (structure-guarded, ~16% leaner); #3920 barracks Talk scenes (63 talks, all 20 followers), six romance arcs and the three missing allegiance reveals.
+
+**Watch for:** the balance test's patron and loan margins are close to their thresholds (rustline patron 33/40, freeholds loans 4.1/5); the bots break ties toward the first listed answer, so new answers go after the originals in every beat. Gated answers are now hidden, not shown locked (optionVisible). Pending art rerolls: ArtJobs 42158-42162. F010 Lumen has no recruitment route yet. `crow-favor-owed` reads as the tower's debt on Day 2 and the Crows' debt in Act IV (pre-existing; not changed).
+
+**In progress:** t-030 epilogue on kind_robots branch worker/emperor-of-dust-t030-epilogue.
