@@ -760,16 +760,22 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: claimed
+    status: ready
     depends_on: t-015
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-10-20T12:53:12Z'
+    updated: '2026-10-20T12:58:50Z'
     note: |-
       From t-015's 2026-10-20 PT art pass: all 184 delivered renders (rounds 2-12) were reviewed against their briefs; 159 keep, 25 sent back for garbled lettering on the focal prop (The Safe-Distance Memo, The Founder's Desk, Which Office Supply Are You?), a missing core gag (The Hungry Detector's teeth, Dale's false mustache, the precognition echo tripping, the Suppression Drill fog) or an off-style render (Security Desk). Mail for Kevin rendered its capsules as ammunition with one held to the worker's temple. ROUND-13.yaml queues 25 forced Krea 2 re-renders at the same paths with prompts rewritten to each review note (all pass the live checkArtPromptContract). To finish: once Auto Art Generate fulfills shifting-desks-r13-*, GET each media_url, record delivery_check and art_job_id, view each render against its prompt and set verdict keep/redo, then run python projects/shifting-desks/encounters/link_art.py --write --probe (20 pack slots link; the other 5 are job, mutation and ending art) and commit. Western Cartoon and Noir editions of these 25 subjects were rendered from the old prompts and were not reviewed here.
 
       2026-10-20 PT: art round 14 (t-033) adds nine tone-ladder renders for the Wellness and Sub-Level Zero department arrivals, six locations and the Board. Review them the same way, and also against ART-DIRECTION.md "Tone ladder": body-horror texture that stays smooth and upholstered is a keep, while blood, wounds, exposed organs or anyone in distress is a redo. Then run link_art.py --write (all 29 pending slots link once kept).
+
+      2026-10-20 PT: round 13 reviewed. 24/25 landed (all new files); 15 keep, linked
+      (link_art.py 148/163, probed live); 9 still missed their gag and are recomposed in
+      ROUND-15. Remaining: ending-the-kind-rewrite (round 13, still rendering), the 9 tone-
+      ladder renders in ROUND-14 and the 9 in ROUND-15. Review each, then link_art.py --write
+      --probe.
     claimed_by: 2026-10-20T20:00:00Z-sd-r13-review
     claimed_at: '2026-10-20T12:53:12Z'
   - id: t-033

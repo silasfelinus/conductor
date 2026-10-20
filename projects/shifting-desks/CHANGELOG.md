@@ -44,3 +44,7 @@
 ## 2026-10-20 PT (later)
 - Tone ladder (t-033, Silas: "In later levels, things might get more cronenbergian. I loved the giant cockroach appearance in the first act."). ART-DIRECTION.md sets the register per floor: one impossible thing treated as normal on the surface, toys a little too alive, the body starting to do paperwork in the Vault, and corporate biology in Sub-Level Zero. Flesh is always smooth and upholstered, with no blood, wounds or exposed organs.
 - Art round 14 queues nine renders that take the Wellness and Sub-Level Zero arrivals, location card backs and the Board one rung up. t-034 carries the ladder into card text.
+
+## 2026-10-20 PT (round 13 review)
+- 24 of 25 round-13 re-renders landed (each is a new file, not the rejected render). Review: 15 keep, including Gus as a man-sized cockroach handing a new hire the form and Mail for Kevin with soup-can canisters (the ammunition read is gone). 9 still missed their gag and go to ROUND-15, recomposed around the one joke each.
+- link_art.py: 148/163 slots linked and probed live. The Kind Rewrite ending is still rendering, and round 14 (the tone ladder) has not started yet.
