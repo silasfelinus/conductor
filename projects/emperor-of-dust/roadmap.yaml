@@ -571,18 +571,28 @@ tasks:
   - id: t-022
     milestone: m3
     title: "Quest room board: assignment slots, requirement bands, preview odds and expiry"
-    status: claimed
+    status: done
     depends_on: t-020
     passes: 0
     stakes: reversible
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-022
     claimed_at: '2026-10-20T21:07:52Z'
-    updated: '2026-10-20T21:07:52Z'
+    updated: '2026-10-20T22:44:34Z'
+    note: >-
+      Merged kind_robots#3940 as c94cf4e003152df8466d5b7a7e4b26f5af3dbb66 (22/22 checks).
+      Notices show requirement bands, Lethal and a countdown; the quest card states reward,
+      the expiry consequence, danger with wound range, per-stat party total vs need (hidden as
+      ?), never fogged factions or hidden strength. previewQuest adds injuryRisk, injuryDays
+      and deathChance from the night-roll tables (matched against 400 seeds). Party slots,
+      per-follower contribution, a What-counts list, non-blocking warnings beside Send, Call
+      back restores the notice; Lamplight support 20 reveals every ? (LAMPLIGHT_SIGHT).
+      Chromium 1440/390.
+    implementation_pr: 'silasfelinus/kind_robots#3940'
   - id: t-023
     milestone: m3
     title: "Follower secret traits, unique abilities, faction modifiers, hidden allegiance and the persistent Codex"
-    status: claimed
+    status: done
     depends_on: t-019
     passes: 0
     stakes: reversible
@@ -590,21 +600,47 @@ tasks:
       Reveal on first relevance, persist revealed traits and allegiance in a
       meta-save Codex across runs (never items, brass or relationships), apply
       hidden modifiers silently until revealed.
+
+      Shipped in kind_robots#3940 (c94cf4e0). codex.ts (trait index, allegiancesKnown,
+      howLearned, codexPages, revealLine); decode/merge keep only follower trait ids (never
+      items, brass or relationships); quest rewards that set an allegiance flag reveal it at
+      dawn; allegiances absorbed on load; reveal moments (EmperorFortressCodexNote) in
+      barracks and throne room; Chronicle Codex section, one page per follower, N of 46
+      secrets with how each was learned; all six talk allegiance flags reach the Codex; writes
+      go through the saves worker's persistCodex guard. Not built: keyword highlights in quest
+      text and the remaining ? reveal sources (follower secret skills, market maps, Komodo's
+      hint).
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-023
     claimed_at: '2026-10-20T21:07:55Z'
-    updated: '2026-10-20T21:07:55Z'
+    updated: '2026-10-20T22:44:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#3940'
   - id: t-024
     milestone: m3
     title: "Market with rotating per-run equipment (two slots), healing and barracks upgrades"
-    status: claimed
+    status: done
     depends_on: t-020
     passes: 0
     stakes: reversible
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-024
     claimed_at: '2026-10-20T21:07:58Z'
-    updated: '2026-10-20T21:07:58Z'
+    updated: '2026-10-20T22:34:00Z'
+    note: >-
+      Merged kind_robots#3936 as dce5fb303eb9669ed73d48b3aaed7e2b45f1285c (21/21 checks).
+      items.ts: 30 items (7 original + 23), stat bonuses, party powers and faction/tag edges,
+      some with faction reactions on purchase (Mire charms cost the Abbey, Rustline relics
+      cost Lamplight, the stolen clapper costs Hollow Bell). market.ts: seeded stock turning
+      over three times an act (days 1-3, 4-6, 7-10), gated by banners on the map, wipe-outs,
+      affinity tiers and local support, rerolled on a rewind branch, once per window per item,
+      Act V peddler favours the host; Sell at half price; Treatments (surgeon 8 + 2/day,
+      Saltroad discount; seeded Mire poultice 50/30/20, Abbey -1) once per follower per day;
+      carpenters (beds) in the market. Market tabs Buy/Sell/Equipment/Treatments/All;
+      run.market optional and validated. Chromium 1440/390 on Day 12. Item icons queued as
+      ArtJobs 42323-42352 (art/ITEMS-ROUND-1.yaml); export keepers to public/emperor-of-
+      dust/items/<id>.webp and list them in ITEM_ART. Balance bots do not shop (a shopping
+      policy would be a follow-up).
+    implementation_pr: 'silasfelinus/kind_robots#3936'
   - id: t-025
     milestone: m3
     title: "Map room: territories, taxes, affinity tiers, act-end map events and telegraphed faction wipe-outs"
