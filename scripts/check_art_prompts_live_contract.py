@@ -11,7 +11,9 @@ ground tiles said "crisp readable detail" ([art-direction-jargon]).
 
 This runs the authoritative TypeScript itself (no copied regexes) under Node's
 type stripping, read from a kind_robots checkout with `git show <ref>:<path>`,
-over every active request and project image. Run it before pushing hand-written
+over every active request and project image, and every unsubmitted cell of a
+round ledger (projects/*/art/*.yaml, submitted by enqueue_art_requests.py, which
+also calls run_contract() before it posts). Run it before pushing hand-written
 art rows, and after rewriting a contract-rejected prompt:
 
     python scripts/check_art_prompts_live_contract.py
@@ -72,6 +74,64 @@ def git_show(repo: Path, ref: str, path: str) -> str:
                           check=True, capture_output=True, text=True).stdout
 
 
+def ledger_rows(paths: list[Path] | None = None) -> list[dict]:
+    """Unsubmitted cells of the round ledgers (projects/*/art/*.yaml with lanes and subjects).
+
+    enqueue_art_requests.py submits these. Its own guard mirrored only the negation rules,
+    so on 2026-10-20 weird-humboldt ck-grove went out twice with "rising out of frame"
+    ([frame-noun]: ArtJobs 40921, 40923, 40962)."""
+    try:
+        from scripts import enqueue_art_requests as enq
+    except ImportError:  # pragma: no cover - direct script execution
+        import enqueue_art_requests as enq
+    found = []
+    for path in paths if paths is not None else sorted(ROOT.glob("projects/*/art/*.yaml")):
+        try:
+            ledger = yaml.safe_load(Path(path).read_text()) or {}
+        except yaml.YAMLError:
+            continue
+        if not isinstance(ledger, dict) or not ledger.get("lanes") or not ledger.get("subjects"):
+            continue
+        cells = [(s, lane) for s, lane in enq.iter_cells(ledger) if not enq.job_id_of(s, lane.get("key"))]
+        for (subject, lane), row in zip(cells, enq.contract_rows(cells)):
+            found.append({**row, "id": f"{Path(path).name}:{subject.get('key')}[{lane.get('key')}]"})
+    return found
+
+
+def run_contract(checked: list[dict], kr_repo: str | Path = ROOT.parent / "kind_robots",
+                 ref: str = "origin/main") -> list[dict] | None:
+    """[{id, violations}] from the real artPromptContract.ts, or None when it cannot run here."""
+    try:
+        contract = git_show(Path(kr_repo), ref, CONTRACT)
+        quality = git_show(Path(kr_repo), ref, QUALITY)
+    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        print(f"cannot read the contract from {kr_repo} at {ref}: {exc}", file=sys.stderr)
+        return None
+    # The two edits that let Node run the server file standalone: h3 is only
+    # used to throw in assertArtPromptContract, and ESM needs the extension.
+    contract = contract.replace("import { createError } from 'h3'",
+                                "const createError = (e: unknown) => new Error(String(e))")
+    contract = contract.replace("from './artPromptQuality'", "from './artPromptQuality.ts'")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        t = Path(tmp)
+        (t / "contract.ts").write_text(contract)
+        (t / "artPromptQuality.ts").write_text(quality)
+        (t / "run.ts").write_text(RUNNER)
+        (t / "rows.json").write_text(json.dumps(checked))
+        try:
+            proc = subprocess.run(["node", "--experimental-strip-types", "--no-warnings",
+                                   str(t / "run.ts"), str(t / "rows.json")],
+                                  capture_output=True, text=True)
+        except FileNotFoundError:
+            print("node is not installed", file=sys.stderr)
+            return None
+    if proc.returncode != 0:
+        print(f"node could not run the contract:\n{proc.stderr.strip()}", file=sys.stderr)
+        return None
+    return json.loads(proc.stdout)
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--kr-repo", default=str(ROOT.parent / "kind_robots"))
@@ -79,33 +139,16 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--project", help="only this project_slug")
     args = ap.parse_args(argv)
 
-    try:
-        contract = git_show(Path(args.kr_repo), args.ref, CONTRACT)
-        quality = git_show(Path(args.kr_repo), args.ref, QUALITY)
-    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
-        print(f"cannot read the contract from {args.kr_repo} at {args.ref}: {exc}", file=sys.stderr)
-        return 2
-    # The two edits that let Node run the server file standalone: h3 is only
-    # used to throw in assertArtPromptContract, and ESM needs the extension.
-    contract = contract.replace("import { createError } from 'h3'",
-                                "const createError = (e: unknown) => new Error(String(e))")
-    contract = contract.replace("from './artPromptQuality'", "from './artPromptQuality.ts'")
-
     checked = rows(args.project)
-    with tempfile.TemporaryDirectory() as tmp:
-        t = Path(tmp)
-        (t / "contract.ts").write_text(contract)
-        (t / "artPromptQuality.ts").write_text(quality)
-        (t / "run.ts").write_text(RUNNER)
-        (t / "rows.json").write_text(json.dumps(checked))
-        proc = subprocess.run(["node", "--experimental-strip-types", "--no-warnings",
-                               str(t / "run.ts"), str(t / "rows.json")],
-                              capture_output=True, text=True)
-    if proc.returncode != 0:
-        print(f"node could not run the contract:\n{proc.stderr.strip()}", file=sys.stderr)
+    if args.project:
+        checked += ledger_rows(sorted(ROOT.glob(f"projects/{args.project}/art/*.yaml")))
+    else:
+        checked += ledger_rows()
+    results = run_contract(checked, args.kr_repo, args.ref)
+    if results is None:
         return 2
 
-    bad = [r for r in json.loads(proc.stdout) if r["violations"]]
+    bad = [r for r in results if r["violations"]]
     for r in bad:
         for v in r["violations"]:
             print(f"  [{v['rule']}] {r['id']}: {v['detail'][:200]}")

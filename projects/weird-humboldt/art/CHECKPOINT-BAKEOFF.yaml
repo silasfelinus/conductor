@@ -284,7 +284,7 @@ subjects:
   prompt_tags: scenery, wide shot, an old-growth coast redwood grove, enormous red-brown trunks rising out of frame,
     ferns and sorrel on the forest floor, a winding dirt path, shafts of misty light, a small wooden footbridge
     over a creek, quiet and ancient
-  prompt_prose: An old-growth coast redwood grove with enormous red-brown trunks rising out of frame, ferns and
+  prompt_prose: An old-growth coast redwood grove with enormous red-brown trunks towering far overhead, ferns and
     redwood sorrel covering the forest floor, a winding dirt path and a small wooden footbridge over a creek, shafts
     of misty light falling between the trees. Quiet and ancient.
   jobs:
@@ -294,8 +294,8 @@ subjects:
     realism: 40919
     nihilmania: 40920
     zimage: 40922
-    flux2: 40923
-    krea2: 40962
+    flux2: 41206
+    krea2: 41205
   art:
     arthemy:
       status: PENDING
@@ -465,6 +465,8 @@ review:
   # Reviewed 2026-10-20 PT (Claude, for Silas's call) from contact sheets of the 38 finished renders. The art
   # worker stalled ~01:16 UTC with ArtJob 40891 (flux2, Mara) stuck RUNNING, so Flux 2 and most tag-lane settings
   # are still pending. ck-grove/krea2 failed once (40921) and was resubmitted as 40962.
+  # 40962 and ck-grove/flux2 40923 failed [frame-noun] on "rising out of frame"; the prose now reads "towering far
+  # overhead" and both lanes were resubmitted as 41205 (krea2) and 41206 (flux2), 2026-10-20.
   people: >-
     Krea 2 and Z-Image are the only lanes whose four portraits read as the cast: Mara as a Native tattoo artist
     sketching flash, Kit as a Hmong American juggler in patchwork coveralls with her sea-serpent sculpture, Juniper
