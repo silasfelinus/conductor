@@ -18,6 +18,11 @@ goal: >-
   one-screen Play experience. Final art direction and any public release remain
   subject to Silas's later explicit creative approval.
 notes_from_silas: |
+  2026-10-20 PT (night), Silas, sending five mockups plus a Story Atlas
+  gallery mockup (design/2026-10-20/): "here's our new mockups for playbook
+  manager and an ecotone layout structure. Ecotone should definitely support
+  multiple styles, same as we do with shifting desks. I'l have to review the
+  checkpoints still to figure out the sweet spots". (t-038, t-039, t-040)
   2026-10-20 PT (evening), Silas, on making Playbook Manager edits work in
   every game: "What does this mean? Is it a fundamental gap in
   implementation. Can it be worked with, or have all systems use the
@@ -1173,3 +1178,72 @@ tasks:
       Silas asked for next follows in kind_robots#3881.
     updated: '2026-10-20T03:52:03Z'
     implementation_pr: 'silasfelinus/kind_robots#3880'
+
+  - id: t-038
+    milestone: m4
+    title: "Ecotone play layout to the 2026-10-20 mockups"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-20T04:11:00Z-studio-mockups
+    claimed_at: '2026-10-20T04:11:00Z'
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas's mockups (design/2026-10-20/). The play view takes the mockup
+      structure:
+      - top bar: the mark, the day and event line, place and time, and Clarity
+        and Endings pills;
+      - full-bleed scene art, with a left headline column (kind pill, serif
+        title, subtitle, narration, and a companion block on encounters with
+        the portrait on the right);
+      - a dialogue panel with a gold kicker, and a choices panel where each
+        choice shows its roll and where it leads;
+      - a bottom nav on every width (Journey, Guides, Map, Journal, Endings).
+      Navy, gold and cream throughout. Real stats and the real ending count
+      replace the mockup's placeholder numbers.
+
+  - id: t-039
+    milestone: m4
+    title: "Ecotone art styles, the Shifting Desks way"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-20T04:11:00Z-studio-mockups
+    claimed_at: '2026-10-20T04:11:00Z'
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      A player-selectable art style, like Shifting Desks. It is view-only, so
+      runs and saves are unaffected, and the choice is remembered per browser.
+      Styles: Painted (the current Z-Image house lane) and Storybook (the
+      code-drawn scenes the mockups show). Each further style keeps its renders
+      under /ecotone/styles/<id>/; any beat it hasn't drawn yet falls back to
+      the base painting, then to the drawn scene. Which checkpoints become
+      styles waits on Silas's bake-off review (t-034).
+
+  - id: t-040
+    milestone: m4
+    title: "Playbook Studio: Story Atlas gallery and focused scene editor"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-20T04:11:00Z-studio-mockups
+    claimed_at: '2026-10-20T04:11:00Z'
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      The Playbook Manager becomes the Playbook Studio of the 2026-10-20
+      mockups.
+      - Story Atlas: a left rail (your stories with beat counts, a Collection
+        of routes and sections, live story health with art requests), the
+        STORY ATLAS headline with filter pills, and art cards with a numbered
+        kind pill, a serif title, the place line, a status dot and an open
+        arrow.
+      - Scene editor: a back link, a serif title, a breadcrumb, a gold-framed
+        art card (scene and variant pills, a quoted line, art candidates,
+        View art options), and the Edit Scene panel (draft pill, underlined
+        Story / Choices / Variants / Art / Notes tabs, a summary footer and a
+        gold Save draft button).
+      Chain view stays available from the Atlas. Every existing edit, note and
+      art tool keeps working.
