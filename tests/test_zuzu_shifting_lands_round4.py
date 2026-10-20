@@ -29,7 +29,7 @@ def test_round_four_card_coverage_and_continuity():
         card = canonical[entry["card"]]
         assert entry["land"] == card["land"]
         assert entry["task"] == "t-033"
-        assert card["brief"].split(".")[0] in entry["prompt_prose"]
+        assert card["brief"][:60] in entry["prompt_prose"]
         assert len(entry["prompt_tags"]) > 120
         assert entry["lane"] == "arthemy-house"
         assert entry["size"] == "1344x768"
