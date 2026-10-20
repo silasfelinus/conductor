@@ -502,6 +502,10 @@ def claim_job():
             ),
             # Coat Dance Grab bag jobs carry one look per motion window. Only
             # a relay whose VACE worker honours that schedule may claim them.
+            "supportsVideoRestyleStrength": bool(
+                callable(globals().get("supports_video_restyle"))
+                and supports_video_restyle()
+            ),
             "supportsVideoRestyleGrabBag": bool(
                 callable(globals().get("supports_video_restyle"))
                 and supports_video_restyle()
