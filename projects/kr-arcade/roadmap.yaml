@@ -2494,7 +2494,7 @@ tasks:
   - id: t-149
     milestone: m8
     title: "Verify Sink Suds earned records through the shared cabinet keepSave and retirement lifecycle."
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-046
@@ -2509,6 +2509,10 @@ tasks:
       scoped browser fixtures and storage boundary; fix only a reproduced integration gap.
       Preserve auth, alerts, validators, required checks and score ceilings. Keep staged fixture
       evidence distinct from deployment or human campaign timing.
+    owner: worker
+    claimed_by: 2026-10-20T0600-sinksuds-verify
+    claimed_at: '2026-10-20T06:51:11Z'
+    updated: '2026-10-20T06:51:11Z'
 
   - id: t-150
     milestone: m8
