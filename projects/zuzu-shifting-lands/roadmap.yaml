@@ -633,11 +633,10 @@ tasks:
   - id: t-034
     milestone: m3
     title: "Endings from the moral ledger and trial outcomes (Desks-level ending variety)"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 20261020T214850Z-zsl-t034-gpt6-b6e7
     claimed_at: '2026-10-20T21:48:50Z'
-    updated: '2026-10-20T21:58:03Z'
+    updated: '2026-10-20T22:13:01Z'
     passes: 0
     stakes: reversible
     depends_on: [t-031]
@@ -647,6 +646,8 @@ tasks:
       Ready 2026-10-18 (V6 merged). Inputs: JourneyStateV6.marks and flags. Deck writers' notes: Homestead V6 cards earn Abbess evidence flags not yet in her trial's requiredAnyFlags (the-infirmarys-last-cot-empty-wing, the-guest-book-on-the-lectern-page-taken, the-guest-book-on-the-lectern-blank-departures, the-refuge-lantern-at-midnight-cart-track, gate-midnight-cart-seen, dormitory-chalked-name); Tablelands outcomes hint the missing travelers are held at the Warden's bridge. Extending trial gates changes V5-pinned trial rules, so do it as a V6-only trial layer with a deck schemaVersion bump.
 
       Authored ten moral-ledger epilogue identities with three phase-specific variants each, honest callbacks to completed trials and recorded deeds. Wired V6 terminal card through Pinia; legacy saves keep their prior ending display. Added gameplay contract assertions for 10 identities, 30 phase texts, terminal guards, pure state reads and trial veracity. Kind Robots PR opening for checks. Trial gameplay mechanics, source decks and replay schema unchanged.
+
+      Completed ledger-aware endings in Kind Robots PR #3935, squash merge 52e56f0b238d3cae8fb2120b36f60923760035dc. Ten authored moral-path endings, three phase-specific stories each (30 terminal variants), plus only actually earned deed and trial callbacks. Derived by pure helper in Pinia and shown in the current bounded terminal reader. Existing V2-V5 display remains fallback, V6 replay schema and mechanics unchanged. All 16 latest-head GitHub CI workflows succeeded including Shifting Lands Gameplay Contract, TypeScript, formatting, and four-shard Contract Tests. No production deployment or visual acceptance verified; no art generated. Separate prose task t-036 and art task t-033 continue independently.
   - id: t-035
     milestone: m5
     title: "V6 balance report: survival, death causes and gate reachability by land"
