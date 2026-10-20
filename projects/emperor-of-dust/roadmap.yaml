@@ -389,7 +389,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Develop Mole Revolutionary faction, anti-witch choices and the Mole tunnel hideout"
-    status: claimed
+    status: done
     depends_on: t-005
     passes: 0
     stakes: reversible
@@ -397,10 +397,21 @@ tasks:
       Eighth faction, opposes empire and swamp witches, with meaningful
       reconciliation arc, named leaders, authored tension effects and
       Day 50 ending variants; maintain pre-Zuzu continuity.
+
+      Merged kind_robots#3937 as 8b383514b216ca319aec5d44d666a7ff7b87de00 (19/19 checks).
+      moles.ts: leaders Umber, Keel, Lumen plus Coal Harrow (hardline sapper captain) and
+      Tobin Umber (courier); a reconciliation track of 23 concession and 9 grievance flags
+      with moleAccord(); generic Requirement.standing / EpilogueCondition.standing (at least N
+      of these flags). Five new audiences (Day 21 weir vs the Mothers, Day 32 reform list that
+      finally makes F010 Lumen recruitable, Day 33 sappers in the fen, Day 44 two kegs in the
+      tunnels, Day 50 the burrows turn out) and Mole epilogue variants. Balance unchanged;
+      patron:moles 10/10 tunnels and Tunnels and Councils. Coal and Tobin have no portrait art
+      yet.
     owner: worker
     claimed_by: 2026-10-20T134500Z-eod-t-016
     claimed_at: '2026-10-20T21:07:46Z'
-    updated: '2026-10-20T21:07:46Z'
+    updated: '2026-10-20T22:21:04Z'
+    implementation_pr: 'silasfelinus/kind_robots#3937'
   - id: t-017
     milestone: m2
     title: "Build the barracks: follower grid, illustrated view, Talk scenes and capacity upgrades"
