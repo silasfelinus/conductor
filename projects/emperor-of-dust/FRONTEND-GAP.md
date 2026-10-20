@@ -17,11 +17,11 @@ Task: t-029. Ledger for room art: `art/ROOMS-ROUND-1.yaml`.
 | HUD | Crest, "EMPEROR OF DUST / ACT II · DAY 17 / 50", meter chips with icon and bar, brass coin pill | Plain number boxes | **Done** (#3873) |
 | Room frame | Medallion, title plate, italic tagline over a painted scene | Plain heading in a card | **Done** (#3873). The painted scenes are queued (ArtJobs 40949–40960); a gradient shows until they're exported |
 | Throne | Petitioner in the hall, petition card with portrait, quote and choice rows | Briefing took half the screen; NPC art in a box inside the dialogue | **Done** (#3873): scene + petition card; briefing folds out |
-| Quest room | Parchment notices on a board, party slots with portraits and "+", odds and injury risk, SEND | Text list and form grid | Next |
-| Barracks | Roster with portraits and pips, follower card with quote, health and anxiety pips, trait chips, equipment slots, TALK | Avatar grid and a stats panel | Next |
-| Market | Tabs (Buy / Sell / Equipment / Treatments / All), rows with item art and brass price pill | Card grid with text buttons | Next |
-| Map room | Painted map with pins, faction banner crests with stance, legend, TRAVEL | Painted map with pins already; region list and support bars | Next: crests, legend |
-| Chronicle | Dawn rows with icons and thumbnails, parchment rewind card | Save slots and day buttons | Next |
+| Quest room | Parchment notices on a board, party slots with portraits and "+", odds and injury risk, SEND | Text list and form grid | **Done** (#3873): pinned notices on a timber board, party slots, Send |
+| Barracks | Roster with portraits and pips, follower card with quote, health and anxiety pips, trait chips, equipment slots, TALK | Avatar grid and a stats panel | **Done** (#3873): roster, follower in the scene, stat pips, trait chips. TALK waits on t-017 |
+| Market | Tabs (Buy / Sell / Equipment / Treatments / All), rows with item art and brass price pill | Card grid with text buttons | **Done** (#3873): All/Tools/Charms, price pills. Item art not made yet; Sell/Treatments wait on t-024 |
+| Map room | Painted map with pins, faction banner crests with stance, legend, TRAVEL | Painted map with pins already; region list and support bars | **Done** (#3876): stance banners, legend |
+| Chronicle | Dawn rows with icons and thumbnails, parchment rewind card | Save slots and day buttons | **Done** (#3873): dawn list, Chronicle of Ash card. Per-dawn thumbnails not made yet |
 | Fortress overview | Painted cutaway with labelled rooms | None | Idea: a cutaway room picker |
 
 ## Art the drafts need that doesn't exist yet
