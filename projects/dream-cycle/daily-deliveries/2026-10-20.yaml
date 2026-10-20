@@ -1,0 +1,74 @@
+date: '2026-10-20'
+entries:
+- slug: emperor-branching-scenes
+  title: 'Emperor of Dust: all fifty days as branching visual-novel scenes'
+  target: emperor-of-dust
+  kind: encounter
+  summary: Throne-room audiences become multi-beat scenes with probe questions, interjecting speakers and about a hundred callbacks to earlier choices across all fifty days.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3914
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39418238968
+  merge_sha: 815fa731b4eff46cd1ab37ce2b65e0eb22cc43ab
+  checks: passed
+  verification: 21 check runs passed; contract checks every beat reachable, loop-free and answerable; balance reaches all eight endings; Chromium at 1440 and 390 on a local dev server. Merged is not deployed.
+  art:
+    status: not-required
+    note: Uses the existing NPC mood art for speakers and interjections.
+- slug: emperor-room-and-quest-art
+  title: 'Emperor of Dust: painted room backdrops and quest art'
+  target: emperor-of-dust
+  kind: room and quest art
+  summary: Six painted fortress room backdrops and 228 of 231 quest notice, success and failure images replace the gradient and map-crop fallbacks.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3915
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39414907231
+  merge_sha: 787757b3068e791e0313d5550d0affe71c5b6279
+  checks: passed
+  verification: 18 check runs passed; ROOM_ART and QUEST_ART match the exported files exactly. Merged is not deployed.
+  art:
+    status: delivered
+    url: https://github.com/silasfelinus/kind_robots/blob/main/public/emperor-of-dust/rooms/throne.webp
+    job_ids: [40949, 40950, 40951, 40952, 40953, 40954, 40955, 40956, 40957, 40958, 40959, 40960]
+    note: Ledgers in conductor projects/emperor-of-dust/art (ROOMS-ROUND-1, QUESTS-ROUND-1). Rerolls 42158-42162 (barracks v2, cave-forage) still pending.
+- slug: emperor-stark-prose
+  title: 'Emperor of Dust: stark prose across all fifty days'
+  target: emperor-of-dust
+  kind: encounter
+  summary: Every scene, quest outcome and briefing is rewritten in crisp stark prose after King, Joe Hill and Lone Wolf and Cub, about sixteen percent leaner.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3919
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39421683295
+  merge_sha: f73f0a1df0effe9d6a3d132b13fa8ccde4bf1385
+  checks: passed
+  verification: 18 check runs passed; a structure guard proved ids, effects, requirements, beats, quests and flags identical to main across 2,591 rewritten strings. Merged is not deployed.
+  art:
+    status: not-required
+    note: Text only.
+- slug: emperor-barracks-talks-romance
+  title: 'Emperor of Dust: barracks Talk scenes and six romance arcs'
+  target: emperor-of-dust
+  kind: follower
+  summary: Sixty-three barracks conversations across all twenty followers, six declinable romance arcs, and talk-revealed allegiances for Teodor, Isolde and Sable.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3920
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39422694832
+  merge_sha: 9bbd2574bfae23eb8cc1b7ed50fb648bd0ad8d21
+  checks: passed
+  verification: 21 check runs passed; contract walks a Day 2 talk through its beat and close; Chromium at 1440 and 390 from an injected save. Merged is not deployed.
+  art:
+    status: not-required
+    note: Uses the delivered follower illustrations and portraits.
+- slug: emperor-afterwards-epilogue
+  title: 'Emperor of Dust: Afterwards, a consequences epilogue'
+  target: emperor-of-dust
+  kind: ending
+  summary: After Day 50 an art-led epilogue tells what became of followers, factions, places and Komodo, chosen from the flags the run left behind.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3921
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39428952445
+  merge_sha: 93190f58f6d1bf870ee5883b073c15129b180500
+  checks: passed
+  verification: 22 check runs passed; every flag an epilogue reads is settable; 21 to 30 entries per simulated run; Chromium at 1440 and 390 with a finished campaign. Merged is not deployed.
+  art:
+    status: not-required
+    note: Uses NPC moods, follower illustrations and memorial portraits.
