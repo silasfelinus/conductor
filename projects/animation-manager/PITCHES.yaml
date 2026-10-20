@@ -2351,3 +2351,35 @@ pitches:
           - kind_robots PR #3848 merged to main (squash b102986), 18/18 checks green
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+  - id: pinwheel-gust-field
+    title: Pinwheel Gust Field
+    status: candidate
+    priority: 47
+    surprise: |
+      A gust of wind rolls across a meadow of paper pinwheels, spinning each up as it passes.
+    passive_loop: |
+      A gust sweeps left to right every 60 seconds with no interaction needed.
+    optional_interaction: |
+      Hovering spins nearby pinwheels; a rate-limited click blows a puff.
+    technique: |
+      One canvas, spin angle as a closed-form function of time with whole-turn gust gains so the loop wraps invisibly.
+    reduced_motion: |
+      Holds a single static frame with no spin, hover or puff.
+    performance_risk: |
+      Low: 45 four-blade pinwheels per frame.
+    novelty: |
+      First pinwheel meadow in the catalog.
+    acceptance:
+      - the gust sweeps the field and wheels spin without interaction
+      - hovering spins nearby wheels
+      - clicking blows at most one puff per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/pinwheel-gust-field.vue
+        pull_request: silasfelinus/kind_robots#3922
+        released_at: "2026-10-20T08:00:00Z"
+        verification:
+          - kind_robots PR #3922 merged to main (squash ffe1b90), 18/18 checks green
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
