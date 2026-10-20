@@ -73,9 +73,19 @@ def load_image(art_image_id):
         return Image.open(io.BytesIO(file_resp.read())).convert("RGB")
 
 
-def export(subjects, kind_robots, load=load_image):
+def write_render(image_id, path):
+    """Fetch one render, fit it to the scene size and save it as WebP."""
     from PIL import Image
 
+    image = load_image(image_id)
+    if image.size != SIZE:
+        image = image.resize(SIZE, Image.LANCZOS)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    image.save(path, "WEBP", quality=78, method=6)
+
+
+def export(subjects, kind_robots, write=write_render):
+    """Remove withdrawn renders, write each finished one not yet on disk; returns how many were written."""
     written = 0
     for subject in subjects:
         for lane in subject.get("withdrawn") or {}:
@@ -87,11 +97,7 @@ def export(subjects, kind_robots, load=load_image):
         path = target(kind_robots, lane, subject["asset"])
         if path.exists():
             continue
-        image = load(image_id)
-        if image.size != SIZE:
-            image = image.resize(SIZE, Image.LANCZOS)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        image.save(path, "WEBP", quality=78, method=6)
+        write(image_id, path)
         written += 1
     return written
 
