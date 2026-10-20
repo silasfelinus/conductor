@@ -425,17 +425,18 @@ tasks:
 - id: t-017
   milestone: m3
   title: 'Video Restyler overwrite strength and editable project titles'
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   claimed_by: 2026-10-20T045300Z-coat-dance-t-017-7df9
   claimed_at: '2026-10-20T04:53:00Z'
-  updated: '2026-10-20T05:20:00Z'
+  updated: '2026-10-20T05:26:00Z'
   note: |-
     Silas requested control over how strongly rendered video replaces original footage, plus custom editable saved-project titles and no Coat Dance default for uploads. Implement through Kind Robots studio/API and Conductor VACE relay, with source-safe defaults and actual renderer contract tests. No live render, deployment or publishing.
 
     Implemented source-mix overwrite strength through Kind Robots job settings, ArtJob payload and relay capability gate, plus editable titles and filename-based default. VACE worker source blending preserves existing 100 percent behavior and original soundtrack. Implementation PRs are being opened for CI verification.
+
+    Merged silasfelinus/conductor#6383 at 8e468a6 after all five workflows passed, including the Python suite. Merged silasfelinus/kind_robots#3884 at 93e6e1a after all 22 workflows passed, including typecheck, video-restyle contract, Prettier and layout checks. A lower overwrite strength blends original source frames into the new look while preserving the original soundtrack; default 100 percent preserves legacy output. New uploads derive title from filename; existing projects and variants can be renamed without re-upload. Both PRs are merged; no live Unraid/Windows deployment or GPU render was performed or verified.
 
 goal: Develop Coat Dance into its intended polished creative work, with the roadmap’s authored concept, assets, and 
   delivery package complete.
