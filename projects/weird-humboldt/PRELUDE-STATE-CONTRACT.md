@@ -1,5 +1,7 @@
 # Weird Humboldt: Festival Prelude and Four Perception Lenses
 
+> **Superseded in part, 2026-10-20 PT:** the opening (event choice, then area, offer and companion or nobody), the two routes and the 70 endings are now in [OPENING-AND-ROUTES.md](OPENING-AND-ROUTES.md). Where this doc maps an opening lens straight to a first companion, that doc wins.
+
 **Date:** 2026-10-19 PT. **Stage:** Text-only creative design. **No art, live code or publishing.** This document captures Silas's latest direction and provisional implementation recommendations.
 
 ## Experience, not an event calendar

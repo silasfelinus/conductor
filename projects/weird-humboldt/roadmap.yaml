@@ -978,8 +978,8 @@ tasks:
   - id: t-032
     milestone: m4
     title: "Rebuild the opening: festival or Kinetic race, area then offer then companion, loner path, race conscription"
-    status: claimed
-    owner: worker
+    status: done
+    owner: reviewer
     claimed_by: 2026-10-20T00:22:16Z-ecotone-structure
     claimed_at: '2026-10-20T00:22:16Z'
     approved_by_human: true
@@ -999,10 +999,17 @@ tasks:
       opens with face-up "where to" cards, companions can be re-met in other
       capacities, the opening lens persists, and endings are the companion
       (or alone) x opening lens x hope/dark from end-of-journey stats.
+      DONE 2026-10-20 PT: kind_robots#3872 squash-merged (f6e1b86), all 21 checks
+      green. The Green Ribbon Fair and the Kinetic Grand Championship routes,
+      Conscripted / The Bay Crossing / The Ferndale Finish, the fair's GR-4 and
+      GR-5 spine beats, white-rabbit forks, the loner path and 70 endings with
+      first-draft finales (bar 5 fair, 7 race; random play near 50/50).
+      Playwright walked both routes to an ending at three widths with zero
+      overflow. Design of record: OPENING-AND-ROUTES.md.
   - id: t-033
     milestone: m4
     title: "Playbook Manager: admin view of Ecotone beats as chained choices, with edits, comments and art requests"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-20T00:22:16Z-ecotone-playbook
     claimed_at: '2026-10-20T00:22:16Z'
@@ -1018,3 +1025,5 @@ tasks:
       request art for beats without it. Edits are a database overlay on the
       authored source, with an export so agents fold them into the code.
       Schema-affecting (additive tables).
+      2026-10-20 PT: implementation PR kind_robots#3875 (schema-affecting:
+      additive PlaybookEdit and PlaybookNote tables), merging when CI is green.
