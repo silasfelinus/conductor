@@ -18,6 +18,18 @@ goal: >-
   one-screen Play experience. Final art direction and any public release remain
   subject to Silas's later explicit creative approval.
 notes_from_silas: |
+  2026-10-20 PT (evening), Silas, on making Playbook Manager edits work in
+  every game: "What does this mean? Is it a fundamental gap in
+  implementation. Can it be worked with, or have all systems use the
+  optimal system? We can redesign everything to use the same upgraded
+  engine. Which includes rewriting for said engine. We want to be optimal,
+  as long as we keep the integrity of each system". Plan agreed in
+  session: (1) one content layer, every game reads its text through an
+  overlay-aware lookup so live edits work everywhere; (2) a shared story
+  kernel (seeded RNG, 2d6 checks, choice/outcome/effects, flags, save
+  versioning) under each game's own rules; (3) golden seeded-replay tests
+  guard each game's integrity. No single rules engine for all games.
+  Silas: "Yes, go forward with step 1." (t-037)
   2026-10-20 PT (later), Silas, verbatim: "We can have at least three
   choices at first, because both of those are very social, the user should
   have the option to simply engage in contemplative solo activities.
@@ -1131,3 +1143,23 @@ tasks:
       gamebook (377 scenes with explicit turns, no special case needed). Text
       edits stay Ecotone-only; notes and art requests work for every game,
       tagged to each game's project and preferred lane.
+  - id: t-037
+    milestone: m4
+    title: "Playbook content layer: live text edits in Shifting Lands, Shifting Desks, the Zuzu gamebook and Emperor of Dust"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-20T02:57:00Z-playbook-content-layer
+    claimed_at: '2026-10-20T02:57:00Z'
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      Step 1 of Silas's 2026-10-20 plan (notes_from_silas). Each game's single
+      lookup (v6Card and trialForLand; encounterById and the boss in
+      currentCard; scene(); questDef and dayDef) consults a live text overlay
+      loaded from /api/playbook/<game>/live, so Save and go live in the
+      Playbook Manager works for every game. Text only: titles, story text,
+      choice labels and outcome text; ids, rolls, effects and structure stay
+      authored, and seeded play is unchanged. Touches those games' lookup
+      functions and stores in a few lines each (cross-project: zuzu-shifting-
+      lands, shifting-desks, zuzu-gamebook, emperor-of-dust).
