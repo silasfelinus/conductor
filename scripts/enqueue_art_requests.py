@@ -521,6 +521,10 @@ def refresh_status(path, header, ledger, get=None):
             job_status = job.get("status") or f"HTTP{status}"
             counts[job_status] = counts.get(job_status, 0) + 1
             art = subject.setdefault("art", {})
+            if not job.get("status") and (art.get(lane_key) or {}).get("art_image_id"):
+                # A failed lookup (a 502 from the relay) says nothing about the job. Keep the
+                # recorded result rather than erasing a delivered ArtImage id.
+                continue
             art[lane_key] = {"status": job_status, "art_image_id": job.get("artImageId")}
     save_ledger(path, header, ledger)
     return counts
