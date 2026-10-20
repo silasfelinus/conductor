@@ -651,7 +651,10 @@ tasks:
   - id: t-035
     milestone: m5
     title: "V6 balance report: survival, death causes and gate reachability by land"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 20261020T232129Z-zsl-t035-gpt6-c4ad
+    claimed_at: '2026-10-20T23:21:29Z'
     passes: 0
     stakes: reversible
     depends_on: [t-032]
@@ -659,7 +662,7 @@ tasks:
     note: |-
       Port the idea of kind_robots utils/scripts/shiftingDesksBalanceReport.ts: simulate many seeds with simple policies (always kind, always safe, greedy, random), report survival per land, the cards that kill most, how often each gated route is reachable, and provisions curves; tune targets/costs where a land is a cliff.
       Ready 2026-10-18: kind runs complete 28% vs ruthless 46% at V6 merge; a starting harness lived in the session scratchpad (policy by marks/targets, 400 seeds each). Decide with t-034 how much of the kindness penalty is tone and how much is a cliff.
-    updated: '2026-10-18T11:15:00Z'
+    updated: '2026-10-20T23:21:29Z'
   - id: t-036
     title: "Shifting Lands V6: comprehensive encounter line edit for voice, stakes and readable choices"
     status: claimed
