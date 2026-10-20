@@ -1448,21 +1448,18 @@ tasks:
   - id: t-048
     milestone: m3
     title: "Second draft III: thousands of seeded journeys and save compatibility"
-    status: claimed
+    status: review
     claimed_by: 2026-10-20T213810Z-ecotone-t048-seeded-x7a9
     claimed_at: '2026-10-20T21:38:10Z'
-    updated: '2026-10-20T21:38:10Z'
+    updated: '2026-10-20T21:51:00Z'
     depends_on: t-047
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Simulate seeded campaigns across openings, routes, archetypes and switches to
-      prove all reachable endings, safe choice offers, coherent flags, no duplicate
-      cards, no phantom callbacks, replay variety and 45-75 minute pacing.
-      Explicitly protect legacy WH-004/WH-037/WH-058 save IDs as LX variant cards
-      replaced these bonus identifiers. Add regression coverage for recoverable
-      failures, gallery counts and art-outcome identity.
+    note: |-
+      Simulate seeded campaigns across openings, routes, archetypes and switches to prove all reachable endings, safe choice offers, coherent flags, no duplicate cards, no phantom callbacks, replay variety and 45-75 minute pacing. Explicitly protect legacy WH-004/WH-037/WH-058 save IDs as LX variant cards replaced these bonus identifiers. Add regression coverage for recoverable failures, gallery counts and art-outcome identity.
+
+      Seeded QA implementation: 8400 additional deterministic playthroughs with card/result art, callbacks, continuity and save roundtrips; title-confirmed migration of older WH-004/037/058 chemical quest references. Audit found that Quiet Way has only three opening lenses while the 84-slot ending gallery includes seven, making four Wild Way lens pairs unreachable. Review PR, preserve release gates, and file a dedicated seven-lens opening fix.
   - id: t-049
     milestone: m5
     title: "Second draft IV: prose, history, culture and quality redline"
