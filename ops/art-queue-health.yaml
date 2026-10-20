@@ -2,12 +2,13 @@
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
 failures:
+- source: requests
+  target: public/images/channels/admin/art-review.webp
+  kind: timeout
+  detail: job 41207 timed out after 300s (still queued/running)
+  first_seen: '2026-10-20'
 - source: kr-failed-jobs
-  target: ArtJob 40923
+  target: ArtJob 40972
   kind: kr-job-failed
-  rules:
-  - frame-noun
-  detail: 'engine=COMFY; error=ArtJob validation failed before claim: Art prompt rejected by the prompt
-    contract (1 violation): [frame-noun] "An old-growth coast redwood grove with enormous red-brown trunks
-    rising out of frame, ferns and redwood sorr…'
+  detail: 'engine=COMFY; error=save-generated failed: HTTP 500 An unknown error occurred.'
   first_seen: '2026-10-20'
