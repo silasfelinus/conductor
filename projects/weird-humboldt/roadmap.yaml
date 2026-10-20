@@ -18,6 +18,16 @@ goal: >-
   one-screen Play experience. Final art direction and any public release remain
   subject to Silas's later explicit creative approval.
 notes_from_silas: |
+  2026-10-20 PT (late night), Silas, after asking how many art pieces one
+  checkpoint style adds: "I call absolute suss on those numbers. Every choice
+  card and consequence ending should have an art object." Recount: 25 story
+  cards, 84 endings (6 lines x 7 lenses x 2 fates), the fixed set, and art for
+  every outcome, about 240 pieces per style. Silas: "Ok, so 240 sounds about
+  right. + new beat makes sense. We want to give images to all outcomes. So
+  I can easily ask for 2-4 styles. Where can I see an output of the example
+  generations? If there isn't one, I'll take a temporary route for a review
+  page that shows me a comparison of all assets, along with generation
+  times". (t-041, t-042, t-043)
   2026-10-20 PT (night), Silas, sending five mockups plus a Story Atlas
   gallery mockup (design/2026-10-20/): "here's our new mockups for playbook
   manager and an ecotone layout structure. Ecotone should definitely support
@@ -1279,3 +1289,56 @@ tasks:
       routing.
     updated: '2026-10-20T05:10:10Z'
     implementation_pr: 'silasfelinus/kind_robots#3883'
+
+  - id: t-041
+    milestone: m4
+    title: "Playbook Studio: + New beat"
+    status: ready
+    owner: worker
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas approved the mockup's "+ New beat" (2026-10-20). A new beat needs
+      a home in the game's flow: the Studio creates it as an edit row (title,
+      text, choices with roll, outcome text and effects) attached to a place
+      the engine already deals from (a route day, a fork pool, or a choice's
+      outcome), and the engine reads those rows like authored cards. Start
+      with Ecotone, where cards and fork pools already carry live edits; other
+      games follow their own content layer. Tests prove a new beat can be
+      reached and finished in seeded play.
+
+  - id: t-042
+    milestone: m4
+    title: "Ecotone art standard: art for every card, outcome and ending, in 2-4 styles"
+    status: ready
+    owner: worker
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      House standard from Silas (2026-10-20): every story card, every choice
+      outcome (success and failure) and every one of the 84 endings gets its
+      own picture, about 240 pieces per style, in each of the 2-4 styles he
+      picks from the checkpoint review (t-043). Engine and art-style work:
+      outcome and ending art slots in the game, a ledger per style, and
+      ArtJobs by lane. Blocked on Silas's checkpoint picks.
+
+  - id: t-043
+    milestone: m4
+    title: "Temporary checkpoint review page with generation times"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-20T05:46:05Z-checkpoint-review
+    claimed_at: '2026-10-20T05:46:05Z'
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas asked where to see the example generations; there was none.
+      /admin/art-review (kind_robots) shows every Ecotone art ledger (the
+      bake-off's 8 subjects x 8 lanes and rounds 1-3) side by side with live
+      status, render time (claim to image saved) and queue wait, per-lane
+      median, fastest and slowest, a lightbox with prompt and settings, and a
+      shortlist per lane for picking the 2-4 styles. Temporary: retire it once
+      the styles are picked.
