@@ -1,0 +1,23 @@
+version: 1
+project: weird-humboldt
+task: t-048
+operation: ready
+session: 2026-10-20T213810Z-ecotone-t048-seeded-x7a9
+updated: '2026-10-20T22:16:50Z'
+note: >-
+  Stage-3 implementation merged on Kind Robots PR #3932 as commit
+  ddab6ccccfff2b544e82e5481eaa8b159dfe01f1 after all 13 CI checks
+  passed. Ran 8400 additional end-to-end deterministic campaigns, observing
+  76/84 ending slots, 543 distinct outcome art results, 16949 failed checks,
+  and 1031 earned callbacks. Migrate old WH-004/037/058 saves only when log
+  title establishes the old quest, preserving current canonical cards. The
+  8 missing endings are ecotopia Hope/Dark for Tipsy/Cocaine/Meth/MDMA because
+  Quiet Way currently offers only three opening lenses. Issue
+  silasfelinus/kind_robots#3933 tracks the required seven-way universal
+  opening choice. Stage 3 stays READY, not done, until all 84 slots have
+  witnessed end-to-end journeys; human 45-75-minute pacing also remains unverified.
+learning: >-
+  Treat collectible catalogue count separately from empirically reachable
+  endings. A 76/84 scripted test is a valuable defect report, not a full
+  reachability pass. Log-title evidence can distinguish renamed quest saves
+  when old and new cards reused the same version and ID.
