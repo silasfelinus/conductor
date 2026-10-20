@@ -227,14 +227,26 @@ tasks:
   - id: t-009
     milestone: m5
     title: "Verify eight-image follower set, NPC moods, full 50-day balance and responsive QA"
-    status: claimed
+    status: done
     depends_on: t-008
     passes: 0
     stakes: reversible
     owner: worker
     claimed_by: 2026-10-20T005211-eod-t009-qa
     claimed_at: '2026-10-20T00:52:11Z'
-    updated: '2026-10-20T00:52:11Z'
+    updated: '2026-10-20T01:38:31Z'
+    note: >-
+      Verified 2026-10-20 in kind_robots#3874. A seeded 13-policy harness
+      (fortress/balance.ts; BALANCE-REPORT.md; CI test verifyEmperorFortressBalance) found the
+      Freehold barn won the hideout in nearly every run, about 20 Ledger loans per full-
+      barracks run, and A Hundred Candles unreachable. Fixed with cheaper, faction-spread
+      chores, pledge-weighted hideout selection, two Rustline choices, wages 6 to 4, and two
+      more lethal Act V expeditions with a two-death threshold. Each patron now hides with its
+      faction in 88-100% of runs, all eight endings occur, and careful play loses the crypt
+      0-5% of the time. Follower moods show in the barracks and the advisor at the briefing.
+      Responsive QA at 390, 768 and 1440 from Day 1 to the ending with real saves found no
+      errors, broken art or horizontal scroll.
+    implementation_pr: 'silasfelinus/kind_robots#3874'
   - id: t-010
     milestone: m5
     title: "Obtain explicit human visual acceptance and public Play release approval"
