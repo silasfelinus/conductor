@@ -18,6 +18,27 @@ goal: >-
   one-screen Play experience. Final art direction and any public release remain
   subject to Silas's later explicit creative approval.
 notes_from_silas: |
+  2026-10-20 PT (later), Silas, verbatim: "We can have at least three
+  choices at first, because both of those are very social, the user should
+  have the option to simply engage in contemplative solo activities.
+  Walking to the marsh or visiting the zoo could give an alternate  route
+  to certain followers, but also allow the user to choose the solo path
+  immediately, and allow us to highlight some of the other things bout
+  Humboldt's right away" ... "Realizing there is a solo path inspired me to
+  think about the ecoutopia path.it has a clear line, the user can have a
+  series of adventures that are potentially all animal focused. If they
+  follow those choices consistently, they can either be faced with the
+  positive path, where their future is envisioned as a wonderful
+  ecological paradise. And the fail ending has things never getting better
+  because they never made a real choice. The user could retire as a
+  hermit. Never interacting with many people. Failing should be
+  interesting, but might as well hit "bittersweet'." (t-035)
+  Same message, on the Playbook Manager: "The storybook manger should be
+  backwards compatible with the previous shifting games. It may or may not
+  make sense to be backward compatible with the gamebook series, it's got
+  a different flow. If it can load, great, otherwise we'll have a special
+  case for it" ... "Is is too much to ask that we can also use the manager
+  to track emperor of dust? Follower and quest lines?" (t-036)
   2026-10-20 PT, Silas, verbatim on structure: "It should definitely be a
   fictitious festival. And yes on afterparty. And the experience should
   absolutely have a resolution where the protagonist is conscripted to
@@ -1056,3 +1077,41 @@ tasks:
       kind_robots public/ecotone/<asset>.webp, add them to ECOTONE_ART and the
       cards' art fields, and PR it. If Silas prefers another lane, the Playbook
       Manager's art lanes (utils/playbook/artLanes.ts) should follow.
+  - id: t-035
+    milestone: m4
+    title: "The Quiet Way: a third, solo opening (marsh, zoo, deer trail) and the Wild Way ecotopia endings"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-20T01:48:46Z-ecotone-quiet-way
+    claimed_at: '2026-10-20T01:48:46Z'
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas, 2026-10-20 PT (notes_from_silas). A third event at the opening:
+      a contemplative day alone. The marsh leads to Juniper and the zoo to Kit
+      (alternate routes to them), and a deer trail nobody knows goes straight
+      onto the solo path. Animal-first choices are tagged across the route and
+      the animal cards; finishing that route alone is the Wild Way: enough
+      animal-first choices earns the ecological paradise, fewer the bittersweet
+      hermit who never made a real choice.
+  - id: t-036
+    milestone: m4
+    title: "Playbook Manager for every story game: Shifting Lands, Shifting Desks, the Zuzu gamebook and Emperor of Dust follower and quest lines"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-20T01:48:46Z-playbook-games
+    claimed_at: '2026-10-20T01:48:46Z'
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas, 2026-10-20 PT (notes_from_silas). Generalize /admin/playbook-manager
+      to a game picker with adapters reading each game's authored source:
+      Shifting Lands (lands, locations, deck pools, trials), Shifting Desks
+      (departments, locations, encounters, window shifts, bosses), the Zuzu
+      gamebook (chapters and scenes with explicit next pointers), and Emperor of
+      Dust (days, audiences and options, quests, follower lines and flag-gated
+      quest lines). Read, comment, flag and request art everywhere; text edits go
+      live only where a game reads the overlay (Ecotone first). Emperor of Dust
+      is read-only here, so it never collides with its own active tasks.
