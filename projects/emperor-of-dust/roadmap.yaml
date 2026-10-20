@@ -864,3 +864,28 @@ tasks:
     claimed_at: '2026-10-20T21:08:04Z'
     updated: '2026-10-20T22:21:07Z'
     implementation_pr: 'silasfelinus/kind_robots#3934'
+  - id: t-033
+    milestone: m5
+    title: "Export the market item icons and the pending room/quest rerolls when they render"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      ArtJobs 42323-42352 (art/ITEMS-ROUND-1.yaml, 30 market item icons) and 42158-42162
+      (ROOMS-ROUND-1 barracks v2, QUESTS-ROUND-1 q-d42-cave-forage) were queued 2026-10-20 behind
+      a multi-hour backlog. Run enqueue_art_requests.py --status on each ledger (safe on relay
+      502s since conductor#6416), contact-sheet and review, reroll rejects as -v2 subjects, export
+      keepers to kind_robots public/emperor-of-dust/items/<id>.webp (list in ITEM_ART), rooms/
+      (ROOM_ART) and quests/ (QUEST_ART), and record approved/keepers in the ledgers.
+  - id: t-034
+    milestone: m5
+    title: "Phone width: tapping a fortress room tab shifts the frame sideways"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Seen independently by the market (t-024) and betrayal (t-028) workers on 2026-10-20: at
+      390px, tapping a room tab whose tooltip appears shifts the fortress shell about 21-24px
+      sideways inside its overflow-hidden container (every room, so the page shell, not a room).
+      The document itself never scrolls horizontally. Reproduce in Chromium at 390x844, fix the
+      tooltip/tab overflow in pages/play/emperor-of-dust.vue, verify at 390/768/1440.
