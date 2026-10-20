@@ -430,7 +430,7 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Illustrate the 13 Orientation card faces (12 encounters + review)"
-    status: review
+    status: done
     depends_on: t-005
     owner: reviewer
     passes: 0
@@ -447,9 +447,18 @@ tasks:
       Round 8 is reviewed (keep x5). Remaining for this task: Orientation cards' art.status
       approved-ArtImage and art_ref need ArtImage ids, which most ledger rows lack (a Kind
       Robots ArtImage lookup). Claim released.
+
+      2026-10-20 PT: closed by the art link pass on claude/shifting-desks-art-link. All 163
+      pack slots now map to the exact path kind_robots stationArt() serves;
+      encounters/link_art.py links a slot (verified-repository-art, art_ref = public path)
+      when its latest art ledger row is delivered and its visual verdict is keep. 143/163
+      linked and probed 200 image/webp. Every delivered render in rounds 2-12 (184) was
+      reviewed: 159 keep, 25 sent back to ROUND-13 re-renders, tracked as t-032. ArtImage ids
+      were not pursued: these images are files on the media host, not ArtImage records, so
+      verified-repository-art is the accurate status.
     claimed_by: 2026-10-20T18:35:00Z-sd-art-link
     claimed_at: '2026-10-20T11:08:56Z'
-    updated: '2026-10-20T11:20:03Z'
+    updated: '2026-10-20T11:20:23Z'
   - id: t-016
     milestone: m4
     title: "Window shifts: the Papers-Please-style desk card type"
