@@ -18,6 +18,51 @@ goal: >-
   one-screen Play experience. Final art direction and any public release remain
   subject to Silas's later explicit creative approval.
 notes_from_silas: |
+  2026-10-20 PT, Silas, verbatim on structure: "It should definitely be a
+  fictitious festival. And yes on afterparty. And the experience should
+  absolutely have a resolution where the protagonist is conscripted to
+  fill in for a last minute racer injury, experience the race with the
+  companion, and then go through a series of days adventures. This
+  conflicts with our "weekend" plan, but these stories can be more
+  expansive than a single long period, especially when sobriety and drug
+  interactions have such a pronounced impact on the story and themes. The
+  user that takes psychedelics at the festival is expected to have a
+  psychedelic experience throughout the story. It's stronger if most of
+  these are presented as the consequences of one string of adventures
+  across one weekend or extended time, but all with a through line that
+  connects to the user meeting a companion, explores the events together,
+  has weird experiences, succeeds or fails on some skill checks, then the
+  events, and their choice of companion and drug or sobriety, shows them
+  the Humboldt of their future, which succeeds or fails based on their
+  stats at the end of the journey." On companions: "They should choose
+  the companion before having the experience of choosing the drug or
+  not ... at the cannabis festival, the users first choice is whether to
+  watch the circus performers doing partner acro on the lawn, or follow
+  the sounds of a drum circle in the woods. Then maybe they are offered
+  their drug choice by some encounter. Then they get the chance to
+  interact, and choose or not, the appropriate companion ... it should be
+  possible to be a loner and just experience things that way (an ending
+  permutation I didn't even think of)." Earlier the same thread: every
+  story draw is at least a binary "white rabbit" choice (an Alice riff
+  with a Humboldt twist is welcome); the first choice is which event to
+  attend; the cannabis festival leads to marijuana, psychedelics, Juniper
+  and Kit; the Kinetic Sculpture Race leads to Cedar, alcohol, party drugs
+  and Mara; companions can be re-met on later days in other capacities.
+  This SUPERSEDES the "NEWEST 2026-10-19 PT STORY LOOP" below where it
+  maps the opener lens directly to a first follower: the companion now
+  comes from the area choice, the lens from the offer, and going alone is
+  a real path with its own endings (t-032).
+  2026-10-20 PT, Silas, verbatim: "I need an admin front end that lets me
+  see these events as a chained set of choices, with a pleasing
+  interface, the link should be on / Admin channel and should be a
+  "Playbook Manager". Obvious things like being able to edit, comment,
+  add extra choices, submit or flag images, request images for
+  unfulfilled choices. Needs to recognize sub choices within an art
+  event, and should have sorting of both (what levels this occurs in,
+  which companion it's written for, but also that the same event can
+  have different variations for factors like sobriety. It should also
+  highlight things like the ending storylines versus random encounters."
+  (t-033)
   2026-10-19 PT (night), Silas: past zoo animals (Bill, Snerfy, the
   prairie dogs) are not current zoo residents. The player sees them only
   in a mystical experience, a journey Kit takes them on, or performed by
@@ -930,3 +975,46 @@ tasks:
       Heartwood, the Ferndale village and cemetery, the casinos and Hupa
       (both wait on verified details and community sources). The zoo-tribute art was withdrawn as anthro; re-render it on the lane art/CHECKPOINT-BAKEOFF.yaml picks.
     updated: '2026-10-19T23:14:25Z'
+  - id: t-032
+    milestone: m4
+    title: "Rebuild the opening: festival or Kinetic race, area then offer then companion, loner path, race conscription"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-20T00:22:16Z-ecotone-structure
+    claimed_at: '2026-10-20T00:22:16Z'
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas, 2026-10-20 PT (notes_from_silas). In kind_robots /play/ecotone:
+      the first choice is the event: a fictional cannabis festival (partner
+      acro on the lawn leads to Kit, the drum circle in the woods to Juniper;
+      offers sober, stoned or tripping) or the real Kinetic Grand Championship
+      with a fictional afterparty (pit row leads to Cedar, the tattoo tent to
+      Mara; offers sober, tipsy, or the party lenses still being written).
+      Order is area, then the offer, then meet the companion or go alone.
+      On the Kinetic route a racer is hurt at the afterparty and you are
+      conscripted to ride the rest of the race with your companion, then
+      the days that follow. Every beat offers at least two choices, each day
+      opens with face-up "where to" cards, companions can be re-met in other
+      capacities, the opening lens persists, and endings are the companion
+      (or alone) x opening lens x hope/dark from end-of-journey stats.
+  - id: t-033
+    milestone: m4
+    title: "Playbook Manager: admin view of Ecotone beats as chained choices, with edits, comments and art requests"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-20T00:22:16Z-ecotone-playbook
+    claimed_at: '2026-10-20T00:22:16Z'
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas, 2026-10-20 PT (notes_from_silas). kind_robots /admin/playbook-manager
+      with an Admin channel tab (requiredRole ADMIN): the playbook as chained
+      choices with sub-choices; sort and filter by day, companion and lens
+      variation; endings and story-spine beats highlighted against random
+      encounters; edit text, comment, add choices, submit or flag images and
+      request art for beats without it. Edits are a database overlay on the
+      authored source, with an export so agents fold them into the code.
+      Schema-affecting (additive tables).
