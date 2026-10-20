@@ -84,6 +84,8 @@ GRADES = ("obedience", "empathy", "ingenuity", "spite")
 VERDICT_AXES = set(GRADES) | {"balanced"}
 RESTRUCTURE_LOCATIONS = {"eliminate": 1, "merge": 2, "add": 1, "none": 0}
 ART_STATUSES = {"design-only", "verified-repository-art", "approved-ArtImage"}
+# The public path kind_robots stationArt() serves; link_art.py writes it from the art ledgers.
+ART_REF = re.compile(r"/images/shifting-desks/[a-z0-9-]+(/[a-z0-9-]+)*\.webp")
 ART_SUFFIX = "every surface bare and unmarked"
 # Kind Robots art-prompt contract: positive phrasing only (scripts/repair_negation_art_prompts.py).
 NEGATION_RE = re.compile(r"\b(no|not|never|without|none|nothing|avoid|don't|isn't)\b", re.I)
@@ -330,6 +332,8 @@ class Checker:
             self.err(where, f"status must be one of {sorted(ART_STATUSES)}")
         if art.get("status") == "design-only" and art.get("art_ref") is not None:
             self.err(where, "design-only art must have art_ref null")
+        if art.get("status") == "verified-repository-art" and not ART_REF.fullmatch(str(art.get("art_ref"))):
+            self.err(where, "verified-repository-art needs art_ref /images/shifting-desks/<path>.webp (link_art.py)")
         for problem in prompt_errors(art.get("brief")):
             self.err(f"{where}.brief", problem)
         if cast_required is False:

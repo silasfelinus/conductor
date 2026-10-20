@@ -1,0 +1,523 @@
+# Shifting Desks art round 13 (t-015 art link pass, 2026-10-20 PT): re-renders for the 25 round 2-12 renders
+# the visual review of all 184 delivered renders sent back (garbled lettering on the focal prop, the card's core
+# beat missing, or off-style). Each prompt is rewritten to fix its review_note; for rounds 9-12 the new prompt
+# also replaces the encounter pack's art.brief. force: true overwrites the rejected render at the same path, so
+# game data is unchanged; link_art.py keeps each slot design-only until its row here is delivered and kept.
+# Status values: requested -> rendered -> delivered (media_url answers 200). Generated internal art is
+# pre-approved (AGENTS.md).
+round: shifting-desks-13
+project_slug: shifting-desks
+task: t-015
+queue: projects/art-prompts.yaml requests
+requested_at: '2026-10-20T18:45:00Z'
+negative_prompt: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render, blurry, low quality, deformed, extra limbs, bad hands, cropped, collage, grid
+subjects:
+- key: the-curious-robot
+  kind: window-applicant
+  department: toy-division
+  title: 'A wind-up robot'
+  card: the-curious-robot
+  source_ref: encounters/TOY-DIVISION-12.json window_shift.applicants[the-curious-robot].art.brief
+  replaces: ROUND-9 the-curious-robot (seed 59005)
+  review_note: 'redo: garbled lettering on the focal subject (''GARNIGE'' across the robot''s chest, ''CBKIMP'' heading the paperwork); no clerk and the robot is not looking up; re-rendered in ROUND-13'
+  request_id: shifting-desks-r13-the-curious-robot
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63001
+  target_path: kind_robots public/images/shifting-desks/window/the-curious-robot.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/the-curious-robot.webp
+  prompt: 'A small tin wind-up robot with a brass turning key in its back and a plain smooth tin chest, standing on a padded counter hatch beside a neat stack of blank pale paper, its round head tilted far back to gaze up hopefully at a bespectacled clerk leaning over the counter toward it, mid-century safety-manual illustration, screen-printed gouache with halftone grain, safety orange and carbon-paper blue palette, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: kevin-from-tank-nine
+  kind: window-applicant
+  department: wellness
+  title: 'Kevin, from Tank Nine'
+  card: kevin-from-tank-nine
+  source_ref: encounters/WELLNESS-12.json window_shift.applicants[kevin-from-tank-nine].art.brief
+  replaces: ROUND-10 kevin-from-tank-nine (seed 60002)
+  review_note: 'redo: large base plaque carries ''CONSENT'' over garbled lines that dominate the lower card; the tank isn''t frosted, there''s no wiped circle, and he waves instead of pressing his palm to the glass; re-rendered in ROUND-13'
+  request_id: shifting-desks-r13-kevin-from-tank-nine
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63002
+  target_path: kind_robots public/images/shifting-desks/window/kevin-from-tank-nine.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/kevin-from-tank-nine.webp
+  prompt: 'A friendly man floating in a tall glass tank fogged white with frost, one small clear circle wiped in the frost where his face peers out, his open palm pressed flat and hopeful against the inside of the glass, a blank sheet of pale paper held up to the glass beside his hand, a plain smooth brass band around the tank base, mid-century safety-manual illustration, screen-printed gouache with halftone grain, fluorescent-tube green and manila palette, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: dale-in-the-mustache
+  kind: window-applicant
+  department: sub-level-zero
+  title: 'Dale, from Compliance, in a mustache'
+  card: dale-in-the-mustache
+  source_ref: encounters/SUBLEVEL-ZERO-12.json window_shift.applicants[dale-in-the-mustache].art.brief
+  replaces: ROUND-11 dale-in-the-mustache (seed 61003)
+  review_note: 'redo: the core gag is missing: Dale has a small natural dark mustache, not an enormous, obviously false, crooked white one (finger raised and brass case under his arm are present); re-rendered in ROUND-13'
+  request_id: shifting-desks-r13-dale-in-the-mustache
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63003
+  target_path: kind_robots public/images/shifting-desks/window/dale-in-the-mustache.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/window/dale-in-the-mustache.webp
+  prompt: 'A smiling compliance officer in a pressed suit leaning on a grand reception desk, a huge bushy snow-white handlebar mustache stuck crookedly across his upper lip, plainly fake, far too big for his face and drooping on one side, one finger raised importantly, an empty brass display stand tucked under his arm, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, fluorescent-tube green and oxblood, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: exit-interview-first
+  kind: card-face
+  department: orientation
+  title: 'Your Exit Interview (Scheduled First)'
+  card: exit-interview-first
+  source_ref: encounters/ORIENTATION-12.json encounters[exit-interview-first].art.brief
+  replaces: ROUND-12 exit-interview-first (seed 62004)
+  review_note: 'redo: three lines of garbled fake heading text sit in the center of the focal form; the doors open onto a dim sepia lobby, not bright sunlight, and the palette reads monochrome brown; re-rendered in ROUND-13'
+  request_id: shifting-desks-r13-exit-interview-first
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63004
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/exit-interview-first.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/exit-interview-first.webp
+  prompt: 'Mid-century safety-manual illustration of a smiling desk clerk holding out an uncapped fountain pen across a marble security desk, a long sheet of blank pale paper between them, tall glass lobby doors behind the clerk swinging wide open onto dazzling golden sunlight and green lawn, a new hire frozen mid-reach toward the pen, bold manila and oxblood palette with bright sunlit highlights, halftone grain, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: which-office-supply-are-you
+  kind: card-face
+  department: orientation
+  title: 'Which Office Supply Are You?'
+  card: which-office-supply-are-you
+  source_ref: encounters/ORIENTATION-12.json encounters[which-office-supply-are-you].art.brief
+  replaces: ROUND-12 which-office-supply-are-you (seed 62008)
+  review_note: 'redo: the focal quiz sheet carries several lines of garbled pseudo-handwriting in the foreground; also painterly rather than halftone, and the cat-eye-glasses psychologist became a man in heavy frames (the stapler/paperclip/red pen/shredder drawings are present); re-rendered in ROUND-13'
+  request_id: shifting-desks-r13-which-office-supply-are-you
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63005
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/which-office-supply-are-you.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/which-office-supply-are-you.webp
+  prompt: 'Mid-century safety-manual illustration of a woman psychologist in pointed cat-eye glasses leaning over a theater seat to tap a pen on a blank pale quiz sheet, four small pictures of a stapler, a paperclip, a red pen and a paper shredder lined up along its edge, a new hire chewing a pencil, warm spotlight from the stage, flat screen-printed shapes, safety-orange and manila palette, halftone grain, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: gus-files-a-grievance
+  kind: card-face
+  department: orientation
+  title: 'Gus Files a Grievance'
+  card: gus-files-a-grievance
+  source_ref: encounters/ORIENTATION-12.json encounters[gus-files-a-grievance].art.brief
+  replaces: ROUND-12 gus-files-a-grievance (seed 62010)
+  review_note: 'redo: ''refrigerator-sized'' was taken literally, so a real fridge fills half the frame, and the new hire receiving the form is missing; garbled lettering on the fridge and the form header (cardigan roach with glasses, pen, form and baseboard roaches are present); re-rendered in ROUND-13'
+  request_id: shifting-desks-r13-gus-files-a-grievance
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63006
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/gus-files-a-grievance.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/gus-files-a-grievance.webp
+  prompt: 'Mid-century safety-manual illustration of a giant cockroach as tall as a man, standing upright in a cardigan and reading glasses, politely holding out a blank sheet of carbon paper and a fountain pen to a startled new hire who reaches to take it, the two facing each other between tall metal storeroom shelves, a row of small cockroaches watching hopefully from the baseboard, a bare bulb overhead, carbon blue and manila palette, halftone grain, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mail-for-kevin
+  kind: card-face
+  department: records
+  title: 'Mail for Kevin'
+  card: mail-for-kevin
+  source_ref: encounters/RECORDS-12.json encounters[mail-for-kevin].art.brief
+  replaces: ROUND-12 mail-for-kevin (seed 62016)
+  review_note: 'redo: the red-tipped brass capsules read as a tray of ammunition cartridges and the worker holds one to his temple, a bad read for the card; the seed catalog has a prominent garbled headline and the amber-draft slot is missing; re-rendered in ROUND-13'
+  request_id: shifting-desks-r13-mail-for-kevin
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63007
+  target_path: kind_robots public/images/shifting-desks/cards/records/mail-for-kevin.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/mail-for-kevin.webp
+  prompt: 'Mid-century safety-manual illustration of a puzzled worker sorting a wire tray heaped with fat rounded brass mail canisters the size of soup cans, a seed packet with a painted tomato on its cover beside the tray, a narrow mail slot in the wall glowing with warm amber light, the worker holding one canister close to listen as if it hums, a wall of brass pneumatic tubes curving overhead, manila and fluorescent green palette, halftone grain, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-taste-panel
+  kind: card-face
+  department: wellness
+  title: 'The Taste Panel'
+  card: the-taste-panel
+  source_ref: encounters/WELLNESS-12.json encounters[the-taste-panel].art.brief
+  replaces: ROUND-12 the-taste-panel (seed 62038)
+  review_note: 'redo: everyone has a separate bowl instead of one shared bowl and no one grimaces, so the eager-agreement-versus-one-holdout beat that is the card''s point is missing; re-rendered in ROUND-13'
+  request_id: shifting-desks-r13-the-taste-panel
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63008
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-taste-panel.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-taste-panel.webp
+  prompt: 'Mid-century safety-manual illustration of four employees seated shoulder to shoulder at a long tasting bench, all four dipping small spoons into one single large shared bowl of pink pudding in the middle, three of them beaming and nodding eagerly, the mustached man in a clip-on tie nodding hardest, the fourth worker at the end pulling a sour grimace at her spoon, a technician with a raised pencil standing at the end of the bench, oxblood and manila palette, halftone grain, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-suppression-drill
+  kind: card-face
+  department: sub-level-zero
+  title: 'The Suppression Drill'
+  card: the-suppression-drill
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-suppression-drill].art.brief
+  replaces: ROUND-12 the-suppression-drill (seed 62058)
+  review_note: 'redo: no suppression fog anywhere in the room (the card''s core event); worker crouches holding his head rather than puffing his cheeks, though the janitor with headphones and the amber beacons are present; re-rendered in ROUND-13'
+  request_id: shifting-desks-r13-the-suppression-drill
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63009
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-suppression-drill.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-suppression-drill.webp
+  prompt: 'Mid-century safety-manual illustration of a cold server room flooding with thick billowing white fog that pours up out of the floor grates and swirls knee-deep along the aisle, a worker crouched under a steel desk with cheeks puffed out wide holding a big breath, a janitor in a headscarf calmly mopping at the far end of the aisle with headphones on, spinning amber beacons overhead, fluorescent green and carbon-paper blue palette, halftone grain, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-guard-who-is-also-you
+  kind: card-face
+  department: orientation
+  title: 'The Guard Who Is Also You'
+  card: the-guard-who-is-also-you
+  replaces: ROUND-2 the-guard-who-is-also-you (seed 52002)
+  review_note: 'redo: the two figures are not identical (male guard vs. woman new hire with different hair) and not mirrored, so the ''also you'' doppelganger concept is lost; pencil is on the new hire, not the guard'
+  request_id: shifting-desks-r13-the-guard-who-is-also-you
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63010
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/the-guard-who-is-also-you.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/the-guard-who-is-also-you.webp
+  prompt: 'Two identical twin men with the same face, the same neat side-parted hair and the same mustache, seated face to face across a security desk in perfect mirror-image poses like a reflection, the one on the left in a navy guard uniform with a pencil tucked behind his ear and a folded crossword in hand, the one on the right in a beige new-hire suit, banks of green phosphor monitors glowing behind them, carbon-paper blue and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-hungry-detector
+  kind: card-face
+  department: orientation
+  title: 'The Hungry Detector'
+  card: the-hungry-detector
+  replaces: ROUND-2 the-hungry-detector (seed 52004)
+  review_note: 'redo: plush beige arch, umbrella handle and worker with key tray are there, but there are no teeth and no smiling seam, so it reads as a plain arch and the ''hungry'' joke is gone'
+  request_id: shifting-desks-r13-the-hungry-detector
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63011
+  target_path: kind_robots public/images/shifting-desks/cards/orientation/the-hungry-detector.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/orientation/the-hungry-detector.webp
+  prompt: 'A plush upholstered beige walk-through security arch shaped like a friendly mouth, a wide grinning seam across its top and a neat row of big rounded white teeth lining the whole inner arch, the curved handle of a swallowed umbrella poking out of its top, a nervous worker holding out a tray of keys toward the toothy opening, warm lobby light, oxblood and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-jam-in-tube-14
+  kind: card-face
+  department: records
+  title: 'The Jam in Tube 14'
+  card: the-jam-in-tube-14
+  replaces: ROUND-2 the-jam-in-tube-14 (seed 52012)
+  review_note: 'redo: no pneumatic tube or bulging lump anywhere and the worker isn''t listening at the brass; it''s just a man at an open emergency kit (axe, flare, towel), so the core jam subject is missing'
+  request_id: shifting-desks-r13-the-jam-in-tube-14
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63012
+  target_path: kind_robots public/images/shifting-desks/cards/records/the-jam-in-tube-14.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/the-jam-in-tube-14.webp
+  prompt: 'A fat shiny brass pneumatic tube running diagonally across a wall, swollen into one big round bulge in the middle like a snake that swallowed an egg, a worker in a rumpled beige suit pressing one ear flat against the bulge to listen, an open wall kit beside him holding a flare and a folded striped towel, steam curling from a tube joint, safety orange and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: problem-mail
+  kind: card-face
+  department: records
+  title: 'Problem Mail'
+  card: problem-mail
+  replaces: ROUND-2 problem-mail (seed 52013)
+  review_note: 'redo: visored dispatcher with headset between two glowing chutes, but there''s no capsule anywhere and the chutes read as foundry furnaces/kilns, so the flick-into-the-furnace mail gag is missing'
+  request_id: shifting-desks-r13-problem-mail
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63013
+  target_path: kind_robots public/images/shifting-desks/cards/records/problem-mail.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/problem-mail.webp
+  prompt: 'A lean older mailroom dispatcher with sleeve garters, a green visor and a headset standing between two brass mail chutes in a tidy beige mailroom, flicking a small brass mail capsule into the left chute whose open mouth glows warm orange, the right chute plain and dark, a worker reaching in from the side with an alarmed hand, oxblood and safety orange dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-form-that-requires-itself
+  kind: boss-face
+  department: records
+  title: 'The Form That Requires Itself'
+  card: the-form-that-requires-itself
+  replaces: ROUND-2 the-form-that-requires-itself (seed 52023)
+  review_note: 'redo: there''s no towering spiral of identical forms (the core subject); a brass tube coils through the supervisor''s body instead, and the window isn''t oxblood. Visor, stamp, worker with pen and grille are there'
+  request_id: shifting-desks-r13-the-form-that-requires-itself
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63014
+  target_path: kind_robots public/images/shifting-desks/cards/records/the-form-that-requires-itself.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/records/the-form-that-requires-itself.webp
+  prompt: 'A towering corkscrew spiral of thousands of identical blank pale paper sheets rising up out of a single oxblood-red service window and twisting away into darkness overhead, an immaculate supervisor in a grey three-piece suit, rimless glasses and a green clerk''s visor waiting behind the glass with a rubber stamp, a small worker at the counter gazing up at the spiral with a pen in hand, a cheerful round speaker grille with a soft green glow above, oxblood and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: location-security-desk
+  kind: location
+  department: orientation
+  title: 'Security Desk & Badge Photo'
+  source_ref: encounters/ORIENTATION-12.json locations[security-desk].art.brief
+  replaces: ROUND-3 location-security-desk (seed 53001)
+  review_note: 'redo: near-photoreal render that breaks the screen-print gouache style and palette, and the detector is a stock metal arch with no upholstery or teeth; desk, brass camera, smiling grille and light shafts are there'
+  request_id: shifting-desks-r13-location-security-desk
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63015
+  target_path: kind_robots public/images/shifting-desks/locations/security-desk.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/locations/security-desk.webp
+  prompt: 'Flat screen-printed illustration of a cathedral-sized marble lobby with one long security desk, a brass badge camera on a stand, a plush upholstered beige walk-through detector arch with a row of big rounded white teeth along its inner edge, a cheerful round speaker grille high on the wall, long shafts of morning light across the floor, mid-century safety-manual illustration, screen-printed gouache with halftone grain, bold flat color shapes, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: job-temp
+  kind: job
+  title: 'Temp'
+  source_ref: encounters/DECKS.json job_titles[temp].art_prompt
+  replaces: ROUND-3 job-temp (seed 53010)
+  review_note: 'redo: visitor sticker on the lapel carries large legible garbled text ''VISVISOR'' on a named prop; figure otherwise fine (beige cardigan, clipboard, gaze away)'
+  request_id: shifting-desks-r13-job-temp
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63016
+  target_path: kind_robots public/images/shifting-desks/jobs/temp.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/jobs/temp.webp
+  prompt: 'An unremarkable office temp in a beige cardigan half-blending into beige wallpaper, a small plain round blank paper sticker on the lapel, holding a clipboard flat against the chest, gaze politely elsewhere, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-four-second-precognition
+  kind: mutation
+  title: 'Four-Second Precognition'
+  source_ref: encounters/DECKS.json mutations[four-second-precognition].art_prompt
+  replaces: ROUND-3 mutation-four-second-precognition (seed 53020)
+  review_note: 'redo: core gag missing - the pale echo walks beside the worker without tripping, and the real worker is stepping onto the cable rather than around it'
+  request_id: shifting-desks-r13-mutation-four-second-precognition
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63017
+  target_path: kind_robots public/images/shifting-desks/mutations/four-second-precognition.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/four-second-precognition.webp
+  prompt: 'An office corridor where a pale glowing see-through ghostly copy of a worker, a few steps ahead, is caught mid-fall flailing over a loose black cable stretched across the floor, while the solid real worker behind calmly lifts one foot high to step over the same cable, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-empathic-static
+  kind: mutation
+  title: 'Empathic Static'
+  source_ref: encounters/DECKS.json mutations[empathic-static].art_prompt
+  replaces: ROUND-3 mutation-empathic-static (seed 53025)
+  review_note: 'redo: no golden static between the coworkers'' temples; reads as two people handing papers across a desk, the mutation is absent'
+  request_id: shifting-desks-r13-mutation-empathic-static
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63018
+  target_path: kind_robots public/images/shifting-desks/mutations/empathic-static.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/empathic-static.webp
+  prompt: 'Two coworkers seated face to face across a desk with eyes closed, a bright crackling arc of warm golden electric static leaping between their two temples like a tiny lightning bridge, their hair lifting and loose papers floating up in the charge, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: mutation-eyes-in-the-back-of-your-head
+  kind: mutation
+  title: 'Eyes in the Back of Your Head'
+  source_ref: encounters/DECKS.json mutations[eyes-in-the-back-of-your-head].art_prompt
+  replaces: ROUND-3 mutation-eyes-in-the-back-of-your-head (seed 53026)
+  review_note: 'redo: no second pair of eyes on the back of the bob haircut, and the coworkers walk normally rather than freezing; the mutation is absent'
+  request_id: shifting-desks-r13-mutation-eyes-in-the-back-of-your-head
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63019
+  target_path: kind_robots public/images/shifting-desks/mutations/eyes-in-the-back-of-your-head.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/mutations/eyes-in-the-back-of-your-head.webp
+  prompt: 'An office worker at a desk seen from directly behind, two large calm wide-open eyes peering out from the back of their neat bob haircut, a sneaking coworker behind them frozen mid-tiptoe with one foot raised and a guilty startled face, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-parents-behind-the-mirror
+  kind: card-face
+  department: toy-division
+  title: 'The Parents Behind the Mirror'
+  card: the-parents-behind-the-mirror
+  source_ref: encounters/TOY-DIVISION-12.json encounters[the-parents-behind-the-mirror].art.brief
+  replaces: ROUND-4 the-parents-behind-the-mirror (seed 54007)
+  review_note: 'redo: lab-coat circle on folding chairs is there, but the room beyond the glass is not empty (it holds a second circle of identical lab-coat men, so it reads as a reflection or duplicate) and there is no screwdriver held up like a candle'
+  request_id: shifting-desks-r13-the-parents-behind-the-mirror
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63020
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/the-parents-behind-the-mirror.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/the-parents-behind-the-mirror.webp
+  prompt: 'A dim observation room seen from inside, nine engineers in white lab coats sitting in a tight circle on folding chairs, one of them solemnly holding a small screwdriver upright like a lit candle, a large window in the back wall looking out onto a bright, completely empty focus group room with one small table and empty chairs, carbon-paper blue and oxblood dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-safe-distance-memo
+  kind: card-face
+  department: toy-division
+  title: 'The Safe-Distance Memo'
+  card: the-safe-distance-memo
+  source_ref: encounters/TOY-DIVISION-12.json encounters[the-safe-distance-memo].art.brief
+  replaces: ROUND-4 the-safe-distance-memo (seed 54011)
+  review_note: 'redo: the memo is the focal prop and carries several lines of legible garbled text (''Mpst: Mgonvor ois poun gafy...''); the rest (thumbs-up mascot, finger on intercom button, office tower across plaza) is fine'
+  request_id: shifting-desks-r13-the-safe-distance-memo
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63021
+  target_path: kind_robots public/images/shifting-desks/cards/toy-division/the-safe-distance-memo.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/toy-division/the-safe-distance-memo.webp
+  prompt: 'A single sheet of blank pale paper pinned to a corkboard beside a desk, a small grinning cartoon mascot drawn in its corner holding up one thumb at arm''s length, a worker''s finger hovering over a large round button on a desk intercom, a window showing a second office building across a plaza, carbon-paper blue and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-vending-machine-that-knows
+  kind: card-face
+  department: wellness
+  title: 'The Vending Machine That Knows'
+  card: the-vending-machine-that-knows
+  source_ref: encounters/WELLNESS-12.json encounters[the-vending-machine-that-knows].art.brief
+  replaces: ROUND-5 the-vending-machine-that-knows (seed 55003)
+  review_note: 'redo: the granola bar in the tray (a named focal prop) carries a large garbled brand logo (''Sqrunly''); otherwise the beige machine with a round lens, paper cup and peering worker read well'
+  request_id: shifting-desks-r13-the-vending-machine-that-knows
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63022
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-vending-machine-that-knows.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-vending-machine-that-knows.webp
+  prompt: 'A tall beige vending machine with a single round glass lens instead of buttons, a plain brown oat bar in a blank wax-paper wrapper and a small paper cup waiting in its tray, a worker leaning back and peering into the lens, fluorescent green and oxblood dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-other-side-of-the-glass
+  kind: card-face
+  department: wellness
+  title: 'The Other Side of the Glass'
+  card: the-other-side-of-the-glass
+  source_ref: encounters/WELLNESS-12.json encounters[the-other-side-of-the-glass].art.brief
+  replaces: ROUND-5 the-other-side-of-the-glass (seed 55007)
+  review_note: 'redo: the sweater-wearing intern giving the thumbs-up sits in the same room as the lab-coat worker, not behind the window, while the window shows an unrelated clipboard man, so the glass separation the card is named for is lost'
+  request_id: shifting-desks-r13-the-other-side-of-the-glass
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63023
+  target_path: kind_robots public/images/shifting-desks/cards/wellness/the-other-side-of-the-glass.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/wellness/the-other-side-of-the-glass.webp
+  prompt: 'A worker in an oversized white lab coat standing in a white corridor with a stopwatch and a thick binder, peering through a large glass window into a separate small padded test room, and inside that room alone a nervous young intern in a cable-knit sweater sitting in a padded chair and giving a thumbs-up through the glass, fluorescent green and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: the-founders-desk
+  kind: card-face
+  department: sub-level-zero
+  title: 'The Founder''s Desk'
+  card: the-founders-desk
+  source_ref: encounters/SUBLEVEL-ZERO-12.json encounters[the-founders-desk].art.brief
+  replaces: ROUND-6 the-founders-desk (seed 56008)
+  review_note: 'redo: legible ''TRAVEL'' plus garbled lettering sits on both focal props (brochure and film tin lid); desk, open drawer, hands and jar head otherwise present'
+  request_id: shifting-desks-r13-the-founders-desk
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63024
+  target_path: kind_robots public/images/shifting-desks/cards/sub-level-zero/the-founders-desk.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/cards/sub-level-zero/the-founders-desk.webp
+  prompt: 'An old wooden desk with one drawer pulled open, holding a plain glossy fold-out pamphlet showing a painted palm beach and a dented plain round metal film tin, a worker''s hands hovering between the two, a glowing head in a jar watching from the corner of the desk, oxblood and manila dominant colors, single readable scene with a strong silhouette, mid-century corporate safety-manual illustration, screen-printed gouache with halftone grain, flat confident shapes and crisp silhouettes, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+- key: ending-the-kind-rewrite
+  kind: ending
+  title: 'Good Morning, Everyone'
+  source_ref: encounters/ENDINGS.json endings[the-kind-rewrite].epilogue.art_prompt
+  replaces: ROUND-7 ending-the-kind-rewrite (seed 57008)
+  review_note: 'redo: no glowing gold round speaker grilles anywhere (the card''s core signifier), modern flat-screen monitors break mid-century period; smiling staff, cable-knit thumbs-up intern and plants are present'
+  request_id: shifting-desks-r13-ending-the-kind-rewrite
+  engine: krea2
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 63025
+  target_path: kind_robots public/images/shifting-desks/endings/the-kind-rewrite.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/endings/the-kind-rewrite.webp
+  prompt: 'A sunny 1950s open-plan office at morning with rows of round brass speaker grilles on the walls all glowing a warm bright gold, employees at wooden desks with beige typewriters looking up and smiling, a young intern in an oversized cable-knit sweater giving a thumbs-up, potted plants on every desk, mid-century safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare and unmarked'
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null

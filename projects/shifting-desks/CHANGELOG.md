@@ -34,3 +34,9 @@
 
 ## 2026-10-17 PT
 - t-031 (Silas): every encounter deck doubles to 24, eight cards per location, so the three-encounters-per-floor pacing stays and replays draw from twice the pool. 60 new encounters across the five departments, 40 new payoffs of earlier-floor flags, 15 new epilogue variants, balance retuned (the classic deathtraps keep their old draw rate) and art round 12 (60 Classic card faces plus Western Cartoon and Noir). Pack filenames keep their historical -12 suffix.
+
+## 2026-10-20 PT
+- Art link pass (t-015): every one of the 189 image paths the game requests answers 200 image/webp on the media host in all three styles (567 of 567). The packs still called all 163 illustrated slots `design-only`.
+- Visual review of all 184 delivered renders from rounds 2-12 against their briefs: 159 keep, 25 sent back. Verdicts are recorded in ROUND-2 through ROUND-12, and rounds 9-12 are marked delivered.
+- encounters/link_art.py links each pack slot to the path kind_robots `stationArt()` serves (`verified-repository-art`, art_ref = public path) when its latest ledger row is delivered and kept: 143/163 linked. validate_pack.py requires that path shape, and tests/test_shifting_desks_art_link.py keeps the packs and ledgers in agreement.
+- ROUND-13.yaml queues 25 forced Krea 2 re-renders with prompts rewritten to each review note, all passing the live contract. Rounds 9-12 briefs take the new prompts. t-032 lands, reviews and links them.

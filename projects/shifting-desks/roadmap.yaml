@@ -430,7 +430,7 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Illustrate the 13 Orientation card faces (12 encounters + review)"
-    status: claimed
+    status: done
     depends_on: t-005
     owner: reviewer
     passes: 0
@@ -447,9 +447,18 @@ tasks:
       Round 8 is reviewed (keep x5). Remaining for this task: Orientation cards' art.status
       approved-ArtImage and art_ref need ArtImage ids, which most ledger rows lack (a Kind
       Robots ArtImage lookup). Claim released.
+
+      2026-10-20 PT: closed by the art link pass on claude/shifting-desks-art-link. All 163
+      pack slots now map to the exact path kind_robots stationArt() serves;
+      encounters/link_art.py links a slot (verified-repository-art, art_ref = public path)
+      when its latest art ledger row is delivered and its visual verdict is keep. 143/163
+      linked and probed 200 image/webp. Every delivered render in rounds 2-12 (184) was
+      reviewed: 159 keep, 25 sent back to ROUND-13 re-renders, tracked as t-032. ArtImage ids
+      were not pursued: these images are files on the media host, not ArtImage records, so
+      verified-repository-art is the accurate status.
     claimed_by: 2026-10-20T18:35:00Z-sd-art-link
     claimed_at: '2026-10-20T11:08:56Z'
-    updated: '2026-10-20T11:08:56Z'
+    updated: '2026-10-20T11:20:23Z'
   - id: t-016
     milestone: m4
     title: "Window shifts: the Papers-Please-style desk card type"
@@ -688,37 +697,70 @@ tasks:
   - id: t-028
     milestone: m3
     title: 'Toy Division Recall Desk: a second Papers, Please window shift'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-10-16T09:30:00Z'
+    updated: '2026-10-20T11:20:26Z'
     note: |-
       Silas, 2026-10-16: free rein on levels to design/release and art to submit. TOY-DIVISION-12.json gains window_shift recall-desk-friday at the Proving Grounds: a Product Safety Memo (no payloads, drop-tested in writing, no toy that asks where it is shipped) and four applicants: Wendell's ticking rabbit (payload), Intern Pip's lunch-break bear (clean), the Supervisor's Snuggle Sentinel Mk 0 with a Defense-waived drop test, and Tinbert the wind-up robot who asks where it is going (recalling it by the book costs Empathy). Six ENDINGS variants remember the stamps. Balance: every bot stays under two Successor losses on Toy Division (Rebel 1.87, Saint 1.64, Schemer 1.87) and the Schemer is eliminated 47.6% (<50%); BALANCE-REPORT regenerated. Art round 9 (ROUND-9.yaml): five Classic Krea 2 requests plus Western Cartoon and Noir style rows (STYLE-CATALOG 126 subjects, 252 v2 requests); all ten Krea prompts pass the live checkArtPromptContract. Kind Robots snapshot merged in kind_robots#3749 (65cc968), with the window component showing each desk's own stamp words. Remaining: deliver round 9 art, then close.
+
+      2026-10-20 PT: art delivery verified on claude/shifting-desks-art-link. Every render
+      this task queued answers 200 image/webp on the media host in Classic, Western Cartoon
+      and Noir. Classic verdicts are recorded in its round ledger, and sent-back renders are
+      re-queued in ROUND-13 (t-032).
   - id: t-029
     milestone: m3
     title: 'Wellness Consent Window: a third Papers, Please window shift'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-10-16T10:30:00Z'
+    updated: '2026-10-20T11:20:30Z'
     note: |-
       Silas, 2026-10-16 free rein. WELLNESS-12.json gains window_shift consent-window-rounds at the Mutation Suite: an Informed Consent Memo (awake while signing; no test result may volunteer again) and three volunteers from the recurring cast: Kevin knocking from inside Tank Nine (already a result; keeping him in by the book costs Empathy), Doris from Accounting signing in her sleep, and Marguerite volunteering to map every duct (clean). Stamps read CONSENT / VOID. Three ENDINGS variants remember them. A four-applicant draft (Dale signing for Pip) pushed the Rebel to 52% eliminated through Suspicion, so the line is three; every policy now stays under 50% (Rebel 47.5%, Schemer 48%) and BALANCE-REPORT is regenerated. Art round 10 (ROUND-10.yaml): four Classic Krea 2 requests plus Western Cartoon and Noir rows (STYLE-CATALOG 130, 260 v2 rows); all eight Krea prompts pass the live checkArtPromptContract. Remaining: Kind Robots snapshot PR, art delivery.
+
+      2026-10-20 PT: art delivery verified on claude/shifting-desks-art-link. Every render
+      this task queued answers 200 image/webp on the media host in Classic, Western Cartoon
+      and Noir. Classic verdicts are recorded in its round ledger, and sent-back renders are
+      re-queued in ROUND-13 (t-032).
   - id: t-030
     milestone: m3
     title: 'Sub-Level Zero Antechamber Sign-In: a fourth Papers, Please window shift'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-10-16T15:00:00Z'
+    updated: '2026-10-20T11:20:33Z'
     note: |-
       Silas, 2026-10-16 free rein. SUBLEVEL-ZERO-12.json gains window_shift antechamber-sign-in at the Boardroom Antechamber: you mind the Board's sign-in ledger, stamped ADMIT / TURN AWAY, under the Board Visitor Protocol (attend alive and entirely attached; wear no one else's face, mustache or badge). Three visitors: the Founder's head on a tea cart (turning him away costs Empathy), Dale from Compliance in the Founder's 1962 mustache, and Delegate Six of the Roach Union, who booked ahead (clean). Five ENDINGS variants remember them (promoted-to-management, position-eliminated, society-coup, roach-union-general-strike, posthumous-affairs). Balance: the first draft put the Rebel at 57% and the Schemer at 52.5% eliminated through finale Suspicion; returning Dale's mustache now earns PAL's approval (-1 Suspicion, -1 composure) and the by-the-book stamps carry the Rebel's and Schemer's grades. Every threshold holds (Rebel 49.4%, Schemer 49.3%, both within a point of the ceiling, so the next finale content needs a margin pass) and BALANCE-REPORT is regenerated. Art round 11 (ROUND-11.yaml): four Classic Krea 2 requests plus Western Cartoon and Noir rows (STYLE-CATALOG 134, 268 v2 rows); all eight Krea prompts pass the live checkArtPromptContract. Kind Robots snapshot kind_robots#3762 merged (84e6734); the Sign-In fits at 390/768/820/1180/1440 with no scroll. Remaining: art round 11 delivery, then close.
+
+      2026-10-20 PT: art delivery verified on claude/shifting-desks-art-link. Every render
+      this task queued answers 200 image/webp on the media host in Classic, Western Cartoon
+      and Noir. Classic verdicts are recorded in its round ledger, and sent-back renders are
+      re-queued in ROUND-13 (t-032).
   - id: t-031
     milestone: m3
     title: 'Double every encounter deck: 24 cards per department, 8 per location'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     approved_by_human: true
-    updated: '2026-10-17T16:30:00Z'
+    updated: '2026-10-20T11:20:37Z'
     note: |-
       Silas, 2026-10-17: "I like the pacing of 3 encounters before boss. What I want to do is double the encounters, so we have a possible 24 per." A run still deals one card from each of a floor's three locations, so pacing is unchanged; every location's pool is now 8 deep instead of 4. 60 new encounters (12 per department, 4 per location, polarity 4/4/4 each, every card graded): Orientation (Refreshments Are Served, The Red Stapler, Fumigation Thursday...), Records (The Tube That Goes Up, The Founding Charter, Forty-Two Years Overdue...), Toy Division (My First Reactor, The Robot Panel, The Hug Test...), Wellness (The Taste Panel, The Graduates' Lounge, Form M: Declaration of Powers...), Sub-Level Zero (Item Four, The Fifth Jar, Kevin's Cabinet, Ticket Number Two...). 40 new choices pay off earlier-floor flags, and 15 new ENDINGS variants read the strongest new flags (42 variants total); FLAG-MAP regenerated. Balance: halving the old deathtraps' draw rate dropped the Coward below its two-Successor floor, so the classic deathtrap cards keep their old frequency through doubled weights (Orientation x4, Jam in Tube 14, Thursday Door and Successor Waiting Room to 6), free paperwork picks now cost composure, and the new cards' -2 Suspicion reliefs are -1. Every threshold holds with more margin than before (Rebel 47.1%, Schemer 44.0%, Saint 35.1%, Complier 21.6%). Art round 12 (ROUND-12.yaml): 60 Classic Krea 2 card faces plus Western Cartoon and Noir rows (STYLE-CATALOG 194 subjects, 388 style rows); all 180 prompts pass the live checkArtPromptContract. Kind Robots kind_robots#3793 merged (188b6ec): the 24-card snapshot plus a denser four-route desk (four-route cards one size down, locked routes fold into lock chips) so the longer new cards fit at 390/768/820/1180/1440. Remaining: art round 12 delivery, then close.
+
+      2026-10-20 PT: art delivery verified on claude/shifting-desks-art-link. Every render
+      this task queued answers 200 image/webp on the media host in Classic, Western Cartoon
+      and Noir. Classic verdicts are recorded in its round ledger, and sent-back renders are
+      re-queued in ROUND-13 (t-032).
+  - id: t-032
+    milestone: m3
+    title: 'Land, review and link the 25 art round 13 re-renders'
+    status: ready
+    depends_on: t-015
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-20T18:50:00Z'
+    note: |-
+      From t-015's 2026-10-20 PT art pass: all 184 delivered renders (rounds 2-12) were reviewed against their briefs; 159 keep, 25 sent back for garbled lettering on the focal prop (The Safe-Distance Memo, The Founder's Desk, Which Office Supply Are You?), a missing core gag (The Hungry Detector's teeth, Dale's false mustache, the precognition echo tripping, the Suppression Drill fog) or an off-style render (Security Desk). Mail for Kevin rendered its capsules as ammunition with one held to the worker's temple. ROUND-13.yaml queues 25 forced Krea 2 re-renders at the same paths with prompts rewritten to each review note (all pass the live checkArtPromptContract). To finish: once Auto Art Generate fulfills shifting-desks-r13-*, GET each media_url, record delivery_check and art_job_id, view each render against its prompt and set verdict keep/redo, then run python projects/shifting-desks/encounters/link_art.py --write --probe (20 pack slots link; the other 5 are job, mutation and ending art) and commit. Western Cartoon and Noir editions of these 25 subjects were rendered from the old prompts and were not reviewed here.
+    claimed_by: null
+    claimed_at: null
