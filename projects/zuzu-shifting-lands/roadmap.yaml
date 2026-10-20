@@ -633,11 +633,11 @@ tasks:
   - id: t-034
     milestone: m3
     title: "Endings from the moral ledger and trial outcomes (Desks-level ending variety)"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261020T214850Z-zsl-t034-gpt6-b6e7
     claimed_at: '2026-10-20T21:48:50Z'
-    updated: '2026-10-20T21:48:50Z'
+    updated: '2026-10-20T21:58:03Z'
     passes: 0
     stakes: reversible
     depends_on: [t-031]
@@ -645,6 +645,8 @@ tasks:
     note: |-
       Shifting Desks has 10 authored endings with variants and 6-9 outcomes per department boss; Shifting Lands has victory / fallen / retired. Read the V6 marks ledger and trial results into authored endings so a merciful run that falls and a ruthless run that wins read differently, in the voice of sacrifice and unrewarded good. Trials may gain ledger-aware outcomes under the V6 rules version.
       Ready 2026-10-18 (V6 merged). Inputs: JourneyStateV6.marks and flags. Deck writers' notes: Homestead V6 cards earn Abbess evidence flags not yet in her trial's requiredAnyFlags (the-infirmarys-last-cot-empty-wing, the-guest-book-on-the-lectern-page-taken, the-guest-book-on-the-lectern-blank-departures, the-refuge-lantern-at-midnight-cart-track, gate-midnight-cart-seen, dormitory-chalked-name); Tablelands outcomes hint the missing travelers are held at the Warden's bridge. Extending trial gates changes V5-pinned trial rules, so do it as a V6-only trial layer with a deck schemaVersion bump.
+
+      Authored ten moral-ledger epilogue identities with three phase-specific variants each, honest callbacks to completed trials and recorded deeds. Wired V6 terminal card through Pinia; legacy saves keep their prior ending display. Added gameplay contract assertions for 10 identities, 30 phase texts, terminal guards, pure state reads and trial veracity. Kind Robots PR opening for checks. Trial gameplay mechanics, source decks and replay schema unchanged.
   - id: t-035
     milestone: m5
     title: "V6 balance report: survival, death causes and gate reachability by land"
