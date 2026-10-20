@@ -36,3 +36,8 @@ Append-only reviewer/worker notes. Project created 2026-10-19 PT; no entries yet
 - Branch conflicted with main (#6357/#6359 had already rendered and exported the revised Kit/Cedar portraits). Resolved by keeping main's ArtJobs/keepers ledger, keeping the PR's revised prompts and cast-canon docs, and dropping the now-moot t-030 requeue task.
 - Pattern: worker branches that touch `art/ROUND-1.yaml` and `roadmap.yaml` collide with concurrent art close-outs; fetch main before writing art-ledger notes.
 - Left open on purpose: #6321 (Emperor of Dust concept art) holds an explicit human art-direction gate for Silas.
+
+10 reviewer: stale worker branches not merged (2026-10-20)
+- `worker/ecotone-story-loop-32-endings-20261019-c4r8` (11 commits) and `worker/ecotone-modular-56-ending-signatures-20261019-r7k3` (6 commits) have no open PR and conflict in every shared file (CONTROL.md, ECOTONE-*.md, JOURNEY-LOOP-CONTRACT.md, roadmap.yaml): both add files main already carries. Main absorbed this design line via #6353 (modular 56 signatures), #6344, #6358 and #6397, so a merge would regress newer canon (e.g. Hmong Kit / Hispanic Cedar).
+- Decision: do not merge; docs-only so nothing lost. Branches left for `branch-janitor` (`force_delete_branches`) once Silas confirms nothing unique remains.
+- Pattern: parallel manual branches on the same spec docs diverge from main within a day; open the PR early so the conflict is resolved while small.
