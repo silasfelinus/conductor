@@ -124,6 +124,50 @@ def test_contract_violating_prompt_is_never_posted(tmp_path):
     assert not (ledger["subjects"][0].get("jobs") or {}).get("zimage-turbo")
 
 
+def test_live_contract_rule_blocks_the_cell_on_its_engine(tmp_path):
+    # The Python mirror knows only the negation rules: weird-humboldt ck-grove went out
+    # twice with "rising out of frame" and failed [frame-noun] at claim (ArtJobs 40921,
+    # 40962). The real contract runs per cell, with that cell's engine.
+    path = _ledger(tmp_path)
+    header, ledger = enq.load_ledger(path)
+    seen = []
+
+    def live(rows):
+        seen.extend(rows)
+        return [{"id": r["id"], "violations": [{"rule": "frame-noun", "detail": "x"}] if r["engine"] == "zimage" else []}
+                for r in rows]
+
+    calls = []
+    cells = list(enq.iter_cells(ledger))
+    result = enq.submit(path, header, ledger, cells, live=live,
+                        post=lambda b: calls.append(b) or (200, {"data": {"jobId": 7}}))
+    assert result == (1, 1)
+    assert [c["engine"] for c in calls] == ["comfy"]
+    assert {r["engine"] for r in seen} == {"zimage", "comfy"}
+    assert next(r for r in seen if r["engine"] == "comfy")["prompt"] == "masterpiece, anthro, koala, gritty"
+    assert not ledger["subjects"][0]["jobs"]["zimage-turbo"]
+
+
+def test_without_a_kind_robots_checkout_the_mirror_still_guards(tmp_path):
+    cells = [({"key": "s", "prompt_prose": "a koala ronin on a dune, no text."}, {"key": "p", "engine": "zimage"}),
+             ({"key": "t", "prompt_prose": "a koala ronin on a dune"}, {"key": "p", "engine": "zimage"})]
+    rules = enq.contract_rules(cells, live=lambda rows: None)
+    assert rules[0] and rules[1] == []
+
+
+def test_live_checker_reads_only_unsubmitted_ledger_cells(tmp_path):
+    from scripts import check_art_prompts_live_contract as live_check
+
+    path = _ledger(tmp_path)
+    ledger = yaml.safe_load(path.read_text())
+    ledger["subjects"][0]["jobs"]["il"] = 55
+    path.write_text(yaml.safe_dump(ledger, sort_keys=False))
+    (tmp_path / "notes.yaml").write_text("items: [1, 2]\n")
+    rows = live_check.ledger_rows([path, tmp_path / "notes.yaml"])
+    assert [(r["id"], r["engine"]) for r in rows] == [("ledger.yaml:s1[zimage-turbo]", "zimage")]
+    assert rows[0]["prompt"] == "a koala ronin on a dune"
+
+
 def test_refresh_status_records_art_image(tmp_path):
     path = _ledger(tmp_path)
     header, ledger = enq.load_ledger(path)

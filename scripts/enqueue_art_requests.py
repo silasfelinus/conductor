@@ -50,9 +50,11 @@ import yaml
 
 try:
     from scripts import consume_art_queue_core as core
+    from scripts.check_art_prompts_live_contract import run_contract
     from scripts.repair_negation_art_prompts import violations
 except ImportError:  # pragma: no cover - direct script execution
     import consume_art_queue_core as core
+    from check_art_prompts_live_contract import run_contract
     from repair_negation_art_prompts import violations
 
 TERMINAL_STATUSES = {"DONE", "FAILED", "CANCELLED"}
@@ -223,6 +225,38 @@ def build_request(ledger, lane, subject, source_image=None, last_image=None):
     if seed is not None:
         body["seed"] = int(seed)
     return body
+
+
+def contract_rows(cells):
+    """What Kind Robots' contract judges for each cell: the prompt and the engine settings."""
+    return [
+        {"id": i, "prompt": compose_prompt(lane, subject), "engine": lane.get("engine"),
+         "steps": lane.get("steps"), "cfg": lane.get("cfg")}
+        for i, (subject, lane) in enumerate(cells)
+    ]
+
+
+def contract_rules(cells, live=None):
+    """The contract rules each cell's prompt breaks, in cell order.
+
+    The Python mirror covers only the negation rules, so on 2026-10-20 weird-humboldt
+    ck-grove went out twice with "rising out of frame" and failed [frame-noun] at claim
+    (ArtJobs 40921, 40923, 40962; the rule is engine-specific, so the engine rides along).
+    When a kind_robots checkout sits beside this repo its real artPromptContract.ts runs
+    too; without one the mirror is all there is."""
+    rows = contract_rows(cells)
+    rules = [list(violations(row["prompt"])) for row in rows]
+    if not rows:
+        return rules
+    results = (live or run_contract)(rows)
+    if results is None:
+        print("  (kind_robots contract unavailable here: checked the negation rules only)", file=sys.stderr)
+        return rules
+    for result in results:
+        for violation in result.get("violations") or []:
+            if violation.get("rule") not in rules[result["id"]]:
+                rules[result["id"]].append(violation.get("rule"))
+    return rules
 
 
 def iter_cells(ledger, lane_filter=None, subject_filter=None):
@@ -428,10 +462,12 @@ def request_url(body):
     return f"{core.KR_BASE_URL}{route}"
 
 
-def submit(path, header, ledger, cells, post=None, fetch_source=None):
+def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None):
     """POST every cell that has no job id yet; write the id back after each one."""
     post = post or (lambda body: core.http_json("POST", request_url(body), body))
     fetch_source = fetch_source or fetch_source_image
+    cells = [(subject, lane) for subject, lane in cells if not job_id_of(subject, lane["key"])]
+    broken = contract_rules(cells, live)
     fetched = {}
 
     def fetch(image_id):
@@ -440,14 +476,11 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None):
         return fetched[image_id]
 
     submitted, failures = 0, 0
-    for subject, lane in cells:
-        if job_id_of(subject, lane["key"]):
-            continue
+    for (subject, lane), rules in zip(cells, broken):
         # Kind Robots validates the prompt contract at claim time, so a rejected
         # prompt still gets a job id and the cell is never resubmitted: on
         # 2026-10-10 all 16 zuzu-showdown portraits (ArtJobs 35176-35191) failed
         # on ", no text." Refuse it here, where the ledger can still be fixed.
-        rules = violations(compose_prompt(lane, subject))
         if rules:
             failures += 1
             print(f"  FAILED {subject['key']} [{lane['key']}]: prompt contract {rules}", file=sys.stderr)
@@ -517,7 +550,8 @@ def main(argv=None):
     if not args.live:
         pending = [(s, lane) for s, lane in cells if not job_id_of(s, lane["key"])]
         print(f"DRY RUN: {len(pending)} of {len(cells)} cells would be submitted via {core.KR_BASE_URL}")
-        for subject, lane in pending:
+        broken = contract_rules(pending)
+        for (subject, lane), rules in zip(pending, broken):
             source = "data:image/png;base64," if lane["engine"] in SOURCE_ENGINES else None
             body = build_request(ledger, lane, subject, source)
             if lane["engine"] in VIDEO_ENGINES:
@@ -529,7 +563,6 @@ def main(argv=None):
                 crop += f", masked {subject['mask_box']} via /api/comfy/kontext/enqueue" if subject.get("mask_box") else ""
                 print(f"    source: ArtImage {subject.get('source_image_id')}{crop}{extra}")
             print(f"  {subject['key']} [{lane['key']}] {body['width']}x{body['height']} \"{body['promptString'][:70]}\"")
-            rules = violations(body["promptString"])
             if rules:
                 print(f"    REJECTED by the prompt contract {rules}: --live will skip this cell")
         return 0
