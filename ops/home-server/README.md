@@ -323,10 +323,10 @@ Same pull model and stdlib-only footprint as the relay — it reuses
 you already set for kr-relay. To enable:
 
 ```powershell
-# KR_RELAY_TOKEN is already set (shared with kr-relay). Optionally, for gated
-# Civitai downloads that need an API key:
-setx KR_CIVITAI_TOKEN "your-civitai-token"
-# open a NEW shell after setx, then:
+# KR_RELAY_TOKEN is already set (shared with kr-relay). For gated Civitai
+# downloads, kr-download accepts either existing CIVITAI_TOKEN (scanner) or
+# KR_CIVITAI_TOKEN. Reuse the existing secret; do not paste it into logs or code.
+# Only if neither exists, configure a token before starting the worker:
 pm2 start ecosystem.config.js --only kr-download
 pm2 save
 pm2 logs kr-download --lines 20   # expect: "download agent … polling …" idle loop
@@ -334,7 +334,11 @@ pm2 logs kr-download --lines 20   # expect: "download agent … polling …" idl
 
 Override `KR_LORA_DIR` / `KR_CHECKPOINT_DIR` only if your engine loads models
 from non-default paths. Like the relay, it runs whatever was on disk when pm2
-started it — `git pull && pm2 restart kr-download` to update.
+started it — `git pull && pm2 restart kr-download` to update. A normal
+`pm2 restart kr-download` reloads Python code but does not re-read changes to
+`ecosystem.config.js`. If PM2 already contains `CIVITAI_TOKEN`, the updated
+script needs only a pull and restart. Use the Downloads tab to retry previously
+failed 401 requests afterward.
 
 ### Updating a running relay (e.g. the 2026-07-10 Hair Studio upgrade)
 
