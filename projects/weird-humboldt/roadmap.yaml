@@ -18,6 +18,18 @@ goal: >-
   one-screen Play experience. Final art direction and any public release remain
   subject to Silas's later explicit creative approval.
 notes_from_silas: |
+  2026-10-20 PT (night), Silas, after the checkpoint review: "we should use
+  nova comix, krea2, arthemy, and z-image turbo should all have generation
+  lanes". Then: "I authorize all unique art generations for quests and
+  consequences. The more the user gets to participate in the story, the
+  better. and do make sure to have the kinetic sculpture race sections to
+  match the actual event (over road, over dunes, and across water). and
+  failing the roll to cross the water should be a fun experience. all that
+  work and their float sank. What a story! And now you've bonded over
+  drowning trauma and public embarrasment." And: "there should be specific
+  weird floats created for this race that return. A rainbow shrimp! a
+  dragon. a shark. one modeled after sea otters and named the Snerfmobile."
+  (t-042, t-044)
   2026-10-20 PT (late night), Silas, after asking how many art pieces one
   checkpoint style adds: "I call absolute suss on those numbers. Every choice
   card and consequence ending should have an art object." Recount: 25 story
@@ -1303,8 +1315,10 @@ tasks:
   - id: t-042
     milestone: m4
     title: "Ecotone art standard: art for every card, outcome and ending, in 2-4 styles"
-    status: ready
+    status: claimed
     owner: worker
+    claimed_by: 2026-10-20T07:09:39Z-art-standard
+    claimed_at: '2026-10-20T07:09:39Z'
     approved_by_human: true
     passes: 0
     stakes: reversible
@@ -1315,6 +1329,12 @@ tasks:
       picks from the checkpoint review (t-043). Engine and art-style work:
       outcome and ending art slots in the game, a ledger per style, and
       ArtJobs by lane. Blocked on Silas's checkpoint picks.
+
+      Picked 2026-10-20 PT: Z-Image Turbo, Krea 2, Arthemy and Nova Comic XL, each a
+      style with its own generation lane (kind_robots#3893 merged, b4740fb). Silas
+      authorized all unique art generations for quests and consequences: 27 cards, 126
+      outcomes and 84 endings, about 237 per lane and about 950 renders, briefed per
+      picture in art/ART-STANDARD.yaml.
 
   - id: t-043
     milestone: m4
@@ -1343,3 +1363,24 @@ tasks:
       shortlist. Retire the page (and its admin tab) once Silas picks the styles for t-042.
     updated: '2026-10-20T06:13:27Z'
     implementation_pr: 'silasfelinus/kind_robots#3886'
+
+  - id: t-044
+    milestone: m4
+    title: "Kinetic race: the real course (road, dunes, water), recurring sculptures, a fun sinking"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-20T07:09:39Z-kinetic-course
+    claimed_at: '2026-10-20T07:09:39Z'
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas (2026-10-20): the race sections match the actual event, over road, over
+      dunes and across water; failing the water roll is a fun story (the float sinks,
+      the crew bonds); and the race has its own returning sculptures: a rainbow
+      shrimp, a dragon, a shark, and the Snerfmobile (sea otters). kind_robots#3895:
+      the party moves to the night before; you're conscripted at the noon whistle on the
+      Plaza, then Dead Man's Drop on the Manila dunes (KN-7), the Humboldt Bay water
+      entry, Melvin's Mile on Table Bluff (KN-8), and Crab Park up the Eel River to
+      Ferndale. Every failed bay crossing sinks the slug with goodwill and a
+      slug_sank flag that later cards remember, per guide.
