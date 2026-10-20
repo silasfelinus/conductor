@@ -31,7 +31,7 @@ Run via pm2 as the `kr-download` app (see ecosystem.config.js). Env:
   KR_LORA_DIR         optional override for the LoRA/LyCORIS directory
   KR_CHECKPOINT_DIR   optional override for the checkpoint directory
   KR_DOWNLOAD_POLL_SECONDS  default 30
-  KR_CIVITAI_TOKEN    optional; appended as ?token= for Civitai downloads
+  CIVITAI_TOKEN or KR_CIVITAI_TOKEN  optional Civitai credentials (same precedence as scanner)
 """
 
 import hashlib
@@ -43,6 +43,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from urllib.parse import quote, urlsplit
 from pathlib import Path
 
 import lora_import_agent as model_import
@@ -68,7 +69,10 @@ RESOURCE_DIRS = {
     "UPSCALER": os.path.join(MODEL_ROOT, "upscale_models"),
 }
 POLL_SECONDS = float(os.environ.get("KR_DOWNLOAD_POLL_SECONDS", "30"))
-CIVITAI_TOKEN = os.environ.get("KR_CIVITAI_TOKEN", "").strip()
+CIVITAI_TOKEN = (
+    os.environ.get("CIVITAI_TOKEN", "").strip()
+    or os.environ.get("KR_CIVITAI_TOKEN", "").strip()
+)
 DOWNLOAD_TIMEOUT = float(os.environ.get("KR_DOWNLOAD_TIMEOUT", "1800"))
 AGENT_ID = os.environ.get("AGENT_ID", socket.gethostname())
 USER_AGENT = "kr-download/1.0 (+https://github.com/silasfelinus/kind_robots)"
@@ -175,10 +179,15 @@ def resolve_download_url(request):
 def with_civitai_token(url):
     """Civitai gates many downloads behind an API token; append it when set and
     the URL is a Civitai one (never leak the token to arbitrary hosts)."""
-    if not CIVITAI_TOKEN or "civitai.com" not in url:
+    parsed = urlsplit(url)
+    if (
+        not CIVITAI_TOKEN
+        or parsed.scheme.lower() != "https"
+        or parsed.hostname not in {"civitai.com", "www.civitai.com"}
+    ):
         return url
-    separator = "&" if "?" in url else "?"
-    return f"{url}{separator}token={CIVITAI_TOKEN}"
+    separator = "&" if parsed.query else "?"
+    return f"{url}{separator}token={quote(CIVITAI_TOKEN, safe='')}"
 
 
 def filename_from_disposition(header):
