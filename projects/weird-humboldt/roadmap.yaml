@@ -1330,7 +1330,7 @@ tasks:
   - id: t-043
     milestone: m4
     title: "Temporary checkpoint review page with generation times"
-    status: claimed
+    status: done
     owner: worker
     claimed_by: 2026-10-20T05:46:05Z-checkpoint-review
     claimed_at: '2026-10-20T05:46:05Z'
@@ -1345,3 +1345,12 @@ tasks:
       median, fastest and slowest, a lightbox with prompt and settings, and a
       shortlist per lane for picking the 2-4 styles. Temporary: retire it once
       the styles are picked.
+
+      DONE 2026-10-20 PT: kind_robots#3886 squash-merged (2825122), all 25 checks green.
+      /admin/art-review (Admin > Checkpoint Review, admin only) shows the bake-off's 8
+      subjects x 8 lanes and rounds 1-3 side by side with live status, render time (relay
+      claim to image saved, so it includes model load and upload) and queue wait; per-lane
+      median, fastest and slowest; a lightbox with prompt and settings; and a per-lane
+      shortlist. Retire the page (and its admin tab) once Silas picks the styles for t-042.
+    updated: '2026-10-20T06:13:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#3886'
