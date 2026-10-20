@@ -12,6 +12,12 @@ goal: >-
   an Act V hideout, injury and rare death, romance and multiple endings.
   Begin in Admin; full Play launch requires explicit publication approval.
 notes_from_silas: |
+  2026-10-20 PT, style: "For writing style notes: we want crisp stark prose. Stephen King or
+  his son Joe Hill, lone wolf and cub". Same day, direction: accelerate development; all paths
+  interesting and unique, engaging conflicts and teetering influences, an engaging visual-novel
+  style (but more verbose) where the reader is often asked to make choices that question
+  morality; wide leniency on art submissions and rerolls. Writing contract:
+  projects/emperor-of-dust/SCENE-WRITING-GUIDE.md ("Prose style" section governs).
   2026-10-18 PT (later): "given the nature of passing and failing quests, we should have
   a robust load/save system, and allow the player the option to rewind to previous days
   (though random events will stay random, another pass will not create the same events
@@ -381,7 +387,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Build the barracks: follower grid, illustrated view, Talk scenes and capacity upgrades"
-    status: claimed
+    status: done
     depends_on: t-020
     passes: 0
     stakes: reversible
@@ -391,10 +397,25 @@ tasks:
       with stat wheel, equipment, known traits, unique ability and faction
       modifiers, limited daily Talk conversations, 6 beds upgradeable to 9 and
       12. Only use delivered images, with fallbacks. Keep the /play gate closed.
+
+      Merged kind_robots#3920 as 9bbd2574bfae23eb8cc1b7ed50fb648bd0ad8d21 after all 21 checks
+      passed on head 57214f9fd2a98097d7f9a60522baef19f41104aa. Barracks Talk scenes: one
+      conversation a day with a ready or injured follower, played as a branching scene
+      (TalkDef, talkFor/talkScene/chooseTalkOption; heard:<id> and talk:<id>:<opt> flags; an
+      open talk closes heard at dawn; saves validate talksHeard/talkDay/talkOpen). Roster dot
+      for followers with something to say, Sit-with button (heart for romance steps), story-
+      gated answers hidden. 63 talks across all 20 followers in stark prose, fortress talks
+      close at the Day 41 betrayal and seven Act V talks open in the hideout; ~40 callbacks to
+      throne-room flags; talk-teodor-letters, talk-isolde-coven and talk-sable-flight now
+      revealable. Chromium 1440/390 from an injected Day 2 save: Rook's talk, beat and close,
+      no page errors or horizontal scroll. Remaining scope not built: barracks capacity is
+      still the existing 6/9/12 bed purchase; no stat wheel. F010 Lumen still has no
+      recruitment route, so her talks wait.
     owner: worker
     claimed_by: 2026-10-20T120500Z-eod-talk-scenes
     claimed_at: '2026-10-20T11:21:58Z'
-    updated: '2026-10-20T11:21:58Z'
+    updated: '2026-10-20T12:35:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#3920'
 
   - id: t-018
     milestone: m3
@@ -476,7 +497,7 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Throne room audiences with gated solutions and the art-led dialogue box with streamed text"
-    status: claimed
+    status: done
     depends_on: t-020
     passes: 0
     stakes: reversible
@@ -486,10 +507,25 @@ tasks:
       follower or flag, shown locked with requirement. Dialogue box with
       nameplate, 2-4 choices, log, typewriter stream with tap-to-complete and a
       persisted speed setting (normal, fast, instant).
+
+      Merged kind_robots#3914 as 815fa731b4eff46cd1ab37ce2b65e0eb22cc43ab after all 21 checks
+      passed on head b79ea712689bb78c7de2eb81d2ce839b33ee4717. Silas 2026-10-20 PT asked for a
+      verbose visual-novel style with frequent morally testing choices. Audiences are now
+      branching scenes: options with next lead into beats (AudienceBeat), lines can be handed
+      to other speakers ({who, npc, text}) with nameplate and portrait, story-gated answers
+      (flags, absent followers) are hidden rather than shown locked, mid-scene state saves and
+      closes at dawn. All 50 days rewritten (98 audiences, 88 scenes, 139 beats, 956 answers,
+      ~56k words, ~100 callback answers and a dozen callback audiences reading earlier flags;
+      Komodo tells on lie days; Day 40 quiet word three beats deep with five evidence routes).
+      Original ids/effects/quests preserved; balance test and 40-seed report hold (8/8
+      endings; rustline patron 33/40; freeholds loans 4.1/run). Chromium at 1440 and 390 on a
+      local dev server: no page errors or horizontal scroll. Writing contract:
+      projects/emperor-of-dust/SCENE-WRITING-GUIDE.md.
     owner: worker
     claimed_by: 2026-10-20T113000Z-eod-vn-scenes
     claimed_at: '2026-10-20T11:14:02Z'
-    updated: '2026-10-20T11:14:02Z'
+    updated: '2026-10-20T12:01:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#3914'
   - id: t-022
     milestone: m3
     title: "Quest room board: assignment slots, requirement bands, preview odds and expiry"
@@ -528,14 +564,24 @@ tasks:
   - id: t-026
     milestone: m4
     title: "Romance arcs for about six followers, never Young Komodo"
-    status: claimed
+    status: done
     depends_on: t-011
     passes: 0
     stakes: reversible
     owner: worker
     claimed_by: 2026-10-20T123000Z-eod-romance
     claimed_at: '2026-10-20T11:41:54Z'
-    updated: '2026-10-20T11:41:54Z'
+    updated: '2026-10-20T12:35:16Z'
+    note: >-
+      Shipped in kind_robots#3920 (9bbd2574). Six romance arcs, never Young Komodo: Rook
+      (rook-2, rook-3), Saffron, Nera, Ash, Sable and Vesper (three steps each, romance:
+      true), final steps Days 27-38. Accepting sets romance-<name>, the last step
+      romance-<name>-sealed; every step can be declined kindly (<name>-friendship, clears the
+      arc). Only one romance can be sealed (courting() notFlags on rivals' sealed flags);
+      three final steps are written jealousy dilemmas, shown only while the rival is alive and
+      at court. Romance costs: a pass that bends Watch law, a lethal walk into the Abbey, the
+      Verge offering war help for Sable, Rook's scout facing the gallows (rook-heartbroken).
+    implementation_pr: 'silasfelinus/kind_robots#3920'
   - id: t-027
     milestone: m4
     title: "Author the major NPC cast (~12-16) with five-mood art briefs, including Komodo's betrayal set"
@@ -562,7 +608,7 @@ tasks:
   - id: t-029
     milestone: m5
     title: "Art-direction pass: bring the fortress front end to the painted drafts"
-    status: claimed
+    status: done
     depends_on: t-020
     passes: 0
     stakes: reversible
@@ -596,8 +642,54 @@ tasks:
       more check-ins were armed. When they render: pick keepers, export to
       public/emperor-of-dust/rooms and list them in ROOM_ART, then close. Item and
       quest-notice art are follow-ups. Visual acceptance stays t-010.
+
+      2026-10-20 PT: all 12 room renders and 231 quest renders were DONE. kind_robots#3915
+      merged as 787757b3068e791e0313d5550d0affe71c5b6279 (18/18 checks): six painted room
+      backdrops (keepers throne a, quests b, barracks a, market a, map b, chronicle a;
+      briefing keeps its gradient) in ROOM_ART, and 228 of 231 quest images in QUEST_ART.
+      Ledgers in conductor#6405 (3e7f6dee). Rejected and rerolling, not yet delivered:
+      barracks backdrop v2 (ArtJobs 42158, 42159; seed a ships with two small background
+      figures) and q-d42-cave-forage notice/success/failure (42160-42162; crow-roost tags
+      overpowered the cave). Those fall back to the map crop until exported; pick up with
+      enqueue_art_requests.py --status on ROOMS-ROUND-1/QUESTS-ROUND-1. Visual acceptance
+      stays t-010.
     owner: worker
     claimed_by: 2026-10-20T005630Z-emperor-t029-gilt
     claimed_at: '2026-10-20T00:56:30Z'
-    updated: '2026-10-20T03:59:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#3885'
+    updated: '2026-10-20T12:16:07Z'
+    implementation_pr: 'silasfelinus/kind_robots#3915'
+  - id: t-030
+    milestone: m4
+    title: "Afterwards: a consequences epilogue after Day 50 that remembers what the emperor did"
+    status: claimed
+    passes: 0
+    stakes: reversible
+    owner: worker
+    claimed_by: 2026-10-20T123500Z-eod-epilogue
+    claimed_at: '2026-10-20T12:35:00Z'
+    updated: '2026-10-20T12:35:00Z'
+    note: >-
+      GAME-BIBLE promises "an ending and a consequences epilogue"; the end screen only showed
+      the ending family and the names of the dead. epilogue.ts holds subjects (followers,
+      NPCs, places, Komodo) with flag/ending/alive/dead-gated variants, first match wins;
+      EmperorFortressEpilogue.vue plays them as an art-led slideshow under the ending.
+      Contract: every flag an epilogue reads is set somewhere (audiences, quests, talks,
+      engine). Branch worker/emperor-of-dust-t030-epilogue in kind_robots; stark prose per
+      SCENE-WRITING-GUIDE.md.
+  - id: t-031
+    milestone: m5
+    title: "Stark-prose pass over all fifty days (King / Joe Hill / Lone Wolf and Cub)"
+    status: done
+    passes: 0
+    stakes: reversible
+    owner: worker
+    updated: '2026-10-20T12:33:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3919'
+    note: >-
+      Silas 2026-10-20 PT: "we want crisp stark prose. Stephen King or his son Joe Hill, lone
+      wolf and cub". kind_robots#3919 merged as f73f0a1df0effe9d6a3d132b13fa8ccde4bf1385
+      (18/18 checks): 2,591 prose strings across the six act files rewritten, about 16% fewer
+      words, every fact, clue, Komodo tell and callback kept. A structure guard proved ids,
+      effects, requirements, beats, quests, flags and line/option counts identical to main;
+      contract, balance and playbook tests pass. Talks (t-017/t-026) were written to the same
+      register.
