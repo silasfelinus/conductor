@@ -3,7 +3,22 @@
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
 failures:
 - source: requests
-  target: projects/images/zuzu-pinball-hero.webp
+  target: projects/images/emperor-of-dust-hero.webp
   kind: timeout
-  detail: job 42410 timed out after 300s (still queued/running)
+  detail: job 42416 timed out after 300s (still queued/running)
+  first_seen: '2026-10-21'
+- source: requests
+  target: projects/images/zuzu-pinball-card.webp
+  kind: timeout
+  detail: job 42417 timed out after 300s (still queued/running)
+  first_seen: '2026-10-21'
+- source: requests
+  target: projects/images/zuzu-shifting-lands-card.webp
+  kind: timeout
+  detail: job 42418 timed out after 300s (still queued/running)
+  first_seen: '2026-10-21'
+- source: requests
+  target: projects/images/zuzu-shifting-lands-hero.webp
+  kind: timeout
+  detail: job 42415 timed out after 300s (still queued/running)
   first_seen: '2026-10-21'
