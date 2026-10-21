@@ -283,7 +283,7 @@ tasks:
 - id: t-011
   milestone: m3
   title: 'Straight animated version: same angle, original footage as mocap, Illustrious checkpoint'
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   note: |-
@@ -331,7 +331,9 @@ tasks:
     Whole-video VACE implementation merged: Conductor PR #6225 at 618e0aaf after 4/4 successful workflows; Kind Robots PR #3744 at 9b04a8f9 after 19/19 successful workflows. Explicit owner-triggered full-film ArtJob after REVIEW pilot, 94-window plan for 5:32 source, source audio reassembly, durable and versioned Comfy caches with atomic downloads, relay lease heartbeat and monotonic progress, failed-job retry, private checksum-verified 4-MiB chunked final MP4 transport and owner playback. No live Windows PM2 restart, Unraid deploy, full-film production render or subjective quality acceptance confirmed. Keep task READY for live deployment and review.
 
     art-medic diagnosis, 2026-10-17: ArtJob 40097 (the full 5:32 film, phase=full, 94 segments, 1080p, created 12:33 UTC) is FAILED after 3 attempts with error "Malformed Coat Dance pilot payload". That string exists nowhere in current conductor or kind_robots main (current ops/home-server/vace_relay.py accepts phase pilot or full and says "Malformed VACE render payload"), so the claiming relay/worker on the render host is running an older pilot-only build. The payload itself is well-formed. Not retried: re-queueing (PR #3729 in-place retry) would only burn the 3 attempts again until the host's relay_agent.py, vace_relay.py and coat_dance_vace_worker.py are redeployed from main, which is Silas's hardware step. After redeploy, retry via Coat Dance Studio's retry action or POST /api/art/queue/{id}/requeue. If the job is instead replaced by a new full-film job, list 40097 in ops/superseded-art-jobs.yaml and clear it with cancel-failed.
-  updated: '2026-10-21T05:03:00Z'
+
+    MPEG upload Comfy decode repair is in the Conductor worker implementation branch: force CFR 65-frame H.264 motion guides, validate complete decoding, atomically replace stale Comfy inputs, and surface real decoder errors. Added actual MPEG program-stream and partial-stage regression tests. Awaiting CI and PR verification; t-011 remains unfinished overall.
+  updated: '2026-10-21T05:21:00Z'
   owner: worker
   claimed_by: 2026-10-21T050300Z-coat-dance-t-011-mpeg-7c42
   claimed_at: '2026-10-21T05:03:00Z'
