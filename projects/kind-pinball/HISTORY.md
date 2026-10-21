@@ -1,0 +1,244 @@
+# kind-pinball — task history archive
+
+Full `note:` prose for completed kind-pinball tasks, moved out of `roadmap.yaml` so the
+Kind Robots projection payload (`scripts/sync_kind_robots_projection.py`, hard limit
+4,000,000 bytes) stays well clear of its ceiling. See conductor/t-158.
+
+Each note below is the **verbatim** original — nothing is summarized or trimmed. The
+`roadmap.yaml` task keeps its own first sentence plus a pointer here. The HTML comment
+markers delimit each note exactly; `archive_done_task_notes.py --verify-only` re-extracts
+every note and checks it byte-for-byte against what the roadmap recorded.
+
+## t-002 — Confirm scope with Silas
+
+<!-- note:begin t-002 -->
+Silas answered in session 2026-10-07 (verbatim in notes_from_silas): one leaderboard; "levels" means a sub-table discovered through play that leads back to the original table; follow the FX3 quality reset (t-017); the project finishes only when it is a truly fun, complex, quality table as good as any Pinball FX3 table. Tables 2 and 3 and the table select are dropped: t-011..t-014 were reshaped around the single table.
+<!-- note:end t-002 -->
+
+## t-003 — Style pass 1 + shot map: DMD, lit inserts, rails, second ramp, orbits
+
+<!-- note:begin t-003 -->
+The first big visible jump, done on the existing file so it ships fast. Add an amber dot-matrix display band (score, ball, mode, banners), a lit, art-directed playfield (wood/dark base, lane guides, GI lamps along the rails, blinking arrow inserts for each shot), chrome rails and wireform ramps with shadows, a shaded ball with a reflection and shadow, and solid flippers with rubbers. Shot map: keep the right ramp, add a LEFT ramp and LEFT/RIGHT orbits (loops) whose arrows light when they pay. Verify: npm run test:arcade-engine, typecheck, Playwright screenshots at phone/tablet/desktop.
+Shipped 2026-10-07 in silasfelinus/kind_robots#3311: 128x32 DMD (utils/arcade/pinball/dmd.ts), printed and lit playfield with arrow inserts for five shots, GI and lamp shows, chrome rails, wireform ramps, second (left) ramp crossing the right, orbits, combos, skill shot, one-way shooter-lane gate, cached render layers (~2.5 ms/frame). Contract tests cover DMD, both ramps, gate, orbit, skill shot.
+<!-- note:end t-003 -->
+
+## t-004 — 3D foundation: dual-canvas Arcade lane + Three.js/Rapier pinball runtime
+
+<!-- note:begin t-004 -->
+Implement the architecture in SYSTEM-DESIGN-SPEC.md without changing the rendering path for any existing Arcade game. Add a render-mode discriminator, stack a WebGL stage canvas behind the existing 2D UI canvas, and lazy-load Three.js plus Rapier only for Kind Pinball. Create utils/arcade/pinball/ boundaries for runtime, physics, rendering, rules, DMD and audio, with a disposable empty/grey table scene proving mount, resize, update, render and dispose. Keep the old Canvas Kind Pinball playable as the rollback path. Verify existing arcade tests/typecheck plus a focused lifecycle test that repeatedly enters and exits the WebGL cabinet without leaking resources.
+Shipped 2026-10-07 in silasfelinus/kind_robots#3320 (all 32 checks green): WebGL arcade lane (renderMode, ArcadeWebGLGameInstance, stage canvas under the 2D UI canvas, dispose on every exit), unlisted kind-pinball-3d preview (maxPlausibleScore 0), utils/arcade/pinball/ engine boundaries (types, Rapier physics at 1/120 s, Three.js scene, rules reducer, audio boundary, runtime), real-scale greybox table. Tests: 25 mount/dispose cycles with zero live physics worlds and GPU resources; verified in real WebGL and in the nuxi dev cabinet at desktop and phone.
+<!-- note:end t-004 -->
+
+## t-005 — Physics feel: cradle, post pass, flipper motors, tilt bob, kickback, spinner, drops
+
+<!-- note:begin t-005 -->
+Tune the Rapier table until the ball feels heavy and controllable rather than arcade-floaty. Servo/motor flippers must support a full-power stroke, tap, live catch, cradle and post pass without coordinate-triggered velocity cheats. Add sling/pop impulses, rolling/spin tuning, left outlane kickback, spinner, three drop targets and a tilt bob with two warnings then TILT. Acceptance: 500 max-speed post impacts with zero tunnelling; reproducible cradle and post-pass tests; ramp threshold tests; and a ten-minute three-ball demo-pilot soak with no permanent stuck ball.
+Merged as kind_robots#3353: motor flippers (20 ms coil stroke, partial taps) with vertical-faced convex-hull bats; physics at 240 Hz on a shared clock; sling kicks on real hits; left outlane kickback (lit each ball, relit by the A-M-I bank) firing through one-way orbit deflectors; tilt bob with two warnings then TILT; animated drop targets; per-ball ball search; ramp covers and straight inlane returns. Acceptance tests pass: tap vs stroke, 5 s cradle, live catch, full flips 3.5-7 m/s on the playfield, post pass across a timing window, 500 max-speed post shots with no tunnelling, ramp thresholds, and a 10-minute three-ball soak with no stuck ball.
+<!-- note:end t-005 -->
+
+## t-006 — Physical DMD: 128x32 scene queue + backbox texture
+
+<!-- note:begin t-006 -->
+Build a logical 128x32 amber dot display with bloom, a big score font and a prioritized scene queue, then expose that canvas as an emissive Three.js texture in the physical backbox. Scenes: skill shot, lock, multiball, jackpot, super jackpot, mode intro/total/timer, wizard mode, extra ball, tilt, bonus count and match. Gameplay timers outrank celebration scenes. The DMD module must be testable without WebGL.
+Done 2026-10-08 (kind_robots#3368): pure ms-clocked DMD scene queue (priority, min time, stale drop, urgent tilt/game-over, resumable mode timers that celebrations may interrupt for <=1 s) and 18 pure scenes into the 128x32 framebuffer, painted as amber dots on an emissive backbox panel with bezel and glass; rules name ball/tilt/tilt-warning/game-over scenes and clear the tilt on drain. t-007 lights jackpots/modes by naming scenes.
+<!-- note:end t-006 -->
+
+## t-007 — Table 1 rules depth: skill shot, combos, lock + multiball jackpots, village map, wizard mode, match
+
+<!-- note:begin t-007 -->
+Rebuild AMI Village Rescue as a pure serializable rules state machine driven by semantic shot events from the 3D sensor/shot recognizer. Skill shot: lit top lane. Combos: ramp to orbit to ramp, growing value. Three locks start AMI multiball; ramps light JACKPOT and then SUPER JACKPOT. The scoop awards one of 12 villages; modes light different shot arrows; all 12 start the Malaria-Free wizard mode. Include extra ball, bonus/multiplier, ball save and match. Effects request score, lights, DMD scenes, audio and mechanisms rather than mutating renderer objects. Contract-test rule sequences without loading Three.js or Rapier.
+Merged kind_robots#3369: Table 1 rules depth on the pure reducer (rules/features.ts + village.ts): skill shot, combos, locks to AMI multiball with growing jackpots and super jackpot, 12-village map of timed modes with saucer relight, extra ball at 5 villages, Malaria-Free wizard multiball at 12, ball save, bonus x multiplier, match, tilt forfeits. Runtime auto-launches added balls; lamps blink lit shots; jackpot light show; synthesized callouts; replay contract tests (runPinballRules).
+<!-- note:end t-007 -->
+
+## t-008 — Pinball audio mixer: mechanics, ball materials, callouts and mode music
+
+<!-- note:begin t-008 -->
+Add a pinball-specific WebAudio mixer instead of stretching the generic arcade beep presets. Buses: mechanical, ball, callout, music and ambience under the existing master mute. Distinct cues for flippers, slings, pops, ramp entry/exit, metal rail, plastic, spinner, drops, scoop, kickback, plunger and drain; positional audio where useful; original short callouts and loopable mode/multiball music beds. Nothing autoplays before the first user gesture.
+Reviewed 2026-10-08 against the brief and closed: kind_robots#3351 (merged 2026-10-07) built the mixer: five buses (mechanical, ball, callout, music, ambience) under the arcade's mute; distinct cues for flippers, slings, pops, ramp entry/exit, metal rail, plastic, spinner, drops, scoop, kickback, launch and drain; stereo panning; mode/multiball music beds; no AudioContext before the first gesture. Later tasks added the callouts, the sub-table bed and the mastery cue. The review found no contract test, so kind_robots#3377 adds one: every sound the rules and runtime name has a cue (a typo would otherwise be silence), every cue sits on a bus, every bed has notes, nothing plays before unlock.
+<!-- note:end t-008 -->
+
+## t-009 — FX3 material + light show pass: GI, inserts, flashers, generated playfield art
+
+<!-- note:begin t-009 -->
+Turn the proven 3D hero scene into an art-directed machine. Use clearcoat playfield PBR, chrome, rubber, transparent/printed plastics, reflective steel ball, baked AO/environment reflection, emissive inserts and pooled flashers with restrained bloom. Add rule-driven sweeps/chases and an attract-mode light show. Generate a top-down AMI Village playfield albedo through durable ArtJobs using the geometry UV/template, with no baked lettering or fake lighting; engine assets supply crisp inserts and labels. Capture fixed-seed before/after screenshots at phone/tablet/desktop quality tiers.
+Implementation merged (kind_robots#3365): light shows, multi-pattern attract show, baked contact shade, generated-albedo loader with procedural fallback. Albedo requested (conductor#5775, prompt fixed by #5782); it could not render while kindrobots.org hung (2026-10-08 12:08Z onward). Remaining before done: confirm /images/pinball/ami-village- playfield.webp renders on the table, take before/after screenshots.
+Closed 2026-10-08 21:40Z. Once kindrobots.org recovered, the playfield albedo rendered (ArtJob 34932, art-prompts status done) and is served at /images/pinball/ami-village- playfield.webp (768x1504, no lettering: hillside village and windmill across the top, compass rose, starry night fading to plum). Verified on the 3D table at a fixed seed on phone (low), tablet (medium) and desktop (high) tiers: the loader swaps it in for the procedural art (hasGeneratedArt true), placed as designed (village along the top arch, compass behind the pops). Before/after: projects/kind- pinball/screenshots/t009-{phone,tablet,desktop}-{before,after}.jpg.
+<!-- note:end t-009 -->
+
+## t-010 — Signature mechanisms + responsive polish: toys, motion, touch and camera
+
+<!-- note:begin t-010 -->
+Replace hero placeholder meshes with at least three gameplay-connected mechanisms: a village hut bank, net-delivery plane/drone, and AMI robot-head/beacon lock toy. Add restrained camera presets, sling/toy motion, jackpot particles and speed-only ball trail. On touch devices remove the generic pinball D-pad: lower-left/right edge zones fire flippers, the launch lane supports plunger drag, and a short upward swipe nudges. Hints fade after the first ball. Verify identical physics/rules on phone, tablet and desktop plus performance traces.
+Merged in three parts. (1) kind_robots#3381: three gameplay-connected toys, scenery with no colliders, driven by rules/toys.ts. A six-hut bank on the arch, one per village toward the wizard (visited glows, saved burns bright, the playing village blinks, the row flashes in the wizard mode). The AMI beacon robot head over the lock (eyes = A-M-I drops, beacon turns when the lock is lit, flashes in multiball). The net drone (carries the NET RUN nets, flies them to the village on HOME, circles in multiball). Sling rubber flex, jackpot sparks, a speed-only ball trail (tier-gated), and two restrained camera presets (plunge lean, higher multiball eye). (2) kind_robots#3382: the touch layout with no d-pad: lower corners flip, a drag down the lane strip pulls the plunger to the finger's depth, a quick upward swipe nudges, and the hints fade after the first ball. (3) kind_robots#3383: runPinballDevices proves the same seeded game ends on identical score, rules and ball positions on phone/low, tablet/medium, desktop/high and with no screen. Performance: projects/kind-pinball/PERF.md. CPU is about 0.4 ms a tick; draw calls are 124/160/172 by tier. Real-device GPU frame times can't be measured in a GPU-less sandbox and fall to Silas's play-test (t-016). Screenshots: projects/kind-pinball/screenshots/t010-*.jpg.
+<!-- note:end t-010 -->
+
+## t-011 — Hidden sub-table: a discoverable secret playfield that returns the ball to the main table
+
+<!-- note:begin t-011 -->
+Silas 2026-10-07: "a sub-table to be discovered, leading back to the original." Build it as real 3D geometry/collision on the shared runtime (occlusion, shadows, its own flipper(s), targets and a toy), reached only by a hidden path the player finds through play -- e.g. a secret entrance that opens after a feat (a lit scoop at the right moment, a full village map, a hurry-up) -- not a labelled ramp that is always open. The camera eases to the sub-table only while every live ball is there. The ball returns to the main table through a visible habitrail or kickout that feeds a flipper, and whatever the player earned there carries back (lit shots, a multiplier, a mode). Its rules are t-012.
+Merged as kind_robots#3346: a secret room behind the backbox, reached through a door in the top arch that opens for 25 s after a lock (DMD tease only); a left orbit is diverted into a hidden hole and subwayed up. The room has its own flippers, N-E-T standups, a windmill toy and a HOME scoop; HOME or its drain returns the ball via the award kickout to the left flipper, carrying a bonus multiplier back. Camera eases to the room only while every ball is there; the backbox occludes it and fades. Also fixed scoops never capturing a ball that settled in them during a kickout cooldown.
+<!-- note:end t-011 -->
+
+## t-012 — Sub-table rules: discovery path, its own mode, rewards carried back to the main table
+
+<!-- note:begin t-012 -->
+Repurposed 2026-10-07 (was "Table 2: Zuzu's Dojo"; Silas chose one table with a discovered sub-table instead -- see t-002). Design and build the sub-table's rules on the pure shot-event state machine: how it is discovered (and rediscovered on later balls: harder each time), the hint language that teaches a new player it exists (DMD teases, a flickering insert, a callout) without giving it away, its own short mode or hurry-up with a DMD scene and music state, and the rewards that carry back (e.g. a lit add-a-ball, a village lit, a jackpot multiplier). It must feed the wizard mode, so a skilled player plans around it. Contract-test discovery, the return path and every carried reward.
+Merged kind_robots#3370: rules/subTable.ts. Discovery ladder (1/2/3 locks; door 25/20/15 s, min 10 s) with teases that never name the left orbit; NET RUN hurry-up (500k +250k per visit, falls to 100k over 20 s) with village mode paused while in the room and a sub-table music bed (musicFor); HOME pays the hurry-up, +1x and relights the saucer; with all nets +1x, rescues a village toward the wizard, and doubles jackpots; add-a-ball in multiball. Also capped the slings (a ramp-return ball could wedge inside) and scoped the ball-search cradle exemption to balls in reach of a held flipper. Tests: runPinballSubRules + sling regression.
+<!-- note:end t-012 -->
+
+## t-013 — Fun and balance pass: ball times, shot difficulty, mode lengths, scoring curve
+
+<!-- note:begin t-013 -->
+Repurposed 2026-10-07 (was "Table 3"). Silas's finish line is "truly fun, complex, and quality", so tune for fun with evidence, not feel alone. Run headless bot sessions at several skill levels and record: average ball time (aim for FX3-like 60-120 s for a decent player), drain causes (outlane vs SDTM vs center), each shot's make rate, how often modes, multiball, the sub-table and the wizard mode are reached, and the score spread. Tune ball save, outlane posts/kickback, shot geometry, mode timers and award values until a new player reaches multiball in a few games and a good player can reach the wizard mode. Check the numbers into a TUNING.md here and repeat after every rules change.
+Harness + three tuning steps merged/opened (kind_robots#3372, #3373, #3374); evidence in projects/kind-pinball/TUNING.md. Fixed: flat flipper hull (ramps/orbits were 1-2 tick shots; bowed rubber), ramp-channel ball trap, impossible skill shot (plunge never reaches bumpers; now a lit flipper shot), reach levers (first multiball 2 locks, orbits relight, wizard at 6 villages, 15 s ball save). Met: every main shot makeable; hidden room found in 60% of good-bot games. Not settled by bots: ball time 60-120 s, novice multiball, good-player wizard -- bot ball times (good 29.8 s) are bounded by bot saving (74% of its flips go back up-table; most drains are balls it never flips at). Needs human play numbers (t-016) before more rules are bent toward bots.
+<!-- note:end t-013 -->
+
+## t-014 — Mastery goals and the one leaderboard (FX3-style table challenges)
+
+<!-- note:begin t-014 -->
+Repurposed 2026-10-07 (was "Table select + per-table scores"; Silas chose one leaderboard). Keep the single existing kind-pinball Arcade board. Add FX3-style mastery goals for replay value: a ladder of table challenges (find the sub-table, play every mode, light all villages, reach the wizard mode, super jackpot in multiball, a combo chain of N), shown on the attract/rules screen and on the DMD when earned. Progress lives in the arcade store per player (per Kind Robots AGENTS.md: stores own persistence). Any ArcadeScore or schema change must be additive and called out as schema-affecting.
+Merged kind_robots#3375: a 13-goal mastery ladder (skill shot, first village, village saved, EVERY VILLAGE across games, 3-way combo, multiball, jackpot, secret village and nets home (shown as ??? until earned), super jackpot, extra ball, MALARIA-FREE wizard, ten million). Announced on the DMD with a callout the first time earned; kept per player in the arcade store (localStorage kr-arcade-mastery, no schema change); ladder on the 3D cabinet's how-to page. 'Light all villages' in one game is impossible since the map resets after the wizard at six, so EVERY VILLAGE covers it and 'play every mode' across games. The single kind-pinball board is unchanged.
+<!-- note:end t-014 -->
+
+## t-015 — Table guide (FX3-style rules card) for the table
+
+<!-- note:begin t-015 -->
+An in-cabinet guide that teaches the table: a shot map diagram with arrows, then each mode, the multiball, the mastery goals and the wizard mode in a few lines. The hidden sub-table stays a secret (at most a teasing silhouette until the player has found it once). Reachable from attract mode and the pause menu.
+Merged kind_robots#3376: an in-cabinet FX3-style rules card. Pages: shot map drawn from the table definition (walls, posts, pops, ramp floors, flippers) with numbered arrows to all eight shots; villages (each of the 12 modes); multiball; more scoring; MALARIA-FREE wizard; mastery ladder. Every number comes from the rules constants. The sub-table stays secret until found once (mastery record): a lone '?' on the map, ??? on the ladder, no page mentions it; once found it gets its own SECRET VILLAGE page. Reachable from the attract loop and the pause screen (B, the Table guide panel switch, hints on how-to and pause screens).
+<!-- note:end t-015 -->
+
+## t-017 — FX3 quality reset: visual mockups + 3D architecture blueprint
+
+<!-- note:begin t-017 -->
+Silas-directed 2026-10-06. Diagnose the visual/technical gap between the current flat Canvas table and a Pinball FX3-quality target. Produce concrete visual mockups plus implementation-ready specs for camera, materials, lighting, geometry, physics, rules, DMD, audio, effects, responsive controls and asset production. Be willing to replace the renderer/physics architecture if the existing 2D approach cannot reach the target. Update the roadmap implementation path from the resulting blueprint without duplicating t-003's already-claimed first style pass.
+
+Produced the FX3 quality blueprint, implementation system spec, three visual mockups, and reset the Table 1 roadmap around a lazy Three.js/Rapier 3D vertical slice while preserving t-003's completed shot-map/style prototype.
+
+Merged silasfelinus/conductor#5705. Added FX3-QUALITY-BLUEPRINT.md, SYSTEM-DESIGN-SPEC.md, three checked-in mockups, DESIGN-BRIEF v2, and a roadmap that routes Table 1 through a Three.js/Rapier 3D foundation, greybox slice, physics acceptance and PBR hero pass before later tables.
+<!-- note:end t-017 -->
+
+## t-018 — 3D greybox vertical slice: full Table 1 shot map in playable geometry
+
+<!-- note:begin t-018 -->
+Translate the t-003 expanded shot map and mockups/02-shot-map.svg into a playable 3D blockout: one steel ball, two motor flippers, slings, three pops, left/right orbits, left/right ramps, upper feed, lock scoop, spinner lane, award scoop, return lanes, drain and plunger lane. Geometry first: primitive materials are fine, but ramps have real height and balls travel under/over mechanisms. Add directional sensor volumes that emit semantic shot events. This is the first vertical slice that must already feel unmistakably like physical pinball.
+Merged as kind_robots#3330: full Table 1 shot map in playable 3D (orbits, U-turn ramps, upper feed, lock, spinner, award saucer, shooter gate) with a pure shot recognizer; Rapier lengthUnit 0.1 and seamless trimesh ramps fix ghost-edge launches; every shot verified makeable across an aim fan; no reachable traps.
+<!-- note:end t-018 -->
+
+## t-019 — 3D hero render pass: PBR materials, camera, GI, inserts, flashers and quality tiers
+
+<!-- note:begin t-019 -->
+Make the greybox look premium before adding more tables: perspective camera, clearcoat playfield, chrome rails/posts, rubber, plastics, reflective steel ball, contact/baked shadows, environment reflections, ACES tone mapping, emissive shot inserts and restrained bloom. Implement measured high/medium/low quality tiers rather than UA sniffing. Fixed-seed screenshots at desktop, landscape tablet and portrait phone must read as a physical pinball machine at a glance and preserve shot readability. Use mockups/01-fx3-table-hero.svg and 03-responsive-shell.svg as the target composition.
+Done 2026-10-08 (kind_robots#3364): PBR materials over a clearcoated procedural AMI Village playfield, night-cabinet env per material, lamp matrix (rules/lamps.ts) with shot arrows/rainbow multiplier/attract chase/tilt blackout, flasher domes with pooled lights, GI, contact shadows, ACES + restrained bloom, screen-fitted camera (steeper on phones, backbox lid hides the room), measured high/medium/low tiers. Screenshots: projects/kind-pinball/screenshots/t019-*.jpg. Real-device 60 FPS check still to do by hand.
+<!-- note:end t-019 -->
+
+## t-020 — Fill the screen: the machine in a lit room, and the game's splash behind every cabinet
+
+<!-- note:begin t-020 -->
+Silas 2026-10-09: "splash background filler instead of blank screen". In landscape the 3D table is a column with black either side. Build the cabinet and the room in 3D: the cabinet body with side art, lockdown bar and legs, the backbox with a backglass, and an arcade-room backdrop (floor, walls, hanging lamps, neighbouring cabinets as silhouettes) lit to match, so no screen shape shows empty black. Tier it (the low tier keeps a painted backdrop). Also for every cabinet: in the fullscreen/locked view the page behind the screen shows the game's splash art (blurred and dimmed) instead of flat navy. Fixed-seed screenshots at phone, tablet and desktop.
+Merged kind_robots#3407. The 3D machine now stands in a lit arcade room (render/room.ts): cabinet body with side art, chrome rails, lockdown bar, coin door and legs; the Kind Pinball backglass over the DMD; a tiled floor, neon back wall, posters of the other games, pendant lamps, and four neighbouring cabinets with lit playfields. Neighbour spotlights are high tier only; the backglass hides with the backbox in the hidden-room view. Every cabinet in fullscreen or locked play shows its own title art, blurred and dimmed, around the screen instead of flat navy. runPinballStage covers the room, legs, tier gating, backglass fade and resource freeing. Screenshots: screenshots/t020-room-{phone,desk,wide}.jpg and t020-splash-{kind-pinball,kind- pinball-3d,butterfly-blaster}.jpg.
+<!-- note:end t-020 -->
+
+## t-021 — Camera views: follow the ball, watch the flippers, see the whole table; the player picks
+
+<!-- note:begin t-021 -->
+Silas 2026-10-09: "different views to follow the ball or flipper". FX3-style views, switchable in play (a key, a cabinet button, a touch chip) and remembered per player: Dynamic (default; a closer camera that follows the ball up the table and settles on the flippers when the ball comes down, tracks multiball by the lowest ball), Flippers (close and low over the flipper zone, follows the ball only when it is high), and Full Table (today's fitted view). Smooth, never jerky, never losing a ball off screen when it matters (a ball near the flippers is always in view). The sub-table and plunge views keep working in every mode. Physics and rules unchanged (runPinballDevices stays green).
+Camera views shipped: dynamic/flippers/full table, B key + touch VIEW chip, remembered per player (kind_robots#3408).
+<!-- note:end t-021 -->
+
+## t-022 — A table longer than one screen: extend the playfield with an upper playfield
+
+<!-- note:begin t-022 -->
+Silas 2026-10-09: "a table that isn't just 1 screen length". With the Dynamic camera following the ball, the table can be longer than the screen: lengthen the field and add an upper playfield above the current arch (reached by the ramps or the upper feed, and returning to the main field), with its own shots and lit features tied to the rules (villages, nets, multiball). Keep the hidden room hidden. Re-fit art bounds and regenerate the playfield art for the new shape; rebuild the aiming chart and re-run the tuning harness (TUNING.md) so ball time and reach do not regress.
+Merged kind_robots#3415. The table runs on 0.42 m past the arch onto the Ridge, an upper playfield; the backbox and hidden room moved back. The upper feed's subway lifts the ball to the Ridge's kicker: three S-K-Y lanes, three pops, three cloud standups, and a funnel to a one-way gate in the arch's crown (the arch's own segments, so orbits are unchanged). Rules (rules/ridge.ts): SKY HIGH (+1x, saucer relit), CLOUD BURST (kickback relit or points), RIDGE RUN on the way down. Lamps, a guide page, and the whole-table cameras reach the Ridge so Dynamic follows a ball up there. Tuning (30 games, vs main): ball time up for both bots; good-bot multiball level, room reach lower (see TUNING.md 2026-10-10). Ridge generated art is still to come. Screenshots: screenshots/t022-ridge-{full-desk,full-phone,dynamic-desk}.jpg.
+<!-- note:end t-022 -->
+
+## t-023 — More flippers: upper flippers with shots of their own
+
+<!-- note:begin t-023 -->
+Silas 2026-10-09: "multiple flippers". Add at least one upper flipper (FX3/Williams tables often have a third or fourth) placed on the longer table where a ball naturally arrives, each with real shots (a ramp, a lock, a mode lane) and lamps that teach them. Same buttons as the main flippers. Extend the bot and aiming chart to the new flippers; re-run tuning; add the shots to the table guide (t-015) and the mastery ladder if fitting.
+Merged kind_robots#3417. A flipper pair above the Ridge's gate, on the same buttons as the rest, and the Lookout saucer up its right side: the left Ridge flipper's cross shot, worth more each time this ball, each one spotting an S-K-Y lane (three in a row is a SKY HIGH). Flippers now carry their zone; the tuning bot and the attract pilot play each ball on its own zone's pair (the bot had never flipped the hidden room's, and the pilot's room position was stale since t-022). Tuning (30 games, vs t-022): ball time 21.5 s average / 43.6 s good, average-bot reach up, good-bot room reach down to 27% (TUNING.md 2026-10-10, t-023). Screenshot: screenshots/t023-ridge-flippers-desk.jpg.
+<!-- note:end t-023 -->
+
+## t-024 — Put the 3D table in the hall as Kind Pinball, on the one leaderboard
+
+<!-- note:begin t-024 -->
+Silas played the hall's 2D cabinet on 2026-10-09; every 3D improvement was still behind ?game=kind-pinball-3d. Once the screen fill and the views land, make the hall's Kind Pinball cabinet the 3D table: listed in the hall, scores on the existing kind-pinball board (a fresh plausibility ceiling for its scoring), its title art, and the 2D table kept as the fallback for a device without WebGL. Reversible by flipping the registry back.
+Merged kind_robots#3418. The hall's Kind Pinball is now the 3D table (the Ridge, the hidden room, camera views, the lit room, the 13-goal mastery ladder, the table guide) on the one kind-pinball board, with a 100M plausibility ceiling (the Canvas table's was 50M). A device without WebGL plays the Canvas 2D table: ArcadeGameMeta.fallback, chosen once in findArcadeGame and the loader. The ?game=kind-pinball-3d preview is gone. Verified in Chromium against Nuxt dev: /play/arcade?game=kind-pinball opens the 3D cabinet and plays its attract demo. Reversible by moving the 3D meta back to PREVIEW_GAMES. Screenshots: screenshots/t024-hall.jpg, t024-hall-demo.jpg. Follow-up worth doing: in landscape the cabinet keeps a 360x640 portrait screen, so the t-020 room shows only in that column.
+<!-- note:end t-024 -->
+
+## t-025 — The 3D cabinet fills the screen: the room around the machine, not a portrait column
+
+<!-- note:begin t-025 -->
+Found closing t-024: the hall's 3D cabinet keeps the meta's 360x640 portrait screen, so in landscape (and fullscreen) the table is a column between splash art, and the lit arcade room from t-020 shows only inside it. Silas's FX3 reference fills a wide screen with the machine and its room. Let a WebGL cabinet's stage take the whole screen area it is given (any aspect), with the camera fit (render/ camera.ts) framing the table and the room filling the sides; the cabinet's 2D overlay (attract, pause, initials, guide) stays legible at the meta's size, centred. Phone portrait must look as it does now. Screenshots at phone, tablet, desktop and ultrawide, and runPinballDevices stays green.
+Merged kind_robots#3421. Fullscreen or pinned for touch, a WebGL cabinet's screen takes the whole play area at any shape: the camera fits the playfield and the t-020 room and neighbouring cabinets fill the sides, as in the FX3 reference. The 2D layer (attract, pause, initials, guide) keeps the meta's shape, centred, over the game's splash. Verified in Chromium against Nuxt dev at 1440x900 fullscreen and a 390x844 touch phone (pinball pad, launch, VIEW chip). Screenshots: screenshots/t025-fill-desk-demo.jpg, t025-fill-desk-attract.jpg, t025-fill-phone-play.jpg.
+<!-- note:end t-025 -->
+
+## t-026 — One camera from the flippers; a single pan to a bonus area and back, never following the ball
+
+<!-- note:begin t-026 -->
+Silas 2026-10-10: "let's stick to a singular from the flippers perspective, unless the user hits a bonus area, and then it's a single pan to or from the location. following the ball all the time is nauseating." One fixed view from behind the flippers framing the main field, at any screen shape. When every ball is in a bonus area (the Ridge, the hidden room) the camera makes one smooth, timed pan there, holds still, and one pan back when a ball returns. No ball following, no plunge or multiball leans, no view modes (remove t-021's Dynamic/Flippers/Full Table, the B cycle and the VIEW chip). The score stays readable when the backbox is out of frame (a DMD on screen). Tests: the camera never moves while the ball moves on the main field; each bonus visit is exactly one pan in and one pan out.
+Shipped in kind_robots#3432 (merged): one fixed camera from behind the flippers framing the main field at any screen shape; it never follows the ball (a test checks the camera position is exactly constant over 300 frames of a ball racing round). When every ball is in a bonus area (the Ridge, the hidden room) it makes one smoothstep pan of 54 frames there and holds still, and one pan back when a ball returns (tested: one pan in, none on a repeat, one pan exactly home). Removed the plunge and multiball leans and t-021's view modes (B cycle, VIEW chip, how-to line, cameraMode.ts). The backbox is out of the main frame, so the DMD now also shows on screen at the top whenever the backbox one is not visible. Screenshots: screenshots/t026-desk.jpg, t026-phone.jpg, t026-ridge-desk.jpg.
+<!-- note:end t-026 -->
+
+## t-027 — A painted playfield in the mockups' quality, for the main field and the Ridge
+
+<!-- note:begin t-027 -->
+The quality bar is mockups/quality-bar-2026-10-10-*.webp. Today's playfield is a soft generated image under procedural paint. Make a densely illustrated, top-down AMI Village playfield (night village, lit windows and lanterns, the rainbow, nets and the drone, AMI) at print resolution, with the shot lanes, inserts and arrows designed into the art, plus its own art for the Ridge (the hilltop above the village). Generate through the durable art pipeline, map each region exactly (art bounds per region), and keep the engine's inserts crisp over it. Screenshot against the mockups.
+Shipped in kind_robots#3467 (merged). Both krea2 renders were delivered: ArtJob 36069 (main playfield, 1024x2000) and 36070 (the Ridge, 1280x1024). They had sat at priority 0 behind 269 Zuzu jobs until they were moved to priority 110 (conductor#5920). The main field is a dense night village with a waterfall and river, boardwalks, blossom trees and a butterfly medallion ringed by lights. The Ridge is a moonlit hilltop with a stream, a bridge, a lookout tower and three lantern clearings. Neither has a crocodile. TableDef.art gains a ridge region over the Ridge floor that meets the main art. paintPlayfield crops each image to its region, never stretching it, and keeps the inserts crisp on top. The canvas goes from 1240 to 1750 px/m, capped to the device's texture limit (artScale). The same PR restored the test suites a027022 (#3428) had dropped: dressing, metalwork, depot and snes-kit. Follow-ups for t-030: the lower field reads bright under the key light, and the backglass art (a cat among mushrooms) may be a Zuzu bleed. Screenshots: screenshots/t027-desk.jpg, t027-phone.jpg.
+<!-- note:end t-027 -->
+
+## t-028 — Sculpted, lit toys and scenery in place of primitives
+
+<!-- note:begin t-028 -->
+Replace boxes and cylinders with modeled pieces in the mockups' spirit: the village huts as real little houses with lit windows, lanterns on posts, pop bumpers as lit lantern caps, the windmill, the AMI robot and the drone sculpted, slingshot plastics printed with art, metal posts with caps and screws, the Ridge's hilltop scenery. Procedural geometry with PBR and emissive materials (or generated meshes where that pipeline exists), tiered so phones stay smooth; collision stays the physics shapes.
+Shipped in kind_robots#3439 (merged). New render/dressing.ts, scenery only (a test checks the colliders are unchanged). Pop bumpers are lathe-turned paper-lantern caps: a chrome foot, a coloured lit body and cap, gold ribs and a gold star. They flash on a hit and settle exactly; this fixed a pre-existing stuck-lit cap. Rubber posts get chrome star-post nuts and screws. Wooden walls get gold trim and painted lacquer. The slings get printed plastics on chrome standoffs. Ten paper lanterns on iron poles line the rails and the Ridge (TableDef.lanterns); they flicker and dim with the GI. The huts are round and thatched, with doors and lit windows. AMI has a rounded head, a visor, ear pods, and butterfly wings from Silas's studies that flutter. The drone has a shell, a dome, pods, blades and skids. Screenshots: screenshots/t028-desk.jpg, t028-phone.jpg, t028-pops.jpg, t028-huts.jpg, t028-ami.jpg.
+<!-- note:end t-028 -->
+
+## t-029 — Chrome wireform ramps, clear plastics and metalwork
+
+<!-- note:begin t-029 -->
+The mockups' ramps are chrome wireforms and clear plastic with light strips; ours are solid blue channels. Build the ramps and the Ridge feed as wireforms (tube rails, cross ties, mounting posts) or clear plastic with lit edges, chrome lane guides and habitrails, metal rails and lockdown hardware, all reflecting the room. Physics colliders unchanged (tests stay green).
+Shipped in kind_robots#3443 (merged). New render/wireforms.ts, scenery only: the colliders are unchanged, and a test checks every wired rail is still a collider. Every ramp with a floor (left ramp, right ramp, upper feed) is a chrome wireform: two polished wires per rail on uprights, cross ties under the clear floor, and a lit cyan strip along each floor edge that dims with the GI. The sheet rails are no longer drawn. Chrome lane guides get a rounded chrome bead along the top, and those taller than 3 cm are drawn as clear plastic shields, which opens the middle of the table. The phone low tier renders at about 6 ms per frame in SwiftShader. Screenshots: screenshots/t029-desk.jpg, t029-ramp.jpg, t029-phone.jpg.
+<!-- note:end t-029 -->
+
+## t-030 — Warm practical lighting and a carved, painted cabinet; the whole look against the mockups
+
+<!-- note:begin t-030 -->
+Light the table like the mockups: warm point lights at lanterns and GI bulbs, candle flicker, insert glow, tuned bloom and tone mapping, shadows and reflections on the ball and chrome. The cabinet: painted side art and backglass at the same quality, metal trim and a carved apron. Finish with side-by-side screenshots (phone, desktop, ultrawide) next to the mockups for Silas.
+Re-armed: status was claimed with null claimed_by/claimed_at (lost close-out write, flagged by check_recurring_claim_drift).
+Shipped in kind_robots #3481 (lighting) and #3484 (cabinet), both merged. Lighting: a softer, warmer key light (1.15, 0xffe6c4), lower ambient, exposure 1.0; the main field's lanterns throw real flickering warm light, 6 on high, 3 on medium, 0 on low (TierSettings.practicalLights). Cabinet: the backglass shows its own painting, rendered by ArtJob for /images/pinball/ami-village-backglass.webp (1536x640): AMI with butterfly wings over the lantern-lit village, the drone carrying a net of care packages, villagers waving, no lettering, no crocodile. The title art stands in only if that image is missing. The side art takes a crop of the backglass painting; chrome corner armour sits on the side rails; the apron carries a painted plate with a gold scroll frame and a butterfly medallion. Screenshots: screenshots/t030-desk.jpg, t030-phone.jpg, t030-ultrawide.jpg, plus side by side with the quality bar: t030-vs-mockup-playfield.jpg and t030-vs-mockup-overview.jpg. Honest comparison: the mockup is still ahead on density of sculpted 3D props, darker and more dramatic contrast, and the number of inserts, arrows and metal lane guides. Those are candidates for after Silas's verdict (t-016), not blockers on this task.
+<!-- note:end t-030 -->
+
+## t-031 — The Care Package Depot: a multiball collector that ships packages to families in need
+
+<!-- note:begin t-031 -->
+Silas 2026-10-10: the mockups' crocodile is "obviously a bleed from the zuzu pinball game, it should be replaced with some sort of multiball collector that sends packages to needy families." Build a sculpted, lit depot toy (a village post house with a parcel chute or conveyor) where the mockup's crocodile mouth sits, as a distinct, legible shot mouth. Each ball it collects is packed as a care package (a parcel appears on the toy and the DMD counts it); filling it starts multiball, and the packages go out to the village (parcels fly or roll to the huts, which light up) with a delivery jackpot. Rules, lamps, DMD copy, sound, the attract show and the guide all name it; tests cover the collect, the multiball start and the delivery. No crocodile, alligator or other Zuzu-table creature anywhere on this table.
+Shipped in kind_robots#3446 (merged). The table's multiball collector is the lock (shot 4), so the lock is now the Care Package Depot. The shot map, colliders and physics are unchanged, which differs from this note's first sketch of a new mouth where the mockup's crocodile sat. It is a little post house over the lock pocket: a teal roof on wooden posts over the pocket's back half, so the mouth stays open, with AMI standing on top. Each ball locked packs a kraft parcel with a coloured ribbon on the pocket's walls; the DMD reads PACKAGE n / k MORE TO SEND. The lock that starts multiball sends every package: they fly in turn to a village hut, whose window flares as each lands, and the DMD reads AMI MULTIBALL / CARE PACKAGES OUT. toyPose gains depot {packed, needed, sending}, and the guide's multiball page tells the story. There is no crocodile on the table. Tests cover the pose, the packing, a flight for every needed package, and every landing; they caught a first-parcel launch bug, now fixed. Screenshots: screenshots/t031-depot.jpg, t031-depot-wide.jpg.
+<!-- note:end t-031 -->
+
+## t-032 — A darker, more dramatic grade: the lamps and lanterns carry the light, as under glass
+
+<!-- note:begin t-032 -->
+t-030's side-by-side with Silas's quality-bar mockups (2026-10-10) found the painted playfield too bright and even: the mockup's field sits in shadow, so the inserts, lanterns and flashers carry the light. Grade the generated playfield and Ridge art down (a multiply dim and a radial falloff to the rails), keep the inserts and engine marks crisp on top, and tint the cabinet's side art so it frames the table rather than outshining it. Visual only: no physics or rules change. Screenshot against t030-desk.jpg.
+Shipped in kind_robots#3489 (merged). The generated playfield and Ridge art are graded once they load: a multiply dim (#d6cde2) over each region, then a radial falloff toward the rails (#5a4a72 at the edge). The inserts and engine marks paint on top, ungraded. The cabinet's side art (the backglass painting) is tinted #8f86a3 once it loads, so the sides frame the table. The lamps, lanterns and flashers now carry the light the way the mockup's do. Visual only; physics and rules are unchanged. Screenshot: screenshots/t032-desk.jpg.
+<!-- note:end t-032 -->
+
+## t-033 — More inserts and metal lane guides: chevron arrow runs into every shot, steel guide hardware
+
+<!-- note:begin t-033 -->
+The mockups carry far more inserts than our table: a run of three to five chevron arrows leading into every shot lane, lit by the rules (an unlit, lit and flashing state for each shot's ladder), plus rows of round inserts for the mode and village progress. Add metal lane guides and wireform-style steel at the lane entries and inlane and outlane dividers, with chrome bolts and screw heads. The shot map, colliders and physics stay unchanged: new inserts are flat lamps under the playfield clear coat, and guides only dress existing walls. Tests cover a chevron run per shot, and that each run follows its shot's rule state.
+Shipped in kind_robots#3491 (merged). A run of three chevrons sits behind each main shot arrow, in the shot's colour. rules/lamps.ts drives it from the arrow: dark while the arrow is unlit, filling one chevron per time the shot has been made, and chasing toward the arrow while the shot is worth going for (the village shots, the multiball jackpots, the wizard mode). A made shot ripples its run. The award saucer sits in the right ramp's lane, so that shot has no run; chevronRun drops any run that would cross a saucer. Hex stand-offs with domed chrome screw heads hold down both ends of every chrome lane guide, with more along the long guides. Both are scenery only: the colliders are unchanged, and the tests assert it. Tests cover placement and clearance from saucers, posts and inserts, every rule state, the chase order, and the stand-off count. The overlap test caught the right-ramp run sitting on the award lamp before it shipped. Screenshots: screenshots/t033-desk.jpg, t033-chevrons.jpg, t033-standoffs.jpg.
+<!-- note:end t-033 -->
+
+## t-034 — Denser sculpted scenery: blossom trees, more village houses and props on the safe edges
+
+<!-- note:begin t-034 -->
+The mockups' playfield is crowded with sculpted 3D props: flowering trees, cottages, fences, lantern posts, barrels and crates, and a bridge over a stream. Ours has the huts, the depot, AMI and the drone. Add more sculpted village scenery, placed only where the ball cannot reach (outside the lanes, behind the slingshots, along the side rails and around the Ridge), so play is unchanged. Merge geometry and instance it so the medium and low tiers keep their frame budget, with the density set per quality tier. Tests check that no prop's footprint overlaps a ball path, and that each tier's prop count holds.
+Shipped in kind_robots#3495 (merged). 24 sculpted props: cottages (timber frames, gabled roofs, chimneys, lit windows that follow the GI), blossom trees, fences, barrels, crates and flower bushes. They stand in two clusters behind the arch at the Ridge's foot beside the huts, with a tree in each Ridge lower corner and a bush on each sling plastic. pinball/reach.ts flood-fills where a ball's centre can reach (2 mm grid, from the plunger and every eject; walls and posts block, ramps, doors and gates never do). The tests prove every prop's footprint, and any crown low enough to meet a ball, is out of play, and that no ramp or cover passes over a prop. They also check the map against the shooter lane, the shot arrows, the saucers and the flippers. Rendering merges per- vertex-coloured solids and windows per tier, six draw calls at most. Low keeps the cottages and main trees, medium adds trees and fences, high adds the small props. No colliders are added. Honest limit: there is little out-of-play ground on the main field, so from the default desk camera the village shows mostly at the top edge near the DMD. It reads fully on the phone view and the Ridge camera. Screenshots: screenshots/t034-desk.jpg, t034-phone.jpg, t034-village.jpg.
+<!-- note:end t-034 -->
+
+## t-035 — No ball stuck for good: seal AMI's centre pockets, escalating ball search with rescue, Nudge button
+
+<!-- note:begin t-035 -->
+Silas, 2026-10-13: his son's ball stuck for good in play (screenshot), and pinball games should have a tilt option. The ball was wedged between the upper feed's right rail and the lock pocket, beside AMI's post house. That pocket and its mirror beside the spinner lane were sealed on every side, so the ball search's shake lifted the ball and it rolled straight back. Shipped in kind_robots#3621 (merged d8fef84). Clear roofs now cover both pockets. The shared runtime's ball search (both tables) watches displacement rather than speed, so a rattling ball counts as stuck. It escalates over three shakes, then sets the ball back on the plunger and fires it ("BALL RESCUED"), with no ball lost. Locked and scooped balls are captured and never moved. Pinball cabinets gain a Nudge button and a pinball controls hint; the tilt bob (WARNING, DANGER, TILT) already existed in the rules engine. New CI test test:kind-pinball-no-stuck runs a 3 cm drop scan inside the arch, pins the found pockets, and checks the rescue on AMI and Zuzu; it fails on the old geometry at the screenshot's spot. Known limit: the dead corner outside the top arch, by the secret chamber, is reachable only by a ball flying over the arch wall; the rescue covers it.
+<!-- note:end t-035 -->

@@ -56,6 +56,116 @@ Mint installation tokens server-side, push worker/scaffold-<slug> branches to us
 DONE 2026-07-21 (conductor scheduled agent run, claude-conductor-agentrun-20260721T-appmaker): kind_robots PR #812 merged (squash 801ed768). Built exactly what GITHUB-APP-DESIGN.md's §8 task table specs for t-009 -- mintInstallationToken/listInstallationRepositories/pushScaffoldBranchAndOpenPr in server/utils/appmakerGithub.ts (token never returned by any API, per §6 invariant 3), repos.get.ts extended with live availableRepos, create-app.post.ts (self-serve external-repo app creation, §5b steps 1-2) and scaffold.post.ts (admin/Worker-only mint+branch+PR, §5b step 3, requireAdminApiUser matching the KR_API_TOKEN Worker-auth convention). Did not build §5c graduation flow -- that is t-010, gated separately. Real find this cycle: the PR's own CI (TypeScript check) failed on the first two pushes with a TS2589 "excessively deep" recursion error in components/art/art-styler.vue, unrelated on its face to appmaker. Root-caused rather than worked around: the 2 new server/api/appmaker/github/*.ts route files grew the project's typed NitroFetchRequest route-key union just enough to push vue-tsc's recursion limit on ANY $fetch call whose R (request) generic was left to infer from the full route union instead of being pinned explicitly -- a pre-existing, repo-wide fragility already sitting at the edge (confirmed: main's own tip reproduces the same failure once nudged, e.g. by any 1-2 new route files). Fixing art-styler.vue's call site only revealed the next-worst one; chased all the way through the codebase (there are only 14 files that call $fetch directly -- the rest goes through typed stores/helpers) and pinned $fetch's R generic (`$fetch<T, string>` or plain `fetch()` for client-only static-asset reads) in all 12 affected files: art-styler.vue, coloring-book-manager.vue, dream-inspire-button.vue, newsfeed-feed.vue, super-form.vue, watchlist-browse.vue, watchlist-entry-detail.vue, leaderboard.vue, currentModel.get.ts, google/callback.ts, muralStore.ts, collectionCardImage.ts. Zero behavior change, verified via vue-tsc --noEmit (0 errors, was exit 2), eslint, and prettier all clean across all 16 changed files, then confirmed green in real CI (TypeScript + Contract verifiers both success) before merging. Also confirmed via conductor/t-073 (still open, needs-human) that the TypeScript check is not actually a required kind_robots branch-protection gate -- did not rely on that to merge, since the underlying issue was fixed for real, but noting it as relevant context for whoever closes t-073.
 <!-- note:end t-009 -->
 
+## t-010 — Graduation flow (monorepo app to its own repo)
+
+<!-- note:begin t-010 -->
+SOFT NEEDS-HUMAN (conductor scheduled Agent run, 2026-08-14T21:45Z session):
+dispatched a research pass over both repos before writing any code and found
+three real architectural gaps the design doc's one-paragraph §5c sketch
+doesn't resolve -- picking wrong on any of them means building throwaway or
+actively risky code, so stopping here rather than guessing on an
+`irreversible`/`gate_human: true` task.
+
+FOR SILAS: three open questions, any answer unblocks real implementation:
+
+1. HISTORY PRESERVATION MECHANISM: §5c says "git subtree split... to
+preserve history" then "push via installation token". Those two clauses are
+in tension with an invariant this project's own code already enforces --
+`mintInstallationToken()` in appmakerGithub.ts is module-private and its own
+docstring says the token must NEVER leave the kind_robots server. `git
+subtree split` is a git-CLI operation needing a real local checkout with
+full history (only the conductor repo's local script layer can run it,
+per the existing `git_plumbing.py`/`worker_merge_pr.py` convention) -- but
+the token that would authenticate a push can only live inside the
+kind_robots Nuxt server process, which has no git binary or persistent
+checkout (it's serverless). The only path that honors both constraints is
+a commit-replay: the conductor script serializes the subtree-split commit
+chain (parent/message/author + full tree per commit) and POSTs it to a new
+kind_robots endpoint, which replays it via GitHub's Git Data API (blob ->
+tree -> commit -> ref-update, chained) so the token never leaves the
+server. That's real new infrastructure, not a wrapper around the existing
+`pushScaffoldBranchAndOpenPr` (which does one-commit-per-file Contents-API
+PUTs and explicitly does not preserve history) -- worth Silas's explicit
+nod before it's built and pointed at someone's real external repo, since a
+bug here writes malformed/partial history into a repo the agent can't
+cleanly undo. ALTERNATIVE if full history isn't actually load-bearing for
+Silas: relax §5c to a single-commit "squash graduate" (reuse
+`pushScaffoldBranchAndOpenPr`'s existing proven mechanism verbatim, just
+pointed at the graduation branch/PR instead of a scaffold PR) -- far less
+new-code risk, ships this task in a fraction of the time, loses per-commit
+history in the new repo (still fully preserved in conductor's own history
+the removal PR points back to).
+
+2. OWNERSHIP MODEL MISMATCH: t-009's external-repo flow (create-app.post.ts,
+scaffold.post.ts) is entirely `AppRepo`-row + `userId`-scoped -- a specific
+user connects their GithubInstallation and owns the AppRepo being created.
+But the actual monorepo fleet this page shows (GET /api/appmaker/apps,
+backing appmaker-page.vue's "Apps" grid) is sourced by listing the
+conductor repo's `apps/` directory directly (`conductorList('apps')`) --
+none of today's 12 scaffolded apps (appmaker, conductor, kind-robots,
+storybook, wishmaster, etc.) have a corresponding `AppRepo` row at all;
+they were created via the Project-scoped `scripts/new_app.py` Todo flow
+(t-004), which predates and never wired into the `AppRepo` model t-008
+added. So "pick 'graduate' on an app" has no existing per-app owner/
+installation to hang the action off of for any app in the actual visible
+fleet today. FOR SILAS: who is allowed to graduate a monorepo-scoped app
+that has no individual owner -- admin-only (gated the same way
+`scaffold.post.ts` gates on `requireAdminApiUser`), or does graduation
+first require the app's Project to have a `userId` owner assigned (a
+smaller, separable task)?
+
+3. TARGET-REPO PREREQUISITE: whichever answer to (2), graduating still
+needs a target external repo + a GithubInstallation already connected for
+whoever is allowed to trigger it -- there is no "create a fresh repo for
+me" path in scope (§7 explicitly excludes it: "Creating repos for users").
+So the UI trigger needs to surface "connect GitHub + pick/create a repo"
+as a precondition, same as t-009's (currently unused-by-any-page)
+`create-app.post.ts` grant-check already assumes.
+
+Recommend resolving (1) first (it's the one with real irreversible-repo
+risk if guessed wrong) -- once decided, this task is straightforward
+software work: a `graduate-request` endpoint mirroring
+`scaffold-request.post.ts`'s Todo-filing pattern (reversible, no git/token
+risk in that half at all), a "Graduate" UI trigger, and the
+conductor-script + kind_robots-endpoint pair implementing whichever
+mechanism (1) resolves to. Both resulting PRs (target-repo push +
+monorepo removal) stay needs-human regardless, per the original design.
+
+Also verified and worth recording since it's a standing environment
+constraint, not specific to this task: this sandbox's local conductor
+checkout is a SHALLOW clone (`git rev-parse --is-shallow-repository` =
+true; every apps/<slug>/ path shows exactly 1 commit in local `git log`
+regardless of real history) -- any future `graduate_app.py` needs to
+`git fetch --unshallow` (or otherwise ensure full history) before running
+`git subtree split`, or it will silently produce single-commit "history"
+even once question (1) is resolved in favor of full replay.
+
+Not blocking other appmaker work -- t-012 (front-end polish, separate
+task) is unaffected. Releasing the claim below since there is nothing
+further to build until Silas answers at least (1).
+
+---
+
+Original design note (unchanged): git subtree split to preserve history,
+push via installation token, flip the AppRepo row, removal PR in the
+monorepo. Both PRs are needs-human per design section 5c.
+
+Decision accepted under Silas's 2026-09-07 default-recommendation policy. Use the lower-risk squash-graduation model rather than inventing a commit-replay history service: preserve full historical provenance in Conductor and link back to it from the graduated repo. Monorepo apps without an individual owner may be graduated only by an admin. Require an already-connected GitHub installation and explicitly selected existing target repo; do not create repos implicitly. Target-repo push and monorepo removal PRs remain explicit review gates because they mutate real repositories.
+
+Merged kind_robots#2802 (silasfelinus/kind_robots@8cff47a) 2026-09-17: admin-only POST
+/api/appmaker/graduate-request (files a Todo, does not push to GitHub), GET
+/api/appmaker/apps extended with graduated/pendingGraduations, admin-only Graduate
+trigger + repo picker in appmaker-page.vue's fleet cards, and
+verifyAppmakerGraduateRequestGuard.ts (+selftest) wired into contract-tests.yml. All 51
+kind_robots CI checks green (Build production image still in flight at merge, non-
+required per established precedent). This closes the request-filing half of graduation
+per Silas's 2026-09-07 decision (squash graduation, admin-only, existing-granted-repo-
+only). The squash-push executor itself (conductor-script + kind_robots-endpoint pair
+that mints an installation token and writes a single commit via the Git Data API, then
+opens the monorepo-removal PR) is separate, higher-risk infrastructure and remains
+unbuilt -- filed as appmaker/t-015 (next_free_task_id.py) rather than left implicit.
+<!-- note:end t-010 -->
+
 ## t-011 — Flag bare-scaffold apps that go stale so the fleet doesn't accumulate untouched shells
 
 <!-- note:begin t-011 -->
@@ -74,3 +184,44 @@ PROGRESS 2026-08-22 (conductor scheduled Agent run): fresh read excluding all pr
 <!-- note:begin t-013 -->
 Kaizen from t-012's 2026-08-16 cycle (kind_robots PR #1913): the `fleet` computed in appmaker-page.vue showed a permanently blank card description for every real, registry-tracked app because `tasks.length === 0` was almost never true in practice (scripts/new_app.py always seeds 3 tasks), so the real per-app text (`project?.goal` / `project?.notesFromSilas`) never reached the UI. Fixed for the `fleet`/Apps card grid. Check whether the same page's "pending" apps list (apps still scaffolding, not yet in the registry) or any other conductorStore-driven list in this project has a similar stale-literal-over-real-data gap, and fix any found the same way. If nothing else is affected, close as a verified no-op rather than forcing a change.
 <!-- note:end t-013 -->
+
+## t-014 — Decide: keep /appmaker admin-only and fix its self-serve copy, or open project creation to all users
+
+<!-- note:begin t-014 -->
+FOR SILAS: found during the 2026-08-18 t-012 polish cycle (kind_robots main, no PR -- this is a read-only finding). content/channels/plan/appmaker.md sets requiredRole: ADMIN, enforced live by middleware/navigation-access.global.ts, so no non-admin user can currently reach /appmaker -- an anonymous visitor is redirected to /login and a logged-in non-admin to / with access=denied, even on the server-rendered HTML.
+What it contains: appmaker-page.vue's own copy still reads as if the tab is open to any signed-in user ("Sign in to create an app. Browsing is open to everyone"), and describes a FREE_PROJECT_LIMIT of 2 apps per free-tier user. server/api/appmaker/scaffold-request.post.ts's entire non-admin cap-enforcement path is consequently unreachable in production right now. Checked sibling plan-channel tabs: conductor-app.md, voice-lab.md, and watchlist.md are also requiredRole: ADMIN, while brainstorm.md, model-builder.md, and coloring.md are open -- so this looks like a deliberate current-phase choice (these read as your internal agent-tooling views) rather than an accidental oversight, but the page's own copy was never updated to match.
+TO APPROVE: tell us which way to take it, and set status: ready (a future t-012 cycle will implement it) or done directly if you'd rather leave it as documentation: (a) keep /appmaker admin-only -- rewrite the sign-in/free-tier copy in appmaker-page.vue to reflect that it's an internal tool, or (b) drop requiredRole: ADMIN from appmaker.md so the existing self-serve copy and cap logic actually apply, in which case also sanity-check the abuse surface of public project creation (scaffold rate limits, GitHub App install flow) before flipping it live, since that would be an outward-facing change. Nothing unblocks on this beyond appmaker's own future polish cycles picking a consistent story.
+AUDITED 2026-08-18 (conductor scheduled Agent run): read appmaker-page.vue in full. It is the only page component for this project (mounted once, from conductor-manager.vue). Two conductorStore-driven lists exist:
+1. The "pending" scaffolds list (apps still filing, not yet in the registry) --
+   sourced from /api/appmaker/apps' `pending: PendingScaffold[]`, not
+   conductorStore at all. It renders only `item.slug` in a badge, with
+   `requestedAt` in a hover tooltip via `formatDate()`. No description field is
+   rendered here, so there is no stale-literal-over-real-data text to go stale --
+   the gap t-012 fixed doesn't exist on this list.
+2. The "fleet" Apps card grid -- already fixed by t-012's PR #1913 (verified
+   present in the current file: `description: project?.goal ||
+   project?.notesFromSilas || ''`, falling back to "Freshly scaffolded." only when
+   there is truly no project data yet).
+
+Searched the wider kind_robots tree for any other component reading `conductorStore.projects` (components/pages/{appmaker,conductor,conductor-pitch-manager}-page.vue, components/taskmaster/taskmaster-sample-tasks.vue, components/conductor/conductor-app-page.vue) -- none belong to the appmaker project's own UI surface (conductor-manager.vue just mounts AppmakerPage under the 'appmaker' workspace tab; the rest are the conductor/pitch/taskmaster projects' own pages, out of this task's scope). No other appmaker-specific component exists.
+Verified no-op: nothing else in this project has the stale-literal gap. Closing without a code change per the task's own "if nothing else is affected" clause.
+
+
+Decision accepted under Silas's 2026-09-07 default-recommendation policy: keep /appmaker admin-only for now and fix the stale self-serve/free-tier copy so the UI tells the truth. Do not broaden public project creation merely to match old copy; if self-serve AppMaker later becomes a real product goal, open a fresh outward-facing task with explicit abuse/rate-limit/GitHub-install review.
+
+Implemented (scheduled conductor Agent run): rewrote appmaker-page.vue's copy per
+Silas's 2026-09-07 decision -- removed the free-tier/self-serve language (Sign in...,
+Free accounts can run N active projects) since content/channels/plan/appmaker.md's
+requiredRole: ADMIN means no non-admin visitor can ever reach this page, and
+enforceProjectCap() already no-ops for admins. Removed the now-dead FREE_PROJECT_LIMIT
+constant. Verified with eslint (clean) and a full vue-tsc --noEmit typecheck (clean).
+Merged silasfelinus/kind_robots#2804 (squash 71bf10a), all 46 CI checks green,
+mergeable_state clean before merge.
+<!-- note:end t-014 -->
+
+## t-016 — Add a log-only dry-run mode to POST /api/appmaker/graduate-execute
+
+<!-- note:begin t-016 -->
+Filed by gate triage 2026-09-30 from t-015's own option (b). A dry-run that reads the app tree, resolves the target repo and installation token scope, and reports the exact commit/tree it WOULD push and the removal PR it WOULD open, with zero writes. It lets Silas validate the mechanism before approving t-015's first irreversible run.
+Shipped kind_robots#3162: dryRun:true on graduate-execute returns the plan with zero writes; guard + selftest extended.
+<!-- note:end t-016 -->

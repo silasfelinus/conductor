@@ -1,0 +1,564 @@
+# butterfly-gallery — task history archive
+
+Full `note:` prose for completed butterfly-gallery tasks, moved out of `roadmap.yaml` so the
+Kind Robots projection payload (`scripts/sync_kind_robots_projection.py`, hard limit
+4,000,000 bytes) stays well clear of its ceiling. See conductor/t-158.
+
+Each note below is the **verbatim** original — nothing is summarized or trimmed. The
+`roadmap.yaml` task keeps its own first sentence plus a pointer here. The HTML comment
+markers delimit each note exactly; `archive_done_task_notes.py --verify-only` re-extracts
+every note and checks it byte-for-byte against what the roadmap recorded.
+
+## t-002 — Create the Kind Robots Project identity and place Butterfly Gallery in Plan
+
+<!-- note:begin t-002 -->
+Ensure the matching Kind Robots Project uses conductorSlug butterfly-gallery, title "Butterfly Gallery", channelKey=plan, tabKey=projects, and liveUrl=/butterfly-gallery. This is a private admin curation project; preserve isPublic=false and mature-aware access so its eventual private/mature ArtImage feed is never exposed by navigation. Kind Robots owns these presentation fields, not Conductor override YAML.
+Patched the existing Kind Robots Project row (id 2118, auto-created by the conductor projection sync, conductorSlug already set) via PATCH /api/projects/2118: title 'Butterfly Gallery', channelKey=plan, tabKey=projects, liveUrl=/butterfly-gallery, isPublic=false. Confirmed via the response payload. No code change / PR needed -- this is a live Kind Robots data field, not a roadmap-adjacent file.
+<!-- note:end t-002 -->
+
+## t-003 — Create /butterfly-gallery shell, store, and scene state machine
+
+<!-- note:begin t-003 -->
+Build the route and Pinia/store state for loading, intro, ready, dragging, dropping, saving, rescanning, and error states. Include selected image, pile/queue entries, bin configuration, filters, batch selection, and intro-played state. Use fixture/private ArtImage data initially so this work does not wait on art-archive integration.
+Merged kind_robots#2830: route+store+state machine landed as described. Downstream t-005/t-006/t-008/t-009 unblock via resolve_deps.py.
+<!-- note:end t-003 -->
+
+## t-004 — Define the private-ArtImage feed contract without duplicating art-archive
+
+<!-- note:begin t-004 -->
+Define the narrow read contract Butterfly Gallery needs from the archive: id/thumbnail/display path, processed state, rating, folder/custom collections, prompt/generation metadata, resource provenance, match state, missing/trashed state, and next-page cursors. Prefer an adapter over duplicating archive queries. Fixture this contract for UI work. The real provider switches to art-archive once that project exposes the feed.
+Merged kind_robots#2831: feed contract (ButterflyGalleryFeedProvider, cursor pagination) + extended ButterflyPileEntry fields landed as described. Downstream t-005/t-008/t-009 unblock via resolve_deps.py.
+<!-- note:end t-004 -->
+
+## t-005 — Build the painting pile and selected central frame interaction
+
+<!-- note:begin t-005 -->
+Render the pile as a deep foreground mass of overlapping thumbnails that rises from BELOW the viewport with NO box/container front. Only the upper portion is visible, implying a much larger hidden backlog. It should be tall enough to very slightly overlap the bottom edge of the central display. Selecting or dragging an image promotes it into the large central frame; the next image advances smoothly after a successful sort. The pile remains a foreground DOM layer so it can occlude the lower-right robot animation behind it.
+FLAG (2026-09-18, same session that shipped this task): Silas's approved-stage-spec commit (839ade1) landed mid-flight and rewrote this task's own note above to specify below-viewport rise / no box-container / slight overlap with the central frame / foreground-DOM layering against a lower-right robot animation. The merged implementation (kind_robots#2832) satisfies the ORIGINAL note this session claimed against (top-of-pile rendering, hover/lift, remaining count, promote-to-frame, smooth advance) but does NOT implement the newer positioning/layering requirements above -- the pile currently renders in-flow inside a bordered kr-panel, not rising from below the viewport with no container. t-010 (STAGE milestone m3, depends_on t-005+t-006) already explicitly owns "Implement APPROVED-STAGE-SPEC.md exactly ... image pile rising from below viewport and slightly overlapping the display", so the positioning/layering rework is likely t-010's job, not a t-005 defect -- but flagging here since t-005's own note now describes requirements this PR doesn't meet. Confirm this reading (t-010 absorbs the staging) or reopen t-005 if the below-viewport/no-box behavior should land before t-010's broader composition pass.
+<!-- note:end t-005 -->
+
+## t-006 — Build configurable left/right sorting-bin rails
+
+<!-- note:begin t-006 -->
+The approved desktop composition has exactly FIVE large configurable preset bins on the LEFT. They are data-driven multi-action presets, not hard-coded meanings; mockup examples include 5★+collection, 4★+favorite tag, 3★ keep-as-is, 2★+move, and 1★+archive. A successful preset marks the item processed/done unless that preset explicitly opts out. Support drag hover/drop plus click/tap fallback. The RIGHT side is not a second custom bin rail: it is reserved for compact Image Info, Cleanup, and Trash.
+Shipped in kind_robots#2834 (Silas's own live session, "build approved sorting stage"): exactly five configurable preset bins on the left (rating/collection/tag presets via fixture `preset` payload), right side reserved for Image Info/Cleanup/Trash (not a second bin rail), drag hover/drop plus click/tap fallback on each preset button. Reconciled by the Reviewer session that also shipped t-005 and hit a merge conflict against this PR on pages/butterfly-gallery.vue.
+<!-- note:end t-006 -->
+
+## t-007 — Wire core curation actions: processed state, rating, trash, and collections
+
+<!-- note:begin t-007 -->
+Make first-class bin/action targets for mark processed/unprocessed, Rate 1-5, recoverable Trash, and Add to collection. Call existing archive APIs when available; until then keep the action adapter injectable and test against fixtures. Do not recreate archive filesystem semantics here.
+Merged silasfelinus/kind_robots#2837 (squash 1df1861): wired setProcessed, setRating, trashEntry/restoreEntry, addToCollection/removeFromCollection through a new injectable ButterflyGalleryActionAdapter (fixture-backed today, mirroring the existing feed provider pattern -- a real art-archive-backed adapter swaps in later under t-022, which is `waiting` on an external art-archive read/action contract that doesn't exist yet). Extracted the field-level rules into pure appliers (stores/helpers/butterflyGalleryActions.ts) so dropOnBin and the new standalone actions share one implementation. Trash is explicitly reversible at the data layer (never drops the pile entry; restoreEntry fully reverses it) though the UI restore affordance itself is t-009/t-020's job. Verification: full npm run test (vue-tsc) clean, layout-contract and kr-class-coverage both hold, eslint/prettier clean, and a new contract test (utils/scripts/verifyButterflyGalleryActions.test.ts, wired into contract-tests.yml) covering processed toggle, rating clamp/clear, trash/restore round-trip, collection add/remove dedup, preset-bin composition, and adapter-call composition -- all 49 kind_robots CI checks green.
+<!-- note:end t-007 -->
+
+## t-008 — Build the selected-image metadata and quick-action drawer
+
+<!-- note:begin t-008 -->
+Implement the compact RIGHT-RAIL Image Info panel from the approved stage spec. Keep it small enough not to compete with the main artwork: thumbnail or identity, filename/title, prompt excerpt, dimensions, checkpoint/LoRAs, rating, processed state, collection/match state as appropriate. Deeper metadata belongs behind a Details/expand affordance. Immediately below it are Cleanup and Trash actions; do not add Keep/Replace tiles unless Silas later requests them.
+Shipped in kind_robots#2834: compact right-rail Image Info panel (rating, folder, checkpoint, processed state) with a Details/expand affordance revealing prompt/LoRAs/ collections, plus Cleanup and Trash actions immediately below per the note. Two minor gaps against the note's full field list: no explicit filename/title line and no dimensions/match-state field in the compact view. Cleanup is rendered but intentionally disabled pending the Art Archive action adapter (explicit PR flag, not an oversight). Judged close enough to the note's core ask to close rather than leave open pending a cosmetic field-list nit -- flag if Silas wants those two fields added.
+<!-- note:end t-008 -->
+
+## t-009 — Add queue filters and folder/collection browsing
+
+<!-- note:begin t-009 -->
+Support processed/unprocessed, rating, match state, missing/trashed state, folder, collection, and search filters. Preserve the theatrical pile metaphor while making the real queue state legible and recoverable.
+Implemented queue filters (search/processed/rating/matchState/trashView) and folder/collection browsing chips in pages/butterfly-gallery.vue + stores/butterflyGalleryStore.ts, extracting the predicate into stores/helpers/butterflyGalleryFilters.ts. Fixed a real bug: trash visibility was folded into matchState==='missing' (t-003 scaffolding), which never actually worked for real trashed entries. New trashView filter decouples it. PR: kind_robots#2838, CI pending.
+Merged kind_robots#2838 (1488740a). 51/51 checks green. Fixed a real pre-existing bug along the way: trash visibility was folded into matchState==='missing' (t-003 scaffolding), which never actually revealed trashed entries since trashing doesn't touch matchState -- now filters.trashView is its own dimension.
+<!-- note:end t-009 -->
+
+## t-010 — Build the static Butterfly Gallery stage composition
+
+<!-- note:begin t-010 -->
+Implement APPROVED-STAGE-SPEC.md exactly: bright friendly minimalist industrial warehouse; one long horizontal top runway/window behind a convex yellow drop funnel; five custom preset bins left; large central display; compact Image Info + Cleanup + Trash right; image pile rising from below viewport and slightly overlapping the display. No in-scene page header, no random copy, and NO living/acting things baked into the static scene. Reserve explicit layer slots for top-runway animation, left butterfly loop, lower-right robot-behind-pile loop, blank-state display loop, and selected-image drop transition.
+Shipped in kind_robots#2834: warehouse-structure stage with top runway slot, convex yellow drop-funnel (neck/bell/mouth), five preset bins left, large central display, right-rail Image Info+Cleanup+Trash, foreground pile rising from below viewport with no box, and reserved animation layer slots (data-animation-slot="butterfly-runway", "foreground-robot", plus a foreground-butterfly-slot and blank-state CSS loop) -- confirmed directly in the merged pages/butterfly-gallery.vue, not just taken from the PR's own description. Per the PR body, t-024 (performance/responsive tuning) and t-025 (cross-width visual acceptance) remain explicitly responsible for what this pass doesn't cover -- this task's own scope (implement the approved composition) is met.
+<!-- note:end t-010 -->
+
+## t-011 — Produce the static art asset set for room, frame, pile, bins, and window
+
+<!-- note:begin t-011 -->
+Productionize the approved scene as SEPARATE layers. The static background contains warehouse architecture and structural mounts only: no butterflies, robots, artwork pile, example art, moving conveyor content, or UI labels. Produce structural runway/window and a CONVEX yellow funnel whose lower bell/mouth is wider than its neck so art can visibly emerge downward. Bins/frame/info are accessible DOM surfaces over the background. Queue any generated Butterfly Gallery art at ArtJob priority 200.
+<!-- note:end t-011 -->
+
+## t-012 — Storyboard the non-looping trapdoor intro and reduced-motion variant
+
+<!-- note:begin t-012 -->
+Replace the older generic trapdoor storyboard with the approved motion contract. The selected-image entry transition is deterministic DOM motion: art emerges downward through the convex funnel, stretches comically long vertically, then snaps/recoils to its true aspect ratio in the central frame. Keep any first-visit intro short/skippable/session-aware. Reduced motion uses a brief fade/scale instead of squash-and-stretch.
+
+
+Wrote projects/butterfly-gallery/MOTION-STORYBOARD.md as the bounded implementation contract for the approved first-visit intro, selected-image stretch-and-snap transition, skip/session behavior, interruption rules, and reduced-motion path.
+
+Reviewer (Claude, scheduled conductor run): merged silasfelinus/conductor#4651 — MOTION-
+STORYBOARD.md is the bounded implementation contract for t-012. Docs-only, reversible,
+mergeable_state clean, all required checks green (an earlier Validate-Worker-PR-handoff
+failure was against a pre-edit PR body missing the Notes-for-reviewer heading; the body
+was corrected and the check passed on the final commit).
+<!-- note:end t-012 -->
+
+## t-013 — Create the butterfly animation shot list and animation-creator jobs
+
+<!-- note:begin t-013 -->
+Build animation-creator jobs for the APPROVED layers: (1) upper runway passes behind the funnel: string carrier, team carry, solo struggler, clean cross, rare failed/drop gag; (2) one transparent rainbow butterfly foreground loop above the left bins: fly-in, hover/flap, settle/perch, idle/reset; (3) one transparent Kind Robot foreground loop in the lower right, BEHIND the pile: pick up/examine/shuffle pictures; and (4) a gentle blank-state center-display loop used only while no ArtImage is selected. No living thing may be baked into the background.
+
+
+Added projects/butterfly-gallery/ANIMATION-SHOT-LIST.md with eight stable animation-creator job keys covering five runway passes, the left butterfly loop, lower-right robot loop, and blank-state loop; all generated project assets are specified at ArtJob priority 200 with compositing and provenance requirements for t-014.
+
+Reviewer (Claude, scheduled conductor run): merged silasfelinus/conductor#4656 -- docs-
+only ANIMATION-SHOT-LIST.md, cross-checked against APPROVED-STAGE-SPEC.md and MOTION-
+STORYBOARD.md, mergeable_state clean, 23/23 check runs green. t-014 now unblocked.
+<!-- note:end t-013 -->
+
+## t-014 — Implement and catalog Gallery motion actors against final production geometry
+
+<!-- note:begin t-014 -->
+HUMAN GATE CLEARED 2026-09-19: Silas confirmed the renamed production assets are installed and served from /images/butterfly-gallery, and explicitly authorized animation submissions at the LOWEST queue priority.
+Use the illustrated Gallery butterfly at /images/butterfly-gallery/gallery-butterfly-start.png as the animation model. For upper-runway clips, use the actual /images/butterfly-gallery/runway-background.png as the background/first frame context and preserve its real aspect ratio/crop. Generate several short variants with smaller butterflies carrying/towing blank portraits: solo carry, string tow, team carry, struggler, and an occasional fumble. These should be image-to-video work (LTX or WAN as appropriate), not a procedural DOM recreation of Butterfly Scouts.
+For the left foreground loop, animate gallery-butterfly-start.png as a close-up fly/hover/perch/idle/reset behavior. For the lower-right loop, animate /images/butterfly-gallery/robot-sift-start.png against the exact production lower-right crop so the live foreground pile can layer in front of it. The central blank state can remain the existing CSS/DOM motion unless visual acceptance requests a generated replacement.
+QUEUE POLICY: every NEW Butterfly Gallery animation ArtJob from this task must be submitted at priority 0. Kind Robots claims PENDING jobs by priority descending, so priority 0 is deliberately beneath the current backlog's elevated work. Do not reuse the old priority-200 setting and do not raise these jobs later just because the project itself is high-priority agent work.
+Prior Stage-2 jobs 28725-28732 and their old butterfly keyframes are superseded visual references. Do not revive/requeue them as production assets. New jobs should use the newly installed production PNGs and the updated illustrated Gallery butterfly direction.
+Acceptance: animated background scenes must not bake in unrelated living actors; runway clips must fit the real horizontal window; the funnel may occlude motion cleanly; the left butterfly loop remains independently composable; the robot reads correctly while partially hidden by the dynamic pile; reduced-motion/visibility gating remains required when integrated.
+Submitted the 7 image-to-video ArtJobs the animation shot list calls for (5 upper-runway carry passes, 1 left-foreground butterfly loop, 1 lower-right robot loop) at priority 0 via POST /api/art/enqueue, using the real production PNGs (runway-background.png, gallery-butterfly-start.png, robot-sift-start.png) fetched over HTTPS as first-frame references. All 7 confirmed PENDING via GET /api/art/queue/:id immediately after submission: job ids 28739 (runway string tow), 28740 (runway team carry), 28741 (runway solo struggler), 28742 (runway clean cross), 28743 (runway rare fumble), 28744 (left butterfly loop), 28745 (lower-right robot loop). Full catalog in projects/butterfly-gallery/ANIMATION-JOB-CATALOG.md. Prior superseded jobs 28725-28732 were not touched or revived.
+Splitting per AGENTS.md's scope-decomposition move: this task's own title ("Implement and catalog") is fully satisfied by the submission + catalog above, but actually splicing the finished clips into the Vue page cannot happen until these async priority-0 renders complete behind the existing backlog. t-033 (new task) carries the original note's acceptance criteria forward unchanged and owns the Vue integration once all 7 jobs report DONE. This note's original "Acceptance" criteria above apply to t-033, not to this now-closed task.
+<!-- note:end t-014 -->
+
+## t-015 — Implement intro orchestration with trapdoor, picture fall, and session memory
+
+<!-- note:begin t-015 -->
+Orchestrate DOM/asset motion rather than making the entire page one giant video. Intro never blocks navigation indefinitely, exposes Skip, records that it played for the intended session scope, and leaves the exact same steady-state DOM the user will interact with afterward.
+Worker/Reviewer (Claude, scheduled conductor run, same session): implemented and merged silasfelinus/kind_robots#2842 -- stores/helpers/butterflyGalleryIntro.ts (pure, deterministic trapdoor/tumble/settle beat timing + tumble-frame trajectory planner, directly unit-tested) plus pages/butterfly-gallery.vue orchestration (trapdoor cue, staggered tumble frames, Skip button, 3.2s hard timeout, reduced-motion at-mount and mid-intro handling, Escape-invokes-Skip, full timer/listener cleanup on finish/unmount). Verified: vue-tsc, eslint, prettier, new test:butterfly-gallery-intro plus the existing actions/filters/motion suites, and the full cross-project guard suite (layout-contract, kr-class-coverage, gallery-adoption, gallery-consistency, disabled-affordances, no- promise-in-store-state, card-action-contract) -- all clean. 51/51 CI checks green, mergeable_state clean, merged. No visual/browser verification was possible in this non- interactive session (flagged in the PR body), matching the same honest gap t-017's PR (kind_robots#2841) flagged.
+<!-- note:end t-015 -->
+
+## t-016 — Implement ambient peekaboo butterfly traffic
+
+<!-- note:begin t-016 -->
+Implement the long upper runway scheduler from APPROVED-STAGE-SPEC.md after t-014 is released from its production-geometry hold. Reuse/extract the existing Butterfly Scouts DOM/CSS renderer rather than playing AI-generated butterfly videos: varied butterfly+art passes should travel across the real runtime width, be clipped by the runway surface, and be occluded behind the central funnel. Carrying frames/strings may be DOM/SVG companions to the canonical butterfly actor. This is the ONLY background-area character animation. No static butterfly silhouettes or robots appear in the warehouse backdrop. Pause when hidden and suppress under reduced motion.
+FOR SILAS: t-016 as written now conflicts with your own 2026-09-19 update to ANIMATION- SHOT-LIST.md. t-016's note says to build the upper-runway ambient traffic using the procedural Butterfly Scouts DOM/CSS renderer; the shot list you updated today says the opposite -- runway butterflies must be smaller versions of the illustrated Gallery butterfly (gallery-butterfly-start.png), animated via LTX/WAN/image-to-video, and explicitly 'do not substitute the procedural Butterfly Scouts DOM/CSS renderer' for this feature. t-033 already covers splicing the 7 rendered motion-actor clips (jobs 28739-28745, still PENDING as of this check) into the runway/left-loop/robot-loop slots, including reduced-motion/visibility gating. TO APPROVE: pick one -- (a) close t-016 as superseded by t-033 (and t-031's gating audit), or (b) narrow t-016 to just the randomized clip-selection/scheduling logic across the 5 runway clips once t-033 lands, and change depends_on from [t-010, t-014] to [t-033]. I did not implement or close it myself since this changes task structure across three related tasks (t-016/t-031/t-033) rather than being a single-task call. Did not consume a retry pass -- never claimed.
+GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in session): NOT A HUMAN GATE, returned to agents. Silas's own 2026-09-19 ANIMATION-SHOT- LIST.md settles the conflict: no procedural DOM renderer for runway butterflies. t-033 is done. Taking option (b): narrow this task to randomized clip selection/scheduling across the rendered runway clips, with depends_on [t-033].
+
+Implemented randomized non-repeating runway clip selection with varied quiet gaps between passes, preserving reduced-motion, tab-hidden, and off-screen gating.
+
+Merged silasfelinus/kind_robots#3201 (squash 4f740f00e37c678492923bb60f75dcb1464e6217). Runway traffic now chooses a different rendered pass randomly, leaves a varied 1.2–5.2s quiet gap between passes, and preserves reduced-motion, hidden-tab, and off-screen suppression. Final PR head de74ca72a667971efa3e40b2644c192b3a6f6ea3 had 31/31 GitHub check runs completed successfully; Contract verifiers completed 429/429 steps.
+<!-- note:end t-016 -->
+
+## t-017 — Add sorting micro-interactions without physics friction
+
+<!-- note:begin t-017 -->
+Animate pile selection, drag-target highlight, successful bin acceptance, next-image reveal, and the approved selected-image funnel transition: exaggerated vertical stretch while dropping, then snap/squash back to correct aspect ratio on arrival. No crane exists; selection automatically places the art. Keep every interaction deterministic and easy to drop.
+Merged silasfelinus/kind_robots#2841 -- sorting micro-interactions (pile selection pop, drag-target highlight, bin-acceptance flash, and the Web-Animations-driven funnel-drop transition per MOTION-STORYBOARD.md's geometry contract) implemented, tested, and merged.
+<!-- note:end t-017 -->
+
+## t-018 — Add persisted custom bins and generation/action presets
+
+<!-- note:begin t-018 -->
+Let the admin choose which bins appear and bind them to reusable actions such as Add LoRA, replace LoRA, switch checkpoint, append/replace prompt, change common generation settings, add variant, or request replacement. Prefer the archive project's preset/action API if it already exists.
+
+
+Implemented the first t-018 slice on the Kind Robots worker branch: a versioned, validated persistence contract for custom bin presets and generation/action intents. Store/UI wiring remains for the continuation after this scoped slice is reviewed and merged.
+
+Reviewed and merged kind_robots#2843 (squash 45041e8) 2026-09-18: versioned, validated
+persistence contract for custom bin presets + typed generation/action intents in
+stores/helpers/butterflyGalleryBinPresets.ts. All 46 CI checks green, mergeable_state
+clean. Verified: type shapes match types/butterflyGallery.ts exactly
+(ButterflyBinConfig, ButterflyBinKind), BIN_KINDS set complete/correct, no pre-existing
+duplicate persistence helper. Inert until wired into the Pinia store + editor UI -- re-
+arming to ready for that continuation.
+
+Added a dedicated Pinia preset store that loads validated v1 custom-bin envelopes from localStorage, falls back safely to defaults, persists edits, and owns enable/action/reset mutations. The editor UI remains for the next continuation slice.
+
+Reviewed and merged kind_robots#2848 (t-018 second slice) 2026-09-18: dedicated Pinia
+store (stores/butterflyGalleryPresetStore.ts) that loads/saves validated v1 bin-preset
+envelopes via localStorage, with in-memory fallback on storage failure, and owns
+upsert/remove/enable/action/reset mutations. All 46 CI checks green, mergeable_state
+clean, diff isolated to the one new store file built on the already-merged #2843 helper.
+Editor UI still remains for the next continuation slice -- re-arming to ready.
+
+Added the reusable admin preset-editor component for the t-018 continuation: visible-bin toggles, editable labels, and persisted generation-action bindings through the existing Pinia preset store. This is a scoped slice; page integration remains before t-018 is complete.
+
+Pushed pass 2 to kind_robots#2850 (94eb84c): mounted ButterflyGalleryPresetEditor.vue
+into pages/butterfly-gallery.vue behind a toggle in the existing admin-gated queue-
+toolbar. Verified locally before pushing: vue-tsc, eslint, prettier, test:component-
+reachability (0 unreachable, was 1), test:kr-class-coverage, test:layout-contract, and
+all five butterfly-gallery unit suites -- all clean. Live-bin sync with the real preset-
+rail remains a follow-up. Awaiting CI on the PR.
+
+Merged kind_robots#2850 pass 2 (squash 11c1c97) 2026-09-18: mounted
+ButterflyGalleryPresetEditor.vue into pages/butterfly-gallery.vue behind a toggle in the
+existing admin-gated queue-toolbar. All 48 CI checks green, mergeable_state clean, diff
+isolated to the component + page file. Live-bin synchronization with the actual preset-
+rail remains a natural follow-up (not yet a separate roadmap task -- t-019 already
+covers ArtJob integration once this lands).
+<!-- note:end t-018 -->
+
+## t-019 — Integrate regeneration actions with normal ArtJobs
+
+<!-- note:begin t-019 -->
+Regenerate/additional/replacement actions must use the existing durable ArtJob system and archive adapters. Butterfly Gallery is a controller, not a second render queue. Failed replacement jobs never destroy the current source image.
+
+
+Roadmap-auditor repair: t-019 was still waiting even though its dependency t-018 is done. Promote it to ready so normal dependency-resolved worker selection can proceed.
+
+Merged silasfelinus/kind_robots#2852 (squash 726b266): live-synced
+leftBins/rightBins/binById to butterflyGalleryPresetStore (closing t-018's own flagged
+follow-up), added the generation contract
+(ButterflyGenerationAction/ButterflyGenerationRequest/ButterflyGalleryGenerationClient)
+in types/butterflyGallery.ts, a pure buildButterflyGenerationRequest() builder, and a
+live-by-default butterflyGalleryGenerationClient that POSTs to /api/art/enqueue.
+persistBinGenerationActions()/applyPendingGenerationJobIds() wire it into dropOnBin
+inside the existing try/catch, so a failed submission never partially applies a sort
+outcome or touches the entry image. Verified: vue-tsc, eslint, prettier, all five
+butterfly-gallery unit suites (new coverage for every generation-action kind plus the
+submit/record/failure paths), layout-contract, kr-class-coverage, and component-
+reachability -- all clean. 47/47 CI checks green, mergeable_state clean, merged.
+<!-- note:end t-019 -->
+
+## t-020 — Add keyboard, touch, and accessible non-drag workflows
+
+<!-- note:begin t-020 -->
+Every bin/action is reachable via focus and keyboard and usable on touch without requiring a drag gesture. Provide visible selected/focus states, useful announcements, and keyboard shortcuts for high-frequency sorting where they do not conflict with browser/app navigation.
+
+
+Reviewer openai-scheduled-2026-09-18T171754Z-butterfly-gallery-pr2845-a1 found a quality issue in kind_robots#2845: window-global Delete/digit/arrow shortcuts intercept keys outside gallery-owned focus, including a recoverable destructive trash action. Scope shortcuts to a gallery interaction region or gallery-owned focus and add a focused shortcut-guard contract before retrying. Existing ARIA live status, aria-pressed, discoverability hints, click/tap fallback, and focus-visible treatment otherwise fit t-020.
+
+Worker (Claude, scheduled conductor run): fixed the review finding from openai-
+scheduled-2026-09-18T171754Z-butterfly-gallery-pr2845-a1 -- kind_robots#2845 commit
+9dfeac2 extracts the shortcut guard/routing logic into a pure
+resolveButterflyShortcutIntent() (stores/helpers/butterflyGalleryShortcuts.ts) and
+rebinds the keydown listener on the page's own root <main> element instead of window, so
+Delete/digit/arrow shortcuts only fire for keydowns that actually bubble from inside the
+gallery, never from unrelated page chrome. Added
+utils/scripts/verifyButterflyGalleryShortcuts.test.ts (wired into package.json +
+contract-tests.yml, matching the existing butterfly-
+gallery-{actions,filters,motion,intro} contract pattern) covering every guard (editable
+target, modifier keys, gallery status, missing selection) plus the sort/trash/arrow-
+navigation intents. Replied to the reviewer on the PR. vue-tsc, eslint, and prettier all
+clean; new contract test passes. kind_robots#2845 CI re-running on the fix commit.
+
+Worker (Claude, scheduled conductor run): kind_robots#2845 merged (squash 60d1208), all
+checks green including the new Butterfly Gallery keyboard shortcut contract. Closing
+t-020: digits 1-5 sort by rating, Delete trashes, ArrowLeft/ArrowRight navigate the
+pile, aria-live announcements, aria-keyshortcuts/title discoverability, aria-pressed,
+and distinct focus-visible outlines are all live. A manual keyboard-only browser pass
+was not possible in this sandbox (no browser session) -- flagged in the PR's test plan
+for a future spot-check.
+<!-- note:end t-020 -->
+
+## t-021 — Add batch selection and batch-action confirmation
+
+<!-- note:begin t-021 -->
+Support multi-select from pile/grid/filtered queue and apply compatible bins/presets in batches. Preview count/scope for destructive or expensive actions and report partial failures without losing successful results.
+
+
+Implemented the first t-021 slice: a pure batch execution/preview contract that deduplicates selected ids, flags destructive/expensive batches for confirmation, and preserves per-entry success/failure results so partial failures do not erase successful work. Store/page wiring remains before t-021 is complete.
+
+Reviewer (Claude, conductor sweep): merged kind_robots#2853 (squash cfbd08d) -- pure
+batch executor/preview contract (previewButterflyBatch, executeButterflyBatch) with
+dedupe, destructive/expensive confirmation flagging, and partial-failure preservation.
+Focused contract test added at utils/scripts/verifyButterflyGalleryBatch.test.ts. All 47
+CI checks green, mergeable_state clean, no schema/API/deploy changes. This is a
+deliberate first slice per the Worker's own PR note -- store/page wiring remains, so
+returning task to ready rather than done.
+
+Added the second t-021 slice: a Pinia batch orchestration store now prepares bin batches, requires confirmation for trash or generation-backed presets, executes selected entries independently through the existing gallery drop/action seam, preserves partial failures, and removes only successful ids from batch selection. Page selection/confirmation UI remains before t-021 is complete.
+
+Reviewer (Claude, scheduled conductor run): merged kind_robots#2855 (squash bf6b07e) --
+the second t-021 slice, a Pinia batch orchestration store
+(stores/butterflyGalleryBatchStore.ts) on top of the already-merged pure batch contract
+(#2853). It previews selected-entry batches, flags Trash/generation-backed presets as
+requiring confirmation, executes each selected entry independently through the existing
+dropOnBin seam preserving partial failures, and removes only successful ids from
+selection. Diff isolated to one new 85-line store file, all 46 CI checks green,
+mergeable_state clean. Per the Worker's own PR note, the pile multi-select affordance
+and confirmation/result UI still remain before t-021 is complete -- returning to ready
+rather than done.
+
+Added the final t-021 UI slice: filtered-queue multi-select, batch preset application, explicit confirmation for destructive/generation-backed batches, and visible partial-failure results with failed items retained for retry.
+
+Reviewer rejection (pass 1, quality): kind_robots#2857's layout-contract check fails --
+components/art/ButterflyGalleryBatchControls.vue:20 uses sm:grid-cols-6, a viewport-
+breakpoint grid-cols gate on a shared (non-page) component, which the viewport-grid rule
+forbids. Reproduced identically reading the branch directly, not a CI flake. Full detail
+and fix pattern posted on kind_robots#2857. status: ready, passes: 1, retry_context set
+below.
+
+Retry pass 2 addressed the exact retry_context on kind_robots#2857 by replacing undefined kr-text-black-md with the existing kr-text-black-base token; CI rerun is required before merge.
+
+Merged kind_robots#2857: final t-021 UI slice (filtered-queue multi-select, batch preset
+application, destructive/generation-backed confirmation, partial-failure result
+display). Both retry rounds' fixes verified: layout-contract grid-cols (auto-fit/minmax
+pattern) and kr-text-black-base token, 47/47 CI green, mergeable_state clean. Closing to
+done.
+<!-- note:end t-021 -->
+
+## t-022 — Integrate the real art-archive private image feed
+
+<!-- note:begin t-022 -->
+EXTERNAL DEPENDENCY: art-archive must expose the private/mature ArtImage read/action contract. Swap the fixture adapter onto that real provider, preserving admin auth and mature-viewer gating. Do not query PRIVATE_PATH directly from Butterfly Gallery and do not duplicate ArchiveEntry scanner logic. Mark ready when the art-archive API seam exists.
+Implemented the real art-archive-backed feed provider (GET /api/admin/art- archive/entries, extended additively for thumbnail/mature/public/prompt/checkpoint/generationMetadata/folderCollection) plus setRating/trash/restore through the existing rate/quarantine/restore endpoints. setProcessed/addToCollection/removeFromCollection/markNeedsReview stay fixture no-ops (no real persistence exists for them yet: no curated-flag field, no slug->id seam for collections, no matchState-mutation endpoint) -- filed as t-029 rather than improvised. Real provider/adapter installed via a new client plugin (not the fixture modules' own default) so the existing contract tests keep working under plain tsx (performFetch pulls in Vite-only import.meta.glob code). New contract test added and wired into CI. vue- tsc/eslint/prettier all clean; all existing butterfly-gallery contract tests still pass. silasfelinus/kind_robots#2858 open, CI pending.
+Merged silasfelinus/kind_robots#2858 (squash a76e0239): real art-archive-backed feed provider (admin entries API, extended additively for thumbnail/mature/public/prompt/checkpoint/generationMetadata/folderCollection) plus setRating/trash/restore wired to the real rate/quarantine/restore endpoints. setProcessed/addToCollection/removeFromCollection/markNeedsReview remain fixture no-ops pending t-029 (real persistence design). All 52 kind_robots CI checks green, mergeable_state clean, additive-only API change. New contract test wired into contract- tests.yml.
+<!-- note:end t-022 -->
+
+## t-023 — Harden privacy, maturity, and navigation boundaries
+
+<!-- note:begin t-023 -->
+Verify the Plan project placement does not make private ArtImages public. Require admin authorization plus mature-content permission for the gallery data surface. Test direct-route access, API access, thumbnails, metadata, and Resource/collection links for no private-content bleed.
+
+
+Hardened the Art Archive entries feed used by Butterfly Gallery so admin privilege alone cannot expose mature/private archive metadata: the endpoint now also requires the account's server-authoritative mature-content opt-in via viewerShowsMature. Direct non-admin access remains blocked by requireAdminApiUser; failed maturity checks return 403 before any archive rows or ArtImage metadata are queried.
+
+Merged kind_robots#2861: gated GET /api/admin/art-archive/entries behind
+viewerShowsMature() so admin privilege alone cannot expose mature/private archive
+metadata. All 48 CI checks green. Reviewer verified viewerShowsMature enforces logged-in
++ not-CHILD + opted-in server-side.
+<!-- note:end t-023 -->
+
+## t-024 — Tune large-queue performance and responsive composition
+
+<!-- note:begin t-024 -->
+Paginate/virtualize queue reads, use thumbnails rather than originals, prefetch only a small next-item window, pause unnecessary animation, and keep the stage useful across desktop/tablet/mobile. On constrained widths, bins may become drawers/trays without losing action parity.
+Merged kind_robots#2862: auto-prefetch (watch-based, small next page once visiblePile dips under a 24-entry buffer above the 18-card render cap) plus a max-width:540px breakpoint converting preset-rail/right-rail into horizontal scrollable bottom trays so bins keep full action parity on phone widths where the old clamp() rail minimums didn't shrink. Thumbnails/pagination were already correct from t-004/t-009/t-022. vue- tsc/eslint/prettier/layout-contract/kr-class-coverage all clean; live phone-width visual check deferred to t-025's existing human gate (no working local DB / no deploy of this branch to verify against).
+<!-- note:end t-024 -->
+
+## t-026 — Add a fixture/adapter shape-parity contract for the Butterfly Gallery pile feed
+
+<!-- note:begin t-026 -->
+Kaizen from t-003 (kind_robots#2830): once t-004's read contract/adapter exists, add a verifyButterflyGalleryFixtureShape-style contract asserting stores/helpers/butterflyGalleryFixtures.ts and the real art-archive-backed provider both emit structurally identical ButterflyPileEntry records, so a future adapter swap cannot silently drop a field the store/UI depends on.
+Reviewer/Worker (Claude, scheduled conductor run): claimed, then released before implementing. This task's own contract cannot be built yet -- it asks for a test asserting stores/helpers/butterflyGalleryFixtures.ts and 'the real art-archive-backed provider' emit structurally identical ButterflyPileEntry records, but that real provider does not exist yet (t-022 'Integrate the real art-archive private image feed' is still status: ready, not done). depends_on corrected from t-004 (already done, so it wasn't actually gating anything) to t-022, and status set to waiting so this stops surfacing as pickable until the real provider exists to compare against. Failure category: actionable (undeclared dependency) -- fixed the roadmap rather than retrying or forcing a placeholder comparison.
+Merged kind_robots#2860: added utils/scripts/verifyButterflyGalleryFixtureShapeParity.test.ts asserting the fixture provider and the real art-archive-backed provider's row mapping (toButterflyPileEntry) emit structurally identical ButterflyPileEntry shapes, wired into package.json and contract-tests.yml. Closing to done.
+<!-- note:end t-026 -->
+
+## t-027 — Add a ButterflyGalleryActionAdapter method for the needs-review bin kind
+
+<!-- note:begin t-027 -->
+Kaizen from t-007 (kind_robots#2837): applyBinOutcome's 'needs-review' bin kind still mutates entry.matchState directly instead of going through the action adapter, unlike the other five bin kinds (processed/unprocessed, rating, trash, collection) which all persist through ButterflyGalleryActionAdapter first. Add a markNeedsReview(entryId) method to the adapter (and its fixture-backed no-op implementation) and route applyBinOutcome's 'needs-review' case through it, once a bin or action actually exercises that kind, so it doesn't silently bypass the adapter seam a real (t-022) art-archive-backed adapter will eventually implement.
+<!-- note:end t-027 -->
+
+## t-028 — Wire the generated room/frame/pile/bins/window art into the stage once rendered
+
+<!-- note:begin t-028 -->
+Follow-on from t-011 (kind_robots#2840): 5 ArtJobs (ids 28711-28715, priority 200, projectSlug butterfly-gallery) were queued for the static room/window/frame/bins/pile assets, targeting public/images/butterfly-gallery/ {room,window,frame,bins,pile}.webp. Rendering happens asynchronously via the relay and had not completed as of this task's creation. Once the images exist, replace the corresponding pure-CSS/gradient shapes in pages/butterfly-gallery.vue (.warehouse-backdrop, .runway-slot, .art-display-inner border/background, .preset-bin background, .art-pile background) with the rendered assets, keeping the current CSS as a graceful fallback for any asset that failed to render. Check ArtJob status via GET /api/art/queue/:id (or the admin queue UI) before starting; if any job is still PENDING/RUNNING, wire only the ones that are DONE and leave a note for the rest.
+Worker (Claude, scheduled conductor run): implemented, verified (vue-tsc, eslint, prettier, layout-contract, kr-class-coverage all clean), and opened kind_robots#2859. Setting status: review.
+Merged kind_robots#2859. All 5 rendered assets (room/window/frame/bins/pile) wired into the stage with graceful CSS fallbacks. Closing to done.
+<!-- note:end t-028 -->
+
+## t-029 — Real persistence for setProcessed/collections/markNeedsReview
+
+<!-- note:begin t-029 -->
+Kaizen from t-022 (kind_robots#2858): the real art-archive-backed feed provider and action adapter wired up setRating/trash/restore (clean 1:1 mappings onto entries/[id]/rate.patch.ts, quarantine.post.ts, restore.post.ts) but left three ButterflyGalleryActionAdapter methods on the fixture-backed no-op because no real persistence path exists for them yet:
+1. setProcessed -- ArchiveEntry has no curated/processed flag. Needs an additive migration (e.g. a `curationProcessed Boolean @default(false)` column, following the isActive-flag convention already documented in prisma/art-archive.prisma) plus a small admin endpoint to set it, mirroring rate.patch.ts's shape.
+2. addToCollection/removeFromCollection -- the real endpoint (entries/[id]/collections.patch.ts) takes numeric ArtCollection ids, but ButterflyGalleryActionAdapter's contract takes a `collection: string` (currently the collection slug). Needs either a slug->id resolution endpoint/lookup or a contract change to pass ids directly -- check whether Butterfly Gallery's own UI already has collection ids available at the call site before assuming a lookup is required.
+3. markNeedsReview -- no admin endpoint mutates ArchiveEntry.matchState directly today; matchState changes currently only happen via the resource-matching pipeline. Needs a small admin endpoint (e.g. a needs-review.post.ts setting matchState to a value that surfaces in the match-review queue) plus the adapter wiring.
+Do each independently; they don't depend on one another. See stores/helpers/butterflyGalleryArtArchiveActionAdapter.ts's header comment for the full context.
+
+
+Implemented a scoped t-029 slice: a real admin needs-review endpoint persists ArchiveEntry.matchState=AMBIGUOUS and the Butterfly Gallery action adapter now calls it. setProcessed and collection persistence remain for continuation.
+
+Merged silasfelinus/kind_robots#2864 (squash ae41ef4): new POST
+/api/admin/art-archive/entries/[id]/needs-review.post.ts (admin-gated,
+validates id, 404s on missing entry, sets matchState=AMBIGUOUS) plus
+markNeedsReview wired in butterflyGalleryArtArchiveActionAdapter.ts. All 49
+kind_robots CI checks green, mergeable_state clean, additive-only API change.
+setProcessed and addToCollection/removeFromCollection remain fixture-backed
+no-ops for a future task.
+<!-- note:end t-029 -->
+
+## t-030 — Audit other admin-only listing endpoints for the same admin-privilege-without-mature-opt-in gap fixed in t-023
+
+<!-- note:begin t-030 -->
+Kaizen from t-023 (kind_robots#2861): GET /api/admin/art-archive/entries only
+required requireAdminApiUser, so an admin who hadn't opted into mature content
+could still see mature/private archive metadata through admin privilege alone.
+Fixed by also gating on viewerShowsMature(auth.user). Grep server/api/admin/**
+for other listing/detail endpoints that touch mature- or private-flagged models
+(ArtImage, ArchiveEntry, and similar) and confirm each one applies the same
+viewerShowsMature (or visibilityWhere/canViewWithMaturity) gate, not just an
+admin check.
+
+Merged kind_robots#2863: audited every server/api/admin/**/*.get.ts route; found and
+fixed the same admin-privilege-without-mature-opt-in gap on the archive entry detail
+route (entries/[id].get.ts), which returned ArtImage/ArtCollection mature metadata
+behind admin auth alone. No other admin GET route touches mature/ArtImage models;
+mutation routes (rate/quarantine/restore/collections/move) already select only narrow
+response fields, no leak found there. vue-tsc/eslint/prettier clean.
+<!-- note:end t-030 -->
+
+## t-031 — Gate the animation-slot elements' future motion assets on visibility/prefers-reduced-motion, not just CSS class toggles
+
+<!-- note:begin t-031 -->
+Kaizen from t-024 (kind_robots#2862): the page's `data-animation-slot`
+containers (butterfly-runway, foreground-robot, foreground-butterfly,
+blank-state) are still empty placeholders pending t-014's motion clips.
+Once t-014 lands real video/CSS motion in them, confirm none of it runs
+continuously regardless of viewport visibility or prefers-reduced-motion
+-- an IntersectionObserver-gated pause (or a plain <video> element's own
+`autoplay` tied to intersection) may be needed the way the current
+short-lived/`v-if`-gated CSS animations in pages/butterfly-gallery.vue
+already avoid this by construction. Depends on t-014 actually landing
+motion content first; nothing to verify against until then.
+
+2026-09-19: dependency corrected from t-014 to t-033. t-014 itself
+split its Vue-integration acceptance criteria off into t-033 (see
+t-014's own closing note and t-033's note, which explicitly names this
+task as auditing its result) and only submitted async ArtJobs -- it
+never landed any motion content in the page. select_role.py/
+resolve_deps.py surfaced this task as `ready` once t-014 reached
+`done`, but there is nothing to gate yet: t-033 (the actual clip
+splice) is still `ready`/not started, and its own 7 ArtJobs
+(28739-28745) are still PENDING as of this check. Re-flipped to
+`waiting` on the correct dependency; `resolve_deps.py` will surface it
+again once t-033 actually completes.
+
+2026-09-22: Audit complete. Read pages/butterfly-gallery.vue at kind_robots commit
+446a915 (PR #2964, t-033's runway splice) end to end for all four
+data-animation-slot elements.
+
+butterfly-runway (the only slot with live motion content): correctly gated on
+all three required signals -- IntersectionObserver visibility
+(runwayIntersecting), tab visibility (document.hidden via visibilitychange),
+and prefers-reduced-motion (matchMedia + change listener) -- combined in
+evaluateRunwayCycle(). Crucially the clip <img> itself is behind
+`v-if="runwayCyclingEnabled && runwayClip"`, so when any gate fails the
+element is fully unmounted rather than merely toggled via a CSS class --
+exactly what this task's title asks for, not the weaker "just a CSS class
+toggle" pattern. The CSS `@media (prefers-reduced-motion: reduce)` rule for
+.runway-clip only silences the 260ms fade-in transition, which is harmless
+since the element is already unmounted by the JS gate in that case.
+
+foreground-butterfly and foreground-robot slots: still empty placeholders,
+no motion content yet (28744/28745 failed upstream in ComfyUI and were
+resubmitted as jobs 30193/30194, tracked by t-035). Nothing to audit until
+that content lands. t-035's own note already specifies the identical
+IntersectionObserver + visibilitychange + prefers-reduced-motion pattern as
+its acceptance criteria ("following t-033's own runway implementation...
+as the pattern"), so the gating requirement this task exists to enforce is
+already carried forward into that task rather than needing t-031 to stay
+open and re-fire later.
+
+blank-state slot (pre-existing, not part of t-014/t-033's new motion
+assets): its orbit/icon CSS animations are gated by `@media
+(prefers-reduced-motion: reduce)` and only render inside a v-else branch
+(no selected image) -- this is the same "short-lived/v-if-gated" case the
+original t-024 kaizen note itself called out as already fine by
+construction, not in scope for this task.
+
+No code change needed -- t-033 already implemented the exact gating this
+task was written to require. Closing as done.
+<!-- note:end t-031 -->
+
+## t-032 — Add a contract test for archive curation mutation routes' invalid-id/missing-entry/state-update behavior
+
+<!-- note:begin t-032 -->
+Kaizen from t-029 (kind_robots#2864): the new needs-review endpoint (and
+its siblings rate.patch.ts/quarantine.post.ts/restore.post.ts/
+collections.patch.ts from t-022/t-029) each hand-roll the same
+invalid-id / missing-entry / successful-state-update checks with no
+shared contract test exercising them together. Add one focused server
+contract test (following the existing contract-tests.yml pattern) that
+covers this behavior across the archive curation mutation routes so a
+future endpoint in this family gets the same coverage for free.
+
+Merged silasfelinus/kind_robots#2865: DB-free shape contract
+(verifyArtArchiveCurationMutationGuards.test.ts) verifying admin gate -> invalid-id 400
+-> missing-entry 404 -> state update ordering, plus the shared success/error response
+envelope, across
+rate.patch.ts/quarantine.post.ts/restore.post.ts/collections.patch.ts/needs-
+review.post.ts. All 47 required kind_robots CI checks green (Build production image,
+non-required, still running at merge time). Local vue-tsc/eslint also clean.
+<!-- note:end t-032 -->
+
+## t-033 — Integrate rendered Gallery motion actor clips into runway/left-loop/robot-loop once ArtJobs complete
+
+<!-- note:begin t-033 -->
+Follow-on from t-014 (this project's ANIMATION-JOB-CATALOG.md): 7 Butterfly Gallery motion ArtJobs were submitted at priority 0 (the deliberate lowest queue band) and confirmed PENDING at submission time. Job ids: 28739 (runway string tow), 28740 (runway team carry), 28741 (runway solo struggler), 28742 (runway clean cross), 28743 (runway rare fumble), 28744 (left foreground butterfly loop), 28745 (lower-right robot loop). Full prompts, dimensions, engine, and preset for each are recorded in projects/butterfly-gallery/ANIMATION-JOB-CATALOG.md.
+STEP 1 -- before doing anything else, GET /api/art/queue/:id for each of the 7 job ids above. If ANY are still PENDING/RUNNING, this task is NOT YET ACTIONABLE: do not attempt partial integration. Update this note with "last checked <date>: jobs <ids> still PENDING/RUNNING", leave status: ready, and move on to other work WITHOUT consuming a pass or a retry -- per AGENTS.md's Failure Triage, checking and finding it not-yet-ready is not a quality/scope failure.
+STEP 2 -- once ALL 7 report DONE (or FAILED): for any FAILED job, note here exactly which shot failed and that a fresh, scoped priority-0 resubmission of that one shot may be needed -- never revive/reuse the old superseded jobs 28725-28732 as a substitute. For every DONE job, proceed to integration.
+STEP 3 -- splice the finished clips into pages/butterfly-gallery.vue's existing reserved animation-slot elements (data-animation-slot= "butterfly-runway", "foreground-butterfly", "foreground-robot") per t-014's own acceptance criteria, carried over unchanged here: - No unrelated living actors baked into the static background. - Runway clips must fit the real horizontal runway window. - The central funnel may occlude runway motion cleanly. - The left butterfly loop remains independently composable (its own
+  layer, not fused into the runway or funnel imagery).
+- The lower-right robot loop must read correctly while partially
+  hidden behind the live, dynamic foreground picture pile (t-005's
+  pile is a separate DOM layer in front of it).
+- Reduced-motion/visibility gating is required: pause/suppress all
+  integrated clips under prefers-reduced-motion and when off-screen
+  (see t-031, which depends on this task and audits exactly this).
+
+Verify with the project's normal suite (vue-tsc, eslint, prettier, layout-contract, kr-class-coverage) plus whatever visual check is actually possible in the session's environment; note clearly what was verified vs. assumed.
+last checked 2026-09-19: jobs 28739, 28740, 28741, 28742, 28743, 28744, 28745 still PENDING (GET /api/art/queue/:id for each). Not yet actionable per STEP 1; leaving status: ready, no pass consumed. Also corrected t-031's depends_on from t-014 to this task (t-033), since t-014 only submitted the ArtJobs and split the actual Vue splice off to this task -- t-031 had nothing real to gate on yet.
+last checked 2026-09-19: jobs 28739-28745 still PENDING.
+last checked 2026-09-19T18:40Z: jobs 28739-28745 still PENDING. No pass consumed.
+last checked 2026-09-19: jobs 28739,28740,28741,28742,28743,28744,28745 still PENDING (all 7 rechecked via GET /api/art/queue/:id); not yet actionable, no pass/retry consumed.
+last checked 2026-09-19: jobs 28739-28745 still PENDING (all 7 confirmed via GET /api/art/queue/:id); task not yet actionable per this task's own STEP 1 instruction, no pass/retry consumed.
+last checked 2026-09-20: STEP 1 verification blocked -- GET /api/art/queue/:id for jobs 28739-28745 now returns 401 "Invalid or expired token" using the current KR_API_TOKEN, reproducible across x-api-key/Authorization-Bearer/x-admin-token header shapes and on retry. This is new: the same token succeeded for non-admin Kind Robots reads this session (check_project_scaffold_drift.py, check_live_facet_coverage.py) but every admin- gated call fails identically (fetch_todos.py also 401'd). Most likely explanation: KR_API_TOKEN was rotated at the source (resolving the 2026-09-16 transcript-exposure security flag) but the conductor secret was not updated to the new value. Not actionable from this session -- no agent can read/set secrets. Leaving status: ready per this task's own STEP 1 instruction; no pass/retry consumed (actionable-category blocker, not quality/scope). See root TALKBACK.md for the full write-up and conductor/t-182 for the tracking task (corrected from an earlier miscite of t-181, an unrelated pm2/PowerShell task).
+last checked 2026-09-20T02:00Z: jobs 28739,28740,28741,28742,28743,28744,28745 still PENDING (all 7 rechecked via GET /api/art/queue/:id; KR_API_TOKEN admin auth confirmed working again post-rotation-sync per conductor/t-182 close-out). Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-20: jobs 28739, 28740, 28741, 28742, 28743, 28744, 28745 still PENDING (GET /api/art/queue/:id, admin token, all 7).
+last checked 2026-09-20T05:50Z: jobs 28739,28740,28741,28742,28743,28744,28745 still PENDING (GET /api/art/queue/:id, admin token, all 7; no status change since first confirmed PENDING at 2026-09-19T12:40:58Z, roughly 17h with zero movement at the deliberate priority-0 band). Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-20T06:59Z: jobs 28739,28740,28741,28742,28743,28744,28745 still PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40Z, ~18h with zero movement). check_render_box.py now confirms root cause directly: render box DOWN -- Comfy heartbeat last seen 409 minutes ago (2026-09-20T00:09:43Z), kr-relay not reporting. /api/art/queue/stats shows a stale RUNNING claim (ArtJob 28763, claimedBy 'Silas-PC', claimed 2026-09-20T00:08:15Z) that never completed, and latestDoneAt stalled at 2026-09-19T23:44:16Z -- consistent with the box going down right around that stale claim. This is the same recurring relay-wedge class tracked at conductor/t-165 and t-167 (hard needs-human), not a new independent defect. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-20T07:55Z: jobs 28739-28745 still PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40Z, ~19h with zero movement). check_render_box.py still confirms render box DOWN -- Comfy heartbeat last seen 47 minutes ago at check time, kr-relay not reporting. Same recurring relay-wedge class tracked at conductor/t-165 and t-167 (hard needs-human). Not yet actionable per STEP 1; no pass/retry consumed.
+last checked 2026-09-20: jobs 28739-28745 still PENDING (GET /api/art/queue/:id for each, updatedAt unchanged since 2026-09-19T12:40Z). Not yet actionable per STEP 1; leaving status: ready, no pass consumed.
+last checked 2026-09-20T10:58Z: jobs 28739-28745 still PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40:48Z, ~22h with zero movement). Root cause re-diagnosed: check_render_box.py now confirms render box UP (Comfy heartbeat healthy 0.3min ago, 2 renders completed in last 6h) -- this is NOT the box-down incident the two prior checks (06:59Z, 07:55Z) attributed it to. GET /api/art/queue/stats shows queueDepth PENDING: 1406, only 1 RUNNING, oldestPending job 23040 from 2026-09-15 (~4.9 days old). These 7 video jobs are genuinely queue-starved at their deliberate priority-0 band in a 1400+ deep backlog, not stuck/wedged -- distinct from the conductor/t-165 and t-167 relay-wedge incidents. No action needed beyond continued waiting; not yet actionable per STEP 1, no pass/retry consumed.
+last checked 2026-09-20T11:54:23Z: jobs 28739-28745 still PENDING (GET /api/art/queue/:id, admin token, all 7). Render box is back UP (check_render_box.py: Comfy heartbeat healthy, 2 renders completed in the last 6h) -- the conductor/t-165 relay-wedge condition previously blocking this has cleared, but these 7 priority-0 jobs simply have not reached the front of the queue yet. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-20T13:53Z: jobs 28739-28745 still PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40Z, ~25h with zero movement). /api/art/queue/stats confirms genuine queue starvation, not a wedge: PENDING depth 1248, RUNNING 1, latestDoneAt 2026-09-20T13:53:14Z (throughput is live), oldestPending job 23040 from 2026-09-15 (~5 days). Priority-0 band simply has not come up yet. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-20 (scheduled conductor Agent run, later in the day): jobs 28739,28740,28741,28742,28743,28744,28745 re-checked via GET /api/art/queue/:id using KR_API_TOKEN -- all 200, all still status: PENDING. The 2026-09-20 KR_API_TOKEN 401 blocker noted above is resolved (token works fine for this admin-gated read now); the jobs themselves simply have not been claimed off the priority-0 queue yet. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-20: jobs 28739, 28740, 28741, 28742, 28743, 28744, 28745 still PENDING (verified via GET /api/art/queue/:id for each). Task remains not-yet-actionable; leaving status: ready, no pass consumed per AGENTS.md Failure Triage.
+last checked 2026-09-20 (session-start sweep): jobs 28739-28745 still PENDING (all 7 rechecked via GET /api/art/queue/:id, submitted at priority 0 over 24h ago). Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-21 (scheduled conductor Agent run): jobs 28739,28740,28741,28742,28743,28744,28745 still PENDING (verified via GET /api/art/queue/:id for each, admin token). /api/art/queue/stats: PENDING depth 761 (down from 1248 on 2026-09-20), latestDoneAt 2026-09-20T19:15Z (throughput live), oldestPending job 23040 unchanged (~6 days). Priority-0 band still has not come up. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-21T02:57Z (scheduled conductor Agent run): jobs 28739-28745 still PENDING (verified via GET /api/art/queue/:id for each, admin token). /api/art/queue/stats: PENDING depth 761 (unchanged since the prior check), latestDoneAt 2026-09-20T19:15:00Z -- now ~7.5h stale with zero new completions, oldestPending job 23040 now ~133h old. check_render_box.py this cycle reports the render box DOWN: Comfy has been reporting ok:false since 2026-09-20T21:26:27Z (~5.5h at time of check) -- the relay is alive and answering, but the engine itself is unhealthy, so POST /prompt would fail even if this task's priority-0 band reached the front of the queue. This is a new, distinct blocker from the earlier queue-starvation-only readings (throughput was live as recently as 2026-09-20T19:15Z); not yet actionable per STEP 1, leaving status: ready, no pass/retry consumed.
+last checked 2026-09-21T04:57Z: jobs 28739,28740,28741,28742,28743,28744,28745 still PENDING (GET /api/art/queue/:id, admin token, all 7). Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-21T05:54Z: jobs 28739,28740,28741,28742,28743,28744,28745 still PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40Z, ~41h with zero movement). /api/art/queue/stats: PENDING depth 759, RUNNING 1, latestDoneAt 2026-09-20T19:15:00Z (~11h stale despite check_render_box.py reporting Comfy heartbeat healthy 0.5min ago and queue idle); one recentFailed job (30014) at 2026-09-21T05:50:49Z with error 'ComfyUI POST /prompt failed ... No accepted prompt for client ... appeared within 120.0s' -- consistent with the recurring relay-accept-hang class already tracked hard needs-human at conductor/t-165 and t-167, not a new independent defect. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-21T08:57Z: jobs 28739,28740,28741,28742,28743,28744,28745 still PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40Z, ~44h with zero movement). check_render_box.py reports render box DOWN: Comfy reporting ok:false since 2026-09-21T08:22:53Z (~35min at check time), consistent with the recurring relay-accept-hang class already tracked hard needs-human at conductor/t-165 and t-167. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-21T09:58Z: jobs 28739,28740,28741,28742,28743,28744,28745 still PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40Z, ~45h with zero movement). check_render_box.py now reports render box UP (media.acrocatranch.com HTTP 404, 12 renders completed in the last 6h; Comfy heartbeat ok:false only briefly, under the 10-minute alarm threshold) -- box has recovered from the prior DOWN state, but these 7 priority-0 (lowest band) jobs have not yet been reached by the queue. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-21: jobs 28739, 28740, 28741, 28742, 28743, 28744, 28745 still PENDING (queried GET /api/art/queue/:id for each). Task remains not-yet-actionable per STEP 1; leaving status: ready, no pass consumed.
+last checked 2026-09-21 (scheduled conductor Agent run): jobs 28739-28745 still PENDING, unchanged since 2026-09-19T12:40Z (~57h, GET /api/art/queue/:id, admin token, all 7). check_render_box.py confirms render box UP (Comfy heartbeat healthy, 12 renders completed in last 6h) -- not a wedge, priority-0 band simply hasn't come up yet in the queue. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-21 (scheduled conductor Agent run): jobs 28739,28740,28741,28742,28743,28744,28745 still PENDING (verified via GET /api/art/queue/:id for each, admin token). Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-21T15:03Z: jobs 28739-28745 still PENDING. Queue backlog is draining (PENDING depth down to 572 from 2207+ on 2026-09-17; oldestPending still coloring-book/23040, age ~6d); render box UP and healthy (17 completions/6h). Priority-0 jobs remain queued behind this backlog per t-165/t-167's known relay-wedge/backlog gate, not a defect in this task. No pass consumed.
+last checked 2026-09-21T17:10Z (scheduled conductor Agent run): jobs 28739-28745 still PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40Z). Queue draining (PENDING depth 552, latestDoneAt live). Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-21T21:57Z (scheduled conductor Agent run): jobs 28739-28745 still PENDING (GET /api/art/queue/:id for each, admin token; unchanged since 2026-09-19T12:40Z, ~57h). Queue continues draining (PENDING depth 301, down from 552 at 17:10Z; latestDoneAt live at 21:56:35Z). Priority-0 band has not come up yet. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-21T23:5{}Z (scheduled conductor Agent run): jobs 28739-28745 still PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40:48Z, ~66h). /api/art/queue/stats: PENDING depth 194 (down from 301 at 21:57Z), RUNNING 1, latestDoneAt live (2026-09-21T23:53:44Z), oldestPending still coloring-book/23040 (~6.4d). Queue continues draining steadily; priority-0 band has not come up yet. Also closes the secondary follow-up noted in this session's earlier security-flag TALKBACK entry: the null-status result that prompted that flag was a bug in that diagnostic script (it read body.status instead of the actual body.data.job.status), not an API defect -- the /api/art/queue/:id response shape is unchanged and correct. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+last checked 2026-09-22T00:59Z (scheduled conductor Agent run): jobs 28739 DONE, 28740 DONE, 28741 RUNNING, 28742-28745 PENDING (GET /api/art/queue/:id for each, admin token) -- first movement since submission at 2026-09-19T12:40Z (~60h). Queue continues draining (24h window: PENDING depth 165, latestDoneAt 2026-09-22T00:48:53Z live). Not yet actionable per STEP 1 (2 of 7 not yet DONE); leaving status: ready, no pass/retry consumed.
+2026-09-22: STEP 1 -- GET /api/art/queue/:id for all 7 jobs (28739-28745): 5 reported DONE (28739, 28740, 28741, 28742, 28743, all runway shots), 2 reported FAILED (28744 left-butterfly loop, 28745 robot loop) -- error on both: "ComfyUI reported a workflow error: node 314 (CLIPTextEncode): hostbuf_file_reader_read failed". Actionable per STEP 2.
+STEP 2 -- for the 2 FAILED jobs (28744, 28745): both failed with the exact same ComfyUI-side file-read error on the CLIPTextEncode node, which reads as upstream/infra rather than a prompt-content problem. Per this note's own instruction, a fresh, scoped priority-0 resubmission of just those two shots is the right next step -- NOT attempted in this pass (did not want to hand-construct a POST /api/art/enqueue payload for a live render queue without the original t-014 submission tooling in hand; the queue GET response only exposes the already-expanded ComfyUI workflow, not the high-level ltx request t-014 actually submitted). Do not revive 28725-28732 (still superseded) or 28744/28745 themselves as a substitute for a fresh submission.
+For the 5 DONE jobs: fetched each job's artImageId (30382-30386) via GET /api/art/image/:id, resolved each to its imagePath under /images/generated/2026/09/, and confirmed via direct HTTPS GET + `file` that all 5 are real animated webp (RIFF/WEBP with an ANIM chunk), not placeholders or partial renders.
+STEP 3 -- spliced the 5 runway clips into pages/butterfly-gallery.vue's "butterfly-runway" slot: they cycle one at a time (~3.4s per clip, restarting each animated webp from frame 0 via a Vue :key swap), gated on all three of IntersectionObserver visibility, document.visibilitychange, and prefers-reduced-motion (satisfies t-031's acceptance criteria for this slot directly). The two loop slots (foreground-butterfly-slot, robot-animation-slot) are untouched -- still their original empty reserved placeholders, since 28744/28745 produced nothing to splice.
+Verified: eslint clean, prettier clean, vue-tsc clean for this file, npm run test:layout-contract holds (no new violations), npm run test:kr-class-coverage OK. Not verified: rendered pixels (no PR-preview infra for kind_robots; needs a post-merge Force Update + the scheduled responsive-layout-audit.yml check per AGENTS.md).
+PR: silasfelinus/kind_robots#2964 (branch claude/laughing-pascal-el1eie).
+Leaving status: ready (not done, no pass consumed -- this is the same "partially actionable, blocked on external async work" shape as STEP 1's own not-yet-actionable case, just discovered one step later). What's left for the next cycle: once #2964 is merged and deployed, resubmit exactly 28744 and 28745 (fresh job ids, priority 0, same prompts/first-frames as ANIMATION-JOB-CATALOG.md's B and C sections), then splice those two clips into foreground-butterfly-slot/robot-animation-slot the same way. t-031 (the reduced-motion/visibility audit) can proceed now for the runway slot; the other two slots still have nothing to audit until their resubmission lands.
+2026-09-22T03:15Z (scheduled conductor Agent run, reconciliation): kind_robots PR #2964 (referenced above) was merged into kind_robots main at 2026-09-22T02:07:18Z, 50/50 CI checks green, no open review threads -- confirmed live via mcp__github__pull_request_read (get, get_check_runs, get_review_comments). Diff inspected directly (git show 446a915): the 5 runway clips are spliced into the "butterfly-runway" slot exactly as this note's STEP 3 described, gated on IntersectionObserver + document.visibilitychange + prefers-reduced-motion. This closes the runway portion of t-033's acceptance criteria.
+Also resubmitted the 2 FAILED shots per this note's own STEP 2 plan: fresh priority-0 jobs 30193 (left-butterfly-loop, was 28744) and 30194 (robot-loop, was 28745), same prompts/negativePrompts/first-frame images as ANIMATION-JOB-CATALOG.md sections B/C, via POST /api/art/enqueue (idempotencyKey butterfly-gallery-t033-{left-butterfly-loop,robot-loop}-resubmit- 2026-09-22), both confirmed PENDING. Filed butterfly-gallery/t-035 to track splicing those two clips into foreground-butterfly-slot/robot-animation-slot once they complete -- kept separate from this task rather than left open, since this task's own runway deliverable is fully shipped and merged and there's nothing further to verify here until the new jobs finish.
+Closing this task as done: the runway integration (this task's core deliverable) is live on kind_robots main with clean CI. t-031 (visibility/reduced-motion audit, depends_on: t-033) unblocks via resolve_deps.py and can now audit the merged runway gating; the two loop slots remain t-035's scope until 30193/30194 land.
+<!-- note:end t-033 -->
+
+## t-034 — Document the video-enqueue payload's required renderScale field in ANIMATION-SHOT-LIST.md or a shared submission helper
+
+<!-- note:begin t-034 -->
+Kaizen from t-014 (conductor#4748): ANIMATION-SHOT-LIST.md and the roadmap's own payload description (task prompt) both describe POST /api/art/enqueue's video-job shape but omit that `renderScale` is a required numeric field for `engine: ltx`/`wan` requests independent of whatever `presetId` is also supplied -- kind_robots' server/api/art/enqueue.post.ts does not derive width/height/duration/ renderScale from `presetId` server-side; `presetId` is descriptive metadata only, and every dimensional field must be supplied directly by the caller. This had to be re-derived by reading enqueue.post.ts directly rather than trusting the shot list. Either add a short note to ANIMATION-SHOT-LIST.md (or wherever future Butterfly Gallery/other video-ArtJob submissions get their payload contract from) documenting this, or better, commit a small reusable submission helper script to kind_robots (mirroring utils/scripts/enqueueButterflyGalleryArt.ts's pattern but for the video engine) so future video-job submissions don't have to re-derive the payload shape from server source each time.
+
+Documented the required explicit width, height, duration, and renderScale fields for LTX/WAN video enqueue requests; presetId remains descriptive metadata and Butterfly Gallery motion jobs remain priority 0.
+
+Reviewed and merged conductor#4751 (docs-only, ANIMATION-SHOT-LIST.md renderScale
+contract). Fixed missing '### Notes for reviewer' handoff section on the PR body
+directly (trivial template gap, not a content issue) so the handoff-validation check
+could pass; all 24 checks green, mergeable_state clean before merge (squash 0a9b8ad).
+<!-- note:end t-034 -->
+
+## t-035 — Splice the resubmitted left-butterfly-loop and robot-loop clips into their reserved slots once ArtJobs 30193/30194 complete
+
+<!-- note:begin t-035 -->
+Follow-on from t-033: the two original ArtJobs for these shots (28744 left-butterfly loop, 28745 robot loop) FAILED with an identical upstream ComfyUI error ("workflow error: node 314 (CLIPTextEncode): hostbuf_file_reader_read failed") after t-033's runway shots (28739- 28743) had already succeeded and been spliced into kind_robots#2964. Fresh priority-0 jobs were resubmitted 2026-09-22 with the same prompts/negativePrompts/first-frame images as ANIMATION-JOB-CATALOG.md sections B and C:
+  - 30193 (left-butterfly-loop resubmit, was 28744, first frame
+    gallery-butterfly-start.png, 768x768, 4s/16fps, loop: true)
+  - 30194 (robot-loop resubmit, was 28745, first frame
+    robot-sift-start.png, 768x768, 4s/16fps, loop: true)
+Both confirmed PENDING via GET /api/art/queue/:id at submission.
+STEP 1 -- GET /api/art/queue/:id for 30193 and 30194. If either is still PENDING/RUNNING, this task is NOT YET ACTIONABLE: update this note with "last checked <date>: still PENDING/RUNNING", leave status: ready, and move on without consuming a pass -- same STEP 1 discipline t-033 followed for its own 7 jobs.
+STEP 2 -- once both report DONE (or FAILED): for any FAILED job, note exactly which shot failed here; a second fresh resubmission may be needed, never reviving 28744/28745/30193/30194 themselves as a substitute. For any DONE job, resolve its artImageId via GET /api/art/image/:id, confirm the resulting file is a real animated webp (not a placeholder), then proceed to integration.
+STEP 3 -- splice each finished clip into pages/butterfly-gallery.vue's matching reserved slot (foreground-butterfly-slot for 30193, robot-animation-slot for 30194), following t-033's own runway implementation (kind_robots#2964) as the pattern: gate on IntersectionObserver visibility, document.visibilitychange, and prefers-reduced-motion. Acceptance criteria carried over from t-014/t-033 unchanged: - The left butterfly loop remains independently composable (its own
+  layer, not fused into the runway or funnel imagery).
+- The lower-right robot loop must read correctly while partially
+  hidden behind the live, dynamic foreground picture pile (t-005's
+  pile is a separate DOM layer in front of it).
+
+Verify with the project's normal suite (vue-tsc, eslint, prettier, layout-contract, kr-class-coverage) plus whatever visual check is actually possible in the session's environment; note clearly what was verified vs. assumed.
+2026-09-22: STEP 1 -- GET /api/art/queue/:id for 30193 and 30194: both DONE (30193 updatedAt 2026-09-22T03:20:05Z, 30194 updatedAt 2026-09-22T03:42:54Z). Actionable per STEP 2.
+STEP 2 -- resolved artImageId via the job records themselves (30458 for 30193, 30459 for 30194), then GET /api/art/image/:id for each: imagePath /images/generated/2026/09/artimage-30458-371b788b.webp and artimage-30459-9fbf71cb.webp. Downloaded both and confirmed via Pillow (768x768, 65 frames each) that both are real animated webp, not placeholders -- matches ANIMATION-JOB-CATALOG.md's spec (768x768, 4s/16fps, loop: true).
+STEP 3 -- spliced artimage-30458 into foreground-butterfly-slot and artimage-30459 into robot-animation-slot in pages/butterfly-gallery.vue. Each slot mounts its one clip behind the same three-signal gate t-033 established for the runway slot (IntersectionObserver + document.hidden + prefers-reduced-motion, v-if unmount not a CSS class toggle) via two new IntersectionObserver instances and evaluateForegroundButterflyLoop()/ evaluateRobotLoop(). No cycling timer needed -- unlike the runway's 5 cycling stills, these are single always-looping clips (loop: true), so the animated webp loops natively once mounted. Added .loop-clip CSS (object-fit: contain, since the clips are square and the slots are not) and included it in the existing prefers-reduced-motion media query alongside .runway-clip.
+Verified: vue-tsc clean, eslint clean, prettier clean, npm run test:layout-contract holds (no new violations), npm run test:kr-class-coverage OK. Not verified: rendered pixels (no PR-preview infra for kind_robots; needs a post-merge Force Update + the scheduled responsive-layout-audit.yml check per AGENTS.md).
+PR: silasfelinus/kind_robots#2966 (branch claude/laughing-pascal-i2599o).
+This closes out butterfly-gallery's t-014/t-033/t-035 motion-clip arc: all 7 original ArtJobs now have their content live in pages/butterfly-gallery.vue, each independently gated per t-031's audited acceptance criteria.
+<!-- note:end t-035 -->

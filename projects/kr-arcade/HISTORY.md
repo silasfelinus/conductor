@@ -422,6 +422,13 @@ Recovery of quality pass1 from already-merged kind_robots#3596: preserve earned 
 Merged silasfelinus/kind_robots#3646 at a4196c625b03be48bcc468b4de0848ef8bb236f5 using expected head f3d4acf4fbdbfc5eaa86a5358a8f1709d29f38a6 after all28 actual head checks completed success, including required TypeScript/Contract verifiers/verify. Complete final diff and reviews checked; no blocking review or approval requirement, no bypass. Main runtime matches repaired blob12b55a257 and obsolete branch verified404. New Season and step-zero reload retain earned dawn/Zero Night history; Continue retains current-run resources. Original runtime red and B-only mutation fails intended reload assertion. Focused strict tsc/Finale/ESLint/Prettier/full33cabinet engine and six actual Chromium keyboard/touch/storage/reload/play cases passed. Existing audited later regions/bosses/endings retained; slice3 complete, co-op/modes remain t058. Staged fixtures are not human45-60minute pacing or deployment evidence. Historical quality pass1 retained; retry_context resolved, implementation link3646, one targeted retirement kaizen t152 awaits dependency release. Daily five ledger untouched.
 <!-- note:end t-057 -->
 
+## t-058 — Butterfly Blaster depth slice 4: Together and forever
+
+<!-- note:begin t-058 -->
+CABINETS.md section 6, Butterfly Blaster (Asteroids riff), slice 4 of 4: Together and forever. The upgrade is "The Rainy Season". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug butterfly-blaster). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+Co-op Flight (2-4 seats, team lasso) shipped via kind_robots#3702 (CI 17/17 green, merge 3204971); modes/medals via #3699.
+<!-- note:end t-058 -->
+
 ## t-059 — Bumper Bubbles depth slice 1: Bubble physics and the first two wings
 
 <!-- note:begin t-059 -->
@@ -453,6 +460,13 @@ CABINETS.md section 7, Bumper Bubbles (Bubble Bobble riff), slice 4 of 5: Wings 
 Merged kind_robots#3649 at 41a1a40680a2c6da1532a0406fb5061d181c1d9a: Wings 8-10, the Jelly Mould (75), the Grumble Fizz King (100), pantries 80/90 and the solo/co-op/true endings. All 28 PR checks green on head 9cb4831. Local suites for slices 1-4 pass; no Chromium screenshots or human pacing claim. Co-op endings need slice 5 (registry maxPlayers). Registry maxPlausibleScore raised to 20M.
 <!-- note:end t-062 -->
 
+## t-063 — Bumper Bubbles depth slice 5: Co-op and the extra modes
+
+<!-- note:begin t-063 -->
+CABINETS.md section 7, Bumper Bubbles (Bubble Bobble riff), slice 5 of 5: Co-op and the extra modes. The upgrade is "The Hundred Floors of Fizzwick Tower". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 5 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug bumper-bubbles). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+Shipped silasfelinus/kind_robots#3703 (squash fee28b2, 17/17 checks green): mode menu (Floor Select, Pop Party, Endless Fizz, Time Trial, Star Board), stars/wing medals/best times in the save, maxPlayers 4. Slice 5 of 5; registry blurb/howTo updated.
+<!-- note:end t-063 -->
+
 ## t-064 — Cable Crawler depth slice 1: Maze engine, surge and the Power Strip
 
 <!-- note:begin t-064 -->
@@ -481,6 +495,14 @@ CABINETS.md section 8, Cable Crawler (Nibbler riff), slice 3 of 5: The Sound Car
 PART 2 2026-10-15: the Graphics Card (picture boards, scanline, glitch sprites, z-fighter walls, Paint, The Glitch rival-cable boss) shipped in silasfelinus/kind_robots#3695 after all 17 CI checks passed (squash 0b132a5). Pilot- validated mazes; new verifyCabinetCableCrawlerGraphicsCard test. Slice 3 complete (Sound Card #3690 + Graphics Card).
 <!-- note:end t-066 -->
 
+## t-067 — Cable Crawler depth slice 4: The CPU Core, the BIOS and the endings
+
+<!-- note:begin t-067 -->
+CABINETS.md section 8, Cable Crawler (Nibbler riff), slice 4 of 5: The CPU Core, the BIOS and the endings. The upgrade is "The Mainframe Odyssey". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug cable-crawler). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+PART 1 SHIPPED (kind_robots#3712, merged 7788778): CPU Core component (5 mazes, clock cycles, interrupts, rival cables, Sleepy Kernel, boot ending, no Screensaver). REMAINING for t-067: the secret BIOS component (3 green-screen mazes, text-mode self-rewriting walls, Boot Loader true boss, unlocked by all golden bytes), the true ending, and medals/medal boards (No Bites, Big Surge, Battery Saver).
+PART 2 SHIPPED 2026-10-17 (kind_robots#3792, squash 63f53db, CI green): secret BIOS component (3 green-screen mazes, Boot Loader boss with 3 checksum sockets and line-by- line wall rewrites, opened by all 30 golden bytes), true ending, and No Bites / Big Surge / Battery Saver maze medals saved with the run. Test: utils/scripts/verifyCabinetCableCrawlerBios.test.ts.
+<!-- note:end t-067 -->
+
 ## t-069 — Seed Lander depth slice 1: Flight core
 
 <!-- note:begin t-069 -->
@@ -502,6 +524,21 @@ Focused first-mission recovery implemented on worker/kr-arcade-t070-initial-save
 Reconciled 2026-10-14: PR kind_robots#3595 merged 2026-10-12T21:48:23Z.
 <!-- note:end t-070 -->
 
+## t-071 — Seed Lander depth slice 3: Waterfall Gorge and Firefly Caverns
+
+<!-- note:begin t-071 -->
+CABINETS.md section 9, Seed Lander (Lunar Lander riff), slice 3 of 5: Waterfall Gorge and Firefly Caverns. The upgrade is "The Great Replanting". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug seed-lander). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome." PART 1 SHIPPED 2026-10-15 (kind_robots #3705, squash 698b6af): Waterfall Gorge island (waterfalls, drip stalactites, pebble rollers, Water mission, Geyser Tortoise). REMAINING: Firefly Caverns (island 4: dark caves with puff-glow light radius, relightable lanterns, crystal bumpers, spore puffballs, bumble buoys, Rescue + Lantern Run missions, Glowworm Queen boss), Free Flight use of the new hazards (BUILT_HAZARDS), and Pixel/HD screenshots. Attract pilot does not finish the tortoise boss.
+PART 2 SHIPPED 2026-10-15 (kind_robots #3707, squash 5311ea4): Firefly Caverns (dark caves, crystal bumpers, spore puffballs, Lantern Run, Rescue, Glowworm Queen) and Free Flight now fields waterfalls/drips/pebbles/spores. Not done: bumble buoys, Pixel/HD screenshots.
+<!-- note:end t-071 -->
+
+## t-072 — Seed Lander depth slice 4: Storm Shelf, Moon Garden and the Seed Vault
+
+<!-- note:begin t-072 -->
+CABINETS.md section 9, Seed Lander (Lunar Lander riff), slice 4 of 5: Storm Shelf, Moon Garden and the Seed Vault. The upgrade is "The Great Replanting". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug seed-lander). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+PART 1 SHIPPED 2026-10-16 (kind_robots #3732, squash b5b2c45): Storm Shelf island (5 missions, storm sky, gravity 1.0-1.12) and the Thunderhead boss (drifting tops, telegraphed lightning, hail bounce) with pilot probe test. REMAINING: Moon Garden (low- gravity, dust devils, meteor drizzle, Old Lander towing finale), the Seed Vault secret island, credits/endings, Gale Season New Game+, free-standing lightning cloud and hail hazards, true wet-pod weight.
+CLOSED 2026-10-20: Moon Garden, Old Lander, Seed Vault, Gale Season already on kind_robots main (verified by tests); Storm Shelf lightning clouds + wet-pod rain weight shipped in kind_robots#3923 (squash dac2a72).
+<!-- note:end t-072 -->
+
 ## t-074 — Ribbon Riders depth slice 1: The riding feel and the wrap-up
 
 <!-- note:begin t-074 -->
@@ -518,3 +555,23 @@ CABINETS.md section 11, Brick Bloom (Breakout / Arkanoid riff), slice 1 of 5: Th
 2026-10-13: Slice 1 shipped in kind_robots#3643 (squash 9dcf56f, Contract Tests green on attempt 2 after a 15-min job timeout on attempt 1). Authored walls (12), Bloom Bed, Pollen Chain, Last-Crate Rush with Bumble, Leaf Curl, ball heat, roof chime, sprout/hinge/puffball crates, R/T/Q seeds. Pilot probe seeds 5/9/13: last three crates 3.7-10.5 s (target <30 s). verifyCabinetBrickBloom.test.ts added; test:arcade-engine 34 suites, vue-tsc, eslint, prettier clean. No saves/co-op yet (later slices).
 Reconciled 2026-10-14: slice 1 PR kind_robots#3643 merged 2026-10-13T21:48:27Z; later slices tracked as t-079+.
 <!-- note:end t-078 -->
+
+## t-098 — Rover Ramble depth slice 1: Course engine and Moon 1
+
+<!-- note:begin t-098 -->
+CABINETS.md section 15, Rover Ramble (Moon Patrol riff), slice 1 of 4: Course engine and Moon 1. The upgrade is "The Five Moons Rally". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rover-ramble). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+Slice 1 shipped (kind_robots#3854, squash 460ecc2): authored A-Z course (roverRamble/course.ts) replacing ROVER_CURVES, outpost reports with stamps, course end at Z, rear-view HUD and pursuers, landmines, tanks, bomber and zig saucers, moon creepers, dust devils, ramps with big-air, boulder stomp. Moons 2-5 reuse the threats on harder scripts until slices 2-4. CI green (57 cabinet suites).
+<!-- note:end t-098 -->
+
+## t-149 — Verify Sink Suds earned records through the shared cabinet keepSave and retirement lifecycle.
+
+<!-- note:begin t-149 -->
+Reviewer kaizen after repaired kind_robots#3558: the game and withSave/JSON/sanitizeSaves helpers now preserve New Wash -> Squeaky Clean progress. Exercise the actual ArcadeCabinet and arcade store consumer: load a valid later-room checkpoint with prior medals/times, choose New Wash, finish a staged Squeaky Clean basin, then leave/retire and reopen the cabinet through the real keepSave path. Verify new and old best times, medals, reached rooms, skin, golden soap and clear persist while the campaign checkpoint resets. Cover immediate exit after New Wash as a separate transition. Reuse the existing consumers, scoped browser fixtures and storage boundary; fix only a reproduced integration gap. Preserve auth, alerts, validators, required checks and score ceilings. Keep staged fixture evidence distinct from deployment or human campaign timing.
+RAN 2026-10-20: added utils/scripts/verifyCabinetSinkSudsSaves.test.ts (kind_robots#3892): New Wash -> Squeaky Clean -> leave/return through withSave/JSON/sanitizeSaves keeps new+old times, medals, reached, skin, golden, clear; checkpoint resets; slower run keeps best; immediate exit after New Wash covered. No integration gap found; test-only.
+<!-- note:end t-149 -->
+
+## t-156 — Achievements: three per game with badge art, an achievements section, and a refreshed jellybean catalog
+
+<!-- note:begin t-156 -->
+Silas, 2026-10-15: "our arcade needs support for achievements ... 3 achievements for each game, with art, and an achievements section. This should extend to any of our other games: Zuzu experiences, shifting desks, etc. I fully authorize making new art for anything." Shipped in silasfelinus/kind_robots#3700 (merge ca4997a): 117 game achievements across 39 games (32 cabinets judged from score/level/mastery at run end; Zuzu Showdown, Gamebook, Shifting Lands, Shifting Desks, Zuzu's Lair and Emperor of Dust fired at the deed; Zuzu Pinball through a new table feats channel), the cabinet pane and game sidebars list each game's three, /achievements gains section chips, and 14 outdated site jellybeans were re-pointed or replaced (retired rows deactivated, earned records kept). achievement-catalog-maintenance.yml seeds the rows and queues entity-backed Krea 2 badge art on merge. Rendered-art and live-earn verification is t-157.
+<!-- note:end t-156 -->

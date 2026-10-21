@@ -118,6 +118,76 @@ FOR SILAS: media-watchlist/t-017 asks whether the BROWSE-UX.md v1 recurring poli
 Decision accepted under Silas's 2026-09-07 default-recommendation policy: BROWSE-UX.md v1 is complete and the recurring polish loop should retire. Do not invent marginal filler UI to keep the project busy. Any future v2 direction should begin as a concrete new task/spec when a real feature is wanted; remaining art-delivery backlog, if any, is one-off technical work rather than a standing human gate.
 <!-- note:end t-017 -->
 
+## t-018 — FOR SILAS: visually accept the Media Watchlist at phone/tablet/desktop widths to close the project out
+
+<!-- note:begin t-018 -->
+FOR SILAS: all 17 roadmap tasks across all four milestones (source/schema, importer
+design, browse/filter/stats UI, external enrichment) are done -- nothing
+agent-actionable remains in the queue (t-017, the last one, closed this cycle by
+deciding BROWSE-UX.md v1 is complete and retiring the recurring polish task rather
+than writing a v2 addendum). Reconciled 2026-09-07 (scheduled Agent sweep) per
+AGENTS.md's rule that a user-facing software project isn't `finished` on task
+count alone: the live front end must be checked at phone/tablet/desktop widths and
+you must accept the visual state (or explicitly waive the check) before it flips.
+What I could verify from this sandbox: `https://kindrobots.org/plan/watchlist`
+returns 200 with real SSR markup (confirmed live "Watchlist" content in the
+response, not the bare SPA shell). What I could NOT verify: actual layout,
+spacing, or anything pixel-level at any width.
+TO APPROVE: open /plan/watchlist yourself at phone/tablet/desktop widths. If it
+looks right, set `approved_by_human: true` and flip project-overrides.yaml's
+media-watchlist entry to `status: finished`. If something needs fixing first, note
+what and I'll file it as a fresh `ready` task (or a v2 BROWSE-UX addendum, per
+t-017's own note).
+What unblocks when you do: nothing else is waiting on this -- it's the project's
+own closing step, and it also clears a currently-failing CI assertion
+(`test_current_project_lifecycle.py`) that flags any `active` project sitting with
+zero open tasks.
+
+Rechecked 2026-09-20 (scheduled Conductor sweep): live Playwright verification is now
+possible from this sandbox (see AGENTS.md's model-builder/t-031 cypress-test-user
+pattern), but /plan/watchlist is ADMIN-gated (content/channels/admin/watchlist.md:
+requiredRole: ADMIN) -- a fresh cypress-* test user (Role: USER) hit the page and was
+client-side redirected to /?access=denied after a brief 'Loading page... Looking for /'
+state (expected access-control behavior, not a bug). Granting a throwaway test account
+ADMIN is outside routine agent authority (privilege escalation), so this sandbox cannot
+render the actual authenticated admin content at any width. Confirmed no unrelated
+regression: the redirect and access-denied behavior work correctly. Test user cypress-
+watchlistcheck created and cleaned up via /api/users/cypress-cleanup, no residue. TO
+APPROVE (unchanged from 2026-09-07): Silas still needs to open /plan/watchlist himself,
+signed in as admin, at phone/tablet/desktop widths to actually accept the visual state
+-- this cannot be done from an unprivileged sandbox session.
+
+Status reconciliation (2026-09-22 scheduled Conductor Agent run): this task already
+carried soft_gate: true and a full FOR SILAS explanation (2026-09-20 recheck:
+/plan/watchlist is ADMIN-gated, a cypress-* test user correctly hit access-denied,
+granting a throwaway account ADMIN is outside routine agent authority) but status was
+never flipped from ready to needs-human, so it kept resurfacing as agent-actionable work
+with nothing left for an agent to do. Correcting status only -- no new investigation
+performed, nothing has changed since the 2026-09-20 recheck. Still needs Silas to open
+/plan/watchlist himself, signed in as admin, at phone/tablet/desktop widths.
+
+GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+session): Legitimate: a look/feel or play verdict that only Silas can give.
+
+Silas, 2026-09-30: "media watchlist isn't even in the current nav list." This can't be
+accepted until it can be reached. Waiting on t-020 (session 20260930T0600Z-gate-triage,
+Claude Code, 2026-09-30).
+
+Back to Silas (session 20260930T0600Z-gate-triage, 2026-09-30): open Admin -> Watchlist
+(/plan/watchlist) at phone, tablet and desktop widths. t-020 turned out to be
+unnecessary, because it was in Admin all along.
+
+DONE 2026-10-02 by Silas's decision in session
+(claude.ai/code/session_015HXyjnTN41AEgjkmVNW1wN): "This project has reached its first
+milestone. I want it marked finished. No more roadmap tasks open." Context: the live
+page had shown no entries because the t-009 seed was only ever dry-run; it was applied
+to production on 2026-10-02 (2,440 MediaEntry rows, after kind_robots#3172 fixed the
+seed's non-TLS connection), Silas reviewed it on his phone, and kind_robots#3173 fixed
+long-title truncation from that pass. Poster/cover artwork was scoped as
+kind_robots#3174 and deliberately left out of this milestone (closed not-planned with
+the project).
+<!-- note:end t-018 -->
+
 ## t-019 — Fix the Media Watchlist failing to load, and stop masking the real cause
 
 <!-- note:begin t-019 -->
@@ -127,3 +197,10 @@ Two separate problems, and the second is the more important one.
 (2) THE ERROR LIES. /api/media-entries answers an auth failure with HTTP 200 and a body of {"success": false, "message": "Invalid or expired token.", "statusCode": 401}. Because the status is 200, $fetch resolves normally, loadEntries() falls to its `if (!res?.success)` branch, and throws the hardcoded string 'Failed to load the watchlist.' -- discarding the real message that was right there in the response. Every distinguishable backend failure renders as one indistinguishable banner. Surface res.message when it exists, and keep the generic string only as a fallback for a genuinely empty error. A user who needs to sign in again should be told that.
 Worth checking whether the 200-with-success-false shape is this endpoint's own convention or a house pattern across the API, because if it is the latter then every consumer written against it has this same blindness and that is a wider finding than this task.
 <!-- note:end t-019 -->
+
+## t-020 — Put the Media Watchlist in the navigation Silas actually uses
+
+<!-- note:begin t-020 -->
+Filed 2026-09-30 from Silas's acceptance attempt: "media watchlist isn't even in the current nav list." His screenshot of the Home/Plan/Play/Admin menu shows Plan listing Projects, Brainstorm, Music Mentor, Video Gen, Mandarin, Art Academy and Storybook, with no Watchlist. In code, /plan/watchlist is registered only as a tab in dashboardHelper.ts's 'wonder' (WonderLab) channel, and utils/projectPlacements.ts places media-watchlist under channelKey 'admin'. Neither surfaces it where he looks. DO: add it to the Plan menu next to the other personal tools (it is a personal log, not an admin utility), reconcile projectPlacements.ts with that, and add or extend a nav contract so a registered project route cannot silently fall out of every menu. Verify on kindrobots.org after deploy. Unblocks t-018's visual acceptance.
+CLOSED, premise corrected (session 20260930T0600Z-gate-triage, 2026-09-30): the Watchlist was never missing from nav. content/channels/admin/watchlist.md puts it at Admin -> Watchlist (requiredRole ADMIN). Silas had looked under Plan. Per his same-day rule ("if it's not to be seen, then it should be in admin"), Admin is the right home for a personal tracker, so no nav change was needed. The site-wide audit his rule prompted landed as kind_robots#3109. It found 11 genuinely hidden pages, which now have tabs or redirects, and added a CI guard, verifyNoHiddenRoutes.ts.
+<!-- note:end t-020 -->

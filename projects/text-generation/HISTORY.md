@@ -45,6 +45,20 @@ What unblocks when approved: t-006 (product-surface wiring + self-hosted setup d
 Closed under Silas's 2026-09-07 human-gate simplification instruction. The recommended boundary is accepted: DB-stored server profiles block loopback/cloud-metadata/link-local destinations, while explicitly trusted RFC1918 LAN and Tailscale CGNAT remain usable because private/self-hosted text servers are the feature's purpose; only the operator-configured Ollama localhost fallback opts into loopback. Kind Robots PR #1926 already merged with focused security coverage, so leaving the roadmap at needs-human was stale bookkeeping.
 <!-- note:end t-005 -->
 
+## t-006 — Wire text-provider selection into the product surfaces and document setup
+
+<!-- note:begin t-006 -->
+Update the relevant admin/chat/generation UI so private servers and cloud providers are understandable choices rather than hidden request parameters. Document a practical self-hosted setup path, starting with Ollama and an OpenAI-compatible server, including network reachability expectations for the self-hosted Kind Robots deployment. Avoid exposing API keys or raw secret values to the browser.
+
+PROGRESS (2026-09-14): read BRIEF.md's concrete implementation sequence, which names the five confirmed chatStore.streamResponse consumers this task should wire: conductor-project-chat.vue, bot-chat.vue, character-chat.vue, character-flip-card.vue, reward-encounter.vue. conductor-project-chat.vue no longer exists in the current tree; of the remaining four, bot-chat.vue and reward-encounter.vue already showed the active text server and passed serverId explicitly (built during t-002..t-005's store-level work). character-chat.vue and character-flip-card.vue did not -- both now show a "Text Server" tile (matching the existing pattern) and pass serverId explicitly into streamResponse. Also wrote docs/text-generation-self-hosted.md (Ollama via the quick nav "Add Local" flow; an OpenAI-compatible CUSTOM endpoint via the full /servers form with an auth key; network-reachability contract for the self-hosted deployment). Confirmed via BRIEF.md's "Explicitly out of scope" section that migrating chat UI onto the new unified /api/generate/text endpoint is NOT this task's job -- the legacy per-provider routes stay as the literal client-facing endpoints, so the fix was filling the provider-visibility gap on the two under-wired consumers, not a wider migration.
+
+Verified: eslint clean, prettier clean, vue-tsc --noEmit clean project-wide (ran against the full provisioned kind_robots checkout, not by inspection).
+
+Found but out of scope: character-flip-card.vue appears to be orphaned duplicate content silently rendered inside character-chat.vue via a Nuxt auto-import filename collision -- filed as kind-robots/t-103 rather than expanding this diff.
+
+kind_robots PR: silasfelinus/kind_robots#2731 -- merged (all 46 CI checks green, squash sha b251277).
+<!-- note:end t-006 -->
+
 ## t-007 — Extend the admin server-uptime dashboard to cover text-capable servers
 
 <!-- note:begin t-007 -->
@@ -56,3 +70,19 @@ Kaizen from t-001's research: server/api/server/uptime.get.ts currently restrict
 <!-- note:begin t-008 -->
 Kaizen from t-004: server/api/generate/text.post.ts's buildUpstreamAuth hand-builds OpenAI/Anthropic auth headers inline, duplicating the shape of textProviderService.ts's existing buildTextServerAuthHeaders (used for Ollama and any generic stored-server case). Fold both into one shared header-building function in textProviderService.ts so the legacy chat routes and the new unified generation endpoint share exactly one code path instead of two independently-maintained ones.
 <!-- note:end t-008 -->
+
+## t-009 — Confirm text-generation product surfaces and close the project
+
+<!-- note:begin t-009 -->
+FOR SILAS: All 8 roadmap tasks across all three milestones (provider contract/ design, unified generation + server integration, security/UX/regression hardening) are done -- nothing agent-actionable remains in the queue.
+
+What was built: a shared server-side text provider layer (message normalization, auth, streaming, mana metering) backing the three existing chat routes (OpenAI/Anthropic/Ollama) unchanged from a caller's perspective; first-class trusted private-server profiles (any Server row with serverType OPENAI/ANTHROPIC/OLLAMA/CUSTOM, the last being a generic OpenAI-compatible endpoint); a new unified one-shot+streaming generation endpoint (server/api/generate/text.post.ts) for non-chat callers; SSRF/timeout/ redirect/cancellation hardening on private-server networking (t-005, already approved_by_human); and, closing today, visible provider/server selection in every chat surface (bot-chat.vue, character-chat.vue, character-flip-card.vue, reward-encounter.vue all show which text server is active and let a user pick a different one via the global "Server Connections" nav modal or the full /servers admin form) plus setup docs at docs/text-generation-self-hosted.md covering both Ollama and an OpenAI- compatible private endpoint.
+
+What I could NOT verify from this sandbox: actual rendered layout/spacing of the new "Text Server" tiles, or a live end-to-end generation call against a real private server (no reachable browser or dev-server-plus- browser path in this sandbox; see AGENTS.md's kind_robots verification section). vue-tsc/eslint/prettier and all 46 CI checks on kind_robots#2731 passed clean, which confirms the code compiles/lints/type-checks and every existing automated contract still holds -- it does not confirm the tiles look right or that a real Ollama/CUSTOM server round-trips a real reply.
+
+TO APPROVE: open the chat surfaces (Characters, Bots, Reward encounters) on kindrobots.org, confirm the "Text Server" indicator looks right and that picking a different server via Server Connections actually changes who answers. If you have a real Ollama or OpenAI-compatible box handy, following docs/text-generation-self-hosted.md end-to-end would be the strongest confirmation. If it looks and works right, set approved_by_human: true and status: done, and flip project-overrides.yaml's text-generation entry to status: finished. If something needs fixing first, note what and I'll file it as a fresh ready task.
+
+What unblocks when you do: nothing else is waiting on this -- it's the project's own closing step, and it also clears a currently-failing CI assertion (test_current_project_lifecycle.py) that flags any active project sitting with zero open tasks.
+GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in session): Legitimate: a look/feel or play verdict that only Silas can give.
+APPROVED by silasfelinus in session (session 20260930T0600Z-gate-triage, Claude Code, 2026-09-30; recorded under CONTROL.md's human gate clearance rule): The text-generation product surfaces are accepted. Project flipped to finished in project-overrides.yaml.
+<!-- note:end t-009 -->

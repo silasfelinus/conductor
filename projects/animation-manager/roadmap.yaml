@@ -437,10 +437,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Kaizen from t-007 (Worker, kind_robots PR #2962, 2026-09-21): geode-bloom (priority 20) shipped for real on 2026-09-05 -- component PR #2407 and catalog-registration PR #2410, both merged, all CI green -- but its PITCHES.yaml entry was never promoted past status: pitched and never got a builds: section, unlike every other shipped/candidate pitch. It sat that way for over two weeks and was only caught because this cycle happened to read the pitch queue in priority order and noticed geode-bloom (priority 20, ostensibly still "pitched"/unbuilt) actually had a live component file and catalog entry already. DO: when t-007's own recurring cycle ships a build, treat the PITCHES.yaml promotion edit (status -> candidate, plus a builds: entry with the PR reference(s) and verification list) as part of the same commit that records the roadmap note -- not a "come back and update this later" TODO. If a future cycle finds another gap like this, add a hard check to check_animation_novelty.py or a small companion script that cross-references PITCHES.yaml build entries against stores/animationCatalog.ts registrations and flags any catalog entry with no matching builds: record.
+    note: >-
+      Kaizen from t-007 (Worker, kind_robots PR #2962, 2026-09-21): geode-bloom (priority 20) shipped for real on 2026-09-05 -- component PR #2407 and catalog-registration PR #2410, both merged, all CI green -- but its PITCHES.yaml entry was never promoted past status: pitched and neve
 
-      Verified the concrete bookkeeping defect this task was filed for is already repaired on current main: projects/animation-manager/PITCHES.yaml now records geode-bloom as status candidate with a builds entry naming components/screenfx/geode-bloom.vue, implementation PR kind_robots#2407, catalog-registration PR kind_robots#2410, and verification. The task note itself now carries the standing same-cycle rule for future t-007 builds. No duplicate code change was warranted after the repair had already landed; closing the kaizen task against the verified canonical state.
+      Full history: projects/animation-manager/HISTORY.md#t-018
     updated: '2026-09-22T02:27:00Z'
     claimed_by: openai-scheduled-2026-09-22T021827Z-animation-manager-t018-a11
     claimed_at: '2026-09-22T02:18:27Z'
@@ -457,18 +457,9 @@ tasks:
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#3011'
     note: >-
-      Silas, 2026-09-23: Animation Manager must show when each managed screensaver was
-      actually made, and the daily digest must make the animation cadence observable with
-      a direct link to try the newest release. If no animation shipped in the digest window,
-      say so and show when the latest one shipped rather than implying the daily build loop
-      ran. Use verified merged-PR dates for existing managed animations and keep future
-      release provenance machine-readable.
-      Digest + release ledger implementation is in review on this companion Conductor PR;
-      Kind Robots deep-link/date UI is in PR #3011.
-      DONE 2026-09-23: Kind Robots #3011 merged at a01cc487 and Conductor #5100
-      merged at 06412c9. Animation Manager now shows verified release dates, exact-effect
-      preview deep links work, and the daily digest reports the newest animation plus an
-      explicit fresh/stale 24-hour cadence state.
+      Silas, 2026-09-23: Animation Manager must show when each managed screensaver was actually made, and the daily digest must make the animation cadence observable with a direct link to try the newest release.
+
+      Full history: projects/animation-manager/HISTORY.md#t-019
 
   - id: t-020
     milestone: m5
@@ -481,25 +472,9 @@ tasks:
     passes: 1
     stakes: reversible
     note: >-
-      Silas, 2026-09-23: Animation Manager should be treated almost as importantly as
-      the Daily Dream/digest creation lane, just south of it, with a goal of making one
-      genuinely new screensaver every Pacific calendar day. The current continuous-fallback
-      and three-day stale-recurring rules are too weak and have already allowed multi-week
-      gaps. Promote animation-manager/t-007 to an explicit daily creative commitment that
-      preempts ordinary backlog pickup when due, while keeping review and broken-work
-      recovery ahead of it. Other Animation Manager maintenance/research stays continuous
-      fallback work. Encode the rule in selection logic, tests, CONTROL/AGENTS guidance,
-      and project priority metadata rather than relying on agent memory.
+      Silas, 2026-09-23: Animation Manager should be treated almost as importantly as the Daily Dream/digest creation lane, just south of it, with a goal of making one genuinely new screensaver every Pacific calendar day.
 
-      Reviewer rejection (pass 1, quality, 2026-09-23):
-      tests/test_select_role.py::test_github_api_unreachable_surfaced_when_real_requests_fail
-      fails on this branch (confirmed via full local pytest run: 1 failed, 2314 passed, 30
-      skipped) because it isn't isolated from live roadmap state and this PR's own new
-      daily_last_checked value on t-007 now trips it. See retry_context for the exact fix.
-      Everything else in the diff (AGENTS.md/CONTROL.md/priority.yaml/project-overrides.yaml
-      docs, the daily-creative role logic itself, and the other 87 new/updated tests in
-      test_select_role.py) reads correctly and is not being re-litigated -- this is scoped to
-      the one missing mock.
+      Full history: projects/animation-manager/HISTORY.md#t-020
     retry_context: 'pass 1 failed (quality): the new find_due_daily_commitments()/daily-creative role change (scripts/select_role.py) breaks tests/test_select_role.py::test_github_api_unreachable_surfaced_when_real_requests_fail deterministically -- that test does not mock run_worker.load_roadmaps or select_role.find_due_daily_commitments, so it reads the real live projects/animation-manager/roadmap.yaml this same PR edits; with t-007''s daily_last_checked (2026-09-21) now before today, find_due_daily_commitments() returns a real hit and the role comes back ''daily-creative'' instead of the asserted ''idle''. Confirmed via full local run: 1 failed, 2314 passed, 30 skipped. Do differently: mock select_role.run_worker.load_roadmaps and select_role.find_due_daily_commitments in that test the same way test_remote_refresh_failure_does_not_crash_selection (same file, ~line 367) already does, so the assertion is not coupled to live roadmap state that changes day to day; then re-run the full suite (PYTHONPATH=scripts:. pytest -q from repo root, after uv tool install pytest --with pyyaml --force) and confirm 0 failed before repushing.'
   - id: t-021
     milestone: m5
@@ -572,32 +547,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Found while closing out t-007's 2026-09-27 soap-film-membrane cycle: 17 pitches
-      (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile,
-      tiny-weather-front, ant-farm-excavation, strandbeest-migration,
-      shadow-puppet-theater, kintsugi-weather, tapestry-loom, hourglass-cascade,
-      geode-bloom, candlelit-reliquary, frost-window-etching, harmonograph-sand-table,
-      cairn-balancing, zoetrope-lantern-drum) each have exactly one build entry, are
-      registered in kind_robots' stores/animationCatalog.ts, and are therefore reachable
-      through their intended surfaces per SPEC.md's own definition of "shipped" -- but
-      PITCHES.yaml still marks every one of them status: candidate with a build-level
-      status: candidate, not shipped. This looks identical to a gap a prior t-007 cycle
-      already fixed once for geode-bloom alone (2026-09-21, see t-007's own note history)
-      before geode-bloom picked up a second, genuinely-candidate build later -- i.e. this
-      has recurred at least once and is probably systemic rather than a one-off. For each
-      pitch: confirm the component file
-      still exists and is still registered in animationCatalog.ts (grep, not assumption),
-      then apply SPEC.md's standing sandbox-verification-gap promotion (status: shipped,
-      build status: shipped, deferred: sandbox-access-gap) exactly as this cycle did for
-      soap-film-membrane. Do not promote any pitch whose component or catalog registration
-      no longer checks out live -- report those separately instead. This is a
-      status-field-only change (no code, no new builds); keep the diff to PITCHES.yaml.
+      Found while closing out t-007's 2026-09-27 soap-film-membrane cycle: 17 pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny-weather-front, ant-farm-excavation, strandbeest-migration, shadow-puppet-theater, kintsugi-weather, tapestry-loom, hourglass-
 
-      Merged as silasfelinus/conductor#5373 (squash de023fb, all 24 checks green including
-      novelty-check). All 17 pitches verified against kind_robots@db6a474 before promotion:
-      component file + exactly one animationCatalog.ts registration each, exactly one build
-      entry each (geode-bloom's own caution note about a possible second build did not apply
-      -- still one build).
+      Full history: projects/animation-manager/HISTORY.md#t-023
     claimed_by: 20260928T171122Z-am023
     claimed_at: '2026-09-28T17:11:23Z'
     updated: '2026-09-28T17:17:53Z'
@@ -611,32 +563,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Kaizen from t-007's 2026-09-28 cycle: the pitch queue's next unbuilt entry by
-      priority was kaleidoscope-bloom (priority 27, novel single-wedge simulate +
-      rotate/mirror composite), but kind_robots already has a shipped, catalog-registered
-      kaleidoscope-effect.vue (id: kaleidoscope-effect, label "Kaleidoscope") doing the
-      same N-fold mirror-symmetry concept under a different, older technique
-      (direct Lissajous-cursor rendering, predates the pitch pipeline, never entered into
-      PITCHES.yaml). check_animation_novelty.py only diffs a pitch's novelty/title text
-      against other PITCHES.yaml entries, so it could not catch this, and
-      kaleidoscope-bloom's own novelty section never mentions the pre-existing catalog
-      entry either. The cycle worked around it by building the next pitch down the queue
-      instead (moire-weave-engine, priority 28) rather than risk shipping a
-      user-facing near-duplicate. Extend the checker (or add a sibling one) to also
-      compare a pitch's title/novelty text against stores/animationCatalog.ts's
-      label/tooltip strings for every already-shipped effect, flagging a likely
-      conceptual collision the same way it already does within PITCHES.yaml.
-      See silasfelinus/kind_robots#3075's "Flags for Reviewer" section for the full
-      writeup of the specific collision that prompted this.
+      Kaizen from t-007's 2026-09-28 cycle: the pitch queue's next unbuilt entry by priority was kaleidoscope-bloom (priority 27, novel single-wedge simulate + rotate/mirror composite), but kind_robots already has a shipped, catalog-registered kaleidoscope-effect.vue (id: kaleidoscope-
 
-      DONE 2026-09-28 (claude-scheduled session): added --check-catalog to
-      check_animation_novelty.py -- fetches kind_robots' stores/animationCatalog.ts via the
-      GitHub Contents API and diffs a pitch's title+novelty against every shipped effect's
-      label+tooltip using an overlap coefficient (Jaccard undercounts a short catalog blurb
-      against a long novelty paragraph). Default no-flag behavior/output/exit-codes unchanged.
-      Regression test reproduces the exact kaleidoscope-bloom/kaleidoscope-effect collision
-      from t-024's own note and confirms the PITCHES-internal check genuinely cannot see it.
-      Full test suite green (2432 passed, 37 skipped).
+      Full history: projects/animation-manager/HISTORY.md#t-024
     claimed_by: claude-scheduled-20260928T085357Z-anim-t024
     claimed_at: '2026-09-28T08:53:58Z'
     updated: '2026-09-28T09:02:28Z'
@@ -649,24 +578,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Found during t-007's 2026-09-28 cycle (see t-024's note for the full collision
-      writeup): PITCHES.yaml's kaleidoscope-bloom (priority 27, status: pitched, still
-      unbuilt) describes a single-wedge-simulate-plus-rotate/mirror-composite dihedral
-      kaleidoscope effect. kind_robots already ships components/screenfx/kaleidoscope-effect.vue
-      (catalog id kaleidoscope-effect, label "Kaleidoscope", a pre-pitch-pipeline
-      Lissajous-cursor-trail effect) covering the same conceptual ground for a user
-      browsing the Screen FX catalog, even though the underlying rendering technique is
-      genuinely different. Left untouched (status: pitched) rather than guessed at. Pick
-      one: (a) rewrite kaleidoscope-bloom's surprise/title to clearly differentiate it from
-      the existing effect (e.g. lean harder into the bloom-and-dissolve lifecycle the
-      existing effect doesn't have) and keep it in the build queue, or (b) retire the pitch
-      (status: retired or similar) as redundant with the shipped kaleidoscope-effect. Either
-      way, this unblocks t-007's queue from skipping over it indefinitely.
+      Found during t-007's 2026-09-28 cycle (see t-024's note for the full collision writeup): PITCHES.yaml's kaleidoscope-bloom (priority 27, status: pitched, still unbuilt) describes a single-wedge-simulate-plus-rotate/mirror-composite dihedral kaleidoscope effect.
 
-      Merged as silasfelinus/conductor#5375 (squash 15ed2f8, all 24 checks green). Decided to
-      retire rather than rewrite: kaleidoscope-effect.vue already ships the exact wedge-
-      simulate + rotate/alternating-mirror technique this pitch's own novelty section claimed
-      was unprecedented, so the overlap is mechanistic, not just thematic.
+      Full history: projects/animation-manager/HISTORY.md#t-025
     claimed_by: 20260928T172334Z-am025
     claimed_at: '2026-09-28T17:23:35Z'
     updated: '2026-09-28T17:27:37Z'
@@ -680,33 +594,9 @@ tasks:
     updated: '2026-10-10T20:50:00+00:00'
     passes: 0
     stakes: reversible
-    note: |-
-      Silas, 2026-09-29: the Animation Manager link in the received Daily Dream digest fails. The generated URL is correct, but the delivered Gmail message shows Brevo replaced it with a sendibt2.com click-tracking redirect. Disable per-recipient open and click tracking for this private one-recipient digest so links remain the original Kind Robots URLs, and add a regression test at the Brevo payload boundary.
+    note: >-
+      Silas, 2026-09-29: the Animation Manager link in the received Daily Dream digest fails.
 
-      Root cause verified against the delivered Gmail message: Brevo rewrote the valid Kind Robots Animation Manager URL through a sendibt2.com click-tracking redirect. The implementation adds contactPixelTrackingConsent: false to the one-recipient transactional payload and regression coverage at the sender boundary.
-
-      Merged silasfelinus/conductor#5411 as a11ddfb after the final head a0e397f6 completed green Worker PR CI, Security Audit, Worker PR handoff, and Process task events workflows. The digest sender now passes contactPixelTrackingConsent: false for its sole recipient, preventing Brevo click/open tracking from replacing Kind Robots hrefs with sendibt2.com redirects. Added regression coverage at configure_payload(). No live email was sent during verification; the next scheduled digest will exercise the change through the normal send path.
-
-      Silas reported on 2026-10-03 that the delivered Conductor digest still rewrites the Animation Manager preview and Decide all pitches links through Brevo's sendibt2.com tracker. Reopen t-026: PR #5411's contactPixelTrackingConsent=false assumption did not prevent rewriting in the live account. Repair the sender-level no-tracking contract and verify the delivered-payload boundary more precisely.
-
-      Live Gmail regression confirmed PR #5411's per-contact consent flag did not prevent Brevo link rewriting. PR #5544 adds explicit X-Mailin-Track-Click: 0 and X-Mailin-Track-Open: 0 headers at the sender boundary while preserving the existing privacy preference. Exact-head workflows completed green before merge: Worker PR CI 37152439542, Security Audit 37152439519, Worker PR handoff 37152439512, Process task events 37152439517, and CodeQL 37152438626.
-
-      Merged silasfelinus/conductor#5544 as b403aa64 after every exact-head workflow completed successfully: Worker PR CI 37152439542, Security Audit 37152439519, Worker PR handoff 37152439512, Process task events 37152439517, and CodeQL 37152438626. The private digest now sends Brevo's explicit no-click/no-open tracking headers in addition to the existing per-recipient privacy preference. No live test email was sent; the next normal digest is the delivered-email verification boundary.
-
-      Silas reported on 2026-10-04 that the second consecutive delivered Dream Digest still rewrote the Decide all pitches link through Brevo. Live Gmail MIME proves X-Mailin-Track-Click: 0 and X-Mailin-Track-Open: 0 were present while sendibt2.com click redirects were still injected, so PR #5544's API-header approach is ineffective. Reopen for a provider-independent fallback and delivered-message regression guard.
-
-      Replaced the disproven X-Mailin tracking-header assumption with a provider-independent backup: every digest now carries a base64 HTML attachment containing the original direct HTTP destinations plus an in-message notice explaining the fallback. Added regression coverage proving signed pitch-inbox and Animation Manager URLs survive unchanged in the attachment and that the ineffective X-Mailin headers are gone.
-
-      Merged silasfelinus/conductor#5567 as 81eb4ba2 after exact-head Worker PR CI 37239804413, Security Audit 37239804439, Worker PR handoff 37239804420, Process task events 37239804411, and CodeQL 37239803211 all completed successfully. The sender no longer claims Brevo X-Mailin tracking headers protect hrefs; every digest now includes a provider-independent conductor-direct-links.html attachment containing the original pre-Brevo destinations plus an in-message fallback notice. The 2026-10-04 digest was separately resent through Gmail as message 1a108fba6ceb5c68 and its delivered MIME contains the direct Kind Robots pitch-inbox URL with no sendibt2.com redirect.
-
-      Third live failure investigated. Today's delivered digest still has Brevo tracking redirects in primary actions even though the attachment contains the correct originals. The external guard ran once, sent no resend, then became disabled. This branch makes the workflow publish a dedicated direct-send artifact before the Brevo step so the repaired guard can consume the rendered payload deterministically. Today's digest was resent through Gmail and verified to contain the direct pitch-inbox URL with no tracking redirect.
-
-      Day-four live verification failed again: scheduled daily-digest run 37492604886 succeeded and produced direct-send artifact 11425494450, but the delivered 2026-10-06 Gmail message still contains sendibt2.com redirects and no direct pitch-inbox href. The external condition-watch guard ran at 2026-10-06T16:47:57Z but sent no corrected message. Recovered today's exact htmlContent from artifact 11425494450, resent through Gmail as message 1a1121f369bfb7ac, and read back its MIME: direct kindrobots.org/api/conductor/pitch-inbox present, sendibt2.com absent. Reconfigured the guard from conditional hourly detection to an exact daily 09:10 America/Los_Angeles proactive Gmail delivery using the canonical direct-send artifact, with delivered-MIME verification required.
-
-      Silas, 2026-10-10: the Daily Dream digest is back to Brevo tracking links instead of direct kindrobots.org links; it was fixed for a day or two, then broke for most of the week. Gmail evidence: direct-link resends from silasfelinus@gmail.com went out 2026-10-03 to 2026-10-07 (the external ChatGPT delivery guard), then stopped; the Brevo digests of 10-08, 10-09 and 10-10 rewrite every href through sendibt3.com. So the fix that "worked" was never in this repo's send path, and it died when the outside guard did. Brevo has no self-serve setting to turn off transactional click tracking (support/Enterprise only), which is why #5411, #5544 and #5567 could not succeed from the sender side.
-      Durable fix shipped in this PR: scripts/send_digest_smtp.py sends the digest (and the creative-reset digest) over Gmail SMTP when DIGEST_SMTP_USER and DIGEST_SMTP_PASSWORD are set, with the HTML relayed byte-for-byte; Brevo stays as the fallback if SMTP fails. With the secrets unset, nothing changes.
-      GATE (only Silas can do this): create a Gmail app password (https://myaccount.google.com/apppasswords, needs 2-Step Verification) and add two GitHub Actions secrets on silasfelinus/conductor: DIGEST_SMTP_USER = the Gmail address, DIGEST_SMTP_PASSWORD = the 16-character app password. Optional: DIGEST_SMTP_FROM if mail should come from a verified Send-mail-as alias. Then the next digest arrives with direct links; close t-026 once one delivered digest shows a kindrobots.org href and no sendibt.
-
-      Silas added DIGEST_SMTP_USER / DIGEST_SMTP_PASSWORD (Gmail app password for silasfelinus@gmail.com) on 2026-10-10; he chose to send from his Gmail rather than a kindrobots.org Send-mail-as alias, since kindrobots.org mail is Cloudflare Email Routing (receive-only, no outbound SMTP). Verified with daily-digest run 38084897291 (workflow_dispatch, send_email=true, success): Gmail message 1a12790c000c6d95 "Conductor Dream Digest 2026-10-10" was sent over SMTP from silasfelinus@gmail.com, every href is direct (kindrobots.org pitch-inbox with signed exp/sig and per-pitch picks, kindrobots.org/build/animation-manager, github.com), no sendibt link, and no Brevo copy was sent. Implementation: conductor#5917. Brevo remains the automatic fallback if SMTP fails.
+      Full history: projects/animation-manager/HISTORY.md#t-026
     claimed_by: 2026-10-05T203300Z-animation-manager-t026-direct-delivery-6f31
     claimed_at: '2026-10-05T20:33:00Z'

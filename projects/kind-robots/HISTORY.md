@@ -1414,6 +1414,19 @@ recommendedCfg=13 -- all match the dry-run plan exactly. Merged
 silasfelinus/kind_robots#2785.
 <!-- note:end t-108 -->
 
+## t-109 — SECURITY: entity previews now serve from an unauthenticated static route, losing revocable access control for private/mature images
+
+<!-- note:begin t-109 -->
+FOR SILAS: kind_robots PR #2814 ("Serve entity previews from disk, not the authenticated API route"), merged 2026-09-18T01:44:03Z (you merged it yourself, in-session), fixes a real UX bug (flickering/missing previews) but introduces a content-exposure regression the PR's own framing did not surface, in server/utils/entityArt.ts's applyEntityArtImage.
+What it contains: previously every entity's imagePath pointed at `/api/art/images/:id/file`, which re-checks `mayView` (isPublic && !isMature for anonymous requests, or owner/admin via Bearer auth) on EVERY request -- so access is revoked immediately if the record later goes private, gets flagged mature, or is deactivated. The route itself already redirected (302) to the same static file once mayView passed, but an unauthorized viewer never learned that static URL, because they were 403'd before reaching the redirect. PR #2814 now writes the entity's imagePath as the raw static URL (`/images/...`) directly whenever one exists, unconditionally -- not gated on isPublic/isMature at all. That static route (server/routes/images/[...path].get.ts) streams any file under the image storage root with NO authentication or authorization check whatsoever; it is pure path-based file serving.
+Concrete failure scenario: a user generates a mature or otherwise private Character/ Resource/Bot/Reward preview, someone with legitimate access loads the page once (the owner, an admin, or a viewer while the record was briefly public), and the raw static URL now sits in that browser's history/cache/devtools/any proxy log along the way. The user later marks the record private, or a moderator flags it mature, or the account is restricted (e.g. a CHILD-consent case, which this same PR's diff explicitly discusses elsewhere via effectiveShowMature). Under the OLD code, that revocation takes effect immediately -- the next fetch of `/api/art/images/:id/file` re-evaluates mayView and 403s. Under the NEW code, the raw `/images/...` URL keeps serving the exact same bytes forever, to anyone who ever obtained it, with no re-check against current visibility/ownership at all. This does not create a NEW way for an unauthorized viewer to discover the URL in the first place (entity-level `visibilityWhere`/`viewerShowsMature` gating from kind_robots#2808, merged the day before, still keeps the entity's own metadata -- including this same imagePath field -- out of a response to a viewer who cannot see the entity), but it permanently removes the ability to REVOKE access once a URL has legitimately left the server once. That is a meaningful narrowing of the app's privacy/moderation guarantees for exactly the content classes (mature, private) this system otherwise goes out of its way to protect.
+TO APPROVE: decide whether this tradeoff is acceptable (static-file performance/reliability vs. losing per-request revocation for private/mature previews), and if not, the fix is narrow: in applyEntityArtImage, only prefer the static path when `target.record.isPublic && !target.record.isMature` (mirroring file.get.ts's own anonymous `mayView` rule); keep routing through `/api/art/images/:id/file` for anything private or mature, exactly as before, so `mayView` keeps being re-checked on every fetch. Set approved_by_human: true and status: done once you've decided (either "acceptable, no change" or "pointer to the fix PR").
+What unblocks when he does: none, this is a standalone finding, not a dependency for other work -- filed here rather than silently merged into the pile of #2814's fixes so it doesn't get lost.
+GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in session): Legitimate: a security finding that needs Silas's acknowledgement. Recommended answer, pending Silas: apply the narrow fix in the note. Prefer the static path only when isPublic && !isMature. That restores per-request revocation for private/mature previews.
+APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30; recorded under CONTROL.md's human gate clearance rule): Apply the narrow fix: prefer the static /images/... path only when isPublic && !isMature, and keep private or mature previews on /api/art/images/:id/file so mayView is re-checked on every request. The implementation is agent work.
+Applied the approved narrow fix in kind_robots#3171 (squash 55ad8e0): applyEntityArtImage prefers the static /images path only when public and non-mature; private/mature previews stay on /api/art/images/:id/file so mayView is re-checked per request.
+<!-- note:end t-109 -->
+
 ## t-110 — Investigate imagePath write truncation warning appearing since kind_robots#2814
 
 <!-- note:begin t-110 -->
@@ -1631,3 +1644,255 @@ before merging -- do not treat a stranded branch's own prior local verification 
 (t-122 caught a real regression: verifyMaturityPrivacyContract.ts still pinned a string the
 diff had already renamed elsewhere).
 <!-- note:end t-123 -->
+
+## t-125 — Create an admin-only Retired channel and move retired navigation surfaces into it
+
+<!-- note:begin t-125 -->
+Silas, 2026-10-03: create a Retired channel that is visible in Kind Robots navigation only to admins. Move Serendipity, Shared With Me, Forum, Art Academy, Hair Studio, Voice Lab, Challenges, Watchlist, UI Gallery, Missing Image Test, Achievement Art, and Social Drafts into it while preserving their existing routes.
+
+Implementation is on worker/kind-robots-t-125-retired-channel. The twelve named surfaces now live under an admin-only Retired channel with existing routes preserved; navigation, placement, and Serendipity contracts were updated with the move.
+
+Merged silasfelinus/kind_robots#3212 at b6ccb3411c80017bf79279949af4efa2038db3d6 after 30/30 PR workflows completed successfully. Retired is now an ADMIN-only channel containing the twelve requested surfaces with their existing routes preserved.
+<!-- note:end t-125 -->
+
+## t-126 — Add generic navigation subtabs and move Retired under Admin
+
+<!-- note:begin t-126 -->
+Silas, 2026-10-03: support subtabs in the Kind Robots navigation. Retired should no longer be a top-level channel; make it a submenu inside Admin, keep the twelve retired surfaces reachable there, and preserve their existing routes. Implement this as reusable nested-tab support rather than a Retired-only special case.
+
+Implemented generic one-level navigation subtabs with parentTabKey, moved Retired under Admin with all twelve routes preserved, and updated navigation/content contracts, project placements, Serendipity contracts, and authoring docs.
+
+Merged kind_robots#3214 at a24d3a8800636b1cd65944938b57b2763e4448a8 after 31/31 PR workflows succeeded. Retired is now a route-less Admin parent tab with the twelve archived surfaces as routed subtabs.
+<!-- note:end t-126 -->
+
+## t-128 — Restore dashboard tab descriptions at tablet widths
+
+<!-- note:begin t-128 -->
+Silas, 2026-10-05: the dashboard navigation tab descriptions have disappeared. The supplied iPad screenshot shows the Home > Dashboard tab flyout rendering labels such as Achievements, Themes, Account, Servers, and Support without their secondary descriptions.
+
+Regression traced to kind_robots PR #3073 / commit 69224c46, which added `sm:hidden xl:block` to shared ChannelTabList summary rows and then pinned that tablet-only hiding in verifyNavigationConsolidation.ts. Restore the summary/description line at tablet widths for normal tabs and nested subtabs while preserving the compact menu geometry.
+
+Restored ChannelTabList secondary descriptions at tablet widths for top-level tabs and nested subtabs while preserving the compact tablet dropdown geometry from PR #3073. Updated the navigation consolidation verifier to require both description rows to stay visible. Implementation branch worker/kind-robots-t-128-tab-descriptions-v2 is ready for PR CI.
+
+Merged silasfelinus/kind_robots#3224 after all 30 PR workflows completed successfully. Dashboard tab summaries are visible again at tablet widths for both top-level tabs and nested subtabs, while the compact tablet dropdown geometry remains unchanged.
+<!-- note:end t-128 -->
+
+## t-129 — Add adjustable ArtJob queue priority controls
+
+<!-- note:begin t-129 -->
+Silas-directed 2026-10-05: ArtJob queue cards should allow actual priority adjustment. The current single toggle labels priority 100 as "Normal priority" and does not provide direct control over the queue value.
+
+Replaced the ArtJob queue card's binary priority toggle with a bounded numeric priority editor using the existing -1000..1000 queue contract and store action. Added a source-level regression contract. Implementation branch: worker/kind-robots-t129-artjob-priority-20261005T100000Z.
+
+Merged silasfelinus/kind_robots#3225 at 9e4e44a1154926b14518e84daff065af229d178b after all 30 PR workflows completed successfully. PENDING ArtJob cards now expose a bounded numeric priority editor backed by the shared queue parser and existing priority API/store path.
+<!-- note:end t-129 -->
+
+## t-130 — Fix ArtJob edit/re-enqueue submission for jobs with multiple LoRAs
+
+<!-- note:begin t-130 -->
+Silas-directed 2026-10-05: editing and re-enqueueing ArtJobs fails to submit when the job has multiple LoRAs, even though multi-LoRA generation is supported. Trace the editor/store/server retry contract, preserve all selected LoRAs, and add regression coverage for the multi-LoRA case.
+
+Root cause confirmed in server/utils/artJobResourceRefresh.ts: the shared edit/re-enqueue Resource refresh path still rejected any ArtJob with more than one LoRA Resource even though Comfy workflow chaining supports stacks. The implementation branch worker/kind-robots-t130-artjob-multilora-20261005T130300Z refreshes every stacked LoRA path in preserved Resource order using krLoraIndex, keeps strengths/base LoRAs intact, and adds a three-LoRA regression contract.
+
+Fixed and merged in silasfelinus/kind_robots PR #3234 at f64f0ce2c2a88c4f99a2f9b476ea6d3f41292538. Multi-LoRA ArtJobs no longer hit the stale single-LoRA Resource-refresh 409 during edit or re-enqueue; stacked Resource paths refresh positionally by krLoraIndex without changing strengths or required/base LoRAs. Final tested head 83e7d0c595f31c2cfad28ff1384c417d3fbbd70e passed 29/29 PR workflows, including the LoRA retry-resource verifier, LoRA chain contract, TypeScript, ESLint ratchet, Prettier ratchet, and full Contract Tests.
+<!-- note:end t-130 -->
+
+## t-132 — Fix intermittent ArtJob queue controls rendering beside cards
+
+<!-- note:begin t-132 -->
+Silas-directed 2026-10-06 from kind_robots issue #3264: the ArtJob queue intermittently renders its status/health/paging controls as a narrow left column beside the cards instead of stacking those controls above the card grid. The screenshot geometry matches the queue browser's direct children laying out horizontally even though the current source declares a column flex direction. Trace the runtime/layout cause, make the vertical structure deterministic, and add regression coverage that exercises the actual layout contract.
+
+Implementation branch worker/kind-robots-t132-artqueue-layout-20261006T113100Z removes the queue scroll owner's fragile flex-row fallback by using grid/block stacking, adds an ArtJob queue layout contract, and wires that contract into Entity Art Manager CI. Source diff is scoped to the queue browser, its contract, and the contract workflow.
+
+Merged silasfelinus/kind_robots#3266 at 995190fbaa03f68902b7711f4062cf8622d14727 after all 30 PR workflows completed successfully. The ArtJob queue scroll owner now uses fail-safe grid/block stacking instead of flex plus a separate direction utility, and its layout contract runs in Entity Art Manager CI. Production is self-hosted and this merge is not deployed until the next Unraid Force Update.
+<!-- note:end t-132 -->
+
+## t-136 — Move tutorial sidebar left and add Arcade dashboard header shortcut
+
+<!-- note:begin t-136 -->
+Silas-directed 2026-10-07: the tutorial/workspace sidebar should open from the left edge instead of the right. Add a fixed-width Arcade icon shortcut to the dashboard/workspace header alongside the existing Art and Memory Dungeon icon buttons, using the existing canonical Arcade route/icon and preserving the header's compact responsive geometry. Add regression coverage for both placement and shortcut behavior.
+
+Implementation complete on worker/kind-robots-t136-tutorial-arcade-20261007T205900Z. Added the canonical Arcade shortcut to the fixed workspace header and extended the navigation-route contract to pin both the Arcade route/icon/active state and the existing left-anchored, left-entering tutorial/workspace sheet behavior.
+
+Merged silasfelinus/kind_robots#3352 at f552b0ae7eeda46d4015e888209312b6d66cc358 after all 30 PR workflows completed successfully on the tested head. The workspace/tutorial sheet was already left-anchored and left-entering on main, so the change pins that behavior with a regression contract and adds the canonical /play/arcade header shortcut with kind-icon:arcade.
+<!-- note:end t-136 -->
+
+## t-137 — Move tutorial sidebar to the right side
+
+<!-- note:begin t-137 -->
+Silas correction 2026-10-07: the tutorial/workspace sidebar should open from the RIGHT, matching the header icon cluster. Preserve the Arcade header shortcut added in t-136/#3352. Change the sheet anchor and slide direction to the right and update regression coverage to enforce right-side behavior.
+
+Implementation complete on worker/kind-robots-t137-right-sheet-20261008T004300Z. app.vue now anchors the tutorial/workspace sheet at right-0 and animates it from translateX(1rem). The navigation-route regression contract now enforces the right edge and preserves the Arcade shortcut from t-136.
+
+Merged silasfelinus/kind_robots#3356 at 619d444879103112a78f9364db36c70dc6486dd9 after all 27 triggered PR workflows completed successfully. The tutorial/workspace sheet is now anchored to right-0 and enters from translateX(1rem); regression coverage enforces the right-side behavior. The Arcade header shortcut from t-136 remains unchanged.
+<!-- note:end t-137 -->
+
+## t-138 — Move workspace sheet reserved gutter to the right
+
+<!-- note:begin t-138 -->
+Silas follow-up 2026-10-08: after moving the tutorial/workspace sheet to the right, the desktop page still reserves sheet width on the LEFT. Move the content reservation to the right so the visible page yields to the right-side sheet, and mirror the workspace hand/footer reservation as well. Add regression coverage for the right-side geometry.
+
+Implementation complete on worker/kind-robots-t138-right-gutter-20261008T112300Z. app.vue now reserves --sheet-w on the right for desktop content and mirrors the workspace hand/footer offset to the right. Navigation-route regression coverage asserts the sheet anchor, right-side content gutter, absence of a left-side sheet gutter, and right-side footer geometry.
+
+Merged silasfelinus/kind_robots#3366 at af4081d4600f7a553943288a5a41300139ee0eed after all 27 triggered PR workflows completed successfully. The desktop page now reserves --sheet-w on the right instead of the left, the workspace hand/footer mirrors that right-side reservation, and navigation-route regression coverage enforces the full right-side geometry.
+<!-- note:end t-138 -->
+
+## t-139 — INCIDENT: kindrobots.org has been unreachable since about 12:08 UTC on 2026-10-08
+
+<!-- note:begin t-139 -->
+FOR SILAS: the production site, kindrobots.org, stopped answering at about 12:08 UTC on 2026-10-08 and was still down at 19:35 UTC. It hangs rather than returning an error. Only you can bring it back: it runs on Alexandria.
+
+Evidence:
+- Every hourly Auto Art Generate run since then has found the Kind Robots API down and skipped all ArtJob work. The latest was run 728 at 18:45 UTC. Each run still reports success, so its green check hides the outage.
+- Requests to the site from Claude sessions hang or are cut off.
+- The last run that reached the API was the 11:20 UTC run.
+
+What it holds up:
+- kind-pinball/t-009: its playfield art cannot render.
+- The art queue in general, including today's dream and project art.
+- Anything else that reads the site's API.
+
+Recovery: https://kindrobots.org/api/health/database answers 200, and the next Auto Art Generate run reports the API as healthy. Close this task then, even if the root cause is still unknown, and track prevention separately.
+
+Recovered: recovery criteria met by 2026-10-08 21:30 UTC.
+https://kindrobots.org/api/health/database answers 200 (0.85 s), and the 20:43 UTC Auto
+Art Generate run reached the API and rendered queued art (including kind-pinball's
+playfield, ArtJob 34932). Down from about 12:08 UTC to before 20:43 UTC, roughly 8
+hours. Root cause not established from here; the outage went unnoticed because each art
+run reports success while it skips its ArtJob work when the API is down.
+<!-- note:end t-139 -->
+
+## t-140 — Modernize tutorial resolution and ship Projects + Arcade reference tutorials
+
+<!-- note:begin t-140 -->
+First implementation slice for issue #3379. Make modern content/channels metadata the primary workspace tutorial source, support authored conceptual channel tutorial sections independent of nav tabs, and ship Projects + Arcade as the reference implementation. Add regression coverage that Projects does not degrade into a catalog dump and Arcade has explicit contextual help/art. Preserve role/permission filtering and legacy tutorial fallbacks for destinations not yet migrated.
+
+First implementation slice complete on worker/kind-robots-t140-tutorial-modernize-20261008T215700Z. Modern workspace tutorial resolution now prefers pageStore's content channel before legacy route fallback; content tutorials support authored conceptual channel sections; explicit tab tutorial metadata is distinguishable from description fallback; Projects has four conceptual tutorial sections; Arcade has explicit contextual help and art; access filtering preserves authored conceptual sections; regression coverage added.
+
+Merged silasfelinus/kind_robots#3380 at d5ce451176c354347bbdd6e26d81ca66e073c244 after all 29 triggered workflows completed successfully on the final head. Modern content/channels tutorial resolution now precedes legacy route fallback; authored conceptual channel tutorial sections are supported and preserved through access filtering; Projects has four conceptual sections rather than a tab catalog; Arcade has explicit page help and existing attract-screen art; regression coverage passed.
+<!-- note:end t-140 -->
+
+## t-141 — INCIDENT: every kindrobots.org page returned 500 after #3380 (null tutorial), about 22:27-23:16 UTC on 2026-10-08
+
+<!-- note:begin t-141 -->
+Found and fixed in one session; no action needed from Silas. Recorded for the history.
+
+What happened: the production container built from kind_robots#3380 (t-140, tutorial modernization; image published 22:27 UTC) made every page that resolves the channels throw "Cannot read properties of null (reading 'enabled')" during server render. That was every page, the home page included. /api/health/database stayed 200 throughout, so health checks alone would not have caught it.
+
+Cause: resolveTabItem in stores/helpers/channelContent.ts checked `item.tutorial !== undefined` before reading `item.tutorial.enabled`. An unset tutorial arrives as null (an empty `tutorial:` key or a database row).
+
+Fix: kind_robots#3382 (merged 23:05 UTC) checks `!= null` and types the field `TutorialContent | null`. verifyChannelResolver now resolves channels and tabs whose tutorial is null; it fails with the production error without the fix.
+
+Recovered at 23:16 UTC, once the fixed image deployed. The home page, /play/arcade and the pinball cabinet all answer 200.
+
+Prevention worth considering (not started): a post-deploy smoke check that fetches the home page and fails on a 500, since the database health check stayed green through the outage.
+<!-- note:end t-141 -->
+
+## t-142 — Reconcile legacy Zuzu resource lore and import missing canon-aligned characters, rewards and scenarios
+
+<!-- note:begin t-142 -->
+FROM GITHUB ISSUE silasfelinus/kind_robots#3390 (https://github.com/silasfelinus/kind_robots/issues/3390), opened by @silasfelinus on 2026-10-09. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3390`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+## Authorization and source of truth
+
+Silas, 2026-10-09, explicitly authorized updating the earliest LLM-generated Kind Robots resource entries to reflect the later Zuzu worldbuilding. Those initial Character/Reward/Scenario/Dream entries **were filler, not canon**. New lore must draw from `BOOK-ONE.md`, later `CAST-PICKS.md`, `VIDEO-GUARDRAILS.md`, and properly labeled Showdown/game extensions.
+
+**Ready-to-sync structured submission**: [Conductor worlds/zuzu/resource-submissions.json](https://github.com/silasfelinus/conductor/blob/main/worlds/zuzu/resource-submissions.json) (Conductor PR #5814; if still open, see [PR files](https://github.com/silasfelinus/conductor/pull/5814/files)).
+
+## Concrete work
+
+1. Authenticate as Silas/admin, query existing Kind Robots Character, Scenario, Reward, Dream and Resource rows for Zuzu and other cast names. Produce a **read-first mapping** (existing IDs, owner, old text, proposed source). Do not use unverified IDs or touch unrelated users.
+2. Idempotently PATCH the matching owned early LLM filler records with current Book One/cast/guardrail descriptions and approved image references. Preserve IDs, relations, audit history, and gallery access.
+3. POST only missing entries from the submission. Nine candidate Character profiles include Zuzu, Coyote Vagrant, Fennec Sister, Fennec Toddler, the Abbess, River Croc, Storm Crow, Hyena Matriarch and Old Komodo, with separate continuity designations. Additional candidates: five Rewards and five Scenarios. The *user has authorized the additions*, but do not silently promote game-only mechanics into comic canon.
+4. Audit the five trained-character LoRA dataset handoffs and actual imported `Resource` records; add existing trained Resource IDs only after verifying models exist. The datasets alone are not imported trained LoRAs.
+5. Keep additions private `isPublic=false`; respect mature visibility. Existing public records may need a scoped explicit visibility determination rather than silently bulk-publishing. Prefer API mutations, never direct SQL.
+6. Update the Zuzu registry's `runtime_model_discovery` with the **verified** IDs and provenance, report create/patch/skipped counts and any conflicting identities, and add regression tests for idempotence and permissions.
+
+Reference: [Zuzu world registry](https://github.com/silasfelinus/conductor/tree/main/worlds/zuzu), [asset audit PR #5814](https://github.com/silasfelinus/conductor/pull/5814), [related live admin world explorer issue #3388](https://github.com/silasfelinus/kind_robots/issues/3388). This issue owns the *data reconciliation*; #3388 owns the visual browser.
+
+Do not announce as applied until actual authenticated API calls and the returned rows have been verified.
+
+Done 2026-10-14: applied live (plan 7b957871c11621e5, post-apply all skip). Patched
+Character #110 and #209 (Silas confirmed #209 as Coyote Vagrant); created private
+Characters #3374-#3381, Rewards #3000-#3004, Scenarios #2251-#2255; LoRA Resource rows
+#4593/#4583/#4588/#4578/#4595 verified. IDs recorded in worlds/zuzu/catalog.json
+(conductor#6172). Tool + tests merged in kind_robots#3681.
+<!-- note:end t-142 -->
+
+## t-143 — Zuzu World: admin resource explorer with live joins to shared universe registry
+
+<!-- note:begin t-143 -->
+FROM GITHUB ISSUE silasfelinus/kind_robots#3388 (https://github.com/silasfelinus/kind_robots/issues/3388), opened by @silasfelinus on 2026-10-09. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3388`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+## Goal
+
+Make the shared Zuzu universe registry accessible from Kind Robots as a genuine admin-only worldbuilding workspace. The canonical, machine-readable index now lives at [Conductor worlds/zuzu/catalog.json](https://github.com/silasfelinus/conductor/blob/main/worlds/zuzu/catalog.json) and the reading contract at [worlds/zuzu/README.md](https://github.com/silasfelinus/conductor/blob/main/worlds/zuzu/README.md).
+
+This must be a **read-through viewer and curator**, not a second datastore or a project with a competing roadmap.
+
+## MVP
+
+- Provide an **admin-only** Zuzu World entrypoint with a visual overview, linked productions, canon precedence, and resources. Follow existing admin auth at **server** API boundaries, including private/mature ArtImage permissions.
+- Resolve current Conductor registry content through an authenticated/commit-stamped pathway. Do not hardcode a divergent copy of world lore in the Kind Robots app. Honor `SOURCE_OF_TRUTH.md`: Conductor owns coordination and canonical file references; Kind Robots owns actual Character/Scenario/Reward/Resource/ArtImage/Project rows and UI presentation.
+- Show curated **characters, art & concept sets, LoRA/checkpoint Resources, Scenarios, Rewards, Dreams, and Projects** with existing IDs and deep links to their current resource/detail screens. Add provenance (origin project/ArtJob, accepted version, visibility, last seen). Never silently mark an unverified lookup or queued ArtJob as an available asset.
+- Cross-link the first seven productions from the registry: comic/Book One, title trailer, animated film, Lair, Showdown, gamebook, and Ghost Trail. Show which changes are canonical vs noncanonical gameplay branches.
+- A new production should get a stable world-catalogue link/read contract and reuse asset IDs. No duplicate model rows, no copied binary assets, no extra `worldId` on Project when `conductorSlug` already joins projects.
+- Provide search and filter by model type, project, character, provenance, and verification status. Do not expose restricted guardrail terms or the hidden-story twist on public labels, metadata or unauthenticated routes.
+
+## Verification and boundaries
+
+- Unit/integration tests for registry loading, offline/errors, missing resource IDs, authorization of private/mature assets, and no duplicate rows.
+- Frontend review at phone/tablet/desktop on protected preview/live route before merge, per `docs/agents/frontend-verification.md`.
+- Keep feature **admin-only** until a separate, explicit human decision authorizes broader publication.
+- New canon, cast changes and external publication remain human-gated; art-generation rights and pipelines remain with production owners.
+
+This issue is a follow-up to Conductor [PR #5812](https://github.com/silasfelinus/conductor/pull/5812), which delivered the repository-backed world registry and cross-production links.
+
+Done 2026-10-14: production roles/slots/pinned versions on ProjectArtImage (additive
+migration 20261014090000) and read-only repository-media index (488 files) shipped in
+kind_robots#3681; first slice was #3392. Remaining post-deploy visual acceptance, typed
+lore editing and durable ArtJob enqueue moved to interface-vision/t-148 (kind-robots
+project is retired).
+<!-- note:end t-143 -->
+
+## t-144 — Tutorial slice 2: route-first channel/tutorial resolution on dedicated pages + Admin tutorials
+
+<!-- note:begin t-144 -->
+Second slice of the umbrella issue silasfelinus/kind_robots#3379 (deliberately no source_issue: the issue is labeled conductor:skip and conductor/t-206 means the bridge could close it while later slices remain).
+
+Silas, 2026-10-09: the channel dropdown did not show the active channel (Zuzu World read "Home"), and the tutorial fix needed the Admin tabs. Root cause: only content pages call pageStore.setPage, so dedicated pages (/admin/worlds/zuzu, /artjob, ...) left the channel picker, header room/tagline, workspace sheet card and workspace tutorial describing the last content page visited (Home Dashboard). channel-select and workspace-sheet now resolve route-first like workspace-header; the header ignores a pageStore room/tab message from another channel. Admin got an authored conceptual channel tutorial (operations, studios, care, boundaries) and explicit page help on all 19 Admin tabs (Retired stays enabled: false); verifyNavigationRouteAccess enforces both.
+
+Merged silasfelinus/kind_robots#3404 at 8803efd078b3a67a119cfe6326a1d786c7e5b339 with all 33 checks green. Not visually verified in a browser (Admin is role-gated; no DB in the session): check /admin/worlds/zuzu shows Admin / Control Room / Zuzu World sheet with the Admin tutorial. Missing Admin tab art (artjob, projects, retired, coloring, mermaids, conductor-app, appmaker) is tracked on #3379's artwork checklist.
+<!-- note:end t-144 -->
+
+## t-145 — Tutorial slice 2b: page-first workspace sheet + tab menu that uses available width
+
+<!-- note:begin t-145 -->
+Follow-up to t-144 under the umbrella issue silasfelinus/kind_robots#3379 (deliberately no source_issue, same reason as t-144).
+
+Silas, 2026-10-09: the tab menu was "condensing the list of tabs on nav even when there's plenty of room", and on single-tab pages the sheet should "just show the tutorial image and then info for that page" instead of an intro card plus a Show tutorial toggle. tab-select now measures the room right of and below itself on open and lays tabs out in up to three 288px columns at the available height (Play's 15 tabs: one 880x214 panel at 1440px, two columns at 900px). workspace-sheet leads with the active tab's tutorial image, title and copy; the channel tutorial moved behind "About <channel>". Builders, deliberate sheet overrides and disabled tutorials keep the old card.
+
+Merged silasfelinus/kind_robots#3412 at 42c25c91752e23c6f9e88226cfc16d711580e23b with all 30 checks green; Playwright-checked locally on /play/arcade and /dashboard. Also confirmed production at 8803efd renders "Navigate Play" on /play/arcade — Silas's "Home" screenshot predated that deploy. Next on the umbrella: generalize the help contract to every channel, then the Home/Storybook audit (About Home still lists tabs).
+<!-- note:end t-145 -->
+
+## t-146 — Tutorial slice 2c/2d: Home, Play and Admin help rewritten from the actual pages; privacy defaults; 21 bad images re-queued
+
+<!-- note:begin t-146 -->
+Under umbrella issue silasfelinus/kind_robots#3379 (deliberately no source_issue, as t-144/t-145).
+
+Silas, 2026-10-10: the Home Dashboard text "doesn't match what is actually on the dashboard", Play had "obviously bad art and a complete mismatch between content", and "have no idea what's going on in the admin descriptions"; then "Privacy policy should say that it is configurable. Our actual default is public for none mature, private for mature. Bad art should be reenqueued with better prompts."
+
+silasfelinus/kind_robots#3416 (merged b2879e9, 34/34 checks): all 54 Home/Play/Admin tabs traced from route to rendering component and their help/description/summary rewritten to match; every tutorial image viewed; new channel sections (Home today/account/people/jellybeans/support, Play make/learn/games/toys, Admin art/projects/studios/people/shelf); privacy policy, Account toggle and help now state public-by-default for non-mature, private for mature, configurable (confirmed: schema isPublic default true, artStore forces isPublic false on mature); art audit covers tutorial images; verifyNavigationConsolidation repaired after #3412 slipped past its path filter.
+
+silasfelinus/conductor#5856 (merged f69ccf9): 21 force: true re-renders at existing media paths with Krea 2-safe prompts (concrete scenes, no screens/signs/labels); Auto Art Generate run 739 started on merge. Follow-up: review the renders and re-queue misses; Mandarin cards with wrong subjects are a separate pipeline.
+<!-- note:end t-146 -->
+
+## t-147 — Tutorial slice 2e: tutorial and tab picker follow tab changes within a channel; ArtJob cards show forced re-renders
+
+<!-- note:begin t-147 -->
+Under umbrella issue silasfelinus/kind_robots#3379 (deliberately no source_issue, as t-144..t-146).
+
+Silas, 2026-10-10: "when i change to a new tab in a channel, the tutorial doesn't change" (ArtJob -> Butterfly Gallery kept the ArtJob tutorial), and the re-rendered art looked "text heavy and not what was requested".
+
+silasfelinus/kind_robots#3433 (merged 4587a57, 35/35 checks): staleness is now pageStore.describesPath(route.path) instead of a channel comparison in channel-select, workspace-header and workspace-sheet (contract added to verifyNavigationRouteAccess); /api/art/images/[id]/file redirects to imagePath?v=<updatedAt> so forced re-renders at the same media path bypass the browser's max-age=3600 copy. The "text heavy" cards were that stale cache, not the prompts: all 21 t-146 re-renders (ArtJobs 35135-35155) landed 09:09-09:33 UTC after the render box came back and were reviewed clean.
+<!-- note:end t-147 -->

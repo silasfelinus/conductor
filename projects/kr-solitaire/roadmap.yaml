@@ -44,10 +44,10 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-10-02T05:12:21+00:00'
-  note: |-
-    FOR SILAS: soft checkpoint, nothing is blocked on it. Read projects/kr-solitaire/DESIGN-BRIEF.md and confirm or redirect the agent picks listed in notes_from_silas. If there is no answer within 7 days the next gate-triage session adopts them as written under the 2026-09-30 default-recommendation rule.
+  note: >-
+    FOR SILAS: soft checkpoint, nothing is blocked on it.
 
-    Silas approved all proposals in session on 2026-10-02 ("I like all proposals"); agent picks in notes_from_silas stand as written.
+    Full history: projects/kr-solitaire/HISTORY.md#t-002
 - id: t-003
   milestone: m1
   title: Survey existing card art and component patterns, pick the card-back set
@@ -57,10 +57,9 @@ tasks:
   stakes: reversible
   updated: '2026-10-02T04:46:04Z'
   note: >-
-    Read-only survey, write projects/kr-solitaire/docs/survey.md: which existing card art (components/navigation/flip-card.vue, card-picker.vue, character and reward cards) can serve as card backs, aspect ratios, where /play pages live, and the pattern for lazy static assets. Recommend 3 to 6 backs. No code changes.
+    Read-only survey, write projects/kr-solitaire/docs/survey.md: which existing card art (components/navigation/flip-card.vue, card-picker.vue, character and reward cards) can serve as card backs, aspect ratios, where /play pages live, and the pattern for lazy static assets.
 
-    Survey landed at projects/kr-solitaire/docs/survey.md: recommend all five existing card
-    backs.
+    Full history: projects/kr-solitaire/HISTORY.md#t-003
   claimed_by: routine-20261002
   claimed_at: '2026-10-02T04:45:48Z'
 - id: t-004
@@ -72,11 +71,9 @@ tasks:
   stakes: reversible
   updated: '2026-10-02T07:02:49Z'
   note: >-
-    Pure TypeScript engine: seeded shuffle, deal, legal move generation, move application, undo log, win and auto-complete detection, draw-1 and draw-3. DB-free tsx tests, a contract-tests step, and a solvability sampler over 200 seeds. No UI.
+    Pure TypeScript engine: seeded shuffle, deal, legal move generation, move application, undo log, win and auto-complete detection, draw-1 and draw-3.
 
-    Landed kind_robots#3175: utils/solitaireEngine.ts (seeded shuffle, deal, legal moves,
-    undo, win/auto-complete, draw-1/3, bounded solver) + test:solitaire-engine (13 checks;
-    115/200 seeds solved within a 6000-node budget), wired into Contract Tests.
+    Full history: projects/kr-solitaire/HISTORY.md#t-004
   claimed_by: 20261002-agent
   claimed_at: '2026-10-02T07:02:33Z'
   implementation_pr: 'silasfelinus/kind_robots#3175'
@@ -99,11 +96,9 @@ tasks:
   stakes: reversible
   updated: '2026-10-06T17:52:41Z'
   note: >-
-    Write projects/kr-solitaire/docs/deck-bible.md: the four suits (names, colours, pips, personality), the 12 court characters mapped to existing characters, the style bible and seed policy, and a 52-row prompt table following the Krea 2 contract in ART-PROMPTS.md. Silas may rename suits; keep them one-line edits.
+    Write projects/kr-solitaire/docs/deck-bible.md: the four suits (names, colours, pips, personality), the 12 court characters mapped to existing characters, the style bible and seed policy, and a 52-row prompt table following the Krea 2 contract in ART-PROMPTS.md.
 
-    2026-10-06: merged conductor#5658. docs/deck-bible.md: suits, court cast, style bible,
-    seed policy, 52-row prompt table. t-007 should swap generic court costumes for each
-    character's established look.
+    Full history: projects/kr-solitaire/HISTORY.md#t-006
   claimed_by: 20261006-worker
   claimed_at: '2026-10-06T17:48:21Z'
   implementation_pr: 'silasfelinus/conductor#5658'
