@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-10-21T01:49:52.658210+00:00`
+Generated: `2026-10-21T03:39:32.272045+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **84** roadmaps, **24** active + **3** continuous projects, **2472** tasks
-- **167 ready**, **182 waiting**, **37 needs-human**, **27 claimed/review**, **2043 done**
+- **84** roadmaps, **24** active + **3** continuous projects, **2473** tasks
+- **168 ready**, **182 waiting**, **37 needs-human**, **24 claimed/review**, **2046 done**
 - Findings: **0 errors**, **36 warnings**, **105 informational**
 
 ## Project inventory
@@ -34,7 +34,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 18 | `zuzu-gamebook` | active | software | 5 | 1 | 0 | 0 | 6 / 12 |
 | 19 | `zuzu-shifting-lands` | active | software | 4 | 3 | 1 | 2 | 27 / 37 |
 | 20 | `zuzu-pinball` | active | software | 4 | 1 | 1 | 0 | 16 / 22 |
-| 21 | `emperor-of-dust` | active | software | 1 | 0 | 1 | 6 | 34 / 42 |
+| 21 | `emperor-of-dust` | active | software | 2 | 0 | 1 | 3 | 37 / 43 |
 | 22 | `rainbow-bullet-hell-space-princess` | active | software | 1 | 2 | 0 | 3 | 19 / 25 |
 | 23 | `save-the-plumber` | active | software | 4 | 3 | 0 | 0 | 12 / 19 |
 | 24 | `shifting-desks` | active | software | 5 | 0 | 0 | 0 | 29 / 34 |
