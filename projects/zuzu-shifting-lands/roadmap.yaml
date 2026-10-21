@@ -705,7 +705,7 @@ tasks:
   - id: t-037
     milestone: m5
     title: "V7 kindness, preparedness and evidence-gate balance upgrade"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261021T000326Z-zsl-v7-kind-safe-9c28
     claimed_at: '2026-10-21T00:03:26Z'
@@ -713,6 +713,8 @@ tasks:
     stakes: reversible
     depends_on: [t-035]
     source_issue: "silasfelinus/kind_robots#3946"
-    updated: '2026-10-21T00:03:26Z'
+    updated: '2026-10-21T00:10:26Z'
     note: |-
       Silas (2026-10-20 PT): approve balance findings and upgrade so kindness remains viable and careful planning pays off. Implement an isolated V7 rules/save pathway that preserves V2-V6 replay, adds earned moral and scouting alternatives to boss trials, and reduces the repeated Verge trial failure cliff without making all choices equal. Verify with seeded kind, safe, greedy, ruthless, random baselines and device-sized UI acceptance, keep public deployment separately gated. Avoid collisions with t-036 prose and t-033 art. Related kind_robots issue #3946.
+
+      V7 rules implemented in a separate Kind Robots ledger/save namespace without changing V5/V6. Added earnable witness approaches (two mercy or honesty marks), one-HP one-time gate scouting opening a safer approach, additional evidence flags from actual V6 encounters, UI trial choices, and seeded comparative V6/V7 simulations. Dedicated V7 restore and forgery assertions included. Kind Robots PR pending CI and measured updated baseline. Production deployment and visual acceptance not claimed.
