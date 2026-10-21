@@ -19,6 +19,7 @@ on:
       - ".github/workflows/auto-art-generate.yml"
       - "projects/art-prompts.yaml"
       - "projects/emperor-of-dust/art/AUDIENCES-ROUND-1.yaml"
+      - "projects/weird-humboldt/art/ART-EDITORIAL-ROUND-1.yaml"
       - "scripts/consume_art_requests_to_media.py"
       - "scripts/dream_sdxl_checkpoint_art.py"
       - "scripts/queue_mandarin_tutor_art.py"
@@ -187,6 +188,32 @@ jobs:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
         run: |
           python scripts/enqueue_art_requests.py projects/emperor-of-dust/art/AUDIENCES-ROUND-1.yaml --live
+
+      # Ecotone's 237 original subjects already have 948 ArtJob ids. Never repost
+      # those jobs because an art.status is still PENDING: --live skips jobs with ids.
+      # The editorial lane is separately versioned and excludes consultation-held
+      # WH-121 / Mara material. The status pass records delivered image ids.
+      - name: Submit private Ecotone editorial art revisions
+        id: ecotone_editorial_submit
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/validate_ecotone_editorial_art.py
+          python scripts/enqueue_art_requests.py projects/weird-humboldt/art/ART-EDITORIAL-ROUND-1.yaml --live
+
+      - name: Refresh Ecotone original and editorial image status
+        id: ecotone_art_status
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/enqueue_art_requests.py projects/weird-humboldt/art/ART-STANDARD.yaml --status
+          python scripts/enqueue_art_requests.py projects/weird-humboldt/art/ART-EDITORIAL-ROUND-1.yaml --status
 
       # Shifting Desks has 220 approved style requests. Hand all of them to
       # the durable ArtJob scheduler first, instead of blocking on each render
