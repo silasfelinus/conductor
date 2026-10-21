@@ -1,0 +1,389 @@
+# Emperor of Dust: first private audience + choice consequence plates (t-045, 2026-10-21 PT).
+# Designed after the Days 1-3 prose pass. Existing NPC illustration moods and 228 quest
+# notice/success/failure assets remain untouched. These are distinct wide story frames,
+# not replacements for portrait sheets. Every depicted resident is anthropomorphic.
+# Prompts are submitted through scripts/enqueue_art_requests.py in Auto Art Generate.
+# Source of truth for queued/completed artwork is subjects[].jobs and subjects[].art;
+# queue acceptance never implies rendered/exported art or visible runtime integration.
+round: emperor-audiences-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style), weathered, dramatic lighting, painterly, wide shot
+  suffix: kiln ochre, deep crimson and tarnished brass palette, ash-grey sky, salvage, dusty wasteland, every surface bare and unmarked
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eoda-d01-aqueduct-enter
+  lane: arthemy-house
+  title: 'Mara comes to court'
+  audience: d01-aqueduct
+  variant: entrance
+  asset: audiences/d01-aqueduct-enter
+  size: 1344x768
+  seed: 77100
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic
+    grey-faced mule mayor Mara Reedbell in a patched crimson mayoral sash, ink-stained hooves, a
+    chain-bound ledger under one arm, climbing the chipped throne-room dais, drinking-water jars
+    carried by concerned anthropomorphic hare townsfolk in the deep background, worn brass sconces
+    and towering dusty court doors, tense first audience
+- key: eoda-d01-aqueduct-repair
+  lane: arthemy-house
+  title: 'An engineer''s order'
+  audience: d01-aqueduct
+  variant: repair
+  asset: audiences/d01-aqueduct-repair
+  size: 1344x768
+  seed: 77113
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic mule
+    mayor Mara Reedbell holding a repair order beside a waist-high broken stone aqueduct model in
+    the throne hall, Young Komodo an upright anthropomorphic Komodo dragon adviser wearing a
+    patched coat with small brass buttons watching her ledger, court mason tools on a table,
+    relief tempered by the cost of diverted crews
+- key: eoda-d01-aqueduct-millers
+  lane: arthemy-house
+  title: 'The millers pay'
+  audience: d01-aqueduct
+  variant: levy-millers
+  asset: audiences/d01-aqueduct-millers
+  size: 1344x768
+  seed: 77126
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic mule
+    mayor Mara Reedbell lowering her head over a royal levy warrant, an anthropomorphic swan Old
+    House spectator snapping a black hand fan shut in the gallery, sacks of flour beside a stone
+    sluice schematic, burden shifted from thirsty wards to wealthy millers, hard midday court
+    light
+- key: eoda-d01-aqueduct-town
+  lane: arthemy-house
+  title: 'The levy reaches the wards'
+  audience: d01-aqueduct
+  variant: levy
+  asset: audiences/d01-aqueduct-town
+  size: 1344x768
+  seed: 77139
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic mule
+    mayor Mara Reedbell clutching a ledger in the town of Hollow Bell, a poor anthropomorphic hare
+    family counting brass bits beside an empty glazed water jug, prosperous timber mill visible up
+    the dry road, posted blank notice board, sober injustice under copper dusk
+- key: eoda-d01-toll-enter
+  lane: arthemy-house
+  title: 'The captain at the bridge'
+  audience: d01-toll
+  variant: entrance
+  asset: audiences/d01-toll-enter
+  size: 1344x768
+  seed: 77152
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, unnamed female
+    anthropomorphic hyena Jackalwire captain with painted jaw, boots untied and a weathered fiddle
+    strapped across her back, standing defiantly on a dusty throne-room carpet, painted raider
+    wagons visible beyond the open tower doors, brash humor masking exhaustion
+- key: eoda-d01-toll-parley
+  lane: arthemy-house
+  title: 'Seven days of passage'
+  audience: d01-toll
+  variant: parley
+  asset: audiences/d01-toll-parley
+  size: 1344x768
+  seed: 77165
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, unnamed female
+    anthropomorphic hyena Jackalwire captain playing a battered fiddle beside a wooden bridge, an
+    anthropomorphic pelican Saltroad merchant driving a medicine wagon past painted raider carts,
+    armed riders holding their distance, frail truce rather than uncomplicated victory
+- key: eoda-d01-toll-force
+  lane: arthemy-house
+  title: 'The toll under spearpoint'
+  audience: d01-toll
+  variant: break-toll
+  asset: audiences/d01-toll-force
+  size: 1344x768
+  seed: 77178
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic wolf
+    Gate Watch guards advancing on a wooden toll bridge blocked by Jackalwire painted wagons, a
+    defiant female anthropomorphic hyena fiddler captain in a patched riding coat stands by sick
+    young hyena family wagons, dust and hard sunlight, the cost of force visible without injury
+    spectacle
+- key: eoda-d01-toll-medicine
+  lane: arthemy-house
+  title: 'Medicine for the pups'
+  audience: d01-toll
+  variant: medicine
+  asset: audiences/d01-toll-medicine
+  size: 1344x768
+  seed: 77191
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, female anthropomorphic
+    hyena Jackalwire captain taking a sealed crate of tincture vials with both paws, wary
+    anthropomorphic pelican Saltroad merchant at the medicine wagon behind her, a small bandaged
+    hyena youth sitting safely in the shade, bridge gate opening, costly mercy
+- key: eoda-d01-toll-informant
+  lane: arthemy-house
+  title: 'A camp drawn on a card'
+  audience: d01-toll
+  variant: informant
+  asset: audiences/d01-toll-informant
+  size: 1344x768
+  seed: 77204
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, young anthropomorphic
+    hyena scout with a cloth-wrapped paw drawing wagon positions on a worn ration card at the
+    fortress postern, masked anthropomorphic wolf Gate Watch sentry holding a dim lantern, brass
+    coins on the sill, shame and espionage rather than triumph, nighttime close composition
+- key: eoda-d01-mirefen-enter
+  lane: arthemy-house
+  title: 'Sister Reedlight''s lantern'
+  audience: d01-mirefen
+  variant: entrance
+  asset: audiences/d01-mirefen-enter
+  size: 1344x768
+  seed: 77217
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, Sister Reedlight an
+    upright anthropomorphic heron witch wearing layered mud-grey marsh robes, bringing a steady
+    golden glass lantern into a dark brass throne room, wet reeds trailing from her skirt, Young
+    Komodo a friendly anthropomorphic Komodo dragon in a patched buttoned coat studying the
+    unmoving flame, secrecy and courtesy
+- key: eoda-d01-mirefen-escort
+  lane: arthemy-house
+  title: 'Forty-one lights'
+  audience: d01-mirefen
+  variant: escort
+  asset: audiences/d01-mirefen-escort
+  size: 1344x768
+  seed: 77230
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic heron
+    witch Sister Reedlight guiding a line of cloaked anthropomorphic marsh travelers with steady
+    glass lanterns over a narrow wooden Mirefen boardwalk at dusk, two armored anthropomorphic
+    wolf escorts watching distant reeds, sense of protectiveness mixed with an unspoken secret,
+    moonlit water
+- key: eoda-d01-mirefen-count
+  lane: arthemy-house
+  title: 'The lantern tally'
+  audience: d01-mirefen
+  variant: question
+  asset: audiences/d01-mirefen-count
+  size: 1344x768
+  seed: 77243
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic heron
+    witch Sister Reedlight turning away while an anthropomorphic sloth Lamplight Archive clerk
+    counts forty-one golden lanterns and thirty-eight cloaked anthropomorphic marsh travelers in a
+    misty checkpoint, three lanterns hang suspended over empty planks, troubling discovery with no
+    spectacle
+- key: eoda-d01-mirefen-close
+  lane: arthemy-house
+  title: 'Road shut at sunset'
+  audience: d01-mirefen
+  variant: close-road
+  asset: audiences/d01-mirefen-close
+  size: 1344x768
+  seed: 77256
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic heron
+    witch Sister Reedlight standing alone with her golden lantern before a closed wooden frontier
+    gate, anthropomorphic wolf guards silhouetted on the parapet, a line of distant anthro
+    travelers turning their lanterns toward black reeds, a cold royal order making survival harder
+- key: eoda-d02-tax-enter
+  lane: arthemy-house
+  title: 'The first law'
+  audience: d02-dust-tax
+  variant: entrance
+  asset: audiences/d02-tax-enter
+  size: 1344x768
+  seed: 77269
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, Factor Marisol Tallow
+    an anthropomorphic raccoon in a brass-buttoned waistcoat holding two blank tax charters,
+    Foreman Dunmore Ash a heavy anthropomorphic boar in a flour-dusted work apron facing her
+    across the throne carpet, guarded rivalry and hungry workers waiting outside, austere brass
+    throne room
+- key: eoda-d02-tax-void-chits
+  lane: arthemy-house
+  title: 'The unpaid Yard'
+  audience: d02-dust-tax
+  variant: void-chits
+  asset: audiences/d02-tax-void-chits
+  size: 1344x768
+  seed: 77282
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic boar
+    foreman Dunmore Ash holding worn unpaid wage chits next to hungry anthropomorphic hare kitchen
+    workers in sturdy work aprons, anthropomorphic raccoon factor Marisol Tallow folding away her
+    purchased notes across a wooden court table, brass strongbox opened to make workers whole,
+    sacrifice and relief
+- key: eoda-d02-tax-high
+  lane: arthemy-house
+  title: 'A full strongbox'
+  audience: d02-dust-tax
+  variant: high
+  asset: audiences/d02-tax-high
+  size: 1344x768
+  seed: 77295
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic raccoon
+    factor Marisol Tallow writing a harsh market tax into a charter, a half-full brass strongbox
+    beside her, anthropomorphic boar foreman Dunmore Ash staring at an empty wage tray, crowded
+    animal-folk market in the courtyard beyond, daylight showing how a number divides the court
+- key: eoda-d02-tax-low
+  lane: arthemy-house
+  title: 'The merchant''s smile'
+  audience: d02-dust-tax
+  variant: low
+  asset: audiences/d02-tax-low
+  size: 1344x768
+  seed: 77308
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic raccoon
+    factor Marisol Tallow smiling while stamping a light tax charter, anthropomorphic boar foreman
+    Dunmore Ash leaving with empty paws, an anthropomorphic black swan Old House courier drafting
+    an angry letter in the gallery, three different reasons to fear a generous policy
+- key: eoda-d03-bell-enter
+  lane: arthemy-house
+  title: 'The wrapped hand bell'
+  audience: d03-bell-vigil
+  variant: entrance
+  asset: audiences/d03-bell-enter
+  size: 1344x768
+  seed: 77321
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic
+    grey-faced mule mayor Mara Reedbell in a patched mayoral sash arriving breathless in the brass
+    throne room, a small hand bell tied shut in cloth at her belt, a chain-bound ledger at her
+    hip, rainless dawn through high windows, deep worry and a secret she refuses to tell
+- key: eoda-d03-bell-watch
+  lane: arthemy-house
+  title: 'The chapel vigil'
+  audience: d03-bell-vigil
+  variant: keep-vigil
+  asset: audiences/d03-bell-watch
+  size: 1344x768
+  seed: 77334
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, two anthro hare town
+    watch volunteers keeping vigil with unlit candles inside Hollow Bell's dry chapel, giant brass
+    bell hanging above an unused rope, anthropomorphic grey-faced mule mayor Mara Reedbell
+    watching from a locked vestry doorway, stillness before an inexplicable ringing, old adobe and
+    timber
+- key: eoda-d03-bell-ledger
+  lane: arthemy-house
+  title: 'A second book'
+  audience: d03-bell-vigil
+  variant: ask-for-book
+  asset: audiences/d03-bell-ledger
+  size: 1344x768
+  seed: 77347
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, anthropomorphic
+    grey-faced mule mayor Mara Reedbell holding a chained water-account ledger against her patched
+    mayoral sash, an upright anthropomorphic Komodo dragon adviser in patched brass-buttoned coat
+    watching from the throne-room shadows, a smaller locked book on a table behind the mayor,
+    obligation and mistrust
+- key: eoda-rook-roof
+  lane: arthemy-house
+  title: 'Rook above the barracks'
+  audience: rook-1
+  variant: talk
+  asset: audiences/rook-roof
+  size: 1344x768
+  seed: 77360
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, Rook Bramble an upright
+    anthropomorphic hare adult in travel-worn frontier clothes sitting on the fortress barracks
+    roof, legs over the edge, looking toward painted raider wagons on the south road, a folded
+    spare blanket and two cooling cups of tea beside them, intimate dusk loneliness
+- key: eoda-rook-bridge-debt
+  lane: arthemy-house
+  title: 'A debt to a raider'
+  audience: rook-1
+  variant: ask-name
+  asset: audiences/rook-bridge-debt
+  size: 1344x768
+  seed: 77373
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text,
+    letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    anthropomorphic animal folk only, original wasteland fantasy frontier, Rook Bramble an upright
+    anthropomorphic hare adult holding a faded wool childhood scarf in the barracks, a small
+    charcoal drawing of a female anthropomorphic hyena scout rescuing a hare family from a flooded
+    ford beside their paw, rain beyond the open shutters, complicated gratitude without a heroic
+    pose
