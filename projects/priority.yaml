@@ -27,22 +27,27 @@
 # textual slot to keep CONTROL.md's human steering band and this ledger mechanically aligned;
 # lifecycle sorting still places every finite active project ahead of it at runtime.
 order:
-  # 2026-10-07: Silas, in session, verbatim: "Make kind pinball in arcade its own project. I want
-  # it, zuzu-lair, arcade, and the zuzu fighting game to be our high priority projects." These four
-  # lead the queue in the order he named them, ahead of the older 2026-08-25 / 2026-09-18 calls below,
-  # which keep their relative order behind them. kr-arcade was flipped continuous -> active the same
-  # day, because a continuous project can never outrank finite active work (project_lifecycle.py).
+  # 2026-10-21: Silas explicitly named these seven as the creative-development
+  # focus. They form one priority tier, NOT a ranking by personal preference.
+  # The order inside the tier preserves their previous relative queue order as
+  # a deterministic tie-breaker. Do not silently promote unrelated projects
+  # above them, or infer that other projects are paused/abandoned.
+  # Scheduled operations, human gates and active PR follow-up still preempt.
+  - weird-humboldt
+  - zuzu-gamebook
+  - zuzu-shifting-lands
+  - emperor-of-dust
+  - rainbow-bullet-hell-space-princess
+  - save-the-plumber
+  - shifting-desks
+  # 2026-10-07: Historical four-project focus (kind pinball, Zuzu Lair, arcade,
+  # Showdown) follows the newer 2026-10-21 focus tier. Keep their previous
+  # relative order. Lifecycle states still govern whether each is pickable.
   - kind-pinball
   - zuzu-lair
   - kr-arcade
   - zuzu-showdown
-  # 2026-10-19 PT: Silas explicitly elevated ECOTONE / Weird Humboldt
-  # to HIGH Conductor agent-work priority after a major creative session.
-  # Put it immediately behind the four previously pinned high-priority
-  # arcade/Zuzu projects, ahead of other backlog work, while scheduled
-  # commitments, external PR reviews and hard human gates still preempt.
-  # Prior normal-priority slot removed below; only one order entry.
-  - weird-humboldt
+  # Ecotone's 2026-10-19 elevation is preserved within the focused tier above.
   # Human priority decision, 2026-08-25: Mandarin Tutor and Cthulhuquarium were the
   # two top non-continuous projects, Mandarin Tutor leading. Earlier Cthulhuquarium/
   # Kapowarr ordering was intentionally superseded then; Kapowarr stays directly
@@ -92,23 +97,16 @@ order:
   # comic-film added 2026-10-04 (Silas: Zuzu issue 1 as an animated film); it builds on
   # music-video's pipeline, so it sits right behind it.
   - comic-film
-  # Zuzu gamebook is independent of kr-adventures, following comic-film's narrative pipeline.
-  # The four explicitly HIGH-priority projects remain ahead of this new normal-priority work.
-  - zuzu-gamebook
-  # New five-land Zuzu board game, 2026-10-09. Normal priority; top band unchanged.
-  - zuzu-shifting-lands
+  # Zuzu Gamebook is now in the focused creative tier above; its story canon
+  # and comic-film dependency context remain independent.
+  # Zuzu Shifting Lands moved into the 2026-10-21 focused creative tier.
   # 2026-10-09, Silas's NEW Zuzu Pinball; place beside Zuzu games without
   # changing the human-ordered four-project lead band above.
   - zuzu-pinball
-  # 2026-10-11 PT: pre-Zuzu empire dispatch drama, normal priority.
-  - emperor-of-dust
-  # 2026-10-11: two Silas-directed standalone Arcade campaigns. Normal priority,
-  # after the Zuzu game lane, without disturbing the explicit top-four lead.
-  - rainbow-bullet-hell-space-princess
-  - save-the-plumber
-  # 2026-10-12 PT: Silas-directed office-dystopia card adventure built on the
-  # Shifting Lands board + Gamebook depth. Normal priority, beside its parent games.
-  - shifting-desks
+  # Emperor of Dust moved into the 2026-10-21 focused creative tier.
+  # Rainbow Space Princess and Save the Plumber are in the focus tier above.
+  # Shifting Desks is in the focus tier above; it builds on the Shifting Lands
+  # board and the Gamebook's narrative depth.
   - tzaddik-gallery
   - scene-animator
   - text-generation

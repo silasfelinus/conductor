@@ -57,6 +57,13 @@ def test_lead_projects_are_the_ones_silas_named():
     Projects with older high-priority intent are not reordered relative to
     each other, and scheduled commitments still preempt the finite queue.
 
+    Updated 2026-10-21, on Silas's explicitly named creative focus:
+    Ecotone, Emperor of Dust, Zuzu Gamebook, Shifting Lands, Shifting Desks,
+    Rainbow Space Princess, and Save the Plumber. This is an unranked focus
+    group. For deterministic scheduling, maintain those seven in their former
+    relative queue order at the front. The older four-project lead follows
+    unchanged; finished/paused members are not resurrected.
+
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -64,10 +71,19 @@ def test_lead_projects_are_the_ones_silas_named():
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
     order = data.get("order") or []
 
-    assert len(order) >= 7
-    assert order[:5] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown", "weird-humboldt"]
-    assert order[5] == "cthulhuquarium"
-    assert order[6] == "kind-economy"
+    focus = [
+        "weird-humboldt",
+        "zuzu-gamebook",
+        "zuzu-shifting-lands",
+        "emperor-of-dust",
+        "rainbow-bullet-hell-space-princess",
+        "save-the-plumber",
+        "shifting-desks",
+    ]
+    assert len(order) >= 14
+    assert order[:7] == focus
+    assert order[7:11] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
+    assert order[11:13] == ["cthulhuquarium", "kind-economy"]
     for finished in ("kapowarr", "ai-art-academy"):
         assert finished not in order
 
@@ -81,12 +97,32 @@ def test_ecotone_high_priority_is_registered_and_pickable():
     priority = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
     order = priority.get("order") or []
     assert order.count("weird-humboldt") == 1
-    assert order.index("weird-humboldt") == 4
+    assert order.index("weird-humboldt") == 0
 
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {item["slug"]: item for item in raw.get("overrides", [])}
     assert overrides["weird-humboldt"]["status"] == "active"
     assert overrides["weird-humboldt"]["priority"] == "high"
+
+
+def test_seven_creative_focus_projects_are_active_and_high_priority():
+    """2026-10-21: do not let creative focus silently become a label-only promise."""
+    focus = {
+        "weird-humboldt",
+        "emperor-of-dust",
+        "zuzu-gamebook",
+        "zuzu-shifting-lands",
+        "shifting-desks",
+        "rainbow-bullet-hell-space-princess",
+        "save-the-plumber",
+    }
+    data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
+    assert set(data["order"][:7]) == focus
+    raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
+    overrides = {row["slug"]: row for row in raw.get("overrides", [])}
+    for slug in focus:
+        assert overrides[slug]["status"] == "active", slug
+        assert overrides[slug]["priority"] == "high", slug
 
 
 def test_control_priority_band_matches_priority_queue():

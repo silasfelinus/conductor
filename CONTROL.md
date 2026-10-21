@@ -16,21 +16,30 @@ happened. Don't edit it; edit here.
 reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
-**Standing creative direction (Silas, 2026-10-11 PT):** Across character-led Kind Robots projects, design casts with a genuine range of body types, skin tones, racial and cultural backgrounds, gender identities and expression. Diversity is not a casting checklist or a set of personality stereotypes. Write distinctive, fully realized people with motivations, flaws, friendships, humor, expertise, agency and lived-in visual design. Preserve strong existing canon and art; reconcile designs rather than mechanically replacing them to satisfy labels. Accessibility and fairness require that a person's body/identity does not imply game-balance penalties. A focused cast may only have a few people, but the *world* should feel populated by different kinds of people. Specific project cast bibles decide individual characters.\n\n**Priority order this week:** kind-pinball → zuzu-lair → kr-arcade → zuzu-showdown → weird-humboldt →
-cthulhuquarium → kind-economy → butterfly-gallery → art-archive → mandarin-tutor → interface-vision →
-humboldt-scoop-cms → digital-storefront → kind-robots → rainbow-butterflies.
+**Standing creative direction (Silas, 2026-10-11 PT):** Across character-led Kind Robots projects, design casts with a genuine range of body types, skin tones, racial and cultural backgrounds, gender identities and expression. Diversity is not a casting checklist or a set of personality stereotypes. Write distinctive, fully realized people with motivations, flaws, friendships, humor, expertise, agency and lived-in visual design. Preserve strong existing canon and art; reconcile designs rather than mechanically replacing them to satisfy labels. Accessibility and fairness require that a person's body/identity does not imply game-balance penalties. A focused cast may only have a few people, but the *world* should feel populated by different kinds of people. Specific project cast bibles decide individual characters.\n\n**Creative development focus (Silas, 2026-10-21 PT):** Ecotone: Weird Humboldt,
+Emperor of Dust, Zuzu Gamebook, Zuzu Shifting Lands, Shifting Desks,
+Rainbow Space Princess, and Save the Plumber. **These seven are one focused
+portfolio, not an internally ranked list.** Prioritize their story quality,
+meaningful choices, gameplay, tests, and image-led presentation in ordinary
+agent task selection. Preserve their previous relative queue order as a stable
+tie-breaker; do not infer personal ranking from the way Silas listed them.
+Other projects remain in their existing lifecycle states, but do not displace
+the seven for discretionary creative work. Scheduled operational commitments,
+security fixes, and review/merge work remain governed by existing policies.
+This is not permission for a public launch, billing, or irreversible changes.
 
-<!-- 2026-10-19 PT: Silas elevated Ecotone: Weird Humboldt to HIGH priority
-after the extended story-design session. Preserve the earlier explicitly pinned four
-leaders, then position Ecotone fifth in both this band and projects/priority.yaml.
-This is an agent work-selection preference, not approval for unreleased art, publishing,
-billing or irreversible production changes. Maintain human creative review of
-the major story canon. -->
+**Priority order this week:** weird-humboldt → zuzu-gamebook → zuzu-shifting-lands → emperor-of-dust → rainbow-bullet-hell-space-princess → save-the-plumber →
+shifting-desks → kind-pinball → zuzu-lair → kr-arcade → zuzu-showdown →
+cthulhuquarium → kind-economy → butterfly-gallery → art-archive.
 
-<!-- Updated 2026-10-07: Silas named four HIGH-priority projects in session, verbatim: "Make kind
-pinball in arcade its own project. I want it, zuzu-lair, arcade, and the zuzu fighting game to be our
-high priority projects." They lead in the order he named; everything behind keeps its order.
-kr-arcade went continuous -> active to be able to lead (see project-overrides.yaml). -->
+<!-- Historical priority record: 2026-10-19 elevated Ecotone behind the four
+2026-10-07 arcade/Zuzu leaders. Superseded for ordinary project selection by
+the seven-project creative focus on 2026-10-21. Human release gates remain. -->
+
+<!-- Historical 2026-10-07 direction: kind-pinball, zuzu-lair, kr-arcade,
+and zuzu-showdown previously led, with their internal order preserved.
+The newer seven-project creative focus now takes precedence; individual
+project lifecycle statuses continue to determine pickability. -->
 
 <!-- Updated 2026-09-19: mandarin-tutor reopened by Silas (see projects/priority.yaml) and
 reinserted here directly behind art-archive to match, repairing CONTROL_PRIORITY_DRIFT flagged
