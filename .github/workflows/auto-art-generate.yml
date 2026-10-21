@@ -19,6 +19,7 @@ on:
       - ".github/workflows/auto-art-generate.yml"
       - "projects/art-prompts.yaml"
       - "projects/emperor-of-dust/art/AUDIENCES-ROUND-1.yaml"
+      - "projects/emperor-of-dust/art/QUESTS-MISSING-ROUND-2.yaml"
       - "projects/weird-humboldt/art/ART-EDITORIAL-ROUND-1.yaml"
       - "scripts/consume_art_requests_to_media.py"
       - "scripts/dream_sdxl_checkpoint_art.py"
@@ -188,6 +189,29 @@ jobs:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
         run: |
           python scripts/enqueue_art_requests.py projects/emperor-of-dust/art/AUDIENCES-ROUND-1.yaml --live
+
+      # New Emperor quest notice/success/failure plates have no ArtJobs yet.
+      # This independent ledger is idempotent; each successfully queued cell
+      # saves its job id before the next request, preventing duplicate charges.
+      - name: Submit missing Emperor of Dust quest illustrations
+        id: emperor_quest_gaps_submit
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/enqueue_art_requests.py projects/emperor-of-dust/art/QUESTS-MISSING-ROUND-2.yaml --live
+
+      - name: Refresh Emperor quest illustration status
+        id: emperor_quest_gaps_status
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/enqueue_art_requests.py projects/emperor-of-dust/art/QUESTS-MISSING-ROUND-2.yaml --status
 
       # Ecotone's 237 original subjects already have 948 ArtJob ids. Never repost
       # those jobs because an art.status is still PENDING: --live skips jobs with ids.
