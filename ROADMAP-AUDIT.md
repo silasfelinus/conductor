@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-10-21T03:39:32.272045+00:00`
+Generated: `2026-10-21T04:50:30.856577+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **84** roadmaps, **24** active + **3** continuous projects, **2473** tasks
-- **168 ready**, **182 waiting**, **37 needs-human**, **24 claimed/review**, **2046 done**
-- Findings: **0 errors**, **36 warnings**, **105 informational**
+- **84** roadmaps, **24** active + **3** continuous projects, **2474** tasks
+- **168 ready**, **182 waiting**, **37 needs-human**, **21 claimed/review**, **2050 done**
+- Findings: **0 errors**, **37 warnings**, **105 informational**
 
 ## Project inventory
 
@@ -34,7 +34,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 18 | `zuzu-gamebook` | active | software | 5 | 1 | 0 | 0 | 6 / 12 |
 | 19 | `zuzu-shifting-lands` | active | software | 4 | 3 | 1 | 2 | 27 / 37 |
 | 20 | `zuzu-pinball` | active | software | 4 | 1 | 1 | 0 | 16 / 22 |
-| 21 | `emperor-of-dust` | active | software | 2 | 0 | 1 | 3 | 37 / 43 |
+| 21 | `emperor-of-dust` | active | software | 2 | 0 | 1 | 0 | 41 / 44 |
 | 22 | `rainbow-bullet-hell-space-princess` | active | software | 1 | 2 | 0 | 3 | 19 / 25 |
 | 23 | `save-the-plumber` | active | software | 4 | 3 | 0 | 0 | 12 / 19 |
 | 24 | `shifting-desks` | active | software | 5 | 0 | 0 | 0 | 29 / 34 |
@@ -105,7 +105,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (36)
+### Warning (37)
 
 - **STALE_CLAIM_FIELDS** — `animation-manager` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 27 days.
@@ -115,7 +115,7 @@ _None._
 - **POSSIBLY_UNNECESSARY_GATE** — `comic-film` / `t-009`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 19 days.
 - **STALE_CLAIM_FIELDS** — `emperor-of-dust` / `t-033`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `kind-economy` / `t-011`: Task has remained claimed for 14 days.
+- **STALE_IN_PROGRESS** — `kind-economy` / `t-011`: Task has remained claimed for 15 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-economy` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **STALE_IN_PROGRESS** — `kind-robots` / `t-127`: Task has remained review for 16 days.
 - **STALE_IN_PROGRESS** — `kind-robots` / `t-131`: Task has remained review for 14 days.
@@ -125,6 +125,7 @@ _None._
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-015`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-018`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
+- **STALE_CLAIM_FIELDS** — `kr-arcade` / `t-009`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_IN_PROGRESS** — `kr-arcade` / `t-075`: Task has remained claimed for 8 days.
 - **STALE_CLAIM_FIELDS** — `kr-arcade` / `t-088`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `kr-arcade` / `t-102`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.

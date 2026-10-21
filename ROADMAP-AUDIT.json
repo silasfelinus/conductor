@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-10-21T03:39:32.272045+00:00",
+  "generated_at": "2026-10-21T04:50:30.856577+00:00",
   "summary": {
     "roadmaps": 84,
     "active_projects": 24,
     "continuous_projects": 3,
-    "tasks": 2473,
+    "tasks": 2474,
     "ready": 168,
     "waiting": 182,
     "needs_human": 37,
-    "in_progress": 24,
-    "done": 2046,
+    "in_progress": 21,
+    "done": 2050,
     "errors": 0,
-    "warnings": 36,
+    "warnings": 37,
     "info": 105
   },
   "projects": [
@@ -429,20 +429,19 @@
       "override_status": "active",
       "priority_index": 21,
       "autonomous": true,
-      "task_count": 43,
+      "task_count": 44,
       "counts": {
-        "claimed": 3,
-        "done": 37,
+        "done": 41,
         "needs-human": 1,
         "ready": 2
       },
-      "open_count": 6,
+      "open_count": 3,
       "human_attention": 1,
       "ready": 2,
       "waiting": 0,
-      "claimed": 3,
+      "claimed": 0,
       "review": 0,
-      "done": 37
+      "done": 41
     },
     {
       "slug": "rainbow-bullet-hell-space-princess",
@@ -1720,7 +1719,7 @@
       "code": "STALE_IN_PROGRESS",
       "project": "kind-economy",
       "task": "t-011",
-      "message": "Task has remained claimed for 14 days."
+      "message": "Task has remained claimed for 15 days."
     },
     {
       "severity": "warning",
@@ -1784,6 +1783,13 @@
       "project": "kindrobots-unraid",
       "task": "t-018",
       "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+    },
+    {
+      "severity": "warning",
+      "code": "STALE_CLAIM_FIELDS",
+      "project": "kr-arcade",
+      "task": "t-009",
+      "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
     },
     {
       "severity": "warning",
