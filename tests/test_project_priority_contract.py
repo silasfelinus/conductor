@@ -128,10 +128,11 @@ def test_butterfly_gallery_leads_art_archive_and_both_are_high():
 def test_silas_october_high_priority_projects_have_high_registry_priority():
     """Keep Silas's priority call separate from his later acceptance decision.
 
-    On 2026-10-12 Silas approved kind-pinball/t-016: "Yes, it’s great!"
-    The workspace lifecycle command was committed as df952cda3, marking the
-    project finished. Its high priority and the CONTROL steering band remain
-    unchanged; the other three projects still have active development work.
+    On 2026-10-12 Silas accepted kind-pinball/t-016, marking it finished.
+    On 2026-10-21 workspace lifecycle synchronization paused Zuzu Lair and
+    Zuzu Showdown, and set Lair's priority to normal. Those later explicit
+    lifecycle records supersede this test's older active-only assumption.
+    The arcade remains active and high priority.
     """
     overrides_raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     entries = {
@@ -139,10 +140,15 @@ def test_silas_october_high_priority_projects_have_high_registry_priority():
         for item in (overrides_raw.get("overrides") or [])
         if isinstance(item, dict) and item.get("slug")
     }
-    for slug in ("kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"):
-        expected_status = "finished" if slug == "kind-pinball" else "active"
-        assert entries[slug]["status"] == expected_status
-        assert entries[slug]["priority"] == "high"
+    expected = {
+        "kind-pinball": ("finished", "high"),
+        "zuzu-lair": ("paused", "normal"),
+        "kr-arcade": ("active", "high"),
+        "zuzu-showdown": ("paused", "high"),
+    }
+    for slug, (status, priority) in expected.items():
+        assert entries[slug]["status"] == status
+        assert entries[slug]["priority"] == priority
 
     # A finished lifecycle must retain the concrete human finish-line approval.
     roadmap = yaml.safe_load(
