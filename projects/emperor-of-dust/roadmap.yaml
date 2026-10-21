@@ -915,7 +915,7 @@ tasks:
   - id: t-040
     milestone: m3
     title: "Playtest engine hooks: audience-to-quest aid, flag-keyed outcome text, debts and laws that come due, finale reads alliances, honest throne stakes"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -927,14 +927,26 @@ tasks:
       bargain effects; Day 50 odds that read Act V alliances; honest stakes on the throne screen (which
       factions an answer warms or cools, brass gained, probes marked as continuing the scene). Balance
       test must hold.
+
+      Merged kind_robots#3957 (squash 9d795c6af256301c9dfb8ec9ea6183b52ee6e15e, 21 checks
+      green). Hooks: effects.questAid + QuestDef.aid; FlagGate-keyed
+      outcomeVariants/komodoVariants/whisper.variants/fellVariants/whyVariants/FALL_OPENINGS;
+      quest:<id>:<tier> flags; DueDef dues and laws (ledger-loan Day 20, Day 2 rate as
+      standing law, rain-covenant/crow-debt); effects.dismiss; HostTerms bargains + host-due
+      Day 46 + effects.relocate; FINALE_AID; Bell Restored needs bell-rung; candlesLine from
+      Day 45; optionStakes on every throne answer. Persona-run fixes: rain-covenant bill only
+      when crow-debt-called, crisisLine display names, Komodo precaution variants. Open call
+      for Silas: runner-paid covenant runs still billed Day 34 (exempting them broke the Storm
+      Crow balance threshold).
     owner: worker
     claimed_by: 2026-10-21T003500Z-eod-t-040
     claimed_at: '2026-10-21T00:34:11Z'
-    updated: '2026-10-21T00:34:11Z'
+    updated: '2026-10-21T01:33:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#3957'
   - id: t-035
     milestone: m4
     title: "Playtest rewrites, Act I (Days 1-10)"
-    status: waiting
+    status: ready
     depends_on: t-040
     passes: 0
     stakes: reversible
@@ -948,7 +960,7 @@ tasks:
   - id: t-036
     milestone: m4
     title: "Playtest rewrites, Act II (Days 11-20)"
-    status: waiting
+    status: ready
     depends_on: t-040
     passes: 0
     stakes: reversible
@@ -962,7 +974,7 @@ tasks:
   - id: t-037
     milestone: m4
     title: "Playtest rewrites, Act III (Days 21-30): make kindness the trap again"
-    status: waiting
+    status: ready
     depends_on: t-040
     passes: 0
     stakes: reversible
@@ -976,7 +988,7 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Playtest rewrites, Act IV (Days 31-40): costly alliances, fair Komodo, the quiet word"
-    status: waiting
+    status: ready
     depends_on: t-040
     passes: 0
     stakes: reversible
@@ -990,7 +1002,7 @@ tasks:
   - id: t-039
     milestone: m4
     title: "Playtest rewrites, Act V and endings: alliances reach the finale, a reachable Bell, warned Candles"
-    status: waiting
+    status: ready
     depends_on: t-040
     passes: 0
     stakes: reversible
