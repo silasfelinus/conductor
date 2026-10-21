@@ -1,0 +1,25 @@
+version: 1
+project: weird-humboldt
+task: t-050
+operation: done
+owner: worker
+session: 2026-10-21T06:08:27Z-ecotone-t050-b7e2
+updated: '2026-10-21T06:29:19Z'
+note: >-
+  Merged Kind Robots PR #3972 at 55ba1daf8a29b77f7fe7432acdd5b3fe891d2b34
+  after all 13 GitHub Actions workflows completed green, including TypeScript,
+  formatting, Ecotone gameplay, and four full contract-test shards. The new
+  permanent suite simulates 1764 seeded journeys across 3 events, 7 lenses,
+  all archetypes and six strategies per entry, verifies 566 result branches
+  including 206 forced failures, 5540 real successful and 4145 real failed
+  rolls, earned callback provenance and save/reload. It checks 1236 unique
+  concept-art briefs and adds 3 missing event-choice illustration slots.
+  No production deployment, art-generation job, public release or historic
+  Wiyot/Tuluwat content approval performed. t-042 separately owns the
+  production art ledger and generation; human pacing and creative acceptance
+  remain outside this automated QA completion.
+learning: >-
+  Run seeded persona journeys and forced-roll coverage across every branch,
+  then anchor art-brief source conditions to actual choices. Review broad CI,
+  not just the game-specific tests: a misplaced test import tripped the
+  lint ratchet and was corrected without weakening it.
