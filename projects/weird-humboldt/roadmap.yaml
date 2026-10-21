@@ -1243,11 +1243,8 @@ tasks:
   - id: t-045
     milestone: m4
     title: "Ecotone: optional time with every companion, and a chosen-family (polycule) utopia ending"
-    status: review
-    owner: worker
-    claimed_by: 2026-10-21T220034Z-ecotone-t045-6f3b9c
-    claimed_at: '2026-10-21T22:00:34Z'
-    updated: '2026-10-21T22:02:55Z'
+    status: ready
+    updated: '2026-10-21T22:15:25Z'
     approved_by_human: true
     passes: 0
     stakes: reversible
@@ -1255,6 +1252,8 @@ tasks:
       Silas (2026-10-20): the companions shouldn't be single-lead only; give optional routes to spend time with everyone, and an endpoint where the weekend ends with more than one of them, "the polyamorist utopia". Not a romance sim: frame it as found family and open-hearted connection, romance optional and PG-13, no jealousy mechanic punishing the player. Design sketch: (1) companion hangout beats a run can take with any companion already met, not only the active lead (a bond count per companion instead of one activeLead); (2) the crossroads gains "bring them along" beside follow/stay, so the party can grow; (3) ending lines for finishing together: Silas's count is four new branches (e.g. one per group shape, or the four three-companion groups plus all four); settle which before writing. Each new ending line is 7 lenses x 2 fates = 14 endings, and under the art standard (t-042) 14 pictures x 4 styles. Keep existing saves and the single-lead endings intact; seeded-replay tests cover reaching each new line.
 
       First reviewed implementation slice: a shared optional potluck encounter now names only actually met companions, with four distinct voices and a callback for the Kinetic Bay sinking. Original choices, IDs, saved games, and art keys remain stable. Full group-travel/collectible-ending scope remains pending and will be returned to ready after the merged slice.
+
+      First scoped optional ensemble-scene slice merged as silasfelinus/kind_robots#4007 (eb8c435428c81077e66987a053fe2de1144b8250). All 13 GitHub Actions workflows on PR head completed successfully, including Ecotone Gameplay Contract, TypeScript, Contract Tests and formatting. FR-ASSEMBLY-01 renders two actually-met guides' unique voices and remembers the slug_sank setback; existing saves, endings, story branches and art IDs are unchanged. Larger t-045 work remains ready: optional bonding/hangouts, bring-them-along party state, multi-companion finale lines, and matching art.
   - id: t-046
     milestone: m2
     title: "Second draft I: make high-leverage regional decisions genuinely distinct"
