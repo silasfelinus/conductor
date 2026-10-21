@@ -21,13 +21,15 @@ This is a design proposal for review. It turns those notes into plot material wi
 
 - **The massacre.** In the early hours of February 26, 1860, a small group of settlers crossed Humboldt Bay and attacked the Wiyot village of Tuluwat on what settlers called Indian Island. The Wiyot were gathered there for their annual World Renewal Ceremony, and many of the men had gone to the mainland for supplies. The dead were mostly women, children and elders.
 - **Coordinated attacks.** The same night or within days, Wiyot people were killed at South Beach, on the South Fork of the Eel River and at Eagle Prairie.
-- **The death toll is disputed.** Estimates run from about 80 to 250 at the island alone, and higher across that week. Use ranges, not one number.
+- **Death-count attribution needs the Tribe's scope.** The Wiyot Tribe's [History](https://www.wiyot.us/148/Cultural) attributes estimates of **80–250** deaths to *that night's series of orchestrated massacres*, not to Tuluwat alone. Other accounts differ. Do not recast the Tribe's estimate as an island-specific death toll or imply one settled count.
 - **No one was prosecuted.** Robert Gunther later recalled that the killers "were pointed out" in secret, and that "We soon found that we had better keep our mouths shut."
 - **Bret Harte.** The assistant editor of Arcata's *Northern Californian* published an eyewitness account of the aftermath on February 29, 1860. He soon left the area after threats against his life. The *Humboldt Times* had run an editorial calling for Native people to be driven out of the county the day before the attack.
 - **Robert Gunther.** He bought the island three days before the massacre. In his own later account he was asleep in Eureka that night, woke to what he thought were screams, and went back to sleep. A justice of the peace woke him the next morning, and they went to the island together. He later diked the marsh and ran a dairy there for decades.
 - **The present.** The Wiyot Tribe began raising money to buy the land back in the late 1990s and bought its first parcel in 2000. The Tribe resumed the World Renewal Ceremony on Tuluwat in 2014. The City of Eureka voted in 2018 to return its island holdings and transferred them in 2019. Later shipyard use left contamination, which the Tribe has worked to remediate. Remains taken from graves were held in museum collections for generations; some have been returned.
 
 ### The hat by the door
+
+**2026-10-21 decision:** The project owner approved the pre-consultation recommendation. This anecdote remains unverified and must NOT be presented as documented Tuluwat history, used to imply known advance knowledge, or used as the historical origin of a morality flag. The original brainstorm below is preserved as superseded development history, not approved playable copy. An independent, modern fictional bystander dilemma can be authored without tying itself to the massacre.
 
 Silas's memory is of a settler who made a show of coming home that evening and hanging his hat by the door, so everyone would know he was not involved, though he likely knew what was coming. No source found so far records that detail. Robert Gunther's own documented account raises the same question in his own words: he heard screams across the bay and went back to sleep, and afterwards the town agreed to keep its mouth shut.
 
@@ -50,10 +52,14 @@ At dusk the protagonist can see Tuluwat across the water from the Eureka waterfr
 
 ### How the hat echoes in the finale
 
+**SUPERSEDED 2026-10-21:** Do not implement the proposed `hat_by_the_door` callback or invite the player to score or analogize conduct during the massacre. The following is an archived design thought only. A distinct present-day fictional dilemma may be written independently of the Tuluwat historical scene.
+
 At the county-fate convergence the player meets a **present-day, fictional** moment where they know harm is coming to someone in the county. It could be a displacement vote, an unsafe worksite or a coalition about to abandon its most vulnerable members. They can act at a cost, or hang their hat by the door. The choice is labelled in plain words, recorded as a callback flag (`hat_by_the_door`) rather than a morality score, and can surface in the 1/10/30-year epilogue signatures.
 - The parallel is about bystanders, not about equivalence. The writing must never suggest that a modern policy fight is comparable to a massacre.
 
 ### Before anything is published
+
+**2026-10-21 owner authorization applies to internal drafting only.** Offer the Wiyot Tribe an opportunity to decline or review with compensation and agreed scope, through the Cultural Department's preferred process, *before* using tribe-specific game text, illustrations, audio or protected cultural material publicly. Prepare exact passage/art and source packet first. No outreach or tribal permission has yet occurred; no silence-as-consent and no approval by proxy.
 
 - **Consult the Wiyot Tribe** (its cultural and historic-preservation office) before any player-facing Tuluwat text ships. Include the Tribe's own published history, and credit it.
 - Use the Tribe's names and terms as the Tribe uses them: Tuluwat, Wiyot. Don't invent words in Soulatluk, the Wiyot language.
@@ -68,9 +74,12 @@ The Josiah Gregg party, a starving overland expedition, reached the coast in Dec
 - By one account, some of them talked about throwing him and his instruments into the river. The river has been the Mad River since.
 - **The only source** is L. K. Wood's memoir, and historians consider him not fully reliable, so the card is a single-source account.
 - Gregg died in 1850 after a fall from his horse on the way back.
-- The river had names long before 1849, from the peoples whose homeland it runs through. Don't invent one; source it if it is used.
+- The Wiyot Tribe publicly records **Baduwa't** as the Soulatluk name for what English-language maps call Mad River. That existing, living Indigenous identity predates the 1849 naming anecdote. Source: [Wiyot Tribe public place-name project](https://www.wiyot.us/450/A-Photographic-Exploration-of-Wigi). For any game use, seek language/cultural guidance; do not invent pronunciation or represent a tribal-only map.
+- The Tribe's [newsletter about Ki-we-lat-tah](https://www.wiyot.us/Archive.aspx?ADID=122) describes Wiyot hospitality to the Gregg party at **Humboldt Bay**. Preserve the distinction between that documented meeting and the separate Mad River crossing; do not relocate named Wiyot people to an invented scene to supply a character or supernatural reward.
 
 ### Proposed card: WH-121 "The Latitude Argument"
+
+**Current implementation warning (2026-10-21):** WH-121 exists in Kind Robots as a playable, explicitly fictionalized historical encounter, with art-job references, but it lacks the Wiyot homeland/welcome context. It is a development item for a bounded pre-consultation revision, **not** a Wiyot-reviewed or historically complete portrayal. The supernatural 1849 fog seam must not blur the line between a sourced settler anecdote and the Wiyot historical record.
 
 A sixth seed for the Mad River / Hammond Trail pool. The joke works with history, not against it.
 
