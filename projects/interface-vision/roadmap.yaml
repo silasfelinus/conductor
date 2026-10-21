@@ -2485,21 +2485,17 @@ tasks:
 - id: t-145
   milestone: m6
   title: "Viewport-first admin and creator tools sweep with tutorial-first help"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
-  note: >-
-    Complete the sitewide instruction on admin/editor/queue/account screens
-    after the high-traffic public passes. Use authenticated fixture coverage
-    and per-route inventory; guest-only Playwright cannot verify admin pages.
-    Move explanatory/caveat copy to existing tutorial sidebar, keep settings
-    compact and preserve essential workflow actions. Apply bounded scroll
-    owners without clipping dialogs, menus, galleries or keyboard focus.
-    Reuse kr-* primitives; no public route or permissions change.
+  note: |-
+    Complete the sitewide instruction on admin/editor/queue/account screens after the high-traffic public passes. Use authenticated fixture coverage and per-route inventory; guest-only Playwright cannot verify admin pages. Move explanatory/caveat copy to existing tutorial sidebar, keep settings compact and preserve essential workflow actions. Apply bounded scroll owners without clipping dialogs, menus, galleries or keyboard focus. Reuse kr-* primitives; no public route or permissions change.
+
+    Scoped XL creative-workspace slice: generator uses the shared wide container, dedicated model/settings and tall scrollable LoRA columns appear at 2xl, and wide gallery/dashboard surfaces share a larger cap. Code and source regression assertions prepared in kind_robots branch worker/interface-vision-t145-xl-art-workspace-b8f3; PR and CI pending.
   owner: worker
   claimed_by: 2026-10-21T061630Z-interface-vision-t145-xl-b8f3
   claimed_at: '2026-10-21T06:16:30Z'
-  updated: '2026-10-21T06:16:30Z'
+  updated: '2026-10-21T06:17:30Z'
 
 - id: t-146
   milestone: m6
