@@ -2,13 +2,10 @@
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
 failures:
-- source: requests
-  target: public/images/channels/arcade/emperor-of-dust.webp
-  kind: timeout
-  detail: job 42322 timed out after 300s (still queued/running)
-  first_seen: '2026-10-20'
-- source: requests
-  target: public/images/channels/arcade/zuzu-pinball.webp
-  kind: timeout
-  detail: job 42321 timed out after 300s (still queued/running)
-  first_seen: '2026-10-20'
+- source: kr-failed-jobs
+  target: ArtJob 42356
+  kind: kr-job-failed
+  detail: 'engine=COMFY; error=Comfy execution failed: _cb, pre_execute_cb=pre_execute_cb, v3_data=v3_data)\n'',
+    '' File "D:\\comfy\\comfy-fast\\execution.py", line 326, in _async_map_node_over_list\n await process_inputs(input_dict,
+    i)\n'', '' File "D:\…'
+  first_seen: '2026-10-21'
