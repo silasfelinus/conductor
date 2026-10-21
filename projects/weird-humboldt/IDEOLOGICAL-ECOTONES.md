@@ -2,6 +2,14 @@
 
 **2026-10-19 PT · design exploration prompted by Silas, not yet finalized game rules.** The story and its 32-ending registry remain canonical as already defined in [ECOTONE-32-ENDINGS.md](ECOTONE-32-ENDINGS.md). This document defines **four independent story tensions**, not a political quiz, drugs-as-politics classifier, binary good/bad moral meter or universal value prescription. No UI build, art generation or publishing authority.
 
+## October 20 refinement: chemistry tilts the philosophical finale rolls
+
+**Newer explicit creator instruction, superseding the October 19 “no axis offset” proposal:** repeated voluntary chemical choices, combinations, and returns to temperance should adjust a *modest thematic bias* toward philosophical possibilities that the player rolls for at the end. This is not a physiological assertion, actual personal ideology classification, moral virtue/vice score or a compulsory endpoint.
+
+The original four axes remain authoritative. At the finale, each axis resolves a seeded, visible 2d6 roll plus a bounded combination of the player's recorded chemical-perspective pulls and earned consequential decisions. The opening perspective remains the narrative memory used for the collectible ending ID. Substances affect the **probability of the philosophical resolution**, but do not decide hopeful/dark fate, prevent any ideology from being rolled, establish facts or circumvent consent and tribal sovereignty.
+
+The first usable implementation is scoped in Kind Robots PR #3958 and `docs/ecotone/PHILOSOPHY-NEEDLES.md`. It distinguishes one-off use from repetition, caps excess so it cannot be farmed for advantage, lets two experiences oppose one another (coffee and cannabis's hippie speedball), allows voluntary pauses to adjust agency without wiping history, and gives *actual scene decisions* their own independent pull. Read the older tables and notes below as the historical **narrative-only** proposal, not a prohibition against this newer weighted-roll behavior. Still keep all 84 gallery IDs and the existing independent civic outcome contract.
+
 ## Four ideological/ecological/philosophical fault lines
 
 | Story axis | Pole A | Pole B | Actual dramatic question |
