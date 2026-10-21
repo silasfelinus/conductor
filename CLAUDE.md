@@ -154,6 +154,9 @@ one you've verified is superseded.
 - First push of a session, or a push after a rebase, fails with **HTTP 413**: create the ref with the
   GitHub MCP `create_branch` tool, or commit via `push_files` against the branch's current remote tip.
   Never force-push to "fix" it. Full recipes: [`docs/agents/git-troubleshooting.md`](docs/agents/git-troubleshooting.md).
+- After any `git clone --depth 1` (the `add_repo` recipe), run
+  `git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'` before the first push, or `push -u`
+  never creates `origin/<branch>` and the stop hook reports pushed work as unpushed. Same doc.
 - **Never delegate a git-state-mutating step to a background subagent without `isolation: 'worktree'`**
   (AGENTS.md hard safety rule 11), and never hand one a workaround you are also fixing in the foreground —
   it will push a stale snapshot over your later commits. Incidents: same doc.
