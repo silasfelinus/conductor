@@ -323,15 +323,14 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Move Zuzu's Lair tab into Admin and add a global Home icon"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Silas requested in session on 2026-10-20 PT: move the existing admin-only
-      Zuzu's Lair game from Play navigation to Admin; keep /admin/zuzu-lair.
-      Add a persistent leftmost home icon to the shared header that returns to /.
-      Implementation belongs in kind_robots navigation, not Conductor presentation data.
+    note: |-
+      Silas requested in session on 2026-10-20 PT: move the existing admin-only Zuzu's Lair game from Play navigation to Admin; keep /admin/zuzu-lair. Add a persistent leftmost home icon to the shared header that returns to /. Implementation belongs in kind_robots navigation, not Conductor presentation data.
+
+      Source patch prepared on kind_robots branch worker/zuzu-lair-t015-admin-home-20261020-c82a: moves the protected Zuzu's Lair tab to Admin, keeps its route, adds a persistent branded Home control, and updates affected navigation contracts.
     claimed_by: 2026-10-21T001215Z-zuzu-lair-nav-home-gpt6-c82a
     claimed_at: '2026-10-21T00:12:15Z'
-    updated: '2026-10-21T00:12:15Z'
+    updated: '2026-10-21T00:19:30Z'
