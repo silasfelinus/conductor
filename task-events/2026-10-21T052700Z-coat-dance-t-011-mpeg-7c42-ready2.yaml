@@ -1,0 +1,13 @@
+version: 1
+project: coat-dance
+task: t-011
+operation: ready
+session: 2026-10-21T050300Z-coat-dance-t-011-mpeg-7c42
+updated: '2026-10-21T05:27:00Z'
+note: >-
+  MPEG/Comfy motion input reliability fix merged in Conductor PR #6444 at
+  ad0277b, with full Worker PR CI, Security Audit and handoff-template checks
+  completed successfully. MPEG program-stream FFmpeg output corrected to
+  exactly 65 CFR frames, validated before Comfy decode, and staged atomically.
+  No Windows PM2 restart or live GPU rerender performed. The broader artistic
+  full-film deliverable in t-011 remains unfinished; return to READY.
