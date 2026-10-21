@@ -723,14 +723,16 @@ tasks:
   - id: t-038
     milestone: m5
     title: "V7 world remembers: cross-land consequences, returned witnesses and readable journey callbacks"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261021T054601Z-zsl-echoes-b64
     claimed_at: '2026-10-21T05:46:01Z'
-    updated: '2026-10-21T05:46:01Z'
+    updated: '2026-10-21T05:56:37Z'
     passes: 0
     stakes: reversible
     depends_on: [t-037]
     source: silas-2026-10-20
     note: |-
       User approved continuing Shifting Lands development after the merged V7 moral economy. Build source-backed in-journey cross-land callbacks: people helped or harmed should reappear in authored read-only vignettes, gate/bargain choices should change how later communities greet the traveler, and hopeful paths should be legible in the Journal before the epilogue. Implement a deterministic V7-only narrative consequence layer derived from real earned marks, flags and successful/failed trial outcomes. Include particular choices and witnessed costs in the later lands, rather than generic morality banners. Keep per-land arrival surface bounded in one-screen board UI; longer consequence history lives in the scrollable journal. Do not alter V7 gameplay rules, replay/save fingerprint, cast/species or V6 authored encounters. Keep t-036 encounter line editing and t-033 artwork independent. Test no spoilers, cause-accurate triggers and V2-V7 fallback, then merge only on green CI. No production deploy or manual visual acceptance assumed.
+
+      Implemented V7 read-only world reaction layer in Kind Robots PR #3971. Added 32 authored land-arrival callbacks for eight prior trial approaches over four later lands, plus ten returns from exact successfully resolved encounters. Reactive Pinia store, compact expandable road announcements and an accumulated journal narrative, plus source-accurate no-spoiler replay-safe tests in dedicated Shifting Lands CI. Shifting Lands gameplay and formatting current-head green; TypeScript and complete contract suite pending. No old save, trial, original encounter/prose, artwork, live deployment or visual approval altered. t-036 and t-033 remain separately owned.
