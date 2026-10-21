@@ -4,6 +4,10 @@
 # once a keeper is exported. One seed per item; reroll rejects as -v2 subjects. Square icons, a single object,
 # no text, the cast's house checkpoint and palette so items sit with the rooms and portraits.
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# Status 2026-10-21 (t-033): all 30 jobs still PENDING after ~70 minutes of polling. The shared art queue
+# frontier sat near ArtJob 42238 at 01:20Z, moving a few jobs every 15 minutes, with ~40 older jobs ahead
+# of 42323. Nothing reviewed or exported yet; `pending` lists the cells. Run --status, contact-sheet, review
+# (reject text/letters, hands or people, several objects, or a mismatch) and export keepers when they land.
 round: emperor-items-1
 project_slug: emperor-of-dust
 designer: Comic Studio
@@ -35,6 +39,10 @@ subjects:
   prompt_tags: pitted salvaged steel crowbar, road grit on it, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42323
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-lockpick-roll
   lane: arthemy-house
   title: 'Market item: lockpick-roll'
@@ -46,6 +54,10 @@ subjects:
   prompt_tags: leather roll open on twelve thin picks, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42324
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-surveyors-glass
   lane: arthemy-house
   title: 'Market item: surveyors-glass'
@@ -57,6 +69,10 @@ subjects:
   prompt_tags: brass-ringed surveyor's lens on a cord, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42325
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-storm-glass-vial
   lane: arthemy-house
   title: 'Market item: storm-glass-vial'
@@ -68,6 +84,10 @@ subjects:
   prompt_tags: corked vial with a grey storm cloud inside, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42326
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-field-kit
   lane: arthemy-house
   title: 'Market item: field-kit'
@@ -80,6 +100,10 @@ subjects:
     soft rim light
   jobs:
     arthemy-house: 42327
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-courier-spurs
   lane: arthemy-house
   title: 'Market item: courier-spurs'
@@ -91,6 +115,10 @@ subjects:
   prompt_tags: worn courier's spurs with dusty rowels, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42328
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-bell-clapper
   lane: arthemy-house
   title: 'Market item: bell-clapper'
@@ -102,6 +130,10 @@ subjects:
   prompt_tags: cracked iron bell clapper, chapel rust, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42329
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-brass-bell-charm
   lane: arthemy-house
   title: 'Market item: brass-bell-charm'
@@ -113,6 +145,10 @@ subjects:
   prompt_tags: small brass bell charm on a red string, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42330
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-saltroad-waybill
   lane: arthemy-house
   title: 'Market item: saltroad-waybill'
@@ -125,6 +161,10 @@ subjects:
     wooden surface, soft rim light
   jobs:
     arthemy-house: 42331
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-caravan-salve
   lane: arthemy-house
   title: 'Market item: caravan-salve'
@@ -136,6 +176,10 @@ subjects:
   prompt_tags: dented tin of tallow-and-salt salve, lid ajar, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42332
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-road-lantern
   lane: arthemy-house
   title: 'Market item: road-lantern'
@@ -148,6 +192,10 @@ subjects:
     light
   jobs:
     arthemy-house: 42333
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-rustline-cutters
   lane: arthemy-house
   title: 'Market item: rustline-cutters'
@@ -160,6 +208,10 @@ subjects:
     light
   jobs:
     arthemy-house: 42334
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-signal-coil
   lane: arthemy-house
   title: 'Market item: signal-coil'
@@ -171,6 +223,10 @@ subjects:
   prompt_tags: copper wire wound on a spool, a faint hum glow, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42335
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-magpie-scales
   lane: arthemy-house
   title: 'Market item: magpie-scales'
@@ -183,6 +239,10 @@ subjects:
     light
   jobs:
     arthemy-house: 42336
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-lost-human-gauntlet
   lane: arthemy-house
   title: 'Market item: lost-human-gauntlet'
@@ -194,6 +254,10 @@ subjects:
   prompt_tags: plated, wired glove of old-world make, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42337
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-crow-glass-eye
   lane: arthemy-house
   title: 'Market item: crow-glass-eye'
@@ -205,6 +269,10 @@ subjects:
   prompt_tags: disc of thin-ground black glass on a thong, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42338
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-rain-feather
   lane: arthemy-house
   title: 'Market item: rain-feather'
@@ -217,6 +285,10 @@ subjects:
     light
   jobs:
     arthemy-house: 42339
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-reed-poppet
   lane: arthemy-house
   title: 'Market item: reed-poppet'
@@ -228,6 +300,10 @@ subjects:
   prompt_tags: wet reed-and-hair poppet tied with twine, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42340
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-witchwater-phial
   lane: arthemy-house
   title: 'Market item: witchwater-phial'
@@ -240,6 +316,10 @@ subjects:
     light
   jobs:
     arthemy-house: 42341
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-abbey-candle
   lane: arthemy-house
   title: 'Market item: abbey-candle'
@@ -252,6 +332,10 @@ subjects:
     rim light
   jobs:
     arthemy-house: 42342
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-silent-bell-rosary
   lane: arthemy-house
   title: 'Market item: silent-bell-rosary'
@@ -263,6 +347,10 @@ subjects:
   prompt_tags: rosary of matte beads with a clapperless bell, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42343
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-snare-kit
   lane: arthemy-house
   title: 'Market item: snare-kit'
@@ -274,6 +362,10 @@ subjects:
   prompt_tags: coil of rail wire with a hook, knotted cord, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42344
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-hyena-tooth
   lane: arthemy-house
   title: 'Market item: hyena-tooth'
@@ -285,6 +377,10 @@ subjects:
   prompt_tags: hyena tooth on a leather thong, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42345
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-freehold-spade
   lane: arthemy-house
   title: 'Market item: freehold-spade'
@@ -296,6 +392,10 @@ subjects:
   prompt_tags: ash-handled spade, mended twice with wire, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42346
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-carbide-lamp
   lane: arthemy-house
   title: 'Market item: carbide-lamp'
@@ -307,6 +407,10 @@ subjects:
   prompt_tags: miner's carbide lamp, blue flame, cracked lens, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42347
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-verge-signet
   lane: arthemy-house
   title: 'Market item: verge-signet'
@@ -318,6 +422,10 @@ subjects:
   prompt_tags: heavy gold signet ring with a black stone, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42348
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-night-draught
   lane: arthemy-house
   title: 'Market item: night-draught'
@@ -330,6 +438,10 @@ subjects:
     rim light
   jobs:
     arthemy-house: 42349
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-watch-buckler
   lane: arthemy-house
   title: 'Market item: watch-buckler'
@@ -341,6 +453,10 @@ subjects:
   prompt_tags: dented round buckler shield, iron rim, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42350
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-ledger-abacus
   lane: arthemy-house
   title: 'Market item: ledger-abacus'
@@ -352,6 +468,10 @@ subjects:
   prompt_tags: brass-bead abacus on a wire frame, resting on a dark worn wooden surface, soft rim light
   jobs:
     arthemy-house: 42351
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
 - key: eodi-lamplight-folio
   lane: arthemy-house
   title: 'Market item: lamplight-folio'
@@ -364,3 +484,38 @@ subjects:
     surface, soft rim light
   jobs:
     arthemy-house: 42352
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+pending:
+  eodi-old-road-crowbar: ArtJob 42323
+  eodi-lockpick-roll: ArtJob 42324
+  eodi-surveyors-glass: ArtJob 42325
+  eodi-storm-glass-vial: ArtJob 42326
+  eodi-field-kit: ArtJob 42327
+  eodi-courier-spurs: ArtJob 42328
+  eodi-bell-clapper: ArtJob 42329
+  eodi-brass-bell-charm: ArtJob 42330
+  eodi-saltroad-waybill: ArtJob 42331
+  eodi-caravan-salve: ArtJob 42332
+  eodi-road-lantern: ArtJob 42333
+  eodi-rustline-cutters: ArtJob 42334
+  eodi-signal-coil: ArtJob 42335
+  eodi-magpie-scales: ArtJob 42336
+  eodi-lost-human-gauntlet: ArtJob 42337
+  eodi-crow-glass-eye: ArtJob 42338
+  eodi-rain-feather: ArtJob 42339
+  eodi-reed-poppet: ArtJob 42340
+  eodi-witchwater-phial: ArtJob 42341
+  eodi-abbey-candle: ArtJob 42342
+  eodi-silent-bell-rosary: ArtJob 42343
+  eodi-snare-kit: ArtJob 42344
+  eodi-hyena-tooth: ArtJob 42345
+  eodi-freehold-spade: ArtJob 42346
+  eodi-carbide-lamp: ArtJob 42347
+  eodi-verge-signet: ArtJob 42348
+  eodi-night-draught: ArtJob 42349
+  eodi-watch-buckler: ArtJob 42350
+  eodi-ledger-abacus: ArtJob 42351
+  eodi-lamplight-folio: ArtJob 42352

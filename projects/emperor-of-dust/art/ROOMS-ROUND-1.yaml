@@ -13,6 +13,8 @@
 # Review 2026-10-20 (t-029): keepers exported in kind_robots#3915 (rooms.ts ROOM_ART). `rejected` says why the
 # other seed lost; `pending` lists the barracks -v2 rerolls (stronger no-figures negative), still queued
 # behind a multi-hour art backlog. When one lands, compare it with barracks-a and swap the keeper if cleaner.
+# Review 2026-10-21 (t-033): both -v2 rerolls came back unpeopled. barracks-b-v2 is the keeper (bedrolls and
+# swords read as a barracks, centre-left floor open, right third dark bedding); exported over rooms/barracks.webp in kind_robots#3955.
 round: emperor-rooms-1
 project_slug: emperor-of-dust
 designer: Comic Studio
@@ -260,8 +262,8 @@ subjects:
     arthemy-house: 42158
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 250135
 - key: eodr-barracks-b-v2
   lane: arthemy-house
   title: Barracks backdrop (b v2, no figures)
@@ -279,12 +281,12 @@ subjects:
     arthemy-house: 42159
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 250136
 keepers:
   throne: a
   quests: b
-  barracks: a
+  barracks: b-v2
   market: a
   map: b
   chronicle: a
@@ -293,7 +295,6 @@ rejected:
   eodr-barracks-b: a standing human figure in the middle of an unpeopled room
   eodr-market-b: a standing human figure in the doorway
   eodr-chronicle-b: three moons in the sky
-pending:
-  eodr-barracks-a-v2: reroll with no figures (barracks-a ships meanwhile with two small figures in the back tunnel);
-    ArtJob 42158
-  eodr-barracks-b-v2: reroll with no figures; ArtJob 42159
+  eodr-barracks-a: 'superseded by barracks-b-v2: two small figures in the back tunnel'
+  eodr-barracks-a-v2: unpeopled, but a symmetrical carpeted corridor with no bunks or kit; reads as a throne approach,
+    not a barracks, and the vanishing point sits dead centre

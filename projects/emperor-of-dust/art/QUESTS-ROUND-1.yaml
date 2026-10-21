@@ -12,6 +12,9 @@
 # (questArt.ts QUEST_ART, 960x548 WebP) in kind_robots#3915. q-d42-cave-forage is held back (`rejected`); its -v2
 # rerolls drop the crow-roost region tags and were still queued behind the art backlog (`pending`). Until
 # they are approved and exported, that quest shows the painted-map crop.
+# Review 2026-10-21 (t-033): the -v2 rerolls dropped the crows but none shows the cave (an empty campsite, two
+# foragers eating at an open-air fire, a pot on a bare slope), so all three are `rejected` and rerolled as -v3
+# with the cave as the framing shot. The quest keeps the painted-map crop until a -v3 set is approved.
 round: emperor-quests-1
 project_slug: emperor-of-dust
 designer: Comic Studio
@@ -4496,8 +4499,8 @@ subjects:
     arthemy-house: 42160
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 250137
 - key: eodq-q-d42-cave-forage-success-v2
   lane: arthemy-house
   title: 'Forage for the Cave (success, v2: the cave, not crow roosts)'
@@ -4516,8 +4519,8 @@ subjects:
     arthemy-house: 42161
   art:
     arthemy-house:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 250138
 - key: eodq-q-d42-cave-forage-failure-v2
   lane: arthemy-house
   title: 'Forage for the Cave (failure, v2: the cave, not crow roosts)'
@@ -4534,6 +4537,67 @@ subjects:
     hills, jagged grey mountain peaks'
   jobs:
     arthemy-house: 42162
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 250139
+- key: eodq-q-d42-cave-forage-notice-v3
+  lane: arthemy-house
+  title: 'Forage for the Cave (notice, v3: inside the cave)'
+  quest: q-d42-cave-forage
+  variant: notice
+  asset: quests/q-d42-cave-forage
+  size: 1344x768
+  seed: 62400
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views, crow, raven, bird
+  prompt_tags: 'story illustration, establishing scene, a few small anthro animal folk figures at a distance, Forage
+    for the Cave: (cave:1.3), (inside a mountain cave:1.2), rough rock walls and a low rock ceiling framing the
+    scene, the cave mouth opening onto storm-grey mountains, a small camp of ragged anthro animal revolutionaries
+    just inside the cave mouth, a tiny guttering campfire, an empty cooking pot, two foragers with baskets setting
+    out down the slope'
+  jobs:
+    arthemy-house: 42353
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodq-q-d42-cave-forage-success-v3
+  lane: arthemy-house
+  title: 'Forage for the Cave (success, v3: inside the cave)'
+  quest: q-d42-cave-forage
+  variant: success
+  asset: quests/q-d42-cave-forage-success
+  size: 1344x768
+  seed: 62401
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views, crow, raven, bird
+  prompt_tags: 'story illustration, the moment it went right, anthro animal folk, warm firelight, Forage for the
+    Cave: (cave:1.3), (inside a mountain cave:1.2), rough rock walls and a low rock ceiling framing the scene, the
+    cave mouth opening onto storm-grey mountains, ragged anthro animal revolutionaries gathered around a bright
+    campfire inside the cave, roots, a snared hare and a sack of flour, a cooking pot steaming'
+  jobs:
+    arthemy-house: 42354
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: eodq-q-d42-cave-forage-failure-v3
+  lane: arthemy-house
+  title: 'Forage for the Cave (failure, v3: inside the cave)'
+  quest: q-d42-cave-forage
+  variant: failure
+  asset: quests/q-d42-cave-forage-failure
+  size: 1344x768
+  seed: 62402
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters,
+    words, logo, writing, caption, ui, frame, border, deformed, human, multiple views, crow, raven, bird
+  prompt_tags: 'story illustration, grim aftermath, anthro animal folk, cold blue dusk light, Forage for the Cave:
+    (cave:1.3), (inside a mountain cave:1.2), rough rock walls and a low rock ceiling framing the scene, the cave
+    mouth opening onto storm-grey mountains, ragged anthro animal revolutionaries huddled hungry inside the cave
+    around dying embers, an empty cooking pot, empty baskets, bare hills outside'
+  jobs:
+    arthemy-house: 42355
   art:
     arthemy-house:
       status: PENDING
@@ -4771,9 +4835,13 @@ rejected:
   eodq-q-d42-cave-forage-notice: 'region tags won: a crow on a cliff ledge, not the cold cave and the foragers'
   eodq-q-d42-cave-forage-success: a crow on a cliff ledge; no food, no camp
   eodq-q-d42-cave-forage-failure: a crow on a cliff ledge; no cave, no hunger
+  eodq-q-d42-cave-forage-notice-v2: 'no crows, but no cave and no foragers: an empty campsite with baskets and pots'
+  eodq-q-d42-cave-forage-success-v2: 'no crows and two foragers fed at a fire, but an open-air snowy valley: no
+    cave'
+  eodq-q-d42-cave-forage-failure-v2: 'no crows, but no cave and no people: a pot steaming on a bare slope'
 pending:
-  eodq-q-d42-cave-forage-notice-v2: ArtJob 42160
-  eodq-q-d42-cave-forage-success-v2: ArtJob 42161
-  eodq-q-d42-cave-forage-failure-v2: ArtJob 42162
+  eodq-q-d42-cave-forage-notice-v3: ArtJob 42353, queued 2026-10-21 (t-033)
+  eodq-q-d42-cave-forage-success-v3: ArtJob 42354, queued 2026-10-21 (t-033)
+  eodq-q-d42-cave-forage-failure-v3: ArtJob 42355, queued 2026-10-21 (t-033)
 export_notes:
   eodq-q-d30-hold-the-line-success: thin black frame baked in; cropped (12, 12, 1334, 767) before resize
