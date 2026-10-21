@@ -31,6 +31,14 @@ Example (before → after):
 - Before: "Sister Reedlight looks down at her lantern as if noticing it for the first time, and laughs, and the laugh is lovely."
 - After: "Sister Reedlight looks at the lantern. Then she laughs. It is a good laugh. You don’t trust it."
 
+## Story calls are yours (Silas, 2026-10-21 PT)
+
+"I'm not versed enough in the story beats to answer the impact of that choice. Make decisions
+with emotional weight." Do not leave a story or design question open for Silas. Decide it: prefer
+the version whose cost lands on a named person the player has met over one that lands on a number.
+Write the call and its reasoning in your PR body. Secrets, publishing and irreversible operations
+are still gates.
+
 ## Read first (skim, then keep open)
 - `/home/user/conductor/projects/emperor-of-dust/GAME-BIBLE.md` (premise, tone, faction bible; v0.3 wins where they disagree)
 - `/home/user/conductor/projects/emperor-of-dust/SYSTEMS-V03.md` (factions, Komodo and the betrayal, hideout)
