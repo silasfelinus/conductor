@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 BASE = ROOT / "projects/weird-humboldt/art/ART-STANDARD.yaml"
 REVISION = ROOT / "projects/weird-humboldt/art/ART-EDITORIAL-ROUND-1.yaml"
 LANES = {"zimage", "krea2", "arthemy", "novacomic"}
-HELD = re.compile(r"\\b(?:wiyot|tuluwat|massacre|ceremon(?:y|ial)|tribal|indigenous|mara|wh-121|baduwa)\\b", re.I)
+HELD = re.compile(r"\b(?:wiyot|tuluwat|massacre|ceremon(?:y|ial)|tribal|indigenous|mara|wh-121|baduwa)\b", re.I)
 
 
 def main() -> None:
