@@ -851,14 +851,15 @@ tasks:
   - id: t-053
     milestone: m5
     title: "Prevent Young Komodo flashing through the startup splash before the introduction"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-10-21T232200Z-eod-intro-6f31
     claimed_at: '2026-10-21T23:22:00Z'
-    updated: '2026-10-21T23:29:00Z'
+    updated: '2026-10-21T23:35:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Silas reported a flash of Young Komodo immediately before the Wasteland intro scene on 2026-10-21 PT. Mount the introduction before the splash fades and preserve first-scene text pacing. Verify the overlay and saved-run paths.
 
       Startup overlay regression fixed on worker/emperor-of-dust-t-053-intro-6f31: introduction first map scene pre-mounted beneath fading splash, narration deferred until visible, underlying briefing covered.
+
+      Merged silasfelinus/kind_robots#4010 as 4b962e72bb2810ed17dd2cb8c423fd6b76a45640. All 21 GitHub checks completed successfully, including verifyEmperorFortress.test.ts, layout, formatting, TypeScript and contract shards. No branch preview or production deployment was performed; self-hosted deploy remains separate.
