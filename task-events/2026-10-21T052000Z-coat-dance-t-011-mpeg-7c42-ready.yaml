@@ -1,0 +1,15 @@
+version: 1
+project: coat-dance
+task: t-011
+operation: ready
+session: 2026-10-21T050300Z-coat-dance-t-011-mpeg-7c42
+updated: '2026-10-21T05:20:00Z'
+note: >-
+  Scoped MPEG program-stream Comfy decoding regression repaired in Conductor
+  PR #6444 (merged ad0277b). Reproduced 64 instead of 65 frames with the
+  previous FFmpeg command and validated corrected constant-frame-rate output.
+  Worker validates fully decodable clips and stages them atomically, replacing
+  partial copies; regression tests added. All current PR workflows finished
+  successfully: Worker PR CI, Security Audit and handoff-template validation.
+  No Windows relay restart, live Comfy PyAV render or production deployment
+  was performed. Keep t-011 READY for the broader full-film creative delivery.
