@@ -19,7 +19,7 @@ The Kind Robots rules and desk now present a small, **personalized Case-file Exh
 - A dented robot's minority objection to the ticking and the Company's eleven unanimous yes votes
 - The parents who received a dated product-safety warning identifying next Thursday's incident
 - The warning attached to the launch memo about the parking structure
-- Whether the player named and implicated the Concerned Parents
+- Whether the player's focus-group crayon drawing exposed the mechanism in the bear before the launch review
 
 The current choices still let the player decide *how* to handle the review; the evidence tells the player **what the Company knows**. The Board need not reveal the scoring key to produce a recognizable record of decisions.
 
