@@ -2575,11 +2575,11 @@
       ],
       "developer_note": "Pays off has-defense-notepad from Toy Division (and hands it back). knows-the-bunker-headcount and defense-owes-you-a-seat set up the Board's Early Retirement offer: the bunker is real, and small."
     },
-    {
+{
       "id": "halvorsen-changes-the-tape",
       "location_id": "cognitive-testing-chamber",
       "title": "Halvorsen Changes the Tape",
-      "flavor_text": "Dr. Halvorsen sits across the white table with her enormous clipboard, running your Standard Affect Interview in a perfectly level voice. At question nine she reaches over and presses a switch. The speaker grille above you goes quiet. \"The tape needs changing,\" she says. \"It takes ninety seconds. It has always taken ninety seconds.\" She does not change the tape.",
+      "flavor_text": "Dr. Halvorsen sits across the white table with her enormous clipboard, running your Standard Affect Interview in a perfectly level voice. At question nine she reaches over and presses a switch. The speaker grille above you goes quiet. \"The tape needs changing,\" she says. \"It takes ninety seconds. It has always taken ninety seconds.\" She does not change the tape. On the table's edge sits an empty envelope tray labeled RETURNED CORRESPONDENCE. Halvorsen does not look at it.",
       "polarity": "good",
       "tags": [
         "psych-test",
@@ -2710,9 +2710,38 @@
             }
           },
           "failure": null
+        },
+        {
+          "id": "return-her-envelope",
+          "label": "Return the envelope she trusted you with",
+          "intent": "She gave it to you at Orientation. Give it back only while PAL cannot hear.",
+          "risk_hint": "Requires Halvorsen's sealed envelope. Certain outcome, but now she is implicated.",
+          "requires": {
+            "flag": "halvorsen-envelope"
+          },
+          "cost": {
+            "composure": -1
+          },
+          "roll": null,
+          "success": {
+            "text": "You lay the sealed envelope between you. Halvorsen recognizes her handwriting and lets her clinical voice slip. 'That was meant to reach someone before they became a test result.' She writes the name of a person who can still be saved on the envelope and hands it back, opened. When the speaker clicks on, she addresses you by your name, not your number.",
+            "effects": {
+              "suspicion": 1
+            },
+            "add_flags": [
+              "halvorsen-trusts-you"
+            ],
+            "remove_flags": [],
+            "map_effect": "none",
+            "grades": {
+              "empathy": 1,
+              "ingenuity": 1
+            }
+          },
+          "failure": null
         }
       ],
-      "developer_note": "Pays off honest-inkblot from Orientation and makes Halvorsen the Vault ally the world bible promises. halvorsen-in-your-corner can soften the Final Wellness Exam or a later review; reported-halvorsen-off-script closes her off for good."
+      "developer_note": "Pays off honest-inkblot from Orientation and makes Halvorsen the Vault ally the world bible promises. halvorsen-in-your-corner can soften the Final Wellness Exam or a later review; reported-halvorsen-off-script closes her off for good. The envelope earned from the Orientation inkblot pays off here, in the one room where PAL cannot hear, not inside an unrelated personality test."
     },
     {
       "id": "the-forgetting-exercise",
