@@ -2383,3 +2383,35 @@ pitches:
           - kind_robots PR #3922 merged to main (squash ffe1b90), 18/18 checks green
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+  - id: domino-spiral-cascade
+    title: Domino Spiral Cascade
+    status: candidate
+    priority: 48
+    surprise: |
+      A spiral of colorful dominoes topples in one slow wave, lies flat, then stands back up to go again.
+    passive_loop: |
+      A 24-second closed-form loop: tip wave, rest, rise wave; no interaction needed.
+    optional_interaction: |
+      Hovering lights up nearby tiles; a rate-limited click speeds the wave.
+    technique: |
+      One canvas, per-domino fall amount as a closed-form function of loop time so the reset is seamless.
+    reduced_motion: |
+      Holds a single static frame with no hover or click.
+    performance_risk: |
+      Low: 120 rectangles per frame.
+    novelty: |
+      First domino-chain effect in the catalog.
+    acceptance:
+      - the wave topples and re-raises the spiral without interaction
+      - hovering lights up nearby tiles
+      - clicking speeds the wave at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/domino-spiral-cascade.vue
+        pull_request: silasfelinus/kind_robots#3998
+        released_at: '2026-10-21T13:00:00Z'
+        verification:
+          - kind_robots PR #3998 merged (squash c292710), 18/18 checks green
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
