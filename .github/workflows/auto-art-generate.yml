@@ -18,6 +18,7 @@ on:
     paths:
       - ".github/workflows/auto-art-generate.yml"
       - "projects/art-prompts.yaml"
+      - "projects/emperor-of-dust/art/AUDIENCES-ROUND-1.yaml"
       - "scripts/consume_art_requests_to_media.py"
       - "scripts/dream_sdxl_checkpoint_art.py"
       - "scripts/queue_mandarin_tutor_art.py"
@@ -173,6 +174,19 @@ jobs:
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
         run: python scripts/submit_mandarin_tutor_artjobs.py --limit 1000
+
+      # The emperor's private audience plates follow the polished source scenes.
+      # enqueue_art_requests persists each ArtJob under the ledger's subject key,
+      # so reruns do not submit duplicate variants.
+      - name: Submit Emperor of Dust illustrated audience plates
+        id: emperor_audiences_submit
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/enqueue_art_requests.py projects/emperor-of-dust/art/AUDIENCES-ROUND-1.yaml --live
 
       # Shifting Desks has 220 approved style requests. Hand all of them to
       # the durable ArtJob scheduler first, instead of blocking on each render
