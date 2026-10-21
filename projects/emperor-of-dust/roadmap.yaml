@@ -1069,7 +1069,7 @@ tasks:
   - id: t-041
     milestone: m5
     title: "Risk, economy and variety: quests that can fail, brass that runs short, more quest templates, honest previews"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -1084,10 +1084,27 @@ tasks:
       same-dawn duplicates, make previews honest about unknowns (range, not a point), and make
       departures and deaths reachable without being punitive. Keep all eight endings reachable; update
       the balance test's thresholds deliberately (document why) rather than weakening them blindly.
+
+      Merged kind_robots#3962 (squash 8daa9d719518f5bf5e17164825bef7de1ae0ea5a, 21 checks
+      green). Requirement needs scale by act (1/1.15/1.3/1.4/1.5), lethal x1.2 (finale-aid
+      roads exempt), exact-need 75% (was 90%); deep wound kills at 40% on failure, 8% on
+      partial. Honest previews: ranges for unread applicable traits, worst-case death odds,
+      Cave-Luck included (rolled outside shown range 33% -> 0%). Departures with weight:
+      Komodo persuades the follower the emperor sat with most (named from Day 37; stopped by
+      Day 40 hold/follow, sealed romance, or follower away); kin departures when the crown
+      turned their people. Chores pay 3-12, Act V chores cost brass; 30 chores in chores.ts
+      with day windows and stark alternates, max two posts per run, no same-dawn duplicates;
+      finishDay repost bug fixed. 120-campaign metrics: deaths/run 0.16->0.40, Komodo
+      departures 0->0.97 (ceiling; warned), loan runs 38%->71%, finale mean 95.5->84.2
+      (45-98), Day 50 brass median 133->44. Balance thresholds changed deliberately and
+      documented in the test (deaths cap 1.0; floors on losses, Candles 1+ but <=20%,
+      borrowing >=75%). Follow-up: q-d50-ring-the-bell and q-d50-crypt-path have no partial
+      reward/outcome line.
     owner: worker
     claimed_by: 2026-10-21T0140Z-eod-t-041
     claimed_at: '2026-10-21T01:33:42Z'
-    updated: '2026-10-21T01:33:42Z'
+    updated: '2026-10-21T03:39:15Z'
+    implementation_pr: 'silasfelinus/kind_robots#3962'
   - id: t-042
     milestone: m4
     title: "Talk pacing: no week-long droughts, no talks naming absent followers"
