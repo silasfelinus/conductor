@@ -1,36 +1,42 @@
-# Shifting Desks: review-room memory and final Board audit
-*2026-10-21 PT · t-037 · third focused story-quality pass*
+# Shifting Desks: Review Memory and Final Board Audit
+*2026-10-21 PT · t-037 · narrative quality pass III*
 
-## Why this pass exists
+## Found and corrected: review menus were already full
 
-A clever choice is only the beginning. The worst of the old review-room writing asks players to revisit their history and then grades them as though their earlier choices never happened. The Company should be able to misread a record, not forget that it exists. Its cruelty must be legible even when the institution's rules are arbitrary.
+The existing Form 0 and Toy Division review screens each have seven authorized choices, which is also the upper bound asserted by `tests/test_shifting_desks_encounters.py`. Adding more choices would defeat the compact, one-screen decision interface and crowd out readable artwork. The initial proposal added four new review routes; CI caught the limit. Those routes were withdrawn in both canonical and runtime content. **No existing review choices, outcomes, authored art, or dice rules were removed.**
 
-Passes I and II fixed the Orientation office-supply questionnaire, Records/Toy cross-floor callbacks and specific ending echoes. This pass strengthens **mandatory review agency** without changing the encounter deck engine or taking over the separate t-034 Wellness/Sub-Level text ownership.
+## What actually changed
 
-## Records: Form 0 now accepts evidence from the player's history
+The Kind Robots rules and desk now present a small, **personalized Case-file Exhibits** section above the existing choice list at relevant mandatory reviews, visible on mobile as well as desktop. The exhibits are deterministic, solely read the run's flags, and are capped at two at a time so the artwork and decision controls remain prominent.
 
-- A player who successfully taught Pip to refuse can ask Pip to deny Form 0's self-referential request. The decision frees the player but traps Pip in the newly created job of Official Officer of Refusals. The cost is not hidden or a cheerful bonus.
-- A player whose surface-tube message was answered can submit the returned parking stub as outside authorization. On success, the Company must recognize correspondence from outside itself; on failure, PAL seizes the evidence, documents an unauthorized exit and schedules further review. Both results follow from the same attempted action.
-- `returned-to-sender` review text is updated to describe the outcome rather than falsely claim every player used a pneumatic tube.
+**Records & Forms may remember:**
+- Pip learning that no is a complete answer, rather than his personhood being filed as an unpaid extra
+- The surface-tube parking stub marked WE READ, proof the Company's internal paperwork isn't the whole world
+- The unauthorized group petition created by Kevin's get-well card
+- Your original Buddy report that sent Pip to the Special Assignment Office
 
-## Toy Division: launch investors must confront dissent
+**Toy Division may remember:**
+- A dented robot's minority objection to the ticking and the Company's eleven unanimous yes votes
+- The parents who received a dated product-safety warning identifying next Thursday's incident
+- The warning attached to the launch memo about the parking structure
+- Whether the player named and implicated the Concerned Parents
 
-- A player who entered the robot's minority objection into the focus-group minutes may read it during the launch. On success the missing witness forces a postponement; on failure the microphone is cut and the player must produce a more compliant witness.
-- A player who delivered the dated safety warning to parents may bring their corrected labels into the launch presentation. Investors do not accept personal liability, and the player's signature remains on every copy.
-- The shared `launch-postponed` summary now truthfully covers safety testimony, minority dissent and the original investors-first route.
+The current choices still let the player decide *how* to handle the review; the evidence tells the player **what the Company knows**. The Board need not reveal the scoring key to produce a recognizable record of decisions.
 
-The four new gated routes use documented flags **earned earlier in the same department** before the boss, retaining the required sequencing. Both reviews retain unrestricted default choices. There are no new boss art slots, new chapter systems or LLM actions.
+## Final Board endings
 
-## The Board's case-file memory
+The existing ten ending families gained **18 new flag-keyed case-file paragraphs**, focused on obedience, complicity, safety warnings, the surface exit, minority dissent, Pip, Kevin, the Supervisor and consequences that cannot be erased with a stamp. Every flag now refers to an act the player can actually perform in a regular encounter or mandatory review. The Board's dialogue and final Sub-Level Zero encounter source were not edited to avoid overlap with t-034.
 
-Twenty-one additional conditional ending paragraphs remember earlier review decisions and human relationships across the established ending families: stamping Form 0, approving or denouncing the bear, Pip's refusal, outside witnesses, the robot's suppressed dissent, the parents' dated warnings, Kevin's letter and the Supervisor's private confession. No new ending category is introduced. `endingLines` already collects all matching paragraphs, so a run can carry multiple moral debts into the Board's eventual verdict without multiplying the ending graph.
+These are *conditional epilogue acknowledgements*, not new Board options and not guaranteed on every run. `endingLines` already displays all relevant earned passages and remains deterministic.
 
-The new case-file lines do **not** appear as guaranteed choices in the Board room. They are earned epilogue acknowledgements if the corresponding finale and history occur together. Honest coverage requires distinguishing that from a new Board branch.
+## Verification
 
-## Validation and outstanding debt
+- Retained the seven-choice limit, and added regression coverage for it.
+- Added deterministic `reviewExhibits` tests: prior records produce the correct two-line maximum; irrelevant departments produce none.
+- Confirmed a visible desk binding, without a second game state or API.
+- Regenerated the canonical flag provenance from all five encounter packs, societies and endings: **514 granted flags; 244 without later readers**. The latter include intentional archival receipts, not 244 confirmed defects.
+- Required merge gates: Conductor full Python suite/pack validator/security checks, Kind Robots Shifting Desks gameplay, TypeScript, Prettier and full contract CI. Code merge and Alexandria deployment are separate statuses.
 
-The authored flag provenance ledger is regenerated after both new review routes and ending readers: **520 flags**, with **244 that have no explicit later reader** (down from 248). This includes archival receipts and late-stage records, not 244 confirmed defects.
+## Remaining scope
 
-Changes must pass the canonical pack validator, narrative and art-brief guards, 2d6 skill-check contracts, Conductor's full Python suite and Kind Robots' gameplay, typecheck, formatting and contract suites. New review options are tested for earlier obtainable source flags, recognized department outcomes and endgame reader coverage.
-
-**Next:** Do a contrasting multi-run editorial simulation for compliant, compassionate and opportunist players, with particular attention to whether the four review choices remain understandable at mobile size and whether accumulated ending paragraphs read as a coherent sequence. Coordinate any Wellness/Sub-Level prose or art with t-034 and t-032. A GitHub merge is not proof that the self-hosted Alexandria deployment received it.
+The 120-card deck still warrants scene-by-scene editorial playtesting of compliant, opportunistic and compassionate runs, particularly at the Wellness/Board transition and the actual mobile viewport. Keep separate t-034 (Wellness/Sub-Level Zero tone text) and art t-032 claims intact. No art prompts were submitted in this pass.
