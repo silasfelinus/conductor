@@ -1,0 +1,75 @@
+date: '2026-10-21'
+entries:
+- slug: glitch-garden-prism-core
+  title: 'Glitch Garden: Prism beam powers and patch multiplier'
+  target: kr-arcade
+  kind: arcade mechanic
+  summary: Blooms carry a colour and lend beams pink split, gold pierce, cyan freeze or violet homing, with a x1 to x5 patch multiplier shown in the HUD.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4002
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39612300733
+  merge_sha: 878dd1c58032a82707361695d03bfd05e0dcc89e
+  checks: passed
+  verification: 18 check runs passed incl. TypeScript and Contract shards 1-4; new Prism test and existing Glitch Garden test pass under tsx. Merged is not deployed; t-088 stays open for sprinklers, data-driven gardens and double-density sprites.
+  art:
+    status: not-required
+    note: Sprites are drawn in code. Double-density sprites and screenshots remain for t-088.
+- slug: emperor-postern-knot
+  title: 'Emperor of Dust: Day 19 callback audience "A Knot at the Postern"'
+  target: emperor-of-dust
+  kind: encounter
+  summary: A new Day 19 audience callbacks the Day 16 informant with a probe beat and three paths that move Watch, Yard and Pack standing.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4001
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39612169807
+  merge_sha: 55165473aa54449e250d14eca6e38bafabcf068f
+  checks: passed
+  verification: 13 workflow runs passed on the final commit incl. Emperor Dispatch Contract, Contract Tests and Generated Client Parity; fortress and balance tests pass. Merged is not deployed.
+  art:
+    status: blocked
+    note: Two private plates are wanted (Dunmark with the knotted feather; Dunmark carrying the sleeping girl) and need locked canon species first. No ArtJob exists yet.
+- slug: brick-bloom-ladybots
+  title: 'Brick Bloom: ladybot ring guarding Vine Hall crates'
+  target: kr-arcade
+  kind: arcade stage
+  summary: Five orbiting ladybot dots shield a crate on Vine Hall walls 3b and 4b, scoring per pop with a bonus for the last one; module and test only.
+  status: in-progress
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3999
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39611320232
+  merge_sha: 0bc6c6a9654e90a5ab31436752633d6f67336f41
+  checks: passed
+  verification: 18 checks green; ring module merged and tested but not yet wired into the cabinet, so nothing is visible in play.
+  next_step: Wire the ring into utils/arcade/games/brickBloom.ts on the two Vine Hall walls, draw it, then Mister Mulch and the Tangle Rose.
+  art:
+    status: not-required
+    note: Dots can be canvas-drawn like the existing mites.
+- slug: cable-crawler-tangle-rules
+  title: 'Cable Crawler: Team Tangle and Tangle Race rules'
+  target: kr-arcade
+  kind: multiplayer mode
+  summary: Pure rules for two to four cables, shared-battery Team Tangle, sparks-based Tangle Race and harmless plug-against-plug bumps.
+  status: in-progress
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4000
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39611435592
+  merge_sha: 5dbbac335f7ab51bda43e0c0e700201bac95ea02
+  checks: passed
+  verification: 18 checks green after one re-run of a stuck TypeScript job; rules test prints ok. Merged but not wired into the game.
+  next_step: Seat 2-4 cables in the single-body cableCrawler.ts, read the players frames, add mode-select entries and set registry maxPlayers.
+  art:
+    status: not-required
+    note: Cable colours for players 2-4 can be palette-only.
+- slug: seed-lander-tandem-relay
+  title: 'Seed Lander: Tandem and Relay pod rules with medal tiers'
+  target: kr-arcade
+  kind: multiplayer mode
+  summary: Pure rules for a shared cargo hold, a double-plant bonus, Relay handoff between pods and crew medal tiers against par.
+  status: in-progress
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4003
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39613621578
+  merge_sha: dfd57a6ca11b54c5c06d911d16d378ed65183501
+  checks: passed
+  verification: 18 checks green; Tandem test prints ok. Merged but the cabinet is not wired to it.
+  next_step: Wire two pods into seedLander.ts, set registry maxPlayers 2 and draw the medal boards.
+  art:
+    status: not-required
+    note: Medal boards reuse existing mastery art.
