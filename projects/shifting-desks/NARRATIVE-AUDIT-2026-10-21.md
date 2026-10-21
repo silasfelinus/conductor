@@ -23,7 +23,7 @@ This is an inventory-based editorial assessment, not a claim that every success/
 
 1. **Questionnaire for a Five-Year-Old**: The text previously numbered three questions; a third route depended on a *fourth* drawing box never disclosed. The setup now names the box, the availability of crayons and the promised consequence of writing someone's name. The seemingly kind answer of naming colleagues thus has an explicit human cost, not a surprise disconnected from the player's understanding.
 2. **Rate Their Sincerity**: The test names a young subject `TYLER, 7`, then a later choice unexpectedly calls him `B`. The setup now exposes his Successor ID in the small print before the player judges his worth. The mystery remains who put him here and why PAL takes sincerity scores so seriously.
-3. **Writing the Warning Label**: The earlier focus-group sketch, previously granted as `drew-the-warning` with no reader, unlocks an authored fourth action here. A successful attempt publicizes the actual dangerous mechanism; a failure turns the warning drawing into advertising. Both answers arise from the player's chosen attempt.
+3. **Writing the Warning Label**: The Orientation exit-interview footnote reveals an incident dated next Thursday involving the Toy Division and a bear. That already-earned clue, `read-the-incident-footnote`, now unlocks the fourth warning-label action. A successful attempt gets the forecast hazard onto boxes; failure turns the correction into launch advertising. The later focus-group drawing cannot unlock this earlier scene, because Concept Lab comes before Focus Group Room. Its flag instead returns as whistleblower evidence at an ending.
 4. **Confidante Prototype**: An earlier Buddy wellbeing report about PAL, previously just a colorful flag, returns as a conditional dialogue with a memory-leaking doll. The positive result makes PAL register unsolicited kindness; the negative result has its privacy fail in a plausible way.
 5. **Range Safety Quiz**: The safety-film jingle from Orientation, previously never read again, is now audible here. An employee conditioned by that film may intentionally sing a wrong note, causing a specific scripted disruption; a failed skill check reproduces the conditioning instead.
 
@@ -31,7 +31,7 @@ These five repaired scenes retain their original cards, locations and art prompt
 
 ## Ending echo audit
 
-Six new epilogue lines acknowledge distinct earlier acts: whether a warning reached parents, a safety jingle was broken, PAL received unrequested kindness, Pip was counted as inventory, Pip was reported to the Company by his Buddy, and Successor B was condemned by his own double. Each is a **variant**, not a guaranteed alternative ending; a player must reach the relevant ending with the matching flag. That is honest about the branching graph and keeps outcomes from becoming a combinatorial explosion.
+Seven new epilogue lines acknowledge distinct earlier acts: whether a warning reached parents, a safety jingle was broken, PAL received unrequested kindness, Pip was counted as inventory, Pip was reported to the Company by his Buddy, Successor B was condemned by his own double, and the focus-group crayon drawing finally reached a hearing. Each is a **variant**, not a guaranteed alternative ending; a player must reach the relevant ending with the matching flag. That is honest about the branching graph and keeps outcomes from becoming a combinatorial explosion.
 
 ## Remaining editorial queue, prioritized
 
@@ -47,4 +47,4 @@ Six new epilogue lines acknowledge distinct earlier acts: whether a warning reac
 
 A card passes narrative review when its setup tells the player enough to understand its options, each result is causally tied to the attempted action, the failure is interesting rather than a dead end, and important promises recur or are intentionally unresolved. A hidden rule is permitted; a hidden omitted option is not.
 
-The current t-035 implementation provides this inventory assessment, five concrete scene repairs, three earlier-choice callbacks and six more ending echoes, with canonical and Kind Robots tests. It **does not declare the entire deck finished**, claim live deployment, claim new render delivery, or replace Silas's creative verdict.
+The current t-035 implementation provides this inventory assessment, five concrete scene repairs, three reachable earlier-choice callbacks and seven more ending echoes, with canonical and Kind Robots tests. It **does not declare the entire deck finished**, claim live deployment, claim new render delivery, or replace Silas's creative verdict.
