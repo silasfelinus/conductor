@@ -702,3 +702,14 @@ tasks:
       Dustwater editorial batch 2 prepared in Kind Robots. All 24 Dustwater encounter cards (nine existing and 15 V6) have focused prose revisions plus nine older cards' extra V6 choices. Original choice ids, dice, costs, flags, and V6 save fingerprint are preserved. PR/checks pending. Tablelands, Deep Cave, Verge and five trials remain unedited by this batch.
 
       Dustwater prose batch merged to kind_robots main in PR 3930 (2d35a70259cbe2ff1fe3076c0fdb4b98e7a287e7), all 14 current-head CI workflows completed successfully including dedicated Shifting Lands gameplay and 4-shard Contract Tests. Edited all 24 Dustwater encounter cards (nine older plus 15 V6), plus extra choice text on all nine older cards, 85 targeted prose changes. Exact mechanical projections from original and branch matched. First two lands now through editorial passes (48/120); remaining Tablelands, Deep Cave, Verge (72 cards), five trials and final journal/voice audit. Keep issue 3917 open and task ready for another land batch. No art generation or production deployment.
+  - id: t-037
+    milestone: m5
+    title: "V7 kindness, preparedness and evidence-gate balance upgrade"
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: [t-035]
+    source_issue: "silasfelinus/kind_robots#3946"
+    updated: '2026-10-20T23:20:00Z'
+    note: |-
+      Silas (2026-10-20 PT): approve balance findings and upgrade so kindness remains viable and careful planning pays off. Implement an isolated V7 rules/save pathway that preserves V2-V6 replay, adds earned moral and scouting alternatives to boss trials, and reduces the repeated Verge trial failure cliff without making all choices equal. Verify with seeded kind, safe, greedy, ruthless, random baselines and device-sized UI acceptance, keep public deployment separately gated. Avoid collisions with t-036 prose and t-033 art. Related kind_robots issue #3946.
