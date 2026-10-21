@@ -49,13 +49,10 @@ tasks:
     owner: claude
     passes: 1
     stakes: reversible
-    note: >
+    note: >-
       kind_robots: rebel-button.vue swaps to rebel-art-reviewer.vue at 100 clicks (logged-in).
-      GET /api/art/review/next serves a random unreacted public-or-own still image under the
-      shared maturity gate (buildArtImageWhere). POST /api/art/review writes one Reaction per
-      user per image (1-5 maps to HATED/BOOED/NEUTRAL/CLAPPED/LOVED, rating stored), awards the
-      existing REACTION_GIVEN karma, credits the owner REACTION_RECEIVED, and increments
-      clickRecord by 1 on the first review of an image only. No schema change.
+
+      Full history: projects/evolve-rebel-button/HISTORY.md#t-002
 
   - id: t-003
     milestone: m3
@@ -65,10 +62,9 @@ tasks:
     gate_rechecked: 2026-10-02
     passes: 0
     stakes: reversible
-    note: |-
-      FOR SILAS: open the Rebel Button on kindrobots.org after the next deploy, with an account at 100+ clicks. Check phone, tablet and desktop widths and whether the stars, labels and comment box feel right. TO APPROVE: set approved_by_human: true and status: done here, or leave a note with changes. Nothing is blocked on this.
-      Silas 2026-10-10 in session: the stars overlap each other on small/mobile screens. Fixed in silasfelinus/kind_robots#3429 (narrower button padding and smaller, wrapping stars below sm; verified at 320/375/640/1024 px). Re-check on a phone after that deploys; stays a soft gate until then.
+    note: >-
+      FOR SILAS: open the Rebel Button on kindrobots.org after the next deploy, with an account at 100+ clicks.
 
-      ACCEPTED COMPLETE by silasfelinus via Kind Robots For You. Confirmed.
+      Full history: projects/evolve-rebel-button/HISTORY.md#t-003
     updated: '2026-10-12 09:46:44.931000+00:00'
     approved_by_human: true

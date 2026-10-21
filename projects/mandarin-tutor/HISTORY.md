@@ -211,3 +211,109 @@ What this gate was waiting on, per the 2026-09-07 reconciliation above: a human 
 Project state at acceptance: 21/21 tasks done across all four milestones (foundation, depth, curriculum, expansion), nothing agent-actionable left in the queue. project-overrides.yaml flips mandarin-tutor to `finished` in the same change, and priority.yaml drops it from the selectable worker queue, since finished projects are historical records rather than pickable work.
 NOTE ON THE PRIORITY QUEUE: mandarin-tutor was order[0] in projects/priority.yaml -- Silas's own 2026-08-25 decision to make it the lead project, pinned by tests/test_project_priority_contract.py. Removing it required editing that test, which the test's own docstring says may only be done alongside a named human decision. That decision is this acceptance. Cthulhuquarium, which Silas pinned immediately behind Mandarin Tutor in the same 2026-08-25 call, now leads.
 <!-- note:end t-021 -->
+
+## t-022 — Teach the word first: per-word lesson pages with pinyin anatomy, component roles, and phonetic series
+
+<!-- note:begin t-022 -->
+The component/etymology data m2 already fetches (Make Me a Hanzi decomposition, etymology.semantic / etymology.phonetic, dictionary radical, IDS leaves) is currently buried behind a `<details>` labelled "Parts & history" that only opens AFTER the learner has been drilled. Silas's request inverts that: instruction first, flashcard second.
+Build `utils/mandarinLesson.ts` as a pure derivation over a MandarinCard plus the rest of the catalog, producing: (1) pinyin anatomy per syllable -- initial, final, tone number, tone contour, and the third-tone sandhi already computed by `parsePinyinToneTargets`; (2) per-character component roles saying what each piece CONTRIBUTES (semantic field, sound clue, indexing radical, structural leaf, or explicitly unresolved), reusing the honest "the source makes no claim here" fallbacks `server/utils/mandarinCharacterData.ts` already writes rather than inventing mnemonics; (3) the character's phonetic series -- other catalog cards sharing the same `role: 'phonetic'` glyph, which is the 青 → 请/清/情/晴 relationship Silas actually means; (4) true homophone groups, same pinyin syllable with and without tone, kept visually and structurally distinct from (3); and (5) the existing history string with its source line.
+Ship it at `/play/mandarin/learn/<key>`. This requires moving `pages/play/mandarin.vue` to `pages/play/mandarin/index.vue` -- the URL is unchanged, but Nuxt makes a sibling `mandarin.vue` a parent route needing `<NuxtPage />` the moment a `mandarin/` directory exists. `utils/projectPlacements.ts` and `content/channels/plan/mandarin.md` reference the route string, not the file, so neither needs touching.
+No schema and no writes in this task -- it is pure derivation plus a read-only page, so it is verifiable by self-test without a database. Gating and points are t-023. Add `utils/scripts/verifyMandarinLesson.test.ts` in the established pure-function style (see verifyMandarinSrs.test.ts) and wire it into contract-tests.yml alongside the other mandarin self-tests.
+DONE 2026-09-19. Shipped utils/mandarinLesson.ts (pure lesson derivation: pinyin anatomy per syllable with tone contour and third-tone sandhi; per-character component roles rendered as full sentences that state what a piece does AND what it does not claim; phonetic series built from role:'phonetic' components, with drifted families flagged rather than hidden; true homophone groups split into exact-reading and tone-variant buckets; and a teachability verdict that reports 'vocabulary' instead of padding a bare IDS dump into a fake explanation), the tutorial page at /play/mandarin/learn/<key>, GET /api/mandarin/lessons/[key] (public and cacheable, like GET /api/mandarin), and the required pages/play/mandarin.vue -> pages/play/mandarin/index.vue move plus ?card= deep- link return path. Added MandarinComponent.character (additive, optional) so a multi- character word's pieces attribute to the right character instead of being label-parsed. Verified: vue-tsc exit 0; new test:mandarin-lesson self-test wired into contract- tests.yml, all assertions passing; layout contract holds with no new violations; page- backdrop passed.
+<!-- note:end t-022 -->
+
+## t-023 — Soft-gate drilling on comprehension and add the Mandarin point ledger
+
+<!-- note:begin t-023 -->
+Silas chose the SOFT gate explicitly: un-lessoned cards sort to the back of the study queue and the study card offers "Learn this first" with a link to t-022's lesson page, but a learner who insists can still drill. Nothing blocks mid-session, and a fresh account must never face an empty deck.
+Schema, additive, following every other Mandarin model's established pattern -- plain `userId` scalar, no relation added to the already-crowded User model, no native Json column: `MandarinLessonProgress` (userId, cardKey, viewedAt, completedAt, unique on userId+cardKey) and `MandarinPointEvent` (append-only ledger: userId, cardKey, reason, amount, balanceAfter, refType/refId, mirroring KarmaTransaction's shape) plus `MandarinLearnerProfile` (userId unique, totalPoints, lessonsCompleted, cardsLearned) as the denormalized current-state summary derived from the ledger, exactly as MandarinCardProgress summarizes MandarinReviewEvent.
+Silas said the point system "may require a user upgrade to the schema" -- the upgrade belongs in this per-domain profile row, NOT in a new User column. `User` already carries questPoints, karma, mana, tokens and earnedTokens; a sixth global balance for one study surface would be the wrong place, would collide with the kind-economy ledgers, and would not be reversible.
+Award rules, per Silas's selection (lesson comprehension + recall, nothing else): points for completing a lesson, and points for a recall rating WEIGHTED BY SRS DIFFICULTY, so re-drilling a card at a long interval earns near zero and genuinely recalling a lapsed card earns a lot. Deliberately NOT in scope: daily streaks, daily point targets, notifications, or any nudge mechanic -- Silas ruled those out by name in the reopening request ("insistent and focused on interactions, notifications, nudges").
+DONE 2026-09-19. Shipped the SOFT gate (cards whose lesson has been read sort to the front of the study queue; unread cards sort to the back and carry a 'Learn this one first' prompt, but Reveal answer stays live and the partition is a no-op for a learner with no completed lessons, so a fresh account never faces an empty deck) and the point ledger. server/utils/mandarinPoints.ts is pure and owns all the arithmetic: a lesson read through pays 10 once per card ever (re-completion is idempotent and pays nothing); a recall pays base(rating) x dueFactor x lapseFactor x maturityFactor, with hard > good > easy because effortful recall is where the learning is, and 'again' paying 0 with nothing ever deducted. dueFactor is the anti-grinding rule -- a review is scored against how much of its scheduled interval actually elapsed, computed from the card's state BEFORE the upsert, so re-drilling an easy card pays the 1-point floor while the same card actually due pays full value, and a late review caps at 1 rather than rewarding neglect. Schema is additive and per-domain (MandarinLessonProgress, MandarinPointEvent append-only ledger, MandarinLearnerProfile summary), all on the plain userId ownership scalar: the 'user upgrade' Silas asked about is deliberately NOT a sixth balance column on User alongside questPoints/karma/mana/tokens/earnedTokens. Streaks, daily targets and nudges were ruled out by name and MandarinLearnerProfile carries no streak or last- active field on purpose. Verified: vue-tsc exit 0; new test:mandarin-points self-test wired into contract-tests.yml covering the grinding exploit, the lapsed-card payoff, the neglect cap and clock-skew edges; Replay migrations on MariaDB green in CI against a real database; schema-migration-parity, no-prisma-json-cast and migration-drift-check all green; layout contract holds. NOT verified: no migration applied to any live database from the session, and no live points round trip exercised.
+<!-- note:end t-023 -->
+
+## t-024 — Sound-family index: browse the catalog by phonetic series
+
+<!-- note:begin t-024 -->
+Once t-022 computes a card's phonetic series, the same derivation supports the inverse view: an index of every sound component in the catalog (兑, 青, 马, 可 ...) with its family underneath, showing how one sound component threads through many characters and where the sound drifted. This is the browsable form of the thing Silas said he REALLY loves about the writing system, and it is the natural entry point for an academic learner who wants to read outward from a component rather than drill a deck.
+Keep it honest: only assert a phonetic relationship the pinned Make Me a Hanzi source actually claims (`etymology.phonetic`), never one inferred from a shared-looking shape, and show the modern readings side by side so a drifted family (说 shuō / 税 shuì) reads as the interesting case it is rather than as a data error.
+
+Implemented the browsable phonetic-series index on the Kind Robots worker branch. The page derives families only from source-asserted role: phonetic components, shows modern readings and drift, and links each member to its lesson page.
+
+Reviewer rejection (pass 1, quality): kind_robots#2891 fails layout-contract --
+pages/play/mandarin/sound-families.vue renders its own <h1>, violating the one-header
+rule. Fix posted on the PR: delete the <h1>, keep the eyebrow/description/badges.
+status: ready, passes: 1, retry_context set.
+
+Retry addresses the reviewer layout finding and the subsequent TypeScript route-inference failure on kind_robots#2891; waiting for fresh CI on exact head 1a706fb3414faabb0a59e7bc303302d8882faf8b.
+
+State reconciliation (2026-09-19, Reviewer sweep): kind_robots#2891 was already merged
+(all 49 checks green, merged_by silasfelinus) but the roadmap task was still status:
+review on main -- flipping to done.
+<!-- note:end t-024 -->
+
+## t-025 — Phonetic-series completion bonus
+
+<!-- note:begin t-025 -->
+NOT SELECTED BY SILAS. Offered in the 2026-09-19 reopening conversation as a fourth point-earning rule -- a bonus for learning every member of a sound family -- and he selected only "lesson comprehension + recall". The original task deliberately parked this behind t-024 so the idea stayed visible until the sound-family index existed. That dependency is now complete, and leaving the declined option at `waiting` would violate the roadmap dependency contract and retrigger portfolio oversight. Closed as a no-op, not implemented; preserve this note as the historical option and only reopen/create implementation work if Silas explicitly asks for the bonus later.
+<!-- note:end t-025 -->
+
+## t-026 — Audit that every catalog card can produce a usable lesson
+
+<!-- note:begin t-026 -->
+m2's provenance audit (t-011) checks the catalog's source data. This checks the new teaching layer on top of it: for every card in the live catalog, does t-022's derivation produce a lesson a human could actually learn from -- pinyin anatomy that parses, at least one component with a stated role, a history line that is either a real source claim or an explicit no-claim, and no lesson whose only content is "the source makes no claim".
+The last case is the interesting one. A card that decomposes into nothing teachable is not a bug in the derivation, it is a card that should either be enriched from a second source or shown as a vocabulary item rather than a structural lesson. The audit's job is to report how many of those exist and which they are, so the coverage gap is a number Silas can look at instead of something a learner discovers one dead lesson at a time. Follow `auditMandarinCatalog.ts`'s shape: a `--self-test` mode for CI plus a live mode.
+<!-- note:end t-026 -->
+
+## t-027 — FOR SILAS: visually accept the COMPREHENSION slice at phone/tablet/desktop widths
+
+<!-- note:begin t-027 -->
+FOR SILAS: the selected m5 COMPREHENSION work is implemented: per-word teaching pages, the soft learn-before-drill flow, comprehension + SRS-weighted recall points, the phonetic-series browser, and the lesson-coverage audit. The optional phonetic-series completion bonus was not selected and is closed as a no-op in t-025. This is the same final target-environment visual acceptance gate used for the original m1-m4 closeout: confirm the evolved Mandarin experience at phone, tablet, and desktop widths before m5 and the reopened project are marked finished. No publish, billing, DNS, secret, or destructive production action is attached to this gate.
+GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in session): Legitimate: a look/feel or play verdict that only Silas can give.
+APPROVED by silasfelinus in session (session 20260930T0600Z-gate-triage, Claude Code, 2026-09-30; recorded under CONTROL.md's human gate clearance rule): The COMPREHENSION slice is accepted at phone/tablet/desktop. The project stays active for t-030 (glyph history).
+<!-- note:end t-027 -->
+
+## t-028 — Guided course: an introduction, then one teaching card at a time
+
+<!-- note:begin t-028 -->
+Silas, 2026-09-20: "i want a real front end interface. We start, are given an introduction, then shown cards that give info, basically, a streamlined teaching interface. do you grok?"
+m5 gave the project a teaching LAYER (t-022's lesson derivation), a reference page for it, and a sound-family browser (t-024). What it did not give is a front door. `/play/mandarin` opened onto a TOOL -- two interaction modes, four workspace views, a deck picker, a gallery -- which is the right shape for someone who already knows what they want and the wrong shape for someone who wants to be taught. A newcomer had to make three choices before the app taught them anything.
+Build the guided course as the front door. Silas made two decisions when asked:
+  * The guided flow BECOMES `/play/mandarin`; the existing workspace moves to
+    `/play/mandarin/browse`, unchanged and one click away, and the start screen also
+    points at `/play/mandarin/sound-families`. Nothing is removed -- the deck picker,
+    search, gallery, custom sets and free drilling all keep working, they just stop
+    being the first thing a newcomer sees. He rejected both alternatives (course on a
+    separate route, and replacing the workspace outright).
+  * A word's teaching run is FIVE BEATS with empty beats auto-skipped: meet it, how it
+    sounds, what each piece does, who shares its sound, recall it. A word whose source
+    asserts nothing structural, or that no other catalog card shares a sound component
+    with, silently drops those beats rather than showing an empty screen -- padding
+    would teach the learner that the course pads, which is exactly what t-022's honesty
+    contract exists to avoid. He rejected the always-three-beats and pick-your-depth
+    alternatives.
+
+The orientation sequence is the "introduction" he asked for by name, and it should do real work rather than be a welcome mat: the biggest obstacle for an English-speaking beginner is believing characters are pictures of their meanings, and every card after that belief is gone is easier to read. Its last screen should state out loud that nothing here is timed, streaked, or notified -- he asked for something "closer to duolingo" but explicitly not "insistent and focused on interactions, notifications, nudges", and saying so is cheaper than a learner waiting for a nag that never comes.
+Three constraints worth stating up front. The course must NOT fetch a lesson per screen: `buildMandarinLesson` is pure and lives in `utils/`, so derive lessons client-side from the already-loaded catalog and keep `GET /api/mandarin/lessons/[key]` for the standalone reference page, which is public, cacheable and server-renderable. The recall beat must advance by rating only -- a card a learner can Continue past without answering is not a recall test. And an already-learned word's run collapses to a single recall beat, which is what turns the course into a review session once a deck is learned instead of making someone re-read a lesson to reach a card they know.
+NOTE ON t-027: that human-acceptance gate was written against the m5 slice as it stood on 2026-09-19 and predates this task. Silas should accept the guided course as part of the same visual pass rather than accepting the old front door and then being handed a different one.
+DONE 2026-09-20. The guided course is now the front door at /play/mandarin; the workspace moved to /play/mandarin/browse unchanged, with a link back, and the course's start screen also points at t-024's /play/mandarin/sound-families. utils/mandarinCourse.ts (pure) turns a lesson into a sequence -- five beats with empty ones dropped, so a word the source asserts nothing structural about, or with no sound family in the catalog, loses those screens rather than showing them blank. teachability is deliberately NOT the pieces test; having components is. MANDARIN_COURSE_INTRO is the orientation: characters are not pictures (氵+青 -> 清), a tone is a letter of the syllable (ma x4), learn the family not the character (青 -> 请/清/情/晴), and an explicit statement that nothing here is timed, streaked or notified -- a self-test asserts that last line keeps saying it. An already-learned word collapses to a single recall beat, so the course becomes a review session. Progress counts WORDS not steps, so the bar does not lurch on longer runs. The recall beat advances by rating only. Lessons derive client- side via the new store.lessonFor() so no round trip is paid per screen, and store.rateCard() splits rating from cursor-advancing so the course cannot have the deck moved underneath it. Session length is 8 words. Verified: all 51 CI checks green including TypeScript, Contract verifiers, layout-contract and Build production image; new test:mandarin-course wired into contract-tests.yml; no regressions in t-022/t-023/t-026. The ESLint ratchet caught a real unused import mid-review and it was fixed before merge. NOT verified: no browser ran this -- how the course feels at phone/tablet/desktop widths is t-027's gate, which now covers this front door too.
+<!-- note:end t-028 -->
+
+## t-029 — Parts first: teach each part's meaning and origin before the word it builds
+
+<!-- note:begin t-029 -->
+Silas, 2026-09-29, on the 我 course card ("Its parts don't explain this one — learn it whole"): "If I am learning wo, I should learn how the parts of the symbols mean, and what they used to mean, and how they connect. there is a history for each symbol, and it's VERY important that this is part of the instruction." Then: "we should learn the parts before we learn the combinations" and "I should learn roof before I learn house, for example."
+Root cause: the pinned Make Me a Hanzi source DOES analyse 我 -- ideographic, "A hand 扌 holding a weapon 戈" -- but only semantic/phonetic roles counted as teachable, so all 1,840 ideographic entries (我 你 好 休 明 ...) fell through to `form` leaves and the 2026-09-20 的 fix then hid them as "learn it whole". And t-028's pieces beat ran after `meet`, so 家 was shown whole before 宀 roof / 豕 pig.
+Implemented in silasfelinus/kind_robots#3097: a new `idea` component role (a leaf only when the source's own hint names it); every meaning/sound/idea part is looked up as a character in its own right and carries its reading, meaning and origin from the source's entry for THAT part (戈 "A spear pointing to the bottom-right"); per-character formations on cards, with a `pictograph` teachability for 人/日-type characters; the course's pieces beat now runs BEFORE meet ("First, the parts"), and meet shows how they combine; orderPartsFirst pulls unlearned catalog words that are parts (日, 月) into the session ahead of the word they build (明) within the 8-word session. Intro card rewritten as "Parts first, then the whole" (宀 + 豕 -> 家). New test:mandarin-parts-first in contract-tests.yml, built on verbatim source lines. NOT verified in a browser -- the visual check folds into t-027's gate.
+DONE 2026-09-29: silasfelinus/kind_robots#3097 merged (squash 9f2e2bf) with all 34 checks green, including TypeScript, Contract verifiers (runs the new test:mandarin-parts-first) and Build production image.
+<!-- note:end t-029 -->
+
+## t-031 — Remove repetitive per-part 'In the next word' copy
+
+<!-- note:begin t-031 -->
+Silas, 2026-09-29, reviewing the new parts-first course card: the repeated per-component helper lines ("In the next word, ...") are redundant beneath the already-labeled Meaning / Sound / Picture part cards. Remove those repeated lines and their unused helper without changing the sourced origin text, component labels, or the top-level explanation that these parts build the next word.
+
+Removed the redundant per-component "In the next word" helper lines and the now-unused helper from the Mandarin course card; preserved the sourced origin text, role labels, and the single top-level parts-first explanation.
+
+DONE 2026-09-29: silasfelinus/kind_robots#3102 merged (squash 1951b614) after all 28 exact-head PR workflows completed successfully. Removed only the repeated per-component "In the next word" helper copy and its unused helper; preserved the sourced origin sentence, component labels, and the single top-level parts explanation.
+<!-- note:end t-031 -->

@@ -100,61 +100,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      FOR SILAS: all 4 roadmap tasks across all three milestones (shape, build, polish/
-      ship) are done -- nothing agent-actionable remains in the queue. Reconciled
-      2026-09-07 (scheduled Agent sweep) per AGENTS.md's rule that a user-facing
-      software project isn't `finished` on task count alone. This one is scoped
-      intentionally as internal/admin-only (per t-002's own note), so the bar is lighter
-      than a public-facing surface, but the same closing step still applies: you should
-      look at it once before it's marked done.
-      What I could verify from this sandbox: `https://kindrobots.org/admin/scene-animator`
-      returns 200 with real SSR markup (confirmed live "Scene Animator" content in the
-      response, not the bare SPA shell). What I could NOT verify: actual layout,
-      spacing, or a real folder-to-video batch run (that needs real source media and the
-      Comfy video pipeline, not a sandbox check).
-      TO APPROVE: open /admin/scene-animator yourself, and if you have a moment, run one
-      real batch against real source folders. If it looks and works right, set
-      `approved_by_human: true` and flip project-overrides.yaml's scene-animator entry to
-      `status: finished`. If something needs fixing first, note what and I'll file it as
-      a fresh `ready` task.
-      What unblocks when you do: nothing else is waiting on this -- it's the project's
-      own closing step, and it also clears a currently-failing CI assertion
-      (`test_current_project_lifecycle.py`) that flags any `active` project sitting with
-      zero open tasks.
+      FOR SILAS: all 4 roadmap tasks across all three milestones (shape, build, polish/ ship) are done -- nothing agent-actionable remains in the queue.
 
-      Silas tested the Scene Animator surface on 2026-09-08 and rejected the closeout: the UI reports "Scene Animator source root is unavailable: /app/animate" and the animator does not work. Reopen this acceptance task for repair. Treat the observed production source-root failure as the concrete bug to fix before asking for acceptance again.
-
-      Root cause confirmed: the Scene Animator application expects /app/animate, but the deployment definition mounted only the public image tree. The implementation branch adds the missing dedicated read-only animate bind, documents the DockerMan production mapping, and adds a source-level deployment contract verifier. Production remains blocked on applying the equivalent saved Unraid template mount before the acceptance test can pass.
-
-      FOR SILAS: The repository-side Scene Animator fix is merged as silasfelinus/kind_robots#2546 (squash ef8397343d8cd74344399469acf75270ffa74a74). Root cause was the production container contract: the app resolves /app/animate, but only the public image tree was mounted. The repo now declares ANIMATE_PATH=/app/animate plus a dedicated read-only host bind from /mnt/user/pc/kindrobots/animate, documents the mapping, and includes a deployment-contract verifier. All exact-head PR workflows completed successfully, including TypeScript, Layout, Schema Migration Parity, and Contract Tests. TO APPROVE / COMPLETE: on Alexandria, add the equivalent saved DockerMan template path mapping Host /mnt/user/pc/kindrobots/animate -> Container /app/animate as Read Only, then recreate/update KindRobots through the normal guarded deployment path and re-test /admin/scene-animator. This is a physical-host configuration gate; no further GitHub code change can make the currently running container see an unmounted host directory. Once the health endpoint reports the source available and one real batch works, this acceptance task can close and the scene-animator project can be marked finished.
-
-      BLOCKED 2026-09-11: Silas attempted this confirmation and could not -- /admin/scene-
-      animator reports "Scene Animator source root is unavailable: /app/animate", so the
-      surface cannot be visually confirmed while the feature cannot run at all. This is
-      environment/deployment, not code: sceneAnimator.ts resolves its root from ANIMATE_PATH
-      (or an IMAGES_PATH-derived fallback) and 503s when that path is not mounted in the
-      container. Filed t-006 for that, and this task now waits on it. Do not re-present this
-      for confirmation until Scene Animator actually lists folders in production -- presenting
-      a broken surface for acceptance is what wasted his time this round.
-
-      UNBLOCKED 2026-09-11: t-006 is resolved. Silas recreated the container with ANIMATE_PATH
-      and the read-only animate bind, and /api/scene-animator/health now reports "source root
-      is reachable" with source: ANIMATE_PATH. The surface no longer errors, so this
-      confirmation is actually performable again. FOR SILAS: the tree is currently EMPTY (0
-      folders, 0 images), which is expected rather than broken --
-      /mnt/user/pc/kindrobots/animate has no scene subfolders yet. You can confirm the admin
-      surface now and see an empty picker, or drop one folder of stills (.png .jpg .jpeg .webp
-      .gif) in first and confirm against real content, which is the more useful check since it
-      exercises the folder listing and the preset/enqueue path rather than just the empty
-      state. Either way this is the last open item for the project apart from t-007's fallback
-      hardening.
-
-      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
-      session): Legitimate: a look/feel or play verdict that only Silas can give.
-
-      APPROVED by silasfelinus in session (session 20260930T0600Z-gate-triage, Claude Code,
-      2026-09-30; recorded under CONTROL.md's human gate clearance rule): The admin Scene
-      Animator surface is accepted. Project flipped to finished in project-overrides.yaml.
+      Full history: projects/scene-animator/HISTORY.md#t-005
     updated: '2026-09-30T09:00:00Z'
     claimed_by: 2026-09-09T055100Z-scene-animator-t-005-gpt56sol-navfix
     claimed_at: '2026-09-09T05:51:00Z'
@@ -186,46 +134,9 @@ tasks:
     stakes: reversible
     passes: 0
     note: >-
-      Filed 2026-09-11 out of t-006's close-out, deliberately as its own task rather than folded
-      into that fix. getSceneAnimatorRoot() resolves in three tiers: ANIMATE_PATH, then an
-      IMAGES_PATH-derived sibling, then path.resolve(process.cwd(), 'animate') -- which inside the
-      container is /app/animate, a path in the APPLICATION WORKING DIRECTORY.
+      Filed 2026-09-11 out of t-006's close-out, deliberately as its own task rather than folded into that fix.
 
-      That last tier is the wrong default for this feature specifically. Silas's stated requirement
-      (2026-09-11): "due to the sensitive mature nature of some animation production, it shouldn't
-      be a part of the kind robots directory, but rather part of comfy, or the media folders." The
-      fallback quietly points at exactly the place he does not want it. Today it is harmless because
-      nothing exists at that path and the deployment binds a read-only host tree over it -- but if
-      anyone ever created /app/animate inside the image, Scene Animator would silently start working
-      and quietly store or read mature content from inside the app directory. A default that fails
-      is much better here than a default that succeeds in the wrong place.
-
-      DO: drop the cwd fallback. When neither ANIMATE_PATH nor IMAGES_PATH is set, throw the same
-      503 shape the missing-mount case already produces, with a message naming ANIMATE_PATH and
-      saying it must point at a directory mounted into the container. Keep the ANIMATE_PATH and
-      IMAGES_PATH-derived tiers exactly as they are.
-
-      Note verifySceneAnimatorHealth.test.ts currently asserts that with neither env var set the
-      source reports 'fallback' -- that assertion encodes the behaviour being removed and must be
-      updated in the same change, not worked around. The SceneAnimatorRootSource union should lose
-      its 'fallback' member with it.
-
-      Lower-priority companion, from t-006's original agent-actionable half: readSceneAnimatorRootStatus
-      flattens three distinguishable conditions into one string -- unset, set-but-missing, and
-      present-but-unreadable. It already tracks enough to tell them apart. Worth separating so an
-      admin reading the surface knows which one they have. This is smaller than it looked when t-006
-      was filed, since `source` already reports which tier answered and that was the distinction that
-      actually mattered when the mount was missing.
-
-      RESOLVED (kind_robots PR #2730, merged): dropped the cwd fallback in
-      getSceneAnimatorRoot() -- it now throws a 503 naming ANIMATE_PATH when neither
-      ANIMATE_PATH nor IMAGES_PATH is set, instead of resolving to /app/animate inside the
-      container. SceneAnimatorRootSource's 'fallback' member replaced with 'unconfigured'.
-      readSceneAnimatorRootStatus() (documented non-throwing) catches the new throw and
-      reports it the same way it reports any other unavailable root.
-      verifySceneAnimatorHealth.test.ts updated in the same change with a new case covering
-      the unconfigured path. The lower-priority companion (splitting unset/missing/unreadable
-      further) was not done -- source already distinguishes enough for an operator.
+      Full history: projects/scene-animator/HISTORY.md#t-007
     updated: '2026-09-14T13:42:18Z'
     claimed_by: claude-20260914T134500Z-sa-t007-conductor
     claimed_at: '2026-09-14T13:30:53Z'

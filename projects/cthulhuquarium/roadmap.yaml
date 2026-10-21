@@ -450,45 +450,9 @@ tasks:
   stakes: reversible
   depends_on: t-008
   note: >-
-    UPDATED 2026-08-27 (conductor scheduled Agent run). Documentation half of this
-    task is DONE: fish/SCHEMA.md and the new fish/CROSS-GAME-SHARING.md in
-    silasfelinus/cthulhuquarium already state the full contract (merged PR #14,
-    worker/ruler-hooked-shared-fish-20260826, 2026-08-26 14:43 PT) -- confirmed via a
-    read-only anonymous git clone (this session's GitHub grant excludes
-    silasfelinus/cthulhuquarium, but read-only HTTPS clone works, same finding
-    t-015's TALKBACK entry recorded). 18 species are tagged
-    games: [cthulhuquarium, ruler-hooked] in the bible: bailiff-eel, chandelier-lion,
-    choirfish, drowned-carp, errand-guppy, gutter-minnow, lamplight-angler,
-    ledger-crab, moebius-crab, parlour-rustfish, sea-camel, sump-blob, the-hold,
-    the-long-patience, the-pleasant-island, the-sexton, the-understone, tithe-shoal.
-    FOR SILAS: the seed-freshness half is NOT confirmed and is likely stale -- t-008's
-    own note timestamps the last production seed run at 01:45 PT on 2026-08-26, about
-    13 hours BEFORE the PR that tagged these 18 species merged (14:43 PT same day). No
-    later reseed is recorded anywhere. This sandbox cannot reach the database (same
-    DNS-resolves/TCP-times-out gap t-008 hit) and no public API exposes Monster.games
-    for an outside check. TO CONFIRM/CLOSE: from a machine that can reach the DB (per
-    t-008, that was your own WSL checkout, not this sandbox), run
-    `npm run seed:bestiary` (dry run) in kind_robots -- if it reports 0 pending
-    changes, the reseed already happened and this can go straight to done; if it
-    reports the 18 slugs above changing, run `npm run seed:bestiary:write` and then
-    flip this task to done. Full species table, exact query/never-mutate rules for
-    Ruler is Hooked's dark-ecosystem branch, and why this session couldn't verify the
-    live DB directly are all in
-    projects/cthulhuquarium/docs/t-022-shared-bestiary-handshake.md. Soft gate --
-    other cthulhuquarium/ruler-hooked work may continue in parallel; this only blocks
-    Ruler is Hooked's own dark-ecosystem branch from safely reading real data.
+    UPDATED 2026-08-27 (conductor scheduled Agent run).
 
-    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
-    session): NOT A HUMAN GATE, returned to agents. Same class as t-076. Confirming
-    Monster.games freshness, or reseeding the 18 shared species, should go through an admin
-    API or workflow path, not Silas's WSL checkout. NEXT: read Monster.games for the 18
-    slugs via the API. If they are stale, add an admin-only reseed path and run it.
-
-    CLOSED 2026-09-30 (scheduled Agent run): kind_robots #3130 added the admin sync
-    workflow; its first write=true run got HTTP 400 (PATCH route validated the games string
-    as an ArtImage id), fixed in #3136. After #3136 deployed, re-dispatched 'Sync Monster
-    games tags' write=true; live API now shows cthulhuquarium,ruler-hooked for choirfish,
-    errand-guppy, moebius-crab, the-pleasant-island (all 18 shared species tagged).
+    Full history: projects/cthulhuquarium/HISTORY.md#t-022
   prior_note: >
     Close the loop Silas asked for: "we can have appropriate ones appear in both
     games." Confirm the ruler-hooked-tagged fish seed correctly into the shared
@@ -1186,13 +1150,9 @@ tasks:
   stakes: reversible
   passes: 0
   note: >-
-    FOR SILAS: Root cause of the 'stuck on Looking for /' report found and reproduced live 2026-09-30 (not a rendering bug). /play/aquarium is ADMIN-only by design: kind_robots content/channels/admin/aquarium.md has requiredRole: ADMIN ('an admin-only project surface kept in Plan while the aquarium grows teeth'). middleware/navigation-access.global.ts therefore sends every non-admin (signed-out -> /login; fresh signed-in cypress user -> /?access=denied), and the catch-all page then sits on 'Loading page... Looking for /'. Same fresh user never loaded a single cthulhuquarium image. The 139 bundled assets are live (200) but only an admin can see them. TO APPROVE: decide one of (a) keep admin-only for now: visit /play/aquarium as admin, confirm fish/egg/parlour art, then set approved_by_human: true and status: done; or (b) open the game to players: remove requiredRole from that tab file (tell an agent and it becomes a ready task). Minor adjacent bug: denied non-admins land on a spinner-looking '/' page instead of a clear message (agent work, not gated).
+    FOR SILAS: Root cause of the 'stuck on Looking for /' report found and reproduced live 2026-09-30 (not a rendering bug).
 
-    Silas 2026-10-10 in session: NOT approved as a game. The art and animation work landed
-    and he likes it ('like the work done with the characters and fish animations'), and he
-    did not ask to open it to players, so /play/aquarium stays admin-only. The loop is the
-    problem: closed as delivered, redesign moved to m4 (t-079 to t-083). t-069's re-audit
-    now waits on that redesign.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-065
   updated: '2026-10-10T09:37:55Z'
   claimed_by: 20260930-agent
   claimed_at: '2026-09-30T19:49:42Z'
@@ -1276,44 +1236,9 @@ tasks:
   stakes: reversible
   passes: 0
   note: >-
-    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11). Two documented-in-code deviations
-    from DESIGN-BRIEF.md's MVP scope: (1) clicking a drifting collectible earns nothing --
-    income is entirely server-tick-settled and the mote click just dismisses a cosmetic
-    reveal of coins already credited (cthulhuquarium-game.vue header comment, ~lines 9-16);
-    (2) there is no food-tier or drop-speed upgrade system anywhere in aquariumEconomy.ts,
-    only a single flat feed-cost formula, versus the brief's "spend coins on food... upgrades
-    (better food, faster drops, more tank slots)". Neither deviation was ever surfaced to
-    Silas as a scope change. FOR SILAS: confirm whether the shipped tick-settled economy
-    (no literal click-income, no food tiers) is an acceptable simplification -- if so, update
-    DESIGN-BRIEF.md to say so explicitly; if not, this becomes a real build task for the
-    literal mechanics. Soft gate: other cthulhuquarium work may continue in parallel.
+    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11).
 
-    AGENT REVIEW 2026-09-11: This is Silas's own literal MVP bar (DESIGN-BRIEF.md "MVP
-    scope" #2 and #4, quoted verbatim from him), so an agent should not unilaterally water
-    it down by amending the brief. Leaving at needs-human rather than ready so tooling stops
-    surfacing it as pickable work until Silas actually decides; t-072/t-073 and other
-    cthulhuquarium tasks are unaffected and continue in parallel.
-
-    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
-    session): NOT A HUMAN GATE, returned to agents. The prior agent review already concluded
-    agents should not water down Silas's own MVP bar, which is quoted verbatim in DESIGN-
-    BRIEF.md. Following the written spec is the default, not a question. NEXT: build the
-    literal mechanics (click-to-collect income and food/drop-speed upgrades) to the brief.
-    If Silas later prefers the tick-settled simplification, a revert is cheap.
-    BUILT 2026-09-30 (session claude/gallant-clarke-tn8g6f), silasfelinus/kind_robots#3113: the
-    literal mechanics per the gate triage. Clicking scales (shed by fish, waiting at the
-    surface) pays real coins, server-authoritative (POST /api/aquarium/collect, bank cap 8, ~3x
-    idle when every scale is caught -- the same active/idle gap ECONOMY.md already accepted).
-    Upgrades: food (-15% feed cost/level, 3 levels) and drop speed (+25% scale rate/level, 4
-    levels). Tank slots deliberately NOT for sale: economy.yaml "coins buy breadth, milestones
-    buy room". SCHEMA-AFFECTING additive migration
-    20260930120000_add_aquarium_collect_and_upgrades. Constants live in
-    server/utils/aquariumCollect.ts and should be copied into data/economy.yaml on the next
-    balance pass.
-
-    MERGED 2026-09-30 08:49Z as silasfelinus/kind_robots#3113 (537c101). Merged is not
-    deployed: the additive migration 20260930120000_add_aquarium_collect_and_upgrades runs
-    via the Alexandria deploy script.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-071
   updated: '2026-09-30T08:54:13Z'
   gate_rechecked: '2026-09-30'
   implementation_pr: 'silasfelinus/kind_robots#3113'
@@ -1343,41 +1268,9 @@ tasks:
   stakes: reversible
   passes: 0
   note: >-
-    Split from t-072 (2026-09-11) -- see that task's note for the full scope investigation. Monster.iconPath/cardPath/artImageId are still null for all 119 species that already have a delivered plate (client-side fallback only, via utils/cthulhuquariumArt.ts's withCthulhuquariumArt -- that helper already yields to real DB values automatically once set, so this closes a permanent workaround without touching the fallback code).
-    Requires: (1) a bulk script creating one ArtImage row per fish, adapting scripts/seed_kr_logo_art_image.ts's dry-run-by-default/--write-gated, idempotent-by-fileName pattern; (2) linking each to its Monster row by slug, adapting scripts/seed_bestiary.ts's two-pass upsert idiom and mirroring server/api/monsters/[id].patch.ts's FK-existence validation for artImageId; (3) a decision on where the 119 static files get a stable public URL for ArtImage.imagePath -- utils/artImageSrc.ts renders that field verbatim as an <img src>, not through Vite asset resolution, so the current assets/images/cthulhuquarium/ Vite-src location (fingerprinted per-build _nuxt/... URLs) won't work as-is; duplicating the 119 files into public/images/cthulhuquarium/ for stable /images/... URLs is the realistic in-repo option, since the real home-network media-share pipeline is explicitly unreachable from any CI/agent session (see utils/cthulhuquariumArt.ts's own header comment). REQUIRES A SESSION WITH LIVE DATABASE_URL ACCESS: this cannot be run or verified from a generic sandbox checkout (confirmed 2026-09-11 -- no .env, dummy-only DATABASE_URL in the provisioning script, no reachable DB port; see docs/runbooks/migration-credential-boundary.md for where real credentials actually live). The script itself can be drafted/reviewed in a sandbox as prep work, but should not attempt --write there.
+    Split from t-072 (2026-09-11) -- see that task's note for the full scope investigation.
 
-    Added a dry-run-by-default bulk linker that discovers delivered fish plates, prepares stable public paths, idempotently creates or updates ArtImage rows by fileName, verifies every plate has a Monster slug match, and links artImageId/iconPath/cardPath. Live --write remains intentionally unrun without production DATABASE_URL access.
-
-    FOR SILAS: scripts/link_cthulhuquarium_monster_art.ts merged (kind_robots#2629) -- a
-    dry-run-by-default script that will bulk-create ArtImage rows for the 119 delivered fish
-    plates and link Monster.artImageId/iconPath/cardPath by slug. Contains a safety check:
-    it refuses to write anything if any plate lacks a matching Monster row. TO APPROVE: run
-    `npx tsx scripts/link_cthulhuquarium_monster_art.ts --write` from an environment with a
-    real production DATABASE_URL (this and every other sandbox session only has a dummy DB
-    URL, confirmed via docs/runbooks/migration-credential-boundary.md -- no sandbox session
-    can run this safely). Once run, set approved_by_human: true and status: done, or note
-    any failure output here. This is the last step of the t-072/t-076 split closing the
-    Monster.iconPath/cardPath/artImageId gap that keeps kr-art-plate on its client-side
-    fallback.
-
-    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
-    session): NOT A HUMAN GATE, returned to agents. 'Needs a session with DATABASE_URL' is
-    an access gap agents can engineer around. art-archive/t-040 did it with an admin HTTPS
-    endpoint plus a conductor workflow that uses KR_API_TOKEN. NEXT: drive the linker
-    through admin APIs (ArtImage create + PATCH /api/monsters/:id). Add an admin-only
-    endpoint if one is missing. Then run it from a workflow. Do not wait for DB credentials.
-
-    API PATH BUILT 2026-09-30: kind_robots#3139 adds iconPath/cardPath to PATCH
-    /api/monsters/:id and ships 151 plates under public/images/cthulhuquarium/.
-    scripts/link_cthulhuquarium_monster_art_api.py + workflow cthulhuquarium-art-link.yml
-    drive it with KR_API_TOKEN (live dry-run verified: 151 plates, all Monster rows exist).
-    NEXT: after #3139 merges AND is deployed to kindrobots.org, dispatch the workflow with
-    mode=write, then flip done.
-
-    DONE 2026-09-30 (scheduled Agent run): after #3139 deployed (plates live at
-    /cthulhuquarium-plates/), dispatched cthulhuquarium-art-link.yml mode=write (run
-    36781583191): plates 151, linked 151, skipped 0, missing [], failed []. All Monster rows
-    now carry artImageId/iconPath/cardPath.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-076
   updated: '2026-09-30T21:54:17Z'
   claimed_by: 2026-09-11T141847Z-cthulhuquarium-t-076-r4m9
   claimed_at: '2026-09-11T14:18:47Z'
@@ -1394,111 +1287,9 @@ tasks:
   stakes: reversible
   passes: 0
   note: >-
-    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11). 119 of 151 species have a delivered
-    art plate as of t-065 (kind_robots#2620); the remaining 32 (mostly *-common starters,
-    per utils/cthulhuquariumArt.ts's own comment) fall through to a placeholder icon even
-    with the client-side fallback active. Use the same authoring/generation process and the
-    same delivery pattern (bundled Vite assets under assets/images/cthulhuquarium/, matched
-    by cthulhuquarium-fish-<slug> filename) as the other 119.
+    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11).
 
-    PROGRESS (2026-09-11, same session): committed a 32-entry art-generate.yaml queue
-    (silasfelinus/conductor#4101, merged) with prompts read verbatim from the cthulhuquarium
-    fish bible for these exact 32 species. Dispatched auto-art-generate.yml manually (run
-    https://github.com/silasfelinus/conductor/actions/runs/34617777502) to drain it rather
-    than waiting for the next 6h cron tick -- same precedent as t-044. NEXT: once that run
-    completes, verify the 32 renders landed on-style (spot check a couple against the bible
-    art_prompt tone), confirm distribute_images.py routed them to
-    projects/cthulhuquarium/art/cthulhuquarium-fish-<slug>.webp, then deliver into
-    kind_robots (bundled Vite assets under assets/images/cthulhuquarium/, same pattern as
-    kind_robots#2620) and wire into utils/cthulhuquariumArt.ts. Left status: claimed (not
-    done) -- rendering is async and this session cannot block on a 150-minute-timeout
-    workflow.
-
-    PROGRESS (2026-09-11, later same day): the dispatched Auto Art Generate run (workflow
-    run 34617777502) hit the workflows own 150-minute budget and was cancelled -- every one
-    of the 32 queued fish jobs individually timed out after its own 300s poll window ("still
-    queued/running"), so 0/32 delivered this run. This is not a failure of the render box:
-    scripts/check_render_box.py now reports UP with a healthy Comfy heartbeat (0.9 min old)
-    and 32 renders completed in the last 6h, and scripts/recheck_render_queue.py shows
-    PENDING=19, RUNNING=1, oldestPending age ~1.5h, 24h windowThroughput DONE=45,
-    recentFailed=none -- the queue is draining, just slower than the running workflow could
-    wait for. auto-art-generate.yml already runs on cron (0 */6 * * *) independent of this
-    session, so the remaining species will keep draining without another manual dispatch; a
-    manual re-dispatch would just hit the same 150-min timeout again given current
-    throughput. NEXT for whichever session picks this back up: re-run
-    scripts/recheck_render_queue.py --task cthulhuquarium/t-073, and once PENDING for these
-    32 jobs reaches 0, verify renders landed on-style and deliver into kind_robots per the
-    original plan. Left status: claimed (stale claim, safe to reclaim) -- no code work to do
-    until the queue finishes draining.
-
-    PROGRESS (2026-09-12, root cause found): re-ran scripts/recheck_render_queue.py --task
-    cthulhuquarium/t-073 -- healthy, oldestPending: none, queue fully drained. But none of the
-    32 fish plates exist in projects/cthulhuquarium/art/ or anywhere else in the repo (checked
-    origin/main's tree directly). Root-caused via GitHub MCP actions_list/get_job_logs across
-    the intervening Auto Art Generate runs: the renders DID succeed and distribute_images.py
-    DID move each file out of projects/process/ into its real destination
-    (projects/cthulhuquarium/art/cthulhuquarium-fish-<slug>.webp) on the CI runner's disk --
-    confirmed via commit d9a956e ("chore: distribute images from projects/process", 2026-09-11
-    16:30 UTC, distribute-images.yml's scheduled run), whose diff shows all 31 (of 32; one
-    presumably landed in an earlier partial run) fish files deleted from projects/process/ with
-    NO corresponding addition anywhere in the same commit. Cause: both
-    auto-art-generate.yml's and distribute-images.yml's "Commit conductor results" steps ran
-    `git add` against a hardcoded list of paths (projects/images/, projects/process/, the two
-    art yaml files, +mandarin-tutor/art-manifest.json) that never included
-    projects/<slug>/art/ -- any per-project delivery destination distribute_images.py writes
-    to outside that list gets moved on disk but never staged, so it's silently discarded when
-    the ephemeral runner's workspace is torn down after the job. The move looked like delivery
-    in the job logs ("34 files changed... 1690 deletions") but nothing was ever added to
-    replace what was deleted. This is a repo-wide bug, not specific to these 32 fish -- any
-    future project-scoped art destination outside the hardcoded list would silently vanish the
-    same way.
-
-    FIXED: both workflows now `git add projects/` instead of the hardcoded subset (this PR).
-    RE-QUEUED: recovered the original 32-entry batch verbatim from conductor#4101's own diff
-    (silasfelinus/conductor@39ca1050, still reachable) and re-wrote projects/art-generate.yaml
-    with the same 32 entries (same image_path destinations, same prompts) plus a note
-    explaining the requeue. auto-art-generate.yml's next cron tick (0 */6 * * *) or a manual
-    workflow_dispatch will drain it for real this time, and the fixed commit step means
-    whatever it delivers will actually land in git. Left status: claimed -- rendering is async
-    and this session cannot block on it; NEXT for whichever session picks this back up: verify
-    all 32 files now exist under projects/cthulhuquarium/art/ (check origin/main's tree
-    directly, not just that the queue drained -- that's exactly what looked fine last time),
-    spot-check on-style, then deliver into kind_robots per the original plan.
-
-    PROGRESS (2026-09-12, later sweep): root cause of the still-empty render queue found --
-    not a rendering problem. auto-art-generate.yml gates its "Submit + wait + verify
-    project-art results" step (the one that would actually dispatch this 32-fish queue to
-    the render box) on the Kind Robots API health check, and
-    https://kindrobots.org/api/health/database has been returning 503 ("schema is not
-    current for this build", 1 pending + 1 failed migration) continuously since ~11:45 UTC
-    today -- every scheduled auto-art-generate.yml run since (10:31, 15:23, 20:26 UTC)
-    skipped the submission step entirely because of this, which is why the render queue
-    shows idle/oldestPending:none despite the 32-entry queue still sitting in projects/art-
-    generate.yaml. This is a genuine production incident, not anything wrong with this task
-    or the requeue fix -- filed as kindrobots-unraid/t-017 (hard needs-human, production DB
-    access required, outside this or any sandbox sessions reach). Left status: needs-human
-    (soft -- this task itself needs no further code work) rather than re-claiming: once
-    t-017 resolves and the Kind Robots API health check passes again, auto-art-generate.ymls
-    next scheduled tick (every 6h) will submit and drain this queue automatically with zero
-    intervention. NEXT for whichever session picks this back up: confirm kindrobots-
-    unraid/t-017 is resolved (or check https://kindrobots.org/api/health/database directly),
-    then verify all 32 files exist under projects/cthulhuquarium/art/, spot-check on-style,
-    and deliver into kind_robots per the original plan.
-
-    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
-    session): NOT A HUMAN GATE, returned to agents. The blocker was the 2026-09-12
-    production 503, and that is resolved (health 200, schema current). All 32 missing plates
-    now exist in projects/cthulhuquarium/art/ on conductor main (152 fish plates vs 120
-    bundled in kind_robots). NEXT: bundle the 32 into kind_robots
-    assets/images/cthulhuquarium/ using the #2620 pattern, and wire them in
-    utils/cthulhuquariumArt.ts.
-    DELIVERED 2026-09-30, silasfelinus/kind_robots#3113: all 32 plates were already rendered in
-    projects/cthulhuquarium/art/ but never bundled; downscaled to 512px (537 KB) into
-    assets/images/cthulhuquarium/. Every one of the 151 species now has a card. Done once #3113
-    merges.
-
-    MERGED 2026-09-30 08:49Z as silasfelinus/kind_robots#3113: all 151 species have a
-    bundled card plate.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-073
   updated: '2026-09-30T08:54:22Z'
   claimed_by: claude-20260912t2035z-cq-t073-blk
   claimed_at: '2026-09-12T07:39:54Z'
@@ -1621,13 +1412,10 @@ tasks:
   claimed_by: 20261001T0615Z-t-078-gallant-clarke-tn8g6f
   claimed_at: '2026-10-01T06:11:16+00:00'
   implementation_pr: 'silasfelinus/kind_robots#3112'
-  note: |-
-    Silas, 2026-09-30: "cthulhuquarium deserves a real roster of fish, with animation, and invisible background... custom, bespoke listings, static image and then animated." Then: "151 fish. real backgrounds. intro tutorial, with special text and images from the two main characters during special moments including the intro. And much better character designs for the two mains" (Charlotte: gothic mistress prima donna old woman; Wilbur: long-haired, partially balding, bespectacled sad sack with a cast, bandaids and injuries). CODE + CANON (session 2026-09-30): silasfelinus/cthulhuquarium#16 adds a bespoke `sprite:` block (motion + prompt) to all 151 species, the redesigned characters (5 poses each + hero), story/scenes.yaml (intro + every special moment + one Charlotte interstitial per milestone), 16 backgrounds, and render/cut-out/animate scripts. silasfelinus/kind_robots#3112 plays it: animated cut-out sprites in the tank and listings, dialogue bottom sheet with portraits and focus rings, seen-once scenes, background picker, the t-019 milestone ladder, first_evolution, and two shop fixes (evolution-only species were listed free; starters now always stocked). REMAINING: 180 renders (151 sprites, 12 character images, 16 backgrounds, 1 plate) via `python3 scripts/render_art.py all --par 3` in the canon repo, then build_sprites.py, build_story_art.py, and kind_robots `node scripts/sync_cthulhuquarium_canon.mjs` in a follow-up PR. BLOCKED 07:03Z 2026-09-30 on the render box: Silas-PC claimed ArtJob 32074 and stalled; check_render_box.py reports DOWN (stalled queue). Needs a ComfyUI restart at home. PROGRESS 2026-09-30 08:40Z (Silas: "we have lots of tokens over the next 36 hours... it should all be submitted"). All 190 renders + 7 WAN video clips are SUBMITTED (cthulhuquarium art/jobs.yaml; render_art.py submit/harvest). Box still stalled (Silas gaming on the render box). Merged: cthulhuquarium#16-#19 (sprites, voices for all 151, barks, videos), kind_robots#3112. Open: kind_robots#3113 (living tank: per-behavior motion, ambience, sound, hunts, eggs; voices/barks on screens; t-071 click-for-coins + upgrades; t-073 cards; Ichthyonomicon scrapbook; live read-only canvas on public tanks; milestone reconcile for veterans; restricted-user public-URL leak fixed), cthulhuquarium#20 (upgrade + peace ward plates). NEXT: harvest -> build_sprites.py -> build_story_art.py -> sync -> art PR; submit the 3 videos whose stills are pending. PROGRESS 2026-09-30 11:40Z. Everything is submitted: 341 renders (151 sprites, a WAN swim clip per fish that auto-submits when its sprite lands, 16 backgrounds, character stills and hero videos); 9 done so far (the box is slow while Silas games). Charlotte's redesign landed and reads right (old, beaming gothic prima donna; hero + 4 of 5 poses). Wilbur's first hero ignored the brief; the prompt was rewritten (cthulhuquarium#26) and his second hero has the balding crown, long hair, glasses and sad-sack face but still no visible cast or face plasters -- his 5 portraits are queued and are the next check. First end-to-end playtest (local MariaDB, 5 fresh accounts) found and fixed a tutorial soft-lock (0 starting coins; now 25, economy.yaml currency.starting_coins), story beats talking over the site tour and reveal dialogs, the sheet hiding the page end, and off-screen focus targets (kind_robots#3120). Listings play each fish's real swim clip (kind_robots#3115).
-    2026-10-01 routine: harvested+cut out 6 more sprites, submitted their clips (cthulhuquarium#50). 94/341 renders done, box UP. Needs pip pillow numpy rembg[cpu] in sandbox. Next: harvest, build_sprites.py, check facing, submit clips.
+  note: >-
+    Silas, 2026-09-30: "cthulhuquarium deserves a real roster of fish, with animation, and invisible background...
 
-    Claim moves to session_01L9VUEkNppD54d5B9LiywHu, which has run the t-078 render loop every ~45 min since 2026-09-30 (harvest, review each sprite against its species' defining trait and facing, re-prompt misses, flip faces-left, sync to kind_robots; cthulhuquarium #38-#51). The 20261001-routine run (claimed 05:46Z) harvested the same six renders in parallel (cthulhuquarium #50), committing two rejected renders and an unflipped sprite and double-submitting six swim clips; #51 reconciled it and cancelled the duplicates (32419-32424). Routine runs: skip t-078 harvesting while this claim holds. Progress 06:15Z: 92/341 renders done, 154 queued, 95 clips waiting on their sprite; no swim clips rendered yet (the box works sprites first).
-
-    Reconciled 2026-10-02: implementation PR kind_robots#3112 merged 2026-09-30.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-078
   updated: '2026-10-02T05:48:50Z'
 
 - id: t-079
@@ -1638,34 +1426,9 @@ tasks:
   stakes: reversible
   passes: 0
   note: >-
-    Silas, 2026-10-10, declining t-065's acceptance: "cthulhuquarium not approved, the gameplay loop is still lackluster. we can get about four or five fish out, there is nothing really to do, and the general page needs tightening. like the work done with the characters and fish animations though. what we need is an actually fun loop. in the inspiration game insaniquarium, fish spawned coins which allowed making more fish. we need some sort of clickable thing, that doesn't seem to be happening, and we aren't allowing enough fish in a tank. I think we should ditch the breeding and secret stats part of the game as well, simplify. we want a fun gameplay loop first."
+    Silas, 2026-10-10, declining t-065's acceptance: "cthulhuquarium not approved, the gameplay loop is still lackluster.
 
-    Write projects/cthulhuquarium/LOOP.md (and update ECONOMY.md and economy.yaml to match) for the
-    simplified loop, then file any implementation step the four sibling tasks miss. It is a spec of
-    numbers and rules, not a rewrite of the canon; keep the fish roster, sprites, animations, Charlotte
-    and Wilbur. Required shape:
-    - Every fish visibly drops coins on its own timer (rarer fish drop more or bigger coins), so coin
-      rate grows with fish count. Coins drift down and vanish if not clicked. Clicking is the main verb.
-      Today the tank sheds ONE scale per 15 s regardless of fish count (server/utils/aquariumCollect.ts
-      :39), about 4.5 coins a minute with a perfect clicker; that is the core of "nothing to do".
-    - Target pacing: the second fish within about a minute of starting, a dozen fish inside the first
-      session, a full tank of 25-40 fish as the medium-term goal. Passive/offline income stays small.
-    - Feeding is a cheap click (drop food) or is removed; it is not 20% of the fish's price
-      (aquariumEconomy.ts:168-182).
-    - No breeding, eggs, hidden stats, sell-for-stats. Rarer fish are bought with coins, unlocked by
-      milestones, or appear as rewards.
-    - The server stays authoritative (coins are credited through a server allowance, as collect is
-      today). Prefer additive schema changes; no destructive drops in this milestone.
-
-    Done 2026-10-10: projects/cthulhuquarium/LOOP.md (rules), data/economy.yaml fun_loop
-    block (numbers), data/simulate_fun_loop.py (pace check: second fish 1:03, a dozen fish
-    11:35, first expansion 24:07, 25 fish ~79 min). ECONOMY.md points to it as superseding
-    the v1 loop. Decisions beyond the task note: coin value by tier (3/8/20/50/125/300 every
-    15 s per fish), server credits clicked VALUE against the existing collectAnchorAt (no
-    migration); hunger only gates drops (starving fish drop nothing), debris and rivalry no
-    longer touch coin drops; room counts fish (12 slots, +4 per coin-bought expansion to
-    40), copies allowed, flat 50% release refund; feeding 2% of unlock cost. No new
-    implementation tasks were needed beyond t-080 to t-083.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-079
   updated: '2026-10-10T10:05:29Z'
   claimed_by: null
   claimed_at: null
@@ -1680,19 +1443,9 @@ tasks:
   depends_on:
     - t-079
   note: >-
-    kind_robots. Per LOOP.md: each fish drops coins on its own timer, sized by rarity, drawn as big,
-    obvious coins that drift down and fade; tap/click to collect with a satisfying sound and number pop.
-    Server allowance (server/utils/aquariumCollect.ts collectAllowance) scales with fish count and rarity
-    so the client still cannot mint coins. Update verifyAquariumCollect.test.ts to the new contract.
-    Mobile tap targets at least 44 px.
+    kind_robots.
 
-    Done 2026-10-10: silasfelinus/kind_robots#3434 (merged 5ac90f9). Every fed fish drops a
-    coin every 15 s worth 3/8/20/50/125/300 by rarity; coins sink, rest on the gravel and
-    fade at 12 s; tap pops +N. Server credits clicked VALUE via coinAllowance against
-    collectAnchorAt (27 s bank, no migration). Starting coins 40, feeding 2% of unlock cost.
-    Verified in a local browser run (MariaDB + seeded bestiary): clicking a sinking coin
-    POSTs {value: 8} and the server credits 8; a 20-fish tank's full bank credits exactly
-    288; the old {count} body is rejected 400.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-080
   updated: '2026-10-10T10:54:35Z'
   claimed_by: null
   claimed_at: null
@@ -1708,20 +1461,9 @@ tasks:
   depends_on:
     - t-079
   note: >-
-    kind_robots. Today a player tops out at ~4-5 fish: Aquarium.sizeCap defaults to 10
-    (prisma/schema.prisma:2522), the shop allows one of each species (server/utils/aquarium.ts:1328-1333),
-    and nothing but one +1 set piece ever raises room (milestones only raise setSlotsCap). Per LOOP.md:
-    allow copies of a species, raise the starting room (additive default change plus a data backfill for
-    existing tanks), and add a coin-bought tank expansion track. Keep the canvas readable at 30-40 fish
-    (sprite scaling, culling if needed) and check mobile performance.
+    kind_robots.
 
-    Done 2026-10-10: silasfelinus/kind_robots#3435 (merged ce2d9b0). Room counts fish (12
-    slots), a 'room' upgrade track sells +4-fish expansions at
-    400/1200/3000/7500/18000/40000/90000 (40 at the top), copies allowed (Another button,
-    Ichthyonomicon Buy another; bestiary still counts distinct species), sprites shrink as
-    the tank fills. Schema-affecting, additive: Aquarium.tankExpansions (migration
-    20261010110000_aquarium_tank_expansions; CI replayed it on MariaDB). Verified locally:
-    two expansions took a tank to 20/20 fish with copies.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-081
   updated: '2026-10-10T10:54:36Z'
   claimed_by: null
   claimed_at: null
@@ -1737,20 +1479,9 @@ tasks:
   depends_on:
     - t-079
   note: >-
-    kind_robots. Silas: "ditch the breeding and secret stats part of the game as well, simplify." Remove
-    from the player-facing game: the breed and sell-for-stats buttons and dialogs, the egg panel, stat
-    displays (game.vue :263-345, :729-848, :1064-1195, :1678-1790; Ichthyonomicon "best seen" stats),
-    the breed/egg/hatch routes (server/api/aquarium/breed.post.ts, eggs/*), and their store actions; make
-    "sell" (if kept) a flat price. Retire verifyAquariumGenetics.test.ts with the feature it tested (not a
-    skipped test). Leave the Prisma columns and AquariumEgg table in place (AGENTS.md: no destructive
-    drop in the auto-deploy window); file a separate staged schema-cleanup task once this is live.
+    kind_robots.
 
-    Done 2026-10-10: silasfelinus/kind_robots#3436 (merged 78a2b50, -2801/+105). Breed and
-    egg routes, breeding/egg/hatch server code, hidden stat rolls, codex best stats, their
-    pure math, UI, store actions and the genetics test are gone; Sell is now a flat Release
-    (half the unlock cost, releasePrice). No schema change -- the staged column/table drop
-    is t-084. The first_evolution background became unreachable (only breeding fired it) --
-    re-homing it is t-085.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-082
   updated: '2026-10-10T11:06:06Z'
   claimed_by: null
   claimed_at: null
@@ -1768,32 +1499,9 @@ tasks:
     - t-081
     - t-082
   note: >-
-    kind_robots. Silas: "the general page needs tightening." The game page today stacks 14 panels under
-    the tank (game.vue: dialogue, toasts, per-fish card grid, background strip, upgrades, rotating shop,
-    Ichthyonomicon, set pieces, decorate, eggs, finale, visibility). Make the tank the page: tank first and
-    large, one compact HUD for coins, buy-a-fish and the next upgrade, and everything else (decorate,
-    backgrounds, Ichthyonomicon, set pieces) behind one drawer or tab row. Phone, tablet and desktop
-    screenshots in the PR. Keep the character dialogue and fish animations Silas liked.
+    kind_robots.
 
-    Findings from the 2026-10-10 local browser run (t-080 to t-082 merged state): on a phone
-    (390 px) the tank renders about 180 px tall and the HUD overlay (coin pill plus
-    Sound/Clean/Feed hungriest) covers its top half; a stale description card above the tank
-    still says 'Feed the occupants to keep them paying you' (components/conductor/aquarium-
-    page.vue and content/play/aquarium.md); coins resting on the gravel sit under the
-    character dialogue sheet while it is open, so they cannot be tapped; and the per-fish
-    cards are tall (three stacked buttons each), so a 20-fish tank is a very long list.
-    AGENTS.md's art-first rule prefers one visual surface over tab proliferation: tighten
-    with the HUD under the tank on phones, an art-led buy strip, a compact grouped roster,
-    and collapsed secondary sections, rather than a tab row.
-
-    Implementation PR silasfelinus/kind_robots#3442 (open): HUD under the tank on phones
-    with Feed hungry (n) / Buy fish / +4 room, the shop as an art-led strip right under the
-    tank, one roster tile per species, extras folded into one collapsed section, refreshed
-    copy. Verified in a local browser run at 390 and 1280 px.
-
-    Done 2026-10-10: silasfelinus/kind_robots#3442 merged (6048901). Known, not changed: the
-    character dialogue sheet covers the bottom strip of the tank while open, so resting
-    coins can't be tapped until it is dismissed.
+    Full history: projects/cthulhuquarium/HISTORY.md#t-083
   updated: '2026-10-10T11:15:35Z'
   implementation_pr: 'silasfelinus/kind_robots#3442'
   claimed_by: null
@@ -1844,18 +1552,7 @@ tasks:
   depends_on:
     - t-083
   note: >-
-    kind_robots #3448. Silas, play-testing the fun loop on 2026-10-10: "much better version. speedier,
-    the loop is starting to make sense. we should be able to select fullscreen mode and toggle it.
-    costs of fish we can't afford are a little hard to read. we aren't using space well enough. in
-    general this is a one screen display that is taking up two screens." Then: "i sold the first
-    demand, but i can never seem to readd it to the tank. it tells me that i don't have enough money
-    after the proper amount had been spent."
+    kind_robots #3448.
 
-    Done in #3448: two-column container-query layout (tank and roster beside a shop and upgrades
-    side panel; phones stay one column), compact shop and upgrade rows, a fullscreen toggle in the
-    tank HUD, opaque disabled price buttons. The re-order bug was client-side: tankStore.error was
-    only cleared on page load, so a failed attempt's "not enough coins" stayed on screen after a
-    later re-order succeeded. Each action now clears it, errors are a 7 s dismissible toast, and the
-    book's Re-order button prints the price (bestiary entries now carry cost). Merged 2026-10-10 as
-    kind_robots c154e89; reaches Alexandria with the next deploy (no schema change).
+    Full history: projects/cthulhuquarium/HISTORY.md#t-086
   updated: '2026-10-10T12:30:00Z'

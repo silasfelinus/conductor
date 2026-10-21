@@ -2738,3 +2738,48 @@ Reviewed and merged 2026-09-30; relay_agent sends smartQueue on claim. Deploying
 Kaizen from conductor archive pass 2026-10-01: run scripts/archive_done_task_notes.py --project kind-robots, verify with --verify-only, confirm check_roadmap_note_size no longer flags it. Also filed so conductor always has an open task (validate_roadmaps requires one for active projects).
 Archived 26 done-task notes from kind-robots roadmap to HISTORY.md (175,436 -> 81,092 bytes), verified; merged in #5455.
 <!-- note:end t-202 -->
+
+## t-204 — Reconcile three accidentally-created Kind Robots projects after Conductor scaffold removal
+
+<!-- note:begin t-204 -->
+Silas-directed 2026-10-02: hidden-robots, robot-dress-up, and kind-word-puzzles were created accidentally and should be deleted. Conductor PR #5504 already removed their scaffolds, but Kind Robots Project rows 2125, 2126, and 2127 still carry conductorSlug and trigger forward parity drift. Archive exactly those rows through the existing Project API and make the scaffold drift audit treat archived rows as deleted rather than live scaffold claims.
+
+Implementation branch archives only the three explicitly tombstoned Kind Robots Project rows by exact id+slug, then treats archived rows as deleted for live scaffold-parity checks. Added targeted tests and project-sync workflow wiring.
+
+Merged silasfelinus/conductor#5507 as e08b9b89b1b74c51d62595969a2c613cc1ba9007. PR checks passed: Worker PR CI including full pytest, Security Audit, CodeQL, task-event validation, roadmap validation, Python syntax, and the corrected Worker PR handoff check. Project Sync run 37073719594 completed successfully; its exact-id+slug tombstone reconciler archived Project #2125 hidden-robots, #2126 robot-dress-up, and #2127 kind-word-puzzles (archiveCount=3) and re-fetched the API to verify all targets were archived. Live parity checks now ignore archived rows by default while --include-inactive retains archive-audit visibility.
+<!-- note:end t-204 -->
+
+## t-205 — Make conductor:skip suppress issue auto-close as well as import
+
+<!-- note:begin t-205 -->
+Bug discovered while using kind_robots#3379 as an umbrella checklist: a completed partial roadmap slice with source_issue caused the issue bridge to close the still-incomplete umbrella issue. conductor:skip already suppresses imports but close_done ignores the label. Make the label consistently suppress all bridge automation, including close, add regression coverage, then reopen/label #3379 so it can remain the canonical multi-slice tracker.
+
+Implementation complete on worker/conductor-t205-skip-close-20261008T223000Z. The issue bridge now excludes conductor:skip issues from open_sources entirely, so the label suppresses both import and close-done automation. Added regression coverage for a mirrored done task whose issue carries conductor:skip.
+
+Merged silasfelinus/conductor#5801 at 6202d0eeb2954f661077cc8088fce8f3beaa0fa0 after all triggered PR workflows completed successfully. conductor:skip now suppresses both import and close-done automation, with regression coverage for a done mirrored task.
+<!-- note:end t-205 -->
+
+## t-206 — Restore project parity audit against current self-hosted Kind Robots API
+
+<!-- note:begin t-206 -->
+FROM GITHUB ISSUE silasfelinus/conductor#5832 (https://github.com/silasfelinus/conductor/issues/5832), opened by @silasfelinus on 2026-10-09. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/conductor#5832`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+## Incident (2026-10-09, PT)
+Conductor oversight remains `unresolved`: `Kind Robots project parity check failed: HTTPError: HTTP Error 503: Service Unavailable`. The last generated report is `PORTFOLIO-OVERSIGHT.md` at 11:25 AM PT. Three merged fixes (#5795 hostname to Vercel, #5804 transient retries, #5811 page size 25) failed to clear the issue.
+
+## Likely architectural mismatch
+Kind Robots `AGENTS.md` now declares `https://kindrobots.org` as self-hosted production and Vercel retired. Conductor `scripts/check_project_scaffold_drift.py` is hardcoded to `https://kind-robots.vercel.app/api/projects`; the earlier domain-switch PR notes the self-hosted endpoint had timed out. Do not blindly flip the hostname without authenticated service verification.
+
+## Required resolution
+1. Verify actual production API ingress and auth with the `KR_API_TOKEN` available to Actions (do not log it), and identify whether a 503 is produced by a retired Vercel deployment or current infrastructure.
+2. Use a lean authenticated project parity projection (id, slug, title, conductorSlug, status, isActive) rather than the heavyweight `projectInclude` response if necessary.
+3. Update Conductor's parity fetch and tests for the verified current endpoint, retaining failure-as-unresolved and all drift detection.
+4. Verify a **completed post-merge** oversight run showing parity fully checked rather than 503, and report its run link.
+
+Alert repetition is handled separately by PR #5831; that does NOT repair the underlying 503.
+
+2026-10-11 verified: #5833 moved parity to https://kindrobots.org/api/conductor/project-
+parity (authenticated 200, lean projection). check_project_scaffold_drift.py reports no
+drift; post-merge conductor-oversight refresh (76374961, 2026-10-11 13:03Z) shows parity
+checked with 0 forward/0 reverse drift, overall clean.
+<!-- note:end t-206 -->
