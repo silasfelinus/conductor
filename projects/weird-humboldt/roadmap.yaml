@@ -1565,24 +1565,12 @@ tasks:
   - id: t-054
     milestone: m4
     title: "Editorial Ecotone art rerolls and live delivery tracking"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-10-21T101900Z-ecotone-art-edit-r8s2
     passes: 0
     stakes: reversible
-    note: >-
-      Owner asked 2026-10-21 PT to edit and submit the Ecotone art. The
-      237-subject, four-lane standard already contains 948 ArtJob IDs, so
-      never reset or duplicate those requests to repair an all-PENDING
-      reporting ledger. Editorial round 1 revises 15 independent safe
-      card/result/ending scenes (60 additional private art variants)
-      with clearer visual cause/effect, recurring race-machine identity,
-      four genuinely distinct styles and a no-lettering composition.
-      Wire the existing six-hour art workflow to enqueue these missing
-      revisions, refresh real delivery status for both ledgers, and
-      validate privacy, original job integrity and cultural exclusions
-      before submission. Exclude held WH-121, Mara-specific Indigenous
-      imagery, Wiyot/Tuluwat history and sacred designs. Distinguish
-      requests submitted from actual completed renders. Visual curation
-      and integration remain a separate review step; human final
-      release and cultural consultation gates remain unchanged.
+    note: |-
+      Owner asked 2026-10-21 PT to edit and submit the Ecotone art. The 237-subject, four-lane standard already contains 948 ArtJob IDs, so never reset or duplicate those requests to repair an all-PENDING reporting ledger. Editorial round 1 revises 15 independent safe card/result/ending scenes (60 additional private art variants) with clearer visual cause/effect, recurring race-machine identity, four genuinely distinct styles and a no-lettering composition. Wire the existing six-hour art workflow to enqueue these missing revisions, refresh real delivery status for both ledgers, and validate privacy, original job integrity and cultural exclusions before submission. Exclude held WH-121, Mara-specific Indigenous imagery, Wiyot/Tuluwat history and sacred designs. Distinguish requests submitted from actual completed renders. Visual curation and integration remain a separate review step; human final release and cultural consultation gates remain unchanged.
+
+      Editorial Ecotone art reroll and status pipeline shipped on Conductor PR #6466, merged as 613d58ae3ca85274145492485d52282b1bd5a23f after all six checks green. Original 237 subject x four style ArtJob IDs (948 unique requests) preserved. Authored 15 culturally independent, specifically retouched scene prompts x four distinct private style lanes (60 more requests) plus pre-submit safety validator. The merge started Auto Art Generate run #39586689813, and its "Submit private Ecotone editorial art revisions" step finished successfully. The workflow's subsequent --status pass reconciles queued versus rendered images; do not represent either batch as accepted visual keepers, integrated or publicly published. Held WH-121 and Mara/Wiyot/Tuluwat content was excluded from new art generation. Human image curation and cultural consultation gates remain open.
+    updated: '2026-10-21T10:45:22Z'
