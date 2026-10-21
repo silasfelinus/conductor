@@ -1013,7 +1013,7 @@ tasks:
   - id: t-042
     milestone: m4
     title: "Talk pacing: no week-long droughts, no talks naming absent followers"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -1022,7 +1022,16 @@ tasks:
       "Mags"). Smooth fromDay spacing per follower, add short talks where the calendar runs dry, gate
       lines that name another follower on that follower being present (requires.follower or variants),
       and add a contract check that a full seeded run has a talk available on most days.
+
+      Merged kind_robots#3956 as 0a2784c65282c172016775de50f67076c00d3ce3 (19/19 checks). 45
+      new one-dilemma talks fill the calendar (existing ids/flags/fromDays unchanged); talk
+      availability for a sit-daily player rose from 35-65% of days (dry streaks up to 19) to
+      ~95% (longest 1; starters-only 87%, longest 3). Lines naming absent followers gated or
+      rewritten (sable-1, sable-2, cobb-2, hollin-2). Contract: no talk names another follower
+      unless gated on them; seeded sit-daily runs keep >=90% availability (>=80% starters-
+      only), never more than 3 dry days.
     owner: worker
     claimed_by: 2026-10-21T005000Z-eod-t-042
     claimed_at: '2026-10-21T00:49:00Z'
-    updated: '2026-10-21T00:49:00Z'
+    updated: '2026-10-21T01:23:17Z'
+    implementation_pr: 'silasfelinus/kind_robots#3956'
