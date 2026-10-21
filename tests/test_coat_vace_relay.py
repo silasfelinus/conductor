@@ -206,6 +206,8 @@ def test_vace_continuity_windows_share_seed_and_reference_precise_overlap(monkey
     monkeypatch.setattr(worker, "check_comfy", lambda base: True)
     monkeypatch.setattr(worker, "extract_window",
                         lambda src, start, dest: dest.write_bytes(b"motion"))
+    monkeypatch.setattr(worker, "stage_motion_input",
+                        lambda guide, staged: staged.write_bytes(guide.read_bytes()))
     refs = []
     def extract_ref(video, index, dest):
         refs.append((video, index, dest))
@@ -393,6 +395,8 @@ def _fake_comfy(monkeypatch, worker):
     monkeypatch.setattr(worker, "check_comfy", lambda base: True)
     monkeypatch.setattr(worker, "extract_window",
                         lambda src, start, dest: dest.write_bytes(b"motion"))
+    monkeypatch.setattr(worker, "stage_motion_input",
+                        lambda guide, staged: staged.write_bytes(guide.read_bytes()))
     monkeypatch.setattr(worker, "extract_reference_frame",
                         lambda *a: pytest.fail("Grab bag chained a previous look across the cut"))
     monkeypatch.setattr(worker, "recover_saved_window", lambda *a: False)
