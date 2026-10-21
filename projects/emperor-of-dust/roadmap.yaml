@@ -884,7 +884,7 @@ tasks:
   - id: t-034
     milestone: m5
     title: "Phone width: tapping a fortress room tab shifts the frame sideways"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -893,10 +893,15 @@ tasks:
       sideways inside its overflow-hidden container (every room, so the page shell, not a room).
       The document itself never scrolls horizontally. Reproduce in Chromium at 390x844, fix the
       tooltip/tab overflow in pages/play/emperor-of-dust.vue, verify at 390/768/1440.
+
+      Merged kind_robots#3953 (384e4e8): room tabs no longer slide the fortress shell sideways
+      at phone width; verified by measuring the shell's left edge before/after tapping every
+      tab at 390/768/1440.
     owner: worker
     claimed_by: 2026-10-21T000500Z-eod-t-034
     claimed_at: '2026-10-21T00:07:39Z'
-    updated: '2026-10-21T00:07:39Z'
+    updated: '2026-10-21T01:23:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#3953'
   - id: t-040
     milestone: m3
     title: "Playtest engine hooks: audience-to-quest aid, flag-keyed outcome text, debts and laws that come due, finale reads alliances, honest throne stakes"
