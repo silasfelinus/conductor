@@ -867,7 +867,7 @@ tasks:
   - id: t-033
     milestone: m5
     title: "Export the market item icons and the pending room/quest rerolls when they render"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: >-
@@ -877,14 +877,24 @@ tasks:
       502s since conductor#6416), contact-sheet and review, reroll rejects as -v2 subjects, export
       keepers to kind_robots public/emperor-of-dust/items/<id>.webp (list in ITEM_ART), rooms/
       (ROOM_ART) and quests/ (QUEST_ART), and record approved/keepers in the ledgers.
+
+      2026-10-21 partial: barracks backdrop keeper barracks-b-v2 exported in kind_robots#3955
+      (f8a577a), ledgers updated in conductor#6431 (5f33b39). Cave-forage v2 rerolls
+      (42160-42162) rejected (no cave in any); v3 rerolls queued as ArtJobs 42353-42355. All
+      30 item icons (42323-42352) still PENDING behind a slow shared queue (~85 jobs ahead at
+      01:20Z). Re-armed to ready: when the queue reaches them, run enqueue_art_requests.py
+      --status on ITEMS-ROUND-1 and QUESTS-ROUND-1, review on contact sheets, export items to
+      public/emperor-of-dust/items/<id>.webp (320px, q80) listed in ITEM_ART and the cave set
+      to quests/ in QUEST_ART, then render the market at 1440/390. Helper:
+      polish/tools/items.py in the 2026-10-20 session scratchpad (paths need updating).
     owner: worker
     claimed_by: 2026-10-21T000500Z-eod-t-033
     claimed_at: '2026-10-21T00:07:36Z'
-    updated: '2026-10-21T00:07:36Z'
+    updated: '2026-10-21T01:28:16Z'
   - id: t-034
     milestone: m5
     title: "Phone width: tapping a fortress room tab shifts the frame sideways"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -893,10 +903,15 @@ tasks:
       sideways inside its overflow-hidden container (every room, so the page shell, not a room).
       The document itself never scrolls horizontally. Reproduce in Chromium at 390x844, fix the
       tooltip/tab overflow in pages/play/emperor-of-dust.vue, verify at 390/768/1440.
+
+      Merged kind_robots#3953 (384e4e8): room tabs no longer slide the fortress shell sideways
+      at phone width; verified by measuring the shell's left edge before/after tapping every
+      tab at 390/768/1440.
     owner: worker
     claimed_by: 2026-10-21T000500Z-eod-t-034
     claimed_at: '2026-10-21T00:07:39Z'
-    updated: '2026-10-21T00:07:39Z'
+    updated: '2026-10-21T01:23:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#3953'
   - id: t-040
     milestone: m3
     title: "Playtest engine hooks: audience-to-quest aid, flag-keyed outcome text, debts and laws that come due, finale reads alliances, honest throne stakes"
@@ -1008,7 +1023,7 @@ tasks:
   - id: t-042
     milestone: m4
     title: "Talk pacing: no week-long droughts, no talks naming absent followers"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -1017,7 +1032,16 @@ tasks:
       "Mags"). Smooth fromDay spacing per follower, add short talks where the calendar runs dry, gate
       lines that name another follower on that follower being present (requires.follower or variants),
       and add a contract check that a full seeded run has a talk available on most days.
+
+      Merged kind_robots#3956 as 0a2784c65282c172016775de50f67076c00d3ce3 (19/19 checks). 45
+      new one-dilemma talks fill the calendar (existing ids/flags/fromDays unchanged); talk
+      availability for a sit-daily player rose from 35-65% of days (dry streaks up to 19) to
+      ~95% (longest 1; starters-only 87%, longest 3). Lines naming absent followers gated or
+      rewritten (sable-1, sable-2, cobb-2, hollin-2). Contract: no talk names another follower
+      unless gated on them; seeded sit-daily runs keep >=90% availability (>=80% starters-
+      only), never more than 3 dry days.
     owner: worker
     claimed_by: 2026-10-21T005000Z-eod-t-042
     claimed_at: '2026-10-21T00:49:00Z'
-    updated: '2026-10-21T00:49:00Z'
+    updated: '2026-10-21T01:23:17Z'
+    implementation_pr: 'silasfelinus/kind_robots#3956'
