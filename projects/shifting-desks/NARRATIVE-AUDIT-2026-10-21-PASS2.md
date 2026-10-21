@@ -33,7 +33,7 @@ Every required flag is obtainable in Records before entering Toy Division, and e
 
 ## Twenty-six ending echoes
 
-The ten established ending families receive **26 additional flag-dependent epilogue paragraphs**. They carry consequences of Pip's quota review, the surface tube, successor approval, denied leave, Kevin's mail/watch, B's test, Beverly's solidarity, the parents' petition, the honest robot dissent, and warnings about Thursday's incident. In particular, risk and compassion are not synonyms for a guaranteed happy ending.
+The ten established ending families receive **26 additional flag-dependent epilogue paragraphs**. They carry consequences of Pip's quota review, the surface tube, successor approval, denied applicants, Kevin's mail/watch, B's test, Beverly's solidarity, the parents' petition, the honest robot dissent, and warnings about Thursday's incident. In particular, risk and compassion are not synonyms for a guaranteed happy ending.
 
 These are conditional *paragraphs*, not 26 new finales. A player must both trigger the correct ending family and have performed the relevant act. This keeps the authored branching finite while giving the world a memory independent of the one-in-eight chance of drawing a later scene.
 
