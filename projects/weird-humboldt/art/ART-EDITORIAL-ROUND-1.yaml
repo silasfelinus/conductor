@@ -14,19 +14,22 @@ lanes:
   label: Z-Image Turbo (Painterly)
   engine: zimage
   prompt: prose
-  suffix: hand-painted Humboldt folktale illustration, delicate pigments, misty redwoods, warm amber and wet green, expressive natural faces, cinematic wide composition, unlettered visual composition
+  suffix: hand-painted Humboldt folktale illustration, delicate pigments, misty redwoods, warm amber and wet green,
+    expressive natural faces, cinematic wide composition, unlettered visual composition
 - key: krea2
   label: Krea 2 (Film Still)
   engine: krea2
   prompt: prose
-  suffix: live-action cinematic film frame, believable weathered costumes and props, natural Humboldt County light, subtle film grain, story-driven staging, restrained atmospheric color, unlettered visual composition
+  suffix: live-action cinematic film frame, believable weathered costumes and props, natural Humboldt County light,
+    subtle film grain, story-driven staging, restrained atmospheric color, unlettered visual composition
 - key: arthemy
   label: Arthemy Western Art v3 (Oil-painted Storybook)
   engine: comfy
   checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
   prompt: tags
   prefix: masterpiece, best quality, intricate illustrative painting, cinematic staging, painterly realism
-  suffix: oil-painted fantasy storybook illustration, layered natural pigments, coastal northern california, redwoods, soft fog, clear narrative focal point
+  suffix: oil-painted fantasy storybook illustration, layered natural pigments, coastal northern california, redwoods,
+    soft fog, clear narrative focal point
   steps: 28
   cfg: 5
   sampler: euler_ancestral
@@ -36,7 +39,8 @@ lanes:
   checkpoint: Illustrious/novaComicXL_v20.safetensors
   prompt: tags
   prefix: masterpiece, best quality, dynamic graphic novel panel, confident linework, expressive composition
-  suffix: bold ink contours, controlled halftone shadows, jewel-toned comic colors, cinematic perspective, Humboldt coastal fog, narrative action, silent sequential-art scene
+  suffix: bold ink contours, controlled halftone shadows, jewel-toned comic colors, cinematic perspective, Humboldt
+    coastal fog, narrative action, silent sequential-art scene
   steps: 28
   cfg: 5
   sampler: euler_ancestral
@@ -48,17 +52,36 @@ subjects:
   seed: 82200
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
-  prompt_tags: >-
-    wide shot, scenery, outdoor summer fair, meadow, redwood forest edge, (giant wooden puppet covered in moss:1.2), falling moss, crowd, growers in sun hats, judging table, potted cannabis plants, rosette ribbons, acrobats making a human tower, drum circle in the trees, hand-painted wooden sign, 1other, from behind, weathered rain jacket, dappled afternoon sunlight, festive, giant moss puppet, two distinct pathways, acrobats left, drummers right
-  prompt_prose: >-
-    A wide view of a summer fair in a meadow at the edge of a redwood forest. A huge wooden puppet draped in moss sways to the music, clumps of moss falling from its arms. Growers in sun hats lean over a table of potted cannabis plants with blank prize rosettes. On the lawn, acrobats stack into a human tower; past a hand-painted wooden sign at the tree line, drummers play in the shade. A figure in a weathered rain jacket watches from behind.
-    The moss puppet must dominate the upper third; two distinct paths divide foreground grass, one toward a human acrobat tower, the other toward drummers among the trees. This is the first consequential fork, not an anonymous festival panorama.
-  jobs: {}
+  prompt_tags: wide shot, scenery, outdoor summer fair, meadow, redwood forest edge, (giant wooden puppet covered
+    in moss:1.2), falling moss, crowd, growers in sun hats, judging table, potted cannabis plants, rosette ribbons,
+    acrobats making a human tower, drum circle in the trees, hand-painted wooden sign, 1other, from behind, weathered
+    rain jacket, dappled afternoon sunlight, festive, giant moss puppet, two distinct pathways, acrobats left, drummers
+    right
+  prompt_prose: A wide view of a summer fair in a meadow at the edge of a redwood forest. A huge wooden puppet draped
+    in moss sways to the music, clumps of moss falling from its arms. Growers in sun hats lean over a table of potted
+    cannabis plants with blank prize rosettes. On the lawn, acrobats stack into a human tower; past a hand-painted
+    wooden sign at the tree line, drummers play in the shade. A figure in a weathered rain jacket watches from behind.
+    The moss puppet must dominate the upper third; two distinct paths divide foreground grass, one toward a human
+    acrobat tower, the other toward drummers among the trees. This is the first consequential fork, not an anonymous
+    festival panorama.
+  jobs:
+    zimage: 42972
+    krea2: 42973
+    arthemy: 42974
+    novacomic: 42975
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-outcomes-gr-1-acro-success
   asset: editorial-round-1/outcomes/gr-1/acro-success
   title: 'GR-1 The Green Ribbon Fair, acro: the upside-down juggler winks'
@@ -67,17 +90,36 @@ subjects:
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, qipao, kimono, conical
     hat
-  prompt_tags: >-
-    medium shot, 1girl, 1boy, adult woman, hmong american woman in her late twenties, short asymmetric black hair, paint-splattered mechanic coveralls with bright fabric patches, (upside down on partner's hands:1.2), juggling three wooden clubs with feet, wink, grin, huge bearded man, tank top, arms raised, partner acrobatics, fair lawn, crowd in background, redwood trees, sunny afternoon, clear acrobat hand balance, three clubs, partner trust, dynamic bodily mechanics
-  prompt_prose: >-
-    Medium shot on a sunny fair lawn. A huge bearded man stands braced with his arms locked overhead, and on his palms balances a Hmong American woman in her late twenties, upside down, with short asymmetric black hair and paint-splattered mechanic coveralls with bright fabric patches. With her feet she juggles three wooden clubs in mid-air, and she grins toward the camera mid-wink. A blurred, gasping crowd and tall redwoods fill the background.
-    Make the dangerous trust legible: palms firmly support the upside-down acrobat, three clubs form one clear airborne arc, and the adult Hmong American performer controls the moment with a delighted, focused expression. Keep every hand and foot plausibly connected.
-  jobs: {}
+  prompt_tags: medium shot, 1girl, 1boy, adult woman, hmong american woman in her late twenties, short asymmetric
+    black hair, paint-splattered mechanic coveralls with bright fabric patches, (upside down on partner's hands:1.2),
+    juggling three wooden clubs with feet, wink, grin, huge bearded man, tank top, arms raised, partner acrobatics,
+    fair lawn, crowd in background, redwood trees, sunny afternoon, clear acrobat hand balance, three clubs, partner
+    trust, dynamic bodily mechanics
+  prompt_prose: 'Medium shot on a sunny fair lawn. A huge bearded man stands braced with his arms locked overhead,
+    and on his palms balances a Hmong American woman in her late twenties, upside down, with short asymmetric black
+    hair and paint-splattered mechanic coveralls with bright fabric patches. With her feet she juggles three wooden
+    clubs in mid-air, and she grins toward the camera mid-wink. A blurred, gasping crowd and tall redwoods fill
+    the background. Make the dangerous trust legible: palms firmly support the upside-down acrobat, three clubs
+    form one clear airborne arc, and the adult Hmong American performer controls the moment with a delighted, focused
+    expression. Keep every hand and foot plausibly connected.'
+  jobs:
+    zimage: 42976
+    krea2: 42977
+    arthemy: 42978
+    novacomic: 42979
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-cards-qw-1
   asset: editorial-round-1/cards/qw-1
   title: 'QW-1 A Day to Yourself, card: turning away from the crowd'
@@ -85,17 +127,34 @@ subjects:
   seed: 82202
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
-  prompt_tags: >-
-    wide shot, scenery, dawn, fog, small town edge, distant plaza crowd in costumes, distant giant pedal-powered sculptures, 1other, from behind, weathered rain jacket, walking away, gravel path, misty ponds, reeds, redwood tree line, birds flying, pale morning light, peaceful, forked landscape, solitary walker, crowded celebration distant, marsh ahead
-  prompt_prose: >-
-    Wide shot at dawn on the foggy edge of a small college town. Far behind, a plaza is filling with people in costumes and giant pedal-powered sculptures. In the foreground a figure in a weathered rain jacket, seen from behind, turns away down a quiet gravel path toward misty ponds, reeds and a line of distant redwoods. Pale light, birds overhead, the peace of choosing nothing.
-    A single figure chooses a narrow empty marsh trail while the carnival remains small, crowded and enticing behind. Leave breathing room ahead of the walker and make the solitude an affirmative choice, not a punishment.
-  jobs: {}
+  prompt_tags: wide shot, scenery, dawn, fog, small town edge, distant plaza crowd in costumes, distant giant pedal-powered
+    sculptures, 1other, from behind, weathered rain jacket, walking away, gravel path, misty ponds, reeds, redwood
+    tree line, birds flying, pale morning light, peaceful, forked landscape, solitary walker, crowded celebration
+    distant, marsh ahead
+  prompt_prose: Wide shot at dawn on the foggy edge of a small college town. Far behind, a plaza is filling with
+    people in costumes and giant pedal-powered sculptures. In the foreground a figure in a weathered rain jacket,
+    seen from behind, turns away down a quiet gravel path toward misty ponds, reeds and a line of distant redwoods.
+    Pale light, birds overhead, the peace of choosing nothing. A single figure chooses a narrow empty marsh trail
+    while the carnival remains small, crowded and enticing behind. Leave breathing room ahead of the walker and
+    make the solitude an affirmative choice, not a punishment.
+  jobs:
+    zimage: 42980
+    krea2: 42981
+    arthemy: 42982
+    novacomic: 42983
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-outcomes-qw-1-zoo-success
   asset: editorial-round-1/outcomes/qw-1/zoo-success
   title: 'QW-1 A Day to Yourself, zoo: juggling nothing at all'
@@ -104,17 +163,36 @@ subjects:
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, qipao, kimono, conical
     hat, juggling clubs, juggling balls
-  prompt_tags: >-
-    medium shot, 1girl, adult woman, hmong american woman in her late twenties, short asymmetric black hair, paint-splattered mechanic coveralls with bright fabric patches, standing still, (miming juggling with empty hands:1.2), wistful expression, small zoo entrance, grass patch, redwood trees, suspended canopy walkway, rope bridge, overcast, quiet, mime juggling without props, arcing sunlight, remembered empty zoo enclosure, quiet joy
-  prompt_prose: >-
-    Medium wide shot at the entrance of a small zoo set among redwoods, a suspended canopy walkway strung between the trunks above. On a patch of filled-in grass where burrows once were, a Hmong American woman in her late twenties with short asymmetric black hair, in paint-splattered mechanic coveralls with bright fabric patches, stands perfectly still, hands raised in a juggling pattern around empty air. Quiet, overcast and wistful.
-    The joke belongs to the empty air: clearly separate three imaginary juggle trajectories made of light from the performer's bare hands, with no clubs. Preserve the grass where the old prairie-dog enclosure once stood; the departed animals remain a cherished memory, with the old burrow lawn empty.
-  jobs: {}
+  prompt_tags: medium shot, 1girl, adult woman, hmong american woman in her late twenties, short asymmetric black
+    hair, paint-splattered mechanic coveralls with bright fabric patches, standing still, (miming juggling with
+    empty hands:1.2), wistful expression, small zoo entrance, grass patch, redwood trees, suspended canopy walkway,
+    rope bridge, overcast, quiet, mime juggling without props, arcing sunlight, remembered empty zoo enclosure,
+    quiet joy
+  prompt_prose: 'Medium wide shot at the entrance of a small zoo set among redwoods, a suspended canopy walkway
+    strung between the trunks above. On a patch of filled-in grass where burrows once were, a Hmong American woman
+    in her late twenties with short asymmetric black hair, in paint-splattered mechanic coveralls with bright fabric
+    patches, stands perfectly still, hands raised in a juggling pattern around empty air. Quiet, overcast and wistful.
+    The joke belongs to the empty air: clearly separate three imaginary juggle trajectories made of light from the
+    performer''s bare hands, with no clubs. Preserve the grass where the old prairie-dog enclosure once stood; the
+    departed animals remain a cherished memory, with the old burrow lawn empty.'
+  jobs:
+    zimage: 42984
+    krea2: 42985
+    arthemy: 42986
+    novacomic: 42987
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-cards-kn-1
   asset: editorial-round-1/cards/kn-1
   title: KN-1 The Night Before on the Plaza
@@ -122,17 +200,37 @@ subjects:
   seed: 82204
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
-  prompt_tags: >-
-    wide shot, scenery, night, town plaza, palm trees, bronze statue, brick storefronts, string lights, giant rainbow shrimp sculpture, long green dragon sculpture exhaling fog, great white shark sculpture in pinstripe suit and necktie, raft of sea otter sculptures holding paws, bicycle wheels, art car, row of pickup trucks, (welding sparks:1.1), folding table, tattoo artist, crowd admiring, festive, warm lamplight, three unique pedal powered kinetic sculptures, rainbow shrimp, dragon, pinstriped shark, parade engineering
-  prompt_prose: >-
-    Wide shot at night of a small-town plaza with palm trees, a bronze statue and old brick storefronts under string lights. Parked around the square are giant pedal-powered art sculptures: a twenty-foot shrimp dyed vivid rainbow hair-dye colors, a long green dragon breathing theatrical fog, a great white shark in a pinstripe suit and necktie, and a raft of sea otter sculptures holding paws. Welding sparks fly along a row of pickups behind them, and across the square a tattoo artist paints a racer's arm at a folding table.'
-    Establish three repeatable vehicle silhouettes, unmistakable from a distance: rainbow shrimp with elaborate segmented tail, long green mechanical dragon, and pinstriped great white shark. Frame them as human-built, pedal-powered kinetic sculptures, not living animals.
-  jobs: {}
+  prompt_tags: wide shot, scenery, night, town plaza, palm trees, bronze statue, brick storefronts, string lights,
+    giant rainbow shrimp sculpture, long green dragon sculpture exhaling fog, great white shark sculpture in pinstripe
+    suit and necktie, raft of sea otter sculptures holding paws, bicycle wheels, art car, row of pickup trucks,
+    (welding sparks:1.1), folding table, tattoo artist, crowd admiring, festive, warm lamplight, three unique pedal
+    powered kinetic sculptures, rainbow shrimp, dragon, pinstriped shark, parade engineering
+  prompt_prose: 'Wide shot at night of a small-town plaza with palm trees, a bronze statue and old brick storefronts
+    under string lights. Parked around the square are giant pedal-powered art sculptures: a twenty-foot shrimp dyed
+    vivid rainbow hair-dye colors, a long green dragon breathing theatrical fog, a great white shark in a pinstripe
+    suit and necktie, and a raft of sea otter sculptures holding paws. Welding sparks fly along a row of pickups
+    behind them, and across the square a tattoo artist paints a racer''s arm at a folding table.'' Establish three
+    repeatable vehicle silhouettes, unmistakable from a distance: rainbow shrimp with elaborate segmented tail,
+    long green mechanical dragon, and pinstriped great white shark. Frame them as human-built, pedal-powered kinetic
+    sculptures, not living animals.'
+  jobs:
+    zimage: 42988
+    krea2: 42989
+    arthemy: 42990
+    novacomic: 42991
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-cards-kn-5
   asset: editorial-round-1/cards/kn-5
   title: KN-5 The Bay Crossing
@@ -140,17 +238,36 @@ subjects:
   seed: 82205
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
-  prompt_tags: >-
-    wide shot, from behind, scenery, bay, fog bank, gray water, giant yellow banana slug sculpture floating, paddle wheel, two antennae, crew in antenna helmets, raft of sea otter sculptures holding paws, people wearing otter hoods, long green dragon sculpture exhaling fog, harbor seals, spectator boats, (bell buoy in fog:1.2), distant waterfront, overcast, eerie calm, heroic yellow mechanical banana slug, paddle wheel, choppy bay, otter sculpture raft, fog bank
-  prompt_prose: >-
-    Wide shot on a gray bay from just behind a paddle-wheeling twelve-foot yellow banana slug sculpture, its crew in antenna helmets pedaling. Fog is rolling down over the water. To one side floats a raft of sea otter sculptures holding paws, crewed by people in otter hoods; to the other, a long green dragon sculpture breathes fog. Real harbor seals poke up their heads to stare. Ahead in the gray a lone bell buoy leans and rings, and the waterfront fades behind.
-    The bright yellow wheeled banana slug is the player's home craft. Make the water crossing physically convincing: visible paddle-wheel splashes, low buoyancy line, exhausted crew in antenna helmets, rival otter raft and green dragon in the receding fog.
-  jobs: {}
+  prompt_tags: wide shot, from behind, scenery, bay, fog bank, gray water, giant yellow banana slug sculpture floating,
+    paddle wheel, two antennae, crew in antenna helmets, raft of sea otter sculptures holding paws, people wearing
+    otter hoods, long green dragon sculpture exhaling fog, harbor seals, spectator boats, (bell buoy in fog:1.2),
+    distant waterfront, overcast, eerie calm, heroic yellow mechanical banana slug, paddle wheel, choppy bay, otter
+    sculpture raft, fog bank
+  prompt_prose: 'Wide shot on a gray bay from just behind a paddle-wheeling twelve-foot yellow banana slug sculpture,
+    its crew in antenna helmets pedaling. Fog is rolling down over the water. To one side floats a raft of sea otter
+    sculptures holding paws, crewed by people in otter hoods; to the other, a long green dragon sculpture breathes
+    fog. Real harbor seals poke up their heads to stare. Ahead in the gray a lone bell buoy leans and rings, and
+    the waterfront fades behind. The bright yellow wheeled banana slug is the player''s home craft. Make the water
+    crossing physically convincing: visible paddle-wheel splashes, low buoyancy line, exhausted crew in antenna
+    helmets, rival otter raft and green dragon in the receding fog.'
+  jobs:
+    zimage: 42992
+    krea2: 42993
+    arthemy: 42994
+    novacomic: 42995
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-outcomes-kn-5-pedal-failure
   asset: editorial-round-1/outcomes/kn-5/pedal-failure
   title: 'KN-5 Pedal hard, failure: the slug sinks with dignity'
@@ -159,17 +276,36 @@ subjects:
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, drowning, panic,
     fear, distress
-  prompt_tags: >-
-    wide shot, (giant yellow banana slug sculpture sinking nose first:1.3), tail in the air, paddle wheel, crew floating in life jackets, helmets with antennae, laughing, waving, 1other, from behind, weathered rain jacket, raft of sea otter sculptures holding paws, people wearing otter hoods, reaching out to help, waterfront dock, cheering crowd, bay, splashing, sun breaking through fog, joyful, comedy, comic sinking pedal craft, all crew safe with flotation vests, triumphant shared failure, no injury
-  prompt_prose: >-
-    Joyful wide shot near a crowded waterfront: the bright yellow banana slug sculpture sinks slowly nose first, its tail and paddle wheel tipped grandly toward the sky. Its crew bob around it in life jackets and antenna helmets, laughing and waving, one figure in a rain jacket seen from behind. On the dock the whole crowd cheers as if they won, while a raft of sea otter sculptures crewed by people in otter hoods paddles back, arms outstretched to tow them in.'
-    Celebrate the failure as a distinct memory. The yellow slug hull is partly submerged nose-first while the intact rear wheels and antennae point skyward; every crew member is safe in a flotation vest, laughing in the water. Spectators cheer from a distant pier.
-  jobs: {}
+  prompt_tags: wide shot, (giant yellow banana slug sculpture sinking nose first:1.3), tail in the air, paddle wheel,
+    crew floating in life jackets, helmets with antennae, laughing, waving, 1other, from behind, weathered rain
+    jacket, raft of sea otter sculptures holding paws, people wearing otter hoods, reaching out to help, waterfront
+    dock, cheering crowd, bay, splashing, sun breaking through fog, joyful, comedy, comic sinking pedal craft, all
+    crew safe with flotation vests, triumphant shared failure, no injury
+  prompt_prose: 'Joyful wide shot near a crowded waterfront: the bright yellow banana slug sculpture sinks slowly
+    nose first, its tail and paddle wheel tipped grandly toward the sky. Its crew bob around it in life jackets
+    and antenna helmets, laughing and waving, one figure in a rain jacket seen from behind. On the dock the whole
+    crowd cheers as if they won, while a raft of sea otter sculptures crewed by people in otter hoods paddles back,
+    arms outstretched to tow them in.'' Celebrate the failure as a distinct memory. The yellow slug hull is partly
+    submerged nose-first while the intact rear wheels and antennae point skyward; every crew member is safe in a
+    flotation vest, laughing in the water. Spectators cheer from a distant pier.'
+  jobs:
+    zimage: 42996
+    krea2: 42997
+    arthemy: 42998
+    novacomic: 42999
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-cards-kn-7
   asset: editorial-round-1/cards/kn-7
   title: KN-7 Dead Man's Drop
@@ -177,17 +313,36 @@ subjects:
   seed: 82207
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
-  prompt_tags: >-
-    wide shot, scenery, (steep sand dune slope:1.2), crowd sitting on dune, spectators, costumes, long green dragon sculpture going downhill, exhaling fog, raft of sea otter sculptures holding paws, sliding, great white shark sculpture in pinstripe suit buried in sand, dorsal fin, giant yellow banana slug sculpture at top edge, crew in antenna helmets, pushing, beach grass, blue sky, sunny, giant coastal dunes, human powered racers, dramatic dune crest, spectators, wheeled machines
-  prompt_prose: >-
-    Wide shot of an enormous steep sand dune slope under a bright coastal sky, its sides lined with costumed spectators sitting like bleachers. A long green dragon sculpture plunges over the lip roaring theatrical fog; a raft of sea otter sculptures slides down on its back; a great white shark sculpture in a pinstripe suit and necktie is buried nose-first to its dorsal fin. At the top edge the yellow banana slug sculpture teeters, its crew in antenna helmets pushing.
-    Show this is the race's dune leg, not a river slide. Wooden and bicycle mechanisms, tire tracks, sand spray, protective helmets and spectators create honest scale; dragon, otter raft, and pinstriped shark are craft, never actual fauna.
-  jobs: {}
+  prompt_tags: wide shot, scenery, (steep sand dune slope:1.2), crowd sitting on dune, spectators, costumes, long
+    green dragon sculpture going downhill, exhaling fog, raft of sea otter sculptures holding paws, sliding, great
+    white shark sculpture in pinstripe suit buried in sand, dorsal fin, giant yellow banana slug sculpture at top
+    edge, crew in antenna helmets, pushing, beach grass, blue sky, sunny, giant coastal dunes, human powered racers,
+    dramatic dune crest, spectators, wheeled machines
+  prompt_prose: Wide shot of an enormous steep sand dune slope under a bright coastal sky, its sides lined with
+    costumed spectators sitting like bleachers. A long green dragon sculpture plunges over the lip roaring theatrical
+    fog; a raft of sea otter sculptures slides down on its back; a great white shark sculpture in a pinstripe suit
+    and necktie is buried nose-first to its dorsal fin. At the top edge the yellow banana slug sculpture teeters,
+    its crew in antenna helmets pushing. Show this is the race's dune leg, not a river slide. Wooden and bicycle
+    mechanisms, tire tracks, sand spray, protective helmets and spectators create honest scale; dragon, otter raft,
+    and pinstriped shark are craft, never actual fauna.
+  jobs:
+    zimage: 43000
+    krea2: 43001
+    arthemy: 43002
+    novacomic: 43003
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-outcomes-kn-7-ride-failure
   asset: editorial-round-1/outcomes/kn-7/ride-failure
   title: 'KN-7 Straight down, failure: a sand-crusted yellow burrito'
@@ -195,17 +350,34 @@ subjects:
   seed: 82208
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views
-  prompt_tags: >-
-    wide shot, giant yellow banana slug sculpture on its side, (covered in sand:1.2), wheels spinning in air, rain jacket sleeve, arm giving thumbs up from hatch, crew in antenna helmets, covered in sand, tumbling, laughing, bottom of sand dune, crowd standing ovation, applause, sunny, comedy, sideways yellow banana slug racer, intact frame, spinning bicycle wheels, sandy thumbs up, safe slapstick
-  prompt_prose: >-
-    Wide shot at the bottom of a steep dune: the yellow banana slug sculpture lies on its side, rolled and crusted in sand like a giant sugared pastry, wheels spinning in the air. From a hatch pokes an arm in a sandy rain jacket sleeve giving a thumbs up, while sand-covered crew in antenna helmets tumble out laughing. Along the slope the whole crowd rises in a standing ovation.'
-    The slug is on its side with the wheels airborne and cabin intact; a sand-coated crew member offers a thumb-up from a hatch. The racers are unharmed and amused despite a genuine setback. Keep the yellow slug recognizable as the same vehicle seen at the water crossing.
-  jobs: {}
+  prompt_tags: wide shot, giant yellow banana slug sculpture on its side, (covered in sand:1.2), wheels spinning
+    in air, rain jacket sleeve, arm giving thumbs up from hatch, crew in antenna helmets, covered in sand, tumbling,
+    laughing, bottom of sand dune, crowd standing ovation, applause, sunny, comedy, sideways yellow banana slug
+    racer, intact frame, spinning bicycle wheels, sandy thumbs up, safe slapstick
+  prompt_prose: 'Wide shot at the bottom of a steep dune: the yellow banana slug sculpture lies on its side, rolled
+    and crusted in sand like a giant sugared pastry, wheels spinning in the air. From a hatch pokes an arm in a
+    sandy rain jacket sleeve giving a thumbs up, while sand-covered crew in antenna helmets tumble out laughing.
+    Along the slope the whole crowd rises in a standing ovation.'' The slug is on its side with the wheels airborne
+    and cabin intact; a sand-coated crew member offers a thumb-up from a hatch. The racers are unharmed and amused
+    despite a genuine setback. Keep the yellow slug recognizable as the same vehicle seen at the water crossing.'
+  jobs:
+    zimage: 43004
+    krea2: 43005
+    arthemy: 43006
+    novacomic: 43007
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-cards-wh-006
   asset: editorial-round-1/cards/wh-006
   title: 'WH-006 The Last Houdini Exit: a gloved hand under the stage'
@@ -214,17 +386,35 @@ subjects:
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, face of player, readable
     note, ghost face
-  prompt_tags: >-
-    wide shot, scenery, indoors, empty old movie theater, red velvet seats, small stage, wooden trapdoor slightly open, golden light from gap, (white-gloved hand holding folded blank note:1.2), 1other, from behind, weathered rain jacket, standing in aisle, dusty spotlight beam, dim, midnight, uncanny, whimsical, empty old theater, single impossible gloved hand, narrow amber trapdoor glow, distant rain jacket silhouette
-  prompt_prose: >-
-    Wide shot of an empty old single-screen movie theater after midnight, rows of worn red velvet seats, popcorn scattered on the aisle carpet. On the bare stage a small wooden trapdoor is lifted one inch, warm golden light leaking from the gap, and a white-gloved hand pushes up a folded blank note. A figure in a weathered rain jacket stands in the aisle seen from behind. Faint dusty spotlight beam, uncanny and funny.
-    Make one impossible detail carry the mystery: a single immaculate white glove emerges from the barely raised trap door in the empty, threadbare 1930s theater. The player is a small rear-view silhouette in the aisle; the uncanny presence is only a single gloved hand.
-  jobs: {}
+  prompt_tags: wide shot, scenery, indoors, empty old movie theater, red velvet seats, small stage, wooden trapdoor
+    slightly open, golden light from gap, (white-gloved hand holding folded blank note:1.2), 1other, from behind,
+    weathered rain jacket, standing in aisle, dusty spotlight beam, dim, midnight, uncanny, whimsical, empty old
+    theater, single impossible gloved hand, narrow amber trapdoor glow, distant rain jacket silhouette
+  prompt_prose: 'Wide shot of an empty old single-screen movie theater after midnight, rows of worn red velvet seats,
+    popcorn scattered on the aisle carpet. On the bare stage a small wooden trapdoor is lifted one inch, warm golden
+    light leaking from the gap, and a white-gloved hand pushes up a folded blank note. A figure in a weathered rain
+    jacket stands in the aisle seen from behind. Faint dusty spotlight beam, uncanny and funny. Make one impossible
+    detail carry the mystery: a single immaculate white glove emerges from the barely raised trap door in the empty,
+    threadbare 1930s theater. The player is a small rear-view silhouette in the aisle; the uncanny presence is only
+    a single gloved hand.'
+  jobs:
+    zimage: 43008
+    krea2: 43009
+    arthemy: 43010
+    novacomic: 43011
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-cards-wh-021
   asset: editorial-round-1/cards/wh-021
   title: 'WH-021 Bigfoot Family Picnic: posing at Moonstone Beach'
@@ -232,17 +422,35 @@ subjects:
   seed: 82210
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, scary, monster, fangs
-  prompt_tags: >-
-    wide shot, scenery, beach cove, large sea stack, river mouth, (three bigfoot:1.2), huge shaggy brown sasquatches, gentle, sun hats, checkered picnic blanket, phone with cracked screen, family photo, cooler, deviled eggs platter, sparkling water, waves rolling backward, overcast coastal light, wholesome, funny, friendly sasquatch family of three, picnic, cracked camera phone, Moonstone Beach sea stack
-  prompt_prose: >-
-    Wide shot of a sandy cove with a big dark sea stack and a small river mouth. Three huge, gentle, shaggy brown sasquatches in floppy sun hats crowd onto a checkered picnic blanket, the smallest holding up a phone with a cracked screen for a family photo while the tallest gestures. A cooler overflows with sparkling water and a platter of deviled eggs. Behind them the waves are curling backward out to sea.
-    Depict Bigfoot as three distinct gentle, shaggy family members with picnic behavior and improvised sun hats, not horror antagonists. The littlest holds a cracked phone, the tallest beckons the player toward the family portrait, and the tide behaves strangely in the distance.
-  jobs: {}
+  prompt_tags: wide shot, scenery, beach cove, large sea stack, river mouth, (three bigfoot:1.2), huge shaggy brown
+    sasquatches, gentle, sun hats, checkered picnic blanket, phone with cracked screen, family photo, cooler, deviled
+    eggs platter, sparkling water, waves rolling backward, overcast coastal light, wholesome, funny, friendly sasquatch
+    family of three, picnic, cracked camera phone, Moonstone Beach sea stack
+  prompt_prose: Wide shot of a sandy cove with a big dark sea stack and a small river mouth. Three huge, gentle,
+    shaggy brown sasquatches in floppy sun hats crowd onto a checkered picnic blanket, the smallest holding up a
+    phone with a cracked screen for a family photo while the tallest gestures. A cooler overflows with sparkling
+    water and a platter of deviled eggs. Behind them the waves are curling backward out to sea. Depict Bigfoot as
+    three distinct gentle, shaggy family members with picnic behavior and improvised sun hats, not horror antagonists.
+    The littlest holds a cracked phone, the tallest beckons the player toward the family portrait, and the tide
+    behaves strangely in the distance.
+  jobs:
+    zimage: 43012
+    krea2: 43013
+    arthemy: 43014
+    novacomic: 43015
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-outcomes-wh-021-photographer-success
   asset: editorial-round-1/outcomes/wh-021/photographer-success
   title: 'WH-021 Bigfoot Picnic, photographer, success: a fourth on screen'
@@ -251,17 +459,32 @@ subjects:
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, scary, readable text,
     user interface text
-  prompt_tags: >-
-    over the shoulder, pov hands holding phone, cracked screen, (phone screen shows four bigfoot:1.2), real beach shows three bigfoot, empty spot on sand, shaggy brown sasquatches, sun hats, posing, beach, overcast, uncanny, wholesome, three Bigfoot in real beach, four Bigfoot only inside phone photo, eerie absent relative, visual contradiction
-  prompt_prose: >-
-    Over-the-shoulder point of view: hands hold a phone with a cracked screen. On the screen the sasquatch family poses beautifully in their sun hats, with a fourth shaggy figure grinning around the borders. On the real beach beyond the phone there are only three sasquatches and an empty patch of sand where the fourth should be. Bright, funny, uncanny.'
-    Keep the ghost fourth relative ONLY in the phone preview, visibly absent from the actual three-person beach group behind it. Align both viewpoints so a reader instantly understands the discrepancy without any captions or screen lettering.
-  jobs: {}
+  prompt_tags: over the shoulder, pov hands holding phone, cracked screen, (phone screen shows four bigfoot:1.2),
+    real beach shows three bigfoot, empty spot on sand, shaggy brown sasquatches, sun hats, posing, beach, overcast,
+    uncanny, wholesome, three Bigfoot in real beach, four Bigfoot only inside phone photo, eerie absent relative,
+    visual contradiction
+  prompt_prose: 'Over-the-shoulder point of view: hands hold a phone with a cracked screen. On the screen the sasquatch
+    family poses beautifully in their sun hats, with a fourth shaggy figure grinning around the borders. On the
+    real beach beyond the phone there are only three sasquatches and an empty patch of sand where the fourth should
+    be. Bright, funny, uncanny.'' Keep the ghost fourth relative ONLY in the phone preview, visibly absent from
+    the actual three-person beach group behind it. Align both viewpoints so a reader instantly understands the discrepancy
+    without any captions or screen lettering.'
+  jobs:
+    arthemy: 43016
+    novacomic: 43017
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-cards-wh-125
   asset: editorial-round-1/cards/wh-125
   title: 'WH-125 Anchor Stores: three lit gates in a closed mall'
@@ -270,17 +493,36 @@ subjects:
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, readable text, store
     signs, logos
-  prompt_tags: >-
-    wide shot, indoors, night, closed 1980s shopping mall concourse, dark skylights, dry fountain, (three glowing store gates showing different worlds:1.2), rainy forest town with solar roofs and farmers market, gleaming warehouse with workers heads down, foggy food court, pretzel under heat lamp, security guard on stand-up scooter, uncanny, three distinct glowing mall portals, cooperative town, exploitative warehouse, uncanny deserted food court
-  prompt_prose: >-
-    Wide shot down the dim concourse of a closed 1980s shopping mall at night, skylights dark, a dry tiled fountain. Three shuttered store gates glow from inside: one onto a rainy forest town with solar roofs and a farmers market, one onto a gleaming warehouse of bowed heads, one onto a foggy food court with a single pretzel turning under a heat lamp. A security guard glides past on a scooter.'
-    Three clearly different futures should be visible simultaneously through the mall gates: a welcoming rain-soaked cooperative town, a gleaming extractive warehouse of exhausted workers, and an uncanny fog-filled food court. Keep the real mall dark to emphasize the choice.
-  jobs: {}
+  prompt_tags: wide shot, indoors, night, closed 1980s shopping mall concourse, dark skylights, dry fountain, (three
+    glowing store gates showing different worlds:1.2), rainy forest town with solar roofs and farmers market, gleaming
+    warehouse with workers heads down, foggy food court, pretzel under heat lamp, security guard on stand-up scooter,
+    uncanny, three distinct glowing mall portals, cooperative town, exploitative warehouse, uncanny deserted food
+    court
+  prompt_prose: 'Wide shot down the dim concourse of a closed 1980s shopping mall at night, skylights dark, a dry
+    tiled fountain. Three shuttered store gates glow from inside: one onto a rainy forest town with solar roofs
+    and a farmers market, one onto a gleaming warehouse of bowed heads, one onto a foggy food court with a single
+    pretzel turning under a heat lamp. A security guard glides past on a scooter.'' Three clearly different futures
+    should be visible simultaneously through the mall gates: a welcoming rain-soaked cooperative town, a gleaming
+    extractive warehouse of exhausted workers, and an uncanny fog-filled food court. Keep the real mall dark to
+    emphasize the choice.'
+  jobs:
+    zimage: 43018
+    krea2: 43019
+    arthemy: 43020
+    novacomic: 43021
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-endings-kit-sober-hope
   asset: editorial-round-1/endings/kit-sober-hope
   title: 'Kit ending, sober, hope: Workshop Charter, juggling class in the workshop yard'
@@ -289,17 +531,37 @@ subjects:
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, qipao, kimono, conical
     hat
-  prompt_tags: >-
-    wide shot, 1girl, adult woman, hmong american woman in her late twenties, short asymmetric black hair, paint-splattered mechanic coveralls with bright fabric patches, juggling, wooden clubs, laughing, teaching, multiple others, young adult students, workshop yard, converted warehouse, roll-up door, giant brass gear above door, framed photographs, welding sparks, spring morning, clear daylight, crisp focus, adult mechanic mentoring kids, kinetic sculpture workshop, brass gear, repairs, collective hope
-  prompt_prose: >-
-    Wide shot of a busy cooperative workshop yard on a clear spring morning. A large brass gear hangs above the open roll-up door of a converted warehouse, framed photographs of past sculptures lining the wall inside. In the yard, a Hmong American woman in her late twenties with short asymmetric black hair, in paint-splattered mechanic coveralls with bright fabric patches laughs as she teaches a row of young adult students to juggle wooden clubs, welding sparks flashing behind them. Crisp, clear light.
-    The cooperative yard is alive with ordinary work and small joyful art-making: the Hmong American mechanic mentors new jugglers without abandoning her own craft, with clearly recognizable repaired race vehicles in the workshop behind. Emphasize earned interdependence, not a trophy pose.
-  jobs: {}
+  prompt_tags: wide shot, 1girl, adult woman, hmong american woman in her late twenties, short asymmetric black
+    hair, paint-splattered mechanic coveralls with bright fabric patches, juggling, wooden clubs, laughing, teaching,
+    multiple others, young adult students, workshop yard, converted warehouse, roll-up door, giant brass gear above
+    door, framed photographs, welding sparks, spring morning, clear daylight, crisp focus, adult mechanic mentoring
+    kids, kinetic sculpture workshop, brass gear, repairs, collective hope
+  prompt_prose: 'Wide shot of a busy cooperative workshop yard on a clear spring morning. A large brass gear hangs
+    above the open roll-up door of a converted warehouse, framed photographs of past sculptures lining the wall
+    inside. In the yard, a Hmong American woman in her late twenties with short asymmetric black hair, in paint-splattered
+    mechanic coveralls with bright fabric patches laughs as she teaches a row of young adult students to juggle
+    wooden clubs, welding sparks flashing behind them. Crisp, clear light. The cooperative yard is alive with ordinary
+    work and small joyful art-making: the Hmong American mechanic mentors new jugglers without abandoning her own
+    craft, with clearly recognizable repaired race vehicles in the workshop behind. Emphasize earned interdependence,
+    not a trophy pose.'
+  jobs:
+    zimage: 43022
+    krea2: 43023
+    arthemy: 43024
+    novacomic: 43025
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
 - key: edit-endings-ecotopia-sober-dark
   asset: editorial-round-1/endings/ecotopia-sober-dark
   title: 'Ecotopia, sober, dark: Field Notes for No One'
@@ -308,14 +570,32 @@ subjects:
   negative: (nude:1.4), nsfw, lowres, worst quality, bad anatomy, bad hands, extra fingers, deformed, watermark,
     signature, text, letters, words, logo, anthro, furry, animal ears, blurry, multiple views, humans, readable
     writing
-  prompt_tags: >-
-    medium wide shot, interior, small wooden cabin, (shelf of worn bird notebooks:1.2), binoculars on windowsill, mug, window view, bird feeder, steller's jays, finches, wooded river, clear spring morning, crisp clear light, sharp focus, quiet, lonely, an unpeopled setting, the subject alone, the space around it bare and deserted, beautiful lonely cabin, bird field notebooks, unattended mug, absent human community, bittersweet ecological isolation
-  prompt_prose: >-
-    Inside a small wooden cabin on a clear spring morning. A shelf sags under rows of identical worn bird notebooks. On the windowsill sit a good pair of binoculars and a mug, and outside the window a bird feeder is busy with jays and finches, with a wooded river glinting beyond. The room is quiet and deserted. Crisp, clear, sharp light.
-    Quiet beauty must have a troubling absence: plentiful birds and neatly numbered field journals, but no neighbors, volunteers or community support beyond the cabin. The lone birdwatcher remains off-camera; this is a bittersweet retreat, not a devastated wasteland.
-  jobs: {}
+  prompt_tags: medium wide shot, interior, small wooden cabin, (shelf of worn bird notebooks:1.2), binoculars on
+    windowsill, mug, window view, bird feeder, steller's jays, finches, wooded river, clear spring morning, crisp
+    clear light, sharp focus, quiet, lonely, an unpeopled setting, the subject alone, the space around it bare and
+    deserted, beautiful lonely cabin, bird field notebooks, unattended mug, absent human community, bittersweet
+    ecological isolation
+  prompt_prose: 'Inside a small wooden cabin on a clear spring morning. A shelf sags under rows of identical worn
+    bird notebooks. On the windowsill sit a good pair of binoculars and a mug, and outside the window a bird feeder
+    is busy with jays and finches, with a wooded river glinting beyond. The room is quiet and deserted. Crisp, clear,
+    sharp light. Quiet beauty must have a troubling absence: plentiful birds and neatly numbered field journals,
+    but no neighbors, volunteers or community support beyond the cabin. The lone birdwatcher remains off-camera;
+    this is a bittersweet retreat, not a devastated wasteland.'
+  jobs:
+    zimage: 43026
+    krea2: 43027
+    arthemy: 43028
+    novacomic: 43029
   art:
-    zimage: {status: PENDING, art_image_id: null}
-    krea2: {status: PENDING, art_image_id: null}
-    arthemy: {status: PENDING, art_image_id: null}
-    novacomic: {status: PENDING, art_image_id: null}
+    zimage:
+      status: PENDING
+      art_image_id: null
+    krea2:
+      status: PENDING
+      art_image_id: null
+    arthemy:
+      status: PENDING
+      art_image_id: null
+    novacomic:
+      status: PENDING
+      art_image_id: null
