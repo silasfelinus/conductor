@@ -57,7 +57,7 @@ def test_style_catalog_covers_388_plates_and_pending_queue_is_a_valid_subset():
     assert all(e["engine"] == "sdxl-checkpoint" for e in cartoon)
     assert all(e["prompt"].startswith("Black-and-white 1940s film noir") for e in noir)
     assert all("monochrome with no color" in e["prompt"] for e in noir)
-    assert all(not re.search(r"\\bframe\\b", e["prompt"]) for e in noir)
+    assert all(not re.search(r"\bframe\b", e["prompt"]) for e in noir)
     assert all("western comics" not in e["prompt"] and "masterpiece" not in e["prompt"] for e in noir)
     assert all("color" in e["negative_prompt"] and "nudity" in e["negative_prompt"] for e in noir)
     assert all(e["status"] in ("pending", "done") for e in entries)
