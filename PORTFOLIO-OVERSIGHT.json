@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-10-20T21:42:48.655845+00:00",
+  "generated_at": "2026-10-21T00:45:43.242430+00:00",
   "summary": {
-    "status": "clean",
+    "status": "semantic-review-upcoming",
     "roadmap_errors": 0,
-    "roadmap_warnings": 36,
+    "roadmap_warnings": 35,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
-    "openai_scheduled_agent_overdue": true,
+    "openai_scheduled_agent_overdue": false,
     "openai_scheduled_agent_authoritative": false,
     "intent_review_due": false,
-    "intent_review_upcoming": false
+    "intent_review_upcoming": true
   },
   "openai_scheduled_agent": {
-    "overdue": true,
-    "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 420.31,
+    "overdue": false,
+    "last_activity": "2026-10-20T23:26:20+00:00",
+    "hours_since": 1.32,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
   },
   "intent_review": {
     "due": false,
-    "upcoming": false,
+    "upcoming": true,
     "last_report": "INTENT-AUDIT-2026-10-19.md",
-    "days_since": 1,
-    "days_until_due": 2.0,
+    "days_since": 2,
+    "days_until_due": 1.0,
     "stale_days": 3.0,
     "failed_attempt": null
   },
@@ -35,19 +35,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-20T21:42:48.655851+00:00",
+    "generated_at": "2026-10-21T00:45:43.242459+00:00",
     "summary": {
       "roadmaps": 84,
       "active_projects": 24,
       "continuous_projects": 3,
-      "tasks": 2460,
-      "ready": 168,
-      "waiting": 184,
+      "tasks": 2470,
+      "ready": 166,
+      "waiting": 187,
       "needs_human": 37,
-      "in_progress": 30,
-      "done": 2025,
+      "in_progress": 25,
+      "done": 2039,
       "errors": 0,
-      "warnings": 36,
+      "warnings": 35,
       "info": 105
     },
     "errors": [],
@@ -182,13 +182,6 @@
         "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "kr-arcade",
-        "task": "t-079",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "kr-arcade",
         "task": "t-088",
         "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
@@ -295,7 +288,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "zuzu-shifting-lands",
         "task": "t-004",
-        "message": "Task has remained review for 10 days."
+        "message": "Task has remained review for 11 days."
       },
       {
         "severity": "warning",
