@@ -30,6 +30,10 @@ def main() -> None:
     assert all(set(s.get("jobs", {})) == LANES for s in originals), (
         "Original 948 already-submitted ArtJobs must not be reset or duplicated"
     )
+    original_jobs = [job for subject in originals for job in subject["jobs"].values()]
+    assert len(original_jobs) == 948 and len(set(original_jobs)) == 948, (
+        "Original ArtJob IDs must all be present, unique and intact"
+    )
     for subject in revisions:
         key = subject["key"]
         assert key.startswith("edit-") and "std-" not in key
