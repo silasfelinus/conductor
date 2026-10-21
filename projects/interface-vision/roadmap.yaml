@@ -2485,17 +2485,16 @@ tasks:
 - id: t-145
   milestone: m6
   title: "Viewport-first admin and creator tools sweep with tutorial-first help"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
     Complete the sitewide instruction on admin/editor/queue/account screens after the high-traffic public passes. Use authenticated fixture coverage and per-route inventory; guest-only Playwright cannot verify admin pages. Move explanatory/caveat copy to existing tutorial sidebar, keep settings compact and preserve essential workflow actions. Apply bounded scroll owners without clipping dialogs, menus, galleries or keyboard focus. Reuse kr-* primitives; no public route or permissions change.
 
     Scoped XL creative-workspace slice: generator uses the shared wide container, dedicated model/settings and tall scrollable LoRA columns appear at 2xl, and wide gallery/dashboard surfaces share a larger cap. Code and source regression assertions prepared in kind_robots branch worker/interface-vision-t145-xl-art-workspace-b8f3; PR and CI pending.
-  owner: worker
-  claimed_by: 2026-10-21T061630Z-interface-vision-t145-xl-b8f3
-  claimed_at: '2026-10-21T06:16:30Z'
-  updated: '2026-10-21T06:17:30Z'
+
+    First bounded XL desktop art-workspace and LoRA gallery slice merged in silasfelinus/kind_robots#3974 at commit 485fc0ee233a381ddaf08c8031fe88fdfdb87032. All 15 exact-head GitHub workflows completed successfully, including Layout, TypeScript, Changed-file Prettier, four Contract Test shards, and container build. No authenticated live production screenshots or post-merge self-hosted deployment verification; preserve t-145 as ready for the remaining sitewide admin/creator viewport sweep and real cross-width geometry verification.
+  updated: '2026-10-21T06:41:50Z'
 
 - id: t-146
   milestone: m6
