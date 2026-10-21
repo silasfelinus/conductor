@@ -7,6 +7,37 @@ is often asked to make interesting choices that question morality."*
 The engine now supports **multi-beat audience scenes**. Your job is to turn your act's throne-room
 audiences from two-line petitions into scenes worth reading, and to make the choices hurt.
 
+## Image-led narrative standard (Silas, 2026-10-21 PT)
+
+The work is not complete when prose exists. **Polish the writing first**, then create private,
+scene-specific render requests in `art/AUDIENCES-ROUND-*.yaml` or the matching quest/talk ledger.
+Illustrate the choice's concrete physical consequence rather than a second interchangeable
+portrait. Cover quest notice, triumph/success, partial/failure, and neglected/expired results,
+plus important audience probes, endings, and follower conversations. The same image cannot
+stand in for outcomes that tell opposing stories. Log requested, ArtJob queued, image rendered,
+editorially accepted, exported, and used in the game as separate states.
+
+**Species and naming are separate layers of canon.** Every visible resident is an identifiable,
+upright anthropomorphic animal, clothed and acting in this wasteland society. State the exact
+canon species and physical description in positive image prompts, especially for named cast;
+do not assume the image model infers an animal body from a character's name. Named individuals
+usually carry personal names (Mara Reedbell, Marisol Tallow, Rook Bramble, Sister Reedlight),
+not animal labels. Explicit existing exceptions include Young Komodo and the Storm Crows'
+faction name. An unnamed passerby may be described by species and role, but a named individual
+must not be rebranded "the Fox" or "Rabbit Captain" in prose or art metadata.
+
+Read `NPCS-V03.md`, `FOLLOWERS-V03.md` and the Book One cast picks before rendering.
+Preserve species, relationships and **first-appearance chronology** across quests, talks and
+artwork. Do not show a major NPC in an early quest epilogue before that character is introduced.
+Young Komodo's friendly early design should never pre-signal betrayal. The Abbess uses her
+locked sea-otter reference. Species never determines guilt, kindness or allegiance.
+
+For Arthemy, describe objects, gestures, animal faces, light and atmosphere affirmatively.
+Avoid forbidden positive prompt terms from the Zuzu video guardrails and model-literal
+traps (for instance "duster", "muzzle", "squat"). Keep text, letters and logos in the
+negative field. Render requests stay private until art review and the separate public release
+gate. A submitted prompt is not a rendered image, and a rendered image is not yet a game asset.
+
 ## Prose style (Silas, 2026-10-20 PT, overrides anything softer below)
 *"We want crisp stark prose. Stephen King or his son Joe Hill, Lone Wolf and Cub."*
 
