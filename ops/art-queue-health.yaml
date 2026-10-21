@@ -4,12 +4,8 @@
 failures:
 - source: requests
   target: public/images/dreams/walking-out-of-the-fog/slack-joint-slip-card.webp
-  kind: contract-rejected
-  rules:
-  - frame-noun
-  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
-    "Slack-Joint Slip, a single practiced technique caught mid-use, An arm bent back at several impossible
-    angles as it passes through a narrow iro…'
+  kind: error
+  detail: 'project art sync failed: HTTP 404 Project slack-joint-slip not found.'
   first_seen: '2026-10-21'
 - source: kr-failed-jobs
   target: ArtJob 42973
