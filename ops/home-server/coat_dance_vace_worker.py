@@ -304,7 +304,8 @@ def extract_window(source, start_time, dest):
                 "tpad=stop_mode=clone:stop_duration=5,trim=end_frame=65,"
                 "setpts=PTS-STARTPTS",
          "-frames:v", str(WINDOW), "-an", "-c:v", "libx264",
-         "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(dest)])
+         "-pix_fmt", "yuv420p", "-fps_mode", "cfr", "-r", str(FPS),
+         "-movflags", "+faststart", str(dest)])
 
 
 def verify_motion_input(path):
