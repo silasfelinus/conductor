@@ -42,6 +42,51 @@ detection may or may not collapse this back to the true incremental diff, so che
 already-merged work; if it looks right (matches only your new commit's actual
 diff), it's safe to merge as normal.
 
+### Stop hook says "no remote branch" right after a successful push (shallow clone)
+
+`add_repo`'s recipe clones with `git clone --depth 1`, which implies
+`--single-branch`: the clone's fetch refspec is
+`+refs/heads/main:refs/remotes/origin/main` and nothing else. `git push -u origin
+<branch>` then succeeds and sets the upstream, but git only writes a
+remote-tracking ref for refs the fetch refspec covers -- so `origin/<branch>` never
+exists locally, and the stop hook (which compares against it) reports "N unpushed
+commit(s) and no remote branch" for work that is already on GitHub. A later
+`git fetch origin <branch>` doesn't create it either; it only fills `FETCH_HEAD`.
+(2026-10-21, humboldtscoopsolutions: tripped twice in one session, patched by hand
+each time.)
+
+Fix it once, right after cloning, before the first push:
+
+```sh
+git -C <clone> config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+```
+
+The clone stays shallow, every later `push -u` creates its tracking ref, and
+`git fetch --prune origin <branch>` copes with branches deleted on merge.
+Don't add one explicit refspec per branch instead: once that branch is
+auto-deleted on merge, every plain `git fetch` fails with "couldn't find remote
+ref". Keep fetching named branches (`git fetch origin main`) rather than a bare
+`git fetch`, which with the wildcard would pull every branch's history.
+To confirm a push without the hook: `git ls-remote origin refs/heads/<branch>`.
+
+### Never `git checkout origin/main -- .` to look at main mid-merge
+
+During a conflicted merge, `git stash` refuses ("needs merge") and
+`git checkout origin/main -- .` then succeeds -- overwriting every resolved file,
+your own changes included, with main's copy. To run a test or read a file as it is
+on main, use a throwaway worktree, which never touches the working tree you are
+resolving:
+
+```sh
+git worktree add /tmp/mainwt origin/main && (cd /tmp/mainwt && php site/tests/x.php)
+git worktree remove --force /tmp/mainwt
+```
+
+If it already happened and your side was committed and pushed before the merge,
+`git merge --abort` (or `git reset --hard HEAD`) and redo the merge; keep the
+resolution in a script so a redo is one command. (2026-10-21, humboldtscoopsolutions
+#124: recovered that way, no work lost.)
+
 ### Don't delegate an in-flight git workaround to a background subagent
 
 If you dispatch a background subagent to run the `push_files` (or any other
