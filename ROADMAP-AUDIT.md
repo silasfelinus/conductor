@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-10-21T15:20:25.677617+00:00`
+Generated: `2026-10-21T21:49:30.439518+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **84** roadmaps, **19** active + **3** continuous projects, **2492** tasks
-- **175 ready**, **182 waiting**, **37 needs-human**, **21 claimed/review**, **2061 done**
+- **84** roadmaps, **19** active + **3** continuous projects, **2493** tasks
+- **175 ready**, **182 waiting**, **37 needs-human**, **22 claimed/review**, **2061 done**
 - Findings: **0 errors**, **38 warnings**, **109 informational**
 
 ## Project inventory
@@ -20,7 +20,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 4 | `emperor-of-dust` | active | software | 9 | 0 | 1 | 0 | 42 / 52 |
 | 5 | `rainbow-bullet-hell-space-princess` | active | software | 1 | 2 | 0 | 3 | 19 / 25 |
 | 6 | `save-the-plumber` | active | software | 4 | 3 | 0 | 0 | 12 / 19 |
-| 7 | `shifting-desks` | active | software | 5 | 0 | 0 | 0 | 31 / 36 |
+| 7 | `shifting-desks` | active | software | 5 | 0 | 0 | 1 | 31 / 37 |
 | 8 | `kind-pinball` | finished | software | 1 | 0 | 0 | 0 | 34 / 35 |
 | 9 | `zuzu-lair` | paused | software | 0 | 4 | 2 | 1 | 8 / 15 |
 | 10 | `kr-arcade` | active | software | 28 | 53 | 0 | 2 | 74 / 157 |
@@ -108,10 +108,10 @@ _None._
 ### Warning (38)
 
 - **STALE_CLAIM_FIELDS** — `animation-manager` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 27 days.
+- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 28 days.
 - **STALE_IN_PROGRESS** — `art-archive` / `t-033`: Task has remained claimed for 18 days.
 - **STALE_IN_PROGRESS** — `art-archive` / `t-044`: Task has remained claimed for 18 days.
-- **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 23 days.
+- **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 24 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `comic-film` / `t-009`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 20 days.
 - **STALE_CLAIM_FIELDS** — `emperor-of-dust` / `t-033`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
