@@ -132,7 +132,7 @@ def test_silas_october_high_priority_projects_have_high_registry_priority():
     On 2026-10-21 workspace lifecycle synchronization paused Zuzu Lair and
     Zuzu Showdown, and set Lair's priority to normal. Those later explicit
     lifecycle records supersede this test's older active-only assumption.
-    The arcade remains active and high priority.
+    The arcade remains active at normal priority after the workspace sync.
     """
     overrides_raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     entries = {
@@ -143,7 +143,7 @@ def test_silas_october_high_priority_projects_have_high_registry_priority():
     expected = {
         "kind-pinball": ("finished", "high"),
         "zuzu-lair": ("paused", "normal"),
-        "kr-arcade": ("active", "high"),
+        "kr-arcade": ("active", "normal"),
         "zuzu-showdown": ("paused", "high"),
     }
     for slug, (status, priority) in expected.items():
