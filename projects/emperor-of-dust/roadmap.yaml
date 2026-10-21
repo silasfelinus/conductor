@@ -897,3 +897,89 @@ tasks:
     claimed_by: 2026-10-21T000500Z-eod-t-034
     claimed_at: '2026-10-21T00:07:39Z'
     updated: '2026-10-21T00:07:39Z'
+  - id: t-040
+    milestone: m3
+    title: "Playtest engine hooks: audience-to-quest aid, flag-keyed outcome text, debts and laws that come due, finale reads alliances, honest throne stakes"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      From the 2026-10-21 playtest (playtest/2026-10-21/SUMMARY.md and the act reports). Build the
+      engine/UI hooks the act rewrites need: an option effect that aids or resolves a posted quest (so
+      marching the Watch to the Ford changes that quest); flag-keyed variants for quest outcome/expiry
+      text and other fixed lines; debts and laws that come due (Ledger loan repayment, the Day 2 tax rate
+      as a standing law that changes daily taxes, fees that rise); a follower-leave effect; per-hideout
+      bargain effects; Day 50 odds that read Act V alliances; honest stakes on the throne screen (which
+      factions an answer warms or cools, brass gained, probes marked as continuing the scene). Balance
+      test must hold.
+  - id: t-035
+    milestone: m4
+    title: "Playtest rewrites, Act I (Days 1-10)"
+    status: ready
+    depends_on: t-040
+    passes: 0
+    stakes: reversible
+    note: >-
+      Implement playtest/2026-10-21/act1.md rewrite proposals: Day 10 act-end choice with real cost and a
+      Day 9 warning about the convoy squeeze, narration/quest agreement (Thistledown, the Day 9 Pack hire),
+      the Day 7 storm and Komodo's first lie actionable, dominant answers (fair tax, polite flour, archive
+      rules, blanket stalls, apology, loan) given real costs, the Day 5 toll stops repeating the dust-lung
+      twist, continuity (informant pronoun, rain days, lantern counts), stark dawn outcomes, fewer
+      kindness-for-brass options. Vary the probe template. Preserve ids/effects unless noted.
+  - id: t-036
+    milestone: m4
+    title: "Playtest rewrites, Act II (Days 11-20)"
+    status: ready
+    depends_on: t-040
+    passes: 0
+    stakes: reversible
+    note: >-
+      Implement playtest/2026-10-21/act2.md proposals: let the player read clause eleven (free probe;
+      Tamsin's reading continues the scene), fix the impossible Day 20 clause-eleven gate, rain timeline
+      and covenant-state briefing variants, Day 34/42/epilogue branches for court runners and the fixed
+      term, a flag for buying one season, Hollow Bell's vote reading the crown's history, the Yard's
+      double loss noticed, dead threats paid off (Vane's bolt, the Verge, the substitution, the flooded
+      Ford villages), the Day 12 dominant option, text/effect mismatches. Fewer Komodo openers.
+  - id: t-037
+    milestone: m4
+    title: "Playtest rewrites, Act III (Days 21-30): make kindness the trap again"
+    status: ready
+    depends_on: t-040
+    passes: 0
+    stakes: reversible
+    note: >-
+      Implement playtest/2026-10-21/act3.md R1-R10: cut the Abbey's winks so one hard tell lands before
+      Day 29, add true innocent readings (a real fever ward, children who come back), give the Abbey
+      credible defenders (Dunmore, Kiyo, Hester) instead of Komodo, put costs on screen; remember the big
+      Abbey choices (d30-children-to-abbey, d23-*, d26-dry-well-followed, ...); fix the Day 21 alliance
+      options not setting pack-alliance, the Day 30 adult-shelter mismatch, the Day 29 Pip trap, the
+      four-cots continuity slip, the repeated parent-at-the-Abbey and Vask-frames shapes.
+  - id: t-038
+    milestone: m4
+    title: "Playtest rewrites, Act IV (Days 31-40): costly alliances, fair Komodo, the quiet word"
+    status: ready
+    depends_on: t-040
+    passes: 0
+    stakes: reversible
+    note: >-
+      Implement playtest/2026-10-21/act4.md: alliances that cost a rival (the dominant d31/d33/d34/d35
+      options), the Black Verge as a party the player can bargain with, quieter unearned Komodo tells on
+      Days 36-38, the Day 40 quiet word rewrite (R8: sit first, the physician question for every path, its
+      answers read later, holding him contradicts dawn, the morning line), make the suspicious player's
+      precautions matter (seal checks, recalled watch, secret tunnel, rosters), the Day 36 rehearsal
+      payoff, quest results read (the collapsed Mole tunnel), a visible likely-hideout hint before Day 41.
+  - id: t-039
+    milestone: m4
+    title: "Playtest rewrites, Act V and endings: alliances reach the finale, a reachable Bell, warned Candles"
+    status: ready
+    depends_on: t-040
+    passes: 0
+    stakes: reversible
+    note: >-
+      Implement playtest/2026-10-21/act5.md (17 proposals): Act V alliances change the Day 50 odds
+      (alliance items/roads), The Bell Restored reachable and requiring the bell rung, A Hundred Candles
+      warned and not silently overriding the vote, hideout terms with real bargains and later collection,
+      fake choices made real (Kiyo, Saffron, front door, dig vs hold), continuity (coalition, Reedlight
+      after the dike, Dunmark's rank, Vellum's place), the Day 44 kegs given a real counterweight, missing
+      quote marks, and the epilogue's repetition ("Nobody", annual rituals) and Long Night variants that
+      read choices.
