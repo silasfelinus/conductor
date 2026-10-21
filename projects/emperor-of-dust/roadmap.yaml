@@ -1036,7 +1036,7 @@ tasks:
   - id: t-039
     milestone: m4
     title: "Playtest rewrites, Act V and endings: alliances reach the finale, a reachable Bell, warned Candles"
-    status: claimed
+    status: done
     depends_on: t-040
     passes: 0
     stakes: reversible
@@ -1048,14 +1048,28 @@ tasks:
       after the dike, Dunmark's rank, Vellum's place), the Day 44 kegs given a real counterweight, missing
       quote marks, and the epilogue's repetition ("Nobody", annual rituals) and Long Night variants that
       read choices.
+
+      Merged kind_robots#3963 (squash 5b77657373c262f75b706bb0b4a388eef187265a, 19 checks
+      green). Writing on top of t-040's mechanics: fake choices made real (Kiyo dismissed,
+      Saffron traded for forty Pack riders as Day 50 aid, front-door dispatch +2, dig costs
+      Moles, hold gives Granny's lamp); Day 44 kegs counterweight (dike drowns Abbey deep
+      well, +2 all roads, costs the lantern-houses and Fennet); continuity via composed() line
+      swaps (Dunmark demoted, Watch, Verge, Pack, Vellum at the fire); Candles spoken and the
+      Day 49 vote preserved under it; all eight hosts collect Day 46 in their own voice; brass
+      buys more than words; ~15 new epilogue variants reading previously unread flags;
+      endings.ts explaining lines cut; Long Night variants; kingdom rituals made single dated
+      acts. Skipped: deserter gate path (R4), host-patience audience, alliance item rewards
+      (R13), lethal bell climb (left to t-041), ~40 barracks rituals. Balance: patron:saltroad
+      10 Open Roads; Hundred Candles still one reckless seed (thin).
     owner: worker
     claimed_by: 2026-10-21T0140Z-eod-t-039
     claimed_at: '2026-10-21T01:39:23Z'
-    updated: '2026-10-21T01:39:23Z'
+    updated: '2026-10-21T03:39:01Z'
+    implementation_pr: 'silasfelinus/kind_robots#3963'
   - id: t-041
     milestone: m5
     title: "Risk, economy and variety: quests that can fail, brass that runs short, more quest templates, honest previews"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -1070,10 +1084,27 @@ tasks:
       same-dawn duplicates, make previews honest about unknowns (range, not a point), and make
       departures and deaths reachable without being punitive. Keep all eight endings reachable; update
       the balance test's thresholds deliberately (document why) rather than weakening them blindly.
+
+      Merged kind_robots#3962 (squash 8daa9d719518f5bf5e17164825bef7de1ae0ea5a, 21 checks
+      green). Requirement needs scale by act (1/1.15/1.3/1.4/1.5), lethal x1.2 (finale-aid
+      roads exempt), exact-need 75% (was 90%); deep wound kills at 40% on failure, 8% on
+      partial. Honest previews: ranges for unread applicable traits, worst-case death odds,
+      Cave-Luck included (rolled outside shown range 33% -> 0%). Departures with weight:
+      Komodo persuades the follower the emperor sat with most (named from Day 37; stopped by
+      Day 40 hold/follow, sealed romance, or follower away); kin departures when the crown
+      turned their people. Chores pay 3-12, Act V chores cost brass; 30 chores in chores.ts
+      with day windows and stark alternates, max two posts per run, no same-dawn duplicates;
+      finishDay repost bug fixed. 120-campaign metrics: deaths/run 0.16->0.40, Komodo
+      departures 0->0.97 (ceiling; warned), loan runs 38%->71%, finale mean 95.5->84.2
+      (45-98), Day 50 brass median 133->44. Balance thresholds changed deliberately and
+      documented in the test (deaths cap 1.0; floors on losses, Candles 1+ but <=20%,
+      borrowing >=75%). Follow-up: q-d50-ring-the-bell and q-d50-crypt-path have no partial
+      reward/outcome line.
     owner: worker
     claimed_by: 2026-10-21T0140Z-eod-t-041
     claimed_at: '2026-10-21T01:33:42Z'
-    updated: '2026-10-21T01:33:42Z'
+    updated: '2026-10-21T03:39:15Z'
+    implementation_pr: 'silasfelinus/kind_robots#3962'
   - id: t-042
     milestone: m4
     title: "Talk pacing: no week-long droughts, no talks naming absent followers"
@@ -1099,3 +1130,17 @@ tasks:
     claimed_at: '2026-10-21T00:49:00Z'
     updated: '2026-10-21T01:23:17Z'
     implementation_pr: 'silasfelinus/kind_robots#3956'
+  - id: t-043
+    milestone: m4
+    title: "Playtest follow-ups: Day 50 partial outcomes and the readbacks the act rewrites skipped"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Leftovers named by the t-036, t-039 and t-041 workers. (1) q-d50-ring-the-bell and
+      q-d50-crypt-path have no partial reward or outcome line: a partial roll seals nothing and the
+      dawn line is empty; give each a stark partial outcome. (2) Act II readbacks needing a later
+      scene: the Day 14 flags on the map/Saltroad, d18-water-taxed in the epilogue, bell-vote-tied,
+      ford-dam-built (the reservoir). (3) Act V: the deserter's "who opened the gate" path (R4,
+      nameless cave) and a host-patience audience for a host whose demand went unpaid. Same rules
+      as t-035..t-039: stark prose, preserve ids/effects, contract assertions, balance honest.
