@@ -1030,7 +1030,7 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Playtest rewrites, Act IV (Days 31-40): costly alliances, fair Komodo, the quiet word"
-    status: claimed
+    status: done
     depends_on: t-040
     passes: 0
     stakes: reversible
@@ -1041,10 +1041,26 @@ tasks:
       answers read later, holding him contradicts dawn, the morning line), make the suspicious player's
       precautions matter (seal checks, recalled watch, secret tunnel, rosters), the Day 36 rehearsal
       payoff, quest results read (the collapsed Mole tunnel), a visible likely-hideout hint before Day 41.
+
+      Merged kind_robots#3961 (squash 4de431a3f1e05ce13f2a579dda94996182705a99, 21 checks
+      green). Precautions matter: PRECAUTIONS list in betrayal.ts (8 guarding, 3 line-only)
+      lowers who leaves with Komodo (3 down to 1) and lines the betrayal page; Komodo's note
+      quotes the physician answer; Day 50 d50-if-you-find-him per philosophy. Audiences aid
+      matching quests (Day 31 Ford, Day 33 Thistledown, Day 36 cellar). Days 36-38 tells
+      quieted. Quiet word rewritten (sit/ask only, physician question on every path, chain
+      answer). Alliances cost a rival (Days 31/33/34/35); new Day 37 d37-verge-terms (fields,
+      40 brass, or hostage Corwin Vask or Sable) blocks the Verge as buyer while it holds.
+      Rehearsal payoff (Teodor can be lost to the Abbess). Hideout hint in the map room Days
+      35-40 matching selectHideout. Quest results read (collapsed tunnel/burned trestle clear
+      pledges; tally book read aloud). ask-runners removed. Story calls recorded in PR body.
+      Skipped: probe-template variety beyond the Verge scene; R7 Vellum line/Day 43 count
+      (paid on the betrayal page); unread flags rehearsal-caught, ford-held, waystation-
+      defended, crow-debt-defaulted and the Tobin clash (moved to t-043).
     owner: worker
     claimed_by: 2026-10-21T0140Z-eod-t-038
     claimed_at: '2026-10-21T01:39:21Z'
-    updated: '2026-10-21T01:39:21Z'
+    updated: '2026-10-21T03:59:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#3961'
   - id: t-039
     milestone: m4
     title: "Playtest rewrites, Act V and endings: alliances reach the finale, a reachable Bell, warned Candles"
