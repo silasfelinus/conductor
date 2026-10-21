@@ -186,8 +186,7 @@ jobs:
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
         run: |
-          python scripts/enqueue_art_requests.py \\
-            projects/emperor-of-dust/art/AUDIENCES-ROUND-1.yaml --live
+          python scripts/enqueue_art_requests.py projects/emperor-of-dust/art/AUDIENCES-ROUND-1.yaml --live
 
       # Shifting Desks has 220 approved style requests. Hand all of them to
       # the durable ArtJob scheduler first, instead of blocking on each render
