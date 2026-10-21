@@ -1,0 +1,656 @@
+# Missing Emperor of Dust quest art for the current 50-day fortress (2026-10-21).
+# Compared authored quest/chores definitions with questArt.ts and the exported quest files.
+# Covers 21 missing quest IDs x notice/success/failure = 63 new, private ArtJobs.
+# Do not requeue q-d42-cave-forage: its v3 rerolls are already ArtJobs 42353-42355.
+# The existing QUESTS-ROUND-1.yaml contains completed and approved legacy jobs;
+# this ledger adds only new assets. Enqueue is idempotent via subjects[].jobs.
+# Generated ArtJobs need art/status review, export, and questArt.ts wiring before
+# they are visible in the runtime. A queued job is not a delivered illustration.
+round: emperor-missing-quests-2
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+  - key: arthemy-house
+    label: Arthemy Western Art v3.0 (house, author settings)
+    engine: comfy
+    checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+    prompt: tags
+    prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style), weathered, dramatic lighting, painterly, wide story illustration
+    suffix: kiln ochre, deep crimson and tarnished brass palette, ash-grey sky, salvage and dusty wasteland, nuanced lighting, non-graphic storytelling, all signage blank
+    steps: 30
+    cfg: 5
+    sampler: euler_ancestral
+subjects:
+  - key: eodq2-q-d07-galleries-notice
+    lane: arthemy-house
+    title: "Under the Ford (notice)"
+    quest: "q-d07-galleries"
+    variant: notice
+    asset: "quests/q-d07-galleries"
+    size: 1344x768
+    seed: 78100
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow galleries cut beneath the riverbank and worn stone shafts, Opening situation: Go down the old Mole galleries under the Eastern Ford, quietly. Komodo’s runner says rubble and rats. See for yourself., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-q-d07-galleries-success
+    lane: arthemy-house
+    title: "Under the Ford (success)"
+    quest: "q-d07-galleries"
+    variant: success
+    asset: "quests/q-d07-galleries-success"
+    size: 1344x768
+    seed: 78101
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow galleries cut beneath the riverbank and worn stone shafts, A successful mission aftermath: No rubble. No rats. Forty Mole families in dry galleries, and a path to the old door worn smooth by small feet. They asked the party not to tell the tower. The party told you anyway., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-q-d07-galleries-failure
+    lane: arthemy-house
+    title: "Under the Ford (failure)"
+    quest: "q-d07-galleries"
+    variant: failure
+    asset: "quests/q-d07-galleries-failure"
+    size: 1344x768
+    seed: 78102
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow galleries cut beneath the riverbank and worn stone shafts, The consequences of an unsuccessful mission: The party went down with a lamp and came up without it. Something in the dark took it out of a hand, politely., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-well-poison-notice
+    lane: arthemy-house
+    title: "Something in the Well (notice)"
+    quest: "r-well-poison"
+    variant: notice
+    asset: "quests/r-well-poison"
+    size: 1344x768
+    seed: 78103
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, Opening situation: A Freehold well at Thistle Row has turned sweet, and three children who drank from it will not wake. Find what is in the water., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-well-poison-success
+    lane: arthemy-house
+    title: "Something in the Well (success)"
+    quest: "r-well-poison"
+    variant: success
+    asset: "quests/r-well-poison-success"
+    size: 1344x768
+    seed: 78104
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, A successful mission aftermath: Honey-root, dumped upstream to kill rats. The children woke on the second day. One of them asked for more of the sweet water., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-well-poison-failure
+    lane: arthemy-house
+    title: "Something in the Well (failure)"
+    quest: "r-well-poison"
+    variant: failure
+    asset: "quests/r-well-poison-failure"
+    size: 1344x768
+    seed: 78105
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, The consequences of an unsuccessful mission: The party could not name it. The well was filled with stones. Thistle Row walks a mile for water now., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-debt-collector-notice
+    lane: arthemy-house
+    title: "The Collector at the Yard (notice)"
+    quest: "r-debt-collector"
+    variant: notice
+    asset: "quests/r-debt-collector"
+    size: 1344x768
+    seed: 78106
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, Opening situation: The Ledger has sent a collector to the Yard with a list of names. He is taking tools. He will take beds next. The Yard wants the crown to stand between., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-debt-collector-success
+    lane: arthemy-house
+    title: "The Collector at the Yard (success)"
+    quest: "r-debt-collector"
+    variant: success
+    asset: "quests/r-debt-collector-success"
+    size: 1344x768
+    seed: 78107
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, A successful mission aftermath: The collector went home with half his list crossed out and a crown seal on the other half. The Ledger will remember the seal., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-debt-collector-failure
+    lane: arthemy-house
+    title: "The Collector at the Yard (failure)"
+    quest: "r-debt-collector"
+    variant: failure
+    asset: "quests/r-debt-collector-failure"
+    size: 1344x768
+    seed: 78108
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, The consequences of an unsuccessful mission: The collector read the crown’s letter aloud, folded it into his list and took the beds anyway., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-runaway-runner-notice
+    lane: arthemy-house
+    title: "A Runner in the Reeds (notice)"
+    quest: "r-runaway-runner"
+    variant: notice
+    asset: "quests/r-runaway-runner"
+    size: 1344x768
+    seed: 78109
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts, slow black water, and lantern-bearing residents, Opening situation: A bonded Crow runner has run. The Crows want her back and are paying for news of her. The Mirefen say she asked them for a boat., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-runaway-runner-success
+    lane: arthemy-house
+    title: "A Runner in the Reeds (success)"
+    quest: "r-runaway-runner"
+    variant: success
+    asset: "quests/r-runaway-runner-success"
+    size: 1344x768
+    seed: 78110
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts, slow black water, and lantern-bearing residents, A successful mission aftermath: She was hiding in a duck blind with a knife she did not know how to hold. The Crows paid. She did not look back at the party once., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-runaway-runner-failure
+    lane: arthemy-house
+    title: "A Runner in the Reeds (failure)"
+    quest: "r-runaway-runner"
+    variant: failure
+    asset: "quests/r-runaway-runner-failure"
+    size: 1344x768
+    seed: 78111
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts, slow black water, and lantern-bearing residents, The consequences of an unsuccessful mission: Her tracks went into the water and did not come out. The Crows say the crown let her go. The Crows may be right., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-fever-ward-notice
+    lane: arthemy-house
+    title: "Fever in the Yard (notice)"
+    quest: "r-fever-ward"
+    variant: notice
+    asset: "quests/r-fever-ward"
+    size: 1344x768
+    seed: 78112
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, Opening situation: A fever is moving through the Yard’s back rows. The healer has one bed and nine names. Somebody has to choose, or find more beds., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-fever-ward-success
+    lane: arthemy-house
+    title: "Fever in the Yard (success)"
+    quest: "r-fever-ward"
+    variant: success
+    asset: "quests/r-fever-ward-success"
+    size: 1344x768
+    seed: 78113
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, A successful mission aftermath: Seven of nine stood up again. The healer burned the bedding of the other two and wrote their names on the wall., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-fever-ward-failure
+    lane: arthemy-house
+    title: "Fever in the Yard (failure)"
+    quest: "r-fever-ward"
+    variant: failure
+    asset: "quests/r-fever-ward-failure"
+    size: 1344x768
+    seed: 78114
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, The consequences of an unsuccessful mission: The fever went through the back rows and into the front ones. The party came home coughing., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-pack-raid-notice
+    lane: arthemy-house
+    title: "Pups in the Grain Store (notice)"
+    quest: "r-pack-raid"
+    variant: notice
+    asset: "quests/r-pack-raid"
+    size: 1344x768
+    seed: 78115
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, hyena raider camp beside painted wagons and weather-beaten toll road, Opening situation: Hyena pups are slipping into a Freehold grain store at night. The farmers have set traps with teeth. The Pack says touch one pup and see., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-pack-raid-success
+    lane: arthemy-house
+    title: "Pups in the Grain Store (success)"
+    quest: "r-pack-raid"
+    variant: success
+    asset: "quests/r-pack-raid-success"
+    size: 1344x768
+    seed: 78116
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, hyena raider camp beside painted wagons and weather-beaten toll road, A successful mission aftermath: The party sprang every trap with a stick and sat in the store all night. At dawn they walked three pups home by the scruff. The farmer fixed his door., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-pack-raid-failure
+    lane: arthemy-house
+    title: "Pups in the Grain Store (failure)"
+    quest: "r-pack-raid"
+    variant: failure
+    asset: "quests/r-pack-raid-failure"
+    size: 1344x768
+    seed: 78117
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, hyena raider camp beside painted wagons and weather-beaten toll road, The consequences of an unsuccessful mission: A trap closed on a pup before the party got there. The Pack came for it in daylight. The farmer’s dog did not come home., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-salt-weigh-notice
+    lane: arthemy-house
+    title: "Short Weight at the Scales (notice)"
+    quest: "r-salt-weigh"
+    variant: notice
+    asset: "quests/r-salt-weigh"
+    size: 1344x768
+    seed: 78118
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, Opening situation: Someone at the Saltroad scales is selling a pound that weighs fourteen ounces. The buyers are the Yard’s cooks. Find the thumb on the scale., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-salt-weigh-success
+    lane: arthemy-house
+    title: "Short Weight at the Scales (success)"
+    quest: "r-salt-weigh"
+    variant: success
+    asset: "quests/r-salt-weigh-success"
+    size: 1344x768
+    seed: 78119
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, A successful mission aftermath: Lead in the pan, under the felt. The weigher was the factor’s nephew. The Saltroad paid the Yard back in salt and does not like the crown for it., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-salt-weigh-failure
+    lane: arthemy-house
+    title: "Short Weight at the Scales (failure)"
+    quest: "r-salt-weigh"
+    variant: failure
+    asset: "quests/r-salt-weigh-failure"
+    size: 1344x768
+    seed: 78120
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, The consequences of an unsuccessful mission: The party weighed every pan twice and found nothing. The cooks still swear the pound is short., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-bell-thief-notice
+    lane: arthemy-house
+    title: "The Chapel Poor Box (notice)"
+    quest: "r-bell-thief"
+    variant: notice
+    asset: "quests/r-bell-thief"
+    size: 1344x768
+    seed: 78121
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, small chapel town of adobe and timber around a brass bell tower, Opening situation: Someone is emptying Hollow Bell’s poor box a coin at a time. The chapel suspects the gravedigger’s boy. The gravedigger suspects the chapel., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-bell-thief-success
+    lane: arthemy-house
+    title: "The Chapel Poor Box (success)"
+    quest: "r-bell-thief"
+    variant: success
+    asset: "quests/r-bell-thief-success"
+    size: 1344x768
+    seed: 78122
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, small chapel town of adobe and timber around a brass bell tower, A successful mission aftermath: It was the curate. He was buying medicine for his mother. The chapel forgave him. The town did not., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-bell-thief-failure
+    lane: arthemy-house
+    title: "The Chapel Poor Box (failure)"
+    quest: "r-bell-thief"
+    variant: failure
+    asset: "quests/r-bell-thief-failure"
+    size: 1344x768
+    seed: 78123
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, small chapel town of adobe and timber around a brass bell tower, The consequences of an unsuccessful mission: The party named the gravedigger’s boy. The chapel whipped him. The coins kept going missing., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-trestle-sags-notice
+    lane: arthemy-house
+    title: "The Trestle Sags (notice)"
+    quest: "r-trestle-sags"
+    variant: notice
+    asset: "quests/r-trestle-sags"
+    size: 1344x768
+    seed: 78124
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, rusted railway yards, ruined engines and ravine trestles in the wasteland, Opening situation: The old rail trestle over the canyon groans when the wind turns. A Rustline crew will shore it up if someone stands under it with them., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-trestle-sags-success
+    lane: arthemy-house
+    title: "The Trestle Sags (success)"
+    quest: "r-trestle-sags"
+    variant: success
+    asset: "quests/r-trestle-sags-success"
+    size: 1344x768
+    seed: 78125
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, rusted railway yards, ruined engines and ravine trestles in the wasteland, A successful mission aftermath: Four new beams and a cable from a dead crane. The trestle stopped talking. The crew foreman shook every hand with his good one., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-trestle-sags-failure
+    lane: arthemy-house
+    title: "The Trestle Sags (failure)"
+    quest: "r-trestle-sags"
+    variant: failure
+    asset: "quests/r-trestle-sags-failure"
+    size: 1344x768
+    seed: 78126
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, rusted railway yards, ruined engines and ravine trestles in the wasteland, The consequences of an unsuccessful mission: A beam came loose and took a Rustline girl into the canyon with it. The crew went home. The trestle still groans., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-fen-gave-back-notice
+    lane: arthemy-house
+    title: "What the Fen Gave Back (notice)"
+    quest: "r-fen-gave-back"
+    variant: notice
+    asset: "quests/r-fen-gave-back"
+    size: 1344x768
+    seed: 78127
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts, slow black water, and lantern-bearing residents, Opening situation: The Mirefen surfaced a body in the night, wrapped in prayer cloth, a coin in its mouth. The Mire Mothers want it reburied. The Archive wants it read., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-fen-gave-back-success
+    lane: arthemy-house
+    title: "What the Fen Gave Back (success)"
+    quest: "r-fen-gave-back"
+    variant: success
+    asset: "quests/r-fen-gave-back-success"
+    size: 1344x768
+    seed: 78128
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts, slow black water, and lantern-bearing residents, A successful mission aftermath: The coin was old crown brass with a face nobody knew. The party copied it and put it back between the teeth. The fen took the body down again without a ripple., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-fen-gave-back-failure
+    lane: arthemy-house
+    title: "What the Fen Gave Back (failure)"
+    quest: "r-fen-gave-back"
+    variant: failure
+    asset: "quests/r-fen-gave-back-failure"
+    size: 1344x768
+    seed: 78129
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts, slow black water, and lantern-bearing residents, The consequences of an unsuccessful mission: The party argued over it until the tide turned. The fen took the body back on its own. The Mothers did not forgive the argument., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-low-galleries-notice
+    lane: arthemy-house
+    title: "Water in the Low Galleries (notice)"
+    quest: "r-low-galleries"
+    variant: notice
+    asset: "quests/r-low-galleries"
+    size: 1344x768
+    seed: 78130
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow galleries cut beneath the riverbank and worn stone shafts, Opening situation: Rain found a crack and the Moles’ lowest galleries are flooding. The nursery is down there. Bring hands and buckets and do not stop., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-low-galleries-success
+    lane: arthemy-house
+    title: "Water in the Low Galleries (success)"
+    quest: "r-low-galleries"
+    variant: success
+    asset: "quests/r-low-galleries-success"
+    size: 1344x768
+    seed: 78131
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow galleries cut beneath the riverbank and worn stone shafts, A successful mission aftermath: A bucket line forty paws long, all night. The nursery is dry. The Moles named the new gallery after the party and then changed their minds and named it after the bucket., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-low-galleries-failure
+    lane: arthemy-house
+    title: "Water in the Low Galleries (failure)"
+    quest: "r-low-galleries"
+    variant: failure
+    asset: "quests/r-low-galleries-failure"
+    size: 1344x768
+    seed: 78132
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, low, lamplit burrow galleries cut beneath the riverbank and worn stone shafts, The consequences of an unsuccessful mission: The water came faster than the buckets. The Moles closed the lowest door with the water on the other side. They will not say who was behind it., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-verge-scouts-notice
+    lane: arthemy-house
+    title: "Plum Scouts on the Ridge (notice)"
+    quest: "r-verge-scouts"
+    variant: notice
+    asset: "quests/r-verge-scouts"
+    size: 1344x768
+    seed: 78133
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, Opening situation: Riders in plum have been seen counting the Freehold barns from the ridge. Run them off, or let them count. Run them off and someone may not come back., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-verge-scouts-success
+    lane: arthemy-house
+    title: "Plum Scouts on the Ridge (success)"
+    quest: "r-verge-scouts"
+    variant: success
+    asset: "quests/r-verge-scouts-success"
+    size: 1344x768
+    seed: 78134
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, A successful mission aftermath: The scouts went back over the ridge at a gallop. They will come back with more., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-verge-scouts-failure
+    lane: arthemy-house
+    title: "Plum Scouts on the Ridge (failure)"
+    quest: "r-verge-scouts"
+    variant: failure
+    asset: "quests/r-verge-scouts-failure"
+    size: 1344x768
+    seed: 78135
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, The consequences of an unsuccessful mission: The scouts were not scouts. The party came back over the ridge carrying what they could., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-deserter-notice
+    lane: arthemy-house
+    title: "A Watchman Over the Wall (notice)"
+    quest: "r-deserter"
+    variant: notice
+    asset: "quests/r-deserter"
+    size: 1344x768
+    seed: 78136
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, Opening situation: A Gate Watch private went over the wall with his kit and a sergeant’s purse. Dunmark wants him back to hang. His mother wants him back alive., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-deserter-success
+    lane: arthemy-house
+    title: "A Watchman Over the Wall (success)"
+    quest: "r-deserter"
+    variant: success
+    asset: "quests/r-deserter-success"
+    size: 1344x768
+    seed: 78137
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, A successful mission aftermath: He was asleep in his mother’s woodshed with the purse under his head. He came back quietly. Dunmark hanged him at noon. His mother watched., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-deserter-failure
+    lane: arthemy-house
+    title: "A Watchman Over the Wall (failure)"
+    quest: "r-deserter"
+    variant: failure
+    asset: "quests/r-deserter-failure"
+    size: 1344x768
+    seed: 78138
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, The consequences of an unsuccessful mission: He was gone. The purse turned up in a Pack game, two nights later., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-thistle-smoke-notice
+    lane: arthemy-house
+    title: "Smoke Over Thistle Row (notice)"
+    quest: "r-thistle-smoke"
+    variant: notice
+    asset: "quests/r-thistle-smoke"
+    size: 1344x768
+    seed: 78139
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, Opening situation: Barns are burning on the Freehold edge, one a night, always the one with people sleeping in it. Find who is lighting them., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-thistle-smoke-success
+    lane: arthemy-house
+    title: "Smoke Over Thistle Row (success)"
+    quest: "r-thistle-smoke"
+    variant: success
+    asset: "quests/r-thistle-smoke-success"
+    size: 1344x768
+    seed: 78140
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, A successful mission aftermath: A Freehold widow with a grudge and a tinderbox. Her own barn burned first, last year, and nobody came. The party brought her in. The fires stopped., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-thistle-smoke-failure
+    lane: arthemy-house
+    title: "Smoke Over Thistle Row (failure)"
+    quest: "r-thistle-smoke"
+    variant: failure
+    asset: "quests/r-thistle-smoke-failure"
+    size: 1344x768
+    seed: 78141
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, The consequences of an unsuccessful mission: Another barn went up the night the party stood watch. There was a family in it. The party got the father out., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-dead-engine-notice
+    lane: arthemy-house
+    title: "Lights in the Dead Engine (notice)"
+    quest: "r-dead-engine"
+    variant: notice
+    asset: "quests/r-dead-engine"
+    size: 1344x768
+    seed: 78142
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, rusted railway yards, ruined engines and ravine trestles in the wasteland, Opening situation: An engine that has not moved in a hundred years is showing lights at night. The Rustline will not go near it. The Archive will, if someone holds the rope., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-dead-engine-success
+    lane: arthemy-house
+    title: "Lights in the Dead Engine (success)"
+    quest: "r-dead-engine"
+    variant: success
+    asset: "quests/r-dead-engine-success"
+    size: 1344x768
+    seed: 78143
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, rusted railway yards, ruined engines and ravine trestles in the wasteland, A successful mission aftermath: A battery the size of a coffin, still holding a charge. It lit three bulbs and a voice that said one word over and over in no language anybody knew., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-dead-engine-failure
+    lane: arthemy-house
+    title: "Lights in the Dead Engine (failure)"
+    quest: "r-dead-engine"
+    variant: failure
+    asset: "quests/r-dead-engine-failure"
+    size: 1344x768
+    seed: 78144
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, rusted railway yards, ruined engines and ravine trestles in the wasteland, The consequences of an unsuccessful mission: The clerk on the rope came back with his hair standing up and would not say why., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-graves-notice
+    lane: arthemy-house
+    title: "Graves Without Names (notice)"
+    quest: "r-graves"
+    variant: notice
+    asset: "quests/r-graves"
+    size: 1344x768
+    seed: 78145
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, small chapel town of adobe and timber around a brass bell tower, Opening situation: Hollow Bell is out of ground. The war sends bodies faster than the gravedigger can mark them. Someone has to write down who is in which hole., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-graves-success
+    lane: arthemy-house
+    title: "Graves Without Names (success)"
+    quest: "r-graves"
+    variant: success
+    asset: "quests/r-graves-success"
+    size: 1344x768
+    seed: 78146
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, small chapel town of adobe and timber around a brass bell tower, A successful mission aftermath: Forty-one names on forty-one boards. Six of them say only “a boy” or “a woman, tall”. The party wrote those too., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-graves-failure
+    lane: arthemy-house
+    title: "Graves Without Names (failure)"
+    quest: "r-graves"
+    variant: failure
+    asset: "quests/r-graves-failure"
+    size: 1344x768
+    seed: 78147
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, small chapel town of adobe and timber around a brass bell tower, The consequences of an unsuccessful mission: The rain washed the chalk off before the paint came. The gravedigger started over., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-ferry-stalled-notice
+    lane: arthemy-house
+    title: "The Ferry Will Not Cross (notice)"
+    quest: "r-ferry-stalled"
+    variant: notice
+    asset: "quests/r-ferry-stalled"
+    size: 1344x768
+    seed: 78148
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts, slow black water, and lantern-bearing residents, Opening situation: The Mirefen ferryman has tied up his raft and will not cross until someone pays what the last passenger owed him. The last passenger was a crown courier, and he drowned., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-ferry-stalled-success
+    lane: arthemy-house
+    title: "The Ferry Will Not Cross (success)"
+    quest: "r-ferry-stalled"
+    variant: success
+    asset: "quests/r-ferry-stalled-success"
+    size: 1344x768
+    seed: 78149
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts, slow black water, and lantern-bearing residents, A successful mission aftermath: The party sat with the ferryman and the courier’s satchel until he could say what happened. Then he untied the raft., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-ferry-stalled-failure
+    lane: arthemy-house
+    title: "The Ferry Will Not Cross (failure)"
+    quest: "r-ferry-stalled"
+    variant: failure
+    asset: "quests/r-ferry-stalled-failure"
+    size: 1344x768
+    seed: 78150
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, marsh causeway with reed huts, slow black water, and lantern-bearing residents, The consequences of an unsuccessful mission: He spat in the water and went inside. The raft is still tied. The traffic goes the long way, three days round., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-hidden-bread-notice
+    lane: arthemy-house
+    title: "Bread Without Questions (notice)"
+    quest: "r-hidden-bread"
+    variant: notice
+    asset: "quests/r-hidden-bread"
+    size: 1344x768
+    seed: 78151
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, Opening situation: A miller two valleys over will sell flour to anyone who does not say who they are. The crown pays his price: 12 brass for the sacks, and the risk of being seen., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-hidden-bread-success
+    lane: arthemy-house
+    title: "Bread Without Questions (success)"
+    quest: "r-hidden-bread"
+    variant: success
+    asset: "quests/r-hidden-bread-success"
+    size: 1344x768
+    seed: 78152
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, A successful mission aftermath: Six sacks, paid in crown brass, carried by night. The miller counted the coins twice and did not look at the faces., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-hidden-bread-failure
+    lane: arthemy-house
+    title: "Bread Without Questions (failure)"
+    quest: "r-hidden-bread"
+    variant: failure
+    asset: "quests/r-hidden-bread-failure"
+    size: 1344x768
+    seed: 78153
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, The consequences of an unsuccessful mission: The miller took one look at the party and shut his door. The Yard ate thin soup that week., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-checkpoint-notice
+    lane: arthemy-house
+    title: "The Toll at the Crossing (notice)"
+    quest: "r-checkpoint"
+    variant: notice
+    asset: "quests/r-checkpoint"
+    size: 1344x768
+    seed: 78154
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, exposed road and guarded river crossing through dry foothills, Opening situation: The buyer’s men hold the river crossing and stop everyone. A letter has to reach the far bank. A purse of 10 brass may get it across. So may a good lie., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-checkpoint-success
+    lane: arthemy-house
+    title: "The Toll at the Crossing (success)"
+    quest: "r-checkpoint"
+    variant: success
+    asset: "quests/r-checkpoint-success"
+    size: 1344x768
+    seed: 78155
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, exposed road and guarded river crossing through dry foothills, A successful mission aftermath: The sergeant at the crossing took the purse and did not count it. The letter is on the far bank., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-checkpoint-failure
+    lane: arthemy-house
+    title: "The Toll at the Crossing (failure)"
+    quest: "r-checkpoint"
+    variant: failure
+    asset: "quests/r-checkpoint-failure"
+    size: 1344x768
+    seed: 78156
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, exposed road and guarded river crossing through dry foothills, The consequences of an unsuccessful mission: The sergeant read the letter, smiled and kept it. The party walked home the long way, through the river., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-last-straggler-notice
+    lane: arthemy-house
+    title: "One More on the Road (notice)"
+    quest: "r-last-straggler"
+    variant: notice
+    asset: "quests/r-last-straggler"
+    size: 1344x768
+    seed: 78157
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, Opening situation: A cook from the tower kitchens is walking the roads at night calling for the court by name. Someone has to bring her in before someone else does., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-last-straggler-success
+    lane: arthemy-house
+    title: "One More on the Road (success)"
+    quest: "r-last-straggler"
+    variant: success
+    asset: "quests/r-last-straggler-success"
+    size: 1344x768
+    seed: 78158
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, A successful mission aftermath: She was sitting in a ditch with her shoes in her lap. She had walked eleven miles. She asked if anyone had eaten., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-last-straggler-failure
+    lane: arthemy-house
+    title: "One More on the Road (failure)"
+    quest: "r-last-straggler"
+    variant: failure
+    asset: "quests/r-last-straggler-failure"
+    size: 1344x768
+    seed: 78159
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, pale salt-trading road by a patched wasteland fortress, market stalls and old wagon tracks, The consequences of an unsuccessful mission: Riders found her first. The party heard it from the trees and could not get there., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-face-at-window-notice
+    lane: arthemy-house
+    title: "A Face at the Window (notice)"
+    quest: "r-face-at-window"
+    variant: notice
+    asset: "quests/r-face-at-window"
+    size: 1344x768
+    seed: 78160
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, Opening situation: Someone in the next village has been asking where the old court sleeps, and paying for answers. Find who is asking before the answer gets back to the tower., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-face-at-window-success
+    lane: arthemy-house
+    title: "A Face at the Window (success)"
+    quest: "r-face-at-window"
+    variant: success
+    asset: "quests/r-face-at-window-success"
+    size: 1344x768
+    seed: 78161
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, A successful mission aftermath: A tinker with a buyer’s token sewn in his hat. The party took the hat. They let him keep his head. He left at a run., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
+  - key: eodq2-r-face-at-window-failure
+    lane: arthemy-house
+    title: "A Face at the Window (failure)"
+    quest: "r-face-at-window"
+    variant: failure
+    asset: "quests/r-face-at-window-failure"
+    size: 1344x768
+    seed: 78162
+    negative: "(nude:1.4), nsfw, lowres, blurry, watermark, writing, signature, caption, logo, human, photorealism, gore, illegible faces, distorted paws"
+    prompt_tags: "storytelling scene, original anthropomorphic animal-folk frontier setting, river ford and Freehold farms under dry hills, weathered bridges and rough barns, The consequences of an unsuccessful mission: The tinker had friends. The court moved its stores in the night and lost ten brass of them on the road., action and reaction visible in one composition, expressive anthropomorphic residents in practical frontier clothing, readable foreground and deep environmental context"
