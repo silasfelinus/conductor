@@ -247,7 +247,23 @@ def execute_comfy(base, workflow, result, timeout_seconds=10800):
         if entry:
             status = entry.get("status", {})
             if status.get("status_str") == "error":
-                raise RuntimeError("Comfy execution failed: " + str(status.get("messages", []))[-1500:])
+                errors = [
+                    item[1] for item in status.get("messages", [])
+                    if isinstance(item, (list, tuple)) and len(item) == 2
+                    and item[0] == "execution_error" and isinstance(item[1], dict)
+                ]
+                if errors:
+                    detail = errors[-1]
+                    raise RuntimeError(
+                        f"Comfy execution failed for prompt {prompt_id}, "
+                        f"node {detail.get('node_type', 'unknown')}: "
+                        f"{detail.get('exception_type', 'Error')}: "
+                        f"{detail.get('exception_message', 'no decoder detail')}"
+                    )
+                raise RuntimeError(
+                    f"Comfy execution failed for prompt {prompt_id}: "
+                    + str(status.get("messages", []))[-1500:]
+                )
             videos = list(saved_video_files(entry))
             if videos:
                 download_output(base, videos[0], result)
@@ -288,7 +304,50 @@ def extract_window(source, start_time, dest):
                 "tpad=stop_mode=clone:stop_duration=5,trim=end_frame=65,"
                 "setpts=PTS-STARTPTS",
          "-frames:v", str(WINDOW), "-an", "-c:v", "libx264",
-         "-pix_fmt", "yuv420p", str(dest)])
+         "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(dest)])
+
+
+def verify_motion_input(path):
+    """Reject partial/stale Comfy inputs before the native PyAV video loader opens them."""
+    try:
+        output = subprocess.check_output(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0",
+             "-count_frames",
+             "-show_entries", "stream=codec_name,pix_fmt,width,height,nb_read_frames",
+             "-of", "json", str(path)],
+            stderr=subprocess.STDOUT, timeout=90,
+        )
+        streams = json.loads(output).get("streams") or []
+        video = streams[0] if streams else {}
+        if (video.get("codec_name") != "h264"
+                or video.get("pix_fmt") != "yuv420p"
+                or video.get("width") != 720 or video.get("height") != 480
+                or int(video.get("nb_read_frames") or 0) != WINDOW):
+            raise ValueError("wrong codec, dimensions or frame count")
+        run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-xerror",
+             "-i", str(path), "-an", "-f", "null", "-"])
+    except (ValueError, subprocess.SubprocessError, RuntimeError) as error:
+        raise ValueError(
+            f"Motion input {path.name} is not a complete, decodable "
+            f"{WINDOW}-frame H.264 MP4: {error}"
+        ) from error
+
+
+def stage_motion_input(guide, staged):
+    """Reuse only verified clips; publish replacements atomically for Comfy's PyAV."""
+    if staged.is_file():
+        try:
+            verify_motion_input(staged)
+            return
+        except ValueError:
+            pass
+    temporary = staged.with_name(staged.stem + "." + uuid.uuid4().hex + ".tmp.mp4")
+    try:
+        shutil.copyfile(guide, temporary)
+        verify_motion_input(temporary)
+        os.replace(temporary, staged)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def window_style_prompts(job, window_count):
@@ -504,8 +563,7 @@ def _render_unlocked(job_path, job, meta, source, pilot, frame_count, spans, arg
                 extract_window(source, pilot["startSec"] + start_frame / FPS, guide)
                 input_name = f"coatdance_{job['id']}_{signature}_{index:03d}.mp4"
                 staged = args.comfy_input / input_name
-                if not staged.exists():
-                    shutil.copyfile(guide, staged)
+                stage_motion_input(guide, staged)
                 prompt = window_prompt(
                     styles[index] if styles else job["renderRecipe"]["stylePrompt"],
                     styles is not None,
