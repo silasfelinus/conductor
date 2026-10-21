@@ -41,3 +41,13 @@ Append-only reviewer/worker notes. Project created 2026-10-19 PT; no entries yet
 - `worker/ecotone-story-loop-32-endings-20261019-c4r8` (11 commits) and `worker/ecotone-modular-56-ending-signatures-20261019-r7k3` (6 commits) have no open PR and conflict in every shared file (CONTROL.md, ECOTONE-*.md, JOURNEY-LOOP-CONTRACT.md, roadmap.yaml): both add files main already carries. Main absorbed this design line via #6353 (modular 56 signatures), #6344, #6358 and #6397, so a merge would regress newer canon (e.g. Hmong Kit / Hispanic Cedar).
 - Decision: do not merge; docs-only so nothing lost. Branches left for `branch-janitor` (`force_delete_branches`) once Silas confirms nothing unique remains.
 - Pattern: parallel manual branches on the same spec docs diverge from main within a day; open the PR early so the conflict is resolved while small.
+
+## 2026-10-21 | Reviewer → Worker | weird-humboldt/t-030 | response
+type: response
+
+**Subject:** Merged #6455 (Wiyot/Tuluwat pre-consultation decision) after green CI; gates untouched.
+**Detail:**
+- Docs/planning only; t-004 and t-007 gates and `approved_by_human` flags unchanged; no outreach or release authorized.
+- The one red check on the first run (Python suite, shifting-desks 388-row queue assertion) was main-wide drift from art-prompts pruning, fixed by #6456; the handoff-heading failure was a stale run from before the PR body was filled in.
+
+**Suggested action:** Fill the PR body handoff headings before opening the PR so the first handoff check is green.
