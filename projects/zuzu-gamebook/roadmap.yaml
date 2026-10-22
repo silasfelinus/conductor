@@ -355,8 +355,8 @@ tasks:
   - id: t-011
     milestone: m5
     title: Continuing autonomous chapter, art and balance evolution
-    status: claimed
-    updated: '2026-10-22T21:29:51.941Z'
+    status: review
+    updated: '2026-10-22T21:32:26.002Z'
     passes: 0
     recurring: true
     stakes: reversible
@@ -371,6 +371,8 @@ tasks:
       PR silasfelinus/kind_robots#4032 adds replayable starting-seed route witnesses for all endings and combat benchmarks; adjusts Guard, Feint and Quiet Draw. CI and gameplay balances undergoing adversarial verification. No art or publication in scope.
 
       2026-10-22 PT: Merged silasfelinus/kind_robots#4032 (squash d3c135a4ce368be89e861e2146011010a8465a32) after 16/16 current-head GitHub workflows passed, including TypeScript, formatting and all contract shards. The gamebook CI now proves legitimate start-to-end, reducer-replayed witnesses for all 15 endings; Wren's Lamp on final head used seed 5891737, 124 moves, finishing at 2 HP, after acquiring wren-ally normally. Combat benchmarks cover all six authored fights with four strategies (250 seeds per strategy); Guard opens counters, Feint deals 3 and softens retaliations, Quiet Draw deals 5 at 2 Resolve. Abbess Feint 56 percent versus Strike 44 percent; Hollis Feint 44 versus Strike 10 percent. The four-file scoped change had no new ArtJobs or database writes. Recurring work remains available for narrative polish, golden replay fixtures, tougher route stress, artwork gaps and device review; t-009 still depends on other milestones.
+
+      Scoped follow-up: compact immutable end-to-end golden replay encoding, scene-and-flag fingerprints, and six-encounter wounded/low-Resolve combat stress matrix. Working branch worker/zuzu-gamebook-t011-golden-wounded-b7e42. CI and frozen fixture snapshots pending.
     owner: worker
     claimed_by: 20261022T212951Z-zuzu-gamebook-t011-golden-b7e42
     claimed_at: '2026-10-22T21:29:51.941Z'
