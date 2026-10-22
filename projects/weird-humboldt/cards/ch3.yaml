@@ -977,3 +977,216 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-050
+  revision: 1
+  chapter: 3
+  location: Eureka F Street waterfront / Perilous Plunge
+  title: The Hot Tub Oracle
+  tier: invented
+  provenance: The F Street waterfront and Perilous Plunge are real; the prophesying hot tub and its bubble readings are invented fiction.
+  rarity: uncommon
+  tone:
+  - funny
+  - warm
+  - dubious
+  cast:
+  - The Hot Tub Oracle (dubious, comfortable)
+  - Steam (a chorus)
+  canon:
+  - The Oracle only prophesies after a plunge, and only in bubbles.
+  - Its predictions are dubious; its sincerity is complete.
+  - No one has ever been harmed by a prophecy, only inconvenienced.
+  scene: 'Past the Plunge, a salvaged hot tub rests in a lot with a hand-lettered sign: BUBBLES TELL. Steam rises in careful spirals. When you approach, the water rearranges itself into a single, solemn burble, then a long one. "You will meet a person who wants a very small favor," the tub announces. Its voice is the sound of a towel and a sigh.'
+  options:
+  - id: a
+    label: Ask a specific question and read the bubbles
+    skill: wits
+    target: 9
+    success:
+      text: The bubbles spell a street and a time. It matches the schedule on a ferry flyer you saw earlier, and you trust the tub more than you expected.
+      effects:
+      - evidence:schedule
+      - flag:oracle_read
+    failure:
+      text: The bubbles seem to predict lunch and nothing else. You come away warm and with no usable information.
+      effects:
+      - time-1
+  - id: b
+    label: Flatter the Oracle sincerely
+    skill: rizz
+    target: 7
+    success:
+      text: 'The tub purrs, and gives you the real prophecy in plain language: a local you trust is hiding something small and kind.'
+      effects:
+      - evidence:rumor
+      - goodwill+1
+      - flag:oracle_flattered
+    failure:
+      text: The Oracle detects flattery and gives you a deliberately useless prediction about socks.
+      effects:
+      - nerve-1
+  - id: c
+    label: Soak a hand and say nothing
+    skill: none
+    target: null
+    success:
+      text: You hold still in the warm water for a long minute. The tub whispers a single vague blessing. It costs a free draw but eases your nerves.
+      effects:
+      - flag:oracle_soaked
+      - nerve+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara dips two fingers in. "Water is good. Whoever maintains this does it right. I would trust it with a tattoo, nearly."
+    kit: Kit grins. "A prophecy with a deposit and a lid. The best kind."
+    juniper: Juniper listens to the steam. "It says what it hopes for, not what it knows. Be kind to it."
+    cedar: Cedar eyes the pump. "No wire, no heater, still hot. Which is more suspicious than any prophecy."
+  callbacks:
+  - oracle_read
+  - oracle_flattered
+  - oracle_soaked
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-052
+  revision: 1
+  chapter: 3
+  location: Humboldt Bay
+  title: The Missing Channel Marker
+  tier: invented
+  provenance: Humboldt Bay channel markers are real navigation aids; the buoy that strikes because the sea keeps lying is invented fiction.
+  rarity: common
+  tone:
+  - dry
+  - salty
+  - labor
+  cast:
+  - Buoy 11 (on strike, loudly)
+  - The Harbor Pilot (sympathetic, overworked)
+  canon:
+  - The marker has left its post and floats in the shallows with a picket sign.
+  - It says the sea keeps changing its story about where the channel is.
+  - It will return to work only when someone can show it a true line.
+  scene: 'A red channel marker bobs in the shallows, far from its post, carrying a tiny hand-painted picket sign: ON STRIKE. It rings its bell in an aggrieved rhythm. "The sea keeps lying," it complains. "Yesterday the channel was here. Today it is there. I am a navigational aid, not a fortune teller." A harbor pilot on the dock shrugs and offers you a thermos.'
+  options:
+  - id: a
+    label: Survey the channel and draw a true line
+    skill: wits
+    target: 9
+    success:
+      text: You pace the shoreline and chart a channel the sea cannot dispute. The marker rings once, satisfied, and returns to its post with a nod.
+      effects:
+      - evidence:geography
+      - flag:marker_restored
+      - goodwill+1
+    failure:
+      text: Your map is half right, which is the most annoying kind. The marker remains on strike and the pilot sighs.
+      effects:
+      - time-1
+      - flag:marker_unconvinced
+  - id: b
+    label: Negotiate with the marker like a union rep
+    skill: rizz
+    target: 9
+    success:
+      text: 'You win it a promise: a chart posted daily, and a lunch break at slack tide. It agrees and gives you a bell chime for the road.'
+      effects:
+      - flag:marker_union
+      - goodwill+1
+      - evidence:schedule
+    failure:
+      text: The marker finds you condescending and rings its bell until your ears ring back.
+      effects:
+      - nerve-1
+  - id: c
+    label: Buy the pilot's thermos and listen to the grievance
+    skill: none
+    target: null
+    success:
+      text: Coffee and sympathy are a tonic. The pilot names two local secrets about the bay's moods. The long chat costs you a free draw.
+      effects:
+      - flag:marker_heard
+      - evidence:rumor
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara reads the picket sign. "Hand-lettered, steady. Whoever paints that is serious about their craft."
+    kit: Kit marches beside the buoy. "Solidarity forever! Do you take requests?"
+    juniper: Juniper murmurs. "The sea lies because it is tired. Tell the marker it is not alone."
+    cedar: Cedar crosses his arms. "A strike is a fair thing. The sea should send a rep and a better map."
+  callbacks:
+  - marker_restored
+  - marker_unconvinced
+  - marker_union
+  - marker_heard
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-054
+  revision: 1
+  chapter: 3
+  location: Humboldt Bay
+  title: The Tide Returns a Bicycle
+  tier: invented
+  provenance: The bay's tides are real; the rustless bicycle carrying evidence of a forgotten trip is invented fiction.
+  rarity: uncommon
+  tone:
+  - eerie
+  - quiet
+  - nostalgic
+  cast:
+  - The Bicycle (rustless, expectant)
+  - A Basket of Evidence (damp, tidy)
+  canon:
+  - The bicycle has never rusted, though it was submerged.
+  - The basket holds a ticket, a map and a photo of someone you do not remember.
+  - Nobody in the county has reported the bike lost.
+  scene: At dawn the tide leaves a bicycle on the mudflat, upright on its kickstand. It is spotless. The chain gleams. In the basket sit a damp ferry ticket, a hand-drawn map and a photograph of a person laughing beside this very bike. They look like someone you should know. You do not. The tide goes out as if it just handed you a secret.
+  options:
+  - id: a
+    label: Follow the map to its marked spot
+    skill: local_lore
+    target: 9
+    success:
+      text: The map leads to a bench by the sloughs. A carved date on the back matches a ferry run from long ago, and you gather real history.
+      effects:
+      - evidence:history
+      - flag:bike_map_followed
+    failure:
+      text: The map loops back on itself and leaves you muddy and no wiser.
+      effects:
+      - time-1
+      - nerve-1
+  - id: b
+    label: Study the photograph for faces and places
+    skill: wits
+    target: 7
+    success:
+      text: 'Behind the laughing person is a sign you can read: a shop that closed years ago. You note the name and the street.'
+      effects:
+      - evidence:memory
+      - flag:bike_photo_read
+    failure:
+      text: The photo smudges as you hold it. Whatever it knew, it has decided to forget again.
+      effects:
+      - nerve-1
+  - id: c
+    label: Ride the bicycle a short way
+    skill: none
+    target: null
+    success:
+      text: It carries you like a bike that knows the route. A memory not yours flickers by. You trade a free draw to follow it to the road.
+      effects:
+      - flag:bike_ridden
+      - weird+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara studies the chain. "Hand-oiled, recently. Somebody has been caring for this one right up until the tide."
+    kit: Kit tests the bell with a grin. "I do not remember whose it is, but I would like to give it back."
+    juniper: Juniper rests a hand on the seat. "It remembers someone. That is more than most of us manage."
+    cedar: Cedar kneels at the kickstand. "No salt crust anywhere. This was never in water. It was somewhere else, waiting."
+  callbacks:
+  - bike_map_followed
+  - bike_photo_read
+  - bike_ridden
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

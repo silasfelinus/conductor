@@ -16,9 +16,9 @@ def test_deck_is_valid():
 
 def test_deck_shape():
     cards = wh.load_cards()
-    assert len(cards) == 96
+    assert len(cards) == 114
     assert {c["chapter"] for c in cards} == {1, 2, 3, 4, 5, 6}
-    assert len({c["id"] for c in cards}) == 96
+    assert len({c["id"] for c in cards}) == 114
 
 
 def test_playtest_is_deterministic_and_states_keep_canon():

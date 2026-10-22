@@ -974,3 +974,213 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-089
+  revision: 1
+  chapter: 5
+  location: Fortuna
+  title: The Lost Receipt of Destiny
+  tier: invented
+  provenance: Fortuna is a real town; the receipt for an object not yet invented, and the cashier who recognizes it, are invented fiction.
+  rarity: uncommon
+  tone:
+  - dry
+  - funny
+  - mysterious
+  cast:
+  - The Cashier (unflappable, nametag blurred)
+  - The Receipt (long, curling, future)
+  canon:
+  - The receipt is for an object that has not been invented yet.
+  - The cashier recognizes it and will not say how.
+  - The item is already paid for by someone who has not been born.
+  scene: 'At a Fortuna register, a customer''s receipt prints a line you cannot parse: ONE (1) HORIZON KETTLE, PAID IN FULL, THANK YOU COME AGAIN. The cashier studies it and goes pale. "I have seen this one before," she says. "It is always the same item and it is always already paid." The receipt keeps printing, longer than any register should allow, curling toward your hand.'
+  options:
+  - id: a
+    label: Ask the cashier to explain what she knows
+    skill: rizz
+    target: 9
+    success:
+      text: She slides a wrinkled, older receipt across the counter. It gives you a date and an address, and she trusts you enough to say where.
+      effects:
+      - evidence:document
+      - goodwill+1
+      - flag:receipt_cashier_trusted
+    failure:
+      text: She clams up, calls for a manager, and the receipt tears itself in half out of what looks like spite.
+      effects:
+      - nerve-1
+  - id: b
+    label: Read the fine print along the receipt's length
+    skill: wits
+    target: 9
+    success:
+      text: Buried in the footer is a return policy with an actual deadline, and a coordinate. You note both for later.
+      effects:
+      - evidence:schedule
+      - flag:receipt_fine_print
+    failure:
+      text: The text loops into a coupon for a tomorrow that has not come. You lose a good chunk of time reading it.
+      effects:
+      - time-1
+  - id: c
+    label: Pay the missing amount on the receipt
+    skill: none
+    target: null
+    success:
+      text: A few coins and a promise. The receipt stops printing and folds itself into your pocket as a keepsake. It costs a free draw.
+      effects:
+      - flag:receipt_paid
+      - weird+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara studies the font. "Foundry type, deliberately old. Someone wants this to look trusted."
+    kit: Kit puts a coin on the counter with a flourish. "Never argue with a receipt. Just pay."
+    juniper: Juniper watches the paper. "It is a promise from someone yet to be. Handle it gently."
+    cedar: Cedar scans the totals. "No tax. Whoever prints this is not in our system. I would keep it quiet."
+  callbacks:
+  - receipt_cashier_trusted
+  - receipt_fine_print
+  - receipt_paid
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-093
+  revision: 1
+  chapter: 5
+  location: Avenue of the Giants
+  title: A Roadside Attraction for Ghost Cars
+  tier: invented
+  provenance: The Avenue of the Giants has real roadside attractions; the invisible tourist ghost cars and abandoned exhibit are invented fiction.
+  rarity: common
+  tone:
+  - funny
+  - eerie
+  - nostalgic
+  cast:
+  - The Ticket Booth (rusted, optimistic)
+  - The Ghost Cars (idling, polite)
+  canon:
+  - Invisible tourists keep buying tickets to an exhibit that closed decades ago.
+  - The booth makes change for nobody.
+  - The exhibit is a single tree with a hand-painted sign.
+  scene: Along the road, a ticket booth sits in front of a closed, faded exhibit. Yet the till counts coins as you watch. A line of unseen cars idles in the gravel, engines humming low, headlights tracing faint cones. A hand-painted sign reads WORLD'S MOST PATIENT TREE, ADULTS 25 CENTS. The booth speaks in a cheerful rasp. "Every one of them leaves a good review."
+  options:
+  - id: a
+    label: Buy a ticket and tour the exhibit
+    skill: none
+    target: null
+    success:
+      text: You pay with a quarter, walk the path, and hear the quiet admiration of a hundred invisible visitors. It costs a free draw but earns a peaceful moment.
+      effects:
+      - flag:ghostcars_toured
+      - goodwill+1
+      - lose:free_draw
+  - id: b
+    label: Ask the booth who is in line
+    skill: rizz
+    target: 7
+    success:
+      text: The booth lists the make, model and year of every ghost car, and tells you which of them are still looking for someone local.
+      effects:
+      - evidence:rumor
+      - flag:ghostcars_listed
+      - goodwill+1
+    failure:
+      text: The booth hears an accusation and shutters its window for a full minute.
+      effects:
+      - time-1
+  - id: c
+    label: Study the tire tracks and dates on the gravel
+    skill: local_lore
+    target: 9
+    success:
+      text: The tracks span decades. You identify the road's old alignment, a detour that the modern map omits.
+      effects:
+      - evidence:geography
+      - flag:ghostcars_tracks
+    failure:
+      text: The gravel is a mess of every era at once, and you walk away with a headache and dusty shoes.
+      effects:
+      - nerve-1
+  lead_reactions:
+    mara: Mara studies the sign lettering. "Signpainter's hand, loving and unhurried. They believed in this tree."
+    kit: Kit tips an imaginary hat at the empty lot. "Welcome, friends. May the road be kind and the gas cheap."
+    juniper: Juniper walks the line slowly. "They are not trapped. They simply love the tree too much to leave."
+    cedar: Cedar checks the till. "Real change counted by no hands. I would not touch it, but I would not insult it either."
+  callbacks:
+  - ghostcars_toured
+  - ghostcars_listed
+  - ghostcars_tracks
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-098
+  revision: 1
+  chapter: 5
+  location: Eel River Valley
+  title: The Farmer's Unmarked Helicopter
+  tier: invented
+  provenance: The Eel River Valley is real farm country; the low-flying craft with a pilot that knows zoning rules is invented fiction.
+  rarity: uncommon
+  tone:
+  - dry
+  - tense
+  - funny
+  cast:
+  - The Pilot (unseen, bureaucratic)
+  - A Farmer (standing in the field, unimpressed)
+  canon:
+  - The helicopter hovers low and never lands on land zoned for agriculture.
+  - Its pilot quotes the county code with unsettling accuracy.
+  - It is not hostile; it is auditing.
+  scene: 'An unmarked helicopter hovers over a hay field, close enough to flatten the grass in spirals. A farmer leans on a fence with a thermos, unimpressed. "It does that every week," he says. A loudspeaker clicks on, and a calm voice recites: "Parcel 14 is zoned agricultural. No aircraft may touch the soil. We are merely observing." The grass whispers agreement.'
+  options:
+  - id: a
+    label: Wave the pilot down and ask a polite question
+    skill: rizz
+    target: 9
+    success:
+      text: The craft dips and a window opens a crack. The pilot admits to a permit, and passes down a laminated map of county land use.
+      effects:
+      - evidence:document
+      - flag:heli_greeted
+      - goodwill+1
+    failure:
+      text: The pilot warns you about trespass and rises with a disapproving whir.
+      effects:
+      - nerve-1
+  - id: b
+    label: Check the county code on the fence post notice
+    skill: local_lore
+    target: 9
+    success:
+      text: You find the exact clause the pilot cites, and a loophole for lawful visitors. The rule gives you a map of the valley's zones.
+      effects:
+      - evidence:geography
+      - flag:heli_code_read
+    failure:
+      text: The notice is in legalese so dense you lose an hour parsing it.
+      effects:
+      - time-1
+  - id: c
+    label: Offer the farmer a hand with a stuck gate
+    skill: none
+    target: null
+    success:
+      text: The farmer accepts, and the helicopter watches with what feels like approval. A free draw is spent, but the farmer shares a rumor.
+      effects:
+      - flag:heli_helped
+      - evidence:rumor
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara shields her eyes. "No registration number, no logo. Whoever flies that wants to be unmemorable."
+    kit: Kit salutes the craft cheerfully. "If it is auditing the hay, I salute its patience."
+    juniper: Juniper listens to the rotor. "It does not hunt. It checks on things and goes home."
+    cedar: Cedar spits in the dust. "Zoning is a real thing. A flying zoning officer is an overachiever."
+  callbacks:
+  - heli_greeted
+  - heli_code_read
+  - heli_helped
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

@@ -972,3 +972,220 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-115
+  revision: 1
+  chapter: 6
+  location: Humboldt Bay · kinetic water crossing
+  title: The Race Officials' Secret Ballot
+  tier: invented
+  provenance: The Kinetic Grand Championship has real race officials and rules; the secret ballot deciding which version of the county survives is invented fiction.
+  rarity: rare
+  tone:
+  - tense
+  - dry
+  - civic
+  cast:
+  - The Chief Judge (impartial, sleepless)
+  - Four Officials (each from a different version of the county)
+  canon:
+  - The officials quietly vote on which version of the county continues.
+  - Each ballot is cast in private and counted at the finish.
+  - A player may speak to the officials but never see a ballot.
+  scene: At the bay crossing, a folding table holds a wooden ballot box with a brass slot. Four officials in matching armbands stand around it, each from a different version of the county, each perfectly polite. "We vote on who finishes," says the chief judge, "and what finishing means." Nobody tells you which of you is on the ballot. A damp ribbon is pinned to the table like a verdict.
+  options:
+  - id: a
+    label: Make your case to the officials directly
+    skill: rizz
+    target: 11
+    success:
+      text: A hush, then three nods. The chief judge slides you a ribbon, and quietly marks your name on a slip you are not meant to see.
+      effects:
+      - flag:ballot_pleaded
+      - goodwill+1
+      - evidence:document
+    failure:
+      text: The officials listen, then shuffle their papers in unison. Nobody says no, which is its own answer.
+      effects:
+      - nerve-1
+      - flag:ballot_cold
+  - id: b
+    label: Review the rulebook for what counts as finishing
+    skill: wits
+    target: 9
+    success:
+      text: Rule 14 allows a witness to be named to the count. You note the clause and the deadline for naming one.
+      effects:
+      - evidence:schedule
+      - flag:ballot_rulebook
+    failure:
+      text: The rulebook has three versions and all disagree. You lose time reconciling them.
+      effects:
+      - time-1
+  - id: c
+    label: Offer to carry the ballot box to the finish
+    skill: none
+    target: null
+    success:
+      text: The chief judge accepts, grave and grateful. You carry it carefully, and it costs you a free draw but earns real trust.
+      effects:
+      - flag:ballot_carried
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara studies the brass slot. "Hand-polished. Someone has been counting these a very long time."
+    kit: Kit takes off his hat. "Civic duty and a funny hat. My two favorite things."
+    juniper: Juniper rests a hand on the table. "The county is deciding who it wants to be. Choose with it, not against it."
+    cedar: Cedar nods at the box. "I like a secret ballot. I like a witness more."
+  callbacks:
+  - ballot_pleaded
+  - ballot_cold
+  - ballot_rulebook
+  - ballot_carried
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-118
+  revision: 1
+  chapter: 6
+  location: Ferndale finish / awards
+  title: The Ghost of Hobart's Contraption
+  tier: invented
+  provenance: The Kinetic Grand Championship's founding in Ferndale is documented history; the contraption's spirit and its final request are invented fiction and name no real person as a ghost.
+  rarity: rare
+  tone:
+  - warm
+  - mechanical
+  - bittersweet
+  cast:
+  - The Contraption (a legendary machine, humming)
+  - The Old Welder (unseen, remembered in the weld lines)
+  canon:
+  - The contraption inspired the whole race and now asks for one last impossible modification.
+  - The modification is a thing the machine itself cannot do.
+  - Anyone can help; nobody has to.
+  scene: 'In a corner of the finish lot sits a contraption older than the race it inspired, all bicycle frame, sculpted fins and hopeful bolts. It hums like a hymn. A pulled tag reads ONE LAST CHANGE. The contraption does not speak, but the welds on its frame glow in careful letters: I WOULD LIKE TO FLOAT AND ROLL AND FLY. A small crowd waits, hats off.'
+  options:
+  - id: a
+    label: Sketch an impossible modification together
+    skill: wits
+    target: 11
+    success:
+      text: You draw a design that cannot work and works anyway. The machine's hum rises in a long, joyful chord, and its welds spell out a gift.
+      effects:
+      - evidence:history
+      - flag:contraption_designed
+      - goodwill+1
+    failure:
+      text: The design collapses on paper, but the crowd forgives you. The contraption rests, unfinished and not unhappy.
+      effects:
+      - nerve-1
+      - flag:contraption_sketched
+  - id: b
+    label: Tighten a loose bolt and thank it for the years
+    skill: burly
+    target: 7
+    success:
+      text: The bolt turns with a sigh. The contraption leans against you for a moment, and gives you a gleaming washer worth more than it looks.
+      effects:
+      - flag:contraption_thanked
+      - goodwill+1
+      - evidence:memory
+    failure:
+      text: The bolt strips and the crowd winces. The machine quietly forgives you.
+      effects:
+      - time-1
+  - id: c
+    label: Sit with it in silence until the crowd leaves
+    skill: none
+    target: null
+    success:
+      text: Time passes in the way it does around old things. When you rise the machine looks lighter. It costs a free draw and warms your nerve.
+      effects:
+      - flag:contraption_sat
+      - nerve+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara touches a weld seam. "Handmade, honest, a little crooked. This is what love looks like in steel."
+    kit: Kit bows low. "It asks for something impossible. That is the whole point of the race."
+    juniper: Juniper presses a palm to the frame. "It wants a blessing, not a repair."
+    cedar: Cedar tests a joint. "Everything on this machine was built by someone who refused to be told no."
+  callbacks:
+  - contraption_designed
+  - contraption_sketched
+  - contraption_thanked
+  - contraption_sat
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-119
+  revision: 1
+  chapter: 6
+  location: Ferndale finish / awards
+  title: Every Version of the Winner
+  tier: invented
+  provenance: The Ferndale finish and awards are a real festival tradition; the five parallel champions who all insist they already met the player are invented fiction.
+  rarity: rare
+  tone:
+  - funny
+  - uncanny
+  - tense
+  cast:
+  - Five Champions (each convinced, each different)
+  - The Podium (crowded)
+  canon:
+  - Five parallel champions each claim to have met the player before.
+  - Each remembers a different version of that meeting, and each is partly right.
+  - Only one of them can stand on the top step at a time.
+  scene: 'The podium is crowded: five champions in five different race outfits, each holding a trophy, each beaming at you. "We met at the plaza," says one. "At the dunes," says another. "You owe me a favor," says the third, kindly. Their stories fit together like mismatched gears and none of them lies. The announcer asks softly who will stand first.'
+  options:
+  - id: a
+    label: Listen to each version and find what they share
+    skill: psyche
+    target: 11
+    success:
+      text: 'The five accounts converge on one fact you can use: a debt of kindness the county owes you. You name it and the champions applaud.'
+      effects:
+      - evidence:memory
+      - flag:winners_reconciled
+      - goodwill+1
+    failure:
+      text: The stories braid into a headache. You nod politely and promise nothing.
+      effects:
+      - nerve-1
+      - flag:winners_tangled
+  - id: b
+    label: Ask each champion for one honest detail about yourself
+    skill: rizz
+    target: 9
+    success:
+      text: Each gives you a small, true thing. Together they sketch someone you almost recognize, and you carry the portrait forward.
+      effects:
+      - evidence:document
+      - flag:winners_portrait
+    failure:
+      text: Two of them describe contradictory scars. Everyone laughs, a little too long.
+      effects:
+      - time-1
+  - id: c
+    label: Step aside and let them decide the order
+    skill: none
+    target: null
+    success:
+      text: They argue gently, sort it out, and one gives you a slice of a victory cake. The wait costs a free draw but earns quiet goodwill.
+      effects:
+      - flag:winners_deferred
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara studies the five outfits. "Five different tailors, one signature stitch. They are all you or all us."
+    kit: Kit counts the trophies, delighted. "Five champions and one cake. That is a good day."
+    juniper: Juniper looks at each in turn. "Every one of them loved you a little. That is not a trap."
+    cedar: Cedar tilts his head. "Same face in five coats. I would keep a straight face and a stack of receipts."
+  callbacks:
+  - winners_reconciled
+  - winners_tangled
+  - winners_portrait
+  - winners_deferred
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

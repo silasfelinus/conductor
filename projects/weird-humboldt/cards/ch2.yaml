@@ -975,3 +975,216 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-034
+  revision: 1
+  chapter: 2
+  location: Luffenholtz Beach
+  title: Underwater Open Mic
+  tier: invented
+  provenance: Luffenholtz is a real beach; the sea-creature comedy club and its tremor-causing punch lines are invented fiction.
+  rarity: uncommon
+  tone:
+  - funny
+  - salty
+  - strange
+  cast:
+  - Mr. Whelk (host, hermit crab, tired of tourists)
+  - The Anemone Trio (opening act)
+  canon:
+  - The open mic runs only at low tide, in the pool beneath the arch.
+  - A joke that lands makes the rocks shake harmlessly.
+  - Humans may attend if they tip in shells and sea glass.
+  scene: Beneath the sea arch, a tide pool glows with a stage light made of sunset and algae. A hermit crab taps a microphone made of kelp. "Is this thing on? Of course it is. It is a tide pool." The anemones giggle and the stones tremble. A flounder at the back table heckles, loudly, and a small earthquake of laughter rolls through the sand under your boots.
+  options:
+  - id: a
+    label: Take the mic and do five minutes
+    skill: rizz
+    target: 9
+    success:
+      text: Your joke about the tide table lands, and the arch hums with delight. The host pays you in a hand-polished piece of sea glass worth more than it looks.
+      effects:
+      - flag:openmic_set
+      - evidence:rumor
+      - goodwill+1
+    failure:
+      text: Your punch line dies in the water and a polite tremor of pity rattles the pool. Someone slides a napkin of sympathy over.
+      effects:
+      - nerve-1
+      - flag:openmic_bombed
+  - id: b
+    label: Study the crowd to learn what they find funny
+    skill: wits
+    target: 7
+    success:
+      text: You notice the comedy runs on tide-table puns and honest failure. You note the show's schedule of low tides, useful for plotting a route.
+      effects:
+      - evidence:schedule
+      - flag:openmic_studied
+    failure:
+      text: You overthink the audience and miss the best joke of the night, which cost you the next hour.
+      effects:
+      - time-1
+  - id: c
+    label: Tip generously and cheer from the back
+    skill: none
+    target: null
+    success:
+      text: A handful of sea glass earns you a table and a heckler's blessing. You trade a free draw for a quiet seat and a good story.
+      effects:
+      - flag:openmic_cheered
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara admires the glowing stage. "Bioluminescence for stage lighting. That is better design than most theaters."
+    kit: Kit leans in, thrilled. "Timing is everything. I would trade a month of juggling for these anemones' beat."
+    juniper: Juniper smiles at the tide pool. "They are not mocking us. They are laughing the way grief laughs."
+    cedar: Cedar frowns. "Tremors from jokes. I have a hunch which funny things hit the fault line the hardest."
+  callbacks:
+  - openmic_set
+  - openmic_bombed
+  - openmic_studied
+  - openmic_cheered
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-035
+  revision: 1
+  chapter: 2
+  location: Luffenholtz Beach
+  title: One Step Past the Stairs
+  tier: invented
+  provenance: The Luffenholtz access stairs are real; the final step opening onto a submerged suburban porch is invented fiction.
+  rarity: rare
+  tone:
+  - eerie
+  - quiet
+  - domestic
+  cast:
+  - The Porch Light (patient, left on)
+  - A Doormat (WELCOME, faded)
+  canon:
+  - The last stair opens onto a flooded porch in a suburb that does not exist above water.
+  - The porch light is always on and the door is never locked.
+  - Whoever lives inside has not left, only gone to bed.
+  scene: You count the beach stairs down, and the count comes out one too many. The last step is a porch step, with a doormat that says WELCOME in letters the sea has softened. Water laps around a screen door. A porch light burns, patient and yellow, as if someone just stepped out for the mail. A wind chime clinks underwater in a minor key.
+  options:
+  - id: a
+    label: Knock politely on the screen door
+    skill: rizz
+    target: 9
+    success:
+      text: A long moment, then a soft "come in" from deep inside. You are handed a mug of warm brine and a framed photo of the shoreline before the flood.
+      effects:
+      - evidence:memory
+      - flag:porch_welcomed
+      - goodwill+1
+    failure:
+      text: The knock echoes down the street of other porches and every light dims. You back away in the dark.
+      effects:
+      - nerve-1
+      - flag:porch_disturbed
+  - id: b
+    label: Read the mailbox and street signs
+    skill: local_lore
+    target: 9
+    success:
+      text: The street name is a dead-end road that the county renamed in 1962. You find the address on an old map and mark it on your own.
+      effects:
+      - evidence:geography
+      - flag:porch_located
+    failure:
+      text: The mailbox is full of wet junk mail addressed to someone who will never read it. You lose an hour sorting it.
+      effects:
+      - time-1
+  - id: c
+    label: Leave the porch light as you found it and climb back
+    skill: none
+    target: null
+    success:
+      text: You leave it burning. The stairs return to their right count, and the tide gives you a clean rise. The moment costs you a free draw.
+      effects:
+      - flag:porch_left_lit
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara touches the mat. "Doormats get stepped on for years. This one never was. Odd, for a house that sounds so loved."
+    kit: Kit lowers his voice. "I do not clown for a house. I will sit on the step and wait if it asks."
+    juniper: Juniper hums softly at the light. "Someone is not done being home. Be gentle."
+    cedar: Cedar studies the screen door. "Screens rust. This is brand new. Somebody replaces it every spring."
+  callbacks:
+  - porch_welcomed
+  - porch_disturbed
+  - porch_located
+  - porch_left_lit
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-036
+  revision: 1
+  chapter: 2
+  location: Mad River / Hammond Trail
+  title: The Rower Who Came Back Dry
+  tier: invented
+  provenance: The Mad River and Hammond Trail are real places; the boat returning upstream without moving the water is invented fiction.
+  rarity: common
+  tone:
+  - eerie
+  - dry
+  - gentle
+  cast:
+  - The Rower (dry, polite, mid-stroke)
+  - A Flat-bottomed Boat (smug)
+  canon:
+  - The boat travels upstream and the water behind it never moves.
+  - The rower is dry because the river does not touch him.
+  - He rows toward a meeting he is certain you arranged.
+  scene: A rowboat comes up the Mad River against the current. The water around it is perfectly still, a mirror in a moving stream. The rower is dry from hat to boots. "I have a meeting," he says, "with you. About the oars." He holds one up. It is bone dry and humming faintly with an unfinished sentence.
+  options:
+  - id: a
+    label: Take the oar and try a stroke
+    skill: burly
+    target: 9
+    success:
+      text: 'The oar bites air and water at once. For a moment you feel the river''s schedule: an upstream tide that only runs on certain nights.'
+      effects:
+      - evidence:schedule
+      - flag:rower_oar_taken
+    failure:
+      text: The oar will not take your grip. You drop it, and the river politely moves around the splash.
+      effects:
+      - nerve-1
+  - id: b
+    label: Ask about the meeting and who sent him
+    skill: psyche
+    target: 9
+    success:
+      text: He admits it was you, from a day not yet lived. He leaves a folded note in your pocket, written in your own handwriting.
+      effects:
+      - evidence:document
+      - flag:rower_note
+      - weird+1
+    failure:
+      text: He insists the meeting is already over and politely refuses to elaborate. You feel oddly dismissed.
+      effects:
+      - time-1
+  - id: c
+    label: Wave him on and wish him a good row
+    skill: none
+    target: null
+    success:
+      text: He nods, grateful, and the water slides back into its old flow. You lose a free draw to a lingering sense of having missed something.
+      effects:
+      - flag:rower_waved
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara studies the dry hull. "Varnish is fresh. A boat does not stay that clean unless someone loves it."
+    kit: Kit tips an imaginary hat. "Anyone that polite on a river like this deserves applause."
+    juniper: Juniper watches the still water. "The river is holding its breath for him. I would let it."
+    cedar: Cedar crouches at the bank. "Dry in a river. That is not magic; that is a boat that knows where it is not."
+  callbacks:
+  - rower_oar_taken
+  - rower_note
+  - rower_waved
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

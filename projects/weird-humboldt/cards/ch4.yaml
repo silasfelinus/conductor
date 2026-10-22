@@ -976,3 +976,216 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-072
+  revision: 1
+  chapter: 4
+  location: Willow Creek
+  title: The Museum's Escaped Footprint
+  tier: invented
+  provenance: Willow Creek's Bigfoot museum and lore are real and reported; the plaster cast taking a midnight walk is invented fiction.
+  rarity: uncommon
+  tone:
+  - funny
+  - eerie
+  - local
+  cast:
+  - The Plaster Cast (restless, artifact)
+  - The Night Docent (embarrassed, armed with a flashlight)
+  canon:
+  - The cast leaves its display case at midnight and leaves fresh tracks.
+  - The cast is more interested in privacy than publicity.
+  - It will return to the case by dawn if left alone.
+  scene: The museum is closed, yet fresh prints cross the gravel lot outside. They end at an empty velvet case where a famous plaster footprint sat for decades. The night docent follows with a flashlight and a clipboard. "It walks every Tuesday," she admits. "I just fill out the paperwork." The prints turn toward the creek, then pause, as if checking who is watching.
+  options:
+  - id: a
+    label: Follow the tracks quietly to the creek
+    skill: local_lore
+    target: 9
+    success:
+      text: You find the cast resting on a flat stone, enjoying the water. It lets you sit with it, and shares a map of the creek's old crossings.
+      effects:
+      - evidence:geography
+      - flag:footprint_found
+    failure:
+      text: You step on a branch, and the cast flees like a startled deer. The docent winces on your behalf.
+      effects:
+      - nerve-1
+      - flag:footprint_spooked
+  - id: b
+    label: Interview the docent about the Tuesday walks
+    skill: rizz
+    target: 7
+    success:
+      text: 'She hands over a logbook decades thick and a theory: the cast walks to meet someone, and has not yet given up.'
+      effects:
+      - evidence:document
+      - goodwill+1
+      - flag:footprint_logbook
+    failure:
+      text: She decides you are press and tucks her clipboard under an arm. "No comment, ever," she says.
+      effects:
+      - time-1
+  - id: c
+    label: Leave a small gift at the empty case
+    skill: none
+    target: null
+    success:
+      text: A pastry and a note of thanks. At dawn the case holds a cast and a single crumb. Waiting costs you a free draw but earns a quiet goodwill.
+      effects:
+      - flag:footprint_gifted
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara kneels at the print. "Pressed deep and clean. Whoever walked this has a grounded, patient step."
+    kit: Kit tiptoes in exaggerated imitation. "If it is a Tuesday ritual, I am respecting the schedule."
+    juniper: Juniper whispers to the gravel. "It is not hiding. It is just walking where nobody calls it a monster."
+    cedar: Cedar studies the stride. "No claw marks, no broken branches. This is a careful walker, not a beast."
+  callbacks:
+  - footprint_found
+  - footprint_spooked
+  - footprint_logbook
+  - footprint_gifted
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-074
+  revision: 1
+  chapter: 4
+  location: Willow Creek
+  title: The River Claims a Witness
+  tier: invented
+  provenance: The Trinity River and Willow Creek are real; the driftwood message naming a witness who was never present is invented fiction.
+  rarity: rare
+  tone:
+  - eerie
+  - legal
+  - quiet
+  cast:
+  - The Driftwood Message (carved, damp)
+  - The Named Witness (absent, insistent)
+  canon:
+  - The driftwood names a witness who was never at the event it describes.
+  - The river insists the witness testified anyway.
+  - The message is carved in a hand that will not be traced.
+  scene: 'A length of driftwood wedges against the bank, and carved on it in neat block letters is a statement: I WITNESSED THE CROSSING AND I WAS NOT THERE. Beneath, a name you can almost read before the grain shifts. The river hums a low legal drone. A heron stands nearby as if sworn in, and waits to see what you do with it.'
+  options:
+  - id: a
+    label: Read the carving closely and trace the name
+    skill: wits
+    target: 9
+    success:
+      text: The name resolves into a family you can place on a county record. You gain a thread connecting the river to a real, documented crossing.
+      effects:
+      - evidence:history
+      - flag:witness_named
+    failure:
+      text: The letters slide away as you read them, and the heron looks personally disappointed.
+      effects:
+      - nerve-1
+      - time-1
+  - id: b
+    label: Swear to the river that you will pass the message on
+    skill: psyche
+    target: 9
+    success:
+      text: The water stills, then flows on easier. Something absent exhales, and the river hands you a smooth stone as proof you were heard.
+      effects:
+      - evidence:memory
+      - goodwill+1
+      - flag:witness_sworn
+    failure:
+      text: Your oath comes out sounding like a negotiation. The river takes it under advisement and gives nothing back.
+      effects:
+      - nerve-1
+  - id: c
+    label: Carry the driftwood to a quiet bank
+    skill: none
+    target: null
+    success:
+      text: You lift it free and set it where the current cannot swallow it. It costs a free draw and a wet sleeve, but the river lets it go.
+      effects:
+      - flag:witness_carried
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara traces a letter with a fingertip. "Carved by someone who has written these shapes a thousand times. A clerk, maybe."
+    kit: Kit lowers his voice. "I will take the stand for anybody the river asks me to."
+    juniper: Juniper bows to the water. "A witness who was not there is still a witness to loss."
+    cedar: Cedar crosses his arms. "I have sat on juries. A claim with no one behind it needs one more careful look."
+  callbacks:
+  - witness_named
+  - witness_sworn
+  - witness_carried
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-079
+  revision: 1
+  chapter: 4
+  location: Highway 299 roadside
+  title: The Alien Rest Area Review
+  tier: invented
+  provenance: Highway 299 rest stops are real; the extraterrestrial customer-service reviews of Earth are invented fiction.
+  rarity: common
+  tone:
+  - funny
+  - dry
+  - absurd
+  cast:
+  - The Comment Box (steel, polite)
+  - Visitors From Elsewhere (unseen reviewers)
+  canon:
+  - The rest area has a comment box that receives reviews from beyond the planet.
+  - The reviews are harsh and, annoyingly, specific.
+  - The visitors will revise a rating for a good enough reason.
+  scene: 'The rest area comment box is stuffed with notes in many handwritings, and one in a script like spilled ink. You pull out a few. EARTH: 2 STARS. THE GRAVITY IS EXCESSIVE AND NOBODY WILL EXPLAIN THE WORD "ALMOST." A map of the stalls is annotated with polite complaints. A tiny speaker on the box clears its throat and says, in a courteous monotone: "May we speak to your manager?"'
+  options:
+  - id: a
+    label: Respond with a thoughtful reply to the reviews
+    skill: wits
+    target: 9
+    success:
+      text: Your honest, funny response raises two ratings by a star. The visitors send back a map of three quiet pull-offs on the highway.
+      effects:
+      - evidence:geography
+      - flag:alien_replied
+      - goodwill+1
+    failure:
+      text: 'Your reply is too long and too apologetic. The box returns it with a note: TL;DR.'
+      effects:
+      - nerve-1
+  - id: b
+    label: Role-play the manager with total confidence
+    skill: rizz
+    target: 9
+    success:
+      text: The speaker approves. The visitors add a rare compliment and a schedule of their next scheduled visits to the county.
+      effects:
+      - evidence:schedule
+      - flag:alien_manager
+    failure:
+      text: The speaker hears the bluff and files a formal complaint against you in a language you cannot read.
+      effects:
+      - nerve-1
+      - time-1
+  - id: c
+    label: Leave a polite five-star note for the restrooms
+    skill: none
+    target: null
+    success:
+      text: You write a kind note. The speaker softens, and a faint hum lifts the stall doors. The pause costs you a free draw.
+      effects:
+      - flag:alien_kindness
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara reads a review aloud. "They hate the hand dryers. Honestly, same."
+    kit: Kit takes a bow to the box. "A tough crowd, the best kind."
+    juniper: Juniper smiles. "They are lonely tourists. Everyone writes a bad review when they are far from home."
+    cedar: Cedar tucks a note in his pocket. "If they are leaving reviews, they have been here a while. I want that schedule."
+  callbacks:
+  - alien_replied
+  - alien_manager
+  - alien_kindness
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
