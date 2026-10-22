@@ -249,3 +249,54 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-045
+  revision: 1
+  chapter: 3
+  location: Old Town Eureka
+  title: The Postcard from Eureka, Mars
+  tier: invented
+  provenance: Old Town Eureka and its postcard racks are real; the card that shows the street under two suns is invented fiction. No real vendor is depicted.
+  rarity: uncommon
+  tone: [wistful, uncanny, dry]
+  cast: ["The Postcard Vendor (sells only what is already stamped)", "A Second Sun (polite, setting)"]
+  canon:
+    - A rack card of Old Town shows a street that matches the real one, house for house, under two suns.
+    - The card is postmarked from a Eureka on Mars that has never been founded.
+    - Every card on the rack is addressed to someone who is standing in the shop.
+  scene: >-
+    The vendor's rack turns slowly in the doorway light. One card shows the very block you are standing on, the Victorian fronts and the bay at the end, but there are two suns above the roofline, a pale one and a copper one. The stamp reads Eureka, Mars. Flip it over and the message is in your own handwriting, asking you to bring a jacket because the evenings are long.
+  options:
+    - id: a
+      label: "Haggle for the card"
+      skill: rizz
+      target: 7
+      success:
+        text: "The vendor shrugs and names a price in pennies from a decade that has not happened. You pay it, and the card is warm in your hand."
+        effects: [goodwill+1, "flag:mars_postcard"]
+      failure:
+        text: "The vendor sighs. \"It isn't for sale. It's for delivery.\" He takes it back and slides it, gently, into a drawer that was not there before."
+        effects: [nerve-1]
+    - id: b
+      label: "Match the street against the card"
+      skill: local_lore
+      target: 9
+      success:
+        text: "Every window on the card is right except one third-floor sash that is open on a building with no third floor. You mark it. It is the only door out."
+        effects: ["evidence:postcard", weird+1]
+      failure:
+        text: "You are sure about the cornice and wrong about the corner. The vendor smiles at you, kindly, for a long time."
+        effects: [time-1]
+    - id: c
+      label: "Mail it to yourself"
+      skill: none
+      target: null
+      success:
+        text: "You drop the card in the old brass box on the corner. It lands with a sound like sand, and a stamp appears on the box that was not there before."
+        effects: ["flag:mars_mailed", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara holds the card to the light and goes quiet. \"Two shadows on every doorway. Someone really did stand here.\""
+    kit: "Kit tilts the card at the real sky. \"The second sun is just late. Give it a minute.\""
+    juniper: "Juniper presses the stamp with a thumb and frowns. \"It smells like cold dust and wet pennies.\""
+    cedar: "Cedar compares the roofline to a map. \"Same block. Different year. Different sky. I don't like it.\""
+  callbacks: [mars_postcard, mars_mailed]
+  eligibility: {requires_flags: [], excludes_flags: []}

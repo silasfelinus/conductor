@@ -246,3 +246,54 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-075
+  revision: 1
+  chapter: 4
+  location: Willow Creek
+  title: A Cryptid's Online Dating Profile
+  tier: invented
+  provenance: Willow Creek's Bigfoot culture is real local custom; the profile, its author and the matches are invented fiction. No real person or account is depicted.
+  rarity: common
+  tone: [warm, comic, awkward]
+  cast: ["Rusty (a woodland resident, shy, very tall)", "The Library Computer (loyal, slow)"]
+  canon:
+    - A woodland resident wants help writing a dating profile with fewer obvious fur-related clues.
+    - Rusty has twelve photos and every one is a blur.
+    - Rusty is looking for someone who enjoys long walks and does not mention the footprints.
+  scene: >-
+    The library is closed, but the side door is open and a very large shape is hunched over the one working computer, typing with a single enormous finger. "I need a bio," says Rusty, without turning. "Something that says outdoorsy but not hairy. Tall but not suspicious. I've written four hundred drafts. Every one says 'sasquatch' in the second line." The cursor blinks. The library cat watches from the radiator.
+  options:
+    - id: a
+      label: "Draft a charming, honest bio"
+      skill: rizz
+      target: 9
+      success:
+        text: "You write that Rusty likes quiet mornings, tall trees and good listeners. By the third reply the screen is full of matches, and Rusty hums a small contented note."
+        effects: [goodwill+1, "flag:rusty_profile"]
+      failure:
+        text: "You write that Rusty is 'enormous and shy,' which attracts one reply, from a very persistent lumberyard."
+        effects: [nerve-1]
+    - id: b
+      label: "Pick the least blurry photo"
+      skill: wits
+      target: 7
+      success:
+        text: "Photo nine shows only a shoulder and a patient expression against a fern. It is the first time Rusty has looked like a person, and Rusty's ears go pink."
+        effects: ["evidence:photo", weird+1]
+      failure:
+        text: "You choose the one where the blur resembles a hand-wave. It gets four hundred views and a message from a podcast."
+        effects: [time-1]
+    - id: c
+      label: "Sit with Rusty while they write it"
+      skill: none
+      target: null
+      success:
+        text: "You stay until dawn. The bio is not very good and Rusty posts it anyway. Before you go, Rusty hands you a pine cone and says it is a promise."
+        effects: ["flag:rusty_pinecone", goodwill+1]
+  lead_reactions:
+    mara: "Mara reads the draft and smiles. \"Skip the adjectives. Put in one true thing about the morning.\""
+    kit: "Kit leans on the desk and whispers, \"Say you're 'big on the outdoors.' Technically accurate. Just do it.\""
+    juniper: "Juniper nudges the cat off the keyboard and says gently, \"Nobody needs a perfect bio. They need a kind one.\""
+    cedar: "Cedar scans the photo folder and shakes his head. \"Twelve photos, zero proof of ears. That's a brand.\""
+  callbacks: [rusty_profile, rusty_pinecone]
+  eligibility: {requires_flags: [], excludes_flags: []}

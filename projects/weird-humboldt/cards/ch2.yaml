@@ -247,3 +247,54 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-022
+  revision: 1
+  chapter: 2
+  location: Trinidad Head tide pools
+  title: The Tide-Pool Tenant
+  tier: invented
+  provenance: Tide pools on the Humboldt coast are real; the tiny landlord, its rent roll and the crab tenants are invented fiction. No real person or business is depicted.
+  rarity: uncommon
+  tone: [absurd, petty, coastal]
+  cast: ["Landlord Whelk (a snail the size of a thumbnail, litigious)", "Three Hermit Crabs (behind on rent)"]
+  canon:
+    - A small tide-pool landlord charges rent to every crab on the rocks, payable in shells and favors.
+    - The crabs believe the rent is fair and also fraudulent.
+    - Landlord Whelk will accept any mediator who can stay dry at ankle height.
+  scene: >-
+    The tide has pulled out and left a pool the size of a dinner table. A snail with a ledger balanced on its shell announces itself as Landlord Whelk and asks if you are a witness or a guarantor. Three hermit crabs wave claws at you from three different directions, each with a different understanding of who owes what. The anemones, you gather, are the building inspectors, and they are watching.
+  options:
+    - id: a
+      label: "Mediate a payment plan in shells"
+      skill: rizz
+      target: 9
+      success:
+        text: "You broker a schedule of two shells a tide and a moratorium on eviction during storms. Whelk stamps the ledger, the crabs click their approval, and the pool exhales."
+        effects: [goodwill+1, "flag:whelk_settlement"]
+      failure:
+        text: "The crabs hear a rent hike, the snail hears an insult, and you are asked, politely, to leave the pool and the jurisdiction."
+        effects: [nerve-1]
+    - id: b
+      label: "Audit the ledger"
+      skill: wits
+      target: 9
+      success:
+        text: "The ledger counts each tide twice: once going out, once coming in. You circle the double billing, and Whelk goes pale in the way snails can."
+        effects: ["evidence:ledger", weird+1]
+      failure:
+        text: "The columns are in tide time, which runs backward on alternate pages. You close the ledger with a headache."
+        effects: [time-1]
+    - id: c
+      label: "Pay a month's rent yourself"
+      skill: none
+      target: null
+      success:
+        text: "You leave a handful of beach glass on the rim of the pool. The snail issues a receipt in the form of a very small, very official bubble."
+        effects: ["flag:whelk_receipt", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara photographs the ledger page and murmurs, \"The handwriting is pure spite, but beautiful spite.\""
+    kit: "Kit tips an imaginary hat to the landlord. \"Sir. I would like to speak to the manager of the ocean.\""
+    juniper: "Juniper kneels by the water and watches the smallest crab. \"They're not mad. They're scared of the tide.\""
+    cedar: "Cedar crouches and checks the rock for a lease. \"Whoever owns this holds it by gravity and persistence.\""
+  callbacks: [whelk_settlement, whelk_receipt]
+  eligibility: {requires_flags: [], excludes_flags: []}
