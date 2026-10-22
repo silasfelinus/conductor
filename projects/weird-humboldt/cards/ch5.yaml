@@ -246,3 +246,54 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-096
+  revision: 1
+  chapter: 5
+  location: Southern Humboldt backroads
+  title: The Backwoods Crop that Talks Back
+  tier: invented
+  provenance: Southern Humboldt farms and backroads are real; the scarecrow, its employment demands and the garden are invented fiction. No real farm, grower or crop is depicted.
+  rarity: uncommon
+  tone: [absurd, earnest, legalistic]
+  cast: ["Mr. Hayes (a scarecrow with a clipboard)", "The Gardener (asleep, possibly on purpose)"]
+  canon:
+    - A remote garden's scarecrow demands employment protections and a written job description.
+    - Mr. Hayes has scared nothing in six years and considers this a performance review in his favor.
+    - The gardener has never once been seen awake in his presence.
+  scene: >-
+    You follow a gravel track to a hillside garden fenced with chicken wire and pallet slats. A scarecrow stands at the center in a plaid shirt, one cardboard hand holding a clipboard. "Before you say anything," he says, "I want it on the record that I work nights, I work weekends and I have never been given a break." Crows sit on every fence post. None of them are scared, but all of them are listening.
+  options:
+    - id: a
+      label: "Negotiate a job description"
+      skill: rizz
+      target: 9
+      success:
+        text: "You draft terms: dusk to dawn, one break at noon, no crows named in the contract. Mr. Hayes signs with a splinter and stands a little straighter."
+        effects: [goodwill+1, "flag:hayes_contract"]
+      failure:
+        text: "The word 'scarecrow' appears in the first clause and Mr. Hayes tears the page with great dignity."
+        effects: [nerve-1]
+    - id: b
+      label: "Ask why the crows have not left"
+      skill: wits
+      target: 7
+      success:
+        text: "The crows are not afraid; they are staff. The scarecrow holds the roster, and every post on the fence is a shift. You copy the schedule."
+        effects: ["evidence:roster", weird+1]
+      failure:
+        text: "A crow lands on your head. The other crows seem to take this as a verdict."
+        effects: [time-1]
+    - id: c
+      label: "Take over the night shift for an hour"
+      skill: none
+      target: null
+      success:
+        text: "You stand in the plaid shirt and nothing at all happens, which is exactly the job. At the end of the hour Mr. Hayes leaves a stitched patch on your sleeve that reads: relief."
+        effects: ["flag:hayes_relief", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara studies the clipboard and nods. \"Nobody ever gave him a title. That's most of the problem.\""
+    kit: "Kit salutes the scarecrow and says, in a low voice, \"Colleague. Respect. I once held a post like yours.\""
+    juniper: "Juniper smooths a loose thread on the scarecrow's sleeve. \"He just wants to be asked how his day went.\""
+    cedar: "Cedar checks the fence line and hums. \"Crows on the posts. He's got a better crew than most people.\""
+  callbacks: [hayes_contract, hayes_relief]
+  eligibility: {requires_flags: [], excludes_flags: []}

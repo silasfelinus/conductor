@@ -247,3 +247,54 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-104
+  revision: 1
+  chapter: 6
+  location: Arcata Plaza, Kinetic Grand Championship start line
+  title: The Racer Who Is a Whole Committee
+  tier: invented
+  provenance: The Kinetic Grand Championship is a real regional event; the six-person entrant, its single registration and its paperwork are invented fiction. No real team or racer is depicted.
+  rarity: uncommon
+  tone: [festive, bureaucratic, absurd]
+  cast: ["The Committee (six people, one entry, one opinion at a time)", "The Registrar (holds a clipboard like a shield)"]
+  canon:
+    - Six people insist they are a single entrant and every form agrees with them.
+    - They speak one at a time but always finish each other's sentences.
+    - The Registrar has checked and it is, apparently, correct.
+  scene: >-
+    At the start line a registrar looks up from a form with the expression of someone who has lost an argument with arithmetic. Six people in matching sashes stand in a row. "We are one racer," the first says. "We have always been one racer," says the second. The third, fourth, fifth and sixth nod. The form lists one name, one number, one set of wheels, and six signatures that all look like the same hand.
+  options:
+    - id: a
+      label: "Interview each member separately"
+      skill: psyche
+      target: 9
+      success:
+        text: "Each member answers differently and every answer fits the next one like a gear. You come away convinced they are one person, shared out among six bodies for good reason."
+        effects: ["evidence:committee", weird+1]
+      failure:
+        text: "By the fourth interview you cannot tell who you asked what. The Committee does not seem to mind and thanks you in unison."
+        effects: [time-1, nerve-1]
+    - id: b
+      label: "Argue the registration is invalid"
+      skill: wits
+      target: 11
+      success:
+        text: "You find a clause allowing a single entrant to be 'of any number.' The Registrar stamps it and the line quietly lets them through."
+        effects: [goodwill+1, "flag:committee_cleared"]
+      failure:
+        text: "The same clause works against you. For the next hour you are, officially, a fourth of someone."
+        effects: [nerve-1]
+    - id: c
+      label: "Cheer for all six at once"
+      skill: none
+      target: null
+      success:
+        text: "You pick a shout that fits six voices. They answer in a chord, and the one who laughs last hands you a sash and says the seventh seat is open."
+        effects: ["flag:committee_seventh", goodwill+1]
+  lead_reactions:
+    mara: "Mara counts the signatures and smiles slowly. \"One hand, six pens. Somebody is very good at being plural.\""
+    kit: "Kit turns to the Committee and says brightly, \"Gentlemen, ladies, and you, in the hat. May I make a toast.\""
+    juniper: "Juniper watches the six move together and goes still. \"They breathe like one animal. I'd leave them be.\""
+    cedar: "Cedar frowns at the form. \"Six bodies, one wheel set. Who's pedaling? That's the real question.\""
+  callbacks: [committee_cleared, committee_seventh]
+  eligibility: {requires_flags: [], excludes_flags: []}

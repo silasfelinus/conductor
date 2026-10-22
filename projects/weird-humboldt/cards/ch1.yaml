@@ -270,3 +270,54 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-009
+  revision: 1
+  chapter: 1
+  location: Minor Theatre, Arcata
+  title: Simplex's Encore
+  tier: invented
+  provenance: The Minor Theatre is a real Arcata cinema; the phantom cat, its beam-walking and its programming taste are invented fiction. No real staff or patrons are depicted.
+  rarity: common
+  tone: [whimsical, eerie, dry]
+  cast: ["Simplex (a phantom theater cat, unimpressed)", "The Projectionist (has stopped asking)"]
+  canon:
+    - A cat that no one has fed in decades walks through the projection beam before the late show.
+    - Wherever its shadow crosses the screen, that film is the one scheduled for tomorrow night.
+    - Simplex has never once picked a sequel.
+  scene: >-
+    The house lights are down and the beam is steady when a small grey shape strolls straight through it, tail high. On the screen a cat-shaped shadow crosses the title card, pauses to wash a paw, and is gone. The projectionist leans out of the booth. "That's the schedule," he says, in the voice of someone reading a verdict. "Whatever it sat on is what we run tomorrow."
+  options:
+    - id: a
+      label: "Hold out a saucer of milk in the beam"
+      skill: rizz
+      target: 7
+      success:
+        text: "A ghost-cat sits in the light and drinks without a ripple. When it leaves, the shadow on the screen has curled into the shape of a film you actually wanted to see."
+        effects: [goodwill+1, "flag:simplex_befriended"]
+      failure:
+        text: "The saucer fills with popcorn dust and the cat looks at you with open contempt. Tomorrow's film will be a very long documentary about milk."
+        effects: [nerve-1]
+    - id: b
+      label: "Read the shadow's pick off the screen"
+      skill: wits
+      target: 9
+      success:
+        text: "You trace the paw-prints across the title card and read them as a booking sheet. Tomorrow's feature is not a film at all, and the projectionist quietly writes down the date."
+        effects: ["evidence:schedule", weird+1]
+      failure:
+        text: "The paw-prints could be any title. You pick one with confidence and the booth chuckles."
+        effects: [time-1]
+    - id: c
+      label: "Stay for the show Simplex chose"
+      skill: none
+      target: null
+      success:
+        text: "You sit through a double bill nobody scheduled. Somewhere in the second reel a warm weight settles on your lap, and a stub is left on the armrest that reads only: reserved."
+        effects: ["flag:simplex_stub", goodwill+1]
+  lead_reactions:
+    mara: "Mara sketches the cat mid-stride in a corner of the program. \"Fast line, slow cat. That's the whole trick of it.\""
+    kit: "Kit holds up a dark chapstick to the beam and whispers, \"No cats, no notes. Pure management.\""
+    juniper: "Juniper crouches and clicks her tongue softly. The empty aisle seems to lean toward her a little."
+    cedar: "Cedar checks the projector gate and frowns. \"The beam bends when it passes. Something with weight is in it.\""
+  callbacks: [simplex_befriended, simplex_stub]
+  eligibility: {requires_flags: [], excludes_flags: []}
