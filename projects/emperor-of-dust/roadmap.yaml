@@ -765,24 +765,17 @@ tasks:
   - id: t-044
     milestone: m4
     title: "Second playtest: score the rewritten game against the 2026-10-21 rubric"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
-    note: >-
-      The first playtest (playtest/2026-10-21/, PLAYTEST-RUBRIC.md) drove t-035..t-043 and t-041,
-      all merged 2026-10-21 (kind_robots#3959-#3968). Re-run it on current main with the same rubric
-      (mood, clarity of the challenge, uniqueness, choice quality, consequence; Silas: "not just rescue
-      the unicorn versus throw the puppies in the lava"): one reviewer per act plus a persona-campaign
-      run (deaths, departures, loans, odds spread, finale odds, brass, chore repetition; the t-041
-      measurement scripts are the model). Write results to playtest/<date>/ beside the first pass,
-      compare scores act by act, and file only real regressions or still-weak scenes as new tasks.
-      Read-only for the reviewers; run at most three at a time (six parallel Opus workers hit the
-      session usage limit on 2026-10-21) and keep at most one Nuxt dev server up (the container OOMs;
-      vue-tsc needs NODE_OPTIONS=--max-old-space-size=6144).
+    note: |-
+      The first playtest (playtest/2026-10-21/, PLAYTEST-RUBRIC.md) drove t-035..t-043 and t-041, all merged 2026-10-21 (kind_robots#3959-#3968). Re-run it on current main with the same rubric (mood, clarity of the challenge, uniqueness, choice quality, consequence; Silas: "not just rescue the unicorn versus throw the puppies in the lava"): one reviewer per act plus a persona-campaign run (deaths, departures, loans, odds spread, finale odds, brass, chore repetition; the t-041 measurement scripts are the model). Write results to playtest/<date>/ beside the first pass, compare scores act by act, and file only real regressions or still-weak scenes as new tasks. Read-only for the reviewers; run at most three at a time (six parallel Opus workers hit the session usage limit on 2026-10-21) and keep at most one Nuxt dev server up (the container OOMs; vue-tsc needs NODE_OPTIONS=--max-old-space-size=6144).
+
+      Second playable engine pass underway: Kiyo paid infirmary, intentional quest slack, seeded daily encounters, 5 secret followers, Kiyo friendship and romance. Implementation PR and CI follow. Playtest report to accompany merge.
     owner: worker
     claimed_by: 20261022T001441058Z-eod-playtest-t044-f83d
     claimed_at: '2026-10-22T00:14:41.058Z'
-    updated: '2026-10-22T00:14:41.058Z'
+    updated: '2026-10-22T00:35:03.434Z'
   - id: t-045
     milestone: m5
     title: "Story and art pilot: revise early quest aftermaths and queue illustrated throne-room choices"
