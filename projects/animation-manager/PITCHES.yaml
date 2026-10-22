@@ -2415,3 +2415,35 @@ pitches:
           - kind_robots PR #3998 merged (squash c292710), 18/18 checks green
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+  - id: spirograph-gear-bloom
+    title: Spirograph Gear Bloom
+    status: candidate
+    priority: 49
+    surprise: |
+      A small gear rolls inside a ring and its glowing pen draws a flower that fades and is redrawn as a different bloom.
+    passive_loop: |
+      Five hypotrochoid gear sets rotate every ~42 seconds; the pen draws continuously with a slow trail fade, no interaction needed.
+    optional_interaction: |
+      Hovering near the pen speeds it; a rate-limited click advances to the next gear set.
+    technique: |
+      One canvas, closed-form hypotrochoid pen position, six line segments per frame over a faded trail.
+    reduced_motion: |
+      Draws one complete static bloom with no travelling pen, fading, hover or click.
+    performance_risk: |
+      Low: six line segments per frame.
+    novelty: |
+      First rolling-gear curve drawing in the catalog; Harmonograph Sand Table uses pendulums, not gear ratios.
+    acceptance:
+      - the pen draws closed blooms continuously without interaction
+      - the gear set changes autonomously about every 42 seconds
+      - hovering near the pen speeds it and clicking advances at most once per cooldown
+      - reduced-motion mode shows one static bloom
+    builds:
+      - status: candidate
+        component: components/screenfx/spirograph-gear-bloom.vue
+        pull_request: silasfelinus/kind_robots#4019
+        released_at: '2026-10-22T09:00:00Z'
+        verification:
+          - kind_robots PR #4019 merged (squash 2e233bb), all CI checks green after a Prettier fix
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
