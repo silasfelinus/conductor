@@ -342,3 +342,53 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-083
+  revision: 1
+  chapter: 5
+  location: "Ferndale Main Street"
+  title: "Victorian House of Cards"
+  tier: invented
+  provenance: "Ferndale's Victorian architecture is real; the museum house, its rearranging rooms and the deck of cards are invented fiction. No real museum, docent or property is depicted."
+  rarity: uncommon
+  tone: [whimsical, eerie, dry]
+  cast: ["Docent Edmund (a very formal figure in a waistcoat)", "The Deck of Rooms (shuffles itself)"]
+  canon:
+    - "A tourist attraction's floor plan is rearranged by drawing cards."
+    - "Every room is real and every card is true."
+    - "The house has never lost anyone, only misfiled them."
+  scene: "A small Victorian house on Main Street offers tours by appointment, and its parlor holds a long table with a single deck of cards on it. Docent Edmund bows. \"Each visitor draws one card,\" he says. \"The house then arranges itself accordingly. Last week a gentleman drew the Seven of Hearts and found himself in the pantry. He has been quite content.\""
+  options:
+    - id: a
+      label: "Draw a card and trust the house"
+      skill: rizz
+      target: 7
+      success:
+        text: "The Queen of Spades, and the stair rearranges to an unlooked-for room full of afternoon light. Edmund nods with approval."
+        effects: ["flag:house_chosen", goodwill+1]
+      failure:
+        text: "You draw the Two of Clubs, and the house sends you through a very long hall to the front door."
+        effects: [time-1]
+    - id: b
+      label: "Study the deck for a pattern"
+      skill: wits
+      target: 9
+      success:
+        text: "Every card is marked with a tiny door number, and the numbers loop. You work out which card will lead to the attic."
+        effects: ["evidence:house_deck_pattern", weird+1]
+      failure:
+        text: "The deck is marked with something you cannot place, and Edmund coughs politely when you hold it up to the light."
+        effects: [nerve-1]
+    - id: c
+      label: "Ask Edmund to draw for you"
+      skill: none
+      target: null
+      success:
+        text: "Edmund draws with theatrical care. The house arranges a small and private room, and you are served tea on a tray that was not there a moment ago."
+        effects: ["flag:house_tea", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara traces a cornice and then the deck. \"Same hand drew the plasterwork and the cards. That is one very patient person.\""
+    kit: "Kit shuffles with a flourish and nearly lands the ace of spades in Edmund's pocket. \"I will return it. I always return it.\""
+    juniper: "Juniper stands very still in the hall. \"The house breathes in the evenings. It is not a haunt, only a good listener.\""
+    cedar: "Cedar runs a thumb along the doorframe. \"These joints have been moved. Many times. And the wall never complained.\""
+  callbacks: [house_chosen, house_tea]
+  eligibility: {requires_flags: [], excludes_flags: []}

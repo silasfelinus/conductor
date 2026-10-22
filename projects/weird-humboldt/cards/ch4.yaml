@@ -342,3 +342,53 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-066
+  revision: 1
+  chapter: 4
+  location: "Kneeland hills"
+  title: "The Airport of Unscheduled Arrivals"
+  tier: invented
+  provenance: "Kneeland is a real community; the airfield, its aircraft and its staff are invented fiction. No real airport, pilot or crew is depicted."
+  rarity: rare
+  tone: [eerie, genial, quiet]
+  cast: ["Gate Agent Lorne (a cheerful attendant in a vintage jacket)", "The Silent Aircraft (arrives without engine noise)"]
+  canon:
+    - "An aircraft lands with no engine noise and excellent snacks."
+    - "The airfield appears on no map and has been open all along."
+    - "The flight's passengers are sure they arrived on time."
+  scene: "A single windsock hangs over a gravel strip in the hills, and a small gleaming aircraft is rolling to a stop without a sound. A hatch opens and the smell of warm bread rolls out. Gate Agent Lorne hurries over with a clipboard. \"Welcome, welcome,\" he says. \"Unscheduled arrivals are our specialty. Would you like a snack while we sort out where you have landed?\""
+  options:
+    - id: a
+      label: "Ask Lorne where the flight came from"
+      skill: wits
+      target: 9
+      success:
+        text: "Lorne checks the manifest, frowns, and then points at a destination that will not exist for another few decades. He asks you not to mention it."
+        effects: ["evidence:airfield_manifest", weird+1]
+      failure:
+        text: "The manifest is in a code you can almost read, and you waste a quarter hour on almost."
+        effects: [time-1]
+    - id: b
+      label: "Accept the snack and make small talk"
+      skill: rizz
+      target: 7
+      success:
+        text: "The snack is a pastry shaped like a map, and it tastes like a place you have not been yet. Lorne leans in and tells you which gate you will want."
+        effects: ["flag:airfield_gate", goodwill+1]
+      failure:
+        text: "You ask the pastry for its autograph, and Lorne has to leave the room."
+        effects: [nerve-1]
+    - id: c
+      label: "Help carry the luggage inside"
+      skill: none
+      target: null
+      success:
+        text: "You carry a bag that weighs nothing and clinks like glass. Lorne tips you with a tiny brass luggage tag, engraved with a tomorrow."
+        effects: ["flag:airfield_tag", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara looks at the plane's livery and exhales. \"No manufacturer's mark. Somebody wanted it plain, and plain costs a lot.\""
+    kit: "Kit wanders the apron humming a boarding call. \"I would run away with this circus in a heartbeat.\""
+    juniper: "Juniper holds out a hand to the wind off the wings. \"The air is calm. It has never once been in a hurry.\""
+    cedar: "Cedar walks around the fuselage. \"No exhaust, no oil on the ground. I do not know what powers this, and I would like to.\""
+  callbacks: [airfield_gate, airfield_tag]
+  eligibility: {requires_flags: [], excludes_flags: []}

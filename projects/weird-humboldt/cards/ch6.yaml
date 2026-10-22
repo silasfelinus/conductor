@@ -343,3 +343,53 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-105
+  revision: 1
+  chapter: 6
+  location: "Arcata Plaza"
+  title: "The Noon Siren at Midnight"
+  tier: invented
+  provenance: "The Arcata Plaza is a real public square; the siren, its timekeeper and the race start are invented fiction. No real official, event or timing system is depicted."
+  rarity: uncommon
+  tone: [tense, funny, eerie]
+  cast: ["Timekeeper Hollis (an official who owns three watches)", "The Plaza Siren (sounds three times, none correctly)"]
+  canon:
+    - "The race launches at noon, midnight and both at once."
+    - "Every timepiece in the plaza is accurate and none of them agree."
+    - "The starting line is the one fixed point."
+  scene: "The siren on the plaza sounds, and it is noon, and it is midnight, and the shadows on the cobbles point both ways at once. Timekeeper Hollis stands at the starting line holding three watches that agree on nothing. \"Racers to your marks,\" he calls, with deep apology, \"all of them, if you please. At the same time. For the moment, time is a courtesy.\""
+  options:
+    - id: a
+      label: "Argue for a single, agreed start"
+      skill: rizz
+      target: 7
+      success:
+        text: "Hollis pauses, taps one watch, and declares the start to be now, which pleases every racer. The plaza exhales."
+        effects: ["flag:siren_agreed", goodwill+1]
+      failure:
+        text: "You argue with a watch, which is a mistake, and the watch wins on points."
+        effects: [nerve-1]
+    - id: b
+      label: "Work out which watch is truthful"
+      skill: wits
+      target: 9
+      success:
+        text: "The middle watch runs a hair slow in exactly the way the siren does. You make a note, and Hollis starts to trust that one."
+        effects: ["evidence:siren_watch", weird+1]
+      failure:
+        text: "The watches argue back, and you lose several minutes learning which of them is rude."
+        effects: [time-1]
+    - id: c
+      label: "Start running and trust the course"
+      skill: none
+      target: null
+      success:
+        text: "You run, and the course meets you halfway, whichever time it is. A race number appears pinned to your jacket, warm from somewhere."
+        effects: ["flag:siren_runner", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara checks the sundial and then the clock tower. \"Two true clocks. I would believe either, but not both.\""
+    kit: "Kit stretches in the half-light and grins. \"A race that starts when it likes? That is the best kind of rehearsal.\""
+    juniper: "Juniper watches the shadows split and rejoin. \"The sun is not confused. We are the ones who keep counting.\""
+    cedar: "Cedar taps the siren post. \"Whatever drives this has a heartbeat. Somebody wound it, and they wound it slow.\""
+  callbacks: [siren_agreed, siren_runner]
+  eligibility: {requires_flags: [], excludes_flags: []}
