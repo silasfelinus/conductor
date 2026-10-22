@@ -1,6 +1,6 @@
 # Roadmap Audit
 
-Generated: `2026-10-22T13:12:39.872651+00:00`
+Generated: `2026-10-22T15:21:02.152474+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
@@ -114,7 +114,7 @@ _None._
 - **STALE_IN_PROGRESS** — `art-archive` / `t-044`: Task has remained claimed for 19 days.
 - **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 24 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `comic-film` / `t-009`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
-- **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 20 days.
+- **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 21 days.
 - **STALE_CLAIM_FIELDS** — `emperor-of-dust` / `t-033`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_IN_PROGRESS** — `kind-economy` / `t-011`: Task has remained claimed for 16 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-economy` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
