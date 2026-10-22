@@ -418,3 +418,25 @@ tasks:
       coyote's v1 LoRA still draws his right hand (t-023); stump plates keep the masked bandage edit. Following ROUND-12
       above, Zuzu and the abbess are `stacks: false` there: a subject naming either beside another character gets no
       default LoRAs, so the explicit per-subject `loras:` in ROUND-12..15 stay authoritative.
+
+  - id: t-013
+    milestone: m5
+    title: Wounded-route risk signals and meaningful retreat paths
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-002]
+    note: >-
+      PR #4037 documented a 6-encounter, 4-health, 3-Resolve, 4-strategy
+      adversarial matrix. At 3 HP, none of the four benchmarked tactics won
+      the crocodile, Abbess or Hollis's band battles in 90 deterministic seeds
+      per setup. Not all losses are dead ends: some authored scenes restore HP
+      and continue, which must be preserved. Audit actual player routes for
+      avoidable and forced encounters; identify when a wounded player is
+      funnelled into near-certain defeat without fair foreshadowing or a
+      meaningful alternative. Add concise one-screen risk cues or narrative
+      retreat options where earned, not blanket stat buffs or free escapes.
+      Preserve Honor/Taint, replay the 15 frozen ending fixtures, and extend
+      adversarial route tests across injured-entry cases. Require current-head
+      TypeScript, contract tests, and any relevant responsive preview checks.
