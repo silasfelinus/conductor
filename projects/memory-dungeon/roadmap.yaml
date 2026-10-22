@@ -4,7 +4,8 @@ kind: software
 autonomous: true
 goal: >-
   Evolve the existing Kind Robots Memory Dungeon at /play/memory into a
-  replayable art-led narrative roguelite RPG, with character creation,
+  replayable art-led narrative roguelite RPG with persistent explored overworld,
+  geographically anchored procedural dungeons and Edgeworlds, character creation,
   independently chosen difficulty and depth, an authored intro, seeded
   procedural encounter/monster/treasure piles, spatial weapon shapes that
   change how memory-matching combat works, fair logic minigames and riddles,
@@ -43,11 +44,26 @@ notes_from_silas: |
   back to other experiences. Memory can be part of the challenge,
   but other logic puzzles are good too."
 
+  Latest direction (2026-10-22 PT): the large tiled screen is not always
+  a memory-matching board. It is a persistent explorable geographic overworld,
+  where revealed squares are encounters, treasure, locations, monster spawns
+  and terrain. Some discovered terrain elements matched in sequence open secret
+  areas. The inner memory combat board is entered FROM an overworld encounter.
+  Geographic landmarks remain in fixed positions; procedurally expanding
+  themed underworlds and strange Edgeworlds attach to those authored anchors.
+  This is a special dungeon within a still-unwritten wacky fantasy world:
+  no invented fixed cosmology/canon, only modular worldbuilder-ready systems.
+  The *same route* may receive an entirely new art-led **video game** interior
+  appearance, with original visual-game concept art for the overworld, combat,
+  surprise treasure, puzzle vault and character creation. Separate versioned
+  World/Character/Expedition/Chronicle saves are mandatory. Refer to
+  WORLD-AND-EXPLORATION.md as latest binding creative direction.
+
   Design calls: preserve the existing Kind Robots /play/memory entry,
   existing matching engine and Classic Match mode. Build an RPG mode
-  into the same page. The 2026-10-21 seven-project focus retains its
-  stable tie-breaker order; this newly HIGH-priority project follows
-  those seven and the protected historical four, ahead of ordinary backlog. Reversible design, engine and
+  into the same page. The 2026-10-21 seven-project focus and previously protected arcade four
+  retain their stable tie-breaker order; HIGH-priority Memory Dungeon follows
+  those eleven, ahead of ordinary backlog. Reversible design, engine and
   internal art may proceed without waiting for subjective feedback.
   Production deployment and external release remain separately gated.
   See DESIGN-BRIEF.md and COMBAT-PATTERNS.md.
@@ -243,6 +259,9 @@ tasks:
     stakes: reversible
     note: >-
       Use ART-PROMPTS.md new project icon/card/hero prompts and
+      generate presentation-quality game-scene mockups: overworld explorer,
+      battle-match board, treasure cut-in, minefield vault and character creator.
+      Avoid a generic web app surface. Draft modular fantasy-biome concept art and
       positive physical-subject first art requests for character
       portraits, weapon masks, scene illustrations and endings.
       Existing memory card images remain useful. Record output
@@ -265,6 +284,52 @@ tasks:
       algorithmic no-mandatory-guess solvability check across seeds,
       fair recoverable failure, and full keyboard/screen-reader support.
       See COMBAT-PATTERNS.md. Integrate after spatial rules proven.
+  - id: t-017
+    milestone: m1
+    title: "Define fixed fantasy overworld coordinate contract and modular lore boundaries"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      WORLD-AND-EXPLORATION.md is authoritative over initial linear-rooms
+      pitch. Define geographically stable coordinates, terrain and fog,
+      discoverable site IDs, portal ancestry, terrain-rune sequence rules,
+      overworld-vs-combat state machine, geography-safe procedural expansions,
+      and future worldbuilder interoperability. World name/cosmology/cast are
+      deliberately not fixed: this is a special dungeon in a not-yet-created
+      original comic fantasy universe.
+  - id: t-018
+    milestone: m2
+    title: "Build playable overworld reveal/explore and nested encounter transition"
+    status: waiting
+    depends_on: t-017
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      On the EXISTING /play/memory stage, ship the first small static world
+      with terrain revelation, named anchor sites and stateful return.
+      Opening an encounter switches the same game camera into match combat,
+      treasure/puzzle or dialogue; on resolution the player returns to
+      exactly the same world position. Include a paired terrain-sequence
+      secret and one procedural dungeon instance anchored to the map.
+      Autosave world and run state across reload.
+  - id: t-019
+    milestone: m3
+    title: "Produce game-screen concept mockups for five scene families"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Produce polished visual compositions for explorable overworld,
+      nested memory combat with shape/bullseye, cinematic treasure/choice,
+      minesweeper-like clue vault, and avatar creation. Mood: original
+      wacky high fantasy with tactile UI and fantastic landscapes.
+      The art/gameplay stage fills the screen, not a website grid with
+      dashboards. Document concept status versus actual generated assets.
+      Compare each to viewport-first standard.
   - id: t-014
     milestone: m4
     title: "Run adversarial multi-seed balance and player-story tests"
