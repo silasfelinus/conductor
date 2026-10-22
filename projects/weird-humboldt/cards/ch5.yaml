@@ -392,3 +392,139 @@
     cedar: "Cedar runs a thumb along the doorframe. \"These joints have been moved. Many times. And the wall never complained.\""
   callbacks: [house_chosen, house_tea]
   eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-084
+  revision: 1
+  chapter: 5
+  location: Ferndale Main Street
+  title: The Pie Contest with a Second Jury
+  tier: invented
+  provenance: Ferndale is a real Victorian village with a real tradition of community events; the second jury, its regret-based scoring and the pies are invented fiction and depict no actual contest.
+  rarity: uncommon
+  tone: [cozy, absurd, tart]
+  cast: ['Judge Marigold (the visible jury, fixed)', 'The Second Jury (unseen, awards by regret, fixed)']
+  canon: ['A second, invisible jury awards the pie prizes based on regret rather than flavor.', The visible jury is aware of the second jury and tries to keep it out of the paperwork., 'The most regretted pie wins, and last year''s winner is still missing a recipe.']
+  scene: 'On a long folding table on Main Street, eleven pies sit under paper doilies. Judge Marigold sips water and says, "The scores come in from two juries. One of them is me." A second set of scorecards flutters onto the table from nowhere, each with a pie''s name and a number that is not about taste. The unseen jury''s marks are written in the margins: TOO LATE TO APOLOGIZE. NEVER CALLED BACK. ALMOST SAID IT.'
+  options:
+  - id: a
+    label: Bake an honest pie entry on the spot
+    skill: rizz
+    target: 9
+    success:
+      text: You hand-make an apology pie using the same recipe as your last regret. The second jury marks it perfect, and Marigold quietly tells you the pie recipe that unlocks last year's winner.
+      effects: ['evidence:pie_recipe', 'flag:pie_apology_won', goodwill+1]
+    failure:
+      text: Your pie is delicious and has no regret in it at all. The second jury gives it a polite zero and Marigold apologizes for the system.
+      effects: [nerve-1, 'flag:pie_zero']
+  - id: b
+    label: Read the unseen scorecards
+    skill: wits
+    target: 7
+    success:
+      text: The scorecards share handwriting with a ledger you've seen elsewhere. You get the full list of regrets the jury is scoring, and a pattern in how they're collected.
+      effects: ['evidence:ledger', 'evidence:document', 'flag:pie_jury_read']
+    failure:
+      text: The scorecards flutter away before you finish, but not before one lands on your shoe and names a regret of yours.
+      effects: [nerve-1, weird+1]
+  - id: c
+    label: Ask Marigold what she would pick
+    skill: none
+    target: null
+    success:
+      text: 'Marigold is honest: she''d pick the plain apple pie. She hands you a slice wrapped in a napkin, and it tastes like a kindness and a deadline. You stay and watch the scoring.'
+      effects: ['flag:pie_marigold_friend', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: 'Mara sniffs a crust. "Butter, no shortcuts. Whoever made this one meant every layer."', kit: Kit holds a doily up like a flag. "The second jury has a better critic's vocabulary than any food writer I know.", juniper: 'Juniper looks at the table gravely. "Regret is a fine spice, but it does not rise."', cedar: 'Cedar eyes the pies. "Home bakers, every one. Nobody here is trying to win, just to be seen."'}
+  callbacks: [pie_apology_won, pie_zero, pie_jury_read, pie_marigold_friend]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-087
+  revision: 1
+  chapter: 5
+  location: Fortuna
+  title: An Extremely Civilized Were-Bear
+  tier: invented
+  provenance: Fortuna is a real city; the were-bear, his noise complaints and his manners are invented fiction, and no real resident or neighbor dispute is depicted.
+  rarity: common
+  tone: [gentle, comic, civic]
+  cast: ['Mr. Ruiz-Abernathy (a were-bear, cheerful, fixed)', 'Neighbor Pat (a human, patient, overwhelmed)']
+  canon: [Mr. Ruiz-Abernathy is a genial local who turns into a bear on full moons and files polite noise complaints about himself., The neighbors do not mind the bear; they mind the paperwork., 'He wants a quiet solution that harms no one, including himself.']
+  scene: A genial man in a cardigan knocks on your door with a stack of paperwork. "Forgive the intrusion," says Mr. Ruiz-Abernathy. "I am a were-bear. It is a quiet condition, mostly. I'd like help with the noise complaints during full moons. They are all about me, and I agree with them." Neighbor Pat waves from across the lawn, holding a thermos. "We love him. We just want one night of sleep."
+  options:
+  - id: a
+    label: Mediate a schedule with the neighbors
+    skill: rizz
+    target: 7
+    success:
+      text: You draw up a full-moon schedule with quiet hours, a snack plan and a guest bedroom for Pat's insomnia. Everyone signs, including a paw print in the margin.
+      effects: [goodwill+1, 'flag:werebear_schedule', 'evidence:schedule']
+    failure:
+      text: The meeting dissolves into an argument about parking. Mr. Ruiz-Abernathy apologizes for everyone and the paperwork gets worse.
+      effects: [nerve-1, 'flag:werebear_mediation_failed']
+  - id: b
+    label: Soundproof the cellar for him
+    skill: burly
+    target: 9
+    success:
+      text: You haul insulation, fix the door and reinforce the latch. The cellar is quiet by moonrise, and Mr. Ruiz-Abernathy gives you a jar of honey and a trail map.
+      effects: ['evidence:geography', 'flag:werebear_cellar', goodwill+1]
+    failure:
+      text: The insulation falls on you and the latch sticks. The cellar is nearly quiet and mostly dusty, and the bear is polite about it.
+      effects: [time-1, nerve-1]
+  - id: c
+    label: Keep him company on the next full moon
+    skill: none
+    target: null
+    success:
+      text: You sit up with him through the night with a thermos and a chair, and the bear does not mind. At dawn he is himself again and tells you the story of his grandmother's cabin.
+      effects: ['flag:werebear_company', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: Mara smiles at the paperwork. "The most polite supernatural condition I've ever seen. Someone's raised him well.", kit: 'Kit shakes his hand with great ceremony. "I''m honored. Does the bear do requests?"', juniper: 'Juniper nods, quietly pleased. "A man who knows himself and asks his neighbors for help. That is the whole spell."', cedar: Cedar looks at the lawn. "Folks around here are good about this stuff. Pat's seen worse and stayed anyway."}
+  callbacks: [werebear_schedule, werebear_mediation_failed, werebear_cellar, werebear_company]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-095
+  revision: 1
+  chapter: 5
+  location: Avenue of the Giants
+  title: The Family Portrait in the Bark
+  tier: invented
+  provenance: The Avenue of the Giants is a real redwood corridor; the portrait in the bark and its resemblance to a family the player has just met are invented fiction.
+  rarity: rare
+  tone: [quiet, eerie, tender]
+  cast: ['The Bark Portrait (scars arranged as a family, fixed)', 'A passing cyclist named Tavi (curious, brief)']
+  canon: [A tree's scars resemble a family the player has just met., The portrait is not a prophecy but a kind of memory the tree is keeping., Every scar in the portrait is older than the family it matches.]
+  scene: 'On the north side of a giant, a patch of old bark has scarred itself into a family portrait: a tall parent, a short parent, a child on someone''s shoulders, a dog sitting out of frame. You recognize them. You met them last night. The scars are older than the family by a hundred years. A cyclist named Tavi coasts to a stop. "Everyone sees someone different," she says. "Most people don''t say who. You just did."'
+  options:
+  - id: a
+    label: Trace the scars carefully
+    skill: wits
+    target: 7
+    success:
+      text: You trace the lines and find a small, deliberate break in the portrait where a hand has been added in a different pattern. A date is carved beneath it, and a dedication in a script you almost recognize.
+      effects: ['evidence:history', 'evidence:document', 'flag:portrait_traced']
+    failure:
+      text: Your fingers slip and the bark crumbles at the child's face. Tavi winces and lets the silence stand for a long moment.
+      effects: [nerve-1, 'flag:portrait_damaged']
+  - id: b
+    label: Tell the portrait who they are
+    skill: rizz
+    target: 9
+    success:
+      text: You say their names out loud, and the bark warms under your palm. A shaft of light falls briefly on the child, and the tree gives you a word of thanks you can almost feel.
+      effects: [goodwill+1, 'flag:portrait_named', weird+1]
+    failure:
+      text: The names come out wrong, and a branch above cracks, not in anger but in correction. You offer a smaller, more honest apology.
+      effects: [time-1, 'flag:portrait_misnamed']
+  - id: c
+    label: Take a quiet moment and leave a note
+    skill: none
+    target: null
+    success:
+      text: You leave a folded note in a hollow beneath the portrait, a few plain words of thanks. Tavi pedals off, and you stay a little longer than you meant to.
+      effects: ['flag:portrait_note', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: Mara stands very still. "People ask me for portraits like this. They never know the real ones are already on the trees.", kit: Kit bows his head. "I'll sketch it later. Right now it feels like I should just be quiet.", juniper: 'Juniper kneels, hand to bark. "This is not a spell. It''s a remembering. Be gentle with it."', cedar: Cedar studies the scars. "Trees grow around what happens to them. This one grew around a family. That says something."}
+  callbacks: [portrait_traced, portrait_damaged, portrait_named, portrait_misnamed, portrait_note]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
