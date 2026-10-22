@@ -125,3 +125,11 @@ This should be replayable with a different class, branch, companion or sacrifice
 - Do not make "randomness" a substitute for writing or remove meaningful player choice with automatic exploration.
 - Do not force lengthy repeated intros; the first 90 seconds should contain a decision and a memorable character.
 - Do not create another front-end route, dashboard or detached version of Memory Dungeon just to display this system.
+
+## Additional defining mechanic: geometrical attacks and minefield vaults (Silas, 2026-10-22 PT)
+
+The follow-up direction materially expands the match-combat architecture. Weapons use visibly previewed **spatial masks**, not ordinary fixed damage rolls: one sword reveals two vertical cells, a hammer reveals three along a diagonal, and other equipment uses crosses/L-shapes. Every mask has a visible **bullseye** coordinate: when a deliberate strike resolves a real matching pair at that marked location, it gets a special crit/stun/guard reward. Revealing a symbol in the bullseye without its matched counterpart is information, not free damage. Larger masks trade precision for information, cooldown and risk; correct remembered positions must outperform blind attack spam.
+
+Deduction rooms may use *large Minesweeper-like* X-by-Y boards with safe-tile numbers, flags, hidden dangers and a route/relic goal. They must be solver-verified so mandatory progress does not require a blind guess. In these rooms exact bullseye placement can defuse danger and a careless area strike may threaten treasure or companions. Use a zoomable/contained stage and accessible grid navigation. Puzzle failures create consequences or alternative paths, rather than arbitrary run-ending coin flips.
+
+Memory-matching remains the combat resolver. Non-combat riddles and logic puzzles (sequence, truth testimony, spatial route, nonograms/sliding tiles or original echoes of other Kind Robots minigames) can diversify exploration without requiring another page. The authoritative mechanics and fairness tests are in COMBAT-PATTERNS.md.
