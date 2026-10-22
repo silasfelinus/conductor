@@ -310,19 +310,18 @@ tasks:
   - id: t-008
     milestone: m4
     title: Combat, powers, dice, inventory and save/resume UI polish
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-002, t-003]
-    note: >-
-      Interactive combat log and enemy cards, visual hit feedback, distinct
-      animated rolling dice with result readable without animation, keyboard
-      and screen reader announcements, save portability, combat outcome
-      illustrations, mobile character-sheet drawer and recovery paths.
+    note: |-
+      Interactive combat log and enemy cards, visual hit feedback, distinct animated rolling dice with result readable without animation, keyboard and screen reader announcements, save portability, combat outcome illustrations, mobile character-sheet drawer and recovery paths.
+
+      Adversarial recovery and full-pack loot changes implemented on worker/zuzu-gamebook-t-008-loot-recovery-g6e8f4. Pending CI and scoped PR review.
     claimed_by: 20261022T103756Z-zuzu-gamebook-t008-g6e8f4
     claimed_at: '2026-10-22T10:37:56.063Z'
-    updated: '2026-10-22T10:37:56.063Z'
+    updated: '2026-10-22T10:42:32.291Z'
   - id: t-009
     milestone: m5
     title: QA and editorial playtest of every route, ending and device
