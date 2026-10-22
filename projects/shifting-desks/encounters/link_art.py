@@ -12,9 +12,9 @@ the packs agree with the art ledgers in ../art/ROUND-*.yaml:
 - every slot maps to the path `stationArt()` builds for it: encounter and review
   cards `cards/<dept>/<id>`, locations `locations/<id>`, the department arrival
   `departments/<dept>`, window desks and applicants `window/<id>`;
-- the latest ledger row for that path decides the link: `delivered` with a
-  verdict that is not `redo` links it (`verified-repository-art`, art_ref = the
-  public path); anything else (requested, rendered, sent back) leaves it
+- the latest ledger row for that path decides the link: `delivered` with an
+  explicit `keep` verdict links it (`verified-repository-art`, art_ref = the
+  public path); anything else (requested, rendered, unreviewed, sent back) leaves it
   `design-only` with art_ref null until the re-render lands and is reviewed.
 
 The ledger row, not art.brief, is the record of what rendered: rounds 1-6
