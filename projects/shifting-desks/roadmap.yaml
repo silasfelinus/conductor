@@ -637,17 +637,14 @@ tasks:
   - id: t-038
     milestone: m5
     title: 'Adversarial playtest follow-up: risk rewards, successor memory and gated-choice coverage'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-22T09:26:10Z'
-    note: >-
-      Silas-directed follow-up 2026-10-22 PT after 2,000 adversarial seeded runs.
-      Reward authored costly interventions, make safe outcomes feel consequential,
-      make Successor terminations remembered in epilogues, and distinguish
-      unreachable gated options from declined available ones in CI telemetry.
-      Mirror canonical Conductor encounter changes into Kind Robots runtime;
-      preserve no-clean-wins, source parity and all eleven endings.
+    updated: '2026-10-22T09:28:50Z'
+    note: |-
+      Silas-directed follow-up 2026-10-22 PT after 2,000 adversarial seeded runs. Reward authored costly interventions, make safe outcomes feel consequential, make Successor terminations remembered in epilogues, and distinguish unreachable gated options from declined available ones in CI telemetry. Mirror canonical Conductor encounter changes into Kind Robots runtime; preserve no-clean-wins, source parity and all eleven endings.
+
+      Canonical source PR silasfelinus/conductor#6490 merged d88e1a1f2cb13124fb7976b739ad0fd74372c6c4 and runtime PR silasfelinus/kind_robots#4021 merged 14a1b7762b8e1f1558b52ab4cdb756e2cc45563f. Added four success-only risky Forms with visible hints, persistent successor and choice consequences, and split 26 unpicked routes into 9 never offered versus 17 offered but not picked. Tested 2,000 seeded runs, 0 engine violations, all 11 endings. Conductor 25/25 and Kind Robots 23/23 GitHub check runs completed successfully or intentionally skipped. No external promotion or production deployment performed.
     claimed_by: 2026-10-22T09:26:10Z-shifting-desks-t038-gpt6-6fac
     claimed_at: '2026-10-22T09:26:10Z'
