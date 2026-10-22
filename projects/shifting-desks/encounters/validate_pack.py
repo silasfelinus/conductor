@@ -75,7 +75,7 @@ TAGS = {
 # Silas, 2026-10-12 PT: secret societies & traitors and paperwork & psych tests lead.
 LEAD_TAGS = {"conspiracy", "psych-test", "paperwork"}
 LEAD_SHARE_MIN = 0.5
-NON_PACK_FILES = {"DECKS.json", "ENDINGS.json", "FLAG-MAP.json"}
+NON_PACK_FILES = {"DECKS.json", "ENDINGS.json", "FLAG-MAP.json", "RISK-PAYOFFS.json"}
 ENDING_KINDS = {"board", "elimination", "secret"}
 FAVOR_KINDS = {"force-success", "effects", "ignore-requirement", "bonus"}
 MUTATION_KINDS = {"reroll", "auto-success", "bonus", "restore-composure"}
