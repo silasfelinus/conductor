@@ -772,3 +772,223 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-008
+  revision: 1
+  chapter: 1
+  location: Minor Theatre
+  title: Rocky Horror, Actual Horror
+  tier: invented
+  provenance: The Minor Theatre is a real landmark; the chicken, its notes and Wendell are invented fiction, and no real cast, troupe or staff member is depicted.
+  rarity: uncommon
+  tone:
+  - campy
+  - meta
+  - uncanny
+  cast:
+  - The Prop Rubber Chicken (self-appointed director, fixed)
+  - Wendell Pruitt (the shadow-cast stage manager, fixed)
+  canon:
+  - A prop rubber chicken has gained opinions and now demands better stage directions.
+  - The midnight shadow-cast follows whatever script the chicken last read.
+  - Wendell has stage-managed forty midnight shows and has never once been thanked by a prop.
+  scene: 'At the midnight show a rubber chicken in a feather boa has climbed onto the lip of the stage and is reading notes off a clipboard it should not be able to hold. "Nobody told me my motivation," it says in a surprisingly reasonable voice. Wendell, the stage manager, mouths a single word at you from the wings: help. The audience is throwing toast at nothing in particular.'
+  options:
+  - id: a
+    label: Give the chicken a motivation
+    skill: rizz
+    target: 9
+    success:
+      text: You improvise a backstory about a chicken who crossed the road to find its audience, and the house lights weep with approval. The chicken hands you its clipboard, and a page of cue times is stapled to the back.
+      effects:
+      - evidence:schedule
+      - flag:chicken_motivated
+      - goodwill+1
+    failure:
+      text: Your backstory has the chicken crossing the road to flee a sequel. It takes this personally and the toast starts landing on you.
+      effects:
+      - nerve-1
+      - flag:chicken_offended
+  - id: b
+    label: Rewrite the stage directions with Wendell
+    skill: wits
+    target: 7
+    success:
+      text: Between you, you cross out forty years of "enter stage left, hopefully" and replace it with precise blocking. The chicken nods and signs the revised script, which proves to be a handy record of who was backstage when.
+      effects:
+      - evidence:document
+      - flag:script_rewritten
+    failure:
+      text: You cut the wrong page and the whole show restarts from the top, which Wendell receives like a death in the family.
+      effects:
+      - time-1
+      - flag:script_restarted
+  - id: c
+    label: Sit in the audience and throw toast respectfully
+    skill: none
+    target: null
+    success:
+      text: You catch a slice of toast mid-air and eat it. The chicken calls this the best review of its career, and Wendell slips you a backstage pass, though it costs your free draw to stay for the encore.
+      effects:
+      - flag:chicken_toasted
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara checks the clipboard. "Real clipboard, real cue times. Whoever wrote these knows this building very well."
+    kit: Kit is delighted. "A chicken with notes. Honestly, the most professional person in this theater."
+    juniper: Juniper tilts her head at the stage. "It is not a prop anymore. Something wanted a voice, and the chicken was nearby."
+    cedar: Cedar grunts. "Forty years of midnight shows and the first to complain is poultry. Fair."
+  callbacks:
+  - chicken_motivated
+  - chicken_offended
+  - script_rewritten
+  - script_restarted
+  - chicken_toasted
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-011
+  revision: 1
+  chapter: 1
+  location: Arcata Community Forest / Redwood Park
+  title: The Trail with Two Trailheads
+  tier: invented
+  provenance: The Community Forest trails are real and public; the jogger, the double trailhead and its sign are invented fiction and depict no real person.
+  rarity: common
+  tone:
+  - eerie
+  - funny
+  - looping
+  cast:
+  - Priya Dunmore (a jogger in a reflective headband, fixed)
+  - The Second Trailhead (patient, fixed)
+  canon:
+  - The jogger keeps emerging at a trailhead she has not yet reached.
+  - Both trailheads carry the same wooden sign and the same mud.
+  - The trail is only a loop if you insist on reaching the end.
+  scene: A jogger in a reflective headband jogs out of the trees, checks her watch, looks up at the trailhead sign and groans. "That is the third time I have arrived at the one I was leaving." Behind her the same sign stands twice, thirty feet apart, with identical mud. She hands you a trail map folded wrong. "Please tell me which one is real. I would like to go home."
+  options:
+  - id: a
+    label: Trace the loop on her map
+    skill: wits
+    target: 9
+    success:
+      text: You notice the two trailheads share a single parking lot that exists only on the map, and mark the spot. Priya laughs with relief and gives you her trail pass stub, stamped with a date from last week.
+      effects:
+      - evidence:geography
+      - flag:trailhead_traced
+      - weird+1
+    failure:
+      text: You fold the map the wrong way and the second trailhead lands on your own start point. Priya wishes you a speedy return, for both of you.
+      effects:
+      - time-1
+      - flag:trailhead_tangled
+  - id: b
+    label: Jog the trail with her until it resolves
+    skill: burly
+    target: 7
+    success:
+      text: You keep pace for a mile, then another, then a third, and the trail finally runs out of ideas and delivers you both to a single sign. Priya collapses onto it, thrilled.
+      effects:
+      - flag:trailhead_jogged
+      - goodwill+1
+      - evidence:rumor
+    failure:
+      text: You are fit for a plaza, not a forest, and you finish winded and a trailhead behind.
+      effects:
+      - nerve-1
+      - time-1
+  - id: c
+    label: Tell her to sit down and stop arriving
+    skill: none
+    target: null
+    success:
+      text: You make Priya sit on a log between the two signs. Slowly, the one on the left stops feeling plausible and fades like a bad habit. She tips her water bottle to you in thanks.
+      effects:
+      - flag:trailhead_rested
+      - goodwill+1
+  lead_reactions:
+    mara: Mara studies the sign. "Same carving, same grain. Somebody made two on purpose, and only one is in the budget."
+    kit: Kit grins. "A trail that gets you coming and going. Efficiency, finally."
+    juniper: Juniper kneels in the mud. "It is not lost. It is shy. It keeps showing up early because it is afraid of being late."
+    cedar: Cedar shakes his head. "I have walked that forest forty years. There was never a second sign. Until now, there never needed to be."
+  callbacks:
+  - trailhead_traced
+  - trailhead_tangled
+  - trailhead_jogged
+  - trailhead_rested
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-013
+  revision: 1
+  chapter: 1
+  location: Arcata Community Forest / Redwood Park
+  title: The Deer in the Reflective Vest
+  tier: invented
+  provenance: The Community Forest and its volunteer culture are real; the vested deer and its 1897 committee are invented fiction and no real volunteer or official is depicted.
+  rarity: uncommon
+  tone:
+  - bureaucratic
+  - eerie
+  - dry
+  cast:
+  - A Deer in a Volunteer Vest (park safety officer, fixed)
+  - The 1897 Trail Committee (heard, never seen)
+  canon:
+  - A deer in a high-visibility vest gives safety briefings for events scheduled in 1897.
+  - The briefings are accurate for 1897 and slightly alarming for any other year.
+  - Anyone who follows the briefing reaches the trailhead fifteen minutes before they left.
+  scene: 'A deer in a bright orange volunteer vest steps onto the path and clears its throat. "Good evening. Today''s hazards are as follows: a steam donkey on the east grade, a mild stampede of oxen, and a speech by the county supervisor. Please stay behind the rope." There is no rope. The deer waits, politely, until you nod. A faint brass band tunes up somewhere in the ferns.'
+  options:
+  - id: a
+    label: Ask for the full hazard briefing
+    skill: local_lore
+    target: 9
+    success:
+      text: You listen to every hazard and recognize two as real events from the county archives. The deer is pleased and hands you a laminated map of the old grade, which has since returned to the forest.
+      effects:
+      - evidence:history
+      - flag:deer_briefed
+      - weird+1
+    failure:
+      text: The briefing runs forty minutes and ends with a warning about a flood you are standing in.
+      effects:
+      - time-1
+      - nerve-1
+  - id: b
+    label: Join the safety line behind the invisible rope
+    skill: psyche
+    target: 7
+    success:
+      text: You stand behind the rope that is not there and feel the whole 1897 crowd shuffle to make room. The deer salutes. A hand-lettered ticket slips into your pocket, admitting you to the speech.
+      effects:
+      - evidence:schedule
+      - flag:deer_rope
+      - goodwill+1
+    failure:
+      text: You lean on the rope and it is, in fact, there. The deer sighs, gently, and takes your name for the report.
+      effects:
+      - nerve-1
+      - flag:deer_reported
+  - id: c
+    label: Thank the deer and ask about the oxen
+    skill: none
+    target: null
+    success:
+      text: The deer is moved to be asked about the oxen, and spends five minutes on their names, temperaments and union. It gives you a vest button as a keepsake.
+      effects:
+      - flag:deer_oxen
+      - goodwill+1
+  lead_reactions:
+    mara: Mara frowns at the vest. "Stitched, not printed. Somebody sewed that to a deer on purpose, and they did a lovely job."
+    kit: Kit salutes the deer. "Finally, a safety officer who looks the part. I would follow that vest anywhere."
+    juniper: Juniper bows to it. "He is not pretending. For him it is 1897 and the forest is grateful someone still keeps the rules."
+    cedar: Cedar grunts. "That grade is real. Nobody walks it, and nobody forgets it. Listen to the deer."
+  callbacks:
+  - deer_briefed
+  - deer_rope
+  - deer_reported
+  - deer_oxen
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

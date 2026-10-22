@@ -751,3 +751,224 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-106
+  revision: 1
+  chapter: 6
+  location: Manila dunes · kinetic course
+  title: Deadman's Drop, Then Up Again
+  tier: invented
+  provenance: The Manila dunes and kinetic sculpture racing are real local traditions; the sculpture, its pilot and the drop are invented fiction and depict no real racer or event.
+  rarity: rare
+  tone:
+  - thrilling
+  - absurd
+  - chronal
+  cast:
+  - The Sculpture (kinetic, enthusiastic, fixed)
+  - Pilot Ravi Ostrander (clinging on, fixed)
+  canon:
+  - A kinetic sculpture rolls down a dune so energetically it reaches yesterday.
+  - On the way back up, it arrives a little before it left.
+  - Pilot Ostrander has been through the drop six times and has learned nothing.
+  scene: A kinetic sculpture shaped like a giant copper fish crests the dune and drops, shrieking its gears. It rolls so fast that the sand behind it goes yesterday-colored. The pilot, clinging to a handlebar, waves frantically as the machine climbs back out of the dune a moment before it went in. "Can you stop us?" Ravi calls. "We keep arriving too early."
+  options:
+  - id: a
+    label: Brace the sculpture at the bottom of the drop
+    skill: burly
+    target: 9
+    success:
+      text: You plant your shoulder against the fish and the sculpture shudders to a halt, overlapping with itself for one long second. Ravi tumbles out grateful and hands you a stamped race ticket from yesterday.
+      effects:
+      - evidence:schedule
+      - flag:drop_braced
+      - goodwill+1
+    failure:
+      text: The fish ignores you and rolls through, taking a bit of your afternoon with it.
+      effects:
+      - time-1
+      - nerve-1
+  - id: b
+    label: Time the drop and call the moment to jump
+    skill: wits
+    target: 11
+    success:
+      text: You count the drop in beats and shout when to jump. Ravi lands in a time that matches the clock, and the sculpture slows into today with a metallic sigh.
+      effects:
+      - evidence:calendar
+      - flag:drop_timed
+      - weird+1
+    failure:
+      text: You count wrong, and Ravi leaps into a Tuesday that is not on the schedule.
+      effects:
+      - nerve-1
+      - flag:drop_lost
+  - id: c
+    label: Cheer from the dune for the next run
+    skill: none
+    target: null
+    success:
+      text: You cheer and the copper fish dips its nose like a bow. Ravi throws a ribbon to you as it rolls past, a keepsake of a run that has not happened yet.
+      effects:
+      - flag:drop_cheered
+      - goodwill+1
+  lead_reactions:
+    mara: Mara studies the dune tracks. "The marks go uphill. That should be impossible, and it is the neatest thing I have seen."
+    kit: Kit whoops. "Go on, fish! Arrive early! Make the future wait for you!"
+    juniper: Juniper strokes the sand. "The dune is not angry. It is just rolling the way it remembers."
+    cedar: Cedar mutters. "A machine so eager it beats the clock. I admire that, and I fear it."
+  callbacks:
+  - drop_braced
+  - drop_timed
+  - drop_lost
+  - drop_cheered
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-108
+  revision: 1
+  chapter: 6
+  location: Manila dunes · kinetic course
+  title: The Dune that Swallowed the Map
+  tier: invented
+  provenance: The Manila dunes shift in real life; the traveling dune, its appetite for maps and the cartographer are invented fiction and depict no real person or place.
+  rarity: rare
+  tone:
+  - uncanny
+  - funny
+  - geographic
+  cast:
+  - The Traveling Dune (patient, hungry for maps, fixed)
+  - Cartographer Nell Dray (map-less, fixed)
+  canon:
+  - A traveling dune relocates three of the player's remembered destinations.
+  - The dune has swallowed the festival map and is slowly digesting it.
+  - Nell Dray insists she can still draw it from memory, and is correct about half.
+  scene: The dune ahead has moved since you last looked. It sits where a lighthouse should be, and it is wearing a corner of a festival map like a napkin. Cartographer Dray, standing at its edge with an empty pen, groans. "It ate the map. And three of the places you remember from this morning, I would say, are now elsewhere. Help me get them back, or at least help me draw them again."
+  options:
+  - id: a
+    label: Redraw the three places from memory
+    skill: local_lore
+    target: 9
+    success:
+      text: You sketch each place with care, and the dune groans and gives them back one by one. Nell inks your sketches into a clean map that lists three corrected routes.
+      effects:
+      - evidence:geography
+      - flag:dune_redrawn
+      - goodwill+1
+    failure:
+      text: You remember the wrong coast and the dune cheerfully relocates a fourth place.
+      effects:
+      - time-1
+      - nerve-1
+  - id: b
+    label: Persuade the dune to give up the map
+    skill: rizz
+    target: 7
+    success:
+      text: You tell the dune it is better than a map, and it burps up a torn corner with a name scrawled on it. Nell takes it, delighted, and hands you a stamp for next time.
+      effects:
+      - evidence:document
+      - flag:dune_persuaded
+      - weird+1
+    failure:
+      text: The dune takes your flattery as a challenge and swallows your hat.
+      effects:
+      - nerve-1
+      - flag:dune_hatless
+  - id: c
+    label: Walk the dune to see where it moved things
+    skill: none
+    target: null
+    success:
+      text: You walk the dune from end to end, noting what sits where it should not. It is a long walk and the sand is warm. At the end you find a quiet corner, and Nell's thanks, at the cost of an hour.
+      effects:
+      - flag:dune_walked
+      - goodwill+1
+      - time-1
+  lead_reactions:
+    mara: Mara spreads the torn map. "Ink is festival-issue. Whoever drew this knew exactly what to leave out."
+    kit: Kit drops into the sand. "A dune that eats maps. I have never felt so seen."
+    juniper: Juniper kneels. "The dune is not greedy. It is lost too, and it hoped a map would help."
+    cedar: Cedar sniffs. "Dunes have always walked. This one has simply learned to take its sightseeing seriously."
+  callbacks:
+  - dune_redrawn
+  - dune_persuaded
+  - dune_hatless
+  - dune_walked
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-114
+  revision: 1
+  chapter: 6
+  location: Humboldt Bay · kinetic water crossing
+  title: The Tide Swaps Places with Time
+  tier: invented
+  provenance: Humboldt Bay's tides and the kinetic water crossing are real; the swapped tide, the stranger and the choice are invented fiction and depict no real person.
+  rarity: rare
+  tone:
+  - tense
+  - wistful
+  - mythic
+  cast:
+  - The Tide (patient, fixed)
+  - A Stranger on the Pier (mid-memory, fixed)
+  canon:
+  - At the crossing the tide trades places with time and offers a hard choice.
+  - The player may save their equipment or rescue a stranger's lost memory, but not both.
+  - The stranger will remember either way. The cost is whose memory it is.
+  scene: Halfway across the bay, the tide stops and the seconds start coming in like water. A stranger stands on the pier clutching an empty frame, whose picture is draining away. The tide speaks, gently. "I can carry your gear to shore, or I can return her memory. Not both." Your equipment bobs at your feet in the swelling clock. The stranger looks at you and does not ask.
+  options:
+  - id: a
+    label: Save the equipment and carry on
+    skill: burly
+    target: 7
+    success:
+      text: 'You haul the gear to shore with a great heave. The stranger watches you go without reproach, and leaves you a note: a description of the memory you did not save.'
+      effects:
+      - evidence:rumor
+      - flag:tide_gear
+      - nerve+1
+    failure:
+      text: You drop half the gear in the swell and the stranger still loses her memory.
+      effects:
+      - nerve-1
+      - time-1
+  - id: b
+    label: Rescue the stranger's memory
+    skill: psyche
+    target: 9
+    success:
+      text: You reach into the swelling time and pull her memory out, whole and wet. She remembers your name and, in gratitude, tells you the route the tide will take next.
+      effects:
+      - evidence:geography
+      - flag:tide_memory
+      - goodwill+1
+    failure:
+      text: You grasp a memory that is not hers, and it shatters into harmless glass.
+      effects:
+      - nerve-1
+      - flag:tide_shattered
+  - id: c
+    label: Ask the tide for a third option
+    skill: none
+    target: null
+    success:
+      text: The tide thinks. "There is one," it says. "Wait." You wait, and it hands you half the gear and half the memory, and keeps the rest for itself, which costs your free draw.
+      effects:
+      - flag:tide_third
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara steadies the boat. "Equipment is replaceable. People are not. But I understand why you might hesitate."
+    kit: Kit bites a lip. "I would have saved her. Then I would have complained for a week about the gear."
+    juniper: Juniper sets a palm on the water. "The tide is not cruel. It is simply honest about what it can hold."
+    cedar: Cedar looks at the stranger. "Some things you pick up even if it costs you. That is what decent looks like."
+  callbacks:
+  - tide_gear
+  - tide_memory
+  - tide_shattered
+  - tide_third
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

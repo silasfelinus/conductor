@@ -753,3 +753,224 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-081
+  revision: 1
+  chapter: 5
+  location: Ferndale Main Street
+  title: The Shop Window Bride
+  tier: invented
+  provenance: Ferndale's Victorian main street is real; the mannequin, the bride and the wedding are invented fiction and depict no real person or family.
+  rarity: rare
+  tone:
+  - gothic
+  - tender
+  - eerie
+  cast:
+  - The Shop Window Mannequin (bridal, fixed)
+  - Edith Marrow (the 1912 bride, unseen)
+  canon:
+  - A mannequin in a bridal gown asks the player to stop a wedding scheduled in 1912.
+  - The wedding is real, the groom is a mistake, and the bride has been waiting for a rescue.
+  - The mannequin speaks only when the street is empty.
+  scene: In a Victorian shop window, a mannequin in a yellowed bridal gown turns her head as you pass. Her lips do not move, but her voice carries through the glass. "Please. There is a wedding at the church at noon, and it is the wrong wedding. It is 1912. I cannot leave this window, but you can." Down the street a bell begins to ring a few years too early.
+  options:
+  - id: a
+    label: Hurry to the church and interrupt
+    skill: burly
+    target: 9
+    success:
+      text: You race to a church that is, for the moment, the church of 1912, and call out a single objection. The doors swing open on an empty hall and a letter on the altar addressed to you.
+      effects:
+      - evidence:document
+      - flag:bride_interrupted
+      - weird+1
+    failure:
+      text: You arrive after the vows. The bell sounds, and the street goes very quiet.
+      effects:
+      - nerve-1
+      - time-1
+  - id: b
+    label: Ask the mannequin why it is the wrong wedding
+    skill: psyche
+    target: 7
+    success:
+      text: The mannequin tells you the groom has forged the bride's name on the deed. You understand it is a quiet crime, but a true one, and you memorize the particulars.
+      effects:
+      - evidence:history
+      - flag:bride_told
+      - goodwill+1
+    failure:
+      text: You ask too many questions and the voice withdraws, leaving only your own reflection in the glass.
+      effects:
+      - nerve-1
+      - flag:bride_silent
+  - id: c
+    label: Place a flower at the window
+    skill: none
+    target: null
+    success:
+      text: You leave a ferndale daisy on the sill. The mannequin's hand lifts, very slightly, in thanks. The glass is warm when you touch it, and the bell stops.
+      effects:
+      - flag:bride_flower
+      - goodwill+1
+  lead_reactions:
+    mara: Mara examines the gown. "Hand-stitched, period-accurate lace. Whoever wore this was a real bride, once."
+    kit: Kit presses a palm to the glass. "She is not a mannequin. She is somebody the shop forgot to let out."
+    juniper: Juniper whispers to the window. "She is not asking you to change the past. She wants someone to witness it."
+    cedar: Cedar tips his hat. "Ferndale keeps its dead close. If one wants help, you give it."
+  callbacks:
+  - bride_interrupted
+  - bride_told
+  - bride_silent
+  - bride_flower
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-088
+  revision: 1
+  chapter: 5
+  location: Fortuna
+  title: The Hardware Store Crop Circle
+  tier: invented
+  provenance: Fortuna's hardware stores are real community fixtures; Mr. Pickett and the cord circle are invented fiction and depict no real business or owner.
+  rarity: common
+  tone:
+  - absurd
+  - funny
+  - agricultural
+  cast:
+  - Mr. Dolan Pickett (store owner, bemused, fixed)
+  - The Aisle Seven Circle (perfect, fixed)
+  canon:
+  - A perfect crop circle has appeared in the aisle of extension cords.
+  - The circle is made of coiled cords and points toward the tool section.
+  - Mr. Pickett has had a lot of weird weeks and considers this a mild one.
+  scene: In aisle seven of a family hardware store, hundreds of extension cords have been coiled on the floor in a perfect, intricate spiral. Mr. Pickett stands at its edge with a coffee mug, unbothered. "Showed up this morning," he says. "I did not do it. The cords are all accounted for. It points at the tool section, which, honestly, is the most useful thing it has done."
+  options:
+  - id: a
+    label: Follow the spiral to its center
+    skill: wits
+    target: 7
+    success:
+      text: The center of the circle is a single socket, and the cords around it label every outlet in the building. You notice one cord is a perfect map of the town's power grid.
+      effects:
+      - evidence:geography
+      - flag:circle_followed
+      - weird+1
+    failure:
+      text: You step on a cord and the whole circle springs back, hissing like a startled snake.
+      effects:
+      - nerve-1
+      - time-1
+  - id: b
+    label: Ask Mr. Pickett what the circle wants
+    skill: rizz
+    target: 9
+    success:
+      text: Pickett thinks. "Maybe it wants to be plugged in." You take that seriously, and a cord uncoils to reveal a receipt for a lamp you must have been meant to buy.
+      effects:
+      - evidence:document
+      - flag:circle_asked
+      - goodwill+1
+    failure:
+      text: You get the question wrong and Pickett laughs. The circle seems wounded.
+      effects:
+      - nerve-1
+      - flag:circle_wounded
+  - id: c
+    label: Buy a single extension cord and leave
+    skill: none
+    target: null
+    success:
+      text: You buy one cord, politely, from the edge of the spiral. Pickett wraps it in brown paper with a rare smile. It is warm to the touch, and costs your free draw to carry.
+      effects:
+      - flag:circle_cord
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara crouches by the spiral. "Precision coiling, no tangles. Whoever made this was patient and very good."
+    kit: Kit nods solemnly. "A crop circle for indoor farming. Honestly, I respect the commitment."
+    juniper: Juniper traces a coil. "It is not a message. It is a gift, in the language of cords."
+    cedar: Cedar shrugs. "Fortuna has seen stranger. A circle that points at the tools? That is practical."
+  callbacks:
+  - circle_followed
+  - circle_asked
+  - circle_wounded
+  - circle_cord
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-092
+  revision: 1
+  chapter: 5
+  location: Avenue of the Giants
+  title: The Giant's Smaller Older Brother
+  tier: invented
+  provenance: The Avenue of the Giants and its redwoods are real; the silhouette, the brothers and the off-trail tree are invented fiction and depict no real tree or person.
+  rarity: uncommon
+  tone:
+  - mythic
+  - funny
+  - tender
+  cast:
+  - The Silhouette (enormous, certain, fixed)
+  - The Older Brother (small, ancient, unseen)
+  canon:
+  - An enormous silhouette insists the real giant is just off-trail.
+  - The real giant is a small, very old redwood that has been waiting for visitors.
+  - The silhouette is a younger brother who is a little jealous.
+  scene: Among the tall trunks, an enormous silhouette looms against the fog, shaped like a tree that is not quite a tree. "You have come for the Giant," it says in a voice like creaking timber. "Not me. I am only the loud one. The real giant is my older brother, off the trail, and he is considerably smaller. He would never say so. Go and find him, please."
+  options:
+  - id: a
+    label: Leave the trail and find the old brother
+    skill: local_lore
+    target: 9
+    success:
+      text: You step off the trail, carefully, and find a modest redwood whose rings are older than the others. It rustles, shyly, and drops a seed cone with a date inside.
+      effects:
+      - evidence:history
+      - flag:giant_found
+      - goodwill+1
+    failure:
+      text: You wander in the wrong direction and find only a very loud woodpecker.
+      effects:
+      - time-1
+      - nerve-1
+  - id: b
+    label: Reassure the silhouette
+    skill: rizz
+    target: 7
+    success:
+      text: You tell the silhouette that being the loud one is also a kind of giant. It deflates with relief and leaves you its best landmark, a path to its brother.
+      effects:
+      - evidence:geography
+      - flag:giant_reassured
+      - goodwill+1
+    failure:
+      text: You compliment the wrong tree and the silhouette sulks into the mist.
+      effects:
+      - nerve-1
+      - flag:giant_sulked
+  - id: c
+    label: Sit with the silhouette until the fog lifts
+    skill: none
+    target: null
+    success:
+      text: You sit until the silhouette thins into an ordinary shadow and the forest breathes out. A single redwood needle falls in your hand, at the cost of your free draw.
+      effects:
+      - flag:giant_sat
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara measures with her thumb. "The shadow is bigger than the trunk. Somebody is lying about scale, and it is the tree."
+    kit: Kit bows. "A younger brother looking out for the older one. I have so many feelings."
+    juniper: Juniper hugs a trunk. "He is shy, not small. The forest keeps its elders quiet."
+    cedar: Cedar removes his hat. "Old trees do not need to be tall. They need to be remembered."
+  callbacks:
+  - giant_found
+  - giant_reassured
+  - giant_sulked
+  - giant_sat
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

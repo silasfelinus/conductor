@@ -752,3 +752,226 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-030
+  revision: 1
+  chapter: 2
+  location: Trinidad Harbor / Head
+  title: Fog Bank Number Seventeen
+  tier: invented
+  provenance: Trinidad Harbor and its fog are real; the clerk, the permit counter and the numbered bank are invented fiction and depict no real agency or person.
+  rarity: uncommon
+  tone:
+  - bureaucratic
+  - dry
+  - coastal
+  cast:
+  - Clerk Hollis Fenwick (weather clerk, fixed)
+  - Fog Bank Number Seventeen (pending, fixed)
+  canon:
+  - A weather clerk at a harbor counter stamps fog permits for banks that are not yet on the coast.
+  - The clerk rejects the player's identity for want of a form that only exists in fog.
+  - Fog Bank Seventeen will move in only when its permit is stamped.
+  scene: At a small counter on the pier, a clerk with a rubber stamp and a sweater the color of fog looks up. "Permit for Bank Seventeen? Of course. And your identity?" You offer a name. He squints at it, stamps REJECTED, and slides it back. "Your form is in the wrong weather." Behind him a gray wall of fog is waiting off the harbor mouth like a patient customer.
+  options:
+  - id: a
+    label: Fill out the fog form properly
+    skill: wits
+    target: 9
+    success:
+      text: You find the form is printed only on the damp side of a page and fill it in with a dripping pen. Clerk Fenwick accepts it with reverence and stamps a permit that doubles as a tide table.
+      effects:
+      - evidence:document
+      - flag:fog_permit
+      - weird+1
+    failure:
+      text: The form smears into an unreadable swirl and the clerk files it under Gray.
+      effects:
+      - time-1
+      - flag:fog_misfiled
+  - id: b
+    label: Charm the clerk into an informal ruling
+    skill: rizz
+    target: 7
+    success:
+      text: Fenwick has not been complimented on his stamp work in eleven years. You do so sincerely, and he signs your identity into the log in a looser, kinder hand.
+      effects:
+      - flag:fog_charmed
+      - goodwill+1
+      - evidence:rumor
+    failure:
+      text: You overdo the charm and he decides you are a fog yourself, which is a different office.
+      effects:
+      - nerve-1
+      - flag:fog_mistaken
+  - id: c
+    label: Wait quietly for the fog to approve you
+    skill: none
+    target: null
+    success:
+      text: You stand at the counter until the fog rolls close and touches your sleeve. Fenwick nods once and stamps your hand APPROVED, though it costs your free draw to wait for the stamp to dry.
+      effects:
+      - flag:fog_approved
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara reads the stamp. "Ink's fresh and the date is wrong in the correct direction. Somebody is forging weather."
+    kit: Kit leans on the counter. "A permit for fog. Finally, bureaucracy with some atmosphere."
+    juniper: Juniper watches the gray bank. "It is lonely. It only wants someone to say its number kindly."
+    cedar: Cedar mutters. "Harbor fog has always needed paperwork. Nobody wrote it down until now."
+  callbacks:
+  - fog_permit
+  - fog_misfiled
+  - fog_charmed
+  - fog_mistaken
+  - fog_approved
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-032
+  revision: 1
+  chapter: 2
+  location: Luffenholtz Beach
+  title: The Borrowed Sunset
+  tier: invented
+  provenance: Luffenholtz Beach is a real coastal spot; the photographer, the borrowed horizon and its Tuesday are invented fiction and no real person is depicted.
+  rarity: rare
+  tone:
+  - wistful
+  - strange
+  - luminous
+  cast:
+  - Odessa Kwan (landscape photographer, fixed)
+  - Next Tuesday's Horizon (shy, fixed)
+  canon:
+  - The horizon at Luffenholtz tonight belongs to next Tuesday, and shows Tuesday's weather.
+  - The sunset on it is a Tuesday sunset and is somewhat better than tonight's.
+  - Anything photographed on that horizon arrives in a photo before it happens.
+  scene: A photographer with a tripod stares at the horizon with her lens cap in her mouth. "That is not tonight's sunset," Odessa says around it. "I checked the almanac. That one is next Tuesday's, and it is considerably nicer." A pink cloud lifts off the sea and arranges itself into a small, clear sign reading TUESDAY. The waves are slightly early.
+  options:
+  - id: a
+    label: Photograph the horizon from the right angle
+    skill: psyche
+    target: 9
+    success:
+      text: You frame the shot with Odessa and the shutter clicks onto next week. The print that develops shows a doorway you will walk through on Tuesday, labeled in Odessa's handwriting.
+      effects:
+      - evidence:calendar
+      - flag:tuesday_photo
+      - weird+1
+    failure:
+      text: You photograph yourself photographing, which is a Tuesday of its own, and the print curls into an uneasy sepia.
+      effects:
+      - nerve-1
+      - flag:tuesday_selfie
+  - id: b
+    label: Ask the horizon to give tonight back
+    skill: local_lore
+    target: 7
+    success:
+      text: You recite the tide table and the horizon, embarrassed, shifts back to tonight's dull orange. Odessa weeps, grateful, and gives you the tide chart she kept for the cove.
+      effects:
+      - evidence:geography
+      - flag:horizon_returned
+      - goodwill+1
+    failure:
+      text: The horizon takes your politeness as a request to stay, and now it is next Tuesday around you.
+      effects:
+      - time-1
+      - flag:tuesday_stuck
+  - id: c
+    label: Watch the Tuesday sunset with Odessa
+    skill: none
+    target: null
+    success:
+      text: You sit beside her in the sand and watch a sunset that has not happened yet. She is quiet, and so are you. She slips a spare lens cap into your hand, which feels like a promise.
+      effects:
+      - flag:tuesday_watched
+      - goodwill+1
+  lead_reactions:
+    mara: Mara checks her watch against the horizon. "The tide is eleven minutes early. Whatever this is, it is running ahead of us."
+    kit: Kit sighs happily. "Next Tuesday, and it is gorgeous. I am going to be so disappointed on Tuesday."
+    juniper: Juniper smiles at the sea. "It is not stolen. The water lent it, the way a friend lends you a coat."
+    cedar: Cedar squints. "A sunset out of order. My late father always said the coast keeps its own calendar."
+  callbacks:
+  - tuesday_photo
+  - tuesday_selfie
+  - horizon_returned
+  - tuesday_stuck
+  - tuesday_watched
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-033
+  revision: 1
+  chapter: 2
+  location: Luffenholtz Beach
+  title: The Listening Cliffs
+  tier: invented
+  provenance: Luffenholtz cliffs are real geography; the voice, its angle and the listening rock are invented fiction and no real person's voice is depicted.
+  rarity: uncommon
+  tone:
+  - eerie
+  - tender
+  - coastal
+  cast:
+  - The Cliffs (listening, fixed)
+  - A Familiar Voice (unplaceable, fixed)
+  canon:
+  - A voice you know calls to you from a place on the cliff face that cannot hold a person.
+  - The cliffs answer anyone who speaks their name softly, but never in the right order.
+  - The voice always says what you most want to hear, a half-second too soon.
+  scene: High on the cliff, at an angle no ledge could allow, a voice you know calls your name. It is warm and a little worried, the way people sound when they have been waiting. It says, a half-second before you can say it yourself, exactly what you were about to ask. The cliff face ripples around the sound, listening hard. A gull stops mid-air to eavesdrop.
+  options:
+  - id: a
+    label: Answer the voice by name
+    skill: psyche
+    target: 9
+    success:
+      text: You say the name, gently, and the voice sighs as if set down. A small stone drops into your palm engraved with a date you will need to recall.
+      effects:
+      - evidence:calendar
+      - flag:cliff_answered
+      - goodwill+1
+    failure:
+      text: You say the wrong name and the voice goes cold, then politely rearranges itself into a stranger.
+      effects:
+      - nerve-1
+      - flag:cliff_wrongname
+  - id: b
+    label: Climb toward the sound
+    skill: burly
+    target: 11
+    success:
+      text: You climb a foothold that does not exist and find a hollow in the rock where a lantern still burns. It lights a handwritten note left by someone who knew you well.
+      effects:
+      - evidence:document
+      - flag:cliff_climbed
+      - weird+1
+    failure:
+      text: The foothold is only an echo, and you slide down with a scrape and a lesson.
+      effects:
+      - nerve-1
+      - time-1
+  - id: c
+    label: Listen without answering
+    skill: none
+    target: null
+    success:
+      text: You hold still and let the cliff finish speaking. When it ends it says thank you, and the sea lowers its voice to match. The listening costs you the best part of an hour.
+      effects:
+      - flag:cliff_listened
+      - goodwill+1
+      - time-1
+  lead_reactions:
+    mara: Mara rubs the stone. "Carved, not eroded. Somebody wanted you to find this, and they knew your habits."
+    kit: Kit speaks softly. "It sounds like someone I used to know. I would like not to find out who."
+    juniper: Juniper lays a hand on the rock. "The cliffs are not tricking you. They are holding a voice for someone who could not stay."
+    cedar: Cedar looks away. "I do not answer cliffs. But I do not stop other folks from doing it either."
+  callbacks:
+  - cliff_answered
+  - cliff_wrongname
+  - cliff_climbed
+  - cliff_listened
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
