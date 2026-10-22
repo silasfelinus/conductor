@@ -545,12 +545,11 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: review
+    status: ready
     depends_on: t-015
-    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-22T23:30:00Z'
+    updated: '2026-10-22T23:38:00Z'
     note: |-
       From t-015's 2026-10-20 PT art pass: all 184 delivered renders (rounds 2-12) were reviewed against their briefs; 159 keep, 25 sent back for garbled lettering on the focal prop (The Safe-Distance Memo, The Founder's Desk, Which Office Supply Are You?), a missing core gag (The Hungry Detector's teeth, Dale's false mustache, the precognition echo tripping, the Suppression Drill fog) or an off-style render (Security Desk). Mail for Kevin rendered its capsules as ammunition with one held to the worker's temple. ROUND-13.yaml queues 25 forced Krea 2 re-renders at the same paths with prompts rewritten to each review note (all pass the live checkArtPromptContract). To finish: once Auto Art Generate fulfills shifting-desks-r13-*, GET each media_url, record delivery_check and art_job_id, view each render against its prompt and set verdict keep/redo, then run python projects/shifting-desks/encounters/link_art.py --write --probe (20 pack slots link; the other 5 are job, mutation and ending art) and commit. Western Cartoon and Noir editions of these 25 subjects were rendered from the old prompts and were not reviewed here.
 
@@ -563,8 +562,8 @@ tasks:
       --probe.
 
       Art delivery first: created provenance-verified round-13-15 reconciler, tests, a generator-workflow step, and keep-only art-linking semantics. Open PR and verify CI; remaining art must be independently rendered, reviewed, and linked before t-032 can be closed.
-    claimed_by: 2026-10-22T232000Z-shifting-desks-t032-art-6bf2
-    claimed_at: '2026-10-22T23:20:00Z'
+
+      Art delivery is Silas's explicit priority (2026-10-22 PT). Merged source PR silasfelinus/conductor#6515 at 7c6d36c43f48dc92876304b801cd9c1aa59e1d8b with 24 completed checks (23 success, one intentionally skipped). The scheduled Auto Art Generate job now reconciles ROUND-13 through ROUND-15 against completed ArtJobs and newer media files, records ArtJob and ArtImage IDs only with evidence, and never grants a visual keep verdict. link_art.py now links only delivered and explicitly kept renders. Remain READY: one round-13 and nine each round-14/15 rows still need delivery evidence, visual keep/redo decisions and link_art.py --write --probe before closure. Review production workflow logs and actual media, do not reenqueue jobs merely because ledger status says requested; source queue had already pruned these requests. After t-032 art is finished, handle t-025 ledger retirement persistence and only then discretionary adversarial playtesting.
   - id: t-033
     milestone: m3
     title: 'Tone ladder: lower floors grow more Cronenbergian (rules and station art)'
