@@ -149,7 +149,7 @@ for w in campaign:
     castle = next(n["id"] for n in w["nodes"] if n["kind"] == "castle")
     if castle not in normal:
         err(f"{castle}: needs a secret exit to reach (main route must not)")
-secret_only = sorted(set(nodes) - normal)
+hidden_only = sorted(set(nodes) - normal)
 
 # Gen-1 reuse
 gen1 = [f"{a}-{b}" for a in range(1, 9) for b in range(1, 5)]
@@ -175,7 +175,7 @@ for w in worlds:
     print(f"  W{w['world']} {w['name']}: {len(ks) - ks.count('start')} nodes, "
           f"{sum(n.get('secretExit', False) for n in w['nodes'])} secret exit(s)")
 print(f"reachable (all exits): {len(full)}/{len(nodes)}")
-print(f"reachable (normal exits only): {len(normal)}/{len(nodes)}; secret-only: {', '.join(secret_only)}")
+print(f"reachable (normal exits only): {len(normal)}/{len(nodes)}; secret-only: {', '.join(hidden_only)}")
 print("Gen-1 -> node: " + ", ".join(f"{c}->{used[c][0]}" for c in gen1 if c in used))
 if errors:
     print(f"\nFAIL: {len(errors)} problem(s)")

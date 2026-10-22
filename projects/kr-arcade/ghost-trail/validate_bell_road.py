@@ -169,8 +169,8 @@ notes.append(
 # --- secret exits ----------------------------------------------------------------------------
 openers = {(p["unlock"]["node"], p["unlock"]["exit"]) for p in D["paths"] if p["unlock"]}
 openers |= {(s["setBy"]["node"], s["setBy"]["exit"]) for s in D.get("switches", [])}
-secret_exits = [(n["id"], "secret") for n in D["nodes"] if "secret" in n.get("exits", [])]
-for se in secret_exits:
+hidden_exits = [(n["id"], "secret") for n in D["nodes"] if "secret" in n.get("exits", [])]
+for se in hidden_exits:
     if se not in openers:
         err(f"secret exit of {se[0]} opens nothing")
 for n in D["nodes"]:
@@ -267,7 +267,7 @@ common = {"node": "s6a2", "subweapons": [w["id"] for w in D["subweapons"]], "wea
           "reserve": "poncho", "poncho": True, "switches": ["shrine-bell"], "score": 99_999_999,
           "lives": 99, "deaths": 999_999, "time": 99_999_999, "best": {k: 99_999 for k in playable},
           "run": run}
-naive = {**common, "done": playable, "secrets": [s[0] for s in secret_exits],
+naive = {**common, "done": playable, "secrets": [s[0] for s in hidden_exits],
          "relics": relics + ["s6a1-novice"], "notes": bell_notes}
 compact = {**common, "marks": {k: 63 for k in playable}}
 sizes = {}
@@ -283,7 +283,7 @@ notes.append(f"worst-case 3-slot save: bitmask {sizes['bitmask']} B, id-list {si
 # --- report -----------------------------------------------------------------------------------
 k = Counter(n["kind"] for n in D["nodes"])
 print(f"bellRoad.json: {total} nodes {dict(k)}, {len(D['paths'])} paths, "
-      f"{len(secret_exits)} secret exits, {len(ordered)} regions + shrine")
+      f"{len(hidden_exits)} secret exits, {len(ordered)} regions + shrine")
 for n in notes:
     print("  note:", n)
 if errors:
