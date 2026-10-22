@@ -2415,6 +2415,38 @@ pitches:
           - kind_robots PR #3998 merged (squash c292710), 18/18 checks green
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+  - id: metronome-sync-shelf
+    title: Metronome Sync Shelf
+    status: candidate
+    priority: 50
+    surprise: |
+      Eleven metronomes start out of step, then the shelf they share nudges them into one ticking beat before they drift apart again.
+    passive_loop: |
+      A 40-second precomputed Kuramoto loop: disorder, synchrony, disorder; no interaction needed.
+    optional_interaction: |
+      Hovering brightens nearby metronomes; a rate-limited click fast-forwards the sync.
+    technique: |
+      One canvas, 1200-row phase table computed once at mount with coupling ramped by a half sine; the scene dips briefly at the loop wrap.
+    reduced_motion: |
+      Holds a single static frame with no hover or click.
+    performance_risk: |
+      Low: eleven small shapes per frame; table build is ~1200x121 operations once.
+    novelty: |
+      First coupled-oscillator synchronization effect in the catalog (pendulum-wave-garden is a fixed-ratio wave, not emergent sync).
+    acceptance:
+      - metronomes visibly converge to one beat and then disperse without interaction
+      - hovering brightens nearby metronomes
+      - clicking fast-forwards at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/metronome-sync-shelf.vue
+        pull_request: silasfelinus/kind_robots#4036
+        released_at: '2026-10-22T13:00:00Z'
+        verification:
+          - kind_robots PR #4036 merged (squash 25e4b37), 18/18 checks green
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
   - id: spirograph-gear-bloom
     title: Spirograph Gear Bloom
     status: candidate
