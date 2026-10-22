@@ -619,12 +619,11 @@ tasks:
   - id: t-037
     milestone: m5
     title: 'Narrative pass III: reviews remember employee history and Board endings'
-    status: claimed
+    status: done
     stakes: reversible
-    owner: worker
     claimed_by: 2026-10-21T211500Z-shifting-desks-t037-gpt6-6f9ac
     claimed_at: '2026-10-21T21:15:00Z'
-    updated: '2026-10-21T21:15:00Z'
+    updated: '2026-10-22T01:56:00Z'
     passes: 0
     note: |-
       Silas, 2026-10-21 PT: "sounds great, keep it up" after passes I and II.
@@ -633,3 +632,5 @@ tasks:
       to the actual choices. Preserve seeded engine behavior, validators and art.
       Keep Wellness/Sub-Level Zero pack text free for independent t-034.
       Source and runtime snapshots must stay synchronized and both PRs green.
+
+      Pass III merged on Conductor PR #6474 at f793d56caaf50cfd00376ef9baf44b967bde01ab (full Worker PR CI, security and handoff green) and Kind Robots PR #4006 at dfe5050368f012342049f69f7de1bf32690a79eb (all 17 applicable workflows green). Kept the seven-choice limit and added two-maximum deterministic case-file exhibits on Records and Toy review screens, plus 18 real flag-keyed Board ending passages. Canonical ending data is stamped in Kind Robots to the merged Conductor SHA. No new art jobs or database schema edits. Live Alexandria deployment and cross-device visual rendering were not verified.
