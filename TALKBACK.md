@@ -12529,3 +12529,8 @@ Worker pattern: good — security-conscious host check and no secret handling. N
 
 ## 2026-10-20 — Reviewer: orphan worker branches (ecotone-modular-56, ecotone-story-loop-32) cleared
 Still PR-less and superseded per the 2026-10-19 entry (content landed via #6353 and earlier main commits). Triggered `branch-janitor.yml` with `force_delete_branches` for both so select_role stops flagging them. No merge. Remaining ready work is kr-arcade cabinet slices (cross-repo kind_robots builds), left for a Worker session.
+
+## 2026-10-22 — Reviewer: worker/conductor-repair-duplicate-timestamp-20261022-0920-8b2d superseded
+PR-less one-line branch removing a duplicate `updated:` key from weird-humboldt/t-031. Cherry-picking onto current main conflicts: main already rewrote t-031's note and has no duplicate keys (YAML duplicate-key scan clean). Not merged; branch cleared via `branch-janitor.yml` `force_delete_branches`.
+Observed: #6495 (Gen-2 arcade plan) is red only on "Detect suspicious roadmap task id reuse" (save-the-plumber t-011 rescoped m3→m6 with a new title). Left to its owning session — it should either issue a new task id or document the intentional rescope; not touched here.
+Worker pattern: branches pushed without a PR again; open the PR at push time.
