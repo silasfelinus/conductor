@@ -864,14 +864,18 @@ tasks:
   - id: t-054
     milestone: m3
     title: "Recruit first followers through seeded throne-room audiences and pace early quests"
-    status: review
+    status: done
     owner: worker
     claimed_by: 2026-10-22T092000Z-emperor-t054-a7c2
     claimed_at: '2026-10-22T09:20:18.631Z'
-    updated: '2026-10-22T09:21:48.890Z'
+    updated: '2026-10-22T21:45:37Z'
     passes: 0
     stakes: reversible
     note: |-
       Silas, 2026-10-22 PT: remove automatic starting followers. Introduce one guaranteed recruit at court, one from a seed-randomized pool, and one from either of two pre-authored squabbling pairs (one recruit only). Carry the losing applicant's exclusion through saves/rewinds; avoid early quest overload; test choices, randomness, pacing and save integrity.
 
       Kind Robots PR #4022 implements three throne-room recruit encounters, exclusive authored rival pairs, permanent rejected-rival flags, and a quiet Day 1 quest board. Added seeded 40-run playtests and save/legacy checks; CI and final merge still being verified.
+
+      Reviewer 2026-10-22: PR #6507 (docs-only balance report refresh, 552-campaign results)
+      green on all 23 checks, merged as 940945a.
+    implementation_pr: 'silasfelinus/conductor#6507'
