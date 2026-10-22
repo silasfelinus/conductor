@@ -2,7 +2,7 @@
 
 projects/shifting-desks/encounters/link_art.py maps every pack slot to the path
 kind_robots stationArt() requests and links it only when the latest art ledger
-row for that path is delivered and was not sent back (t-015, 2026-10-20 PT).
+row for that path is delivered and explicitly marked keep (t-015, 2026-10-20 PT).
 """
 
 import copy
@@ -71,7 +71,7 @@ def test_write_links_accepted_renders_and_is_idempotent():
 
 
 def test_sent_back_or_pending_render_unlinks_the_slot():
-    for row in (_row(verdict="redo: garbled lettering"), _row(status="requested", verdict=None)):
+    for row in (_row(verdict="redo: garbled lettering"), _row(status="requested", verdict=None), _row(status="delivered", verdict=None)):
         pack = _pack()
         for _label, art, path in la.slots(pack):
             art["status"], art["art_ref"] = "verified-repository-art", path

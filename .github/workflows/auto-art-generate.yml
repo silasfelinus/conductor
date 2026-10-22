@@ -376,6 +376,19 @@ jobs:
           python scripts/consume_art_queue_to_media.py --live $LIMIT_FLAG \
             --timeout ${{ github.event.inputs.timeout || '300' }} 2>&1 | tee "$RUNNER_TEMP/art-project-art.log"
 
+      # Reconcile retired Shifting Desks request rows against durable ArtJobs.
+      # A media 200 alone is NOT proof of a forced re-render at that same path.
+      # Only matching DONE ArtJobs with newer media become delivered, never kept.
+      - name: Reconcile Shifting Desks art delivery evidence
+        id: shifting_desks_delivery
+        if: ${{ steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python projects/shifting-desks/art/reconcile_delivery.py --live --write
+
       - name: Route downloaded conductor and fallback images
         continue-on-error: true
         working-directory: conductor
