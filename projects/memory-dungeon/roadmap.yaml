@@ -248,6 +248,23 @@ tasks:
       Existing memory card images remain useful. Record output
       provenance and ArtJob IDs when available; do not claim
       generated images exist because prompts were written.
+  - id: t-016
+    milestone: m2
+    title: "Build bullseye sweet spots and solver-verified minefield challenge floors"
+    status: waiting
+    depends_on: t-006
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Implement visible sweet-spot cell(s) per weapon mask: a correctly
+      remembered match at the bullseye earns crit/stun/guard effect,
+      not automatic matching. Prototype rare 8x8/10x10 Minesweeper-like
+      challenge rooms with clue numbers, flags, hazard-safe route goals,
+      zoomable bounded grid, and exact disarm footprints. Require an
+      algorithmic no-mandatory-guess solvability check across seeds,
+      fair recoverable failure, and full keyboard/screen-reader support.
+      See COMBAT-PATTERNS.md. Integrate after spatial rules proven.
   - id: t-014
     milestone: m4
     title: "Run adversarial multi-seed balance and player-story tests"
