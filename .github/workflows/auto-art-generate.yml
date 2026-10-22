@@ -20,6 +20,8 @@ on:
       - "projects/art-prompts.yaml"
       - "projects/emperor-of-dust/art/AUDIENCES-ROUND-1.yaml"
       - "projects/emperor-of-dust/art/SECRET-FOLLOWERS-ROUND-1.yaml"
+      - "projects/emperor-of-dust/art/CHANCE-ACT1-ROUND-1.yaml"
+      - "projects/emperor-of-dust/art/SECRET-STORY-SCENES-ROUND-1.yaml"
       - "projects/emperor-of-dust/art/QUESTS-MISSING-ROUND-2.yaml"
       - "projects/weird-humboldt/art/ART-EDITORIAL-ROUND-1.yaml"
       - "scripts/consume_art_requests_to_media.py"
@@ -235,6 +237,49 @@ jobs:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
         run: |
           python scripts/enqueue_art_requests.py projects/emperor-of-dust/art/SECRET-FOLLOWERS-ROUND-1.yaml --status
+
+      # Emperor of Dust's first act receives distinct surprise and consequence
+      # plates. Keep story-specific cast assets separate from standalone portraits.
+      # The enqueue ledger records ArtJob IDs immediately so retries are safe.
+      - name: Submit Emperor Act I chance-event illustrations
+        id: emperor_chance_a1_submit
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/enqueue_art_requests.py projects/emperor-of-dust/art/CHANCE-ACT1-ROUND-1.yaml --live
+
+      - name: Refresh Emperor Act I chance-event illustration statuses
+        id: emperor_chance_a1_status
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/enqueue_art_requests.py projects/emperor-of-dust/art/CHANCE-ACT1-ROUND-1.yaml --status
+
+      - name: Submit Emperor secret follower story illustrations
+        id: emperor_secret_story_submit
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/enqueue_art_requests.py projects/emperor-of-dust/art/SECRET-STORY-SCENES-ROUND-1.yaml --live
+
+      - name: Refresh Emperor secret story illustration statuses
+        id: emperor_secret_story_status
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/enqueue_art_requests.py projects/emperor-of-dust/art/SECRET-STORY-SCENES-ROUND-1.yaml --status
 
       # Ecotone's 237 original subjects already have 948 ArtJob ids. Never repost
       # those jobs because an art.status is still PENDING: --live skips jobs with ids.
