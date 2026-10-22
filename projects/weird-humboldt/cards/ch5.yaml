@@ -1,0 +1,180 @@
+# Weird Humboldt v1 deck — chapter 5, Southern Humboldt and older roads.
+- id: WH-090
+  revision: 1
+  chapter: 5
+  location: "Eel River Valley"
+  title: "The Eel River Forecast Desk"
+  tier: invented
+  provenance: "The Eel River valley is real; the weather station, its volunteer and the emotional forecasts are invented fiction. No real station or agency is depicted."
+  rarity: common
+  tone: [cozy, strange, sincere]
+  cast: ["Volunteer Forecaster Wendell (fixed)", "Barometer (a very old dog)"]
+  canon:
+    - The forecast desk predicts emotional conditions alongside rainfall.
+    - The predictions are right about eighty percent of the time.
+    - Wendell knows the pattern follows the frequency and has told no one.
+  scene: >-
+    The volunteer weather station is a shed with a hand-lettered sign: TODAY, 40% CHANCE OF RAIN, 70% CHANCE OF NOSTALGIA. Wendell hands you a mug and a printed forecast for your own day. It says, in careful block letters, that you will be tempted to forgive someone before dusk. Barometer the dog thumps his tail twice, which Wendell translates as "yes."
+  options:
+    - id: a
+      label: "Ask Wendell how the forecast works"
+      skill: wits
+      target: 9
+      success:
+        text: "Wendell shows you a hand-built receiver that picks up the county's mood, one pulse at a time. It matches the frequency down to the last tone."
+        effects: ["evidence:frequency", "flag:forecast_explained"]
+      failure:
+        text: "Wendell explains for forty minutes. You leave with three new hobbies and no answer."
+        effects: [time-1]
+    - id: b
+      label: "Take the forecast seriously and act on it"
+      skill: rizz
+      target: 7
+      success:
+        text: "You forgive someone, a little. The forecast clears and Wendell prints a new one that says only: good."
+        effects: [goodwill+1, "flag:forecast_followed"]
+      failure:
+        text: "You try to forgive and fumble it. The forecast adds a 90% chance of awkwardness."
+        effects: [nerve-1]
+    - id: c
+      label: "Pet Barometer and sit a while"
+      skill: none
+      target: null
+      success:
+        text: "The dog leans against your leg. A quiet minute passes. Clarity returns by a small, honest notch."
+        effects: ["flag:valley_rest", "clarity+1"]
+  lead_reactions:
+    mara: "Mara reads the forecast aloud and says, \"That's the most honest weather report I've ever heard.\""
+    kit: "Kit performs the forecast as a three-line pantomime for Wendell, who weeps happily."
+    juniper: "Juniper tells Wendell the river is delighted to be listened to."
+    cedar: "Cedar eyes the receiver. \"That's built from a pickup coil and a coffee can. I love this man.\""
+  callbacks: [forecast_explained, forecast_followed, valley_rest]
+  eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-091
+  revision: 1
+  chapter: 5
+  location: "Avenue of the Giants"
+  title: "The Tree with a Reception Desk"
+  tier: invented
+  provenance: "The Avenue of the Giants is a real scenic route; the receptionist, the hollow redwood and the impossible visitors are invented fiction. No real tree or business is depicted."
+  rarity: rare
+  tone: [serene, bureaucratic, mythic]
+  cast: ["Receptionist Alder (fixed)", "The Visitor in the Waiting Room (identity withheld)"]
+  canon:
+    - A hollow redwood hosts a receptionist for the forest's impossible visitors.
+    - The waiting room contains one visitor who will not say who they are.
+    - Alder keeps a ledger of every anomaly that has come through, and it includes the player.
+  scene: >-
+    A hollow redwood stands on the side of the road with a brass bell and a hand-lettered sign: PLEASE RING FOR SERVICE. Inside, under a cathedral of bark, a receptionist named Alder looks up from a ledger. "Name?" she asks. "I have you down for a quarter past." You have never been here. The waiting room has one chair, and the person in it has been waiting a very long time.
+  options:
+    - id: a
+      label: "Ask to see the ledger"
+      skill: wits
+      target: 9
+      success:
+        text: "The ledger lists every impossible visitor in order. Your name appears twice, once in the past tense. A margin note says, in the same hand, \"Ask about the frequency.\""
+        effects: ["evidence:document", weird+1, "flag:ledger_seen"]
+      failure:
+        text: "Alder closes the ledger with the gentlest of smiles. \"That requires an appointment.\""
+        effects: [time-1]
+    - id: b
+      label: "Speak to the visitor in the waiting room"
+      skill: rizz
+      target: 7
+      success:
+        text: "The visitor shifts a little and talks. They have been here since before the highway. They ask only that someone remember them."
+        effects: [goodwill+1, "flag:visitor_remembered"]
+      failure:
+        text: "The visitor looks at you with great patience and does not answer."
+        effects: [nerve-1]
+    - id: c
+      label: "Take a number and sit quietly"
+      skill: none
+      target: null
+      success:
+        text: "Alder hands you number thirteen. Time passes in a way that doesn't hurt. When your number is called, the lobby is empty and a door has appeared."
+        effects: ["flag:reception_door", "clarity+1"]
+  lead_reactions:
+    mara: "Mara bows to Alder as to an elder. \"Thank you for keeping the record.\""
+    kit: "Kit mimes ringing the bell and the bell rings back."
+    juniper: "Juniper is quiet for a long time, then says, \"This is a house. A very old house. We're guests.\""
+    cedar: "Cedar checks the ledger's binding. \"This paper is older than the highway. And it's still dry.\""
+  callbacks: [ledger_seen, visitor_remembered, reception_door]
+  eligibility: {requires_flags: [], excludes_flags: []}
+  by_state:
+    sober:
+      narration: "Sober, you notice that the clock above the desk runs at exactly the speed of your pulse, and so does the ledger's pen."
+      check_mods: {}
+    tipsy:
+      narration: "Warm and sociable, you want to introduce yourself to everyone, including the person who would rather not."
+      check_mods: {b: 1, a: -1}
+    stoned:
+      narration: "The room hums with the redwood's slow pulse, and the ledger's handwriting seems to rearrange as you look."
+      check_mods: {a: 1}
+    tripping_balls:
+      narration: "The hollow is a cathedral of lungs; the receptionist is a bell, and the visitor is the sound it's trying to make."
+      check_mods: {b: -1, a: 1}
+      extra_option:
+        id: d
+        label: "Ask the bell what it remembers"
+        skill: psyche
+        target: 9
+        success:
+          text: "The bell remembers the visitor's name. You are sure it's right, and you will verify it, and it checks out."
+          effects: ["evidence:memory", "flag:visitor_remembered"]
+        failure:
+          text: "The bell remembers only its own ringing. It rings once, in apology."
+          effects: [nerve-1]
+
+- id: WH-099
+  revision: 1
+  chapter: 5
+  location: "Eel River Valley"
+  title: "The River Stone Adoption Agency"
+  tier: invented
+  provenance: "The valley is real; the family, the pet rock and the ranch dispute are invented fiction. No real family or property is depicted."
+  rarity: common
+  tone: [domestic, absurd, legalistic]
+  cast: ["Grandma Josephine Pruitt (fixed)", "Pebble (a pet rock, claimed heir)"]
+  canon:
+    - The Pruitts insist their pet rock is the rightful heir to their ranch.
+    - Pebble has, in some sense, been speaking for years.
+    - The rival heir is a cousin who has never visited.
+  scene: >-
+    Grandma Pruitt greets you at the gate with a legal pad and a deed. "My grandson is out of the picture and my cousin is a vulture," she says. "The ranch goes to Pebble." On the porch rail sits a grey river stone about the size of a loaf of bread. It does not move. Everyone present is certain it has a position on the matter.
+  options:
+    - id: a
+      label: "Draft a trust naming Pebble as beneficiary"
+      skill: wits
+      target: 9
+      success:
+        text: "You draft the trust and name the ranch a conservation easement in Pebble's honor. Grandma Pruitt signs, the cousin loses interest, and Pebble sits in a patch of sun."
+        effects: [goodwill+1, "flag:pebble_trust"]
+      failure:
+        text: "The draft names Pebble twice and Grandma Pruitt once. A notary shakes her head."
+        effects: [time-1, nerve-1]
+    - id: b
+      label: "Interview Pebble formally"
+      skill: psyche
+      target: 7
+      success:
+        text: "You sit with the stone. After a long minute you are quite sure it wants the ranch left alone. Your certainty is odd and total."
+        effects: ["evidence:memory", "flag:pebble_interviewed"]
+      failure:
+        text: "Pebble is silent. The silence is so complete it takes on opinions."
+        effects: [nerve-1]
+    - id: c
+      label: "Accept a jar of Grandma's pickles and move on"
+      skill: none
+      target: null
+      success:
+        text: "The pickles are sharp and wonderful. Grandma Pruitt gives you a recipe and a promise: if you ever need a place to stay, the porch is yours."
+        effects: ["flag:pruitt_porch", goodwill+1]
+  lead_reactions:
+    mara: "Mara reads the deed and says quietly, \"A signature is a kind of tattoo. Make sure you mean it.\""
+    kit: "Kit sets Pebble on a pedestal and bows. Pebble remains unimpressed, which is correct."
+    juniper: "Juniper sits beside the stone and says nothing. After a while the stone seems less alone."
+    cedar: "Cedar taps the deed. \"Heir to a ranch. This is going to cost a lot of lawyers.\""
+  callbacks: [pebble_trust, pebble_interviewed, pruitt_porch]
+  eligibility: {requires_flags: [], excludes_flags: []}

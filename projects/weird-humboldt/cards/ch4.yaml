@@ -1,0 +1,180 @@
+# Weird Humboldt v1 deck — chapter 4, Backroads and bad reception.
+- id: WH-061
+  revision: 1
+  chapter: 4
+  location: "Blue Lake"
+  title: "Town Council of Stray Radios"
+  tier: invented
+  provenance: "Blue Lake is a real town; the radio council, its emergency and every voice on it are invented fiction. No real municipal body is depicted."
+  rarity: uncommon
+  tone: [civic, eerie, funny]
+  cast: ["Chair Walkie (a hand-held radio, fixed)", "Clerk Bernadette (human, takes the minutes)"]
+  canon:
+    - A council of walkie-talkies is voting on a municipal emergency nobody can identify.
+    - The emergency is real and has not happened yet.
+    - The radios use a channel that appears on no band plan.
+  scene: >-
+    Twelve walkie-talkies sit in a ring on a picnic table, antennas raised, as Clerk Bernadette reads the agenda in the careful voice of someone taking notes for a future trial. "Item one, the emergency," crackles Chair Walkie. "All in favor?" Eleven static bursts say aye. Nobody can say what the emergency is, but everyone is certain it is Thursday.
+  options:
+    - id: a
+      label: "Ask the council to define the emergency"
+      skill: wits
+      target: 9
+      success:
+        text: "Chair Walkie stalls, then relents: the emergency is a signal that will drown out every radio in the county. They are voting to warn the people."
+        effects: ["evidence:frequency", "flag:council_warned"]
+      failure:
+        text: "The council votes to define the emergency as your question. You are temporarily the emergency."
+        effects: [nerve-1, time-1]
+    - id: b
+      label: "Join the vote as the public"
+      skill: rizz
+      target: 7
+      success:
+        text: "Your aye carries. Twelve radios cheer, and Chair Walkie grants you honorary citizenship in a town that does not recognize borders."
+        effects: [goodwill+1, "flag:council_citizen"]
+      failure:
+        text: "The motion fails by one and the radios argue until the picnic ends."
+        effects: [time-1]
+    - id: c
+      label: "Take a radio with you"
+      skill: none
+      target: null
+      success:
+        text: "A small orange radio volunteers. It will chatter at odd moments, but it always knows which way is Thursday."
+        effects: ["flag:orange_radio", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara leans toward the circle. \"These are old families' radios. Somebody trusted them with something.\""
+    kit: "Kit starts a call-and-response and the whole council answers in perfect rhythm."
+    juniper: "Juniper says the radios are tree frogs in a bad mood, and the council goes quiet in embarrassment."
+    cedar: "Cedar flips the back of a radio. \"Hand-wound coil. Nobody makes these. Somebody has been building them for years.\""
+  callbacks: [council_warned, council_citizen, orange_radio]
+  eligibility: {requires_flags: [], excludes_flags: []}
+  by_state:
+    sober:
+      narration: "Sober, you notice the radios are all tuned to the same frequency, and that frequency is drifting a tiny step each minute."
+      check_mods: {}
+    tipsy:
+      narration: "Light on your feet and chatty, you want to buy every radio a round of batteries."
+      check_mods: {b: 1, a: -1}
+    stoned:
+      narration: "The static is a warm blanket with a thread of music in it; you can feel the emergency as a shape, not a word."
+      check_mods: {a: 1}
+    tripping_balls:
+      narration: "The radios are small birds and the council is a murmuration; you can see the vote as it ripples through them."
+      check_mods: {b: -1, a: 1}
+      extra_option:
+        id: d
+        label: "Listen to the murmuration"
+        skill: psyche
+        target: 9
+        success:
+          text: "The emergency has a date and a time inside the murmuration's pattern. You write it on your wrist before it fades."
+          effects: ["evidence:frequency", weird+1]
+        failure:
+          text: "You hear only birds, but they appear grateful to be heard."
+          effects: [goodwill+1]
+
+- id: WH-067
+  revision: 1
+  chapter: 4
+  location: "Kneeland hills"
+  title: "The Amateur UFO Tow Truck"
+  tier: invented
+  provenance: "The hills are real; the tow company, its owners and the stuck saucers are invented fiction. No real business is depicted."
+  rarity: common
+  tone: [rural, comic, wholesome]
+  cast: ["Duane and Marcy Whitlock (neighbors, towing)", "Saucer Pilot Zilch (stuck in the mud)"]
+  canon:
+    - Duane and Marcy tow stuck saucers for cash and pie.
+    - Zilch is genuinely stuck and genuinely polite.
+    - The saucer was headed for the same festival as the player.
+  scene: >-
+    A rattling tow truck with a hand-painted sign reading SAUCERS (AND TRACTORS) pulls up as you reach a wet bend. In the ditch, a silver disc is sunk to its axles. Marcy shoves a thermos at you. "He's been stuck since Tuesday. He says he's late for something." The saucer's pilot, Zilch, leans out of a hatch with the embarrassed grin of a man who forgot to check the road.
+  options:
+    - id: a
+      label: "Help winch the saucer out"
+      skill: burly
+      target: 9
+      success:
+        text: "With a heave and a lot of unwise language, the saucer pops free. Zilch kisses your hand, then remembers himself and bows."
+        effects: [goodwill+1, "flag:saucer_freed"]
+      failure:
+        text: "The winch cable snaps. Everyone is fine, but you are now covered in mud and a minor amount of intergalactic goodwill."
+        effects: [nerve-1, time-1]
+    - id: b
+      label: "Ask Zilch where he was going"
+      skill: rizz
+      target: 7
+      success:
+        text: "He was headed to the kinetic festival's starting line. He shows you the invitation on a data slate. It is addressed to you."
+        effects: ["evidence:document", "flag:saucer_invitation"]
+      failure:
+        text: "Zilch is too embarrassed to say. He asks you to keep the secret and you promise."
+        effects: ["flag:zilch_secret"]
+    - id: c
+      label: "Accept Marcy's pie and a ride"
+      skill: none
+      target: null
+      success:
+        text: "The pie is rhubarb, the ride is bumpy, and Duane drops you exactly where you needed to be, a mile before you knew it."
+        effects: ["flag:whitlock_ride", goodwill+1]
+  lead_reactions:
+    mara: "Mara laughs. \"A saucer stuck in a ditch. Somebody finally did the honest thing.\""
+    kit: "Kit hops onto the saucer and juggles Zilch's wrenches, to Zilch's delight."
+    juniper: "Juniper pats the saucer's hull. \"She's not hurt. She's just tired.\""
+    cedar: "Cedar peers at the axle assembly. \"That's a repulsor array with a CB radio bolted on. Respect.\""
+  callbacks: [saucer_freed, saucer_invitation, whitlock_ride, zilch_secret]
+  eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-069
+  revision: 1
+  chapter: 4
+  location: "Highway 299 roadside"
+  title: "The Midnight Cattle Crossing"
+  tier: invented
+  provenance: "The highway is real; the cattle, their traffic signals and the rancher are invented fiction. No real ranch or herd is depicted."
+  rarity: common
+  tone: [eerie, deadpan, rural]
+  cast: ["Rancher Hollis (fixed)", "Lead Cow Bettina (organizes the herd)"]
+  canon:
+    - The cows follow invisible traffic signals with military precision.
+    - The signals are real; they are broadcast by the frequency.
+    - Rancher Hollis can see the signals only when he blinks twice.
+  scene: >-
+    At midnight a herd of cattle crosses the road in perfect lanes, stopping at an invisible red light and proceeding on green. Rancher Hollis leans on a fence post. "They started doing this three weeks ago," he says. "Bettina runs the intersection. I stopped asking questions after the second week."
+  options:
+    - id: a
+      label: "Watch the herd and map the signals"
+      skill: wits
+      target: 7
+      success:
+        text: "The signal pattern matches a sequence you've heard in the static. You write it down; the cows seem to approve."
+        effects: ["evidence:frequency", "flag:cow_signals_mapped"]
+      failure:
+        text: "You try to cross on the red, and Bettina stops you with a look."
+        effects: [nerve-1]
+    - id: b
+      label: "Ask Hollis to blink twice"
+      skill: rizz
+      target: 9
+      success:
+        text: "Hollis blinks. For three seconds he sees the signals too. He drops his hat and quietly says, \"Oh.\" He gives you the key to the north gate."
+        effects: [goodwill+1, "flag:hollis_trusts"]
+      failure:
+        text: "Hollis blinks once, finds the request insulting, and offers you a long lecture on fence maintenance instead."
+        effects: [time-1]
+    - id: c
+      label: "Wait for the green and cross with the herd"
+      skill: none
+      target: null
+      success:
+        text: "You cross in lane three. Bettina nods. The herd accepts you as traffic, and the signals flicker to a color you have no name for."
+        effects: ["flag:crossed_with_herd", weird+1]
+  lead_reactions:
+    mara: "Mara quietly sketches the herd's formation, a pattern like a tattoo flash she has never been able to finish."
+    kit: "Kit dances the crossing in perfect time with the cows, and Bettina gives a slow, regal blink."
+    juniper: "Juniper apologizes to Bettina for the interruption and receives an answering moo."
+    cedar: "Cedar squints at the road. \"That's a four-way sequenced intersection. Who wired it? And to what?\""
+  callbacks: [cow_signals_mapped, hollis_trusts, crossed_with_herd]
+  eligibility: {requires_flags: [], excludes_flags: []}

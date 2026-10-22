@@ -1,0 +1,180 @@
+# Weird Humboldt v1 deck — chapter 2, Coast of improbable tides.
+- id: WH-021
+  revision: 1
+  chapter: 2
+  location: "Moonstone Beach"
+  title: "Bigfoot Family Picnic"
+  tier: invented
+  provenance: "Moonstone Beach is a real place; the Sasquatch family, Uncle Glenn and the backward tide are original comic fiction. No local group is depicted."
+  rarity: uncommon
+  tone: [warm, domestic, uncanny]
+  cast: ["Mama Orla (tallest Sasquatch, fixed)", "Pip (youngest, holds the cracked phone)", "Uncle Glenn (missing, never appears)"]
+  canon:
+    - A fourth figure appears in the family photo of three, and always did.
+    - The tide is moving backward, and has been since before the player arrived.
+    - Uncle Glenn is missing again; the family says this is typical.
+  scene: >-
+    Three vast figures in sun hats are arguing over the proper way to pose for a family photo. The youngest, Pip, holds a phone with a cracked screen. Mama Orla says you may leave if you promise not to call them the Sasquatches. Uncle Glenn is missing again; everyone agrees this is typical. The cooler contains sparkling water and a truly impossible number of deviled eggs. The tide has begun moving backward, but the family is focused on whether Glenn got the invitation.
+  options:
+    - id: a
+      label: "Become the family photographer"
+      skill: rizz
+      target: 7
+      success:
+        text: "They pose. On Pip's cracked screen a fourth figure stands at the family's edge, smiling the way relatives do at a reunion they've outlived. Mama Orla clutches your hand and doesn't say a word."
+        effects: [goodwill+1, "evidence:memory", "flag:picnic_photo_taken"]
+      failure:
+        text: "You mention Glenn at the wrong moment and the family splits into two arguments. One relative, offended and polite, follows you into the next scene."
+        effects: [nerve-1, "flag:glenn_followup"]
+    - id: b
+      label: "Follow the backward tide"
+      skill: psyche
+      target: 9
+      success:
+        text: "The water backs away from your feet and leaves Glenn's folded note on the sand. It points to a place the family has avoided for forty years."
+        effects: ["evidence:geography", "flag:glenn_note"]
+      failure:
+        text: "You return two hours older and soaked, with sea glass in every pocket and no explanation."
+        effects: [time-1, weird+1]
+    - id: c
+      label: "Ask who brought the eggs"
+      skill: none
+      target: null
+      success:
+        text: "Pip receives your question like a compliment. You walk away with a recipe, a warning never to photograph the sea at dawn, and a standing invitation to the next picnic."
+        effects: ["flag:sasquatch_recipe", goodwill+1]
+  lead_reactions:
+    mara: "Mara kneels to Pip's eye level. \"Show me the fourth one. I do portraits. I know the difference between a person and a pose.\""
+    kit: "Kit catches an egg in mid-air, juggles two, and wins the whole beach over in seconds."
+    juniper: "Juniper sets a ribbon on the cooler. \"They're family of the forest. You're allowed to be afraid; they're afraid of you too.\""
+    cedar: "Cedar checks the cracked phone's timestamp and says, very quietly, \"This photo is from tomorrow.\""
+  callbacks: [picnic_photo_taken, glenn_note, glenn_followup, sasquatch_recipe]
+  eligibility: {requires_flags: [], excludes_flags: []}
+  by_state:
+    sober:
+      narration: "Sober, you spot that the phone's clock and the sun disagree by an exact hour, and the fourth figure casts no shadow on the beach."
+      check_mods: {}
+    tipsy:
+      narration: "A little loose and fond of every stranger, you want the whole family in one frame with you in it."
+      check_mods: {a: 1, b: -1}
+    stoned:
+      narration: "The surf pulses to a rhythm you've definitely heard at the festival; it's a lead, and it needs a second witness."
+      check_mods: {b: 1}
+    tripping_balls:
+      narration: "The picnic blanket is a map of the county, folds and all, with a red thread running toward a cove that isn't there yet."
+      check_mods: {a: -1, b: 1}
+      extra_option:
+        id: d
+        label: "Read the blanket as a map"
+        skill: psyche
+        target: 9
+        success:
+          text: "The red thread ends at a boulder the family has circled for years. Glenn's note was under it all along."
+          effects: ["evidence:geography", "flag:glenn_note"]
+        failure:
+          text: "The map leads to the egg cooler, where you are given an egg and a heartfelt apology."
+          effects: [nerve-1, "flag:sasquatch_recipe"]
+
+- id: WH-027
+  revision: 1
+  chapter: 2
+  location: "Trinidad Harbor"
+  title: "The Seagull Union Bargain"
+  tier: invented
+  provenance: "Trinidad Harbor is real; the union, the lunches and the grievances are invented fiction. No real fishing or labor organization is depicted."
+  rarity: common
+  tone: [comic, bureaucratic]
+  cast: ["Shop Steward Gwendolyn (herring gull, fixed)", "Harbormaster Lou (human, tired)"]
+  canon:
+    - The gulls have organized and have a grievance list at least eleven items long.
+    - Stolen lunches are item one; the gulls want compensation, not apology.
+    - Harbormaster Lou will not negotiate without a human witness.
+  scene: >-
+    Forty gulls stand in perfect formation on the dock. A herring gull in a tiny hard hat steps forward. "Shop steward Gwendolyn," she says, in a voice that has done this before. "We have years of unattended lunches stolen and no collective bargaining agreement. We require a mediator." Harbormaster Lou looks at you pleadingly over a thermos. "Please. Just say yes."
+  options:
+    - id: a
+      label: "Mediate the grievance list"
+      skill: rizz
+      target: 9
+      success:
+        text: "You trade one sandwich-free hour a day for a pledge not to dive-bomb tourists. Gwendolyn shakes your hand with a webbed foot and the harbor cheers."
+        effects: [goodwill+1, "flag:gull_accord"]
+      failure:
+        text: "The meeting runs long. Lunches are stolen anyway, including yours, and a gull files a formal complaint about your negotiating style."
+        effects: [nerve-1, time-1]
+    - id: b
+      label: "Audit the dock's lunch records"
+      skill: wits
+      target: 7
+      success:
+        text: "The stolen lunches match a perfect tide schedule. Someone is feeding the gulls on purpose, in order, as if to make them organize."
+        effects: ["evidence:document", weird+1]
+      failure:
+        text: "The records list lunches that were stolen on days the harbor was closed. You decide not to ask."
+        effects: [time-1]
+    - id: c
+      label: "Offer your own lunch as a good-faith gesture"
+      skill: none
+      target: null
+      success:
+        text: "Gwendolyn accepts, inspects it and declares it adequate. The gulls adopt you as a courtesy member, which will matter later."
+        effects: ["flag:gull_courtesy_member", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara signs the grievance list with a flourish. \"Clear terms. Written down. Everyone gets something.\""
+    kit: "Kit mimes a boxing match with the lead gull, and loses with theatrical grace."
+    juniper: "Juniper speaks to the gulls in a low coastal tongue and they straighten their ranks."
+    cedar: "Cedar reads the contract clauses aloud. \"Item eight is a CB channel assignment. Why do the gulls have a radio plan?\""
+  callbacks: [gull_accord, gull_courtesy_member]
+  eligibility: {requires_flags: [], excludes_flags: [gull_accord]}
+
+- id: WH-039
+  revision: 1
+  chapter: 2
+  location: "Mad River / Hammond Trail"
+  title: "The Secret Tide Committee"
+  tier: invented
+  provenance: "The trail and river are real; the committee, its clipboards and the vote are invented fiction. No real local committee is depicted."
+  rarity: uncommon
+  tone: [satire, civic, uncanny]
+  cast: ["Chairperson Bea Tanaka (fixed)", "Treasurer Ollie (silent, holds the gavel)"]
+  canon:
+    - The committee has motions to remove the moon from office and has the votes.
+    - The Moon is a guest on campus and is not aware of the vote.
+    - Chair Tanaka sincerely believes the tide is a public utility.
+  scene: >-
+    Eleven locals with clipboards sit in a ring of folding chairs at the edge of the river. A banner reads SPECIAL SESSION: MOTION TO VACATE THE MOON. Chairperson Tanaka bangs a gavel made from a driftwood knot. "The motion is on the floor. Who will speak for the defendant?" The Moon is not present. No one has told it.
+  options:
+    - id: a
+      label: "Speak for the Moon in public comment"
+      skill: rizz
+      target: 9
+      success:
+        text: "You mention the harbor, the sea glass and the sandwich-stealing gulls. Three members flip to nay. The vote ties, and Treasurer Ollie breaks it with one slow bang of the gavel."
+        effects: [goodwill+1, "flag:moon_defended"]
+      failure:
+        text: "The motion carries by one vote. The tides will be running strangely for the rest of the weekend."
+        effects: [nerve-1, weird+1, "flag:moon_vacated"]
+    - id: b
+      label: "Move to table the motion for lack of notice"
+      skill: local_lore
+      target: 7
+      success:
+        text: "Quoting a bylaw nobody remembers, you table the motion. Chair Tanaka beams. \"Finally, someone who reads.\""
+        effects: ["evidence:history", "flag:motion_tabled"]
+      failure:
+        text: "The bylaw you quote was repealed in 1974. You are loudly thanked for your service and asked to sit down."
+        effects: [time-1]
+    - id: c
+      label: "Take the minutes and say nothing"
+      skill: none
+      target: null
+      success:
+        text: "Your minutes become the only record of the session. When someone later asks who voted, you are the only one who knows."
+        effects: ["flag:tide_minutes", "evidence:document"]
+  lead_reactions:
+    mara: "Mara asks whether the committee will compensate the Moon. They have not thought of that."
+    kit: "Kit stages a mock trial in the dirt, with a rock as the defendant."
+    juniper: "Juniper simply laughs, a long delighted laugh, and the whole committee falls quiet."
+    cedar: "Cedar scans the agenda. \"Item four is a rate hike on the river. Someone is charging for water that moves.\""
+  callbacks: [moon_defended, moon_vacated, motion_tabled, tide_minutes]
+  eligibility: {requires_flags: [], excludes_flags: []}
