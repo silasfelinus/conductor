@@ -830,7 +830,6 @@ def validate_endings(path: Path, packs: list[Path]) -> list[str]:
     bottom = loaded[-1][1]
     boss = bottom.get("boss") or {}
     outcome_ids = [o.get("id") for o in boss.get("department_outcomes") or []]
-    fallback = outcome_ids[-1] if outcome_ids else None
     endings = doc.get("endings") or []
     if len(endings) < 10:
         errors.append(f"ENDINGS: need at least ten endings, have {len(endings)}")
