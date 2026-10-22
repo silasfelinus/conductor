@@ -355,8 +355,8 @@ tasks:
   - id: t-011
     milestone: m5
     title: Continuing autonomous chapter, art and balance evolution
-    status: review
-    updated: '2026-10-22T21:32:26.002Z'
+    status: ready
+    updated: '2026-10-22T21:46:25.899Z'
     passes: 0
     recurring: true
     stakes: reversible
@@ -373,9 +373,8 @@ tasks:
       2026-10-22 PT: Merged silasfelinus/kind_robots#4032 (squash d3c135a4ce368be89e861e2146011010a8465a32) after 16/16 current-head GitHub workflows passed, including TypeScript, formatting and all contract shards. The gamebook CI now proves legitimate start-to-end, reducer-replayed witnesses for all 15 endings; Wren's Lamp on final head used seed 5891737, 124 moves, finishing at 2 HP, after acquiring wren-ally normally. Combat benchmarks cover all six authored fights with four strategies (250 seeds per strategy); Guard opens counters, Feint deals 3 and softens retaliations, Quiet Draw deals 5 at 2 Resolve. Abbess Feint 56 percent versus Strike 44 percent; Hollis Feint 44 versus Strike 10 percent. The four-file scoped change had no new ArtJobs or database writes. Recurring work remains available for narrative polish, golden replay fixtures, tougher route stress, artwork gaps and device review; t-009 still depends on other milestones.
 
       Scoped follow-up: compact immutable end-to-end golden replay encoding, scene-and-flag fingerprints, and six-encounter wounded/low-Resolve combat stress matrix. Working branch worker/zuzu-gamebook-t011-golden-wounded-b7e42. CI and frozen fixture snapshots pending.
-    owner: worker
-    claimed_by: 20261022T212951Z-zuzu-gamebook-t011-golden-b7e42
-    claimed_at: '2026-10-22T21:29:51.941Z'
+
+      2026-10-22 PT: Merged Kind Robots PR #4037, squash commit 4121d73ef0126a751cdf95d1d13b3c66a8173b8f, after all 13 current-head workflows passed (including four contract shards, TypeScript, changed-file formatting). Frozen 15 genuine complete end-to-end ending journeys comprising 1217 reducer actions in utils/scripts/fixtures/zuzuGamebookGolden.json, with deterministic replay and route/flag/item/resource/RNG fingerprints. Tested all six authored fights at 3/6/9/12 HP and 0/2/4 Resolve, four strategies and 90 seeded fights per configuration, correctly allowing recovery scene effects after losing. No gameplay rule changes, ArtJobs, or external publication. Triage: 3 HP produced zero wins in 90 seeds for each of four tactics versus the Croc, Abbess, and Hollis; inspect retreat routes, player risk signals and wounded pacing, while retaining meaningful defeat continuations. Recurring task rearmed; full visual QA and pending illustration work remain with the other roadmap tasks.
   - id: t-012
     milestone: m5
     title: Redraw the two-character plates once the character LoRAs exist
