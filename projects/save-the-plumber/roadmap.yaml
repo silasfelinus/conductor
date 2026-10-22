@@ -23,6 +23,11 @@ notes_from_silas: |
   plumber boyfriend. Again, equivalent length and challenge to
   original Mario bros, but with more variety and unique enemies."
 
+  2026-10-22 PT, confirmed (verbatim): "I meant 2d. super mario world should be the
+  benchmark for save the plumber. or any of the later 2d mario wonder level games. I
+  authorize all projects to get them to wonderful states." Benchmark: Super Mario World,
+  with later 2D Marios (Wonder) as fair targets; 2D stays.
+
   2026-10-22 PT, concept evolution (verbatim): "save the plumber (and zuzu ghost
   trail, even though it's not high priority) needs a concept evolution. i was saying
   the games needed an old school mario bros / ghosts and goblins vibe, but they need
@@ -87,7 +92,7 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Gen-2 world design: eight world maps, node graphs, secret exits and level-type mix"
-    status: ready
+    status: done
     updated: '2026-10-22T10:30:00Z'
     passes: 0
     stakes: reversible
@@ -107,6 +112,9 @@ tasks:
       World-by-world authored maps/beat sheets from WORLD-ATLAS.md: 32 unique level objectives and diagrams, 40+ distinct enemy behaviors, eight readable boss movesets, four-stage pacing, secrets, rewards, original soundtrack motifs, intro, chapter and ending illustrations. Plan collision/exits before painting. Use internal art pipeline and verify delivered assets.
 
       Prior production-bible session was interrupted by Silas's more specific four-princess cast direction. No Save the Plumber production-bible deliverable was committed in that session. Return this task to ready for the next agent to author its 32-stage and 40+ behavior design catalog; retain existing WORLD-ATLAS and DESIGN-BRIEF without overwriting.
+
+      DONE 2026-10-22: GEN2-WORLDS.md (eight worlds of 7-9 nodes, 81 nodes, 13 secret exits, four Valve Chapels, the Upstream Sky zone, a Wild Tap wonder moment per course, six powers plus the Spare Thermos reserve and Gurgle the newt companion, per-course beat sheets) and gen2Worlds.json with validate_gen2_worlds.py (PASS). Next: t-011 follow-up makes savePlumberOverworld.ts data-driven from gen2Worlds.json (unlock by node, nine node kinds, save v3 keyed by node id; migrate via each node's Gen-1 stage, never by id).
+
   - id: t-003
     milestone: m2
     title: "Build private /admin Arcade shell and original platforming physics"
@@ -279,7 +287,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Produce illustrated world art, enemy animation, sound and cinematics"
-    status: waiting
+    status: ready
     depends_on: [t-002, t-006]
     owner: null
     passes: 0

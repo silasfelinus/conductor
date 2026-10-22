@@ -527,8 +527,8 @@ tasks:
   - id: t-026
     milestone: m6
     title: "Gen-2 route design: branching Luminous Ocean map, branch conditions, alternate stages"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     updated: '2026-10-22T10:30:00Z'
@@ -540,10 +540,13 @@ tasks:
       captive, saving an escort, destroying a hidden generator, a no-continue clear), plus a per-stage
       medal goal and the routes that lead to each ending. Keep the three dialogue scenes per Act
       (ACT-STRUCTURE.md) and say which branch changes which scene.
+
+      DONE 2026-10-22: ROUTE-MAP.md and rainbowRoute.json (validate_route.py PASS: 14 nodes, four alternate detour stages each gated by a mechanic already in code, finale on all 16 routes, 13 medals, Palace Hangar fittings bounded so fairness never moves, a three-slot save measured at 5.9 KB).
+
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: waiting
+    status: ready
     depends_on: [t-026]
     owner: null
     passes: 0
@@ -558,7 +561,7 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
-    status: waiting
+    status: ready
     depends_on: [t-026]
     owner: null
     passes: 0
@@ -568,8 +571,8 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     updated: '2026-10-22T10:30:00Z'
@@ -578,6 +581,9 @@ tasks:
       scripts/sweep_art_ledgers.py. Review keepers in the ledger, then hand to t-027/t-028.
 
       2026-10-22: rendering (6 of 12 DONE at last check). Next: review keepers in the ledger and hand them to t-027/t-028.
+
+      DONE 2026-10-22: all 12 rendered and reviewed in the ledger; the six Krea 2 renders keep (route map, Palace
+      Hangar, Kelp Nebula Bypass, Sunken Lighthouse Ring, Coral Comet Trail, Mirror Shoal). Hand to t-027/t-028.
   - id: t-030
     milestone: m6
     title: "Gen-2 animation: animated pilot cut-ins, enemy sprite cycles and moving cutscenes"

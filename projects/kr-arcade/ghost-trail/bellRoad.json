@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "game": "zuzu-ghost-trail",
+  "doc": "projects/kr-arcade/ghost-trail/GEN2-BELL-ROAD.md (conductor kr-arcade t-158)",
+  "screen": [480, 270],
+  "nodeKinds": ["start", "level", "fortress", "house", "shrine", "boss"],
+  "exits": ["normal", "secret"],
+  "start": "bell-road-start",
+  "ending": { "node": "s6a3", "exit": "normal", "then": "credits" },
+  "maps": [
+    { "id": "bell-road", "title": "The Bell Road", "role": "region select and the Canyon Shrine", "art": { "ledger": "gt2-map-bell-road", "lane": "zimage", "art_image_id": 251289 } },
+    { "id": "silver-gulch", "title": "Silver Gulch", "art": { "ledger": "gt2-map-silver-gulch", "lane": "zimage", "art_image_id": 251290 } },
+    { "id": "bone-yard", "title": "The Bone Yard", "art": { "ledger": "gt2-map-bone-yard", "lane": "zimage", "art_image_id": 251291 } },
+    { "id": "watering-hole", "title": "Drowned Watering Hole", "art": { "ledger": "gt2-map-watering-hole", "lane": "zimage", "art_image_id": 251292 } },
+    { "id": "storm-crow", "title": "Storm Crow Pass", "art": { "ledger": "gt2-map-storm-crow", "lane": "zimage", "art_image_id": 251293 } },
+    { "id": "mission", "title": "Mission Bell Tower and the Abbey below", "layers": ["above", "below"], "art": { "ledger": "gt2-map-bell-tower", "lane": "zimage", "art_image_id": 251294 } }
+  ],
+  "regions": [
+    { "id": "gulch", "n": 1, "title": "Silver Gulch", "gen1Stage": 1, "map": "silver-gulch", "entry": "bell-road-start", "boss": "s1a2" },
+    { "id": "boneyard", "n": 2, "title": "The Bone Yard", "gen1Stage": 2, "map": "bone-yard", "entry": "s2a1", "boss": "s2a2" },
+    { "id": "waterhole", "n": 3, "title": "Drowned Watering Hole", "gen1Stage": 3, "map": "watering-hole", "entry": "s3a1", "boss": "s3a3" },
+    { "id": "stormcrow", "n": 4, "title": "Storm Crow Pass", "gen1Stage": 4, "map": "storm-crow", "entry": "s4a1", "boss": "s4a3" },
+    { "id": "belltower", "n": 5, "title": "Mission Bell Tower", "gen1Stage": 5, "map": "mission", "mapLayer": "above", "entry": "s5a1", "boss": "s5a3" },
+    { "id": "abbey", "n": 6, "title": "Abbey Beneath the Bell", "gen1Stage": 6, "map": "mission", "mapLayer": "below", "entry": "s6a1", "boss": "s6a3" },
+    { "id": "shrine", "n": 0, "title": "The Canyon Shrine", "gen1Stage": null, "map": "bell-road", "hidden": true, "entry": "canyon-shrine", "boss": null }
+  ],
+  "nodes": [
+    { "id": "bell-road-start", "kind": "start", "region": "gulch", "x": 40, "y": 212, "title": "Gulch Trailhead", "gen1Act": null, "exits": [] },
+
+    { "id": "s1a1", "kind": "level", "region": "gulch", "x": 112, "y": 176, "title": "Main Street", "gen1Act": "s1a1", "exits": ["normal"], "relics": ["s1a1-tin-star"], "note": "note-s1a1" },
+    { "id": "s1-boarding-house", "kind": "house", "region": "gulch", "x": 200, "y": 210, "title": "The Widow's Boarding House", "gen1Act": null, "exits": ["normal", "secret"], "relics": ["s1-house-guest-book"], "note": "note-s1-boarding-house", "art": "gt2-type-haunted-house" },
+    { "id": "s1-jailhouse", "kind": "fortress", "region": "gulch", "x": 292, "y": 166, "title": "Boot Hill Jailhouse", "gen1Act": null, "exits": ["normal"], "midBoss": "The Turnkey", "relics": ["s1-jailhouse-cell-key"], "note": "note-s1-jailhouse", "subweapon": "shuriken" },
+    { "id": "s1a2", "kind": "boss", "region": "gulch", "x": 402, "y": 118, "title": "The Courthouse", "gen1Act": "s1a2", "exits": ["normal"], "boss": "marshal", "relics": ["s1a2-piano-key"], "note": "note-s1a2" },
+
+    { "id": "s2a1", "kind": "level", "region": "boneyard", "x": 60, "y": 198, "title": "The Crypts", "gen1Act": "s2a1", "exits": ["normal", "secret"], "relics": ["s2a1-widows-locket"], "note": "note-s2a1" },
+    { "id": "s2-ossuary", "kind": "fortress", "region": "boneyard", "x": 196, "y": 150, "title": "The Ossuary Vault", "gen1Act": null, "exits": ["normal"], "midBoss": "The Ossuary Choir", "relics": ["s2-ossuary-tuning-bone"], "note": "note-s2-ossuary" },
+    { "id": "s2-house", "kind": "house", "region": "boneyard", "x": 176, "y": 226, "title": "The Gravedigger's Lodging", "gen1Act": null, "exits": ["normal"], "relics": ["s2-house-sexton-spade"], "note": "note-s2-house", "subweapon": "kasa", "art": "gt2-type-haunted-house" },
+    { "id": "s2a2", "kind": "boss", "region": "boneyard", "x": 384, "y": 138, "title": "The Broken Bridge", "gen1Act": "s2a2", "exits": ["normal", "secret"], "boss": "bull", "relics": ["s2a2-bell-sigil"], "note": "note-s2a2" },
+
+    { "id": "s3a1", "kind": "level", "region": "waterhole", "x": 58, "y": 190, "title": "The Shallows", "gen1Act": "s3a1", "exits": ["normal"], "relics": ["s3a1-ferry-token"], "note": "note-s3a1" },
+    { "id": "s3-house", "kind": "house", "region": "waterhole", "x": 162, "y": 138, "title": "The Stilt Hotel", "gen1Act": null, "exits": ["normal", "secret"], "relics": ["s3-house-room-nine-key"], "note": "note-s3-house", "art": "gt2-type-haunted-house" },
+    { "id": "s3a2", "kind": "fortress", "region": "waterhole", "x": 272, "y": 200, "title": "The Sunken Chapel", "gen1Act": "s3a2", "exits": ["normal"], "midBoss": "The Font Warden", "relics": ["s3a2-chapel-chalice"], "note": "note-s3a2", "subweapon": "lantern", "companion": "river-croc" },
+    { "id": "s3a3", "kind": "boss", "region": "waterhole", "x": 402, "y": 148, "title": "The Ferry Crossing", "gen1Act": "s3a3", "exits": ["normal"], "boss": "ferryman", "relics": ["s3a3-boatmans-coin"], "note": "note-s3a3" },
+
+    { "id": "s4a1", "kind": "level", "region": "stormcrow", "x": 52, "y": 222, "title": "The Switchbacks", "gen1Act": "s4a1", "exits": ["normal", "secret"], "relics": ["s4a1-storm-feather"], "note": "note-s4a1" },
+    { "id": "s4a2", "kind": "fortress", "region": "stormcrow", "x": 160, "y": 176, "title": "The Canopy", "gen1Act": "s4a2", "exits": ["normal"], "midBoss": "The Dust Devil", "relics": ["s4a2-miners-lamp"], "note": "note-s4a2", "subweapon": "katana" },
+    { "id": "s4-house", "kind": "house", "region": "stormcrow", "x": 116, "y": 96, "title": "The Way Station", "gen1Act": null, "exits": ["normal"], "relics": ["s4-house-last-timetable"], "note": "note-s4-house", "art": "gt2-type-haunted-house" },
+    { "id": "s4cliff", "kind": "level", "region": "stormcrow", "x": 266, "y": 114, "title": "The Cliff Road", "gen1Act": "s4cliff", "exits": ["normal", "secret"], "relics": ["s4cliff-thunder-egg"], "note": "note-s4cliff" },
+    { "id": "s4a3", "kind": "boss", "region": "stormcrow", "x": 404, "y": 58, "title": "The Aerie", "gen1Act": "s4a3", "exits": ["normal"], "boss": "matriarch", "relics": ["s4a3-crown-of-quills"], "note": "note-s4a3" },
+
+    { "id": "s5a1", "kind": "level", "region": "belltower", "x": 50, "y": 204, "title": "The Mission Steps", "gen1Act": "s5a1", "exits": ["normal", "secret"], "relics": ["s5a1-ledger"], "note": "note-s5a1" },
+    { "id": "s5a2", "kind": "level", "region": "belltower", "x": 156, "y": 172, "title": "The Bell Gallery", "gen1Act": "s5a2", "exits": ["normal"], "relics": ["s5a2-clapper"], "note": "note-s5a2" },
+    { "id": "s5-house", "kind": "house", "region": "belltower", "x": 120, "y": 108, "title": "The Padre's Rectory", "gen1Act": null, "exits": ["normal", "secret"], "relics": ["s5-house-padre-spectacles"], "note": "note-s5-house", "art": "gt2-type-haunted-house" },
+    { "id": "s5stair", "kind": "fortress", "region": "belltower", "x": 272, "y": 122, "title": "The Bell Stair", "gen1Act": "s5stair", "exits": ["normal"], "midBoss": "The Tolling Twins", "relics": ["s5stair-bell-rope"], "note": "note-s5stair" },
+    { "id": "s5a3", "kind": "boss", "region": "belltower", "x": 384, "y": 70, "title": "The Belfry", "gen1Act": "s5a3", "exits": ["normal"], "boss": "heretic", "relics": ["s5a3-bell-order"], "note": "note-s5a3" },
+
+    { "id": "s6a1", "kind": "level", "region": "abbey", "x": 60, "y": 122, "title": "The Undercroft", "gen1Act": "s6a1", "exits": ["normal", "secret"], "relics": ["s6a1-letter", "s6a1-vow"], "captive": "s6a1-novice", "note": "note-s6a1" },
+    { "id": "s6a2", "kind": "fortress", "region": "abbey", "x": 204, "y": 172, "title": "The Ritual Halls", "gen1Act": "s6a2", "exits": ["normal"], "midBoss": "The Candle Prioress", "relics": ["s6a2-confession", "s6a2-foundry"], "note": "note-s6a2" },
+    { "id": "s6-house", "kind": "house", "region": "abbey", "x": 214, "y": 70, "title": "The Novices' Dormitory", "gen1Act": null, "exits": ["normal"], "relics": ["s6-house-lullaby"], "note": "note-s6-house", "art": "gt2-type-haunted-house" },
+    { "id": "s6a3", "kind": "boss", "region": "abbey", "x": 384, "y": 128, "title": "The Bell Beneath", "gen1Act": "s6a3", "exits": ["normal"], "boss": "abbess", "relics": ["s6a3-ledger", "s6a3-litany"], "note": "note-s6a3", "seal": { "bossClears": ["s1a2", "s2a2", "s3a3", "s4a3", "s5a3"], "why": "the five cracked bells: the Abbess's door opens only when every lesser bell is silent" } },
+
+    { "id": "canyon-shrine", "kind": "shrine", "region": "shrine", "x": 300, "y": 58, "title": "The Canyon Shrine", "gen1Act": null, "exits": ["normal", "secret"], "relics": ["shrine-pilgrim-candle"], "note": "note-canyon-shrine", "subweapon": "bell-charm", "art": "gt2-type-secret-shrine" }
+  ],
+  "paths": [
+    { "from": "bell-road-start", "to": "s1a1", "unlock": null },
+    { "from": "s1a1", "to": "s1-boarding-house", "unlock": { "node": "s1a1", "exit": "normal" } },
+    { "from": "s1-boarding-house", "to": "s1-jailhouse", "unlock": { "node": "s1-boarding-house", "exit": "normal" } },
+    { "from": "s1-boarding-house", "to": "s1a2", "unlock": { "node": "s1-boarding-house", "exit": "secret" }, "label": "the dumbwaiter to Courthouse Square (skips the jail)" },
+    { "from": "s1-jailhouse", "to": "s1a2", "unlock": { "node": "s1-jailhouse", "exit": "normal" } },
+    { "from": "s1a2", "to": "s2a1", "unlock": { "node": "s1a2", "exit": "normal" }, "warp": "right" },
+
+    { "from": "s2a1", "to": "s2-ossuary", "unlock": { "node": "s2a1", "exit": "normal" } },
+    { "from": "s2a1", "to": "s2-house", "unlock": { "node": "s2a1", "exit": "secret" }, "label": "down through the collapsed crypt roof" },
+    { "from": "s2-ossuary", "to": "s2a2", "unlock": { "node": "s2-ossuary", "exit": "normal" } },
+    { "from": "s2-house", "to": "s2a2", "unlock": { "node": "s2-house", "exit": "normal" }, "label": "the lodging's back gate onto the bridge (skips the ossuary)" },
+    { "from": "s2a2", "to": "canyon-shrine", "unlock": { "node": "s2a2", "exit": "secret" }, "warp": "down", "label": "the ravine floor, following the bell sigils" },
+    { "from": "s2a2", "to": "s3a1", "unlock": { "node": "s2a2", "exit": "normal" }, "warp": "right" },
+
+    { "from": "s3a1", "to": "s3-house", "unlock": { "node": "s3a1", "exit": "normal" } },
+    { "from": "s3-house", "to": "s3a2", "unlock": { "node": "s3-house", "exit": "normal" } },
+    { "from": "s3-house", "to": "s3a3", "unlock": { "node": "s3-house", "exit": "secret" }, "label": "the cellar door at dead-low tide (skips the chapel)" },
+    { "from": "s3a2", "to": "s3a3", "unlock": { "node": "s3a2", "exit": "normal" } },
+    { "from": "s3a3", "to": "s4a1", "unlock": { "node": "s3a3", "exit": "normal" }, "warp": "up" },
+
+    { "from": "s4a1", "to": "s4a2", "unlock": { "node": "s4a1", "exit": "normal" } },
+    { "from": "s4a1", "to": "s4-house", "unlock": { "node": "s4a1", "exit": "secret" }, "label": "ride the wind off the high walkway" },
+    { "from": "s4a2", "to": "s4cliff", "unlock": { "node": "s4a2", "exit": "normal" } },
+    { "from": "s4-house", "to": "s4cliff", "unlock": { "node": "s4-house", "exit": "normal" }, "label": "the last coach (skips the canopy)" },
+    { "from": "s4cliff", "to": "canyon-shrine", "unlock": { "node": "s4cliff", "exit": "secret" }, "warp": "left", "label": "the cave behind the lightning column" },
+    { "from": "s4cliff", "to": "s4a3", "unlock": { "node": "s4cliff", "exit": "normal" } },
+    { "from": "s4a3", "to": "s5a1", "unlock": { "node": "s4a3", "exit": "normal" }, "warp": "right" },
+
+    { "from": "s5a1", "to": "s5a2", "unlock": { "node": "s5a1", "exit": "normal" } },
+    { "from": "s5a1", "to": "s5-house", "unlock": { "node": "s5a1", "exit": "secret" }, "label": "the cloister-roof lift" },
+    { "from": "s5a2", "to": "s5stair", "unlock": { "node": "s5a2", "exit": "normal" } },
+    { "from": "s5-house", "to": "s5stair", "unlock": { "node": "s5-house", "exit": "normal" }, "label": "the vestry door (skips the gallery)" },
+    { "from": "s5-house", "to": "canyon-shrine", "unlock": { "node": "s5-house", "exit": "secret" }, "warp": "up", "label": "the wine-cellar tunnel to the canyon" },
+    { "from": "s5stair", "to": "s5a3", "unlock": { "node": "s5stair", "exit": "normal" } },
+    { "from": "s5a3", "to": "s6a1", "unlock": { "node": "s5a3", "exit": "normal" }, "warp": "down" },
+
+    { "from": "s6a1", "to": "s6a2", "unlock": { "node": "s6a1", "exit": "normal" } },
+    { "from": "s6a1", "to": "s6-house", "unlock": { "node": "s6a1", "exit": "secret" }, "label": "the floating stair past the novice's cage" },
+    { "from": "s6a2", "to": "s6a3", "unlock": { "node": "s6a2", "exit": "normal" } },
+    { "from": "s6-house", "to": "s6a3", "unlock": { "node": "s6-house", "exit": "normal" }, "label": "follow the sleepwalker (skips the ritual halls)" },
+
+    { "from": "canyon-shrine", "to": "s6a1", "unlock": { "node": "canyon-shrine", "exit": "secret" }, "warp": "down", "label": "the Lantern Road: a back door into the abbey" }
+  ],
+  "switches": [
+    { "id": "shrine-bell", "setBy": { "node": "canyon-shrine", "exit": "normal" }, "effect": "spirit planks (cyan dotted outlines) turn solid in every level, for good", "levelsWithPlanks": ["s1a1", "s1a2", "s2a1", "s2a2", "s3a1", "s3a2", "s4a1", "s4cliff", "s5a2", "s5stair", "s6a1", "s6a2"] }
+  ],
+  "subweapons": [
+    { "id": "kunai", "from": "start", "tradeoff": "safe, fast, 3 in flight" },
+    { "id": "shuriken", "from": "s1-jailhouse", "tradeoff": "three ways; hits diagonal targets and switches; slower cadence" },
+    { "id": "kasa", "from": "s2-house", "tradeoff": "returns through everything; one mid-air hop off the returning hat" },
+    { "id": "lantern", "from": "s3a2", "tradeoff": "lobbed ground fire; lights dark rooms, burns bramble and fuses; 2 damage" },
+    { "id": "katana", "from": "s4a2", "tradeoff": "iai cut: short brave lunge across a 3-tile gap, cuts bolts out of the air" },
+    { "id": "bell-charm", "from": "canyon-shrine", "tradeoff": "a rung note: stuns spirits, shows false walls and spirit planks; long cooldown, no damage" }
+  ]
+}

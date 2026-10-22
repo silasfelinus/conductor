@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "doc": "projects/rainbow-bullet-hell-space-princess/ROUTE-MAP.md",
+  "nodes": [
+    { "id": "start", "kind": "start", "name": "Palace Hangar launch" },
+    { "id": "S01", "kind": "act", "name": "Act I: Pinkwake Estuary", "act": 1 },
+    { "id": "S02", "kind": "act", "name": "Act II: Moonjelly Fields", "act": 2 },
+    { "id": "X1", "kind": "alt", "name": "Kelp Nebula Bypass" },
+    { "id": "S03", "kind": "act", "name": "Act III: Chromatic Trench", "act": 3 },
+    { "id": "S04", "kind": "act", "name": "Act IV: Rosefin Express", "act": 4 },
+    { "id": "X2", "kind": "alt", "name": "Coral Comet Trail" },
+    { "id": "S05", "kind": "act", "name": "Act V: Blossom Wreckyard", "act": 5 },
+    { "id": "S06", "kind": "act", "name": "Act VI: Crown Reef", "act": 6 },
+    { "id": "X3", "kind": "alt", "name": "Sunken Lighthouse Ring" },
+    { "id": "S07", "kind": "act", "name": "Act VII: Glass Current", "act": 7 },
+    { "id": "X4", "kind": "alt", "name": "Mirror Shoal" },
+    { "id": "S08", "kind": "act", "name": "Act VIII: Eclipse Palace", "act": 8 },
+    { "id": "S09", "kind": "finale", "name": "Finale: Eclipse Crown", "act": 9 }
+  ],
+  "conditions": {
+    "clear": "The node's boss or guardian aftermath completed (the Act's AFTER scene fires).",
+    "rescuedNemi": "Act II: Nemi rescued (rainbowPrincessPreview rescuedNemi = true).",
+    "rescuedCourier": "Act IV: the courier pod reached the end of the rails (rescuedCourier = true).",
+    "stoppedRelay": "Act VI: relay route taken, settled, and every relay pylon destroyed (palaceFlags().stoppedRelay).",
+    "noContinue": "Act VII cleared with actContinues === 0 (a silver or gold rank medal).",
+    "rescuedNavigator": "Act VII: the Lost Navigator reached before the boss (rescuedNavigator = true)."
+  },
+  "paths": [
+    { "from": "start", "to": "S01", "unlock": null },
+    { "from": "S01", "to": "S02", "unlock": { "node": "S01", "condition": "clear" } },
+    { "from": "S02", "to": "S03", "unlock": { "node": "S02", "condition": "clear" } },
+    { "from": "S02", "to": "X1", "unlock": { "node": "S02", "condition": "rescuedNemi" } },
+    { "from": "X1", "to": "S03", "unlock": { "node": "X1", "condition": "clear" } },
+    { "from": "S03", "to": "S04", "unlock": { "node": "S03", "condition": "clear" } },
+    { "from": "S04", "to": "S05", "unlock": { "node": "S04", "condition": "clear" } },
+    { "from": "S04", "to": "X2", "unlock": { "node": "S04", "condition": "rescuedCourier" } },
+    { "from": "X2", "to": "S05", "unlock": { "node": "X2", "condition": "clear" } },
+    { "from": "S05", "to": "S06", "unlock": { "node": "S05", "condition": "clear" } },
+    { "from": "S06", "to": "S07", "unlock": { "node": "S06", "condition": "clear" } },
+    { "from": "S06", "to": "X3", "unlock": { "node": "S06", "condition": "stoppedRelay" } },
+    { "from": "X3", "to": "S07", "unlock": { "node": "X3", "condition": "clear" } },
+    { "from": "S07", "to": "S08", "unlock": { "node": "S07", "condition": "clear" } },
+    { "from": "S07", "to": "X4", "unlock": { "node": "S07", "condition": "noContinue" } },
+    { "from": "S07", "to": "X4", "unlock": { "node": "S07", "condition": "rescuedNavigator" } },
+    { "from": "X4", "to": "S08", "unlock": { "node": "X4", "condition": "clear" } },
+    { "from": "S08", "to": "S09", "unlock": { "node": "S08", "condition": "clear" } }
+  ],
+  "medals": [
+    { "node": "S01", "id": "pearl-keeper", "goal": "Rescue the Pinkwake station and defeat the Urchin guardian before it escapes." },
+    { "node": "S02", "id": "bell-ringer", "goal": "Rescue Nemi and defeat the Lantern guardian before it escapes." },
+    { "node": "X1", "id": "choir-keeper", "goal": "Free all five Coral Choir pods and defeat the Kelp Warden." },
+    { "node": "S03", "id": "vault-diver", "goal": "Settle the vault route (securedSalvage) without losing a life in the Act." },
+    { "node": "S04", "id": "clean-rails", "goal": "Bring the courier pod home and defeat the Courier guardian before it escapes." },
+    { "node": "X2", "id": "full-wing", "goal": "Bring all four cadet trainers out of the comet tail." },
+    { "node": "S05", "id": "all-hands", "goal": "Free the depot with all seven survivor pods reached (podsSaved = 7)." },
+    { "node": "S06", "id": "lights-out", "goal": "Silence the relay (stoppedRelay) and defeat the Bulwark guardian before it escapes." },
+    { "node": "X3", "id": "every-lamp", "goal": "Relight all six lighthouse lamps." },
+    { "node": "S07", "id": "true-reflection", "goal": "Rescue the Lost Navigator and defeat the Mirror guardian before it escapes." },
+    { "node": "X4", "id": "still-water", "goal": "Clear Mirror Shoal without being hit." },
+    { "node": "S08", "id": "every-collar", "goal": "Free every captive of the armada (captivesFreed = PALACE_CAPTIVES) and defeat the Herald guardian." },
+    { "node": "S09", "id": "open-sky", "goal": "Clear the Eclipse Crown without a continue and with every seated pilot still flying." }
+  ]
+}

@@ -1,71 +1,72 @@
 # Roadmap Audit
 
-Generated: `2026-10-21T21:49:30.439518+00:00`
+Generated: `2026-10-22T13:08:20.592137+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **84** roadmaps, **19** active + **3** continuous projects, **2493** tasks
-- **175 ready**, **182 waiting**, **37 needs-human**, **22 claimed/review**, **2061 done**
+- **85** roadmaps, **20** active + **3** continuous projects, **2534** tasks
+- **185 ready**, **194 waiting**, **38 needs-human**, **24 claimed/review**, **2077 done**
 - Findings: **0 errors**, **38 warnings**, **109 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `weird-humboldt` | active | software | 10 | 19 | 1 | 2 | 22 / 54 |
+| 1 | `weird-humboldt` | active | software | 8 | 17 | 1 | 3 | 26 / 55 |
 | 2 | `zuzu-gamebook` | active | software | 5 | 1 | 0 | 0 | 6 / 12 |
 | 3 | `zuzu-shifting-lands` | active | software | 4 | 3 | 1 | 2 | 30 / 40 |
-| 4 | `emperor-of-dust` | active | software | 9 | 0 | 1 | 0 | 42 / 52 |
-| 5 | `rainbow-bullet-hell-space-princess` | active | software | 1 | 2 | 0 | 3 | 19 / 25 |
-| 6 | `save-the-plumber` | active | software | 4 | 3 | 0 | 0 | 12 / 19 |
-| 7 | `shifting-desks` | active | software | 5 | 0 | 0 | 1 | 31 / 37 |
+| 4 | `emperor-of-dust` | active | software | 8 | 0 | 1 | 2 | 43 / 54 |
+| 5 | `rainbow-bullet-hell-space-princess` | active | software | 4 | 2 | 0 | 3 | 21 / 30 |
+| 6 | `save-the-plumber` | active | software | 6 | 5 | 0 | 0 | 14 / 25 |
+| 7 | `shifting-desks` | active | software | 5 | 0 | 0 | 0 | 34 / 39 |
 | 8 | `kind-pinball` | finished | software | 1 | 0 | 0 | 0 | 34 / 35 |
 | 9 | `zuzu-lair` | paused | software | 0 | 4 | 2 | 1 | 8 / 15 |
-| 10 | `kr-arcade` | active | software | 28 | 53 | 0 | 2 | 74 / 157 |
+| 10 | `kr-arcade` | active | software | 30 | 55 | 0 | 2 | 76 / 163 |
 | 11 | `zuzu-showdown` | paused | software | 3 | 0 | 0 | 0 | 29 / 32 |
-| 12 | `cthulhuquarium` | paused | software | 2 | 0 | 1 | 0 | 83 / 86 |
-| 13 | `kind-economy` | paused | software | 0 | 4 | 1 | 1 | 22 / 28 |
-| 14 | `butterfly-gallery` | finished | software | 1 | 0 | 0 | 0 | 34 / 35 |
-| 15 | `art-archive` | finished | software | 0 | 2 | 0 | 2 | 40 / 44 |
-| 16 | `mandarin-tutor` | paused | software | 0 | 0 | 0 | 1 | 30 / 31 |
-| 17 | `interface-vision` | continuous | software | 9 | 2 | 0 | 1 | 138 / 150 |
-| 18 | `humboldt-scoop-cms` | paused | software | 1 | 1 | 4 | 0 | 40 / 46 |
-| 19 | `digital-storefront` | paused | software | 1 | 2 | 1 | 0 | 40 / 44 |
-| 20 | `kind-robots` | retired | software | 4 | 0 | 0 | 3 | 140 / 147 |
-| 21 | `rainbow-butterflies` | paused | software | 0 | 1 | 2 | 0 | 50 / 53 |
-| 22 | `music-video` | finished | software | 6 | 3 | 0 | 0 | 26 / 35 |
-| 23 | `comic-film` | paused | software | 3 | 6 | 0 | 0 | 2 / 11 |
-| 24 | `zuzu-pinball` | finished | software | 4 | 1 | 1 | 0 | 16 / 22 |
-| 25 | `tzaddik-gallery` | finished | software | 1 | 1 | 1 | 0 | 31 / 34 |
-| 26 | `scene-animator` | finished | software | 0 | 0 | 0 | 0 | 11 / 11 |
-| 27 | `text-generation` | finished | software | 0 | 0 | 0 | 0 | 9 / 9 |
-| 28 | `kindrobots-unraid` | paused | software | 0 | 6 | 2 | 0 | 14 / 22 |
-| 29 | `lora-ingestion` | finished | infrastructure | 1 | 0 | 0 | 0 | 16 / 17 |
-| 30 | `conductor` | finished | software | 2 | 0 | 0 | 1 | 205 / 208 |
-| 31 | `storybook` | finished | software | 5 | 2 | 0 | 0 | 63 / 70 |
-| 32 | `coat-dance` | paused | content | 1 | 4 | 0 | 0 | 7 / 17 |
-| 33 | `conductor-app` | retired | software | 0 | 0 | 1 | 0 | 14 / 15 |
-| 34 | `media-watchlist` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 35 | `ruler-hooked` | paused | software | 1 | 0 | 1 | 0 | 41 / 43 |
-| 36 | `animation-manager` | continuous | software | 2 | 0 | 0 | 1 | 22 / 26 |
-| 37 | `comic-creator` | retired | software | 10 | 2 | 0 | 0 | 11 / 23 |
-| 38 | `kr-solitaire` | active | software | 4 | 2 | 0 | 0 | 5 / 11 |
-| 39 | `kr-adventures` | retired | software | 4 | 4 | 0 | 0 | 3 / 11 |
-| 40 | `kind-oracle` | active | software | 3 | 4 | 0 | 0 | 4 / 11 |
-| 41 | `pocket-pet-robot` | active | software | 3 | 5 | 0 | 0 | 3 / 11 |
-| 42 | `evolve-rebel-button` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
-| 43 | `robot-mashup-flipbook` | retired | software | 3 | 1 | 0 | 0 | 1 / 5 |
-| 44 | `robot-sound-garden` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
-| 45 | `kind-trivia-trail` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
-| 46 | `kind-lantern-garden` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
-| 47 | `robot-species-sorting-quiz` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
-| 48 | `kind-daily-riddle` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
-| 49 | `kind-nonogram-gallery` | active | software | 4 | 1 | 0 | 0 | 1 / 6 |
-| 50 | `robot-paper-boat-regatta` | active | software | 3 | 1 | 0 | 0 | 2 / 6 |
-| 51 | `kind-sliding-tile-gallery` | active | software | 4 | 0 | 0 | 0 | 1 / 5 |
-| 52 | `dream-cycle` | continuous | software | 5 | 0 | 0 | 0 | 34 / 39 |
+| 12 | `memory-dungeon` | active | software | 6 | 10 | 1 | 0 | 2 / 19 |
+| 13 | `cthulhuquarium` | paused | software | 2 | 0 | 1 | 0 | 83 / 86 |
+| 14 | `kind-economy` | paused | software | 0 | 4 | 1 | 1 | 22 / 28 |
+| 15 | `butterfly-gallery` | finished | software | 1 | 0 | 0 | 0 | 34 / 35 |
+| 16 | `art-archive` | finished | software | 0 | 2 | 0 | 2 | 40 / 44 |
+| 17 | `mandarin-tutor` | paused | software | 0 | 0 | 0 | 1 | 30 / 31 |
+| 18 | `interface-vision` | continuous | software | 9 | 2 | 0 | 1 | 138 / 150 |
+| 19 | `humboldt-scoop-cms` | paused | software | 1 | 1 | 4 | 0 | 40 / 46 |
+| 20 | `digital-storefront` | paused | software | 1 | 2 | 1 | 0 | 40 / 44 |
+| 21 | `kind-robots` | retired | software | 4 | 0 | 0 | 3 | 140 / 147 |
+| 22 | `rainbow-butterflies` | paused | software | 0 | 1 | 2 | 0 | 50 / 53 |
+| 23 | `music-video` | finished | software | 6 | 3 | 0 | 0 | 26 / 35 |
+| 24 | `comic-film` | paused | software | 3 | 6 | 0 | 0 | 2 / 11 |
+| 25 | `zuzu-pinball` | finished | software | 4 | 1 | 1 | 0 | 16 / 22 |
+| 26 | `tzaddik-gallery` | finished | software | 1 | 1 | 1 | 0 | 31 / 34 |
+| 27 | `scene-animator` | finished | software | 0 | 0 | 0 | 0 | 11 / 11 |
+| 28 | `text-generation` | finished | software | 0 | 0 | 0 | 0 | 9 / 9 |
+| 29 | `kindrobots-unraid` | paused | software | 0 | 6 | 2 | 0 | 14 / 22 |
+| 30 | `lora-ingestion` | finished | infrastructure | 1 | 0 | 0 | 0 | 16 / 17 |
+| 31 | `conductor` | finished | software | 2 | 0 | 0 | 1 | 205 / 208 |
+| 32 | `storybook` | finished | software | 5 | 2 | 0 | 0 | 63 / 70 |
+| 33 | `coat-dance` | paused | content | 1 | 4 | 0 | 0 | 7 / 17 |
+| 34 | `conductor-app` | retired | software | 0 | 0 | 1 | 0 | 14 / 15 |
+| 35 | `media-watchlist` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
+| 36 | `ruler-hooked` | paused | software | 1 | 0 | 1 | 0 | 41 / 43 |
+| 37 | `animation-manager` | continuous | software | 2 | 0 | 0 | 1 | 22 / 26 |
+| 38 | `comic-creator` | retired | software | 10 | 2 | 0 | 0 | 11 / 23 |
+| 39 | `kr-solitaire` | active | software | 4 | 2 | 0 | 0 | 5 / 11 |
+| 40 | `kr-adventures` | retired | software | 4 | 4 | 0 | 0 | 3 / 11 |
+| 41 | `kind-oracle` | active | software | 3 | 4 | 0 | 0 | 4 / 11 |
+| 42 | `pocket-pet-robot` | active | software | 3 | 5 | 0 | 0 | 3 / 11 |
+| 43 | `evolve-rebel-button` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
+| 44 | `robot-mashup-flipbook` | retired | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 45 | `robot-sound-garden` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 46 | `kind-trivia-trail` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 47 | `kind-lantern-garden` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 48 | `robot-species-sorting-quiz` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 49 | `kind-daily-riddle` | active | software | 3 | 1 | 0 | 0 | 1 / 5 |
+| 50 | `kind-nonogram-gallery` | active | software | 4 | 1 | 0 | 0 | 1 / 6 |
+| 51 | `robot-paper-boat-regatta` | active | software | 3 | 1 | 0 | 0 | 2 / 6 |
+| 52 | `kind-sliding-tile-gallery` | active | software | 4 | 0 | 0 | 0 | 1 / 5 |
+| 53 | `dream-cycle` | continuous | software | 5 | 0 | 0 | 0 | 34 / 39 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
@@ -109,32 +110,32 @@ _None._
 
 - **STALE_CLAIM_FIELDS** — `animation-manager` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 28 days.
-- **STALE_IN_PROGRESS** — `art-archive` / `t-033`: Task has remained claimed for 18 days.
-- **STALE_IN_PROGRESS** — `art-archive` / `t-044`: Task has remained claimed for 18 days.
+- **STALE_IN_PROGRESS** — `art-archive` / `t-033`: Task has remained claimed for 19 days.
+- **STALE_IN_PROGRESS** — `art-archive` / `t-044`: Task has remained claimed for 19 days.
 - **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 24 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `comic-film` / `t-009`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 20 days.
 - **STALE_CLAIM_FIELDS** — `emperor-of-dust` / `t-033`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `kind-economy` / `t-011`: Task has remained claimed for 15 days.
+- **STALE_IN_PROGRESS** — `kind-economy` / `t-011`: Task has remained claimed for 16 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-economy` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
-- **STALE_IN_PROGRESS** — `kind-robots` / `t-127`: Task has remained review for 17 days.
-- **STALE_IN_PROGRESS** — `kind-robots` / `t-131`: Task has remained review for 15 days.
-- **STALE_IN_PROGRESS** — `kind-robots` / `t-133`: Task has remained review for 14 days.
+- **STALE_IN_PROGRESS** — `kind-robots` / `t-127`: Task has remained review for 18 days.
+- **STALE_IN_PROGRESS** — `kind-robots` / `t-131`: Task has remained review for 16 days.
+- **STALE_IN_PROGRESS** — `kind-robots` / `t-133`: Task has remained review for 15 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-robots` / `t-139`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-014`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-015`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-018`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **STALE_CLAIM_FIELDS** — `kr-arcade` / `t-009`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `kr-arcade` / `t-075`: Task has remained claimed for 9 days.
-- **STALE_IN_PROGRESS** — `kr-arcade` / `t-083`: Task has remained claimed for 3 days.
+- **STALE_IN_PROGRESS** — `kr-arcade` / `t-075`: Task has remained claimed for 10 days.
+- **STALE_IN_PROGRESS** — `kr-arcade` / `t-083`: Task has remained claimed for 4 days.
 - **STALE_CLAIM_FIELDS** — `kr-arcade` / `t-088`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `kr-arcade` / `t-102`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **STALE_CLAIM_FIELDS** — `kr-arcade` / `t-150`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `mandarin-tutor` / `t-030`: Task has remained claimed for 18 days.
-- **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-011`: Task has remained claimed for 4 days.
-- **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-012`: Task has remained claimed for 4 days.
-- **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-022`: Task has remained claimed for 6 days.
+- **STALE_IN_PROGRESS** — `mandarin-tutor` / `t-030`: Task has remained claimed for 19 days.
+- **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-011`: Task has remained claimed for 5 days.
+- **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-012`: Task has remained claimed for 5 days.
+- **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-022`: Task has remained claimed for 7 days.
 - **STALE_CLAIM_FIELDS** — `shifting-desks` / `t-032`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **POSSIBLY_UNNECESSARY_GATE** — `tzaddik-gallery` / `t-013`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `weird-humboldt` / `t-042`: Claimed/review task has no parseable updated timestamp.
@@ -142,8 +143,8 @@ _None._
 - **SOFT_NEEDS_HUMAN** — `zuzu-lair` / `t-006`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-lair` / `t-008`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-lair` / `t-010`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
-- **STALE_IN_PROGRESS** — `zuzu-lair` / `t-014`: Task has remained review for 11 days.
-- **STALE_IN_PROGRESS** — `zuzu-shifting-lands` / `t-004`: Task has remained review for 11 days.
+- **STALE_IN_PROGRESS** — `zuzu-lair` / `t-014`: Task has remained review for 12 days.
+- **STALE_IN_PROGRESS** — `zuzu-shifting-lands` / `t-004`: Task has remained review for 12 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-showdown` / `t-025`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 
 ### Info (109)
