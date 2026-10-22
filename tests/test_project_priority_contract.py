@@ -64,6 +64,14 @@ def test_lead_projects_are_the_ones_silas_named():
     relative queue order at the front. The older four-project lead follows
     unchanged; finished/paused members are not resurrected.
 
+    Updated 2026-10-22 in Silas's named new-project request: "New project: an
+    evolution of memory dungeon. Add to conductor projects, high priority."
+    Memory Dungeon is inserted after the seven creative focus and earlier
+    four-project historical band, ahead of the previously ordered
+    Cthulhuquarium and Kind Economy pair. Those two retain relative order.
+    It remains active and high priority, without silently reprioritizing
+    the protected creative focus or earlier arcade projects.
+
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -80,10 +88,11 @@ def test_lead_projects_are_the_ones_silas_named():
         "save-the-plumber",
         "shifting-desks",
     ]
-    assert len(order) >= 14
+    assert len(order) >= 15
     assert order[:7] == focus
     assert order[7:11] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
-    assert order[11:13] == ["cthulhuquarium", "kind-economy"]
+    assert order[11] == "memory-dungeon"
+    assert order[12:14] == ["cthulhuquarium", "kind-economy"]
     for finished in ("kapowarr", "ai-art-academy"):
         assert finished not in order
 
