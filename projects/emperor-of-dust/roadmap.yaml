@@ -765,7 +765,7 @@ tasks:
   - id: t-044
     milestone: m4
     title: "Second playtest: score the rewritten game against the 2026-10-21 rubric"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: >-
@@ -779,6 +779,10 @@ tasks:
       Read-only for the reviewers; run at most three at a time (six parallel Opus workers hit the
       session usage limit on 2026-10-21) and keep at most one Nuxt dev server up (the container OOMs;
       vue-tsc needs NODE_OPTIONS=--max-old-space-size=6144).
+    owner: worker
+    claimed_by: 20261022T001441058Z-eod-playtest-t044-f83d
+    claimed_at: '2026-10-22T00:14:41.058Z'
+    updated: '2026-10-22T00:14:41.058Z'
   - id: t-045
     milestone: m5
     title: "Story and art pilot: revise early quest aftermaths and queue illustrated throne-room choices"
