@@ -1,0 +1,168 @@
+# Save the Plumber Gen-2 map motion, round 1 (Silas 2026-10-22 PT: the map should be animated, not a still).
+# Each world's reviewed Krea 2 map plate (GEN2-ROUND-1, ArtImages 251323-251344) becomes a seamless WAN 2.2
+# first/last-frame loop (same frame at both ends): water, waterfalls, flags, lanterns and clouds move while every
+# path and clearing stays put, so the map nodes stay on their clearings. Exported as H.264 MP4 to kind_robots
+# public/save-the-plumber/maps/world-N.mp4 and drawn as a looping video under the map (the still plate is the
+# fallback). auto_submit: true. Private.
+round: save-the-plumber-gen2-mapclips-1
+project_slug: save-the-plumber
+designer: Save the Plumber art bay
+is_public: false
+is_mature: false
+auto_submit: true
+lanes:
+- key: wan-clips
+  label: WAN 2.2 image-to-video (14B), first frame to last frame
+  engine: wan
+  prompt: prose
+  fps: 16
+  output_format: webp
+  negative: camera movement, camera pan, zoom, cut, scene change, morphing, melting, moving buildings, moving paths,
+    flicker, text, watermark, blurry, photorealistic, 3d render
+subjects:
+- key: gen2-mapclip-1-bluebell-pipeworks
+  entity: map-motion
+  title: World 1 map plate motion loop
+  size: 832x480
+  seed: 83101
+  source_image_id: 251323
+  last_image_id: 251323
+  duration: 4
+  loop: true
+  prompt_prose: The waterfall pours and foams, water trickles from the brass valve spouts, bluebells and grass sway
+    in a light breeze, a thin wisp of steam curls from the cottage chimney, soft clouds drift slowly. The map is
+    a fixed painted storybook overworld seen from above; the camera holds perfectly still and every path, building
+    and clearing stays exactly in place.
+  jobs:
+    wan-clips: 43731
+  art:
+    wan-clips:
+      status: RUNNING
+      art_image_id: null
+- key: gen2-mapclip-2-tideglass-marina
+  entity: map-motion
+  title: World 2 map plate motion loop
+  size: 832x480
+  seed: 83102
+  source_image_id: 251326
+  last_image_id: 251326
+  duration: 4
+  loop: true
+  prompt_prose: Gentle waves lap the wharves, boats bob on the sparkling water, the waterfall pours into the harbour,
+    gulls glide far off, grass sways in the sea breeze. The map is a fixed painted storybook overworld seen from
+    above; the camera holds perfectly still and every path, building and clearing stays exactly in place.
+  jobs:
+    wan-clips: 43732
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: gen2-mapclip-3-lantern-orchard
+  entity: map-motion
+  title: World 3 map plate motion loop
+  size: 832x480
+  seed: 83103
+  source_image_id: 251329
+  last_image_id: 251329
+  duration: 4
+  loop: true
+  prompt_prose: Paper lanterns sway and glow softly, fireflies drift and twinkle, the waterfall pours, leaves rustle
+    in the orchard trees, light ripples across the greenhouse glass. The map is a fixed painted storybook overworld
+    seen from above; the camera holds perfectly still and every path, building and clearing stays exactly in place.
+  jobs:
+    wan-clips: 43733
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: gen2-mapclip-4-clockwork-fair
+  entity: map-motion
+  title: World 4 map plate motion loop
+  size: 832x480
+  seed: 83104
+  source_image_id: 251332
+  last_image_id: 251332
+  duration: 4
+  loop: true
+  prompt_prose: The big wheels turn slowly, pennant flags flutter on the towers, cotton candy clouds drift, the
+    waterfall pours, the parade floats rock gently in place. The map is a fixed painted storybook overworld seen
+    from above; the camera holds perfectly still and every path, building and clearing stays exactly in place.
+  jobs:
+    wan-clips: 43734
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: gen2-mapclip-5-cloudrail-commons
+  entity: map-motion
+  title: World 5 map plate motion loop
+  size: 832x480
+  seed: 83105
+  source_image_id: 251335
+  last_image_id: 251335
+  duration: 4
+  loop: true
+  prompt_prose: Clouds drift below and around the floating island, windmill sails turn, the cable cars sway on their
+    ropes, the airship bobs gently, the waterfall spills off the edge into the clouds. The map is a fixed painted
+    storybook overworld seen from above; the camera holds perfectly still and every path, building and clearing
+    stays exactly in place.
+  jobs:
+    wan-clips: 43735
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: gen2-mapclip-6-crystal-underworks
+  entity: map-motion
+  title: World 6 map plate motion loop
+  size: 832x480
+  seed: 83106
+  source_image_id: 251338
+  last_image_id: 251338
+  duration: 4
+  loop: true
+  prompt_prose: Crystals pulse with a soft violet glow, the underground waterfall pours and mists, glowing motes
+    float upward, light shimmers across the cavern walls. The map is a fixed painted storybook overworld seen from
+    above; the camera holds perfectly still and every path, building and clearing stays exactly in place.
+  jobs:
+    wan-clips: 43736
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: gen2-mapclip-7-night-market-rooftops
+  entity: map-motion
+  title: World 7 map plate motion loop
+  size: 832x480
+  seed: 83107
+  source_image_id: 251341
+  last_image_id: 251341
+  duration: 4
+  loop: true
+  prompt_prose: Windows flicker with warm lamplight, string lights twinkle across the rooftops, the waterfall pours,
+    chimney smoke drifts, stars shimmer in the night sky. The map is a fixed painted storybook overworld seen from
+    above; the camera holds perfectly still and every path, building and clearing stays exactly in place.
+  jobs:
+    wan-clips: 43737
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: gen2-mapclip-8-stardrain-citadel
+  entity: map-motion
+  title: World 8 map plate motion loop
+  size: 832x480
+  seed: 83108
+  source_image_id: 251344
+  last_image_id: 251344
+  duration: 4
+  loop: true
+  prompt_prose: Blue energy columns pulse and rise from the citadel towers, the rivers flow and sparkle, the waterfall
+    pours, mist drifts around the machine walls, clouds pass slowly. The map is a fixed painted storybook overworld
+    seen from above; the camera holds perfectly still and every path, building and clearing stays exactly in place.
+  jobs:
+    wan-clips: 43738
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
