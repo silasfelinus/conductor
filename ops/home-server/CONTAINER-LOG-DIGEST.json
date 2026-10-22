@@ -1,1739 +1,281 @@
 {
-  "generated_at": "2026-10-21T14:00:02.012589+00:00",
+  "generated_at": "2026-10-22T14:00:01.921074+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 680,
-      "fingerprint": "b0c0bb192fa5",
-      "sample": "2026-10-20 17:11:15 mysql_connection.cpp:1357:handler(): [ERROR] Failed to mysql_real_connect() on 10:mariadb-kindrobots2:3306 , FD (Conn:143 , MyDS:143) , 1045: Access denied for user 'kindrobot'@'pr",
+      "container": "audiobookshelf",
+      "count": 4,
+      "fingerprint": "b4e6a96d0bdd",
+      "sample": "errno: 5,",
       "severity": "error",
-      "skeleton": "<ts> mysql_connection.cpp<ip>handler(): [error] failed to mysql_real_connect() on <num>:mariadb-kindrobots2:<num> , fd (conn:<num> , myds:<num>) , <num>: access denied for user <str>@<str> (using password: <redacted>)."
+      "skeleton": "errno: <num>,"
     },
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 58,
-      "fingerprint": "ffdd93561a95",
-      "sample": "2026-10-20 17:11:15 MySQL_Monitor.cpp:1488:monitor_connect_thread(): [ERROR] Server mariadb-kindrobots2:3306 is returning \"Access denied\" for monitoring user",
-      "severity": "error",
-      "skeleton": "<ts> mysql_monitor.cpp<ip>monitor_connect_thread(): [error] server mariadb-kindrobots2:<num> is returning <str> for monitoring user"
+      "container": "requests",
+      "count": 3,
+      "fingerprint": "22b9e0a74cb0",
+      "sample": "timeout: 0,",
+      "severity": "other",
+      "skeleton": "timeout: <num>,"
     },
     {
       "baseline": null,
-      "container": "netdata",
+      "container": "audiobookshelf",
+      "count": 2,
+      "fingerprint": "354f062e70d5",
+      "sample": "parent: [Error: SQLITE_BUSY: database is locked] {",
+      "severity": "error",
+      "skeleton": "parent: [error: sqlite_busy: database is locked] {"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 2,
+      "fingerprint": "d06633e4ba82",
+      "sample": "original: [Error: SQLITE_BUSY: database is locked] {",
+      "severity": "error",
+      "skeleton": "original: [error: sqlite_busy: database is locked] {"
+    },
+    {
+      "baseline": null,
+      "container": "KindRobots",
       "count": 1,
-      "fingerprint": "4fe5104e2e97",
-      "sample": "time=2026-10-21T00:03:28.163-07:00 comm=netdata source=daemon level=error errno=\"2, No such file or directory\" tid=432153 thread=ACLK_MAIN msg=\"ACLK: Cloud returned EC=\\\"77pV0wiPux-991888\\\", Msg-Key:\\",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=netdata source=daemon level=error errno=<str> tid=<num> thread=aclk_main msg=<str>77pv0wipux-<num>\\<str>erragentalreadyconnected\\<str>delay retry <num>: agent already connected\\<str>"
+      "fingerprint": "356ee4e67cc1",
+      "sample": "[Icon] loading icon `kind-icon:hand-heart` timed out after 1500ms",
+      "severity": "other",
+      "skeleton": "[icon] loading icon `kind-icon:hand-heart` timed out after <num>"
     },
     {
       "baseline": null,
-      "container": "netdata",
+      "container": "KindRobots",
       "count": 1,
-      "fingerprint": "e5f99ed0c0a4",
-      "sample": "time=2026-10-21T04:11:08.924-07:00 comm=netdata source=health level=warning tid=432145 thread=HEALTH <REDACTED-BLOB> node=211a8138a0fa instance=disk_space./ context=disk.space code=0 alert_id=17872782",
+      "fingerprint": "8a544754281c",
+      "sample": "[Icon] loading icon `kind-icon:heart` timed out after 1500ms",
+      "severity": "other",
+      "skeleton": "[icon] loading icon `kind-icon:heart` timed out after <num>"
+    },
+    {
+      "baseline": null,
+      "container": "KindRobots",
+      "count": 1,
+      "fingerprint": "317265d56d5e",
+      "sample": "[Icon] loading icon `kind-icon:cart` timed out after 1500ms",
+      "severity": "other",
+      "skeleton": "[icon] loading icon `kind-icon:cart` timed out after <num>"
+    },
+    {
+      "baseline": null,
+      "container": "KindRobots",
+      "count": 1,
+      "fingerprint": "d712393c25f8",
+      "sample": "[Icon] loading icon `kind-icon:rocket` timed out after 1500ms",
+      "severity": "other",
+      "skeleton": "[icon] loading icon `kind-icon:rocket` timed out after <num>"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 1,
+      "fingerprint": "3d243de46081",
+      "sample": "[Error] CommandExecutor: Error occurred while executing task ApplicationUpdateCheck",
+      "severity": "error",
+      "skeleton": "[error] commandexecutor: error occurred while executing task applicationupdatecheck"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 1,
+      "fingerprint": "e07b812c24dc",
+      "sample": "[Warn] HttpClient: HTTP Error - Res: HTTP/2.0 [GET] https://prowlarr.servarr.com/v1/update/develop?version=2.6.5.5623&os=linuxmusl&arch=X64&runtime=netcore&runtimeVer=8.0.27&dbType=SQLite&includeMajor",
       "severity": "warn",
-      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=disk_space./ context=disk.space code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=disk_space_usage alert_class=utilization alert_com"
+      "skeleton": "[warn] httpclient: http error - res: http/<num> [get] <url> <num> (<num> bytes)"
     },
     {
       "baseline": null,
-      "container": "netdata",
+      "container": "prowlarr",
       "count": 1,
-      "fingerprint": "3b489e45694a",
-      "sample": "time=2026-10-21T04:12:08.518-07:00 comm=alarm-notify.sh source=health level=error tid=4099506 thread=alarm-notify <REDACTED-BLOB> node=211a8138a0fa instance=disk_space./ context=disk.space alert_id=17",
+      "fingerprint": "a3f9cb96758f",
+      "sample": "[Error] CommandExecutor: Error occurred while executing task CheckHealth",
       "severity": "error",
-      "skeleton": "time=<ts> comm=alarm-notify.sh source=health level=error tid=<num> thread=alarm-notify <redacted-blob> node=<hex> instance=disk_space./ context=disk.space alert_id=<hex> alert_unique_id=<hex> <redacted-blob> alert=disk_space_usage alert_class=utilization alert_component=disk alert_type=system alert_"
+      "skeleton": "[error] commandexecutor: error occurred while executing task checkhealth"
     },
     {
       "baseline": null,
-      "container": "tautulli",
+      "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "1d7af620af15",
-      "sample": "2026-10-20 10:30:37 - ERROR :: Thread-19 (run) : Tautulli WebSocket :: [Errno 104] Connection reset by peer.",
+      "fingerprint": "5a6161eb4fe7",
+      "sample": "[2026-10-21 08:16:50.310] INFO: [SocketAuthority] Socket sHNI8IeEhYmIg2SHAASj disconnected from client \"superkate\" after 170818ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket shni8ieehymig2shaasj disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "8e5d0b9af357",
+      "sample": "[2026-10-21 08:22:55.995] INFO: [SocketAuthority] Socket bAkAvX5jUvnzcZVrAASl disconnected from client \"superkate\" after 95197ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket bakavx5juvnzczvraasl disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "76d86773d9f9",
+      "sample": "[2026-10-21 17:13:39.491] INFO: [SocketAuthority] Socket Llc7LV_NQGsjLtGTAASn disconnected from client \"superkate\" after 70108ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket llc7lv_nqgsjltgtaasn disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "e5eaaffb2a45",
+      "sample": "[2026-10-21 17:16:23.771] INFO: [SocketAuthority] Socket yEkDiuCzOfcrhLWSAASp disconnected from client \"superkate\" after 196390ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket yekdiuczofcrhlwsaasp disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "dd40a7fc7989",
+      "sample": "[2026-10-21 17:21:10.436] INFO: [SocketAuthority] Socket 0arO_8OL56v8GOVTAASr disconnected from client \"superkate\" after 95587ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 0aro_8ol56v8govtaasr disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "9e4bc2178049",
+      "sample": "[2026-10-21 17:22:51.518] INFO: [SocketAuthority] Socket d_s5lMn2kHLgszZZAASt disconnected from client \"superkate\" after 95149ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket d_s5lmn2khlgszzzaast disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "b5d9931aec7c",
+      "sample": "[2026-10-21 17:31:18.049] INFO: [SocketAuthority] Socket oV0bw3ej_fXZe-ShAASv disconnected from client \"superkate\" after 221435ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket ov0bw3ej_fxze-shaasv disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "835b7b187676",
+      "sample": "[2026-10-21 17:40:21.979] INFO: [SocketAuthority] Socket vbnU32NdC3szoAY1AASz disconnected from client \"superkate\" after 70316ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket vbnu32ndc3szoay1aasz disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "669df9bcbb13",
+      "sample": "[2026-10-22 01:30:07.143] FATAL: [Server] Unhandled rejection: Error",
+      "severity": "fatal",
+      "skeleton": "[<ts>] fatal: [server] unhandled rejection: error"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "37e1d7d40527",
+      "sample": "<rejected> Error",
       "severity": "error",
-      "skeleton": "<ts> - error :: thread-<num> (run) : tautulli websocket :: [errno <num>] connection reset by peer."
+      "skeleton": "<rejected> error"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "requests",
       "count": 1,
-      "fingerprint": "5b53dee1a707",
-      "sample": "[2026-10-20 07:00:20.774] INFO: [SocketAuthority] Unauth socket RfcdAkhrVa24z-lzAAKr disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket rfcdakhrva24z-lzaakr disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "65a5db22fea0",
-      "sample": "[2026-10-20 07:01:21.777] INFO: [SocketAuthority] Unauth socket OR7o4mq0BCVmZMmAAAKt disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket or7o4mq0bcvmzmmaaakt disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "84736782049b",
-      "sample": "[2026-10-20 07:02:20.779] INFO: [SocketAuthority] Unauth socket JQkYluGb5FIT3oDKAAKv disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket jqkylugb5fit3odkaakv disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "72cd337bc03e",
-      "sample": "[2026-10-20 07:03:20.767] INFO: [SocketAuthority] Unauth socket hFdxrYwWCsmqT0iGAAKx disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket hfdxrywwcsmqt0igaakx disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "43952d2754b3",
-      "sample": "[2026-10-20 07:04:21.866] INFO: [SocketAuthority] Unauth socket 8O-1QfYSPnlZ7uTAAAKz disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 8o-1qfyspnlz7utaaakz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "295231acb7de",
-      "sample": "[2026-10-20 07:05:21.777] INFO: [SocketAuthority] Unauth socket hFAjzkx4dDORMPHFAAK1 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket hfajzkx4ddormphfaak1 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "166d3033bd03",
-      "sample": "[2026-10-20 07:06:20.769] INFO: [SocketAuthority] Unauth socket s19F_vX-QDi8DgvwAAK3 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket s19f_vx-qdi8dgvwaak3 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "40da51e28f6e",
-      "sample": "[2026-10-20 07:07:20.766] INFO: [SocketAuthority] Unauth socket xn1zX3vt4GbWH14RAAK5 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket xn1zx3vt4gbwh14raak5 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "3164022ce4ce",
-      "sample": "[2026-10-20 07:08:20.771] INFO: [SocketAuthority] Unauth socket Q2LdXvGm-B2jlWxbAAK7 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket q2ldxvgm-b2jlwxbaak7 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "ffd479fc7e58",
-      "sample": "[2026-10-20 07:15:28.951] INFO: [SocketAuthority] Socket NuEls6Rw_g_6II4yAAK_ disconnected from client \"superkate\" after 220967ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket nuels6rw_g_6ii4yaak_ disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "0853e1531e10",
-      "sample": "[2026-10-20 07:34:59.031] INFO: [SocketAuthority] Socket 5dEeiqUwccng6auOAALB disconnected from client \"superkate\" after 95135ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 5deeiquwccng6auoaalb disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "41320265b1aa",
-      "sample": "[2026-10-20 07:50:21.757] INFO: [SocketAuthority] Unauth socket nI1Xm5T8w6Q24XfPAALD disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ni1xm5t8w6q24xfpaald disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "e2c7cae8226a",
-      "sample": "[2026-10-20 07:51:21.709] INFO: [SocketAuthority] Unauth socket ojp5O3Vy2gJeC5C0AALF disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ojp5o3vy2gjec5c0aalf disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "1263f91e7f0c",
-      "sample": "[2026-10-20 07:52:20.706] INFO: [SocketAuthority] Unauth socket ujuRwFHNur-hMS1aAALH disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ujurwfhnur-hms1aaalh disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "8cfd6935f483",
-      "sample": "[2026-10-20 07:53:21.702] INFO: [SocketAuthority] Unauth socket uqxBcHujhigzOb3hAALJ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket uqxbchujhigzob3haalj disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "bcd0feabb61b",
-      "sample": "[2026-10-20 07:54:20.715] INFO: [SocketAuthority] Unauth socket 52RvoHFVYWbRFHeyAALL disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 52rvohfvywbrfheyaall disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "1b7d3e561979",
-      "sample": "[2026-10-20 07:55:21.752] INFO: [SocketAuthority] Unauth socket av_Msa2hc7WuJgEeAALN disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket av_msa2hc7wujgeeaaln disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "1e740b99c535",
-      "sample": "[2026-10-20 07:56:20.696] INFO: [SocketAuthority] Unauth socket J_5PMPSKiAEWd7gIAALP disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket j_5pmpskiaewd7giaalp disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "91909dc78e1a",
-      "sample": "[2026-10-20 07:57:21.701] INFO: [SocketAuthority] Unauth socket _HxWZ3cgX_fbQ8GKAALR disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket _hxwz3cgx_fbq8gkaalr disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "85259781d9f1",
-      "sample": "[2026-10-20 07:58:20.699] INFO: [SocketAuthority] Unauth socket UW8Vq6jNmjV0N7cRAALT disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket uw8vq6jnmjv0n7craalt disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "15751c5585b1",
-      "sample": "[2026-10-20 07:59:20.700] INFO: [SocketAuthority] Unauth socket ouPrd7m8kjR5oOpAAALV disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ouprd7m8kjr5oopaaalv disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "cfd560a45618",
-      "sample": "[2026-10-20 08:00:20.695] INFO: [SocketAuthority] Unauth socket 1sPT_bEJ3a9dmJaZAALX disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 1spt_bej3a9dmjazaalx disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9b80379d4e88",
-      "sample": "[2026-10-20 08:01:20.730] INFO: [SocketAuthority] Unauth socket UzfdF4vn4w_TColzAALZ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket uzfdf4vn4w_tcolzaalz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "7b574b9c93b8",
-      "sample": "[2026-10-20 08:02:20.703] INFO: [SocketAuthority] Unauth socket PTy175TeVGxZbbe3AALb disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket pty175tevgxzbbe3aalb disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "642e10151077",
-      "sample": "[2026-10-20 08:03:21.696] INFO: [SocketAuthority] Unauth socket Pg8Zy5CjBT0Dhm-IAALd disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket pg8zy5cjbt0dhm-iaald disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9cc2206d3c1c",
-      "sample": "[2026-10-20 08:04:21.692] INFO: [SocketAuthority] Unauth socket Uxzd-12e_Dm4H_2FAALf disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket uxzd-12e_dm4h_2faalf disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "c71346323a4f",
-      "sample": "[2026-10-20 08:42:22.205] INFO: [SocketAuthority] Socket v-nZeZb1dAfPtkBlAALl disconnected from client \"superkate\" after 220668ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket v-nzezb1dafptkblaall disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "416016aefcb7",
-      "sample": "[2026-10-20 08:46:21.646] INFO: [SocketAuthority] Unauth socket JnbNPCNuEO6OHtCTAALp disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket jnbnpcnueo6ohtctaalp disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "e11bce3adfd3",
-      "sample": "[2026-10-20 08:46:37.559] INFO: [SocketAuthority] Socket OgnCrRPh_kLurQuiAALn disconnected from client \"superkate\" after 95041ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket ogncrrph_klurquiaaln disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "e2a6af801c5c",
-      "sample": "[2026-10-20 08:47:20.638] INFO: [SocketAuthority] Unauth socket cVNbNIbwlokpmozaAALr disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket cvnbnibwlokpmozaaalr disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "8bca5a1e5723",
-      "sample": "[2026-10-20 08:48:21.636] INFO: [SocketAuthority] Unauth socket 1dZde4fdD3kkE7fIAALt disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 1dzde4fdd3kke7fiaalt disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "ba5a47b10dee",
-      "sample": "[2026-10-20 08:49:20.648] INFO: [SocketAuthority] Unauth socket R8HkWbbRBmsBmKF-AALv disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket r8hkwbbrbmsbmkf-aalv disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f4f7f3306f8b",
-      "sample": "[2026-10-20 08:50:20.643] INFO: [SocketAuthority] Unauth socket _Zo1Epuk98qHCmJuAALx disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket _zo1epuk98qhcmjuaalx disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9e3b99cb0804",
-      "sample": "[2026-10-20 08:51:20.636] INFO: [SocketAuthority] Unauth socket U0tNcpoNezInWck5AALz disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket u0tncponezinwck5aalz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "745fd5ce3b10",
-      "sample": "[2026-10-20 08:52:21.685] INFO: [SocketAuthority] Unauth socket VPVVajD26Zsz1SaDAAL1 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket vpvvajd26zsz1sadaal1 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "08e88fecf843",
-      "sample": "[2026-10-20 08:53:20.637] INFO: [SocketAuthority] Unauth socket A6-_5pcHSjbM61S7AAL3 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket a6-_5pchsjbm61s7aal3 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "940a12a4b4e1",
-      "sample": "[2026-10-20 08:54:21.639] INFO: [SocketAuthority] Unauth socket cwWCMwPQkI5zzHa4AAL5 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket cwwcmwpqki5zzha4aal5 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "68028dd3a2f6",
-      "sample": "[2026-10-20 08:55:21.643] INFO: [SocketAuthority] Unauth socket hT1034bj4jsRXXOuAAL7 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ht1034bj4jsrxxouaal7 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "a64861c99537",
-      "sample": "[2026-10-20 08:56:21.628] INFO: [SocketAuthority] Unauth socket gLxbFA5U7AdgPKe4AAL9 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket glxbfa5u7adgpke4aal9 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f7f27365bb37",
-      "sample": "[2026-10-20 08:57:20.627] INFO: [SocketAuthority] Unauth socket 7p6qlRgcBAd_SxVFAAL_ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 7p6qlrgcbad_sxvfaal_ disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "ec1737f2e515",
-      "sample": "[2026-10-20 08:58:21.714] INFO: [SocketAuthority] Unauth socket 54AteFseTkAQpCGIAAMB disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 54atefsetkaqpcgiaamb disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "06b943fc58ff",
-      "sample": "[2026-10-20 08:59:21.625] INFO: [SocketAuthority] Unauth socket md9Wp-TdK4ctKkqUAAMD disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket md9wp-tdk4ctkkquaamd disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "74d38ed78ee3",
-      "sample": "[2026-10-20 09:00:20.630] INFO: [SocketAuthority] Unauth socket 7n_yQO6BF9eX0IP3AAMF disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 7n_yqo6bf9ex0ip3aamf disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "252067d15682",
-      "sample": "[2026-10-20 09:01:20.628] INFO: [SocketAuthority] Unauth socket qepYyt6WBPdIHpmGAAMH disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket qepyyt6wbpdihpmgaamh disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "1a49dac49142",
-      "sample": "[2026-10-20 09:02:21.623] INFO: [SocketAuthority] Unauth socket Gcoa-X7YCLEOvYDbAAMJ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket gcoa-x7ycleovydbaamj disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "0d45cb210b3a",
-      "sample": "[2026-10-20 09:46:21.766] INFO: [SocketAuthority] Unauth socket xa6Pty4giYfigmq_AAMN disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket xa6pty4giyfigmq_aamn disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "62e9ac972012",
-      "sample": "[2026-10-20 09:47:20.614] INFO: [SocketAuthority] Unauth socket hFj_IbIizpyJ1w-cAAMP disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket hfj_ibiizpyj1w-caamp disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "0f7c0bc9c9c0",
-      "sample": "[2026-10-20 09:48:20.566] INFO: [SocketAuthority] Unauth socket S9GnO7DnrPqbhZFUAAMR disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket s9gno7dnrpqbhzfuaamr disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "036c1b34ec43",
-      "sample": "[2026-10-20 09:49:20.558] INFO: [SocketAuthority] Unauth socket nWgofwD8yDeUqSCtAAMT disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket nwgofwd8ydeuqsctaamt disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "05aa27e769a8",
-      "sample": "[2026-10-20 09:50:21.555] INFO: [SocketAuthority] Unauth socket iPE6_JdHGhDLJuVpAAMV disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ipe6_jdhghdljuvpaamv disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "18b1ca127ac0",
-      "sample": "[2026-10-20 09:51:20.566] INFO: [SocketAuthority] Unauth socket kyTu29ul1WqGDsl_AAMX disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket kytu29ul1wqgdsl_aamx disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "c69751bef01c",
-      "sample": "[2026-10-20 09:52:20.609] INFO: [SocketAuthority] Unauth socket Ppt2u2uIXiNzM91EAAMZ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ppt2u2uixinzm91eaamz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "e9014d0dd369",
-      "sample": "[2026-10-20 09:53:20.562] INFO: [SocketAuthority] Unauth socket a0IIh3WLMXLTCgqBAAMb disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket a0iih3wlmxltcgqbaamb disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "d07adb72b566",
-      "sample": "[2026-10-20 09:54:20.551] INFO: [SocketAuthority] Unauth socket u_BBk_ov9YppLFGFAAMd disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket u_bbk_ov9ypplfgfaamd disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "26ff7651fe40",
-      "sample": "[2026-10-20 09:55:21.562] INFO: [SocketAuthority] Unauth socket X019OkWhKF_gPpwtAAMf disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket x019okwhkf_gppwtaamf disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "1efb1eee6da5",
-      "sample": "[2026-10-20 09:56:21.552] INFO: [SocketAuthority] Unauth socket 9xufHFXY5IeN7wEEAAMh disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 9xufhfxy5ien7weeaamh disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "915961be9d38",
-      "sample": "[2026-10-20 09:57:20.639] INFO: [SocketAuthority] Unauth socket 46PjNkWAmnuOd2jCAAMj disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 46pjnkwamnuod2jcaamj disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "dcd7d0b488c4",
-      "sample": "[2026-10-20 09:58:20.575] INFO: [SocketAuthority] Unauth socket yE8Ld8SNnAEkSpblAAMl disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ye8ld8snnaekspblaaml disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "629c025cd7ba",
-      "sample": "[2026-10-20 09:59:21.550] INFO: [SocketAuthority] Unauth socket wWUFNHnYUrHYk9-8AAMn disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket wwufnhnyurhyk9-8aamn disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "66f54367586f",
-      "sample": "[2026-10-20 10:00:21.557] INFO: [SocketAuthority] Unauth socket IL2Tt6z26-jSV4XzAAMp disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket il2tt6z26-jsv4xzaamp disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9ab6fb48ca68",
-      "sample": "[2026-10-20 10:43:20.541] INFO: [SocketAuthority] Unauth socket d60C1E0ce0jdOLaXAAMv disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket d60c1e0ce0jdolaxaamv disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "aa8dc1d12f76",
-      "sample": "[2026-10-20 10:44:21.502] INFO: [SocketAuthority] Unauth socket 68PJ9mwNqbFG-AaaAAMx disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 68pj9mwnqbfg-aaaaamx disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "366204b5d04a",
-      "sample": "[2026-10-20 10:45:20.520] INFO: [SocketAuthority] Unauth socket dtfy-g9-VPWHl76iAAMz disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket dtfy-g9-vpwhl76iaamz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "d27520f6ae6a",
-      "sample": "[2026-10-20 10:46:20.494] INFO: [SocketAuthority] Unauth socket 13NcsrOdb8oXJOXaAAM1 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 13ncsrodb8oxjoxaaam1 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "34a872c63bfe",
-      "sample": "[2026-10-20 10:47:21.524] INFO: [SocketAuthority] Unauth socket IxDS55ysMT8kU1GtAAM3 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ixds55ysmt8ku1gtaam3 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9766ad98e760",
-      "sample": "[2026-10-20 10:48:20.482] INFO: [SocketAuthority] Unauth socket -0r3wJU_p4p32vFOAAM5 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket -0r3wju_p4p32vfoaam5 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "55a1caa02f42",
-      "sample": "[2026-10-20 10:49:20.539] INFO: [SocketAuthority] Unauth socket tTPV-m5pLAJ29G1nAAM7 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ttpv-m5plaj29g1naam7 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9aa86fc1e8b6",
-      "sample": "[2026-10-20 10:50:21.482] INFO: [SocketAuthority] Unauth socket rklyZuM0izoMKG46AAM9 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket rklyzum0izomkg46aam9 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "b0f69fb58227",
-      "sample": "[2026-10-20 10:51:21.490] INFO: [SocketAuthority] Unauth socket o4VIBeJpRtQEKKD3AAM_ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket o4vibejprtqekkd3aam_ disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "8fbd49acd05d",
-      "sample": "[2026-10-20 10:52:20.486] INFO: [SocketAuthority] Unauth socket QOLkE7Kfm3zqngUyAANB disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket qolke7kfm3zqnguyaanb disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "df7cfbe31d73",
-      "sample": "[2026-10-20 10:53:21.487] INFO: [SocketAuthority] Unauth socket qD8bbKPXKOZJdCghAAND disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket qd8bbkpxkozjdcghaand disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "0ec45ab04663",
-      "sample": "[2026-10-20 10:54:21.485] INFO: [SocketAuthority] Unauth socket YqjNzLJr5geeNbQ7AANF disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket yqjnzljr5geenbq7aanf disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "8a37d21e6a41",
-      "sample": "[2026-10-20 10:55:21.526] INFO: [SocketAuthority] Unauth socket Sg2A-xGCGCR5Tgs_AANH disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket sg2a-xgcgcr5tgs_aanh disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "dfbcb2681148",
-      "sample": "[2026-10-20 10:56:21.488] INFO: [SocketAuthority] Unauth socket VKEpJ3dmr2izuPeOAANJ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket vkepj3dmr2izupeoaanj disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "ebf12feccee9",
-      "sample": "[2026-10-20 11:39:20.731] INFO: [SocketAuthority] Unauth socket UocXeC8DV-mapZ3PAANN disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket uocxec8dv-mapz3paann disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "62ed0c28d0ae",
-      "sample": "[2026-10-20 11:40:21.447] INFO: [SocketAuthority] Unauth socket QLOK9odGFO-WhUy3AANP disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket qlok9odgfo-whuy3aanp disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "14db749cc174",
-      "sample": "[2026-10-20 11:41:20.429] INFO: [SocketAuthority] Unauth socket 2_qzpPzGVR4xEXQvAANR disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 2_qzppzgvr4xexqvaanr disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "115e0766b27a",
-      "sample": "[2026-10-20 11:42:20.431] INFO: [SocketAuthority] Unauth socket OOqtEG8QA95bY3DoAANT disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ooqteg8qa95by3doaant disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "760742a5d411",
-      "sample": "[2026-10-20 11:43:21.423] INFO: [SocketAuthority] Unauth socket wO4ivZJhOEv5j8xUAANV disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket wo4ivzjhoev5j8xuaanv disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "2790e0ba430f",
-      "sample": "[2026-10-20 11:44:21.417] INFO: [SocketAuthority] Unauth socket T3GhKjOMt6W9xQj7AANX disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket t3ghkjomt6w9xqj7aanx disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "ca132dcb2059",
-      "sample": "[2026-10-20 11:45:21.472] INFO: [SocketAuthority] Unauth socket rfqnFr2DJSHYmURIAANZ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket rfqnfr2djshymuriaanz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "e3e6ea1166fb",
-      "sample": "[2026-10-20 11:46:20.424] INFO: [SocketAuthority] Unauth socket 1PtmLnNRQSNAPN5fAANb disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 1ptmlnnrqsnapn5faanb disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "6ebd19cd5416",
-      "sample": "[2026-10-20 11:47:21.415] INFO: [SocketAuthority] Unauth socket tHKgcGHoqjeMTaN9AANd disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket thkgcghoqjemtan9aand disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f489b9c55398",
-      "sample": "[2026-10-20 11:48:20.423] INFO: [SocketAuthority] Unauth socket L-dmPRxef8VoUwJFAANf disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket l-dmprxef8vouwjfaanf disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "5ec7f4c71fb3",
-      "sample": "[2026-10-20 11:49:20.416] INFO: [SocketAuthority] Unauth socket -R5F9l4_F4YeJs9HAANh disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket -r5f9l4_f4yejs9haanh disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "63e35b0afb36",
-      "sample": "[2026-10-20 11:50:20.414] INFO: [SocketAuthority] Unauth socket VJBH__Ipy-gZBmNTAANj disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket vjbh__ipy-gzbmntaanj disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "e86a60a3a7fe",
-      "sample": "[2026-10-20 11:51:21.454] INFO: [SocketAuthority] Unauth socket fbmrNBKgct5gx-FuAANl disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket fbmrnbkgct5gx-fuaanl disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "d996ebcde3c6",
-      "sample": "[2026-10-20 11:52:20.422] INFO: [SocketAuthority] Unauth socket 4OiG9dRVEtO1eJR7AANn disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 4oig9drveto1ejr7aann disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f1fa118e894b",
-      "sample": "[2026-10-20 11:53:20.410] INFO: [SocketAuthority] Unauth socket jaqsyUFVdWIlBp8AAANp disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket jaqsyufvdwilbp8aaanp disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "5100834636c2",
-      "sample": "[2026-10-20 12:35:21.414] INFO: [SocketAuthority] Unauth socket AgfVYE86nZU21R-KAANt disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket agfvye86nzu21r-kaant disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "5b640fd66f6f",
-      "sample": "[2026-10-20 12:36:20.363] INFO: [SocketAuthority] Unauth socket 20yn-jn9ZQfx8vLuAANv disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 20yn-jn9zqfx8vluaanv disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "dbe31f2d7c99",
-      "sample": "[2026-10-20 12:37:21.361] INFO: [SocketAuthority] Unauth socket 3H4-WWbPOWcY2caaAANx disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 3h4-wwbpowcy2caaaanx disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9a526d0ccd47",
-      "sample": "[2026-10-20 12:38:20.371] INFO: [SocketAuthority] Unauth socket NgB0o4IQmJrahBFQAANz disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ngb0o4iqmjrahbfqaanz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "2b9db8c8834b",
-      "sample": "[2026-10-20 12:39:20.361] INFO: [SocketAuthority] Unauth socket P-XKcQDuMWfIr7UYAAN1 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket p-xkcqdumwfir7uyaan1 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "c1862b4f7fc5",
-      "sample": "[2026-10-20 12:40:21.387] INFO: [SocketAuthority] Unauth socket BkCkyV0Fw33AR0GxAAN3 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket bkckyv0fw33ar0gxaan3 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "dcc6f0396776",
-      "sample": "[2026-10-20 12:41:21.349] INFO: [SocketAuthority] Unauth socket ZPbNTcGU9jtWS4jWAAN5 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket zpbntcgu9jtws4jwaan5 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "7a645115c129",
-      "sample": "[2026-10-20 12:42:21.354] INFO: [SocketAuthority] Unauth socket 2pwChSevUi-jftqrAAN7 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 2pwchsevui-jftqraan7 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "0f67c22d0f61",
-      "sample": "[2026-10-20 12:43:21.340] INFO: [SocketAuthority] Unauth socket DmmeXujR-j94Gk7IAAN9 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket dmmexujr-j94gk7iaan9 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "346bf60f902c",
-      "sample": "[2026-10-20 12:44:20.349] INFO: [SocketAuthority] Unauth socket 6jC77hW6bngqx2mnAAN_ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 6jc77hw6bngqx2mnaan_ disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "d26b423429bd",
-      "sample": "[2026-10-20 12:45:21.392] INFO: [SocketAuthority] Unauth socket 5RLevje4fJ0PIuRgAAOB disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 5rlevje4fj0piurgaaob disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "c9f7195565fc",
-      "sample": "[2026-10-20 12:46:20.351] INFO: [SocketAuthority] Unauth socket tkM7QhniogIBJ2nqAAOD disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket tkm7qhniogibj2nqaaod disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "16310e615e25",
-      "sample": "[2026-10-20 12:47:21.342] INFO: [SocketAuthority] Unauth socket FFcVXfw8Tcl_V7H-AAOF disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ffcvxfw8tcl_v7h-aaof disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "0d36bcf3110a",
-      "sample": "[2026-10-20 12:48:21.399] INFO: [SocketAuthority] Unauth socket 1H_f7pjhyDNeNiqnAAOH disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 1h_f7pjhydneniqnaaoh disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "bec83bc2627f",
-      "sample": "[2026-10-20 12:49:20.336] INFO: [SocketAuthority] Unauth socket QA9RFkjcukQOYEygAAOJ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket qa9rfkjcukqoyeygaaoj disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "2e6a5cac7ef8",
-      "sample": "[2026-10-20 12:50:21.334] INFO: [SocketAuthority] Unauth socket 0RxksH052atkjUO_AAOL disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 0rxksh052atkjuo_aaol disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "15f4f4e85b7f",
-      "sample": "[2026-10-20 13:32:21.373] INFO: [SocketAuthority] Unauth socket Xyk_IDiwrhrOxP2bAAOT disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket xyk_idiwrhroxp2baaot disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "330fb541fbeb",
-      "sample": "[2026-10-20 13:33:20.283] INFO: [SocketAuthority] Unauth socket vMQzbywaqxScFCbCAAOV disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket vmqzbywaqxscfcbcaaov disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "3592d8035491",
-      "sample": "[2026-10-20 13:34:21.291] INFO: [SocketAuthority] Unauth socket wAxJVmc421QRdbpvAAOX disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket waxjvmc421qrdbpvaaox disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "88a8891c666b",
-      "sample": "[2026-10-20 13:35:21.276] INFO: [SocketAuthority] Unauth socket Fq06T4i1NeOOIm-MAAOZ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket fq06t4i1neooim-maaoz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "eb16e5303721",
-      "sample": "[2026-10-20 13:36:21.282] INFO: [SocketAuthority] Unauth socket a4eoqE8_LZ1hLng3AAOb disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket a4eoqe8_lz1hlng3aaob disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "5ec31ee4aa00",
-      "sample": "[2026-10-20 13:37:21.273] INFO: [SocketAuthority] Unauth socket N9tvuT2IRcKN9hU1AAOd disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket n9tvut2irckn9hu1aaod disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "82ab53719de6",
-      "sample": "[2026-10-20 13:38:21.302] INFO: [SocketAuthority] Unauth socket xD0lqsITJy69zO15AAOf disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket xd0lqsitjy69zo15aaof disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "220ff91037d4",
-      "sample": "[2026-10-20 13:39:20.275] INFO: [SocketAuthority] Unauth socket MJSHyJtY9yZpLj2YAAOh disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket mjshyjty9yzplj2yaaoh disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "b25bdec733bd",
-      "sample": "[2026-10-20 13:40:21.290] INFO: [SocketAuthority] Unauth socket zxRRaMAQ_pA-lcwlAAOj disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket zxrramaq_pa-lcwlaaoj disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "cf0784eca8d7",
-      "sample": "[2026-10-20 13:41:21.278] INFO: [SocketAuthority] Unauth socket F0QCgcmTkuNorFJEAAOl disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket f0qcgcmtkunorfjeaaol disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "02687fcf7e53",
-      "sample": "[2026-10-20 13:42:20.283] INFO: [SocketAuthority] Unauth socket 1xHy589NCgaebF1hAAOn disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 1xhy589ncgaebf1haaon disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "6e5ff1042f27",
-      "sample": "[2026-10-20 13:43:20.276] INFO: [SocketAuthority] Unauth socket nFNx0E9qqKur0fERAAOp disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket nfnx0e9qqkur0feraaop disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "c5f46fb0bb51",
-      "sample": "[2026-10-20 13:44:21.314] INFO: [SocketAuthority] Unauth socket F7bKOK6DxqpaBP98AAOr disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket f7bkok6dxqpabp98aaor disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "8124c418d6e0",
-      "sample": "[2026-10-20 13:45:21.296] INFO: [SocketAuthority] Unauth socket oXuI-YDGNU9n0KIsAAOt disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket oxui-ydgnu9n0kisaaot disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "a3d3415107f2",
-      "sample": "[2026-10-20 13:46:20.273] INFO: [SocketAuthority] Unauth socket psPOeIzjqcCKN7VQAAOv disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket pspoeizjqcckn7vqaaov disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f29c9b29213a",
-      "sample": "[2026-10-20 14:27:08.522] INFO: [SocketAuthority] Unauth socket BtboBIhlJoiiBUe8AAOz disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket btbobihljoiibue8aaoz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "da5d8a9702f4",
-      "sample": "[2026-10-20 14:28:20.256] INFO: [SocketAuthority] Unauth socket 1l1s1GMPwmzK2sO8AAO3 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 1l1s1gmpwmzk2so8aao3 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "a7efa538c948",
-      "sample": "[2026-10-20 14:29:21.241] INFO: [SocketAuthority] Unauth socket KoeTY-1EmLQaMIHwAAO5 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket koety-1emlqamihwaao5 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "380d34c71f52",
-      "sample": "[2026-10-20 14:30:21.209] INFO: [SocketAuthority] Unauth socket 1o2BUIrVfBrRPxszAAO7 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 1o2buirvfbrrpxszaao7 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "50e4cdbb0f42",
-      "sample": "[2026-10-20 14:31:20.239] INFO: [SocketAuthority] Unauth socket PHsrrz9TiEumKlOUAAO9 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket phsrrz9tieumklouaao9 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "16da08dcb51c",
-      "sample": "[2026-10-20 14:32:20.209] INFO: [SocketAuthority] Unauth socket M-46t8IoHhS8QMSuAAO_ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket m-46t8iohhs8qmsuaao_ disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "4624abd828b4",
-      "sample": "[2026-10-20 14:33:21.263] INFO: [SocketAuthority] Unauth socket gTFEI2jOndv5Kvs2AAPB disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket gtfei2jondv5kvs2aapb disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "0302e515de2b",
-      "sample": "[2026-10-20 14:34:21.206] INFO: [SocketAuthority] Unauth socket 1plaCWG3kQWtCySVAAPD disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 1placwg3kqwtcysvaapd disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "21a8324bc1aa",
-      "sample": "[2026-10-20 14:34:33.633] INFO: [SocketAuthority] Socket DRUp-Ho8PnBudG2OAAO1 disconnected from client \"superkate\" after 750699ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket drup-ho8pnbudg2oaao1 disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "b1eaa43adbfd",
-      "sample": "[2026-10-20 14:35:21.212] INFO: [SocketAuthority] Unauth socket BL8rfzH_xYRzuddUAAPF disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket bl8rfzh_xyrzudduaapf disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "bc29c759e162",
-      "sample": "[2026-10-20 14:36:21.209] INFO: [SocketAuthority] Unauth socket -A_4VXhHjGUeLtm5AAPH disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket -a_4vxhhjgueltm5aaph disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "c12739988300",
-      "sample": "[2026-10-20 14:37:20.201] INFO: [SocketAuthority] Unauth socket apbc7CkvudZz2aMHAAPJ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket apbc7ckvudzz2amhaapj disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "09b8e2dae6c4",
-      "sample": "[2026-10-20 14:38:21.221] INFO: [SocketAuthority] Unauth socket rUGDsmJvUb5zZBfkAAPL disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket rugdsmjvub5zzbfkaapl disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "91cf826ed6a9",
-      "sample": "[2026-10-20 14:39:20.202] INFO: [SocketAuthority] Unauth socket P87jd_HSCBAtocKIAAPN disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket p87jd_hscbatockiaapn disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "7ed634a67885",
-      "sample": "[2026-10-20 14:40:20.204] INFO: [SocketAuthority] Unauth socket E7HbYMZ9jAYTlV7JAAPP disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket e7hbymz9jaytlv7jaapp disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "eecc9e07fca6",
-      "sample": "[2026-10-20 14:41:21.196] INFO: [SocketAuthority] Unauth socket FqklJhGC_dSuO6f_AAPR disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket fqkljhgc_dsuo6f_aapr disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "6886ed1bf900",
-      "sample": "[2026-10-20 15:25:20.252] INFO: [SocketAuthority] Unauth socket VRZRkbz_H9F-pUF7AAPZ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket vrzrkbz_h9f-puf7aapz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "0e34cbfad783",
-      "sample": "[2026-10-20 15:26:20.142] INFO: [SocketAuthority] Unauth socket t88jXGT6aFTPjFHmAAPb disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket t88jxgt6aftpjfhmaapb disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "5c33308f4a32",
-      "sample": "[2026-10-20 15:27:20.142] INFO: [SocketAuthority] Unauth socket 3bZSMG5hITWyRpg_AAPd disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 3bzsmg5hitwyrpg_aapd disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "fb9c2e8f8391",
-      "sample": "[2026-10-20 15:28:20.142] INFO: [SocketAuthority] Unauth socket eWQw2TL1OhtElt3ZAAPf disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ewqw2tl1ohtelt3zaapf disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "494059414f1a",
-      "sample": "[2026-10-20 15:29:20.142] INFO: [SocketAuthority] Unauth socket lh6GKsqEAEFrPxLSAAPh disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket lh6gksqeaefrpxlsaaph disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "4165b264cb9f",
-      "sample": "[2026-10-20 15:30:20.150] INFO: [SocketAuthority] Unauth socket I7QAZlG8TAgMY_RhAAPj disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket i7qazlg8tagmy_rhaapj disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "ad27b056954a",
-      "sample": "[2026-10-20 15:31:21.199] INFO: [SocketAuthority] Unauth socket lgTFHST_43g2re-aAAPl disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket lgtfhst_43g2re-aaapl disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "79f7a317b887",
-      "sample": "[2026-10-20 15:32:21.134] INFO: [SocketAuthority] Unauth socket B4AzoCy2F8iYQpvqAAPn disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket b4azocy2f8iyqpvqaapn disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "341a8d2531df",
-      "sample": "[2026-10-20 15:33:21.134] INFO: [SocketAuthority] Unauth socket pwwZP0avkbugtIf4AAPp disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket pwwzp0avkbugtif4aapp disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "ce1b277d3a9e",
-      "sample": "[2026-10-20 15:34:20.136] INFO: [SocketAuthority] Unauth socket WY7-6KnOgwPtcr6tAAPr disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket wy7-6knogwptcr6taapr disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "390043e82d42",
-      "sample": "[2026-10-20 15:35:20.132] INFO: [SocketAuthority] Unauth socket WZm2qmr8WqeJ6fLrAAPt disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket wzm2qmr8wqej6flraapt disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "92f14231dbe8",
-      "sample": "[2026-10-20 15:36:20.135] INFO: [SocketAuthority] Unauth socket h8jM2uBa0iLeJP6tAAPv disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket h8jm2uba0ilejp6taapv disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "5894abdc52fa",
-      "sample": "[2026-10-20 15:37:20.135] INFO: [SocketAuthority] Unauth socket yklf7kET8OiKQ_0qAAPx disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket yklf7ket8oikq_0qaapx disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f1ed69da8836",
-      "sample": "[2026-10-20 15:38:20.137] INFO: [SocketAuthority] Unauth socket ZtBPWlz5d56KL3wTAAPz disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ztbpwlz5d56kl3wtaapz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "8e318d4eab94",
-      "sample": "[2026-10-20 15:39:20.126] INFO: [SocketAuthority] Unauth socket c-oILUSlpMNgSNUAAAP1 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket c-oiluslpmngsnuaaap1 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f0564763ac98",
-      "sample": "[2026-10-20 15:40:20.139] INFO: [SocketAuthority] Unauth socket hrnVpEL41TEoyYWkAAP3 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket hrnvpel41teoyywkaap3 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "6fc0cf804405",
-      "sample": "[2026-10-20 15:41:20.124] INFO: [SocketAuthority] Unauth socket KETGFQja0FnggxusAAP5 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ketgfqja0fnggxusaap5 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f63adccf0ee0",
-      "sample": "[2026-10-20 15:42:20.163] INFO: [SocketAuthority] Unauth socket 6Nc1_BL38BnYF-HQAAP7 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket 6nc1_bl38bnyf-hqaap7 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "c5cf349408fb",
-      "sample": "[2026-10-20 15:43:21.159] INFO: [SocketAuthority] Unauth socket a2G8Pp9XxVkxnDVTAAP9 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket a2g8pp9xxvkxndvtaap9 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "1fdea5c2cabb",
-      "sample": "[2026-10-20 15:44:20.125] INFO: [SocketAuthority] Unauth socket DBp5lNAHX69ikKyBAAP_ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket dbp5lnahx69ikkybaap_ disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "8c686fbe323d",
-      "sample": "[2026-10-20 15:45:20.125] INFO: [SocketAuthority] Unauth socket -o5LAR1o1Hq4be1AAAQB disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket -o5lar1o1hq4be1aaaqb disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "fea6d54589f5",
-      "sample": "[2026-10-20 16:35:22.725] INFO: [SocketAuthority] Unauth socket AC3ysdHEzib35bb9AAQV disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ac3ysdhezib35bb9aaqv disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "54efb8d8686d",
-      "sample": "[2026-10-20 16:37:21.149] INFO: [SocketAuthority] Unauth socket QQN6doK2wr5NbipFAAQZ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket qqn6dok2wr5nbipfaaqz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "aaa8ba274f89",
-      "sample": "[2026-10-20 16:38:20.053] INFO: [SocketAuthority] Unauth socket R1Fn4rsqVhyV9UKuAAQb disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket r1fn4rsqvhyv9ukuaaqb disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f84a4368651f",
-      "sample": "[2026-10-20 16:41:20.059] INFO: [SocketAuthority] Unauth socket zhTHFS78Im-8XirmAAQl disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket zhthfs78im-8xirmaaql disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f7c0ab9b79ce",
-      "sample": "[2026-10-20 16:42:20.095] INFO: [SocketAuthority] Unauth socket QsCJS1cFEfB0nm_UAAQn disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket qscjs1cfefb0nm_uaaqn disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "848ccba9c905",
-      "sample": "[2026-10-20 16:43:20.049] INFO: [SocketAuthority] Unauth socket yEI5LqWFbFpJf1-iAAQp disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket yei5lqwfbfpjf1-iaaqp disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "42e97077faf4",
-      "sample": "[2026-10-20 16:44:20.053] INFO: [SocketAuthority] Unauth socket u6IvXZ-Gxgj3y-HhAAQr disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket u6ivxz-gxgj3y-hhaaqr disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "215a8107f7df",
-      "sample": "[2026-10-20 16:45:20.044] INFO: [SocketAuthority] Unauth socket ZvVdlDCtTm8trxdUAAQt disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket zvvdldcttm8trxduaaqt disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "9d8307adb3c9",
-      "sample": "[2026-10-20 16:47:21.085] INFO: [SocketAuthority] Unauth socket WUXHoiEXq3rr03TbAAQx disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket wuxhoiexq3rr03tbaaqx disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "bed572c06f40",
-      "sample": "[2026-10-20 16:48:21.046] INFO: [SocketAuthority] Unauth socket 1657s-du_gTq0SOTAAQz disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket <num>-du_gtq0sotaaqz disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "f9f997f35586",
-      "sample": "[2026-10-20 16:53:10.736] INFO: [SocketAuthority] Unauth socket KNAIffmUV1iyHT2ZAAQ1 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket knaiffmuv1iyht2zaaq1 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "04b8f30b507a",
-      "sample": "[2026-10-20 16:54:21.069] INFO: [SocketAuthority] Unauth socket cbz6D8ISOj2sKzsEAAQ3 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket cbz6d8isoj2skzseaaq3 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "631be24b4022",
-      "sample": "[2026-10-20 16:55:21.045] INFO: [SocketAuthority] Unauth socket ivNnIK8_NBTiAKgZAAQ5 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ivnnik8_nbtiakgzaaq5 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "e1d1933657f4",
-      "sample": "[2026-10-20 16:56:20.040] INFO: [SocketAuthority] Unauth socket f6_5qVSbCmxO53EkAAQ7 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket f6_5qvsbcmxo53ekaaq7 disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "22f2459fac36",
-      "sample": "[2026-10-20 16:57:21.057] INFO: [SocketAuthority] Unauth socket RdlHkzYH_yNilfZaAAQ9 disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket rdlhkzyh_ynilfzaaaq9 disconnected (reason: ping timeout)"
+      "fingerprint": "43cf24d8f295",
+      "sample": "AxiosError: Request failed with status code 401",
+      "severity": "error",
+      "skeleton": "axioserror: request failed with status code <num>"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "requests",
       "count": 1,
-      "fingerprint": "63473ee4ec08",
-      "sample": "[2026-10-20 16:58:20.027] INFO: [SocketAuthority] Unauth socket zNM1iBUUIx2Fw347AAQ_ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket znm1ibuuix2fw347aaq_ disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "384a6ba7b77e",
-      "sample": "[2026-10-20 17:07:16.060] INFO: [SocketAuthority] Unauth socket NC1CwsBi-jTNDgebAARH disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket nc1cwsbi-jtndgebaarh disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "cc81b531ef9b",
-      "sample": "[2026-10-20 17:13:21.041] INFO: [SocketAuthority] Unauth socket QyqUgrQaw7C05wMwAARR disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket qyqugrqaw7c05wmwaarr disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "de514a58caa9",
-      "sample": "[2026-10-20 17:16:21.005] INFO: [SocketAuthority] Unauth socket s8smtW5qpLFIXa54AARb disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket s8smtw5qplfixa54aarb disconnected (reason: ping timeout)"
+      "fingerprint": "fb8ad1e6a457",
+      "sample": "error: [Function (anonymous)],",
+      "severity": "error",
+      "skeleton": "error: [function (anonymous)],"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "requests",
       "count": 1,
-      "fingerprint": "18f845c7db36",
-      "sample": "[2026-10-20 17:22:19.997] INFO: [SocketAuthority] Unauth socket CzRHH8CzSLVOv1Q3AARx disconnected (Reason: ping timeout)",
+      "fingerprint": "168e1e290fef",
+      "sample": "timeout: [Function (anonymous)],",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket czrhh8czslvov1q3aarx disconnected (reason: ping timeout)"
+      "skeleton": "timeout: [function (anonymous)],"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "requests",
       "count": 1,
-      "fingerprint": "3f919d5ce49f",
-      "sample": "[2026-10-20 17:23:54.969] INFO: [SocketAuthority] Unauth socket REvGsy4DTgIiCVvcAARz disconnected (Reason: ping timeout)",
+      "fingerprint": "33907499d2f3",
+      "sample": "statusMessage: 'Unauthorized',",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket revgsy4dtgiicvvcaarz disconnected (reason: ping timeout)"
+      "skeleton": "statusmessage: <str>,"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "requests",
       "count": 1,
-      "fingerprint": "b35ee36e3684",
-      "sample": "[2026-10-20 17:24:20.033] INFO: [SocketAuthority] Unauth socket sYXJIiNi5WGHNn32AAR7 disconnected (Reason: ping timeout)",
+      "fingerprint": "bc6ffbf258f4",
+      "sample": "[Symbol(timeout)]: Timeout {",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket syxjiini5wghnn32aar7 disconnected (reason: ping timeout)"
+      "skeleton": "[symbol(timeout)]: timeout {"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "requests",
       "count": 1,
-      "fingerprint": "3a46c583be35",
-      "sample": "[2026-10-20 17:25:20.998] INFO: [SocketAuthority] Unauth socket Z5Sldu562VgELpyyAAR9 disconnected (Reason: ping timeout)",
+      "fingerprint": "9825c2d551e2",
+      "sample": "statusText: 'Unauthorized',",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket z5sldu562vgelpyyaar9 disconnected (reason: ping timeout)"
+      "skeleton": "statustext: <str>,"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "requests",
       "count": 1,
-      "fingerprint": "6c434fc4f28a",
-      "sample": "[2026-10-20 17:27:20.000] INFO: [SocketAuthority] Unauth socket VttbSc1jTfLLct3dAASD disconnected (Reason: ping timeout)",
+      "fingerprint": "c72c153059c8",
+      "sample": "'keep-alive': 'timeout=5'",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket vttbsc1jtfllct3daasd disconnected (reason: ping timeout)"
+      "skeleton": "<str>: <str>"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "requests",
       "count": 1,
-      "fingerprint": "6e289137ba62",
-      "sample": "[2026-10-20 17:57:21.998] INFO: [SocketAuthority] Unauth socket E-HLoUhFHt291qoPAASL disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket e-hlouhfht291qopaasl disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "3ef43ac1d8d4",
-      "sample": "[2026-10-20 18:00:19.956] INFO: [SocketAuthority] Unauth socket OJPy2yhhzJflfYk8AASV disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket ojpy2yhhzjflfyk8aasv disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "1605080937b1",
-      "sample": "[2026-10-20 18:01:19.951] INFO: [SocketAuthority] Unauth socket _WmAcgTTc6bDVKwOAASX disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket _wmacgttc6bdvkwoaasx disconnected (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "a9c85ad94800",
-      "sample": "[2026-10-20 18:02:19.966] INFO: [SocketAuthority] Unauth socket Iwm5hzgMhxz8y202AASZ disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket iwm5hzgmhxz8y202aasz disconnected (reason: ping timeout)"
+      "fingerprint": "4c59ed262a44",
+      "sample": "data: { message: \"cookie 'connect.sid' required\", errors: [Array] }",
+      "severity": "error",
+      "skeleton": "data: { message: <str>, errors: [array] }"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "requests",
       "count": 1,
-      "fingerprint": "ffb57b544158",
-      "sample": "[2026-10-20 18:03:19.942] INFO: [SocketAuthority] Unauth socket sKgdaY-MUSZTLobFAASb disconnected (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] unauth socket skgday-musztlobfaasb disconnected (reason: ping timeout)"
+      "fingerprint": "d674f77a1462",
+      "sample": "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client",
+      "severity": "error",
+      "skeleton": "error [err_http_headers_sent]: cannot set headers after they are sent to the client"
     }
   ],
   "quiet": [
     {
-      "baseline": 3280.0,
+      "baseline": 1640.0,
       "container": "netdata",
       "count": 0,
       "fingerprint": "ac0e30c87dd9",
@@ -1742,13 +284,22 @@
       "skeleton": "time=<ts> level=error msg=<str><url> jobmgr containment: attempt superseded\" plugin=go.d collector=nginx job=docker_media config_source=discovered/sd:docker"
     },
     {
-      "baseline": 18.0,
-      "container": "netdata",
+      "baseline": 22.0,
+      "container": "qbit",
       "count": 0,
-      "fingerprint": "e3a5ac6f15b7",
-      "sample": "time=2026-10-19T06:59:41.434-07:00 level=error msg=\"job manager attempt contained\" plugin=go.d component=\"job manager\" event_sequence=51347231 run_generation=1 resource=nginx_docker_media state=job co",
+      "fingerprint": "b51302f9d222",
+      "sample": "Mon Oct 19 07:01:26 2026 RESOLVE: Cannot resolve host address: us-california.privacy.network:1197 (Temporary failure in name resolution)",
       "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d component=<str> event_sequence=<hex> run_generation=<num> resource=nginx_docker_media state=job count=<num> age=<num> error=<str>"
+      "skeleton": "<ts> resolve: cannot resolve host address: us-california.privacy.network:<num> (temporary failure in name resolution)"
+    },
+    {
+      "baseline": 11.0,
+      "container": "qbit",
+      "count": 0,
+      "fingerprint": "d00417be0245",
+      "sample": "Mon Oct 19 07:01:44 2026 Could not determine IPv4/IPv6 protocol",
+      "severity": "other",
+      "skeleton": "<ts> could not determine ipv4/ipv6 protocol"
     }
   ],
   "scan": {
@@ -1756,184 +307,67 @@
     "containers_scanned": 44,
     "containers_total": 44,
     "high_cardinality": [],
-    "lines_matched": 4081,
-    "lines_read": 146619,
-    "signatures_total": 326,
+    "lines_matched": 20180,
+    "lines_read": 139263,
+    "signatures_total": 162,
     "truncated": []
   },
   "spiking": [
     {
       "baseline": 0.0,
-      "container": "sonarr",
-      "count": 492,
-      "fingerprint": "85e74f9dd654",
-      "sample": "[Error] VideoFileInfoReader: Unable to parse media info from file: /pc/miss_kitty/sonarr/Carrie.S01E08.AP.PHYSICS.1080p.AMZN.WEB-DL.DDP5.1.Atmos.H.264-FLUX.1/Carrie.S01E08.AP.PHYSICS.1080p.AMZN.WEB-DL",
+      "container": "qbit",
+      "count": 19367,
+      "fingerprint": "78027c85326d",
+      "sample": "Wed Oct 21 13:32:35 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #2306155 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mu",
       "severity": "error",
-      "skeleton": "[error] videofileinforeader: unable to parse media info from file: <path>"
+      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<num> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
     },
     {
       "baseline": 0.0,
       "container": "sonarr",
-      "count": 492,
-      "fingerprint": "effbc70f4438",
-      "sample": "[matroska,webm @ 0x19cd180] EBML header parsing failed",
-      "severity": "error",
-      "skeleton": "[matroska,webm @ <hex>] ebml header parsing failed"
-    },
-    {
-      "baseline": 0.0,
-      "container": "sonarr",
-      "count": 492,
-      "fingerprint": "52feaf1413eb",
-      "sample": "[Error] DetectSample: Failed to get runtime from the file, make sure ffprobe is available",
-      "severity": "error",
-      "skeleton": "[error] detectsample: failed to get runtime from the file, make sure ffprobe is available"
-    },
-    {
-      "baseline": 0.0,
-      "container": "audiobookshelf",
-      "count": 246,
-      "fingerprint": "ca78d2160a96",
-      "sample": "[2026-10-20 07:00:36.780] ERROR: Cannot validate socket - token expired",
-      "severity": "error",
-      "skeleton": "[<ts>] error: cannot validate socket - token expired"
-    },
-    {
-      "baseline": 0.0,
-      "container": "sonarr",
-      "count": 40,
+      "count": 31,
       "fingerprint": "86dd8b493a0a",
       "sample": "[Error] TaskExtensions: Task Error",
       "severity": "error",
       "skeleton": "[error] taskextensions: task error"
-    },
-    {
-      "baseline": 0.0,
-      "container": "proxysql",
-      "count": 30,
-      "fingerprint": "7ada29ceece5",
-      "sample": "2026-10-20 16:01:28 MyHGC.cpp:202:get_random_MySrvC(): [ERROR] Hostgroup 10 has no servers available! Checking servers shunned for more than 1 second",
-      "severity": "error",
-      "skeleton": "<ts> myhgc.cpp<ip>get_random_mysrvc(): [error] hostgroup <num> has no servers available! checking servers shunned for more than <num> second"
-    },
-    {
-      "baseline": 0.0,
-      "container": "proxysql",
-      "count": 26,
-      "fingerprint": "7f9a78d5d0d8",
-      "sample": "2026-10-20 16:01:28 mysql_connection.cpp:1357:handler(): [ERROR] Failed to mysql_real_connect() on 10:mariadb-kindrobots2:3306 , FD (Conn:0 , MyDS:70) , 2002: Can't connect to server on '172.21.0.23' ",
-      "severity": "error",
-      "skeleton": "<ts> mysql_connection.cpp<ip>handler(): [error] failed to mysql_real_connect() on <num>:mariadb-kindrobots2:<num> , fd (conn:<num> , myds:<num>) , <num>: can't connect to server on <str> (<num>)."
-    },
-    {
-      "baseline": 0.0,
-      "container": "auth",
-      "count": 22,
-      "fingerprint": "c0197fc71f93",
-      "sample": "time=\"2026-10-20T11:12:07-07:00\" level=error msg=\"Target URL '/blog/' has an insecure scheme '', only the 'https' and 'wss' schemes are supported so session cookies can be transmitted securely\" method",
-      "severity": "error",
-      "skeleton": "time=<str> level=error msg=\"target url '<path>"
-    },
-    {
-      "baseline": 0.0,
-      "container": "proxysql",
-      "count": 22,
-      "fingerprint": "b55fd5e80411",
-      "sample": "2026-10-20 16:01:22 MySQL_Monitor.cpp:3412:monitor_ping(): [ERROR] Server mariadb-kindrobots2:3306 missed 3 heartbeats, shunning it and killing all the connections. Disabling other checks until the no",
-      "severity": "error",
-      "skeleton": "<ts> mysql_monitor.cpp<ip>monitor_ping(): [error] server mariadb-kindrobots2:<num> missed <num> heartbeats, shunning it and killing all the connections. disabling other checks until the node comes back online."
-    },
-    {
-      "baseline": 0.0,
-      "container": "proxysql",
-      "count": 20,
-      "fingerprint": "127fc0b30822",
-      "sample": "2026-10-20 16:01:14 MySQL_Thread.cpp:4475:process_data_on_data_stream(): [WARNING] Detected broken idle connection on mariadb-kindrobots2:3306",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>process_data_on_data_stream(): [warning] detected broken idle connection on mariadb-kindrobots2:<num>"
     }
   ],
   "top": [
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 680,
-      "fingerprint": "b0c0bb192fa5",
-      "sample": "2026-10-20 17:11:15 mysql_connection.cpp:1357:handler(): [ERROR] Failed to mysql_real_connect() on 10:mariadb-kindrobots2:3306 , FD (Conn:143 , MyDS:143) , 1045: Access denied for user 'kindrobot'@'pr",
+      "container": "qbit",
+      "count": 19367,
+      "fingerprint": "78027c85326d",
+      "sample": "Wed Oct 21 13:32:35 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #2306155 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mu",
       "severity": "error",
-      "skeleton": "<ts> mysql_connection.cpp<ip>handler(): [error] failed to mysql_real_connect() on <num>:mariadb-kindrobots2:<num> , fd (conn:<num> , myds:<num>) , <num>: access denied for user <str>@<str> (using password: <redacted>)."
+      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<num> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
     },
     {
       "baseline": null,
       "container": "proxysql",
-      "count": 519,
+      "count": 94,
       "fingerprint": "a9cfc33818b3",
-      "sample": "2026-10-20 09:10:52 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:57370 , user 'kindrobot_migrate' , hostgroup 30 , connection 51289",
+      "sample": "2026-10-22 03:11:04 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:47310 , user 'kindrobot_migrate' , hostgroup 30 , connection 69500",
       "severity": "warn",
       "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
     },
     {
       "baseline": null,
-      "container": "sonarr",
-      "count": 492,
-      "fingerprint": "85e74f9dd654",
-      "sample": "[Error] VideoFileInfoReader: Unable to parse media info from file: /pc/miss_kitty/sonarr/Carrie.S01E08.AP.PHYSICS.1080p.AMZN.WEB-DL.DDP5.1.Atmos.H.264-FLUX.1/Carrie.S01E08.AP.PHYSICS.1080p.AMZN.WEB-DL",
-      "severity": "error",
-      "skeleton": "[error] videofileinforeader: unable to parse media info from file: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 492,
-      "fingerprint": "effbc70f4438",
-      "sample": "[matroska,webm @ 0x19cd180] EBML header parsing failed",
-      "severity": "error",
-      "skeleton": "[matroska,webm @ <hex>] ebml header parsing failed"
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 492,
-      "fingerprint": "52feaf1413eb",
-      "sample": "[Error] DetectSample: Failed to get runtime from the file, make sure ffprobe is available",
-      "severity": "error",
-      "skeleton": "[error] detectsample: failed to get runtime from the file, make sure ffprobe is available"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 246,
-      "fingerprint": "ca78d2160a96",
-      "sample": "[2026-10-20 07:00:36.780] ERROR: Cannot validate socket - token expired",
-      "severity": "error",
-      "skeleton": "[<ts>] error: cannot validate socket - token expired"
-    },
-    {
-      "baseline": null,
       "container": "requests",
-      "count": 120,
+      "count": 91,
       "fingerprint": "b0b22d3dd961",
-      "sample": "2026-10-21T11:35:07.631Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 268894\",\"title\"",
+      "sample": "2026-10-22T11:34:46.306Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 330823\",\"title\"",
       "severity": "error",
       "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 100,
-      "fingerprint": "24756dae8afd",
-      "sample": "time=2026-10-20T18:41:19.725-07:00 comm=spawn-unnamed source=collector level=warning tid=434779  msg=\"SPAWN SERVER: child with pid 434780 (request 1) exited with exit code 1: /usr/libexec/netdata/plug",
+      "container": "scoopspress",
+      "count": 80,
+      "fingerprint": "6497ddc377f6",
+      "sample": "[Wed Oct 21 23:30:12.875706 2026] [php:warn] [pid 26:tid 26] [client 75.111.66.70:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
       "severity": "warn",
-      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 79,
-      "fingerprint": "2107195e439a",
-      "sample": "2026-10-21T01:41:11.290540Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
-      "severity": "error",
-      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
+      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
     },
     {
       "baseline": null,
@@ -1946,26 +380,26 @@
     },
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 58,
-      "fingerprint": "ffdd93561a95",
-      "sample": "2026-10-20 17:11:15 MySQL_Monitor.cpp:1488:monitor_connect_thread(): [ERROR] Server mariadb-kindrobots2:3306 is returning \"Access denied\" for monitoring user",
-      "severity": "error",
-      "skeleton": "<ts> mysql_monitor.cpp<ip>monitor_connect_thread(): [error] server mariadb-kindrobots2:<num> is returning <str> for monitoring user"
+      "container": "netdata",
+      "count": 61,
+      "fingerprint": "24756dae8afd",
+      "sample": "time=2026-10-22T01:41:30.340-07:00 comm=spawn-unnamed source=collector level=warning tid=3498372  msg=\"SPAWN SERVER: child with pid 3498373 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 48,
-      "fingerprint": "8ef3774a1987",
-      "sample": "time=2026-10-20T18:41:57.516-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=432154  msg=\"Cannot process /host/proc/445402/io (command 'grep')\"",
+      "count": 38,
+      "fingerprint": "2107195e439a",
+      "sample": "2026-10-22T08:41:22.289165Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
       "severity": "error",
-      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
+      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
     },
     {
       "baseline": null,
       "container": "sonarr",
-      "count": 40,
+      "count": 31,
       "fingerprint": "86dd8b493a0a",
       "sample": "[Error] TaskExtensions: Task Error",
       "severity": "error",
@@ -1974,99 +408,72 @@
     {
       "baseline": null,
       "container": "netdata",
-      "count": 39,
-      "fingerprint": "29a758d0ae5d",
-      "sample": "time=2026-10-20T18:41:09.055-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=432220 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS is",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 30,
-      "fingerprint": "7ada29ceece5",
-      "sample": "2026-10-20 16:01:28 MyHGC.cpp:202:get_random_MySrvC(): [ERROR] Hostgroup 10 has no servers available! Checking servers shunned for more than 1 second",
-      "severity": "error",
-      "skeleton": "<ts> myhgc.cpp<ip>get_random_mysrvc(): [error] hostgroup <num> has no servers available! checking servers shunned for more than <num> second"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 28,
+      "count": 27,
       "fingerprint": "b4a4f3c0319b",
-      "sample": "time=2026-10-20T18:41:09.009-07:00 comm=spawn-plugins source=collector level=warning tid=430869  msg=\"SPAWN SERVER: child with pid 432179 (request 8) exited with exit code 1: /bin/sh -c \\\"exec /usr/li",
+      "sample": "time=2026-10-22T01:41:19.313-07:00 comm=spawn-plugins source=collector level=warning tid=3494725  msg=\"SPAWN SERVER: child with pid 3496038 (request 8) exited with exit code 1: /bin/sh -c \\\"exec /usr/",
       "severity": "warn",
       "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 26,
-      "fingerprint": "7f9a78d5d0d8",
-      "sample": "2026-10-20 16:01:28 mysql_connection.cpp:1357:handler(): [ERROR] Failed to mysql_real_connect() on 10:mariadb-kindrobots2:3306 , FD (Conn:0 , MyDS:70) , 2002: Can't connect to server on '172.21.0.23' ",
+      "container": "scoopspress",
+      "count": 19,
+      "fingerprint": "e9aa591b1dc1",
+      "sample": "[Thu Oct 22 03:36:18.277447 2026] [autoindex:error] [pid 135:tid 135] [client 20.194.45.183:0] AH01276: Cannot serve directory /var/www/html/wp-includes/: No matching DirectoryIndex (index.php,index.h",
       "severity": "error",
-      "skeleton": "<ts> mysql_connection.cpp<ip>handler(): [error] failed to mysql_real_connect() on <num>:mariadb-kindrobots2:<num> , fd (conn:<num> , myds:<num>) , <num>: can't connect to server on <str> (<num>)."
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
     },
     {
       "baseline": null,
-      "container": "auth",
-      "count": 22,
-      "fingerprint": "c0197fc71f93",
-      "sample": "time=\"2026-10-20T11:12:07-07:00\" level=error msg=\"Target URL '/blog/' has an insecure scheme '', only the 'https' and 'wss' schemes are supported so session cookies can be transmitted securely\" method",
+      "container": "hairpress",
+      "count": 19,
+      "fingerprint": "b32e674d9dd1",
+      "sample": "[Thu Oct 22 02:52:39.437412 2026] [autoindex:error] [pid 20:tid 20] [client 20.194.45.183:0] AH01276: Cannot serve directory /var/www/html/wp-includes/: No matching DirectoryIndex (index.php,index.htm",
       "severity": "error",
-      "skeleton": "time=<str> level=error msg=\"target url '<path>"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 22,
-      "fingerprint": "b55fd5e80411",
-      "sample": "2026-10-20 16:01:22 MySQL_Monitor.cpp:3412:monitor_ping(): [ERROR] Server mariadb-kindrobots2:3306 missed 3 heartbeats, shunning it and killing all the connections. Disabling other checks until the no",
-      "severity": "error",
-      "skeleton": "<ts> mysql_monitor.cpp<ip>monitor_ping(): [error] server mariadb-kindrobots2:<num> missed <num> heartbeats, shunning it and killing all the connections. disabling other checks until the node comes back online."
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 20,
-      "fingerprint": "127fc0b30822",
-      "sample": "2026-10-20 16:01:14 MySQL_Thread.cpp:4475:process_data_on_data_stream(): [WARNING] Detected broken idle connection on mariadb-kindrobots2:3306",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>process_data_on_data_stream(): [warning] detected broken idle connection on mariadb-kindrobots2:<num>"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 14,
-      "fingerprint": "9caf510b320a",
-      "sample": "2026-10-20 09:04:03 MySQL_Session.cpp:5667:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,43171): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_key",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [warning] error during query on (<num>,mariadb-kindrobots2,<num>,<num>): <num>, duplicate entry <str> for key <str>"
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 12,
-      "fingerprint": "381cf7bc9913",
-      "sample": "time=2026-10-20T18:46:12.003-07:00 level=error msg=\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/info\\\": context deadline exceeded\" plugin=go.d collector=docker job=local config_source=\"stock/file re",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str><url> context deadline exceeded<str>stock/file reader\""
+      "count": 18,
+      "fingerprint": "29a758d0ae5d",
+      "sample": "time=2026-10-22T01:41:19.396-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=3496083 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
     },
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 10,
-      "fingerprint": "d558b7812f86",
-      "sample": "2026-10-20 17:01:22 MySQL_Session.cpp:3536:handler_again___status_CONNECTING_SERVER(): [ERROR] Max connect timeout reached while reaching hostgroup 10 after 10000ms . HG status: [{\"Bytes_recv\":\"504062",
+      "container": "netdata",
+      "count": 14,
+      "fingerprint": "8ef3774a1987",
+      "sample": "time=2026-10-22T02:00:06.663-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=3496017  msg=\"Cannot process /host/proc/3728687/io (command 'mariadbd-safe')\"",
       "severity": "error",
-      "skeleton": "<ts> mysql_session.cpp<ip>handler_again___status_connecting_server(): [error] max connect timeout reached while reaching hostgroup <num> after <num> . hg status: [{<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str"
+      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 8,
+      "fingerprint": "46dd23614c58",
+      "sample": "--- End of inner exception stack trace ---",
+      "severity": "error",
+      "skeleton": "--- end of inner exception stack trace ---"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 7,
+      "fingerprint": "381cf7bc9913",
+      "sample": "time=2026-10-22T02:46:13.106-07:00 level=error msg=\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/info\\\": context deadline exceeded\" plugin=go.d collector=docker job=local config_source=\"stock/file re",
+      "severity": "error",
+      "skeleton": "time=<ts> level=error msg=<str><url> context deadline exceeded<str>stock/file reader\""
     },
     {
       "baseline": null,
       "container": "logs",
       "count": 7,
       "fingerprint": "369ccb230cc3",
-      "sample": "{\"level\":\"warn\",\"version\":\"v11.3.4\",\"error\":\"context deadline exceeded\",\"id\":\"07febf8b4c1f\",\"time\":\"2026-10-20T13:20:44-07:00\",\"message\":\"failed to inspect container, falling back to list entry\"}",
+      "sample": "{\"level\":\"warn\",\"version\":\"v11.3.4\",\"error\":\"context deadline exceeded\",\"id\":\"28f5de08286f\",\"time\":\"2026-10-21T07:15:44-07:00\",\"message\":\"failed to inspect container, falling back to list entry\"}",
       "severity": "warn",
       "skeleton": "{<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>}"
     },
@@ -2075,9 +482,81 @@
       "container": "logs",
       "count": 7,
       "fingerprint": "a4a6b5b427de",
-      "sample": "{\"level\":\"warn\",\"version\":\"v11.3.4\",\"error\":\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/containers/json?all=1\\\": context deadline exceeded\",\"id\":\"07febf8b4c1f\",\"time\":\"2026-10-20T13:20:44-07:00\",\"m",
+      "sample": "{\"level\":\"warn\",\"version\":\"v11.3.4\",\"error\":\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/containers/json?all=1\\\": context deadline exceeded\",\"id\":\"28f5de08286f\",\"time\":\"2026-10-21T07:15:44-07:00\",\"m",
       "severity": "warn",
       "skeleton": "{<str>:<str>,<str>:<str>,<str>:<str><url> context deadline exceeded<str>id<str><hex><str>time<str><ts><str>message<str>failed to list containers while adding container\"}"
+    },
+    {
+      "baseline": null,
+      "container": "subtitles",
+      "count": 6,
+      "fingerprint": "581e297308ed",
+      "sample": "2026-10-22 03:27:09,979 - root                             (1517e066ab30) :  ERROR (utils:55) - BAZARR Error ('.bin' is not a valid video extension) trying to get video information for this file: /pc/",
+      "severity": "error",
+      "skeleton": "<ts> - root (<hex>) : error (utils:<num>) - bazarr error (<str> is not a valid video extension) trying to get video information for this file: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 6,
+      "fingerprint": "031e9746569c",
+      "sample": "[Error] Newznab: Invalid Release: 'https://api.nzb.<REDACTED-BLOB>' from indexer: Nzb.su. No title provided.",
+      "severity": "error",
+      "skeleton": "[error] newznab: invalid release: '<url> from indexer: nzb.su. no title provided."
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 4,
+      "fingerprint": "7d1394e6bd47",
+      "sample": "time=2026-10-22T01:41:24.062-07:00 level=error msg=\"check failed: GET 'http://172.21.0.26:80/basic_status' returned HTTP status code: 404\" plugin=go.d collector=nginx job=docker_media config_source=di",
+      "severity": "error",
+      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d collector=nginx job=docker_media config_source=discovered/sd:docker"
+    },
+    {
+      "baseline": null,
+      "container": "scoopspress",
+      "count": 4,
+      "fingerprint": "0174d77ccc5f",
+      "sample": "AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.21.0.39. Set the 'ServerName' directive globally to suppress this message",
+      "severity": "other",
+      "skeleton": "ah00558: apache2: could not reliably determine the server's fully qualified domain name, using <ip>. set the <str> directive globally to suppress this message"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 4,
+      "fingerprint": "5dcec9bc3591",
+      "sample": "[Warn] AllowedHostsCheck: Allowed Hosts is not configured, requests for any hostname will be accepted. You can set this via settings or the config file",
+      "severity": "warn",
+      "skeleton": "[warn] allowedhostscheck: allowed hosts is not configured, requests for any hostname will be accepted. you can set this via settings or the config file"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 4,
+      "fingerprint": "b4e6a96d0bdd",
+      "sample": "errno: 5,",
+      "severity": "error",
+      "skeleton": "errno: <num>,"
+    },
+    {
+      "baseline": null,
+      "container": "KindRobots",
+      "count": 3,
+      "fingerprint": "3d84f1a8fd12",
+      "sample": "Operation rejected: {",
+      "severity": "other",
+      "skeleton": "operation rejected: {"
+    },
+    {
+      "baseline": null,
+      "container": "KindRobots",
+      "count": 3,
+      "fingerprint": "bb9501289941",
+      "sample": "name: 'Error',",
+      "severity": "error",
+      "skeleton": "name: <str>,"
     }
   ],
   "version": 1,
