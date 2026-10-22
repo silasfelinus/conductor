@@ -1,5 +1,7 @@
 # Ecotone | Wiyot / Tuluwat: conditional internal-work approval
 
+> **ARCHIVED · SUPERSEDED October 22, 2026 PT.** This file documents an earlier Ecotone proposal, **not current instructions or planned development**. The owner withdrew the entire Wiyot/Tuluwat story, review and consultation workstream. No drafting, game use, art generation, outreach, release or queued follow-up is authorized by this archived document. Do not treat the earlier conditional approval below as active. See [the binding content-exclusion decision](EXCLUDED-CONTENT-2026-10-22.md). The original text remains below for internal provenance only.
+
 **Decision date:** 2026-10-21 (PT)
 **Decision maker:** Ecotone project owner, in conversation
 **Status:** Approved **for internal development under a Wiyot-community review boundary**. This is not a consultation result, a Tribe-endorsed interpretation, or public-release permission.
