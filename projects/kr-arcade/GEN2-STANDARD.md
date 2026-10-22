@@ -14,10 +14,13 @@ carries its own "Generation 2" section that applies it. A Gen-1 feature that alr
 Plumber stages, six Ghost Trail stages, eight Rainbow Acts) is **raw material**, not a reason to
 call a Gen-2 requirement met.
 
-**Reading of "N64 level expectations":** the games stay 2D (the design targets SMB3/SMW are 2D), and
-the N64 bar applies to *production values*: smooth many-frame animation, a living camera, depth
-through parallax and lighting, animated cinematics and a game that remembers you. A move to real 3D
-would be a different project and needs Silas's say-so; nothing here assumes it.
+**Confirmed by Silas, 2026-10-22 PT:** "I meant 2d. super mario world should be the benchmark for save
+the plumber. or any of the later 2d mario wonder level games. I authorize all projects to get them to
+wonderful states." So the games stay **2D**; *Super Mario World* is Save the Plumber's benchmark and the
+later 2D Marios (*Super Mario Bros. Wonder* and its kin) are fair targets for level ideas and polish. The
+"N64 bar" is production value: smooth many-frame animation, a living camera, depth through parallax and
+lighting, animated cinematics and a game that remembers you. Match the design quality and structure,
+never the content: no borrowed names, characters, items, layouts or music.
 
 ## 1. The world is a place, not a level list
 
@@ -43,6 +46,11 @@ would be a different project and needs Silas's say-so; nothing here assumes it.
   solid across the whole campaign).
 - **Introduce → combine → subvert → test** still holds inside each world, now over 6–9 nodes
   rather than four stages.
+
+- **A wonder moment per level** (*Wonder* in spirit, original in content): an optional collectible that,
+  once touched, transforms the level for a while (the floor becomes a river, the pipes start to sing and
+  carry you, the camera turns, enemies change behaviour), with its own reward at the end. Every level
+  should have one surprise you will want to tell someone about.
 
 ## 3. Memory: the game recognizes progress
 
