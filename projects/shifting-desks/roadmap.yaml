@@ -545,12 +545,12 @@ tasks:
   - id: t-032
     milestone: m3
     title: 'Land, review and link the art round 13 re-renders and round 14 tone-ladder renders'
-    status: claimed
+    status: review
     depends_on: t-015
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-22T23:20:00Z'
+    updated: '2026-10-22T23:30:00Z'
     note: |-
       From t-015's 2026-10-20 PT art pass: all 184 delivered renders (rounds 2-12) were reviewed against their briefs; 159 keep, 25 sent back for garbled lettering on the focal prop (The Safe-Distance Memo, The Founder's Desk, Which Office Supply Are You?), a missing core gag (The Hungry Detector's teeth, Dale's false mustache, the precognition echo tripping, the Suppression Drill fog) or an off-style render (Security Desk). Mail for Kevin rendered its capsules as ammunition with one held to the worker's temple. ROUND-13.yaml queues 25 forced Krea 2 re-renders at the same paths with prompts rewritten to each review note (all pass the live checkArtPromptContract). To finish: once Auto Art Generate fulfills shifting-desks-r13-*, GET each media_url, record delivery_check and art_job_id, view each render against its prompt and set verdict keep/redo, then run python projects/shifting-desks/encounters/link_art.py --write --probe (20 pack slots link; the other 5 are job, mutation and ending art) and commit. Western Cartoon and Noir editions of these 25 subjects were rendered from the old prompts and were not reviewed here.
 
@@ -561,6 +561,8 @@ tasks:
       ROUND-15. Remaining: ending-the-kind-rewrite (round 13, still rendering), the 9 tone-
       ladder renders in ROUND-14 and the 9 in ROUND-15. Review each, then link_art.py --write
       --probe.
+
+      Art delivery first: created provenance-verified round-13-15 reconciler, tests, a generator-workflow step, and keep-only art-linking semantics. Open PR and verify CI; remaining art must be independently rendered, reviewed, and linked before t-032 can be closed.
     claimed_by: 2026-10-22T232000Z-shifting-desks-t032-art-6bf2
     claimed_at: '2026-10-22T23:20:00Z'
   - id: t-033
