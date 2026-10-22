@@ -355,8 +355,8 @@ tasks:
   - id: t-011
     milestone: m5
     title: Continuing autonomous chapter, art and balance evolution
-    status: review
-    updated: '2026-10-22T11:36:18.866Z'
+    status: ready
+    updated: '2026-10-22T11:50:29.544Z'
     passes: 0
     recurring: true
     stakes: reversible
@@ -369,9 +369,8 @@ tasks:
       2026-10-14 PT: Merged Kind Robots PR #3698 (squash SHA 18b5751065e127ee23b07539938caa0fb9a23272) after 12/12 current-head GitHub workflows completed successfully (including all 4 contract shards, gamebook graph/reducer tests, TypeScript, and changed-file Prettier). The boot-stealing raccoon encounter now has a non-intervention route to the boardwalk, including after observation, with regression tests for no repeated choice and no false friendship/debt flags. No new artwork or ArtJobs in this scope. Recurring task remains available for future gamebook evolution.
 
       PR silasfelinus/kind_robots#4032 adds replayable starting-seed route witnesses for all endings and combat benchmarks; adjusts Guard, Feint and Quiet Draw. CI and gameplay balances undergoing adversarial verification. No art or publication in scope.
-    owner: worker
-    claimed_by: 20261022T112919Z-zuzu-gamebook-t011-audit-d7e63
-    claimed_at: '2026-10-22T11:29:19.345Z'
+
+      2026-10-22 PT: Merged silasfelinus/kind_robots#4032 (squash d3c135a4ce368be89e861e2146011010a8465a32) after 16/16 current-head GitHub workflows passed, including TypeScript, formatting and all contract shards. The gamebook CI now proves legitimate start-to-end, reducer-replayed witnesses for all 15 endings; Wren's Lamp on final head used seed 5891737, 124 moves, finishing at 2 HP, after acquiring wren-ally normally. Combat benchmarks cover all six authored fights with four strategies (250 seeds per strategy); Guard opens counters, Feint deals 3 and softens retaliations, Quiet Draw deals 5 at 2 Resolve. Abbess Feint 56 percent versus Strike 44 percent; Hollis Feint 44 versus Strike 10 percent. The four-file scoped change had no new ArtJobs or database writes. Recurring work remains available for narrative polish, golden replay fixtures, tougher route stress, artwork gaps and device review; t-009 still depends on other milestones.
   - id: t-012
     milestone: m5
     title: Redraw the two-character plates once the character LoRAs exist
