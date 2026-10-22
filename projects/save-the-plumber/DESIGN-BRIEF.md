@@ -41,3 +41,25 @@ Use the existing Arcade app shell, shared sound/gamepad input, score and project
 ## Definition of finished
 
 Player can complete all 32 levels, defeat every boss, unlock secrets, save and resume, reach the full written illustrated ending and credits on phone/tablet/desktop/controller as supported. Automated replay proves collision determinism, attainable exits and no stage softlocks; manual first-playthrough validates checkpoints and challenge; shipped art URLs verified. A completed milestone checklist is not the final acceptance test: Silas plays the campaign and judges its depth and quality.
+
+## Generation 2 (Silas, 2026-10-22 PT): the SMB3 / Super Mario World bar
+
+The reference bar moves from *SMB 1/2* to **Super Mario Bros. 3 and Super Mario World** for level design,
+gameplay conception and depth, with "an old school Mario Bros / Ghosts 'n Goblins vibe" kept as the feel and
+"N64 level expectations" for animation and presentation. The shared rules are in
+[projects/kr-arcade/GEN2-STANDARD.md](../kr-arcade/GEN2-STANDARD.md); what changes here:
+
+- **Each world becomes a walkable overworld** of 6-9 nodes (levels, a fortress, a Hush House haunted maze, a
+  bonus cottage, a shop, the castle), with paths revealed as you clear them and **secret exits** that open
+  other paths. A hidden **Upstream Sky** special zone is reached only through secrets.
+- **Valve Chapels** (switch palaces) change blocks in every level for the rest of the save.
+- **Levels grow to 3-6 minutes** with midpoints, sub-areas through doors and pipes, vertical rooms and a real
+  secret each. The 32 Gen-1 stages are raw material for these, not the finished campaign.
+- **Three save slots** that remember map position, clears and secret exits, Golden Gears, switches, reserve
+  item, lives, time and deaths, with completion percent per world and per slot.
+- **5-7 powers**, a reserve item and an original ride companion (GEN2-STANDARD section 4).
+- **Animation**: painted heroine and enemy atlases from WAN first/last-frame clips between key poses, animated
+  cutscenes, four parallax planes per level.
+
+Roadmap milestone **m6** carries this (t-002, t-011, t-020 to t-025). Art round 1 is
+`art/GEN2-ROUND-1.yaml`; motion round 1 is `art/GEN2-CLIPS-1.yaml`.

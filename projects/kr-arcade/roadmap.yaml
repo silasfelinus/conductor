@@ -64,6 +64,10 @@ milestones:
     title: "CABINET DEPTH PASS — every other cabinet grows from a thin riff into a full campaign"
     weight: 100
     status: in-progress
+  - id: m9
+    title: "GHOST TRAIL GEN 2 — SMW-depth Bell Road overworld, memory, layered stages, N64-bar animation"
+    weight: 60
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -417,12 +421,16 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Ghost Trail finish: sound, HUD, balance, device QA and >=60-minute playtest"
-    status: ready
+    status: waiting
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: t-019
+    depends_on: [t-019, t-160]
     note: >-
+      2026-10-22 PT: held behind the Gen-2 upgrade (m9; GEN2-STANDARD.md). Balancing and timing the
+      Gen-1 six-stage loop would be spent on a structure Silas has asked to replace; this playtest
+      runs on the Gen-2 Bell Road once t-160 lands.
+
       Replace placeholder sounds with authored ambience/combat/music; playtest boss tells,
       attack cooldown, save/resume and secrets, verify DPR/pixel/HD, phone/tablet/desktop
       and keyboard/gamepad/touch. Log actual unfamiliar-player run durations; target
@@ -2646,3 +2654,84 @@ tasks:
       and one event achievement while signed in, and confirm the popup, the cabinet
       pane's earned state and the /achievements?section=arcade chip counts at 390/768/1440.
     updated: '2026-10-15T03:50:00Z'
+  - id: t-158
+    milestone: m9
+    title: "Ghost Trail Gen-2 design: Bell Road overworld graph, secret exits, haunted houses"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      Silas, 2026-10-22 PT: Ghost Trail too needs the concept evolution to Super Mario Bros 3 / Super
+      Mario World depth ("not high priority"). Write projects/kr-arcade/ghost-trail/GEN2-BELL-ROAD.md:
+      turn the six Gen-1 stages into an overworld of 20-28 nodes over six regions (stage acts become
+      separate levels), with fortresses, a haunted boarding house per region whose exit is the puzzle,
+      at least one secret exit per region, the hidden Canyon Shrine zone, and which relics and
+      subweapons are found where. Machine-readable enough for a catalog module, following
+      TEN-HOUR-ROADMAP.md's "data manifests, not a bigger switch" rule.
+  - id: t-159
+    milestone: m9
+    title: "Ghost Trail Gen-2 art round 1: Bell Road map, regional maps, haunted house, shrine"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-22T1030Z-plumber-gen2-overworld
+    claimed_at: '2026-10-22T10:30:00Z'
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      art/GHOST-TRAIL-GEN2-ROUND-1.yaml (8 subjects x Arthemy/Z-Image = 16 cells) submitted 2026-10-22
+      via scripts/sweep_art_ledgers.py. Review each render in the ledger (keep/reroll), then hand
+      keepers to t-160.
+  - id: t-160
+    milestone: m9
+    title: "Ghost Trail Gen-2 overworld and save slots (reuse the Save the Plumber overworld module)"
+    status: waiting
+    depends_on: [t-158]
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      Reuse the pure overworld/save-slot module built for save-the-plumber/t-011 (generalize it into
+      utils/arcade/ rather than copying). Bell Road map screen, three save slots, per-level clear and
+      secret flags, relics, subweapons, deaths/time, migration from the current Ghost Trail save.
+  - id: t-161
+    milestone: m9
+    title: "Ghost Trail Gen-2 stages: split acts into levels, sub-areas, secret exits, haunted houses"
+    status: waiting
+    depends_on: [t-158, t-160]
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: One region per PR; 3-6 minute levels with a midpoint, a sub-area and a real secret each.
+  - id: t-162
+    milestone: m9
+    title: "Ghost Trail Gen-2 animation: Zuzu and enemy pose-to-pose WAN atlases"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      Replace the code-drawn Zuzu with a painted, many-frame atlas (CAMPAIGN-BLUEPRINT.md action list:
+      idle 6, walk 8, jump 3, fall 2, attack 5, throw 4, crouch 2, hit 4, poncho-loss 6, death 8)
+      using white-ground key poses plus WAN first/last-frame clips (GEN2-STANDARD.md section 6; the
+      zuzu-pinball T019 croc recipe). Canon guardrails: koala, stern, kasa, rust poncho with orange
+      zigzag, katana hilt over the RIGHT shoulder; never mirror a frame that flips the katana.
+  - id: t-163
+    milestone: m9
+    title: "Arcade save sync: per-user save slots on the server for long campaigns"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      GEN2-STANDARD.md section 3. Today utils/arcade/saves.ts keeps one 8 KB save per game per device.
+      Add an authenticated save endpoint (a small ArcadeSave table keyed by user, game slug and slot,
+      validated by each game's own parser) so Save the Plumber, Ghost Trail and Rainbow saves follow
+      a signed-in player between devices, with the local save as the offline fallback and
+      last-write-wins by updatedAt. Reversible additive migration; no change for signed-out players.

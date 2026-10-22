@@ -1,0 +1,220 @@
+# Zuzu: Ghost Trail Generation 2 art, round 1 (kr-arcade m9; projects/kr-arcade/GEN2-STANDARD.md). Silas 2026-10-22 PT:
+# Ghost Trail too should aim for Super Mario Bros 3 / Super Mario World depth with open world maps and save states.
+# The Bell Road overworld map, five regional maps for the six-stage Act I, a haunted-house level type and a secret
+# shrine zone. Maps carry empty clearings for code-drawn node markers. Character-free on purpose: Zuzu canon
+# (koala, kasa, rust poncho, katana over right shoulder) stays in the sprite atlases. auto_submit: true. Private.
+round: ghost-trail-gen2-1
+project_slug: kr-arcade
+designer: Kind Robots Arcade
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (weird-west house)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style)
+  suffix: dramatic moonlight, coherent scene
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+- key: zimage
+  label: Z-Image Turbo (painted alternate)
+  engine: zimage
+  prompt: prose
+subjects:
+- key: gt2-map-bell-road
+  entity: overworld
+  title: 'The Bell Road: overworld map'
+  size: 1344x768
+  seed: 82041
+  negative: nsfw, text, letters, words, writing, logo, watermark, signature, photorealism, 3d render, blurry, lowres,
+    game HUD, characters, people
+  prompt_prose: 'A hand-painted overworld map of a haunted weird-west frontier seen from a high three-quarter angle:
+    a dusty trail winds from a moonlit ghost town past a bone-strewn ravine, a drowned watering hole, a stormy canyon
+    pass and a ruined mission bell tower to an abbey on a cliff; empty round clearings mark stops along the trail,
+    a side path forks into a hidden canyon shrine, unpeopled, every surface bare and unmarked, hand-painted anthropomorphic
+    weird-west, midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  prompt_tags: 'A hand-painted overworld map of a haunted weird-west frontier seen from a high three-quarter angle:
+    a dusty trail winds from a moonlit ghost town past a bone-strewn ravine, a drowned watering hole, a stormy canyon
+    pass and a ruined mission bell tower to an abbey on a cliff; empty round clearings mark stops along the trail,
+    a side path forks into a hidden canyon shrine, unpeopled, every surface bare and unmarked, hand-painted anthropomorphic
+    weird-west, midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  jobs:
+    arthemy-house: 43355
+    zimage: 43356
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gt2-map-silver-gulch
+  entity: overworld
+  title: Silver Gulch region map
+  size: 1344x768
+  seed: 82042
+  negative: nsfw, text, letters, words, writing, logo, watermark, signature, photorealism, 3d render, blurry, lowres,
+    game HUD, characters, people
+  prompt_prose: 'Close regional overworld map of a moonlit frontier ghost town: boardwalk streets, a courthouse,
+    a saloon and a graveyard linked by a lantern-lit path with empty clearings for stops and a crawlspace shortcut,
+    unpeopled, hand-painted anthropomorphic weird-west, midnight indigo, dusty plum, warm bone, amber lanterns and
+    spectral cyan, painterly game art'
+  prompt_tags: 'Close regional overworld map of a moonlit frontier ghost town: boardwalk streets, a courthouse,
+    a saloon and a graveyard linked by a lantern-lit path with empty clearings for stops and a crawlspace shortcut,
+    unpeopled, hand-painted anthropomorphic weird-west, midnight indigo, dusty plum, warm bone, amber lanterns and
+    spectral cyan, painterly game art'
+  jobs:
+    arthemy-house: 43357
+    zimage: 43358
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gt2-map-bone-yard
+  entity: overworld
+  title: Bone Yard region map
+  size: 1344x768
+  seed: 82043
+  negative: nsfw, text, letters, words, writing, logo, watermark, signature, photorealism, 3d render, blurry, lowres,
+    game HUD, characters, people
+  prompt_prose: 'Close regional overworld map of a haunted ravine: crypt mouths, a broken rope bridge, hanging bells
+    and tombstone terraces joined by a winding trail with empty clearings, unpeopled, hand-painted anthropomorphic
+    weird-west, midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  prompt_tags: 'Close regional overworld map of a haunted ravine: crypt mouths, a broken rope bridge, hanging bells
+    and tombstone terraces joined by a winding trail with empty clearings, unpeopled, hand-painted anthropomorphic
+    weird-west, midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  jobs:
+    arthemy-house: 43359
+    zimage: 43360
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gt2-map-watering-hole
+  entity: overworld
+  title: Drowned Watering Hole region map
+  size: 1344x768
+  seed: 82044
+  negative: nsfw, text, letters, words, writing, logo, watermark, signature, photorealism, 3d render, blurry, lowres,
+    game HUD, characters, people
+  prompt_prose: 'Close regional overworld map of a flooded frontier oasis: half-sunken windmills, a raft dock, reed
+    islands and a cave behind a waterfall, trail with empty clearings, unpeopled, hand-painted anthropomorphic weird-west,
+    midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  prompt_tags: 'Close regional overworld map of a flooded frontier oasis: half-sunken windmills, a raft dock, reed
+    islands and a cave behind a waterfall, trail with empty clearings, unpeopled, hand-painted anthropomorphic weird-west,
+    midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  jobs:
+    arthemy-house: 43361
+    zimage: 43362
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gt2-map-storm-crow
+  entity: overworld
+  title: Storm Crow Pass region map
+  size: 1344x768
+  seed: 82045
+  negative: nsfw, text, letters, words, writing, logo, watermark, signature, photorealism, 3d render, blurry, lowres,
+    game HUD, characters, people
+  prompt_prose: 'Close regional overworld map of a storm-lit canyon pass: rope lifts, tree canopy walkways, crow-nest
+    crags and sheltered caves along a trail with empty clearings, unpeopled, hand-painted anthropomorphic weird-west,
+    midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  prompt_tags: 'Close regional overworld map of a storm-lit canyon pass: rope lifts, tree canopy walkways, crow-nest
+    crags and sheltered caves along a trail with empty clearings, unpeopled, hand-painted anthropomorphic weird-west,
+    midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  jobs:
+    arthemy-house: 43363
+    zimage: 43364
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gt2-map-bell-tower
+  entity: overworld
+  title: Mission Bell Tower region map
+  size: 1344x768
+  seed: 82046
+  negative: nsfw, text, letters, words, writing, logo, watermark, signature, photorealism, 3d render, blurry, lowres,
+    game HUD, characters, people
+  prompt_prose: 'Close regional overworld map of a ruined mission compound: a cracked bell tower, burning braziers,
+    cloisters and a stair down into crypts, a trail with empty clearings, unpeopled, hand-painted anthropomorphic
+    weird-west, midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  prompt_tags: 'Close regional overworld map of a ruined mission compound: a cracked bell tower, burning braziers,
+    cloisters and a stair down into crypts, a trail with empty clearings, unpeopled, hand-painted anthropomorphic
+    weird-west, midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  jobs:
+    arthemy-house: 43365
+    zimage: 43366
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gt2-type-haunted-house
+  entity: level-type
+  title: 'Haunted house level: the Widow''s Boarding House'
+  size: 1344x768
+  seed: 82047
+  negative: nsfw, text, letters, words, writing, logo, watermark, signature, photorealism, 3d render, blurry, lowres,
+    game HUD, characters, people
+  prompt_prose: 'Interior of a haunted frontier boarding house for a side-scrolling action platformer: looping hallways,
+    doors that open onto the wrong rooms, floating chairs, spectral cyan lamplight, a hidden exit behind a tall
+    painted portrait, unpeopled, hand-painted anthropomorphic weird-west, midnight indigo, dusty plum, warm bone,
+    amber lanterns and spectral cyan, painterly game art'
+  prompt_tags: 'Interior of a haunted frontier boarding house for a side-scrolling action platformer: looping hallways,
+    doors that open onto the wrong rooms, floating chairs, spectral cyan lamplight, a hidden exit behind a tall
+    painted portrait, unpeopled, hand-painted anthropomorphic weird-west, midnight indigo, dusty plum, warm bone,
+    amber lanterns and spectral cyan, painterly game art'
+  jobs:
+    arthemy-house: 43367
+    zimage: 43368
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gt2-type-secret-shrine
+  entity: level-type
+  title: 'Secret zone: the Canyon Shrine'
+  size: 1344x768
+  seed: 82048
+  negative: nsfw, text, letters, words, writing, logo, watermark, signature, photorealism, 3d render, blurry, lowres,
+    game HUD, characters, people
+  prompt_prose: 'A hidden canyon shrine reached by a secret trail: a small adobe shrine lit by hundreds of candles,
+    a stone bell, prayer ribbons and a vast starry sky, reverent and rewarding, unpeopled, hand-painted anthropomorphic
+    weird-west, midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  prompt_tags: 'A hidden canyon shrine reached by a secret trail: a small adobe shrine lit by hundreds of candles,
+    a stone bell, prayer ribbons and a vast starry sky, reverent and rewarding, unpeopled, hand-painted anthropomorphic
+    weird-west, midnight indigo, dusty plum, warm bone, amber lanterns and spectral cyan, painterly game art'
+  jobs:
+    arthemy-house: 43369
+    zimage: 43370
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null

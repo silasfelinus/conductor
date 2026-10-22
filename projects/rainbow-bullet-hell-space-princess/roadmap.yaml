@@ -14,6 +14,15 @@ goal: >-
   No runtime LLM. Accept only after measured end-to-end gameplay, 1/2/3/4
   player soak, art and accessibility review, and Silas's hands-on verdict.
 notes_from_silas: |
+  2026-10-22 PT (verbatim, after asking Save the Plumber and Ghost Trail to aim for Super
+  Mario Bros 3 / Super Mario World depth): "rainbow space princess should have the same
+  consideration. games should have memory, recognize progress, etc. So we need open world
+  maps, save states, etc. And probably upgrades to pixel expectations and other factors.
+  they need an upgrade." For a shooter the matching reference is Star Fox 64: a branching
+  route map whose paths open from in-stage conditions, per-stage medals, and persistent
+  progress, plus a Palace Hangar that keeps earned upgrades. Shared bar:
+  projects/kr-arcade/GEN2-STANDARD.md. Milestone m6 carries it.
+
   2026-10-11 PT: "a gorgeous bullet shmup inspired by gracious, Darius,
   and r-type, with a focus on gorgeously lavish visuals, fair but challenging
   combat, and a friendly pink and pastel rainbow aesthetic. Rainbow Bullet
@@ -39,15 +48,15 @@ notes_from_silas: |
 milestones:
   - id: m1
     title: "CREATIVE FOUNDATION — art bible, boss roster and encounter score"
-    weight: 15
+    weight: 10
     status: done
   - id: m2
     title: "PLAYABLE CORE — 60 Hz combat, co-op, save and collision truth"
-    weight: 20
+    weight: 15
     status: in-progress
   - id: m3
     title: "FULL CAMPAIGN — authored stages, routes, bosses and progression"
-    weight: 35
+    weight: 20
     status: done
   - id: m4
     title: "VISUAL SPECTACLE — animation, layered worlds, music and cinematic story"
@@ -57,6 +66,10 @@ milestones:
     title: "BALANCE, QA AND RELEASE VERDICT"
     weight: 10
     status: not-started
+  - id: m6
+    title: "GEN 2 — ROUTE MAP & MEMORY: Star Fox 64-style branches, medals, hangar, N64-bar animation"
+    weight: 25
+    status: in-progress
 tasks:
   - id: t-001
     milestone: m1
@@ -511,3 +524,69 @@ tasks:
     claimed_at: '2026-10-19T10:30:00Z'
     updated: '2026-10-19T11:14:22Z'
     implementation_pr: 'silasfelinus/kind_robots#3865'
+  - id: t-026
+    milestone: m6
+    title: "Gen-2 route design: branching Luminous Ocean map, branch conditions, alternate stages"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      Write projects/rainbow-bullet-hell-space-princess/ROUTE-MAP.md: the eight Acts become nodes on a
+      branching route map (Star Fox 64 in spirit, original in content) with at least four alternate
+      stages (Kelp Nebula Bypass, Sunken Lighthouse Ring, Coral Comet Trail, Mirror Shoal; backdrops in
+      art/GEN2-ROUND-1.yaml), each branch opened by something done in the stage before (rescuing a
+      captive, saving an escort, destroying a hidden generator, a no-continue clear), plus a per-stage
+      medal goal and the routes that lead to each ending. Keep the three dialogue scenes per Act
+      (ACT-STRUCTURE.md) and say which branch changes which scene.
+  - id: t-027
+    milestone: m6
+    title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
+    status: waiting
+    depends_on: [t-026]
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      Reuse the generalized overworld/save-slot module (save-the-plumber/t-011, kr-arcade/t-160).
+      Three slots; route map with cleared nodes, medals and discovered branches; a hangar where
+      medals buy permanent, bounded upgrades (never pay-to-win against the fairness rules); pilot
+      comms that recognise progress (first visit vs return, a branch found, a friend rescued last
+      run). Migrate the current save.
+  - id: t-028
+    milestone: m6
+    title: "Gen-2 alternate stages: four branch stages with their own guardians"
+    status: waiting
+    depends_on: [t-026]
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: One stage per PR, authored to the existing Act pacing and fairness rules, each with a guardian.
+  - id: t-029
+    milestone: m6
+    title: "Gen-2 art round 1: route map, Palace Hangar and four alternate-stage backdrops"
+    status: claimed
+    owner: worker
+    claimed_by: 2026-10-22T1030Z-plumber-gen2-overworld
+    claimed_at: '2026-10-22T10:30:00Z'
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      art/GEN2-ROUND-1.yaml (6 subjects x Z-Image/Krea 2 = 12 cells) submitted 2026-10-22 via
+      scripts/sweep_art_ledgers.py. Review keepers in the ledger, then hand to t-027/t-028.
+  - id: t-030
+    milestone: m6
+    title: "Gen-2 animation: animated pilot cut-ins, enemy sprite cycles and moving cutscenes"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      GEN2-STANDARD.md sections 5-6. WAN first/last-frame clips from the delivered cutscene stills
+      (ART-ROUND-19) and pilot cut-ins, then enemy idle/attack cycles packed into atlases. Bullets
+      stay crisp code-drawn shapes; animation is for craft, pilots and scenes.

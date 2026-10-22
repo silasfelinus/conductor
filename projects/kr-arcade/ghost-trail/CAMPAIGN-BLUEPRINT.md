@@ -80,3 +80,14 @@ These are visual **concepts**, not usable tilemaps or verified collision geometr
 6. **Polish/QA**: boss tuning, soundscape/music, accessibility and elapsed-time testing.
 
 **No substitutions:** do not represent queued images as shipped; do not present screenshots as actual engine renders; do not call a 4-stage infinite loop a 6-stage complete game; and do not declare 60-minute completion without a timed playtest.
+
+## Generation 2 (Silas, 2026-10-22 PT): the Bell Road overworld
+
+Ghost Trail takes the same concept evolution as Save the Plumber ("not high priority", but the same bar):
+Super Mario Bros. 3 / Super Mario World depth on top of the Ghosts 'n Goblins feel. The six stages above become
+**six regions of a walkable Bell Road overworld** (20-28 nodes: their acts become separate levels, plus
+fortresses, a haunted boarding house per region, secret exits and the hidden Canyon Shrine), with **three save
+slots** that remember relics, subweapons, clears and secrets, and a painted many-frame Zuzu atlas animated with
+WAN pose-to-pose clips. Shared rules: [../GEN2-STANDARD.md](../GEN2-STANDARD.md). Roadmap milestone **m9**
+(t-158 to t-163); t-020's playtest now runs on the Gen-2 Bell Road. Art round 1:
+`projects/kr-arcade/art/GHOST-TRAIL-GEN2-ROUND-1.yaml`.
