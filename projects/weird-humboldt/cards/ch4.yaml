@@ -528,3 +528,228 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+
+- id: WH-063
+  revision: 1
+  chapter: 4
+  location: Blue Lake
+  title: The Bridge from the Other Side
+  tier: invented
+  provenance: Blue Lake and its river crossings are real; Wendell, the remembered bridge and the other side are invented fiction and depict no real person or structure.
+  rarity: uncommon
+  tone:
+  - melancholy
+  - eerie
+  - quiet
+  cast:
+  - Wendell Rask (a stranger, remembers a bridge, fixed)
+  - The Other Bridge (demolished, remembered)
+  canon:
+  - A stranger remembers crossing a bridge that was demolished before he was born.
+  - The remembered bridge connects to a place that is not on this side of the river.
+  - Wendell's memory is accurate in every detail except its date.
+  scene: A man sits on the riverbank with his shoes off, looking at an empty span of air. "I crossed here last Thursday," Wendell says, mildly. "It was a good bridge. Green. It hummed when you walked on it." There is no bridge. There are only two concrete stubs on either bank. "I would like to know who is keeping it," he adds. "I would like to go back and thank them."
+  options:
+  - id: a
+    label: Walk the line where the bridge should be
+    skill: psyche
+    target: 9
+    success:
+      text: You step onto the air and feel a green, humming floor. Three paces over, you find a handrail with initials carved into it and a faded stamp.
+      effects:
+      - evidence:history
+      - evidence:document
+      - flag:bridge_walked
+      - weird+1
+    failure:
+      text: You step out and your foot finds river. You climb out shivering, and Wendell wraps you in his coat without comment.
+      effects:
+      - nerve-1
+      - flag:bridge_wet
+  - id: b
+    label: Ask Wendell to describe the crossing in detail
+    skill: rizz
+    target: 7
+    success:
+      text: Wendell remembers the hum, the paint, the toll, the dog at the far end. He has more detail than any record, and you write it down for him, which he finds deeply moving.
+      effects:
+      - goodwill+1
+      - flag:bridge_described
+      - evidence:memory
+    failure:
+      text: Wendell frets and loses the thread. His memory slides into some other bridge, another year, and he does not recover for a while.
+      effects:
+      - time-1
+      - evidence:rumor
+  - id: c
+    label: Sit with him and wait for the bridge
+    skill: none
+    target: null
+    success:
+      text: You sit until the light changes. Nothing appears, but Wendell is quiet and unburdened, and he leaves you with a carved token the shape of a handrail.
+      effects:
+      - flag:bridge_vigil
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara studies the stubs. "Concrete's old. Rebar's older. Someone did a very thorough job removing a thing that people still remember."
+    kit: Kit tips an imaginary hat. "A bridge so good it outlived its own demolition. I want its agent."
+    juniper: Juniper closes her eyes. "The span is still there. It just crossed over to the other side."
+    cedar: Cedar checks the bank. "Sure there was a crossing here once. My granddad mentioned it and then wouldn't say any more."
+  callbacks:
+  - bridge_walked
+  - bridge_wet
+  - bridge_described
+  - bridge_vigil
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-077
+  revision: 1
+  chapter: 4
+  location: Highway 299 roadside
+  title: The Hitchhiker Who Hitches Time
+  tier: invented
+  provenance: Highway 299 is a real road; Ines, her receipts and her destination are invented fiction and depict no real traveler.
+  rarity: rare
+  tone:
+  - polite
+  - uncanny
+  - wry
+  cast:
+  - Ines Vantongeren (a hitchhiker, courteous, fixed)
+  - A Folded Gas Receipt (dated ten years ahead)
+  canon:
+  - A polite hitchhiker pays for rides with gas receipts dated ten years ahead.
+  - Her destination is always the place the driver was already headed.
+  - Accepting her payment does not create a debt, only a date.
+  scene: On the shoulder of the highway stands a woman with a small canvas pack and a hand held up in a neat, apologetic wave. "I can pay," Ines says, and offers a folded gas receipt. You read the date and it is ten years from now. The station is one you know, in a town that is not yet famous. "I'm told they take these," she adds. "Eventually."
+  options:
+  - id: a
+    label: Give her a ride and ask where she's headed
+    skill: rizz
+    target: 7
+    success:
+      text: Ines settles into the seat and names a place you were already going to, then names the reason. She sleeps. When you wake her, there is a second receipt tucked into your visor.
+      effects:
+      - goodwill+1
+      - flag:hitcher_ridden
+      - evidence:schedule
+    failure:
+      text: The ride is quiet and awkward. Ines holds her pack and her tongue, and at her stop she tucks a stiff little bow into the dashboard and is gone.
+      effects:
+      - time-1
+      - flag:hitcher_awkward
+  - id: b
+    label: Read the receipt closely
+    skill: wits
+    target: 9
+    success:
+      text: The receipt lists a purchase, a pump number and a total, and in the corner a handwritten tally of something you have not done yet. It matches nothing you own but all of what you intend.
+      effects:
+      - evidence:document
+      - evidence:calendar
+      - weird+1
+    failure:
+      text: The numbers swim and spell your own name in a font that looks like handwriting. You hand it back sooner than you meant.
+      effects:
+      - nerve-1
+      - flag:hitcher_name
+  - id: c
+    label: Decline the payment, just give her the ride
+    skill: none
+    target: null
+    success:
+      text: You wave off the receipt and she smiles as if you'd said exactly the correct thing. She leaves a tiny knot of ribbon on the seat, tied around a mile marker.
+      effects:
+      - flag:hitcher_free_ride
+      - goodwill+1
+      - evidence:geography
+  lead_reactions:
+    mara: Mara glances at the date. "Ten years out. I'd tattoo that if it weren't so rude."
+    kit: Kit wiggles an eyebrow. "Cash from the future. The only bribe with no inflation."
+    juniper: Juniper rolls down the window. "She's not late. She's early, and carrying something on behalf of tomorrow."
+    cedar: Cedar squints at the gas pump number. "That's the old station near Willow Creek. It closed before my time."
+  callbacks:
+  - hitcher_ridden
+  - hitcher_awkward
+  - hitcher_name
+  - hitcher_free_ride
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-078
+  revision: 1
+  chapter: 4
+  location: Highway 299 roadside
+  title: The Last Working Pay Phone
+  tier: invented
+  provenance: Highway 299 is real and pay phones were once common along it; this booth and its calls are invented fiction, and no real office or agency is depicted.
+  rarity: uncommon
+  tone:
+  - eerie
+  - dry
+  - bureaucratic
+  cast:
+  - The Pay Phone (rings with missing county offices, fixed)
+  - A Voice from the Department of Tides (courteous, unseen)
+  canon:
+  - An empty booth rings with calls from county offices that no longer exist.
+  - Every caller asks for a person who has not yet been hired.
+  - Answering the phone is the only way to find out who is calling.
+  scene: At a gravel turnout stands a single pay phone, its cord frayed, its receiver sweating. It rings, bright and insistent, though the booth has no lines running to it. A hand-lettered sign says OUT OF ORDER, NEVER REPAIRED. The phone rings again. A moth lands on the coin slot and appears to listen. It is the kind of ring that expects you to pick up.
+  options:
+  - id: a
+    label: Answer the phone
+    skill: rizz
+    target: 9
+    success:
+      text: A voice asks for a deputy who doesn't exist yet and then, politely, for you. It reads out a short list of dates, a room number and a room that is gone.
+      effects:
+      - evidence:schedule
+      - evidence:document
+      - flag:payphone_answered
+      - weird+1
+    failure:
+      text: The line is nothing but static and your own voice a half second behind. You hang up shaking and out of change.
+      effects:
+      - nerve-1
+      - flag:payphone_static
+  - id: b
+    label: Trace the dead wires to their source
+    skill: wits
+    target: 7
+    success:
+      text: The wires run, improbably, to a post stamped with the county seal and a number. Beneath the post you find a metal tag with the date the phone was last paid for.
+      effects:
+      - evidence:history
+      - evidence:geography
+      - flag:payphone_traced
+    failure:
+      text: You follow the wire into brambles and out again, scratched and none the wiser. The phone rings once more behind you, as if amused.
+      effects:
+      - time-1
+      - nerve-1
+  - id: c
+    label: Slip a coin in and let it ring
+    skill: none
+    target: null
+    success:
+      text: You pay the coin and let it ring until it stops. A small receipt prints from the slot, reading CALL WAITING, in the neat type of an office that closed years ago.
+      effects:
+      - flag:payphone_coin
+      - evidence:rumor
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara frowns at the cord. "No lines. No power. Still rings. That's not telecom, that's tradition."
+    kit: Kit picks up and listens for a moment. "The hold music is excellent. Somebody cares about the callers."
+    juniper: Juniper rests her palm on the booth. "It rings because someone always did. That's all it knows how to do."
+    cedar: Cedar eyes the sign. "That's a county office stencil. They ran that line before I was born."
+  callbacks:
+  - payphone_answered
+  - payphone_static
+  - payphone_traced
+  - payphone_coin
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

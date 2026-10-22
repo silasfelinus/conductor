@@ -529,3 +529,226 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+
+- id: WH-024
+  revision: 1
+  chapter: 2
+  location: Moonstone Beach
+  title: Beachcomber's Other Shadow
+  tier: invented
+  provenance: Moonstone Beach is a real beach; the abandoned shadow, its adventure and its crab accomplice are invented fiction and depict no real person.
+  rarity: uncommon
+  tone:
+  - melancholy
+  - funny
+  - uncanny
+  cast:
+  - Your companion's Shadow (left at low tide, fixed)
+  - A Hermit Crab Named Pilot (an accomplice)
+  canon:
+  - A companion's shadow stays behind at low tide and starts its own adventure.
+  - The shadow can only be asked questions in a language of posture and angle.
+  - The shadow will return at dusk if given something worth coming back for.
+  scene: At the tide line, one of your companions realizes her shadow is not with her. It is standing twenty feet away, hands in pockets, watching a hermit crab drag a bottle cap toward the surf. The shadow looks back, shrugs, and walks the other way. A crab named Pilot, you decide, is already working for it. The light is low, and every other shadow on the beach is beginning to lean in.
+  options:
+  - id: a
+    label: Follow the shadow along the waterline
+    skill: wits
+    target: 7
+    success:
+      text: 'You trail it past the kelp and watch it do small, useful things: it holds a door for tide pools, rights an upturned shell. At the end it points to a stone with a message scratched in the lee.'
+      effects:
+      - evidence:document
+      - flag:shadow_followed
+    failure:
+      text: The shadow doubles back and walks through you, which is unpleasant and leaves your own shadow a little shorter.
+      effects:
+      - nerve-1
+      - flag:shadow_shortened
+  - id: b
+    label: Bargain for its return with a story
+    skill: rizz
+    target: 9
+    success:
+      text: You tell the shadow what the day was like for the one it belongs to. It listens, nods, and walks home on its own at dusk, handing you a coin of sea glass on the way past.
+      effects:
+      - goodwill+1
+      - flag:shadow_returned
+      - evidence:memory
+    failure:
+      text: Your story lands wrong and the shadow turns its back, folding into the cliff for a while. Pilot looks apologetic.
+      effects:
+      - time-1
+      - flag:shadow_sulks
+  - id: c
+    label: Leave it a note and a sandwich on the sand
+    skill: none
+    target: null
+    success:
+      text: You tuck a note under a stone and set a sandwich on a clean rock. When you look back the sandwich is gone and the note has been annotated in neat shadow-script.
+      effects:
+      - flag:shadow_note
+      - evidence:rumor
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara stares at the empty patch of sand. "A shadow with agency. I've tattooed worse ideas on better people."
+    kit: Kit waves at the shadow. "The most independent employee I've ever met. I'd hire it."
+    juniper: Juniper kneels by the tide. "The shadow was lonely, not lost. It just needed somewhere to be a person."
+    cedar: Cedar frowns at Pilot. "Hermit crabs never take a job unless the pay is good. What did the shadow offer?"
+  callbacks:
+  - shadow_followed
+  - shadow_shortened
+  - shadow_returned
+  - shadow_sulks
+  - shadow_note
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-026
+  revision: 1
+  chapter: 2
+  location: Trinidad Head
+  title: The Lighthouse Keeper's Second Light
+  tier: invented
+  provenance: Trinidad Head is real and its light is part of the coast's history; the phantom second light and its keeper's descendant are invented fiction, and no real keeper or family is depicted.
+  rarity: rare
+  tone:
+  - eerie
+  - solemn
+  - wry
+  cast:
+  - The Second Light (a phantom beacon, fixed)
+  - Nell Vickery (a keeper's descendant, wary)
+  canon:
+  - A phantom light on the head warns of things not visible to boats.
+  - The second light sweeps only when something is about to go wrong and nobody would otherwise notice.
+  - The keeper's descendant keeps the lamp oiled in case the ghost needs it.
+  scene: Past midnight, a second beam crosses the water, pale gold where the lighthouse beam is white. It is not aimed at ships. It touches the headland, the tide pools, your own hands, and moves on. A woman in a lined coat is on the path with a lantern and a thermos. "Don't wave at it," Nell says. "It reads that as a request." She offers you tea, and does not look away from the water.
+  options:
+  - id: a
+    label: Follow the second beam to what it marks
+    skill: wits
+    target: 9
+    success:
+      text: The beam lingers on a rock that will be underwater in an hour, and a little farther on, a boat on the shore that no one remembers launching. You find a logbook inside, warm and dry.
+      effects:
+      - evidence:document
+      - flag:second_light_followed
+      - evidence:geography
+    failure:
+      text: The beam passes over you and holds a moment too long. You come away with a cold feeling and no idea what it saw.
+      effects:
+      - nerve-1
+      - weird+1
+  - id: b
+    label: Ask Nell what the beam keeps warning about
+    skill: rizz
+    target: 9
+    success:
+      text: Nell sets down the thermos and lets herself speak. The light is a courtesy, she says, to the people nobody would think to warn. She gives you her grandfather's keys.
+      effects:
+      - goodwill+1
+      - flag:second_light_keys
+      - evidence:history
+    failure:
+      text: Nell shuts the conversation like a lamp. The beam swings toward you and then away, as if embarrassed on both sides.
+      effects:
+      - time-1
+      - flag:second_light_rebuffed
+  - id: c
+    label: Take the lantern and stand watch with her
+    skill: none
+    target: null
+    success:
+      text: You stand the dark hour with Nell and the thermos, and the second beam circles you without stopping. At dawn she tells you what it last warned about, and why she kept the lamp.
+      effects:
+      - flag:second_light_watch
+      - goodwill+1
+      - evidence:rumor
+  lead_reactions:
+    mara: Mara watches the beam pass over her ink. "It lingered on my arm. That was kind. I hate that it was kind."
+    kit: Kit lowers his voice. "A lighthouse that warns nobody and everybody. Best theater I've seen all year."
+    juniper: Juniper closes her eyes in the beam. "It's not a ghost. It's a habit that outlived everyone who started it."
+    cedar: Cedar studies the rock. "That outcrop gets covered at the minus tide. Whoever lit this knew the coast."
+  callbacks:
+  - second_light_followed
+  - second_light_keys
+  - second_light_rebuffed
+  - second_light_watch
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-037
+  revision: 1
+  chapter: 2
+  location: Mad River / Hammond Trail
+  title: A Very Small River God
+  tier: invented
+  provenance: The Mad River and Hammond Trail are real places; the small river god, his toll and the bridge's temperament are invented fiction and depict no real tradition.
+  rarity: uncommon
+  tone:
+  - petty
+  - funny
+  - bureaucratic
+  cast:
+  - Pebble the River God (three inches, official, fixed)
+  - A Footbridge (reluctant)
+  canon:
+  - A three-inch river god demands bridge tolls paid in river pebbles.
+  - The god is correct that the bridge crosses its water, and tolls are an old and honorable custom.
+  - The tolls fund small, specific repairs along the bank.
+  scene: A three-inch figure of braided reeds stands on the footbridge rail, a ledger in one fist and a tiny reflective sash across his chest. "Toll," Pebble announces, in a voice that carries like a spoon on a glass. "One pebble each. River stones only. I am a river god, not a savage." The bridge creaks beneath you in what sounds very much like agreement.
+  options:
+  - id: a
+    label: Pay the toll in properly chosen pebbles
+    skill: wits
+    target: 7
+    success:
+      text: You pick six smooth stones that match his ledger's taste, and he accepts each one with a nod. He stamps your hand with a river-glyph that opens a gate farther down the trail.
+      effects:
+      - flag:river_toll_paid
+      - evidence:document
+      - goodwill+1
+    failure:
+      text: You hand him a rock he finds crude, and he returns it with a sigh. The bridge sags a hair to remind you which of you is in charge.
+      effects:
+      - nerve-1
+      - time-1
+  - id: b
+    label: Negotiate a group discount
+    skill: rizz
+    target: 9
+    success:
+      text: Pebble confers with the bridge and grants a tour-group rate, in writing. His sash gleams with pride. You also get an unexpected promise that the river will remember you kindly.
+      effects:
+      - goodwill+1
+      - flag:river_discount
+      - evidence:rumor
+    failure:
+      text: The negotiation escalates into a formal grievance. Pebble issues a citation for loitering that you are certain is unenforceable and equally certain you should keep.
+      effects:
+      - nerve-1
+      - flag:river_citation
+  - id: c
+    label: Offer a pebble to the river instead
+    skill: none
+    target: null
+    success:
+      text: You skip a stone across the water. Pebble sets down the ledger and watches it go, then, very quietly, thanks you for remembering whose bridge it is.
+      effects:
+      - flag:river_skipped_stone
+      - weird+1
+      - evidence:history
+  lead_reactions:
+    mara: Mara bends to the rail. "A sash and a ledger. Someone's been taking this god's reflective vest very seriously."
+    kit: Kit applauds. "A river god with paperwork. The most believable deity I've met."
+    juniper: Juniper kneels by the bank. "He is small because he is precise. The river trusts him with the details."
+    cedar: Cedar prods the bridge. "Footbridge needs new decking. Maybe the tolls are for that."
+  callbacks:
+  - river_toll_paid
+  - river_discount
+  - river_citation
+  - river_skipped_stone
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

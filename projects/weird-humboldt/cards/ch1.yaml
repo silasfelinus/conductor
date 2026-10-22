@@ -552,3 +552,223 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+
+- id: WH-002
+  revision: 1
+  chapter: 1
+  location: Arcata Plaza
+  title: The Oyster That Won the Election
+  tier: invented
+  provenance: The Plaza and its civic life are real in spirit; the kiosk, the oyster and the losing candidate are invented fiction and depict no real official or campaign.
+  rarity: uncommon
+  tone:
+  - satirical
+  - dry
+  - uncanny
+  cast:
+  - The Oyster Candidate (unopposed, fixed)
+  - Councilwoman Ferris Quill (the losing candidate, fixed)
+  canon:
+  - A ballot kiosk announces the oyster as the winner of every contest, and only the losing candidate can hear its platform.
+  - The oyster's platform is always a true local grievance, stated badly.
+  - Quill has lost to the same oyster in three consecutive elections and has kept every concession speech.
+  scene: 'A gray ballot kiosk by the fountain chimes and declares a winner: an oyster, unopposed. A woman in a campaign sash stands before it with a clipboard, nodding at nothing. "It is promising to fix the drainage on Eighth," Quill whispers to you. "I can hear it. You cannot. Do not tell the others, they find it demoralizing that I can." The kiosk prints a receipt and hums a jingle in a damp, bubbling voice.'
+  options:
+  - id: a
+    label: Ask Quill to translate the platform
+    skill: wits
+    target: 7
+    success:
+      text: Quill relays the platform line by line, and you notice it is a list of four real complaints with the same street names a county memo once used. You leave with the list and a quiet respect for the shellfish.
+      effects:
+      - evidence:document
+      - flag:oyster_platform
+    failure:
+      text: You mishear the translation and promise the kiosk a sewer bond. A receipt prints in triplicate, and one copy is addressed to you.
+      effects:
+      - time-1
+      - flag:oyster_promise
+  - id: b
+    label: Vote for the oyster anyway
+    skill: rizz
+    target: 9
+    success:
+      text: You cast a ballot with a flourish and the kiosk plays a delighted gurgle. Quill, vindicated and a little misty, gives you her one spare campaign button, which doubles as a pass to a closed meeting.
+      effects:
+      - goodwill+1
+      - flag:oyster_voter
+      - evidence:schedule
+    failure:
+      text: The kiosk takes your enthusiasm as a donation and prints a thank-you card that reads, in tidy type, SEE YOU AT THE NEXT RECOUNT.
+      effects:
+      - nerve-1
+      - evidence:rumor
+  - id: c
+    label: Sit with Quill and hear her concession speech
+    skill: none
+    target: null
+    success:
+      text: You sit on the fountain edge and hear all three concession speeches. They are good. She gives you the oyster's last pamphlet, and your free draw goes to keeping her company.
+      effects:
+      - flag:oyster_concession
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara studies the receipt. "Ink's local. The printer's a county one. Someone is feeding this kiosk real paperwork."
+    kit: Kit applauds softly. "An unopposed mollusk. The most honest ballot in the state, honestly."
+    juniper: Juniper rests her palm on the kiosk and smiles. "There's brine in the wiring. It wants to be good at this."
+    cedar: Cedar squints at the street names. "Eighth Street really does flood. The oyster did its homework."
+  callbacks:
+  - oyster_platform
+  - oyster_promise
+  - oyster_voter
+  - oyster_concession
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-003
+  revision: 1
+  chapter: 1
+  location: Arcata Plaza
+  title: Four Minutes to Farmers Market
+  tier: invented
+  provenance: The Arcata farmers market is a real weekly tradition; the vendor, her peaches and the endless four minutes are invented fiction, and no real vendor is depicted.
+  rarity: common
+  tone:
+  - warm
+  - strange
+  - funny
+  cast:
+  - Dahlia Orchard-Reyes (peach seller, fixed)
+  - A Crate of Peaches That Remember
+  canon:
+  - Each peach remembers a year that never happened, and tastes like it.
+  - The market opens in four minutes and has done so for as long as anyone can say.
+  - Dahlia sells only to people who will tell her what the year tasted like.
+  scene: Under a striped awning, a woman is arranging peaches with a jeweler's care. A clock above her stall reads four minutes to opening and has since you arrived. "This one remembers 1923," she says, tapping a peach. "A very nice 1923. It did not occur. Take a bite and tell me what year it tastes like, and I'll tell you whether you were right." The peach is warm and faintly humming.
+  options:
+  - id: a
+    label: Bite the peach and name the year
+    skill: psyche
+    target: 9
+    success:
+      text: You taste cedar smoke and a brass band, and say 1923. Dahlia beams. The peach pit in your hand is stamped with a county fair date that actually happened.
+      effects:
+      - evidence:calendar
+      - flag:peach_remembered
+      - weird+1
+    failure:
+      text: The peach is bitter with a decade you cannot name, and you blurt a wrong year. Dahlia pats your shoulder and tells you the market opens, soon.
+      effects:
+      - nerve-1
+      - flag:peach_misnamed
+  - id: b
+    label: Ask why the market never opens
+    skill: wits
+    target: 7
+    success:
+      text: 'Dahlia confesses that the four minutes are a kindness: the market stays unopened as long as someone is still missing from the line. She names the one who is, and where they last stood.'
+      effects:
+      - evidence:rumor
+      - evidence:geography
+    failure:
+      text: Your question comes out sounding like a complaint, and the clock ticks backward a minute to give you a chance to rephrase.
+      effects:
+      - time-1
+      - flag:market_clock_reset
+  - id: c
+    label: Buy a peach and leave a fair price
+    skill: none
+    target: null
+    success:
+      text: You pay in coins and a compliment, which Dahlia accepts as legal tender. The peach is cold in your pocket and refuses to ripen until needed.
+      effects:
+      - flag:peach_pocketed
+      - goodwill+1
+  lead_reactions:
+    mara: Mara sniffs a peach. "No pesticide, no wax. Whoever grew this took a hundred hours and a lot of pride."
+    kit: Kit tries a bite and tears up cheerfully. "1923, in a good mood. I'll take two."
+    juniper: Juniper cups a peach in both hands. "It's remembering a summer so well it's started to sweat."
+    cedar: Cedar eyes the stall. "A market that stays closed to wait for one person. That's the most neighborly thing I've heard."
+  callbacks:
+  - peach_remembered
+  - peach_misnamed
+  - market_clock_reset
+  - peach_pocketed
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-005
+  revision: 1
+  chapter: 1
+  location: Arcata Plaza
+  title: Plaza Clock, Wrong County
+  tier: invented
+  provenance: The Plaza is real; this clock, its thirteenth strike and the unmapped county are invented fiction, and no real public clock or official is depicted.
+  rarity: uncommon
+  tone:
+  - eerie
+  - dry
+  - bureaucratic
+  cast:
+  - The Plaza Clock (strikes thirteen, fixed)
+  - Gus Mendelbaum (a passerby who insists it always has, fixed)
+  canon:
+  - The clock strikes thirteen and everyone present insists it always has.
+  - The thirteenth strike belongs to a neighboring county that does not appear on any map.
+  - Anyone who notices the thirteenth strike hears it more clearly each time.
+  scene: The clock above the Plaza strikes twelve, then, clearly and with a little cough, thirteen. Nobody looks up. Gus, a man feeding pigeons, shrugs when you ask. "It's always done thirteen. You're thinking of a different county." He says county the way people say a name they have almost forgotten. The thirteenth strike hangs a beat too long, as if waiting for someone to answer it.
+  options:
+  - id: a
+    label: Count the strikes again, aloud
+    skill: wits
+    target: 9
+    success:
+      text: You count thirteen with Gus, and by the end he is counting with you, uncertain. On the last strike he mutters an address he has never visited, and you write it down.
+      effects:
+      - evidence:geography
+      - flag:clock_counted
+      - weird+1
+    failure:
+      text: You lose count at nine and the clock starts over, politely, to help. Gus stops feeding the pigeons to watch you suffer.
+      effects:
+      - time-1
+      - nerve-1
+  - id: b
+    label: Answer the thirteenth strike
+    skill: psyche
+    target: 11
+    success:
+      text: You say "present" to the empty air. Somewhere a gate opens, and a short, serious breeze delivers a stamped slip of paper into your hand.
+      effects:
+      - evidence:document
+      - flag:clock_answered
+      - weird+1
+    failure:
+      text: The answer is wrong, though you cannot tell how, and the whole Plaza goes briefly quiet before resuming as if you had said nothing.
+      effects:
+      - nerve-1
+      - flag:clock_silenced
+  - id: c
+    label: Ask Gus which county he means
+    skill: none
+    target: null
+    success:
+      text: Gus thinks hard and sketches a county line in the dust with his shoe. It is a good line. He insists he has never been there and gives you the pigeon seed to remember by.
+      effects:
+      - flag:clock_gus_sketch
+      - goodwill+1
+      - evidence:history
+  lead_reactions:
+    mara: Mara checks the clock face. "Twelve numerals. Whoever made it never planned for thirteen. Which is the unsettling part."
+    kit: Kit salutes the clock. "A timekeeper with an extra hour. That's called editing."
+    juniper: Juniper cocks her head. "The thirteenth is a different tone. It's not a bell, it's an invitation."
+    cedar: Cedar mutters. "Wrong county. Funny, I never knew there was a right one to compare it to."
+  callbacks:
+  - clock_counted
+  - clock_answered
+  - clock_silenced
+  - clock_gus_sketch
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
