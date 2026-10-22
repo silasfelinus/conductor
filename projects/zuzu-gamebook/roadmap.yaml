@@ -310,8 +310,7 @@ tasks:
   - id: t-008
     milestone: m4
     title: Combat, powers, dice, inventory and save/resume UI polish
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-002, t-003]
@@ -319,9 +318,9 @@ tasks:
       Interactive combat log and enemy cards, visual hit feedback, distinct animated rolling dice with result readable without animation, keyboard and screen reader announcements, save portability, combat outcome illustrations, mobile character-sheet drawer and recovery paths.
 
       Adversarial recovery and full-pack loot changes implemented on worker/zuzu-gamebook-t-008-loot-recovery-g6e8f4. Pending CI and scoped PR review.
-    claimed_by: 20261022T103756Z-zuzu-gamebook-t008-g6e8f4
-    claimed_at: '2026-10-22T10:37:56.063Z'
-    updated: '2026-10-22T10:42:32.291Z'
+
+      2026-10-22 PT: Merged reversible fix PR silasfelinus/kind_robots#4029 (squash bb7e04953eff9a7a08ab0931d573739835b0333a) after all 16 current-head GitHub workflows passed. Inventory overflow now pauses for explicit replace-or-leave, with V1 save compatibility and regression tests; a recoverable previous journey survives restart, retaining the existing confirmation. No ArtJobs or external publishing in this scope. Re-arm t-008 for its uncompleted combat log/feedback, portable saves and responsive acceptance work. Priority triage: (1) full start-to-ending witness transcripts for all 15 endings including Wren's Lamp via t-011/t-009; (2) combat strategy win-rate calibration for Guard/Feint versus Quiet Draw; (3) eight shared-art fallbacks via t-006/t-012; (4) remaining UI polish and device testing. t-009 remains waiting on t-006, t-007, and t-008.
+    updated: '2026-10-22T10:52:32.609Z'
   - id: t-009
     milestone: m5
     title: QA and editorial playtest of every route, ending and device
