@@ -28,8 +28,11 @@ the seven for discretionary creative work. Scheduled operational commitments,
 security fixes, and review/merge work remain governed by existing policies.
 This is not permission for a public launch, billing, or irreversible changes.
 
+
+**New creative project (Silas, 2026-10-22 PT):** Memory Dungeon is ACTIVE and HIGH priority immediately after the seven-project 2026-10-21 focus tier in the deterministic task queue. This **adds** a project without changing their relative tie-break order. Extend existing `/play/memory` and retain the home directory and Play entry, Classic mode and the match engine. The RPG adds spatial-pattern/bullseye weapons, Minesweeper-style logical trap rooms, varied puzzles, meaningful companion and story progress, and seeded replay. See `projects/memory-dungeon/`. Public deployment remains gated.
+
 **Priority order this week:** weird-humboldt → zuzu-gamebook → zuzu-shifting-lands → emperor-of-dust → rainbow-bullet-hell-space-princess → save-the-plumber →
-shifting-desks → kind-pinball → zuzu-lair → kr-arcade → zuzu-showdown →
+shifting-desks → memory-dungeon → kind-pinball → zuzu-lair → kr-arcade → zuzu-showdown →
 cthulhuquarium → kind-economy → butterfly-gallery → art-archive.
 
 <!-- Historical priority record: 2026-10-19 elevated Ecotone behind the four
@@ -740,3 +743,12 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Starting recommendation: six chapters × four named places/events × five encounter seeds = 120, with a seeded selection of two per chapter; optional radio-frequency multiverse mystery, self-contained local vignettes, persistent relationship/evidence flags and multiple endings. Seeds are NOT completed playable cards.
 - Ground history carefully. Minor Theatre Houdini performance is disputed lore; the owner-reported trapdoor does not confirm an appearance. Perilous Plunge and Kinetic Grand Championship are separate events. Present-day Native characters have agency and normal occupations and are never occult stereotypes; fictional pagan groups do not represent Native traditions.
 - Reuse only generic card UI; separate game data and state. Stage composition, cast voices, optional mystery and horror register await t-004's *explicit creative verdict*. Art phase waits on that gate while text content development may continue.
+
+
+### memory-dungeon (software)
+**Direction (2026-10-22 PT, new project):** Evolve the existing memory match game at `/play/memory` into a full narrative roguelite RPG without a second front-end route. Character creation, difficulty plus independent dungeon depth, introduction, procedural draws from encounter/monster/treasure piles, hard moral decisions, recurrent cast, companions whose skills evolve, and Chronicle-based memory across runs. Combat resolution is always the match game, expanded to larger grids and weapon shapes revealing multiple cells. A targeted bullseye square gives precision effects for correctly remembered pair placement; rare giant Minesweeper-like deduction floors reward careful logical analysis and must never demand a mandatory blind guess.
+**Notes:**
+- Preserve existing `memory-dungeon.vue`, `memoryStore.ts`, `/play/memory` Play tab, home directory link and Classic Match mode. No separate product landing page.
+- High-priority `active` software project, after the seven-project focus tier and ahead of ordinary backlog; automatic work may proceed within reversible implementation boundaries.
+- Story and choices take precedence over stuffing every room with another complete match board. Run memory unlocks discoveries, relationships and tactical synergies, not permanent pay-to-win stat inflation.
+- Anchor rules, playtest hypotheses and acceptance details: `projects/memory-dungeon/DESIGN-BRIEF.md`, `COMBAT-PATTERNS.md`, `roadmap.yaml`.
