@@ -1,5 +1,7 @@
 # Weird Humboldt: fact / folklore / fiction ledger
 
+**SCOPE UPDATE (October 22, 2026 PT):** The entries concerning Wiyot/Tuluwat, other tribe-specific story candidates, Mara's discarded tribal biography, and the held WH-121 encounter are **archival research notes, not future Ecotone content requirements**. Do not reopen a review, source packet, consultation or playable scene for them. See [EXCLUDED-CONTENT-2026-10-22.md](EXCLUDED-CONTENT-2026-10-22.md). Independent non-sensitive local history and ecology remain in scope.
+
 Sources checked 2026-10-19 PT. URLs support place/event grounding, **not** supernatural claims. Encounters should carry source tier and avoid presenting a source as endorsement of fictional content.
 
 | Item | Status | Source | Writing treatment |
@@ -60,7 +62,7 @@ Additional grounded inspiration: the Humboldt Juggling Society's festival progra
 - **Living Indigenous governance and land return:** Source Wiyot Tribe documentation of Tuluwat reclamation and ongoing habitat remediation, including the 2019 major land transfer; living nations are not a chronological 'era' replaced by colonists. Sacred history is not fictional occult worldbuilding. https://www.wiyot.us/186/Tuluwat-Project and https://www.wiyot.us/466/Landback
 - **Wildlife, marsh and working landscape:** Humboldt Bay refuge and altered historic marsh habitat provide strong grounded ecology, not blanket claims that all restoration has been completed. https://www.fws.gov/refuge/humboldt-bay/about-us
 
-**Speculative story-only:** tech utopia/dystopia, secret forecasting machine, magical future-overlap, corporate villains, sabotaging anarchist faction, enormous rail corridor, permanent ecological sanctuary, all ten endings. Mark these as future inventions. Research actual disadvantaged communities as living residents with agency, not 'meth and poverty' horror set dressing. Use careful outside cultural review before writing real tribal political positions or culture-specific narratives into the game.
+**Speculative story-only:** tech utopia/dystopia, secret forecasting machine, magical future-overlap, corporate villains, sabotaging anarchist faction, enormous rail corridor, permanent ecological sanctuary, all ten endings. Mark these as future inventions. Research actual disadvantaged communities as living residents with agency, not 'meth and poverty' horror set dressing. Do not write tribe-specific political positions or cultural narratives into this game; that workstream was withdrawn by the owner.
 
 ## Luna and the timber-era conflicts (2026-10-19)
 
@@ -82,4 +84,4 @@ Additional grounded inspiration: the Humboldt Juggling Society's festival progra
 
 ## Tuluwat 1860 and the Mad River naming (2026-10-19)
 
-Sourced summaries, the hat-by-the-door telling (unverified so far; Robert Gunther's documented account is the grounded parallel) and the publication rules (consult the Wiyot Tribe first) are in [HISTORY-THREADS.md](HISTORY-THREADS.md).
+Earlier research and sources are preserved in [HISTORY-THREADS.md](HISTORY-THREADS.md) for internal provenance only. They are not a story brief, consultation plan or publication prerequisite.
