@@ -1,0 +1,20 @@
+version: 1
+project: memory-dungeon
+task: t-017
+operation: done
+owner: worker
+session: 2026-10-22T114300Z-md-region-design-b7d42
+updated: '2026-10-22T11:57:00Z'
+note: >-
+  Merged silasfelinus/conductor#6499 as the first-region implementable
+  design. Draft covers the fixed 11x11 overworld, themed sublevels,
+  geometric combat, reset and difference rooms, progression tools,
+  durable save layers and future art-direction inventory. All PR
+  checks passed, including full 2,939+ test suite. No app or art
+  implementation happened in this document-only task.
+learning:
+  kind: software
+  stakes: reversible
+  passes: 0
+  failure_category: null
+  lesson: "Name a fixed overworld and verify route adjacency before procedural dungeon expansion; preserve separation between map discoveries and nested memory encounters."
