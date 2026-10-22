@@ -879,3 +879,15 @@ tasks:
       Reviewer 2026-10-22: PR #6507 (docs-only balance report refresh, 552-campaign results)
       green on all 23 checks, merged as 940945a.
     implementation_pr: 'silasfelinus/conductor#6507'
+  - id: t-055
+    milestone: m5
+    title: "Inspect Iron Peace eligibility: spurn-all reaches it in 38/40 seeded campaigns"
+    status: ready
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-054 (BALANCE-REPORT.md, 2026-10-22). The Favours-nobody policy lands
+      Iron Peace in 38/40 seeds, which reads as thematically cheap. Inspect the ending's
+      eligibility conditions in kind_robots and tighten the writing/conditions rather than
+      loosening simulation thresholds; re-run the balance report afterward.
