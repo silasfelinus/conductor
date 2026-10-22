@@ -28,4 +28,10 @@ A second pass on the 50-day court game focused on available follower labor, cost
 4. Track player agency through quests and weekly follower availability. The design target is most ordinary quests completable by thoughtful play, with deliberate scarce-resource crises at act endings, rather than an unannounced mathematical impossibility.
 5. Recheck the secret follower recruit flow for free bed, late discovery and carried-over saves; target one actual in-game preview after the private art is published to the frontend.
 
+## Art quality acceptance before frontend registration
+- Each approval requires the expected **animalfolk species** and identifiable costume/prop continuity with existing cast.
+- Choice-specific paintings must visibly depict a distinct decision or consequence; three identical generic court portraits do not count as three results.
+- Ensure opening and result scenes have usable 16:9 framing and still work with a text overlay at XL and narrow displays. Retain the current art as fallback until the new image passes review.
+- Track `requested -> queued -> rendered -> reviewed -> exported -> wired` as separate states. An ArtJob DONE status proves the renderer finished an image, not that an approved, in-game picture exists.
+
 **Current disposition:** keep Conductor t-044 at review until the per-act scored playtest is completed. The completed software and art-queue work is independently mergeable.
