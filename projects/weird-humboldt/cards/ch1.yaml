@@ -992,3 +992,218 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-017
+  revision: 1
+  chapter: 1
+  location: Cal Poly Humboldt campus
+  title: Dorm Room 404
+  tier: invented
+  provenance: Campus dorm life is real; the missing room, its meal plan and the cafeteria ledger are invented fiction with no real student or residence.
+  rarity: common
+  tone:
+  - dry
+  - absurd
+  - warm
+  cast:
+  - The Meal Plan Ledger (a clipboard that answers)
+  - Room 404 (present, politely absent)
+  canon:
+  - Floor four has rooms 401, 402, 403 and 405.
+  - Room 404 has never been assigned, yet its meal plan is the most active on campus.
+  - Nothing in 404 is dangerous; it is simply very hungry for scheduling.
+  scene: 'On the fourth floor the hall skips from 403 to 405, but the card reader beside the gap beeps every few minutes. A laminated slip under the wall panel reads MEAL SWIPES: 212 THIS WEEK. The smell of reheated pasta drifts out of drywall. A student RA stands there with a clipboard, looking like a person who has argued with a room and lost. "It eats better than I do," she says.'
+  options:
+  - id: a
+    label: Swipe your own card at the blank wall
+    skill: wits
+    target: 9
+    success:
+      text: 'The reader accepts you, and the wall shows a menu: three items, one circled in a red pen that is not yours. You learn the room orders for someone who works nights.'
+      effects:
+      - flag:dorm_404_menu
+      - evidence:document
+    failure:
+      text: The reader flashes INSUFFICIENT HAUNTING and eats your swipe for the day. The RA sighs and writes your name down anyway.
+      effects:
+      - time-1
+      - flag:dorm_404_declined
+  - id: b
+    label: Ask the RA what the room has been doing all night
+    skill: rizz
+    target: 7
+    success:
+      text: She confesses the room studies for finals out loud around 3 a.m., and shows you the sign-in sheet. It lists a tutoring schedule you can use.
+      effects:
+      - evidence:schedule
+      - goodwill+1
+      - flag:dorm_ra_ally
+    failure:
+      text: She decides you are from housing and closes the clipboard. "Nothing to report," she says, loudly, to the wall.
+      effects:
+      - nerve-1
+  - id: c
+    label: Slide a dining coupon under the gap
+    skill: none
+    target: null
+    success:
+      text: Something inside takes the coupon with great care and slides back a receipt for one hot meal, owed. It costs you a free draw while you wait for the door to cool.
+      effects:
+      - flag:dorm_404_fed
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara studies the blank wall. "No door, no frame, but the paint is fresher here. Someone keeps touching it up."
+    kit: Kit tries a three-ball cascade for the hallway. "Anything that eats this much deserves a show."
+    juniper: Juniper sniffs the pasta air. "It is lonely, not hungry. Those get confused a lot."
+    cedar: Cedar checks the ceiling tile. "No vents, no gas line, no cook. That is a fine kitchen for something with no hands."
+  callbacks:
+  - dorm_404_menu
+  - dorm_404_declined
+  - dorm_ra_ally
+  - dorm_404_fed
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-018
+  revision: 1
+  chapter: 1
+  location: Cal Poly Humboldt campus
+  title: The Thesis Defense of the Dead
+  tier: invented
+  provenance: Thesis defenses are routine academic practice; the committee member who never graduated or died, and the defense itself, are invented fiction.
+  rarity: uncommon
+  tone:
+  - dry
+  - gothic
+  - funny
+  cast:
+  - Dr. Ellery Marsh (committee member, unfinished, unending)
+  - The Chair (human, tired)
+  canon:
+  - The committee has had the same fifth seat since before the building was renovated.
+  - Dr. Marsh never graduated and never died; he insists both facts are on the form.
+  - A defense passes only when every member signs, including the one who cannot hold a pen.
+  scene: The defense room has five chairs and four nameplates. The fifth chair holds a tweed coat with no one in it, and the coat is asking pointed questions about your methods. The chair of the committee mouths please just answer. A cold cup of coffee refills itself whenever you lie. "I never graduated," the coat says, "and I never died. I am a very rigorous examiner for that reason."
+  options:
+  - id: a
+    label: Defend your argument on its merits
+    skill: wits
+    target: 9
+    success:
+      text: The coat nods slowly, and the fifth nameplate warms to read a real surname. You learn the committee seat hides a map of old campus tunnels.
+      effects:
+      - evidence:geography
+      - flag:thesis_defended
+      - goodwill+1
+    failure:
+      text: Dr. Marsh finds an error in footnote nine that you have not yet committed. The coffee boils over and the room records it.
+      effects:
+      - nerve-1
+      - flag:thesis_flunked
+  - id: b
+    label: Ask Dr. Marsh about his own unfinished work
+    skill: rizz
+    target: 9
+    success:
+      text: 'The coat softens. He passes you a yellowed index card of research notes ending mid-sentence, and a request: finish the sentence for him.'
+      effects:
+      - evidence:document
+      - flag:thesis_marsh_heard
+    failure:
+      text: He takes offense, and the nameplates all rotate one chair to the left, which is not helpful.
+      effects:
+      - time-1
+  - id: c
+    label: Request a recess and read the committee bylaws
+    skill: local_lore
+    target: 7
+    success:
+      text: Bylaw nine allows a living guest to call a witness. You note the clause, a legal pathway the rest of the county will need later.
+      effects:
+      - evidence:history
+      - flag:thesis_bylaw
+    failure:
+      text: The bylaws are in a dead language of footnotes. You come back with a headache and ten fewer minutes.
+      effects:
+      - time-1
+  lead_reactions:
+    mara: Mara studies the coat's seams. "Hand-stitched, mended often. Somebody loved this thing before it started grading."
+    kit: Kit addresses the empty chair with a bow. "A fine examiner deserves a standing ovation and a longer lunch."
+    juniper: Juniper sits quietly beside the coat. "He is not angry. He is waiting to be told he is allowed to finish."
+    cedar: Cedar reads the nameplates. "Four of these are real names. Who put the fifth up, and who is paying the dues?"
+  callbacks:
+  - thesis_defended
+  - thesis_flunked
+  - thesis_marsh_heard
+  - thesis_bylaw
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-019
+  revision: 1
+  chapter: 1
+  location: Cal Poly Humboldt campus
+  title: The Mascot Disputes Biology
+  tier: invented
+  provenance: The campus has a real mascot tradition; the mascot suit developing accurate, unsolicited zoological opinions is invented fiction.
+  rarity: common
+  tone:
+  - absurd
+  - funny
+  - warm
+  cast:
+  - The Mascot (a sentient costume with a master's in zoology)
+  - Bystanders (loyal, embarrassed)
+  canon:
+  - The mascot knows more about local wildlife than anyone on the quad.
+  - It is always correct and never tactful.
+  - It will keep correcting everyone until someone says thank you.
+  scene: A pep rally is in progress when the mascot interrupts the cheer to correct it. "A lumberjack is not a bird," it announces, "and neither is a banana slug, which is a gastropod with opinions." The crowd cheers, then winces. The mascot corrects a nearby sign, a passing crow and a man holding a hot dog. Its voice is warm, relentless and, annoyingly, accurate.
+  options:
+  - id: a
+    label: Challenge it to a trivia duel
+    skill: wits
+    target: 9
+    success:
+      text: You hold your own for six rounds and win on a rare lichen question. The mascot pins a hand-lettered ribbon on you and shares a field guide tip.
+      effects:
+      - evidence:geography
+      - flag:mascot_dueled
+    failure:
+      text: It is right. It is right again. The crowd gives you a kind round of applause that hurts worse than silence.
+      effects:
+      - nerve-1
+  - id: b
+    label: Thank it sincerely for the corrections
+    skill: rizz
+    target: 7
+    success:
+      text: The mascot goes quiet, then bows. "Nobody ever says that," it whispers, and offers a mud-stained map of its favorite quiet stretch of the dunes.
+      effects:
+      - evidence:geography
+      - goodwill+1
+      - flag:mascot_thanked
+    failure:
+      text: It hears sarcasm that is not there and corrects your gratitude for three minutes while the rally empties.
+      effects:
+      - time-1
+  - id: c
+    label: Lead it away to a quieter lawn
+    skill: none
+    target: null
+    success:
+      text: You steer the mascot toward the grass, where it names every plant on the way. The detour costs time and a free draw, but it stops shouting.
+      effects:
+      - flag:mascot_walked
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara admires the stitching on the costume. "The seam work is gorgeous. Whoever built this took pride in being corrected."
+    kit: Kit starts a rhythm with the crowd. "If it is going to lecture, it deserves a backbeat."
+    juniper: Juniper looks at the mascot with respect. "It says the true things loudly. That is a hard way to live."
+    cedar: Cedar nods. "Corrections save time. I like it better than the folks who nod and get it wrong."
+  callbacks:
+  - mascot_dueled
+  - mascot_thanked
+  - mascot_walked
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
