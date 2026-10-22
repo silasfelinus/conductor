@@ -847,8 +847,8 @@ def validate_endings(path: Path, packs: list[Path]) -> list[str]:
         trig = e.get("trigger") or {}
         if e["kind"] == "board":
             oid = trig.get("department_outcome")
-            if oid not in outcome_ids or oid == fallback:
-                errors.append(f"{w} must name a non-fallback outcome of {boss.get('id')!r}")
+            if oid not in outcome_ids:
+                errors.append(f"{w} must name an outcome of {boss.get('id')!r}")
             board_outcomes.add(oid)
         else:
             if trig.get("status") != "eliminated":
@@ -875,7 +875,7 @@ def validate_endings(path: Path, packs: list[Path]) -> list[str]:
             if not isinstance(vt, str) or not vt.rstrip().endswith((".", "!", "?")):
                 errors.append(f"{w} variant text must be a complete sentence")
     for oid in outcome_ids:
-        if oid != fallback and oid not in board_outcomes:
+        if oid not in board_outcomes:
             errors.append(f"ENDINGS: outcome {oid!r} of {boss.get('id')!r} has no ending")
     if defaults != 1:
         errors.append(f"ENDINGS: need exactly one default elimination ending, have {defaults}")
