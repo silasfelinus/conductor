@@ -91,3 +91,41 @@ For every board size and weapon:
 - Verify Classic Match scoring, lives and reward system are unchanged.
 
 **Prototype decision gate:** retain the simplest ruleset that makes an accurately remembered board meaningfully more powerful than an unknown board. Simulated board runs and real adversarial playtest observations, not an aesthetic preference, decide whether weapon shapes are *attacks*, *reveals*, or both.
+
+## Bullseyes, precision damage and Minesweeper-style danger rooms (Silas, 2026-10-22 PT)
+
+**Creative direction:** "a weapon can have a stronger hit if the image is inside the bullseye space ... having a giant minesweeper type screen for some levels, you can almost have to puzzle out to not mess up a solution."
+
+### Bullseye is a position the player understands, not a random crit
+
+Every weapon mask may designate one or more **sweet-spot cells** relative to its anchor. The preview must show the exact primary cell(s) and the peripheral coverage before commit. The damage/skill effect depends on what *the player correctly remembers and deliberately targets*, not on a hidden random crit probability.
+
+Recommended prototype:
+- A weapon's footprint reveals N cells. Complete matching pairs in the footprint are resolved according to the base combat rules.
+- A complete pair that includes a marked **bullseye coordinate** gets an enhanced hit, guard effect or specific status (not a guaranteed extra match); a matched pair away from the bullseye is an ordinary hit. If the bullseye reveals an unmatched card, it gives information but no automatic critical.
+- On some enemies, the player must target a telegraphed **specific symbol** in the bullseye (e.g. strike the oath sigil exactly at the hammerhead) for a stagger or pacification. Do not require guessing an unseen symbol to unlock mandatory progress.
+- Some legendary items can offer offset or double bullseyes as a tradeoff to area size or tempo cost. Allow pattern rotation and clear touch/keyboard anchoring; target regions should be much larger than finger precision.
+
+**Test case:** When a player has remembered two equal images in positions (2,3) and (4,3), the selected shape might capture both but put the wrong image in its bullseye. A more deliberate rotated strike should reward the player's knowledge. Compare mean turns/damage for correct-memory versus random targeting to validate.
+
+### Dedicated puzzle-floor modifier: The Minefield Archives
+
+Certain deeper floors or special vault rooms replace the small match stage with a **large, scroll-contained or zoomable grid** (e.g. 8×8 or 10×10). A Minesweeper-style room contains **reliable local clue numbers**, safe tiles, hidden traps and a goal path or relic. The player must deduce safe squares, decide whether to bypass optional loot and select weapon footprints without triggering known danger. It is *not* just a giant normal memory board.
+
+- Floor draw announces this room type and its special rules. Board generation is seeded.
+- Reveal a safe tile to uncover an adjacent-hazard count. Let players flag suspected mines and use visible known clues to reason forward.
+- The solver/validator must establish that **mandatory objectives can be completed by logic, without a required blind guess** from the initially disclosed clues and subsequent deductions. If the generator cannot guarantee this, offer a visible hint/alternative route rather than disguising chance as logic.
+- Weapon-mask strikes on these floors interact with hazards. A bullseye strike can **disarm** a correctly located trap, but broad accidental coverage can trigger a warning, curse or damage. Before commit, show known risks, shape, sweet spot and whether the action is reversible.
+- Avoid catastrophic instant death on the first unknown mine. Use escalating, telegraphed consequences and a recoverable exit; optional treasure can carry voluntary risk.
+- The player may need to protect a tile rather than clear it, route around a fragile clue, or remove just one precise trap. Nonlethal errors should alter the story or room resources.
+- Accessibility: expose clue counts and coordinate navigation in text/ARIA; flags distinguishable by more than color, keyboard and touch accessible, no precision timers.
+
+### Combinations worth prototyping
+
+- **Needle Rapier:** only 1–2 cells, but when the marked image sits on the bullseye it deals high precision damage. Ideal for careful recollection, weak for blind scouting.
+- **Mason's Hammer:** three diagonal reveals; a correctly placed center glyph stuns an armored enemy but missing the center lets it retaliate.
+- **Surveyor's Lens:** reveals the hazard count around one cell without attacking. Synergizes with the Minefield Archives and a companion who remembers board changes.
+- **Bombardier's Grimoire:** a 2×2 blast can remove multiple hazards but destroys nearby treasure unless an exact central pair is identified first.
+- **The Oath Bell:** rings when a previously revealed image is centered on the sweet spot; it amplifies the damage but advances the dungeon's Danger track.
+
+Treat these as candidate effects. The *smallest fun, provably fair ruleset* wins after playtest. A large board is appropriate for an occasional set piece, not for every corridor battle.
