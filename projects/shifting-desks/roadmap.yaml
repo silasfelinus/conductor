@@ -580,13 +580,15 @@ tasks:
   - id: t-034
     milestone: m3
     title: 'Tone ladder text pass: Wellness and Sub-Level Zero card flavor'
-    status: claimed
+    status: review
     depends_on: t-033
     passes: 0
     stakes: reversible
-    updated: '2026-10-22T22:49:00Z'
+    updated: '2026-10-22T22:55:00Z'
     note: |-
       Carry the t-033 tone ladder into the words players actually read. The 48 Wellness and Sub-Level Zero encounter cards, both reviews and both window shifts should gain body-horror texture in their flavor_text and outcome text, in the ART-DIRECTION.md "Tone ladder" register: PAL's grilles that lean in, furniture that breathes, mutations reported cheerfully by HR, and the Board as one organism. Change no mechanics, ids, flags or grades, so BALANCE-REPORT and FLAG-MAP stay byte-identical, which proves it. Keep the brief's tone guardrails (no blood, wounds or self-harm). Mirror the text into the kind_robots utils/shiftingDesks/wellness.json and sub-level-zero.json snapshots (art_prompt too, so the nine t-033 station prompts and the Western Cartoon/Noir STYLE-CATALOG rows can follow), then check the desk at 390 and 1440.
+
+      Lower-floor prose pass on canonical Conductor and Kind Robots branches. The source changes cover 48 encounter introductions, every choice-result text, two bosses and window shifts; runtime additionally adopts current station art prompts. Mechanical JSON fields remain unchanged. Preparing scoped PRs and CI.
     owner: worker
     claimed_by: 2026-10-22T224900Z-shifting-desks-t034-gpt6-9f31
     claimed_at: '2026-10-22T22:49:00Z'
