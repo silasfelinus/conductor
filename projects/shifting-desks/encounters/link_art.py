@@ -80,7 +80,7 @@ def slots(pack: dict):
 
 
 def accepted(row: dict | None) -> bool:
-    return bool(row) and row.get("status") == "delivered" and not str(row.get("verdict") or "").startswith("redo")
+    return bool(row) and row.get("status") == "delivered" and str(row.get("verdict") or "").strip().lower().startswith("keep")
 
 
 def reconcile(pack: dict, index: dict[str, dict], write: bool = False) -> tuple[list[str], list[str]]:
