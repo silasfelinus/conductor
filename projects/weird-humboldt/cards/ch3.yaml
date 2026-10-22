@@ -531,3 +531,224 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+
+- id: WH-041
+  revision: 1
+  chapter: 3
+  location: Old Town Eureka
+  title: The Victorian with Too Many Windows
+  tier: invented
+  provenance: Old Town Eureka's Victorian architecture is real; this house, its windows and its boarder are invented fiction and depict no real building or resident.
+  rarity: rare
+  tone:
+  - eerie
+  - droll
+  - gothic
+  cast:
+  - The House (adds windows, fixed)
+  - Miss Adelaide Pruitt (a boarder who counts, wary)
+  canon:
+  - A Victorian adds one window each time a secret is spoken within earshot.
+  - The windows all look out onto rooms that are not in the house.
+  - Miss Pruitt has been counting for eleven years and has never been wrong.
+  scene: Between a bakery and a bank stands a Victorian with more windows than a house can hold, every pane lit from within. A new one blinks open as you read the front door's brass plate. Miss Pruitt sits on the porch with a notebook, tallying. "Careful what you say near it," she says. "It collects." She turns a page. "That was fourteen." The windows seem to face an audience.
+  options:
+  - id: a
+    label: Look through a window that just appeared
+    skill: wits
+    target: 9
+    success:
+      text: 'The new window shows a room you have never been in but know: a chair, a lamp and a letter addressed to someone who died here. You memorize the street of its return address.'
+      effects:
+      - evidence:document
+      - evidence:geography
+      - flag:windows_looked
+    failure:
+      text: The window shows you looking, then looks back, and you step away with a headache and the feeling you have been catalogued.
+      effects:
+      - nerve-1
+      - weird+1
+  - id: b
+    label: Tell the house a harmless secret on purpose
+    skill: psyche
+    target: 9
+    success:
+      text: You confide something small and kind. A window opens onto a warm kitchen, and Miss Pruitt writes a number in her notebook and smiles for the first time in years.
+      effects:
+      - goodwill+1
+      - flag:windows_confided
+      - evidence:memory
+    failure:
+      text: The secret turns out to be heavier than you meant. A cold window opens above your head and watches for a long time.
+      effects:
+      - nerve-1
+      - flag:windows_cold
+  - id: c
+    label: Sit on the porch and help Miss Pruitt count
+    skill: none
+    target: null
+    success:
+      text: You count windows alongside her, and by dusk you have fixed the number at forty-one, which she pronounces correct. She gives you the front key to remember her by.
+      effects:
+      - flag:windows_counted
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara watches the glass. "Every pane is hand-leaded. Whoever built these windows loved secrets and hated doors."
+    kit: Kit whispers. "A house that listens. Finally, a landlord with taste."
+    juniper: Juniper puts a palm to the wall. "The house isn't greedy. It's lonely, and secrets are the only company that stays."
+    cedar: Cedar looks up at the eaves. "Counting like that takes years. She's not a boarder. She's the house's friend."
+  callbacks:
+  - windows_looked
+  - windows_confided
+  - windows_cold
+  - windows_counted
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-042
+  revision: 1
+  chapter: 3
+  location: Old Town Eureka
+  title: Antique Shop of Almost-Famous Objects
+  tier: invented
+  provenance: Old Town Eureka has real antique shops; this one, its stock and its shopkeeper are invented fiction and depict no real business, person or artifact.
+  rarity: common
+  tone:
+  - wry
+  - funny
+  - warm
+  cast:
+  - Barnaby Fenn (shopkeeper, honest, fixed)
+  - A Spoon Used by the Second Man on the Moon (disputed)
+  canon:
+  - The shop sells history's second-best cursed relics at honest prices.
+  - Every item has a certificate that says exactly how close it came to being famous.
+  - Barnaby will refund anything that turns out to be actually cursed.
+  scene: 'A bell chimes the moment you step inside. Shelves are crowded with objects tagged in neat handwriting: THE SECOND-BEST CROWN OF A MINOR KING, A LAMP THAT ALMOST GRANTED A WISH. Barnaby, a round man in a cardigan, waves from behind the register. "Everything here nearly changed the world," he says. "Nothing did, so the prices are fair." A music box in the corner is playing, a little sadly, a song that has never been written.'
+  options:
+  - id: a
+    label: Haggle for the lamp that almost granted a wish
+    skill: rizz
+    target: 7
+    success:
+      text: Barnaby accepts your offer with an air of ceremony. The lamp, when you polish it, grants nothing, but a slip of paper falls out with a name and a date on it.
+      effects:
+      - evidence:document
+      - flag:shop_lamp
+      - goodwill+1
+    failure:
+      text: Barnaby declines gently, citing integrity. The lamp gives off a faint hopeful sigh, and you leave with your wallet intact and your pride dented.
+      effects:
+      - nerve-1
+  - id: b
+    label: Study the certificates for a pattern
+    skill: wits
+    target: 9
+    success:
+      text: Every certificate was written in the same hand and ends with a different year. The years spell out a schedule, and one date is not yet past.
+      effects:
+      - evidence:schedule
+      - evidence:calendar
+      - flag:shop_certificates
+    failure:
+      text: You read for an hour and find only fine print about refunds. Barnaby, delighted, offers you tea and asks if you'd like to read the terms again.
+      effects:
+      - time-1
+      - evidence:rumor
+  - id: c
+    label: Buy the music box and let it finish
+    skill: none
+    target: null
+    success:
+      text: You pay Barnaby and let the unwritten song finish. In the quiet after, he tells you where the tune is from, and who nearly wrote it.
+      effects:
+      - flag:shop_music_box
+      - goodwill+1
+      - evidence:history
+  lead_reactions:
+    mara: Mara turns a pendant over. "Second-best cursed. Honest of him. Most shops oversell."
+    kit: Kit grins at the tags. "An archive of nearlys. Nothing in this room is trying to impress me, and I'm charmed."
+    juniper: Juniper touches the music box. "The song knows it was never written. It plays anyway, which is its own sort of grace."
+    cedar: Cedar reads a certificate. "Honest dealer. That's rarer than a cursed lamp in this county."
+  callbacks:
+  - shop_lamp
+  - shop_certificates
+  - shop_music_box
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-058
+  revision: 1
+  chapter: 3
+  location: Sequoia Park Zoo
+  title: A Peacock with a Search Warrant
+  tier: invented
+  provenance: Sequoia Park Zoo in Eureka is real; the peacock, the warrant and the missing color are invented fiction, and no real animal or staff member is depicted.
+  rarity: uncommon
+  tone:
+  - officious
+  - absurd
+  - dry
+  cast:
+  - Inspector Plume (a peacock with legal standing, fixed)
+  - The Missing Color (blue-green, unaccounted for)
+  canon:
+  - An extremely official peacock investigates a color that has gone missing from the park.
+  - The peacock's warrant is real in the way things are real at a zoo at night.
+  - The color was last seen in the pond and has an alibi that does not hold.
+  scene: A peacock in a tiny badge fans its tail and the blue-green at its center is missing, leaving a pale outline like a stencil. "Madam, sir," says Inspector Plume, in the clipped voice of the very upright, "I hold a warrant to search the persons of anyone who has been near the pond." He unrolls a leaf with a seal on it. The pond behind him is, unnervingly, a flat unremarkable gray.
+  options:
+  - id: a
+    label: Submit to the search with good grace
+    skill: rizz
+    target: 7
+    success:
+      text: You turn out your pockets and Plume inspects each item with a magnifying monocle. He declares you clear and, in thanks, gives you a feather that holds a pinch of the missing color.
+      effects:
+      - goodwill+1
+      - flag:peacock_cleared
+      - evidence:document
+    failure:
+      text: Plume finds a button the exact shade he's seeking and declares you a person of interest. You spend an hour explaining it.
+      effects:
+      - time-1
+      - flag:peacock_suspect
+  - id: b
+    label: Investigate the pond for the stolen color
+    skill: wits
+    target: 9
+    success:
+      text: 'At the edge of the pond you find the missing color stored in a jar of water, hidden among the reeds with a tidy note: BORROWED, WILL RETURN.'
+      effects:
+      - evidence:document
+      - evidence:rumor
+      - flag:peacock_color_found
+    failure:
+      text: The pond is mud and gray and has nothing to say. A frog watches you search and politely does not volunteer.
+      effects:
+      - nerve-1
+      - time-1
+  - id: c
+    label: Offer Plume your own color as a gesture
+    skill: none
+    target: null
+    success:
+      text: You tell Plume a story about a blue you once loved. He listens with great seriousness, then lays his tail to rest and admits the missing color was his to lose.
+      effects:
+      - flag:peacock_confession
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara eyes the stencil of color. "That's an outline, not an absence. Something tagged it, like a tattoo before the ink."
+    kit: Kit salutes the bird. "I've been interrogated by worse. The warrant is frankly better written than most scripts."
+    juniper: Juniper crouches by the pond. "The color isn't stolen. It went somewhere it was needed and forgot to tell anyone."
+    cedar: Cedar nods respectfully. "Peacocks take their jobs seriously. He'll find it by supper, or he won't sleep."
+  callbacks:
+  - peacock_cleared
+  - peacock_suspect
+  - peacock_color_found
+  - peacock_confession
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

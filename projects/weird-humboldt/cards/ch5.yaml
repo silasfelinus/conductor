@@ -528,3 +528,228 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+
+- id: WH-085
+  revision: 1
+  chapter: 5
+  location: Ferndale Main Street
+  title: Parade Float of Future Regrets
+  tier: invented
+  provenance: Ferndale's Main Street and its Victorian character are real; the float, its driver and its accuracy are invented fiction and depict no real parade or entrant.
+  rarity: rare
+  tone:
+  - satirical
+  - wry
+  - uncanny
+  cast:
+  - The Float (accurate, fixed)
+  - Orrin Tallow (the float's driver, apologetic)
+  canon:
+  - A parade float depicts the player's decisions with embarrassing accuracy.
+  - Every figure on the float is made of paper and holds a small sign naming a choice.
+  - The float cannot be steered away from its target, only slowed.
+  scene: A parade float rolls down Main Street with slow, regretful dignity. On it, paper figures act out the last few choices you made, in order, with excruciating fidelity. One of them wears your coat. A small sign beside it reads WHAT SEEMED REASONABLE AT THE TIME. Orrin, the driver, leans from the cab. "Sorry," he says. "I just drive it. I don't write the signs."
+  options:
+  - id: a
+    label: Read the figures carefully for what's next
+    skill: wits
+    target: 9
+    success:
+      text: At the end of the tableau a new paper figure is half-finished, holding a sign whose first words you can read. They describe a choice you can still make differently.
+      effects:
+      - evidence:rumor
+      - evidence:schedule
+      - flag:float_read
+      - weird+1
+    failure:
+      text: The sign you read describes an old choice, in too much detail, and you spend ten minutes arguing with it. The crowd cheers politely.
+      effects:
+      - nerve-1
+      - time-1
+  - id: b
+    label: Climb aboard and rewrite one of the signs
+    skill: rizz
+    target: 11
+    success:
+      text: You ride the float down the block rewriting a sign in your own hand. The paper figure straightens and bows, and the crowd's applause sounds strangely like relief.
+      effects:
+      - goodwill+1
+      - flag:float_rewritten
+      - clarity+1
+    failure:
+      text: The marker runs dry and the sign becomes something worse. The float turns slowly toward the next block as if satisfied.
+      effects:
+      - nerve-1
+      - flag:float_worse
+  - id: c
+    label: Walk beside the float with Orrin
+    skill: none
+    target: null
+    success:
+      text: You keep pace with the float and let Orrin talk. He admits he's been driving it for years and knows how every sign ends. He tells you one, quietly, to take with you.
+      effects:
+      - flag:float_companion
+      - goodwill+1
+      - evidence:history
+  lead_reactions:
+    mara: Mara reads the placard. "Accurate. Smug. Illustrated. I've been written up worse."
+    kit: Kit claps along dutifully. "The first review of my life that gets all the details right."
+    juniper: Juniper keeps her distance. "It's not cruel. It's honest, and honesty is rude at a parade."
+    cedar: Cedar nods at Orrin. "Fella's apologizing for the weather, basically. You ride the float, you ride it out."
+  callbacks:
+  - float_read
+  - float_rewritten
+  - float_worse
+  - float_companion
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-086
+  revision: 1
+  chapter: 5
+  location: Fortuna
+  title: The River Lodge Has No Exit
+  tier: invented
+  provenance: Fortuna and its riverside lodging are real in spirit; this conference room, its facilitator and its endless sessions are invented fiction and depict no real venue or business.
+  rarity: uncommon
+  tone:
+  - claustrophobic
+  - droll
+  - bureaucratic
+  cast:
+  - The Conference Room (exits into all others, fixed)
+  - Penelope Hargrove (a facilitator, unflappable)
+  canon:
+  - A conference room's exit opens into every other conference room at once.
+  - The breakout sessions are real and mandatory.
+  - The only way out is to reach consensus on something small.
+  scene: You push the door marked EXIT and step into a conference room identical to the one you left. Penelope smiles from the front, marker poised. "Welcome back," she says, which is odd. "We are on the fourth agenda item." Through the glass you can see a hundred other rooms, a hundred other Penelopes, and a hundred other versions of yourself looking for the door. The coffee is, at least, free.
+  options:
+  - id: a
+    label: Propose an agenda item and call for a vote
+    skill: rizz
+    target: 9
+    success:
+      text: You propose that the group adjourn and the room votes yes, unanimously. The door that opens leads outside, onto a pleasant parking lot, with a nameplate engraved as a thank-you.
+      effects:
+      - goodwill+1
+      - flag:lodge_adjourned
+      - evidence:document
+    failure:
+      text: Your motion is tabled, amended, and re-tabled. You are a committee of one on four subcommittees by the time Penelope calls a break.
+      effects:
+      - time-1
+      - nerve-1
+  - id: b
+    label: Search the rooms for the real exit
+    skill: wits
+    target: 9
+    success:
+      text: You cross room after room, noticing small differences in the carpet. In one, a window is cracked an inch. Outside it, a river and a route that is not on any map.
+      effects:
+      - evidence:geography
+      - evidence:rumor
+      - flag:lodge_window
+    failure:
+      text: Each door opens into the same room with fresh handouts. You return to the first, which has your name on a placard now.
+      effects:
+      - nerve-1
+      - flag:lodge_placard
+  - id: c
+    label: Take a seat and help Penelope facilitate
+    skill: none
+    target: null
+    success:
+      text: You take the second marker and help Penelope work the whiteboard. By lunch, the room finds consensus on something small and sets you free with a lanyard and a plate of pastries.
+      effects:
+      - flag:lodge_facilitated
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara scans the room. "Same carpet, same hum. Whoever built this really doesn't want you to leave."
+    kit: Kit raises a hand. "I'd like to table a motion to escape. Seconded by my own reflection."
+    juniper: Juniper breathes slowly. "The room isn't trapping us. It just can't decide, and that's contagious."
+    cedar: Cedar eyes the door. "I've been in worse places than a meeting. Not many, but some."
+  callbacks:
+  - lodge_adjourned
+  - lodge_window
+  - lodge_placard
+  - lodge_facilitated
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-097
+  revision: 1
+  chapter: 5
+  location: Eel River Valley
+  title: The Moonshine of Mixed Timelines
+  tier: invented
+  provenance: The Eel River Valley is real; Hollis, the jar and its fictional effect are invented fiction and depict no real person, product or practice, and nothing here describes making or using any substance.
+  rarity: uncommon
+  tone:
+  - warm
+  - uncanny
+  - funny
+  cast:
+  - Hollis Greer (a home-brewer, generous, fixed)
+  - A Mason Jar (clear, deceptive)
+  canon:
+  - A homebrewed drink makes two contradictory memories equally convincing.
+  - The brew is harmless and the memories are not, until they are shared with someone else.
+  - Hollis only pours for people who promise to compare notes afterward.
+  scene: On a porch above the valley a man in suspenders is polishing a mason jar of something clear and slightly iridescent. "Hollis," he says, and tips the jar toward you. "Take a sip and you'll remember two things that can't both be true. They'll both feel right." He grins. "The trick is to bring them back to me afterward. That's the whole recipe." The valley below shimmers in two slightly different directions.
+  options:
+  - id: a
+    label: Take a sip and compare your two memories
+    skill: psyche
+    target: 9
+    success:
+      text: You taste two afternoons at once, one where you left early and one where you stayed. Hollis writes both down, and you leave with a better memory than either alone.
+      effects:
+      - evidence:memory
+      - clarity+1
+      - flag:moonshine_compared
+      - weird+1
+    failure:
+      text: The two memories tangle and each insists on being the true one. You spend an hour sorting them on Hollis's porch, shaken but kindly handled.
+      effects:
+      - nerve-1
+      - flag:moonshine_tangled
+  - id: b
+    label: Ask Hollis about the contradictions he's collected
+    skill: rizz
+    target: 7
+    success:
+      text: Hollis opens a ledger of paired memories from the valley, each noted with a date and a name. He lets you read a few, and gives you the most useful pair as a gift.
+      effects:
+      - goodwill+1
+      - evidence:document
+      - flag:moonshine_ledger
+    failure:
+      text: Hollis laughs and changes the subject. He pours you lemonade instead, with a gentle shake of the head that means not today.
+      effects:
+      - time-1
+      - evidence:rumor
+  - id: c
+    label: Decline the jar and share the porch
+    skill: none
+    target: null
+    success:
+      text: You sit on the porch without drinking, and Hollis tells you the one memory of his own that he never keeps in a jar. It is simple and true, and it goes a long way.
+      effects:
+      - flag:moonshine_porch
+      - goodwill+1
+      - evidence:history
+  lead_reactions:
+    mara: Mara keeps her hands in her lap. "I know what two contradictory memories feel like. I just don't sign up for it voluntarily."
+    kit: Kit sniffs the jar and smiles. "It smells like two equally excellent Septembers. I respect the craft."
+    juniper: Juniper looks out at the valley. "Hollis isn't tricking anyone. He's keeping a library of people's second thoughts."
+    cedar: Cedar nods at the porch. "Man who makes that for company, not profit. That's an old kind of hospitality."
+  callbacks:
+  - moonshine_compared
+  - moonshine_tangled
+  - moonshine_ledger
+  - moonshine_porch
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

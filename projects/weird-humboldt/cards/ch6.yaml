@@ -529,3 +529,225 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+
+- id: WH-103
+  revision: 1
+  chapter: 6
+  location: Arcata Plaza, kinetic starting line
+  title: The Engineering Judge from Elsewhere
+  tier: invented
+  provenance: The kinetic sculpture race tradition is real in spirit; the visiting judge, her clipboard and her scoring are invented fiction, and no real race official is depicted.
+  rarity: rare
+  tone:
+  - deadpan
+  - absurd
+  - bureaucratic
+  cast:
+  - The Judge (visiting, impartial, fixed)
+  - The Scoring Clipboard (legible only to the Judge)
+  canon:
+  - A judge from elsewhere gives perfect scores for violating Earth's physics.
+  - The Judge is sincerely trying to be fair by the standards of somewhere else.
+  - Contestants who explain their machine's failure get higher marks than those who explain its success.
+  scene: At the starting line, a tall judge in a pressed gray coat inspects each craft with an expression of grave delight. She awards a perfect score to a bicycle that is clearly on fire. "Excellent defiance of conservation," she says in a pleasant, flat voice. "Ten." She turns to you, clipboard raised, and asks you to explain what you have built. You have, at best, a plan.
+  options:
+  - id: a
+    label: Present your plan as a machine
+    skill: rizz
+    target: 9
+    success:
+      text: You describe your plan with such conviction that the Judge scores it a nine and offers a note. The note, once translated, contains a shortcut and an apology.
+      effects:
+      - goodwill+1
+      - flag:judge_impressed
+      - evidence:document
+    failure:
+      text: The Judge scores your plan a three for conventional adhesion to physics. Her pen taps the clipboard in something like sympathy.
+      effects:
+      - nerve-1
+      - time-1
+  - id: b
+    label: Ask the Judge how she scores
+    skill: wits
+    target: 9
+    success:
+      text: She is delighted to be asked. She explains that on her world, rules are the thing you have not yet broken. You learn what she values and where the course is weakest.
+      effects:
+      - evidence:rumor
+      - evidence:history
+      - flag:judge_rubric
+    failure:
+      text: The explanation is lovely but incomprehensible, and you nod your way through it with a vague sense of having failed an exam you did not know you were taking.
+      effects:
+      - time-1
+      - weird+1
+  - id: c
+    label: Let her inspect your craft in silence
+    skill: none
+    target: null
+    success:
+      text: The Judge circles your craft slowly, pen still, and then writes one word on the clipboard. She does not show you, but she smiles, and nods you toward the course.
+      effects:
+      - flag:judge_silent_nod
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara watches the burning bicycle. "Ten out of ten. I hope someone's got an extinguisher at the finish."
+    kit: Kit applauds the Judge. "An arbiter who rewards disaster. I could tour with her."
+    juniper: Juniper steps back. "She isn't judging us. She's collecting how people try."
+    cedar: Cedar nods at the bicycle. "Seen worse engineering in a county fair. She's right about the defiance."
+  callbacks:
+  - judge_impressed
+  - judge_rubric
+  - judge_silent_nod
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-107
+  revision: 1
+  chapter: 6
+  location: Manila dunes, kinetic course
+  title: Sand Castle with a Mayor
+  tier: invented
+  provenance: The Manila dunes are a real place; the sand castle, its mayor and its council are invented fiction and depict no real government or official.
+  rarity: uncommon
+  tone:
+  - petty
+  - funny
+  - civic
+  cast:
+  - Mayor Quartz (a miniature, elected by grains, fixed)
+  - The Tiny Council (nine ants in sashes)
+  canon:
+  - A miniature sand government attempts to reroute the race through its jurisdiction.
+  - 'The mayor has an actual platform: no one has ever crossed the dunes without permission.'
+  - The Tiny Council meets on the hour and votes with its antennae.
+  scene: A castle the size of a hatbox sits in the sand, flags snapping, battlements immaculate. A speck in a sash climbs the tallest tower. "By the authority vested in me by approximately three thousand grains," Mayor Quartz announces in a voice like a whisper through a flute, "this course is hereby rerouted through the Municipal Moat." Nine ants raise their antennae in solemn assent. The race marshal is nowhere to be found.
+  options:
+  - id: a
+    label: Petition the council for safe passage
+    skill: rizz
+    target: 7
+    success:
+      text: You address the ants as honored members. They confer, vote, and issue a tiny seal on a grain of sand granting you permission to cross, with a note about the tide.
+      effects:
+      - goodwill+1
+      - flag:sand_passage
+      - evidence:document
+    failure:
+      text: The council finds your petition vulgar. The mayor assesses a fine, payable in future dunes, and you leave a little less sure of your standing.
+      effects:
+      - nerve-1
+      - flag:sand_fined
+  - id: b
+    label: Scout the dunes for a route around the castle
+    skill: wits
+    target: 9
+    success:
+      text: You map a path between ridges that skirts the moat and respects the mayor's borders. The ants, watching, are impressed enough to wave you through.
+      effects:
+      - evidence:geography
+      - evidence:schedule
+      - flag:sand_route
+    failure:
+      text: The dunes shift and the castle ends up on both sides of you, and you lose the route entirely. The mayor waves benevolently as you retrace.
+      effects:
+      - time-1
+      - nerve-1
+  - id: c
+    label: Compliment the architecture and move on
+    skill: none
+    target: null
+    success:
+      text: You praise the crenellations and the mayor swells with pride. A small gate opens, and a parade of ants sees you off with a single, perfectly timed cheer.
+      effects:
+      - flag:sand_compliment
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara kneels to look at the moat. "The brickwork is flawless. If this is a joke, it's a very committed one."
+    kit: Kit bows deeply to the mayor. "A politician with integrity and no real power. I think I love him."
+    juniper: Juniper smiles. "It's a tiny democracy, built from sand and sincerity. It will outlast the rest of us."
+    cedar: Cedar frowns at the ants. "Ants vote by scent. Whoever planned this knows their politics."
+  callbacks:
+  - sand_passage
+  - sand_fined
+  - sand_route
+  - sand_compliment
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-116
+  revision: 1
+  chapter: 6
+  location: Ferndale finish line
+  title: The Trophy with a Pulse
+  tier: invented
+  provenance: The Ferndale finish line is a real tradition in spirit; the trophy, its pulse and the name it whispers are invented fiction, and the real names of Wiyot and other peoples' places are treated with care, not claimed or invented here.
+  rarity: rare
+  tone:
+  - warm
+  - uncanny
+  - solemn
+  cast:
+  - The Trophy (alive, gracious, fixed)
+  - The Plaque (reads the county's original name)
+  canon:
+  - A trophy congratulates winners and whispers the county's original name.
+  - The trophy's pulse speeds up when someone tells it a true thing.
+  - The original name is not a secret; it is a gift handed over when asked correctly.
+  scene: On the finish-line table, the trophy is gleaming and, quietly, breathing. Its base lifts and settles like a chest. "Well done," it says, in a voice like warm brass. "I mean it." It tilts toward you. "Ask me what this place was called, before the county, and I will tell you what I am allowed to." The crowd around you has gone gently quiet, as if hearing something very old.
+  options:
+  - id: a
+    label: Ask the trophy respectfully what it may share
+    skill: psyche
+    target: 9
+    success:
+      text: You ask without demanding, and the trophy answers with a careful, partial name and a reminder that the rest belongs to those who still speak it. It points you toward whom to ask.
+      effects:
+      - evidence:history
+      - evidence:geography
+      - flag:trophy_asked
+      - goodwill+1
+    failure:
+      text: You ask too casually, and the trophy's pulse dims. It says only, quietly, that some names deserve more than curiosity.
+      effects:
+      - nerve-1
+      - flag:trophy_dimmed
+  - id: b
+    label: Tell the trophy something true about your journey
+    skill: rizz
+    target: 7
+    success:
+      text: You tell it honestly what the trip has been. The trophy's pulse quickens, and it whispers a line of encouragement and a landmark you hadn't thought to look for.
+      effects:
+      - goodwill+1
+      - flag:trophy_told
+      - evidence:rumor
+    failure:
+      text: The truth comes out clumsy and the trophy winces kindly. It thanks you for trying and goes still, its pulse a patient drumbeat.
+      effects:
+      - time-1
+  - id: c
+    label: Stand with the trophy and hold its hand, so to speak
+    skill: none
+    target: null
+    success:
+      text: You rest a palm on its base and feel the pulse steady. It does not speak again, but you leave with the sense of having been thanked by something older than the race.
+      effects:
+      - flag:trophy_companion
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara touches the base lightly. "There's a heartbeat in there. I'm not going to ask whose."
+    kit: Kit lowers his voice. "A trophy with manners. If only every award did."
+    juniper: Juniper steps back with care. "Some names are not mine to ask for. The trophy knows the difference, and so should we."
+    cedar: Cedar takes off his hat. "That's the first trophy I ever felt like thanking. Good heart, whoever made it."
+  callbacks:
+  - trophy_asked
+  - trophy_dimmed
+  - trophy_told
+  - trophy_companion
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
