@@ -580,16 +580,17 @@ tasks:
   - id: t-034
     milestone: m3
     title: 'Tone ladder text pass: Wellness and Sub-Level Zero card flavor'
-    status: review
+    status: done
     depends_on: t-033
     passes: 0
     stakes: reversible
-    updated: '2026-10-22T22:55:00Z'
+    updated: '2026-10-22T23:04:00Z'
     note: |-
       Carry the t-033 tone ladder into the words players actually read. The 48 Wellness and Sub-Level Zero encounter cards, both reviews and both window shifts should gain body-horror texture in their flavor_text and outcome text, in the ART-DIRECTION.md "Tone ladder" register: PAL's grilles that lean in, furniture that breathes, mutations reported cheerfully by HR, and the Board as one organism. Change no mechanics, ids, flags or grades, so BALANCE-REPORT and FLAG-MAP stay byte-identical, which proves it. Keep the brief's tone guardrails (no blood, wounds or self-harm). Mirror the text into the kind_robots utils/shiftingDesks/wellness.json and sub-level-zero.json snapshots (art_prompt too, so the nine t-033 station prompts and the Western Cartoon/Noir STYLE-CATALOG rows can follow), then check the desk at 390 and 1440.
 
       Lower-floor prose pass on canonical Conductor and Kind Robots branches. The source changes cover 48 encounter introductions, every choice-result text, two bosses and window shifts; runtime additionally adopts current station art prompts. Mechanical JSON fields remain unchanged. Preparing scoped PRs and CI.
-    owner: worker
+
+      Shifting Desks lower-floor tone ladder is merged. Canonical Conductor PR https://github.com/silasfelinus/conductor/pull/6513 merged e29a4b59ec960baff5df2dfb41ff7b9e47527bae with all 23 checks completed green or intentionally skipped. Runtime Kind Robots PR https://github.com/silasfelinus/kind_robots/pull/4043 merged 055f442158a2fab69b9cbdcd2772b51d7ea3c134 with all 19 final-head checks completed green or intentionally skipped. All 48 Wellness and Sub-Level Zero encounter intros and every available choice outcome, both boss reviews, and two window shifts received distinct living-office details. Runtime prose matches canonical source and ten station art prompts match canonical briefs, with both runtime sourceSha fields stamped to Conductor merge e29a4b59ec960baff5df2dfb41ff7b9e47527bae. Structured before/after diff allowed only prose and art prompts; no flags, grades, costs, rolls or ending identifiers changed. t-032 art review and t-025 render evidence synchronization remain open, so playtest-only focus is not yet justified. No ArtJobs were submitted and no Alexandria deployment or browser screenshots were verified.
     claimed_by: 2026-10-22T224900Z-shifting-desks-t034-gpt6-9f31
     claimed_at: '2026-10-22T22:49:00Z'
   - id: t-035
