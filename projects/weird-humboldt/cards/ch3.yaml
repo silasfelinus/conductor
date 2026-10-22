@@ -1,0 +1,183 @@
+# Weird Humboldt v1 deck — chapter 3, Eureka and the bay.
+- id: WH-044
+  revision: 1
+  chapter: 3
+  location: "Old Town Eureka"
+  title: "A Ghost Demands Parking Validation"
+  tier: invented
+  provenance: "Old Town Eureka is real; the apparition, the meters and the fee dispute are invented fiction. No real business or city office is depicted."
+  rarity: common
+  tone: [petty, comic, historical-flavored]
+  cast: ["Mr. Ambrose Pell (Edwardian apparition, fixed)", "Meter Maid Corinne (human, sympathetic)"]
+  canon:
+    - Mr. Pell will not haunt until his meter fees are reimbursed.
+    - He is a real presence whose last parking ticket was issued in 1911, for a car that did not exist.
+    - Corinne cannot reimburse him without a form that has not been invented.
+  scene: >-
+    A pale gentleman in a bowler hat blocks the sidewalk and presents a receipt in a hand that looks like cobwebs. "Eleven cents," says Mr. Pell. "I have been haunting this block since 1911 and the city has not once validated my stay." Corinne from Parking Enforcement shrugs at you across the meter. "He's very polite about it. He just won't leave."
+  options:
+    - id: a
+      label: "Negotiate a symbolic reimbursement"
+      skill: rizz
+      target: 7
+      success:
+        text: "You offer eleven cents in a handshake that cuts straight through his hand. Mr. Pell is moved to tears of ectoplasm and agrees to haunt only a parking garage."
+        effects: [goodwill+1, "flag:pell_appeased"]
+      failure:
+        text: "He accepts the coin and demands interest. You are now in a conversation about compound interest since 1911."
+        effects: [time-1, nerve-1]
+    - id: b
+      label: "Look up the 1911 ticket"
+      skill: local_lore
+      target: 9
+      success:
+        text: "The ticket was written for a carriage that had been stolen. Mr. Pell has been haunting a crime scene, and he knows who took it."
+        effects: ["evidence:history", "flag:pell_stolen_carriage"]
+      failure:
+        text: "The records office has the ticket and a stern note that says do not ask again."
+        effects: [time-1]
+    - id: c
+      label: "Pay the meter yourself"
+      skill: none
+      target: null
+      success:
+        text: "You feed the meter for him. He tips his hat, vanishes, and the meter reads a time that has not happened yet."
+        effects: ["flag:pell_paid", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara asks Mr. Pell where he parked in life, and listens for a long time."
+    kit: "Kit hands him an invisible ticket and he accepts it with great ceremony."
+    juniper: "Juniper asks the street, gently, to forgive him. The street seems to agree."
+    cedar: "Cedar reads the meter. \"This thing hasn't been calibrated since the invention of the quarter.\""
+  callbacks: [pell_appeased, pell_stolen_carriage, pell_paid]
+  eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-046
+  revision: 1
+  chapter: 3
+  location: "Eureka F Street waterfront"
+  title: "The Perilous Plunge into Monday"
+  tier: reported
+  provenance: "A costumed fundraising plunge at the waterfront is documented as a local event; the time anomaly, the squid costume and everyone in the scene are invented fiction."
+  rarity: uncommon
+  tone: [chaotic, festive, time-bending]
+  cast: ["Tadeusz (squid-costume jumper, fixed)", "Event Organizer Priya (fixed)"]
+  canon:
+    - Tadeusz has already survived this morning twice and says so.
+    - The newspaper he holds is from Monday, three days ahead of the plunge.
+    - Priya will not suspend judging; the squid costume is magnificent.
+  scene: >-
+    Costumed jumpers queue near Humboldt Bay. A marching band strikes up, and a volunteer in a homemade squid costume dives in. Tadeusz emerges holding a newspaper from Monday, three days too soon, and insists he has already survived this morning twice. Organizer Priya will not suspend judging because the costume is, in fairness, magnificent. A hot tub nearby has begun hissing last year's weather forecast.
+  options:
+    - id: a
+      label: "Pull Tadeusz out of the bay"
+      skill: burly
+      target: 7
+      success:
+        text: "You haul him ashore. He keeps his memory of the future but loses the newspaper to the tide. He hugs you hard enough to dent your ribs."
+        effects: [goodwill+1, "flag:plunge_saved"]
+      failure:
+        text: "You get him ashore anyway, cold and disoriented; the newspaper floats away while you take the bay's opinion of your boots."
+        effects: [nerve-1]
+    - id: b
+      label: "Retrieve the future newspaper"
+      skill: wits
+      target: 9
+      success:
+        text: "You document one true prediction before the ink fades. It names a hall that does not yet exist."
+        effects: ["evidence:document", weird+1]
+      failure:
+        text: "You snatch a fake edition printed by someone watching you from the pier."
+        effects: [weird+1, "flag:plunge_false_story"]
+    - id: c
+      label: "Ask the organizers to hold a second judging"
+      skill: rizz
+      target: 11
+      success:
+        text: "Priya signs an absurdly official day-change waiver. It permits exactly one thing: a Monday of your choosing."
+        effects: ["flag:festival_waiver", goodwill+1]
+      failure:
+        text: "You gain a recurring volunteer nemesis and one hilarious participation ribbon."
+        effects: ["flag:ribbon_nemesis"]
+  lead_reactions:
+    mara: "Mara reads the newspaper over your shoulder and goes still. \"That's my shop on the front page.\""
+    kit: "Kit dives in after the squid, in costume, to a standing ovation from the jumpers."
+    juniper: "Juniper talks to the tide and it gives Tadeusz back."
+    cedar: "Cedar looks at the dateline and mutters, \"Three days isn't a prank. That's a sync error.\""
+  callbacks: [plunge_saved, plunge_false_story, festival_waiver, ribbon_nemesis]
+  eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-055
+  revision: 1
+  chapter: 3
+  location: "Humboldt Bay"
+  title: "Radio Static from Underwater"
+  tier: invented
+  provenance: "Humboldt Bay is real; the call-in show, its host and the answers-before-questions are invented fiction. No real station is depicted."
+  rarity: rare
+  tone: [eerie, funny, signal-haunted]
+  cast: ["Host Marlowe Finch (underwater, fixed)", "Caller Number Nine (a seal, polite)"]
+  canon:
+    - The show answers questions before the caller asks them.
+    - The broadcast is the same frequency that has followed the player since the festival.
+    - Host Finch is sincere and genuinely does not know he is underwater.
+  scene: >-
+    A battered radio on the rail of a fishing boat crackles, then clears. "You're on the air with Marlowe Finch, tonight's question is: yes, you will take the left fork," says a warm voice. "Go ahead, caller." You haven't called. The caller list scrolls past on a cracked screen: Caller Number Nine, a seal, is already on the line and very polite about the delay.
+  options:
+    - id: a
+      label: "Call back with a question"
+      skill: wits
+      target: 9
+      success:
+        text: "You ask what the signal is for, and Finch answers a full minute before you speak. You have your answer, and you know he can't hear you say it."
+        effects: ["evidence:frequency", weird+1, "flag:finch_heard"]
+      failure:
+        text: "Finch answers every question except the one you wanted. You hang up with a recipe for chowder."
+        effects: [time-1]
+    - id: b
+      label: "Triangulate the signal's source"
+      skill: local_lore
+      target: 11
+      success:
+        text: "The signal comes from beneath the old mill pilings, down by the dredging channel. You mark it on the map, and a seal nods."
+        effects: ["evidence:geography", "flag:underwater_source"]
+      failure:
+        text: "You triangulate to the middle of the bay, then to your own pocket. You're not sure which is more alarming."
+        effects: [nerve-1, weird+1]
+    - id: c
+      label: "Ask Caller Number Nine what they know"
+      skill: none
+      target: null
+      success:
+        text: "The seal says, with great gentleness, that Finch has been on air for thirty years and doesn't know how it started. It tells you where to find the first tape."
+        effects: ["flag:first_tape_hint", goodwill+1]
+  lead_reactions:
+    mara: "Mara listens to Finch's voice with her eyes closed. \"That man is lonely. You can hear it under the jokes.\""
+    kit: "Kit mouths Finch's patter back at the radio, perfectly in time."
+    juniper: "Juniper says the radio is a kind of tide pool, and everyone on it is a small creature clinging to a rock."
+    cedar: "Cedar cracks the radio's case. \"No battery. No antenna. What the hell is this running on?\""
+  callbacks: [finch_heard, underwater_source, first_tape_hint]
+  eligibility: {requires_flags: [], excludes_flags: []}
+  by_state:
+    sober:
+      narration: "Sober, you notice Finch's questions arrive exactly four seconds before you think them, and the delay is steady."
+      check_mods: {}
+    tipsy:
+      narration: "Loose and talkative, you banter with the radio like an old friend and Finch seems to enjoy it."
+      check_mods: {a: 1, b: -1}
+    stoned:
+      narration: "The static has a texture you can almost hold, and in its grain are low pulses that match the festival rhythm."
+      check_mods: {b: 1}
+    tripping_balls:
+      narration: "The radio's speaker is a porthole and Finch is waving through it, and you are almost sure the waving is real."
+      check_mods: {a: -1, b: 1}
+      extra_option:
+        id: d
+        label: "Wave back at the porthole"
+        skill: psyche
+        target: 9
+        success:
+          text: "Finch sees you. For a moment the bay is clear glass and the studio is real; he mouths a number, and you remember it."
+          effects: ["evidence:frequency", "flag:finch_heard"]
+        failure:
+          text: "Finch waves at the wrong person. The seal looks embarrassed on your behalf."
+          effects: [nerve-1]

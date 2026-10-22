@@ -1,0 +1,180 @@
+# Weird Humboldt v1 deck — chapter 6, The impossible festival.
+- id: WH-101
+  revision: 1
+  chapter: 6
+  location: "Arcata Plaza, kinetic starting line"
+  title: "The Bicycle Powered by Applause"
+  tier: invented
+  provenance: "The Plaza is real and kinetic races are an established local tradition; this team, its machine and the impossible rhythm are invented fiction. No real race entrant is depicted."
+  rarity: uncommon
+  tone: [festive, rhythmic, communal]
+  cast: ["Pilot Imelda Voss (fixed)", "Crew Chief Ratchet (fixed, teenage)"]
+  canon:
+    - The machine runs only when the crowd claps in an exact impossible rhythm.
+    - The rhythm is the same as the frequency, played slower.
+    - The crowd can learn it, but only if someone leads.
+  scene: >-
+    A pedal-powered contraption of bicycle parts, cymbals and one confused wind chime idles at the starting line. Pilot Voss holds up a hand. "She runs on applause," she says. "Not just any applause. Seven, then five, then a silence you can feel in your ribs." Crew chief Ratchet, who is perhaps fifteen, hands you a bullhorn. "You have a crowd and a voice. Lead."
+  options:
+    - id: a
+      label: "Teach the crowd the rhythm"
+      skill: rizz
+      target: 9
+      success:
+        text: "Thousands of hands find the pattern. The bicycle lurches, hums, and rolls, and the Plaza feels, for a moment, like one body."
+        effects: [goodwill+1, "flag:applause_led"]
+      failure:
+        text: "The crowd claps seven, then nine, then eleven. The bicycle coughs and goes up in a modest, cheerful fireball."
+        effects: [nerve-1, "flag:applause_failed"]
+    - id: b
+      label: "Work out the rhythm from the machine"
+      skill: wits
+      target: 7
+      success:
+        text: "The cymbals are tuned in a pattern you've heard before, and the wind chime is the final note. You hand Ratchet a chart."
+        effects: ["evidence:frequency", "flag:rhythm_chart"]
+      failure:
+        text: "You get the pattern backward and the machine rolls in reverse."
+        effects: [time-1]
+    - id: c
+      label: "Clap alone, steadily, and let others join"
+      skill: none
+      target: null
+      success:
+        text: "It takes a minute. Then a child joins you, then a vendor, then a cop. The bike starts. You do not take credit."
+        effects: ["flag:started_alone", goodwill+1]
+  lead_reactions:
+    mara: "Mara closes her eyes and claps the rhythm on her knee. \"I know this. It's a heartbeat.\""
+    kit: "Kit starts the crowd off with a juggler's cue, and the Plaza answers in time."
+    juniper: "Juniper hums the rhythm until the pigeons take up the beat."
+    cedar: "Cedar scribbles the pattern on his hand. \"It's a modulation scheme. Somebody is encoding something.\""
+  callbacks: [applause_led, applause_failed, rhythm_chart, started_alone]
+  eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-110
+  revision: 1
+  chapter: 6
+  location: "Manila dunes, kinetic course"
+  title: "The Official Unofficial Rescue Team"
+  tier: invented
+  provenance: "The dunes are a real coastal landform; the cryptid crew, their truck and the repairs are invented fiction. No real rescue agency is depicted."
+  rarity: uncommon
+  tone: [cheerful, competent, cryptid]
+  cast: ["Foreman Sasquatch Tobias (fixed)", "Mothman Dev (fixed, mechanic)"]
+  canon:
+    - The crew repairs stranded race sculptures for free and for the pleasure of it.
+    - They do not appear in photographs, by agreement with the photographers.
+    - Tobias will not take payment but will take a favor.
+  scene: >-
+    A kinetic sculpture lies on its side in the dunes with a wheel off. A pickup truck marked UNOFFICIAL (OFFICIAL) RESCUE pulls up and a very large foreman hops out, followed by a slim figure with enormous wings folded neatly under a tool vest. "Don't mind us," says Tobias. "We're just here to help." Within minutes the wheel is back on. They have not asked for anything.
+  options:
+    - id: a
+      label: "Offer to help with the repair"
+      skill: burly
+      target: 7
+      success:
+        text: "You hold the axle while Dev welds. Tobias claps your shoulder, and you are now an honorary member of a crew that does not exist."
+        effects: [goodwill+1, "flag:rescue_crew_member"]
+      failure:
+        text: "You drop the wrench on Tobias's foot. He pretends it did not happen with great dignity."
+        effects: [nerve-1]
+    - id: b
+      label: "Ask them how they learned to fix things"
+      skill: local_lore
+      target: 9
+      success:
+        text: "They were trained by an old logging-camp mechanic, a man who never left the county. They give you his name and a tool he left behind."
+        effects: ["evidence:history", "flag:mechanic_tool"]
+      failure:
+        text: "Tobias changes the subject with the smoothness of a man who has done it before."
+        effects: [time-1]
+    - id: c
+      label: "Ask for the favor they'd want in return"
+      skill: none
+      target: null
+      success:
+        text: "Tobias thinks. \"Don't tell anyone about the pie.\" You promise, and later you receive the pie."
+        effects: ["flag:cryptid_pie", goodwill+1]
+  lead_reactions:
+    mara: "Mara studies the crew with respect. \"They don't want credit. That's rare.\""
+    kit: "Kit and Dev trade tricks; Dev can juggle with wings."
+    juniper: "Juniper greets Tobias in an old forest way and he answers with a bow."
+    cedar: "Cedar and Dev disappear under the sculpture and come out arguing happily about torque specs."
+  callbacks: [rescue_crew_member, mechanic_tool, cryptid_pie]
+  eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-117
+  revision: 1
+  chapter: 6
+  location: "Ferndale finish line"
+  title: "The Finish Line Moves"
+  tier: invented
+  provenance: "Ferndale is a real town and a historic race finish; the vanishing banner, the officials and the claims are invented fiction. No real person or organization is depicted."
+  rarity: rare
+  tone: [climactic, absurd, wry]
+  cast: ["Chief Timekeeper Odalys (fixed)", "The Finish Banner (sentient, shy)"]
+  canon:
+    - The finish banner vanishes whenever someone claims to have solved the mystery.
+    - The banner is not hostile; it is protecting the answer from being declared too early.
+    - Odalys can tell the player what would count as a real solution.
+  scene: >-
+    The finish line is a long banner strung between two Victorian porches. As you approach, a runner shouts, "I've got it! The answer is—" and the banner is gone, replaced by an empty street. Chief Timekeeper Odalys sighs and unfolds a lawn chair. "It does that. Everyone gets excited. Try again when you're sure."
+  options:
+    - id: a
+      label: "Present your verified evidence to Odalys"
+      skill: wits
+      target: 11
+      success:
+        text: "Odalys reads your evidence slowly. The banner reappears, hesitant, then holds. She stamps your sheet. \"Provisional,\" she says. \"But yes.\""
+        effects: ["evidence:document", goodwill+1, "flag:finish_provisional"]
+      failure:
+        text: "Your evidence is not enough. The banner stays gone, but Odalys marks exactly what is missing."
+        effects: [time-1, "flag:finish_gap_named"]
+    - id: b
+      label: "Reassure the banner"
+      skill: rizz
+      target: 9
+      success:
+        text: "The banner flutters back into view and curls around your shoulders for a moment. It is not afraid of you; it is afraid of being wrong."
+        effects: [goodwill+1, "flag:banner_trusts"]
+      failure:
+        text: "The banner flickers, withdraws farther down the street, and will not meet your eye for a while."
+        effects: [nerve-1]
+    - id: c
+      label: "Sit with Odalys until the street goes quiet"
+      skill: none
+      target: null
+      success:
+        text: "You sit. Eventually the banner sneaks back up the street and ties itself to the porch at its own pace. Odalys offers you half a sandwich."
+        effects: ["flag:finish_waited", "clarity+1"]
+  lead_reactions:
+    mara: "Mara sits down beside Odalys. \"Some things you can't rush.\""
+    kit: "Kit tosses a ring of juggling clubs up and lets the banner decide when to appear."
+    juniper: "Juniper lays a hand on the porch rail and whispers, \"You're safe. We'll wait.\""
+    cedar: "Cedar paces. \"If the banner is a sensor, then the claim is a trigger. We need a better test.\""
+  callbacks: [finish_provisional, finish_gap_named, banner_trusts, finish_waited]
+  eligibility: {requires_flags: [], excludes_flags: []}
+  by_state:
+    sober:
+      narration: "Sober, you notice every claim made before the banner vanished was missing the same single fact."
+      check_mods: {}
+    tipsy:
+      narration: "With a flush of confidence, you are tempted to announce the answer yourself, which is the exact thing the banner dislikes."
+      check_mods: {b: 1, a: -1}
+    stoned:
+      narration: "The banner's edges ripple in the same slow rhythm as the frequency, and you can almost read its fear."
+      check_mods: {b: 1}
+    tripping_balls:
+      narration: "The street is a held breath and the banner is the exhale; you understand it will return only when you stop reaching for it."
+      check_mods: {a: -1, b: 1}
+      extra_option:
+        id: d
+        label: "Let go of the answer and watch the street"
+        skill: psyche
+        target: 9
+        success:
+          text: "The banner drifts down and settles. You realize you can check your evidence in daylight, and it holds."
+          effects: ["flag:banner_trusts", "clarity+1"]
+        failure:
+          text: "You let go too thoroughly and wander toward the fairgrounds for a while."
+          effects: [time-1]

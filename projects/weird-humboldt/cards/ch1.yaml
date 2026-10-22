@@ -1,0 +1,204 @@
+# Weird Humboldt v1 deck — chapter 1, Arcata after hours. Schema: ../design/card.schema.json
+- id: WH-006
+  revision: 1
+  chapter: 1
+  location: "Minor Theatre, Arcata"
+  title: "The Last Houdini Exit"
+  tier: reported
+  provenance: "The theater and a trapdoor story are local lore (reported, disputed); the voice, the note and the seventy-three magicians are invented fiction."
+  rarity: common
+  tone: [dry, theatrical, warm]
+  cast: ["Mr. Vesper (exhausted trapdoor occupant, never a ghost)", "The Unseen Applauder (a century away)"]
+  canon:
+    - The trapdoor opens onto a dressing room that does not exist above ground.
+    - Mr. Vesper is a performer, alive in a sense he dislikes explaining, and hates being called Harry.
+    - Seventy-three amateur magicians have used the door to impress a date; none tipped.
+  scene: >-
+    The midnight audience is gone, but applause keeps coming from beneath the stage. A trapdoor lifts one inch. A gloved hand pushes up a handwritten note: STOP CALLING ME HARRY. The voice below sounds exhausted rather than spectral. "Do you know how many amateur magicians have used this door to impress a first date?" it asks. "Seventy-three. None of them tipped." Somewhere behind him, another person keeps applauding from what sounds like a century away.
+  options:
+    - id: a
+      label: "Ask for the voice's real name"
+      skill: rizz
+      target: 7
+      success:
+        text: "\"Vesper,\" he says, and then, because nobody has asked in decades, the rest of his story. He taps the stage twice. The applause below softens into something almost like thanks."
+        effects: [goodwill+1, "flag:minor_occupant_trusted"]
+      failure:
+        text: "Vesper decides you are press and shuts the trapdoor with a click like a held breath. Through the boards he still mutters a surname, which is more than he meant to give you."
+        effects: ["evidence:rumor", time-1]
+    - id: b
+      label: "Inspect the rope system"
+      skill: wits
+      target: 9
+      success:
+        text: "There is a pulley in the rigging that connects to nothing and lifts something anyway. Its rope is warm. Someone below hauls back, politely, to let you know you were seen."
+        effects: ["evidence:radio", weird+1]
+      failure:
+        text: "The house curtain drops with a thump and the empty auditorium applauds. You take a bow without meaning to."
+        effects: [nerve-1, "flag:minor_curtain_fell"]
+    - id: c
+      label: "Offer the unseen performer a ride home"
+      skill: none
+      target: null
+      success:
+        text: "A long silence, then: \"I'll need my hat.\" Costly kindness. You give up your next free location draw to wait for him, and he promises to remember it."
+        effects: ["flag:minor_companion", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara reads the dressing-room stencil on the trapdoor like a tattoo flash sheet and says, \"Whoever painted that was paid in applause. I know that look.\""
+    kit: "Kit tests the pulley with a juggler's flick and grins. \"It's a counterweight to a stage that is not here. I love it.\""
+    juniper: "Juniper leans over the opening and sniffs. \"He smells like old cedar and an even older grudge. Be nice.\""
+    cedar: "Cedar eyeballs the wiring. \"No power run to that rig. So what's turning the pulley, the audience?\""
+  callbacks: [minor_occupant_trusted, minor_curtain_fell, minor_companion]
+  eligibility: {requires_flags: [], excludes_flags: [minor_companion]}
+  by_state:
+    sober:
+      narration: "Sober, you notice the applause has a pattern; it's the same eleven seconds on a loop, and the note's ink is still wet."
+      check_mods: {}
+    tipsy:
+      narration: "A little loose and a lot chatty, you want to buy the poor man a drink through the floorboards, which is a kind of rapport."
+      check_mods: {a: 1, b: -1}
+    stoned:
+      narration: "The applause has a color, a warm amber, and it rises when you say anything kind, which feels like a clue you should check."
+      check_mods: {b: 1}
+    tripping_balls:
+      narration: "The stage is breathing. The trapdoor is a mouth that is very sorry about the whole thing; you are certain, and you should still look at the rope."
+      check_mods: {a: -1, b: 1}
+      extra_option:
+        id: d
+        label: "Ask the breathing stage what it wants"
+        skill: psyche
+        target: 9
+        success:
+          text: "The stage wants the date remembered. It spells out the last show's date in dust; Vesper confirms it through the boards, rattled."
+          effects: ["evidence:date", weird+1]
+        failure:
+          text: "The stage wants quiet. You have given it a speech instead, which it forgives, slowly."
+          effects: [nerve-1]
+
+- id: WH-012
+  revision: 1
+  chapter: 1
+  location: "Arcata Community Forest"
+  title: "Volunteer Tree Census"
+  tier: invented
+  provenance: "The forest is a real municipal park; the census, the rings and everyone in the scene are invented fiction. No real organization is depicted."
+  rarity: common
+  tone: [dry, uncanny, bureaucratic]
+  cast: ["Dot Alvarado (clipboard volunteer, fixed)", "Tree 14 (a very patient redwood)"]
+  canon:
+    - Every redwood counted by the census has one more ring the next morning.
+    - Dot's clipboard is the only list that predicts which tree grows next.
+    - Tree 14 is not hostile and wants its number changed.
+  scene: >-
+    Dot Alvarado hands you a clipboard and a pencil with the confidence of someone who has not slept since Tuesday. "Count the rings. Note the date. Don't think about it." Tree 14 has forty-one rings on its cut face this evening. Dot's notes say it had forty last night. The tree is not a stump. It is also, apparently, taking notes.
+  options:
+    - id: a
+      label: "Recount the rings against Dot's log"
+      skill: wits
+      target: 7
+      success:
+        text: "Every tree gains exactly one ring a night, and the new ring is always a different color. You photograph the colors; they match nothing in the forest."
+        effects: ["evidence:document", "flag:census_pattern"]
+      failure:
+        text: "You count forty-two, forty, then forty-one three times running. Dot looks at you gently. \"Everyone does that the first night.\""
+        effects: [time-1]
+    - id: b
+      label: "Ask Dot who gave her the clipboard"
+      skill: local_lore
+      target: 9
+      success:
+        text: "You recognize the form from an old trail-crew packet nobody should still have. The census is older than the park's current rules, and Dot knows exactly who started it."
+        effects: ["evidence:history", goodwill+1]
+      failure:
+        text: "Dot's smile freezes. \"Nobody gave me anything.\" The clipboard becomes slightly heavier."
+        effects: [nerve-1]
+    - id: c
+      label: "Ask Tree 14 which number it wants"
+      skill: none
+      target: null
+      success:
+        text: "Tree 14 prefers 7. It does not say why. Dot writes down 7 and the next ring is a lucky color."
+        effects: ["flag:tree_fourteen_is_seven", goodwill+1]
+  lead_reactions:
+    mara: "Mara studies the ring colors and says quietly, \"That's how healing ink bleeds. Slow, and not always where you want it.\""
+    kit: "Kit counts a rhythm in the rings and starts tapping it on the log. \"Seventeen beats. Why is this a drum solo?\""
+    juniper: "Juniper presses a palm to the bark. \"He's not afraid. He's embarrassed. Somebody told him he's a statistic.\""
+    cedar: "Cedar frowns at the pencil. \"Dot, you realize that's a lead-free mechanical pencil from a county that doesn't have a hardware store anymore.\""
+  callbacks: [census_pattern, tree_fourteen_is_seven]
+  eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-016
+  revision: 1
+  chapter: 1
+  location: "Cal Poly Humboldt campus"
+  title: "Office Hours with a Visiting Moon"
+  tier: invented
+  provenance: "The campus is real; the lecturer, the guest speaker and the sabbatical are invented fiction. Nobody at the university is depicted."
+  rarity: uncommon
+  tone: [academic, absurd, gentle]
+  cast: ["Dr. Imani Okafor-Reyes (lecturer, fixed)", "The Moon (guest speaker, on sabbatical)"]
+  canon:
+    - The guest speaker is the actual Moon, in a cardigan, and is not a metaphor.
+    - The tides are running late because the Moon is on campus.
+    - Dr. Okafor-Reyes cannot afford to lose her grant and will not admit the Moon is real.
+  scene: >-
+    A hand-lettered sign on the lecture hall door reads GUEST SPEAKER: THE MOON (PLEASE BE SEATED, THIS MEANS YOU). Dr. Okafor-Reyes introduces the speaker with the strained cheer of a woman who has already filled out the incident form. The Moon sits in the front row in a soft grey cardigan, glowing at roughly the wattage of a reading lamp. "I am on sabbatical," it says. "I have been told the tides can cope. They cannot."
+  options:
+    - id: a
+      label: "Ask the Moon one honest question"
+      skill: rizz
+      target: 7
+      success:
+        text: "The Moon is moved to be asked anything. \"Yes, I can hear the frequency,\" it says. \"Everyone down there is humming it wrong.\""
+        effects: ["evidence:frequency", goodwill+1, "flag:moon_confided"]
+      failure:
+        text: "The Moon is asked a bad question and gives a very long answer. Dr. Okafor-Reyes writes down your name for later."
+        effects: [time-1, "flag:okafor_notes_name"]
+    - id: b
+      label: "Check the tide charts from the library"
+      skill: local_lore
+      target: 9
+      success:
+        text: "The harbor is running forty minutes late and the delay is growing by exactly the length of the lecture. You can prove it to a skeptic with a stopwatch."
+        effects: ["evidence:geography", weird+1]
+      failure:
+        text: "The library has an excellent tide chart for a month that has not happened. You leave with a headache and a due date."
+        effects: [nerve-1]
+    - id: c
+      label: "Help Dr. Okafor-Reyes keep the incident quiet"
+      skill: none
+      target: null
+      success:
+        text: "You staple the incident form to the corkboard under a sign that says OFFICE HOURS. She exhales for the first time in a week and keeps your name off the report."
+        effects: ["flag:okafor_ally", goodwill+1]
+  lead_reactions:
+    mara: "Mara listens to the Moon for a full minute. \"It's the loneliest thing I've heard in years. Be kind.\""
+    kit: "Kit mimes handing the Moon a juggling pin. The Moon holds it like a bouquet."
+    juniper: "Juniper bows low, a forest courtesy. \"Elder sibling. You are very far from your tree line.\""
+    cedar: "Cedar sketches the Moon's glow on a napkin, then writes lumens beside it. \"Okay. Okay. That's not a lamp.\""
+  callbacks: [moon_confided, okafor_ally, okafor_notes_name]
+  eligibility: {requires_flags: [], excludes_flags: []}
+  by_state:
+    sober:
+      narration: "Sober, you can see the Moon's cardigan has a pocket, and in the pocket is something that glints like a returned phone call."
+      check_mods: {}
+    tipsy:
+      narration: "With a pleasant buzz you want to buy the Moon a coffee; it asks, politely, for water."
+      check_mods: {a: 1, b: -1}
+    stoned:
+      narration: "The Moon's glow pulses in time with the tide chart; you can almost read the chart off the cardigan."
+      check_mods: {b: 1}
+    tripping_balls:
+      narration: "The lecture hall is a lighthouse and the Moon is its keeper, and in the narrow beam of the argument you understand that everyone is arguing about tides."
+      check_mods: {a: -1, b: 1}
+      extra_option:
+        id: d
+        label: "Offer to carry the Moon's cardigan back out to the sky"
+        skill: psyche
+        target: 9
+        success:
+          text: "The Moon takes your offer seriously. It agrees to be back by Thursday and hands you its schedule; the tides will be on time for exactly three nights."
+          effects: ["evidence:frequency", "flag:moon_schedule"]
+        failure:
+          text: "You carry an empty cardigan across campus for an hour, and several students salute it."
+          effects: [nerve-1]
