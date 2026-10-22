@@ -1,5 +1,7 @@
 # Ecotone: Humboldt history, warts and all
 
+> **ARCHIVED · SUPERSEDED October 22, 2026 PT.** This file documents an earlier Ecotone proposal, **not current instructions or planned development**. The owner withdrew the entire Wiyot/Tuluwat story, review and consultation workstream. No drafting, game use, art generation, outreach, release or queued follow-up is authorized by this archived document. Do not treat the earlier conditional approval below as active. See [the binding content-exclusion decision](EXCLUDED-CONTENT-2026-10-22.md). The original text remains below for internal provenance only.
+
 **Silas, 2026-10-19 PT, verbatim:** *"I really want the history of Humboldt, warts and all to be a part of the experience. This game is partly a love letter to my home community, and I want people who explore it to get a better sense of our history. There's the Indian island massacre. I remember learning about one white man who made a large point of coming home for the evening and very expressively hanging his hat by the door to communicate that he wasn't involved (though theoretically he knew it would happen, one could be asked whether he was guilty, or could have done anything to affect it). There's the story about the explorers arguing as they crossed the river that became named after it: The Mad River."*
 
 This is a design proposal for review. It turns those notes into plot material without breaking the rules already in ECOTONE-CORE.md and FACT-CHECK.md:
