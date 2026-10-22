@@ -1,5 +1,7 @@
 # Memory Dungeon: The Forgotten Depths — Design Brief
 
+> **2026-10-22 PT latest direction:** Read `WORLD-AND-EXPLORATION.md` first. The game now has a **persistent explorable overworld of discovery tiles**, with matching combat/puzzles **nested inside** exploration. Procedural themed dungeons and Edgeworlds extend from **fixed** landmarks. The broader fantasy universe has not been built; the title `The Forgotten Depths`, named supporting cast, premise and three-floor linear descent below are strictly **non-canon examples to revise**, not final worldbuilding or a mandatory plot. The existing route stays, but its inner video-game scene will be visually redesigned.
+
 **Project:** `memory-dungeon` | **Kind Robots route:** `/play/memory` | **Type:** single-player, offline-resolvable, seeded narrative roguelite RPG | **Status:** design direction, not implemented functionality | **Date:** 2026-10-22 PT
 
 ## Promise
