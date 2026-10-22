@@ -1,5 +1,7 @@
 # Weird Humboldt: four companion routes and character bible (design v0.3)
 
+**CURRENT SCOPE (2026-10-22 PT):** Prior Wiyot/Tuluwat-associated backstories, tribal-grant concepts and unreviewed cultural art are removed from development. The rest of the companion arcs continue. See [the exclusion decision](EXCLUDED-CONTENT-2026-10-22.md); older brainstorming in related files is archival, not a review dependency.
+
 **2026-10-19 PT · character exploration; text only · art remains on hold.**
 
 This document **extends** [PRELUDE-STATE-CONTRACT.md](PRELUDE-STATE-CONTRACT.md), the authority for `opening_state`, `current_state`, `clarity`, the five skills **Rizz, Burly, Wits, Local Lore, Psyche**, seeded canonical events and four authored narrative lenses. It does not replace that contract or require a particular intoxication to access the mystery.
@@ -85,18 +87,16 @@ The player may **ask the Hispanic logger father and activist mother what each fe
 
 **Editorial boundary:** never imply the player can visit Luna, invent participation or wrongdoing by Hill, absolve or accuse real people of unspecified tree spiking, or make Indigenous land dispossession an occult mechanism. Keep actual family conflict fictional, and treat workers' safety and the protected redwood as real stakes.
 
-## 4. Mara — Indigenous Humboldt tattoo artist (Sober introduction)
+## 4. Mara — independent tattoo artist (Sober introduction)
 
-**Silas-directed background; name provisional.** An adult Indigenous woman, born and raised in Humboldt County, **raised on her family's reservation**. She's heavily tattooed, meticulous, understated and dryly funny, with a busy independent studio. **Her tattoo business began thanks to a small-business grant funded by tribal casino revenues**, giving her the means to purchase equipment, establish a space and grow her practice. This is a **fictional character and fictionalized grant history**, not a factual assertion about any specific tribal casino program.
+Mara is a fictional, professionally established Humboldt tattoo artist: meticulous, dryly funny and fiercely protective of her clients. She runs an independent studio, knows the cost of rent and supplies, and values friends who respect privacy instead of rewarding sensationalism. Her family background is intentionally unspecified. The earlier proposal assigning a real tribal nation, reservation upbringing or casino-grant origin is **withdrawn**, not waiting for community research.
 
-- **Specificity to resolve thoughtfully:** Her **tribal nation, reservation and family/community setting remain unset**. The writer must choose a geographically and historically coherent specific community, ground modern life in that community's own published sources, and seek suitable cultural review before publication of detailed culture-specific material. Do not conflate Wiyot, Yurok, Hoopa/Hupa, Karuk, Tolowa or other peoples, or infer that tribal casino funding works identically across nations.
-- **Work ethic:** She personally avoids smoking cannabis because she finds it interferes with steady hands and fine, precise tattoo lines. This is her experience, **not** a medical claim or disdain for cannabis users. She can enjoy the gathering sober.
-- **Independence:** Proud of building her business and deeply aware that support came through her community's economic resources. She has regular customers, bills, friends and obligations and needn't be grateful to outsiders for permission to be successful. The grant isn't her entire personality or a patronizing rescue story.
-- **Humor and flaws:** low tolerance for performance without substance; a sharp eye for inconsistent stories; prone to relying on an observation she's already drawn rather than hearing the person explaining it.
-- **Mystery arc:** A client requests a modern, ordinary custom design that Mara has never drawn before, yet that identical design appears in an old photograph, in a kinetic machine schematic and later in an impossible radio printout. **It is not a sacred tribal motif, ceremonial design or appropriated Indigenous symbolism.** She wants to find out who is copying her work and why, and must decide whether uncovering the truth exposes a client.
-- **Sober-route reward:** grounded pattern recognition, reliable visual documentation, community relationships earned through real interactions. Her heritage gives her **no automatic psychic stat bonus or mystic 'tribal knowledge' ability**, and ancestry never locks other players out of understanding the symbol.
-- **A possible line:** “I don't need to be high to know that tree just moved.” Warm humor underneath serious craft.
-- **Placement in the wider cast:** If the player chooses the separate playable Tribal Community Organizer archetype, respect its different background and personality. Do not merge all Indigenous characters into a single representative or assume they share a tribe.
+- **Work ethic:** She personally avoids cannabis while working because she prefers precise lines; that is an individual preference, not a statement about everyone else.
+- **Independence:** She makes the decisions about clients, credit, prices, consent and what work may be copied, without a gratitude narrative or special grant.
+- **Humor and flaws:** Quick to call out empty performance, slower to admit when she has misunderstood somebody else's motives.
+- **Mystery arc:** A completely invented six-winged design appears in an old photograph, a kinetic machine sketch and a later impossible radio printout before she draws it. It is **modern original art**, not an Indigenous or ceremonial motif. She must decide whether pursuing the source risks identifying a client.
+- **Sober-route reward:** Grounded observation, a paper trail, ordinary community friendships and precise documentation, with no identity-based supernatural abilities.
+- **A possible line:** “I don't need to be high to know that tree just moved.”
 
 ### Mara's first meeting: the sober festival path (prototype, not a completed card)
 
