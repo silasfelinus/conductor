@@ -2,7 +2,7 @@
 
 projects/shifting-desks/encounters/link_art.py maps every pack slot to the path
 kind_robots stationArt() requests and links it only when the latest art ledger
-row for that path is delivered and was not sent back (t-015, 2026-10-20 PT).
+row for that path is delivered and explicitly marked keep (t-015, 2026-10-20 PT).
 """
 
 import copy
