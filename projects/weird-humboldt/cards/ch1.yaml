@@ -321,3 +321,48 @@
     cedar: "Cedar checks the projector gate and frowns. \"The beam bends when it passes. Something with weight is in it.\""
   callbacks: [simplex_befriended, simplex_stub]
   eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-014
+  revision: 1
+  chapter: 1
+  location: Arcata Community Forest
+  title: Mushroom Neighborhood Watch
+  tier: invented
+  provenance: The Arcata Community Forest is a real public forest; the fungal watch committee, its complaints and its bulletin format are invented fiction. No real volunteers or officials are depicted.
+  rarity: uncommon
+  tone: [whimsical, dry, eerie]
+  cast: [The Mycelial Watch (a very patient network of fungi), A Trail Steward (has learned not to argue)]
+  canon: [Mushrooms along the trail rearrange themselves nightly into a notice board., Every complaint is filed against the living and logged in spore-print., The Watch has never once complained about the dead.]
+  scene: 'A ring of pale mushrooms has grown around a trailhead sign overnight, and a fresh notice is pinned in the cap-gills of the largest one. It reads, in spore-print: NOISE, 4 INCIDENTS. UNLEASHED OPINIONS, 2. A BOOTPRINT ON A PERSON WE KNEW. The steward sighs. "They are not wrong about the boot. They are rarely wrong about anything."'
+  options:
+  - id: a
+    label: Apologize formally to the Watch
+    skill: rizz
+    target: 7
+    success:
+      text: 'The ring ripples and a single mushroom bows. A smaller notice appears: complaint withdrawn, provisionally. The path ahead feels newly welcoming.'
+      effects: [goodwill+1, 'flag:watch_appeased']
+    failure:
+      text: You apologize to the wrong mushroom, and word travels at fungal speed. Every cap on the trail turns slightly away from you.
+      effects: [nerve-1]
+  - id: b
+    label: Read the complaints for clues
+    skill: wits
+    target: 9
+    success:
+      text: The incident log lines up into a map of footsteps over the last week, and one entry points at a place nobody mentioned. You copy it down.
+      effects: ['evidence:fungal_log', weird+1]
+    failure:
+      text: The spore-print smears into pure gossip about someone named Gary. You lose twenty minutes learning about Gary.
+      effects: [time-1]
+  - id: c
+    label: Offer to file a complaint of your own
+    skill: none
+    target: null
+    success:
+      text: 'The Watch accepts, with enormous dignity. Your grievance about the parking is logged, and a receipt grows beside your shoe: it reads, simply, filed.'
+      effects: ['flag:watch_member', goodwill+1]
+  lead_reactions: {mara: 'Mara sketches the notice board in three fast lines. "Best municipal typography in the county, and it is made of spores."', kit: 'Kit leans to the mushrooms and murmurs, "No recordings, I swear on my chapstick," to general suspicion.', juniper: 'Juniper kneels and presses a palm to the moss. The ring seems to lean in, listening to her listen.', cedar: Cedar studies the cap-ring and nods slowly. "A fairy ring is a vote of confidence. Treat it like a hearing."}
+  callbacks: [watch_appeased, watch_member]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

@@ -297,3 +297,48 @@
     cedar: "Cedar scans the photo folder and shakes his head. \"Twelve photos, zero proof of ears. That's a brand.\""
   callbacks: [rusty_profile, rusty_pinecone]
   eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-065
+  revision: 1
+  chapter: 4
+  location: Blue Lake
+  title: A Community Potluck for Cryptids
+  tier: invented
+  provenance: Blue Lake is a real town; the potluck, its no-photo policy and its guests are invented fiction. No real residents, events or organizations are depicted.
+  rarity: uncommon
+  tone: [whimsical, warm, eerie]
+  cast: ['Hostess Wren (a very tall, gentle, deeply furred host)', The Pie Table (a tense matter)]
+  canon: ['The potluck has one rule: no cameras, no exceptions, no forgiveness.', Every guest brings a dish and not one will say where it was foraged., 'The pie is, by consensus, the best in the county.']
+  scene: 'A long folding table sits in a clearing behind the grange, covered in casseroles, deviled somethings and an unreasonable number of pies. A hand-lettered sign reads: NO PHOTOS. NO EXCEPTIONS. NO SECOND HELPINGS UNTIL EVERYONE HAS HAD A FIRST. A very tall figure in an apron presses a paper plate into your hands. "Eat first," she says. "Questions after."'
+  options:
+  - id: a
+    label: Charm the hostess with a compliment
+    skill: rizz
+    target: 7
+    success:
+      text: You compliment the crust with enough sincerity to sting. She beams, and a small slice, wrapped in wax paper, is slipped into your pocket.
+      effects: [goodwill+1, 'flag:potluck_welcome']
+    failure:
+      text: You compliment the wrong pie and the table goes quiet. Somebody has to be forgiven, and it will take dessert.
+      effects: [nerve-1]
+  - id: b
+    label: Work out which pie is the secret one
+    skill: wits
+    target: 9
+    success:
+      text: The pie nobody touches is the one nobody brought. You nudge it, and under it is a recipe card with a place name on it.
+      effects: ['evidence:pie_recipe', weird+1]
+    failure:
+      text: You pick the wrong pie with great confidence, and it was the cobbler. The room forgives you very slowly.
+      effects: [time-1]
+  - id: c
+    label: Eat first and ask questions after
+    skill: none
+    target: null
+    success:
+      text: You finish the plate in respectful silence. An enormous hand pats your shoulder, and a place is saved for you at the long table next time.
+      effects: ['flag:potluck_seat', goodwill+1]
+  lead_reactions: {mara: Mara tucks her phone away and sketches from memory. "No photos is not no art. I am a rules lawyer about this.", kit: 'Kit pats an empty pocket and says, "I did not bring a camera, I did not bring a camera," in an increasingly loud voice.', juniper: 'Juniper accepts a plate and, without a word, offers one back to the dark treeline. A plate returns, empty.', cedar: Cedar reads the recipe cards and nods. "Honest food. Everything here is local. The question is which locals."}
+  callbacks: [potluck_welcome, potluck_seat]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

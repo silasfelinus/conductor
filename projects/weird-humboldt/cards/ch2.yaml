@@ -298,3 +298,48 @@
     cedar: "Cedar crouches and checks the rock for a lease. \"Whoever owns this holds it by gravity and persistence.\""
   callbacks: [whelk_settlement, whelk_receipt]
   eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-028
+  revision: 1
+  chapter: 2
+  location: Trinidad Harbor
+  title: Fish with a Press Credential
+  tier: invented
+  provenance: Trinidad Harbor is a real working harbor; the salmon reporter, its credential and its exclusive are invented fiction. No real journalists, outlets or fishers are depicted.
+  rarity: uncommon
+  tone: [whimsical, dry, tense]
+  cast: [Pike Marlow (a salmon with a laminated press pass), 'The Harbor Dock Cart (listening in, badly)']
+  canon: [The salmon has a valid press credential from an outlet that has never printed anything., 'Its exclusive is real, but it demands discretion in exchange.', 'Salmon have no sense of an embargo, only of tide.']
+  scene: A salmon is propped against a dock piling in a shallow tray of water, a laminated press pass clipped to one fin. "Pike Marlow, tide desk," it says, in the clipped voice of someone who has done this before. "I have an exclusive. I will trade it for discretion. You have until the next wave to decide what I am worth."
+  options:
+  - id: a
+    label: Promise discretion and ask for the exclusive
+    skill: rizz
+    target: 7
+    success:
+      text: Marlow glances left, then right, then tells you which boat is quietly not coming back. You write it down and say nothing to anyone.
+      effects: ['evidence:harbor_exclusive', goodwill+1]
+    failure:
+      text: You promise too eagerly. Marlow files a brief item about your eagerness, which does not stay brief.
+      effects: [nerve-1]
+  - id: b
+    label: Check the press pass for forgery
+    skill: wits
+    target: 9
+    success:
+      text: The laminate is real, and the outlet is a tide chart printed on kelp. You hand the pass back, impressed, and Marlow nods with a flicker of respect.
+      effects: ['flag:marlow_vetted', weird+1]
+    failure:
+      text: You read the pass upside down, and Marlow files a correction on your behalf. The correction is also about you.
+      effects: [time-1]
+  - id: c
+    label: Buy the interview a round of kelp chips
+    skill: none
+    target: null
+    success:
+      text: 'Marlow accepts the chips with a stiff little nod and a quote for the record: the tide is a story, and you are in it. A press pass appears, folded, in your pocket.'
+      effects: ['flag:marlow_pass', goodwill+1]
+  lead_reactions: {mara: 'Mara sketches Marlow mid-interview. "Fins like a collar, eyes like a deadline. I would hire this fish in a heartbeat."', kit: 'Kit leans in and whispers, "Off the record, on the record, and on the water. I respect the hustle."', juniper: 'Juniper dips her fingers in the tray, and Marlow flinches, then settles. "He is nervous," she says. "Not about us."', cedar: Cedar frowns at the pass. "Real laminate. Somebody in this harbor has a very good press."}
+  callbacks: [marlow_vetted, marlow_pass]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

@@ -300,3 +300,48 @@
     cedar: "Cedar compares the roofline to a map. \"Same block. Different year. Different sky. I don't like it.\""
   callbacks: [mars_postcard, mars_mailed]
   eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-047
+  revision: 1
+  chapter: 3
+  location: Eureka F Street waterfront
+  title: The Judge Who Is Also an Octopus
+  tier: invented
+  provenance: Eureka and its waterfront are real places; the judging panel, its octopus member and the awards are invented fiction. No real organization, panelist or event staff is depicted.
+  rarity: uncommon
+  tone: [whimsical, dry, eerie]
+  cast: [Judge Eight (an octopus in a borrowed blazer), The Panel Chair (determinedly composed)]
+  canon: [The octopus has been on the panel since before the waterfront had a panel., It scores with several arms at once and no two scores agree., 'Its verdict is always correct, which is the unsettling part.']
+  scene: The fundraiser award table has four chairs and five judges. The fifth sits in a tank wheeled up beside the table, wearing a tiny blazer on one arm and holding scoring paddles in the other seven. "She is the most qualified member we have," the panel chair says, and then, lower, "please do not ask where her paperwork is."
+  options:
+  - id: a
+    label: Present your entry to the whole panel
+    skill: rizz
+    target: 9
+    success:
+      text: 'You perform for five judges and eight arms. The octopus gives you an inked nine and a long stare, and the chair slips you a note: she liked it.'
+      effects: [goodwill+1, 'flag:judge_favor']
+    failure:
+      text: The octopus scores you with every arm and none of them agree. The chair tactfully rounds you down to participation.
+      effects: [nerve-1]
+  - id: b
+    label: Ask Judge Eight to explain her criteria
+    skill: wits
+    target: 7
+    success:
+      text: 'Her paddles spell out an answer in ink: originality, tide, sincerity, in that order. You learn what the whole county has been measured by.'
+      effects: ['evidence:judging_criteria', weird+1]
+    failure:
+      text: The ink forms a diagram you cannot read. It also appears to be a map of your own bad decisions.
+      effects: [time-1]
+  - id: c
+    label: Hand her an offering of kelp snacks
+    skill: none
+    target: null
+    success:
+      text: She accepts with two arms and a nod. Your table placard quietly changes to a better table, and the blazer sleeve waves goodbye.
+      effects: ['flag:judge_snacks', goodwill+1]
+  lead_reactions: {mara: 'Mara sketches the octopus holding all seven paddles. "Seven simultaneous opinions, and not one of them rude. I want that confidence."', kit: 'Kit holds a sealed envelope behind the tank and whispers, "Pure sponsorship, nothing weird, no bribery, probably."', juniper: Juniper tilts her head toward the tank and the octopus tilts back. They hold the pose a long while., cedar: Cedar studies the water line in the tank and frowns. "Fresh bay water. She is not a visitor. She lives here."}
+  callbacks: [judge_favor, judge_snacks]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

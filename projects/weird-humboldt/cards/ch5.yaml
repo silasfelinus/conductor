@@ -297,3 +297,48 @@
     cedar: "Cedar checks the fence line and hums. \"Crows on the posts. He's got a better crew than most people.\""
   callbacks: [hayes_contract, hayes_relief]
   eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-082
+  revision: 1
+  chapter: 5
+  location: Ferndale Main Street
+  title: The Cow Who Owns the Theater
+  tier: invented
+  provenance: Ferndale is a real Victorian village; the cow, her deed and the theater are invented fiction. No real property, owners or businesses are depicted.
+  rarity: rare
+  tone: [whimsical, dry, warm]
+  cast: [Lady Clementine (a cow in a tasteful hat), The Notary (unsure what year it is)]
+  canon: [The deed names Clementine and is notarized in two centuries at once., 'She has never entered the theater, only inherited it.', The marquee changes its title to her mood.]
+  scene: 'The old marquee on Main Street reads TONIGHT: COW. Beneath it stands a Holstein in a velvet hat, with a rolled deed hanging from a ribbon at her neck. A notary stamps the document while clearly wishing to be elsewhere. "The terms are lawful," she says, with the dazed relief of someone who has checked three times. "The tenant, however, wants to renegotiate the popcorn."'
+  options:
+  - id: a
+    label: Argue the lease on her behalf
+    skill: wits
+    target: 9
+    success:
+      text: You find the clause that lets the owner keep the balcony in perpetuity. Clementine lowers her head in a regal nod, and the notary stamps twice.
+      effects: [goodwill+1, 'flag:clementine_lease']
+    failure:
+      text: You argue the wrong century. The notary agrees with both sides and the marquee flickers to NOT TONIGHT.
+      effects: [time-1]
+  - id: b
+    label: Win her confidence with a gentle word
+    skill: rizz
+    target: 7
+    success:
+      text: She leans her whole head into your hand. The marquee brightens, and every bulb along Main Street comes up one shade warmer.
+      effects: [goodwill+1, weird+1]
+    failure:
+      text: You pet the hat by mistake. She forgives you, but the marquee remembers.
+      effects: [nerve-1]
+  - id: c
+    label: Ask to see the theater
+    skill: none
+    target: null
+    success:
+      text: 'Clementine leads you through a side door to the balcony. Between the seats, a stub is pinned on the rail: reserved, owner only. She nods once, and you take the second seat.'
+      effects: ['flag:clementine_balcony', 'evidence:theater_deed']
+  lead_reactions: {mara: Mara sketches the hat and the marquee in one long curve. "A cow with a hat and a deed. This is the most dignified thing in Ferndale.", kit: 'Kit smooths an invisible tie and whispers, "Madam, I represent no one, but I admire your property enormously."', juniper: 'Juniper bows her head to the cow and, to everyone''s surprise, the cow bows back.', cedar: 'Cedar eyes the deed and murmurs, "That is real Victorian paper. Somebody did their homework a long time ago."'}
+  callbacks: [clementine_lease, clementine_balcony]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

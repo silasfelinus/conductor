@@ -298,3 +298,48 @@
     cedar: "Cedar frowns at the form. \"Six bodies, one wheel set. Who's pedaling? That's the real question.\""
   callbacks: [committee_cleared, committee_seventh]
   eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-109
+  revision: 1
+  chapter: 6
+  location: Manila dunes, kinetic course
+  title: The Bribe That Bribes Itself
+  tier: invented
+  provenance: The Manila dunes are a real coastal area; the kinetic race bribe, its sentience and its counteroffer are invented fiction. No real race officials or entrants are depicted.
+  rarity: uncommon
+  tone: [whimsical, dry, tense]
+  cast: ['The Bribe (a small tin of coins, newly sentient)', A Race Marshal (visibly regretting all this)]
+  canon: ['By custom, every kinetic entry slips the marshals a token bribe, and everyone enjoys it.', This year's bribe woke up and now makes offers of its own., 'Its counteroffer is excellent, which is exactly the problem.']
+  scene: On the dune crest, the ceremonial bribe tin rolls itself across the sand and stops at your boots. The lid pops. "I've been analyzing the market," it says, in a small, silky voice. "Instead of me bribing the marshal, let me bribe you. Fair deal, flexible terms, absolutely no strings." A marshal behind it makes a face of pure professional dread.
+  options:
+  - id: a
+    label: Negotiate better terms with the tin
+    skill: wits
+    target: 9
+    success:
+      text: You trade the coins back and forth until the tin concedes one favor, in writing. The marshal exhales for the first time in an hour.
+      effects: [goodwill+1, 'flag:bribe_favor']
+    failure:
+      text: The tin outmaneuvers you in four sentences. You walk away owing it a small, unspecified debt.
+      effects: [nerve-1]
+  - id: b
+    label: Refuse and keep the race honest
+    skill: psyche
+    target: 7
+    success:
+      text: The tin hums, thinks, and closes itself with a quiet click. The marshal quietly salutes you, and somewhere the sand settles in approval.
+      effects: [nerve+1, 'evidence:honest_race']
+    failure:
+      text: You refuse so loudly the whole dune hears. The tin sulks, and every marshal starts looking at you.
+      effects: [goodwill-1]
+  - id: c
+    label: Accept a single polite coin as a souvenir
+    skill: none
+    target: null
+    success:
+      text: The tin offers one coin, tails side up. It is warm, and it says on the rim, in tiny print, no obligation. You pocket it with a feeling of exquisite unease.
+      effects: ['flag:bribe_coin', weird+1]
+  lead_reactions: {mara: 'Mara draws the tin mid-sales-pitch. "Tiny face, enormous confidence. Every salesman I ever met, and he is a coin box."', kit: 'Kit leans in and whispers, "This is my competition, and I resent how good the pitch is."', juniper: 'Juniper listens to the tin hum for a long time. "It is lonely," she says. "It wanted someone to talk to."', cedar: Cedar picks up the tin with two careful fingers. "Old pewter. Older than the race. It has seen a lot of dunes."}
+  callbacks: [bribe_favor, bribe_coin]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
