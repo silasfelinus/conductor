@@ -238,7 +238,7 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Finish map progression, lives, secrets, challenge and save system"
-    status: claimed
+    status: done
     depends_on: [t-006, t-010]
     owner: worker
     claimed_by: 2026-10-22T1030Z-plumber-gen2-overworld
@@ -266,7 +266,16 @@ tasks:
       rooms in 1-1, 2-2 and 3-2, and tokens with an extra life every 100. Still to build: map
       exits/warps, achievements, difficulty assists, speedrun splits, a secret ending, and a
       blind-run secrets audit.
+
+      DONE 2026-10-22: kind_robots#4030 merged (17c094c) after 23/23 checks green. Eight walkable world maps
+      (savePlumberOverworld.ts) with normal/secret-exit path unlocks, revisits and the castle road between
+      worlds; save v2 with three files (map node, clears, secret exits, gears, deaths, time) migrating v1 saves;
+      file select, map screen with locked stages dimmed and newly opened paths drawn in; verifySavePlumberOverworld
+      test. Fortresses, Hush Houses, Valve Chapels and real secret exits arrive with t-002/t-020/t-021; painted
+      map plates with t-024.
     updated: '2026-10-16T14:04:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#4030'
+
   - id: t-012
     milestone: m4
     title: "Produce illustrated world art, enemy animation, sound and cinematics"
@@ -446,10 +455,8 @@ tasks:
   - id: t-024
     milestone: m6
     title: "Gen-2 art round 1: overworld maps, far skies, arrival vistas, level types, Pip key poses"
-    status: claimed
-    owner: worker
-    claimed_by: 2026-10-22T1030Z-plumber-gen2-overworld
-    claimed_at: '2026-10-22T10:30:00Z'
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-10-22T10:30:00Z'
@@ -457,6 +464,8 @@ tasks:
       art/GEN2-ROUND-1.yaml (36 subjects x krea2/zimage = 72 cells) submitted 2026-10-22 through
       scripts/sweep_art_ledgers.py (auto_submit). Done when every cell is DONE, reviewed in the ledger
       (keep/reroll with a reason) and the keepers are exported to the media host for t-011/t-021.
+
+      2026-10-22 review of the first 14 renders: the Z-Image overworld maps are excellent (SMB3-style painted maps with empty clearings, a fortress, cottage and waterfall trail); far skies and arrival vistas also keep. Next: when the round is DONE, review the rest in the ledger, export keepers to the media host, and author per-map node coordinates matched to each plate's clearings so savePlumberOverworld.ts draws the painted map instead of the code-drawn land.
   - id: t-025
     milestone: m6
     title: "Gen-2 animation: pose-to-pose WAN sprite clips, atlases and animated cinematics"
