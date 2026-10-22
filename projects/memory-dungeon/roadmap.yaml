@@ -1,0 +1,279 @@
+# 2026-10-22 PT: Silas-directed evolution of the existing /play/memory game.
+project: memory-dungeon
+kind: software
+autonomous: true
+goal: >-
+  Evolve the existing Kind Robots Memory Dungeon at /play/memory into a
+  replayable art-led narrative roguelite RPG, with character creation,
+  independently chosen difficulty and depth, an authored intro, seeded
+  procedural encounter/monster/treasure piles, spatial weapon shapes that
+  change how memory-matching combat works, fair logic minigames and riddles,
+  consequential choices, recurrent characters, recruitable and evolving
+  companions, run-specific upgrades, save/resume and cross-run Chronicle
+  discoveries. Preserve Classic Match and the existing game route/links.
+  Finish only after adversarial seeded playtests, meaningful endings,
+  balance/accessibility QA and Silas's subjective gameplay verdict.
+notes_from_silas: |
+  2026-10-22 PT: "New project: an evolution of memory dungeon. Add to conductor
+  projects, high priority. Should not need a new front end: we need the
+  current memory dungeon to exist as a link from the new front end.
+  This will be a full rpg. Create a character, choose a difficulty
+  level/dungeon depth. Experience intro. Dive into a dungeon crawler
+  where all combat is decided by a memory game. We use the basic memory
+  match, but add automate exploration through procedural dungeons,
+  complete with riddle challenge rooms, wandering monsters, treasure
+  hordes, and other unexpected surprises. Each level is a series of
+  draws from piles, encounter, wandering monster, and treasure. We
+  can discover other companions through this experience who will
+  support us, evolve down experience levels to learn skills, and
+  wrapped in a memory match where your memory is your sharpest weapon.
+  Your biggest job will be taking this idea into something with a
+  solid and fun gameplay loop: explore dungeon, random encounter,
+  difficult decisions, etc. recurring characters, hard decisions,
+  and an interesting story should be priorities, but also including
+  a roguelike experience. The runs should have memory, and future
+  runs can discover new combos that will help."
+
+  Later in the same session: "if someone is given a tool that uncovers
+  two at a time, how does their play change. We can use larger boards
+  and give people weapons that carve out different shapes on the x by y
+  grid. So one sword might be two vertical., a hammer might be three
+  diagonal, etc. we can do larger boards, and maybe ask different
+  challenges. This can truly change the game. Mini games can call
+  back to other experiences. Memory can be part of the challenge,
+  but other logic puzzles are good too."
+
+  Design calls: preserve the existing Kind Robots /play/memory entry,
+  existing matching engine and Classic Match mode. Build an RPG mode
+  into the same page. The 2026-10-21 seven-project focus retains its
+  stable tie-breaker order; this newly HIGH-priority project follows
+  that tier, ahead of ordinary backlog. Reversible design, engine and
+  internal art may proceed without waiting for subjective feedback.
+  Production deployment and external release remain separately gated.
+  See DESIGN-BRIEF.md and COMBAT-PATTERNS.md.
+milestones:
+  - id: m1
+    title: "SHAPE — combat geometry, story and seeded systems"
+    weight: 20
+    status: in-progress
+  - id: m2
+    title: "BUILD — existing-page RPG, procedural floors and persistence"
+    weight: 35
+    status: not-started
+  - id: m3
+    title: "CONTENT — companions, hard choices, riddles and illustrated rooms"
+    weight: 30
+    status: not-started
+  - id: m4
+    title: "POLISH — adversarial playtesting, balance, accessibility, verdict"
+    weight: 15
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Seeded expedition reducer, room schema and Classic adapter"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Inspect existing memoryStore.ts and memory-dungeon.vue, preserve its
+      current matching/scoring/reward paths; design typed versioned run state,
+      seeded draws, event log, room outcomes and deterministic 3-floor
+      text simulator. Include regression tests for existing Classic mode.
+      Scope to a first testable implementation in kind_robots, PR and merge
+      on complete green checks.
+  - id: t-002
+    milestone: m1
+    title: "Optional scope feedback on story and complexity"
+    status: needs-human
+    soft_gate: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_reason: creative-approval
+    note: >-
+      FOR SILAS: nonblocking opportunity to steer The Forgotten Depths'
+      setting, recurring cast and weapon geometry. Continue reversible
+      work immediately; do not require approval as a prerequisite.
+      This is not production deploy/public release approval.
+  - id: t-003
+    milestone: m1
+    title: "Verify and preserve existing Memory Dungeon front-end links"
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Source inspected 2026-10-22 PT: kind_robots
+      components/home/home-visitor-directory.vue already links
+      /play/memory; content/channels/arcade/experiments.md already
+      contains the Play tab/tutorial. Preserve these rather than
+      inventing another route. Verified GitHub source, not live deploy.
+  - id: t-004
+    milestone: m2
+    title: "Create character, set difficulty/depth and play authored intro"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Add optional avatar/origin/name, three starter disciplines,
+      independent Short/Full/Endless depth, meaningful authored opening,
+      immediate decision and clear Classic/RPG mode selection within
+      current page and one-screen accessible stage.
+  - id: t-005
+    milestone: m2
+    title: "Procedural room director for three encounter piles and floor forks"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Seeded, weighted and cooldown-controlled encounter, wandering
+      monster, treasure piles plus authored injections; risk/Danger
+      telegraph, meaningful fork/choice and rest/extract at exits;
+      reachability invariants and multi-seed simulation tests.
+  - id: t-006
+    milestone: m1
+    title: "Spatial weapon combat specification and shape-playtest prototype"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Use COMBAT-PATTERNS.md. Test targetable two-cell vertical
+      sword, three-cell diagonal hammer, cross and precision tools
+      on 4x4, 4x6 and 6x6 boards. Define reveal-vs-match-vs-damage,
+      cooldown and Focus costs, edge clipping/rotation, enemy intent
+      and accessibility. Validate that a wider reveal isn't always
+      optimal and that memory placement remains the deciding skill.
+      Build pure engine plus adversarial tests before visual polish.
+  - id: t-007
+    milestone: m2
+    title: "Integrate RPG combat masks and telegraphed enemies into match board"
+    status: waiting
+    depends_on: t-006
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Apply selected geometry to same existing match board, with
+      shape preview and consistent reveal/match/strike rules.
+      Never shuffle a matched pair or obscure card values unfairly;
+      preserve Classic matching; tune misses/tempo/streaks/Focus.
+      Implement varied monster, rescue, guardian objectives.
+  - id: t-008
+    milestone: m2
+    title: "Recruit companions and unlock skills, relic synergies and levels"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      One active companion, trust/debt ties, two relic slots, one
+      run-earned sidegrade per floor and meaningful gear patterns
+      rather than raw damage upgrades. New combinations unlock
+      tradeoffs, story gates, and geometry without automatic victory.
+  - id: t-009
+    milestone: m3
+    title: "Author floor story, recurring cast and consequential decisions"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Expand Pip, the Brass Knight, Vesper and the Index into recurring
+      personalities with competing agendas and authored consequences.
+      Three-floor plot, at least three endings, six rare events,
+      callbacks/relationship flags, authored loss continuations,
+      distinct visuals and art prompts for each important beat.
+      Each player choice has an explicit opportunity cost.
+  - id: t-010
+    milestone: m3
+    title: "Ship riddle and logic minigame framework plus authored puzzle pack"
+    status: waiting
+    depends_on: t-005
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Challenges beyond memory: sequence deduction, constrained path,
+      pattern logic, liar/truth testimony, spatial rotations, visual
+      clue assembly. Six authored, uniquely solvable puzzles with
+      reasonable accessibility and fair failure continuations;
+      callbacks to existing Kind Robots minigames only via their
+      *own original shared mechanics*, without awkward page swaps.
+  - id: t-011
+    milestone: m3
+    title: "Build first 24 room records, 3 guardians, endings and validator"
+    status: waiting
+    depends_on: t-005
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Eight encounter, eight monster and eight treasure records plus
+      six rare story scenes; authored consequences and conditional
+      dialogue; validator for reachable actions, seeded deck variety,
+      prompt coverage and first three floor bosses; failures stay
+      interesting rather than immediate locked doors.
+  - id: t-012
+    milestone: m2
+    title: "Save/resume, defeat/extract and cross-run Chronicle"
+    status: waiting
+    depends_on: t-005
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Versioned deterministic event log and room-boundary save/resume;
+      chronicled decisions/secrets/relationships; failed run still
+      unlocks information and opening variants; replay cannot farm
+      the same reward without consuming a decision or reroll seed.
+  - id: t-013
+    milestone: m3
+    title: "Deliver character, room, weapon and ending art pipeline"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Use ART-PROMPTS.md new project icon/card/hero prompts and
+      positive physical-subject first art requests for character
+      portraits, weapon masks, scene illustrations and endings.
+      Existing memory card images remain useful. Record output
+      provenance and ArtJob IDs when available; do not claim
+      generated images exist because prompts were written.
+  - id: t-014
+    milestone: m4
+    title: "Run adversarial multi-seed balance and player-story tests"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Test all difficulty/depth combinations with expert, novice,
+      greedy, pacifist and adversarial strategies. Check information
+      gain for 2-cell and 3-cell reveal tools, pattern edge clipping,
+      resource loops, unwinnable puzzles, room repetition, threats,
+      fair short runs, useful defeat rewards and distinguishable
+      story endings. Document metrics and fix critical regressions.
+  - id: t-015
+    milestone: m4
+    title: "Finish accessible one-screen UI and request subjective verdict"
+    status: waiting
+    depends_on: t-014
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Verify actual render on phone/tablet/desktop/XL, large
+      readable cards, accessible spatial targeting/keyboard/reduced
+      motion, workmanlike tutorial in sidebar. Visual/subjective
+      game acceptance is for Silas; production deploy/outward-facing
+      release are separate explicit human gates.
