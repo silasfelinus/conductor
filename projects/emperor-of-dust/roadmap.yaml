@@ -865,10 +865,9 @@ tasks:
     milestone: m3
     title: "Recruit first followers through seeded throne-room audiences and pace early quests"
     status: done
-    owner: worker
     claimed_by: 2026-10-22T092000Z-emperor-t054-a7c2
     claimed_at: '2026-10-22T09:20:18.631Z'
-    updated: '2026-10-22T21:45:37Z'
+    updated: '2026-10-22T21:45:44.218Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -876,9 +875,7 @@ tasks:
 
       Kind Robots PR #4022 implements three throne-room recruit encounters, exclusive authored rival pairs, permanent rejected-rival flags, and a quiet Day 1 quest board. Added seeded 40-run playtests and save/legacy checks; CI and final merge still being verified.
 
-      Reviewer 2026-10-22: PR #6507 (docs-only balance report refresh, 552-campaign results)
-      green on all 23 checks, merged as 940945a.
-    implementation_pr: 'silasfelinus/conductor#6507'
+      Merged kind_robots#4022 (6c945b0) for mandatory court-only followers and early quest pacing, and kind_robots#4038 (36560c8) for the Day 1 rewind fix, CI adversarial harness and nightly schedule. All 14 GitHub checks on #4038 passed, including 552 full campaigns, 27,600 simulated days, 240 opening seeds, 480 rival-choice branches, 342 rewinds that selected different arrivals, and all 8 ending families. At most 2 Day 1 quests. Merged conductor#6507 (940945a) with the actual fresh policy-by-policy balance report. No public release, production deployment or ArtJob.
   - id: t-055
     milestone: m5
     title: "Inspect Iron Peace eligibility: spurn-all reaches it in 38/40 seeded campaigns"
