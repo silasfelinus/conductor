@@ -395,3 +395,139 @@
     cedar: "Cedar taps the tether line. \"Nothing on the other end. That balloon is flying under its own power, and I would like to know whose.\""
   callbacks: [balloon_paperwork, balloon_ribbon]
   eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-056
+  revision: 1
+  chapter: 3
+  location: Sequoia Park, Eureka
+  title: The Redwood's Lost-and-Found
+  tier: invented
+  provenance: Sequoia Park is a real Eureka park; the bench that collects forgotten childhood things and the objects it holds are invented fiction and depict no actual property.
+  rarity: common
+  tone: [tender, whimsical, wistful]
+  cast: ['The Bench (a park bench with a drawer, fixed)', 'A seven-year-old named Moss (sitting on it, solemn)']
+  canon: ['The bench keeps small things people forgot as children: a tooth, a sticker book, a name for a pet rock.', An object can be reclaimed only by someone who can say what it meant., The bench has a drawer that opens onto more bench.]
+  scene: Under a redwood, a bench has a drawer where no drawer should be. Inside lie a lone mitten, a plastic dinosaur wearing a monocle, a slip of paper reading SECRET FORT and a tooth in a matchbox. A seven-year-old named Moss swings her legs and supervises. "It's the lost-and-found," she says. "You have to say what it was for. Grownups usually cry."
+  options:
+  - id: a
+    label: Say what the dinosaur was for
+    skill: rizz
+    target: 7
+    success:
+      text: You tell the truth, simply, about a monocle and a thing you were afraid of. The bench slides the dinosaur toward you, and it turns out to hold a folded map of a forgotten trail.
+      effects: ['evidence:geography', goodwill+1, 'flag:bench_reclaimed']
+    failure:
+      text: You make something up and the drawer snaps shut. Moss gives you a sympathetic look that is entirely too old for her.
+      effects: [nerve-1, 'flag:bench_unconvinced']
+  - id: b
+    label: Read the SECRET FORT note
+    skill: wits
+    target: 9
+    success:
+      text: The note is a child's careful map to a fort that still stands. You note the trail marks and recognize a landmark that appears on no official park chart.
+      effects: ['evidence:document', 'evidence:geography']
+    failure:
+      text: The note is in a child's cipher you can't crack. By the time you give up the bench has swallowed it and offered you a sticker.
+      effects: [time-1]
+  - id: c
+    label: Leave something of your own in the drawer
+    skill: none
+    target: null
+    success:
+      text: You tuck in a small, true thing from your own childhood. The drawer closes with a click, and the bench will keep it, which Moss says is the best thing a bench can do.
+      effects: ['flag:bench_gift', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: Mara touches the tooth box. "People bring me their forgotten things on skin. This bench keeps them without the ink.", kit: Kit puts the monocle on the dinosaur. "A dignified creature. I would like to apologize on its behalf to everyone.", juniper: Juniper lays her hand on the wood. "Trees remember too. This one has been holding other people's quiet things.", cedar: Cedar nods at Moss. "Good kid. She knows how a place works better than half the adults."}
+  callbacks: [bench_reclaimed, bench_unconvinced, bench_gift]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-057
+  revision: 1
+  chapter: 3
+  location: Sequoia Park Zoo, Eureka
+  title: The Volunteer in the Bear Costume
+  tier: invented
+  provenance: Sequoia Park Zoo is a real Eureka institution; the stuck costume, its volunteer and the talk are invented fiction and depict no actual staff, volunteer or program.
+  rarity: uncommon
+  tone: [comic, tender, awkward]
+  cast: ['Dale (a volunteer who cannot remove the bear head, fixed)', 'A school group of fourteen children (loud, unconvinced)']
+  canon: [Dale gives animal talks in a bear costume that no longer comes off., Dale is cheerful and more worried about the children than himself., The costume's zipper opens only for people who answer the talk's closing question honestly.]
+  scene: 'A volunteer in a full bear costume is giving a talk to fourteen skeptical children under a sign about native animals. Mid-sentence he stops and, with great dignity, says: "I need someone to unzip me." The zipper pull is jammed under the chin. The children are not surprised. One of them says, "He did this on Tuesday too." Dale''s voice comes out muffled and gentle from behind the bear. "It''s not an emergency. It is also an emergency."'
+  options:
+  - id: a
+    label: Work the zipper loose
+    skill: burly
+    target: 7
+    success:
+      text: The zipper gives with a shriek, and Dale breathes freely for the first time in a week. His real face is tired and delighted. He hands you a key card for a staff-only service gate.
+      effects: [goodwill+1, 'flag:bear_unzipped', 'evidence:document']
+    failure:
+      text: The zipper holds, and the pull snaps off in your hand. Dale takes this very well and the children take it better. You are given a sticker for effort.
+      effects: [nerve-1, 'flag:bear_zipper_broke']
+  - id: b
+    label: Answer the closing question honestly
+    skill: psyche
+    target: 9
+    success:
+      text: 'The question is: what are you afraid of leaving behind? You answer truthfully and the costume loosens itself seam by seam, in a ripple that makes the children gasp.'
+      effects: ['flag:bear_honest', 'evidence:memory', weird+1]
+    failure:
+      text: Your answer comes out as a joke, and the costume tightens a notch. Dale pats your shoulder with a foam paw and promises to try again tomorrow.
+      effects: [time-1]
+  - id: c
+    label: Finish the talk for him
+    skill: none
+    target: null
+    success:
+      text: You take the fourteen children through the rest of the talk, bear facts and all, while Dale supervises from the bench. It costs you an afternoon and earns you a lasting reputation.
+      effects: ['flag:bear_talk_finished', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: 'Mara bites back a laugh. "If I ever get stuck in a costume, I want you to pretend it''s a tattoo."', kit: 'Kit applauds the bear. "Commit to the bit all the way. Dale, you are my hero."', juniper: 'Juniper looks at the children, not the bear. "The kids are fine. Dale needs someone to be gentle about this."', cedar: Cedar kneels to look at the zipper. "Heavy-duty. This is a work zipper. Somebody built this to last."}
+  callbacks: [bear_unzipped, bear_zipper_broke, bear_honest, bear_talk_finished]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-060
+  revision: 1
+  chapter: 3
+  location: Sequoia Park, Eureka
+  title: The Tree That Grows Entrances
+  tier: invented
+  provenance: Sequoia Park holds real old-growth trees; the hollow trunk that grows doors is invented fiction, and no real tree or trail is claimed to have such doors.
+  rarity: rare
+  tone: [wonder, dreamy, mysterious]
+  cast: ['The Hollow Trunk (grows entrances, never exits, fixed)', A trail ranger named Ofelia (unflustered)]
+  canon: ['The hollow trunk offers three doors, none requiring a key, and a fourth that appears if you wait.', 'Each door leads to a place already on the player''s journey, but a different day of it.', Ofelia has been told not to go through them and is extremely tempted.]
+  scene: 'A hollow redwood trunk the width of a small room has three doors in its bark: a green one, a red one, a faded blue one. None has a lock. A fourth is forming slowly in the wood, like a bruise becoming a plan. A trail ranger named Ofelia stands beside it with a clipboard and the expression of a person who has filed a report about it. "They show up on Thursdays," she says. "I''m not allowed to open them. I''m allowed to supervise you."'
+  options:
+  - id: a
+    label: Open the green door
+    skill: wits
+    target: 7
+    success:
+      text: The green door opens onto a room full of maps, one of which shows the festival route redrawn by someone who has already walked it. You slip out with the margin notes.
+      effects: ['evidence:geography', 'evidence:schedule', 'flag:trunk_green']
+    failure:
+      text: The green door opens onto a very small picnic you're not invited to. You are firmly shown out and your sandwich is taken as a toll.
+      effects: [nerve-1, 'flag:trunk_picnic']
+  - id: b
+    label: Open the faded blue door
+    skill: psyche
+    target: 9
+    success:
+      text: Blue opens onto a quiet pond at dusk and a feeling like being forgiven. You step out lighter and clearer, with a vague memory of a frequency.
+      effects: ['evidence:frequency', clarity+1, 'flag:trunk_blue']
+    failure:
+      text: Blue opens onto the same pond and a feeling like being forgotten. You come out unsettled and very slightly older.
+      effects: [weird+1, time-1]
+  - id: c
+    label: Wait for the fourth door
+    skill: none
+    target: null
+    success:
+      text: You wait, and Ofelia waits with you, and the fourth door finishes growing. It has your name on it in her handwriting. You do not open it yet but she writes down that you could.
+      effects: ['flag:trunk_fourth', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: Mara studies the grain around each door. "They're not carved. They're healed. Somebody asked the tree nicely.", kit: Kit tests each handle without turning it. "Green says adventure. Red says consequences. Blue says nap.", juniper: Juniper lays her palm on the bark. "The tree is not showing you where to go. It is showing you who you were.", cedar: Cedar eyes the hollow. "I've seen big hollow trees. This one's been hollow on purpose."}
+  callbacks: [trunk_green, trunk_picnic, trunk_blue, trunk_fourth]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

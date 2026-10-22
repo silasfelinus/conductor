@@ -393,3 +393,139 @@
     cedar: "Cedar taps the siren post. \"Whatever drives this has a heartbeat. Somebody wound it, and they wound it slow.\""
   callbacks: [siren_agreed, siren_runner]
   eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-102
+  revision: 1
+  chapter: 6
+  location: Arcata Plaza, kinetic starting line
+  title: Glorious Competitor Number Minus One
+  tier: invented
+  provenance: The Arcata kinetic sculpture tradition is real; the unregistered sculpture visible in every starting photograph is invented fiction, and no real racer or entry is depicted.
+  rarity: uncommon
+  tone: [festive, puzzling, comic]
+  cast: ['Number Minus One (an unregistered sculpture, silent, fixed)', 'Race Marshal Vikram (flustered, exact)']
+  canon: [An unregistered sculpture appears in every historic starting photograph., 'Race Marshal Vikram cannot find an entry form, a team, or a builder for it.', 'The sculpture has never crossed the finish line, only the start.']
+  scene: 'At the starting line, Race Marshal Vikram flips through thirty years of photographs with growing distress. In every one, at the left edge of the frame, stands a kinetic sculpture nobody registered: part pedal-cycle, part lantern, part lopsided heron. It has no number and no team. Today it is there again, parked at the line, quietly vibrating. "Competitor Number Minus One," Vikram says. "I have given up trying to disqualify it."'
+  options:
+  - id: a
+    label: Search the photos for a builder
+    skill: wits
+    target: 9
+    success:
+      text: You line up the photographs by year and find a single, recurring hand adjusting a wheel in the shadow of the heron. You get a name and a workshop address.
+      effects: ['evidence:photo', 'evidence:roster', 'flag:minus_one_builder']
+    failure:
+      text: The photographs seem to shuffle when you look away. You come out with a headache and a suspicion that you appear in some of them.
+      effects: [nerve-1, weird+1]
+  - id: b
+    label: Ask the sculpture to race
+    skill: rizz
+    target: 9
+    success:
+      text: 'You speak to it plainly and the heron straightens. It rolls up to the line and waits, and Vikram, defeated, writes a new number on the board: MINUS ONE (PROVISIONAL).'
+      effects: [goodwill+1, 'flag:minus_one_entered', 'evidence:schedule']
+    failure:
+      text: The sculpture does not react. Vikram sighs, offers you a cup of tea and says it has been like this for thirty years.
+      effects: [time-1]
+  - id: c
+    label: Give it a place at the line without a word
+    skill: none
+    target: null
+    success:
+      text: You clear a space at the line and straighten its wheel. It rests there and the crowd politely adjusts. Vikram makes a note that you did this without being asked.
+      effects: ['flag:minus_one_welcomed', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: Mara studies the heron's welds. "Whoever built this can fake an accident convincingly. That takes real craft.", kit: 'Kit circles it, delighted. "No team. No number. A competitor with pure vibes. I adore it."', juniper: Juniper puts a hand on its frame. "It is not lost. It is waiting for someone to say it belongs.", cedar: 'Cedar looks over the frame. "Pedals, chain, no seat. Built by someone who wanted a ride but no passenger."'}
+  callbacks: [minus_one_builder, minus_one_entered, minus_one_welcomed]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-111
+  revision: 1
+  chapter: 6
+  location: Humboldt Bay, kinetic water crossing
+  title: A Floating Sculpture with Opinions
+  tier: invented
+  provenance: The bay crossing is a real feature of the kinetic race tradition; the sculpture that refuses to float without a hearing is invented fiction and depicts no real entry.
+  rarity: common
+  tone: [comic, earnest, festive]
+  cast: ['The Sculpture (a floating craft with design philosophy, fixed)', 'Crew Chief Imani (exasperated, fond)']
+  canon: [The craft refuses to float until its design philosophy is heard in full., 'The philosophy is short but nuanced, and includes a rule about not being rushed.', Imani has built it for twelve years and has never once been consulted.]
+  scene: 'At the water''s edge, a lopsided craft of pipe, canvas and umbrella sits on the mud while the tide rolls in and out around it. Crew Chief Imani wipes her forehead. "She won''t launch," she says, "until somebody hears her design philosophy." From inside the hull a mild, dignified voice begins: "Firstly, a boat should be allowed to be a sculpture. Secondly, a sculpture should be allowed to leak." It goes on for a while.'
+  options:
+  - id: a
+    label: Listen to the whole philosophy
+    skill: psyche
+    target: 7
+    success:
+      text: You listen without interrupting. The craft concludes with a surprisingly concrete request, and as you nod it lifts off the mud, bobbing in grateful circles. Imani nearly cries.
+      effects: [goodwill+1, 'flag:sculpture_heard', 'evidence:judging_criteria']
+    failure:
+      text: You drift off at point nine. The craft notices and sulks, grounded again until you can summarize the first three points.
+      effects: [nerve-1, 'flag:sculpture_slighted']
+  - id: b
+    label: Patch the hull while it talks
+    skill: burly
+    target: 9
+    success:
+      text: You work with tar and tape while it lectures. By the end the hull holds water out, the sculpture holds opinions in, and Imani presses a launch pass into your hand.
+      effects: ['evidence:document', 'flag:sculpture_patched', goodwill+1]
+    failure:
+      text: The patch peels in the first wave, and the craft delivers a new, longer lecture on respecting materials. Imani rubs her eyes.
+      effects: [time-1, nerve-1]
+  - id: c
+    label: Applaud and step back
+    skill: none
+    target: null
+    success:
+      text: You applaud sincerely. The sculpture, flustered, floats out a few feet on pride alone. Imani laughs for the first time in months and says you may have fixed more than the boat.
+      effects: ['flag:sculpture_applauded', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: Mara listens with a small smile. "A boat that insists on being understood. We'd get along.", kit: Kit salutes the hull. "Artistic statements should be allowed to leak. I am going to have this printed on a shirt.", juniper: Juniper bows slightly to the sculpture. "A thing that asks to be heard is already half free.", cedar: Cedar scratches his jaw. "I've fixed worse boats. Never one that argued back before."}
+  callbacks: [sculpture_heard, sculpture_slighted, sculpture_patched, sculpture_applauded]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-113
+  revision: 1
+  chapter: 6
+  location: Humboldt Bay, kinetic water crossing
+  title: The Cosmic Coast Guard
+  tier: invented
+  provenance: The Humboldt Bay coast guard presence is real; the cosmic rescue boat, its paperwork and its vanished galaxy are invented fiction, and no real agency or personnel are depicted.
+  rarity: rare
+  tone: [cosmic, bureaucratic, melancholy]
+  cast: ['Captain Sef (a cosmic coast guard officer, fixed)', 'The Paperwork (valid in a galaxy that no longer exists, fixed)']
+  canon: [A rescue boat arrives with paperwork from a galaxy that no longer exists., Captain Sef is not here to rescue the race but to close out an old file., The paperwork is binding in a way that only matters to those who answer it honestly.]
+  scene: A white rescue boat noses into the bay with a lamp of no known color. Captain Sef steps aboard your craft with a clipboard and a regulation expression. "Cosmic Coast Guard," she says. "I'm here to close a rescue file opened four billion years ago." She hands you a form. It is dated from a galaxy that is, as far as she knows, gone. "Technically, you are the surviving party. Please sign where the stars used to be."
+  options:
+  - id: a
+    label: Read the form closely before signing
+    skill: wits
+    target: 9
+    success:
+      text: The form is a rescue request signed by a ship that may be the race's oldest ancestor. Among the clauses is a coordinate that sits just off the finish line.
+      effects: ['evidence:document', 'evidence:geography', 'flag:coastguard_read']
+    failure:
+      text: The form rewrites itself as you read and by the end you aren't certain whether you've signed. Captain Sef stamps it either way, apologetically.
+      effects: [nerve-1, weird+1]
+  - id: b
+    label: Offer Captain Sef a cup of tea and a moment
+    skill: rizz
+    target: 7
+    success:
+      text: She takes the cup. For a while she is no longer an officer but a person far from home. She tells you what the file was really about and slides you a pass to the finish.
+      effects: [goodwill+1, 'flag:coastguard_tea', 'evidence:history']
+    failure:
+      text: She refuses the tea out of regulation and the moment passes. The file stays open and her expression doesn't change.
+      effects: [time-1]
+  - id: c
+    label: Sign where the stars used to be
+    skill: none
+    target: null
+    success:
+      text: You sign, and the pen leaves a faint light on the page. Captain Sef closes the file with ceremony and the boat leaves with a long, low note. You feel responsible for something very old.
+      effects: ['flag:coastguard_signed', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: Mara studies the form without touching it. "Paperwork for the dead. I know a few people who'd have a lot to say about that.", kit: 'Kit salutes Captain Sef, wide-eyed. "I always hoped someone was watching the coast. I did not expect them to file reports."', juniper: Juniper bows her head. "Some endings need a witness more than a rescue.", cedar: Cedar reads the form upside down. "Looks like a work order. Somebody's been waiting a long time for a crew to answer it."}
+  callbacks: [coastguard_read, coastguard_tea, coastguard_signed]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

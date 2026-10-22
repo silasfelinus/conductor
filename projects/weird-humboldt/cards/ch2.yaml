@@ -393,3 +393,139 @@
     cedar: "Cedar checks the pilings with a knuckle. \"Good timber, no rot. Somebody keeps this up, even when it is not here.\""
   callbacks: [berth_seven, lower_dock_note]
   eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-023
+  revision: 1
+  chapter: 2
+  location: Moonstone Beach
+  title: Message in a Glass Kombucha
+  tier: invented
+  provenance: Moonstone Beach is real; the bottle, the handwriting, the date and the ocean's postage are invented fiction, and no real brand is depicted.
+  rarity: common
+  tone: [quirky, eerie, self-aware]
+  cast: ['The Bottle (kombucha, glass, sealed, fixed)', Gull Eleven (an opinionated witness)]
+  canon: [The note in the bottle is in the player's own handwriting and carries tomorrow's date., Whatever the note instructs is already half done by the time it is read., The sea has no postage system; the bottle simply insists on arriving.]
+  scene: 'Between a drift log and a tangle of kelp lies a brown glass kombucha bottle, cap still tight, a slip of paper curled inside. When you hold it to the light the handwriting is unmistakably yours: the same crossed sevens, the same sulking loop on every G. The date at the top is tomorrow''s. Gull Eleven stands over it like a notary. "It arrived," she says, "before it was sent. Please sign for it."'
+  options:
+  - id: a
+    label: Break the cap and read the whole note
+    skill: wits
+    target: 7
+    success:
+      text: 'The note is a list: three directions, one warning and a promise that you will be fine. The warning names a stretch of tideline, and you get to it before the tide does.'
+      effects: ['evidence:geography', 'flag:bottle_read']
+    failure:
+      text: The cap shatters and the note smears into your own signature. You can read half of one sentence, which says only WHY DID YOU OPEN IT.
+      effects: [nerve-1, 'flag:bottle_smeared']
+  - id: b
+    label: Write a reply and send it back on the tide
+    skill: rizz
+    target: 9
+    success:
+      text: You write a short, honest answer to yourself and send it to sea. Gull Eleven nods approval and the bottle, for a moment, floats upstream toward the future.
+      effects: [goodwill+1, 'flag:bottle_replied', weird+1]
+    failure:
+      text: Your reply comes out bossy, and the sea sends it back immediately, soggy, with a gull's footprint on it as formal review.
+      effects: [time-1, 'evidence:rumor']
+  - id: c
+    label: Leave it sealed and walk away
+    skill: none
+    target: null
+    success:
+      text: You set the bottle on the log, unopened. Whatever is in it will be true either way, and Gull Eleven writes you down as someone who respects a deadline.
+      effects: ['flag:bottle_unread', 'lose:free_draw']
+  lead_reactions: {mara: 'Mara compares the ink. "Same pen pressure. Same shaking on the Gs. This is you, tired, being clever."', kit: Kit tests the cap and gasps. "Kombucha! The fizz survived the apocalypse of timing. Tragic and delicious.", juniper: Juniper kneels in the foam. "The sea carries what it carries. Whether it's late or early is your problem.", cedar: 'Cedar studies the bottle. "Brewed in a garage, not a factory. Somebody local sent this, or you did."'}
+  callbacks: [bottle_read, bottle_smeared, bottle_replied, bottle_unread]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-025
+  revision: 1
+  chapter: 2
+  location: Moonstone Beach
+  title: The Last Sea Glass
+  tier: invented
+  provenance: Moonstone Beach is real and sea glass is a genuine local pastime; the tiny working lighthouse inside this piece and its keeper's schedule are invented fiction.
+  rarity: uncommon
+  tone: [wonder, gentle, quiet]
+  cast: ['The Sea Glass (frosted green, contains a lighthouse, fixed)', 'The Tiny Keeper (an inch tall, polite, overworked)']
+  canon: [Inside the sea glass is a miniature lighthouse that really sweeps its beam across the beach., The Tiny Keeper tends the light by hand and has not had a visitor since the last storm., 'The beam falls on things the tide has hidden, one at a time, in the same order every night.']
+  scene: 'One piece of frosted green sea glass, the last on the strand, hums when you pick it up. Inside, a lighthouse no taller than a grain of rice turns a beam across a beach no bigger than a thumbnail. Someone small is waving from the lantern room. A voice the size of a hiccup says: "Please do not shake me. I have a tight schedule and no assistants."'
+  options:
+  - id: a
+    label: Ask the keeper which way the beam falls next
+    skill: wits
+    target: 7
+    success:
+      text: The keeper checks a ledger the size of a flea and gives you three bearings. The beam lights a half-buried marker; the marker is a signpost that wasn't there at noon.
+      effects: ['evidence:geography', 'flag:glass_bearings']
+    failure:
+      text: You jostle the glass and the beam strobes in your face. The keeper curses in a language of small bells and refuses to talk until you have apologized.
+      effects: [nerve-1, time-1]
+  - id: b
+    label: Offer to carry the glass to a safer shore
+    skill: rizz
+    target: 9
+    success:
+      text: The keeper agrees, with conditions. You walk the glass up the beach in your cupped hands while the beam makes a path for you, and a tide-warning pulses twice.
+      effects: [goodwill+1, 'flag:glass_carried', 'evidence:schedule']
+    failure:
+      text: The promise rings insincere, and the keeper draws the shutters inside the glass. It sits dark and pretending to be ordinary in your palm.
+      effects: ['flag:glass_dark']
+  - id: c
+    label: Set it back where you found it
+    skill: none
+    target: null
+    success:
+      text: You return the glass to the strand exactly as it was. The beam makes a single small bow in your direction and the keeper thanks you for your restraint.
+      effects: ['flag:glass_returned', goodwill+1]
+  lead_reactions: {mara: Mara tilts the glass to the light. "It's like a piece of flash art the ocean did on its own. I'd frame it.", kit: Kit presses an ear to it and grins. "Singing. A very small organ playing a very small hymn.", juniper: Juniper cups it gently. "A keeper in glass. The tide has been telling the truth in miniature all along.", cedar: 'Cedar holds still, wary. "Don''t drop that. Whatever''s in there ain''t built for gravity."'}
+  callbacks: [glass_bearings, glass_carried, glass_dark, glass_returned]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-031
+  revision: 1
+  chapter: 2
+  location: Luffenholtz Beach
+  title: Footprints Arriving from the Sea
+  tier: invented
+  provenance: Luffenholtz Beach is a real stretch of coast; the wet footprints, their direction and the walker they imply are invented fiction, and no real visitor or drowning is depicted.
+  rarity: common
+  tone: [eerie, gentle, puzzling]
+  cast: ['The Walker (never seen, leaves wet bare tracks, fixed)', 'A dog walker named Ines (local, startled, helpful)']
+  canon: [The footprints climb uphill from the water before the waves reach that point., The walker is not hostile; the prints stop at the same bench every night., 'The tide is arriving later each day, as if to give the walker time.']
+  scene: The sand is dry at the top of the stair, and yet a line of wet bare footprints climbs it, one print after another, glistening and cold. They begin at the waterline and walk upward. The waves haven't reached that point yet, which means the walker walked out of the sea before the sea got there. A dog walker named Ines points with her leash. "Every night," she says. "They stop at the bench."
+  options:
+  - id: a
+    label: Follow the prints to the bench
+    skill: local_lore
+    target: 7
+    success:
+      text: At the bench the prints stop and a small puddle of seawater holds an old coin and a tide table in a language of knots. You recognize a local fishing family's shorthand.
+      effects: ['evidence:document', 'flag:prints_followed']
+    failure:
+      text: The prints loop twice around the bench and lead you back to the stairs, where you find your own boot prints arriving from the sea. You have been walking in circles.
+      effects: [time-1, weird+1]
+  - id: b
+    label: Ask Ines what she has noticed
+    skill: rizz
+    target: 7
+    success:
+      text: Ines has kept a notebook. She shows you eight nights of pencil sketches and the tide times, and lets you copy the pattern that the sea seems to be keeping for someone.
+      effects: ['evidence:schedule', goodwill+1, 'flag:ines_notebook']
+    failure:
+      text: 'Ines gets protective of her dog and her night and shuts the notebook. She says only: "They''re polite. Don''t be loud."'
+      effects: [nerve-1]
+  - id: c
+    label: Leave a dry towel on the bench
+    skill: none
+    target: null
+    success:
+      text: You leave the towel folded on the bench like a small offering. Whoever walks out of the sea will have somewhere to put their hands, and Ines raises her leash to you in salute.
+      effects: ['flag:walker_towel', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: 'Mara crouches near a print. "Arch is high, toes spread. Barefoot, practiced. Someone who has done this walk many times."', kit: 'Kit tiptoes alongside them. "Whoever it is, I would love to have their cardio."', juniper: Juniper lays a palm on the sand. "The beach is not afraid. It's making room.", cedar: 'Cedar studies the stair. "Tide tables lie sometimes. Prints don''t. Whoever this is, they''re patient."'}
+  callbacks: [prints_followed, ines_notebook, walker_towel]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

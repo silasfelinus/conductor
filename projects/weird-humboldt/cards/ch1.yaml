@@ -416,3 +416,139 @@
     cedar: "Cedar crouches and sniffs the cold ash. \"Somebody burned something here that never needed a match.\""
   callbacks: [campfire_mapped, campfire_guest]
   eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-001
+  revision: 1
+  chapter: 1
+  location: Arcata Plaza
+  title: The Human Statue Who Keeps Turning
+  tier: invented
+  provenance: Arcata Plaza and its street performers are real in spirit; this particular busker, the town-name rule and the audience that is not there are invented fiction, and no real performer is depicted.
+  rarity: common
+  tone: [dry, uncanny, warm]
+  cast: ['Pell (a busker painted silver, fixed)', 'The Unseen Crowd (never visible, always polite)']
+  canon: ['Pell freezes whenever anyone says the town''s name, even when nobody is watching.', 'The freeze is not a trick: it lasts until someone says something kind about the person who was just named.', Pell has been turning toward the same empty corner for eleven years.]
+  scene: A silver-painted busker stands on an overturned crate at the edge of the Plaza, and every time you so much as think the town's name, he stops mid-pose like a video buffering. Pell's eyes follow you anyway. A hat at his feet holds three buttons, a bus transfer and a folded paper crane. "It is not me," he says without moving his lips. "It is the word. It has weight. I have been holding it up since the ninth of March."
+  options:
+  - id: a
+    label: Say the town's name with real affection
+    skill: rizz
+    target: 7
+    success:
+      text: You say it like a friend's name, and Pell exhales for the first time in years. His pose melts into a bow, and he hands you the paper crane, which has a street address written inside the wing.
+      effects: [goodwill+1, 'flag:statue_freed', 'evidence:document']
+    failure:
+      text: The name comes out as a joke and Pell freezes harder, pointing a gloved finger at a corner you can't see. Passers-by who aren't there stop to watch you apologize.
+      effects: [nerve-1, 'flag:statue_offended']
+  - id: b
+    label: Follow his frozen gaze to the corner
+    skill: wits
+    target: 9
+    success:
+      text: The corner has a worn brass bolt in the paving where a statue once stood. Pell is standing in for it. You get the bolt number, which matches a municipal inventory nobody has seen.
+      effects: ['evidence:history', weird+1]
+    failure:
+      text: You trace his stare, find nothing and turn back to find your own reflection posed on the crate beside him, waiting for a tip.
+      effects: [time-1, 'evidence:rumor']
+  - id: c
+    label: Put a coin in the hat and ask nothing
+    skill: none
+    target: null
+    success:
+      text: He cannot move, but a button rolls into your palm and the empty crowd gives a small, courteous cheer. It costs you a coin and your last free draw while you stay to keep him company.
+      effects: ['flag:statue_company', 'lose:free_draw']
+  lead_reactions: {mara: 'Mara studies the paint job. "That''s cosmetic-grade silver. Someone does this professionally, and they don''t like what the word costs them."', kit: Kit pulls a ribbon from a sleeve and ties it to Pell's crate. "A busker's hat is a language. Tell me what these buttons say.", juniper: Juniper lays a hand on the crate and frowns. "The wood remembers a larger statue. This man is a placeholder with feelings.", cedar: 'Cedar squints at the corner bolt. "That''s a real survey bolt. Somebody''s measuring something from here, and it ain''t the Plaza."'}
+  callbacks: [statue_freed, statue_offended, statue_company]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-004
+  revision: 1
+  chapter: 1
+  location: Arcata Plaza
+  title: The Man Selling Used Fog
+  tier: invented
+  provenance: The Plaza is real; the memory-bottling vendor, his mason jars and the fog market are invented fiction and depict no real merchant or product.
+  rarity: uncommon
+  tone: [eerie, wry, melancholy]
+  cast: ['Mr. Ambrose Tuck (vendor of used fog, fixed)', 'A jar labeled ''Tuesday, mostly'' (a memory)']
+  canon: [Ambrose Tuck bottles exactly one memory per customer in a mason jar and charges nothing but the memory., A bottled memory is gone from the seller but never destroyed; it can be reopened by whoever holds the jar., 'Tuck''s own jars were all filled by him, and he will not say why he keeps them.']
+  scene: A folding table holds forty mason jars full of grey, slow-moving fog, each with a masking-tape label in tidy block capitals. A man in a raincoat several seasons too heavy waves you over. "Used fog," Tuck says, "previously owned by somebody who needed the room. One memory per jar, one jar per customer. You can give one up, or you can buy one. Either way, somebody feels lighter."
+  options:
+  - id: a
+    label: Offer a small memory for the trade
+    skill: psyche
+    target: 9
+    success:
+      text: You give up the smell of a childhood porch. It comes out of you like breath and you feel a quiet gap, but Tuck hands you a jar that, when opened, plays a stranger's lullaby and a county road number.
+      effects: ['evidence:memory', 'flag:fog_jar_traded', nerve-1]
+    failure:
+      text: The memory you reach for is the wrong one, a recent and useful one, and it slips into the jar before you can stop it. Tuck apologizes sincerely and the fog keeps it.
+      effects: ['evidence:rumor', weird+1, 'flag:fog_jar_lost']
+  - id: b
+    label: Ask where the fog comes from
+    skill: wits
+    target: 7
+    success:
+      text: Tuck taps a jar and the fog rearranges itself into a coastline you recognize, then a time of day. You learn the vendor's stock comes from three specific foggy mornings, one still ahead.
+      effects: ['evidence:geography', 'evidence:schedule']
+    failure:
+      text: You ask too bluntly and Tuck shuts the table like a book. A single jar rolls to your feet, which you are fairly sure was not on offer.
+      effects: [time-1, 'flag:fog_jar_gift']
+  - id: c
+    label: Decline the trade and buy a jar with kindness
+    skill: none
+    target: null
+    success:
+      text: 'You pay with a story instead of a memory: a good day, told aloud. Tuck listens as if he were collecting it, then gives you the jar free and promises to remember you in the fog.'
+      effects: ['flag:fog_vendor_friend', goodwill+1]
+  lead_reactions: {mara: Mara turns a jar toward the light. "Memory is the thing people ask me to put on skin. I do not trade it by the ounce.", kit: 'Kit grins at the labels. "Tuesday, mostly. Ha. Somebody curated this like a gallery of regrets."', juniper: 'Juniper puts her palm near a lid and shivers. "The fog is old, and tired, and not lying. That''s rarer than you''d think."', cedar: Cedar sniffs one cautiously. "Smells like a logging-road morning. Whoever sold this knows the coast."}
+  callbacks: [fog_jar_traded, fog_jar_lost, fog_jar_gift, fog_vendor_friend]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-010
+  revision: 1
+  chapter: 1
+  location: Minor Theatre, Arcata
+  title: The Film That Watches Back
+  tier: invented
+  provenance: The Minor Theatre is a real Arcata venue; the lost reel, its subtitles and the projectionist's rule are invented fiction and describe no actual film or staff member.
+  rarity: rare
+  tone: [meta, dry, unsettling]
+  cast: ['The Reel (a lost film that watches the audience, fixed)', 'Dot (a retired projectionist, unreliable about dates)']
+  canon: ['The reel shows the viewer''s next choice, badly subtitled, always one beat before they make it.', 'The subtitles are wrong in consistent, useful ways: they translate intent, not speech.', Dot hid the reel in the booth because she refused to learn what it said about her own next choice.]
+  scene: 'The booth door is open a hand''s width. Inside, a lost reel runs on a projector that is not plugged in. On the screen below, the film shows a shaky shot of the theater lobby, and then of you, standing here, looking up. The subtitles read: SHE WILL ASK WHAT IS HAPPENING (UNTRUE). Dot, the retired projectionist, sits on a milk crate with her hands folded. "I stopped watching in 1998," she says. "It spoiled the ending."'
+  options:
+  - id: a
+    label: Read the subtitles aloud and answer them
+    skill: rizz
+    target: 9
+    success:
+      text: You answer the subtitles as if they were a patient interviewer. The film seems pleased, rewinds a frame and shows you the afternoon you most needed to know about, with a county road clearly visible.
+      effects: ['evidence:frequency', 'flag:film_answered', weird+1]
+    failure:
+      text: You argue with the subtitles and lose. The film cuts to your face, deeply embarrassed, and runs that shot on loop for the rest of the night.
+      effects: [nerve-1, 'flag:film_embarrassed']
+  - id: b
+    label: Pull the reel and check the splices
+    skill: wits
+    target: 9
+    success:
+      text: Every splice is a different decade of film stock, spliced by the same hand. You find a date inked on the leader that matches a calendar nobody around here uses.
+      effects: ['evidence:calendar', 'evidence:document']
+    failure:
+      text: The reel is hot, and the splices are fine, and the film continues to run from nowhere. A subtitle reads YOU TOUCHED IT (TRUE). Dot confiscates your fingerprints, figuratively.
+      effects: [time-1, 'evidence:rumor']
+  - id: c
+    label: Sit with Dot and watch nothing
+    skill: none
+    target: null
+    success:
+      text: You sit beside her and look away from the screen. After a while Dot tells you what she saw in 1998, and the story is about a theater that would stay open. She gives you the booth key.
+      effects: ['flag:film_dot_key', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: 'Mara reads the subtitles as if they were flash. "Intent, not speech. Honest, and rude. I respect it."', kit: 'Kit applauds the screen once. "A film that critiques its audience in real time. Finally, a reviewer with courage."', juniper: Juniper turns her back on the screen. "I do not need to see what I am about to choose. I would rather make it plain.", cedar: 'Cedar frowns at the booth. "No cable, no plug, no signal. That is not electricity. That''s something older."'}
+  callbacks: [film_answered, film_embarrassed, film_dot_key]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

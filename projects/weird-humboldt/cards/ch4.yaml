@@ -392,3 +392,139 @@
     cedar: "Cedar walks around the fuselage. \"No exhaust, no oil on the ground. I do not know what powers this, and I would like to.\""
   callbacks: [airfield_gate, airfield_tag]
   eligibility: {requires_flags: [], excludes_flags: []}
+
+- id: WH-062
+  revision: 1
+  chapter: 4
+  location: Blue Lake
+  title: The Casino of Lost Tuesdays
+  tier: invented
+  provenance: Blue Lake is a real small town; the casino, its slot machine and the paid-out Tuesdays are invented fiction, and no real establishment or gambling operation is depicted.
+  rarity: uncommon
+  tone: [noir, dry, eerie]
+  cast: ['The Machine (a slot machine that pays in memories, fixed)', 'Kendra (the only employee, bored, honest)']
+  canon: [The slot machine pays out in memories of work shifts the player never worked., Winning pays a memory; losing costs nothing but the pull., 'Kendra says no one has ever cashed out a jackpot, because the jackpot is a whole Tuesday.']
+  scene: 'The casino is a converted feed store with one machine and one employee. The machine has three reels, each a different clock face. Kendra leans on the cash counter and doesn''t look up from her crossword. "Pays in memories," she says. "Shifts you never worked. Last guy won a double at a cannery and wept for an hour." The machine pulses amber, patient. A sign reads: NO REAL MONEY WAS HARMED IN THE MAKING OF THIS NIGHT.'
+  options:
+  - id: a
+    label: Pull the lever once
+    skill: psyche
+    target: 7
+    success:
+      text: The reels stop on three matching Tuesdays and you remember an entire shift at a hardware counter. You gain the manager's name and a key combination that fits something later.
+      effects: ['evidence:document', 'evidence:memory', weird+1]
+    failure:
+      text: The reels stop on two Tuesdays and a Friday, and you come away remembering a wrong day with total confidence. It fades after an hour but the doubt lingers.
+      effects: [nerve-1, 'flag:casino_false_memory']
+  - id: b
+    label: Ask Kendra how the machine is rigged
+    skill: rizz
+    target: 9
+    success:
+      text: Kendra sets down her pen. She tells you the machine isn't rigged; it's lonely, and it pays out whatever the nearest person misses most. She lets you copy the serial plate.
+      effects: ['evidence:frequency', 'flag:casino_kendra_talk', goodwill+1]
+    failure:
+      text: Kendra takes offense on the machine's behalf. She turns the crossword to face you and writes WHO ASKED in the margins.
+      effects: [time-1, 'flag:casino_kendra_cool']
+  - id: c
+    label: Walk out without playing
+    skill: none
+    target: null
+    success:
+      text: You leave the machine pulsing in the dark. Kendra gives you a nod, and the machine, a little hurt, pays out a single small coin that rolls after you. It is a memory of being brave.
+      effects: ['flag:casino_walkaway', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: Mara watches the reels. "Memory as currency. People pay me in that on skin all the time. I just don't call it gambling.", kit: Kit rubs her hands together and then thinks better of it. "I'm lucky. That is exactly why I should not pull that lever.", juniper: Juniper eyes the clock faces. "These aren't clocks. They are the shapes of missing days.", cedar: Cedar reads the sign. "No real money harmed. That's the most honest thing I've read all week."}
+  callbacks: [casino_false_memory, casino_kendra_talk, casino_kendra_cool, casino_walkaway]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-064
+  revision: 1
+  chapter: 4
+  location: Blue Lake
+  title: The Banjo that Predicts Lightning
+  tier: invented
+  provenance: Blue Lake is a real town and bluegrass is a real local pleasure; the banjo's forecasts and its player are invented fiction and depict no real musician.
+  rarity: common
+  tone: [musical, funny, tense]
+  cast: ['Wynn Aldous (a banjo player, forecast by ear, fixed)', 'The Banjo (named Thunderhead, fixed)']
+  canon: ['Wynn plays weather forecasts as bluegrass solos, and the banjo has never been wrong about lightning.', The banjo plays a different tune for each kind of weather and refuses requests., 'A storm is due that Wynn will not describe, only play.']
+  scene: On a porch overlooking the lake, Wynn Aldous plucks out a bright, jittery tune that makes the hair on your arms stand up. It is a forecast. The banjo is named Thunderhead and plays lightning as a rolling, five-string rhythm with a hitch in the third bar. "Three strikes," Wynn says, "one on the water, one in the lot, and one I would rather not play in front of company." Behind him, clouds are lining up like a choir.
+  options:
+  - id: a
+    label: Learn the forecast tune
+    skill: wits
+    target: 7
+    success:
+      text: 'You pick out the hitch in the third bar. It maps to the exact order of the strikes, and you can now read the sky: the water first, then the lot, then a high tree that belongs to nobody.'
+      effects: ['evidence:schedule', 'flag:forecast_learned']
+    failure:
+      text: You miss the hitch and mangle the forecast into a tune that sounds like a good day. Thunderhead makes a sound like a cough and refuses to play it back.
+      effects: [nerve-1, 'flag:forecast_garbled']
+  - id: b
+    label: Ask Wynn to play the third strike
+    skill: rizz
+    target: 9
+    success:
+      text: Wynn considers and then plays it slowly, gently, as a lullaby. The strike will land on an empty field. You walk away with the grid reference stuck in your head.
+      effects: ['evidence:geography', goodwill+1, 'flag:forecast_trusted']
+    failure:
+      text: Wynn shakes his head, reaches for the banjo and puts it in its case. The porch goes quiet except for the first spit of rain.
+      effects: [time-1]
+  - id: c
+    label: Sit and listen to the whole set
+    skill: none
+    target: null
+    success:
+      text: 'You stay for the whole set, and the storm waits for you. Thunderhead plays the three strikes in order and your hair stands on end with the last. Wynn nods: you were polite.'
+      effects: ['flag:forecast_audience', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: Mara taps the rhythm on her knee. "The hitch in bar three is a tell. It always is. Somebody's hiding a bruise.", kit: Kit lights up. "A banjo that predicts lightning. I would marry this banjo.", juniper: 'Juniper looks at the clouds, not the musician. "The storm is being kind. It is giving us a song first."', cedar: Cedar listens hard. "I've heard worse forecasts on the radio. This one at least admits it's scary."}
+  callbacks: [forecast_learned, forecast_garbled, forecast_trusted, forecast_audience]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-076
+  revision: 1
+  chapter: 4
+  location: Highway 299 roadside
+  title: Mile Marker Zero and a Half
+  tier: invented
+  provenance: Highway 299 is a real route; the lying mile marker and its distance rule are invented fiction, and no real signage or Caltrans property is claimed to behave this way.
+  rarity: uncommon
+  tone: [roadside, dry, uncanny]
+  cast: ['Mile Marker 0.5 (a roadside sign that changes distance when someone lies, fixed)', 'A trucker named Orla (unimpressed, honest)']
+  canon: [The mile marker changes its distance whenever someone nearby lies., 'The sign has never been wrong about a lie, only about the size of it.', Orla has lied to it three times and regrets all of them.]
+  scene: 'A reflective green sign by the shoulder reads MILE 0.5. Orla leans on her truck''s fender beside it. "Watch," she says, then tells the sign she has never taken a shortcut. The sign flickers: MILE 0.7. "Little one," she says, satisfied. She tells it she''s never speeded and it ticks to MILE 3.2. "There," says Orla. "Eight hundred miles of road and the only honest thing on it is a sign."'
+  options:
+  - id: a
+    label: Ask the sign a true question
+    skill: local_lore
+    target: 7
+    success:
+      text: You ask where the road actually goes and the sign turns to MILE 0.0 and holds it. The answer is a turnoff you didn't know about, wide enough for one truck.
+      effects: ['evidence:geography', 'flag:marker_truthful']
+    failure:
+      text: You ask a question with a hidden premise and the sign jumps to MILE 11.0. Orla lifts an eyebrow at your honesty problem.
+      effects: [nerve-1, weird+1]
+  - id: b
+    label: Lie small on purpose to calibrate it
+    skill: wits
+    target: 9
+    success:
+      text: You tell a calibrated, tiny lie. The sign moves just a tenth of a mile. You now know its scale and can measure anyone's fibs nearby.
+      effects: ['evidence:rumor', 'flag:marker_calibrated', weird+1]
+    failure:
+      text: 'You lie too well and the sign goes dark in a huff. Orla taps it: "You broke it for the day. Good job, genius."'
+      effects: [time-1, 'flag:marker_offended']
+  - id: c
+    label: Tell the sign the plain truth about yourself
+    skill: none
+    target: null
+    success:
+      text: You tell the sign your actual worry, in plain words. It reads MILE 0.5 and stays that way, and Orla offers a ride as far as the next honest stretch.
+      effects: ['flag:marker_confided', goodwill+1, 'lose:free_draw']
+  lead_reactions: {mara: 'Mara crosses her arms at the sign. "If it can measure lies, it would have a field day in my industry."', kit: Kit tests it with a flagrant fib and delights in the response. "Mile eleven! I am a legend!", juniper: Juniper stands quietly beside it. "It's not punishing anyone. It's just refusing to pretend.", cedar: Cedar nods at Orla. "Truckers know what a road tells you and what it hides. This one's a straight talker."}
+  callbacks: [marker_truthful, marker_calibrated, marker_offended, marker_confided]
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
