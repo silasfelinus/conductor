@@ -1173,6 +1173,24 @@ def test_find_stranded_branches_remote_flags_unmerged_and_old():
     assert stranded[0]["repo"] == "silasfelinus/kind_robots"
 
 
+def test_find_stranded_branches_remote_skips_branches_with_an_open_pr():
+    """A branch already under an open PR (e.g. parked at a billing gate) is in
+    review, not stranded -- branch-medic must not keep re-flagging it."""
+    now = datetime(2026, 7, 26, 12, 0, 0, tzinfo=timezone.utc)
+    routes = {
+        "/pulls?state=open&per_page=100": [{"head": {"ref": "worker/gated-pr"}}],
+        "/branches?per_page=100": [{"name": "worker/gated-pr", "commit": {"sha": "abc"}}],
+        "/compare/main...worker%2Fgated-pr": {"status": "diverged"},
+        "/commits/abc": {"commit": {"committer": {"date": "2026-07-21T22:00:00Z"}}},
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        stranded = select_role.find_stranded_branches_remote(
+            "silasfelinus/kind_robots", "fake-token", stale_hours=12.0, now=now
+        )
+
+    assert stranded == []
+
+
 def test_find_stranded_branches_remote_excludes_merged():
     now = datetime(2026, 7, 26, 12, 0, 0, tzinfo=timezone.utc)
     routes = {

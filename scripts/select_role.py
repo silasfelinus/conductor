@@ -667,7 +667,14 @@ def find_stranded_branches_remote(
     now = now or datetime.now(timezone.utc)
     base = REPO_BASE_BRANCHES.get(repo, 'main')
     stranded: list[dict] = []
+    # A branch with an open PR is already in review (or deliberately parked at
+    # a human gate) -- it is not stranded, so branch-medic must not re-flag it.
+    open_pr_heads = {
+        (pr.get('head') or {}).get('ref') for pr in list_open_prs(repo, token)
+    }
     for branch in list_branches_api(repo, token, prefixes):
+        if branch.get('name') in open_pr_heads:
+            continue
         name = branch.get('name')
         sha = (branch.get('commit') or {}).get('sha')
         if not name or not sha:
