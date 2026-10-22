@@ -178,3 +178,72 @@
     cedar: "Cedar scans the agenda. \"Item four is a rate hike on the river. Someone is charging for water that moves.\""
   callbacks: [moon_defended, moon_vacated, motion_tabled, tide_minutes]
   eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-040
+  revision: 1
+  chapter: 2
+  location: Hammond Trail, Mad River
+  title: The Kayak in the Tree
+  tier: reported
+  provenance: The Hammond Trail and Mad River estuary are real places; the lost kayak, its saltwater and its need for directions are invented fiction.
+  rarity: common
+  tone:
+  - wry
+  - salty
+  - gentle
+  cast:
+  - The Kayak (upside down, dripping, polite)
+  - A Jogger Who Did Not Stop
+  canon:
+  - An upside-down kayak sits wedged in a spruce well above any tide line and drips saltwater onto the trail.
+  - The kayak speaks in a hull-hollow murmur and only asks where home is, never why it is in a tree.
+  - Home is a particular dock, and the kayak will not accept any other.
+  scene: 'A red kayak hangs upside down in a spruce beside the Hammond Trail, twenty feet above any tide line, dripping saltwater onto the path in slow, patient beats. A jogger passes below without looking up. From inside the hull, a murmur asks: "Excuse me. Which way is the water? Not this water. The water I belong to." It sounds embarrassed to have to ask a stranger.'
+  options:
+  - id: a
+    label: Ask which dock it remembers
+    skill: local_lore
+    target: 7
+    success:
+      text: It names a dock with a green door, a tide gauge and a gull called Bernard. You know the place, and the kayak sags with relief against the branches.
+      effects:
+      - goodwill+1
+      - flag:kayak_heading_known
+    failure:
+      text: The dock it describes belongs to three different harbors. The kayak's hull rings flatly, and a little saltwater runs down the trunk.
+      effects:
+      - evidence:rumor
+      - nerve-1
+  - id: b
+    label: Climb up and ease it down
+    skill: burly
+    target: 9
+    success:
+      text: You work it loose branch by branch and carry it to the estuary mud. It floats the second the tide touches it, then rights itself with a very small cheer.
+      effects:
+      - flag:kayak_carried
+      - goodwill+1
+    failure:
+      text: A branch gives way and you slide down with a mouthful of needles. The kayak, kindly, pretends to have seen nothing.
+      effects:
+      - nerve-1
+      - time-1
+  - id: c
+    label: Say the trail is the way home
+    skill: none
+    target: null
+    success:
+      text: The kayak is quiet for a long while. "That seems unlikely," it says, "but I appreciate the effort." It drips once, lightly, onto your shoulder.
+      effects:
+      - flag:kayak_misdirected
+  lead_reactions:
+    mara: Mara pats the hull like a stubborn horse. "It's been out too long. Everyone gets like this when they're lost near the water."
+    kit: Kit grins at the drip pattern. "That's a rhythm. It's counting down to a tide it can feel from here."
+    juniper: Juniper sniffs the salt and tilts their head. "It smells like kelp and sorrow. It isn't lying about being far from home."
+    cedar: Cedar measures the height and frowns. "No flood puts a boat there. Something carried it, and it wasn't water."
+  callbacks:
+  - kayak_heading_known
+  - kayak_carried
+  - kayak_misdirected
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
