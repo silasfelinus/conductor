@@ -145,11 +145,11 @@ def yaml_value(value):
 def patch_rows(text, changes_by_request):
     """Targeted text edits preserve art briefs, YAML comments, ordering and seeds."""
     seen = set()
-    pattern = re.compile(r"(?ms)^- key:.*?(?=^- key:|\\Z)")
+    pattern = re.compile(r"(?ms)^- key:.*?(?=^- key:|\Z)")
 
     def update(match):
         block = match.group(0)
-        identity = re.search(r"(?m)^  request_id: (\\S+)\\s*$", block)
+        identity = re.search(r"(?m)^  request_id: (\S+)\s*$", block)
         if not identity or identity.group(1) not in changes_by_request:
             return block
         request_id = identity.group(1)
