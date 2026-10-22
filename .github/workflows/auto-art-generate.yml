@@ -24,6 +24,9 @@ on:
       - "projects/emperor-of-dust/art/SECRET-STORY-SCENES-ROUND-1.yaml"
       - "projects/emperor-of-dust/art/QUESTS-MISSING-ROUND-2.yaml"
       - "projects/weird-humboldt/art/ART-EDITORIAL-ROUND-1.yaml"
+      # Any ledger that opts in with `auto_submit: true` (scripts/sweep_art_ledgers.py).
+      - "projects/*/art/**.yaml"
+      - "scripts/sweep_art_ledgers.py"
       - "scripts/consume_art_requests_to_media.py"
       - "scripts/dream_sdxl_checkpoint_art.py"
       - "scripts/queue_mandarin_tutor_art.py"
@@ -306,6 +309,20 @@ jobs:
         run: |
           python scripts/enqueue_art_requests.py projects/weird-humboldt/art/ART-STANDARD.yaml --status
           python scripts/enqueue_art_requests.py projects/weird-humboldt/art/ART-EDITORIAL-ROUND-1.yaml --status
+
+      # One step for every ledger that opts in with `auto_submit: true`, so a new ledger
+      # reaches the render box without a hand-written step here (2026-10-22: Shifting
+      # Lands ROUND-4 sat unsubmitted while the box idled). Submits open cells, then
+      # refreshes status; job ids are written back, so re-runs never duplicate.
+      - name: Sweep opted-in art ledgers
+        id: ledger_sweep
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/sweep_art_ledgers.py --live
 
       # Shifting Desks has 220 approved style requests. Hand all of them to
       # the durable ArtJob scheduler first, instead of blocking on each render

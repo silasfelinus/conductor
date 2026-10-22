@@ -1,0 +1,89 @@
+# Save the Plumber Generation 2 motion, round 1: the four delivered cutscene stills (ArtImages 246819-246822) become
+# seamless WAN 2.2 first/last-frame motion loops (same frame at both ends), so the opening, finale and credits move.
+# Recipe and caveats: projects/zuzu-pinball/art/T019-CROC-CLIPS.yaml (A14B pair, first+last frame; the 5B first-frame
+# model barely moves). Pip pose-to-pose sprite clips follow once GEN2-ROUND-1's white-ground poses are reviewed.
+# auto_submit: true. Private.
+round: save-the-plumber-gen2-clips-1
+project_slug: save-the-plumber
+designer: Save the Plumber art bay
+is_public: false
+is_mature: false
+auto_submit: true
+lanes:
+- key: wan-clips
+  label: WAN 2.2 image-to-video (14B), first frame to last frame
+  engine: wan
+  prompt: prose
+  fps: 16
+  output_format: webp
+  negative: camera movement, camera pan, zoom, cut, scene change, morphing, melting, flicker, text, watermark, blurry,
+    photorealistic, 3d render
+subjects:
+- key: gen2-clip-intro-discovery
+  entity: cinematic
+  title: 'Cutscene motion loop: intro-discovery'
+  size: 832x480
+  seed: 82037
+  source_image_id: 246819
+  last_image_id: 246819
+  duration: 4
+  loop: true
+  prompt_prose: Rain drifts down and a thin stream of water arcs upward out of a copper pipe into the clouds; puddles
+    ripple; the light slowly brightens. Gentle storybook animation, the camera holds still.
+  jobs:
+    wan-clips: 43383
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: gen2-clip-intro-capture
+  entity: cinematic
+  title: 'Cutscene motion loop: intro-capture'
+  size: 832x480
+  seed: 82038
+  source_image_id: 246820
+  last_image_id: 246820
+  duration: 4
+  loop: true
+  prompt_prose: Machine arms sway and steam puffs in rhythm while pipes shudder and water climbs upward; lights
+    blink. Gentle storybook animation, the camera holds still.
+  jobs:
+    wan-clips: 43384
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: gen2-clip-finale-reversal
+  entity: cinematic
+  title: 'Cutscene motion loop: finale-reversal'
+  size: 832x480
+  seed: 82039
+  source_image_id: 246821
+  last_image_id: 246821
+  duration: 4
+  loop: true
+  prompt_prose: Water pours back down from the sky in shining ribbons, mist rolls outward and sunlight breaks through.
+    Gentle storybook animation, the camera holds still.
+  jobs:
+    wan-clips: 43385
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null
+- key: gen2-clip-credits-vista
+  entity: cinematic
+  title: 'Cutscene motion loop: credits-vista'
+  size: 832x480
+  seed: 82040
+  source_image_id: 246822
+  last_image_id: 246822
+  duration: 4
+  loop: true
+  prompt_prose: Clouds drift slowly across the sky, water sparkles and leaves sway in a light breeze. Gentle storybook
+    animation, the camera holds still.
+  jobs:
+    wan-clips: 43386
+  art:
+    wan-clips:
+      status: PENDING
+      art_image_id: null

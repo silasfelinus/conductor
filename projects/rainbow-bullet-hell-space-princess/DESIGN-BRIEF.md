@@ -62,3 +62,15 @@ Opening: a quiet floating seaside palace beneath a pink ring nebula; its royal s
 ## Acceptance bar
 
 A complete first clear; 1–4 simultaneous playable pilots locally and online; eight authored stages plus real finale; all distinct bosses; skill-balanced powerups and shields; generous audiovisual treatment with individually readable hit danger; deterministic loss/restore/save tests; documented 60 Hz/frame performance on representative desktops with degradation controls; input/accessibility checks at mobile/tablet/desktop. Silas makes the final call after playing the actual build.
+
+## Generation 2 (Silas, 2026-10-22 PT): route map and memory
+
+"Rainbow space princess should have the same consideration. Games should have memory, recognize progress."
+For a shooter the matching reference is **Star Fox 64**: the eight Acts become nodes on a **branching route
+map** whose alternate paths open from things done in a stage (a captive rescued, an escort saved, a hidden
+generator destroyed), with per-stage **medals**, **three save slots**, a persistent **Palace Hangar** where
+medals buy bounded permanent upgrades, and pilot comms that recognise progress across runs. Four alternate
+branch stages join the eight. Presentation moves to the N64 bar: animated pilot cut-ins, enemy cycles and
+moving cutscenes, while bullets stay crisp code-drawn shapes. Shared rules:
+[projects/kr-arcade/GEN2-STANDARD.md](../kr-arcade/GEN2-STANDARD.md). Roadmap milestone **m6** (t-026 to t-030);
+art round 1 is `art/GEN2-ROUND-1.yaml`.

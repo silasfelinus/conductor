@@ -11,8 +11,9 @@ goal: >-
   platforming, layered levels, meaningful powerups and abilities,
   varied traversal and puzzle-combat encounters, checkpoints, secrets,
   introductory sequence, world interludes, ending and credits. Target
-  campaign length and challenge comparable to the first two Super Mario
-  Bros games, with more original world and enemy variety. Reuse Arcade
+  campaign length, level design and depth comparable to Super Mario Bros 3
+  and Super Mario World (Gen-2 bar, 2026-10-22), with walkable world maps,
+  secret exits, persistent save slots and more original world and enemy variety. Reuse Arcade
   plumbing where appropriate; no runtime LLM or borrowed Nintendo IP.
   Completion requires whole-campaign play, fairness metrics, visual
   acceptance and Silas's hands-on verdict.
@@ -21,6 +22,18 @@ notes_from_silas: |
   Play as a random young woman going through 8 worlds to save her
   plumber boyfriend. Again, equivalent length and challenge to
   original Mario bros, but with more variety and unique enemies."
+
+  2026-10-22 PT, concept evolution (verbatim): "save the plumber (and zuzu ghost
+  trail, even though it's not high priority) needs a concept evolution. i was saying
+  the games needed an old school mario bros / ghosts and goblins vibe, but they need
+  to aim for super mario bros 3 / super mario world for level design, gameplay
+  conception, gameplay depth, etc. The games should have persistent save states, long
+  form exploration, etc. ... games should have memory, recognize progress, etc. So we
+  need open world maps, save states, etc. And probably upgrades to pixel expectations
+  and other factors. they need an upgrade." And: "we will need animations if we are
+  upgrading our platformers to n64 level expectations. which we now are." The shared
+  bar is projects/kr-arcade/GEN2-STANDARD.md; milestone m6 carries it. The 32 Gen-1
+  stages are raw material for Gen-2 worlds, not a reason to call Gen-2 done.
 
   Treat the heroine as a generated young ADULT woman, with coherent
   appearance/name established once per run (not shuffled per level).
@@ -36,24 +49,28 @@ notes_from_silas: |
 milestones:
   - id: m1
     title: "SHAPE — full 8-world map, mechanics and original art bible"
-    weight: 15
+    weight: 10
     status: in-progress
   - id: m2
     title: "PLATFORMING CORE — movement, collisions, enemies and progression"
-    weight: 20
+    weight: 15
     status: in-progress
   - id: m3
     title: "CAMPAIGN — 32 authored levels and eight unique bosses"
-    weight: 40
+    weight: 20
     status: in-progress
   - id: m4
     title: "PRESENTATION — cinematic intro, music, layered artwork and finale"
-    weight: 15
+    weight: 10
     status: in-progress
   - id: m5
     title: "BALANCE — complete QA, secrets, responsiveness and approval"
     weight: 10
     status: not-started
+  - id: m6
+    title: "GEN 2 — SMB3/SMW depth: world maps, memory, layered levels, N64-bar animation"
+    weight: 35
+    status: in-progress
 tasks:
   - id: t-001
     milestone: m1
@@ -69,12 +86,24 @@ tasks:
       images asserted as live.
   - id: t-002
     milestone: m1
-    title: "Write 32-level beat sheets, enemy roster and storyboard art prompts"
+    title: "Gen-2 world design: eight world maps, node graphs, secret exits and level-type mix"
     status: ready
-    updated: '2026-10-12T05:00:00Z'
+    updated: '2026-10-22T10:30:00Z'
     passes: 0
     stakes: reversible
     note: |-
+      REWRITTEN 2026-10-22 PT for Silas's Gen-2 direction (projects/kr-arcade/GEN2-STANDARD.md).
+      Write projects/save-the-plumber/GEN2-WORLDS.md: for each of the eight worlds an overworld
+      node graph (6-9 nodes: levels, a fortress with a mid-boss, a Hush House haunted maze, bonus
+      cottage, shop or item house, the world castle), which levels have a secret exit and which path
+      each exit opens, where the Valve Chapel switch palaces sit and which blocks they make solid
+      campaign-wide, the Upstream Sky special zone and its secret entrances, and a per-level beat
+      sheet (3-6 minute first clear, midpoint, sub-areas, the secret, the skill test). Reuse the 32
+      Gen-1 stages as rooms and set-pieces where they fit. The node graph must be machine-readable
+      enough to become savePlumberOverworld.ts data (t-011 ships World 1's graph as the template).
+      Overworld map plates per world are queued in art/GEN2-ROUND-1.yaml.
+
+      Original (superseded) brief:
       World-by-world authored maps/beat sheets from WORLD-ATLAS.md: 32 unique level objectives and diagrams, 40+ distinct enemy behaviors, eight readable boss movesets, four-stage pacing, secrets, rewards, original soundtrack motifs, intro, chapter and ending illustrations. Plan collision/exits before painting. Use internal art pipeline and verify delivered assets.
 
       Prior production-bible session was interrupted by Silas's more specific four-princess cast direction. No Save the Plumber production-bible deliverable was committed in that session. Return this task to ready for the next agent to author its 32-stage and 40+ behavior design catalog; retain existing WORLD-ATLAS and DESIGN-BRIEF without overwriting.
@@ -119,6 +148,12 @@ tasks:
       destructibles, three meaningful powerup tracks, damage/knockback,
       invulnerability frames, lives/continues and checkpoint semantics.
       Source-verified deterministic collision and softlock tests.
+
+      2026-10-22 Gen-2 scope addition (GEN2-STANDARD.md section 4): grow from three
+      tracks to 5-7 powers with movement consequences (glide or flight, a water or fire
+      suit, a heavy form, carry), an SMW-style reserve item, map-usable item inventory, and
+      an original ride/companion creature that changes traversal. Remaining Gen-1 items
+      (slopes, ladders, carrying enemies and keys) still apply.
 
       2026-10-16 progress: the three powerup tracks shipped and merged
       (silasfelinus/kind_robots#3758). Springstep gives a higher jump and a float. Bottled
@@ -203,12 +238,24 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Finish map progression, lives, secrets, challenge and save system"
-    status: ready
+    status: done
     depends_on: [t-006, t-010]
-    owner: null
+    owner: worker
+    claimed_by: 2026-10-22T1030Z-plumber-gen2-overworld
+    claimed_at: '2026-10-22T10:30:00Z'
     passes: 0
     stakes: reversible
     note: >-
+      REWRITTEN 2026-10-22 PT for the Gen-2 bar (projects/kr-arcade/GEN2-STANDARD.md sections 1
+      and 3). Ship in Kind Robots: (1) a pure overworld module (node graph per world, paths with
+      normal/secret unlock conditions, walking between revealed nodes, entering a level, revisits);
+      (2) save v2 with three slots: map position, per-level clear and secret-exit flags, Golden Gear
+      ids, switches, revealed paths, reserve item, lives, total time, deaths and completion percent,
+      migrating a v1 save into slot 1 rather than dropping it; (3) a walkable World 1 map screen in
+      the cabinet between stages, with completion marks per node, and a file-select screen with
+      per-slot percent. Later worlds' graphs come from t-002. Account sync is kr-arcade/t-163.
+
+      Pre-Gen-2 note, kept for history:
       World map, exits/warps, collectibles, achievements, secret rooms,
       coin-equivalent reward economy, save/continue, difficulty assists,
       score and speedrun splits. Every planned secret is mechanically
@@ -219,7 +266,16 @@ tasks:
       rooms in 1-1, 2-2 and 3-2, and tokens with an extra life every 100. Still to build: map
       exits/warps, achievements, difficulty assists, speedrun splits, a secret ending, and a
       blind-run secrets audit.
+
+      DONE 2026-10-22: kind_robots#4030 merged (17c094c) after 23/23 checks green. Eight walkable world maps
+      (savePlumberOverworld.ts) with normal/secret-exit path unlocks, revisits and the castle road between
+      worlds; save v2 with three files (map node, clears, secret exits, gears, deaths, time) migrating v1 saves;
+      file select, map screen with locked stages dimmed and newly opened paths drawn in; verifySavePlumberOverworld
+      test. Fortresses, Hush Houses, Valve Chapels and real secret exits arrive with t-002/t-020/t-021; painted
+      map plates with t-024.
     updated: '2026-10-16T14:04:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#4030'
+
   - id: t-012
     milestone: m4
     title: "Produce illustrated world art, enemy animation, sound and cinematics"
@@ -345,3 +401,83 @@ tasks:
     claimed_at: '2026-10-14T06:20:00Z'
     implementation_pr: 'silasfelinus/kind_robots#3680'
     updated: '2026-10-14T22:48:02Z'
+  - id: t-020
+    milestone: m6
+    title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera
+      bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type
+      that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level
+      so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze
+      (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room
+      return position, switch persistence across levels and save/reload.
+  - id: t-021
+    milestone: m6
+    title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
+    status: waiting
+    depends_on: [t-002, t-011, t-020]
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House,
+      the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas
+      and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record
+      first-clear times. This world is the template Silas plays before Worlds 2-8 are rebuilt.
+  - id: t-022
+    milestone: m6
+    title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
+    status: waiting
+    depends_on: [t-021]
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: One world per PR, same bar as t-021; each world introduces one new level type or power.
+  - id: t-023
+    milestone: m6
+    title: "Gen-2 Worlds 5-8 and the Upstream Sky special zone"
+    status: waiting
+    depends_on: [t-022]
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      One world per PR. Upstream Sky is reached only through secret exits and rewards completion
+      (GEN2-STANDARD.md section 1). World 8 remixes every learned mechanic.
+  - id: t-024
+    milestone: m6
+    title: "Gen-2 art round 1: overworld maps, far skies, arrival vistas, level types, Pip key poses"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      art/GEN2-ROUND-1.yaml (36 subjects x krea2/zimage = 72 cells) submitted 2026-10-22 through
+      scripts/sweep_art_ledgers.py (auto_submit). Done when every cell is DONE, reviewed in the ledger
+      (keep/reroll with a reason) and the keepers are exported to the media host for t-011/t-021.
+
+      2026-10-22 review of the first 14 renders: the Z-Image overworld maps are excellent (SMB3-style painted maps with empty clearings, a fortress, cottage and waterfall trail); far skies and arrival vistas also keep. Next: when the round is DONE, review the rest in the ledger, export keepers to the media host, and author per-map node coordinates matched to each plate's clearings so savePlumberOverworld.ts draws the painted map instead of the code-drawn land.
+  - id: t-025
+    milestone: m6
+    title: "Gen-2 animation: pose-to-pose WAN sprite clips, atlases and animated cinematics"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-22T10:30:00Z'
+    note: >-
+      GEN2-STANDARD.md sections 5-6. art/GEN2-CLIPS-1.yaml already animates the four cutscene stills
+      as WAN first/last-frame loops (submitted 2026-10-22). Next: from the reviewed Pip key poses in
+      GEN2-ROUND-1, queue WAN first/last clips between pose pairs (idle loop, run cycle, jump, skid,
+      climb, hurt), matte the white, normalize pivots and pack an atlas (the zuzu-pinball T019 croc
+      tool is the template), then wire the atlas into the engine with the code-drawn heroine as the
+      fallback. Then the other seven roster heroines and the enemy families. Target 12 fps or better.

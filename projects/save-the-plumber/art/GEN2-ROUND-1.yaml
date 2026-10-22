@@ -1,0 +1,861 @@
+# Save the Plumber Generation 2 art, round 1 (Silas 2026-10-22 PT: "aim for Super Mario Bros 3 / Super Mario World
+# for level design ... open world maps, save states ... we will need animations"). See projects/kr-arcade/GEN2-STANDARD.md.
+# Per world: an overworld map plate (seven empty clearings for level nodes, a fortress, a cottage, one hidden side
+# trail), a far-sky parallax plate and an arrival vista. Plus the four new level types (fortress, Hush House haunted
+# maze, Valve Chapel switch palace, Upstream Sky special zone) and eight white-ground key poses of Pip that GEN2-CLIPS
+# will animate with WAN first/last-frame clips (the zuzu-pinball T019 croc recipe). Two lanes to pick from.
+# auto_submit: true -> scripts/sweep_art_ledgers.py submits and refreshes this ledger on every Auto Art Generate run.
+# Queued is not rendered; rendered is not shipped. Private.
+round: save-the-plumber-gen2-1
+project_slug: save-the-plumber
+designer: Save the Plumber art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (house look of the 2026-10-13 plates)
+  engine: krea2
+  prompt: prose
+- key: zimage
+  label: Z-Image Turbo (painted alternate)
+  engine: zimage
+  prompt: prose
+subjects:
+- key: gen2-map-1-bluebell-pipeworks
+  entity: overworld-map
+  title: 'World 1 Bluebell Pipeworks: overworld map'
+  size: 1344x768
+  seed: 82001
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: 'A charming storybook overworld map of Bluebell Pipeworks, seen from a high three-quarter angle
+    like a hand-painted board game: rain-washed garden courtyards of teal copper pipes, brass valve wheels and bluebell
+    beds. A winding sandy footpath links seven round empty clearings where levels sit, crossing little bridges and
+    climbing hills; a squat brick pump tower stands at the far end as the fortress; a small cottage sits beside
+    the path; one narrow overgrown side trail slips behind a waterfall to a hidden clearing. cerulean, apricot and
+    emerald palette, soft morning light, deliberate empty space on each clearing for game markers, unpeopled, every
+    surface bare and unmarked, modern storybook side-scrolling platformer art, lavish hand-painted animation background,
+    soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43387
+    zimage: 43388
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251303
+- key: gen2-sky-1-bluebell-pipeworks
+  entity: parallax-sky
+  title: 'World 1 Bluebell Pipeworks: far sky parallax plate'
+  size: 1344x768
+  seed: 82002
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures,
+    ground, buildings in foreground
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Bluebell Pipeworks: a wide distant sky
+    with soft layered clouds and a faint far horizon silhouette suggesting rain-washed garden courtyards of teal
+    copper pipes, brass valve wheels and bluebell beds, cerulean, apricot and emerald palette, no ground in the
+    lower half, seamless left and right edges, an unpeopled backdrop layer, modern storybook side-scrolling platformer
+    art, lavish hand-painted animation background, soft painterly brushwork, clear readable shapes, warm saturated
+    colour'
+  jobs:
+    krea2: 43389
+    zimage: 43390
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251304
+- key: gen2-vista-1-bluebell-pipeworks
+  entity: world-keyart
+  title: 'World 1 Bluebell Pipeworks: world arrival vista'
+  size: 1344x768
+  seed: 82003
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame
+  prompt_prose: 'Cinematic arrival vista of Bluebell Pipeworks: rain-washed garden courtyards of teal copper pipes,
+    brass valve wheels and bluebell beds, a squat brick pump tower rising in the distance, a young adult woman adventurer
+    in mustard overalls and goggles seen small from behind on a ridge looking out over the land, a dented brass
+    wrench in her hand, cerulean, apricot and emerald palette, golden hour, sense of a big world to explore, modern
+    storybook side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork,
+    clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43391
+    zimage: 43392
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251305
+- key: gen2-map-2-tideglass-marina
+  entity: overworld-map
+  title: 'World 2 Tideglass Marina: overworld map'
+  size: 1344x768
+  seed: 82004
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: 'A charming storybook overworld map of Tideglass Marina, seen from a high three-quarter angle like
+    a hand-painted board game: floating wooden wharves, glass boat hulls and canal locks on a bright harbour. A
+    winding sandy footpath links seven round empty clearings where levels sit, crossing little bridges and climbing
+    hills; a rusted drydock gantry stands at the far end as the fortress; a small cottage sits beside the path;
+    one narrow overgrown side trail slips behind a waterfall to a hidden clearing. sea-glass green, coral and sandy
+    gold palette, soft morning light, deliberate empty space on each clearing for game markers, unpeopled, every
+    surface bare and unmarked, modern storybook side-scrolling platformer art, lavish hand-painted animation background,
+    soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43393
+    zimage: 43394
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251306
+- key: gen2-sky-2-tideglass-marina
+  entity: parallax-sky
+  title: 'World 2 Tideglass Marina: far sky parallax plate'
+  size: 1344x768
+  seed: 82005
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures,
+    ground, buildings in foreground
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Tideglass Marina: a wide distant sky with
+    soft layered clouds and a faint far horizon silhouette suggesting floating wooden wharves, glass boat hulls
+    and canal locks on a bright harbour, sea-glass green, coral and sandy gold palette, no ground in the lower half,
+    seamless left and right edges, an unpeopled backdrop layer, modern storybook side-scrolling platformer art,
+    lavish hand-painted animation background, soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43395
+    zimage: 43396
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251307
+- key: gen2-vista-2-tideglass-marina
+  entity: world-keyart
+  title: 'World 2 Tideglass Marina: world arrival vista'
+  size: 1344x768
+  seed: 82006
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame
+  prompt_prose: 'Cinematic arrival vista of Tideglass Marina: floating wooden wharves, glass boat hulls and canal
+    locks on a bright harbour, a rusted drydock gantry rising in the distance, a young adult woman adventurer in
+    mustard overalls and goggles seen small from behind on a ridge looking out over the land, a dented brass wrench
+    in her hand, sea-glass green, coral and sandy gold palette, golden hour, sense of a big world to explore, modern
+    storybook side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork,
+    clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43397
+    zimage: 43398
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251308
+- key: gen2-map-3-lantern-orchard
+  entity: overworld-map
+  title: 'World 3 Lantern Orchard: overworld map'
+  size: 1344x768
+  seed: 82007
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: 'A charming storybook overworld map of Lantern Orchard, seen from a high three-quarter angle like
+    a hand-painted board game: terraced apricot orchards, root cellars and firefly canopies hung with paper lanterns.
+    A winding sandy footpath links seven round empty clearings where levels sit, crossing little bridges and climbing
+    hills; a glass hanging conservatory stands at the far end as the fortress; a small cottage sits beside the path;
+    one narrow overgrown side trail slips behind a waterfall to a hidden clearing. amber, plum and moss green palette,
+    soft morning light, deliberate empty space on each clearing for game markers, unpeopled, every surface bare
+    and unmarked, modern storybook side-scrolling platformer art, lavish hand-painted animation background, soft
+    painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43399
+    zimage: 43400
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251309
+- key: gen2-sky-3-lantern-orchard
+  entity: parallax-sky
+  title: 'World 3 Lantern Orchard: far sky parallax plate'
+  size: 1344x768
+  seed: 82008
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures,
+    ground, buildings in foreground
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Lantern Orchard: a wide distant sky with
+    soft layered clouds and a faint far horizon silhouette suggesting terraced apricot orchards, root cellars and
+    firefly canopies hung with paper lanterns, amber, plum and moss green palette, no ground in the lower half,
+    seamless left and right edges, an unpeopled backdrop layer, modern storybook side-scrolling platformer art,
+    lavish hand-painted animation background, soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43401
+    zimage: 43402
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251310
+- key: gen2-vista-3-lantern-orchard
+  entity: world-keyart
+  title: 'World 3 Lantern Orchard: world arrival vista'
+  size: 1344x768
+  seed: 82009
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame
+  prompt_prose: 'Cinematic arrival vista of Lantern Orchard: terraced apricot orchards, root cellars and firefly
+    canopies hung with paper lanterns, a glass hanging conservatory rising in the distance, a young adult woman
+    adventurer in mustard overalls and goggles seen small from behind on a ridge looking out over the land, a dented
+    brass wrench in her hand, amber, plum and moss green palette, golden hour, sense of a big world to explore,
+    modern storybook side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork,
+    clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43403
+    zimage: 43404
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251311
+- key: gen2-map-4-clockwork-fair
+  entity: overworld-map
+  title: 'World 4 Clockwork Fair: overworld map'
+  size: 1344x768
+  seed: 82010
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: 'A charming storybook overworld map of Clockwork Fair, seen from a high three-quarter angle like
+    a hand-painted board game: a parade street of gear-driven floats, a cotton-candy coaster and a giant big wheel.
+    A winding sandy footpath links seven round empty clearings where levels sit, crossing little bridges and climbing
+    hills; a clocktop big wheel stands at the far end as the fortress; a small cottage sits beside the path; one
+    narrow overgrown side trail slips behind a waterfall to a hidden clearing. candy pink, brass and midnight blue
+    palette, soft morning light, deliberate empty space on each clearing for game markers, unpeopled, every surface
+    bare and unmarked, modern storybook side-scrolling platformer art, lavish hand-painted animation background,
+    soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43405
+    zimage: 43406
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251312
+- key: gen2-sky-4-clockwork-fair
+  entity: parallax-sky
+  title: 'World 4 Clockwork Fair: far sky parallax plate'
+  size: 1344x768
+  seed: 82011
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures,
+    ground, buildings in foreground
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Clockwork Fair: a wide distant sky with
+    soft layered clouds and a faint far horizon silhouette suggesting a parade street of gear-driven floats, a cotton-candy
+    coaster and a giant big wheel, candy pink, brass and midnight blue palette, no ground in the lower half, seamless
+    left and right edges, an unpeopled backdrop layer, modern storybook side-scrolling platformer art, lavish hand-painted
+    animation background, soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43407
+    zimage: 43408
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251313
+- key: gen2-vista-4-clockwork-fair
+  entity: world-keyart
+  title: 'World 4 Clockwork Fair: world arrival vista'
+  size: 1344x768
+  seed: 82012
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame
+  prompt_prose: 'Cinematic arrival vista of Clockwork Fair: a parade street of gear-driven floats, a cotton-candy
+    coaster and a giant big wheel, a clocktop big wheel rising in the distance, a young adult woman adventurer in
+    mustard overalls and goggles seen small from behind on a ridge looking out over the land, a dented brass wrench
+    in her hand, candy pink, brass and midnight blue palette, golden hour, sense of a big world to explore, modern
+    storybook side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork,
+    clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43409
+    zimage: 43410
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251314
+- key: gen2-map-5-cloudrail-commons
+  entity: overworld-map
+  title: 'World 5 Cloudrail Commons: overworld map'
+  size: 1344x768
+  seed: 82013
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: 'A charming storybook overworld map of Cloudrail Commons, seen from a high three-quarter angle like
+    a hand-painted board game: ropeway cars, windmill platforms and airship docks among towering clouds. A winding
+    sandy footpath links seven round empty clearings where levels sit, crossing little bridges and climbing hills;
+    a thunder-struck rail station stands at the far end as the fortress; a small cottage sits beside the path; one
+    narrow overgrown side trail slips behind a waterfall to a hidden clearing. sky blue, cream and sunset orange
+    palette, soft morning light, deliberate empty space on each clearing for game markers, unpeopled, every surface
+    bare and unmarked, modern storybook side-scrolling platformer art, lavish hand-painted animation background,
+    soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43411
+    zimage: 43412
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251315
+- key: gen2-sky-5-cloudrail-commons
+  entity: parallax-sky
+  title: 'World 5 Cloudrail Commons: far sky parallax plate'
+  size: 1344x768
+  seed: 82014
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures,
+    ground, buildings in foreground
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Cloudrail Commons: a wide distant sky
+    with soft layered clouds and a faint far horizon silhouette suggesting ropeway cars, windmill platforms and
+    airship docks among towering clouds, sky blue, cream and sunset orange palette, no ground in the lower half,
+    seamless left and right edges, an unpeopled backdrop layer, modern storybook side-scrolling platformer art,
+    lavish hand-painted animation background, soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43413
+    zimage: 43414
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: DONE
+      art_image_id: 251316
+- key: gen2-vista-5-cloudrail-commons
+  entity: world-keyart
+  title: 'World 5 Cloudrail Commons: world arrival vista'
+  size: 1344x768
+  seed: 82015
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame
+  prompt_prose: 'Cinematic arrival vista of Cloudrail Commons: ropeway cars, windmill platforms and airship docks
+    among towering clouds, a thunder-struck rail station rising in the distance, a young adult woman adventurer
+    in mustard overalls and goggles seen small from behind on a ridge looking out over the land, a dented brass
+    wrench in her hand, sky blue, cream and sunset orange palette, golden hour, sense of a big world to explore,
+    modern storybook side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork,
+    clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43415
+    zimage: 43416
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-map-6-crystal-underworks
+  entity: overworld-map
+  title: 'World 6 Crystal Underworks: overworld map'
+  size: 1344x768
+  seed: 82016
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: 'A charming storybook overworld map of Crystal Underworks, seen from a high three-quarter angle
+    like a hand-painted board game: glowing silica caverns, glowpipe bridges and an echoing underground sluice.
+    A winding sandy footpath links seven round empty clearings where levels sit, crossing little bridges and climbing
+    hills; a giant geode filter chamber stands at the far end as the fortress; a small cottage sits beside the path;
+    one narrow overgrown side trail slips behind a waterfall to a hidden clearing. violet, cyan and deep indigo
+    palette, soft morning light, deliberate empty space on each clearing for game markers, unpeopled, every surface
+    bare and unmarked, modern storybook side-scrolling platformer art, lavish hand-painted animation background,
+    soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43417
+    zimage: 43418
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-sky-6-crystal-underworks
+  entity: parallax-sky
+  title: 'World 6 Crystal Underworks: far sky parallax plate'
+  size: 1344x768
+  seed: 82017
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures,
+    ground, buildings in foreground
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Crystal Underworks: a wide distant sky
+    with soft layered clouds and a faint far horizon silhouette suggesting glowing silica caverns, glowpipe bridges
+    and an echoing underground sluice, violet, cyan and deep indigo palette, no ground in the lower half, seamless
+    left and right edges, an unpeopled backdrop layer, modern storybook side-scrolling platformer art, lavish hand-painted
+    animation background, soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43419
+    zimage: 43420
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-vista-6-crystal-underworks
+  entity: world-keyart
+  title: 'World 6 Crystal Underworks: world arrival vista'
+  size: 1344x768
+  seed: 82018
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame
+  prompt_prose: 'Cinematic arrival vista of Crystal Underworks: glowing silica caverns, glowpipe bridges and an
+    echoing underground sluice, a giant geode filter chamber rising in the distance, a young adult woman adventurer
+    in mustard overalls and goggles seen small from behind on a ridge looking out over the land, a dented brass
+    wrench in her hand, violet, cyan and deep indigo palette, golden hour, sense of a big world to explore, modern
+    storybook side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork,
+    clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43421
+    zimage: 43422
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-map-7-night-market-rooftops
+  entity: overworld-map
+  title: 'World 7 Night Market Rooftops: overworld map'
+  size: 1344x768
+  seed: 82019
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: 'A charming storybook overworld map of Night Market Rooftops, seen from a high three-quarter angle
+    like a hand-painted board game: lantern-lit rooftops, chimney stacks and a bustling midnight bazaar. A winding
+    sandy footpath links seven round empty clearings where levels sit, crossing little bridges and climbing hills;
+    a market clock spire stands at the far end as the fortress; a small cottage sits beside the path; one narrow
+    overgrown side trail slips behind a waterfall to a hidden clearing. neon magenta, teal and warm lantern gold
+    palette, soft morning light, deliberate empty space on each clearing for game markers, unpeopled, every surface
+    bare and unmarked, modern storybook side-scrolling platformer art, lavish hand-painted animation background,
+    soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43423
+    zimage: 43424
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-sky-7-night-market-rooftops
+  entity: parallax-sky
+  title: 'World 7 Night Market Rooftops: far sky parallax plate'
+  size: 1344x768
+  seed: 82020
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures,
+    ground, buildings in foreground
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Night Market Rooftops: a wide distant
+    sky with soft layered clouds and a faint far horizon silhouette suggesting lantern-lit rooftops, chimney stacks
+    and a bustling midnight bazaar, neon magenta, teal and warm lantern gold palette, no ground in the lower half,
+    seamless left and right edges, an unpeopled backdrop layer, modern storybook side-scrolling platformer art,
+    lavish hand-painted animation background, soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43425
+    zimage: 43426
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-vista-7-night-market-rooftops
+  entity: world-keyart
+  title: 'World 7 Night Market Rooftops: world arrival vista'
+  size: 1344x768
+  seed: 82021
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame
+  prompt_prose: 'Cinematic arrival vista of Night Market Rooftops: lantern-lit rooftops, chimney stacks and a bustling
+    midnight bazaar, a market clock spire rising in the distance, a young adult woman adventurer in mustard overalls
+    and goggles seen small from behind on a ridge looking out over the land, a dented brass wrench in her hand,
+    neon magenta, teal and warm lantern gold palette, golden hour, sense of a big world to explore, modern storybook
+    side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork, clear readable
+    shapes, warm saturated colour'
+  jobs:
+    krea2: 43427
+    zimage: 43428
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-map-8-stardrain-citadel
+  entity: overworld-map
+  title: 'World 8 Stardrain Citadel: overworld map'
+  size: 1344x768
+  seed: 82022
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: 'A charming storybook overworld map of Stardrain Citadel, seen from a high three-quarter angle like
+    a hand-painted board game: a vast machine citadel siphoning rivers upward into the sky. A winding sandy footpath
+    links seven round empty clearings where levels sit, crossing little bridges and climbing hills; the central
+    valve heart stands at the far end as the fortress; a small cottage sits beside the path; one narrow overgrown
+    side trail slips behind a waterfall to a hidden clearing. steel grey, electric blue and reservoir teal palette,
+    soft morning light, deliberate empty space on each clearing for game markers, unpeopled, every surface bare
+    and unmarked, modern storybook side-scrolling platformer art, lavish hand-painted animation background, soft
+    painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43429
+    zimage: 43430
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-sky-8-stardrain-citadel
+  entity: parallax-sky
+  title: 'World 8 Stardrain Citadel: far sky parallax plate'
+  size: 1344x768
+  seed: 82023
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures,
+    ground, buildings in foreground
+  prompt_prose: 'The far sky layer for a side-scrolling platformer set in Stardrain Citadel: a wide distant sky
+    with soft layered clouds and a faint far horizon silhouette suggesting a vast machine citadel siphoning rivers
+    upward into the sky, steel grey, electric blue and reservoir teal palette, no ground in the lower half, seamless
+    left and right edges, an unpeopled backdrop layer, modern storybook side-scrolling platformer art, lavish hand-painted
+    animation background, soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43431
+    zimage: 43432
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-vista-8-stardrain-citadel
+  entity: world-keyart
+  title: 'World 8 Stardrain Citadel: world arrival vista'
+  size: 1344x768
+  seed: 82024
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame
+  prompt_prose: 'Cinematic arrival vista of Stardrain Citadel: a vast machine citadel siphoning rivers upward into
+    the sky, the central valve heart rising in the distance, a young adult woman adventurer in mustard overalls
+    and goggles seen small from behind on a ridge looking out over the land, a dented brass wrench in her hand,
+    steel grey, electric blue and reservoir teal palette, golden hour, sense of a big world to explore, modern storybook
+    side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork, clear readable
+    shapes, warm saturated colour'
+  jobs:
+    krea2: 43433
+    zimage: 43434
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-type-fortress
+  entity: level-type
+  title: 'Fortress interior: the Pump Tower'
+  size: 1344x768
+  seed: 82025
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: 'Interior of a brick and copper pump tower fortress for a side-scrolling platformer: tall shafts,
+    rising pistons, iron catwalks, steam vents and a heavy boss door at the top, cerulean and rust palette, dramatic
+    shafts of light, unpeopled, modern storybook side-scrolling platformer art, lavish hand-painted animation background,
+    soft painterly brushwork, clear readable shapes, warm saturated colour'
+  jobs:
+    krea2: 43435
+    zimage: 43436
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-type-hush-house
+  entity: level-type
+  title: 'Haunted maze: the Hush House'
+  size: 1344x768
+  seed: 82026
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: 'Interior of a hushed haunted manor for a side-scrolling platformer, its rooms looping into each
+    other: mismatched doors, floating teacups, wallpaper that drips upward, ghostly blue candlelight and long shadows,
+    a puzzle house whose true exit is hidden, unpeopled, eerie but playful, modern storybook side-scrolling platformer
+    art, lavish hand-painted animation background, soft painterly brushwork, clear readable shapes, warm saturated
+    colour'
+  jobs:
+    krea2: 43437
+    zimage: 43438
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-type-valve-chapel
+  entity: level-type
+  title: 'Switch palace: the Valve Chapel'
+  size: 1344x768
+  seed: 82027
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: A small tiled chapel housing one enormous glowing valve wheel on a pedestal, pipes radiating out
+    through the walls to the whole world, stained-glass light in teal and gold, a pilgrimage-like calm, unpeopled,
+    modern storybook side-scrolling platformer art, lavish hand-painted animation background, soft painterly brushwork,
+    clear readable shapes, warm saturated colour
+  jobs:
+    krea2: 43439
+    zimage: 43440
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-type-upstream-sky
+  entity: level-type
+  title: 'Special zone: Upstream Sky'
+  size: 1344x768
+  seed: 82028
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, frame, characters, people, creatures
+  prompt_prose: 'A secret zone where rivers flow upward into a starry daytime sky: floating islands of pipework,
+    waterfalls rising into clouds, prismatic light, dreamlike and rewarding, unpeopled, modern storybook side-scrolling
+    platformer art, lavish hand-painted animation background, soft painterly brushwork, clear readable shapes, warm
+    saturated colour'
+  jobs:
+    krea2: 43441
+    zimage: 43442
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-pip-pose-idle
+  entity: heroine-pose
+  title: 'Pip key pose: idle'
+  size: 1024x1024
+  seed: 82029
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed
+  prompt_prose: Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, standing relaxed, weight on one leg, breathing calmly,
+    single character centred on a flat pure white background with generous margin, original storybook platformer
+    game character, bold clean dark outline, cel-shaded with soft painterly highlights, warm saturated colours,
+    consistent proportions
+  jobs:
+    krea2: 43443
+    zimage: 43444
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-pip-pose-run-contact
+  entity: heroine-pose
+  title: 'Pip key pose: run-contact'
+  size: 1024x1024
+  seed: 82030
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed
+  prompt_prose: Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, mid-run, front foot striking the ground, arms pumping,
+    single character centred on a flat pure white background with generous margin, original storybook platformer
+    game character, bold clean dark outline, cel-shaded with soft painterly highlights, warm saturated colours,
+    consistent proportions
+  jobs:
+    krea2: 43445
+    zimage: 43446
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-pip-pose-run-passing
+  entity: heroine-pose
+  title: 'Pip key pose: run-passing'
+  size: 1024x1024
+  seed: 82031
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed
+  prompt_prose: Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, mid-run, legs passing under her body, leaning forward,
+    single character centred on a flat pure white background with generous margin, original storybook platformer
+    game character, bold clean dark outline, cel-shaded with soft painterly highlights, warm saturated colours,
+    consistent proportions
+  jobs:
+    krea2: 43447
+    zimage: 43448
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-pip-pose-jump-rise
+  entity: heroine-pose
+  title: 'Pip key pose: jump-rise'
+  size: 1024x1024
+  seed: 82032
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed
+  prompt_prose: Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, leaping upward, knees tucked, one fist raised, single
+    character centred on a flat pure white background with generous margin, original storybook platformer game character,
+    bold clean dark outline, cel-shaded with soft painterly highlights, warm saturated colours, consistent proportions
+  jobs:
+    krea2: 43449
+    zimage: 43450
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-pip-pose-jump-fall
+  entity: heroine-pose
+  title: 'Pip key pose: jump-fall'
+  size: 1024x1024
+  seed: 82033
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed
+  prompt_prose: Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, falling, legs reaching down for a landing, scarf trailing
+    up, single character centred on a flat pure white background with generous margin, original storybook platformer
+    game character, bold clean dark outline, cel-shaded with soft painterly highlights, warm saturated colours,
+    consistent proportions
+  jobs:
+    krea2: 43451
+    zimage: 43452
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-pip-pose-skid
+  entity: heroine-pose
+  title: 'Pip key pose: skid'
+  size: 1024x1024
+  seed: 82034
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed
+  prompt_prose: Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, skidding to a stop, heels dug in, leaning back, single
+    character centred on a flat pure white background with generous margin, original storybook platformer game character,
+    bold clean dark outline, cel-shaded with soft painterly highlights, warm saturated colours, consistent proportions
+  jobs:
+    krea2: 43453
+    zimage: 43454
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-pip-pose-climb
+  entity: heroine-pose
+  title: 'Pip key pose: climb'
+  size: 1024x1024
+  seed: 82035
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed
+  prompt_prose: Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, climbing a ladder seen from the side, one hand reaching
+    up, single character centred on a flat pure white background with generous margin, original storybook platformer
+    game character, bold clean dark outline, cel-shaded with soft painterly highlights, warm saturated colours,
+    consistent proportions
+  jobs:
+    krea2: 43455
+    zimage: 43456
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
+- key: gen2-pip-pose-hurt
+  entity: heroine-pose
+  title: 'Pip key pose: hurt'
+  size: 1024x1024
+  seed: 82036
+  negative: text, letters, logo, watermark, multiple characters, duplicate, sprite sheet, grid, cropped, background
+    scenery, shadow, photorealistic, 3d render, blurry, deformed
+  prompt_prose: Pip, a determined young adult woman with pale freckled skin and a bright magenta bob haircut, brass
+    goggles on her forehead, mustard yellow overalls over a lavender shirt, a white scarf, navy boots and a small
+    wrench on her belt, full body side view facing right, recoiling from a hit, eyes squeezed shut, stumbling back,
+    single character centred on a flat pure white background with generous margin, original storybook platformer
+    game character, bold clean dark outline, cel-shaded with soft painterly highlights, warm saturated colours,
+    consistent proportions
+  jobs:
+    krea2: 43457
+    zimage: 43458
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+    zimage:
+      status: PENDING
+      art_image_id: null
