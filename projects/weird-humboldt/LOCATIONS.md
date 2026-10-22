@@ -1,8 +1,10 @@
 # Ecotone: Silas's Humboldt location atlas
 
+**CURRENT SCOPE (2026-10-22 PT):** Tribe-specific casino and Hoopa/Hupa cards are withdrawn from the playable location plan, as are all Wiyot/Tuluwat-dependent scenes, maps and consultation proposals. The early brainstorming quote below is a historical record, not a current writing assignment. See [EXCLUDED-CONTENT-2026-10-22.md](EXCLUDED-CONTENT-2026-10-22.md).
+
 **Silas, 2026-10-19 PT, verbatim:** *"Important locations: arcata marsh, redwood forest, moonstone beach (and the clothing optional lufenholtz next door), the once great Bayshore mall, devil's playground, heartwood massage institute, fickle hill, sequoia park zoo (complete with stories of Bill the Chimp (and my other old friends who are no longer there, the groundhogs and snerf the river otter). Casino(s), hupa, arcata plaza, old town eureka, ferndale Victorian village, ferndale graveyard."*
 
-This atlas maps each place to a chapter (DESIGN-BRIEF.md) and suggests a story hook, with fact notes and care rules. Hooks are proposals for review, not canon. Same rules as HISTORY-THREADS.md:
+This atlas maps non-excluded places to a chapter (DESIGN-BRIEF.md) and suggests a story hook, with fact notes and care rules. Hooks are proposals for review, not canon. General provenance rules:
 - Real places are named for grounding, never as villains in invented wrongdoing.
 - Living communities speak for themselves.
 - Every card shows its provenance.
@@ -18,8 +20,6 @@ This atlas maps each place to a chapter (DESIGN-BRIEF.md) and suggests a story h
 | Heartwood Institute | 5 SoHum | Documented school in Garberville; current status unconfirmed | The Southern Humboldt healing-arts culture |
 | Fickle Hill | 1 / 4 | Documented road above Arcata | Fog ridge, bad reception, Cedar's CB |
 | Sequoia Park Zoo: Bill the Chimp, the prairie dogs, Snerfy the river otter | 3 Eureka | Bill documented; Silas's memories of Bill, Snerfy and the prairie dogs are personal recollection | A tender, bittersweet heart in a weird game |
-| Casinos | 1, 3, 4 | Tribally owned; check each before naming | Night-shift dealer background; Mara's fictional grant |
-| Hupa / Hoopa Valley | 4 Backroads | Sovereign nation (Hoopa Valley Tribe) | Living present; consultation first |
 | Arcata Plaza | 1 | Documented | Already a Chapter 1 pool |
 | Old Town Eureka | 3 | Documented | Already a Chapter 3 pool |
 | Ferndale Victorian village | 5 | Documented historic district | Kinetic Grand Championship finish town |
@@ -116,19 +116,6 @@ A quieter alternative for players who have earned Kit's trust (her optimal-path 
 - **The village:** a historic Victorian main street, and the finish town for the Kinetic Grand Championship (the real event lives in FACT-CHECK.md).
 - **The cemetery:** the hillside graves above the village are natural gentle-ghost territory: the dead have opinions about the county's future.
 - **Care:** no real named grave, family or person is made into a ghost. Invent the dead.
-
-### Casinos (Ch 1, 3, 4)
-- **The places:** the county's casinos are tribally owned enterprises (Blue Lake, Bear River, Cher-Ae Heights, Lucky Bear in Hoopa; verify each before naming).
-- **Hooks:** the Night-Shift Casino Dealer background; Mara's grant-funded studio (character fiction, not a named program); a 3 a.m. card where the slot machines briefly pay out in futures.
-- **Care:** casinos are portrayed as ordinary workplaces and community resources run by sovereign nations, never as cartoon vice or plot villains. Name a specific casino only once its details are checked.
-
-### Hupa / Hoopa Valley (Ch 4, Backroads)
-- **The place:** the Hoopa Valley Tribe's reservation on the Trinity River, along Highway 96. The Tribe is a sovereign nation, and the Hupa are a living community with their own history, government and present.
-- **Care:**
-  - Hupa ceremonies (including dances) are not game content.
-  - Any Hupa character or place card is written with Hupa sources and reviewed before it ships, like Tuluwat.
-  - Hupa, Wiyot and Yurok are not interchangeable.
-- **Possible role:** a drive through the valley on Highway 96, where the protagonist is a guest, plus a scene about contemporary life that is not a mystery clue.
 
 ### Already in the deck
 - **Arcata Plaza, Old Town Eureka and the redwoods** already have pools in ENCOUNTER-SEEDS.md.
