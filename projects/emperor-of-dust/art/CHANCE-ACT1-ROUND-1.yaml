@@ -1,0 +1,800 @@
+# Unique ArtJob requests for every Act I daily chance encounter: opening and both player choice consequences.
+# Asset ids are reserved for later review/export, not claimed as already installed.
+round: emperor-act-one-chance-scenes-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+  - key: arthemy-house
+    label: Arthemy Western Art v3.0 house
+    engine: comfy
+    checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+    prompt: tags
+    prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics style, dramatic visual-novel tableau, crisp expressive eyes, richly painted environmental storytelling
+    suffix: anthropomorphic animalfolk with distinct species silhouettes, practical frontier clothing, weathered brass and rusty canyon ochre palette, strong central staging, widescreen cinematic art, atmospheric depth, unmarked banners and surfaces
+    steps: 30
+    cfg: 5
+    sampler: euler_ancestral
+subjects:
+  - key: eod-chance-a1-dust-weather-notice
+    lane: arthemy-house
+    title: "Dust in the Courtyard · notice"
+    event_id: "dust-weather-1"
+    variant: notice
+    asset: "chance-events/dust-weather-1/notice"
+    size: 1344x768
+    seed: 983000
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, fortress well surrounded by orange falling dust, child holding cup full of fine rust-colored sand, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-dust-weather-collect
+    lane: arthemy-house
+    title: "Dust in the Courtyard · collect"
+    event_id: "dust-weather-1"
+    variant: collect
+    asset: "chance-events/dust-weather-1/collect"
+    size: 1344x768
+    seed: 983001
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, court workers closing the well, water cart arriving from river ford, patient townsfolk holding empty jars, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-dust-weather-care
+    lane: arthemy-house
+    title: "Dust in the Courtyard · care"
+    event_id: "dust-weather-1"
+    variant: care
+    asset: "chance-events/dust-weather-1/care"
+    size: 1344x768
+    seed: 983002
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, watch sentry keeping a careful register beside the open well, long line of anxious residents, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-river-weather-notice
+    lane: arthemy-house
+    title: "A Rain Worth Keeping · notice"
+    event_id: "river-weather-1"
+    variant: notice
+    asset: "chance-events/river-weather-1/notice"
+    size: 1344x768
+    seed: 983003
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, brief rain shower in drought-stricken courtyard, cooks racing with broad copper water pots, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-river-weather-collect
+    lane: arthemy-house
+    title: "A Rain Worth Keeping · collect"
+    event_id: "river-weather-1"
+    variant: collect
+    asset: "chance-events/river-weather-1/collect"
+    size: 1344x768
+    seed: 983004
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, koala healer Kiyo filling sterile glass jars at the infirmary doorway, injured animalfolk on cots, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-river-weather-care
+    lane: arthemy-house
+    title: "A Rain Worth Keeping · care"
+    event_id: "river-weather-1"
+    variant: care
+    asset: "chance-events/river-weather-1/care"
+    size: 1344x768
+    seed: 983005
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, salt caravan trader sealing barrels of precious rainwater, bustling kitchen bread line, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-salt-caravan-notice
+    lane: arthemy-house
+    title: "Two Spare Wheels · notice"
+    event_id: "salt-caravan-1"
+    variant: notice
+    asset: "chance-events/salt-caravan-1/notice"
+    size: 1344x768
+    seed: 983006
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, dusty merchant wagon with two spare wagon wheels, fox caravaner counting bolts and spokes, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-salt-caravan-collect
+    lane: arthemy-house
+    title: "Two Spare Wheels · collect"
+    event_id: "salt-caravan-1"
+    variant: collect
+    asset: "chance-events/salt-caravan-1/collect"
+    size: 1344x768
+    seed: 983007
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, gate watch soldiers mounting salvaged wheels onto fragile patrol cart, caravan patched for departure, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-salt-caravan-care
+    lane: arthemy-house
+    title: "Two Spare Wheels · care"
+    event_id: "salt-caravan-1"
+    variant: care
+    asset: "chance-events/salt-caravan-1/care"
+    size: 1344x768
+    seed: 983008
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, refugee families taking passage vouchers beside a caravan cart, weary watch engineers replacing their axle, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-wild-harvest-notice
+    lane: arthemy-house
+    title: "Three Red Turnips · notice"
+    event_id: "wild-harvest-1"
+    variant: notice
+    asset: "chance-events/wild-harvest-1/notice"
+    size: 1344x768
+    seed: 983009
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, rabbit gardener cradling giant red turnips in dry cracked farmland, villagers gathered in awe, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-wild-harvest-collect
+    lane: arthemy-house
+    title: "Three Red Turnips · collect"
+    event_id: "wild-harvest-1"
+    variant: collect
+    asset: "chance-events/wild-harvest-1/collect"
+    size: 1344x768
+    seed: 983010
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, gardener carving tiny seed pieces, carefully laying them into tilled furrows under a sunrise, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-wild-harvest-care
+    lane: arthemy-house
+    title: "Three Red Turnips · care"
+    event_id: "wild-harvest-1"
+    variant: care
+    asset: "chance-events/wild-harvest-1/care"
+    size: 1344x768
+    seed: 983011
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, steaming communal turnip stew served at long benches, three precious seeds on a farmer's cloth, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-little-omens-notice
+    lane: arthemy-house
+    title: "A Spoon That Stays Warm · notice"
+    event_id: "little-omens-1"
+    variant: notice
+    asset: "chance-events/little-omens-1/notice"
+    size: 1344x768
+    seed: 983012
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, child in abandoned cottage holding a glowing warm brass spoon, startled neighbors in doorway, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-little-omens-collect
+    lane: arthemy-house
+    title: "A Spoon That Stays Warm · collect"
+    event_id: "little-omens-1"
+    variant: collect
+    asset: "chance-events/little-omens-1/collect"
+    size: 1344x768
+    seed: 983013
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, child with spoon and archivist drawing a carefully observed ledger, warm fireplace and missing father's coat, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-little-omens-care
+    lane: arthemy-house
+    title: "A Spoon That Stays Warm · care"
+    event_id: "little-omens-1"
+    variant: care
+    asset: "chance-events/little-omens-1/care"
+    size: 1344x768
+    seed: 983014
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, glass case in lamplit Archive holding supernatural warm spoon, child watching from threshold, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-mire-ferry-notice
+    lane: arthemy-house
+    title: "A Raft and a Duck · notice"
+    event_id: "mire-ferry-1"
+    variant: notice
+    asset: "chance-events/mire-ferry-1/notice"
+    size: 1344x768
+    seed: 983015
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, marsh ferryman guiding bamboo raft with small duck wearing old brass ring, reeds and low fog, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-mire-ferry-collect
+    lane: arthemy-house
+    title: "A Raft and a Duck · collect"
+    event_id: "mire-ferry-1"
+    variant: collect
+    asset: "chance-events/mire-ferry-1/collect"
+    size: 1344x768
+    seed: 983016
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, ferryman studying ancient seal on duck's ring while dockhands tally a tiny passenger, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-mire-ferry-care
+    lane: arthemy-house
+    title: "A Raft and a Duck · care"
+    event_id: "mire-ferry-1"
+    variant: care
+    asset: "chance-events/mire-ferry-1/care"
+    size: 1344x768
+    seed: 983017
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, court clerk examining claims from three strangers as duck wanders among military boots, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-rustline-signal-notice
+    lane: arthemy-house
+    title: "A Whistle in a Kettle · notice"
+    event_id: "rustline-signal-1"
+    variant: notice
+    asset: "chance-events/rustline-signal-1/notice"
+    size: 1344x768
+    seed: 983018
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, fortress kitchen kettle producing unexpected steam whistle, anthro cooks looking toward abandoned rail tracks, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-rustline-signal-collect
+    lane: arthemy-house
+    title: "A Whistle in a Kettle · collect"
+    event_id: "rustline-signal-1"
+    variant: collect
+    asset: "chance-events/rustline-signal-1/collect"
+    size: 1344x768
+    seed: 983019
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, small otter-shrew mechanic Tiller investigating brass kettle with copper wires and rails behind him, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-rustline-signal-care
+    lane: arthemy-house
+    title: "A Whistle in a Kettle · care"
+    event_id: "rustline-signal-1"
+    variant: care
+    asset: "chance-events/rustline-signal-1/care"
+    size: 1344x768
+    seed: 983020
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, cooks pouring tea while soldiers listen to mysterious train whistle traveling through windows, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-toll-dispute-notice
+    lane: arthemy-house
+    title: "Two Carts and One Bridge · notice"
+    event_id: "toll-dispute-1"
+    variant: notice
+    asset: "chance-events/toll-dispute-1/notice"
+    size: 1344x768
+    seed: 983021
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, two stubborn wagon drivers nose-to-nose on narrow stone toll bridge, their carts locked axle to axle, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-toll-dispute-collect
+    lane: arthemy-house
+    title: "Two Carts and One Bridge · collect"
+    event_id: "toll-dispute-1"
+    variant: collect
+    asset: "chance-events/toll-dispute-1/collect"
+    size: 1344x768
+    seed: 983022
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, gate watch ox-team pulling tangled wagons apart, clerk collecting bridge fees, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-toll-dispute-care
+    lane: arthemy-house
+    title: "Two Carts and One Bridge · care"
+    event_id: "toll-dispute-1"
+    variant: care
+    asset: "chance-events/toll-dispute-1/care"
+    size: 1344x768
+    seed: 983023
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, two angry drivers carrying each other's crates through shallow river beside stranded carts, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-quiet-witness-notice
+    lane: arthemy-house
+    title: "The Girl Who Heard the Door · notice"
+    event_id: "quiet-witness-1"
+    variant: notice
+    asset: "chance-events/quiet-witness-1/notice"
+    size: 1344x768
+    seed: 983024
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, anthro child pointing to trapdoor boards beneath ancient fortress kitchen, cook holding cooking pan, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-quiet-witness-collect
+    lane: arthemy-house
+    title: "The Girl Who Heard the Door · collect"
+    event_id: "quiet-witness-1"
+    variant: collect
+    asset: "chance-events/quiet-witness-1/collect"
+    size: 1344x768
+    seed: 983025
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, carpenter lifting wooden floor hatch with child and archivist attending, secret brass-hinged box revealed, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-quiet-witness-care
+    lane: arthemy-house
+    title: "The Girl Who Heard the Door · care"
+    event_id: "quiet-witness-1"
+    variant: care
+    asset: "chance-events/quiet-witness-1/care"
+    size: 1344x768
+    seed: 983026
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, carpenter quietly carrying small wooden evidence box to clerk at dim doorway while child returns to school, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-night-market-notice
+    lane: arthemy-house
+    title: "A Market of Buttons · notice"
+    event_id: "night-market-1"
+    variant: notice
+    asset: "chance-events/night-market-1/notice"
+    size: 1344x768
+    seed: 983027
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, lamplit night market stall covered in mismatched antique buttons, elderly woman recognizing coat fastener, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-night-market-collect
+    lane: arthemy-house
+    title: "A Market of Buttons · collect"
+    event_id: "night-market-1"
+    variant: collect
+    asset: "chance-events/night-market-1/collect"
+    size: 1344x768
+    seed: 983028
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, public market with traders explaining mysterious button origins to scribe, wedding coat displayed nearby, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-night-market-care
+    lane: arthemy-house
+    title: "A Market of Buttons · care"
+    event_id: "night-market-1"
+    variant: care
+    asset: "chance-events/night-market-1/care"
+    size: 1344x768
+    seed: 983029
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, quartermaster distributing newly repaired uniforms, soldiers noticing their initials on antique buttons, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-lost-animals-notice
+    lane: arthemy-house
+    title: "One Goat on the Stairs · notice"
+    event_id: "lost-animals-1"
+    variant: notice
+    asset: "chance-events/lost-animals-1/notice"
+    size: 1344x768
+    seed: 983030
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, cheeky goat atop throne room staircase eating imperial tax parchments, startled court officials, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-lost-animals-collect
+    lane: arthemy-house
+    title: "One Goat on the Stairs · collect"
+    event_id: "lost-animals-1"
+    variant: collect
+    asset: "chance-events/lost-animals-1/collect"
+    size: 1344x768
+    seed: 983031
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, three competing households showing goat sketches to magistrate, goat nibbling the papers, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-lost-animals-care
+    lane: arthemy-house
+    title: "One Goat on the Stairs · care"
+    event_id: "lost-animals-1"
+    variant: care
+    asset: "chance-events/lost-animals-1/care"
+    size: 1344x768
+    seed: 983032
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, schoolchildren crowning a goat Chancellor atop makeshift straw throne in bright schoolyard, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-bell-echo-notice
+    lane: arthemy-house
+    title: "The Bell with No Clapper · notice"
+    event_id: "bell-echo-1"
+    variant: notice
+    asset: "chance-events/bell-echo-1/notice"
+    size: 1344x768
+    seed: 983033
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, silent chapel under stone bell tower ringing in bright morning, bell clapper displayed at gatehouse, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-bell-echo-collect
+    lane: arthemy-house
+    title: "The Bell with No Clapper · collect"
+    event_id: "bell-echo-1"
+    variant: collect
+    asset: "chance-events/bell-echo-1/collect"
+    size: 1344x768
+    seed: 983034
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, ibis bellkeeper Sera and bell tester nearing antique clapper to brass bell, startled witnesses, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-bell-echo-care
+    lane: arthemy-house
+    title: "The Bell with No Clapper · care"
+    event_id: "bell-echo-1"
+    variant: care
+    asset: "chance-events/bell-echo-1/care"
+    size: 1344x768
+    seed: 983035
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, watchman at twilight guarding empty chapel, bell tower moonlit and pocket clock stopped, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-stranger-tent-notice
+    lane: arthemy-house
+    title: "A Scholar with No Shoes · notice"
+    event_id: "stranger-tent-1"
+    variant: notice
+    asset: "chance-events/stranger-tent-1/notice"
+    size: 1344x768
+    seed: 983036
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, barefoot wandering scholar with heavy leather ledger entering fortress arch in blazing sun, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-stranger-tent-collect
+    lane: arthemy-house
+    title: "A Scholar with No Shoes · collect"
+    event_id: "stranger-tent-1"
+    variant: collect
+    asset: "chance-events/stranger-tent-1/collect"
+    size: 1344x768
+    seed: 983037
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, scholar lecturing crowded courtyard about vanished river, listeners tracing old maps on sand, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-stranger-tent-care
+    lane: arthemy-house
+    title: "A Scholar with No Shoes · care"
+    event_id: "stranger-tent-1"
+    variant: care
+    asset: "chance-events/stranger-tent-1/care"
+    size: 1344x768
+    seed: 983038
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, royal archivist purchasing old river ledger, turning to page missing from torn binding, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-children-games-notice
+    lane: arthemy-house
+    title: "Spoons for Crowns · notice"
+    event_id: "children-games-1"
+    variant: notice
+    asset: "chance-events/children-games-1/notice"
+    size: 1344x768
+    seed: 983039
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, animated animalfolk children wearing paper crowns and holding wooden spoons as rulers in muddy yard, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-children-games-collect
+    lane: arthemy-house
+    title: "Spoons for Crowns · collect"
+    event_id: "children-games-1"
+    variant: collect
+    asset: "chance-events/children-games-1/collect"
+    size: 1344x768
+    seed: 983040
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, emperor ceremonially signing child's playful proclamation, two grinning mock emperors, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-children-games-care
+    lane: arthemy-house
+    title: "Spoons for Crowns · care"
+    event_id: "children-games-1"
+    variant: care
+    asset: "chance-events/children-games-1/care"
+    size: 1344x768
+    seed: 983041
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, emperor hauling heavy water buckets as laughing children direct their invented kingdom, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-medicine-trade-notice
+    lane: arthemy-house
+    title: "A Jar of Bitter Roots · notice"
+    event_id: "medicine-trade-1"
+    variant: notice
+    asset: "chance-events/medicine-trade-1/notice"
+    size: 1344x768
+    seed: 983042
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, traveling herb peddler displaying six dried roots in apothecary jars before market stall, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-medicine-trade-collect
+    lane: arthemy-house
+    title: "A Jar of Bitter Roots · collect"
+    event_id: "medicine-trade-1"
+    variant: collect
+    asset: "chance-events/medicine-trade-1/collect"
+    size: 1344x768
+    seed: 983043
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, koala healer Kiyo inspecting bitter root specimen in infirmary with tools and herbal notebook, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-medicine-trade-care
+    lane: arthemy-house
+    title: "A Jar of Bitter Roots · care"
+    event_id: "medicine-trade-1"
+    variant: care
+    asset: "chance-events/medicine-trade-1/care"
+    size: 1344x768
+    seed: 983044
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, careful quartermaster storing mystery medicine bundles in labeled glass cabinet under lantern, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-raider-guest-notice
+    lane: arthemy-house
+    title: "A Hyena at Breakfast · notice"
+    event_id: "raider-guest-1"
+    variant: notice
+    asset: "chance-events/raider-guest-1/notice"
+    size: 1344x768
+    seed: 983045
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, painted Jackalwire hyena messenger entering fort gate at breakfast, suspicious guards raising eyebrows, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-raider-guest-collect
+    lane: arthemy-house
+    title: "A Hyena at Breakfast · collect"
+    event_id: "raider-guest-1"
+    variant: collect
+    asset: "chance-events/raider-guest-1/collect"
+    size: 1344x768
+    seed: 983046
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, hyena rider enjoying breakfast at crowded public table beside uneasy gate watch soldiers, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-raider-guest-care
+    lane: arthemy-house
+    title: "A Hyena at Breakfast · care"
+    event_id: "raider-guest-1"
+    variant: care
+    asset: "chance-events/raider-guest-1/care"
+    size: 1344x768
+    seed: 983047
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, hyena messenger seated privately before ledger official in dim chamber, captive wagon diagram between them, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-house-feast-notice
+    lane: arthemy-house
+    title: "A Dinner Invitation · notice"
+    event_id: "house-feast-1"
+    variant: notice
+    asset: "chance-events/house-feast-1/notice"
+    size: 1344x768
+    seed: 983048
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, four silver place settings in ceremonial hall, old noble family staring at empty chair, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-house-feast-collect
+    lane: arthemy-house
+    title: "A Dinner Invitation · collect"
+    event_id: "house-feast-1"
+    variant: collect
+    asset: "chance-events/house-feast-1/collect"
+    size: 1344x768
+    seed: 983049
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, kitchen cook in plain work clothes sitting at banquet table among uncomfortable richly clad animalfolk nobles, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-house-feast-care
+    lane: arthemy-house
+    title: "A Dinner Invitation · care"
+    event_id: "house-feast-1"
+    variant: care
+    asset: "chance-events/house-feast-1/care"
+    size: 1344x768
+    seed: 983050
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, solemn banquet with empty fourth chair, old genealogical scroll and silver spoon on table, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-glass-oracle-notice
+    lane: arthemy-house
+    title: "A Jar of Yesterday · notice"
+    event_id: "glass-oracle-1"
+    variant: notice
+    asset: "chance-events/glass-oracle-1/notice"
+    size: 1344x768
+    seed: 983051
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, young animalfolk child displaying sealed glass jar glowing with tiny sunset in daylight, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-glass-oracle-collect
+    lane: arthemy-house
+    title: "A Jar of Yesterday · collect"
+    event_id: "glass-oracle-1"
+    variant: collect
+    asset: "chance-events/glass-oracle-1/collect"
+    size: 1344x768
+    seed: 983052
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, sunset light flooding crowded court as child uncorks mysterious jar, astonished onlookers, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-glass-oracle-care
+    lane: arthemy-house
+    title: "A Jar of Yesterday · care"
+    event_id: "glass-oracle-1"
+    variant: care
+    asset: "chance-events/glass-oracle-1/care"
+    size: 1344x768
+    seed: 983053
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, watch soldier shading captured sunset jar atop fortress wall to signal across wasteland, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-courier-trouble-notice
+    lane: arthemy-house
+    title: "A Letter Without a Name · notice"
+    event_id: "courier-trouble-1"
+    variant: notice
+    asset: "chance-events/courier-trouble-1/notice"
+    size: 1344x768
+    seed: 983054
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, dusty courier standing at gate reciting a lost letter, anxious clerk with empty envelope, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-courier-trouble-collect
+    lane: arthemy-house
+    title: "A Letter Without a Name · collect"
+    event_id: "courier-trouble-1"
+    variant: collect
+    asset: "chance-events/courier-trouble-1/collect"
+    size: 1344x768
+    seed: 983055
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, court clerk transcribing courier's memorized message, wax seal and writing desk, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-courier-trouble-care
+    lane: arthemy-house
+    title: "A Letter Without a Name · care"
+    event_id: "courier-trouble-1"
+    variant: care
+    asset: "chance-events/courier-trouble-1/care"
+    size: 1344x768
+    seed: 983056
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, two mounted couriers leaving different fortress gates, distant crossroads visible in morning haze, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-forgotten-song-notice
+    lane: arthemy-house
+    title: "A Song in the Bread Line · notice"
+    event_id: "forgotten-song-1"
+    variant: notice
+    asset: "chance-events/forgotten-song-1/notice"
+    size: 1344x768
+    seed: 983057
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, elderly anthro cook singing strange melody at bread line, watchman listening with tears, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-forgotten-song-collect
+    lane: arthemy-house
+    title: "A Song in the Bread Line · collect"
+    event_id: "forgotten-song-1"
+    variant: collect
+    asset: "chance-events/forgotten-song-1/collect"
+    size: 1344x768
+    seed: 983058
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, barracks cooks and armed sentries singing together in lantern glow, ancient music scroll open, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-forgotten-song-care
+    lane: arthemy-house
+    title: "A Song in the Bread Line · care"
+    event_id: "forgotten-song-1"
+    variant: care
+    asset: "chance-events/forgotten-song-1/care"
+    size: 1344x768
+    seed: 983059
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, archive researcher studying melody written on reverse side of historic casualty roll, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-salt-accounts-notice
+    lane: arthemy-house
+    title: "An Extra Zero · notice"
+    event_id: "salt-accounts-1"
+    variant: notice
+    asset: "chance-events/salt-accounts-1/notice"
+    size: 1344x768
+    seed: 983060
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, market desk buried in ledgers, one disputed abacus bead and arguing merchants, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-salt-accounts-collect
+    lane: arthemy-house
+    title: "An Extra Zero · collect"
+    event_id: "salt-accounts-1"
+    variant: collect
+    asset: "chance-events/salt-accounts-1/collect"
+    size: 1344x768
+    seed: 983061
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, ledger treasurer refunding receipts to anxious merchants, scrutiny of stamped papers, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-salt-accounts-care
+    lane: arthemy-house
+    title: "An Extra Zero · care"
+    event_id: "salt-accounts-1"
+    variant: care
+    asset: "chance-events/salt-accounts-1/care"
+    size: 1344x768
+    seed: 983062
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, busy public audit table where traders compare receipts and mismatched wax seals, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-moonlit-scouts-notice
+    lane: arthemy-house
+    title: "A Light on the Ridge · notice"
+    event_id: "moonlit-scouts-1"
+    variant: notice
+    asset: "chance-events/moonlit-scouts-1/notice"
+    size: 1344x768
+    seed: 983063
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, distant lantern moving on rocky ridge at night, two anthro scouts watching from watchtower, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-moonlit-scouts-collect
+    lane: arthemy-house
+    title: "A Light on the Ridge · collect"
+    event_id: "moonlit-scouts-1"
+    variant: collect
+    asset: "chance-events/moonlit-scouts-1/collect"
+    size: 1344x768
+    seed: 983064
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, two scouts sneaking up moonlit ridge under hooded lanterns, strange hoofprint pressed into mud, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-moonlit-scouts-care
+    lane: arthemy-house
+    title: "A Light on the Ridge · care"
+    event_id: "moonlit-scouts-1"
+    variant: care
+    asset: "chance-events/moonlit-scouts-1/care"
+    size: 1344x768
+    seed: 983065
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, fortress gate with beacon invitation, distant light approaching from unseen valley, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-strange-craft-notice
+    lane: arthemy-house
+    title: "The Self-Counting Abacus · notice"
+    event_id: "strange-craft-1"
+    variant: notice
+    asset: "chance-events/strange-craft-1/notice"
+    size: 1344x768
+    seed: 983066
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, ancient abacus counting its own beads in dusty office, astonished accountant hovering, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-strange-craft-collect
+    lane: arthemy-house
+    title: "The Self-Counting Abacus · collect"
+    event_id: "strange-craft-1"
+    variant: collect
+    asset: "chance-events/strange-craft-1/collect"
+    size: 1344x768
+    seed: 983067
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, treasury clerks comparing enchanted abacus to financial ledger, suspicion on every face, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-strange-craft-care
+    lane: arthemy-house
+    title: "The Self-Counting Abacus · care"
+    event_id: "strange-craft-1"
+    variant: care
+    asset: "chance-events/strange-craft-1/care"
+    size: 1344x768
+    seed: 983068
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, children in schoolroom experimenting with self-counting abacus, moving beads toward visitor, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-watch-desertion-notice
+    lane: arthemy-house
+    title: "An Empty Watch Cloak · notice"
+    event_id: "watch-desertion-1"
+    variant: notice
+    asset: "chance-events/watch-desertion-1/notice"
+    size: 1344x768
+    seed: 983069
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, empty guard post with cloak hanging on iron gate hook, unfinished letter beneath it, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-watch-desertion-collect
+    lane: arthemy-house
+    title: "An Empty Watch Cloak · collect"
+    event_id: "watch-desertion-1"
+    variant: collect
+    asset: "chance-events/watch-desertion-1/collect"
+    size: 1344x768
+    seed: 983070
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, watch captain talking to ill soldier's mother inside modest homestead, nurse preparing medicine, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-watch-desertion-care
+    lane: arthemy-house
+    title: "An Empty Watch Cloak · care"
+    event_id: "watch-desertion-1"
+    variant: care
+    asset: "chance-events/watch-desertion-1/care"
+    size: 1344x768
+    seed: 983071
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, sentry standing before assembled watchmen at roll call, several others raising their hands, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-pilgrim-road-notice
+    lane: arthemy-house
+    title: "Two Pilgrims and a Cart · notice"
+    event_id: "pilgrim-road-1"
+    variant: notice
+    asset: "chance-events/pilgrim-road-1/notice"
+    size: 1344x768
+    seed: 983072
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, two travel-worn pilgrim animalfolk guiding cart with ill stranger beneath blankets, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-pilgrim-road-collect
+    lane: arthemy-house
+    title: "Two Pilgrims and a Cart · collect"
+    event_id: "pilgrim-road-1"
+    variant: collect
+    asset: "chance-events/pilgrim-road-1/collect"
+    size: 1344x768
+    seed: 983073
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, council hall opened to exhausted pilgrims, warm hearth, boots drying beside sleeping cart passenger, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-pilgrim-road-care
+    lane: arthemy-house
+    title: "Two Pilgrims and a Cart · care"
+    event_id: "pilgrim-road-1"
+    variant: care
+    asset: "chance-events/pilgrim-road-1/care"
+    size: 1344x768
+    seed: 983074
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, gate watch escorting pilgrim cart toward distant abbey path under copper-colored dusk, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-factions-argue-notice
+    lane: arthemy-house
+    title: "Who Owns the Stray Pig · notice"
+    event_id: "factions-argue-1"
+    variant: notice
+    asset: "chance-events/factions-argue-1/notice"
+    size: 1344x768
+    seed: 983075
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, pig escaped into court courtroom among quarreling farmer and ledger merchant, papers scattered, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-factions-argue-collect
+    lane: arthemy-house
+    title: "Who Owns the Stray Pig · collect"
+    event_id: "factions-argue-1"
+    variant: collect
+    asset: "chance-events/factions-argue-1/collect"
+    size: 1344x768
+    seed: 983076
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, royal clerk attempting to examine pig in makeshift pen as two claimants provide witnesses, painted story still, hand-designed ensemble tableau"
+  - key: eod-chance-a1-factions-argue-care
+    lane: arthemy-house
+    title: "Who Owns the Stray Pig · care"
+    event_id: "factions-argue-1"
+    variant: care
+    asset: "chance-events/factions-argue-1/care"
+    size: 1344x768
+    seed: 983077
+    negative: "nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore, extra limbs, malformed muzzle"
+    prompt_tags: "Emperor of Dust original anthro fantasy frontier scene, farmer and broker shaking hands beside mischievous male pig while villagers laugh, painted story still, hand-designed ensemble tableau"
