@@ -753,3 +753,226 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-068
+  revision: 1
+  chapter: 4
+  location: Kneeland / hills
+  title: The Fog That Followed You Home
+  tier: invented
+  provenance: The Kneeland hills and their ranching roads are real; the personal fog and the rancher are invented fiction and depict no real person.
+  rarity: common
+  tone:
+  - funny
+  - tender
+  - cozy
+  cast:
+  - Your Fog (personal, polite, fixed)
+  - Lorna Hatch (a rancher, unbothered, fixed)
+  canon:
+  - A patch of fog about the size of a dog has attached itself to the player.
+  - It is polite, follows at a respectful distance and sulks in sunlight.
+  - It knows the shortest way down every road in the hills.
+  scene: On the Kneeland ridge a small gray cloud hovers at your elbow, no bigger than a sleeping dog. It follows when you walk and stops when you stop, and when a truck passes it ducks behind your leg. A rancher at a gate watches it with calm interest. "That one is yours," Lorna says. "They do that. You will want to feed it something. Fog likes a good story."
+  options:
+  - id: a
+    label: Tell the fog a story
+    skill: rizz
+    target: 7
+    success:
+      text: You tell it how you got here, and the fog listens so intently it thickens into a soft pillow. It hums and, in thanks, leaves you the route down the ridge, traced in dew.
+      effects:
+      - evidence:geography
+      - flag:fog_storied
+      - goodwill+1
+    failure:
+      text: You tell a story so dull the fog drifts off, then comes back to ask politely for another.
+      effects:
+      - time-1
+      - flag:fog_bored
+  - id: b
+    label: Follow the fog down the back road
+    skill: local_lore
+    target: 9
+    success:
+      text: The fog leads you down a lane that does not appear on any county map, past a farmhouse where someone is still waiting for a letter. You note the address.
+      effects:
+      - evidence:rumor
+      - flag:fog_followed
+      - weird+1
+    failure:
+      text: The fog leads you in a circle and apologizes by wrapping you in a gray blanket.
+      effects:
+      - nerve-1
+      - time-1
+  - id: c
+    label: Ask Lorna how to keep it
+    skill: none
+    target: null
+    success:
+      text: 'Lorna explains the fog''s needs: bread crumbs, a window, and some quiet. She hands you a jar with a tiny crack in the lid, at the cost of your free draw while she finds it.'
+      effects:
+      - flag:fog_kept
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara sniffs the air. "Smells like salt and wood smoke. Whatever this is, it came from the coast."
+    kit: Kit scratches the cloud. "It purrs, I think. Or it is a very small thunderstorm. Either way, I am keeping it."
+    juniper: Juniper kneels. "It is not lost. It is lonely, and you were kind. That is all it takes."
+    cedar: Cedar nods. "Hills have always had a few strays. This one picked a good home."
+  callbacks:
+  - fog_storied
+  - fog_bored
+  - fog_followed
+  - fog_kept
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-070
+  revision: 1
+  chapter: 4
+  location: Kneeland / hills
+  title: Antenna for the Wrong Stars
+  tier: invented
+  provenance: Amateur radio is a real hobby on the Humboldt hills; Walt, his antenna and the strange broadcast are invented fiction and no real operator is depicted.
+  rarity: rare
+  tone:
+  - eerie
+  - nerdy
+  - wistful
+  cast:
+  - Walt Brennerman (ham-radio operator, fixed)
+  - The Broadcast (unfamiliar constellation, fixed)
+  canon:
+  - A ham-radio operator receives weather reports for a constellation that does not exist in our sky.
+  - 'The reports are accurate: tomorrow''s forecast is always correct for a place nobody has visited.'
+  - Walt has logged four hundred of them and will not stop.
+  scene: 'In a shed lit by green dials, an old man hunches over a ham radio. A calm voice recites weather: "Over the third moon of Aldebran-Ness, a light drizzle of copper. Winds from the northeast. Clear skies for the lamplighters." Walt switches off the volume. "Four hundred reports," he says. "Every one correct, for a place I cannot find. Would you check my coordinates?"'
+  options:
+  - id: a
+    label: Cross-check the coordinates against a star chart
+    skill: wits
+    target: 9
+    success:
+      text: You line up the reports with the chart and find the constellation sits just beyond the edge of the printed sky. Walt copies out the plot for you in careful pencil.
+      effects:
+      - evidence:geography
+      - flag:antenna_charted
+      - weird+1
+    failure:
+      text: You misread the chart and plot the stars into the middle of Eureka. Walt goes pale.
+      effects:
+      - nerve-1
+      - flag:antenna_misplotted
+  - id: b
+    label: Reply on the radio
+    skill: rizz
+    target: 11
+    success:
+      text: You key the mic and say hello, and a long pause answers, then a thankful voice. They ask for your weather and you give it, one kind sentence at a time.
+      effects:
+      - flag:antenna_replied
+      - goodwill+1
+      - evidence:rumor
+    failure:
+      text: You say hello in the wrong frequency and the static answers with your own voice, a day early.
+      effects:
+      - nerve-1
+      - time-1
+  - id: c
+    label: Sit with Walt and listen to a report
+    skill: none
+    target: null
+    success:
+      text: You take the second chair and listen to the whole report, copper drizzle and all. Walt gives you his logbook to keep, which you read for an hour.
+      effects:
+      - flag:antenna_listened
+      - goodwill+1
+      - time-1
+  lead_reactions:
+    mara: Mara frowns at the logbook. "Four hundred entries, no gaps. This man has not missed a night in years."
+    kit: Kit leans in. "A weather report from a star I have never heard of. I would like to move there."
+    juniper: Juniper closes her eyes. "They are not broadcasting at us. They are just saying their day out loud, in case someone is listening."
+    cedar: Cedar grunts. "Radios pick up odd things in the hills. Nobody believes the man who writes it down."
+  callbacks:
+  - antenna_charted
+  - antenna_misplotted
+  - antenna_replied
+  - antenna_listened
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-073
+  revision: 1
+  chapter: 4
+  location: Willow Creek
+  title: The Other Bigfoot Research Society
+  tier: invented
+  provenance: Willow Creek's Bigfoot tourism is a real local tradition; the Tinyfoot Society and its president are invented fiction, and no real researcher or institution is depicted.
+  rarity: uncommon
+  tone:
+  - satirical
+  - funny
+  - earnest
+  cast:
+  - Doctor Ingrid Sallow (president, fixed)
+  - The Society for Tinyfoot Studies (furious, fixed)
+  canon:
+  - A research society has conclusive proof of a tiny footprint-leaving creature and is furious nobody cares.
+  - Its evidence is a shoebox of footprints the size of thumbnails.
+  - The Society meets in a laundromat and keeps excellent minutes.
+  scene: In the back of a laundromat, a dozen people in matching name tags sit around a folding table with a shoebox between them. "We have the proof," Doctor Sallow announces. "Tinyfoot. Footprints of an inch, impeccably documented. And nobody will so much as look." She lifts the lid. Inside, on a bed of felt, lie hundreds of footprints cast in plaster the size of a thumbnail.
+  options:
+  - id: a
+    label: Examine the casts with care
+    skill: wits
+    target: 9
+    success:
+      text: You notice that the prints follow a single, careful path across a table and out of the laundromat. Sallow gasps, and hands you a map of the route, drawn from the minutes.
+      effects:
+      - evidence:geography
+      - flag:tinyfoot_examined
+      - goodwill+1
+    failure:
+      text: You sneeze on the casts and a hundred inches of footprint dust the floor.
+      effects:
+      - nerve-1
+      - flag:tinyfoot_sneezed
+  - id: b
+    label: Take the Society's side in public
+    skill: rizz
+    target: 7
+    success:
+      text: You stand and declare the Society right, loudly. The laundromat applauds, and Sallow gives you the last name tag, which opens a back room of correspondence.
+      effects:
+      - evidence:document
+      - flag:tinyfoot_champion
+      - goodwill+1
+    failure:
+      text: You overdo it and promise a press conference, which the Society holds you to.
+      effects:
+      - time-1
+      - flag:tinyfoot_presser
+  - id: c
+    label: Quietly add your own footprint to the box
+    skill: none
+    target: null
+    success:
+      text: You press your thumb in clay and drop it in the box. The Society weeps. Sallow files it under Confirmed, and gives you a membership card, at the cost of your free draw.
+      effects:
+      - flag:tinyfoot_member
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara studies a cast. "Plaster's professional grade. Someone has dedicated serious resources to this."
+    kit: Kit grins. "A society furious at being ignored. I have never met people I understood so quickly."
+    juniper: Juniper cups the shoebox. "They are not wrong. They are just small and loved, and that is a kind of proof."
+    cedar: Cedar nods. "Small people have always been overlooked. Sometimes they are right to be annoyed."
+  callbacks:
+  - tinyfoot_examined
+  - tinyfoot_sneezed
+  - tinyfoot_champion
+  - tinyfoot_presser
+  - tinyfoot_member
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

@@ -752,3 +752,228 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-049
+  revision: 1
+  chapter: 3
+  location: Eureka F Street waterfront / Perilous Plunge
+  title: The Marching Lumberjack Paradox
+  tier: invented
+  provenance: Eureka's waterfront and its parade tradition are real; the reversing band and its drum major are invented fiction, and no real musicians or officials are depicted.
+  rarity: uncommon
+  tone:
+  - absurd
+  - festive
+  - looping
+  cast:
+  - The Lumberjack Marching Band (reversing, fixed)
+  - Drum Major Alder Voss (tired, fixed)
+  canon:
+  - A lumberjack marching band performs yesterday's parade backward, down F Street.
+  - 'Each backward step undoes a small thing from yesterday: a spill, a decision, a dropped flag.'
+  - Alder Voss has not been able to stop the beat since Tuesday and would like to.
+  scene: A drumbeat comes up F Street and then, strangely, goes down it. A marching band in flannel and axes steps backward in perfect time, unspilling coffee, un-dropping a flag, unpicking a quarrel from the sidewalk. The drum major spots you over her shoulder. "We have been marching yesterday since sunrise," Alder says through her baton. "Can you help us end it before the part where we trip?"
+  options:
+  - id: a
+    label: Time the beat and cut in on the downbeat
+    skill: wits
+    target: 9
+    success:
+      text: You count the reversed measures, step in on the seam, and lift a hand. The drums land on a single, clean, forward note and the band stumbles gratefully into today. Alder hands you the parade route, marked with tomorrow's corrections.
+      effects:
+      - evidence:schedule
+      - flag:parade_stopped
+      - goodwill+1
+    failure:
+      text: You cut in a beat late and the band un-happens a bit of your morning as well.
+      effects:
+      - time-1
+      - flag:parade_reversed
+  - id: b
+    label: March backward with them and set the pace
+    skill: burly
+    target: 7
+    success:
+      text: You fall in step, backward, and slowly bend the cadence toward forward. By the plunge the whole band has turned around, and they cheer you with a wheezing tuba.
+      effects:
+      - flag:parade_marched
+      - goodwill+1
+      - evidence:rumor
+    failure:
+      text: You trip on a curb that was not there yet and fall into the tuba section.
+      effects:
+      - nerve-1
+      - flag:parade_tripped
+  - id: c
+    label: Wait on the curb and let them pass
+    skill: none
+    target: null
+    success:
+      text: You wait. The band passes backward, and the parade ends exactly where it began, a little tidier. Alder tips her hat to you and slips a program into your hand, though it costs your free draw.
+      effects:
+      - flag:parade_watched
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara frowns at the bandstand. "Uniforms are pressed. Somebody ironed these after the parade was over."
+    kit: Kit claps backward. "A marching band in reverse! It is like seeing a magic trick from behind the curtain."
+    juniper: Juniper hums with the drums. "They are not lost. They are looking for the part of yesterday they dropped."
+    cedar: Cedar mutters. "Eureka has done odder parades. Not many, but I have seen them."
+  callbacks:
+  - parade_stopped
+  - parade_reversed
+  - parade_marched
+  - parade_tripped
+  - parade_watched
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-051
+  revision: 1
+  chapter: 3
+  location: Humboldt Bay
+  title: The Oyster Council Convenes
+  tier: invented
+  provenance: Humboldt Bay's oyster culture is real; the parliament, its speaker and the gull's subpoena are invented fiction and no real business or official is depicted.
+  rarity: rare
+  tone:
+  - legal
+  - absurd
+  - briny
+  cast:
+  - The Oyster Council (floating parliament, fixed)
+  - Speaker Brine Halloran (presiding oyster, fixed)
+  - Gull Number 9 (the subpoenaed, fixed)
+  canon:
+  - A floating shellfish parliament has issued a subpoena for a gull.
+  - The Council meets only at slack tide and sustains objections by closing.
+  - Gull Number 9 is not guilty of anything but has strong opinions about perch.
+  scene: On a raft of floating oyster beds, a hundred shells open at once like a parliament coming to order. The Speaker, a large oyster with a barnacle gavel, announces that Gull Number 9 has been subpoenaed for conduct unbecoming a perch. The gull is on a piling nearby, looking wronged. "I only landed," it tells you. "They've been shucking me for hours."
+  options:
+  - id: a
+    label: Argue the gull's case before the Council
+    skill: rizz
+    target: 9
+    success:
+      text: You plead the gull's case with gesture and conviction, and the Council closes in a collective sigh of assent. The Speaker issues a written dismissal, a dripping parchment you can use as evidence.
+      effects:
+      - evidence:document
+      - flag:council_pleaded
+      - goodwill+1
+    failure:
+      text: You argue too well and the Council subpoenas you instead, but only for dinner.
+      effects:
+      - nerve-1
+      - flag:council_subpoenaed
+  - id: b
+    label: Check the subpoena for procedural defects
+    skill: wits
+    target: 7
+    success:
+      text: The subpoena is addressed to Gull Number 8, which the Council had dismissed last week. You point out the typo and the Speaker wearily agrees.
+      effects:
+      - evidence:rumor
+      - flag:council_typo
+      - weird+1
+    failure:
+      text: You cite the wrong statute and the Council records your confusion in the minutes, in pearl.
+      effects:
+      - time-1
+      - flag:council_minuted
+  - id: c
+    label: Escort the gull away from the raft
+    skill: none
+    target: null
+    success:
+      text: You walk the gull down the pier to a safe piling. It thanks you grimly and leaves a feather on your sleeve, which you keep, at the cost of your free draw.
+      effects:
+      - flag:council_escorted
+      - goodwill+1
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara reads the subpoena. "Ink on shell, but the form is county standard. This parliament has paperwork."
+    kit: Kit bows to the Speaker. "A full legal system run by shellfish. Honestly, more stable than most."
+    juniper: Juniper listens to the tide. "They are not cruel. They are lonely and they have learned to hold court for company."
+    cedar: Cedar squints. "Oysters are old as the bay. If they want a hearing, they are owed one."
+  callbacks:
+  - council_pleaded
+  - council_subpoenaed
+  - council_typo
+  - council_minuted
+  - council_escorted
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
+- id: WH-053
+  revision: 1
+  chapter: 3
+  location: Humboldt Bay
+  title: Submarine with Bicycle Pedals
+  tier: invented
+  provenance: Humboldt Bay and its maritime tinkering are real; Captain Tolliver, the pedal craft and its funding letter are invented fiction and no real agency or person is depicted.
+  rarity: common
+  tone:
+  - absurd
+  - funny
+  - earnest
+  cast:
+  - Captain Marguerite Tolliver (inventor, fixed)
+  - The Pedal Submarine (federally funded, allegedly, fixed)
+  canon:
+  - A homemade submarine powered by bicycle pedals claims to be a federally funded research craft.
+  - Its funding letter is real, but it is addressed to a different submarine.
+  - It has descended exactly once, and returned with a sunburn.
+  scene: A bright yellow submarine bobs against the dock with a bicycle seat on top and a periscope made of a garden hose. A woman in a lab coat waves a letter at you. "Federal research vessel," Captain Tolliver says. "Funded. I have the stamp." The stamp is real. The letter is addressed to a different submarine. The craft pedals itself in a slow, hopeful circle.
+  options:
+  - id: a
+    label: Pedal the craft out to the shoals
+    skill: burly
+    target: 9
+    success:
+      text: You pedal into the bay and the submarine dips just far enough to show you a shipwreck outline on the bottom. You surface with its coordinates sketched in the margin of the funding letter.
+      effects:
+      - evidence:geography
+      - flag:sub_pedaled
+      - weird+1
+    failure:
+      text: You pedal in the wrong direction and the submarine politely returns you to the dock after twenty minutes.
+      effects:
+      - time-1
+      - nerve-1
+  - id: b
+    label: Verify the funding letter
+    skill: wits
+    target: 7
+    success:
+      text: The letter's stamp traces to a legitimate, dormant grant for a different vessel. Tolliver is relieved to learn her submarine has a twin out there somewhere.
+      effects:
+      - evidence:document
+      - flag:sub_funded
+      - goodwill+1
+    failure:
+      text: You question the letter too sharply and Tolliver takes it personally and locks the hatch.
+      effects:
+      - nerve-1
+      - flag:sub_locked
+  - id: c
+    label: Wish the captain luck and stay on the dock
+    skill: none
+    target: null
+    success:
+      text: You salute the pedaling craft as it sets out. Tolliver radios back a cheerful sunburned report an hour later, and mails you a postcard of the bay floor.
+      effects:
+      - flag:sub_salute
+      - goodwill+1
+      - evidence:rumor
+  lead_reactions:
+    mara: Mara inspects the pedals. "Welded properly, no leaks. Whoever built this took a lot of care."
+    kit: Kit mounts the seat happily. "A submarine you pedal. I love how no one asked if it should work."
+    juniper: Juniper presses a palm to the hull. "She is proud. She has been told she was a mistake, and she has decided otherwise."
+    cedar: Cedar chuckles. "I have seen worse boats win federal grants. Not many, but some."
+  callbacks:
+  - sub_pedaled
+  - sub_funded
+  - sub_locked
+  - sub_salute
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
