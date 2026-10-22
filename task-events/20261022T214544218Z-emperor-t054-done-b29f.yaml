@@ -1,0 +1,10 @@
+version: 1
+project: emperor-of-dust
+task: t-054
+operation: done
+session: 2026-10-22T092000Z-emperor-t054-a7c2
+updated: '2026-10-22T21:45:44.218Z'
+note: >-
+  Merged kind_robots#4022 (6c945b0) for mandatory court-only followers and early quest pacing, and kind_robots#4038 (36560c8) for the Day 1 rewind fix, CI adversarial harness and nightly schedule. All 14 GitHub checks on #4038 passed, including 552 full campaigns, 27,600 simulated days, 240 opening seeds, 480 rival-choice branches, 342 rewinds that selected different arrivals, and all 8 ending families. At most 2 Day 1 quests. Merged conductor#6507 (940945a) with the actual fresh policy-by-policy balance report. No public release, production deployment or ArtJob.
+learning: >-
+  Seed-selected throne petition IDs cached in dayAudiences must be recalculated when a rewind changes the branch; otherwise the newly selected audience IDs are filtered out and Day 1 can deadlock. Keep seeded rewind, save-codec and all-policy 50-day simulations on the daily Emperor contract.
