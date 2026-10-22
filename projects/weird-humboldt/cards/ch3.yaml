@@ -181,3 +181,71 @@
         failure:
           text: "Finch waves at the wrong person. The seal looks embarrassed on your behalf."
           effects: [nerve-1]
+- id: WH-043
+  revision: 1
+  chapter: 3
+  location: Old Town Eureka
+  title: The Fog Machine Union
+  tier: reported
+  provenance: Eureka's fog and Old Town streets are real; the stagehand union, its grievances and its machinery are invented fiction.
+  rarity: uncommon
+  tone:
+  - satirical
+  - damp
+  - dry
+  cast:
+  - Local 404 of the Stagehands (clipboards, headsets, grievances)
+  - The Foreman (visible only when the fog thickens)
+  canon:
+  - Stagehands in black walk Old Town at dusk and claim the citywide fog is a labor dispute they are mid-strike over.
+  - The fog machines are in the walls, and the union wants fair hours before it will thin the fog out.
+  - Nobody on the crew will admit who the employer is.
+  scene: At dusk in Old Town a line of stagehands in black stands outside a closed storefront, carrying picket signs that read FAIR HOURS FOR FOG. Their foreman, who flickers in and out as the mist thickens, explains that the entire coastal fog bank has been working unpaid doubles since 1851. "We will stop," he says, "when someone signs this." He holds out a clipboard. The pen is also fog.
+  options:
+  - id: a
+    label: Negotiate a fair rota with the foreman
+    skill: rizz
+    target: 9
+    success:
+      text: By midnight you have drafted a rota with rest hours and a lunch break. The foreman signs with a cloud, and the street clears in a long, grateful breath.
+      effects:
+      - goodwill+1
+      - flag:fog_union_deal
+    failure:
+      text: The foreman declares you management, and the pickets turn to face you. You leave the street with fog-damp shoes and no new friends.
+      effects:
+      - nerve-1
+      - evidence:rumor
+  - id: b
+    label: Trace the machines in the walls
+    skill: wits
+    target: 9
+    success:
+      text: You follow the hum to a brick alcove with a gauge reading Tuesday. Behind it, a stack of very old timecards confirms exactly who has been overworked.
+      effects:
+      - evidence:timecards
+      - weird+1
+    failure:
+      text: The hum turns out to be a refrigerator. A mist pours from the open door and your sleeves are wet for an hour.
+      effects:
+      - time-1
+  - id: c
+    label: Join the picket line for an hour
+    skill: none
+    target: null
+    success:
+      text: You carry a sign through three blocks of Old Town. The fog thins around you a little, as if listening, and the stagehands remember your name.
+      effects:
+      - flag:fog_union_ally
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara reads the sign lettering and snorts. "Good hand. These folks mean it, and they've been painting that sign a while."
+    kit: Kit tests the cadence of the chant and loves it. "It's a work song. The fog has a work song."
+    juniper: Juniper sniffs the mist and relaxes. "Wet wool and tired people. They aren't scary, only owed."
+    cedar: Cedar eyes the clipboard. "Whatever's written on that, I want to read the fine print before anyone signs."
+  callbacks:
+  - fog_union_deal
+  - fog_union_ally
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

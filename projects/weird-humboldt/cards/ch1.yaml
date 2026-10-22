@@ -202,3 +202,71 @@
         failure:
           text: "You carry an empty cardigan across campus for an hour, and several students salute it."
           effects: [nerve-1]
+- id: WH-007
+  revision: 1
+  chapter: 1
+  location: Minor Theatre, Arcata
+  title: Audience of One Hundred and One
+  tier: reported
+  provenance: The theater is real and shadow-cast midnight screenings are local custom; the extra shadow, its seat and its opinions are invented fiction.
+  rarity: uncommon
+  tone:
+  - eerie
+  - dry
+  - warm
+  cast:
+  - The Hundred-and-First Shadow (polite, seated, unticketed)
+  - The Ticket Taker (counts twice, sighs once)
+  canon:
+  - Every seat is occupied by a ticket holder, yet one more shadow falls on the screen than there are people.
+  - The extra shadow always sits in the aisle seat and leaves before the credits to avoid the lobby.
+  - It has never caused harm and has strong views on popcorn volume.
+  scene: The midnight screening is sold out, and the ticket taker has counted the house twice. On the screen, a hundred and one shadows flicker against the film's glow, one more than the people in the seats. The extra shadow sits very upright in the aisle and holds a shadow of a bucket of popcorn, which it is eating, without crunching, out of what appears to be consideration for the rest of the audience.
+  options:
+  - id: a
+    label: Offer the shadow your spare ticket stub
+    skill: rizz
+    target: 7
+    success:
+      text: The shadow takes the stub with a flicker like a nod. For the first time all night it laughs at the right moment, and the whole row feels it through the armrest.
+      effects:
+      - goodwill+1
+      - flag:minor_shadow_seated
+    failure:
+      text: The stub falls through its hand and lands in the aisle. The shadow looks embarrassed to be so obviously incorporeal and slides a seat farther away.
+      effects:
+      - evidence:rumor
+      - nerve-1
+  - id: b
+    label: Count the shadows against the seats
+    skill: wits
+    target: 9
+    success:
+      text: One shadow has no body above it, but its seat has a warm cushion. You mark the aisle seat, and the ticket taker quietly stops pretending it is nothing.
+      effects:
+      - evidence:seating_chart
+      - weird+1
+    failure:
+      text: You lose count at ninety, then ninety again. The ticket taker counts for you, gets one hundred and one, and looks at you as if you had asked.
+      effects:
+      - time-1
+  - id: c
+    label: Sit beside it for the whole film
+    skill: none
+    target: null
+    success:
+      text: 'You give up the second feature to keep it company. Afterward the aisle seat is yours, with a note on it that says only: held.'
+      effects:
+      - flag:minor_seat_held
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara studies the silhouette's outline and nods slowly. "Good line work. Whoever it was, they stood up straight for this."
+    kit: Kit checks the hundredth and first shadow's rhythm and grins. "It laughs half a beat early. It's seen this movie."
+    juniper: Juniper sniffs the aisle air and softens. "Warm cushion, no smell of fear. It just wants to sit down, that's all."
+    cedar: Cedar looks at the projector and the shadows together. "Light can't make an extra one. So where's the light?"
+  callbacks:
+  - minor_shadow_seated
+  - minor_seat_held
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

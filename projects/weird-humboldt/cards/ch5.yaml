@@ -178,3 +178,71 @@
     cedar: "Cedar taps the deed. \"Heir to a ranch. This is going to cost a lot of lawyers.\""
   callbacks: [pebble_trust, pebble_interviewed, pruitt_porch]
   eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-094
+  revision: 1
+  chapter: 5
+  location: Avenue of the Giants
+  title: The Redwood Rings of Tomorrow
+  tier: reported
+  provenance: The Avenue of the Giants and its fallen redwoods are real; the log's extra rings and what they record are invented fiction.
+  rarity: rare
+  tone:
+  - hushed
+  - uncanny
+  - reverent
+  cast:
+  - The Fallen Giant (slow, patient, a record-keeper)
+  - A Ranger Who Is Late for Something
+  canon:
+  - A fallen log by the Avenue of the Giants holds two more summers of rings than have yet occurred.
+  - The extra rings are thin and pale and appear to record weather nobody has seen.
+  - The log is not a prophecy, only a ledger that is slightly ahead of schedule.
+  scene: 'A fallen giant lies across the forest floor off the Avenue, its cross-section cut years ago and polished by rain. You count the rings the way you were taught, and the count is wrong. Two outer rings are pale, thin, and clearly new, but the tree has been dead longer than that. One records a wet spring. The other records something you cannot read: a summer with a name you do not know.'
+  options:
+  - id: a
+    label: Read the pale rings aloud
+    skill: local_lore
+    target: 9
+    success:
+      text: The wet spring is next March. The nameless summer is not a warning, only a long, gentle one. You say so, and the log settles into the moss.
+      effects:
+      - evidence:future_rings
+      - weird+1
+    failure:
+      text: The rings blur as you read, and a few words come out in the wrong language. The log goes quiet, politely.
+      effects:
+      - nerve-1
+  - id: b
+    label: Press your palm to the newest ring
+    skill: psyche
+    target: 9
+    success:
+      text: It is warm. For a moment you feel a long summer coming that will be easy on the forest. You walk out lighter and a little less afraid.
+      effects:
+      - goodwill+1
+      - flag:redwood_ring_felt
+    failure:
+      text: The ring is cold, and a dread you can't name follows you for a mile. It fades, but you remember it.
+      effects:
+      - nerve-1
+      - time-1
+  - id: c
+    label: Sit with the log until the light changes
+    skill: none
+    target: null
+    success:
+      text: You wait through an afternoon of green light. When you rise the moss has grown over your footprints, and the log feels like it has been listened to.
+      effects:
+      - flag:redwood_sat_with
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara traces the pale ring with a fingertip. "I would tattoo that line if it let me. It's too honest."
+    kit: Kit hums low to the grain. "It's keeping a beat from next year. I could dance to that, almost."
+    juniper: Juniper lies down beside the bark and sighs. "It's not scary. It just remembers forward, that's all."
+    cedar: Cedar counts the rings twice and frowns. "Dendrology says no. The log disagrees, and I respect the log."
+  callbacks:
+  - redwood_ring_felt
+  - redwood_sat_with
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

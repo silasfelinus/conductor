@@ -178,3 +178,72 @@
         failure:
           text: "You let go too thoroughly and wander toward the fairgrounds for a while."
           effects: [time-1]
+- id: WH-112
+  revision: 1
+  chapter: 6
+  location: Humboldt Bay, festival crossing
+  title: The Second Water Crossing
+  tier: invented
+  provenance: Humboldt Bay is real; the mirror bay, the crossing and everything under it are invented festival fiction with no documented basis.
+  rarity: rare
+  tone:
+  - dreamlike
+  - tense
+  - bright
+  cast:
+  - The Mirror Bay (the same water, below the first)
+  - A Race Marshal in a Rubber Duck Costume
+  canon:
+  - For one tide a second bay forms just beneath the first, reflected and slightly kinder.
+  - Crossing the lower water costs a memory's worth of speed; crossing the upper water costs nothing but the risk.
+  - The marshals will accept either route and will judge neither.
+  scene: 'Halfway through the water crossing the bay splits. Beneath the choppy surface lies a second bay, perfectly still and a few shades brighter, with a mirror-image of the course running upside down below your boat. The marshal in the rubber duck costume shrugs from the dock: either route counts. The upper water is rough but yours. The lower water is calm and smells like a place you have not been yet.'
+  options:
+  - id: a
+    label: Hold the upper route against the chop
+    skill: burly
+    target: 9
+    success:
+      text: You haul through the chop, wet, grinning, and first to the far buoy. The mirror bay below applauds with ripples, and the marshal blows a squeaky horn.
+      effects:
+      - goodwill+1
+      - flag:bay_upper_crossed
+    failure:
+      text: A swell tips your boat and the course drags you sideways. You finish soaked, last, and strangely exhilarated.
+      effects:
+      - nerve-1
+      - time-1
+  - id: b
+    label: Slip through to the mirror bay
+    skill: psyche
+    target: 9
+    success:
+      text: The water takes you gently. On the far side your boat surfaces beside the finish, a minute early and with a new memory that isn't yours yet.
+      effects:
+      - evidence:mirror_bay
+      - weird+1
+    failure:
+      text: The lower water holds you a beat too long. You surface with half a memory of someone else's morning and no idea whose.
+      effects:
+      - nerve-1
+      - weird+1
+  - id: c
+    label: Wait on the dock and let it pass
+    skill: none
+    target: null
+    success:
+      text: You watch both bays close together like a held breath. The marshal hands you a rubber duck in thanks for the patience, and it keeps your seat.
+      effects:
+      - flag:bay_crossing_watched
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara studies the mirrored course and smiles. "A perfect reflection. I'd ink that on my forearm just to remember the doubt."
+    kit: Kit whoops at the doubled waves. "Two songs on one tide! Pick a verse and commit to the bit."
+    juniper: Juniper sniffs the lower water carefully. "It smells kind. Kind things can still ask a lot of you."
+    cedar: Cedar checks the buoys against their reflections. "Everything's the same but flipped. Which means the flip is the cost."
+  callbacks:
+  - bay_upper_crossed
+  - bay_crossing_watched
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

@@ -178,3 +178,71 @@
     cedar: "Cedar squints at the road. \"That's a four-way sequenced intersection. Who wired it? And to what?\""
   callbacks: [cow_signals_mapped, hollis_trusts, crossed_with_herd]
   eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-071
+  revision: 1
+  chapter: 4
+  location: Willow Creek
+  title: Bigfoot's Custody Weekend
+  tier: reported
+  provenance: Willow Creek's Bigfoot lore is real and widely celebrated; the two parents, their calendar and the custody argument are invented fiction.
+  rarity: uncommon
+  tone:
+  - warm
+  - absurd
+  - domestic
+  cast:
+  - Two Sasquatch Parents (tall, tired, courteous in public)
+  - Little Bramble (a Sasquatch kid, very quiet, listens)
+  canon:
+  - Two Sasquatch parents argue about whose weekend it is, with a shared calendar they keep in bark.
+  - Their kid, Little Bramble, is present, watchful and fond of both.
+  - Neither parent will leave first, and both would hate to be photographed arguing.
+  scene: Behind the Willow Creek gas station, two enormous silhouettes stand on either side of a picnic table, arguing in low, courteous voices about who has Little Bramble this weekend. A calendar carved in bark lies between them. Each of them is right. The kid sits on the table with a juice box, looking from one parent to the other like a very small, very hairy referee. They both turn to you at once.
+  options:
+  - id: a
+    label: Propose a split weekend with a handoff
+    skill: rizz
+    target: 9
+    success:
+      text: Saturday to one, Sunday to the other, a handoff at the creek. They both stare, then nod. Little Bramble gives you a juice box in tribute.
+      effects:
+      - goodwill+1
+      - flag:bigfoot_custody_settled
+    failure:
+      text: Your plan has a hole where Sunday dinner should be. The parents begin to argue about you instead, which is somehow worse.
+      effects:
+      - nerve-1
+      - evidence:rumor
+  - id: b
+    label: Check the bark calendar for the truth
+    skill: wits
+    target: 7
+    success:
+      text: The calendar has been scratched out twice and rewritten in a third hand. You show them the pattern, and both admit they agreed to this months ago.
+      effects:
+      - evidence:calendar
+      - goodwill+1
+    failure:
+      text: The bark is carved in a notation older than any weekend. You nod gravely and say nothing useful, which is ruled neutral.
+      effects:
+      - time-1
+  - id: c
+    label: Ask Little Bramble what the kid wants
+    skill: none
+    target: null
+    success:
+      text: The kid whispers a plan involving the creek, both parents, and a pancake. It costs you the morning, and the parents quietly adopt it.
+      effects:
+      - flag:bigfoot_kid_heard
+      - lose:free_draw
+  lead_reactions:
+    mara: Mara watches the kid listen and her voice goes soft. "Kids know. Kids always know who's loud and who's loved."
+    kit: Kit grins at the standoff. "This is a duet. They're singing the same song and calling it a fight."
+    juniper: Juniper settles near the table. "Everyone's tired, and nobody's angry. That's the saddest kind of argument."
+    cedar: Cedar scans the carved calendar. "Three handwritings. Someone's been quietly editing their own agreement."
+  callbacks:
+  - bigfoot_custody_settled
+  - bigfoot_kid_heard
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
