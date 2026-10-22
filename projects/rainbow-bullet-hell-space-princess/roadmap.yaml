@@ -527,8 +527,8 @@ tasks:
   - id: t-026
     milestone: m6
     title: "Gen-2 route design: branching Luminous Ocean map, branch conditions, alternate stages"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     updated: '2026-10-22T10:30:00Z'
@@ -540,10 +540,13 @@ tasks:
       captive, saving an escort, destroying a hidden generator, a no-continue clear), plus a per-stage
       medal goal and the routes that lead to each ending. Keep the three dialogue scenes per Act
       (ACT-STRUCTURE.md) and say which branch changes which scene.
+
+      DONE 2026-10-22: ROUTE-MAP.md and rainbowRoute.json (validate_route.py PASS: 14 nodes, four alternate detour stages each gated by a mechanic already in code, finale on all 16 routes, 13 medals, Palace Hangar fittings bounded so fairness never moves, a three-slot save measured at 5.9 KB).
+
   - id: t-027
     milestone: m6
     title: "Gen-2 memory: save slots, route map screen, medals and the persistent Palace Hangar"
-    status: waiting
+    status: ready
     depends_on: [t-026]
     owner: null
     passes: 0
@@ -558,7 +561,7 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Gen-2 alternate stages: four branch stages with their own guardians"
-    status: waiting
+    status: ready
     depends_on: [t-026]
     owner: null
     passes: 0

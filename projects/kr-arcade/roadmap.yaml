@@ -2657,8 +2657,8 @@ tasks:
   - id: t-158
     milestone: m9
     title: "Ghost Trail Gen-2 design: Bell Road overworld graph, secret exits, haunted houses"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     updated: '2026-10-22T10:30:00Z'
@@ -2670,6 +2670,9 @@ tasks:
       at least one secret exit per region, the hidden Canyon Shrine zone, and which relics and
       subweapons are found where. Machine-readable enough for a catalog module, following
       TEN-HOUR-ROADMAP.md's "data manifests, not a bigger switch" rule.
+
+      DONE 2026-10-22: ghost-trail/GEN2-BELL-ROAD.md and bellRoad.json (validate_bell_road.py PASS: 28 nodes over six regions, every Gen-1 act kept as its own level so saves and relics carry over, six haunted houses, two new fortresses, the Canyon Shrine hub, 10 secret exits, a ghost-bell wonder moment per level, worst-case three-slot save 4.6 KB).
+
   - id: t-159
     milestone: m9
     title: "Ghost Trail Gen-2 art round 1: Bell Road map, regional maps, haunted house, shrine"
@@ -2687,7 +2690,7 @@ tasks:
   - id: t-160
     milestone: m9
     title: "Ghost Trail Gen-2 overworld and save slots (reuse the Save the Plumber overworld module)"
-    status: waiting
+    status: ready
     depends_on: [t-158]
     owner: null
     passes: 0
