@@ -366,3 +366,53 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-015
+  revision: 1
+  chapter: 1
+  location: "Arcata Community Forest"
+  title: "Campfire Without a Camp"
+  tier: invented
+  provenance: "The Arcata Community Forest is a real public forest; the invisible campers, their gossip and the cold fire ring are invented fiction. No real campers or residents are depicted."
+  rarity: uncommon
+  tone: [eerie, funny, intimate]
+  cast: ["The Unseen Campers (three voices, no bodies)", "A Cold Fire Ring (very good listener)"]
+  canon:
+    - "Invisible campers gossip about the player's future over cold ash."
+    - "The ash is cold and the conversation is warm."
+    - "The campers are never wrong about the past, only reckless about the future."
+  scene: "Past the last trail marker, a ring of blackened stones sits under a stand of alder, and three voices are chatting around it as if over a fire. \"She'll take the left path,\" says one. \"She always takes the left path,\" says another, and a third adds, \"Wait, is she listening?\" The ash is stone cold. The marshmallows, you notice, are not."
+  options:
+    - id: a
+      label: "Sit down and ask what they know"
+      skill: rizz
+      target: 7
+      success:
+        text: "The voices clear their throats, settle, and tell you plainly which fork leads somewhere you will want to be. You thank them and they pretend not to be moved."
+        effects: ["evidence:campfire_gossip", goodwill+1]
+      failure:
+        text: "You sit on someone. A voice says, with great dignity, that it is not a chair."
+        effects: [nerve-1]
+    - id: b
+      label: "Work out how they can be heard"
+      skill: wits
+      target: 9
+      success:
+        text: "The voices only carry where the alders lean together. You map the gap, and it points at a clearing nobody has used in decades."
+        effects: ["flag:campfire_mapped", weird+1]
+      failure:
+        text: "You decide it is an echo, then it answers back, and you lose twenty minutes defending the echo's reputation."
+        effects: [time-1]
+    - id: c
+      label: "Roast a marshmallow in the cold ring"
+      skill: none
+      target: null
+      success:
+        text: "You hold a stick over cold stone. A gentle cheer goes up, and the marshmallow comes back toasted exactly to your preference."
+        effects: ["flag:campfire_guest", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara tilts her head at the empty circle. \"Three voices, one rhythm. Somebody rehearsed this.\""
+    kit: "Kit bows to the empty logs. \"I did not bring a hat to pass, so I will pass a compliment.\""
+    juniper: "Juniper lays a hand on the nearest alder and nods. \"They are not ghosts. They are neighbors the trees have been keeping.\""
+    cedar: "Cedar crouches and sniffs the cold ash. \"Somebody burned something here that never needed a match.\""
+  callbacks: [campfire_mapped, campfire_guest]
+  eligibility: {requires_flags: [], excludes_flags: []}

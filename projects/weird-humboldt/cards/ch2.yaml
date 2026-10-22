@@ -343,3 +343,53 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-029
+  revision: 1
+  chapter: 2
+  location: "Trinidad Harbor"
+  title: "The Harbor Below the Harbor"
+  tier: invented
+  provenance: "Trinidad Harbor is a real working harbor; the uncharted dock, its keeper and the ledger are invented fiction. No real harbor staff or vessels are depicted."
+  rarity: rare
+  tone: [eerie, quiet, wry]
+  cast: ["Dockmaster Orrin (a patient figure in a yellow slicker)", "The Lower Dock (appears only at low tide)"]
+  canon:
+    - "A low tide exposes a dock that appears on no navigational chart."
+    - "Boats are moored there that left port a long time ago."
+    - "The dock exists until the tide returns, and no longer."
+  scene: "At the bottom of the tide a second set of pilings stands out of the wet sand, and a weathered dock runs out to nothing. A figure in a yellow slicker is stamping a ledger. \"Berth seven is yours if you can be quick,\" says Dockmaster Orrin. \"The sea gives us about an hour, and it does not give extensions.\""
+  options:
+    - id: a
+      label: "Ask which boats are moored here"
+      skill: wits
+      target: 9
+      success:
+        text: "Orrin reads out the names, and one belongs to a boat whose crew is still being searched for upstairs. You commit it to memory."
+        effects: ["evidence:lower_dock_ledger", weird+1]
+      failure:
+        text: "Orrin reads out the names. You can only remember that one sounded like soup."
+        effects: [time-1]
+    - id: b
+      label: "Charm your way to berth seven"
+      skill: rizz
+      target: 7
+      success:
+        text: "Orrin stamps the ledger with a flourish. \"Berth seven, no fee, and mind the third plank. It remembers.\""
+        effects: [goodwill+1, "flag:berth_seven"]
+      failure:
+        text: "Orrin takes your charm for an attempt at bribery and logs it with a sigh."
+        effects: [nerve-1]
+    - id: c
+      label: "Leave a note and head back before the tide"
+      skill: none
+      target: null
+      success:
+        text: "You pin a note to a piling and hurry back as the water closes. Behind you, the dock finishes folding itself away, and the note, you are fairly sure, is read."
+        effects: ["flag:lower_dock_note", "lose:free_draw"]
+  lead_reactions:
+    mara: "Mara walks the planks, tracing the grain with one finger. \"This was built by a person who cared. Nobody builds like this for a lie.\""
+    kit: "Kit juggles three pebbles along the dock edge and misses none. \"I like a stage that disappears. It forgives the bad nights.\""
+    juniper: "Juniper kneels at the water's edge and listens. \"The tide is not hiding it. It is only holding it.\""
+    cedar: "Cedar checks the pilings with a knuckle. \"Good timber, no rot. Somebody keeps this up, even when it is not here.\""
+  callbacks: [berth_seven, lower_dock_note]
+  eligibility: {requires_flags: [], excludes_flags: []}

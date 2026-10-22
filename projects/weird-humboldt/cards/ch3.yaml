@@ -345,3 +345,53 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-048
+  revision: 1
+  chapter: 3
+  location: "Eureka F Street waterfront"
+  title: "Best Costume: Unidentified Object"
+  tier: invented
+  provenance: "The F Street waterfront is a real place; the costume contest entrant, its paperwork and the judging panel are invented fiction. No real contest, organizer or competitor is depicted."
+  rarity: uncommon
+  tone: [whimsical, dry, bureaucratic]
+  cast: ["Entrant 14 (registered as a weather balloon)", "Clerk Phoebe Dunmore (human, has seen worse)"]
+  canon:
+    - "Someone has registered as a weather balloon with very convincing paperwork."
+    - "The paperwork is real and was filed on time."
+    - "The balloon has never once been asked to explain itself."
+  scene: "Between a pirate crew and a table of dancing cheese wedges stands a very large, very silver weather balloon, tethered to nothing, wearing a numbered bib. Clerk Phoebe flips through the forms with the resignation of long experience. \"Everything is in order,\" she says. \"That is the problem. I would prefer a clerical error.\""
+  options:
+    - id: a
+      label: "Interview the balloon"
+      skill: rizz
+      target: 7
+      success:
+        text: "The balloon bobs with great courtesy and gives a statement through the faintest hiss. It is, it explains, merely between jobs."
+        effects: ["evidence:balloon_statement", goodwill+1]
+      failure:
+        text: "You interrupt the balloon's answer. It drifts three feet away and stays there out of principle."
+        effects: [nerve-1]
+    - id: b
+      label: "Inspect the paperwork for flaws"
+      skill: wits
+      target: 9
+      success:
+        text: "The forms are flawless except for the fee, which was paid in the local currency of a place that does not exist. You note the stamp and keep it."
+        effects: ["flag:balloon_paperwork", weird+1]
+      failure:
+        text: "The forms are flawless, and you spend half an hour confirming it."
+        effects: [time-1]
+    - id: c
+      label: "Cast a vote for Best Costume"
+      skill: none
+      target: null
+      success:
+        text: "You vote for the balloon. A small ribbon floats down from the sky and lands in your hand with a cheerful chime."
+        effects: ["flag:balloon_ribbon", goodwill+1]
+  lead_reactions:
+    mara: "Mara studies the silver surface. \"That is not paint. That is fabric, and somebody sewed every seam by hand.\""
+    kit: "Kit squints with admiration. \"A static costume that costs nothing and says everything. I am furious I did not think of it.\""
+    juniper: "Juniper holds her palm out and the balloon leans toward it. \"It is gentle. It is only very, very lost.\""
+    cedar: "Cedar taps the tether line. \"Nothing on the other end. That balloon is flying under its own power, and I would like to know whose.\""
+  callbacks: [balloon_paperwork, balloon_ribbon]
+  eligibility: {requires_flags: [], excludes_flags: []}
