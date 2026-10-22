@@ -1,0 +1,72 @@
+date: '2026-10-22'
+entries:
+- slug: brick-bloom-ladybot-ring-live
+  title: 'Brick Bloom: ladybot ring now guards Vine Hall crates in play'
+  target: kr-arcade
+  kind: arcade stage
+  summary: Five orbiting ladybots now shield the ringed crate on Vine Hall walls 3b and 4b, pop for points, and release the crate when all are gone.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4004
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39674188687
+  merge_sha: 14d3941ff2d1abcd703fecca016377105244129e
+  checks: passed
+  verification: PR checks all green incl. Contract shards 1-4, TypeScript and the ladybot test under verifyBrickBloomLadybots; closes the wiring step recorded as in-progress on 2026-10-21. Merged is not deployed.
+  art:
+    status: not-required
+    note: Ladybot dots are canvas-drawn like the existing pollen mites.
+- slug: shifting-desks-history-review
+  title: 'Shifting Desks: player-history review options and Board case-file echoes'
+  target: shifting-desks
+  kind: gamebook branch
+  summary: Review scenes now offer options drawn from the player's own history, and the Board's case files echo earlier choices with new authored endings.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4006
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39680705649
+  merge_sha: dfe5050368f012342049f69f7de1bf32690a79eb
+  checks: passed
+  verification: 23 check runs passed or skipped (browser-contract skipped by design) incl. Contract shards 1-4 and TypeScript; new cases in verifyShiftingDesks.test.ts. Merged is not deployed.
+  art:
+    status: not-required
+    note: Text-only branch content.
+- slug: emperor-hidden-wanderer-arcs
+  title: 'Emperor of Dust: eleven hidden-wanderer story arcs with consequential endings'
+  target: emperor-of-dust
+  kind: encounter
+  summary: Five secret followers gain eleven one-on-one scenes across Acts II to V with trade-off choices, four rare equipment rewards and thirteen epilogue outcomes.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4015
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39706485981
+  merge_sha: 1a54b174517b10a8bf3b7e28b285874369acb20e
+  checks: passed
+  verification: Contract verifiers, facet-catalog and provider-reference checks green on the final head; an eleven-scene secret-story contract test is wired into the Emperor Dispatch workflow. Merged is not deployed.
+  art:
+    status: blocked
+    note: New follower scenes have no rendered plates yet; they must go through the durable ArtJob pipeline once canon is stable.
+- slug: emperor-act-one-bespoke-choices
+  title: 'Emperor of Dust: 52 bespoke Act I daily-event decisions'
+  target: emperor-of-dust
+  kind: encounter
+  summary: Twenty-six Act I chance events each get two distinct options with specific aftermaths and remembered flags instead of repeated collect-or-care answers.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4016
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39708769427
+  merge_sha: 6ddf9a4228bd15ccf416d9a2dd901011e845806f
+  checks: passed
+  verification: Contract shards 1-4 and Contract verifiers passed on the merged head; regression assertions cover uniqueness, remembered flags and choice distinction. Later acts keep their motif events for follow-up passes. Merged is not deployed.
+  art:
+    status: not-required
+    note: Text-only; scene illustrations belong to the separate art ledger.
+- slug: animation-domino-spiral-cascade
+  title: 'Animation Manager: Domino Spiral Cascade screensaver'
+  target: animation-manager
+  kind: animation
+  summary: A new Domino Spiral Cascade screensaver component is registered in the animation catalog and can be chosen like the existing screen effects.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/3998
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/39602786557
+  merge_sha: c29271058bdf2a050dcff67b9886a5cd449a8078
+  checks: passed
+  verification: PR checks including Contract verifiers and the verifier filename guard passed before merge; catalog entry added alongside the component. Merged is not deployed; no screenshot captured.
+  art:
+    status: not-required
+    note: Pure CSS/canvas animation, no raster assets.
