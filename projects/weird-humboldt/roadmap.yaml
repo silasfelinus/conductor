@@ -1471,3 +1471,14 @@ tasks:
       Kaizen from WH-120 review (#6527): validate_weird_humboldt_cards.py and
       tests/test_weird_humboldt_cards.py hard-code deck sizes, so each new card
       needs three coordinated edits. Derive counts from the seeds file.
+  - id: t-061
+    milestone: m2
+    title: "Add chapter-anchor scene schema to the card validator before authoring the six anchors"
+    status: ready
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from #6533 review: extend validate_weird_humboldt_cards.py with a
+      chapter-anchor scene schema check (one anchor per chapter, authored text,
+      no-dead-end rules) so anchors are validated from their first commit.
