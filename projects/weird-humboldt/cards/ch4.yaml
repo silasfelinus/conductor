@@ -1189,3 +1189,74 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-080
+  revision: 1
+  chapter: 4
+  location: Highway 299 roadside
+  title: The Logging Road to the Backroom
+  tier: invented
+  provenance: Logging roads and warehouses are real parts of the region's landscape; a dirt road leading to a warehouse that stores abandoned dreams is invented fiction.
+  rarity: uncommon
+  tone:
+  - eerie
+  - dry
+  - strange
+  cast:
+  - The Night Clerk (courteous, impossible to photograph)
+  - Shelved Dreams (labeled, restless)
+  canon:
+  - The warehouse stores dreams that people abandoned before finishing.
+  - Every dream is labeled, shelved and available for adoption.
+  - Nobody who leaves with a dream gets to say where they got it.
+  scene: 'A dirt road branches off the highway where the map shows only trees. It ends at a long warehouse with one lit window. Inside, a clerk in a reflective vest points at shelves of small glowing boxes,
+    each labeled in neat handwriting: ABANDONED, UNFINISHED, MISFILED. "Adoption is free," the clerk says. "Returns are not accepted." Somewhere in the back, a dream about flying clears its throat and asks
+    to be taken home.'
+  options:
+  - id: a
+    label: Search the shelves for the one that is yours
+    skill: psyche
+    target: 9
+    success:
+      text: You find a small box with your handwriting and open it carefully. The old dream is smaller than you remember and still warm. It leaves a clear mark on your plan for the road.
+      effects:
+      - evidence:memory
+      - flag:backroom_found
+    failure:
+      text: You pick a box that is almost yours and hold it a little too long. The clerk gently takes it back and sends you out the door.
+      effects:
+      - nerve-1
+  - id: b
+    label: Ask the clerk how dreams get abandoned
+    skill: rizz
+    target: 7
+    success:
+      text: The clerk explains patiently and, near the end, admits the loneliest part is the paperwork. You are handed a pamphlet and a name.
+      effects:
+      - evidence:document
+      - goodwill+1
+      - flag:backroom_clerk
+    failure:
+      text: The clerk is courteous and entirely unhelpful. You leave with a form you cannot read.
+      effects:
+      - time-1
+  - id: c
+    label: Adopt the flying dream and head back to the road
+    skill: none
+    target: null
+    success:
+      text: The dream hums quietly in your bag and does not ask for much. The road back is surprisingly short.
+      effects:
+      - evidence:rumor
+      - flag:backroom_adopted
+  lead_reactions:
+    mara: Mara reads a shelf label. "The cataloging is gorgeous and heartbreaking. Someone loved this inventory."
+    kit: Kit leans toward a box and listens. "This one is humming a melody that was never finished. I would like to finish it."
+    juniper: Juniper speaks softly to the shelves. "I am sorry these were set down. I hope someone picks them up gently."
+    cedar: Cedar studies the exits. "Fine place to visit and a poor place to be locked in. Let us keep the door in sight."
+  callbacks:
+  - backroom_found
+  - backroom_clerk
+  - backroom_adopted
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

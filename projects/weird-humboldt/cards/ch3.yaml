@@ -1190,3 +1190,74 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-059
+  revision: 1
+  chapter: 3
+  location: Sequoia Park / Zoo
+  title: The Picnic That Never Ends
+  tier: invented
+  provenance: Sequoia Park is a real public park; a family that has been packing up the same picnic for decades is invented fiction and no real family is meant.
+  rarity: uncommon
+  tone:
+  - gentle
+  - absurd
+  - warm
+  cast:
+  - The Picnic Family (cheerful, increasingly tired)
+  - The Last Sandwich (negotiable)
+  canon:
+  - The family has been packing up the same picnic for decades and cannot leave.
+  - Whoever helps carry the last basket is thanked at length and then asked to stay for dessert.
+  - The leftovers are always excellent.
+  scene: A family sits near the pond, folding napkins into the same careful squares. "We are nearly finished," says the oldest aunt, with a smile that has said it before. The cooler is shut, the blanket
+    is rolled, and then someone remembers one more thing. A child in a sun hat looks at you hopefully. "Do you know how to leave a picnic?" she whispers. Behind her, the wind lifts a napkin and sets it
+    down again, folded.
+  options:
+  - id: a
+    label: Help pack the very last basket
+    skill: burly
+    target: 9
+    success:
+      text: You lift the basket, close the lid and say the ordinary words of leaving. The family sighs with relief and gives you a recipe card for the potato salad.
+      effects:
+      - evidence:document
+      - flag:picnic_ended
+    failure:
+      text: The basket stays open no matter how you close it. You are thanked politely and stay for a second round of sandwiches.
+      effects:
+      - time-1
+  - id: b
+    label: Ask the aunt what they are still waiting for
+    skill: psyche
+    target: 7
+    success:
+      text: She admits they are waiting for someone to say it was a good day. You say it, and the sunlight shifts. She presses a pie recipe into your hand.
+      effects:
+      - evidence:pie_recipe
+      - goodwill+1
+      - flag:picnic_blessed
+    failure:
+      text: She is not ready to talk about it, and the afternoon grows long. You leave quietly with a heavier heart.
+      effects:
+      - nerve-1
+  - id: c
+    label: Take the last sandwich and wave goodbye
+    skill: none
+    target: null
+    success:
+      text: The family cheers as if you have won something. The sandwich is perfect, and the napkins fall flat at last.
+      effects:
+      - evidence:rumor
+      - flag:picnic_sandwich
+  lead_reactions:
+    mara: Mara watches the folding. "The crease is a ritual. Somebody should write down what it was for."
+    kit: Kit gently taps a spoon on a cup. "A good song ends on purpose. Let me show them how to land it."
+    juniper: Juniper kneels near the child. "Leaving is also a kind of caring. We can practice it together."
+    cedar: Cedar adjusts the cooler lid. "Good packing ends with a clear checklist. Let me help them write one."
+  callbacks:
+  - picnic_ended
+  - picnic_blessed
+  - picnic_sandwich
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

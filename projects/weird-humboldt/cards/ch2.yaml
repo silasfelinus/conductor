@@ -1188,3 +1188,73 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-038
+  revision: 1
+  chapter: 2
+  location: Mad River / Hammond Trail
+  title: Trail Detour to Yesterday
+  tier: invented
+  provenance: The Hammond Trail is a real coastal route; a detour sign that leads to the same path twenty years earlier is invented fiction, and the earlier hikers are fictional.
+  rarity: uncommon
+  tone:
+  - wistful
+  - funny
+  - eerie
+  cast:
+  - The Detour Sign (orange, authoritative, dated)
+  - A Younger Hiker (twenty years early, unbothered)
+  canon:
+  - The orange sign is always right about where the trail goes, and wrong about when.
+  - The path twenty years earlier looks the same except for the bench, the dog and the cell service.
+  - Anything you carry home from the earlier trail arrives slightly out of date.
+  scene: A bright orange sign reads TRAIL CLOSED, DETOUR AHEAD, and the arrow points at a path that looks like the one you were already on. You follow it anyway. The fern patch is smaller, the bench has
+    not been vandalized yet, and a hiker passes you wearing a fleece in a color nobody makes any more. "Your phone is a brick," they say, kindly, and keep walking. The sign behind you has changed its date.
+  options:
+  - id: a
+    label: Walk back the way you came and check the sign
+    skill: wits
+    target: 9
+    success:
+      text: You find the date, spot that the detour only loops once, and step out an hour later than you left. The sign gives you a tidy schedule.
+      effects:
+      - evidence:schedule
+      - flag:detour_looped
+    failure:
+      text: You loop twice before you notice the fern patch growing back. You arrive late and a little wistful.
+      effects:
+      - time-1
+  - id: b
+    label: Ask the younger hiker what the trail is like now
+    skill: rizz
+    target: 7
+    success:
+      text: They describe a trail they assume will always look this way, and you remember it better than they do. They hand you a trail map from a printer that no longer exists.
+      effects:
+      - evidence:geography
+      - goodwill+1
+      - flag:detour_befriended
+    failure:
+      text: They get confused about whether you are from the future or just lost. You leave them both worried.
+      effects:
+      - nerve-1
+  - id: c
+    label: Sit on the bench and wait for the day to catch up
+    skill: none
+    target: null
+    success:
+      text: You rest while the light slides forward to your own afternoon. You carry back a small, clear memory of how quiet the trail was.
+      effects:
+      - evidence:memory
+      - flag:detour_waited
+  lead_reactions:
+    mara: Mara checks her old photos. "If this is yesterday, I am keeping a record. Someone will argue about it later."
+    kit: Kit hums a tune that has not been released yet. "If I play it now it never has to be written."
+    juniper: Juniper touches the bench lightly. "Places remember being young the way people do, with a small fond sigh."
+    cedar: Cedar frowns at the sign. "A closure with no repair crew and no reason. Somebody has to answer for this."
+  callbacks:
+  - detour_looped
+  - detour_befriended
+  - detour_waited
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

@@ -1184,3 +1184,75 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-100
+  revision: 1
+  chapter: 5
+  location: Eel River Valley
+  title: A Small Pagan Book Club
+  tier: invented
+  provenance: Book clubs and small spiritual groups meet all over the valley; this fictional occult reading group that accidentally summons its own literary critic is invented comedy and portrays no real
+    group.
+  rarity: rare
+  tone:
+  - funny
+  - dry
+  - warm
+  cast:
+  - The Book Club (earnest, a little over-prepared)
+  - The Critic (summoned, unimpressed, secretly moved)
+  canon:
+  - The club meant to discuss a novel and accidentally summoned its own literary critic.
+  - The critic cannot leave until the discussion reaches a satisfying conclusion.
+  - The club is gentle, sincere and badly in need of a snack.
+  scene: A candle-lit farmhouse porch holds a circle of readers with matching paperbacks and a chalk diagram somebody drew by mistake. A tall figure in a gray scarf has appeared in the middle of it and
+    is reading the chapter aloud with visible disappointment. "The metaphor in the third act is doing too much," the critic says. The club apologizes in unison. Someone whispers that they only wanted to
+    talk about the themes, and the critic raises one eyebrow at the word.
+  options:
+  - id: a
+    label: Offer a clear, honest reading of the book
+    skill: wits
+    target: 9
+    success:
+      text: You give a plain account of what the book is trying to do. The critic nods slowly, writes one line in a small notebook and begins to fade, pleased.
+      effects:
+      - evidence:document
+      - flag:bookclub_read
+    failure:
+      text: Your reading is confident and wrong, and the critic reads it back to you in a lower voice. You leave humbled and slightly flushed.
+      effects:
+      - nerve-1
+  - id: b
+    label: Compliment the club for trying something new
+    skill: rizz
+    target: 7
+    success:
+      text: The club glows. The critic hides a smile and grants them a single, generous review. Someone hands you a casserole.
+      effects:
+      - evidence:rumor
+      - goodwill+1
+      - flag:bookclub_cheered
+    failure:
+      text: Your praise lands on the critic by mistake, who corrects you for a very long time.
+      effects:
+      - time-1
+  - id: c
+    label: Quietly open the porch door so the critic can leave
+    skill: none
+    target: null
+    success:
+      text: The critic pauses, adjusts the scarf and steps into the evening air. The club exhales and starts a second, easier book.
+      effects:
+      - evidence:history
+      - flag:bookclub_released
+  lead_reactions:
+    mara: Mara leans in eagerly. "I have notes. I would love to hear what the critic thinks of the footnotes."
+    kit: Kit grins at the circle. "A summoning and a book club. This is the best open mic I have ever seen."
+    juniper: Juniper sits among the readers. "The critic is lonely. Sometimes the loudest opinions belong to the quietest hearts."
+    cedar: Cedar looks around for the kitchen. "No meeting should run this long without coffee. I will find the pot."
+  callbacks:
+  - bookclub_read
+  - bookclub_cheered
+  - bookclub_released
+  eligibility:
+    requires_flags: []
+    excludes_flags: []

@@ -24,8 +24,9 @@ PROJECT = ROOT / "projects" / "weird-humboldt"
 SCHEMA = PROJECT / "design" / "card.schema.json"
 CARD_DIR = PROJECT / "cards"
 SEEDS = PROJECT / "ENCOUNTER-SEEDS.md"
-EXPECTED_CARDS = 114
-PER_CHAPTER = 19
+# Chapters 1-5 hold seeds 1-20; chapter 6 awaits WH-120 (county vote finale, needs ending grammar).
+PER_CHAPTER = {1: 20, 2: 20, 3: 20, 4: 20, 5: 20, 6: 19}
+EXPECTED_CARDS = sum(PER_CHAPTER.values())
 EFFECT_RE = re.compile(r"^((goodwill|nerve|time|weird|clarity)[+-][0-9]|flag:[a-z0-9_]+|evidence:[a-z_]+|lose:free_draw)$")
 BANNED = re.compile(r"\b(dosage|milligram|snort|inject|how to (cook|make|score)|where to buy)\b", re.I)
 STATES = ["sober", "tipsy", "stoned", "tripping_balls"]
@@ -161,8 +162,8 @@ def validate(cards: list[dict]) -> list[str]:
         if BANNED.search(json.dumps(c, ensure_ascii=False)):
             problems.append(f"{cid}: contains real-world drug instruction wording")
     for ch in range(1, 7):
-        if per_chapter.get(ch, 0) != PER_CHAPTER:
-            problems.append(f"chapter {ch}: expected {PER_CHAPTER} cards, has {per_chapter.get(ch, 0)}")
+        if per_chapter.get(ch, 0) != PER_CHAPTER[ch]:
+            problems.append(f"chapter {ch}: expected {PER_CHAPTER[ch]} cards, has {per_chapter.get(ch, 0)}")
     if len(cards) != EXPECTED_CARDS:
         problems.append(f"deck has {len(cards)} cards, expected {EXPECTED_CARDS}")
     for c in cards:
