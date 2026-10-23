@@ -155,7 +155,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: Independently enqueue and review gamebook illustrations in batches
-    status: ready
+    status: review
     passes: 0
     stakes: reversible
     depends_on: [t-005]
@@ -179,7 +179,14 @@ tasks:
       Nine Round 16 ArtJobs and ArtImages are DONE in the durable ledger. Implement authenticated URL/media decode/size review for all nine; never auto-promote unreviewed candidates or commit private originals.
 
       Round 16 ArtJobs 44243-44251 / ArtImages 252163-252171 all returned DONE, readable media URLs, valid formats/dimensions (verified by action 40025486936), but 0/9 visually matched the scene. Recorded all nine editorial reject reasons in Round 16 ledger. Merged Conductor PR #6548 (ephemeral authenticated editorial contact sheet) and #6549 (nine subject-focused Arthemy house rerolls in ROUND-17-SCENE-FIDELITY.yaml). Both green. Fresh Round 17 ArtJob IDs not yet persisted; Auto Art Generate run 40026323889 queued behind an existing earlier run. Next action: inspect Round 17 queue IDs, wait for actual DONE/render media, review new images, choose only story-faithful keepers, export WebPs via reviewed Kind Robots PR, update manifests and retire placeholder SVGs. The a2-gift raccoon-head plate and temporary bell/bloom SVGs remain unresolved on the published site; do not call this task done.
-    updated: '2026-10-23T21:23:35Z'
+
+      Human-directed two-stage internal art generation: submit Krea 2 compositions for three mismatched scenes, select by scene fidelity, then conservative Arthemy img2img; keep publication and unreviewed promotion gated.
+
+      Implement Krea 2 Round 18 (9 compositions, auto-submit), dormant Arthemy Round 19 (sdxl-img2img at 0.28/0.43), proof-of-delivery + visually scored gate and tests. New workflows with no public thumbnails.
+    updated: '2026-10-23T22:52:17Z'
+    owner: worker
+    claimed_by: 2026-10-23T224457Z-zuzu-t006-krea2-f8c2
+    claimed_at: '2026-10-23T22:44:57Z'
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest

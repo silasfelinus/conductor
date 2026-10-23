@@ -492,3 +492,38 @@ tasks:
       climb, hurt), matte the white, normalize pivots and pack an atlas (the zuzu-pinball T019 croc
       tool is the template), then wire the atlas into the engine with the code-drawn heroine as the
       fallback. Then the other seven roster heroines and the enemy families. Target 12 fps or better.
+  - id: t-026
+    title: "Save the Plumber: ship WAN opening cinematic and animated heroine in handheld title"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#4081"
+    updated: '2026-10-23'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4081 (https://github.com/silasfelinus/kind_robots/issues/4081), opened by @silasfelinus on 2026-10-23. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4081`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      ## Player-facing problem
+      Silas (2026-10-23) flags the Save the Plumber page's janky SVG animation as higher priority than its webapp layout. A single-screen handheld-console shell is implemented in PR #4080. That PR swaps the SVG title for shipped painted WAN motion **map** loops as a concrete first-pass improvement, but those are top-down overworld animations, not a bespoke title cinematic or animated heroine. This issue tracks the actual illustrated-motion delivery, not another vector placeholder.
+
+      ## Ready source art; export these before requesting duplicates
+      Conductor `projects/save-the-plumber/art/GEN2-CLIPS-1.yaml` reports all four existing WAN 2.2 clips DONE:
+      - Opening discovery (uphill rain/copper pipes): job 43383, ArtImage **251358**
+      - Opening capture (machinery and Teo): job 43384, ArtImage **251359**
+      - Finale reversal: job 43385, ArtImage **251360**
+      - Credits vista: job 43386, ArtImage **251361**
+
+      These **are not yet bundled at the public app asset paths**. Export/import reviewed encoded motion to `public/save-the-plumber/cinematics/` as WebM and H.264 MP4 with poster WebP, or equivalent storage backed by verified URLs. Respect private art metadata and media-host publication boundaries; no broken placeholder URLs. Use actual painted/video art on the title and prologue, not SVG motion, CSS-bobbing paper dolls or a fallback stuck forever.
+
+      ## Next art round
+      Develop an original adult heroine character-led title performance with readable silhouette and a short purposeful animation (entrance/idle/wrench stance), consistent pose/identity across frames and title, using reviewed original keys and WAN first/last-frame recipe from save-the-plumber t-025. Avoid melting faces, drifting hands, moving camera, duplicated limbs, watermark/text from AI. Encode mobile-friendly loop, poster and reduced-motion fallback. The first real art delivery outranks cosmetic UI refinements.
+
+      ## Acceptance
+      - Title cinematic and story beats display the **rendered opening cutscene**, with actual decoded video in a fresh production browser; no active animated SVG.
+      - Continuity, face/hand integrity, loop seam, safe color/contrast, portrait/landscape crop tested at 390×844, 844×390 and tablet/desktop.
+      - Missing clip: immediate legible poster, not blank.
+      - Automatic playback silent/playsinline, reduced-motion static, no uncontrolled bandwidth or multiple simultaneous videos.
+      - Character joins/title motion distinguished from overworld motion; a screen-to-screen console layout remains intact.
+      - State exactly which art jobs were queued, completed, reviewed, exported and deployed. No "submitted" claim without a real job/ledger reference.
+
+      Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
