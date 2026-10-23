@@ -1,0 +1,25 @@
+# Stage 2 is deliberately dormant until approved Krea compositions exist.
+# Run scripts/activate_zuzu_gamebook_stylepass.py after Round 18 DONE + review.
+# It validates four 0-2 scores (>= 7 overall), mandatory scene details, and
+# the selected ArtImage ID against the actual Round 18 ledger.
+# It then builds six img2img cells (safe/bold for each of three scenes).
+auto_submit: false
+cast_loras: false
+round: gamebook-19-arthemy-stylepass
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-style
+  label: Arthemy v3.0 source-preserving SDXL img2img
+  engine: sdxl-img2img
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, western comics style, painted graphic novel, weathered ink work, rich natural detail
+  suffix: painterly western comic finish, earthy colors, retain exact source composition and placement of objects
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects: []

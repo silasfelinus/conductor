@@ -28,7 +28,8 @@ def cells(data):
     """Reject a superficially DONE ledger that lacks real IDs or unique cells."""
     assert data.get("series") == "zuzu-koala-assassin"
     subjects = data.get("subjects") or []
-    assert Counter(s.get("section") for s in subjects) == {key: 3 for key in REQUIRED}
+    count = 2 if data.get("round") == "gamebook-19-arthemy-stylepass" else 3
+    assert Counter(s.get("section") for s in subjects) == {key: count for key in REQUIRED}
     assert len({s["key"] for s in subjects}) == 9
     jobs = set()
     images = set()
@@ -90,7 +91,8 @@ def review_sheet(loaded, output):
 
     thumb = (390, 260)
     label_height = 42
-    sheet = Image.new("RGB", (3 * thumb[0], 3 * (thumb[1] + label_height)), "#23252a")
+    rows = max(1, (len(loaded) + 2) // 3)
+    sheet = Image.new("RGB", (3 * thumb[0], rows * (thumb[1] + label_height)), "#23252a")
     draw = ImageDraw.Draw(sheet)
     for idx, (subject, job_id, image_id, image, _) in enumerate(loaded):
         column, row = idx % 3, idx // 3
@@ -108,14 +110,27 @@ def main(argv=None):
     parser.add_argument("--ledger", type=Path, default=LEDGER)
     parser.add_argument("--sheet", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
+    parser.add_argument("--if-pending", action="store_true", help="Exit cleanly before delivery is DONE")
     args = parser.parse_args(argv)
+    ledger = yaml.safe_load(args.ledger.read_text())
+    if args.if_pending:
+        subjects = ledger.get("subjects") or []
+        expected = 6 if ledger.get("round") == "gamebook-19-arthemy-stylepass" else 9
+        # Pending jobs are normal during the background generator's queue drain.
+        if len(subjects) != expected or any(
+            (subject.get("art") or {}).get(subject.get("lane", "arthemy-house"), {}).get("status") != "DONE"
+            or not (subject.get("art") or {}).get(subject.get("lane", "arthemy-house"), {}).get("art_image_id")
+            for subject in subjects
+        ):
+            print(f"{ledger.get('round')}: waiting for {expected} completed delivered ArtImages")
+            return 0
     token = os.getenv("KR_API_TOKEN", "")
     base = os.getenv("KR_BASE_URL", "https://kindrobots.org")
     if not token:
         print("KR_API_TOKEN unavailable; no private images fetched", file=sys.stderr)
         return 2
     loaded = []
-    for subject, job_id, image_id in cells(yaml.safe_load(args.ledger.read_text())):
+    for subject, job_id, image_id in cells(ledger):
         image, sha = fetch_image(image_id, token, base)
         expected = REQUIRED[subject["section"]]
         if image.size != expected:
@@ -123,12 +138,12 @@ def main(argv=None):
         loaded.append((subject, job_id, image_id, image, sha))
         print(f"{subject['key']}: job {job_id}, ArtImage {image_id}, "
               f"{image.width}x{image.height}, SHA256 {sha[:16]}, accessible")
-    assert len(loaded) == 9
+    assert len(loaded) == (6 if ledger.get("round") == "gamebook-19-arthemy-stylepass" else 9)
     review_sheet(loaded, args.sheet)
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
     args.receipt.write_text(json.dumps({
-        "round": "gamebook-16-scene-fidelity",
-        "fetched": 9,
+        "round": ledger["round"],
+        "fetched": len(loaded),
         "complete": True,
         "candidates": [
             {"section": s["section"], "seed": s["seed"], "artJobId": j,
@@ -137,7 +152,7 @@ def main(argv=None):
             for s, j, a, image, sha in loaded
         ],
     }, indent=2) + "\n")
-    print("Verified nine private ArtImage URLs and created local editorial review sheet")
+    print(f"Verified {len(loaded)} private ArtImage URLs and created local editorial review sheet")
     return 0
 
 
