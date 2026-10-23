@@ -928,23 +928,14 @@ tasks:
   - id: t-058
     milestone: m5
     title: "Enforce role-first narrative prose, never species-as-identity"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
-    note: >-
-      Silas, 2026-10-23 PT: people in Emperor of Dust must never be introduced
-      or described by species in narration or dialogue, named or unnamed.
-      Use a person's role, occupation, name, relationship, allegiance or
-      deeds, such as traveler, farmer, petitioner, knight or vagrant. Exception:
-      exact species is required for art prompts and cast metadata, with rare
-      established in-world proper names such as Young Komodo. Preserve proper
-      faction titles (Storm Crows, Mole Revolutionaries), real animals, and
-      plot/state IDs. Correct Day 1 onboarding and player-visible scripted
-      prose across acts, chance events, quest outcomes and character talks.
-      Add a scoped species-as-identity regression check without mistaking
-      faction names, species-locked art or literal animals for prose defects.
-      Do not deploy or publish.
+    note: |-
+      Silas, 2026-10-23 PT: people in Emperor of Dust must never be introduced or described by species in narration or dialogue, named or unnamed. Use a person's role, occupation, name, relationship, allegiance or deeds, such as traveler, farmer, petitioner, knight or vagrant. Exception: exact species is required for art prompts and cast metadata, with rare established in-world proper names such as Young Komodo. Preserve proper faction titles (Storm Crows, Mole Revolutionaries), real animals, and plot/state IDs. Correct Day 1 onboarding and player-visible scripted prose across acts, chance events, quest outcomes and character talks. Add a scoped species-as-identity regression check without mistaking faction names, species-locked art or literal animals for prose defects. Do not deploy or publish.
+
+      Rewrote species-first identities across Day 1 recruit introductions, Act I–V court scenes, follower talks, random encounters, quest outcomes, epilogues, market visitors and betrayals. Positive art/cast species, explicit proper faction names and wildlife remain unchanged. Added seeded-CI narrative guard for 18 story files, with narrowly documented fauna/art exceptions. Pending CI and code review before merge; no production deployment.
     owner: worker
     claimed_by: 2026-10-23T120004Z-eod-t058-role-first-f91b
     claimed_at: '2026-10-23T12:00:22Z'
-    updated: '2026-10-23T12:00:22Z'
+    updated: '2026-10-23T12:09:38Z'
