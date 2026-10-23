@@ -2479,3 +2479,36 @@ pitches:
           - kind_robots PR #4019 merged (squash 2e233bb), all CI checks green after a Prettier fix
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+
+  - id: orbital-resonance-chords
+    title: Orbital Resonance Chords
+    status: candidate
+    priority: 50
+    surprise: |
+      Six moons circle a small sun in whole-number resonance and the chords between them weave a glowing figure that reforms every loop.
+    passive_loop: |
+      Moons orbit at 1:2:3:4:5:6 speeds over a 48-second loop; a fading trail of chord polylines draws the web, no interaction needed.
+    optional_interaction: |
+      Hovering brightens nearby moons; a rate-limited click briefly speeds the orbits.
+    technique: |
+      One canvas, closed-form moon positions of the loop clock, 15 polylines per frame.
+    reduced_motion: |
+      Draws one static frame with no motion, hover or click.
+    performance_risk: |
+      Low: about 90 line segments per frame.
+    novelty: |
+      First resonance-ratio orbit chord figure; Orbit Effect uses free orbs, not locked ratios.
+    acceptance:
+      - the chord web evolves continuously without interaction
+      - the figure reforms exactly each loop
+      - hovering brightens nearby moons and clicking speeds orbits at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/orbital-resonance-chords.vue
+        pull_request: silasfelinus/kind_robots#4058
+        released_at: '2026-10-23T13:00:00Z'
+        verification:
+          - kind_robots PR #4058 merged (squash 3904a55), all CI checks green
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
