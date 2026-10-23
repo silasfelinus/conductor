@@ -8,6 +8,7 @@ import yaml
 from scripts import activate_zuzu_gamebook_stylepass as activate
 from scripts import enqueue_art_requests as enqueue
 from scripts import sweep_art_ledgers as sweep
+from scripts.repair_negation_art_prompts import violations
 
 ART = Path(__file__).resolve().parents[1] / "projects/zuzu-gamebook/art"
 
@@ -58,6 +59,7 @@ def test_round18_krea_is_live_and_does_not_start_style_jobs_early():
         assert req["isPublic"] is False and req["projectSlug"] == "zuzu-gamebook"
         assert req["promptString"] and len(req["promptString"]) > 200
         assert "sourceImageBase64" not in req
+        assert list(violations(req["promptString"])) == [], "Krea positive prompt must not contain negation traps"
     template = yaml.safe_load((ART / "ROUND-19-ARTHEMY-STYLEPASS.yaml").read_text())
     assert not sweep.is_auto_ledger(template)
     assert template["auto_submit"] is False and template["subjects"] == []
