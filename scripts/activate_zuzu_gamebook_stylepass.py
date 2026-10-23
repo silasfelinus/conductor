@@ -138,11 +138,12 @@ def main(argv=None):
     parser.add_argument("--selections", type=Path, default=ART / "ROUND-18-SELECTIONS.yaml")
     parser.add_argument("--receipt", type=Path, required=True, help="Authenticated ephemeral Round 18 review receipt")
     parser.add_argument("--stage19", type=Path, default=ART / "ROUND-19-ARTHEMY-STYLEPASS.yaml")
-    parser.add_argument("--output", type=Path, required=True, help="New YAML file to submit in reviewed PR")
+    parser.add_argument("--output", type=Path, help="Destination (defaults to dormant Stage 19 template)")
     args = parser.parse_args(argv)
     inputs = [args.round18, args.selections, args.receipt, args.stage19]
-    if args.output.exists():
-        parser.error("output exists: refusing to overwrite any existing job ledger")
+    output = args.output or args.stage19
+    if output.exists() and output.resolve() != args.stage19.resolve():
+        parser.error("refusing to overwrite a non-template output")
     ledger, selections, template = (
         yaml.safe_load(args.round18.read_text()),
         yaml.safe_load(args.selections.read_text()),
@@ -151,7 +152,7 @@ def main(argv=None):
     receipt = json.loads(args.receipt.read_text())
     chosen = approved_sources(ledger, selections, receipt)
     stage = build_stage19(template, chosen)
-    args.output.write_text(yaml.safe_dump(stage, sort_keys=False))
+    output.write_text(yaml.safe_dump(stage, sort_keys=False))
     print("Activated six Arthemy img2img jobs with exact verified Krea source ArtImages")
     for section, (_, image_id) in chosen.items():
         print(f"  {section}: ArtImage {image_id}, denoise 0.28 / 0.43")
