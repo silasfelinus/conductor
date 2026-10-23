@@ -139,6 +139,46 @@ def test_backlog_drains_oldest_first(backlog):
     assert reason == ""
 
 
+def test_scheduled_missing_today_drains_existing_buffer(backlog, monkeypatch):
+    today = _today()
+    older = _write_proposal(backlog, today - datetime.timedelta(days=4), "buffered")
+    monkeypatch.setenv("DAILY_DREAM_SCHEDULED", "1")
+
+    path, reason = runner.eligible_proposal(today.isoformat())
+
+    assert path == older
+    assert reason == ""
+
+
+def test_scheduled_existing_today_does_not_skip_invalid_proposal(backlog, monkeypatch):
+    today = _today()
+    _write_proposal(backlog, today - datetime.timedelta(days=1), "older")
+    current = _write_proposal(backlog, today, "invalid-today")
+    monkeypatch.setenv("DAILY_DREAM_SCHEDULED", "1")
+    monkeypatch.setattr(
+        runner.creative_contract,
+        "validate_path",
+        lambda path: ["needs creative revision"] if path == current else [],
+    )
+
+    path, reason = runner.eligible_proposal(today.isoformat())
+
+    assert path is None
+    assert "invalid-today" in reason
+    assert "creative contract failed" in reason
+
+
+def test_manual_missing_date_never_falls_back_to_old_proposal(backlog, monkeypatch):
+    today = _today()
+    _write_proposal(backlog, today - datetime.timedelta(days=1), "older")
+    monkeypatch.delenv("DAILY_DREAM_SCHEDULED", raising=False)
+
+    path, reason = runner.eligible_proposal(today.isoformat())
+
+    assert path is None
+    assert "no unbuilt proposal ready" in reason
+
+
 def test_stale_backlog_entry_still_faces_the_current_creative_contract(backlog, monkeypatch):
     # Removing the age cap must not let old creativity in through the back door;
     # the contract check is what actually enforces newer creative rules.
