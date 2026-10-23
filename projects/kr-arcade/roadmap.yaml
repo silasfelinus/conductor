@@ -2738,3 +2738,20 @@ tasks:
       validated by each game's own parser) so Save the Plumber, Ghost Trail and Rainbow saves follow
       a signed-in player between devices, with the local save as the offline fallback and
       last-write-wins by updatedAt. Reversible additive migration; no change for signed-out players.
+
+  - id: t-164
+    milestone: m4
+    title: "Cross-game responsive resolution, render-budget and character-readability contract (issue #4062)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    source_issue: silasfelinus/kind_robots#4062
+    updated: '2026-10-23T09:00:00Z'
+    note: >-
+      Silas-directed 2026-10-23. Begin with shared Arcade display fit and backing-pixel budget,
+      actual height/width responsive bounds and regression tests at phone landscape/portrait,
+      tablet and desktop DPRs. Follow with genre-specific camera and sprite legibility improvements
+      for Save the Plumber, Rainbow Princess, Ghost Trail, Zuzu Showdown, classic cabinets and Memory
+      Dungeon, without changing deterministic gameplay or forcing square memory boards into 16:9.
+      Full acceptance and per-game follow-up specification: kind_robots issue #4062.
