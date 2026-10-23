@@ -1,0 +1,308 @@
+# Weird Humboldt v1 — the six guaranteed chapter anchors (never random draws).
+# Contract: JOURNEY-LOOP-CONTRACT.md "Suggested six-chapter pacing"; shape follows
+# ../design/card.schema.json with ids WH-A1..A6, an `anchor` stage label and no seed row.
+# Checked by scripts/validate_weird_humboldt_cards.py (validate_anchors). Text only: no art, no ArtJobs.
+# Excluded per EXCLUDED-CONTENT-2026-10-22.md: nothing here touches Wiyot/Tuluwat material.
+- id: WH-A1
+  revision: 1
+  anchor: chapter_1_local_mystery
+  chapter: 1
+  location: "Arcata Plaza"
+  title: "The Sign on the Plaza Stones"
+  tier: invented
+  provenance: "The Plaza and its statue are real public places; the chalked six-winged sign, the radio hum and every sighting are invented fiction shared by all four companions."
+  rarity: rare
+  tone: [uncanny, warm, wry]
+  cast: ["Your current companion", "A night-shift sweeper named Dolores (invented, unimpressed)"]
+  canon:
+    - The same six-winged sign is on the Plaza stones in every run, whatever the player has taken.
+    - Each companion has already met the sign in their own work before the player arrives.
+    - The sign is modern and original; it is not a copy of any real community's design.
+  scene: >-
+    Past midnight the Plaza is empty except for a sweeper pushing a broom in slow, patient arcs, and the stones in front of the statue, where a six-winged shape has been drawn in chalk. It is not quite chalk. It is warm under your palm, and when you step back it is already a little larger. Your companion goes quiet in the way people do when a private worry turns out to be public. "I've seen this," they say. "In my work. I thought I was the only one." The sweeper leans on her broom. "Third night running. I sweep it off. It comes back neater."
+  options:
+    - id: a
+      label: "Photograph the sign and compare it with your companion's version"
+      skill: wits
+      target: 9
+      success:
+        text: "The proportions match to the last feather. Your companion's version and the Plaza's differ in exactly one wing, and that wing points at the harbor. You mark it on a map and, for the first time, the mystery has a direction."
+        effects: ["evidence:geography", "flag:anchor1_sign_mapped", goodwill+1]
+      failure:
+        text: "The photo comes out as a clean stone floor, which is its own kind of evidence. Dolores shrugs and says it never photographs; you will have to remember it the old way."
+        effects: ["evidence:memory", "flag:anchor1_sign_mapped", time-1]
+    - id: b
+      label: "Ask Dolores what she has seen on her three nights"
+      skill: rizz
+      target: 7
+      success:
+        text: "She tells you the hum starts at 12:40, that it stops when someone says its name wrong, and that a radio in a pickup truck two streets over hums back. She hands you the broom to hold while she writes the truck's plate on your hand."
+        effects: ["evidence:rumor", "evidence:frequency", "flag:anchor1_sweeper_ally", goodwill+1]
+      failure:
+        text: "Dolores decides you are from the city council and gives you a very short, very accurate lecture about parking permits. The one detail that slips out is the time the hum starts."
+        effects: ["evidence:schedule", "flag:anchor1_sweeper_ally"]
+    - id: c
+      label: "Sit with your companion and keep watch until the sign is redrawn"
+      skill: none
+      target: null
+      success:
+        text: "You give up the next free hour and an unhurried thing happens: your companion tells you why this matters to them, plainly, and you tell them why you came. When the sign finally redraws itself it does so in two hands at once, yours and theirs, and neither of you looks away."
+        effects: ["flag:anchor1_vigil_kept", "flag:anchor1_motive_shared", time-1, goodwill+1]
+  lead_reactions:
+    mara: "Mara crouches and runs a thumb along the line. \"Whoever drew this has a steady hand and no fear of mistakes. That's not nothing. That's a signature.\""
+    kit: "Kit walks the outline heel to toe, counting under her breath. \"It's a gear train drawn as a bird. Somebody is describing a machine.\""
+    juniper: "Juniper presses both palms flat and holds very still. \"The stones remember growing. They're trying to say it to me and it comes out as wings.\""
+    cedar: "Cedar keys the handset in his truck two streets away and the Plaza hums back. \"Well. That's the antenna I've been missing all year.\""
+  callbacks: [anchor1_sign_mapped, anchor1_sweeper_ally, anchor1_vigil_kept, anchor1_motive_shared]
+  eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-A2
+  revision: 1
+  anchor: chapter_2_crossroads_1
+  chapter: 2
+  location: "Trinidad Harbor"
+  title: "Crossroads at the Pier"
+  tier: invented
+  provenance: "Trinidad Harbor and its pier are real; the newcomer's arrival, the argument over the tide table and the offered ride are invented fiction written for the first stay-or-follow choice."
+  rarity: rare
+  tone: [tender, funny, decisive]
+  cast: ["Your current companion", "The first newcomer, one of the other three (seeded)", "A harbor cat that belongs to no boat"]
+  canon:
+    - The newcomer is one of the four main companions the player has not yet met; which one is a seeded permutation.
+    - Leaving a companion is never a betrayal; they stay in the world and pursue their own work.
+    - A declined or deferred newcomer remains available at later crossroads.
+  scene: >-
+    The fog sits on the water like a lid. At the end of the pier your companion is arguing with a stranger about whether the tide table is wrong or the tide is lying, and the stranger, who looks as if they have been awake for two days on pure stubbornness, turns and says your name before you have given it. The two of them stop arguing at once. A harbor cat sits down precisely between you. There is a boat for the cove leaving in ten minutes and it will not wait for anyone who is still deciding.
+  options:
+    - id: a
+      label: "Stay with your current companion"
+      skill: none
+      target: null
+      success:
+        text: "You tell the newcomer, kindly, that you are going on with your guide. The newcomer nods like someone who has been left at plenty of piers and wasn't hurt by this one, writes a time and a place on your wrist, and steps back. Your companion lets out a breath they did not know they were holding, and the next stretch of road has a different weight."
+        effects: ["flag:crossroads1_stayed", "flag:newcomer1_available", goodwill+1]
+    - id: b
+      label: "Follow the newcomer"
+      skill: none
+      target: null
+      success:
+        text: "Your companion hears it before you finish, and answers with a joke that comes out a little too fast. They keep the boat schedule, give you the half of the map they were not using, and say they have a harbor to clear before dark. They are not gone. They are working. You step onto the boat with someone new and a story that has changed shape."
+        effects: ["flag:crossroads1_followed", "flag:previous_companion_working", time-1]
+    - id: c
+      label: "Talk them into sharing the boat and the argument"
+      skill: rizz
+      target: 11
+      success:
+        text: "Somehow the tide table becomes a shared problem and the cove boat holds three. For the length of one crossing the two of them take turns correcting each other, and you notice they finish each other's sentences about the symbol. It will not last, but it is true while it does."
+        effects: ["flag:crossroads1_shared_boat", "evidence:schedule", goodwill+1, nerve-1]
+      failure:
+        text: "The boat leaves with two aboard and one on the pier, holding a coffee that has gone cold. By the time you find another ride the decision has been made for you, and you pick whichever of them is still smiling."
+        effects: ["flag:crossroads1_stayed", "flag:newcomer1_available", time-1]
+  lead_reactions:
+    mara: "Mara, as the one who stays or goes, steadies the pier rail with two fingers. \"Decide. I'll honor it either way, and I'll be rude about it afterward.\""
+    kit: "Kit juggles three lines of rope, drops none. \"Whichever you pick, I'm going to turn up again with a better entrance.\""
+    juniper: "Juniper crouches to the cat and murmurs. \"She says follow your feet. She says nothing about your head.\""
+    cedar: "Cedar thumbs his handset. \"Static says the tide's wrong and the boat's right. I'll take that bet.\""
+  callbacks: [crossroads1_stayed, crossroads1_followed, crossroads1_shared_boat, newcomer1_available, previous_companion_working]
+  eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-A3
+  revision: 1
+  anchor: chapter_3_crossroads_2
+  chapter: 3
+  location: "Old Town Eureka"
+  title: "The Second Meeting on F Street"
+  tier: invented
+  provenance: "Old Town and F Street are real places; the staged argument over a parking ticket, the second newcomer and the remembered promise are invented fiction for the second stay-or-follow choice."
+  rarity: rare
+  tone: [wry, wistful, decisive]
+  cast: ["Your current companion", "The second newcomer, one of the two not yet met", "The previous companion, glimpsed across the street"]
+  canon:
+    - The newcomer is a different main companion from the first crossroads; all four are met in every run.
+    - If the player followed at the first crossroads, the left-behind companion is seen working, not waiting.
+    - Neither option erases the earlier choice; it is remembered in dialogue and in the ending.
+  scene: >-
+    F Street smells of salt and old paint. Across the road your first companion, or the person you left at the pier, is unloading something heavy from a van and pretending not to notice you. Then the second newcomer steps off a curb with the confidence of someone who has already been looking for you, and says, "You're the one carrying the sign." Your current companion's shoulders go up. Behind you a ghost in a bad suit waves a parking ticket at the sky. Three stories are asking to be in the same afternoon.
+  options:
+    - id: a
+      label: "Stay with your current companion and keep the promise you made"
+      skill: none
+      target: null
+      success:
+        text: "You say it plainly and it costs something, and your companion sees what it cost. The newcomer takes a card from a coat pocket and says, not unkindly, that the door does not lock. Your companion walks the next block differently, like someone who has been chosen on purpose."
+        effects: ["flag:crossroads2_stayed", "flag:newcomer2_available", goodwill+1]
+    - id: b
+      label: "Follow the newcomer"
+      skill: none
+      target: null
+      success:
+        text: "Your current companion says, \"Go,\" and means it, and then says one more thing quietly that you will remember until the ending. The newcomer falls in beside you. The street is the same street and every sentence on it has a different edge."
+        effects: ["flag:crossroads2_followed", "flag:previous_companion_working", time-1]
+    - id: c
+      label: "Get all three of them to say aloud what they each know about the sign"
+      skill: psyche
+      target: 11
+      success:
+        text: "It takes twenty minutes and a bench, and nobody sits comfortably, but the three accounts finally disagree about the meaning and agree about every measurement. You write down the measurements. You leave with three people who now owe each other an honest correction."
+        effects: ["flag:crossroads2_shared_account", "evidence:document", "evidence:geography", goodwill+1]
+      failure:
+        text: "The conversation collapses into an argument about whose story is oldest, and the ghost with the ticket wins it. You still catch two numbers worth keeping and a long look from the one who stayed quiet."
+        effects: ["flag:crossroads2_shared_account", "evidence:rumor", nerve-1]
+  lead_reactions:
+    mara: "Mara counts the three of you with the end of her pencil. \"Two is a conversation. Three is a committee. Don't let it become a committee.\""
+    kit: "Kit lifts both brows at the street. \"This is a very good stage. Whoever blocked it did their homework. Don't tell them I said that.\""
+    juniper: "Juniper offers the ghost a clover leaf from her braid. \"He's lonely, not dangerous. They're often the same bill.\""
+    cedar: "Cedar scans the dial in his head. \"Three people on one frequency. That's how you get feedback, or a choir.\""
+  callbacks: [crossroads2_stayed, crossroads2_followed, crossroads2_shared_account, newcomer2_available, previous_companion_working]
+  eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-A4
+  revision: 1
+  anchor: chapter_4_crossroads_3
+  chapter: 4
+  location: "Blue Lake"
+  title: "The Last Companion at the Radio Table"
+  tier: invented
+  provenance: "Blue Lake is a real town; the council of stray radios, the fourth newcomer and the late-route stakes are invented fiction for the third and final stay-or-follow choice."
+  rarity: rare
+  tone: [urgent, funny, earnest]
+  cast: ["Your current companion", "The fourth main companion, met last", "A town council of stray radios (invented, procedural)"]
+  canon:
+    - The fourth main companion is met in this scene in every run, so all four are met by the end of chapter 4.
+    - A late switch changes the cost and texture of the personal arc, not the availability of any hopeful outcome.
+    - Chapter 5 provides authored catch-up beats for whichever companion the player chooses here.
+  scene: >-
+    The council of stray radios has convened in the Blue Lake gym and is voting on whether you exist. Your current companion defends your standing with a patience that is clearly wearing out. At the back, by the door, the fourth main companion has been waiting a long time with the weary dignity of someone who left a message and got no reply. The radios call for a recess. "Whoever leaves with you," a very small speaker announces, "will carry the next part. Choose before the gavel."
+  options:
+    - id: a
+      label: "Stay with your current companion into the final stretch"
+      skill: none
+      target: null
+      success:
+        text: "You say it into the microphone so the council can hear, and a quieter room than before listens. The fourth companion nods once, takes a seat on the bleacher, and says they will be on the road when it matters. Your companion exhales. The route gets heavier and the hands that hold it are surer."
+        effects: ["flag:crossroads3_stayed", "flag:newcomer3_available", goodwill+1]
+    - id: b
+      label: "Follow the fourth companion"
+      skill: none
+      target: null
+      success:
+        text: "Your current companion stands up from the table and says it before you can, with a flourish that lets you both off easily. They hand you a folded scrap with the stretch of road they will be on. You leave the gym beside someone whose story you now have to learn very quickly."
+        effects: ["flag:crossroads3_followed", "flag:previous_companion_working", time-1]
+    - id: c
+      label: "Put the matter to the council as a matter of the order of business"
+      skill: wits
+      target: 9
+      success:
+        text: "The stray radios love procedure. By the time you have moved to amend the motion, the fourth companion has been seated at the council table as an expert witness and your current companion as the chair. Everyone has a title and nobody is left out. It will cost you an hour. It will be worth it."
+        effects: ["flag:crossroads3_council_seated", "evidence:document", goodwill+1, time-1]
+      failure:
+        text: "You move to amend the wrong motion and the gavel falls on you. The radios fine you in static and the only thing left is to pick a side. The fourth companion has already picked a seat for you."
+        effects: ["flag:crossroads3_council_seated", "evidence:rumor", nerve-1]
+  lead_reactions:
+    mara: "Mara taps the table twice. \"I've never lost a client to a good argument. I've lost a few to a bad exit. Make it a good one.\""
+    kit: "Kit climbs onto the bleachers to see the whole room at once. \"Okay. This is a three-ring circus and you are the ringmaster. Please, no clowns.\""
+    juniper: "Juniper hums a note and the nearest radio hums it back, out of tune. \"Even the machines are tired of being talked over.\""
+    cedar: "Cedar cracks a grin at the tiny speaker. \"Madam chair, I would like it noted that I fix every radio in this room and none of them have thanked me.\""
+  callbacks: [crossroads3_stayed, crossroads3_followed, crossroads3_council_seated, newcomer3_available, previous_companion_working]
+  eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-A5
+  revision: 1
+  anchor: chapter_5_companion_payoff
+  chapter: 5
+  location: "Avenue of the Giants"
+  title: "The Promise Under the Big Trees"
+  tier: invented
+  provenance: "The Avenue of the Giants is a real public road through old-growth redwoods; the scene, the kept or broken promises and every named consequence are invented fiction written to pay off whichever companion is active."
+  rarity: rare
+  tone: [earnest, quiet, hopeful]
+  cast: ["Your active companion", "Whoever the player has met and left, glimpsed once", "The county coalitions' invented delegates"]
+  canon:
+    - The active companion's personal arc pays off here whether they were met first or last; a late switch changes cost, not access.
+    - The player chooses to honour, complicate or betray accumulated commitments; each is authored and none ends the run.
+    - Hopeful outcomes remain reachable from every branch; the dark branch costs more, not everything.
+  scene: >-
+    The big trees do what big trees do: they make everyone in their shade a little smaller and a little more honest. Your active companion has asked you to walk the last quiet stretch with them before the coalitions meet. Along the road, small things you promised are waiting: a favour owed, a name you gave, a hand you shook. They ask you, not unkindly, which of them you meant. Down the road, the delegates are already arguing about parking.
+  options:
+    - id: a
+      label: "Honour every commitment, even the inconvenient ones"
+      skill: psyche
+      target: 9
+      success:
+        text: "It takes the whole afternoon and an uncomfortable telephone call, but when you are finished every promise is either kept or openly renegotiated. Your companion walks a little taller. The delegates, who have been watching from a distance, decide you are trustworthy and start asking you questions."
+        effects: ["flag:anchor5_promises_kept", "evidence:history", goodwill+1, "clarity+1"]
+      failure:
+        text: "You keep most of them and miss one, and your companion notices. The apology is awkward and sincere, and it works better than you would have guessed. One promise is left unpaid, openly, with a date."
+        effects: ["flag:anchor5_promises_kept", "evidence:memory", nerve-1]
+    - id: b
+      label: "Complicate it: keep what you can and tell the rest the truth"
+      skill: rizz
+      target: 7
+      success:
+        text: "You say what you can and cannot do, and nobody leaves. A delegate with a pen says she has never heard that sentence before and writes it down. Your companion looks at you for a long beat and says it was the honest answer they needed."
+        effects: ["flag:anchor5_honest_limits", "evidence:document", goodwill+1]
+      failure:
+        text: "The honest answer lands badly and the delegate hears only the no. The next hour is spent on repair. Your companion stays at your side the whole time, which counts for more than the repair does."
+        effects: ["flag:anchor5_honest_limits", "evidence:rumor", time-1]
+    - id: c
+      label: "Betray one commitment to protect a bigger one"
+      skill: none
+      target: null
+      success:
+        text: "You choose, and you tell your companion before anyone else. It costs you a friend among the delegates and a night's sleep, and your companion is quiet for a mile. When they speak, it is only to say they would have chosen the same and wish they had not. The road ahead is harder and not closed."
+        effects: ["flag:anchor5_betrayed_one", "evidence:ledger", nerve-1, "weird+1"]
+  lead_reactions:
+    mara: "Mara watches the delegates and not the trees. \"Everybody here signs something. Fewer people read it. You be the one who reads it.\""
+    kit: "Kit walks the line of the road like a tightrope, arms out. \"Every promise is a rope. The trick is to know which ones are holding the tent.\""
+    juniper: "Juniper lays a palm against the bark and listens a long moment. \"They don't count years the way you do. They count who stayed.\""
+    cedar: "Cedar looks at the sky between the crowns. \"My folks fought about this road for twenty years and came home to the same table every night. It can be done.\""
+  callbacks: [anchor5_promises_kept, anchor5_honest_limits, anchor5_betrayed_one]
+  eligibility: {requires_flags: [], excludes_flags: []}
+- id: WH-A6
+  revision: 1
+  anchor: chapter_6_convergence
+  chapter: 6
+  location: "Arcata Plaza"
+  title: "Where the Count Comes Home"
+  tier: invented
+  provenance: "Arcata Plaza is a real public place; the convergence of companions, coalitions and the chalked sign is invented fiction that closes the county-fate arc before the ending records."
+  rarity: rare
+  tone: [luminous, earned, funny]
+  cast: ["Every main companion, once each", "The county coalition delegates", "Dolores the sweeper, who has the last word"]
+  canon:
+    - All four main companions are present in every run, whichever one the player ends with.
+    - The scene resolves the county's convergence; the final tally and ending record are computed from the earned flags, not from this choice alone.
+    - Both the hopeful and dark futures stay reachable up to this scene; this choice sets the tone, not the verdict.
+  scene: >-
+    Dawn on the Arcata Plaza, and everyone is here. Four companions who have been met in four different orders stand at four different corners of the stones, each pretending not to look at the others. The coalition delegates arrive with clipboards. Dolores sweeps one slow arc around the six-winged sign, which is now the size of a small stage and entirely clean. It hums at exactly the pitch of your own breathing. Someone, you suspect everyone, has been waiting for you to say what the sign is for.
+  options:
+    - id: a
+      label: "Say it plainly: the sign is a promise the county made to itself"
+      skill: psyche
+      target: 11
+      success:
+        text: "You say it without ornament, and the hum settles into a note everyone can hold. The delegates put down their clipboards, one at a time. It does not fix anything. It makes fixing it possible, and the stones are warm all the way to the curb."
+        effects: ["flag:anchor6_named_the_promise", "evidence:history", goodwill+1, "clarity+1"]
+      failure:
+        text: "Your first sentence is too grand and the second too small, and a delegate laughs, not unkindly. The laugh breaks the tension. You try again in fewer words and the hum comes down to meet you."
+        effects: ["flag:anchor6_named_the_promise", "evidence:memory", nerve-1]
+    - id: b
+      label: "Ask each of the four companions to stand at one corner of the sign and speak last"
+      skill: rizz
+      target: 9
+      success:
+        text: "They go reluctantly, one by one, and each says one true thing about what the others did for them. Nobody sounds rehearsed. By the fourth the delegates have stopped writing and started listening, and the whole Plaza holds the rest."
+        effects: ["flag:anchor6_four_voices", "evidence:document", goodwill+1]
+      failure:
+        text: "The second companion declines to speak last and the third speaks twice. It is messy, but it is theirs. Dolores finishes the last arc of her sweep and says that was close enough."
+        effects: ["flag:anchor6_four_voices", "evidence:rumor", time-1]
+    - id: c
+      label: "Step back and let the county decide without you"
+      skill: none
+      target: null
+      success:
+        text: "You sit on the curb next to Dolores and offer her half a pastry. The delegates and companions argue for twenty minutes, in a muddle, in public, and reach something that nobody planned. It is smaller and truer than the speech would have been, and it is theirs to keep."
+        effects: ["flag:anchor6_county_decides", "evidence:geography", goodwill+1, time-1]
+  lead_reactions:
+    mara: "Mara steps onto the sign and signs her name in the dust beside it. \"I don't do blank pages. This one's mine now. Good.\""
+    kit: "Kit takes a bow to the empty bleachers, then to the real crowd. \"Thank you, thank you, I'm only the warm-up.\""
+    juniper: "Juniper exhales and the sign hums with her. \"Listen. Even the stones sound like they're choosing something.\""
+    cedar: "Cedar sets his handset down on the stones, finally off. \"First time in three days it's quiet. That's the broadcast. That's the future.\""
+  callbacks: [anchor6_named_the_promise, anchor6_four_voices, anchor6_county_decides]
+  eligibility: {requires_flags: [], excludes_flags: []}

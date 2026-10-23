@@ -55,3 +55,31 @@ def test_no_dead_end_proof_catches_flag_locked_chapter():
         if c["chapter"] == 3:
             c["eligibility"]["requires_flags"] = ["minor_companion"]
     assert any("chapter 3" in p and "dead end" in p for p in wh.validate(cards))
+
+
+def _enums():
+    import json
+    schema = json.loads(wh.SCHEMA.read_text())
+    return {"skill": schema["$defs"]["option"]["properties"]["skill"]["enum"],
+            "tier": schema["properties"]["tier"]["enum"], "rarity": schema["properties"]["rarity"]["enum"]}
+
+
+def test_six_chapter_anchors_are_valid():
+    anchors = wh.load_anchors()
+    assert [a["id"] for a in anchors] == [f"WH-A{i}" for i in range(1, 7)]
+    assert wh.validate_anchors(anchors, _enums()) == []
+
+
+def test_anchor_crossroads_must_set_stay_and_follow():
+    anchors = wh.load_anchors()
+    for o in anchors[1]["options"]:
+        for br in ("success", "failure"):
+            if br in o:
+                o[br]["effects"] = [e for e in o[br]["effects"] if "followed" not in e]
+    assert any("crossroads1_followed" in p for p in wh.validate_anchors(anchors, _enums()))
+
+
+def test_anchor_cannot_be_flag_gated():
+    anchors = wh.load_anchors()
+    anchors[0]["eligibility"]["requires_flags"] = ["minor_companion"]
+    assert any("flag-gated" in p for p in wh.validate_anchors(anchors, _enums()))

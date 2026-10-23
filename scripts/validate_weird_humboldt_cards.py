@@ -23,6 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PROJECT = ROOT / "projects" / "weird-humboldt"
 SCHEMA = PROJECT / "design" / "card.schema.json"
 CARD_DIR = PROJECT / "cards"
+ANCHOR_FILE = PROJECT / "anchors" / "anchors.yaml"
 SEEDS = PROJECT / "ENCOUNTER-SEEDS.md"
 # Chapters 1-5 hold seeds 1-20 (chapter 2 also WH-121); chapter 6 holds all 20 incl. WH-120 (county vote finale).
 PER_CHAPTER = {1: 20, 2: 21, 3: 20, 4: 20, 5: 20, 6: 20}
@@ -172,6 +173,67 @@ def validate(cards: list[dict]) -> list[str]:
                 if fl not in all_flags:
                     problems.append(f"{c['id']}: eligibility references unknown flag {fl}")
     problems += no_dead_end_problems(cards)
+    problems += validate_anchors(load_anchors(), enums)
+    return problems
+
+
+def load_anchors() -> list[dict]:
+    return yaml.safe_load(ANCHOR_FILE.read_text()) or []
+
+
+# Chapters 2-4 are the three stay/follow crossroads (JOURNEY-LOOP-CONTRACT.md).
+CROSSROADS = {2: "crossroads1", 3: "crossroads2", 4: "crossroads3"}
+EXCLUDED_TERMS = re.compile(r"wiyot|tuluwat", re.I)
+
+
+def validate_anchors(anchors: list[dict], enums: dict) -> list[str]:
+    """The six guaranteed chapter anchors: one per chapter, never flag-gated, no dead ends."""
+    problems: list[str] = []
+    schema = json.loads(SCHEMA.read_text())
+    if sorted(a.get("chapter") for a in anchors) != [1, 2, 3, 4, 5, 6]:
+        problems.append("anchors: need exactly one anchor per chapter 1-6")
+    for a in anchors:
+        aid = a.get("id", "?")
+        if not re.match(r"^WH-A[1-6]$", str(aid)):
+            problems.append(f"{aid}: anchor id must be WH-A1..WH-A6")
+        for key in schema["required"]:
+            if key not in a:
+                problems.append(f"{aid}: missing {key}")
+        if not a.get("anchor"):
+            problems.append(f"{aid}: missing anchor stage label")
+        if a.get("eligibility", {}).get("requires_flags") or a.get("eligibility", {}).get("excludes_flags"):
+            problems.append(f"{aid}: a guaranteed anchor cannot be flag-gated")
+        if words(a.get("scene", "")) < 60:
+            problems.append(f"{aid}: scene under 60 words")
+        opts = a.get("options", [])
+        if not 2 <= len(opts) <= 4:
+            problems.append(f"{aid}: needs 2-4 options, has {len(opts)}")
+        for o in opts:
+            check_option(aid, o, enums, problems, "")
+        if not any(o.get("skill") == "none" for o in opts):
+            problems.append(f"{aid}: needs a no-roll option so no player can be blocked by dice")
+        for lead in LEADS:
+            if words(a.get("lead_reactions", {}).get(lead, "")) < 8:
+                problems.append(f"{aid}: lead_reactions.{lead} missing or under 8 words")
+        fx = effects_of(a)
+        for cb in a.get("callbacks", []):
+            if f"flag:{cb}" not in fx:
+                problems.append(f"{aid}: callback {cb!r} is never set by an effect")
+        prefix = CROSSROADS.get(a.get("chapter"))
+        if prefix:
+            for kind in ("stayed", "followed"):
+                if f"flag:{prefix}_{kind}" not in fx:
+                    problems.append(f"{aid}: crossroads needs a no-roll route that sets {prefix}_{kind}")
+            for o in opts:
+                if o.get("skill") != "none":
+                    # a failed room-brokering roll must still resolve to a stay/follow flag
+                    if not any(e.startswith(f"flag:{prefix}_") for e in o["failure"]["effects"] + o["success"]["effects"]):
+                        problems.append(f"{aid}.{o['id']}: crossroads option sets no {prefix} flag")
+        blob = json.dumps(a, ensure_ascii=False)
+        if BANNED.search(blob):
+            problems.append(f"{aid}: contains real-world drug instruction wording")
+        if EXCLUDED_TERMS.search(blob):
+            problems.append(f"{aid}: touches excluded Wiyot/Tuluwat material (EXCLUDED-CONTENT-2026-10-22.md)")
     return problems
 
 
