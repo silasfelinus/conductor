@@ -25,3 +25,32 @@ def test_manifest_lists_shipped_worlds_in_order(tmp_path):
     assert "Do not edit by hand." in text
     assert text.rstrip().endswith("export const MAP_CLIP_WORLDS: readonly number[] = [1, 3]")
     assert clips.render_manifest([]).rstrip().endswith("= []")
+
+
+def _solid(value):
+    from PIL import Image
+
+    return Image.new("RGB", (32, 18), (value, value, value))
+
+
+def test_loop_frames_drops_the_settling_frames_and_crossfades_the_seam():
+    import itertools
+    import math
+
+    # Two jumpy warm-up frames (the sharp plate settling into WAN's render), then a near-periodic shimmer
+    # that drifts 12 levels over the clip, so the raw last frame does not meet the first.
+    steady = [round(90 + 6 * math.sin(2 * math.pi * i / 40) + 0.3 * i) for i in range(40)]
+    frames = [_solid(220), _solid(150)] + [_solid(v) for v in steady]
+    looped = clips.loop_frames(frames, fade=8)
+    values = [f.getpixel((0, 0))[0] for f in looped]
+    raw_seam = abs(steady[-1] - steady[0])
+    wrap = values + values[:1]
+    assert len(looped) == 40 - 8, "warm-up dropped, and the head's fade frames folded into the tail"
+    assert values[0] == steady[8], "the loop opens on the frame after the faded head"
+    assert raw_seam >= 8, "the uncorrected clip would pop at the wrap"
+    assert max(abs(b - a) for a, b in itertools.pairwise(wrap)) <= 3, "with the crossfade, no step pops, the wrap included"
+
+
+def test_loop_frames_leaves_a_short_clip_alone():
+    frames = [_solid(10 + i) for i in range(10)]
+    assert len(clips.loop_frames(frames, fade=8)) == 10
