@@ -5,6 +5,8 @@
 **Status:** Developer triage, not a human-playtest satisfaction score or creative-canon approval. User requested a ranked set of improvements after the five-policy adversarial matrix.  
 **Scope boundary:** Maintain Ecotone's permanent non-sensitive-content-only scope in `CONTROL.md` and `EXCLUDED-CONTENT-2026-10-22.md`. This is not authorization for external publication, content restoration, or public deployment.
 
+**CI provenance:** Kind Robots [Ecotone Gameplay Contract run #39875726685](https://github.com/silasfelinus/kind_robots/actions/runs/39875726685) completed successfully on the final #4045 head. The sample metrics below are the test's console output, not estimated figures.
+
 ## Evidence and limits
 
 - A new CI test sampled **1,260 completed campaigns**: three event starts × seven voluntary opening lenses × twelve seeded runs × five choice policies. All **252 five-policy matched groups** diverged in complete choice history, saved consequence snapshot and final ending ID. There were 1,260 different whole-history signatures.
