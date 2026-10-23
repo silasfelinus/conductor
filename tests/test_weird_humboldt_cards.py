@@ -40,3 +40,18 @@ def test_validator_rejects_failure_on_no_roll_option():
     opt = next(o for c in cards for o in c["options"] if o["skill"] == "none")
     opt["failure"] = {"text": "x " * 12, "effects": []}
     assert any("no-roll option cannot have a failure" in p for p in wh.validate(cards))
+
+
+def test_no_dead_end_proof_holds_for_every_chapter():
+    cards = wh.load_cards()
+    assert wh.no_dead_end_problems(cards) == []
+    for ch in range(1, 7):
+        assert len(wh.guaranteed_pool(cards, ch)) >= wh.MIN_GUARANTEED_PER_CHAPTER
+
+
+def test_no_dead_end_proof_catches_flag_locked_chapter():
+    cards = wh.load_cards()
+    for c in cards:
+        if c["chapter"] == 3:
+            c["eligibility"]["requires_flags"] = ["minor_companion"]
+    assert any("chapter 3" in p and "dead end" in p for p in wh.validate(cards))
