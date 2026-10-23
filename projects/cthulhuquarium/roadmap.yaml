@@ -1603,3 +1603,54 @@ tasks:
   updated: '2026-10-23T11:16:00Z'
   claimed_by: 2026-10-23T110500Z-cthulhuquarium-t089-f2a9
   claimed_at: '2026-10-23T11:05:00Z'
+
+- id: t-090
+  milestone: m4
+  title: Prioritize full-screen Charlotte and Wilbur cinematic art delivery
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-10-23: Cthulhuquarium is a visual-novel game as well as an
+    aquarium. Prioritize large, striking illustrated/studio portraits of
+    Charlotte Fishmonger and Wilbur Stint, opening and milestone scene plates,
+    and restrained motion with visual continuity. This is ART DELIVERY rather
+    than additional text or tiny overlay UI. Keep canonical character identity
+    and art prompts in silasfelinus/cthulhuquarium/characters/*.yaml, scene
+    descriptions in story/plates.yaml and video plans in videos/videos.yaml.
+    Audit delivered assets before submitting duplicates: Kind Robots currently
+    bundles 10 pose portraits, 7 moving webp scenes/characters, 4 plate assets
+    and 16 illustrated aquarium backdrops. Render or improve missing high-res
+    832x1216+ hero stills and 16:9 milestone scenes for actual full-screen
+    legibility, preserve Charlotte's elderly gothic prima donna appearance and
+    Wilbur's injured, bespectacled balding silhouette, and deliver art through
+    the established Kind Robots/Comfy pipeline with source linkage and
+    verified fallback if a job fails. Track ArtJob IDs and delivery counts.
+    Each first-run intro beat and authored story interstitial should have a
+    suitable large image, with no placeholder portrait substituting for a
+    queued missing scene. Art work should lead this project's next iteration.
+  updated: '2026-10-23T11:40:00Z'
+- id: t-091
+  milestone: m4
+  title: Image-first cinematic quality and cross-device acceptance for every room
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-089
+  note: >-
+    Silas, 2026-10-23: game boot shows only the aquarium except for the
+    one-time full-screen authored NPC introduction. Every market, bestiary,
+    roster, relic, decoration and scenery choice gets its own image-led
+    console scene or full-stage mode, not a long website card list, side-sheet
+    or stacked page. Ensure the aquarium continues filling the game host at
+    390px, 768px, 1024px portrait and 1440px, with accurate canvas hit-testing,
+    main app navigation still reachable, no outer scrolling and keyboard and
+    touch controls. Use image-forward fish purchasing, strong art for the
+    bestiary and remaining rooms, cinematic milestone scene transitions,
+    reduced-motion still fallback and native accessibility. Visually verify
+    on the actual self-hosted deployment or a faithful rendered preview;
+    source tests alone do not establish layout acceptance.
+  updated: '2026-10-23T11:40:00Z'
