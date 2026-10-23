@@ -15,76 +15,65 @@ is_public: false
 is_mature: false
 cast_loras: false
 lanes:
-  - key: arthemy-house
-    label: Arthemy Western Art v3.0, illustrated arcade cover
-    engine: comfy
-    checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
-    prompt: tags
-    prefix: >-
-      masterpiece, best quality, amazing quality, absurdres, very aesthetic,
-      western comics (style), hand-painted detailed inked illustration,
-      weird west, Edo samurai, gritty dark fantasy, dramatic cinematic lighting,
-      rich weathered materials, deep navy shadows, antique amber and turquoise glows
-    steps: 30
-    cfg: 5
-    sampler: euler_ancestral
+- key: arthemy-house
+  label: Arthemy Western Art v3.0, illustrated arcade cover
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics (style), hand-painted
+    detailed inked illustration, weird west, Edo samurai, gritty dark fantasy, dramatic cinematic lighting, rich
+    weathered materials, deep navy shadows, antique amber and turquoise glows
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
 subjects:
-  - key: home-feature-cabinet
-    entity: zuzu-last-bell-home-feature
-    title: Zuzu The Last Bell, complete haunted arcade cabinet beauty view
-    size: 1216x768
-    seed: 10232301
-    prompt_tags: >-
-      (a single complete luxury pinball machine seen from a three-quarter front angle:1.5),
-      (intricate playable pinball table inside a real wooden cabinet:1.4),
-      The Last Bell haunted abbey pinball, aged oxblood lacquer, dark cedar
-      cabinet sides, ornate copper and brass rails, silver steel pinball,
-      two clearly visible lower white flippers, rising elevated mini-playfield
-      with two upper flippers, three distinct spiralling copper ramps,
-      five winding shooting lanes, warm lanterns along a frontier village,
-      a huge scarred River Croc rising from dark teal water on the left of the table
-      with his wide open jaws ready to catch the ball,
-      massive swinging antique bronze abbey bell at the rear of the table,
-      tall painted glass backbox with Zuzu the grey koala wandering Edo ronin
-      wearing a weathered straw kasa and holding a chipped katana,
-      moonlit haunted abbey and dusty frontier village behind the ronin,
-      intricate physically credible bumper posts and glowing target inserts,
-      luminous amber lanterns, cyan water reflections, violet crypt lights,
-      full cabinet in frame, low dramatic perspective, horizontal composition,
-      the cabinet filling the picture, polished premium illustrated game cover
-    negative: >-
-      sprite sheet, sprites, contact sheet, comic strip, panels, grid,
-      character lineup, turnaround, multi view, blueprint, schematic,
-      exploded diagram, poster text, words, lettering, logos, watermark,
-      flat vector graphic, empty background, unpainted prototype, low detail,
-      blurred, deformities, disembodied flippers, floating cabinet parts,
-      photocollage, gore
-  - key: home-feature-ball
-    entity: zuzu-last-bell-home-feature
-    title: Zuzu The Last Bell, dramatic close three-quarter playable table
-    size: 1216x768
-    seed: 10232302
-    prompt_tags: >-
-      (immersive elevated three-quarter photograph-like illustration of one
-      ornate premium haunted abbey pinball cabinet:1.5),
-      (pinball machine and its deeply layered illuminated playfield:1.4),
-      silver steel ball racing toward the River Croc's open mouth at left,
-      ancient scarred crocodile emerging from murky teal water with glowing eyes,
-      large swinging bronze abbey bell above a raised two-flipper upper playfield,
-      broad curving copper ramps crossing a dark oxblood wooden table,
-      individual brass posts, intricate mechanical targets, orbit lanes,
-      two ivory lower flippers clear in foreground,
-      glass backbox painted with Zuzu a grey anthropomorphic koala ronin
-      in an Edo straw kasa carrying a worn katana,
-      moonlit frontier abbey, old graveyard lanterns, haunted weird west village,
-      rich deep ink-black shadows and gold lantern light,
-      icy cyan water reflections, crimson ritual lamps, violet crypt highlights,
-      lacquered wooden cabinet and worn decorative iron,
-      premium complete pinball machine occupying the frame,
-      horizontal wide cinematic composition, cohesive painted western comic scene
-    negative: >-
-      sprite atlas, sprite sheet, contact sheet, collage, character sheet,
-      comic panels, split screen, title words, typography, captions,
-      watermark, logo, blueprint, schematic, diagram, cutaway,
-      blurry, fuzzy, lowres, flat vectors, floating objects,
-      unrealistic disconnected ramps, multiple machines, gore
+- key: home-feature-cabinet
+  entity: zuzu-last-bell-home-feature
+  title: Zuzu The Last Bell, complete haunted arcade cabinet beauty view
+  size: 1216x768
+  seed: 10232301
+  prompt_tags: (a single complete luxury pinball machine seen from a three-quarter front angle:1.5), (intricate
+    playable pinball table inside a real wooden cabinet:1.4), The Last Bell haunted abbey pinball, aged oxblood
+    lacquer, dark cedar cabinet sides, ornate copper and brass rails, silver steel pinball, two clearly visible
+    lower white flippers, rising elevated mini-playfield with two upper flippers, three distinct spiralling copper
+    ramps, five winding shooting lanes, warm lanterns along a frontier village, a huge scarred River Croc rising
+    from dark teal water on the left of the table with his wide open jaws ready to catch the ball, massive swinging
+    antique bronze abbey bell at the rear of the table, tall painted glass backbox with Zuzu the grey koala wandering
+    Edo ronin wearing a weathered straw kasa and holding a chipped katana, moonlit haunted abbey and dusty frontier
+    village behind the ronin, intricate physically credible bumper posts and glowing target inserts, luminous amber
+    lanterns, cyan water reflections, violet crypt lights, full cabinet in frame, low dramatic perspective, horizontal
+    composition, the cabinet filling the picture, polished premium illustrated game cover
+  negative: sprite sheet, sprites, contact sheet, comic strip, panels, grid, character lineup, turnaround, multi
+    view, blueprint, schematic, exploded diagram, poster text, words, lettering, logos, watermark, flat vector graphic,
+    empty background, unpainted prototype, low detail, blurred, deformities, disembodied flippers, floating cabinet
+    parts, photocollage, gore
+  jobs:
+    arthemy-house: 44263
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: home-feature-ball
+  entity: zuzu-last-bell-home-feature
+  title: Zuzu The Last Bell, dramatic close three-quarter playable table
+  size: 1216x768
+  seed: 10232302
+  prompt_tags: (immersive elevated three-quarter photograph-like illustration of one ornate premium haunted abbey
+    pinball cabinet:1.5), (pinball machine and its deeply layered illuminated playfield:1.4), silver steel ball
+    racing toward the River Croc's open mouth at left, ancient scarred crocodile emerging from murky teal water
+    with glowing eyes, large swinging bronze abbey bell above a raised two-flipper upper playfield, broad curving
+    copper ramps crossing a dark oxblood wooden table, individual brass posts, intricate mechanical targets, orbit
+    lanes, two ivory lower flippers clear in foreground, glass backbox painted with Zuzu a grey anthropomorphic
+    koala ronin in an Edo straw kasa carrying a worn katana, moonlit frontier abbey, old graveyard lanterns, haunted
+    weird west village, rich deep ink-black shadows and gold lantern light, icy cyan water reflections, crimson
+    ritual lamps, violet crypt highlights, lacquered wooden cabinet and worn decorative iron, premium complete pinball
+    machine occupying the frame, horizontal wide cinematic composition, cohesive painted western comic scene
+  negative: sprite atlas, sprite sheet, contact sheet, collage, character sheet, comic panels, split screen, title
+    words, typography, captions, watermark, logo, blueprint, schematic, diagram, cutaway, blurry, fuzzy, lowres,
+    flat vectors, floating objects, unrealistic disconnected ramps, multiple machines, gore
+  jobs:
+    arthemy-house: 44264
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
