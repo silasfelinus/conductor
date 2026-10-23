@@ -35,12 +35,13 @@ jobs:
           python scripts/review_zuzu_gamebook_round16.py \
             --sheet "$RUNNER_TEMP/zuzu-round16-review.jpg" \
             --receipt "$RUNNER_TEMP/zuzu-round16-receipt.json"
-      - name: Archive ephemeral editorial previews
+      # Never upload a contact-sheet image to artifacts of this public repository.
+      # Preserve only non-image delivery metadata for authenticated internal review.
+      - name: Archive delivery metadata only
         uses: actions/upload-artifact@v4
         with:
           name: zuzu-round16-editorial-review
           path: |
-            ${{ runner.temp }}/zuzu-round16-review.jpg
             ${{ runner.temp }}/zuzu-round16-receipt.json
           retention-days: 1
           if-no-files-found: error
