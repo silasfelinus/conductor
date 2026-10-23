@@ -237,7 +237,7 @@ jobs:
         id: daily_dream_build
         continue-on-error: true
         # Consume the oldest valid unbuilt proposal if the buffer is full and
-        # no proposal was authored today. Never silently reuse yesterday\x27s output.
+        # no proposal was authored today. Never silently reuse the prior completed bundle.
         run: python scripts/run_daily_dream_build.py --date "$(TZ=America/Los_Angeles date +%F)"
         env:
           DAILY_DREAM_SCHEDULED: "1"
