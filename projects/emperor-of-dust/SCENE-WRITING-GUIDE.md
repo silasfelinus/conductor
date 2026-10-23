@@ -20,11 +20,21 @@ editorially accepted, exported, and used in the game as separate states.
 **Species and naming are separate layers of canon.** Every visible resident is an identifiable,
 upright anthropomorphic animal, clothed and acting in this wasteland society. State the exact
 canon species and physical description in positive image prompts, especially for named cast;
-do not assume the image model infers an animal body from a character's name. Named individuals
-usually carry personal names (Mara Reedbell, Marisol Tallow, Rook Bramble, Sister Reedlight),
-not animal labels. Explicit existing exceptions include Young Komodo and the Storm Crows'
-faction name. An unnamed passerby may be described by species and role, but a named individual
-must not be rebranded "the Fox" or "Rabbit Captain" in prose or art metadata.
+do not assume the image model infers an animal body from a character's name. In **player-facing story prose and dialogue**, introduce and describe residents by
+name, occupation, role, relationship, allegiance, or actions, **never by species**,
+even when the person is unnamed. Write "a traveler", "an engineer", "a petitioner",
+"a knight", "a farmer", "a guard", or "the courier", not "a koala",
+"a fox", "a wolf", "an otter sister", or "a rabbit". Do not substitute
+species for a personal name later in a scene, either. This rule includes
+briefings, throne petitions, quest outcomes, follower talks, epilogues, market
+stalls, and random events. Preserve proper faction names such as **Storm Crows**
+and **Mole Revolutionaries**, and very rare established proper names such as
+**Young Komodo**. Literal livestock, pets, wildlife, and anatomical detail
+may appear naturally, but no person's identity should be reduced to a species.
+
+Keep exact species, physical design, anatomy, reference art, and species locking
+in positive **art prompts** and behind-the-scenes cast metadata. Do not remove
+canonical species from cast records or silently change artwork.
 
 Read `NPCS-V03.md`, `FOLLOWERS-V03.md` and the Book One cast picks before rendering.
 Preserve species, relationships and **first-appearance chronology** across quests, talks and
