@@ -771,8 +771,7 @@ tasks:
 - id: t-044
   milestone: m4
   title: Replace ruler cosmetics and overlay maze with a console-first briefing, map and fishing flow
-  status: review
-  owner: worker
+  status: done
   stakes: reversible
   passes: 0
   note: |-
@@ -781,13 +780,15 @@ tasks:
     Built a new one-screen console flow with map, lake, inline opening, royal briefings, catch reveal, shop, records and saves. Removed ruler name/honorific/photo pickers, hid the unseen ruler sprite, replaced the old repeated timing/tension encounters with a two-stop cast and forgiving tap/slack reel reducer, and added deterministic catch tests. App branch worker/ruler-hooked-t044-console-20261023; CI pending.
 
     Silas revised the original ruler-cosmetic-removal request on 2026-10-23 PT: preserve ruler name, honorific and avatar selection, but integrate all three into an illustrated full-stage in-game coronation. The ruler is the unseen player point-of-view thereafter and must not appear in world, fishing, map, quest, catch or chronicle art. Updated kind_robots PR #4060 with a portrait carousel, local portrait upload, in-game name/title inscriptions, non-scrolling console route, ruler-free compositor and chronicle, and mandatory POV contract tests. CI running; art prompt pipeline must honor opening-only portraits too.
-  updated: '2026-10-23T21:26:07.175Z'
+
+    Merged silasfelinus/kind_robots#4060 to main at commit 7cb8b695ad3dc4cb4884f21e747ae4d934f7208c after all 14 GitHub Actions workflows completed successfully (TypeScript, full contract suite, layout, icon audit, formatting, Ruler Hooked game tests). Under Silas's revised direction, ruler name, honorific and portrait selection now belong to an illustrated, in-game coronation with large preset previews and optional custom image. The world, fishing, briefings and chronicles never render the player's face; only the opening does. Separated scene screens, one initial fishing spot, and easier two-stop plus tap/pause fishing are merged. Canonical first-person prompt instructions and opening-only portrait generation also merged via silasfelinus/conductor#6550. Production self-hosted deploy and rendered tablet/mobile visual acceptance remain unverified and are not claimed done.
+  updated: '2026-10-23T21:32:11.713Z'
   claimed_by: 2026-10-23T080000Z-ruler-hooked-t044-c6p4
   claimed_at: '2026-10-23T08:00:00Z'
 - id: t-045
   milestone: m4
   title: Deepen kingdom quest arcs and connect decisions to fishing spots and species
-  status: waiting
+  status: ready
   owner: null
   stakes: reversible
   passes: 0
