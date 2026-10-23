@@ -1,0 +1,46 @@
+name: Zuzu Gamebook Scene Art Review
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/zuzu-gamebook-art-review.yml'
+      - 'scripts/review_zuzu_gamebook_round16.py'
+      - 'projects/zuzu-gamebook/art/ROUND-16-SCENE-FIDELITY.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zuzu-gamebook-art-review
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+      KR_BASE_URL: https://kindrobots.org
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned review dependencies
+        run: python -m pip install 'PyYAML>=6,<7' 'Pillow>=11,<13'
+      - name: Verify accessible delivered artwork and prepare editor sheet
+        run: |
+          python scripts/review_zuzu_gamebook_round16.py \
+            --sheet "$RUNNER_TEMP/zuzu-round16-review.jpg" \
+            --receipt "$RUNNER_TEMP/zuzu-round16-receipt.json"
+      - name: Archive ephemeral editorial previews
+        uses: actions/upload-artifact@v4
+        with:
+          name: zuzu-round16-editorial-review
+          path: |
+            ${{ runner.temp }}/zuzu-round16-review.jpg
+            ${{ runner.temp }}/zuzu-round16-receipt.json
+          retention-days: 1
+          if-no-files-found: error
