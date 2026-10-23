@@ -1258,3 +1258,81 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-121
+  revision: 1
+  chapter: 2
+  location: Mad River mouth / Hammond Trail
+  title: The Latitude Argument
+  tier: reported
+  provenance: 'The Josiah Gregg party reached this coast in December 1849 and, by one account, quarreled at the river mouth over fixing its latitude; the only source is L. K. Wood''s memoir, which historians
+    treat with caution. The river had other names first, including Baduwa''t in the Wiyot (Soulatluk) language, and the Wiyot people are still here. The foggy replay, the dialogue and the sextant jokes are invented
+    and fictionalize the anecdote; this is not a Wiyot-reviewed account.'
+  rarity: uncommon
+  tone:
+  - funny
+  - wry
+  - uncanny
+  cast:
+  - The Surveyor (fictionalized, fixated, hoarse)
+  - The Crew (starving, done with latitude)
+  - The Fog (replaying a story, not a person)
+  canon:
+  - The anecdote is single-source, so the game says so and does not pretend it is settled history.
+  - The river already had names and people long before the English-language one, and Baduwa't is one of them.
+  - Nobody on the card is a real Wiyot person, and no one from the Wiyot Tribe is put into the replay.
+  scene: The fog on the Mad River mouth is replaying a bad morning. A ragged party in 1849 coats stands around a man fussing with a sextant that cannot find a horizon. "I will not cross until I have the latitude,"
+    he says, for the ninth time. The rest want to cross, eat and never hear the word again. A weathered sign nearby notes that the river had other names first, Baduwa't among them, and that this story comes from
+    a single memoir. The crew turns to you. "You look reasonable. Settle it."
+  options:
+  - id: a
+    label: Help him take the reading
+    skill: wits
+    target: 9
+    success:
+      text: You steady the sextant and read out a number. It is a very precise latitude, a little wrong for this Humboldt and exactly right for a different one. The surveyor writes it down with a grave nod.
+      effects:
+      - evidence:document
+      - flag:latitude_measured
+    failure:
+      text: The fog swallows the horizon and the surveyor blames you at length. You learn several new words for a level line.
+      effects:
+      - nerve-1
+  - id: b
+    label: Help the crew across
+    skill: burly
+    target: 7
+    success:
+      text: Everyone gets over dry and fed, and the shouting starts behind you right on schedule. The river keeps going the way it always has.
+      effects:
+      - goodwill+1
+      - flag:mad_river_ferried
+    failure:
+      text: You are as wet as the crew and twice as cross. The surveyor shouts a few more facts at your back.
+      effects:
+      - time-1
+  - id: c
+    label: Try to make peace
+    skill: rizz
+    target: 11
+    success:
+      text: For thirty seconds the whole party goes quiet. Then the argument resumes, because the river's name was never yours to change, and you step back and let the fog finish its story.
+      effects:
+      - evidence:history
+      - goodwill+1
+      - flag:mad_river_peace
+    failure:
+      text: You are now part of the argument, which is by this point mostly about you.
+      effects:
+      - nerve-1
+  lead_reactions:
+    mara: Mara reads the sign twice. "One memoir, one witness, a famously touchy surveyor. I would like that written down, and I would like the river's first name written down too."
+    kit: Kit salutes the sextant. "Nine times? That is a bit. I respect the commitment and I will not be doing it."
+    juniper: Juniper looks at the water, not the men. "The story is loud, but the river is older than the story. I would let the river finish the sentence."
+    cedar: Cedar scratches his neck. "Everybody just wants to cross and eat. I have never heard a plainer plan."
+  callbacks:
+  - latitude_measured
+  - mad_river_ferried
+  - mad_river_peace
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
