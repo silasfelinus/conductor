@@ -912,17 +912,18 @@ tasks:
   - id: t-057
     milestone: m5
     title: "Restore opaque, legible Emperor of Dust room panels over illustrated backgrounds"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-10-23T115100Z-eod-contrast-4f8b1
     claimed_at: '2026-10-23T11:51:00Z'
-    updated: '2026-10-23T11:56:00Z'
+    updated: '2026-10-23T12:08:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Silas's 2026-10-23 PT tablet screenshot shows transparent Quest Room containers obscuring quest details, rewards, needs, roster, and dispatch actions over room artwork. Repair the shared visual panel colors without reducing artwork prominence or losing compact console layout. Add a regression guard to the Emperor layout test and review other shared panels.
 
       Quest Room and other illustrated fortress panels now use opaque shared ink surfaces instead of transparent color mixes; added an Emperor layout regression guard. Implementation branch worker/emperor-of-dust-t-057-contrast-4f8b1; awaiting PR checks.
+
+      Merged silasfelinus/kind_robots#4074 into main as 66669d9a2323b22ad22d2dd90a241c37fe8e702a. All 16 head-commit GitHub Actions workflows completed successfully, including Emperor of Dust Dispatch Contract, TypeScript, Changed-File Formatting, Layout Contract, and four Contract Test shards. Shared fortress text panels, chips, and plates now use solid theme surfaces while background art stays intact; no game logic changes. No production deployment or real-device screenshot verified.
 
   - id: t-058
     milestone: m5
