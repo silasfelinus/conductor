@@ -18,7 +18,6 @@ from collections import Counter
 from pathlib import Path
 
 import yaml
-from PIL import Image, ImageDraw, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
 LEDGER = ROOT / "projects/zuzu-gamebook/art/ROUND-16-SCENE-FIDELITY.yaml"
@@ -74,6 +73,8 @@ def fetch_image(image_id, token, base):
         raw = response.read(12_000_000)
         if len(raw) >= 12_000_000:
             raise ValueError(f"ArtImage {image_id}: excessive media size")
+    from PIL import Image
+
     with Image.open(io.BytesIO(raw)) as image:
         image.load()
         image_format = image.format
@@ -85,6 +86,8 @@ def fetch_image(image_id, token, base):
 
 def review_sheet(loaded, output):
     """Three columns by three rows; labels stay within each candidate cell."""
+    from PIL import Image, ImageDraw, ImageOps
+
     thumb = (390, 260)
     label_height = 42
     sheet = Image.new("RGB", (3 * thumb[0], 3 * (thumb[1] + label_height)), "#23252a")
