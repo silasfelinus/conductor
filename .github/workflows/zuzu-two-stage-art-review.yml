@@ -1,0 +1,56 @@
+name: Zuzu Two-Stage Art Delivery Checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/zuzu-gamebook/art/ROUND-18-KREA-COMPOSITION.yaml'
+      - 'projects/zuzu-gamebook/art/ROUND-19-ARTHEMY-STYLEPASS.yaml'
+      - 'scripts/review_zuzu_gamebook_round16.py'
+      - '.github/workflows/zuzu-two-stage-art-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zuzu-two-stage-art-review
+  cancel-in-progress: false
+
+jobs:
+  verify-delivery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+      KR_BASE_URL: https://kindrobots.org
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install verification dependencies
+        run: python -m pip install 'PyYAML>=6,<7' 'Pillow>=11,<13'
+      - name: Verify Krea composition ArtImages when ready
+        run: |
+          python scripts/review_zuzu_gamebook_round16.py \
+            --ledger projects/zuzu-gamebook/art/ROUND-18-KREA-COMPOSITION.yaml \
+            --if-pending \
+            --sheet "$RUNNER_TEMP/krea-compositions-private.jpg" \
+            --receipt "$RUNNER_TEMP/krea-receipt.json"
+      - name: Verify Arthemy img2img ArtImages when ready
+        run: |
+          python scripts/review_zuzu_gamebook_round16.py \
+            --ledger projects/zuzu-gamebook/art/ROUND-19-ARTHEMY-STYLEPASS.yaml \
+            --if-pending \
+            --sheet "$RUNNER_TEMP/arthemy-style-private.jpg" \
+            --receipt "$RUNNER_TEMP/arthemy-receipt.json"
+      - name: Upload metadata receipts only, never private image pixels
+        uses: actions/upload-artifact@v4
+        with:
+          name: zuzu-two-stage-private-delivery-receipts
+          path: |
+            ${{ runner.temp }}/krea-receipt.json
+            ${{ runner.temp }}/arthemy-receipt.json
+          retention-days: 2
+          if-no-files-found: ignore
