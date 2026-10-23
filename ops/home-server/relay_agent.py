@@ -33,6 +33,12 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    import relay_fingerprint
+except ImportError:  # loaded by file path (tests, ad-hoc runs) without this folder on sys.path
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import relay_fingerprint
+
 KR_BASE_URL = os.environ.get(
     "KR_BASE_URL", "https://kindrobots.org"
 ).rstrip("/")
@@ -48,9 +54,6 @@ HEARTBEAT_SECONDS = float(os.environ.get("HEARTBEAT_SECONDS", "60"))
 # timeout, and in practice well under one. 30s is past anything healthy and far
 # short of the 60s sleep, so it cannot fire on ordinary jitter.
 HEARTBEAT_SLOW_SECONDS = float(os.environ.get("HEARTBEAT_SLOW_SECONDS", "30"))
-RELAY_VERSION = os.environ.get(
-    "KR_RELAY_VERSION", "conductor-relay-completion-proof-v1"
-).strip()
 
 # The model tree ComfyUI loads weights from, as this box sees it. The relay
 # never opens these files itself -- it hands ComfyUI a workflow and ComfyUI
@@ -203,6 +206,11 @@ def detect_relay_build():
 RELAY_BUILD = detect_relay_build()
 # An explicit env var still wins; it just is no longer the only way to get one.
 RELAY_COMMIT = os.environ.get("KR_RELAY_COMMIT", "").strip() or RELAY_BUILD["commit"]
+# Derived from the loaded code (see relay_fingerprint.py), so relay-status shows
+# a relay still running code main has since changed. The env var still wins.
+RELAY_VERSION = os.environ.get("KR_RELAY_VERSION", "").strip() or relay_fingerprint.relay_version(
+    RELAY_COMMIT
+)
 
 # .webp covers animated-clip jobs saved via ComfyUI's native SaveAnimatedWEBP
 # node (kind_robots' video generator defaults to it: smaller/better quality

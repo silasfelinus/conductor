@@ -50,6 +50,7 @@ CHECKS: list[tuple[str, list[str], bool, bool]] = [
     ("check_recurring_claim_drift", ["scripts/check_recurring_claim_drift.py"], False, False),
     ("check_recurring_churn", ["scripts/check_recurring_churn.py"], False, False),
     ("art_queue_health", ["scripts/art_queue_health.py", "check"], False, False),
+    ("check_relay_version_drift", ["scripts/check_relay_version_drift.py"], True, False),
     ("issue_bridge", ["scripts/sync_github_issues.py", "--check"], True, False),
     ("dream_docket", ["scripts/build_dream_proposal.py", "--check", "--fetch"], True, True),
     ("tzaddik_review", ["scripts/tzaddik_review.py", "--check"], False, True),
