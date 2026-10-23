@@ -155,7 +155,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: Independently enqueue and review gamebook illustrations in batches
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: [t-005]
@@ -175,7 +175,9 @@ tasks:
       Merged Conductor PR #6539 at 2026-10-23 PT, committing nine approved Arthemy v3 art requests across a2-bell-view, a2-gift, a4-bloom. PR CI fully passed. GitHub Actions auto-art-generate run 39949108564 reached Sweep opted-in art ledgers, but ArtJob IDs were not yet committed/verified at closeout. Do not double-submit while sweep active. Follow through: confirm nine durable job IDs, DONE plus reachable delivered private ArtImages, review narrative fidelity and export vetted WebPs into kind_robots, update art manifests, retire temporary SVGs. Task stays ready because generation and delivery are not complete.
 
       Finish scene-fidelity round 16 delivery: verify completed private ArtImage URLs, make an authenticated review/export pipeline, and retire temporary assets only after approved final art exists.
-    updated: '2026-10-23T21:09:42Z'
+
+      Nine Round 16 ArtJobs and ArtImages are DONE in the durable ledger. Implement authenticated URL/media decode/size review for all nine; never auto-promote unreviewed candidates or commit private originals.
+    updated: '2026-10-23T21:13:20Z'
     owner: worker
     claimed_by: 2026-10-23T210942Z-zuzu-delivery-98a3
     claimed_at: '2026-10-23T21:09:42Z'
