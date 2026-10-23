@@ -155,8 +155,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: Independently enqueue and review gamebook illustrations in batches
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-005]
@@ -166,9 +165,9 @@ tasks:
       Silas-directed illustration replacement: From the Bell and other incongruent gamebook art should depict their own prose instead of unrelated stand-ins.
 
       Replaced two demonstrably incongruent stand-ins (a2-bell-view, a4-bloom) with original scene-specific vector plates, added SVG provenance handling and regression tests. App PR follows; broader illustration review continues.
-    claimed_by: 2026-10-23T09:23:47Z-zuzu-t006-illustration-c91e
-    claimed_at: '2026-10-23T09:23:47Z'
-    updated: '2026-10-23T09:36:02Z'
+
+      Merged silasfelinus/kind_robots#4064 at 2026-10-23 02:49 PT (29a44a3321adf1b5a08ac40dde96f144a60a5ba0), replacing inaccurate stand-ins for a2-bell-view and a4-bloom with scene-faithful original vector illustrations. All 14 PR checks passed. Production deploy not verified; ongoing gamebook art delivery remains unfinished, so task returns to ready.
+    updated: '2026-10-23T09:50:07Z'
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest
