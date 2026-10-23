@@ -1470,3 +1470,17 @@ tasks:
       Kaizen from #6533 review: extend validate_weird_humboldt_cards.py with a
       chapter-anchor scene schema check (one anchor per chapter, authored text,
       no-dead-end rules) so anchors are validated from their first commit.
+  - id: t-062
+    milestone: m2
+    title: "Mysteries: twelve once-per-run local cases, three gates, true path, Real Endings and Case Files"
+    status: review
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    claimed_by: 2026-10-24T00:30:00Z-wh-t062-mysteries-c7f4
+    claimed_at: '2026-10-24T00:30:00Z'
+    updated: '2026-10-24T03:20:00Z'
+    note: |-
+      Silas, 2026-10-23 PT, in session: "a singular opportunity that occurs once a game to pursue a random local mystery" — twelve cases modeled on the zodiac without naming it ("unless it's buried in something like 'The mystery of the virgin sacrifice'"), fresh stories in Humboldt's backwoods and underbelly, "a college aged Scooby Doo vibe", unique Mystery cards with a hint of each sign in the art, a Case Files screen showing which mysteries were uncovered and which gates passed, about three gates per game told as digressions, two passes for the true path, and a final choice tree to Real Endings. Design and roster: MYSTERIES.md.
+
+      Implemented in kind_robots PR #4082 (branch claude/youthful-carson-7vs0zk): utils/ecotone/mysteries (types, compiler, validator, seeded pick preferring unopened cases, gate interludes before the first fork / crossroads / finale that keep route indexes and save v4 stable), twelve authored cases (84 scenes, 36 Real Endings), Case Files tab and ledger, code-drawn zodiac-hinted Mystery cards, digression message bubbles and Real Ending framing; verifyEcotoneMysteries contract in the Ecotone Gameplay workflow. Twelve Krea 2 card-art requests queued in projects/art-prompts.yaml (queued, not rendered).
