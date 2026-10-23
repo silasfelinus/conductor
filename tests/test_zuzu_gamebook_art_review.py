@@ -1,7 +1,6 @@
 """Round 16 review verifies *delivered* private art; no auto-promotion."""
 import pytest
 import yaml
-from PIL import Image
 
 from scripts import review_zuzu_gamebook_round16 as review
 
@@ -29,6 +28,7 @@ def test_private_media_url_is_origin_bound():
 
 def test_contact_sheet_produces_no_file_without_explicit_call(tmp_path):
     assert not list(tmp_path.iterdir())
+    Image = pytest.importorskip("PIL.Image")
     image = Image.new("RGB", (1344, 768), "navy")
     subjects = yaml.safe_load(review.LEDGER.read_text())["subjects"]
     loaded = [(s, 44243 + i, 252163 + i, image, "abc123") for i, s in enumerate(subjects)]
