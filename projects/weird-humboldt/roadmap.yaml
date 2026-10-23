@@ -1456,3 +1456,15 @@ tasks:
     claimed_by: 2026-10-23T024850Z-wh-t060-f98d6e
     claimed_at: '2026-10-23T02:48:50Z'
     updated: '2026-10-23T03:00:00Z'
+  - id: t-030
+    milestone: m2
+    title: "Derive validator PER_CHAPTER card counts from ENCOUNTER-SEEDS.md instead of hand-maintained constants"
+    status: ready
+    depends_on: t-003
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from WH-120 review (#6527): validate_weird_humboldt_cards.py and
+      tests/test_weird_humboldt_cards.py hard-code deck sizes, so each new card
+      needs three coordinated edits. Derive counts from the seeds file.
