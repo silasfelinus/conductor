@@ -25,6 +25,7 @@ more than it bought.
 from __future__ import annotations
 
 import datetime
+import os
 import sys
 from pathlib import Path
 from typing import Optional
@@ -42,6 +43,20 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
     contract before any live records are created.
     """
     today = datetime.datetime.now(core._TZ).date().isoformat()
+    # The scheduled morning author may intentionally skip today's date while the
+    # proposal buffer is full. Consume an older eligible proposal rather than
+    # succeeding as a no-op and reusing a previous built bundle in the digest.
+    # An existing same-day proposal must not be bypassed, even when invalid.
+    if (
+        os.environ.get("DAILY_DREAM_SCHEDULED") == "1"
+        and date_override == today
+        and not any(
+            str(fm.get("proposal_date") or fm.get("created") or "") == today
+            for _, fm, _ in core.find_proposals()
+        )
+    ):
+        return eligible_proposal(None)
+
     best: Optional[tuple[str, Path]] = None
     retry: Optional[tuple[str, Path]] = None
     reason = "no unbuilt proposal ready (none past its steering day)"
