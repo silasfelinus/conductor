@@ -1393,22 +1393,17 @@ tasks:
   - id: t-057
     milestone: m2
     title: "Ecotone P0: make seven advertised origin perks genuinely playable"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
-    note: >-
-      Triage 2026-10-22 PT: content.ts advertises seven origin-specific powers that
-      the reducer does not track or consume; the front end displays the promises.
-      Implement visible and replay-safe limited-use actions for each archetype
-      (once per chapter where specified), including spent-state tracking and
-      old-save compatibility, or remove any promise that cannot be supported.
-      Seven origin witnesses, cap enforcement and save/reload tests required.
-      No cultural-history changes, public deployment, or art workstream edits.
-      Source: PLAYSTYLE-TRIAGE-2026-10-22.md.
+    note: |-
+      Triage 2026-10-22 PT: content.ts advertises seven origin-specific powers that the reducer does not track or consume; the front end displays the promises. Implement visible and replay-safe limited-use actions for each archetype (once per chapter where specified), including spent-state tracking and old-save compatibility, or remove any promise that cannot be supported. Seven origin witnesses, cap enforcement and save/reload tests required. No cultural-history changes, public deployment, or art workstream edits. Source: PLAYSTYLE-TRIAGE-2026-10-22.md.
+
+      Implemented seven individually functional player-invoked origin perks on worker/weird-humboldt-t057-origin-perks-a83f21. Includes once-per-chapter spend, visible player control and in-character consequences, safe version-4 save restore, and seven-archetype seeded witnesses. Waiting for CI, formatting and code review; no outward-facing deployment or excluded content changes.
     owner: worker
     claimed_by: 2026-10-23T011325Z-wh-t057-a83f21
     claimed_at: '2026-10-23T01:13:25Z'
-    updated: '2026-10-23T01:13:25Z'
+    updated: '2026-10-23T01:32:00Z'
 
   - id: t-058
     milestone: m3
