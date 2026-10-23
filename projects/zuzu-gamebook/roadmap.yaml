@@ -155,7 +155,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: Independently enqueue and review gamebook illustrations in batches
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-005]
@@ -171,10 +171,9 @@ tasks:
       Human follow-up: SVG image patches are temporary; submit verified Arthemy rerenders for a2-bell-view, a2-gift, and a4-bloom, then confirm real ArtJob IDs.
 
       Review real art batch ROUND-16-SCENE-FIDELITY.yaml: 9 Arthemy house renders, 3 seeds each for a2-bell-view, a2-gift, and a4-bloom. Uses auto_submit; verify durable ArtJob IDs and delivered keepers.
-    updated: '2026-10-23T11:47:36Z'
-    owner: worker
-    claimed_by: 2026-10-23T11:41:31Z-zuzu-art-real-b72f
-    claimed_at: '2026-10-23T11:41:31Z'
+
+      Merged Conductor PR #6539 at 2026-10-23 PT, committing nine approved Arthemy v3 art requests across a2-bell-view, a2-gift, a4-bloom. PR CI fully passed. GitHub Actions auto-art-generate run 39949108564 reached Sweep opted-in art ledgers, but ArtJob IDs were not yet committed/verified at closeout. Do not double-submit while sweep active. Follow through: confirm nine durable job IDs, DONE plus reachable delivered private ArtImages, review narrative fidelity and export vetted WebPs into kind_robots, update art manifests, retire temporary SVGs. Task stays ready because generation and delivery are not complete.
+    updated: '2026-10-23T12:05:40Z'
   - id: t-007
     milestone: m3
     title: Integrate authored story bundle, chapter pacing and illustration manifest

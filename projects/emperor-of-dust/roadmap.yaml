@@ -911,20 +911,31 @@ tasks:
 
   - id: t-057
     milestone: m5
-    title: "Enforce role-first narrative prose, never species-as-identity"
-    status: ready
+    title: "Restore opaque, legible Emperor of Dust room panels over illustrated backgrounds"
+    status: done
+    claimed_by: 2026-10-23T115100Z-eod-contrast-4f8b1
+    claimed_at: '2026-10-23T11:51:00Z'
+    updated: '2026-10-23T12:08:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Silas, 2026-10-23 PT: people in Emperor of Dust must never be introduced
-      or described by species in narration or dialogue, named or unnamed.
-      Use a person's role, occupation, name, relationship, allegiance or
-      deeds, such as traveler, farmer, petitioner, knight or vagrant. Exception:
-      exact species is required for art prompts and cast metadata, with rare
-      established in-world proper names such as Young Komodo. Preserve proper
-      faction titles (Storm Crows, Mole Revolutionaries), real animals, and
-      plot/state IDs. Correct Day 1 onboarding and player-visible scripted
-      prose across acts, chance events, quest outcomes and character talks.
-      Add a scoped species-as-identity regression check without mistaking
-      faction names, species-locked art or literal animals for prose defects.
-      Do not deploy or publish.
+    note: |-
+      Silas's 2026-10-23 PT tablet screenshot shows transparent Quest Room containers obscuring quest details, rewards, needs, roster, and dispatch actions over room artwork. Repair the shared visual panel colors without reducing artwork prominence or losing compact console layout. Add a regression guard to the Emperor layout test and review other shared panels.
+
+      Quest Room and other illustrated fortress panels now use opaque shared ink surfaces instead of transparent color mixes; added an Emperor layout regression guard. Implementation branch worker/emperor-of-dust-t-057-contrast-4f8b1; awaiting PR checks.
+
+      Merged silasfelinus/kind_robots#4074 into main as 66669d9a2323b22ad22d2dd90a241c37fe8e702a. All 16 head-commit GitHub Actions workflows completed successfully, including Emperor of Dust Dispatch Contract, TypeScript, Changed-File Formatting, Layout Contract, and four Contract Test shards. Shared fortress text panels, chips, and plates now use solid theme surfaces while background art stays intact; no game logic changes. No production deployment or real-device screenshot verified.
+
+  - id: t-058
+    milestone: m5
+    title: "Enforce role-first narrative prose, never species-as-identity"
+    status: review
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-10-23 PT: people in Emperor of Dust must never be introduced or described by species in narration or dialogue, named or unnamed. Use a person's role, occupation, name, relationship, allegiance or deeds, such as traveler, farmer, petitioner, knight or vagrant. Exception: exact species is required for art prompts and cast metadata, with rare established in-world proper names such as Young Komodo. Preserve proper faction titles (Storm Crows, Mole Revolutionaries), real animals, and plot/state IDs. Correct Day 1 onboarding and player-visible scripted prose across acts, chance events, quest outcomes and character talks. Add a scoped species-as-identity regression check without mistaking faction names, species-locked art or literal animals for prose defects. Do not deploy or publish.
+
+      Rewrote species-first identities across Day 1 recruit introductions, Act I–V court scenes, follower talks, random encounters, quest outcomes, epilogues, market visitors and betrayals. Positive art/cast species, explicit proper faction names and wildlife remain unchanged. Added seeded-CI narrative guard for 18 story files, with narrowly documented fauna/art exceptions. Pending CI and code review before merge; no production deployment.
+    owner: worker
+    claimed_by: 2026-10-23T120004Z-eod-t058-role-first-f91b
+    claimed_at: '2026-10-23T12:00:22Z'
+    updated: '2026-10-23T12:09:38Z'
