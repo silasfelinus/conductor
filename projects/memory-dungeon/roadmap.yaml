@@ -167,18 +167,17 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Integrate RPG combat masks and telegraphed enemies into match board"
-    status: claimed
+    status: ready
     depends_on: t-006
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Apply selected geometry to same existing match board, with shape preview and consistent reveal/match/strike rules. Never shuffle a matched pair or obscure card values unfairly; preserve Classic matching; tune misses/tempo/streaks/Focus. Implement varied monster, rescue, guardian objectives.
 
       Weapon combat in the Briar Camp rooms: kind_robots#4055 (Warden and both duels on the t-006 engine, accessible board, saves).
-    claimed_by: 2026-10-23T011500Z-md-t-007-franklin
-    claimed_at: '2026-10-23T01:41:10+00:00'
-    updated: '2026-10-23T01:41:10+00:00'
+
+      First slice merged in kind_robots#4055: the Rootbound Warden and both forest duels fight on the t-006 engine on a 4x4 board of the chosen deck, with telegraphed enemy, weapon bar (Focus/cooldowns), pivot-aimed previews with rotation, keyboard grid, spoken labels, live narration and in-save fights; Echo Chamber stays Classic. Per-room balance (200 seeds): memory 100%, blind 2-12%, spray 10-34%. Remaining for done: a rescue objective room, telegraphed board mutations (e.g. sealing a column), and a larger board for a set-piece fight.
+    updated: '2026-10-23T02:01:50+00:00'
   - id: t-008
     milestone: m2
     title: "Recruit companions and unlock skills, relic synergies and levels"
@@ -268,18 +267,17 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Build bullseye sweet spots and solver-verified minefield challenge floors"
-    status: claimed
+    status: ready
     depends_on: t-006
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Implement visible sweet-spot cell(s) per weapon mask: a correctly remembered match at the bullseye earns crit/stun/guard effect, not automatic matching. Prototype rare 8x8/10x10 Minesweeper-like challenge rooms with clue numbers, flags, hazard-safe route goals, zoomable bounded grid, and exact disarm footprints. Require an algorithmic no-mandatory-guess solvability check across seeds, fair recoverable failure, and full keyboard/screen-reader support. See COMBAT-PATTERNS.md. Integrate after spatial rules proven.
 
       Engine half merged in kind_robots#4050 (guess-free 8x8/10x10 floors, provenCells hints, exact disarms); bullseye crits live in combat.ts. Floor UI next.
-    claimed_by: 2026-10-23T011500Z-md-t-016-franklin
-    claimed_at: '2026-10-23T01:41:10+00:00'
-    updated: '2026-10-23T01:41:10+00:00'
+
+      Engine merged in kind_robots#4050 (utils/memoryDungeon/minefield.ts): seeded 8x8/10x10 floors kept only when a deduction solver clears them with no forced guess (40-46% of draws redrawn), recoverable missteps, exact one-cell disarms, provenCells hints from visible state, leak-free screen-reader text. Bullseye crits are live in combat.ts (+2 on a sweet-spot pair). Remaining for done: the floor UI (zoomable bounded grid, keyboard map) and a site on the map that opens it.
+    updated: '2026-10-23T02:01:50+00:00'
   - id: t-017
     milestone: m1
     title: "Define fixed fantasy overworld coordinate contract and modular lore boundaries"
