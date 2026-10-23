@@ -1,3 +1,5 @@
+import pytest
+
 import scripts.export_plumber_map_clips as clips
 
 
@@ -28,7 +30,7 @@ def test_manifest_lists_shipped_worlds_in_order(tmp_path):
 
 
 def _solid(value):
-    from PIL import Image
+    Image = pytest.importorskip("PIL.Image")
 
     return Image.new("RGB", (32, 18), (value, value, value))
 
