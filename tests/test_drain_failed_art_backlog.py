@@ -303,3 +303,15 @@ def test_target_media_state_reads_a_network_failure_as_unknown(monkeypatch):
 def test_target_media_state_has_no_opinion_on_a_non_media_target():
     # Nothing to HEAD, so this check must not claim the image is missing.
     assert drain.target_media_state({"id": 1, "payload": {}}) == ("unknown", "")
+
+
+def test_unreadable_source_video_is_a_payload_fault():
+    error = (
+        "Comfy execution failed: File \"video_types.py\", line 620, in get_components\n"
+        "with av.open(self.__file, mode='r') as container:\n"
+        "File \"av/container/core.py\", line 555, in av.container.core.open\n"
+        "File \"av/error.py\", line 411, in av.error.err_check\n"
+    )
+    failure_class = drain.classify_failure({"error": error})
+    assert failure_class == "payload-source-media-unreadable"
+    assert not drain.is_retryable(failure_class)

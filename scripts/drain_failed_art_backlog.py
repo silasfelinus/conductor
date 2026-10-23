@@ -98,6 +98,12 @@ FAILURE_PATTERNS = (
         "payload-column-range",
         re.compile(r"Out of range value for column", re.IGNORECASE),
     ),
+    # The job's own input video is unreadable (PyAV cannot open it): a truncated
+    # or corrupt upload. Not a host fault; the source has to be replaced.
+    (
+        "payload-source-media-unreadable",
+        re.compile(r"av\.container\.core\.open|av\.error\.err_check", re.IGNORECASE),
+    ),
     # --- render-host faults: the box could not read its own model files ---
     (
         "render-host-io",
