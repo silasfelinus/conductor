@@ -1,31 +1,31 @@
 # Roadmap Audit
 
-Generated: `2026-10-22T15:21:02.152474+00:00`
+Generated: `2026-10-23T06:47:28.899150+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **85** roadmaps, **20** active + **3** continuous projects, **2534** tasks
-- **185 ready**, **194 waiting**, **38 needs-human**, **24 claimed/review**, **2077 done**
+- **85** roadmaps, **20** active + **3** continuous projects, **2543** tasks
+- **187 ready**, **192 waiting**, **38 needs-human**, **24 claimed/review**, **2086 done**
 - Findings: **0 errors**, **38 warnings**, **109 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `weird-humboldt` | active | software | 8 | 17 | 1 | 3 | 26 / 55 |
-| 2 | `zuzu-gamebook` | active | software | 5 | 1 | 0 | 0 | 6 / 12 |
-| 3 | `zuzu-shifting-lands` | active | software | 4 | 3 | 1 | 2 | 30 / 40 |
-| 4 | `emperor-of-dust` | active | software | 8 | 0 | 1 | 2 | 43 / 54 |
+| 1 | `weird-humboldt` | active | software | 10 | 17 | 1 | 4 | 28 / 60 |
+| 2 | `zuzu-gamebook` | active | software | 6 | 1 | 0 | 0 | 6 / 13 |
+| 3 | `zuzu-shifting-lands` | active | software | 4 | 3 | 1 | 2 | 32 / 42 |
+| 4 | `emperor-of-dust` | active | software | 8 | 0 | 1 | 1 | 45 / 55 |
 | 5 | `rainbow-bullet-hell-space-princess` | active | software | 4 | 2 | 0 | 3 | 21 / 30 |
 | 6 | `save-the-plumber` | active | software | 6 | 5 | 0 | 0 | 14 / 25 |
-| 7 | `shifting-desks` | active | software | 5 | 0 | 0 | 0 | 34 / 39 |
+| 7 | `shifting-desks` | active | software | 4 | 0 | 0 | 0 | 35 / 39 |
 | 8 | `kind-pinball` | finished | software | 1 | 0 | 0 | 0 | 34 / 35 |
 | 9 | `zuzu-lair` | paused | software | 0 | 4 | 2 | 1 | 8 / 15 |
 | 10 | `kr-arcade` | active | software | 30 | 55 | 0 | 2 | 76 / 163 |
 | 11 | `zuzu-showdown` | paused | software | 3 | 0 | 0 | 0 | 29 / 32 |
-| 12 | `memory-dungeon` | active | software | 6 | 10 | 1 | 0 | 2 / 19 |
+| 12 | `memory-dungeon` | active | software | 6 | 8 | 1 | 0 | 4 / 19 |
 | 13 | `cthulhuquarium` | paused | software | 2 | 0 | 1 | 0 | 83 / 86 |
 | 14 | `kind-economy` | paused | software | 0 | 4 | 1 | 1 | 22 / 28 |
 | 15 | `butterfly-gallery` | finished | software | 1 | 0 | 0 | 0 | 34 / 35 |
@@ -109,18 +109,18 @@ _None._
 ### Warning (38)
 
 - **STALE_CLAIM_FIELDS** — `animation-manager` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 28 days.
-- **STALE_IN_PROGRESS** — `art-archive` / `t-033`: Task has remained claimed for 19 days.
+- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 29 days.
+- **STALE_IN_PROGRESS** — `art-archive` / `t-033`: Task has remained claimed for 20 days.
 - **STALE_IN_PROGRESS** — `art-archive` / `t-044`: Task has remained claimed for 19 days.
-- **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 24 days.
+- **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 25 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `comic-film` / `t-009`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 21 days.
 - **STALE_CLAIM_FIELDS** — `emperor-of-dust` / `t-033`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `kind-economy` / `t-011`: Task has remained claimed for 16 days.
+- **STALE_IN_PROGRESS** — `kind-economy` / `t-011`: Task has remained claimed for 17 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-economy` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **STALE_IN_PROGRESS** — `kind-robots` / `t-127`: Task has remained review for 18 days.
 - **STALE_IN_PROGRESS** — `kind-robots` / `t-131`: Task has remained review for 16 days.
-- **STALE_IN_PROGRESS** — `kind-robots` / `t-133`: Task has remained review for 15 days.
+- **STALE_IN_PROGRESS** — `kind-robots` / `t-133`: Task has remained review for 16 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-robots` / `t-139`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-014`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-015`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
@@ -135,16 +135,16 @@ _None._
 - **STALE_IN_PROGRESS** — `mandarin-tutor` / `t-030`: Task has remained claimed for 19 days.
 - **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-011`: Task has remained claimed for 5 days.
 - **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-012`: Task has remained claimed for 5 days.
-- **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-022`: Task has remained claimed for 7 days.
-- **STALE_CLAIM_FIELDS** — `shifting-desks` / `t-032`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
+- **STALE_IN_PROGRESS** — `rainbow-bullet-hell-space-princess` / `t-022`: Task has remained claimed for 8 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `tzaddik-gallery` / `t-013`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
+- **STALE_CLAIM_FIELDS** — `weird-humboldt` / `t-003`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `weird-humboldt` / `t-042`: Claimed/review task has no parseable updated timestamp.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `weird-humboldt` / `t-044`: Claimed/review task has no parseable updated timestamp.
 - **SOFT_NEEDS_HUMAN** — `zuzu-lair` / `t-006`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-lair` / `t-008`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-lair` / `t-010`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **STALE_IN_PROGRESS** — `zuzu-lair` / `t-014`: Task has remained review for 12 days.
-- **STALE_IN_PROGRESS** — `zuzu-shifting-lands` / `t-004`: Task has remained review for 12 days.
+- **STALE_IN_PROGRESS** — `zuzu-shifting-lands` / `t-004`: Task has remained review for 13 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `zuzu-showdown` / `t-025`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 
 ### Info (109)
