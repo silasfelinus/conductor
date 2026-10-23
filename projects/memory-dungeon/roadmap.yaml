@@ -167,17 +167,18 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Integrate RPG combat masks and telegraphed enemies into match board"
-    status: ready
+    status: claimed
     depends_on: t-006
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Apply selected geometry to same existing match board, with
-      shape preview and consistent reveal/match/strike rules.
-      Never shuffle a matched pair or obscure card values unfairly;
-      preserve Classic matching; tune misses/tempo/streaks/Focus.
-      Implement varied monster, rescue, guardian objectives.
+    note: |-
+      Apply selected geometry to same existing match board, with shape preview and consistent reveal/match/strike rules. Never shuffle a matched pair or obscure card values unfairly; preserve Classic matching; tune misses/tempo/streaks/Focus. Implement varied monster, rescue, guardian objectives.
+
+      Weapon combat in the Briar Camp rooms: kind_robots#4055 (Warden and both duels on the t-006 engine, accessible board, saves).
+    claimed_by: 2026-10-23T011500Z-md-t-007-franklin
+    claimed_at: '2026-10-23T01:41:10+00:00'
+    updated: '2026-10-23T01:41:10+00:00'
   - id: t-008
     milestone: m2
     title: "Recruit companions and unlock skills, relic synergies and levels"
@@ -267,20 +268,18 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Build bullseye sweet spots and solver-verified minefield challenge floors"
-    status: ready
+    status: claimed
     depends_on: t-006
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Implement visible sweet-spot cell(s) per weapon mask: a correctly
-      remembered match at the bullseye earns crit/stun/guard effect,
-      not automatic matching. Prototype rare 8x8/10x10 Minesweeper-like
-      challenge rooms with clue numbers, flags, hazard-safe route goals,
-      zoomable bounded grid, and exact disarm footprints. Require an
-      algorithmic no-mandatory-guess solvability check across seeds,
-      fair recoverable failure, and full keyboard/screen-reader support.
-      See COMBAT-PATTERNS.md. Integrate after spatial rules proven.
+    note: |-
+      Implement visible sweet-spot cell(s) per weapon mask: a correctly remembered match at the bullseye earns crit/stun/guard effect, not automatic matching. Prototype rare 8x8/10x10 Minesweeper-like challenge rooms with clue numbers, flags, hazard-safe route goals, zoomable bounded grid, and exact disarm footprints. Require an algorithmic no-mandatory-guess solvability check across seeds, fair recoverable failure, and full keyboard/screen-reader support. See COMBAT-PATTERNS.md. Integrate after spatial rules proven.
+
+      Engine half merged in kind_robots#4050 (guess-free 8x8/10x10 floors, provenCells hints, exact disarms); bullseye crits live in combat.ts. Floor UI next.
+    claimed_by: 2026-10-23T011500Z-md-t-016-franklin
+    claimed_at: '2026-10-23T01:41:10+00:00'
+    updated: '2026-10-23T01:41:10+00:00'
   - id: t-017
     milestone: m1
     title: "Define fixed fantasy overworld coordinate contract and modular lore boundaries"
