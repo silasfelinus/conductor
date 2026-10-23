@@ -155,7 +155,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: Independently enqueue and review gamebook illustrations in batches
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: [t-005]
@@ -169,7 +169,9 @@ tasks:
       Merged silasfelinus/kind_robots#4064 at 2026-10-23 02:49 PT (29a44a3321adf1b5a08ac40dde96f144a60a5ba0), replacing inaccurate stand-ins for a2-bell-view and a4-bloom with scene-faithful original vector illustrations. All 14 PR checks passed. Production deploy not verified; ongoing gamebook art delivery remains unfinished, so task returns to ready.
 
       Human follow-up: SVG image patches are temporary; submit verified Arthemy rerenders for a2-bell-view, a2-gift, and a4-bloom, then confirm real ArtJob IDs.
-    updated: '2026-10-23T11:41:31Z'
+
+      Review real art batch ROUND-16-SCENE-FIDELITY.yaml: 9 Arthemy house renders, 3 seeds each for a2-bell-view, a2-gift, and a4-bloom. Uses auto_submit; verify durable ArtJob IDs and delivered keepers.
+    updated: '2026-10-23T11:47:36Z'
     owner: worker
     claimed_by: 2026-10-23T11:41:31Z-zuzu-art-real-b72f
     claimed_at: '2026-10-23T11:41:31Z'
