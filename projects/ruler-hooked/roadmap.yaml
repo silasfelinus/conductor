@@ -771,19 +771,15 @@ tasks:
 - id: t-044
   milestone: m4
   title: Replace ruler cosmetics and overlay maze with a console-first briefing, map and fishing flow
-  status: claimed
+  status: review
   owner: worker
   stakes: reversible
   passes: 0
-  note: >-
-    Silas, 2026-10-23 PT: remove ruler name, honorific and portrait selection.
-    Replace overlays-on-overlays with navigable scene screens: royal briefing,
-    fishing map with one initially accessible spot, cinematic NPC visits,
-    and a persistent art-led lakeside stage. Keep saves and existing game logic.
-    Replace the opaque fishing minigame with two timed target stops followed by
-    clearly instructed tap/release reeling. A first-time player must be able to
-    catch a common fish reliably, with deterministic reducer tests.
-  updated: '2026-10-23T08:00:00Z'
+  note: |-
+    Silas, 2026-10-23 PT: remove ruler name, honorific and portrait selection. Replace overlays-on-overlays with navigable scene screens: royal briefing, fishing map with one initially accessible spot, cinematic NPC visits, and a persistent art-led lakeside stage. Keep saves and existing game logic. Replace the opaque fishing minigame with two timed target stops followed by clearly instructed tap/release reeling. A first-time player must be able to catch a common fish reliably, with deterministic reducer tests.
+
+    Built a new one-screen console flow with map, lake, inline opening, royal briefings, catch reveal, shop, records and saves. Removed ruler name/honorific/photo pickers, hid the unseen ruler sprite, replaced the old repeated timing/tension encounters with a two-stop cast and forgiving tap/slack reel reducer, and added deterministic catch tests. App branch worker/ruler-hooked-t044-console-20261023; CI pending.
+  updated: '2026-10-23T08:14:00Z'
   claimed_by: 2026-10-23T080000Z-ruler-hooked-t044-c6p4
   claimed_at: '2026-10-23T08:00:00Z'
 - id: t-045
