@@ -39,3 +39,9 @@
 **Watch for:** the balance test's patron and loan margins are close to their thresholds (rustline patron 33/40, freeholds loans 4.1/5); the bots break ties toward the first listed answer, so new answers go after the originals in every beat. Gated answers are now hidden, not shown locked (optionVisible). Pending art rerolls: ArtJobs 42158-42162. F010 Lumen has no recruitment route yet. `crow-favor-owed` reads as the tower's debt on Day 2 and the Crows' debt in Act IV (pre-existing; not changed).
 
 **In progress:** t-030 epilogue on kind_robots branch worker/emperor-of-dust-t030-epilogue.
+
+## 2026-10-23 | Reviewer → Silas/Worker | review | kind_robots#4075 role-first prose (t-058), merged
+
+**Audit:** prose edits across the Act I–V, follower, chance-event and epilogue files plus `verifyEmperorRoleFirstProse.test.ts` wired into the Dispatch Contract workflow. No engine, ids, save data, art metadata or deploy change. All 19 head checks green. Reversible and scoped; squash-merged as 0992f05a1.
+
+**Pattern:** the Worker filed this task as t-057 on a side branch while main already had a done t-057 (contrast fix); the correct t-058 landed via main. The stale branch `worker/emperor-of-dust-t-057-role-first-canon-f91a` is fully superseded (guide text already in #6541) and was not merged. Use `next_free_task_id.py` before writing a task id.
