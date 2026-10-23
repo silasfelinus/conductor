@@ -13,6 +13,26 @@ docs/decks.md (t-006 — card & character art), DESIGN-BRIEF.md (art references)
 > doc pins the *look* and ships the *first landscape-layer prompt pack* as text.
 > The queued entries live in `projects/art-prompts.yaml`.
 
+## Current POV rule (Silas, October 23, 2026 PT)
+
+**The ruler is seen only during the game's in-world coronation and
+character-creation portrait selection.** The player keeps a chosen name,
+honorific, preset appearance or private uploaded portrait, but gameplay is
+from that unseen person's viewpoint. Full-screen kingdom maps, fishing,
+catch reveals, NPC briefings, quest consequences, chronicles and ending
+illustrations must not portray the ruler as a visible character. Show the
+environment, fish, meaningful scenery changes, and the petitioners or
+courtiers addressing the player instead. Do not replace the player with a
+generic king in key art.
+
+The twelve canonical ruler presets remain useful exclusively as large,
+clear **character-creation portraits**; they are not composite layers on
+the lakeside stage. The runtime compositor skips the `ruler` region,
+and `scripts/build_ruler_hooked_art_queue.py` now omits it from generated
+gameplay layers. Legacy references below to compositing a ruler layer
+document historical implementation, superseded by this rule. Existing
+rendered ruler-layer assets are not to be reused as in-game scene art.
+
 ## 1. The look (the pin)
 
 **Cartoony, goofy, warm.** Exaggerated good-and-evil archetypes with wry twists,
