@@ -317,15 +317,9 @@ RULER_PRESETS = [
 ]
 RULER_BY_ID = {preset["id"]: preset for preset in RULER_PRESETS}
 
-# The four time-of-day vistas are a matched set: one ruler across all of them is
-# what makes the cycle read as one place. Named rather than inlined so the already
-# rendered and approved pieces stay reproducible, and so swapping the hero is one
-# edit. The alternate vistas below carry the range instead.
-HERO_RULER_ID = "king-osric"
-THE_RULER = RULER_BY_ID[HERO_RULER_ID]["look"] + (
-    ", a battered fishing rod held with total unearned confidence"
-)
-
+# The player's appearance is an opening-screen choice, never a canonical face
+# in lake, kingdom, scene, catch or card artwork. Preset portraits are the only
+# art lane allowed to show the player's ruler.
 LAKESIDE = (
     "a wide storybook lake behind a small castle, reeds and a worn wooden fishing "
     "perch in the foreground, forested far bank, a village edge and castle grounds "
@@ -341,35 +335,36 @@ SCENE_CONCEPTS = [
         "key-art-day",
         WIDE,
         "Ruler Hooked key art (day)",
-        f"The core promise of the game in one frame: {THE_RULER}, sitting alone "
-        f"at the edge of {LAKESIDE}, line in the water, blissfully ignoring the "
-        "kingdom behind them. The whole scene is calm, inviting, and a little bit "
-        f"of a joke at the monarch's expense. {TIME_MOD['day']}",
+        f"Seen through the unseen ruler's eyes: {LAKESIDE}, an empty weathered "
+        "fishing perch at the near bank, an idle fishing rod leaning against "
+        "its rail, busy distant subjects visible across the lake. "
+        f"Warm storybook exploration, wide visual game scene. {TIME_MOD['day']}",
     ),
     (
         "key-art-golden",
         WIDE,
         "Ruler Hooked key art (golden hour)",
-        f"The same lakeside vista: {THE_RULER} fishing at the edge of {LAKESIDE}, "
-        "the kingdom quiet behind them, the water gone to hammered gold. A brief, "
-        f"beautiful moment the player happens to catch. {TIME_MOD['golden']}",
+        f"The same tranquil lakeside kingdom viewed from its fishing perch: {LAKESIDE}, "
+        "the water like hammered gold, the near fishing basket and rod "
+        "awaiting their unseen owner. "
+        f"{TIME_MOD['golden']}",
     ),
     (
         "key-art-night",
         WIDE,
         "Ruler Hooked key art (night)",
-        f"The same lakeside vista after dark: {THE_RULER} fishing at the edge of "
-        f"{LAKESIDE}, a lantern hooked on the fishing perch, fireflies drifting over "
-        "the reeds, warm windows glowing in the distant village and castle. "
+        f"First-person view across {LAKESIDE} after dark, a lantern "
+        "hooked on an unoccupied fishing perch and distant village windows "
+        "glowing over the water. "
         f"{TIME_MOD['night']}",
     ),
     (
         "key-art-dawn",
         WIDE,
         "Ruler Hooked key art (dawn)",
-        f"The same lakeside vista at first light: {THE_RULER} already out fishing "
-        f"before anyone can find them, at the edge of {LAKESIDE}, mist lying flat on "
-        f"the water, every reed beaded with dew. {TIME_MOD['dawn']}",
+        f"The peaceful lakeside kingdom from a fisher's eye level, {LAKESIDE}, "
+        "mist over the lake, empty fishing perch, every reed jeweled with dew. "
+        f"{TIME_MOD['dawn']}",
     ),
     (
         "kingdom-preserved",
@@ -406,11 +401,11 @@ SCENE_CONCEPTS = [
         "beat-the-interruption",
         WIDE,
         "Story beat: the interruption",
-        f"The core comedy beat of the game: {THE_RULER} is mid-cast at the lake when "
-        "a breathless courier bursts through the reeds brandishing an enormous "
-        "unrolled scroll, boot deep in mud, utterly urgent. The monarch does not "
-        "look away from the water. Staged like a comic adventure game screen, the "
-        "two figures posed so clearly that a glance tells the whole joke",
+        "From the unseen ruler's point of view at a lakeside fishing perch, "
+        "a breathless courier splashes through the reeds brandishing an "
+        "enormous urgent scroll, boot deep in mud. The scroll and the "
+        "petitioner's expressive face dominate the frame, with open "
+        "water beyond. Cinematic illustrated NPC interruption.",
     ),
     (
         "beat-the-standoff",
@@ -427,31 +422,28 @@ SCENE_CONCEPTS = [
         "beat-the-catch",
         WIDE,
         "Story beat: the catch",
-        f"{THE_RULER} hauling an absurd storybook fish out of the lake at the moment "
-        "of triumph, both of them equally surprised. Water arcing off the line, rod "
-        "bent double, crown falling off. The fish is characterful and strange rather "
-        "than realistic, with a personality of its own",
+        "An enormous absurd storybook fish bursting from the lake at "
+        "the end of a taut line coming from below the frame, water "
+        "arcing spectacularly across a sunny lakeside kingdom. "
+        "First-person catch reveal, the fish fills the picture with "
+        "a brilliantly comic surprised expression.",
     ),
     (
         "beat-the-escape",
         WIDE,
         "Story beat: the escape",
-        "A monarch's morning routine: a castle corridor hung with heavy tapestries, "
-        f"{THE_RULER} tiptoeing out of frame with a fishing rod and a tackle basket "
-        "held behind their back, while a knot of courtiers, ledgers, and petitioners "
-        "argue among themselves and fail entirely to notice",
+        "A castle corridor hung with heavy tapestries: a bewildered knot "
+        "of courtiers, petitioners and royal clerks argue over ledgers "
+        "while a side door stands ajar, sunlight and lake reeds showing "
+        "the unseen monarch's route outdoors. Scene staged from the "
+        "departing ruler's eye level, populated by NPCs only.",
     ),
 ]
 
-# Alternate hero vistas. The four key-art pieces above deliberately share one
-# ruler; these carry the range into the mockups themselves, so "what this game
-# looks like" is never a single body. Different preset, different time, same place.
-ALT_HERO_VISTAS = [
-    ("queen-mabel", "golden", "Alternate key art: the Queen at golden hour"),
-    ("sovereign-wren", "night", "Alternate key art: the Sovereign at night"),
-    ("chieftain-brakka", "day", "Alternate key art: the Chieftain by day"),
-    ("little-monarch-pip", "dawn", "Alternate key art: the little Monarch at dawn"),
 ]
+
+# Alternate ruler-bearing lake mockups are retired. The twelve playable
+# appearances belong to the in-game coronation portrait gallery only.
 
 UI_CONCEPTS = [
     (
@@ -477,11 +469,12 @@ UI_CONCEPTS = [
         "ui-title-screen",
         WIDE,
         "UI concept: title screen",
-        "A concept for the title screen of a comedic fishing and kingdom-management "
-        f"game: {THE_RULER} very small at the bottom of a huge warm lakeside vista, "
-        "back to the viewer, line already in the water, the kingdom rising behind "
-        "them in clear painted depth bands. The upper third is generous empty sky, "
-        "bare open air and nothing else",
+        "A large illustrated cinematic title screen for a comedic fishing and "
+        "kingdom-management game: unoccupied royal fishing perch in the foreground "
+        "of a grand warm lakeside vista, an unattended fishing rod, the kingdom "
+        "rising behind in clear painted depth bands. The upper third is broad "
+        "empty golden sky for UI lettering. The ruler is the viewer, never "
+        "a subject inside the picture",
     ),
 ]
 
@@ -727,10 +720,6 @@ REGION_BASE = {
         "a worn grassy near bank with reeds, a wooden fishing perch, a tackle basket, "
         "trodden footpath"
     ),
-    ("ruler", "fishing"): (
-        f"{THE_RULER}, seated in profile on a fishing perch, line in the water, "
-        "entirely at peace"
-    ),
 }
 
 # Per art-direction.md Section 2 and the contract t-017 settled: the layer occupies
@@ -847,36 +836,22 @@ def fish_entries() -> list[dict]:
 
 
 def ruler_entries() -> list[dict]:
-    """One piece per ruler preset, at the `ruler` layer's own framing.
-
-    ruler-hooked/t-025: this flat path serves two jobs -- the cosmetics picker's
-    thumbnail, and (per ruler-hooked/t-017's compositing contract) a fallback rung
-    for the `ruler` region's own full-bleed layer in ruler-hooked-stage.vue, which
-    draws every art layer object-cover, stacked in z-order over the whole canvas.
-    A reference-sheet portrait with a solid painted backdrop would paint over every
-    layer behind it whenever the ruler layer is topmost, so this uses the same
-    figure-in-depth-band style as REGION_BASE[("ruler", "fishing")]/ruler-fishing.webp
-    -- full figure, own depth band, rest of the frame empty -- at the layer's own
-    1344x768 (7:4) aspect instead of a portrait crop.
-    """
+    """Opening ceremony portraits only. These never enter the world compositor."""
     entries: list[dict] = []
     for preset in RULER_PRESETS:
         body = (
-            f"{preset['look']}, holding a battered fishing rod with total "
-            f"unearned confidence, seated in profile on a fishing perch, line "
-            f"in the water, entirely at peace"
+            f"Coronation portrait for the in-game character creator: "
+            f"{preset['look']}. Full-length illustrated character study, "
+            f"crowned subject alone with an expressive face, formal "
+            f"portrait staging and rich ceremonial fabric. {PORTRAIT_FRAME}"
         )
         entries.append(
             make_entry(
                 request_id=f"ruler-hooked-ruler-{preset['id']}",
-                # Matches components/ruler-hooked/ruler-hooked-cosmetics-picker.vue's
-                # `/images/ruler-hooked/ruler-${preset.id}.webp` <img> src exactly
-                # (ruler-hooked/t-025) -- a nested `ruler/{id}.webp` path here would
-                # render fine but land where the picker never looks for it.
                 image_path=f"public/images/ruler-hooked/ruler-{preset['id']}.webp",
-                label=f"Ruler Hooked ruler preset: {preset['title']} ({preset['id']})",
-                size=WIDE,
-                prompt=f"{body}. {LAYER_TAIL}. {STYLE_TAIL}. {NO_TEXT}",
+                label=f"Ruler Hooked opening portrait: {preset['title']} ({preset['id']})",
+                size=PORTRAIT,
+                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="ruler",
             )
@@ -885,28 +860,8 @@ def ruler_entries() -> list[dict]:
 
 
 def alt_vista_entries() -> list[dict]:
-    """Key-art vistas featuring rulers other than the hero preset."""
-    entries: list[dict] = []
-    for preset_id, time, label in ALT_HERO_VISTAS:
-        preset = RULER_BY_ID[preset_id]
-        body = (
-            f"The core promise of the game in one frame: {preset['look']}, holding "
-            f"a battered fishing rod, sitting alone at the edge of {LAKESIDE}, line "
-            f"in the water, blissfully ignoring the kingdom behind them. "
-            f"{TIME_MOD[time]}"
-        )
-        entries.append(
-            make_entry(
-                request_id=f"ruler-hooked-concept-key-art-{preset_id}",
-                image_path=f"public/images/ruler-hooked/concept/key-art-{preset_id}.webp",
-                label=f"Ruler Hooked concept: {label}",
-                size=WIDE,
-                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
-                priority=CONCEPT_PRIORITY,
-                lane="concept",
-            )
-        )
-    return entries
+    """Retired: alternative rulers must never appear in gameplay scenery."""
+    return []
 
 
 REWARD_FRAME = (
@@ -1043,8 +998,9 @@ def ending_entries(content_ts: Path) -> list[dict]:
 
 
 CARD_FRAME = (
-    "a painted storybook moment, staged like a scene from a comic adventure "
-    "game, figures posed so a glance tells the whole joke, warm and inviting"
+    "a painted storybook moment staged from the unseen ruler's point of "
+    "view, highlighting the visiting petitioners and NPCs, lively faces "
+    "and the kingdom behind them, warm illustrated console-game lighting"
 )
 
 CARD_RE = re.compile(
@@ -1128,6 +1084,10 @@ def layer_entries(regions: dict[str, dict[str, list[str]]]) -> list[dict]:
     """The (region, state, time) matrix, named exactly as assetCandidates() resolves."""
     entries: list[dict] = []
     for region, spec in regions.items():
+        if region == "ruler":
+            # The player chooses a portrait during coronation. The composited
+            # game environment never depicts the ruler from outside.
+            continue
         for state in spec["states"]:
             base = REGION_BASE.get((region, state))
             if not base:
