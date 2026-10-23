@@ -896,21 +896,14 @@ tasks:
   - id: t-056
     milestone: m5
     title: "Repair Day 1 tutorial and new-reign navigation; contain tablet quest display"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
-    note: >-
-      Silas, 2026-10-23 PT: tablet screenshot shows a Day 1 roster with Rook
-      and Saffron together plus the original starter tutorial rather than
-      the three seeded throne-room recruits. Investigate stale live deployment
-      or legacy autosave separately from genuine UI defects. Update the
-      introduction and New Reign flow to lead into Day 1 throne recruitment,
-      and make the quest board and detail independently bounded/scrollable in
-      portrait tablet and phone console layouts. Add checks for new-run state,
-      the tutorial copy and the responsive quest-room scroll ownership.
-      Do not overwrite legacy saves or assert a production deployment without
-      independent verification.
+    note: |-
+      Silas, 2026-10-23 PT: tablet screenshot shows a Day 1 roster with Rook and Saffron together plus the original starter tutorial rather than the three seeded throne-room recruits. Investigate stale live deployment or legacy autosave separately from genuine UI defects. Update the introduction and New Reign flow to lead into Day 1 throne recruitment, and make the quest board and detail independently bounded/scrollable in portrait tablet and phone console layouts. Add checks for new-run state, the tutorial copy and the responsive quest-room scroll ownership. Do not overwrite legacy saves or assert a production deployment without independent verification.
+
+      Corrected the starter-portrait introduction and new-run routing to Day 1 throne recruitment. Tablet quest board/detail now own bounded scroll areas, and added store and source-layout regression checks to the Emperor CI workflow. Await GitHub checks and verification of current live deployment separately.
     owner: worker
     claimed_by: 2026-10-23T111550Z-emperor-t056-e79c
     claimed_at: '2026-10-23T11:16:48Z'
-    updated: '2026-10-23T11:16:48Z'
+    updated: '2026-10-23T11:20:23Z'
