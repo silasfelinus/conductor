@@ -538,18 +538,19 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Prove festival lenses and sober story parity"
-    status: review
+    status: ready
     depends_on: t-002
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Validate the user-directed festival state model, four authored views of the same encounter seed (not 480 separate cards), and lens-specific choices/checks; support current-state changes and recoverable Clarity, save/reload determinism and a fully meaningful sober route to every required clue and ending. Incorporate an independently motivated nymph guide across all four branches. Text-only, no art or deployment.
 
       Added five adversarial player-style policies over matched seeded journeys, a parity/replay and consequence-diversity contract, and an evidence-based editorial review. Implementation branch worker/weird-humboldt-t008-playstyles-7f62c; pending Kind Robots CI.
-    claimed_by: 2026-10-22T235330Z-weird-humboldt-t008-7f62c
-    claimed_at: '2026-10-22T23:53:30Z'
-    updated: '2026-10-22T23:59:30Z'
+
+      Scoped adversarial playstyle slice merged as Kind Robots PR #4045, squash SHA 6d59826cbabae0fe564b20368af92781b20ab47f. All 13 latest-head CI workflows completed successfully, including Ecotone gameplay, TypeScript, formatting, and four contract shards. Simulated 1,260 journeys across five contrasting player styles and 252 matched groups; every group showed divergent decisions, saved consequences, and ending IDs. Human fun assessment is not claimed. The original t-008 umbrella still needs evidence for full clarity recovery, lens parity across authored scenes, and independently motivated Juniper guide development. Other non-sensitive playstyle follow-up: investigate caretaker, solo and coalition policies producing 21 distinct endings each versus investigator 44 and thrill 39.
+
+      Scoped adversarial playstyle addition merged as kind_robots PR #4045 (6d59826cbabae0fe564b20368af92781b20ab47f). All 13 CI workflows completed successfully on the final head, including gameplay, formatting, TypeScript and four contract shards. The deterministic 1260-campaign matrix and editorial review are shipped, but t-008 still requires the fuller authored lens and Clarity recovery acceptance; leave remaining task READY. New owner request for a distinct prioritized editorial triage follows separately.
+    updated: '2026-10-23T00:12:00Z'
   - id: t-009
     milestone: m1
     title: "Write four companion intros with Hmong Kit and grounded Mara stories"
