@@ -1,0 +1,1740 @@
+# Emperor of Dust: daily chance encounter OPENING scenes for Acts II-V (Days 11-50), the written content that has no art.
+# Gap sweep 2026-10-23 against kind_robots main (utils/emperorOfDust/fortress/dailyEvents.ts CHANCE_EVENTS, merged
+# 2026-10-21 in 0025553): 135 chance events, 27 per act. Act I's 26 motif scenes are CHANCE-ACT1-ROUND-1.yaml (78
+# DONE), the five secret-recruit encounters are SECRET-STORY-SCENES-ROUND-1.yaml (43 DONE), so the gap is the 104 motif
+# scenes of Acts II-V. Only the OPENING (notice) image is queued: in Acts II-V every motif still offers its shared
+# collect/care choice pair (Act I's were rewritten into unique choices in 6ddf9a4), and the act passes t-047..t-050
+# (owned by other sessions) are where those choices get rewritten, so outcome plates wait for that prose.
+# Prompts are drawn from each scene's authored title and text as of kind_robots 7f12b41; the lane, negatives, sizes
+# and asset naming copy CHANCE-ACT1-ROUND-1.yaml. Asset ids reserve chance-events/<event-id>/notice for export;
+# nothing is wired in the runtime yet (t-052 owns delivery). Every depicted resident is anthropomorphic animalfolk.
+# auto_submit: true. Private.
+round: emperor-chance-scenes-acts-2-5-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 house
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, western comics style, dramatic
+    visual-novel tableau, crisp expressive eyes, richly painted environmental storytelling
+  suffix: anthropomorphic animalfolk with distinct species silhouettes, practical frontier clothing, weathered brass
+    and rusty canyon ochre palette, strong central staging, widescreen cinematic art, atmospheric depth, unmarked
+    banners and surfaces
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eod-chance-a2-dust-weather-notice
+  lane: arthemy-house
+  title: The Three-Day Wind · notice
+  event_id: dust-weather-2
+  act: 2
+  variant: notice
+  asset: chance-events/dust-weather-2/notice
+  size: 1344x768
+  seed: 984000
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A wind flattens two roadside camps without touching the bell tower. The tent pegs are twisted like
+    nails.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, two flattened roadside tent camps after a
+    great wind, tent pegs twisted like nails in the sand, an untouched stone bell tower standing tall behind, weary
+    anthro travelers gathering torn canvas, painted story still
+  jobs:
+    arthemy-house: 44066
+- key: eod-chance-a3-dust-weather-notice
+  lane: arthemy-house
+  title: The Black Sand Morning · notice
+  event_id: dust-weather-3
+  act: 3
+  variant: notice
+  asset: chance-events/dust-weather-3/notice
+  size: 1344x768
+  seed: 984001
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Sand dark as coal falls from a clear sky. Cart drivers argue about whether it can poison the grain.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, coal-black sand falling from a clear blue
+    sky over a fortress yard, anthro cart drivers arguing beside grain wagons, dark grains piling on sacks, painted
+    story still
+  jobs:
+    arthemy-house: 44067
+- key: eod-chance-a4-dust-weather-notice
+  lane: arthemy-house
+  title: The Wind That Named Us · notice
+  event_id: dust-weather-4
+  act: 4
+  variant: notice
+  asset: chance-events/dust-weather-4/notice
+  size: 1344x768
+  seed: 984002
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A dust front arrives with the sound of voices in it. The Watch claims one of them called the emperor
+    by name.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a towering wall of dust rolling toward the
+    fortress, anthro gate watch soldiers on the rampart leaning to listen, ghostly swirls in the dust cloud, painted
+    story still
+  jobs:
+    arthemy-house: 44068
+- key: eod-chance-a5-dust-weather-notice
+  lane: arthemy-house
+  title: The Ashen Noon · notice
+  event_id: dust-weather-5
+  act: 5
+  variant: notice
+  asset: chance-events/dust-weather-5/notice
+  size: 1344x768
+  seed: 984003
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The whole horizon turns the color of a bruise. Travelers have one hour to get below stone before
+    the front reaches them.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a bruise-purple horizon, a vast dust front
+    approaching across the waste, anthro travelers hurrying down stone steps into a cellar shelter, urgent, painted
+    story still
+  jobs:
+    arthemy-house: 44069
+- key: eod-chance-a2-river-weather-notice
+  lane: arthemy-house
+  title: Copper Rain · notice
+  event_id: river-weather-2
+  act: 2
+  variant: notice
+  asset: chance-events/river-weather-2/notice
+  size: 1344x768
+  seed: 984004
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The rain tastes faintly of pennies and leaves a red ring on every bucket. No one has become sick,
+    yet.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, rain falling into wooden buckets in a fortress
+    yard, each bucket rimmed with a red copper ring, an anthro cook frowning at a tasting ladle, painted story still
+  jobs:
+    arthemy-house: 44070
+- key: eod-chance-a3-river-weather-notice
+  lane: arthemy-house
+  title: Storm over the Ford · notice
+  event_id: river-weather-3
+  act: 3
+  variant: notice
+  asset: chance-events/river-weather-3/notice
+  size: 1344x768
+  seed: 984005
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The first real storm of the season threatens to take the Ford bridge. The river looks harmless at
+    dawn.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a swollen brown river under dark storm clouds
+    threatening an old timber ford bridge, anthro villagers hauling sandbags at the bank, painted story still
+  jobs:
+    arthemy-house: 44071
+- key: eod-chance-a4-river-weather-notice
+  lane: arthemy-house
+  title: The Second Flood · notice
+  event_id: river-weather-4
+  act: 4
+  variant: notice
+  asset: chance-events/river-weather-4/notice
+  size: 1344x768
+  seed: 984006
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Water comes from upstream before the storm. A mole engineer says the order of things is wrong.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, floodwater surging down a dry riverbed under
+    a clear sky before a storm, an anthro mole engineer in goggles pointing upstream with a measuring rod, painted
+    story still
+  jobs:
+    arthemy-house: 44072
+- key: eod-chance-a5-river-weather-notice
+  lane: arthemy-house
+  title: The Wet Wasteland · notice
+  event_id: river-weather-5
+  act: 5
+  variant: notice
+  asset: chance-events/river-weather-5/notice
+  size: 1344x768
+  seed: 984007
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Rain lasts until every dried creek is a river. The farmers dance and the sentries watch the retaining
+    walls bend.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, endless rain turning dry creeks into rivers
+    across the wasteland, anthro farmers dancing in the mud, sentries on a bending retaining wall, painted story
+    still
+  jobs:
+    arthemy-house: 44073
+- key: eod-chance-a2-salt-caravan-notice
+  lane: arthemy-house
+  title: Salt at Half Price · notice
+  event_id: salt-caravan-2
+  act: 2
+  variant: notice
+  asset: chance-events/salt-caravan-2/notice
+  size: 1344x768
+  seed: 984008
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A trader fears the south road and will sell their salt for less than they paid. Their guards have
+    quit.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a lone anthro salt trader beside a cart heaped
+    with salt blocks, glancing nervously at the south road, empty guard posts by the cart, painted story still
+  jobs:
+    arthemy-house: 44074
+- key: eod-chance-a3-salt-caravan-notice
+  lane: arthemy-house
+  title: The Missing Measure · notice
+  event_id: salt-caravan-3
+  act: 3
+  variant: notice
+  asset: chance-events/salt-caravan-3/notice
+  size: 1344x768
+  seed: 984009
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A caravan claims the tower's scales are wrong. The factor has brought weights from three other cities.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro caravan factor setting brass weights
+    from three cities beside the tower scales on a market table, suspicious merchants leaning in, painted story
+    still
+  jobs:
+    arthemy-house: 44075
+- key: eod-chance-a4-salt-caravan-notice
+  lane: arthemy-house
+  title: An Entire Road for Sale · notice
+  event_id: salt-caravan-4
+  act: 4
+  variant: notice
+  asset: chance-events/salt-caravan-4/notice
+  size: 1344x768
+  seed: 984010
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A cart guild offers exclusive rights to the northern gate for one season. Its contract is thirty
+    pages long.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro cart guild envoy presenting a thick
+    bound contract at the northern gate, a long line of wagons waiting behind, painted story still
+  jobs:
+    arthemy-house: 44076
+- key: eod-chance-a5-salt-caravan-notice
+  lane: arthemy-house
+  title: The Last Market · notice
+  event_id: salt-caravan-5
+  act: 5
+  variant: notice
+  asset: chance-events/salt-caravan-5/notice
+  size: 1344x768
+  seed: 984011
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A traveling bazaar unfolds beside the hideout. Some merchants call it charity. None admit who told
+    them where to come.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a colorful traveling bazaar unfolding beside
+    a rough hideout camp at dusk, anthro merchants raising striped awnings, lanterns, painted story still
+  jobs:
+    arthemy-house: 44077
+- key: eod-chance-a2-wild-harvest-notice
+  lane: arthemy-house
+  title: Orchard Behind the Wall · notice
+  event_id: wild-harvest-2
+  act: 2
+  variant: notice
+  asset: chance-events/wild-harvest-2/notice
+  size: 1344x768
+  seed: 984012
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A tree nobody remembers planting bears fruit behind the old granary. Half of it is sweet and half
+    is bitter.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a mysterious fruit tree behind an old stone
+    granary wall, branches heavy with half golden and half dark fruit, anthro workers staring, painted story still
+  jobs:
+    arthemy-house: 44078
+- key: eod-chance-a3-wild-harvest-notice
+  lane: arthemy-house
+  title: The Honey Wind · notice
+  event_id: wild-harvest-3
+  act: 3
+  variant: notice
+  asset: chance-events/wild-harvest-3/notice
+  size: 1344x768
+  seed: 984013
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Bees arrive from nowhere and swarm an empty grain silo. The keeper claims the honey belongs to the
+    Crown.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a swarm of golden bees pouring into an empty
+    grain silo, an anthro beekeeper in a veil claiming the honeycomb, sunlit, painted story still
+  jobs:
+    arthemy-house: 44079
+- key: eod-chance-a4-wild-harvest-notice
+  lane: arthemy-house
+  title: The Orchard's Second Spring · notice
+  event_id: wild-harvest-4
+  act: 4
+  variant: notice
+  asset: chance-events/wild-harvest-4/notice
+  size: 1344x768
+  seed: 984014
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A dead grove flowers overnight. The blossoms smell of smoke and the roots are warm as living skin.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a dead grove of black trees blooming overnight
+    with pale blossoms, faint smoke curling from the branches, anthro villagers touching the warm roots, painted
+    story still
+  jobs:
+    arthemy-house: 44080
+- key: eod-chance-a5-wild-harvest-notice
+  lane: arthemy-house
+  title: Bread from the Dust · notice
+  event_id: wild-harvest-5
+  act: 5
+  variant: notice
+  asset: chance-events/wild-harvest-5/notice
+  size: 1344x768
+  seed: 984015
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A farmer brings sacks of wheat from a field where all the other crops burned. She wants no questions.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a stern anthro farmer woman unloading sacks
+    of golden wheat at the gate, a burned field smoking on the horizon behind her, painted story still
+  jobs:
+    arthemy-house: 44081
+- key: eod-chance-a2-little-omens-notice
+  lane: arthemy-house
+  title: The Sleeping Clock · notice
+  event_id: little-omens-2
+  act: 2
+  variant: notice
+  asset: chance-events/little-omens-2/notice
+  size: 1344x768
+  seed: 984016
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: An empty wall clock begins ticking at noon. It has no hands, and nobody owns the building.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a dusty abandoned room with a large handless
+    wall clock ticking at noon, a shaft of sunlight, anthro residents peering in through the doorway, painted story
+    still
+  jobs:
+    arthemy-house: 44082
+- key: eod-chance-a3-little-omens-notice
+  lane: arthemy-house
+  title: Three False Shadows · notice
+  event_id: little-omens-3
+  act: 3
+  variant: notice
+  asset: chance-events/little-omens-3/notice
+  size: 1344x768
+  seed: 984017
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A child casts three shadows at the gate. One of them reaches toward the bell even after the child
+    moves.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a small anthro child at the fortress gate
+    casting three long shadows on the ground, one shadow stretching toward a distant bell tower, painted story still
+  jobs:
+    arthemy-house: 44083
+- key: eod-chance-a4-little-omens-notice
+  lane: arthemy-house
+  title: The Hour That Went Missing · notice
+  event_id: little-omens-4
+  act: 4
+  variant: notice
+  asset: chance-events/little-omens-4/notice
+  size: 1344x768
+  seed: 984018
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Nobody in the Yard can remember the fourth bell. Every lamp burned down the same length.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a row of identical burned-down lamps in a
+    quiet yard at dawn, puzzled anthro residents counting on their fingers, an empty bell tower, painted story still
+  jobs:
+    arthemy-house: 44084
+- key: eod-chance-a5-little-omens-notice
+  lane: arthemy-house
+  title: The Last Minute · notice
+  event_id: little-omens-5
+  act: 5
+  variant: notice
+  asset: chance-events/little-omens-5/notice
+  size: 1344x768
+  seed: 984019
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A clock in the crypt strikes at a time the sun cannot make. A messenger swears he has already lived
+    tomorrow.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a dim stone crypt with an old clock striking
+    under candlelight, a wide-eyed anthro messenger clutching his cap, painted story still
+  jobs:
+    arthemy-house: 44085
+- key: eod-chance-a2-mire-ferry-notice
+  lane: arthemy-house
+  title: The Boat Without a Pole · notice
+  event_id: mire-ferry-2
+  act: 2
+  variant: notice
+  asset: chance-events/mire-ferry-2/notice
+  size: 1344x768
+  seed: 984020
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A raft drifts into the shallows with three passengers asleep upright and no ferryman.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a pole-less raft drifting into reed shallows
+    with three anthro passengers asleep sitting upright, mist on the water, painted story still
+  jobs:
+    arthemy-house: 44086
+- key: eod-chance-a3-mire-ferry-notice
+  lane: arthemy-house
+  title: A Crossing in Fog · notice
+  event_id: mire-ferry-3
+  act: 3
+  variant: notice
+  asset: chance-events/mire-ferry-3/notice
+  size: 1344x768
+  seed: 984021
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The ferry rope rings like a stringed instrument in the mist. The ferryman refuses to cross at the
+    usual landing.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a ferry rope stretched across a misty river,
+    an anthro ferryman on a raft refusing to cross, fog hiding the far landing, painted story still
+  jobs:
+    arthemy-house: 44087
+- key: eod-chance-a4-mire-ferry-notice
+  lane: arthemy-house
+  title: The River Forgets Its Bank · notice
+  event_id: mire-ferry-4
+  act: 4
+  variant: notice
+  asset: chance-events/mire-ferry-4/notice
+  size: 1344x768
+  seed: 984022
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A channel moves fifty paces overnight. Three farm plots wake on the wrong side of the river.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a river channel shifted overnight across
+    farmland, three small farm plots cut off on the far bank, anthro farmers gaping at the water, painted story
+    still
+  jobs:
+    arthemy-house: 44088
+- key: eod-chance-a5-mire-ferry-notice
+  lane: arthemy-house
+  title: The Ferry of the Dead · notice
+  event_id: mire-ferry-5
+  act: 5
+  variant: notice
+  asset: chance-events/mire-ferry-5/notice
+  size: 1344x768
+  seed: 984023
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A raft passes the hideout carrying silent figures under lanterns. Their wet footprints stop at the
+    waterline.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a dark raft gliding past at night carrying
+    silent cloaked anthro figures under hanging lanterns, wet footprints ending at the waterline, painted story
+    still
+  jobs:
+    arthemy-house: 44089
+- key: eod-chance-a2-rustline-signal-notice
+  lane: arthemy-house
+  title: Rail Nails in the Bread · notice
+  event_id: rustline-signal-2
+  act: 2
+  variant: notice
+  asset: chance-events/rustline-signal-2/notice
+  size: 1344x768
+  seed: 984024
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Three old railway spikes turn up in the wheat sacks. They are polished and still warm.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, three polished old railway spikes gleaming
+    among spilled wheat from a split sack, anthro bakers staring at them on a flour-dusted table, painted story
+    still
+  jobs:
+    arthemy-house: 44090
+- key: eod-chance-a3-rustline-signal-notice
+  lane: arthemy-house
+  title: A Semaphore Turns · notice
+  event_id: rustline-signal-3
+  act: 3
+  variant: notice
+  asset: chance-events/rustline-signal-3/notice
+  size: 1344x768
+  seed: 984025
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A tower semaphore changes position during the night. Its gears were stolen decades ago.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a rusted railway semaphore tower at dawn
+    with its arm newly raised, an anthro watchman gazing up at gearless machinery, painted story still
+  jobs:
+    arthemy-house: 44091
+- key: eod-chance-a4-rustline-signal-notice
+  lane: arthemy-house
+  title: A Train Behind the Hill · notice
+  event_id: rustline-signal-4
+  act: 4
+  variant: notice
+  asset: chance-events/rustline-signal-4/notice
+  size: 1344x768
+  seed: 984026
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The hills rumble at dusk and a headlamp moves along rails that exist only on old maps.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a single headlamp moving along a ghostly
+    rail line behind dusk hills, anthro sentries on a wall watching in awe, painted story still
+  jobs:
+    arthemy-house: 44092
+- key: eod-chance-a5-rustline-signal-notice
+  lane: arthemy-house
+  title: The Track Under the Hideout · notice
+  event_id: rustline-signal-5
+  act: 5
+  variant: notice
+  asset: chance-events/rustline-signal-5/notice
+  size: 1344x768
+  seed: 984027
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: An iron vibration rises through the floor. In the distance, the dead station answers.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, the floor of a rough hideout trembling, anthro
+    exiles with ears raised, a distant ruined railway station on the horizon, painted story still
+  jobs:
+    arthemy-house: 44093
+- key: eod-chance-a2-toll-dispute-notice
+  lane: arthemy-house
+  title: A Toll Written Twice · notice
+  event_id: toll-dispute-2
+  act: 2
+  variant: notice
+  asset: chance-events/toll-dispute-2/notice
+  size: 1344x768
+  seed: 984028
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Two collectors present stamped licenses for the same bridge. Both seals appear genuine.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, two rival anthro toll collectors at a bridge
+    each holding up identical stamped wax-sealed licenses, travelers waiting between them, painted story still
+  jobs:
+    arthemy-house: 44094
+- key: eod-chance-a3-toll-dispute-notice
+  lane: arthemy-house
+  title: The Captain's Granddaughter · notice
+  event_id: toll-dispute-3
+  act: 3
+  variant: notice
+  asset: chance-events/toll-dispute-3/notice
+  size: 1344x768
+  seed: 984029
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A child brings the Pack's toll ledger to court and refuses to say who gave it to her.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a small determined anthro girl standing before
+    a throne holding a heavy leather ledger, courtiers whispering, painted story still
+  jobs:
+    arthemy-house: 44095
+- key: eod-chance-a4-toll-dispute-notice
+  lane: arthemy-house
+  title: The Road Under Arrest · notice
+  event_id: toll-dispute-4
+  act: 4
+  variant: notice
+  asset: chance-events/toll-dispute-4/notice
+  size: 1344x768
+  seed: 984030
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A tax sergeant arrests a road marker on the theory that it belongs to the Black Verge.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro tax sergeant putting iron shackles
+    on a weathered stone road marker, bemused travelers watching, painted story still
+  jobs:
+    arthemy-house: 44096
+- key: eod-chance-a5-toll-dispute-notice
+  lane: arthemy-house
+  title: The Price of Leaving · notice
+  event_id: toll-dispute-5
+  act: 5
+  variant: notice
+  asset: chance-events/toll-dispute-5/notice
+  size: 1344x768
+  seed: 984031
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A toll guild charges refugees for the road away from the fallen tower. It sends a copy of its charter.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, weary anthro refugees with bundles stopped
+    at a toll gate on a road away from a fallen tower, a guild collector with an outstretched paw, painted story
+    still
+  jobs:
+    arthemy-house: 44097
+- key: eod-chance-a2-quiet-witness-notice
+  lane: arthemy-house
+  title: The Miller's Second Ledger · notice
+  event_id: quiet-witness-2
+  act: 2
+  variant: notice
+  asset: chance-events/quiet-witness-2/notice
+  size: 1344x768
+  seed: 984032
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A bookkeeper brings an account with two columns of names, one scratched away after the last war.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro bookkeeper presenting an open ledger
+    with two columns, one column scratched out, to a candlelit court, painted story still
+  jobs:
+    arthemy-house: 44098
+- key: eod-chance-a3-quiet-witness-notice
+  lane: arthemy-house
+  title: The Witness Who Won't Name · notice
+  event_id: quiet-witness-3
+  act: 3
+  variant: notice
+  asset: chance-events/quiet-witness-3/notice
+  size: 1344x768
+  seed: 984033
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A caravan guard swears she saw a murder but will describe only the victim's boots.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro caravan guard woman testifying
+    in court, describing a pair of worn boots, a shadowy alley memory behind her, painted story still
+  jobs:
+    arthemy-house: 44099
+- key: eod-chance-a4-quiet-witness-notice
+  lane: arthemy-house
+  title: A Witness in the Stone · notice
+  event_id: quiet-witness-4
+  act: 4
+  variant: notice
+  asset: chance-events/quiet-witness-4/notice
+  size: 1344x768
+  seed: 984034
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A workman opens a wall and finds a testimony scratched into the back of every brick.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro workman opening a brick wall, the
+    back of every brick covered in tiny scratched marks, lantern light, painted story still
+  jobs:
+    arthemy-house: 44100
+- key: eod-chance-a5-quiet-witness-notice
+  lane: arthemy-house
+  title: The Witnesses of Tomorrow · notice
+  event_id: quiet-witness-5
+  act: 5
+  variant: notice
+  asset: chance-events/quiet-witness-5/notice
+  size: 1344x768
+  seed: 984035
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Three strangers arrive separately to report a crime no one at court has yet heard happened.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, three separate anthro strangers in travel
+    cloaks arriving at a courtroom from three directions, the court uneasy, painted story still
+  jobs:
+    arthemy-house: 44101
+- key: eod-chance-a2-night-market-notice
+  lane: arthemy-house
+  title: The Traveling Barber · notice
+  event_id: night-market-2
+  act: 2
+  variant: notice
+  asset: chance-events/night-market-2/notice
+  size: 1344x768
+  seed: 984036
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A barber offers cuts and news under the north arch. His gossip is better than his scissors.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro barber with scissors cutting hair
+    under a stone north arch at night, customers leaning in for gossip, lanterns, painted story still
+  jobs:
+    arthemy-house: 44102
+- key: eod-chance-a3-night-market-notice
+  lane: arthemy-house
+  title: The Bone Lottery · notice
+  event_id: night-market-3
+  act: 3
+  variant: notice
+  asset: chance-events/night-market-3/notice
+  size: 1344x768
+  seed: 984037
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A night market sells tickets cut from polished bone. Each prize belongs to someone who vanished on
+    the road.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a night market stall selling lottery tickets
+    cut from polished bone, prize items laid out on cloth, wary anthro shoppers, painted story still
+  jobs:
+    arthemy-house: 44103
+- key: eod-chance-a4-night-market-notice
+  lane: arthemy-house
+  title: The Masked Exchange · notice
+  event_id: night-market-4
+  act: 4
+  variant: notice
+  asset: chance-events/night-market-4/notice
+  size: 1344x768
+  seed: 984038
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: No trader shows a face at the night market. The prices are written in favors rather than brass.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a night market where every anthro trader
+    wears a mask, lanterns, hushed bargaining, mysterious, painted story still
+  jobs:
+    arthemy-house: 44104
+- key: eod-chance-a5-night-market-notice
+  lane: arthemy-house
+  title: The Market After Midnight · notice
+  event_id: night-market-5
+  act: 5
+  variant: notice
+  asset: chance-events/night-market-5/notice
+  size: 1344x768
+  seed: 984039
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The exiled court wakes to find a market pitched on the dry riverbed, every stall bearing the tower's
+    old crest.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a moonlit market pitched in a dry riverbed,
+    every stall hung with the old tower crest, anthro exiles waking to the sight, painted story still
+  jobs:
+    arthemy-house: 44105
+- key: eod-chance-a2-lost-animals-notice
+  lane: arthemy-house
+  title: The Pack's Red Dog · notice
+  event_id: lost-animals-2
+  act: 2
+  variant: notice
+  asset: chance-events/lost-animals-2/notice
+  size: 1344x768
+  seed: 984040
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A red dog follows the Watch for a mile. Its collar carries a Jackalwire knot tied inside out.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a red dog following an anthro watch patrol
+    along a dusty road, a knotted cord collar on its neck, painted story still
+  jobs:
+    arthemy-house: 44106
+- key: eod-chance-a3-lost-animals-notice
+  lane: arthemy-house
+  title: The Horse That Knows the Route · notice
+  event_id: lost-animals-3
+  act: 3
+  variant: notice
+  asset: chance-events/lost-animals-3/notice
+  size: 1344x768
+  seed: 984041
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A riderless horse turns at every old caravan stop and waits for someone to speak its rider's name.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a saddled riderless horse waiting patiently
+    at an old caravan stop, anthro travelers approaching it, painted story still
+  jobs:
+    arthemy-house: 44107
+- key: eod-chance-a4-lost-animals-notice
+  lane: arthemy-house
+  title: The Returning Herd · notice
+  event_id: lost-animals-4
+  act: 4
+  variant: notice
+  asset: chance-events/lost-animals-4/notice
+  size: 1344x768
+  seed: 984042
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Animals that fled the war appear together under the walls at dawn, all facing south.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a herd of goats, mules and horses gathered
+    under the fortress walls at dawn, all facing south, anthro guards on the wall, painted story still
+  jobs:
+    arthemy-house: 44108
+- key: eod-chance-a5-lost-animals-notice
+  lane: arthemy-house
+  title: The Beasts Leave First · notice
+  event_id: lost-animals-5
+  act: 5
+  variant: notice
+  asset: chance-events/lost-animals-5/notice
+  size: 1344x768
+  seed: 984043
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The hideout's draft animals refuse to move toward one particular valley. They choose a new road themselves.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, hideout draft oxen refusing to enter a shadowed
+    valley, turning onto a new road, anthro drovers following, painted story still
+  jobs:
+    arthemy-house: 44109
+- key: eod-chance-a2-bell-echo-notice
+  lane: arthemy-house
+  title: The Fourth Bell · notice
+  event_id: bell-echo-2
+  act: 2
+  variant: notice
+  asset: chance-events/bell-echo-2/notice
+  size: 1344x768
+  seed: 984044
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Hollow Bell hears four strokes at sunrise, a number its tower has never struck.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, the Hollow Bell tower at sunrise ringing
+    four times, anthro townsfolk in the square looking up startled, painted story still
+  jobs:
+    arthemy-house: 44110
+- key: eod-chance-a3-bell-echo-notice
+  lane: arthemy-house
+  title: A Bell Buried Upright · notice
+  event_id: bell-echo-3
+  act: 3
+  variant: notice
+  asset: chance-events/bell-echo-3/notice
+  size: 1344x768
+  seed: 984045
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Diggers find a bell standing in the earth like a buried flower, still clean inside.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, anthro diggers uncovering a bronze bell standing
+    upright in the earth like a buried flower, clean and gleaming inside, painted story still
+  jobs:
+    arthemy-house: 44111
+- key: eod-chance-a4-bell-echo-notice
+  lane: arthemy-house
+  title: The Bell's Other Voice · notice
+  event_id: bell-echo-4
+  act: 4
+  variant: notice
+  asset: chance-events/bell-echo-4/notice
+  size: 1344x768
+  seed: 984046
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A bell that has always warned of fire begins ringing for the people it couldn't save.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a fire bell tower ringing at dusk, grieving
+    anthro townsfolk gathered below holding candles, painted story still
+  jobs:
+    arthemy-house: 44112
+- key: eod-chance-a5-bell-echo-notice
+  lane: arthemy-house
+  title: The Silent Toll · notice
+  event_id: bell-echo-5
+  act: 5
+  variant: notice
+  asset: chance-events/bell-echo-5/notice
+  size: 1344x768
+  seed: 984047
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: At the edge of defeat, the bell rings once without sound. Everyone in the hideout feels it.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a quiet hideout camp at night, anthro exiles
+    all pausing at once and looking up, a faint ripple of light in the air, painted story still
+  jobs:
+    arthemy-house: 44113
+- key: eod-chance-a2-stranger-tent-notice
+  lane: arthemy-house
+  title: The Weather Reader's Tent · notice
+  event_id: stranger-tent-2
+  act: 2
+  variant: notice
+  asset: chance-events/stranger-tent-2/notice
+  size: 1344x768
+  seed: 984048
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A traveler sets up a tiny tent beyond the yard and measures the wind with a broken fork.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a tiny patched tent beyond the yard, an anthro
+    weather reader holding up a broken fork to the wind, painted story still
+  jobs:
+    arthemy-house: 44114
+- key: eod-chance-a3-stranger-tent-notice
+  lane: arthemy-house
+  title: The Fen Cartographer · notice
+  event_id: stranger-tent-3
+  act: 3
+  variant: notice
+  asset: chance-events/stranger-tent-3/notice
+  size: 1344x768
+  seed: 984049
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A traveler offers a map of channels that change each night. The paper smells of river mud.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro fen cartographer unrolling a mud-stained
+    map of shifting channels on a table in the yard, painted story still
+  jobs:
+    arthemy-house: 44115
+- key: eod-chance-a4-stranger-tent-notice
+  lane: arthemy-house
+  title: The Owl Who Remembers · notice
+  event_id: stranger-tent-4
+  act: 4
+  variant: notice
+  asset: chance-events/stranger-tent-4/notice
+  size: 1344x768
+  seed: 984050
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A tired wanderer arrives with fifty sketches of buildings that no longer exist.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a tired anthro owl wanderer spreading dozens
+    of sketches of lost buildings across a table, lamplight, painted story still
+  jobs:
+    arthemy-house: 44116
+- key: eod-chance-a5-stranger-tent-notice
+  lane: arthemy-house
+  title: The Cook from the Old Court · notice
+  event_id: stranger-tent-5
+  act: 5
+  variant: notice
+  asset: chance-events/stranger-tent-5/notice
+  size: 1344x768
+  seed: 984051
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A kitchen worker reaches the hideout with their cart empty and their recipe book intact.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro cook from the old court arriving
+    at the hideout with an empty handcart and a thick recipe book hugged to the chest, painted story still
+  jobs:
+    arthemy-house: 44117
+- key: eod-chance-a2-children-games-notice
+  lane: arthemy-house
+  title: The Paper Crown Contest · notice
+  event_id: children-games-2
+  act: 2
+  variant: notice
+  asset: chance-events/children-games-2/notice
+  size: 1344x768
+  seed: 984052
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Children from two villages arrive for a crown-making contest and demand the emperor judge it.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, anthro children from two villages holding
+    up paper crowns for a contest in the throne room, laughing, painted story still
+  jobs:
+    arthemy-house: 44118
+- key: eod-chance-a3-children-games-notice
+  lane: arthemy-house
+  title: A Game of Borders · notice
+  event_id: children-games-3
+  act: 3
+  variant: notice
+  asset: chance-events/children-games-3/notice
+  size: 1344x768
+  seed: 984053
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Children draw the map in chalk. Their borders are kinder than the ones in the map room.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, anthro children drawing a big chalk map with
+    gentle curving borders on the flagstones of a courtyard, painted story still
+  jobs:
+    arthemy-house: 44119
+- key: eod-chance-a4-children-games-notice
+  lane: arthemy-house
+  title: The Children's Parliament · notice
+  event_id: children-games-4
+  act: 4
+  variant: notice
+  asset: chance-events/children-games-4/notice
+  size: 1344x768
+  seed: 984054
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A gang of children presents seventeen demands, most of them about the right to sleep late.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a gang of anthro children presenting a long
+    list of demands to the throne, sleepy-eyed and serious, painted story still
+  jobs:
+    arthemy-house: 44120
+- key: eod-chance-a5-children-games-notice
+  lane: arthemy-house
+  title: The Last Game · notice
+  event_id: children-games-5
+  act: 5
+  variant: notice
+  asset: chance-events/children-games-5/notice
+  size: 1344x768
+  seed: 984055
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: In the hideout, children invent a game where losing means everyone escapes together.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, anthro children playing a circle game together
+    in the hideout, all holding paws and running toward a gap in the ring, joyful, painted story still
+  jobs:
+    arthemy-house: 44121
+- key: eod-chance-a2-medicine-trade-notice
+  lane: arthemy-house
+  title: The Traveling Midwife · notice
+  event_id: medicine-trade-2
+  act: 2
+  variant: notice
+  asset: chance-events/medicine-trade-2/notice
+  size: 1344x768
+  seed: 984056
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A midwife arrives with a cracked herb press and demands clean water before negotiation.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro midwife setting a cracked herb
+    press on a table and pointing firmly at a water barrel, painted story still
+  jobs:
+    arthemy-house: 44122
+- key: eod-chance-a3-medicine-trade-notice
+  lane: arthemy-house
+  title: Fever in the Salt Wagons · notice
+  event_id: medicine-trade-3
+  act: 3
+  variant: notice
+  asset: chance-events/medicine-trade-3/notice
+  size: 1344x768
+  seed: 984057
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A spice wagon carries an unexpected medicine and a rider with a suspicious fever.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a spice wagon with medicine jars in the yard,
+    a feverish anthro rider slumped on the seat, cautious healers approaching, painted story still
+  jobs:
+    arthemy-house: 44123
+- key: eod-chance-a4-medicine-trade-notice
+  lane: arthemy-house
+  title: The Last Apothecary · notice
+  event_id: medicine-trade-4
+  act: 4
+  variant: notice
+  asset: chance-events/medicine-trade-4/notice
+  size: 1344x768
+  seed: 984058
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A chemist sells medicine made with ash from a ruined abbey. Their receipts have the wrong year.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro chemist selling grey ash-colored
+    medicine bottles from a cart, ruined abbey silhouette behind, dusk, painted story still
+  jobs:
+    arthemy-house: 44124
+- key: eod-chance-a5-medicine-trade-notice
+  lane: arthemy-house
+  title: A Cure for the Road · notice
+  event_id: medicine-trade-5
+  act: 5
+  variant: notice
+  asset: chance-events/medicine-trade-5/notice
+  size: 1344x768
+  seed: 984059
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: An exiled herbalist brings enough bitter leaves for the sick, if someone can spare the pots to brew
+    them.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an exiled anthro herbalist with baskets of
+    bitter green leaves beside a row of empty cooking pots at the hideout fire, painted story still
+  jobs:
+    arthemy-house: 44125
+- key: eod-chance-a2-raider-guest-notice
+  lane: arthemy-house
+  title: The Painted Wagon's Gift · notice
+  event_id: raider-guest-2
+  act: 2
+  variant: notice
+  asset: chance-events/raider-guest-2/notice
+  size: 1344x768
+  seed: 984060
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A Pack scout returns a stolen shovel polished bright. There is a note nailed to the handle.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro raider scout handing back a polished
+    gleaming shovel with a folded note nailed to the handle at the gate, painted story still
+  jobs:
+    arthemy-house: 44126
+- key: eod-chance-a3-raider-guest-notice
+  lane: arthemy-house
+  title: A Truce with Bad Handwriting · notice
+  event_id: raider-guest-3
+  act: 3
+  variant: notice
+  asset: chance-events/raider-guest-3/notice
+  size: 1344x768
+  seed: 984061
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The Pack sends a truce letter written by someone who has never learned all the letters.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a crumpled truce letter in clumsy handwriting
+    delivered on a spear tip to wary anthro guards at the wall, painted story still
+  jobs:
+    arthemy-house: 44127
+- key: eod-chance-a4-raider-guest-notice
+  lane: arthemy-house
+  title: The Captain Without a Banner · notice
+  event_id: raider-guest-4
+  act: 4
+  variant: notice
+  asset: chance-events/raider-guest-4/notice
+  size: 1344x768
+  seed: 984062
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A raider captain arrives alone with a folded flag and one broken axle. The watchmen have orders to
+    shoot on sight.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a lone anthro raider captain arriving at
+    the gate with a folded flag and a broken wagon axle, guards with crossbows raised, painted story still
+  jobs:
+    arthemy-house: 44128
+- key: eod-chance-a5-raider-guest-notice
+  lane: arthemy-house
+  title: The Pack's Empty Camp · notice
+  event_id: raider-guest-5
+  act: 5
+  variant: notice
+  asset: chance-events/raider-guest-5/notice
+  size: 1344x768
+  seed: 984063
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: On the exile road you find a raider camp abandoned in haste. Dinner is still warm.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an abandoned raider camp on the exile road,
+    cookpots still steaming over campfires, anthro scouts creeping in, painted story still
+  jobs:
+    arthemy-house: 44129
+- key: eod-chance-a2-house-feast-notice
+  lane: arthemy-house
+  title: Candles for the Commons · notice
+  event_id: house-feast-2
+  act: 2
+  variant: notice
+  asset: chance-events/house-feast-2/notice
+  size: 1344x768
+  seed: 984064
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A family offers to host the whole Yard but wants to choose who serves the meal.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a wealthy anthro family setting long tables
+    for the whole yard, a matron choosing servers from a line, painted story still
+  jobs:
+    arthemy-house: 44130
+- key: eod-chance-a3-house-feast-notice
+  lane: arthemy-house
+  title: The Unspoken Toast · notice
+  event_id: house-feast-3
+  act: 3
+  variant: notice
+  asset: chance-events/house-feast-3/notice
+  size: 1344x768
+  seed: 984065
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: At a banquet, everyone raises a cup at an empty chair. Nobody will name its owner.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a candlelit banquet, every anthro guest raising
+    a cup toward a single empty chair at the head of the table, painted story still
+  jobs:
+    arthemy-house: 44131
+- key: eod-chance-a4-house-feast-notice
+  lane: arthemy-house
+  title: The Feast with No Meat · notice
+  event_id: house-feast-4
+  act: 4
+  variant: notice
+  asset: chance-events/house-feast-4/notice
+  size: 1344x768
+  seed: 984066
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The old families host a feast during rationing. Every platter arrives covered and empty.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, old noble anthro families at a rationing
+    feast, servants lifting silver covers off platters, painted story still
+  jobs:
+    arthemy-house: 44132
+- key: eod-chance-a5-house-feast-notice
+  lane: arthemy-house
+  title: Supper Under Exile · notice
+  event_id: house-feast-5
+  act: 5
+  variant: notice
+  asset: chance-events/house-feast-5/notice
+  size: 1344x768
+  seed: 984067
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A steward brings fine porcelain to the hideout and sets it down on bare earth without a word.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an elderly anthro steward setting fine porcelain
+    dishes on bare earth at a rough hideout camp, quiet dignity, painted story still
+  jobs:
+    arthemy-house: 44133
+- key: eod-chance-a2-glass-oracle-notice
+  lane: arthemy-house
+  title: A Glass Seed · notice
+  event_id: glass-oracle-2
+  act: 2
+  variant: notice
+  asset: chance-events/glass-oracle-2/notice
+  size: 1344x768
+  seed: 984068
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A crow drops a clear stone that sprouts a tiny glass leaf when warmed. The branch shatters at the
+    sound of a bell.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a crow dropping a clear stone into an anthro
+    palm, a tiny glass leaf sprouting from it in warm light, painted story still
+  jobs:
+    arthemy-house: 44134
+- key: eod-chance-a3-glass-oracle-notice
+  lane: arthemy-house
+  title: The Mirror with the Wrong Door · notice
+  event_id: glass-oracle-3
+  act: 3
+  variant: notice
+  asset: chance-events/glass-oracle-3/notice
+  size: 1344x768
+  seed: 984069
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: An old mirror shows a door in the west wall that hasn't been built. A guard swears he watched somebody
+    knock. The latch rattles.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an ornate old mirror reflecting a door in
+    a stone wall where only bare wall stands, an anthro guard staring, painted story still
+  jobs:
+    arthemy-house: 44135
+- key: eod-chance-a4-glass-oracle-notice
+  lane: arthemy-house
+  title: The Crow's Prism · notice
+  event_id: glass-oracle-4
+  act: 4
+  variant: notice
+  asset: chance-events/glass-oracle-4/notice
+  size: 1344x768
+  seed: 984070
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A prism splits candlelight into colors none of the court has names for. One color darkens whenever
+    a guest lies.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a crystal prism splitting candlelight into
+    strange rainbow colors across a court table, anthro guests watching, painted story still
+  jobs:
+    arthemy-house: 44136
+- key: eod-chance-a5-glass-oracle-notice
+  lane: arthemy-house
+  title: The Glass That Shows the Road · notice
+  event_id: glass-oracle-5
+  act: 5
+  variant: notice
+  asset: chance-events/glass-oracle-5/notice
+  size: 1344x768
+  seed: 984071
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The object shows an ordinary road until someone asks where it ends. Then the answer moves.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a glass orb showing a winding road that curls
+    away, anthro courtiers leaning close, painted story still
+  jobs:
+    arthemy-house: 44137
+- key: eod-chance-a2-courier-trouble-notice
+  lane: arthemy-house
+  title: The Wrong Recipient · notice
+  event_id: courier-trouble-2
+  act: 2
+  variant: notice
+  asset: chance-events/courier-trouble-2/notice
+  size: 1344x768
+  seed: 984072
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A rider arrives with letters for people who died a generation ago, and demands signatures.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro courier on horseback holding out
+    a bundle of yellowed letters at the gate, old townsfolk recoiling, painted story still
+  jobs:
+    arthemy-house: 44138
+- key: eod-chance-a3-courier-trouble-notice
+  lane: arthemy-house
+  title: A Seal Not Yet Cast · notice
+  event_id: courier-trouble-3
+  act: 3
+  variant: notice
+  asset: chance-events/courier-trouble-3/notice
+  size: 1344x768
+  seed: 984073
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A letter bears the crown's seal before the new stamp has been made. The wax is warm and the signer
+    is missing. The ink is fresh.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a letter sealed with warm red wax bearing
+    the crown seal on the emperor desk, an anthro adviser frowning, painted story still
+  jobs:
+    arthemy-house: 44139
+- key: eod-chance-a4-courier-trouble-notice
+  lane: arthemy-house
+  title: The Courier Who Won't Dismount · notice
+  event_id: courier-trouble-4
+  act: 4
+  variant: notice
+  asset: chance-events/courier-trouble-4/notice
+  size: 1344x768
+  seed: 984074
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A courier keeps circling the Yard until somebody promises not to open his saddlebag.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro courier on horseback circling the
+    yard clutching a sealed saddlebag, watchmen following, painted story still
+  jobs:
+    arthemy-house: 44140
+- key: eod-chance-a5-courier-trouble-notice
+  lane: arthemy-house
+  title: The Last Dispatch · notice
+  event_id: courier-trouble-5
+  act: 5
+  variant: notice
+  asset: chance-events/courier-trouble-5/notice
+  size: 1344x768
+  seed: 984075
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A messenger finds the hideout by following a road that appears on no map, and says the next message
+    is already late.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a breathless anthro messenger arriving at
+    the hideout along a faint glowing road through the waste, painted story still
+  jobs:
+    arthemy-house: 44141
+- key: eod-chance-a2-forgotten-song-notice
+  lane: arthemy-house
+  title: The Second Voice · notice
+  event_id: forgotten-song-2
+  act: 2
+  variant: notice
+  asset: chance-events/forgotten-song-2/notice
+  size: 1344x768
+  seed: 984076
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The singers in the Yard hear a second voice from the empty storeroom, perfectly in time.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, anthro singers in the yard at dusk pausing
+    as a voice echoes from a dark empty storeroom, painted story still
+  jobs:
+    arthemy-house: 44142
+- key: eod-chance-a3-forgotten-song-notice
+  lane: arthemy-house
+  title: The Choir under the Floor · notice
+  event_id: forgotten-song-3
+  act: 3
+  variant: notice
+  asset: chance-events/forgotten-song-3/notice
+  size: 1344x768
+  seed: 984077
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A shift of stone reveals a chamber where sound travels without air. Someone has scratched notes into
+    it.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a hidden stone chamber revealed by shifted
+    floor stones, musical notes scratched into the walls, anthro workers with lanterns, painted story still
+  jobs:
+    arthemy-house: 44143
+- key: eod-chance-a4-forgotten-song-notice
+  lane: arthemy-house
+  title: The Music of the Broken Well · notice
+  event_id: forgotten-song-4
+  act: 4
+  variant: notice
+  asset: chance-events/forgotten-song-4/notice
+  size: 1344x768
+  seed: 984078
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A well with no water begins to sing when the wind comes from the north. The tune changes when someone
+    speaks a name.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a dry broken stone well with wind swirling
+    into it, anthro villagers listening, ears raised, painted story still
+  jobs:
+    arthemy-house: 44144
+- key: eod-chance-a5-forgotten-song-notice
+  lane: arthemy-house
+  title: The Song without an Ending · notice
+  event_id: forgotten-song-5
+  act: 5
+  variant: notice
+  asset: chance-events/forgotten-song-5/notice
+  size: 1344x768
+  seed: 984079
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: At the hideout, the old tune returns with a final verse that nobody remembers learning.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, exiles singing around a hideout campfire,
+    an old anthro singer leading a new verse, starry night, painted story still
+  jobs:
+    arthemy-house: 44145
+- key: eod-chance-a2-salt-accounts-notice
+  lane: arthemy-house
+  title: The Double Entry · notice
+  event_id: salt-accounts-2
+  act: 2
+  variant: notice
+  asset: chance-events/salt-accounts-2/notice
+  size: 1344x768
+  seed: 984080
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A Saltroad account pays the same wagon twice for two separate journeys made on the same afternoon.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a Saltroad ledger open beside two identical
+    wagons in the yard, an anthro clerk double-checking with a lens, painted story still
+  jobs:
+    arthemy-house: 44146
+- key: eod-chance-a3-salt-accounts-notice
+  lane: arthemy-house
+  title: The Missing Merchant · notice
+  event_id: salt-accounts-3
+  act: 3
+  variant: notice
+  asset: chance-events/salt-accounts-3/notice
+  size: 1344x768
+  seed: 984081
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A ledger continues posting sales under the name of a merchant buried last winter.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro ledger keeper reading an account
+    book beside a fresh grave marker, uneasy, painted story still
+  jobs:
+    arthemy-house: 44147
+- key: eod-chance-a4-salt-accounts-notice
+  lane: arthemy-house
+  title: The King's Invisible Debt · notice
+  event_id: salt-accounts-4
+  act: 4
+  variant: notice
+  asset: chance-events/salt-accounts-4/notice
+  size: 1344x768
+  seed: 984082
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A claim arrives with forty pages of figures and a signature that looks like the emperor's.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a towering stack of claim papers set before
+    an empty brass throne, Young Komodo, a friendly anthropomorphic Komodo dragon adviser, squinting at a signature
+    through a lens, painted story still
+  jobs:
+    arthemy-house: 44148
+- key: eod-chance-a5-salt-accounts-notice
+  lane: arthemy-house
+  title: The Account of the Fallen Tower · notice
+  event_id: salt-accounts-5
+  act: 5
+  variant: notice
+  asset: chance-events/salt-accounts-5/notice
+  size: 1344x768
+  seed: 984083
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A ledger arrives at the hideout showing every tax the tower will collect after it has already fallen.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a dusty ledger delivered to the hideout table,
+    exiled anthro courtiers poring over it by lamplight, painted story still
+  jobs:
+    arthemy-house: 44149
+- key: eod-chance-a2-moonlit-scouts-notice
+  lane: arthemy-house
+  title: The Scout with No Tracks · notice
+  event_id: moonlit-scouts-2
+  act: 2
+  variant: notice
+  asset: chance-events/moonlit-scouts-2/notice
+  size: 1344x768
+  seed: 984084
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A courier says an unseen scout followed them through the valley for six miles.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro courier looking over his shoulder
+    in a moonlit valley, a faint shape on the ridge behind, painted story still
+  jobs:
+    arthemy-house: 44150
+- key: eod-chance-a3-moonlit-scouts-notice
+  lane: arthemy-house
+  title: The Lantern Wall · notice
+  event_id: moonlit-scouts-3
+  act: 3
+  variant: notice
+  asset: chance-events/moonlit-scouts-3/notice
+  size: 1344x768
+  seed: 984085
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Twenty distant lights move together across the dry flats as though strung on a line.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, twenty distant lantern lights moving in a
+    line across dry salt flats at night, anthro sentries watching from a wall, painted story still
+  jobs:
+    arthemy-house: 44151
+- key: eod-chance-a4-moonlit-scouts-notice
+  lane: arthemy-house
+  title: The Ridge Has Eyes · notice
+  event_id: moonlit-scouts-4
+  act: 4
+  variant: notice
+  asset: chance-events/moonlit-scouts-4/notice
+  size: 1344x768
+  seed: 984086
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Every Watch patrol reports a different stranger watching the same ridge from a different direction.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a lone shadowy watcher on a moonlit ridge,
+    an anthro patrol pointing from below, painted story still
+  jobs:
+    arthemy-house: 44152
+- key: eod-chance-a5-moonlit-scouts-notice
+  lane: arthemy-house
+  title: The Lamps at the Grave · notice
+  event_id: moonlit-scouts-5
+  act: 5
+  variant: notice
+  asset: chance-events/moonlit-scouts-5/notice
+  size: 1344x768
+  seed: 984087
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: On the exile road, lanterns appear over the places where the fallen were buried.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, lanterns glowing over fresh graves along
+    the exile road at night, mourning anthro exiles, painted story still
+  jobs:
+    arthemy-house: 44153
+- key: eod-chance-a2-strange-craft-notice
+  lane: arthemy-house
+  title: The Brass Bird · notice
+  event_id: strange-craft-2
+  act: 2
+  variant: notice
+  asset: chance-events/strange-craft-2/notice
+  size: 1344x768
+  seed: 984088
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A small metal bird winds itself from a spring, sings once, and folds back into a box.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a tiny brass clockwork bird singing on an
+    open wooden box, anthro tinkerers delighted, painted story still
+  jobs:
+    arthemy-house: 44154
+- key: eod-chance-a3-strange-craft-notice
+  lane: arthemy-house
+  title: The Well-Engine's Heart · notice
+  event_id: strange-craft-3
+  act: 3
+  variant: notice
+  asset: chance-events/strange-craft-3/notice
+  size: 1344x768
+  seed: 984089
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A brass pump begins turning with no water, producing a pulse that can be felt in the floor.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a brass pump engine turning on its own in
+    a dry pump house, an anthro engineer with a paw on the floor, painted story still
+  jobs:
+    arthemy-house: 44155
+- key: eod-chance-a4-strange-craft-notice
+  lane: arthemy-house
+  title: The Maker of Shadows · notice
+  event_id: strange-craft-4
+  act: 4
+  variant: notice
+  asset: chance-events/strange-craft-4/notice
+  size: 1344x768
+  seed: 984090
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A craftsman builds a lamp that throws the shadows of objects left outside its light.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro craftsman holding a strange brass
+    lamp that casts shadows of objects outside its light, workshop at night, painted story still
+  jobs:
+    arthemy-house: 44156
+- key: eod-chance-a5-strange-craft-notice
+  lane: arthemy-house
+  title: The Machine with No Master · notice
+  event_id: strange-craft-5
+  act: 5
+  variant: notice
+  asset: chance-events/strange-craft-5/notice
+  size: 1344x768
+  seed: 984091
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A device from the lost century starts working when the last engineer leaves the room.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an ancient machine humming to life in an
+    empty workshop, an anthro engineer peeking back through the doorway, painted story still
+  jobs:
+    arthemy-house: 44157
+- key: eod-chance-a2-watch-desertion-notice
+  lane: arthemy-house
+  title: The Sergeant's Dice · notice
+  event_id: watch-desertion-2
+  act: 2
+  variant: notice
+  asset: chance-events/watch-desertion-2/notice
+  size: 1344x768
+  seed: 984092
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A sergeant's lucky dice arrive in the barracks without him. His squad denies knowing where he went.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a pair of carved lucky dice on a barracks
+    table, anthro soldiers avoiding each other eyes, painted story still
+  jobs:
+    arthemy-house: 44158
+- key: eod-chance-a3-watch-desertion-notice
+  lane: arthemy-house
+  title: The Watchman in the Orchard · notice
+  event_id: watch-desertion-3
+  act: 3
+  variant: notice
+  asset: chance-events/watch-desertion-3/notice
+  size: 1344x768
+  seed: 984093
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A soldier hides in the Freehold orchard and asks not to be returned until somebody hears why he fled.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a frightened anthro soldier hiding among
+    orchard trees, his uniform jacket torn, painted story still
+  jobs:
+    arthemy-house: 44159
+- key: eod-chance-a4-watch-desertion-notice
+  lane: arthemy-house
+  title: The Captain's Promise · notice
+  event_id: watch-desertion-4
+  act: 4
+  variant: notice
+  asset: chance-events/watch-desertion-4/notice
+  size: 1344x768
+  seed: 984094
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The Watch demands a deserter be punished. A farmer claims the soldier saved a village.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an anthro watch captain and a farmer arguing
+    before the throne over a chained young soldier, painted story still
+  jobs:
+    arthemy-house: 44160
+- key: eod-chance-a5-watch-desertion-notice
+  lane: arthemy-house
+  title: The Watch Without a Wall · notice
+  event_id: watch-desertion-5
+  act: 5
+  variant: notice
+  asset: chance-events/watch-desertion-5/notice
+  size: 1344x768
+  seed: 984095
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Soldiers who lost the tower offer to guard the hideout but refuse to wear the old badge.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, anthro soldiers in worn plain uniforms offering
+    to guard a hideout camp, their old badges set aside on a rock, painted story still
+  jobs:
+    arthemy-house: 44161
+- key: eod-chance-a2-pilgrim-road-notice
+  lane: arthemy-house
+  title: The Pilgrim's Boots · notice
+  event_id: pilgrim-road-2
+  act: 2
+  variant: notice
+  asset: chance-events/pilgrim-road-2/notice
+  size: 1344x768
+  seed: 984096
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A pilgrim reaches the gate barefoot, carrying a pair of boots tied together with black thread.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a barefoot anthro pilgrim at the gate carrying
+    a pair of boots tied together with black thread, painted story still
+  jobs:
+    arthemy-house: 44162
+- key: eod-chance-a3-pilgrim-road-notice
+  lane: arthemy-house
+  title: The Silent Procession · notice
+  event_id: pilgrim-road-3
+  act: 3
+  variant: notice
+  asset: chance-events/pilgrim-road-3/notice
+  size: 1344x768
+  seed: 984097
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Pilgrims walk past the fortress without greeting it, all carrying empty bowls.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a line of silent anthro pilgrims in grey
+    robes passing the fortress carrying empty bowls, painted story still
+  jobs:
+    arthemy-house: 44163
+- key: eod-chance-a4-pilgrim-road-notice
+  lane: arthemy-house
+  title: The Pilgrim Who Returned · notice
+  event_id: pilgrim-road-4
+  act: 4
+  variant: notice
+  asset: chance-events/pilgrim-road-4/notice
+  size: 1344x768
+  seed: 984098
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A pilgrim who left for the Abbey years ago arrives older than the number of years can explain.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, an elderly anthro pilgrim returning to the
+    gate with a long white beard and the same young eyes, painted story still
+  jobs:
+    arthemy-house: 44164
+- key: eod-chance-a5-pilgrim-road-notice
+  lane: arthemy-house
+  title: The Road of a Hundred Candles · notice
+  event_id: pilgrim-road-5
+  act: 5
+  variant: notice
+  asset: chance-events/pilgrim-road-5/notice
+  size: 1344x768
+  seed: 984099
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: A line of pilgrims walks toward the hideout with lanterns shielded from a wind that hasn't arrived.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a long line of anthro pilgrims carrying shielded
+    lanterns approaching the hideout at dusk, still air, painted story still
+  jobs:
+    arthemy-house: 44165
+- key: eod-chance-a2-factions-argue-notice
+  lane: arthemy-house
+  title: The Creek's Real Name · notice
+  event_id: factions-argue-2
+  act: 2
+  variant: notice
+  asset: chance-events/factions-argue-2/notice
+  size: 1344x768
+  seed: 984100
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Two villages dispute which name belongs on the map beside the new canal. Each claims their ancestors
+    dug it.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, two groups of anthro villagers arguing over
+    a new canal map in the map room, painted story still
+  jobs:
+    arthemy-house: 44166
+- key: eod-chance-a3-factions-argue-notice
+  lane: arthemy-house
+  title: Whose Bridge Is It · notice
+  event_id: factions-argue-3
+  act: 3
+  variant: notice
+  asset: chance-events/factions-argue-3/notice
+  size: 1344x768
+  seed: 984101
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: The same river bridge appears on two tax rolls, each with different owners and damaged stones.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, a damaged stone river bridge, two anthro
+    owners with competing tax rolls arguing on it, painted story still
+  jobs:
+    arthemy-house: 44167
+- key: eod-chance-a4-factions-argue-notice
+  lane: arthemy-house
+  title: The Order That Cannot Stand · notice
+  event_id: factions-argue-4
+  act: 4
+  variant: notice
+  asset: chance-events/factions-argue-4/notice
+  size: 1344x768
+  seed: 984102
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Three factions present contradictory orders bearing the tower's official seal.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, three anthro faction envoys presenting contradictory
+    sealed orders to the throne, tense standoff, painted story still
+  jobs:
+    arthemy-house: 44168
+- key: eod-chance-a5-factions-argue-notice
+  lane: arthemy-house
+  title: The Border of Exile · notice
+  event_id: factions-argue-5
+  act: 5
+  variant: notice
+  asset: chance-events/factions-argue-5/notice
+  size: 1344x768
+  seed: 984103
+  negative: nsfw, nudity, watermark, text, subtitles, signature, logo, photorealistic human, blurry, lowres, gore,
+    extra limbs, malformed muzzle
+  source_text: Refugees ask whether the realm has ended where the emperor sleeps now or where the banner was left
+    behind.
+  prompt_tags: Emperor of Dust original anthro fantasy frontier scene, weary anthro refugees gathered around a lone
+    planted banner at the edge of the hideout camp, one pointing back along the long road toward the distant fallen
+    tower, wide wasteland, painted story still
+  jobs:
+    arthemy-house: 44169

@@ -1,0 +1,843 @@
+# Zuzu: Ghost Trail Generation 2 art, round 2 (kr-arcade t-162; GEN2-STANDARD.md sections 5-6; CAMPAIGN-BLUEPRINT.md
+# art pipeline step 3). Step one of the pose-to-pose atlas: white-ground KEY POSES that GHOST-TRAIL-GEN2-CLIPS-1 will
+# animate with WAN 2.2 first/last-frame clips (the zuzu-pinball T019 croc recipe), then cut, matte and pack per action.
+# ZUZU: Flux Kontext re-poses of his locked current look, ArtImage 242395 (comic-creator ANGLES-ZUZU r17-zuzu-subtle-
+# front-1: white ground, kasa, rust poncho with orange zigzag, one katana with the hilt over his RIGHT shoulder),
+# padded white to square so every pose shares one camera and scale. All poses face RIGHT, so his right shoulder (and
+# the hilt) is nearest the viewer. NEVER mirror a Zuzu frame: a flip moves the katana to the wrong shoulder; left-
+# facing frames come from a later Kontext pass, not a flip. Two seeds per pose. Action coverage (blueprint: idle 6,
+# walk 8, jump 3, fall 2, attack 5, throw 4, crouch 2, hit 4, poncho-loss 6, death 8): each WAN clip runs between two
+# keys below (idle->idle loop; walk contact->passing; jump crouch->rise; fall rise->fall; throw windup->release;
+# cut draw->slash; hit idle->hit; poncho-loss hit->tear->exposed idle; death exposed hit->kneel->down). The exposed set
+# (first hit tears off poncho and kasa: dark tunic, orange sash, bare head; heroArt.ts) has its own idle, walk and hit.
+# No character LoRA: Silas excluded the 2D games from the cast-LoRA default (cast-loras/zuzu-koala-assassin.yaml).
+# ENEMIES: one white-ground KEY design for each of the four mockup foes (foeArt.ts: spectral bone coyote 'hyena',
+# hooded grave ghost 'spirit', storm crow, skeleton gunslinger) in Arthemy and Z-Image. Their telegraph/attack/defeat
+# poses are a Kontext round from whichever key Silas or the reviewer picks (same croc recipe), so they are NOT queued
+# blind here. Enemies face LEFT (toward Zuzu); mirroring an enemy is fine. auto_submit: true. Private.
+round: ghost-trail-gen2-2
+project_slug: kr-arcade
+designer: Kind Robots Arcade
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: kontext-poses
+  label: Flux Kontext dev (fp8), Zuzu key poses re-posed from the locked look 242395
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+- key: arthemy-white
+  label: Arthemy Western Art v3.0, white-ground enemy key designs
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style)
+  suffix: full body, character design, (white background:1.3), simple background, single character, centered, wide
+    margin, bold ink outlines
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+- key: zimage
+  label: Z-Image Turbo (painted alternate)
+  engine: zimage
+  prompt: prose
+subjects:
+- key: gt2-zuzu-idle-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: idle (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82101
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, standing at rest, weight settled on both feet, paws loose
+    at his sides, chest rising with a slow breath. Keep the same koala character, the same stern face, the same
+    short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange
+    band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana strapped across
+    his back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white background
+    all around him with a wide white margin, his whole body in view, the same camera distance and scale, and the
+    same inked western comic art style.
+  jobs:
+    kontext-poses: 43977
+- key: gt2-zuzu-idle-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: idle (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82102
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, standing at rest, weight settled on both feet, paws loose
+    at his sides, chest rising with a slow breath. Keep the same koala character, the same stern face, the same
+    short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange
+    band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana strapped across
+    his back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white background
+    all around him with a wide white margin, his whole body in view, the same camera distance and scale, and the
+    same inked western comic art style.
+  jobs:
+    kontext-poses: 43978
+- key: gt2-zuzu-walk-contact-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: walk contact (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82103
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, walking mid-stride, his front foot planted heel-first
+    and his back foot pushing off, arms swinging, the poncho hem swaying. Keep the same koala character, the same
+    stern face, the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw
+    kasa with the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed
+    katana strapped across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the
+    plain white background all around him with a wide white margin, his whole body in view, the same camera distance
+    and scale, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43979
+- key: gt2-zuzu-walk-contact-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: walk contact (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82104
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, walking mid-stride, his front foot planted heel-first
+    and his back foot pushing off, arms swinging, the poncho hem swaying. Keep the same koala character, the same
+    stern face, the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw
+    kasa with the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed
+    katana strapped across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the
+    plain white background all around him with a wide white margin, his whole body in view, the same camera distance
+    and scale, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43980
+- key: gt2-zuzu-walk-passing-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: walk passing (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82105
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, walking mid-stride, one leg passing under his body with
+    the knee lifted and the other foot flat, his body slightly raised. Keep the same koala character, the same stern
+    face, the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa
+    with the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana
+    strapped across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white
+    background all around him with a wide white margin, his whole body in view, the same camera distance and scale,
+    and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43981
+- key: gt2-zuzu-walk-passing-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: walk passing (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82106
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, walking mid-stride, one leg passing under his body with
+    the knee lifted and the other foot flat, his body slightly raised. Keep the same koala character, the same stern
+    face, the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa
+    with the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana
+    strapped across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white
+    background all around him with a wide white margin, his whole body in view, the same camera distance and scale,
+    and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43982
+- key: gt2-zuzu-jump-crouch-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: jump crouch (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82107
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, crouched low just before a jump, knees deeply bent, arms
+    swept back behind him, leaning forward. Keep the same koala character, the same stern face, the same short stocky
+    build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band, the
+    orange neckerchief and sash, the dark brown trousers, and the single sheathed katana strapped across his back
+    with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white background all around
+    him with a wide white margin, his whole body in view, the same camera distance and scale, and the same inked
+    western comic art style.
+  jobs:
+    kontext-poses: 43983
+- key: gt2-zuzu-jump-crouch-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: jump crouch (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82108
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, crouched low just before a jump, knees deeply bent, arms
+    swept back behind him, leaning forward. Keep the same koala character, the same stern face, the same short stocky
+    build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band, the
+    orange neckerchief and sash, the dark brown trousers, and the single sheathed katana strapped across his back
+    with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white background all around
+    him with a wide white margin, his whole body in view, the same camera distance and scale, and the same inked
+    western comic art style.
+  jobs:
+    kontext-poses: 43984
+- key: gt2-zuzu-jump-rise-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: jump rise (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82109
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, leaping upward in mid-air, knees tucked up high, arms
+    raised, the poncho flaring down and back. Keep the same koala character, the same stern face, the same short
+    stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band,
+    the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana strapped across his
+    back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white background all
+    around him with a wide white margin, his whole body in view, the same camera distance and scale, and the same
+    inked western comic art style.
+  jobs:
+    kontext-poses: 43985
+- key: gt2-zuzu-jump-rise-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: jump rise (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82110
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, leaping upward in mid-air, knees tucked up high, arms
+    raised, the poncho flaring down and back. Keep the same koala character, the same stern face, the same short
+    stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band,
+    the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana strapped across his
+    back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white background all
+    around him with a wide white margin, his whole body in view, the same camera distance and scale, and the same
+    inked western comic art style.
+  jobs:
+    kontext-poses: 43986
+- key: gt2-zuzu-fall-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: fall (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82111
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, dropping in mid-air, legs stretched down ready to land,
+    arms held out for balance, the poncho billowing upward. Keep the same koala character, the same stern face,
+    the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with
+    the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana strapped
+    across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white background
+    all around him with a wide white margin, his whole body in view, the same camera distance and scale, and the
+    same inked western comic art style.
+  jobs:
+    kontext-poses: 43987
+- key: gt2-zuzu-fall-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: fall (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82112
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, dropping in mid-air, legs stretched down ready to land,
+    arms held out for balance, the poncho billowing upward. Keep the same koala character, the same stern face,
+    the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with
+    the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana strapped
+    across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white background
+    all around him with a wide white margin, his whole body in view, the same camera distance and scale, and the
+    same inked western comic art style.
+  jobs:
+    kontext-poses: 43988
+- key: gt2-zuzu-throw-windup-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: throw windup (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82113
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, winding up a throw, his right paw drawn back beside his
+    ear holding a small black kunai, his left arm pointing forward. Keep the same koala character, the same stern
+    face, the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa
+    with the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana
+    strapped across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white
+    background all around him with a wide white margin, his whole body in view, the same camera distance and scale,
+    and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43989
+- key: gt2-zuzu-throw-windup-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: throw windup (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82114
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, winding up a throw, his right paw drawn back beside his
+    ear holding a small black kunai, his left arm pointing forward. Keep the same koala character, the same stern
+    face, the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa
+    with the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana
+    strapped across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white
+    background all around him with a wide white margin, his whole body in view, the same camera distance and scale,
+    and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43990
+- key: gt2-zuzu-throw-release-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: throw release (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82115
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, just after a throw, his right arm flung forward at full
+    reach with the paw open, a small black kunai flying ahead of it, his weight on his front foot. Keep the same
+    koala character, the same stern face, the same short stocky build, the same rust-brown poncho with the orange
+    zigzag trim, the wide straw kasa with the orange band, the orange neckerchief and sash, the dark brown trousers,
+    and the single sheathed katana strapped across his back with its hilt rising above his right shoulder, nearest
+    the viewer. Keep the plain white background all around him with a wide white margin, his whole body in view,
+    the same camera distance and scale, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43991
+- key: gt2-zuzu-throw-release-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: throw release (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82116
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, just after a throw, his right arm flung forward at full
+    reach with the paw open, a small black kunai flying ahead of it, his weight on his front foot. Keep the same
+    koala character, the same stern face, the same short stocky build, the same rust-brown poncho with the orange
+    zigzag trim, the wide straw kasa with the orange band, the orange neckerchief and sash, the dark brown trousers,
+    and the single sheathed katana strapped across his back with its hilt rising above his right shoulder, nearest
+    the viewer. Keep the plain white background all around him with a wide white margin, his whole body in view,
+    the same camera distance and scale, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43992
+- key: gt2-zuzu-cut-draw-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: cut draw (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82117
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, reaching up with his right paw to grip the katana hilt
+    above his right shoulder, about to draw, knees bent, eyes narrowed. Keep the same koala character, the same
+    stern face, the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw
+    kasa with the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed
+    katana strapped across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the
+    plain white background all around him with a wide white margin, his whole body in view, the same camera distance
+    and scale, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43993
+- key: gt2-zuzu-cut-draw-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: cut draw (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82118
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, reaching up with his right paw to grip the katana hilt
+    above his right shoulder, about to draw, knees bent, eyes narrowed. Keep the same koala character, the same
+    stern face, the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw
+    kasa with the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed
+    katana strapped across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the
+    plain white background all around him with a wide white margin, his whole body in view, the same camera distance
+    and scale, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43994
+- key: gt2-zuzu-cut-slash-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: cut slash (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82119
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, lunging forward with the drawn katana gripped in both
+    paws, the blade swept level straight ahead at full reach, the empty sheath still across his back. Keep the same
+    koala character, the same stern face, the same short stocky build, the same rust-brown poncho with the orange
+    zigzag trim, the wide straw kasa with the orange band, the orange neckerchief and sash, the dark brown trousers,
+    and the single sheathed katana strapped across his back with its hilt rising above his right shoulder, nearest
+    the viewer. Keep the plain white background all around him with a wide white margin, his whole body in view,
+    the same camera distance and scale, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43995
+- key: gt2-zuzu-cut-slash-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: cut slash (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82120
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, lunging forward with the drawn katana gripped in both
+    paws, the blade swept level straight ahead at full reach, the empty sheath still across his back. Keep the same
+    koala character, the same stern face, the same short stocky build, the same rust-brown poncho with the orange
+    zigzag trim, the wide straw kasa with the orange band, the orange neckerchief and sash, the dark brown trousers,
+    and the single sheathed katana strapped across his back with its hilt rising above his right shoulder, nearest
+    the viewer. Keep the plain white background all around him with a wide white margin, his whole body in view,
+    the same camera distance and scale, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43996
+- key: gt2-zuzu-crouch-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: crouch (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82121
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, crouching low to the ground, knees bent, one paw touching
+    the ground, the kasa brim low over his eyes. Keep the same koala character, the same stern face, the same short
+    stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band,
+    the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana strapped across his
+    back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white background all
+    around him with a wide white margin, his whole body in view, the same camera distance and scale, and the same
+    inked western comic art style.
+  jobs:
+    kontext-poses: 43997
+- key: gt2-zuzu-crouch-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: crouch (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82122
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, crouching low to the ground, knees bent, one paw touching
+    the ground, the kasa brim low over his eyes. Keep the same koala character, the same stern face, the same short
+    stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa with the orange band,
+    the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana strapped across his
+    back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white background all
+    around him with a wide white margin, his whole body in view, the same camera distance and scale, and the same
+    inked western comic art style.
+  jobs:
+    kontext-poses: 43998
+- key: gt2-zuzu-hit-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: hit (seed 1)'
+  set: intact
+  size: 1024x1024
+  seed: 82123
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, knocked back by a blow, his body bent backward, arms
+    flung out, one foot lifted off the ground, eyes squeezed shut. Keep the same koala character, the same stern
+    face, the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa
+    with the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana
+    strapped across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white
+    background all around him with a wide white margin, his whole body in view, the same camera distance and scale,
+    and the same inked western comic art style.
+  jobs:
+    kontext-poses: 43999
+- key: gt2-zuzu-hit-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: hit (seed 2)'
+  set: intact
+  size: 1024x1024
+  seed: 82124
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, knocked back by a blow, his body bent backward, arms
+    flung out, one foot lifted off the ground, eyes squeezed shut. Keep the same koala character, the same stern
+    face, the same short stocky build, the same rust-brown poncho with the orange zigzag trim, the wide straw kasa
+    with the orange band, the orange neckerchief and sash, the dark brown trousers, and the single sheathed katana
+    strapped across his back with its hilt rising above his right shoulder, nearest the viewer. Keep the plain white
+    background all around him with a wide white margin, his whole body in view, the same camera distance and scale,
+    and the same inked western comic art style.
+  jobs:
+    kontext-poses: 44000
+- key: gt2-zuzu-poncho-tear-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: poncho tear (seed 1)'
+  set: tear
+  size: 1024x1024
+  seed: 82125
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, knocked back by a hard blow while his rust-brown poncho
+    and straw kasa tear away from him and fly off behind his back, arms flung out, his dark tunic and orange sash
+    showing underneath. Keep the same koala character, the same stern face, the same short stocky build and the
+    single sheathed katana strapped across his back with its hilt rising above his right shoulder, nearest the viewer.
+    Keep the plain white background all around him with a wide white margin, his whole body in view, the same camera
+    distance and scale, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 44001
+- key: gt2-zuzu-poncho-tear-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: poncho tear (seed 2)'
+  set: tear
+  size: 1024x1024
+  seed: 82126
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: Show him in a full side view facing right, knocked back by a hard blow while his rust-brown poncho
+    and straw kasa tear away from him and fly off behind his back, arms flung out, his dark tunic and orange sash
+    showing underneath. Keep the same koala character, the same stern face, the same short stocky build and the
+    single sheathed katana strapped across his back with its hilt rising above his right shoulder, nearest the viewer.
+    Keep the plain white background all around him with a wide white margin, his whole body in view, the same camera
+    distance and scale, and the same inked western comic art style.
+  jobs:
+    kontext-poses: 44002
+- key: gt2-zuzu-exposed-idle-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: exposed idle (seed 1)'
+  set: exposed
+  size: 1024x1024
+  seed: 82127
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: 'Show him in a full side view facing right, standing at rest, weight settled on both feet, paws
+    loose at his sides, wary. His rust-brown poncho and straw kasa are gone: he wears a plain dark tunic with the
+    orange sash knotted at the waist and dark brown trousers, his bare grey head and round fuzzy ears showing, and
+    the same single sheathed katana strapped across his back with its hilt rising above his right shoulder, nearest
+    the viewer. Keep the same koala character, the same stern face and the same short stocky build. Keep the plain
+    white background all around him with a wide white margin, his whole body in view, the same camera distance and
+    scale, and the same inked western comic art style.'
+  jobs:
+    kontext-poses: 44003
+- key: gt2-zuzu-exposed-idle-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: exposed idle (seed 2)'
+  set: exposed
+  size: 1024x1024
+  seed: 82128
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: 'Show him in a full side view facing right, standing at rest, weight settled on both feet, paws
+    loose at his sides, wary. His rust-brown poncho and straw kasa are gone: he wears a plain dark tunic with the
+    orange sash knotted at the waist and dark brown trousers, his bare grey head and round fuzzy ears showing, and
+    the same single sheathed katana strapped across his back with its hilt rising above his right shoulder, nearest
+    the viewer. Keep the same koala character, the same stern face and the same short stocky build. Keep the plain
+    white background all around him with a wide white margin, his whole body in view, the same camera distance and
+    scale, and the same inked western comic art style.'
+  jobs:
+    kontext-poses: 44004
+- key: gt2-zuzu-exposed-walk-contact-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: exposed walk contact (seed 1)'
+  set: exposed
+  size: 1024x1024
+  seed: 82129
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: 'Show him in a full side view facing right, walking mid-stride, his front foot planted heel-first
+    and his back foot pushing off, arms swinging. His rust-brown poncho and straw kasa are gone: he wears a plain
+    dark tunic with the orange sash knotted at the waist and dark brown trousers, his bare grey head and round fuzzy
+    ears showing, and the same single sheathed katana strapped across his back with its hilt rising above his right
+    shoulder, nearest the viewer. Keep the same koala character, the same stern face and the same short stocky build.
+    Keep the plain white background all around him with a wide white margin, his whole body in view, the same camera
+    distance and scale, and the same inked western comic art style.'
+  jobs:
+    kontext-poses: 44005
+- key: gt2-zuzu-exposed-walk-contact-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: exposed walk contact (seed 2)'
+  set: exposed
+  size: 1024x1024
+  seed: 82130
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: 'Show him in a full side view facing right, walking mid-stride, his front foot planted heel-first
+    and his back foot pushing off, arms swinging. His rust-brown poncho and straw kasa are gone: he wears a plain
+    dark tunic with the orange sash knotted at the waist and dark brown trousers, his bare grey head and round fuzzy
+    ears showing, and the same single sheathed katana strapped across his back with its hilt rising above his right
+    shoulder, nearest the viewer. Keep the same koala character, the same stern face and the same short stocky build.
+    Keep the plain white background all around him with a wide white margin, his whole body in view, the same camera
+    distance and scale, and the same inked western comic art style.'
+  jobs:
+    kontext-poses: 44006
+- key: gt2-zuzu-exposed-hit-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: exposed hit (seed 1)'
+  set: exposed
+  size: 1024x1024
+  seed: 82131
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: 'Show him in a full side view facing right, knocked back by a blow, his body bent backward, arms
+    flung out, one foot lifted off the ground, eyes squeezed shut. His rust-brown poncho and straw kasa are gone:
+    he wears a plain dark tunic with the orange sash knotted at the waist and dark brown trousers, his bare grey
+    head and round fuzzy ears showing, and the same single sheathed katana strapped across his back with its hilt
+    rising above his right shoulder, nearest the viewer. Keep the same koala character, the same stern face and
+    the same short stocky build. Keep the plain white background all around him with a wide white margin, his whole
+    body in view, the same camera distance and scale, and the same inked western comic art style.'
+  jobs:
+    kontext-poses: 44007
+- key: gt2-zuzu-exposed-hit-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: exposed hit (seed 2)'
+  set: exposed
+  size: 1024x1024
+  seed: 82132
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: 'Show him in a full side view facing right, knocked back by a blow, his body bent backward, arms
+    flung out, one foot lifted off the ground, eyes squeezed shut. His rust-brown poncho and straw kasa are gone:
+    he wears a plain dark tunic with the orange sash knotted at the waist and dark brown trousers, his bare grey
+    head and round fuzzy ears showing, and the same single sheathed katana strapped across his back with its hilt
+    rising above his right shoulder, nearest the viewer. Keep the same koala character, the same stern face and
+    the same short stocky build. Keep the plain white background all around him with a wide white margin, his whole
+    body in view, the same camera distance and scale, and the same inked western comic art style.'
+  jobs:
+    kontext-poses: 44008
+- key: gt2-zuzu-death-kneel-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: death kneel (seed 1)'
+  set: exposed
+  size: 1024x1024
+  seed: 82133
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: 'Show him in a full side view facing right, sinking down onto both knees, exhausted, head bowed,
+    one paw pressed flat on the ground. His rust-brown poncho and straw kasa are gone: he wears a plain dark tunic
+    with the orange sash knotted at the waist and dark brown trousers, his bare grey head and round fuzzy ears showing,
+    and the same single sheathed katana strapped across his back with its hilt rising above his right shoulder,
+    nearest the viewer. Keep the same koala character, the same stern face and the same short stocky build. Keep
+    the plain white background all around him with a wide white margin, his whole body in view, the same camera
+    distance and scale, and the same inked western comic art style.'
+  jobs:
+    kontext-poses: 44009
+- key: gt2-zuzu-death-kneel-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: death kneel (seed 2)'
+  set: exposed
+  size: 1024x1024
+  seed: 82134
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: 'Show him in a full side view facing right, sinking down onto both knees, exhausted, head bowed,
+    one paw pressed flat on the ground. His rust-brown poncho and straw kasa are gone: he wears a plain dark tunic
+    with the orange sash knotted at the waist and dark brown trousers, his bare grey head and round fuzzy ears showing,
+    and the same single sheathed katana strapped across his back with its hilt rising above his right shoulder,
+    nearest the viewer. Keep the same koala character, the same stern face and the same short stocky build. Keep
+    the plain white background all around him with a wide white margin, his whole body in view, the same camera
+    distance and scale, and the same inked western comic art style.'
+  jobs:
+    kontext-poses: 44010
+- key: gt2-zuzu-death-down-1
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: death down (seed 1)'
+  set: exposed
+  size: 1024x1024
+  seed: 82135
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: 'Show him in a full side view facing right, lying stretched out flat on his front on the ground,
+    arms out to the sides, eyes closed, still. His rust-brown poncho and straw kasa are gone: he wears a plain dark
+    tunic with the orange sash knotted at the waist and dark brown trousers, his bare grey head and round fuzzy
+    ears showing, and the same single sheathed katana strapped across his back with its hilt rising above his right
+    shoulder, nearest the viewer. Keep the same koala character, the same stern face and the same short stocky build.
+    Keep the plain white background all around him with a wide white margin, his whole body in view, the same camera
+    distance and scale, and the same inked western comic art style.'
+  jobs:
+    kontext-poses: 44011
+- key: gt2-zuzu-death-down-2
+  entity: zuzu-pose
+  lane: kontext-poses
+  title: 'Zuzu key pose: death down (seed 2)'
+  set: exposed
+  size: 1024x1024
+  seed: 82136
+  source_image_id: 242395
+  source_pad: '1:1'
+  prompt_prose: 'Show him in a full side view facing right, lying stretched out flat on his front on the ground,
+    arms out to the sides, eyes closed, still. His rust-brown poncho and straw kasa are gone: he wears a plain dark
+    tunic with the orange sash knotted at the waist and dark brown trousers, his bare grey head and round fuzzy
+    ears showing, and the same single sheathed katana strapped across his back with its hilt rising above his right
+    shoulder, nearest the viewer. Keep the same koala character, the same stern face and the same short stocky build.
+    Keep the plain white background all around him with a wide white margin, his whole body in view, the same camera
+    distance and scale, and the same inked western comic art style.'
+  jobs:
+    kontext-poses: 44012
+- key: gt2-foe-bone-coyote-key-arthemy
+  entity: enemy-key
+  lane: arthemy-white
+  title: 'Enemy key design: spectral bone coyote (arthemy-white)'
+  size: 1024x1024
+  seed: 82201
+  negative: nsfw, text, letters, words, logo, watermark, signature, multiple characters, duplicate, sprite sheet,
+    grid, cropped, background scenery, cast shadow, photorealistic, 3d render, blurry, lowres, deformed, extra limbs,
+    gore
+  prompt_prose: A spectral bone coyote, the skeleton of a lean prowling coyote wearing a battered bowler-brimmed
+    cowboy hat and a red bandana, wrapped in a faint cyan ghost glow, small ember-red eyes in the skull, standing
+    on all fours in a side view facing left, head low, ready to pounce, one single figure centred on a flat pure
+    white background with a wide white margin, hand-painted haunted weird-west game character, bold dark ink outline,
+    midnight indigo, dusty plum, warm bone, amber lantern light and spectral cyan accents
+  prompt_tags: skeleton coyote, feral, quadruped, on all fours, bone ribs and skull, battered bowler-brimmed cowboy
+    hat, red bandana, faint cyan ghost glow, small ember-red eyes, prowling, head low, side view, facing left, midnight
+    indigo, dusty plum, warm bone, amber lantern light and spectral cyan accents
+  jobs:
+    arthemy-white: 44013
+- key: gt2-foe-bone-coyote-key-zimage
+  entity: enemy-key
+  lane: zimage
+  title: 'Enemy key design: spectral bone coyote (zimage)'
+  size: 1024x1024
+  seed: 82201
+  negative: nsfw, text, letters, words, logo, watermark, signature, multiple characters, duplicate, sprite sheet,
+    grid, cropped, background scenery, cast shadow, photorealistic, 3d render, blurry, lowres, deformed, extra limbs,
+    gore
+  prompt_prose: A spectral bone coyote, the skeleton of a lean prowling coyote wearing a battered bowler-brimmed
+    cowboy hat and a red bandana, wrapped in a faint cyan ghost glow, small ember-red eyes in the skull, standing
+    on all fours in a side view facing left, head low, ready to pounce, one single figure centred on a flat pure
+    white background with a wide white margin, hand-painted haunted weird-west game character, bold dark ink outline,
+    midnight indigo, dusty plum, warm bone, amber lantern light and spectral cyan accents
+  prompt_tags: skeleton coyote, feral, quadruped, on all fours, bone ribs and skull, battered bowler-brimmed cowboy
+    hat, red bandana, faint cyan ghost glow, small ember-red eyes, prowling, head low, side view, facing left, midnight
+    indigo, dusty plum, warm bone, amber lantern light and spectral cyan accents
+  jobs:
+    zimage: 44014
+- key: gt2-foe-grave-ghost-key-arthemy
+  entity: enemy-key
+  lane: arthemy-white
+  title: 'Enemy key design: hooded grave ghost (arthemy-white)'
+  size: 1024x1024
+  seed: 82202
+  negative: nsfw, text, letters, words, logo, watermark, signature, multiple characters, duplicate, sprite sheet,
+    grid, cropped, background scenery, cast shadow, photorealistic, 3d render, blurry, lowres, deformed, extra limbs,
+    gore
+  prompt_prose: A hooded grave ghost, a ragged grey-violet shroud with an empty dark hood and two pale cyan pinpoint
+    eyes, long bony clawed hands reaching forward, the lower shroud trailing into wisps of grave dust, floating
+    in a side view facing left, one single figure centred on a flat pure white background with a wide white margin,
+    hand-painted haunted weird-west game character, bold dark ink outline, midnight indigo, dusty plum, warm bone,
+    amber lantern light and spectral cyan accents
+  prompt_tags: hooded ghost, ragged grey-violet shroud, empty dark hood, two pale cyan pinpoint eyes, long bony
+    clawed hands reaching forward, lower shroud trailing into wisps of dust, floating, spectral, side view, facing
+    left, midnight indigo, dusty plum, warm bone, amber lantern light and spectral cyan accents
+  jobs:
+    arthemy-white: 44232
+- key: gt2-foe-grave-ghost-key-zimage
+  entity: enemy-key
+  lane: zimage
+  title: 'Enemy key design: hooded grave ghost (zimage)'
+  size: 1024x1024
+  seed: 82202
+  negative: nsfw, text, letters, words, logo, watermark, signature, multiple characters, duplicate, sprite sheet,
+    grid, cropped, background scenery, cast shadow, photorealistic, 3d render, blurry, lowres, deformed, extra limbs,
+    gore
+  prompt_prose: A hooded grave ghost, a ragged grey-violet shroud with an empty dark hood and two pale cyan pinpoint
+    eyes, long bony clawed hands reaching forward, the lower shroud trailing into wisps of grave dust, floating
+    in a side view facing left, one single figure centred on a flat pure white background with a wide white margin,
+    hand-painted haunted weird-west game character, bold dark ink outline, midnight indigo, dusty plum, warm bone,
+    amber lantern light and spectral cyan accents
+  prompt_tags: hooded ghost, ragged grey-violet shroud, empty dark hood, two pale cyan pinpoint eyes, long bony
+    clawed hands reaching forward, lower shroud trailing into wisps of dust, floating, spectral, side view, facing
+    left, midnight indigo, dusty plum, warm bone, amber lantern light and spectral cyan accents
+  jobs:
+    zimage: 44233
+- key: gt2-foe-storm-crow-key-arthemy
+  entity: enemy-key
+  lane: arthemy-white
+  title: 'Enemy key design: storm crow (arthemy-white)'
+  size: 1024x1024
+  seed: 82203
+  negative: nsfw, text, letters, words, logo, watermark, signature, multiple characters, duplicate, sprite sheet,
+    grid, cropped, background scenery, cast shadow, photorealistic, 3d render, blurry, lowres, deformed, extra limbs,
+    gore
+  prompt_prose: A storm crow, a large ragged black crow with sparking cyan edges on its wing feathers and a bright
+    amber eye, wings spread mid-flap, talons curled, in a side view facing left, one single figure centred on a
+    flat pure white background with a wide white margin, hand-painted haunted weird-west game character, bold dark
+    ink outline, midnight indigo, dusty plum, warm bone, amber lantern light and spectral cyan accents
+  prompt_tags: large ragged black crow, feral bird, wings spread mid-flap, cyan sparks on wing feather edges, bright
+    amber eye, curled talons, side view, facing left, midnight indigo, dusty plum, warm bone, amber lantern light
+    and spectral cyan accents
+  jobs:
+    arthemy-white: 44234
+- key: gt2-foe-storm-crow-key-zimage
+  entity: enemy-key
+  lane: zimage
+  title: 'Enemy key design: storm crow (zimage)'
+  size: 1024x1024
+  seed: 82203
+  negative: nsfw, text, letters, words, logo, watermark, signature, multiple characters, duplicate, sprite sheet,
+    grid, cropped, background scenery, cast shadow, photorealistic, 3d render, blurry, lowres, deformed, extra limbs,
+    gore
+  prompt_prose: A storm crow, a large ragged black crow with sparking cyan edges on its wing feathers and a bright
+    amber eye, wings spread mid-flap, talons curled, in a side view facing left, one single figure centred on a
+    flat pure white background with a wide white margin, hand-painted haunted weird-west game character, bold dark
+    ink outline, midnight indigo, dusty plum, warm bone, amber lantern light and spectral cyan accents
+  prompt_tags: large ragged black crow, feral bird, wings spread mid-flap, cyan sparks on wing feather edges, bright
+    amber eye, curled talons, side view, facing left, midnight indigo, dusty plum, warm bone, amber lantern light
+    and spectral cyan accents
+  jobs:
+    zimage: 44235
+- key: gt2-foe-skeleton-gunslinger-key-arthemy
+  entity: enemy-key
+  lane: arthemy-white
+  title: 'Enemy key design: skeleton gunslinger (arthemy-white)'
+  size: 1024x1024
+  seed: 82204
+  negative: nsfw, text, letters, words, logo, watermark, signature, multiple characters, duplicate, sprite sheet,
+    grid, cropped, background scenery, cast shadow, photorealistic, 3d render, blurry, lowres, deformed, extra limbs,
+    gore
+  prompt_prose: A skeleton gunslinger, a lanky bone skeleton in a tattered duster coat, a sagging wide-brimmed hat
+    and a gunbelt, one bony hand resting on a holstered six-shooter, ember-red eyes in the skull, standing in a
+    side view facing left, ready to draw, one single figure centred on a flat pure white background with a wide
+    white margin, hand-painted haunted weird-west game character, bold dark ink outline, midnight indigo, dusty
+    plum, warm bone, amber lantern light and spectral cyan accents
+  prompt_tags: skeleton gunslinger, lanky bone skeleton, tattered duster coat, sagging wide-brimmed hat, gunbelt,
+    bony hand resting on holstered revolver, ember-red eyes in skull, standing, ready to draw, side view, facing
+    left, midnight indigo, dusty plum, warm bone, amber lantern light and spectral cyan accents
+  jobs:
+    arthemy-white: 44015
+- key: gt2-foe-skeleton-gunslinger-key-zimage
+  entity: enemy-key
+  lane: zimage
+  title: 'Enemy key design: skeleton gunslinger (zimage)'
+  size: 1024x1024
+  seed: 82204
+  negative: nsfw, text, letters, words, logo, watermark, signature, multiple characters, duplicate, sprite sheet,
+    grid, cropped, background scenery, cast shadow, photorealistic, 3d render, blurry, lowres, deformed, extra limbs,
+    gore
+  prompt_prose: A skeleton gunslinger, a lanky bone skeleton in a tattered duster coat, a sagging wide-brimmed hat
+    and a gunbelt, one bony hand resting on a holstered six-shooter, ember-red eyes in the skull, standing in a
+    side view facing left, ready to draw, one single figure centred on a flat pure white background with a wide
+    white margin, hand-painted haunted weird-west game character, bold dark ink outline, midnight indigo, dusty
+    plum, warm bone, amber lantern light and spectral cyan accents
+  prompt_tags: skeleton gunslinger, lanky bone skeleton, tattered duster coat, sagging wide-brimmed hat, gunbelt,
+    bony hand resting on holstered revolver, ember-red eyes in skull, standing, ready to draw, side view, facing
+    left, midnight indigo, dusty plum, warm bone, amber lantern light and spectral cyan accents
+  jobs:
+    zimage: 44016

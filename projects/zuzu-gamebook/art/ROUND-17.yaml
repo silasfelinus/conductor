@@ -1,0 +1,413 @@
+# Zuzu Gamebook art round 17 (zuzu-gamebook t-006 / t-011): own plates for the sections that still borrow one.
+# Gap sweep 2026-10-23 (kind_robots utils/zuzuGamebook book.ts SCENE_ORDER vs sectionArt.ts SECTION_PLATES): 377
+# sections, 369 plates, 8 without their own. Not here: a2-bell-view and a4-bloom (ROUND-16 ArtJobs 37526-37531 are
+# DONE as ArtImages 245674-245676 / 245686-245688 and await review, not a reroll) and ending-water (its shared plate
+# kasa-on-water, ArtImage 243308, was drawn for that ending in ROUND-1: alias it in SECTION_PLATES). The other five
+# get three seeds each: apple-tree and a2-wax (shared MV / round-4 plates that show a different moment), a3-apples-reach
+# (shares apples-sister), and the two newest endings (ending-wren-lamp, ending-bell-keeper), which share the generic
+# bell-tower plate. Compositions follow the ROUND-12..16 lessons: Zuzu alone with the zuzukoala LoRA (he fuses with
+# any second figure), the sister and toddler together with their two LoRAs, Wren's ending as an unpeopled scene
+# (otter nuns draw human faces). Zuzu canon: koala, stern, straw kasa, rust poncho with orange zigzag trim, one katana
+# with the hilt over his RIGHT shoulder. Keepers go to kind_robots public/zuzu-gamebook/scenes/sections/<id>.webp and
+# SECTION_PLATES. auto_submit: true. Private.
+round: gamebook-17
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+auto_submit: true
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, weathered, grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: gb17-apple-tree-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act III: fruit in the wasteland (r17, seed 1)'
+  size: 1344x768
+  seed: 31001
+  section: apple-tree
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear, (tail:1.3), animal tail, high heels, asphalt road, painted
+    road lines, second sword, sword at hip
+  prompt_prose: Zuzu sits in the shade of a lone apple tree on a bare roadside, eating one apple with a bundle of
+    gathered fruit beside him, while far down the empty road behind him two tiny shapes stand still.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, stern face, rust-brown poncho,
+    orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, katana hilt over his right
+    shoulder, sitting in the shade of a single gnarled apple tree heavy with red apples on a bare desert roadside,
+    eating a red apple, a knotted cloth bundle of gathered apples beside him, a flat grey rock at the edge of the
+    dusty dirt road, far down the empty road behind him two tiny distant specks standing still in the heat shimmer,
+    lone tree in a wasteland, wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras:
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 44049
+- key: gb17-apple-tree-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act III: fruit in the wasteland (r17, seed 2)'
+  size: 1344x768
+  seed: 31002
+  section: apple-tree
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear, (tail:1.3), animal tail, high heels, asphalt road, painted
+    road lines, second sword, sword at hip
+  prompt_prose: Zuzu sits in the shade of a lone apple tree on a bare roadside, eating one apple with a bundle of
+    gathered fruit beside him, while far down the empty road behind him two tiny shapes stand still.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, stern face, rust-brown poncho,
+    orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, katana hilt over his right
+    shoulder, sitting in the shade of a single gnarled apple tree heavy with red apples on a bare desert roadside,
+    eating a red apple, a knotted cloth bundle of gathered apples beside him, a flat grey rock at the edge of the
+    dusty dirt road, far down the empty road behind him two tiny distant specks standing still in the heat shimmer,
+    lone tree in a wasteland, wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras:
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 44050
+- key: gb17-apple-tree-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Act III: fruit in the wasteland (r17, seed 3)'
+  size: 1344x768
+  seed: 31003
+  section: apple-tree
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear, (tail:1.3), animal tail, high heels, asphalt road, painted
+    road lines, second sword, sword at hip
+  prompt_prose: Zuzu sits in the shade of a lone apple tree on a bare roadside, eating one apple with a bundle of
+    gathered fruit beside him, while far down the empty road behind him two tiny shapes stand still.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, stern face, rust-brown poncho,
+    orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, katana hilt over his right
+    shoulder, sitting in the shade of a single gnarled apple tree heavy with red apples on a bare desert roadside,
+    eating a red apple, a knotted cloth bundle of gathered apples beside him, a flat grey rock at the edge of the
+    dusty dirt road, far down the empty road behind him two tiny distant specks standing still in the heat shimmer,
+    lone tree in a wasteland, wide shot, harsh desert sun, dusty haze, long hard shadows, ochre sand
+  loras:
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 44051
+- key: gb17-a2-wax-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Act II: black wax (r17, seed 1)'
+  size: 1024x1024
+  seed: 31011
+  section: a2-wax
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: At the end of a burned street a long low adobe house stands untouched, a row of small empty pegs
+    by its door and a thick pool of black candle wax on its threshold.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, the end of a burned-out frontier street, a long low adobe
+    house standing untouched among scorched ruins, a row of small empty wooden pegs on the wall beside its door
+    at the height of a child's shoulder, on the worn stone threshold a thick glossy pool of black candle wax dripped
+    in one place, soot marks curving around the house walls where the fire passed it by, drifting ash, eerie, medium
+    shot, orange and violet sundown sky, long hard shadows, dusty haze
+  loras: []
+  jobs:
+    arthemy-house: 44052
+- key: gb17-a2-wax-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Act II: black wax (r17, seed 2)'
+  size: 1024x1024
+  seed: 31012
+  section: a2-wax
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: At the end of a burned street a long low adobe house stands untouched, a row of small empty pegs
+    by its door and a thick pool of black candle wax on its threshold.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, the end of a burned-out frontier street, a long low adobe
+    house standing untouched among scorched ruins, a row of small empty wooden pegs on the wall beside its door
+    at the height of a child's shoulder, on the worn stone threshold a thick glossy pool of black candle wax dripped
+    in one place, soot marks curving around the house walls where the fire passed it by, drifting ash, eerie, medium
+    shot, orange and violet sundown sky, long hard shadows, dusty haze
+  loras: []
+  jobs:
+    arthemy-house: 44053
+- key: gb17-a2-wax-3
+  entity: empty
+  lane: arthemy-house
+  title: 'Act II: black wax (r17, seed 3)'
+  size: 1024x1024
+  seed: 31013
+  section: a2-wax
+  shape: square
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: At the end of a burned street a long low adobe house stands untouched, a row of small empty pegs
+    by its door and a thick pool of black candle wax on its threshold.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, the end of a burned-out frontier street, a long low adobe
+    house standing untouched among scorched ruins, a row of small empty wooden pegs on the wall beside its door
+    at the height of a child's shoulder, on the worn stone threshold a thick glossy pool of black candle wax dripped
+    in one place, soot marks curving around the house walls where the fire passed it by, drifting ash, eerie, medium
+    shot, orange and violet sundown sky, long hard shadows, dusty haze
+  loras: []
+  jobs:
+    arthemy-house: 44054
+- key: gb17-a3-apples-reach-1
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: her paw on the rock (r17, seed 1)'
+  size: 768x1344
+  seed: 31021
+  section: a3-apples-reach
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters, koala
+  prompt_prose: Seen from the switchback above, the fennec sister reaches a bandaged paw to a careful pile of red
+    apples on a flat grey rock while her little brother eats beside her in the late sun.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, high angle view looking down from a ridge road switchback,
+    a flat grey rock beside a dusty road with a careful pile of red apples on it,, zkasister, anthro fennec fox,
+    female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists, crouching wary at the rock,
+    reaching out one thin bandaged paw to take an apple, ears up, watchful,, zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, sitting beside her, eating a chewed piece
+    of apple with both fists, red fruit on grey stone, golden late afternoon sun, tender, medium shot, harsh desert
+    sun, dusty haze, long hard shadows, ochre sand
+  loras:
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 44055
+- key: gb17-a3-apples-reach-2
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: her paw on the rock (r17, seed 2)'
+  size: 768x1344
+  seed: 31022
+  section: a3-apples-reach
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters, koala
+  prompt_prose: Seen from the switchback above, the fennec sister reaches a bandaged paw to a careful pile of red
+    apples on a flat grey rock while her little brother eats beside her in the late sun.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, high angle view looking down from a ridge road switchback,
+    a flat grey rock beside a dusty road with a careful pile of red apples on it,, zkasister, anthro fennec fox,
+    female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists, crouching wary at the rock,
+    reaching out one thin bandaged paw to take an apple, ears up, watchful,, zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, sitting beside her, eating a chewed piece
+    of apple with both fists, red fruit on grey stone, golden late afternoon sun, tender, medium shot, harsh desert
+    sun, dusty haze, long hard shadows, ochre sand
+  loras:
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 44056
+- key: gb17-a3-apples-reach-3
+  entity: kids
+  lane: arthemy-house
+  title: 'Act III: her paw on the rock (r17, seed 3)'
+  size: 768x1344
+  seed: 31023
+  section: a3-apples-reach
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, blood, gore, injury, revealing clothes, adult female body, mature,
+    person, (fusion:1.3), merged characters, hybrid creature, matching outfits, extra characters, koala
+  prompt_prose: Seen from the switchback above, the fennec sister reaches a bandaged paw to a careful pile of red
+    apples on a flat grey rock while her little brother eats beside her in the late sun.
+  prompt_tags: (fully clothed:1.3), (two characters:1.2), duo, high angle view looking down from a ridge road switchback,
+    a flat grey rock beside a dusty road with a careful pile of red apples on it,, zkasister, anthro fennec fox,
+    female, young, enormous ears, sand-colored fur, ragged pale dress, bandaged wrists, crouching wary at the rock,
+    reaching out one thin bandaged paw to take an apple, ears up, watchful,, zkatoddler, anthro fennec fox, toddler,
+    enormous ears, sand-colored fur, ragged checked tunic, bandaged paw, sitting beside her, eating a chewed piece
+    of apple with both fists, red fruit on grey stone, golden late afternoon sun, tender, medium shot, harsh desert
+    sun, dusty haze, long hard shadows, ochre sand
+  loras:
+  - resource_id: 4583
+    strength: 0.75
+  - resource_id: 4588
+    strength: 0.75
+  jobs:
+    arthemy-house: 44057
+- key: gb17-ending-wren-lamp-1
+  entity: empty
+  lane: arthemy-house
+  title: 'Ending: Wren''s lamp (r17, seed 1)'
+  size: 1344x768
+  seed: 31031
+  section: ending-wren-lamp
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Looking back from the Dustwater road at dawn, a lone mission bell tower on a rise keeps one small
+    steady lantern burning high on its post against the grey.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, view from a winding dirt road looking back at a lone adobe
+    mission bell tower on a low rise, a single small horn lantern glowing warm and steady high on a post of the
+    tower, an empty bell hanging dark beneath its canopy, a thin line of kitchen smoke from the mission buildings
+    below, the empty road winding away toward the viewer, quiet hope, epic wide shot, grey overcast dawn, cold pale
+    light, dusty haze, long soft shadows
+  loras: []
+  jobs:
+    arthemy-house: 44058
+- key: gb17-ending-wren-lamp-2
+  entity: empty
+  lane: arthemy-house
+  title: 'Ending: Wren''s lamp (r17, seed 2)'
+  size: 1344x768
+  seed: 31032
+  section: ending-wren-lamp
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Looking back from the Dustwater road at dawn, a lone mission bell tower on a rise keeps one small
+    steady lantern burning high on its post against the grey.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, view from a winding dirt road looking back at a lone adobe
+    mission bell tower on a low rise, a single small horn lantern glowing warm and steady high on a post of the
+    tower, an empty bell hanging dark beneath its canopy, a thin line of kitchen smoke from the mission buildings
+    below, the empty road winding away toward the viewer, quiet hope, epic wide shot, grey overcast dawn, cold pale
+    light, dusty haze, long soft shadows
+  loras: []
+  jobs:
+    arthemy-house: 44059
+- key: gb17-ending-wren-lamp-3
+  entity: empty
+  lane: arthemy-house
+  title: 'Ending: Wren''s lamp (r17, seed 3)'
+  size: 1344x768
+  seed: 31033
+  section: ending-wren-lamp
+  shape: wide
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, person, figure, character, crowd, animal, ghost, hooded figure, shrouded
+    figure, silhouette, face
+  prompt_prose: Looking back from the Dustwater road at dawn, a lone mission bell tower on a rise keeps one small
+    steady lantern burning high on its post against the grey.
+  prompt_tags: (empty scene:1.3), uninhabited, scenery, view from a winding dirt road looking back at a lone adobe
+    mission bell tower on a low rise, a single small horn lantern glowing warm and steady high on a post of the
+    tower, an empty bell hanging dark beneath its canopy, a thin line of kitchen smoke from the mission buildings
+    below, the empty road winding away toward the viewer, quiet hope, epic wide shot, grey overcast dawn, cold pale
+    light, dusty haze, long soft shadows
+  loras: []
+  jobs:
+    arthemy-house: 44060
+- key: gb17-ending-bell-keeper-1
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Ending: the keeper of the empty bell (r17, seed 1)'
+  size: 768x1344
+  seed: 31041
+  section: ending-bell-keeper
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear, (tail:1.3), animal tail, high heels, asphalt road, painted
+    road lines, second sword, sword at hip
+  prompt_prose: Zuzu sits on the boards beneath a green bronze bell with his back to the post, keeping watch over
+    a small lit house and an open gate below.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, stern face, rust-brown poncho,
+    orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, katana hilt over his right
+    shoulder, sitting on worn wooden floorboards beneath a large silent verdigris-green bronze bell, his back resting
+    against a thick wooden post, legs crossed, paws on his knees, calm watchful face, looking out over the desert,
+    far below a small adobe house with warm lit windows, an open wooden gate, a kitchen garden with a thread of
+    smoke, the Dustwater road beyond, vertical composition, medium shot, orange and violet sundown sky, long hard
+    shadows, dusty haze
+  loras:
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 44061
+- key: gb17-ending-bell-keeper-2
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Ending: the keeper of the empty bell (r17, seed 2)'
+  size: 768x1344
+  seed: 31042
+  section: ending-bell-keeper
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear, (tail:1.3), animal tail, high heels, asphalt road, painted
+    road lines, second sword, sword at hip
+  prompt_prose: Zuzu sits on the boards beneath a green bronze bell with his back to the post, keeping watch over
+    a small lit house and an open gate below.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, stern face, rust-brown poncho,
+    orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, katana hilt over his right
+    shoulder, sitting on worn wooden floorboards beneath a large silent verdigris-green bronze bell, his back resting
+    against a thick wooden post, legs crossed, paws on his knees, calm watchful face, looking out over the desert,
+    far below a small adobe house with warm lit windows, an open wooden gate, a kitchen garden with a thread of
+    smoke, the Dustwater road beyond, vertical composition, medium shot, orange and violet sundown sky, long hard
+    shadows, dusty haze
+  loras:
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 44062
+- key: gb17-ending-bell-keeper-3
+  entity: zuzu
+  lane: arthemy-house
+  title: 'Ending: the keeper of the empty bell (r17, seed 3)'
+  size: 768x1344
+  seed: 31043
+  section: ending-bell-keeper
+  shape: tall
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, letters, words, logo, disney, pixar, cute,
+    kawaii, glossy, bright saturated colors, tall, lanky, long legs, slender, (thin:1.3), (skinny:1.2), long torso,
+    human proportions, straw boater, cowboy hat, cloak, cape, two swords, sword on front, cigarette, smoking, mouse
+    ears, mouse face, (two koalas:1.3), second koala, bear, (tail:1.3), animal tail, high heels, asphalt road, painted
+    road lines, second sword, sword at hip
+  prompt_prose: Zuzu sits on the boards beneath a green bronze bell with his back to the post, keeping watch over
+    a small lit house and an open gate below.
+  prompt_tags: solo, (fully clothed:1.3), zuzukoala, anthro koala, male, grey fur, stern face, rust-brown poncho,
+    orange zigzag trim, orange sash, dark brown trousers, wide straw hat, katana on back, katana hilt over his right
+    shoulder, sitting on worn wooden floorboards beneath a large silent verdigris-green bronze bell, his back resting
+    against a thick wooden post, legs crossed, paws on his knees, calm watchful face, looking out over the desert,
+    far below a small adobe house with warm lit windows, an open wooden gate, a kitchen garden with a thread of
+    smoke, the Dustwater road beyond, vertical composition, medium shot, orange and violet sundown sky, long hard
+    shadows, dusty haze
+  loras:
+  - resource_id: 4593
+    strength: 0.75
+  jobs:
+    arthemy-house: 44063

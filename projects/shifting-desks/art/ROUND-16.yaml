@@ -1,0 +1,73 @@
+# Shifting Desks art round 16 (t-032 follow-on, 2026-10-23 gap sweep): the one illustrated slot with no render at all.
+# endings/permanent-adjournment ("Permanently Adjourned", the Board-adjourned ending authored in kind_robots 7687bc3,
+# 2026-10-21) has no ledger row in ROUND-1..15 and its media URL answers 404, so the endings gallery and personnel file
+# show the fallback. Every other slot (163 pack slots, 11 endings, 6 societies, 8 mutations) has a delivered render;
+# the 19 ROUND-13..15 rows still marked `requested` all answer 200 on media (rendered 2026-10-20) and need review and
+# link_art.py --write --probe, not new jobs.
+# FORMAT NOTE: rounds 1-15 went through projects/art-prompts.yaml requests (delivered straight to target_path). This
+# round uses scripts/enqueue_art_requests.py instead (auto_submit: true), so a keeper is an ArtImage that the reviewer
+# exports to kind_robots public/images/shifting-desks/endings/permanent-adjournment.webp (media) by hand, then sets
+# status: delivered and verdict: keep on that row. link_art.py takes the LAST row per target_path, so delete the
+# losing row's target_path when recording the keeper. Prompt is the ending's own epilogue.art_prompt (Classic edition,
+# Krea 2, 2:3 portrait like every ending). Two seeds. Generated internal art is pre-approved (AGENTS.md). Private.
+round: shifting-desks-16
+project_slug: shifting-desks
+designer: Shifting Desks art bay
+task: t-032
+is_public: false
+is_mature: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (Classic edition)
+  engine: krea2
+  prompt: prose
+subjects:
+- key: ending-permanent-adjournment-1
+  kind: ending
+  lane: krea2
+  title: Your Case Remains Under Consideration (seed 1)
+  card: permanent-adjournment
+  source_ref: kind_robots utils/shiftingDesks/endings.json endings[permanent-adjournment].epilogue.art_prompt
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 66001
+  target_path: kind_robots public/images/shifting-desks/endings/permanent-adjournment.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/endings/permanent-adjournment.webp
+  prompt_prose: An endless beige executive waiting room under a sealed underground office, a small employee alone
+    beneath an enormous stopped brass clock, successive vacant chairs stretching into deep shadow, unsettling papery
+    human-shaped silhouettes behind a frosted meeting room door, darkly comic bureaucratic science-fiction, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare
+    and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+  jobs:
+    krea2: 44064
+- key: ending-permanent-adjournment-2
+  kind: ending
+  lane: krea2
+  title: Your Case Remains Under Consideration (seed 2)
+  card: permanent-adjournment
+  source_ref: kind_robots utils/shiftingDesks/endings.json endings[permanent-adjournment].epilogue.art_prompt
+  size: 832x1248
+  aspect: 2:3 portrait
+  seed: 66002
+  target_path: kind_robots public/images/shifting-desks/endings/permanent-adjournment.webp
+  media_url: https://media.acrocatranch.com/images/shifting-desks/endings/permanent-adjournment.webp
+  prompt_prose: An endless beige executive waiting room under a sealed underground office, a small employee alone
+    beneath an enormous stopped brass clock, successive vacant chairs stretching into deep shadow, unsettling papery
+    human-shaped silhouettes behind a frosted meeting room door, darkly comic bureaucratic science-fiction, mid-century
+    safety-manual illustration, screen-printed gouache with halftone grain, limited palette of manila, carbon-paper
+    blue, safety orange, fluorescent-tube green and oxblood, vertical 2:3 portrait composition, every surface bare
+    and unmarked
+  status: requested
+  delivery_check: null
+  art_job_id: null
+  art_image_id: null
+  verdict: null
+  jobs:
+    krea2: 44065
