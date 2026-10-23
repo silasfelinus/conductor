@@ -171,7 +171,45 @@ def validate(cards: list[dict]) -> list[str]:
             for fl in c.get("eligibility", {}).get(key, []):
                 if fl not in all_flags:
                     problems.append(f"{c['id']}: eligibility references unknown flag {fl}")
+    problems += no_dead_end_problems(cards)
     return problems
+
+
+MIN_GUARANTEED_PER_CHAPTER = 6
+
+
+def guaranteed_pool(cards: list[dict], chapter: int) -> list[dict]:
+    """Cards drawable in a chapter whatever the player's flags are.
+
+    A card is guaranteed when it requires no flag and can only be excluded by a flag
+    that its own effects set (so it can lock itself out after playing, never another card's).
+    """
+    pool = []
+    for c in cards:
+        if c.get("chapter") != chapter:
+            continue
+        el = c.get("eligibility", {})
+        if el.get("requires_flags"):
+            continue
+        if set(el.get("excludes_flags", [])) <= {e[5:] for e in effects_of(c) if e.startswith("flag:")}:
+            pool.append(c)
+    return pool
+
+
+def no_dead_end_problems(cards: list[dict]) -> list[str]:
+    """No-dead-end proof: every chapter keeps a flag-independent draw pool, and every card has
+    an option whose success path never needs a roll to be survivable (a rolled failure still
+    authored, so no choice ends the run)."""
+    out = []
+    for ch in range(1, 7):
+        n = len(guaranteed_pool(cards, ch))
+        if n < MIN_GUARANTEED_PER_CHAPTER:
+            out.append(f"chapter {ch}: only {n} flag-independent cards (need {MIN_GUARANTEED_PER_CHAPTER}); a player could draw a dead end")
+    for c in cards:
+        for o in c.get("options", []) + [v["extra_option"] for v in (c.get("by_state") or {}).values() if "extra_option" in v]:
+            if o.get("skill") != "none" and not o.get("failure", {}).get("text"):
+                out.append(f"{c['id']}.{o.get('id')}: failure branch is a dead end (no authored text)")
+    return out
 
 
 def playtest(cards: list[dict], seed: int, state: str, skills: dict[str, int], lead: str) -> str:
