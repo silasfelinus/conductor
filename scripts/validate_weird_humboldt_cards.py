@@ -24,8 +24,8 @@ PROJECT = ROOT / "projects" / "weird-humboldt"
 SCHEMA = PROJECT / "design" / "card.schema.json"
 CARD_DIR = PROJECT / "cards"
 SEEDS = PROJECT / "ENCOUNTER-SEEDS.md"
-# Chapters 1-5 hold seeds 1-20 (chapter 2 also WH-121); chapter 6 awaits WH-120 (county vote finale, needs ending grammar).
-PER_CHAPTER = {1: 20, 2: 21, 3: 20, 4: 20, 5: 20, 6: 19}
+# Chapters 1-5 hold seeds 1-20 (chapter 2 also WH-121); chapter 6 holds all 20 incl. WH-120 (county vote finale).
+PER_CHAPTER = {1: 20, 2: 21, 3: 20, 4: 20, 5: 20, 6: 20}
 EXPECTED_CARDS = sum(PER_CHAPTER.values())
 EFFECT_RE = re.compile(r"^((goodwill|nerve|time|weird|clarity)[+-][0-9]|flag:[a-z0-9_]+|evidence:[a-z_]+|lose:free_draw)$")
 BANNED = re.compile(r"\b(dosage|milligram|snort|inject|how to (cook|make|score)|where to buy)\b", re.I)
