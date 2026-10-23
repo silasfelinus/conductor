@@ -62,6 +62,17 @@ notes_from_silas: |
   (card, review, location, department arrival, job title, society, mutation) carries an
   image prompt from the moment it is authored; validate_pack.py enforces it.
 
+  2026-10-23 PT (first human full clear): The game ends with a text-heavy
+  Employee of the Month dossier and four Exceptional test scores. Owner demands
+  visual celebration for EVERY completed run: unique ending hero images, earned
+  achievement/milestone cards, a first-clear Personnel Archive, visually
+  differentiated locked/unlocked/progress states, ending gallery, persistent
+  run-history souvenirs, useful print cards and entertaining mixed test results.
+  Prioritize a playable reward/gallery first slice NOW alongside art delivery;
+  the pending r13-r15 art review remains open. Scores must stay truthful, with
+  humorous institutional evaluations and counterbalancing commentary instead
+  of inventing mechanical stat penalties. No auto-promotion or deployment.
+
   Agent mandate (AGENTS.md defaults for new projects): scope gate t-002 is SOFT and runs
   in parallel; build immediately. Internal generated art is pre-approved. Public /play,
   publishing, spend, secrets and production deploys are NOT pre-approved. Homage, never
@@ -668,3 +679,159 @@ tasks:
       Canonical Conductor PR #6494 and Kind Robots PR #4025 merged, 25 and 23 respective check runs green or intentionally skipped. Original hidden routes retained, nine alternative earned clue chains and nine epilogue callbacks tested. 2,000 standard seeded runs yielded zero engine violations, zero stalls, all eleven endings and two (formerly nine) never-offered options. No verified production deployment, browser render or promotion.
     claimed_by: 2026-10-22T10:43:30Z-shifting-desks-t039-gpt6-f4ca
     claimed_at: '2026-10-22T10:43:30Z'
+
+  - id: t-040
+    milestone: m4
+    title: 'First-clear Personnel Archive: persistent illustrated milestones, endings and run dossiers'
+    status: ready
+    depends_on: t-012
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-23T09:58:00Z'
+    note: >-
+      P1, owner directive 2026-10-23 PT. A finished run must leave visible
+      evidence of accomplishment, immediately and across browser reloads.
+      First naturally reached ending unlocks an accessible one-screen Personnel
+      Archive and clearly announces the unlock on the ending screen, with
+      persistent navigation at the front desk and from the ending. Tabs:
+      Milestones, Endings, Achievements, Runs (discoveries optional).
+      Cards show art/badges, earned timestamp, progress, silhouette/redaction for
+      locked, filled/partial for progress, distinct rare treatment without spoilers.
+      Initial milestones: first completion, first ending, full five-department
+      clear, first mutation, secret-society membership, successor use, Board
+      approval, first test report, form thresholds; never award a milestone
+      unearned. Persist bounded finished-run dossiers (end ID, job, society,
+      mutation, floors, employee count, forms, grades, date, seed) idempotently
+      on reload; migrate existing endingsFound/current finished save as fairly
+      as evidence permits and never invent unseen run histories. Honor reduced
+      motion and responsive internal gallery scroll. Existing ending-gallery
+      collection must remain available and 11 ending IDs unchanged.
+      Test first win, refresh, repeat win, no win, tampered saves, mobile widths.
+
+  - id: t-041
+    milestone: m3
+    title: 'Deliver unique illustrated ending hero artwork and linked achievement badges for all endings'
+    status: ready
+    depends_on: t-032
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-23T09:58:00Z'
+    note: >-
+      P1 ART DELIVERY. Eleven authored endings already have art_prompt in
+      canonical/runtime endings; don't re-request existing confirmed ArtJobs.
+      Audit job/media evidence per ending ID, submit only truly missing internal
+      art using the existing durable queue and style system, review image against
+      ending punchline, attach accepted hero render. Employee of the Month must
+      visibly show the identical portraits in every elevator. Design matching
+      achievement stamps/badges with real art or honest branded fallback,
+      never claim generated image until verified. Ending screen must display
+      a large, unmissable image on phone/tablet/desktop and visually celebrate
+      earned ending + achievement. Keep no-gore PG-13 and distinct ending
+      pictures instead of one generic backdrop.
+
+  - id: t-042
+    milestone: m4
+    title: 'End-of-run reward ceremony: achievement unlock, milestone progress and clear run summary'
+    status: ready
+    depends_on: t-040
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-23T09:58:00Z'
+    note: >-
+      P1. On first win show unlocked archive call-to-action; on every finish
+      show earned ending hero, at least one linked achievement or milestone
+      image/card, newly earned awards without duplicate unlock spam, progress
+      toward remaining milestones, levels and departments cleared, mutations,
+      society, files, successors, key incidents and next-play motivation.
+      Render rewards above fold in the one-screen end panel without stealing
+      all story text; no fake rewards and no spoilers for unseen paths. Existing
+      Kind Robots achievements must remain authoritative when an achievement
+      code exists; local milestone gallery supplements rather than duplicating
+      global account rewards. Adversarial reload/double-resolve checks.
+
+  - id: t-043
+    milestone: m5
+    title: 'Test Results: credible mixed evaluations, liabilities and sharper HR writing'
+    status: ready
+    depends_on: t-040
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-23T09:58:00Z'
+    note: >-
+      P1. The first human full run had Empathy 13, Ingenuity 8, Obedience 7,
+      Spite 6, all tagged Exceptional: unfun. Keep raw grades, seed, skill gates,
+      thresholds and engine balance unchanged. Presentation may award at most
+      one Exceptional; others gain relative or corporate liability descriptors
+      (e.g. Productive Liability, Admirably Compliant, Valuable in Limited
+      Amounts), with score-dependent and rank-dependent observations,
+      paradoxical counterbalances and different report verdicts on repeat
+      builds. No invented stat penalties or downgrading hidden numeric rolls.
+      Preserve level/bar accessibility. Add golden case with 13/8/7/6,
+      all-low and tied scores, varied seeded playthrough reports and first-read
+      humor review. Any gameplay tradeoff proposal must be separate and
+      balance-tested before touching mechanics.
+
+  - id: t-044
+    milestone: m4
+    title: 'Collectible printable personnel dossier with ending art, awards and run receipt'
+    status: ready
+    depends_on: t-040
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-23T09:58:00Z'
+    note: >-
+      P2. Print/share layout includes verified ending splash and achievement
+      imagery, ending text, unlocked milestone(s), file number, actual job,
+      mutation, society, departments, tests, terminations, counts and dates.
+      Print-only styles make a useful single-page or multipage personnel
+      souvenir rather than a cropped tab. No third-party posting by default.
+      Verify print CSS, imagery fallback, dark/light and long notes.
+
+  - id: t-045
+    milestone: m4
+    title: 'Personnel Archive achievement cabinet: global progress, badges and replay targets'
+    status: ready
+    depends_on: t-040
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-23T09:58:00Z'
+    note: >-
+      P2. Build the illustrated archive achievements wall and unify it with
+      existing Kind Robots codes (survived review, faced Board, Sub-Level Zero)
+      without double awarding account achievements. Show meaningful title,
+      flavor, image/icon, unlocked date, locked silhouettes and progress.
+      New feat codes for endings and rare achievements only after checking
+      canonical achievement registry; optional rare foil treatment and
+      replay prompts. Avoid security-sensitive client-only claims of server
+      rewards.
+
+  - id: t-046
+    milestone: m5
+    title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'
+    status: ready
+    depends_on:
+      - t-040
+      - t-041
+      - t-042
+      - t-043
+      - t-044
+      - t-045
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-23T09:58:00Z'
+    note: >-
+      P2 after art and reward implementation. Simulate at least 2000 seeded
+      diverse styles; every reachable ending shows distinct payoff and a saved
+      evidence card. Check replay rewards, correct lock/unlock progress, saved
+      migrations, no duplicate accounts or achievements, true raw grade values,
+      no four-Exceptional result, keyboard/screenreader, no forced page scroll
+      at phone/tablet/desktop, and image fallback. Run mock reviews asking
+      whether the ending and archive feel earned, funny and replayable.
+      Do not override t-020 owner's subjective fun and promotion gate.
