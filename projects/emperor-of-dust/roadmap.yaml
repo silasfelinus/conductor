@@ -892,3 +892,21 @@ tasks:
     claimed_by: 2026-10-22T215751Z-eod-t055-8a6f
     claimed_at: '2026-10-22T21:57:51Z'
     updated: '2026-10-22T22:17:17Z'
+
+  - id: t-056
+    milestone: m5
+    title: "Repair Day 1 tutorial and new-reign navigation; contain tablet quest display"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas, 2026-10-23 PT: tablet screenshot shows a Day 1 roster with Rook
+      and Saffron together plus the original starter tutorial rather than
+      the three seeded throne-room recruits. Investigate stale live deployment
+      or legacy autosave separately from genuine UI defects. Update the
+      introduction and New Reign flow to lead into Day 1 throne recruitment,
+      and make the quest board and detail independently bounded/scrollable in
+      portrait tablet and phone console layouts. Add checks for new-run state,
+      the tutorial copy and the responsive quest-room scroll ownership.
+      Do not overwrite legacy saves or assert a production deployment without
+      independent verification.
