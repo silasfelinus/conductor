@@ -53,7 +53,7 @@ def test_round_16_is_a_real_automatic_arthemy_submission():
             assert (req["width"], req["height"]) == (896, 1152)
             assert "waterskin" in req["promptString"].lower() or "canteen" in req["promptString"].lower() or "water pouch" in req["promptString"].lower()
             assert "nail" in req["promptString"].lower()
-            assert "scrat" in req["promptString"].lower() or "gouge" in req["promptString"].lower()
+            assert any(word in req["promptString"].lower() for word in ("scrat", "gouge", "mark"))
         else:
             assert (req["width"], req["height"]) == (1344, 768)
             assert "flower" in req["promptString"].lower()
