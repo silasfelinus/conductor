@@ -1,0 +1,151 @@
+# Round 17 scene-fidelity rerolls after seeing all nine Round 16 thumbnails.
+# Round 16 jobs 44243-44251 were all DONE but editorially REJECTED:
+# architecture displaced the bell, water flask, and flowers in all nine renders.
+# This round uses object-dominant positive prompts and suppresses incidental architecture.
+# DO NOT auto-promote; verify delivered ArtImages and actual visual fidelity first.
+auto_submit: true
+cast_loras: false
+round: gamebook-17-scene-fidelity
+series: zuzu-koala-assassin
+project_slug: zuzu-gamebook
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house; subject-first rerolls)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, toon (style), western comics (style), weathered, richly textured brushwork, painterly inking, high contrast
+  suffix: natural color, dramatic realistic light, western graphic novel illustration
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: gb17-a2-bell-view-1
+  entity: scenery
+  lane: arthemy-house
+  title: "From the Bell (subject-first Arthemy reroll 1)"
+  size: 1344x768
+  seed: 28230
+  section: a2-bell-view
+  shape: wide
+  negative: >-
+    person, face, animal, corridor, long hallway, tunnel, passageway, cave, arch, lantern, lamp, cabin, barn, house, hut, modern building, exterior tower facade, miniature church building, ornate metalwork, text, letters, logo, watermark, glossy, anime, cute, disney, pixar
+  prompt_prose: >-
+    The cold cast-metal bell is clearly in the immediate foreground, hanging under a burnt timber canopy. A vast ochre-and-white desert stretches below, crossed by a line of tiny tracks toward a remote thin pale tower.
+  prompt_tags: >-
+    (massive bronze bell:1.45), (bell hanging from timber crossbeam:1.3), underside of a cast metal bell with visible clapper dominating left foreground, charred wooden beam and open railing, seen from high lookout, ochre and white flat desert below, tiny straight trail of shallow footprints across wasteland, thin pale spire at distant horizon, amber sunset, wide outdoor panorama
+- key: gb17-a2-bell-view-2
+  entity: scenery
+  lane: arthemy-house
+  title: "From the Bell (subject-first Arthemy reroll 2)"
+  size: 1344x768
+  seed: 28231
+  section: a2-bell-view
+  shape: wide
+  negative: >-
+    person, face, animal, corridor, long hallway, tunnel, passageway, cave, arch, lantern, lamp, cabin, barn, house, hut, modern building, exterior tower facade, miniature church building, ornate metalwork, text, letters, logo, watermark, glossy, anime, cute, disney, pixar
+  prompt_prose: >-
+    The cold cast-metal bell is clearly in the immediate foreground, hanging under a burnt timber canopy. A vast ochre-and-white desert stretches below, crossed by a line of tiny tracks toward a remote thin pale tower.
+  prompt_tags: >-
+    (large suspended bronze church bell:1.5), exposed bronze bell and iron clapper seen up close from below, scorched thick timber crosspiece over upper frame, looking outward across uninhabited desert salt flats, series of tiny paw-sized footprints forms a line over light earth toward a solitary pale needle-like tower on the horizon, warm smoky light, painterly graphic novel wide framing
+- key: gb17-a2-bell-view-3
+  entity: scenery
+  lane: arthemy-house
+  title: "From the Bell (subject-first Arthemy reroll 3)"
+  size: 1344x768
+  seed: 28232
+  section: a2-bell-view
+  shape: wide
+  negative: >-
+    person, face, animal, corridor, long hallway, tunnel, passageway, cave, arch, lantern, lamp, cabin, barn, house, hut, modern building, exterior tower facade, miniature church building, ornate metalwork, text, letters, logo, watermark, glossy, anime, cute, disney, pixar
+  prompt_prose: >-
+    The cold cast-metal bell is clearly in the immediate foreground, hanging under a burnt timber canopy. A vast ochre-and-white desert stretches below, crossed by a line of tiny tracks toward a remote thin pale tower.
+  prompt_tags: >-
+    close-up view of a heavy weathered bronze bell and its clapper inside burnt open wooden canopy, rough scorched beams frame the very top, bright vast tan desert visible through open sides, chalk-white salt patches, straight line of little prints trails from foreground towards far-off slender ivory watch spire, crisp copper shadows, panoramic western comic landscape
+- key: gb17-a2-gift-1
+  entity: still
+  lane: arthemy-house
+  title: "Left on the Arch Post (subject-first Arthemy reroll 1)"
+  size: 896x1152
+  seed: 28240
+  section: a2-gift
+  shape: tall
+  negative: >-
+    human, woman, man, child, face, portrait, animal, fox, raccoon, koala, mask, statue, person, full figure, body, eye sculpture, ornament, carved face, person in doorway, doorway, stone arch, building facade, empty pillar, bottle, plastic, bucket, lantern, clock, text, logo, watermark, cartoon, cute
+  prompt_prose: >-
+    A heavy full stitched leather drinking waterskin, tied at its neck, hangs by its strap from a crooked iron nail on a wooden post. Beside the skin are two small scratched eye-like ovals connected by a short bar, in the wood itself.
+  prompt_tags: >-
+    (full leather waterskin:1.6), (hanging leather water bag:1.4), bulging dark brown stitched hide drinking pouch tied at neck and suspended from a single crooked iron nail, close-up weathered upright wood plank, two small dark scratched oval shapes linked by a short straight scratch beside the bag, empty pale desert soft focus behind, tactile leather stitching, portrait still life
+- key: gb17-a2-gift-2
+  entity: still
+  lane: arthemy-house
+  title: "Left on the Arch Post (subject-first Arthemy reroll 2)"
+  size: 896x1152
+  seed: 28241
+  section: a2-gift
+  shape: tall
+  negative: >-
+    human, woman, man, child, face, portrait, animal, fox, raccoon, koala, mask, statue, person, full figure, body, eye sculpture, ornament, carved face, person in doorway, doorway, stone arch, building facade, empty pillar, bottle, plastic, bucket, lantern, clock, text, logo, watermark, cartoon, cute
+  prompt_prose: >-
+    A heavy full stitched leather drinking waterskin, tied at its neck, hangs by its strap from a crooked iron nail on a wooden post. Beside the skin are two small scratched eye-like ovals connected by a short bar, in the wood itself.
+  prompt_tags: >-
+    (leather canteen hanging from a nail:1.5), (large full stitched waterskin:1.45), rounded dark leather flask with tied drawstring and carrying strap, on one rusty nail through a weathered wood post, two crude small horizontal eye-shaped scratches linked by a short chiseled line in wood nearby, early cool sunlight, close cropped vertical still life, foreground sharp focus
+- key: gb17-a2-gift-3
+  entity: still
+  lane: arthemy-house
+  title: "Left on the Arch Post (subject-first Arthemy reroll 3)"
+  size: 896x1152
+  seed: 28242
+  section: a2-gift
+  shape: tall
+  negative: >-
+    human, woman, man, child, face, portrait, animal, fox, raccoon, koala, mask, statue, person, full figure, body, eye sculpture, ornament, carved face, person in doorway, doorway, stone arch, building facade, empty pillar, bottle, plastic, bucket, lantern, clock, text, logo, watermark, cartoon, cute
+  prompt_prose: >-
+    A heavy full stitched leather drinking waterskin, tied at its neck, hangs by its strap from a crooked iron nail on a wooden post. Beside the skin are two small scratched eye-like ovals connected by a short bar, in the wood itself.
+  prompt_tags: >-
+    foreground full soft leather water pouch with narrow tied spout and thick woven shoulder cord hanging from one bent iron nail in a rough sunbaked timber post, (waterskin clearly visible:1.5), little freshly carved pair of black ovals joined by one scratch to its right, nearly empty desert backdrop, vertical object study, western comics rich natural color
+- key: gb17-a4-bloom-1
+  entity: scenery
+  lane: arthemy-house
+  title: "After the Rain (subject-first Arthemy reroll 1)"
+  size: 1344x768
+  seed: 28250
+  section: a4-bloom
+  shape: wide
+  negative: >-
+    shrine, barn, cabin, house, hut, shelter, roof, stone arch, tunnel, gateway, person, figure, face, creature, animal, silhouette, statue, empty barren desert, wheat field, dried tall grass, grass only, dunes only, cactus only, tree, apple, apple tree, orchard, text, lettering, logo, watermark, cartoon, cute, disney, pixar
+  prompt_prose: >-
+    At dawn after a hard desert rain, an extraordinary continuous carpet of small yellow, white and violet wildflowers covers the wet reddish ground to the horizon. Dew beads cling to five-petaled blossoms, with thin rainwater puddles between clusters.
+  prompt_tags: >-
+    (many thousands of tiny wildflowers:1.5), (dense carpet of wildflowers:1.45), small yellow white and violet five-petal blossoms visibly cover the entire foreground and middle ground from edge to edge, wet russet desert soil visible in tiny gaps, beads of rainwater on petals, soft dawn light, shallow puddles reflect peach sky, vast panoramic field of flowers, western comic painted landscape
+- key: gb17-a4-bloom-2
+  entity: scenery
+  lane: arthemy-house
+  title: "After the Rain (subject-first Arthemy reroll 2)"
+  size: 1344x768
+  seed: 28251
+  section: a4-bloom
+  shape: wide
+  negative: >-
+    shrine, barn, cabin, house, hut, shelter, roof, stone arch, tunnel, gateway, person, figure, face, creature, animal, silhouette, statue, empty barren desert, wheat field, dried tall grass, grass only, dunes only, cactus only, tree, apple, apple tree, orchard, text, lettering, logo, watermark, cartoon, cute, disney, pixar
+  prompt_prose: >-
+    At dawn after a hard desert rain, an extraordinary continuous carpet of small yellow, white and violet wildflowers covers the wet reddish ground to the horizon. Dew beads cling to five-petaled blossoms, with thin rainwater puddles between clusters.
+  prompt_tags: >-
+    (desert wildflowers blooming everywhere:1.5), clusters of little yellow flowers intermingled with white and purple five-petaled flowers, bright colored petals filling foreground, blanket of blossoms uninterrupted to a distant low horizon, fine droplets from last night's rain, damp red soil, thin reflective puddles, wide low-angle view, soft golden sunrise, organic botanical scene
+- key: gb17-a4-bloom-3
+  entity: scenery
+  lane: arthemy-house
+  title: "After the Rain (subject-first Arthemy reroll 3)"
+  size: 1344x768
+  seed: 28252
+  section: a4-bloom
+  shape: wide
+  negative: >-
+    shrine, barn, cabin, house, hut, shelter, roof, stone arch, tunnel, gateway, person, figure, face, creature, animal, silhouette, statue, empty barren desert, wheat field, dried tall grass, grass only, dunes only, cactus only, tree, apple, apple tree, orchard, text, lettering, logo, watermark, cartoon, cute, disney, pixar
+  prompt_prose: >-
+    At dawn after a hard desert rain, an extraordinary continuous carpet of small yellow, white and violet wildflowers covers the wet reddish ground to the horizon. Dew beads cling to five-petaled blossoms, with thin rainwater puddles between clusters.
+  prompt_tags: >-
+    wide macro-to-horizon composition of an immense field of small wildflower blossoms after rain, (dense yellow ivory violet flowers:1.55), thousands of individual open petals dominate image, brown wet clay between plants, sun breaking through low clouds, raindrops on leaves and small pools reflecting dawn, vibrant natural color, western graphic novel botanical landscape
