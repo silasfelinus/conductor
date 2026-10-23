@@ -156,22 +156,18 @@ tasks:
   - id: t-006
     milestone: m1
     title: "Spatial weapon combat specification and shape-playtest prototype"
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
-    note: >-
-      Use COMBAT-PATTERNS.md. Test targetable two-cell vertical
-      sword, three-cell diagonal hammer, cross and precision tools
-      on 4x4, 4x6 and 6x6 boards. Define reveal-vs-match-vs-damage,
-      cooldown and Focus costs, edge clipping/rotation, enemy intent
-      and accessibility. Validate that a wider reveal isn't always
-      optimal and that memory placement remains the deciding skill.
-      Build pure engine plus adversarial tests before visual polish.
+    note: |-
+      Use COMBAT-PATTERNS.md. Test targetable two-cell vertical sword, three-cell diagonal hammer, cross and precision tools on 4x4, 4x6 and 6x6 boards. Define reveal-vs-match-vs-damage, cooldown and Focus costs, edge clipping/rotation, enemy intent and accessibility. Validate that a wider reveal isn't always optimal and that memory placement remains the deciding skill. Build pure engine plus adversarial tests before visual polish.
+
+      Pure engine and adversarial contract merged in kind_robots#4047 (utils/memoryDungeon/combat.ts, verifyMemoryDungeonCombat.test.ts, wired into contract shard 4). Twinblade, Hammer, Spear, Staff, Lantern and Rapier masks with rotation, bullseyes and no silent clipping; Focus, cooldowns, 2-pair strike cap, Guard, stagger, telegraphed tempo and redeal. 200-seed simulations on 4x4/4x6/6x6: memory wins 100%, 60% memory 86-100%, blind 0-6%, wide-shape spray 37%/6%/0%; aiming shapes at remembered pairs is fastest. Twinblade no-pair Guard broke the economy and is now earned by a hit. Results and the accessibility contract for t-007 are in COMBAT-PATTERNS.md.
+    updated: '2026-10-23T00:58:05+00:00'
   - id: t-007
     milestone: m2
     title: "Integrate RPG combat masks and telegraphed enemies into match board"
-    status: waiting
+    status: ready
     depends_on: t-006
     owner: null
     passes: 0
@@ -271,7 +267,7 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Build bullseye sweet spots and solver-verified minefield challenge floors"
-    status: waiting
+    status: ready
     depends_on: t-006
     owner: null
     passes: 0
@@ -303,18 +299,19 @@ tasks:
   - id: t-018
     milestone: m2
     title: "Build playable overworld reveal/explore and nested encounter transition"
-    status: review
+    status: done
     depends_on: t-017
-    owner: worker
     passes: 0
     claimed_by: 2026-10-22T231000Z-md-overworld-p01-8d34
     claimed_at: '2026-10-22T23:10:00Z'
-    updated: '2026-10-22T23:35:00Z'
+    updated: '2026-10-23T00:58:06+00:00'
     stakes: reversible
     note: |-
       On the EXISTING /play/memory stage, ship the first small static world with terrain revelation, named anchor sites and stateful return. Opening an encounter switches the same game camera into match combat, treasure/puzzle or dialogue; on resolution the player returns to exactly the same world position. Include a paired terrain-sequence secret and one procedural dungeon instance anchored to the map. Autosave world and run state across reload.
 
       First Briar Camp vertical slice implemented on Kind Robots worker branch: fixed 8x8 authored map, progressive 1-2-square frontier, merchant, chests, clue/puzzle, optional duels, two gallery-image match rooms in Rootbound Vault, one-run total two-card attempt counter, Bramble Chime and eastern gate payoff, and versioned browser save/resume. Preserved existing /play/memory Classic Match. Art is clean SVG underlay without baked cards or hero. Submitted for PR CI; no production deployment or Page 02 promised.
+
+      kind_robots#4044 merged 2026-10-23T00:39Z (merge recorded under silasfelinus): Briar Camp 8x8 overworld with progressive reveal, named sites, Rootbound Vault gallery-image match rooms, Bramble Chime and east-gate payoff, versioned browser save/resume, and one shared deck launcher for Classic Match and the RPG. Classic Match preserved; verifyMemoryWorld.test.ts in contract CI. No production deploy claimed.
   - id: t-019
     milestone: m3
     title: "Produce game-screen concept mockups for five scene families"
