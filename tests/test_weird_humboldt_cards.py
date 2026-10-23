@@ -83,3 +83,16 @@ def test_anchor_cannot_be_flag_gated():
     anchors = wh.load_anchors()
     anchors[0]["eligibility"]["requires_flags"] = ["minor_companion"]
     assert any("flag-gated" in p for p in wh.validate_anchors(anchors, _enums()))
+
+
+def test_endings_are_valid():
+    endings = wh.load_endings()
+    assert len(endings) >= 10
+    assert wh.validate_endings(endings, wh.load_cards()) == []
+
+
+def test_endings_reject_unearnable_flag_and_missing_core():
+    endings = wh.load_endings()
+    endings[0]["requires_flags"] = ["never_set_flag"]
+    assert any("never_set_flag" in p for p in wh.validate_endings(endings, wh.load_cards()))
+    assert any("missing core" in p for p in wh.validate_endings(endings[1:], wh.load_cards()))

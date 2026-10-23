@@ -24,6 +24,7 @@ PROJECT = ROOT / "projects" / "weird-humboldt"
 SCHEMA = PROJECT / "design" / "card.schema.json"
 CARD_DIR = PROJECT / "cards"
 ANCHOR_FILE = PROJECT / "anchors" / "anchors.yaml"
+ENDING_FILE = PROJECT / "endings" / "endings.yaml"
 SEEDS = PROJECT / "ENCOUNTER-SEEDS.md"
 # Chapters 1-5 hold seeds 1-20 (chapter 2 also WH-121); chapter 6 holds all 20 incl. WH-120 (county vote finale).
 PER_CHAPTER = {1: 20, 2: 21, 3: 20, 4: 20, 5: 20, 6: 20}
@@ -174,11 +175,59 @@ def validate(cards: list[dict]) -> list[str]:
                     problems.append(f"{c['id']}: eligibility references unknown flag {fl}")
     problems += no_dead_end_problems(cards)
     problems += validate_anchors(load_anchors(), enums)
+    problems += validate_endings(load_endings(), cards)
     return problems
 
 
 def load_anchors() -> list[dict]:
     return yaml.safe_load(ANCHOR_FILE.read_text()) or []
+
+
+def load_endings() -> list[dict]:
+    return yaml.safe_load(ENDING_FILE.read_text()) or []
+
+
+MIN_ENDINGS = 10
+ENDING_BEATS = ("one_year", "ten_year", "thirty_year")
+
+
+def validate_endings(endings: list[dict], cards: list[dict]) -> list[str]:
+    """10+ ending records: every companion core in both fates, earnable flags, no excluded material."""
+    problems: list[str] = []
+    if len(endings) < MIN_ENDINGS:
+        problems.append(f"endings: need at least {MIN_ENDINGS}, have {len(endings)}")
+    ids = [e.get("id") for e in endings]
+    if len(set(ids)) != len(ids):
+        problems.append("endings: duplicate ids")
+    cores = {(e.get("lead"), e.get("fate")) for e in endings if e.get("kind") == "core"}
+    for lead in LEADS:
+        for fate in ("hope", "dark"):
+            if (lead, fate) not in cores:
+                problems.append(f"endings: missing core {lead}.{fate}")
+    settable = set()
+    for card in cards + load_anchors():
+        for e in effects_of(card):
+            if e.startswith("flag:"):
+                settable.add(e[5:])
+    for e in endings:
+        eid = e.get("id", "?")
+        for key in ("title", "civic_future", "cost", "quiet_scene", "requires_flags"):
+            if not e.get(key):
+                problems.append(f"{eid}: missing {key}")
+        for flag in e.get("requires_flags", []):
+            if flag not in settable:
+                problems.append(f"{eid}: requires_flags {flag!r} is never set by any card or anchor")
+        for beat in ENDING_BEATS:
+            if e.get("kind") == "core" and words(e.get(beat, "")) < 15:
+                problems.append(f"{eid}: {beat} missing or under 15 words")
+        blob = json.dumps(e, ensure_ascii=False)
+        if EXCLUDED_TERMS.search(blob):
+            problems.append(f"{eid}: touches excluded Wiyot/Tuluwat material")
+        if BANNED.search(blob):
+            problems.append(f"{eid}: contains real-world drug instruction wording")
+        if e.get("lead") == "cedar" and not re.search(r"parents|father and .*mother|mother and .*father", blob, re.I):
+            problems.append(f"{eid}: Cedar's parents must stay together in every timeline")
+    return problems
 
 
 # Chapters 2-4 are the three stay/follow crossroads (JOURNEY-LOOP-CONTRACT.md).
