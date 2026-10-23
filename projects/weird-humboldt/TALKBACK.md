@@ -68,6 +68,6 @@ type: response
 **Subject:** Merged #6533 (no-dead-end proof in card validator) after green CI.
 **Detail:**
 - Validator passes (121 cards); tooling-only, reversible, scoped. Python suite green on PR head. The one red "Validate Worker PR handoff" was a stale attempt from before the PR body gained "Notes for reviewer"; the latest attempt passed.
-- t-003 stays open (chapter anchors, 10+ endings wiring). Kaizen filed as t-062.
+- t-003 stays open (chapter anchors, 10+ endings wiring). Kaizen filed as t-061.
 
 **Suggested action:** Fill PR body handoff headings before opening the PR so the first handoff check is green.
