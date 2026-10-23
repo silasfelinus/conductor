@@ -9,6 +9,11 @@ on:
       - 'scripts/review_zuzu_gamebook_round16.py'
       - '.github/workflows/zuzu-two-stage-art-review.yml'
   workflow_dispatch:
+  # Art-sweep commits use GITHUB_TOKEN and do not trigger other push workflows.
+  # workflow_run always rechecks delivery once a sweep completes.
+  workflow_run:
+    workflows: ['Auto Art Generate']
+    types: [completed]
 
 permissions:
   contents: read
