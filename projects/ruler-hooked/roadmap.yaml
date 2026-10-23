@@ -768,3 +768,36 @@ tasks:
   claimed_at: '2026-09-26T17:19:01Z'
   updated: '2026-09-26T18:12:38Z'
   implementation_pr: 'silasfelinus/kind_robots#3055'
+- id: t-044
+  milestone: m4
+  title: Replace ruler cosmetics and overlay maze with a console-first briefing, map and fishing flow
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-10-23 PT: remove ruler name, honorific and portrait selection.
+    Replace overlays-on-overlays with navigable scene screens: royal briefing,
+    fishing map with one initially accessible spot, cinematic NPC visits,
+    and a persistent art-led lakeside stage. Keep saves and existing game logic.
+    Replace the opaque fishing minigame with two timed target stops followed by
+    clearly instructed tap/release reeling. A first-time player must be able to
+    catch a common fish reliably, with deterministic reducer tests.
+  updated: '2026-10-23T07:41:00Z'
+- id: t-045
+  milestone: m4
+  title: Deepen kingdom quest arcs and connect decisions to fishing spots and species
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-044
+  note: >-
+    Silas, 2026-10-23 PT: match Emperor of Dust's depth of kingdom incidents,
+    dilemma writing, faction tradeoffs, long-running consequences and NPC
+    follow-ups. Repeated choices must meaningfully transform the illustrated
+    world map, alter which fishing spots unlock or close and change the fish
+    available at each location. Keep the offline deterministic story engine and
+    add adversarial playtests for distinct player philosophies and replay paths.
+  updated: '2026-10-23T07:41:00Z'
