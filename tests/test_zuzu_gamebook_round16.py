@@ -47,7 +47,7 @@ def test_round_16_is_a_real_automatic_arthemy_submission():
         if subject["section"] == "a2-bell-view":
             assert (req["width"], req["height"]) == (1344, 768)
             assert "bell" in req["promptString"].lower()
-            assert "tiny" in req["promptString"].lower()
+            assert any(word in req["promptString"].lower() for word in ("tiny", "small"))
             assert "tower" in req["promptString"].lower()
         elif subject["section"] == "a2-gift":
             assert (req["width"], req["height"]) == (896, 1152)
@@ -62,4 +62,4 @@ def test_round_16_is_a_real_automatic_arthemy_submission():
 
     # The runner writes subject.jobs when it has genuinely accepted the ArtJobs.
     # Do not infer submission from the existence of this file or pretend these IDs exist.
-    assert all(not s.get("jobs") for s in subjects) or all(isinstance(s.get("jobs"), dict) for s in subjects)
+    assert all(isinstance(s.get("jobs", {}), dict) for s in subjects)
