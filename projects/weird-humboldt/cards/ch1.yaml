@@ -1207,3 +1207,74 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-020
+  revision: 1
+  chapter: 1
+  location: Cal Poly Humboldt campus
+  title: Finals Week from Another Timeline
+  tier: invented
+  provenance: Finals week is a universal campus ritual; the exam that arrives before the class, and the registrar's no-refund policy across timelines, are invented fiction.
+  rarity: common
+  tone:
+  - absurd
+  - dry
+  - warm
+  cast:
+  - The Proctor (calm, from a timeline with better scheduling)
+  - Fellow Examinees (haunted, caffeinated)
+  canon:
+  - Exams in this timeline arrive before the classes that teach them.
+  - The registrar does not issue refunds across timelines.
+  - Anyone who passes keeps a little of the knowledge, whether they asked for it or not.
+  scene: 'A blue book lands on your desk in the quad, and the cover reads FINAL EXAM: INTRODUCTION TO A COURSE YOU HAVE NOT TAKEN YET. The proctor taps a clock that runs sideways. "The syllabus arrives
+    in March," she says kindly. "The exam arrives now. Refunds are not available in this timeline, or in the adjacent ones." Around you, other students stare at the same impossible first question with the
+    glassy calm of people who have given up on logic.'
+  options:
+  - id: a
+    label: Answer using what you already know about the coast
+    skill: local_lore
+    target: 9
+    success:
+      text: Your answers are half guesses and half true, and the proctor stamps PASS in the wrong ink. A margin note gives you a real date to chase.
+      effects:
+      - evidence:calendar
+      - flag:finals_passed
+    failure:
+      text: The blue book comes back marked SEE ME IN MARCH. You lose track of an hour you will meet again later.
+      effects:
+      - time-1
+  - id: b
+    label: Ask the proctor for the syllabus
+    skill: rizz
+    target: 7
+    success:
+      text: She slides over a photocopied syllabus from next spring. It is mostly office hours, but one of them is circled and signed by someone useful.
+      effects:
+      - evidence:schedule
+      - goodwill+1
+      - flag:finals_syllabus
+    failure:
+      text: She explains the refund policy again, with a diagram. You leave calmer and slightly poorer in nerve.
+      effects:
+      - nerve-1
+  - id: c
+    label: Quietly trade desks with a calmer examinee
+    skill: none
+    target: null
+    success:
+      text: You swap seats with a student who has clearly done this before. They copy nothing and say a single useful thing about the route ahead.
+      effects:
+      - evidence:rumor
+      - flag:finals_traded
+  lead_reactions:
+    mara: Mara studies the cover. "A deadline that arrives before the lesson is just a landlord with a syllabus."
+    kit: Kit taps out a nervous rhythm on the desk. "Everybody finishes this at a different tempo. Nobody finishes on time."
+    juniper: Juniper reads the question twice and shakes their head slowly. "Some tests only measure whether you stay kind while confused."
+    cedar: Cedar folds their arms. "I would like the study guide, please. Skipping straight to the final is how people get hurt."
+  callbacks:
+  - finals_passed
+  - finals_syllabus
+  - finals_traded
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
