@@ -1590,22 +1590,16 @@ tasks:
 - id: t-089
   milestone: m4
   title: Verify single-screen console shell and collectible effects together
-  status: claimed
+  status: review
   owner: worker
   stakes: reversible
   passes: 0
   depends_on:
     - t-088
-  note: >-
-    Follow-up acceptance sweep for screenshots reported 2026-10-23. Repair
-    existing PR #4067's layout contract and formatting failures; confirm no
-    outer document scrolling in portrait, landscape, tablet and desktop,
-    and that tank, buttons and bounded panel remain usable. Bring floating
-    coin behavior from PR #4069 to main only after all CI is green. Add
-    regression coverage for coins not pooling at the bottom, food appearing
-    at varied locations and multi-fish feeding, along with reduced-motion,
-    touch-target and keyboard behavior. Keep generated art/intro/story and
-    server economy unchanged; report merge versus deployment separately.
-  updated: '2026-10-23T11:05:00Z'
+  note: |-
+    Follow-up acceptance sweep for screenshots reported 2026-10-23. Repair existing PR #4067's layout contract and formatting failures; confirm no outer document scrolling in portrait, landscape, tablet and desktop, and that tank, buttons and bounded panel remain usable. Bring floating coin behavior from PR #4069 to main only after all CI is green. Add regression coverage for coins not pooling at the bottom, food appearing at varied locations and multi-fish feeding, along with reduced-motion, touch-target and keyboard behavior. Keep generated art/intro/story and server economy unchanged; report merge versus deployment separately.
+
+    Updated kind_robots PR #4067 to use the existing non-scrolling kr-surface/kr-stage route instead of the generic project-front-page. The tank and all overlays now use parent-owned height, with admin curation as an overlay, and a source-level console layout regression workflow. Floating coins (#4069) and scattered feeding (#4070) are merged. PR CI and rendered desktop/mobile verification still pending.
+  updated: '2026-10-23T11:16:00Z'
   claimed_by: 2026-10-23T110500Z-cthulhuquarium-t089-f2a9
   claimed_at: '2026-10-23T11:05:00Z'
