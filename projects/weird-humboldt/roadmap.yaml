@@ -450,37 +450,19 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Author and test all 120 complete encounter records, callbacks and chapter anchors"
-    status: claimed
+    status: ready
     depends_on: t-002
-    owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Convert all 120 seeds to scene + >=2 choices + check/visible stakes + authored
-      success/failure/complication text + persistent consequences. Include 6 chapter
-      anchors, 10+ endings, 8 playable archetype reactions, no-dead-end proof and
-      writing review for humor, cultural care and variety. Ensure choices
-      also create human-scale civic future flags, recurring commitments and
-      different ecological and economic costs per ECOTONE-CORE.md. No art jobs.
+    note: |-
+      Convert all 120 seeds to scene + >=2 choices + check/visible stakes + authored success/failure/complication text + persistent consequences. Include 6 chapter anchors, 10+ endings, 8 playable archetype reactions, no-dead-end proof and writing review for humor, cultural care and variety. Ensure choices also create human-scale civic future flags, recurring commitments and different ecological and economic costs per ECOTONE-CORE.md. No art jobs.
+      2026-10-22 PT: 18 more cards authored (78 -> 96 of 120), PR #6512 merged. 24 seeds remain (WH-0xx incl. 121); next batch 3-4 per chapter.
+      2026-10-22 PT: 18 more cards authored (96 -> 114 of 120); validator/tests now expect 114 (19 per chapter). 7 seeds remain: WH-020, WH-038, WH-059, WH-080, WH-100, WH-120, WH-121. WH-120 (county vote finale) needs ending-grammar design; then final count 121.
+      2026-10-23 PT: WH-121 The Latitude Argument authored (114 -> 120 incl. earlier batch; deck now 120). Only WH-120 (county vote finale, needs ending-grammar design) remains.
+      2026-10-23 PT: card authoring COMPLETE (121 cards, WH-120 merged #6527, validator + no- dead-end proof #6533). Remaining scope only: 6 guaranteed chapter anchor scenes (non- card; see JOURNEY-LOOP-CONTRACT.md; Wiyot/Tuluwat anchor excluded per EXCLUDED- CONTENT-2026-10-22.md), 10+ ending records per ECOTONE-ENDING-GRAMMAR.md, 8 archetype reactions, writing review.
 
-      2026-10-22 PT: 18 more cards authored (78 -> 96 of 120), PR #6512 merged. 24 seeds
-      remain (WH-0xx incl. 121); next batch 3-4 per chapter.
-
-      2026-10-22 PT: 18 more cards authored (96 -> 114 of 120); validator/tests now expect
-      114 (19 per chapter). 7 seeds remain: WH-020, WH-038, WH-059, WH-080, WH-100, WH-120,
-      WH-121. WH-120 (county vote finale) needs ending-grammar design; then final count 121.
-
-      2026-10-23 PT: WH-121 The Latitude Argument authored (114 -> 120 incl. earlier batch; deck now 120).
-      Only WH-120 (county vote finale, needs ending-grammar design) remains.
-
-      2026-10-23 PT: card authoring COMPLETE (121 cards, WH-120 merged #6527, validator + no-
-      dead-end proof #6533). Remaining scope only: 6 guaranteed chapter anchor scenes (non-
-      card; see JOURNEY-LOOP-CONTRACT.md; Wiyot/Tuluwat anchor excluded per EXCLUDED-
-      CONTENT-2026-10-22.md), 10+ ending records per ECOTONE-ENDING-GRAMMAR.md, 8 archetype
-      reactions, writing review.
-    claimed_by: 2026-10-23T2150Z-weird-humboldt-t-003-anchors
-    claimed_at: '2026-10-23T21:49:31Z'
-    updated: '2026-10-23T21:49:31Z'
+      Six guaranteed chapter anchors authored (WH-A1..A6, projects/weird-humboldt/anchors/anchors.yaml): ch1 local mystery, ch2-4 the three stay/follow crossroads (each with a no-roll stay and follow route setting crossroadsN_stayed/followed), ch5 companion payoff (honour/complicate/betray), ch6 county convergence. validate_anchors() in validate_weird_humboldt_cards.py enforces one per chapter, no flag gating, a no-roll option, authored failures, four lead reactions and callbacks set by effects, and rejects Wiyot/Tuluwat terms; 3 new tests. Remaining scope: 10+ ending records per ECOTONE-ENDING-GRAMMAR.md, 8 archetype reactions, writing review. No art, no Kind Robots runtime.
+    updated: '2026-10-23T21:55:00Z'
   - id: t-004
     milestone: m1
     title: "Creative review: optional mystery, stage rhythm, comedy-horror register and cast"
