@@ -1189,3 +1189,76 @@
   eligibility:
     requires_flags: []
     excludes_flags: []
+- id: WH-120
+  revision: 1
+  chapter: 6
+  location: Ferndale finish / awards
+  title: The County Finally Votes
+  tier: invented
+  provenance: The Ferndale finish is a real festival tradition and county government is real; a vote that tallies the player's journey and chooses which version of the county survives is invented fiction, and it stays a story device, not a claim about any actual election.
+  rarity: rare
+  tone:
+  - hopeful
+  - tense
+  - funny
+  cast:
+  - The Returning Officer (a Grange hall volunteer with a shoebox of pencils)
+  - The Neighbors (every face you met, in folding chairs)
+  canon:
+  - The vote tallies acts, not speeches; whatever you actually did on the road is what gets counted.
+  - Every neighbor in the hall may speak, including the ones who disagreed with you.
+  - The county survives the vote in some form, and what that form is depends on what was built, kept and shared along the way.
+  scene: 'The Grange hall fills with every face you met on the road, folding chairs squeaking, someone passing around pie. The Returning Officer taps a shoebox of pencils and reads the only rule: "We count what was done, not what was promised." She lifts the ledger of your journey, and the room goes quiet enough to hear the fog horn. You may speak once before the count.'
+  options:
+  - id: a
+    label: Lay out what you built and who shared the work
+    skill: wits
+    target: 11
+    success:
+      text: You read your ledger aloud, item by item, and name the neighbors beside each one. The count runs long and warm, and the hall rises to ratify a county made from shared work.
+      effects:
+      - flag:vote_shared_work
+      - evidence:document
+      - goodwill+1
+    failure:
+      text: The ledger is real but dense, and half the room drifts into the pie. The count still happens, a little thinner than the work deserved.
+      effects:
+      - flag:vote_thin_count
+      - time-1
+  - id: b
+    label: Ask the neighbors who disagreed with you to speak first
+    skill: psyche
+    target: 9
+    success:
+      text: A logger, a fisher and a skeptical retiree each state their terms. You answer none of them smoothly and all of them honestly, and their terms go into the ledger beside yours.
+      effects:
+      - flag:vote_all_voices
+      - goodwill+1
+      - clarity+1
+    failure:
+      text: The first speaker is angry and the second is angrier. You hold the chair for them anyway, and the room remembers that you did.
+      effects:
+      - flag:vote_rough_hearing
+      - nerve-1
+  - id: c
+    label: Say nothing and let the road speak for you
+    skill: none
+    target: null
+    success:
+      text: 'You sit, and the Returning Officer counts in silence. The result is honest and a little plain: what you did survives, what you only meant to do does not.'
+      effects:
+      - flag:vote_road_speaks
+  lead_reactions:
+    mara: Mara folds her hands. "Receipts first, then speeches. The county can hold either, but it believes the first."
+    kit: Kit raises a pencil, grinning. "A vote with pie. I am voting for everybody who brought a dish."
+    juniper: Juniper speaks softly. "Whoever you ask to speak first tells the room who the county is for."
+    cedar: Cedar looks at the chairs. "Same hall I grew up in. The ones who lose a vote still have to share the road home."
+  callbacks:
+  - vote_shared_work
+  - vote_thin_count
+  - vote_all_voices
+  - vote_rough_hearing
+  - vote_road_speaks
+  eligibility:
+    requires_flags: []
+    excludes_flags: []
