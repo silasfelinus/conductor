@@ -1,0 +1,12 @@
+version: 1
+project: memory-dungeon
+task: t-016
+operation: ready
+note: >-
+  Engine merged in kind_robots#4050 (utils/memoryDungeon/minefield.ts):
+  seeded 8x8/10x10 floors kept only when a deduction solver clears them
+  with no forced guess (40-46% of draws redrawn), recoverable missteps,
+  exact one-cell disarms, provenCells hints from visible state, leak-free
+  screen-reader text. Bullseye crits are live in combat.ts (+2 on a
+  sweet-spot pair). Remaining for done: the floor UI (zoomable bounded
+  grid, keyboard map) and a site on the map that opens it.
