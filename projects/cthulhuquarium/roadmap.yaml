@@ -1575,22 +1575,15 @@ tasks:
 - id: t-088
   milestone: m4
   title: Distribute live feed across the aquarium and let nearby fish pursue it
-  status: claimed
+  status: review
   owner: worker
   stakes: reversible
   passes: 0
-  note: >-
-    Silas, 2026-10-23: the Feed action still creates a uniform row of food
-    entering from y=12, and step() steers all swimmers toward feed[0].
-    Spread food across independent entry points near the fed occupants,
-    with safe scene margins and staggered depths, so consecutive taps do not
-    create the same visual pattern. Assign nearby food targets to swimmers;
-    preserve anchored/clinging fish behavior, wriggle and eating animations.
-    Keep the server's feedHungry economy authoritative; do not synthesize
-    earned nourishment client-side. Bound food particles for performance.
-    Add deterministic geometry/target tests including mobile-sized hit
-    areas, same-location fish, empty-swimmer and repeated-feed cases.
-  updated: '2026-10-23T10:37:00Z'
+  note: |-
+    Silas, 2026-10-23: the Feed action still creates a uniform row of food entering from y=12, and step() steers all swimmers toward feed[0]. Spread food across independent entry points near the fed occupants, with safe scene margins and staggered depths, so consecutive taps do not create the same visual pattern. Assign nearby food targets to swimmers; preserve anchored/clinging fish behavior, wriggle and eating animations. Keep the server's feedHungry economy authoritative; do not synthesize earned nourishment client-side. Bound food particles for performance. Add deterministic geometry/target tests including mobile-sized hit areas, same-location fish, empty-swimmer and repeated-feed cases.
+
+    Implemented deterministic scattered food positions for all fed fish (capped on dense tanks), independent nearby target selection per swimming creature, and tests for repeatability, overlapping fish, upper/lower fish, empty swimmer lists, stage margins and large tanks. Branch worker/cthulhuquarium-t088-feed-distribution-20261023t1037z; review and CI remain pending.
+  updated: '2026-10-23T10:45:00Z'
   claimed_by: 2026-10-23T103700Z-cthulhuquarium-t088-b7d4
   claimed_at: '2026-10-23T10:37:00Z'
 - id: t-089
