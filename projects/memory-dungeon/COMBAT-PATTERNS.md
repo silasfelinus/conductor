@@ -129,3 +129,43 @@ Certain deeper floors or special vault rooms replace the small match stage with 
 - **The Oath Bell:** rings when a previously revealed image is centered on the sweet spot; it amplifies the damage but advances the dungeon's Danger track.
 
 Treat these as candidate effects. The *smallest fun, provably fair ruleset* wins after playtest. A large board is appropriate for an occasional set piece, not for every corridor battle.
+
+## Prototype results (t-006, 2026-10-23 PT)
+
+The pure engine is `kind_robots/utils/memoryDungeon/combat.ts`, with `utils/scripts/verifyMemoryDungeonCombat.test.ts` (`npm run test:memory-dungeon-combat`) as its contract. It implements the first ruleset (strikes are **both** attacks and reveals: pairs wholly inside the footprint resolve, the rest of the footprint is information). The hybrid "name the pair" variant is not built; the numbers below already meet the decision gate, so it stays a later option, not a requirement.
+
+**Rules the prototype settled**
+
+| Rule | Value | Why |
+| --- | --- | --- |
+| Pair damage | 2; +2 when the pair touches a bullseye cell | Damage follows the pair found, never the cell count |
+| Per-strike cap | 2 pairs, +1 multi-match bonus; extras stay face down and log as `capped` | Big shapes can't clear a lucky cluster in one blow |
+| Twinblade | 2 cells, rotates; 0 Focus, no cooldown; +1 Guard **only on a hit**; Guard banks at most 1 | See finding below |
+| Rune Hammer | diagonal or reverse diagonal; 1 Focus, 1-turn cooldown; staggers the enemy one beat on a match | |
+| Hooked Spear | L-triomino, 4 rotations; 1 Focus, 1-turn cooldown | |
+| Seer's Staff | 5-cross; 2 Focus, 2-turn cooldown; two pairs in one strike refund 1 Focus | |
+| Memory Lantern | 2x2; 1 Focus, 2-turn cooldown; reveals only, never resolves a pair | |
+| Needle Rapier | 2 cells, both bullseye; free, 1-turn cooldown | Precision tool for a remembered adjacent pair |
+| Edges | An overhanging mask is shown whole and refused (`legal: false`), never clipped | |
+| Tempo | Every scout or strike is one beat of the enemy's telegraph; a cleared board with the enemy standing redeals | |
+
+**Simulation (200 seeds per cell; enemy HP = pairs on the board, attack 2, telegraph 4 beats on 4x4/4x6 and 5 on 6x6; win rate / mean actions)**
+
+| Player | 4x4 | 4x6 | 6x6 |
+| --- | --- | --- | --- |
+| Blind random scouting | 6% / 19.6 | 0% / 20.0 | 0% / 25.0 |
+| Spray: widest affordable shape at random, no memory | 37% / 17.6 | 6% / 21.5 | 0% / 26.8 |
+| Remembers 60% of revealed cells | 100% / 9.7 | 99% / 14.9 | 86% / 22.8 |
+| Remembers every revealed cell | 100% / 7.9 | 100% / 12.0 | 100% / 18.4 |
+| Remembers, and aims shapes at known pairs | 100% / 7.5 | 100% / 11.6 | 100% / 17.7 |
+
+Memory decides fights at every size, a wider reveal never substitutes for it (spray loses badly from 4x6 up), and aiming the right shape at a remembered pair is the fastest play. 4x4 is forgiving enough that blind area play sometimes wins; keep it for tutorial and corridor fights.
+
+**Finding:** the tentative "Twinblade grants 1 Guard even without a pair" broke the economy. Memoryless Twinblade spam kept a Guard banked for every telegraphed hit, halving all damage, and won 58% of 4x4 fights by stalling. Guard is now earned by a struck pair and caps at one.
+
+**Accessibility contract for t-007 (the board integration)**
+
+- Every mask preview is also text: weapon, rotation and the covered coordinates ("Hammer, reverse diagonal: B2, C3, D4"), so a screen reader hears exactly what a sighted player sees before committing.
+- Bullseye cells carry a glyph and an outline, never colour alone; illegal placements say why (`strikeBlocked` returns the sentence).
+- Keyboard and touch both move the anchor by cell, rotate with a dedicated control, and commit with a separate confirm. No action depends on timing or reflexes.
+- Reveal hold time is a setting (reduced motion swaps the flip animation for a fade), and the enemy's telegraph is shown as a number as well as an icon.

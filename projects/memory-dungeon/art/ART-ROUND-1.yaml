@@ -1,0 +1,1154 @@
+# Memory Dungeon art, round 1 (memory-dungeon t-013 art pipeline + t-019 concept screens + t-018 starter-region art).
+# Purpose: the first production art ledger for the RPG mode of the existing /play/memory game -- an original,
+# wacky-high-fantasy narrative roguelite where exploration happens on a persistent overworld of discovery tiles
+# and combat is the memory card-matching board. Silas 2026-10-22 PT: a persistent explorable overworld of discovery
+# tiles; the starter region (Briar Camp, with the Rootbound Vault dungeon, per t-018 / kind_robots PR #4044) is being
+# built now on a clean SVG placeholder underlay (public/memory-dungeon/briar-camp.svg, 800x800) that needs real
+# painted art.
+# Sources: projects/memory-dungeon/{DESIGN-BRIEF.md, WORLD-AND-EXPLORATION.md, STARTER-REGION-DESIGN.md,
+# COMBAT-PATTERNS.md, CONCEPT-SCREENS.md, roadmap.yaml t-009/t-011/t-013/t-018/t-019}, plus the authored Briar Camp
+# site list in kind_robots utils/memoryDungeonWorld.ts (PR #4044 head) and the layout of its SVG underlay.
+# Contents (92 subjects x 2 lanes = 184 cells):
+#   5 full-screen concept screens (t-019: overworld explorer, nested match battle with a sword mask + bullseye,
+#     treasure/choice cut-in, minefield clue vault, character creator) -- UI implied by physical props, PROPOSED
+#     VISUAL DIRECTION, never to be presented as live gameplay;
+#   2 Briar Camp overworld maps (a square 1024 straight-down underlay laid out to match the SVG: camp west, road
+#     east-west, river down the east third with a plank bridge, creek along the south, merchant hut and root
+#     vault arch to the north, thorn gate at the east edge; plus a wide three-quarter overview), 3 Rootbound Vault
+#     plates, 10 Briar Camp discovery-tile cut-ins (one per authored site in memoryDungeonWorld.ts), 8 biome plates
+#     for later regions (STARTER-REGION-DESIGN.md site atlas);
+#   13 recurring-cast portraits (Pip x4, Brass Knight x3, Vesper x3, the Index x3 -- non-canon example cast) and
+#     8 selectable player avatars (waist-up, consistent three-quarter pose, flat parchment backdrop; four women,
+#     four men, ages young adult to elderly, varied bodies, ethnicities, one orc, one wheelchair user, one
+#     prosthetic arm);
+#   24 vertical-slice room records (8 encounter, 8 wandering monster, 8 treasure) + 1 guardian;
+#   11 weapon/tool hero objects (COMBAT-PATTERNS.md + STARTER-REGION-DESIGN.md earned tools + the Bramble Chime);
+#   3 match-card back designs + 1 face-down overworld map tile; 3 first-region ending vignettes.
+# Invented names (not in the docs; working fiction, non-canon): Three Witness Statues (truth-teller gate),
+#   the Sneezecap Swarm (Sneeze-Worthy Hollow monster), the Crown of Kept Receipts (cursed relic), the Deep Bloom
+#   Reliquary (B4 secret treasure), the Litigious Chest (negotiating treasure), the Twin Reliquaries (tampered
+#   treasure difference room), the Glyph Wheel Door (sequence lock), the Fungus Physician's look, the Ford
+#   Caretaker's look, Mosswick's look. "Bloom Orchard" is the region name behind Thorn Gate in memoryDungeonWorld.ts,
+#   painted here as the docs' Backwards Orchard.
+# Prompt contract: positive description only (every surface bare and unmarked, deserted scenes), house style in the
+#   shared lane suffix. Lanes: Krea 2 and Z-Image Turbo, both prose, both carry the same suffix.
+# auto_submit: true -> scripts/sweep_art_ledgers.py submits and refreshes this ledger on every Auto Art Generate run.
+# Queued is not rendered; rendered is not shipped. Private (is_public: false); nothing here is canon or released.
+round: memory-dungeon-art-1
+project_slug: memory-dungeon
+designer: Memory Dungeon art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (painted storybook house look)
+  engine: krea2
+  prompt: prose
+  suffix: whimsical hand-painted storybook high-fantasy illustration, rich gouache and oil glazes, warm candlelight
+    amber and deep moss greens with tarnished brass and plum accents, mischievous good-humoured mood, tactile textures
+    of wood, parchment, stone and fern, soft painterly brushwork, luminous atmosphere
+- key: zimage
+  label: Z-Image Turbo (painted alternate)
+  engine: zimage
+  prompt: prose
+  suffix: whimsical hand-painted storybook high-fantasy illustration, rich gouache and oil glazes, warm candlelight
+    amber and deep moss greens with tarnished brass and plum accents, mischievous good-humoured mood, tactile textures
+    of wood, parchment, stone and fern, soft painterly brushwork, luminous atmosphere
+subjects:
+- key: md-screen-overworld-explorer
+  entity: concept-screen
+  title: 'Concept screen A: overworld explorer'
+  size: 1344x768
+  seed: 87101
+  prompt_prose: 'A full-screen fantasy adventure game scene seen from a high three-quarter angle, a lush woodland
+    region laid out like a tabletop diorama of square map tiles: about half of the tiles are flipped face up showing
+    sunny meadow, ferny forest, a blue river crossed by a little wooden bridge and a winding sandy road, while the
+    rest are still covered by carved oak tiles under drifting silver fog. A tiny cloaked adventurer with a lantern
+    stands on the road beside a campfire and a patched canvas tent, a striped merchant stall sits under a mossy
+    roof, a stone archway choked with roots glows amber at the northern treeline and a gate of woven thorns closes
+    the eastern edge. An open leather explorer''s journal rests at the left edge with ink sketches of leaves and
+    a sun, and a brass compass and a small hourglass sit at the lower right corner of the table'
+  jobs:
+    krea2: 43793
+    zimage: 43794
+- key: md-screen-match-battle
+  entity: concept-screen
+  title: 'Concept screen B: nested memory-match battle with sword mask and bullseye'
+  size: 1344x768
+  seed: 87102
+  prompt_prose: 'A full-screen fantasy battle scene inside a root-woven stone chamber: across the left half a large
+    six by six grid of face-down memory playing pieces lies on mossy flagstones, their backs lacquered moss green
+    with a coiled gold knot, four of them flipped face up showing a painted fox, a key, a crescent moon and a second
+    matching key. A glowing translucent sword-shaped beam of golden light covers two vertically stacked pieces,
+    with a bright golden bullseye ring hovering over the upper one. On the right half a big grumpy memory leech,
+    a translucent violet slug with lamp eyes and tiny clutching hands, rears up over the board while a glowing purple
+    omen of two hovering pips warns of its attack. A small adventurer with a sword stands at the near edge of the
+    board seen from behind, sparks of matched light rising, braziers casting dramatic candlelight'
+  jobs:
+    krea2: 43795
+    zimage: 43796
+- key: md-screen-treasure-cutin
+  entity: concept-screen
+  title: 'Concept screen C: cinematic treasure and choice cut-in'
+  size: 1344x768
+  seed: 87103
+  prompt_prose: 'A cinematic full-screen fantasy discovery scene: a gigantic ornate treasure chest the size of a
+    cottage sits in a mossy cavern, its lid cracked open like a mouth lined with brass teeth, golden light and floating
+    coins spilling out, and the chest wears a monocle and holds out a long unrolled parchment contract and a quill
+    as if haggling. In the foreground two small adventurers seen from behind, a cloaked hero and a goblin bookkeeper
+    hugging a ledger, lean back in wary astonishment. Along the bottom edge three carved wooden plaques hang on
+    brass chains from a low branch, each painted with one emblem, a heart, a key and a skull, offering three costly
+    choices. Rich spotlight from above, glittering dust, a grand sense of scale'
+  jobs:
+    krea2: 43797
+    zimage: 43798
+- key: md-screen-minefield-vault
+  entity: concept-screen
+  title: 'Concept screen D: minefield clue vault'
+  size: 1344x768
+  seed: 87104
+  prompt_prose: 'A full-screen fantasy puzzle scene in a vast underground vault: a huge ten by ten floor of square
+    slate tiles stretches toward a sealed round bronze vault door carved with roots, many tiles still covered by
+    dull grey stone, the revealed tiles glowing softly and studded with one, two or three brass dots that count
+    the traps nearby, little red cloth flags on wooden pegs standing on suspected trap tiles, and a few cracked
+    tiles leaking violet sparks of danger. A small adventurer with a needle-thin rapier stands at the near corner
+    beside a brass surveyor''s lens on a tripod, and a golden bullseye ring of light hovers over one tile ahead.
+    Towering vault mechanisms of cogs, chains and hanging lanterns rise on both sides, cool blue shadows warmed
+    by candlelight'
+  jobs:
+    krea2: 43799
+    zimage: 43800
+- key: md-screen-character-creator
+  entity: concept-screen
+  title: 'Concept screen E: character creator outfitting room'
+  size: 1344x768
+  seed: 87105
+  prompt_prose: 'A full-screen fantasy scene of a cosy adventurer''s outfitting room in a timber attic: a tall standing
+    mirror of carved oak in the centre reflects a waiting adventurer in travelling clothes, eight small painted
+    portrait miniatures of different adventurers hang around it on coloured ribbons, a wooden rack of starter weapons
+    holds a sword, a hammer, a hooked spear and a crystal staff, an open leather journal on a writing desk shows
+    sketches of a face and a map, three stained-glass leaves glow amber, green and plum in the round attic window,
+    and a little brass dial with three settings sits beside a quill and inkpot. Warm lamplight, the feeling of choosing
+    who to become'
+  jobs:
+    krea2: 43801
+    zimage: 43802
+- key: md-map-briar-camp-underlay
+  entity: overworld-map
+  title: 'Briar Camp: painted top-down map underlay (replaces briar-camp.svg)'
+  size: 1024x1024
+  seed: 87106
+  prompt_prose: 'A painted top-down map of a small woodland region seen straight from above like a hand-painted
+    board game: a winding sandy road runs east to west across the middle, from a tiny campsite with a canvas tent
+    and a ring of fire stones on the western side to a gate of woven thorns at the far eastern edge; a blue river
+    flows from the top edge down through the eastern third and the road crosses it on a little wooden plank bridge;
+    a narrow creek curls along the southern edge to meet the river; a side path climbs north from the road to a
+    timber merchant''s hut with a mossy roof and then turns east to a stone archway overgrown with roots at the
+    northern treeline; dense oaks and pines line the northern and southern borders, with scattered grey boulders,
+    fern clumps and cream wildflower patches across soft green meadow, gentle even daylight, an unpeopled landscape,
+    every surface bare and unmarked'
+  jobs:
+    krea2: 43803
+    zimage: 43804
+- key: md-map-briar-camp-overview
+  entity: overworld-map
+  title: 'Briar Camp: three-quarter overview of the discovery tiles'
+  size: 1344x768
+  seed: 87107
+  prompt_prose: 'A charming three-quarter overview map of Briar Camp, a small woodland region seen from a high angle
+    like a hand-painted tabletop board: a campsite with a crackling fire and a crooked signpost of blank weathered
+    boards, a striped merchant stall under a mossy roof, a stone archway into a root-tangled vault, a half-buried
+    round stone seal glowing faintly blue, three standing stones in a ring of clover, two little chests tucked among
+    ferns by a creek and on a riverbank, and a gate of woven thorns at the eastern edge with blossoming orchard
+    trees beyond it; a blue river and a sandy road knit the places together, soft fog drifts over the unexplored
+    corners, an unpeopled landscape, every surface bare and unmarked'
+  jobs:
+    krea2: 43805
+    zimage: 43806
+- key: md-vault-rootbound-entrance
+  entity: dungeon
+  title: 'Rootbound Vault: entrance'
+  size: 1344x768
+  seed: 87108
+  prompt_prose: 'The entrance to the Rootbound Vault: a mossy stone archway half swallowed by enormous twisting
+    tree roots at the edge of a dim forest, worn steps leading down into a warm amber glow, small hanging bronze
+    bells and tangled bramble vines across the arch, fireflies drifting, a fallen lantern resting on the top step,
+    roots curling like sleeping fingers, deserted and inviting, every surface bare and unmarked'
+  jobs:
+    krea2: 43807
+    zimage: 43808
+- key: md-vault-rootbound-chamber
+  entity: dungeon
+  title: 'Rootbound Vault: first memory chamber'
+  size: 1344x768
+  seed: 87109
+  prompt_prose: 'Inside the first chamber of the Rootbound Vault: a round underground hall walled with living tree
+    roots and old stone, a wide mossy floor of square flagstones laid out as an empty matching grid, glowing mushrooms
+    and lanterns hanging from the roots, a ring of pale stone pedestals, golden shafts of light falling through
+    cracks in the ceiling, dust motes, a deserted and quiet hall waiting for a challenge'
+  jobs:
+    krea2: 43809
+    zimage: 43810
+- key: md-vault-rootbound-chime-chamber
+  entity: dungeon
+  title: 'Rootbound Vault: the Bramble Chime chamber'
+  size: 1344x768
+  seed: 87110
+  prompt_prose: 'The innermost chamber of the Rootbound Vault: a soaring cave of interwoven roots around a stone
+    dais where a small bronze chime of five tubular bells bound in blossoming bramble hangs from a single arched
+    root, glowing with soft green and gold light, pink petals drifting down, still pools on the floor reflecting
+    the glow, a deserted and sacred hush, every surface bare and unmarked'
+  jobs:
+    krea2: 43811
+    zimage: 43812
+- key: md-site-briar-camp
+  entity: site
+  title: 'Briar Camp (2,4): the camp'
+  size: 1344x768
+  seed: 87111
+  prompt_prose: 'Briar Camp at dusk: a cosy forest campsite with a crackling fire in a ring of stones, a patched
+    canvas tent, a bedroll and a kettle on an iron hook, a deeply crooked wooden signpost whose five blank arms
+    point in contradictory directions, lanterns hung in a bramble hedge, a scruffy friendly fox curled up by the
+    warmth, a safe golden glow against the dark trees'
+  jobs:
+    krea2: 43813
+    zimage: 43814
+- key: md-site-mosswick-stall
+  entity: site
+  title: 'Mosswick''s Stall (4,2): merchant'
+  size: 1344x768
+  seed: 87112
+  prompt_prose: 'Mosswick''s Stall: a tiny ramshackle forest market stall with a mossy shingled roof and a faded
+    striped awning, shelves crowded with jars of fireflies, pressed wildflowers, lantern wicks, odd keys and spools
+    of map string, and behind the counter Mosswick, a stout elderly hedgehog merchant in a mustard waistcoat and
+    half-moon spectacles, leaning forward with a conspiratorial grin and holding out a little glowing lantern'
+  jobs:
+    krea2: 43815
+    zimage: 43816
+- key: md-site-sleeping-sigil
+  entity: site
+  title: 'The Sleeping Sigil (5,2): sealed clue'
+  size: 1344x768
+  seed: 87113
+  prompt_prose: 'The Sleeping Sigil: a large round stone seal half sunk into a clover meadow, carved with one half
+    of a looping knot emblem that glows faint blue as if breathing in its sleep, moss and tiny white flowers growing
+    in its grooves, an empty socket beside it shaped for a missing partner stone, a soft morning mist, curious beetles
+    on its rim, quiet and mysterious'
+  jobs:
+    krea2: 43817
+    zimage: 43818
+- key: md-site-thorn-gate
+  entity: site
+  title: 'Thorn Gate (8,4): the eastern gate'
+  size: 1344x768
+  seed: 87114
+  prompt_prose: 'The Thorn Gate: a tall gate woven from enormous dark briar thorns and twisted branches across a
+    sandy road at the eastern edge of a forest, its two halves knotted shut around a hollow bronze bell socket,
+    and through the gaps a glimpse of a sunlit orchard in pink and white blossom beyond, petals blowing through,
+    dramatic and inviting'
+  jobs:
+    krea2: 43819
+    zimage: 43820
+- key: md-site-three-quiet-stones
+  entity: site
+  title: 'Three Quiet Stones (2,7): rune puzzle'
+  size: 1344x768
+  seed: 87115
+  prompt_prose: 'Three Quiet Stones: three weathered standing stones in a small clearing ringed with clover, the
+    first two carved with the same leaf rune and the third with a radiant sun rune, each rune softly glowing gold,
+    old offerings of acorns and ribbons at their feet, dappled afternoon light, a hushed puzzle waiting to be solved'
+  jobs:
+    krea2: 43821
+    zimage: 43822
+- key: md-site-creekside-cache
+  entity: site
+  title: 'Creekside Cache (3,6): chest'
+  size: 1344x768
+  seed: 87116
+  prompt_prose: 'Creekside Cache: a small weatherproof oak chest bound in copper, tucked among tall ferns beside
+    a bubbling creek, a sprig of wildflowers tied to its handle, moss on its lid, dragonflies hovering, sunlight
+    sparkling on wet stones, a cosy hidden treasure'
+  jobs:
+    krea2: 43823
+    zimage: 43824
+- key: md-site-riverbank-chest
+  entity: site
+  title: 'Riverbank Chest (7,6): chest'
+  size: 1344x768
+  seed: 87117
+  prompt_prose: 'Riverbank Chest: a bright chest lacquered blue and gold resting on a sandy riverbank among reeds
+    and smooth pebbles, a brass latch shaped like a lantern, the wide clear river flowing past, a kingfisher on
+    a reed, morning light glinting on the water, cheerful and tempting'
+  jobs:
+    krea2: 43825
+    zimage: 43826
+- key: md-site-moss-inscription
+  entity: site
+  title: 'Moss Inscription (2,6): rune clue'
+  size: 1344x768
+  seed: 87118
+  prompt_prose: 'The Moss Inscription: an old grey boulder in a fern glade with a carving scraped through its moss
+    showing three simple pictographs in a row, a leaf, a second leaf and a radiant sun, the grooves glowing faint
+    gold, a little snail climbing beside them, cool green shade and a single shaft of sunlight'
+  jobs:
+    krea2: 43827
+    zimage: 43828
+- key: md-site-moss-sprite
+  entity: site
+  title: 'Moss Sprite (5,5): optional duel'
+  size: 1344x768
+  seed: 87119
+  prompt_prose: 'A mischievous Moss Sprite: a tiny round forest spirit made of springy green moss with a dandelion-puff
+    crown, big glossy black eyes and a toothy cheeky grin, perched on a red toadstool and fanning out a hand of
+    little leaf-shaped game tiles, challenging the viewer to a matching duel, in a sun-dappled glade full of ferns'
+  jobs:
+    krea2: 43829
+    zimage: 43830
+- key: md-site-thorn-patrol
+  entity: site
+  title: 'Thorn Patrol (7,3): optional duel'
+  size: 1344x768
+  seed: 87120
+  prompt_prose: 'The Thorn Patrol: two disgruntled forest sentries made of woven bramble and bark, one tall and
+    spindly and one short and barrel-shaped, wearing acorn-cap helmets and crossing thorn-tipped spears over a narrow
+    shortcut path, rolling their knot-hole eyes at each other, a mossy trail winding away behind them, comic and
+    grumpy'
+  jobs:
+    krea2: 43831
+    zimage: 43832
+- key: md-biome-bloom-orchard
+  entity: biome
+  title: 'Biome: Bloom Orchard, the Backwards Orchard (strange woods)'
+  size: 1344x768
+  seed: 87121
+  prompt_prose: 'The Backwards Orchard beyond a gate of thorns: rolling hills of fruit trees growing upside down,
+    their roots spread like fans against the sky and their blossoms and glowing golden pears hanging down toward
+    the grass, wooden ladders leaning the wrong way, petals drifting upward, a pink and gold afternoon, a wide landscape
+    vista, unpeopled countryside'
+  jobs:
+    krea2: 43833
+    zimage: 43834
+- key: md-biome-lantern-ford
+  entity: biome
+  title: 'Biome: Lantern Ford (shallow river)'
+  size: 1344x768
+  seed: 87122
+  prompt_prose: 'Lantern Ford: a wide shallow river crossing at twilight, a line of flat stepping stones each topped
+    with a little floating paper lantern, a half-collapsed wooden bridge under repair with loose planks and coiled
+    ropes, a caretaker''s stilt hut with a lit porch on the far bank, reeds and fireflies, glittering reflections,
+    a deserted and peaceful crossing'
+  jobs:
+    krea2: 43835
+    zimage: 43836
+- key: md-biome-sneeze-worthy-hollow
+  entity: biome
+  title: 'Biome: Sneeze-Worthy Hollow (fungal ravine)'
+  size: 1344x768
+  seed: 87123
+  prompt_prose: 'Sneeze-Worthy Hollow: a deep fungal ravine of giant toadstools in coral, ochre and lavender, fat
+    puffballs releasing glittering clouds of golden spores, shelf fungi forming stairways down the cliffs, a sagging
+    rope bridge, gills glowing blue in the shadows, a warm humid haze, an unpeopled wild place'
+  jobs:
+    krea2: 43837
+    zimage: 43838
+- key: md-biome-reflection-grotto
+  entity: biome
+  title: 'Biome: Reflection Grotto (wooded underlevel)'
+  size: 1344x768
+  seed: 87124
+  prompt_prose: 'Reflection Grotto: a hidden cave beneath twisting orchard roots filled with still, glassy pools
+    that reflect a slightly different cavern than the one above them, pale crystal stalactites, rows of weathered
+    twin statues facing each other across the water, soft silver-blue light, a deserted and dreamlike hush'
+  jobs:
+    krea2: 43839
+    zimage: 43840
+- key: md-biome-unlit-shrine
+  entity: biome
+  title: 'Biome: The Unlit Shrine (ruined meadow)'
+  size: 1344x768
+  seed: 87125
+  prompt_prose: 'The Unlit Shrine: a small ruined shrine of tumbled marble columns in a wild meadow, a dark empty
+    lantern on a central altar, poppies and tall swaying grass, broken mossy steps, butterflies, a wide cloudy sky,
+    a mood of quiet expectation, an unpeopled landscape'
+  jobs:
+    krea2: 43841
+    zimage: 43842
+- key: md-biome-clocktower
+  entity: biome
+  title: 'Biome: The Clocktower with No Clock (masonry ruins)'
+  size: 1344x768
+  seed: 87126
+  prompt_prose: A tall leaning stone tower among masonry ruins on a rocky hill, a great empty round opening near
+    its top with open sky showing straight through it, giant brass gears and cogs half sunk in the grass around
+    its base, crows circling, a crumbling spiral stair, blue mountains in the distance, a dramatic windy sunset
+  jobs:
+    krea2: 43843
+    zimage: 43844
+- key: md-biome-receipt-keep
+  entity: biome
+  title: 'Biome: The Receipt-Keep (old stone bastion, first main dungeon)'
+  size: 1344x768
+  seed: 87127
+  prompt_prose: 'The Receipt-Keep: an old stone bastion on a cliff whose walls are shingled with countless fluttering
+    blank paper slips like scales, a great iron portcullis, pennants of tied parchment ribbons, towers stacked like
+    filing cabinets, a drawbridge over a moat of black ink, ominous yet comic bureaucratic grandeur under a stormy
+    sky'
+  jobs:
+    krea2: 43845
+    zimage: 43846
+- key: md-biome-edgeworld-breach
+  entity: biome
+  title: 'Biome: The Door that Wasn''t There (Edgeworld breach)'
+  size: 1344x768
+  seed: 87128
+  prompt_prose: 'The Door that Wasn''t There: on a windswept border hill a freestanding doorway of pale stone stands
+    alone in open grass, and through it shines an impossible pocket world of floating islands, upside-down waterfalls
+    and a violet sky with two moons, the edges of the landscape peeling like old paper around the doorway, eerie
+    and wondrous'
+  jobs:
+    krea2: 43847
+    zimage: 43848
+- key: md-cast-pip-tallying
+  entity: portrait
+  title: 'Pip: tallying, suspicious'
+  size: 1024x1024
+  seed: 87129
+  prompt_prose: Pip, a small wiry goblin bookkeeper with moss-green skin, enormous bat-like ears, round brass spectacles,
+    a tiny ink-stained waistcoat over a patched linen shirt and a quill tucked behind one ear, peering over his
+    spectacles while tallying in a fat leather ledger with his quill, one eyebrow raised in mild suspicion, a counting
+    house of stacked coin towers behind him, waist-up character portrait, softly blurred warm candlelit background
+  jobs:
+    krea2: 43849
+    zimage: 43850
+- key: md-cast-pip-delighted
+  entity: portrait
+  title: 'Pip: delighted'
+  size: 1024x1024
+  seed: 87130
+  prompt_prose: Pip, a small wiry goblin bookkeeper with moss-green skin, enormous bat-like ears, round brass spectacles,
+    a tiny ink-stained waistcoat over a patched linen shirt and a quill tucked behind one ear, grinning a wide toothy
+    grin and holding up a shiny gold coin to the light, ears perked high, ledger tucked under one arm, waist-up
+    character portrait, softly blurred warm candlelit background
+  jobs:
+    krea2: 43851
+    zimage: 43852
+- key: md-cast-pip-indignant
+  entity: portrait
+  title: 'Pip: indignant'
+  size: 1024x1024
+  seed: 87131
+  prompt_prose: Pip, a small wiry goblin bookkeeper with moss-green skin, enormous bat-like ears, round brass spectacles,
+    a tiny ink-stained waistcoat over a patched linen shirt and a quill tucked behind one ear, ears flared wide
+    in indignation, jabbing his quill forward and slamming his ledger shut with the other hand, cheeks flushed darker
+    green, waist-up character portrait, softly blurred warm candlelit background
+  jobs:
+    krea2: 43853
+    zimage: 43854
+- key: md-cast-pip-tender
+  entity: portrait
+  title: 'Pip: tender'
+  size: 1024x1024
+  seed: 87132
+  prompt_prose: Pip, a small wiry goblin bookkeeper with moss-green skin, enormous bat-like ears, round brass spectacles,
+    a tiny ink-stained waistcoat over a patched linen shirt and a quill tucked behind one ear, quietly hugging his
+    closed ledger to his chest, eyes glistening, a small shy smile, a pressed flower poking from between the pages,
+    waist-up character portrait, softly blurred warm candlelit background
+  jobs:
+    krea2: 43855
+    zimage: 43856
+- key: md-cast-brass-knight-guard
+  entity: portrait
+  title: 'Brass Knight: on guard'
+  size: 1024x1024
+  seed: 87133
+  prompt_prose: the Brass Knight, a tall suit of animated brass plate armour with an empty helm glowing soft amber
+    inside, badly repaired with mismatched riveted patches and a bandaged pauldron, moss in its joints, a long scarf
+    of faded vow ribbons, standing protectively with a dented round shield raised and a notched sword lowered, sturdy
+    and loyal, waist-up character portrait, softly blurred warm candlelit background
+  jobs:
+    krea2: 43857
+    zimage: 43858
+- key: md-cast-brass-knight-vow
+  entity: portrait
+  title: 'Brass Knight: the vow'
+  size: 1024x1024
+  seed: 87134
+  prompt_prose: the Brass Knight, a tall suit of animated brass plate armour with an empty helm glowing soft amber
+    inside, badly repaired with mismatched riveted patches and a bandaged pauldron, moss in its joints, a long scarf
+    of faded vow ribbons, kneeling with one gauntlet pressed over its breastplate, helm bowed, its amber glow brightening
+    solemnly as it swears an oath, waist-up character portrait, softly blurred warm candlelit background
+  jobs:
+    krea2: 43859
+    zimage: 43860
+- key: md-cast-brass-knight-creaky
+  entity: portrait
+  title: 'Brass Knight: creaky and endearing'
+  size: 1024x1024
+  seed: 87135
+  prompt_prose: the Brass Knight, a tall suit of animated brass plate armour with an empty helm glowing soft amber
+    inside, badly repaired with mismatched riveted patches and a bandaged pauldron, moss in its joints, a long scarf
+    of faded vow ribbons, helm tilted awkwardly with a squeak of hinges, a small bluebird nesting in its shoulder
+    plate, one gauntlet raised in a sheepish wave, waist-up character portrait, softly blurred warm candlelit background
+  jobs:
+    krea2: 43861
+    zimage: 43862
+- key: md-cast-vesper-sketching
+  entity: portrait
+  title: 'Vesper: sketching a map'
+  size: 1024x1024
+  seed: 87136
+  prompt_prose: Vesper, a slender moth-folk cartographer with soft dusty-grey fur, feathery antennae, huge velvety
+    wings patterned like old maps, dark glossy eyes and a satchel of rolled maps, sketching a map with a silver
+    pen on parchment held against one wing, antennae curled in concentration, waist-up character portrait, softly
+    blurred warm candlelit background
+  jobs:
+    krea2: 43863
+    zimage: 43864
+- key: md-cast-vesper-offer
+  entity: portrait
+  title: 'Vesper: offering a shortcut'
+  size: 1024x1024
+  seed: 87137
+  prompt_prose: Vesper, a slender moth-folk cartographer with soft dusty-grey fur, feathery antennae, huge velvety
+    wings patterned like old maps, dark glossy eyes and a satchel of rolled maps, holding out an unrolled map toward
+    the viewer with a sly half-smile, one clawed finger tapping a secret route marked in glowing ink, waist-up character
+    portrait, softly blurred warm candlelit background
+  jobs:
+    krea2: 43865
+    zimage: 43866
+- key: md-cast-vesper-wings
+  entity: portrait
+  title: 'Vesper: wings unfurled'
+  size: 1024x1024
+  seed: 87138
+  prompt_prose: Vesper, a slender moth-folk cartographer with soft dusty-grey fur, feathery antennae, huge velvety
+    wings patterned like old maps, dark glossy eyes and a satchel of rolled maps, wings spread wide and glowing
+    in lamplight so the map patterns shine like stained glass, eyes luminous and mysterious, waist-up character
+    portrait, softly blurred warm candlelit background
+  jobs:
+    krea2: 43867
+    zimage: 43868
+- key: md-cast-index-serene
+  entity: portrait
+  title: 'The Index: serene custodian'
+  size: 1024x1024
+  seed: 87139
+  prompt_prose: the Index, a tall robed archive custodian whose face is a smooth porcelain mask, long sleeves lined
+    with tiny brass catalogue drawers, a halo of floating blank paper slips, hands folded calmly, the mask showing
+    a gentle serene face, standing among towering archive shelves of glowing jars, waist-up character portrait,
+    softly blurred warm candlelit background
+  jobs:
+    krea2: 43869
+    zimage: 43870
+- key: md-cast-index-shifting
+  entity: portrait
+  title: 'The Index: face shifting'
+  size: 1024x1024
+  seed: 87140
+  prompt_prose: the Index, a tall robed archive custodian whose face is a smooth porcelain mask, long sleeves lined
+    with tiny brass catalogue drawers, a halo of floating blank paper slips, the porcelain mask mid-change, fracturing
+    into a fan of many different faces of young and old strangers, unsettling and hypnotic, waist-up character portrait,
+    softly blurred warm candlelit background
+  jobs:
+    krea2: 43871
+    zimage: 43872
+- key: md-cast-index-sorrowful
+  entity: portrait
+  title: 'The Index: sorrowful steward'
+  size: 1024x1024
+  seed: 87141
+  prompt_prose: the Index, a tall robed archive custodian whose face is a smooth porcelain mask, long sleeves lined
+    with tiny brass catalogue drawers, a halo of floating blank paper slips, the mask showing a sorrowful face with
+    a single porcelain tear, cradling one small glowing memory shaped like a songbird in cupped hands, waist-up
+    character portrait, softly blurred warm candlelit background
+  jobs:
+    krea2: 43873
+    zimage: 43874
+- key: md-avatar-1-herbalist-seer
+  entity: avatar
+  title: 'Avatar 1: elderly East Asian herbalist seer (woman)'
+  size: 1024x1024
+  seed: 87142
+  prompt_prose: 'waist-up portrait of an original fantasy adventurer facing three-quarter toward the viewer, centred,
+    head and shoulders level with the top third, against a flat soft warm parchment-coloured backdrop with a gentle
+    vignette: an elderly East Asian woman with silver hair in a topknot pinned with a twig, deep laugh lines, round
+    spectacles pushed up on her forehead, a quilted indigo coat with pockets of dried herbs, holding a small star
+    lantern, wise and amused'
+  jobs:
+    krea2: 43875
+    zimage: 43876
+- key: md-avatar-2-gentle-warden
+  entity: avatar
+  title: 'Avatar 2: young Black warden (man, heavyset)'
+  size: 1024x1024
+  seed: 87143
+  prompt_prose: 'waist-up portrait of an original fantasy adventurer facing three-quarter toward the viewer, centred,
+    head and shoulders level with the top third, against a flat soft warm parchment-coloured backdrop with a gentle
+    vignette: a young Black man, broad and heavyset, short twists, warm brown eyes, a padded russet gambeson, a
+    patched round wooden shield slung on his back and one hand resting on a sword hilt, gentle confident smile'
+  jobs:
+    krea2: 43877
+    zimage: 43878
+- key: md-avatar-3-coin-trickster
+  entity: avatar
+  title: 'Avatar 3: young Filipina trickster with a carved prosthetic arm (woman)'
+  size: 1024x1024
+  seed: 87144
+  prompt_prose: 'waist-up portrait of an original fantasy adventurer facing three-quarter toward the viewer, centred,
+    head and shoulders level with the top third, against a flat soft warm parchment-coloured backdrop with a gentle
+    vignette: a slim young Filipina woman with a short wavy bob and a hair clip shaped like a key, a carved wooden
+    prosthetic left forearm with brass hinges, a patchwork cloak full of hidden pockets, rolling a coin across her
+    knuckles, mischievous smirk'
+  jobs:
+    krea2: 43879
+    zimage: 43880
+- key: md-avatar-4-wheeled-cartographer
+  entity: avatar
+  title: 'Avatar 4: Latina cartographer in a wheelchair (woman)'
+  size: 1024x1024
+  seed: 87145
+  prompt_prose: 'waist-up portrait of an original fantasy adventurer facing three-quarter toward the viewer, centred,
+    head and shoulders level with the top third, against a flat soft warm parchment-coloured backdrop with a gentle
+    vignette: a Latina woman in her thirties seated in a sturdy wooden wheelchair, the brass-rimmed top of one wheel
+    and a map case strapped to the armrest visible, a long dark braid, freckles, a moss-green cartographer''s coat,
+    a spyglass in her lap, determined bright gaze'
+  jobs:
+    krea2: 43881
+    zimage: 43882
+- key: md-avatar-5-forge-warden
+  entity: avatar
+  title: 'Avatar 5: plus-size red-haired smith warden (woman, middle-aged)'
+  size: 1024x1024
+  seed: 87146
+  prompt_prose: 'waist-up portrait of an original fantasy adventurer facing three-quarter toward the viewer, centred,
+    head and shoulders level with the top third, against a flat soft warm parchment-coloured backdrop with a gentle
+    vignette: a plus-size middle-aged white woman with thick copper-red braids, rosy cheeks and broad shoulders,
+    a blacksmith''s leather apron over chainmail, a rune hammer resting on her shoulder, a hearty laugh'
+  jobs:
+    krea2: 43883
+    zimage: 43884
+- key: md-avatar-6-astrolabe-sage
+  entity: avatar
+  title: 'Avatar 6: elderly Middle Eastern sage (man)'
+  size: 1024x1024
+  seed: 87147
+  prompt_prose: 'waist-up portrait of an original fantasy adventurer facing three-quarter toward the viewer, centred,
+    head and shoulders level with the top third, against a flat soft warm parchment-coloured backdrop with a gentle
+    vignette: an elderly Middle Eastern man, bald with a full white beard and kind dark eyes, a sand-coloured travelling
+    robe with embroidered sleeves, a brass astrolabe on a chain around his neck, a crystal-topped staff, serene'
+  jobs:
+    krea2: 43885
+    zimage: 43886
+- key: md-avatar-7-orc-cook
+  entity: avatar
+  title: 'Avatar 7: stocky orc cook-turned-warden (man, middle-aged)'
+  size: 1024x1024
+  seed: 87148
+  prompt_prose: 'waist-up portrait of an original fantasy adventurer facing three-quarter toward the viewer, centred,
+    head and shoulders level with the top third, against a flat soft warm parchment-coloured backdrop with a gentle
+    vignette: a stocky round-bellied middle-aged orc man with sage-green skin, small polished tusks and a greying
+    topknot, gentle eyes, a cast-iron pan strapped on his forearm like a shield, a hooked spear over his shoulder,
+    a friendly grin'
+  jobs:
+    krea2: 43887
+    zimage: 43888
+- key: md-avatar-8-island-voyager
+  entity: avatar
+  title: 'Avatar 8: young Pacific Islander voyager (man)'
+  size: 1024x1024
+  seed: 87149
+  prompt_prose: 'waist-up portrait of an original fantasy adventurer facing three-quarter toward the viewer, centred,
+    head and shoulders level with the top third, against a flat soft warm parchment-coloured backdrop with a gentle
+    vignette: a young Pacific Islander man, tall and broad-shouldered, voluminous curly black hair with a white
+    blossom tucked behind one ear, a woven sun hat hanging on a cord, a sleeveless sea-blue tunic and rope belt,
+    a hooked spear in hand, adventurous grin'
+  jobs:
+    krea2: 43889
+    zimage: 43890
+- key: md-room-enc-shrine-riddle
+  entity: room-encounter
+  title: 'Encounter: the Shrine Riddle'
+  size: 1344x768
+  seed: 87150
+  prompt_prose: 'A small ruined shrine interior lit by dozens of stubby candles: a huge serene stone face carved
+    into the back wall speaks a riddle, its mouth open and glowing gold, and before it a low altar holds four empty
+    carved bowls and a heap of smooth pebbles carved with a leaf, a moon, a key and a bell, ivy creeping through
+    the cracks, moonlight falling through a broken roof'
+  jobs:
+    krea2: 43891
+    zimage: 43892
+- key: md-room-enc-reflected-bargain
+  entity: room-encounter
+  title: 'Encounter: the Reflected Bargain (Reflection Prisoner)'
+  size: 1344x768
+  seed: 87151
+  prompt_prose: A grotto chamber with a tall antique mirror leaning against a rock wall, and inside its glass a
+    small trapped creature, a fluffy blue owl-cat with sad lamp eyes, presses its paws against the glass; a crack
+    runs across one corner of the mirror, a heavy wooden mallet rests on a stool beside it, a shortcut tunnel glows
+    behind, pale silver light, a tense choice between breaking the glass and walking away
+  jobs:
+    krea2: 43893
+    zimage: 43894
+- key: md-room-enc-glyph-wheel-door
+  entity: room-encounter
+  title: 'Encounter: the Glyph Wheel Door (sequence lock)'
+  size: 1344x768
+  seed: 87152
+  prompt_prose: A massive round vault door of bronze set into a root-woven stone wall, made of six concentric rotating
+    rings each carved with glyphs of leaves, moons, keys, bells, eyes and suns, a softly glowing keyhole at the
+    centre, a stone lectern beside it holding an open leather journal of sketched glyphs, lantern light, mysterious
+    and inviting
+  jobs:
+    krea2: 43895
+    zimage: 43896
+- key: md-room-enc-pips-crossroads
+  entity: room-encounter
+  title: 'Encounter: Pip''s Crossroads debt'
+  size: 1344x768
+  seed: 87153
+  prompt_prose: At a misty forest crossroads with a leaning signpost of blank weathered boards, a small green goblin
+    bookkeeper in brass spectacles and an ink-stained waistcoat holds up an open ledger and a quill, demanding payment
+    from a frightened skeleton who clutches its own empty coin purse, knees knocking, while a lantern hangs from
+    the signpost, comic yet tender tension
+  jobs:
+    krea2: 43897
+    zimage: 43898
+- key: md-room-enc-three-witness-statues
+  entity: room-encounter
+  title: 'Encounter: Three Witness Statues (truth-teller gate)'
+  size: 1344x768
+  seed: 87154
+  prompt_prose: A gate hall where three tall painted statues of a gardener, a soldier and a jester stand before
+    a locked iron gate, each statue holding out a different key while the jester hides a fourth key behind its back,
+    their carved faces caught mid-speech with shifty sidelong glances, a checkered marble floor, flickering torchlight
+  jobs:
+    krea2: 43899
+    zimage: 43900
+- key: md-room-enc-ford-caretaker
+  entity: room-encounter
+  title: 'Encounter: the Ford Caretaker''s bargain'
+  size: 1344x768
+  seed: 87155
+  prompt_prose: On the porch of a stilt hut beside a twilight river crossing, the Ford Caretaker, a lanky elderly
+    river keeper with a long grey beard braided with reeds, wearing waders and a patched oilskin coat, holds out
+    two lanterns, one in each hand, offering two ways across, a half-repaired bridge of planks and ropes behind
+    and paper lanterns floating on the water
+  jobs:
+    krea2: 43901
+    zimage: 43902
+- key: md-room-enc-antidote-cabinet
+  entity: room-encounter
+  title: 'Encounter: the Antidote Cabinet'
+  size: 1344x768
+  seed: 87156
+  prompt_prose: A cosy fungal-cave apothecary where a tall carved cabinet of tiny drawers stands open, and the Fungus
+    Physician, a kindly plump healer with a spotted red mushroom cap and round goggles, holds out two glowing potion
+    vials, one gold and one teal, while through a round doorway behind a little village of mushroom houses glows
+    dimly under a sickly haze
+  jobs:
+    krea2: 43903
+    zimage: 43904
+- key: md-room-enc-painted-door
+  entity: room-encounter
+  title: 'Encounter: the Painted Door (find the difference)'
+  size: 1344x768
+  seed: 87157
+  prompt_prose: A candlelit hallway ending in two identical tall wooden doors side by side, each painted with the
+    same lush garden scene of a marble statue holding a feather beside a key on a hook, carved and gilded trim,
+    a velvet rope between them, a magnifying glass resting on a cushion, soft gallery lighting, a careful spot-the-difference
+    puzzle
+  jobs:
+    krea2: 43905
+    zimage: 43906
+- key: md-room-mon-memory-leech
+  entity: room-monster
+  title: 'Monster: Memory Leech'
+  size: 1344x768
+  seed: 87158
+  prompt_prose: 'A Memory Leech lurking in a dripping archive cellar: a large translucent violet slug creature with
+    a fringe of glowing feelers, lamp-like eyes and tiny grasping hands, slurping up a glowing wisp of memory shaped
+    like a little sailing ship, shelves of dusty jars of glowing memories behind it, puddles on the floor, eerie
+    lantern light, menacing and a little pathetic'
+  jobs:
+    krea2: 43907
+    zimage: 43908
+- key: md-room-mon-skeletal-collector
+  entity: room-monster
+  title: 'Monster: Skeletal Collector'
+  size: 1344x768
+  seed: 87159
+  prompt_prose: 'The Skeletal Collector in a crypt of debts: a lanky polite skeleton in a moth-eaten tailcoat and
+    top hat, carrying a brass collection plate and a long hooked cane, a bulging sack of collected keepsakes over
+    its shoulder, bowing with ghastly courtesy among candlelit niches piled with bones and coins'
+  jobs:
+    krea2: 43909
+    zimage: 43910
+- key: md-room-mon-mimic
+  entity: room-monster
+  title: 'Monster: Mimic'
+  size: 1344x768
+  seed: 87160
+  prompt_prose: 'A Mimic in a treasure alcove: a handsome gilded treasure chest bursting open to reveal a long pink
+    tongue, rows of jagged teeth and a single curious eye on a stalk, coins and paste jewels tumbling out, its brass
+    clawed feet planted for a pounce, while a small heap of genuine treasure glints temptingly in the corner'
+  jobs:
+    krea2: 43911
+    zimage: 43912
+- key: md-room-mon-oathbreaker
+  entity: room-monster
+  title: 'Monster: Oathbreaker'
+  size: 1344x768
+  seed: 87161
+  prompt_prose: 'The Oathbreaker on a crumbling bridge of vows: a towering hollow knight of black iron bound in
+    snapped chains and torn red ribbons, its cracked helm leaking ember light, a broken sword in one hand and a
+    shattered shield in the other, a storm of torn blank paper promises swirling around it, an old stone bridge
+    collapsing into mist'
+  jobs:
+    krea2: 43913
+    zimage: 43914
+- key: md-room-mon-mirror-wraith
+  entity: room-monster
+  title: 'Monster: Mirror Wraith'
+  size: 1344x768
+  seed: 87162
+  prompt_prose: 'A Mirror Wraith in a hall of looking glasses: a tall elegant ghost of silver smoke and shards of
+    reflective glass, its body split into two mirror-image halves, long fingers tracing glowing symmetrical patterns
+    in the air, dozens of tilted standing mirrors reflecting it in endless rows, cold moonlight'
+  jobs:
+    krea2: 43915
+    zimage: 43916
+- key: md-room-mon-grave-scribe
+  entity: room-monster
+  title: 'Monster: Grave Scribe'
+  size: 1344x768
+  seed: 87163
+  prompt_prose: 'The Grave Scribe in a candlelit crypt scriptorium: a hunched ghoulish monk with ink-black fingers
+    and a long nose like a quill, tipping a huge inkwell over a floor of square stone tiles and covering them in
+    glossy black puddles, scrolls and pens scattered everywhere, its robes dripping ink, a sly grin'
+  jobs:
+    krea2: 43917
+    zimage: 43918
+- key: md-room-mon-clockwork-collector
+  entity: room-monster
+  title: 'Monster: Clockwork Collector'
+  size: 1344x768
+  seed: 87164
+  prompt_prose: 'The Clockwork Collector in a gear-filled vault: a bulky brass automaton tax collector with a strongbox
+    chest, many spindly arms holding scales, wax stamps and a magnifying monocle, steam whistling from its ear vents,
+    demanding tribute before two glowing sigil pedestals, giant gears ticking in the walls'
+  jobs:
+    krea2: 43919
+    zimage: 43920
+- key: md-room-mon-sneezecap-swarm
+  entity: room-monster
+  title: 'Monster: the Sneezecap Swarm'
+  size: 1344x768
+  seed: 87165
+  prompt_prose: 'The Sneezecap Swarm in a fungal ravine: a bouncing crowd of tiny round mushroom creatures with
+    puffy spotted caps and big red noses, mid-sneeze, blasting clouds of glittering golden spores, some clinging
+    to each other and a few sneezing themselves backwards, giant toadstools and glowing blue gills behind them,
+    chaotic and funny'
+  jobs:
+    krea2: 43921
+    zimage: 43922
+- key: md-room-tre-bell-chest
+  entity: room-treasure
+  title: 'Treasure: the Bell Chest'
+  size: 1344x768
+  seed: 87166
+  prompt_prose: 'The Bell Chest: a squat iron-bound chest on a stone plinth in a quiet vault, its lid open to reveal
+    a small tarnished brass bell nestled on faded velvet beside a folded letter sealed with red wax, a cold draft
+    stirring the dust, a single shaft of light, a held-breath moment of temptation'
+  jobs:
+    krea2: 43923
+    zimage: 43924
+- key: md-room-tre-trapped-coffer
+  entity: room-treasure
+  title: 'Treasure: the Trapped Coffer'
+  size: 1344x768
+  seed: 87167
+  prompt_prose: 'The Trapped Coffer: an elegant rosewood coffer on a pedestal at the end of a narrow chamber, surrounded
+    by visible trip wires strung with tiny silver bells, pressure plates set in the floor, two crossbows peeking
+    from wall niches, a key dangling on a thread above it, golden light leaking from the coffer''s keyhole'
+  jobs:
+    krea2: 43925
+    zimage: 43926
+- key: md-room-tre-crown-of-kept-receipts
+  entity: room-treasure
+  title: 'Treasure: the Crown of Kept Receipts (cursed relic)'
+  size: 1344x768
+  seed: 87168
+  prompt_prose: 'The Crown of Kept Receipts: a beautiful jewelled crown resting on a velvet cushion in a dim alcove,
+    long curling strips of blank paper spilling from it like ribbons, a faint purple curse aura swirling around
+    it, tiny ghostly hands reaching from the shadows, temptation and dread'
+  jobs:
+    krea2: 43927
+    zimage: 43928
+- key: md-room-tre-abandoned-journal
+  entity: room-treasure
+  title: 'Treasure: the Abandoned Journal (missing ledger page)'
+  size: 1344x768
+  seed: 87169
+  prompt_prose: 'The Abandoned Journal: a battered leather travel journal lying open on a mossy rock beside a cold
+    campfire in a ruined corridor, one page torn out and pinned beneath a pebble, pressed flowers and a feather
+    tucked in as bookmarks, a lost adventurer''s boots and folded cloak left behind, melancholy golden light'
+  jobs:
+    krea2: 43929
+    zimage: 43930
+- key: md-room-tre-oath-hoard
+  entity: room-treasure
+  title: 'Treasure: the Hoard Guarded by Oath'
+  size: 1344x768
+  seed: 87170
+  prompt_prose: 'The Hoard Guarded by Oath: a glittering mountain of gold coins, goblets and crowns heaped in a
+    vaulted cave, ringed by glowing carved stone tablets of vows, an ancient sleeping tortoise with a mossy shell
+    curled protectively around the hoard, a sword thrust upright into the gold, a reverent hush'
+  jobs:
+    krea2: 43931
+    zimage: 43932
+- key: md-room-tre-deep-bloom-reliquary
+  entity: room-treasure
+  title: 'Treasure: the Deep Bloom Reliquary'
+  size: 1344x768
+  seed: 87171
+  prompt_prose: 'The Deep Bloom Reliquary: in the deepest fungal chamber a giant flower of glowing petals opens
+    to cradle a small silver reliquary, spores drifting down like snow, roots and threads of mycelium glowing blue
+    across the cavern floor, wonder edged with danger'
+  jobs:
+    krea2: 43933
+    zimage: 43934
+- key: md-room-tre-litigious-chest
+  entity: room-treasure
+  title: 'Treasure: the Litigious Chest'
+  size: 1344x768
+  seed: 87172
+  prompt_prose: 'The Litigious Chest: a huge talking treasure chest wearing a powdered wig and a monocle, propped
+    on a stack of leather-bound tomes in a grand cave, its lid opening like a mouth mid-argument, brass claws holding
+    out a long unrolled parchment contract and a quill toward the viewer, gold glittering inside, absurd and charming'
+  jobs:
+    krea2: 43935
+    zimage: 43936
+- key: md-room-tre-twin-reliquaries
+  entity: room-treasure
+  title: 'Treasure: the Twin Reliquaries (tampered treasure)'
+  size: 1344x768
+  seed: 87173
+  prompt_prose: 'The Twin Reliquaries: two identical golden reliquaries shaped like sleeping cats on matching marble
+    plinths in a symmetrical candlelit chapel, one of them subtly tampered with a scratched green gem and a crooked
+    whisker, a jeweller''s loupe resting on a velvet cloth before them, a puzzle of careful observation'
+  jobs:
+    krea2: 43937
+    zimage: 43938
+- key: md-guardian-keeper-of-receipts
+  entity: guardian
+  title: 'Guardian: the Keeper of Receipts'
+  size: 1344x768
+  seed: 87174
+  prompt_prose: 'The Keeper of Receipts in the guardian hall of the Receipt-Keep: a towering weary archivist with
+    long silver hair and four arms in ink-stained sleeves, holding a giant ledger and a heavy wax seal stamp, standing
+    among whirlwinds of blank paper slips and towering cabinets of drawers, a giant brass balance scale behind,
+    tragic and imposing, stormy candlelight'
+  jobs:
+    krea2: 43939
+    zimage: 43940
+- key: md-tool-scout-dagger
+  entity: weapon
+  title: 'Weapon: Scout Dagger'
+  size: 1024x1024
+  seed: 87175
+  prompt_prose: 'a single object resting alone on a softly lit dark plum velvet ground with warm rim light: a slim
+    scout''s dagger with a leaf-shaped blade of blued steel, a wrapped leather grip and a pommel shaped like an
+    open eye, two tiny matching garnets set in the crossguard'
+  jobs:
+    krea2: 43941
+    zimage: 43942
+- key: md-tool-twinblade-sword
+  entity: weapon
+  title: 'Weapon: Twinblade Sword (2 vertical cells)'
+  size: 1024x1024
+  seed: 87176
+  prompt_prose: 'a single object resting alone on a softly lit dark plum velvet ground with warm rim light: the
+    Twinblade Sword, a straight longsword whose blade splits into two parallel stacked edges along its length, a
+    golden bullseye ring engraved near the tip, a brass crossguard shaped like two clasped hands'
+  jobs:
+    krea2: 43943
+    zimage: 43944
+- key: md-tool-mason-hammer
+  entity: weapon
+  title: 'Weapon: Mason''s Rune Hammer (3 diagonal cells)'
+  size: 1024x1024
+  seed: 87177
+  prompt_prose: 'a single object resting alone on a softly lit dark plum velvet ground with warm rim light: the
+    Mason''s Rune Hammer, a stout stonemason''s hammer with a granite head carved with three glowing runes in a
+    diagonal line, the middle rune circled in gold as a bullseye, an oak haft bound in copper wire'
+  jobs:
+    krea2: 43945
+    zimage: 43946
+- key: md-tool-hooked-spear
+  entity: weapon
+  title: 'Weapon: Hooked Spear (L-triomino)'
+  size: 1024x1024
+  seed: 87178
+  prompt_prose: 'a single object resting alone on a softly lit dark plum velvet ground with warm rim light: the
+    Hooked Spear, a long ash-wood spear with a bent L-shaped hooked iron head and a second small barb, red cloth
+    streamers, a little brass ring marking its sweet spot'
+  jobs:
+    krea2: 43947
+    zimage: 43948
+- key: md-tool-seers-cross-staff
+  entity: weapon
+  title: 'Weapon: Seer''s Cross Staff (5-cell cross)'
+  size: 1024x1024
+  seed: 87179
+  prompt_prose: 'a single object resting alone on a softly lit dark plum velvet ground with warm rim light: the
+    Seer''s Cross Staff, a tall staff of pale driftwood topped with an equal-armed cross of five glowing crystal
+    orbs, the centre orb brightest, star-chart ribbons wound along the shaft'
+  jobs:
+    krea2: 43949
+    zimage: 43950
+- key: md-tool-memory-lantern
+  entity: tool
+  title: 'Tool: Memory Lantern (2x2 scout)'
+  size: 1024x1024
+  seed: 87180
+  prompt_prose: 'a single object resting alone on a softly lit dark plum velvet ground with warm rim light: the
+    Memory Lantern, a square brass lantern with four glass panes, inside it a soft glow drifting in the shape of
+    four tiny floating keepsakes, a ring handle and a small brass charge dial'
+  jobs:
+    krea2: 43951
+    zimage: 43952
+- key: md-tool-needle-rapier
+  entity: weapon
+  title: 'Weapon: Needle Rapier (precision)'
+  size: 1024x1024
+  seed: 87181
+  prompt_prose: 'a single object resting alone on a softly lit dark plum velvet ground with warm rim light: the
+    Needle Rapier, an extremely thin elegant rapier with a swept silver basket hilt, its point ending in a tiny
+    glowing golden bullseye ring'
+  jobs:
+    krea2: 43953
+    zimage: 43954
+- key: md-tool-surveyors-lens
+  entity: tool
+  title: 'Tool: Surveyor''s Lens (minefield clue)'
+  size: 1024x1024
+  seed: 87182
+  prompt_prose: 'a single object resting alone on a softly lit dark plum velvet ground with warm rim light: the
+    Surveyor''s Lens, a brass magnifying lens on a folding tripod with nested rotating rings studded with counting
+    dots, a small spirit level and a dangling plumb bob'
+  jobs:
+    krea2: 43955
+    zimage: 43956
+- key: md-tool-oath-bell
+  entity: tool
+  title: 'Tool: the Oath Bell (relic)'
+  size: 1024x1024
+  seed: 87183
+  prompt_prose: 'a single object resting alone on a softly lit dark plum velvet ground with warm rim light: the
+    Oath Bell, a heavy bronze handbell engraved with a ring of vow glyphs around a central bullseye, a frayed red
+    ribbon tied to its handle, a faint shimmering ripple of sound around it'
+  jobs:
+    krea2: 43957
+    zimage: 43958
+- key: md-tool-echo-locket
+  entity: tool
+  title: 'Tool: Echo Locket (earned at the Shrine)'
+  size: 1024x1024
+  seed: 87184
+  prompt_prose: 'a single object resting alone on a softly lit dark plum velvet ground with warm rim light: the
+    Echo Locket, an oval silver locket lying open on a fine chain, inside it a tiny glowing painted fox that seems
+    to echo outward in faint ghostly copies'
+  jobs:
+    krea2: 43959
+    zimage: 43960
+- key: md-tool-bramble-chime
+  entity: tool
+  title: 'Key item: the Bramble Chime (opens Thorn Gate)'
+  size: 1024x1024
+  seed: 87185
+  prompt_prose: 'a single object resting alone on a softly lit dark plum velvet ground with warm rim light: the
+    Bramble Chime, five small bronze tubular chimes hanging from a curled bramble branch in blossom, tiny thorns
+    and pink flowers, glowing with green and gold resonance'
+  jobs:
+    krea2: 43961
+    zimage: 43962
+- key: md-cardback-rootknot
+  entity: card-back
+  title: 'Card back: Root Knot (house)'
+  size: 1024x1024
+  seed: 87186
+  prompt_prose: 'The ornate back face of a single memory playing piece seen straight on from above and filling the
+    whole square, symmetrical design, rich tactile surface: deep moss-green lacquer with a gold-leaf coiled knot
+    of roots at the centre, a surrounding band of tiny brass rivets and oak leaves, gently worn corners'
+  jobs:
+    krea2: 43963
+    zimage: 43964
+- key: md-cardback-archive-eye
+  entity: card-back
+  title: 'Card back: Archive Eye'
+  size: 1024x1024
+  seed: 87187
+  prompt_prose: 'The ornate back face of a single memory playing piece seen straight on from above and filling the
+    whole square, symmetrical design, rich tactile surface: plum velvet with a silver embossed open eye at the centre
+    surrounded by moth wings and a ring of tiny keys, gently worn corners'
+  jobs:
+    krea2: 43965
+    zimage: 43966
+- key: md-cardback-briar-bell
+  entity: card-back
+  title: 'Card back: Briar Bell'
+  size: 1024x1024
+  seed: 87188
+  prompt_prose: 'The ornate back face of a single memory playing piece seen straight on from above and filling the
+    whole square, symmetrical design, rich tactile surface: warm oak wood carved in relief with a blossoming bramble
+    wreath around a little brass bell, inlaid mother-of-pearl petals, gently worn corners'
+  jobs:
+    krea2: 43967
+    zimage: 43968
+- key: md-tile-face-down
+  entity: map-tile
+  title: 'Overworld: face-down discovery tile'
+  size: 1024x1024
+  seed: 87189
+  prompt_prose: 'A single square overworld map tile of carved weathered oak seen straight on from above and filling
+    the whole square, symmetrical design, rich tactile surface: its face carved with a compass rose of swirling
+    fog and tiny inlaid brass stars, mossy edges, a soft cool silver mist curling across the woodgrain'
+  jobs:
+    krea2: 43969
+    zimage: 43970
+- key: md-ending-page-returned
+  entity: ending
+  title: 'Ending vignette: the Page Returned'
+  size: 1344x768
+  seed: 87190
+  prompt_prose: At Lantern Ford at dawn, a young adventurer in a travelling cloak hands a torn ledger page to the
+    elderly reed-bearded river keeper, whose eyes fill with tears of recognition as a glowing memory rises from
+    the page like a lantern, while on the far bank a hooded stranger turns away in shame, gold sunrise on the river,
+    bittersweet
+  jobs:
+    krea2: 43971
+    zimage: 43972
+- key: md-ending-page-burned
+  entity: ending
+  title: 'Ending vignette: the Page Burned'
+  size: 1344x768
+  seed: 87191
+  prompt_prose: At night beside Briar Camp's fire, a young adventurer drops a torn ledger page into the flames,
+    and the smoke curls into a glowing map path that unfurls into the dark forest, while a small green goblin bookkeeper
+    watches from the shadows with crossed arms and a hurt frown, ember light, a hard bargain
+  jobs:
+    krea2: 43973
+    zimage: 43974
+- key: md-ending-page-carried
+  entity: ending
+  title: 'Ending vignette: the Page Carried Beyond'
+  size: 1344x768
+  seed: 87192
+  prompt_prose: A young adventurer steps through a freestanding pale stone doorway into an impossible violet Edgeworld
+    of floating islands and two moons, holding high a torn ledger page that streams golden light, a moth-winged
+    cartographer guiding the way with a glowing map, strange beauty and danger, wonder
+  jobs:
+    krea2: 43975
+    zimage: 43976

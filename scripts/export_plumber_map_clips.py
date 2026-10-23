@@ -76,13 +76,52 @@ def fetch_animation(art_image_id):
         return resp.read()
 
 
+def _delta(a, b):
+    """Mean per-channel difference of two same-size RGB frames, on a small thumbnail."""
+    from PIL import ImageChops, ImageStat
+
+    small = (160, 90)
+    diff = ImageChops.difference(a.resize(small), b.resize(small))
+    return sum(ImageStat.Stat(diff).mean) / 3
+
+
+def loop_frames(frames, fade=8, settle_max=6, settle_delta=6.0):
+    """Frames that loop without a pop.
+
+    WAN spends its first few frames settling from the sharp source plate into its own render (world 1's
+    first loop jumped 16.6 then 9.7 between its opening frames, then ran at 2-5), so those leading frames are
+    dropped until one frame-to-frame step falls under ``settle_delta``. The last ``fade`` frames are then
+    crossfaded into the first ``fade`` ones, which are dropped from the head, so the final frame flows into
+    the first exactly as two neighbouring frames do.
+    """
+    from PIL import Image
+
+    start = 0
+    while start < min(settle_max, len(frames) - 1) and _delta(frames[start], frames[start + 1]) > settle_delta:
+        start += 1
+    frames = list(frames[start:])
+    if len(frames) <= 2 * fade:
+        return frames
+    head, body = frames[:fade], frames[fade:]
+    for j in range(fade):
+        alpha = (j + 1) / (fade + 1)
+        body[len(body) - fade + j] = Image.blend(body[len(body) - fade + j], head[j], alpha)
+    return body
+
+
 def encode_mp4(webp_bytes, out_path, fps=16):
-    """Every frame of an animated WebP into a looping-friendly H.264 MP4."""
+    """Every frame of an animated WebP into a seamlessly looping H.264 MP4 (and a VP9 WebM)."""
     from PIL import Image
 
     image = Image.open(io.BytesIO(webp_bytes))
     width, height = (d - d % 2 for d in image.size)
     out_path.parent.mkdir(parents=True, exist_ok=True)
+    decoded = []
+    for index in range(getattr(image, "n_frames", 1)):
+        image.seek(index)
+        frame = image.convert("RGB")
+        decoded.append(frame.crop((0, 0, width, height)) if frame.size != (width, height) else frame)
+    looped = loop_frames(decoded)
     cmd = [
         "ffmpeg", "-y", "-loglevel", "error",
         "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{width}x{height}", "-r", str(fps), "-i", "-",
@@ -90,12 +129,7 @@ def encode_mp4(webp_bytes, out_path, fps=16):
         "-movflags", "+faststart", "-an", str(out_path),
     ]
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
-    frames = getattr(image, "n_frames", 1)
-    for index in range(frames):
-        image.seek(index)
-        frame = image.convert("RGB")
-        if frame.size != (width, height):
-            frame = frame.crop((0, 0, width, height))
+    for frame in looped:
         proc.stdin.write(frame.tobytes())
     proc.stdin.close()
     if proc.wait() != 0:
@@ -105,7 +139,7 @@ def encode_mp4(webp_bytes, out_path, fps=16):
            "-crf", "30", "-row-mt", "1", "-an", str(webm)]
     if subprocess.run(vp9).returncode != 0:
         raise RuntimeError(f"ffmpeg failed for {webm}")
-    return frames
+    return len(looped)
 
 
 def main(argv=None):

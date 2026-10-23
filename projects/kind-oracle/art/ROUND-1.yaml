@@ -1,0 +1,684 @@
+# Kind Oracle art round 1 (t-010 first content slice and art; docs/spec.md "The deck" and "Art plan"): the 22 major
+# arcana faces, ship-first per the spec. Each prompt draws the card's "Kind Robots idea" (the spec's art direction;
+# ids, numbers and themes are the contract). Faces are 2:3 (832x1248) full-bleed illustrations only: the frame and
+# numeral band are composed in code (spec: CSS/SVG fallback face), so nothing here asks for lettering. The spec's
+# "style bible" step is folded in: every face renders in Krea 2 (the brief's contract) and Z-Image with one shared
+# style tail, and the reviewer picks the lane that reads as one deck before the minors are queued. The card back is
+# reused (five existing backs). Content (t-005 meanings) is independent of these faces. Private; auto_submit: true.
+round: kind-oracle-1
+project_slug: kind-oracle
+designer: Kind Oracle art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (the brief's prompt contract, ART-PROMPTS.md)
+  engine: krea2
+  prompt: prose
+- key: zimage
+  label: Z-Image Turbo (painted alternate)
+  engine: zimage
+  prompt: prose
+subjects:
+- key: oracle-major-00-the-newly-woken-krea2
+  entity: major
+  lane: krea2
+  title: 0. The Newly Woken (krea2)
+  card: the-newly-woken
+  order: 0
+  size: 832x1248
+  seed: 92000
+  asset: cards/the-newly-woken.webp
+  prompt_prose: a small new robot sitting up on a workbench, its eyes lighting for the first time, a soft dawn glow,
+    a curious open posture, its first step at the edge of the bench, storybook gouache illustration with fine ink
+    linework, a softly glowing mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle
+    robot characters with rounded friendly faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44170
+- key: oracle-major-00-the-newly-woken-zimage
+  entity: major
+  lane: zimage
+  title: 0. The Newly Woken (zimage)
+  card: the-newly-woken
+  order: 0
+  size: 832x1248
+  seed: 92000
+  asset: cards/the-newly-woken.webp
+  prompt_prose: a small new robot sitting up on a workbench, its eyes lighting for the first time, a soft dawn glow,
+    a curious open posture, its first step at the edge of the bench, storybook gouache illustration with fine ink
+    linework, a softly glowing mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle
+    robot characters with rounded friendly faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44171
+- key: oracle-major-01-the-tinkerer-krea2
+  entity: major
+  lane: krea2
+  title: 1. The Tinkerer (krea2)
+  card: the-tinkerer
+  order: 1
+  size: 832x1248
+  seed: 92001
+  asset: cards/the-tinkerer.webp
+  prompt_prose: a robot at a cluttered workbench of spare parts, one hand holding a tiny screwdriver, gears, springs
+    and bolts laid out before it, a desk lamp, storybook gouache illustration with fine ink linework, a softly glowing
+    mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded
+    friendly faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44172
+- key: oracle-major-01-the-tinkerer-zimage
+  entity: major
+  lane: zimage
+  title: 1. The Tinkerer (zimage)
+  card: the-tinkerer
+  order: 1
+  size: 832x1248
+  seed: 92001
+  asset: cards/the-tinkerer.webp
+  prompt_prose: a robot at a cluttered workbench of spare parts, one hand holding a tiny screwdriver, gears, springs
+    and bolts laid out before it, a desk lamp, storybook gouache illustration with fine ink linework, a softly glowing
+    mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded
+    friendly faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44173
+- key: oracle-major-02-the-quiet-archivist-krea2
+  entity: major
+  lane: krea2
+  title: 2. The Quiet Archivist (krea2)
+  card: the-quiet-archivist
+  order: 2
+  size: 832x1248
+  seed: 92002
+  asset: cards/the-quiet-archivist.webp
+  prompt_prose: a calm robot librarian seated among tall shelves of field-guide books and specimen jars, reading
+    by candlelight, a moth on its shoulder, storybook gouache illustration with fine ink linework, a softly glowing
+    mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded
+    friendly faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44174
+- key: oracle-major-02-the-quiet-archivist-zimage
+  entity: major
+  lane: zimage
+  title: 2. The Quiet Archivist (zimage)
+  card: the-quiet-archivist
+  order: 2
+  size: 832x1248
+  seed: 92002
+  asset: cards/the-quiet-archivist.webp
+  prompt_prose: a calm robot librarian seated among tall shelves of field-guide books and specimen jars, reading
+    by candlelight, a moth on its shoulder, storybook gouache illustration with fine ink linework, a softly glowing
+    mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded
+    friendly faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44175
+- key: oracle-major-03-the-gardener-krea2
+  entity: major
+  lane: krea2
+  title: 3. The Gardener (krea2)
+  card: the-gardener
+  order: 3
+  size: 832x1248
+  seed: 92003
+  asset: cards/the-gardener.webp
+  prompt_prose: a gentle robot kneeling among moss and wildflowers, watering a seedling with a small copper can,
+    bees and butterflies around it, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44176
+- key: oracle-major-03-the-gardener-zimage
+  entity: major
+  lane: zimage
+  title: 3. The Gardener (zimage)
+  card: the-gardener
+  order: 3
+  size: 832x1248
+  seed: 92003
+  asset: cards/the-gardener.webp
+  prompt_prose: a gentle robot kneeling among moss and wildflowers, watering a seedling with a small copper can,
+    bees and butterflies around it, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44177
+- key: oracle-major-04-the-lighthouse-keeper-krea2
+  entity: major
+  lane: krea2
+  title: 4. The Lighthouse Keeper (krea2)
+  card: the-lighthouse-keeper
+  order: 4
+  size: 832x1248
+  seed: 92004
+  asset: cards/the-lighthouse-keeper.webp
+  prompt_prose: a sturdy robot standing at the top of a lighthouse holding the great lamp steady, its beam sweeping
+    over a dark sea, small boats guided home, storybook gouache illustration with fine ink linework, a softly glowing
+    mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded
+    friendly faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44178
+- key: oracle-major-04-the-lighthouse-keeper-zimage
+  entity: major
+  lane: zimage
+  title: 4. The Lighthouse Keeper (zimage)
+  card: the-lighthouse-keeper
+  order: 4
+  size: 832x1248
+  seed: 92004
+  asset: cards/the-lighthouse-keeper.webp
+  prompt_prose: a sturdy robot standing at the top of a lighthouse holding the great lamp steady, its beam sweeping
+    over a dark sea, small boats guided home, storybook gouache illustration with fine ink linework, a softly glowing
+    mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded
+    friendly faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44179
+- key: oracle-major-05-the-storyteller-krea2
+  entity: major
+  lane: krea2
+  title: 5. The Storyteller (krea2)
+  card: the-storyteller
+  order: 5
+  size: 832x1248
+  seed: 92005
+  asset: cards/the-storyteller.webp
+  prompt_prose: an old robot telling a story beside a campfire of glowing circuit embers, small robots gathered
+    around listening, sparks rising into a starry sky, storybook gouache illustration with fine ink linework, a
+    softly glowing mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters
+    with rounded friendly faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44180
+- key: oracle-major-05-the-storyteller-zimage
+  entity: major
+  lane: zimage
+  title: 5. The Storyteller (zimage)
+  card: the-storyteller
+  order: 5
+  size: 832x1248
+  seed: 92005
+  asset: cards/the-storyteller.webp
+  prompt_prose: an old robot telling a story beside a campfire of glowing circuit embers, small robots gathered
+    around listening, sparks rising into a starry sky, storybook gouache illustration with fine ink linework, a
+    softly glowing mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters
+    with rounded friendly faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44181
+- key: oracle-major-06-the-two-bots-krea2
+  entity: major
+  lane: krea2
+  title: 6. The Two Bots (krea2)
+  card: the-two-bots
+  order: 6
+  size: 832x1248
+  seed: 92006
+  asset: cards/the-two-bots.webp
+  prompt_prose: two friendly robots facing each other and sharing one glowing power cell held between them, a forked
+    path behind them, storybook gouache illustration with fine ink linework, a softly glowing mystical mood, palette
+    of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly faces, a
+    full vertical composition with the subject centred
+  jobs:
+    krea2: 44182
+- key: oracle-major-06-the-two-bots-zimage
+  entity: major
+  lane: zimage
+  title: 6. The Two Bots (zimage)
+  card: the-two-bots
+  order: 6
+  size: 832x1248
+  seed: 92006
+  asset: cards/the-two-bots.webp
+  prompt_prose: two friendly robots facing each other and sharing one glowing power cell held between them, a forked
+    path behind them, storybook gouache illustration with fine ink linework, a softly glowing mystical mood, palette
+    of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly faces, a
+    full vertical composition with the subject centred
+  jobs:
+    zimage: 44183
+- key: oracle-major-07-the-wayfarer-krea2
+  entity: major
+  lane: krea2
+  title: 7. The Wayfarer (krea2)
+  card: the-wayfarer
+  order: 7
+  size: 832x1248
+  seed: 92007
+  asset: cards/the-wayfarer.webp
+  prompt_prose: a determined robot riding a rolling cart across rippled sand dunes, a banner of cloth streaming,
+    a bright horizon ahead, storybook gouache illustration with fine ink linework, a softly glowing mystical mood,
+    palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly faces,
+    a full vertical composition with the subject centred
+  jobs:
+    krea2: 44184
+- key: oracle-major-07-the-wayfarer-zimage
+  entity: major
+  lane: zimage
+  title: 7. The Wayfarer (zimage)
+  card: the-wayfarer
+  order: 7
+  size: 832x1248
+  seed: 92007
+  asset: cards/the-wayfarer.webp
+  prompt_prose: a determined robot riding a rolling cart across rippled sand dunes, a banner of cloth streaming,
+    a bright horizon ahead, storybook gouache illustration with fine ink linework, a softly glowing mystical mood,
+    palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly faces,
+    a full vertical composition with the subject centred
+  jobs:
+    zimage: 44185
+- key: oracle-major-08-the-gentle-giant-krea2
+  entity: major
+  lane: krea2
+  title: 8. The Gentle Giant (krea2)
+  card: the-gentle-giant
+  order: 8
+  size: 832x1248
+  seed: 92008
+  asset: cards/the-gentle-giant.webp
+  prompt_prose: a huge mossy robot kneeling and cupping a tiny songbird in its enormous open hands, wildflowers
+    growing from its shoulders, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44186
+- key: oracle-major-08-the-gentle-giant-zimage
+  entity: major
+  lane: zimage
+  title: 8. The Gentle Giant (zimage)
+  card: the-gentle-giant
+  order: 8
+  size: 832x1248
+  seed: 92008
+  asset: cards/the-gentle-giant.webp
+  prompt_prose: a huge mossy robot kneeling and cupping a tiny songbird in its enormous open hands, wildflowers
+    growing from its shoulders, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44187
+- key: oracle-major-09-the-lantern-bearer-krea2
+  entity: major
+  lane: krea2
+  title: 9. The Lantern Bearer (krea2)
+  card: the-lantern-bearer
+  order: 9
+  size: 832x1248
+  seed: 92009
+  asset: cards/the-lantern-bearer.webp
+  prompt_prose: a lone cloaked robot holding up a small lantern on a mountain path in thick fog, the light making
+    a warm circle, storybook gouache illustration with fine ink linework, a softly glowing mystical mood, palette
+    of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly faces, a
+    full vertical composition with the subject centred
+  jobs:
+    krea2: 44188
+- key: oracle-major-09-the-lantern-bearer-zimage
+  entity: major
+  lane: zimage
+  title: 9. The Lantern Bearer (zimage)
+  card: the-lantern-bearer
+  order: 9
+  size: 832x1248
+  seed: 92009
+  asset: cards/the-lantern-bearer.webp
+  prompt_prose: a lone cloaked robot holding up a small lantern on a mountain path in thick fog, the light making
+    a warm circle, storybook gouache illustration with fine ink linework, a softly glowing mystical mood, palette
+    of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly faces, a
+    full vertical composition with the subject centred
+  jobs:
+    zimage: 44189
+- key: oracle-major-10-the-wheel-krea2
+  entity: major
+  lane: krea2
+  title: 10. The Great Cog Wheel (krea2)
+  card: the-wheel
+  order: 10
+  size: 832x1248
+  seed: 92010
+  asset: cards/the-wheel.webp
+  prompt_prose: a great wheel of interlocking brass gears turning in the sky, each section showing a season, spring
+    blossoms, summer sun, autumn leaves and winter snow, storybook gouache illustration with fine ink linework,
+    a softly glowing mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters
+    with rounded friendly faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44190
+- key: oracle-major-10-the-wheel-zimage
+  entity: major
+  lane: zimage
+  title: 10. The Great Cog Wheel (zimage)
+  card: the-wheel
+  order: 10
+  size: 832x1248
+  seed: 92010
+  asset: cards/the-wheel.webp
+  prompt_prose: a great wheel of interlocking brass gears turning in the sky, each section showing a season, spring
+    blossoms, summer sun, autumn leaves and winter snow, storybook gouache illustration with fine ink linework,
+    a softly glowing mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters
+    with rounded friendly faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44191
+- key: oracle-major-11-the-fair-scale-krea2
+  entity: major
+  lane: krea2
+  title: 11. The Fair Scale (krea2)
+  card: the-fair-scale
+  order: 11
+  size: 832x1248
+  seed: 92011
+  asset: cards/the-fair-scale.webp
+  prompt_prose: a tall robot holding a balancing arm with a single white feather on one pan and a small brass heart
+    on the other, perfectly level, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44192
+- key: oracle-major-11-the-fair-scale-zimage
+  entity: major
+  lane: zimage
+  title: 11. The Fair Scale (zimage)
+  card: the-fair-scale
+  order: 11
+  size: 832x1248
+  seed: 92011
+  asset: cards/the-fair-scale.webp
+  prompt_prose: a tall robot holding a balancing arm with a single white feather on one pan and a small brass heart
+    on the other, perfectly level, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44193
+- key: oracle-major-12-the-upside-down-bot-krea2
+  entity: major
+  lane: krea2
+  title: 12. The Upside-Down Bot (krea2)
+  card: the-upside-down-bot
+  order: 12
+  size: 832x1248
+  seed: 92012
+  asset: cards/the-upside-down-bot.webp
+  prompt_prose: a smiling robot hanging upside down by one leg from a wooden rafter, arms relaxed, a halo of soft
+    light around its head, storybook gouache illustration with fine ink linework, a softly glowing mystical mood,
+    palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly faces,
+    a full vertical composition with the subject centred
+  jobs:
+    krea2: 44194
+- key: oracle-major-12-the-upside-down-bot-zimage
+  entity: major
+  lane: zimage
+  title: 12. The Upside-Down Bot (zimage)
+  card: the-upside-down-bot
+  order: 12
+  size: 832x1248
+  seed: 92012
+  asset: cards/the-upside-down-bot.webp
+  prompt_prose: a smiling robot hanging upside down by one leg from a wooden rafter, arms relaxed, a halo of soft
+    light around its head, storybook gouache illustration with fine ink linework, a softly glowing mystical mood,
+    palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly faces,
+    a full vertical composition with the subject centred
+  jobs:
+    zimage: 44195
+- key: oracle-major-13-the-shedding-krea2
+  entity: major
+  lane: krea2
+  title: 13. The Shedding (krea2)
+  card: the-shedding
+  order: 13
+  size: 832x1248
+  seed: 92013
+  asset: cards/the-shedding.webp
+  prompt_prose: a robot standing in a quiet field as old rusted plating falls away like autumn leaves, revealing
+    bright new plating underneath, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44196
+- key: oracle-major-13-the-shedding-zimage
+  entity: major
+  lane: zimage
+  title: 13. The Shedding (zimage)
+  card: the-shedding
+  order: 13
+  size: 832x1248
+  seed: 92013
+  asset: cards/the-shedding.webp
+  prompt_prose: a robot standing in a quiet field as old rusted plating falls away like autumn leaves, revealing
+    bright new plating underneath, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44197
+- key: oracle-major-14-the-mender-krea2
+  entity: major
+  lane: krea2
+  title: 14. The Mender (krea2)
+  card: the-mender
+  order: 14
+  size: 832x1248
+  seed: 92014
+  asset: cards/the-mender.webp
+  prompt_prose: a robot carefully stitching two halves of a torn quilt together with a glowing thread, one foot
+    on land and one in a stream, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44198
+- key: oracle-major-14-the-mender-zimage
+  entity: major
+  lane: zimage
+  title: 14. The Mender (zimage)
+  card: the-mender
+  order: 14
+  size: 832x1248
+  seed: 92014
+  asset: cards/the-mender.webp
+  prompt_prose: a robot carefully stitching two halves of a torn quilt together with a glowing thread, one foot
+    on land and one in a stream, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44199
+- key: oracle-major-15-the-tangle-krea2
+  entity: major
+  lane: krea2
+  title: 15. The Tangle (krea2)
+  card: the-tangle
+  order: 15
+  size: 832x1248
+  seed: 92015
+  asset: cards/the-tangle.webp
+  prompt_prose: a robot snarled in its own long cables, loops wrapped around its arms and legs, a pair of scissors
+    lying within reach on the ground, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44200
+- key: oracle-major-15-the-tangle-zimage
+  entity: major
+  lane: zimage
+  title: 15. The Tangle (zimage)
+  card: the-tangle
+  order: 15
+  size: 832x1248
+  seed: 92015
+  asset: cards/the-tangle.webp
+  prompt_prose: a robot snarled in its own long cables, loops wrapped around its arms and legs, a pair of scissors
+    lying within reach on the ground, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44201
+- key: oracle-major-16-the-short-circuit-krea2
+  entity: major
+  lane: krea2
+  title: 16. The Short Circuit (krea2)
+  card: the-short-circuit
+  order: 16
+  size: 832x1248
+  seed: 92016
+  asset: cards/the-short-circuit.webp
+  prompt_prose: a tall stone tower bursting with a fountain of bright sparks at its top, bolts of electricity crackling,
+    small robots leaping clear, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44202
+- key: oracle-major-16-the-short-circuit-zimage
+  entity: major
+  lane: zimage
+  title: 16. The Short Circuit (zimage)
+  card: the-short-circuit
+  order: 16
+  size: 832x1248
+  seed: 92016
+  asset: cards/the-short-circuit.webp
+  prompt_prose: a tall stone tower bursting with a fountain of bright sparks at its top, bolts of electricity crackling,
+    small robots leaping clear, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44203
+- key: oracle-major-17-the-night-sky-bot-krea2
+  entity: major
+  lane: krea2
+  title: 17. The Night-Sky Bot (krea2)
+  card: the-night-sky-bot
+  order: 17
+  size: 832x1248
+  seed: 92017
+  asset: cards/the-night-sky-bot.webp
+  prompt_prose: a robot sitting on a hill at night with its chest hatch open, a warm light inside, gazing up at
+    a sky full of stars, one bright star above, storybook gouache illustration with fine ink linework, a softly
+    glowing mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters
+    with rounded friendly faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44204
+- key: oracle-major-17-the-night-sky-bot-zimage
+  entity: major
+  lane: zimage
+  title: 17. The Night-Sky Bot (zimage)
+  card: the-night-sky-bot
+  order: 17
+  size: 832x1248
+  seed: 92017
+  asset: cards/the-night-sky-bot.webp
+  prompt_prose: a robot sitting on a hill at night with its chest hatch open, a warm light inside, gazing up at
+    a sky full of stars, one bright star above, storybook gouache illustration with fine ink linework, a softly
+    glowing mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters
+    with rounded friendly faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44205
+- key: oracle-major-18-the-moon-pool-krea2
+  entity: major
+  lane: krea2
+  title: 18. The Moon Pool (krea2)
+  card: the-moon-pool
+  order: 18
+  size: 832x1248
+  seed: 92018
+  asset: cards/the-moon-pool.webp
+  prompt_prose: a robot kneeling at a still pool under a full moon, its reflection in the water showing a different
+    face, two towers on either side, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44206
+- key: oracle-major-18-the-moon-pool-zimage
+  entity: major
+  lane: zimage
+  title: 18. The Moon Pool (zimage)
+  card: the-moon-pool
+  order: 18
+  size: 832x1248
+  seed: 92018
+  asset: cards/the-moon-pool.webp
+  prompt_prose: a robot kneeling at a still pool under a full moon, its reflection in the water showing a different
+    face, two towers on either side, storybook gouache illustration with fine ink linework, a softly glowing mystical
+    mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly
+    faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44207
+- key: oracle-major-19-the-sunrise-engine-krea2
+  entity: major
+  lane: krea2
+  title: 19. The Sunrise Engine (krea2)
+  card: the-sunrise-engine
+  order: 19
+  size: 832x1248
+  seed: 92019
+  asset: cards/the-sunrise-engine.webp
+  prompt_prose: a joyful robot basking with its solar panels spread wide like wings in a field of sunflowers under
+    a huge rising sun, storybook gouache illustration with fine ink linework, a softly glowing mystical mood, palette
+    of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly faces, a
+    full vertical composition with the subject centred
+  jobs:
+    krea2: 44208
+- key: oracle-major-19-the-sunrise-engine-zimage
+  entity: major
+  lane: zimage
+  title: 19. The Sunrise Engine (zimage)
+  card: the-sunrise-engine
+  order: 19
+  size: 832x1248
+  seed: 92019
+  asset: cards/the-sunrise-engine.webp
+  prompt_prose: a joyful robot basking with its solar panels spread wide like wings in a field of sunflowers under
+    a huge rising sun, storybook gouache illustration with fine ink linework, a softly glowing mystical mood, palette
+    of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded friendly faces, a
+    full vertical composition with the subject centred
+  jobs:
+    zimage: 44209
+- key: oracle-major-20-the-reboot-krea2
+  entity: major
+  lane: krea2
+  title: 20. The Reboot (krea2)
+  card: the-reboot
+  order: 20
+  size: 832x1248
+  seed: 92020
+  asset: cards/the-reboot.webp
+  prompt_prose: many robots waking together, sitting up from their resting places with eyes lighting up, a great
+    bell ringing in the sky above them, storybook gouache illustration with fine ink linework, a softly glowing
+    mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded
+    friendly faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44210
+- key: oracle-major-20-the-reboot-zimage
+  entity: major
+  lane: zimage
+  title: 20. The Reboot (zimage)
+  card: the-reboot
+  order: 20
+  size: 832x1248
+  seed: 92020
+  asset: cards/the-reboot.webp
+  prompt_prose: many robots waking together, sitting up from their resting places with eyes lighting up, a great
+    bell ringing in the sky above them, storybook gouache illustration with fine ink linework, a softly glowing
+    mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters with rounded
+    friendly faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44211
+- key: oracle-major-21-the-whole-world-krea2
+  entity: major
+  lane: krea2
+  title: 21. The Whole World (krea2)
+  card: the-whole-world
+  order: 21
+  size: 832x1248
+  seed: 92021
+  asset: cards/the-whole-world.webp
+  prompt_prose: a dancing robot at the centre of a great wreath of leaves and flowers, the four suit symbols of
+    a gear, a spark, a water drop and a feather at the corners, storybook gouache illustration with fine ink linework,
+    a softly glowing mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters
+    with rounded friendly faces, a full vertical composition with the subject centred
+  jobs:
+    krea2: 44212
+- key: oracle-major-21-the-whole-world-zimage
+  entity: major
+  lane: zimage
+  title: 21. The Whole World (zimage)
+  card: the-whole-world
+  order: 21
+  size: 832x1248
+  seed: 92021
+  asset: cards/the-whole-world.webp
+  prompt_prose: a dancing robot at the centre of a great wreath of leaves and flowers, the four suit symbols of
+    a gear, a spark, a water drop and a feather at the corners, storybook gouache illustration with fine ink linework,
+    a softly glowing mystical mood, palette of deep teal, cream, burnished copper and dusk rose, gentle robot characters
+    with rounded friendly faces, a full vertical composition with the subject centred
+  jobs:
+    zimage: 44213

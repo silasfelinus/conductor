@@ -1,0 +1,523 @@
+# Rainbow Space Princess Generation 2 art, round 2 (t-011 / t-028; ROUTE-MAP.md section 7; kr-arcade GEN2-STANDARD.md
+# sections 5 and 6.4): separate parallax planes for the four alternate-route stages. GEN2-ROUND-1 kept one flattened
+# Krea 2 backdrop per alt (X1 Kelp Nebula 251319, X3 Sunken Lighthouse 251320, X2 Coral Comet 251321, X4 Mirror Shoal
+# 251322), and ROUTE-MAP.md says an alt does not count as finished until it has sky / far / mid / near plates rendered
+# separately, never one picture cut apart. Four planes per alt (the "at least four parallax planes" bar), two routes:
+#   krea2   - txt2img in the house scenery lane (review 2026-10-22: Krea 2 is the Rainbow lane for scenery).
+#   kontext - each plane lifted out of that alt's kept backdrop (the ART-ROUND-14 foreground-strip recipe), so the
+#             layers share the keeper's shapes and colours.
+# Sky plates are full and opaque. Far, mid and near plates sit on flat solid magenta for keying (the round-14
+# convention: all 16 S01-S08 strips keyed cleanly on magenta). Pilots and craft stay in their own Kontext/house lanes;
+# this round is scenery only. Test tiling and drift speeds in the real cabinet at 390/768/1440 before wiring.
+# auto_submit: true. Private.
+round: rainbow-gen2-2
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (house scenery lane)
+  engine: krea2
+  prompt: prose
+- key: kontext
+  label: Flux Kontext dev (fp8), planes lifted from the GEN2-ROUND-1 keepers
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: rb2-x1-kelp-nebula-sky-krea2
+  lane: krea2
+  title: 'X1 Kelp Nebula Bypass: sky plane (opaque, slowest), Krea 2'
+  entity: stage-plane
+  stage: X1
+  plane: sky
+  size: 1344x768
+  seed: 82301
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter sky layer for a pastel space ocean stage: a deep violet nebula current
+    swirling across a starfield, soft streams of glowing particles drifting in one direction, one seamless open
+    band of sky and stars from edge to edge, unpeopled, flat-colour western cartoon art style with clean bold outlines,
+    like a modern animated series, pastel rainbow space ocean, pink, lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44017
+- key: rb2-x1-kelp-nebula-sky-kontext
+  lane: kontext
+  title: 'X1 Kelp Nebula Bypass: sky plane (opaque, slowest), Kontext from 251319'
+  entity: stage-plane
+  stage: X1
+  plane: sky
+  size: 1344x768
+  seed: 82301
+  source_image_id: 251319
+  prompt_prose: Remove every object from this scene, the kelp, pods and rocks, and paint the open sky, nebula and
+    stars that lie behind them, as one seamless wide sky layer from edge to edge. Keep the same colours, light and
+    flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 44018
+- key: rb2-x1-kelp-nebula-far-krea2
+  lane: krea2
+  title: 'X1 Kelp Nebula Bypass: far plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X1
+  plane: far
+  size: 1344x768
+  seed: 82302
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter far parallax layer: a distant forest of towering space kelp fading
+    into violet haze, a low band of soft distant shapes across the lower half from edge to edge, set against a flat
+    solid magenta background filling the whole upper half, unpeopled, flat-colour western cartoon art style with
+    clean bold outlines, like a modern animated series, pastel rainbow space ocean, pink, lavender, aqua and gold,
+    luminous'
+  jobs:
+    krea2: 44019
+- key: rb2-x1-kelp-nebula-far-kontext
+  lane: kontext
+  title: 'X1 Kelp Nebula Bypass: far plane (keyed on magenta), Kontext from 251319'
+  entity: stage-plane
+  stage: X1
+  plane: far
+  size: 1344x768
+  seed: 82302
+  source_image_id: 251319
+  prompt_prose: Keep only the towering kelp forest in the haze across the lower half of this scene, and replace
+    everything else, the sky, the nearer shapes and the foreground, with a flat solid magenta background, as a wide
+    far parallax layer. Keep the same colours, light and flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 44020
+- key: rb2-x1-kelp-nebula-mid-krea2
+  lane: krea2
+  title: 'X1 Kelp Nebula Bypass: mid plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X1
+  plane: mid
+  size: 1344x768
+  seed: 82303
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter middle parallax layer: tall swaying fronds of glowing space kelp hung
+    with round bioluminescent pods, spaced out from edge to edge along the bottom half with open gaps between them,
+    set against a flat solid magenta background, unpeopled, flat-colour western cartoon art style with clean bold
+    outlines, like a modern animated series, pastel rainbow space ocean, pink, lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44021
+- key: rb2-x1-kelp-nebula-mid-kontext
+  lane: kontext
+  title: 'X1 Kelp Nebula Bypass: mid plane (keyed on magenta), Kontext from 251319'
+  entity: stage-plane
+  stage: X1
+  plane: mid
+  size: 1344x768
+  seed: 82303
+  source_image_id: 251319
+  prompt_prose: Keep only the swaying kelp fronds and glowing pods in the middle distance of this scene, and replace
+    everything else, the sky, the distant shapes and the foreground, with a flat solid magenta background, as a
+    wide middle parallax layer. Keep the same colours, light and flat-colour western cartoon art style with clean
+    bold outlines.
+  jobs:
+    kontext: 44022
+- key: rb2-x1-kelp-nebula-near-krea2
+  lane: krea2
+  title: 'X1 Kelp Nebula Bypass: near plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X1
+  plane: near
+  size: 1344x768
+  seed: 82304
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter foreground strip: kelp holdfasts, rounded rocks and clusters of glowing
+    pods running along the bottom edge from edge to edge, about a quarter of the height tall, with a flat solid
+    magenta background above them, unpeopled, flat-colour western cartoon art style with clean bold outlines, like
+    a modern animated series, pastel rainbow space ocean, pink, lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44023
+- key: rb2-x1-kelp-nebula-near-kontext
+  lane: kontext
+  title: 'X1 Kelp Nebula Bypass: near plane (keyed on magenta), Kontext from 251319'
+  entity: stage-plane
+  stage: X1
+  plane: near
+  size: 1344x768
+  seed: 82304
+  source_image_id: 251319
+  prompt_prose: Keep only the kelp holdfasts, rocks and pods along the bottom edge of this scene, about a quarter
+    of its height, and replace everything above them with a flat solid magenta background, as a wide side-scrolling
+    foreground strip. Keep the same colours, light and flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 44024
+- key: rb2-x2-comet-trail-sky-krea2
+  lane: krea2
+  title: 'X2 Coral Comet Trail: sky plane (opaque, slowest), Krea 2'
+  entity: stage-plane
+  stage: X2
+  plane: sky
+  size: 1344x768
+  seed: 82305
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter sky layer for a pastel space ocean stage: the long glowing tail of
+    a comet streaking across a pastel starfield, sparkling dust and fast motion streaks, one seamless open band
+    of sky and stars from edge to edge, unpeopled, flat-colour western cartoon art style with clean bold outlines,
+    like a modern animated series, pastel rainbow space ocean, pink, lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44025
+- key: rb2-x2-comet-trail-sky-kontext
+  lane: kontext
+  title: 'X2 Coral Comet Trail: sky plane (opaque, slowest), Kontext from 251321'
+  entity: stage-plane
+  stage: X2
+  plane: sky
+  size: 1344x768
+  seed: 82305
+  source_image_id: 251321
+  prompt_prose: Remove every object from this scene, the coral asteroids and dust clouds, and paint the open sky,
+    nebula and stars that lie behind them, as one seamless wide sky layer from edge to edge. Keep the same colours,
+    light and flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 44026
+- key: rb2-x2-comet-trail-far-krea2
+  lane: krea2
+  title: 'X2 Coral Comet Trail: far plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X2
+  plane: far
+  size: 1344x768
+  seed: 82306
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter far parallax layer: a faint band of tiny distant coral asteroids glittering
+    inside the comet tail, a low band of soft distant shapes across the lower half from edge to edge, set against
+    a flat solid magenta background filling the whole upper half, unpeopled, flat-colour western cartoon art style
+    with clean bold outlines, like a modern animated series, pastel rainbow space ocean, pink, lavender, aqua and
+    gold, luminous'
+  jobs:
+    krea2: 44027
+- key: rb2-x2-comet-trail-far-kontext
+  lane: kontext
+  title: 'X2 Coral Comet Trail: far plane (keyed on magenta), Kontext from 251321'
+  entity: stage-plane
+  stage: X2
+  plane: far
+  size: 1344x768
+  seed: 82306
+  source_image_id: 251321
+  prompt_prose: Keep only the distant coral asteroids in the comet tail across the lower half of this scene, and
+    replace everything else, the sky, the nearer shapes and the foreground, with a flat solid magenta background,
+    as a wide far parallax layer. Keep the same colours, light and flat-colour western cartoon art style with clean
+    bold outlines.
+  jobs:
+    kontext: 44028
+- key: rb2-x2-comet-trail-mid-krea2
+  lane: krea2
+  title: 'X2 Coral Comet Trail: mid plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X2
+  plane: mid
+  size: 1344x768
+  seed: 82307
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter middle parallax layer: pink coral asteroids of many sizes tumbling
+    past with short motion streaks, spaced out from edge to edge along the bottom half with open gaps between them,
+    set against a flat solid magenta background, unpeopled, flat-colour western cartoon art style with clean bold
+    outlines, like a modern animated series, pastel rainbow space ocean, pink, lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44029
+- key: rb2-x2-comet-trail-mid-kontext
+  lane: kontext
+  title: 'X2 Coral Comet Trail: mid plane (keyed on magenta), Kontext from 251321'
+  entity: stage-plane
+  stage: X2
+  plane: mid
+  size: 1344x768
+  seed: 82307
+  source_image_id: 251321
+  prompt_prose: Keep only the mid-sized pink coral asteroids in the middle distance of this scene, and replace everything
+    else, the sky, the distant shapes and the foreground, with a flat solid magenta background, as a wide middle
+    parallax layer. Keep the same colours, light and flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 44030
+- key: rb2-x2-comet-trail-near-krea2
+  lane: krea2
+  title: 'X2 Coral Comet Trail: near plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X2
+  plane: near
+  size: 1344x768
+  seed: 82308
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter foreground strip: jagged pink coral asteroid fragments and branching
+    coral shards running along the bottom edge from edge to edge, about a quarter of the height tall, with a flat
+    solid magenta background above them, unpeopled, flat-colour western cartoon art style with clean bold outlines,
+    like a modern animated series, pastel rainbow space ocean, pink, lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44031
+- key: rb2-x2-comet-trail-near-kontext
+  lane: kontext
+  title: 'X2 Coral Comet Trail: near plane (keyed on magenta), Kontext from 251321'
+  entity: stage-plane
+  stage: X2
+  plane: near
+  size: 1344x768
+  seed: 82308
+  source_image_id: 251321
+  prompt_prose: Keep only the largest coral asteroid fragments along the bottom edge of this scene, about a quarter
+    of its height, and replace everything above them with a flat solid magenta background, as a wide side-scrolling
+    foreground strip. Keep the same colours, light and flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 44032
+- key: rb2-x3-sunken-lighthouse-sky-krea2
+  lane: krea2
+  title: 'X3 Sunken Lighthouse Ring: sky plane (opaque, slowest), Krea 2'
+  entity: stage-plane
+  stage: X3
+  plane: sky
+  size: 1344x768
+  seed: 82309
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter sky layer for a pastel space ocean stage: a dark moon hanging in indigo
+    space water, broad sweeping beams of rainbow light fanning across the stars, one seamless open band of sky and
+    stars from edge to edge, unpeopled, flat-colour western cartoon art style with clean bold outlines, like a modern
+    animated series, pastel rainbow space ocean, pink, lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44033
+- key: rb2-x3-sunken-lighthouse-sky-kontext
+  lane: kontext
+  title: 'X3 Sunken Lighthouse Ring: sky plane (opaque, slowest), Kontext from 251320'
+  entity: stage-plane
+  stage: X3
+  plane: sky
+  size: 1344x768
+  seed: 82309
+  source_image_id: 251320
+  prompt_prose: Remove every object from this scene, the lighthouses, rocks and light beams, and paint the open
+    sky, nebula and stars that lie behind them, as one seamless wide sky layer from edge to edge. Keep the same
+    colours, light and flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 44034
+- key: rb2-x3-sunken-lighthouse-far-krea2
+  lane: krea2
+  title: 'X3 Sunken Lighthouse Ring: far plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X3
+  plane: far
+  size: 1344x768
+  seed: 82310
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter far parallax layer: a distant ring of small half-drowned crystal lighthouses
+    circling the dark moon, a low band of soft distant shapes across the lower half from edge to edge, set against
+    a flat solid magenta background filling the whole upper half, unpeopled, flat-colour western cartoon art style
+    with clean bold outlines, like a modern animated series, pastel rainbow space ocean, pink, lavender, aqua and
+    gold, luminous'
+  jobs:
+    krea2: 44035
+- key: rb2-x3-sunken-lighthouse-far-kontext
+  lane: kontext
+  title: 'X3 Sunken Lighthouse Ring: far plane (keyed on magenta), Kontext from 251320'
+  entity: stage-plane
+  stage: X3
+  plane: far
+  size: 1344x768
+  seed: 82310
+  source_image_id: 251320
+  prompt_prose: Keep only the distant ring of small lighthouses around the moon across the lower half of this scene,
+    and replace everything else, the sky, the nearer shapes and the foreground, with a flat solid magenta background,
+    as a wide far parallax layer. Keep the same colours, light and flat-colour western cartoon art style with clean
+    bold outlines.
+  jobs:
+    kontext: 44036
+- key: rb2-x3-sunken-lighthouse-mid-krea2
+  lane: krea2
+  title: 'X3 Sunken Lighthouse Ring: mid plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X3
+  plane: mid
+  size: 1344x768
+  seed: 82311
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter middle parallax layer: six tall half-sunken crystal lighthouses with
+    dark unlit lamp rooms, tilted at different angles, spaced out from edge to edge along the bottom half with open
+    gaps between them, set against a flat solid magenta background, unpeopled, flat-colour western cartoon art style
+    with clean bold outlines, like a modern animated series, pastel rainbow space ocean, pink, lavender, aqua and
+    gold, luminous'
+  jobs:
+    krea2: 44037
+- key: rb2-x3-sunken-lighthouse-mid-kontext
+  lane: kontext
+  title: 'X3 Sunken Lighthouse Ring: mid plane (keyed on magenta), Kontext from 251320'
+  entity: stage-plane
+  stage: X3
+  plane: mid
+  size: 1344x768
+  seed: 82311
+  source_image_id: 251320
+  prompt_prose: Keep only the tall half-sunken crystal lighthouses in the middle distance of this scene, and replace
+    everything else, the sky, the distant shapes and the foreground, with a flat solid magenta background, as a
+    wide middle parallax layer. Keep the same colours, light and flat-colour western cartoon art style with clean
+    bold outlines.
+  jobs:
+    kontext: 44038
+- key: rb2-x3-sunken-lighthouse-near-krea2
+  lane: krea2
+  title: 'X3 Sunken Lighthouse Ring: near plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X3
+  plane: near
+  size: 1344x768
+  seed: 82312
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter foreground strip: broken crystal rocks and fallen lighthouse stones
+    running along the bottom edge from edge to edge, about a quarter of the height tall, with a flat solid magenta
+    background above them, unpeopled, flat-colour western cartoon art style with clean bold outlines, like a modern
+    animated series, pastel rainbow space ocean, pink, lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44039
+- key: rb2-x3-sunken-lighthouse-near-kontext
+  lane: kontext
+  title: 'X3 Sunken Lighthouse Ring: near plane (keyed on magenta), Kontext from 251320'
+  entity: stage-plane
+  stage: X3
+  plane: near
+  size: 1344x768
+  seed: 82312
+  source_image_id: 251320
+  prompt_prose: Keep only the broken crystal rocks and lighthouse stones along the bottom edge of this scene, about
+    a quarter of its height, and replace everything above them with a flat solid magenta background, as a wide side-scrolling
+    foreground strip. Keep the same colours, light and flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 44040
+- key: rb2-x4-mirror-shoal-sky-krea2
+  lane: krea2
+  title: 'X4 Mirror Shoal: sky plane (opaque, slowest), Krea 2'
+  entity: stage-plane
+  stage: X4
+  plane: sky
+  size: 1344x768
+  seed: 82313
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter sky layer for a pastel space ocean stage: a fractured rainbow sky split
+    into shining glassy shards above a calm horizon, one seamless open band of sky and stars from edge to edge,
+    unpeopled, flat-colour western cartoon art style with clean bold outlines, like a modern animated series, pastel
+    rainbow space ocean, pink, lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44041
+- key: rb2-x4-mirror-shoal-sky-kontext
+  lane: kontext
+  title: 'X4 Mirror Shoal: sky plane (opaque, slowest), Kontext from 251322'
+  entity: stage-plane
+  stage: X4
+  plane: sky
+  size: 1344x768
+  seed: 82313
+  source_image_id: 251322
+  prompt_prose: Remove every object from this scene, the glass reefs, water and reflections, and paint the open
+    sky, nebula and stars that lie behind them, as one seamless wide sky layer from edge to edge. Keep the same
+    colours, light and flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 44042
+- key: rb2-x4-mirror-shoal-far-krea2
+  lane: krea2
+  title: 'X4 Mirror Shoal: far plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X4
+  plane: far
+  size: 1344x768
+  seed: 82314
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter far parallax layer: a low distant line of glass reefs on a mirror-flat
+    waterline, their reflections hanging upside down beneath them, a low band of soft distant shapes across the
+    lower half from edge to edge, set against a flat solid magenta background filling the whole upper half, unpeopled,
+    flat-colour western cartoon art style with clean bold outlines, like a modern animated series, pastel rainbow
+    space ocean, pink, lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44043
+- key: rb2-x4-mirror-shoal-far-kontext
+  lane: kontext
+  title: 'X4 Mirror Shoal: far plane (keyed on magenta), Kontext from 251322'
+  entity: stage-plane
+  stage: X4
+  plane: far
+  size: 1344x768
+  seed: 82314
+  source_image_id: 251322
+  prompt_prose: Keep only the distant glass reefs on the waterline with their reflections across the lower half
+    of this scene, and replace everything else, the sky, the nearer shapes and the foreground, with a flat solid
+    magenta background, as a wide far parallax layer. Keep the same colours, light and flat-colour western cartoon
+    art style with clean bold outlines.
+  jobs:
+    kontext: 44044
+- key: rb2-x4-mirror-shoal-mid-krea2
+  lane: krea2
+  title: 'X4 Mirror Shoal: mid plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X4
+  plane: mid
+  size: 1344x768
+  seed: 82315
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter middle parallax layer: glass reefs shaped like leaping fish standing
+    in shallow mirrored water, each with a soft reflection below, spaced out from edge to edge along the bottom
+    half with open gaps between them, set against a flat solid magenta background, unpeopled, flat-colour western
+    cartoon art style with clean bold outlines, like a modern animated series, pastel rainbow space ocean, pink,
+    lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44045
+- key: rb2-x4-mirror-shoal-mid-kontext
+  lane: kontext
+  title: 'X4 Mirror Shoal: mid plane (keyed on magenta), Kontext from 251322'
+  entity: stage-plane
+  stage: X4
+  plane: mid
+  size: 1344x768
+  seed: 82315
+  source_image_id: 251322
+  prompt_prose: Keep only the fish-shaped glass reefs with their reflections in the middle distance of this scene,
+    and replace everything else, the sky, the distant shapes and the foreground, with a flat solid magenta background,
+    as a wide middle parallax layer. Keep the same colours, light and flat-colour western cartoon art style with
+    clean bold outlines.
+  jobs:
+    kontext: 44046
+- key: rb2-x4-mirror-shoal-near-krea2
+  lane: krea2
+  title: 'X4 Mirror Shoal: near plane (keyed on magenta), Krea 2'
+  entity: stage-plane
+  stage: X4
+  plane: near
+  size: 1344x768
+  seed: 82316
+  negative: text, letters, words, numbers, logo, watermark, signature, game HUD, interface, photorealistic, photograph,
+    3d render, blurry, low quality, collage, grid, multiple panels, border, characters, people, spaceships
+  prompt_prose: 'Wide side-scrolling shooter foreground strip: clear glass reef shards and ripples of mirrored water
+    running along the bottom edge from edge to edge, about a quarter of the height tall, with a flat solid magenta
+    background above them, unpeopled, flat-colour western cartoon art style with clean bold outlines, like a modern
+    animated series, pastel rainbow space ocean, pink, lavender, aqua and gold, luminous'
+  jobs:
+    krea2: 44047
+- key: rb2-x4-mirror-shoal-near-kontext
+  lane: kontext
+  title: 'X4 Mirror Shoal: near plane (keyed on magenta), Kontext from 251322'
+  entity: stage-plane
+  stage: X4
+  plane: near
+  size: 1344x768
+  seed: 82316
+  source_image_id: 251322
+  prompt_prose: Keep only the glass reef shards and ripples along the bottom edge of this scene, about a quarter
+    of its height, and replace everything above them with a flat solid magenta background, as a wide side-scrolling
+    foreground strip. Keep the same colours, light and flat-colour western cartoon art style with clean bold outlines.
+  jobs:
+    kontext: 44048

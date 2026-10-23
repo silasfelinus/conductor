@@ -1,0 +1,295 @@
+# Pocket Pet Robot art round 1 (t-010 first content slice and art; docs/spec.md section 7 sprite and scene manifest).
+# The spec fixes the art: 3 forms x 8 moods = 24 sprites (512x512, transparent, one consistent design per form) and
+# 6 room backdrops (1600x900: kitchen, bedroom, playroom, garden, workshop, rooftop). No character design exists yet, so
+# this round queues the parts that unblock everything else and nothing that depends on a pick:
+#   - FORM KEYS: sprout, buddy and champion as one growing robot (same palette, outline weight and chest light), on
+#     flat white for matting, Krea 2 and Z-Image. The 8 moods per form are a Kontext round from the picked keys, so
+#     the design holds across moods (the croc/Pip key-pose recipe).
+#   - ROOMS: all six day backdrops, unpeopled, at 16:9 (1344x768, upscale on export to 1600x900). Night and care-state
+#     variants (t-007) follow from the picked rooms.
+# Krea 2 contract: physical subject first, no negations (ART-PROMPTS.md). Private; auto_submit: true.
+round: pocket-pet-1
+project_slug: pocket-pet-robot
+designer: Pocket Pet Robot art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (the brief's prompt contract, ART-PROMPTS.md)
+  engine: krea2
+  prompt: prose
+- key: zimage
+  label: Z-Image Turbo (painted alternate)
+  engine: zimage
+  prompt: prose
+subjects:
+- key: pet-form-sprout-krea2
+  entity: form-key
+  lane: krea2
+  title: Sprout form key design (krea2)
+  form: sprout
+  size: 1024x1024
+  seed: 91001
+  asset: sprites/sprout-happy.webp
+  prompt_prose: a small friendly robot pet with a smooth rounded mint-green and cream body, two big round glowing
+    sky-blue screen eyes, a small coral heart light on its chest, tiny and round as an egg, stubby nub feet, a single
+    curled leaf-shaped antenna on top, newly hatched and curious, sitting, full body seen from the front, one single
+    character centred on a flat pure white background with a wide white margin, cosy storybook illustration with
+    soft rounded shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and soft
+    sky blue
+  jobs:
+    krea2: 44214
+- key: pet-form-sprout-zimage
+  entity: form-key
+  lane: zimage
+  title: Sprout form key design (zimage)
+  form: sprout
+  size: 1024x1024
+  seed: 91001
+  asset: sprites/sprout-happy.webp
+  prompt_prose: a small friendly robot pet with a smooth rounded mint-green and cream body, two big round glowing
+    sky-blue screen eyes, a small coral heart light on its chest, tiny and round as an egg, stubby nub feet, a single
+    curled leaf-shaped antenna on top, newly hatched and curious, sitting, full body seen from the front, one single
+    character centred on a flat pure white background with a wide white margin, cosy storybook illustration with
+    soft rounded shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and soft
+    sky blue
+  jobs:
+    zimage: 44215
+- key: pet-form-buddy-krea2
+  entity: form-key
+  lane: krea2
+  title: Buddy form key design (krea2)
+  form: buddy
+  size: 1024x1024
+  seed: 91002
+  asset: sprites/buddy-happy.webp
+  prompt_prose: a small friendly robot pet with a smooth rounded mint-green and cream body, two big round glowing
+    sky-blue screen eyes, a small coral heart light on its chest, the size of a puppy, a rounder body on four short
+    sturdy legs, two springy antennae, a little wagging cable tail, playful, standing, full body seen from the front,
+    one single character centred on a flat pure white background with a wide white margin, cosy storybook illustration
+    with soft rounded shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and
+    soft sky blue
+  jobs:
+    krea2: 44216
+- key: pet-form-buddy-zimage
+  entity: form-key
+  lane: zimage
+  title: Buddy form key design (zimage)
+  form: buddy
+  size: 1024x1024
+  seed: 91002
+  asset: sprites/buddy-happy.webp
+  prompt_prose: a small friendly robot pet with a smooth rounded mint-green and cream body, two big round glowing
+    sky-blue screen eyes, a small coral heart light on its chest, the size of a puppy, a rounder body on four short
+    sturdy legs, two springy antennae, a little wagging cable tail, playful, standing, full body seen from the front,
+    one single character centred on a flat pure white background with a wide white margin, cosy storybook illustration
+    with soft rounded shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and
+    soft sky blue
+  jobs:
+    zimage: 44217
+- key: pet-form-champion-krea2
+  entity: form-key
+  lane: krea2
+  title: Champion form key design (krea2)
+  form: champion
+  size: 1024x1024
+  seed: 91003
+  asset: sprites/champion-happy.webp
+  prompt_prose: a small friendly robot pet with a smooth rounded mint-green and cream body, two big round glowing
+    sky-blue screen eyes, a small coral heart light on its chest, grown taller and sturdier, standing upright on
+    two strong legs with small capable hands, two swept-back antenna fins, a proud gentle posture, full body seen
+    from the front, one single character centred on a flat pure white background with a wide white margin, cosy
+    storybook illustration with soft rounded shapes, clean dark outline, gentle cel shading, palette of mint green,
+    cream, warm coral and soft sky blue
+  jobs:
+    krea2: 44218
+- key: pet-form-champion-zimage
+  entity: form-key
+  lane: zimage
+  title: Champion form key design (zimage)
+  form: champion
+  size: 1024x1024
+  seed: 91003
+  asset: sprites/champion-happy.webp
+  prompt_prose: a small friendly robot pet with a smooth rounded mint-green and cream body, two big round glowing
+    sky-blue screen eyes, a small coral heart light on its chest, grown taller and sturdier, standing upright on
+    two strong legs with small capable hands, two swept-back antenna fins, a proud gentle posture, full body seen
+    from the front, one single character centred on a flat pure white background with a wide white margin, cosy
+    storybook illustration with soft rounded shapes, clean dark outline, gentle cel shading, palette of mint green,
+    cream, warm coral and soft sky blue
+  jobs:
+    zimage: 44219
+- key: pet-room-kitchen-krea2
+  entity: room
+  lane: krea2
+  title: 'Room backdrop: kitchen (krea2)'
+  room: kitchen
+  size: 1344x768
+  seed: 91004
+  asset: rooms/kitchen.webp
+  prompt_prose: 'a tiny cosy kitchen for a robot pet: a low round table with a bowl of glowing battery snacks, a
+    small oven, copper pots on hooks, a checked rug, morning light from a round window, seen from the front at a
+    small pet''s eye level with open floor space in the lower middle for the pet to stand, an empty unpeopled room,
+    cosy storybook illustration with soft rounded shapes, clean dark outline, gentle cel shading, palette of mint
+    green, cream, warm coral and soft sky blue'
+  jobs:
+    krea2: 44220
+- key: pet-room-kitchen-zimage
+  entity: room
+  lane: zimage
+  title: 'Room backdrop: kitchen (zimage)'
+  room: kitchen
+  size: 1344x768
+  seed: 91004
+  asset: rooms/kitchen.webp
+  prompt_prose: 'a tiny cosy kitchen for a robot pet: a low round table with a bowl of glowing battery snacks, a
+    small oven, copper pots on hooks, a checked rug, morning light from a round window, seen from the front at a
+    small pet''s eye level with open floor space in the lower middle for the pet to stand, an empty unpeopled room,
+    cosy storybook illustration with soft rounded shapes, clean dark outline, gentle cel shading, palette of mint
+    green, cream, warm coral and soft sky blue'
+  jobs:
+    zimage: 44221
+- key: pet-room-bedroom-krea2
+  entity: room
+  lane: krea2
+  title: 'Room backdrop: bedroom (krea2)'
+  room: bedroom
+  size: 1344x768
+  seed: 91005
+  asset: rooms/bedroom.webp
+  prompt_prose: 'a tiny cosy bedroom for a robot pet: a round cushioned charging bed with a soft blanket, a dim
+    star-shaped night lamp, a toy shelf, soft evening light, seen from the front at a small pet''s eye level with
+    open floor space in the lower middle for the pet to stand, an empty unpeopled room, cosy storybook illustration
+    with soft rounded shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and
+    soft sky blue'
+  jobs:
+    krea2: 44222
+- key: pet-room-bedroom-zimage
+  entity: room
+  lane: zimage
+  title: 'Room backdrop: bedroom (zimage)'
+  room: bedroom
+  size: 1344x768
+  seed: 91005
+  asset: rooms/bedroom.webp
+  prompt_prose: 'a tiny cosy bedroom for a robot pet: a round cushioned charging bed with a soft blanket, a dim
+    star-shaped night lamp, a toy shelf, soft evening light, seen from the front at a small pet''s eye level with
+    open floor space in the lower middle for the pet to stand, an empty unpeopled room, cosy storybook illustration
+    with soft rounded shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and
+    soft sky blue'
+  jobs:
+    zimage: 44223
+- key: pet-room-playroom-krea2
+  entity: room
+  lane: krea2
+  title: 'Room backdrop: playroom (krea2)'
+  room: playroom
+  size: 1344x768
+  seed: 91006
+  asset: rooms/playroom.webp
+  prompt_prose: 'a bright playroom for a robot pet: soft play blocks, a ball, a small slide, a ribbon of bunting,
+    a toy box, sunny afternoon light, seen from the front at a small pet''s eye level with open floor space in the
+    lower middle for the pet to stand, an empty unpeopled room, cosy storybook illustration with soft rounded shapes,
+    clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and soft sky blue'
+  jobs:
+    krea2: 44224
+- key: pet-room-playroom-zimage
+  entity: room
+  lane: zimage
+  title: 'Room backdrop: playroom (zimage)'
+  room: playroom
+  size: 1344x768
+  seed: 91006
+  asset: rooms/playroom.webp
+  prompt_prose: 'a bright playroom for a robot pet: soft play blocks, a ball, a small slide, a ribbon of bunting,
+    a toy box, sunny afternoon light, seen from the front at a small pet''s eye level with open floor space in the
+    lower middle for the pet to stand, an empty unpeopled room, cosy storybook illustration with soft rounded shapes,
+    clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and soft sky blue'
+  jobs:
+    zimage: 44225
+- key: pet-room-garden-krea2
+  entity: room
+  lane: krea2
+  title: 'Room backdrop: garden (krea2)'
+  room: garden
+  size: 1344x768
+  seed: 91007
+  asset: rooms/garden.webp
+  prompt_prose: 'a small walled back garden for a robot pet: a round lawn, flower beds, a tiny watering can, a birdbath,
+    a picket gate, soft spring sunshine, seen from the front at a small pet''s eye level with open floor space in
+    the lower middle for the pet to stand, an empty unpeopled room, cosy storybook illustration with soft rounded
+    shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and soft sky blue'
+  jobs:
+    krea2: 44226
+- key: pet-room-garden-zimage
+  entity: room
+  lane: zimage
+  title: 'Room backdrop: garden (zimage)'
+  room: garden
+  size: 1344x768
+  seed: 91007
+  asset: rooms/garden.webp
+  prompt_prose: 'a small walled back garden for a robot pet: a round lawn, flower beds, a tiny watering can, a birdbath,
+    a picket gate, soft spring sunshine, seen from the front at a small pet''s eye level with open floor space in
+    the lower middle for the pet to stand, an empty unpeopled room, cosy storybook illustration with soft rounded
+    shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and soft sky blue'
+  jobs:
+    zimage: 44227
+- key: pet-room-workshop-krea2
+  entity: room
+  lane: krea2
+  title: 'Room backdrop: workshop (krea2)'
+  room: workshop
+  size: 1344x768
+  seed: 91008
+  asset: rooms/workshop.webp
+  prompt_prose: 'a small tidy workshop for a robot pet: a low workbench with tiny tools and spare bolts in jars,
+    a pegboard, a desk lamp, warm lamplight, seen from the front at a small pet''s eye level with open floor space
+    in the lower middle for the pet to stand, an empty unpeopled room, cosy storybook illustration with soft rounded
+    shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and soft sky blue'
+  jobs:
+    krea2: 44228
+- key: pet-room-workshop-zimage
+  entity: room
+  lane: zimage
+  title: 'Room backdrop: workshop (zimage)'
+  room: workshop
+  size: 1344x768
+  seed: 91008
+  asset: rooms/workshop.webp
+  prompt_prose: 'a small tidy workshop for a robot pet: a low workbench with tiny tools and spare bolts in jars,
+    a pegboard, a desk lamp, warm lamplight, seen from the front at a small pet''s eye level with open floor space
+    in the lower middle for the pet to stand, an empty unpeopled room, cosy storybook illustration with soft rounded
+    shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and soft sky blue'
+  jobs:
+    zimage: 44229
+- key: pet-room-rooftop-krea2
+  entity: room
+  lane: krea2
+  title: 'Room backdrop: rooftop (krea2)'
+  room: rooftop
+  size: 1344x768
+  seed: 91009
+  asset: rooms/rooftop.webp
+  prompt_prose: 'a cosy rooftop terrace for a robot pet: potted plants, a little telescope, string lights, chimney
+    pots, a wide sunset sky over a quiet town, seen from the front at a small pet''s eye level with open floor space
+    in the lower middle for the pet to stand, an empty unpeopled room, cosy storybook illustration with soft rounded
+    shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and soft sky blue'
+  jobs:
+    krea2: 44230
+- key: pet-room-rooftop-zimage
+  entity: room
+  lane: zimage
+  title: 'Room backdrop: rooftop (zimage)'
+  room: rooftop
+  size: 1344x768
+  seed: 91009
+  asset: rooms/rooftop.webp
+  prompt_prose: 'a cosy rooftop terrace for a robot pet: potted plants, a little telescope, string lights, chimney
+    pots, a wide sunset sky over a quiet town, seen from the front at a small pet''s eye level with open floor space
+    in the lower middle for the pet to stand, an empty unpeopled room, cosy storybook illustration with soft rounded
+    shapes, clean dark outline, gentle cel shading, palette of mint green, cream, warm coral and soft sky blue'
+  jobs:
+    zimage: 44231

@@ -1,0 +1,15 @@
+version: 1
+project: memory-dungeon
+task: t-006
+operation: done
+note: >-
+  Pure engine and adversarial contract merged in kind_robots#4047
+  (utils/memoryDungeon/combat.ts, verifyMemoryDungeonCombat.test.ts,
+  wired into contract shard 4). Twinblade, Hammer, Spear, Staff,
+  Lantern and Rapier masks with rotation, bullseyes and no silent
+  clipping; Focus, cooldowns, 2-pair strike cap, Guard, stagger,
+  telegraphed tempo and redeal. 200-seed simulations on 4x4/4x6/6x6:
+  memory wins 100%, 60% memory 86-100%, blind 0-6%, wide-shape spray
+  37%/6%/0%; aiming shapes at remembered pairs is fastest. Twinblade
+  no-pair Guard broke the economy and is now earned by a hit. Results
+  and the accessibility contract for t-007 are in COMBAT-PATTERNS.md.
