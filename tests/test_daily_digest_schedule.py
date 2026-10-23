@@ -101,4 +101,5 @@ def test_digest_freezes_email_before_preparing_tomorrows_art():
     assert digest_pos < email_payload_pos < build_pos < submit_pos < email_pos
     assert "submit_daily_dream_art.py --wait-timeout" not in workflow
     assert "TZ=America/Los_Angeles date +%F" in workflow
+    assert 'DAILY_DREAM_SCHEDULED: "1"' in workflow
     assert "continue-on-error: true" in workflow

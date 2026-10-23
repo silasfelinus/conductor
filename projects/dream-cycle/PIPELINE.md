@@ -73,9 +73,13 @@ is about to showcase.
 ## 3. Build today's proposal for tomorrow
 
 After the email payload is frozen, `scripts/run_daily_dream_build.py --date <today>`
-delegates to `scripts/build_dream_records.py`, the **sole object writer**. The explicit
-Pacific date allows the proposal to be built during its own morning cycle rather than
-waiting until it becomes "prior" the next day.
+(with `DAILY_DREAM_SCHEDULED=1`) delegates to `scripts/build_dream_records.py`,
+the **sole object writer**. It builds today's proposal when present. If today's
+no-cost authoring step skips the date because the five-proposal buffer is full,
+the scheduled builder instead consumes the oldest eligible, unbuilt proposal
+from an earlier day. Manual `--date` calls still target only the requested date.
+This prevents repeated completed worlds while valid proposals wait in the buffer,
+without discarding earlier creative work or spending API credits.
 
 The builder creates the complete six-object bundle transactionally, records every
 resulting ID in `built-data`, and writes exactly six stable art requests to
