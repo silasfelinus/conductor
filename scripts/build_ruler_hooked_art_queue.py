@@ -335,7 +335,7 @@ SCENE_CONCEPTS = [
         "key-art-day",
         WIDE,
         "Ruler Hooked key art (day)",
-        f"Seen through the unseen ruler's eyes: {LAKESIDE}, an empty weathered "
+        f"A first-person viewpoint at the lakeside fishing station: {LAKESIDE}, an empty weathered "
         "fishing perch at the near bank, an idle fishing rod leaning against "
         "its rail, busy distant subjects visible across the lake. "
         f"Warm storybook exploration, wide visual game scene. {TIME_MOD['day']}",
@@ -401,7 +401,7 @@ SCENE_CONCEPTS = [
         "beat-the-interruption",
         WIDE,
         "Story beat: the interruption",
-        "From the unseen ruler's point of view at a lakeside fishing perch, "
+        "First-person eye-level view from a lakeside fishing perch: "
         "a breathless courier splashes through the reeds brandishing an "
         "enormous urgent scroll, boot deep in mud. The scroll and the "
         "petitioner's expressive face dominate the frame, with open "
@@ -435,11 +435,9 @@ SCENE_CONCEPTS = [
         "A castle corridor hung with heavy tapestries: a bewildered knot "
         "of courtiers, petitioners and royal clerks argue over ledgers "
         "while a side door stands ajar, sunlight and lake reeds showing "
-        "the unseen monarch's route outdoors. Scene staged from the "
-        "departing ruler's eye level, populated by NPCs only.",
+        "the secret route outdoors. Scene staged from the "
+        "departing fisher's eye level, populated by NPCs only.",
     ),
-]
-
 ]
 
 # Alternate ruler-bearing lake mockups are retired. The twelve playable
@@ -473,8 +471,8 @@ UI_CONCEPTS = [
         "kingdom-management game: unoccupied royal fishing perch in the foreground "
         "of a grand warm lakeside vista, an unattended fishing rod, the kingdom "
         "rising behind in clear painted depth bands. The upper third is broad "
-        "empty golden sky for UI lettering. The ruler is the viewer, never "
-        "a subject inside the picture",
+        "empty golden sky for UI lettering. First-person staging: the viewer remains outside the picture, never "
+        "pictured as a character",
     ),
 ]
 
@@ -998,7 +996,7 @@ def ending_entries(content_ts: Path) -> list[dict]:
 
 
 CARD_FRAME = (
-    "a painted storybook moment staged from the unseen ruler's point of "
+    "a painted storybook moment staged from the player's first-person point of "
     "view, highlighting the visiting petitioners and NPCs, lively faces "
     "and the kingdom behind them, warm illustrated console-game lighting"
 )
