@@ -34,7 +34,7 @@ def test_mpeg_program_stream_stages_as_decodable_mp4_and_repairs_partial_copy(tm
         ],
         check=True, timeout=45,
     )
-    assert source.read_bytes()[:4] == b"\\x00\\x00\\x01\\xba"
+    assert source.read_bytes()[:4] == b"\x00\x00\x01\xba"
 
     guide = tmp_path / "motion_control_000.mp4"
     worker.extract_window(source, 0, guide)

@@ -155,6 +155,15 @@ flags something and you need to know why it exists or how to fix it.
      waiting. A timeout or other error counts after it persists 2 days (`--persist-days`). A flag
      is `art-medic` work (`docs/agents/roles/art-medic.md`): fix the rows and the producer that
      wrote them. Exit 1 when flagged.
+   - `python scripts/check_relay_version_drift.py` — is every kr-relay Kind Robots has seen in the
+     last 30 minutes running main's relay code? On 2026-10-23 Coat Dance ArtJob 42356 failed in
+     ComfyUI's PyAV loader with the defect conductor#6444 had fixed two days earlier, because
+     Silas-PC was still on the old worker and its constant agentVersion could not say so. The relay
+     now reports `conductor-relay-<fingerprint>@<commit>`, a hash of the modules it loaded at
+     startup (`ops/home-server/relay_fingerprint.py`; add a file to `RELAY_CODE_FILES` when the
+     relay starts importing it). Exit 1 names each stale relay: the fix is on the box,
+     `git pull && pm2 restart kr-relay`, so it is Silas's to run. Expect a flag after every merge
+     that touches relay code until he pulls. Exit 2 without `KR_API_TOKEN`.
    - `python scripts/sync_github_issues.py --check` (sweep name `issue_bridge`) — lists open GitHub
      issues in every repos.yaml repo that no roadmap task mirrors yet (`IMPORT`), issues whose owning
      project is paused/retired/finished (`INACTIVE`), issues from non-collaborators that are never
