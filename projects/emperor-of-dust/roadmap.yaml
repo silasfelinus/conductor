@@ -896,14 +896,15 @@ tasks:
   - id: t-056
     milestone: m5
     title: "Repair Day 1 tutorial and new-reign navigation; contain tablet quest display"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Silas, 2026-10-23 PT: tablet screenshot shows a Day 1 roster with Rook and Saffron together plus the original starter tutorial rather than the three seeded throne-room recruits. Investigate stale live deployment or legacy autosave separately from genuine UI defects. Update the introduction and New Reign flow to lead into Day 1 throne recruitment, and make the quest board and detail independently bounded/scrollable in portrait tablet and phone console layouts. Add checks for new-run state, the tutorial copy and the responsive quest-room scroll ownership. Do not overwrite legacy saves or assert a production deployment without independent verification.
 
       Corrected the starter-portrait introduction and new-run routing to Day 1 throne recruitment. Tablet quest board/detail now own bounded scroll areas, and added store and source-layout regression checks to the Emperor CI workflow. Await GitHub checks and verification of current live deployment separately.
-    owner: worker
+
+      Kind Robots PR #4073 merged as 6a02ec7791bac7ebb6743c5cb995710768c03162, after all 16 CI workflows green. Replaced misleading four-starter intro with zero-roster Day 1 court recruitment, reset New Reign tutorial and room state, automatically open the Throne Room after an unstaffed Day 1 introduction, and repaired tablet quest-room overflow with one bounded scrolling region and normal-flow stacked board/details. Added real Pinia new-run assertions and source-layout guard into the nightly Emperor workflow. No production deployment performed or verified; screenshot strongly indicates older live code or persisted legacy run and requires post-deploy device QA.
     claimed_by: 2026-10-23T111550Z-emperor-t056-e79c
     claimed_at: '2026-10-23T11:16:48Z'
-    updated: '2026-10-23T11:20:23Z'
+    updated: '2026-10-23T11:39:07Z'
