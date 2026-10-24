@@ -450,7 +450,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Author and test all 120 complete encounter records, callbacks and chapter anchors"
-    status: claimed
+    status: ready
     depends_on: t-002
     passes: 0
     stakes: reversible
@@ -462,7 +462,11 @@ tasks:
       2026-10-23 PT: card authoring COMPLETE (121 cards, WH-120 merged #6527, validator + no- dead-end proof #6533). Remaining scope only: 6 guaranteed chapter anchor scenes (non- card; see JOURNEY-LOOP-CONTRACT.md; Wiyot/Tuluwat anchor excluded per EXCLUDED- CONTENT-2026-10-22.md), 10+ ending records per ECOTONE-ENDING-GRAMMAR.md, 8 archetype reactions, writing review.
 
       Six guaranteed chapter anchors authored (WH-A1..A6, projects/weird-humboldt/anchors/anchors.yaml): ch1 local mystery, ch2-4 the three stay/follow crossroads (each with a no-roll stay and follow route setting crossroadsN_stayed/followed), ch5 companion payoff (honour/complicate/betray), ch6 county convergence. validate_anchors() in validate_weird_humboldt_cards.py enforces one per chapter, no flag gating, a no-roll option, authored failures, four lead reactions and callbacks set by effects, and rejects Wiyot/Tuluwat terms; 3 new tests. Remaining scope: 10+ ending records per ECOTONE-ENDING-GRAMMAR.md, 8 archetype reactions, writing review. No art, no Kind Robots runtime.
-    updated: '2026-10-23T23:46:21Z'
+
+      2026-10-24 PT: 12 ending records (8 companion cores + 4 county futures) merged in #6557
+      with validate_endings() and tests. Remaining scope: 8 archetype reactions and the
+      writing review.
+    updated: '2026-10-24T00:45:13Z'
     owner: worker
     claimed_by: 014gC3bAwAbsGxi9p7s6nju8
     claimed_at: '2026-10-23T23:46:21Z'
