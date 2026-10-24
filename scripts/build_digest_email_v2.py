@@ -59,5 +59,24 @@ def proposal_section(
     return rendered
 
 
+_BASE_BUILD_PAYLOAD = build_payload
+
+
+def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
+    payload = _BASE_BUILD_PAYLOAD(digest)
+    status = str(digest.get("daily_dream_output_status") or "")
+    if not digest.get("current_dream_output") and status and status != "ready":
+        notice = (
+            '<p style="color:#92400e;background:#fffbeb;padding:8px 12px;'
+            'border-left:4px solid #f59e0b">'
+            '<strong>Daily Dream not refreshed:</strong> '
+            f'{esc(status)}</p>'
+        )
+        payload["htmlContent"] = payload["htmlContent"].replace(
+            "</h1>", "</h1>" + notice, 1
+        )
+    return payload
+
+
 if _WRAPPER_NAME == "__main__":
     raise SystemExit(main())
