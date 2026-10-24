@@ -126,7 +126,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Deliver art round 1 into the runtime paths"
-    status: claimed
+    status: done
     depends_on: t-001
     owner: reviewer
     passes: 0
@@ -139,9 +139,16 @@ tasks:
       and falls back to code-drawn SVG. Either export DONE ArtImages to those media paths (follow
       the Emperor of Dust / Shifting Lands export pattern) or map ids to ArtImage URLs in a
       manifest the store reads. Verify final URLs, not job status.
+
+      DONE 2026-10-24 PT. kind_robots #4122 merged as 72a14f7: 208 round-1 renders (21 villain
+      posters, 22 portraits, 22 companion posters, 132 moods, 11 locations) exported as WebP
+      (max edge 1024, 12 MB) into public/crystal-street/ by
+      scripts/export_crystal_street_art.py; contact sheet reviewed. Every existing runtime
+      path now resolves to painted art.
     claimed_by: 2026-10-24T135800Z-cs-art-delivery
     claimed_at: '2026-10-24T21:08:02Z'
-    updated: '2026-10-24T21:08:02Z'
+    updated: '2026-10-24T21:53:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#4122'
 
   - id: t-004
     milestone: m2
