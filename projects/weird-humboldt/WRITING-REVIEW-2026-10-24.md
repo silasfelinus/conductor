@@ -10,3 +10,6 @@ Mechanical pass over 121 cards, 6 anchors, 12 endings and 8 archetypes (agent re
 
 ## Flag for Silas (owner decision needed)
 **WH-121 "The Latitude Argument"** (`cards/ch2.yaml`) is the 1849 Mad River card. `EXCLUDED-CONTENT-2026-10-22.md` lists "the held 1849/Mad River/Wiyot expedition roleplay WH-121" as dropped. The authored card is a rewrite: a single-source Gregg-party anecdote with fog and sextant jokes. But its provenance and canon still name the Wiyot language (Baduwa't) and say it is "not a Wiyot-reviewed account", and the scene sign repeats the Baduwa't name. Decide: keep the rewrite as-is, strip the Wiyot naming, or remove the card. Removing it changes the validator and test count from 121 to 120. No change was made here.
+
+## Follow-up (2026-10-24 PT)
+WH-121 no longer names the Wiyot language or Baduwa't anywhere (provenance, canon, scene sign); it stays a fictionalized single-source surveyor anecdote, consistent with the owner's no-Wiyot-content direction. Validator passes at 121 cards. Removing the card entirely remains Silas's call.
