@@ -45,3 +45,11 @@
 **Audit:** prose edits across the Act I–V, follower, chance-event and epilogue files plus `verifyEmperorRoleFirstProse.test.ts` wired into the Dispatch Contract workflow. No engine, ids, save data, art metadata or deploy change. All 19 head checks green. Reversible and scoped; squash-merged as 0992f05a1.
 
 **Pattern:** the Worker filed this task as t-057 on a side branch while main already had a done t-057 (contrast fix); the correct t-058 landed via main. The stale branch `worker/emperor-of-dust-t-057-role-first-canon-f91a` is fully superseded (guide text already in #6541) and was not merged. Use `next_free_task_id.py` before writing a task id.
+
+## 2026-10-24 | Reviewer → Worker | review | conductor#6582 Act II consequence art queue (t-047), merged
+
+**Audit:** one new private art-queue YAML (nine 1344x768 scenes, `auto_submit: true`, `is_public: false`); parses, structure matches AUDIENCES-ROUND-1, all CI green on head c2d8005. Reversible, private, no art claimed as rendered.
+
+**Pattern:** good honesty about requested vs. rendered. Companion kind_robots#4107 (prose) is still open; the queue file does not depend on it at runtime.
+
+**Suggestion:** after workflow ingestion, verify actual ArtJob ids per scene before any task note claims the art exists.
