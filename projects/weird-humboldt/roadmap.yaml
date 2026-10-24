@@ -1510,3 +1510,19 @@ tasks:
       kind_robots PR #4087: utils/playbook/ecotoneMysteries.ts (120 Playbook nodes, 12 Collections, live edits reach mystery cards); missed-trap reveals (reveal.afterMiss), approach memory and recall lines so gate results carry forward, validator rules for them; transcript tool; all twelve cases rewritten through three rounds of blind playtest. Final grades: 12/12 cases PASS, set originality/culprits/mechanics/companions PASS (MYSTERIES-PLAYTEST.md). Browser click-through on the final text passed (true path via missed trap to a Real Ending, cold case, ledger, zero page errors). Art: art/MYSTERIES-ROUND-1.yaml, 336 Z-Image subjects (every scene card, gate outcome and Real Ending), auto_submit, live prompt contract 376/376 — queued on merge, not rendered.
 
       Merged 2026-10-24 PT: kind_robots #4087 squash d928b45bd4cce9df7f4d96c62a3addeb3d5d5b78 (all 20 checks green, including the Ecotone mysteries contract). Open, not blocking: Silas's editorial read, culprit gender skew (11 of 12 women), optional Case VIII pun title.
+  - id: t-064
+    milestone: m5
+    title: "Mysteries: vary the culprit genders across the twelve cases"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    claimed_by: 2026-10-24T00:55:00Z-wh-t064-mystery-culprits-4e1a
+    claimed_at: '2026-10-24T00:55:00Z'
+    updated: '2026-10-24T01:57:00Z'
+    note: |-
+      Silas, 2026-10-24 PT: "vary the culprit genders across the twelve cases".
+
+      On the final t-063 text the person under the mask was a woman in eight cases (the "11 of 12" in the playtest record was stale), three men, one couple, and every man under a mask was a wrongdoer. Three sympathetic culprits change: Case I Bev Ostrander -> Hollis Ostrander; Case IV the widow Ione -> the widower Arne Sorensen (the yellow oilskins are Ione's, so the ghost still reads as hers); Case IX Dr. Wren Okonkwo-Barlow uses they/them, with no commentary (ending "The Arrow That Points at Wren", id unchanged). Result: five women, five men, one nonbinary, one couple; wrongdoers three men, two women. Plot, clues, gates, ids and effects unchanged; validator, test:ecotone-mysteries and test:playbook pass. Culprit-depicting art briefs in art/MYSTERIES-ROUND-1.yaml re-briefed and resubmitted (old job ids kept as superseded_jobs).
+
+      Merged 2026-10-23 PT: kind_robots #4088 squash ecb889605e8dd78a90c4106c02d6f0e9961896f4 (all 17 checks green). The 19 new art prompts are queued by the next Auto Art Generate sweep; queued is not rendered.

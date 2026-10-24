@@ -11,6 +11,9 @@
 # positive description only (every surface bare and unmarked).
 # auto_submit: true -> scripts/sweep_art_ledgers.py submits and refreshes this ledger on every Auto Art Generate run.
 # Queued is not rendered; rendered is not shipped. Private (is_public: false).
+# t-064 (2026-10-24 PT, Silas: "vary the culprit genders across the twelve cases"): Case I's culprit is now Hollis
+# Ostrander, Case IV's the widower Arne Sorensen, Case IX's Wren uses they/them. The 19 briefs that showed those culprits
+# were rewritten with new seeds; their round-1 jobs moved to superseded_jobs, so the sweep submits the new prompts.
 round: ecotone-mysteries-1
 project_slug: weird-humboldt
 designer: Ecotone
@@ -397,52 +400,41 @@ subjects:
       art_image_id: null
 - key: mys-cards-my-01-b-unmasked
   asset: cards/my-01-b-unmasked
-  title: MY-01-B-unmasked Bev Ostrander, scene
+  title: MY-01-B-unmasked Hollis Ostrander, scene
   size: 1344x768
-  seed: 93024
-  prompt_prose: Medium close shot in a gravel turnout lit by flashlights. A seventy-one-year-old woman with wind-burned
-    cheeks and a silver buzz cut standing straight up with static holds a horned welding helmet under one arm, black
-    leathers zipped to the chin, jaw lifted in defiant pride. Beside her, an older woman in a quilted vest over
-    a trucker's jacket covers her mouth in astonished recognition. Behind them, eight gray-haired racers nod beside
-    their homemade carts, and a white ram in a red bandana leans on her knee. Tender, triumphant unmasking.
-  jobs:
+  seed: 93524
+  prompt_prose: Medium close shot in a gravel turnout lit by flashlights. A seventy-one-year-old man with wind-burned
+    cheeks, a deeply creased squint from decades of roadside weather and a silver flattop standing straight up with
+    static holds a horned welding helmet under one arm, black leathers zipped to the chin, jaw lifted in defiant
+    pride. Beside him, an older woman in a quilted vest over a trucker's jacket covers her mouth in astonished recognition.
+    Behind them, eight gray-haired racers nod beside their homemade carts, and a white ram in a red bandana leans
+    on his knee. Tender, triumphant unmasking.
+  superseded_jobs:
     zimage: 44310
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-cards-my-01-b-rematch
   asset: cards/my-01-b-rematch
   title: MY-01-B-rematch Top of the Mountain, scene
   size: 1344x768
-  seed: 93025
+  seed: 93525
   prompt_prose: 'Wide shot from the crest of a ridge at night above a sea of white fog, stars blazing. Homemade
     carts wait in a row at the top: a church pew on wheels carrying a figure in a weathered rain jacket, seen from
     behind, and beside it a long low gurney cart whose leather-clad driver lifts a horned welding helmet, revealing
-    a silver buzz cut and a huge grin. A mustached man in a clawfoot bathtub cart drops a red bandana. A white ram
-    stands at the front. Cold, exhilarating, pure joy.'
-  jobs:
+    a wind-burned seventy-one-year-old man with a silver flattop and a huge grin. A mustached man in a clawfoot
+    bathtub cart drops a red bandana. A white ram stands at the front. Cold, exhilarating, pure joy.'
+  superseded_jobs:
     zimage: 44311
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-mysteries-kneeland-ram-first-down
   asset: mysteries/kneeland-ram/first-down
   title: 'Case I Real Ending: First Down the Mountain (true)'
   size: 1344x768
-  seed: 93026
+  seed: 93526
   prompt_prose: Wide shot of a slow, glowing parade down a foggy mountain road at night. People in inside-out orange
     beanies line every bend on foot, holding flashlights high. A shaggy white ram in a red bandana leads, trotting
-    proudly; behind him a horned gurney cart driven by a silver-haired woman in leathers, then a clawfoot bathtub,
-    a coffin cart steered by a beaming old man, and at the very back a church pew carrying a figure in a weathered
-    rain jacket, seen from behind. Joyful, communal celebration.
-  jobs:
+    proudly; behind him a horned gurney cart driven by a wind-burned old man with a silver flattop, in leathers,
+    then a clawfoot bathtub, a coffin cart steered by a beaming old man, and at the very back a church pew carrying
+    a figure in a weathered rain jacket, seen from behind. Joyful, communal celebration.
+  superseded_jobs:
     zimage: 44312
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-mysteries-kneeland-ram-ram-stays-wild
   asset: mysteries/kneeland-ram/ram-stays-wild
   title: 'Case I Real Ending: The Ram Stays Wild (bittersweet)'
@@ -462,18 +454,15 @@ subjects:
   asset: mysteries/kneeland-ram/headfirst
   title: 'Case I Real Ending: Waved Through (strange)'
   size: 1344x768
-  seed: 93028
+  seed: 93528
   prompt_prose: 'Wide dreamlike shot of a figure in a weathered rain jacket, seen from behind, running through dense
     white fog after a shaggy white ram in a red bandana. The road beneath changes in bands as it recedes: cracked
     asphalt, oiled gravel, then two ruts in the grass. On each stretch a flagger stands on the center line holding
-    a plain paddle and waving the ram through first: a young woman in a hard hat who gives a sly wink, then a figure
-    in a canvas coat, then one in a wool cap, each fainter in the mist. Timeless, uncanny, quietly triumphant.'
-  jobs:
+    a plain paddle and waving the ram through first: a wind-burned young man of thirty in a hard hat who gives a
+    sly wink, then a figure in a canvas coat, then one in a wool cap, each fainter in the mist. Timeless, uncanny,
+    quietly triumphant.'
+  superseded_jobs:
     zimage: 44314
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-cards-my-02-g1
   asset: cards/my-02-g1
   title: MY-02-G1 The Empty Shelf, scene
@@ -1491,17 +1480,13 @@ subjects:
   asset: outcomes/my-04-g2/dock-failure
   title: MY-04-G2 Sit on the dock and wait for whoever is aboard, failure
   size: 1344x768
-  seed: 93094
+  seed: 93594
   prompt_prose: Medium shot on a dark dock beside a crab boat on a misty slough at night. The wheelhouse is dark
     and padlocked, the stovepipe cold, the geraniums drooping. A figure in a weathered rain jacket, seen from behind,
     crouches at a cleat, unfolding a small note whose writing is turned away, a phone glowing in their other hand.
-    Chilly, damp air, the sting of a motherly scolding.
-  jobs:
+    Chilly, damp air, the sting of a gruff grandfatherly scolding.
+  superseded_jobs:
     zimage: 44380
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-outcomes-my-04-g2-logbook-success
   asset: outcomes/my-04-g2/logbook-success
   title: MY-04-G2 Read the boat’s history in the yard’s old logbook, success
@@ -1688,66 +1673,51 @@ subjects:
   asset: cards/my-04-reveal
   title: MY-04-REVEAL The Crabber in Yellow, scene
   size: 1344x768
-  seed: 93107
+  seed: 93607
   prompt_prose: Medium-wide shot on a small wooden dock at dawn, a weathered crab boat tied at the end, engine ticking
-    as it cools. Thirty neighbors in rubber boots crowd the planks. In their center stands a woman in her seventies
-    with a long white braid, old yellow oilskin hood pushed back, bright tired eyes, big-knuckled bait-scarred hands
-    folding a stick of gum in half. An elderly woman with silver hair in a bun reaches toward her, voice breaking.
-    A burly man in a yellow rain jacket exhales in relief. Tender, cornered revelation.
-  jobs:
+    as it cools. Thirty neighbors in rubber boots crowd the planks. In their center stands an old man in his seventies
+    in old yellow buttoned-hood oilskins, hood pushed back from a white beard trimmed square with kitchen scissors,
+    very bright tired eyes, big-knuckled bait-scarred hands folding a stick of gum in half. An elderly woman with
+    silver hair in a bun reaches toward him, voice breaking. A burly man in a yellow rain jacket exhales in relief.
+    Tender, cornered revelation.
+  superseded_jobs:
     zimage: 44393
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-cards-my-04-b-aboard
   asset: cards/my-04-b-aboard
   title: MY-04-B-aboard The Moon Snail’s Galley, scene
   size: 1344x768
-  seed: 93108
+  seed: 93608
   prompt_prose: 'Medium interior shot of a tiny wooden wheelhouse lived in as a home: a breadbox-sized woodstove
     glowing, a bunk under a quilt patched from old yellow oilskins, folded reading glasses on a chart table, an
     old wall calendar with blurred dates. On a rack by the stove hang two lopsided painted snail mugs, one chipped,
-    one pristine. A woman in her seventies with a long white braid, in a thick wool sweater, gestures proudly around
-    the cramped space. Warm, cramped dignity.'
-  jobs:
+    one pristine. An old man in his seventies with a white beard trimmed square and big-knuckled, bait-scarred hands,
+    in a thick wool sweater, gestures proudly around the cramped space. Warm, cramped dignity.'
+  superseded_jobs:
     zimage: 44394
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-cards-my-04-b-porch-council
   asset: cards/my-04-b-porch-council
   title: MY-04-B-porch-council The Porch Council, scene
   size: 1344x768
-  seed: 93109
+  seed: 93609
   prompt_prose: Wide shot of a small wooden dock at dawn crowded with thirty neighbors in rubber boots and borrowed
     coats. A steel crab pot serves as a coffee table, topped with a box of donuts and steaming mugs. A burly man
-    in a yellow rain jacket offers the donut box first to a woman in her seventies with a long white braid. A young
-    man in his twenties in a hoodie taps notes into his phone. Woodsmoke drifts from a crab boat's stovepipe. Communal,
-    gentle reckoning.
-  jobs:
+    in a yellow rain jacket offers the donut box first to an old man in his seventies with a white beard trimmed
+    square, very bright tired eyes and big-knuckled hands. A young man in his twenties in a hoodie taps notes into
+    his phone. Woodsmoke drifts from a crab boat's stovepipe. Communal, gentle reckoning.
+  superseded_jobs:
     zimage: 44395
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-mysteries-crab-pot-ghost-home-port
   asset: mysteries/crab-pot-ghost/home-port
   title: 'Case IV Real Ending: Home Port (true)'
   size: 1344x768
-  seed: 93110
+  seed: 93610
   prompt_prose: Wide shot of a festive potluck on a small dock on a bright opening-day morning. A weathered crab
-    boat with a shiny new welded rail and fresh curtains in her wheelhouse windows sits tied at a proper slip. A
-    woman in her seventies with a long white braid, in yellow oilskins, measures a red Dungeness crab with a brass
-    gauge at a long table heaped with crab, while neighbors line up with paper plates. Gulls, sunshine, generous
-    joy.
-  jobs:
+    boat with a shiny new welded rail and fresh curtains in her wheelhouse windows sits tied at a proper slip. An
+    old man in his seventies with a white beard trimmed square, in yellow buttoned-hood oilskins, measures a red
+    Dungeness crab with a brass gauge in big-knuckled hands at a long table heaped with crab, while neighbors line
+    up with paper plates. Gulls, sunshine, generous joy.
+  superseded_jobs:
     zimage: 44396
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-mysteries-crab-pot-ghost-last-haul
   asset: mysteries/crab-pot-ghost/last-haul
   title: 'Case IV Real Ending: The Last Haul (bittersweet)'
@@ -3665,18 +3635,14 @@ subjects:
   asset: outcomes/my-09-g2/sheep-success
   title: MY-09-G2 Help Hap run his ewes through the gate while he talks, success
   size: 1344x768
-  seed: 93233
+  seed: 93733
   prompt_prose: 'Medium shot of a sheep pen above the Mattole: a figure in a weathered rain jacket, seen from behind,
     swings a wooden gate wide while a black-and-white herding dog pushes a stream of woolly ewes through. On the
     far side Hap Sundberg, seventy-nine, lean and sun-creased in a canvas barn coat and flat cap, talks mid-story,
-    one hand raised high as if describing a tall woman on a tall horse, grinning. Morning dust in the sunlight,
+    one hand raised high as if describing a tall rider on a tall horse, grinning. Morning dust in the sunlight,
     the river glinting beyond the fence.'
-  jobs:
+  superseded_jobs:
     zimage: 44519
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-outcomes-my-09-g2-sheep-failure
   asset: outcomes/my-09-g2/sheep-failure
   title: MY-09-G2 Help Hap run his ewes through the gate while he talks, failure
@@ -3777,18 +3743,14 @@ subjects:
   asset: outcomes/my-09-g3/gallop-success
   title: MY-09-G3 Run the rider down along the hard sand, success
   size: 1344x768
-  seed: 93240
+  seed: 93740
   prompt_prose: 'Medium shot on hard wet sand at night: a tall gray horse reined in at the base of dark sea rocks,
-    its rider, a woman of sixty-one with deep brown skin, silver locs tied back, an oilskin coat and glasses with
-    one taped lens, twisting in the saddle to laugh with open delight. A figure in a weathered rain jacket, seen
-    from behind, staggers up the beach toward her, chest heaving, headlamp beam bouncing. Silver surf under the
-    moon, the tide edging back in. Exhilaration.'
-  jobs:
+    its rider, a lean sixty-one-year-old with deep brown skin, silver locs tied back, an oilskin coat and glasses
+    with one taped lens, twisting in the saddle to laugh with open delight. A figure in a weathered rain jacket,
+    seen from behind, staggers up the beach toward horse and rider, chest heaving, headlamp beam bouncing. Silver
+    surf under the moon, the tide edging back in. Exhilaration.'
+  superseded_jobs:
     zimage: 44526
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-outcomes-my-09-g3-gallop-failure
   asset: outcomes/my-09-g3/gallop-failure
   title: MY-09-G3 Run the rider down along the hard sand, failure
@@ -3808,18 +3770,14 @@ subjects:
   asset: outcomes/my-09-g3/bait-success
   title: MY-09-G3 Pretend to be lost so the rider comes to find you, success
   size: 1344x768
-  seed: 93242
+  seed: 93742
   prompt_prose: 'Medium shot beside a rock on the moonlit beach: a figure in a weathered rain jacket, seen from
     behind, sits slumped with the headlamp switched off and a folded tide chart in their lap. A huge gray horse
-    has stopped alongside, and its rider, a woman of sixty-one with deep brown skin, silver locs tied back, an oilskin
-    coat and glasses with one taped lens, leans down from the saddle with an uncapped marker, eyebrows raised in
-    amused admiration at the chart. Silver surf, starlight, a game recognized.'
-  jobs:
+    has stopped alongside, and its rider, a lean sixty-one-year-old with deep brown skin, silver locs tied back,
+    an oilskin coat and glasses with one taped lens, leans down from the saddle with an uncapped marker, eyebrows
+    raised in amused admiration at the chart. Silver surf, starlight, a game recognized.'
+  superseded_jobs:
     zimage: 44528
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-outcomes-my-09-g3-bait-failure
   asset: outcomes/my-09-g3/bait-failure
   title: MY-09-G3 Pretend to be lost so the rider comes to find you, failure
@@ -3840,17 +3798,13 @@ subjects:
   asset: outcomes/my-09-g3/question-success
   title: MY-09-G3 Shout one honest question into the fog, success
   size: 1344x768
-  seed: 93244
+  seed: 93744
   prompt_prose: 'Wide night shot of the beach under the King Range wrapped in thick fog: a figure in a weathered
     rain jacket, seen from behind, stands with hands cupped around their mouth. Out of the fog, at a slow walk,
-    emerges a tall gray horse and its rider in an oilskin coat, head tilted, listening, her face softened. The fog
-    glows pale with moonlight, hoofprints trail behind her. Hushed, tender moment.'
-  jobs:
+    emerges a tall gray horse and its rider in an oilskin coat, head tilted, listening, the rider''s face softened.
+    The fog glows pale with moonlight, hoofprints trailing behind the horse. Hushed, tender moment.'
+  superseded_jobs:
     zimage: 44530
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-outcomes-my-09-g3-question-failure
   asset: outcomes/my-09-g3/question-failure
   title: MY-09-G3 Shout one honest question into the fog, failure
@@ -3886,98 +3840,74 @@ subjects:
   asset: cards/my-09-reveal
   title: MY-09-REVEAL The Rider, Dismounted, scene
   size: 1344x768
-  seed: 93247
+  seed: 93747
   prompt_prose: 'Wide shot of a meadow camp high in the King Range at night: a spring trickling over stones, a blue
     tarp strung between firs, a glowing fire ring, four crates of damp, swollen paperbacks. A gray horse the size
-    of a small barn grazes, unsaddled. Beside it stands Dr. Wren Okonkwo-Barlow, a woman of sixty-one with deep
-    brown skin, silver locs tied back, an oilskin coat and glasses with one taped lens, a ring of fletching thread
-    on a carabiner and a quiver of driftwood arrows on her back, offering a single arrow across her open palm. Amber
-    firelight, stars, revelation.'
-  jobs:
+    of a small barn grazes, unsaddled. Beside it stands Dr. Wren Okonkwo-Barlow, a lean sixty-one-year-old rider
+    with deep brown skin, silver locs tied back, an oilskin coat and glasses with one taped lens, a ring of fletching
+    thread on a carabiner and a quiver of driftwood arrows across the back, offering a single arrow across an open
+    palm. Amber firelight, stars, revelation.'
+  superseded_jobs:
     zimage: 44533
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-cards-my-09-b-what-it-cost
   asset: cards/my-09-b-what-it-cost
   title: MY-09-B-what-it-cost What It Cost, scene
   size: 1344x768
-  seed: 93248
+  seed: 93748
   prompt_prose: 'Close-up by a campfire high in the King Range: Wren, sixty-one, deep brown skin, silver locs tied
-    back, oilskin coat and one taped glasses lens, feeds a stick into the flames, her face lit amber and steady,
-    eyes lifted toward someone across the fire with honest, unhidden pain. Firelight glints on the carabiner of
-    fletching thread at her hip. Behind her, darkness and the faint shape of a grazing gray horse. Intimate, grave
-    mood.'
-  jobs:
+    back, oilskin coat and one taped glasses lens, feeds a stick into the flames, the rider''s face lit amber and
+    steady, eyes lifted toward someone across the fire with honest, unhidden pain. Firelight glints on the carabiner
+    of fletching thread at the rider''s hip. Behind the fire, darkness and the faint shape of a grazing gray horse.
+    Intimate, grave mood.'
+  superseded_jobs:
     zimage: 44534
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-cards-my-09-b-arrows-i-didnt-make
   asset: cards/my-09-b-arrows-i-didnt-make
   title: MY-09-B-arrows-i-didnt-make The Arrows I Didn’t Make, scene
   size: 1344x768
-  seed: 93249
+  seed: 93749
   prompt_prose: 'Medium overhead shot of a blue tarp by firelight: twelve driftwood arrows fletched in a finer,
     unfamiliar hand lie in a loose row, each one slightly turned, slowly swinging toward distant points in the dark
     like compass needles. The last arrow at the end lies perfectly still, aimed back toward the fire. Wren''s weathered
-    hands rest on her knees at the tarp''s edge, oilskin sleeves and a quiver strap in view. Eerie amber glow, hushed
-    wonder.'
-  jobs:
+    hands rest on drawn-up knees at the tarp''s edge, oilskin sleeves and a quiver strap in view. Eerie amber glow,
+    hushed wonder.'
+  superseded_jobs:
     zimage: 44535
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-mysteries-wandering-arrows-coffee-for-ten
   asset: mysteries/wandering-arrows/coffee-for-ten
   title: 'Case IX Real Ending: Coffee for Ten (true)'
   size: 1344x768
-  seed: 93250
+  seed: 93750
   prompt_prose: 'Wide shot of the King Range camp at first light: eight search-and-rescue volunteers in orange jackets
-    sit around the fire with steaming mugs, while Wren, sixty-one in her oilskin coat and taped glasses, grinds
-    coffee in a hand mill, scowling and generous at once. Arrows lie across a tarp as she traces creeks for them.
-    A retired stenographer, white-haired in a reflective vest, writes in a notebook beside a duffel bag stuffed
-    with confiscated arrows. Gold dawn mist, the gray horse grazing, grudging warmth.'
-  jobs:
+    sit around the fire with steaming mugs, while Wren, sixty-one, in an oilskin coat and taped glasses, grinds
+    coffee in a hand mill, scowling and generous at once. Arrows lie across a tarp, one weathered finger tracing
+    creeks for the volunteers. A retired stenographer, white-haired in a reflective vest, writes in a notebook beside
+    a duffel bag stuffed with confiscated arrows. Gold dawn mist, the gray horse grazing, grudging warmth.'
+  superseded_jobs:
     zimage: 44536
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-mysteries-wandering-arrows-rider-moves-on
   asset: mysteries/wandering-arrows/rider-moves-on
   title: 'Case IX Real Ending: The Rider Moves On (bittersweet)'
   size: 1344x768
-  seed: 93251
+  seed: 93751
   prompt_prose: 'Wide shot from high in the King Range at morning: a tall gray horse with bulging saddlebags carries
-    Wren, in her oilskin coat with a quiver on her back, north along a ridge trail into silver fog, small against
-    the steep green mountains and the shining sea. In the foreground the camp is swept clean, a cold ring of stones
-    beside a trampled patch of grass. Soft gold light, bittersweet farewell.'
-  jobs:
+    Wren, in an oilskin coat with a quiver across the back, north along a ridge trail into silver fog, horse and
+    rider small against the steep green mountains and the shining sea. In the foreground the camp is swept clean,
+    a cold ring of stones beside a trampled patch of grass. Soft gold light, bittersweet farewell.'
+  superseded_jobs:
     zimage: 44537
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-mysteries-wandering-arrows-arrow-at-her
   asset: mysteries/wandering-arrows/arrow-at-her
-  title: 'Case IX Real Ending: The Arrow That Points at Her (strange)'
+  title: 'Case IX Real Ending: The Arrow That Points at Wren (strange)'
   size: 1344x768
-  seed: 93252
+  seed: 93752
   prompt_prose: Medium shot at the gray end of night, approaching a campfire from the dark trees in a King Range
-    clearing. Wren sits beside it the way a lost hiker gives up, knees drawn up, hood over her silver locs, oilskin
+    clearing. Wren sits beside it the way a lost hiker gives up, knees drawn up, hood up over silver locs, oilskin
     coat wrapped tight, looking up as if found. In the foreground a figure in a weathered rain jacket, seen from
     behind, lowers a driftwood arrow; on the back of their hand a long inked route winds east. Pale dawn blue, low
     embers, uncanny tenderness.
-  jobs:
+  superseded_jobs:
     zimage: 44538
-  art:
-    zimage:
-      status: PENDING
-      art_image_id: null
 - key: mys-cards-my-10-g1
   asset: cards/my-10-g1
   title: MY-10-G1 Hoofprints on the Pier, scene
