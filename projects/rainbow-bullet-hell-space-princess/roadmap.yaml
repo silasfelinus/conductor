@@ -599,11 +599,11 @@ tasks:
   - id: t-031
     milestone: m6
     title: "Resume at the last checkpoint: the cabinet keeps every checkpoint, not just Act starts"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T02:42:51Z'
+    updated: '2026-10-24T02:52:58Z'
     note: >-
       Silas, 2026-10-23 PT (verbatim): "we should remember runs between games, returning should put
       us at the last checkpoint. If that isn't already implemented." Today the save is written only
@@ -612,6 +612,12 @@ tasks:
       save at every section/boss checkpoint (Act I too), accept and validate those checkpoints on
       load, and resume through the same rewind the CONTINUE? path uses. The continue menu names the
       Act and section. Narrow slice of t-027's memory work; t-027 keeps save slots and the route map.
+
+      DONE 2026-10-23 PT: kind_robots#4092 merged (da34189). The cabinet save is written at
+      every section and boss checkpoint (Act I included) and validated against the engine's
+      own checkpoint list on load (isRainbowCheckpoint). Continuing resumes the Act clock on
+      that checkpoint frame through the CONTINUE? rewind, and the flight log names the
+      section. All 34 Rainbow verifiers and 18 CI checks are green.
     claimed_by: 2026-10-24T024500Z-rainbow-t031-resume-q7m3
     claimed_at: '2026-10-24T02:42:12Z'
     implementation_pr: 'silasfelinus/kind_robots#4092'
