@@ -1,4 +1,4 @@
-# It Came from the Terrors on Crystal Street: design brief
+# Terrors on Crystal Street: design brief
 
 Title chosen by Silas, 2026-10-24 PT (it began as Nightmare on Crystal Street). A full single-screen, console-style 80s horror-comedy
 card adventure. One week on an idyllic suburban cul-de-sac beset by one of twenty-two nightmares (many flipped or bent classic villains);
@@ -121,6 +121,6 @@ villain posters, companion posters and mood portraits, and locations
 
 ## Title
 
-**Decided (Silas, 2026-10-24 PT):** *"I like It Came from the Terrors on Crystal Street."* The earlier
-alternatives (Nightmare on Lavender Lane, Seven Nights on Crystal Street, Slumber Party on Sapphire
+**Decided (Silas, 2026-10-24 PT): Terrors on Crystal Street.** He first chose *"It Came from the Terrors on
+Crystal Street"*, then: *"Change to “Terrors on Crystal Street”"*. The earlier alternatives (Nightmare on Lavender Lane, Seven Nights on Crystal Street, Slumber Party on Sapphire
 Court, Glimmer Falls After Dark, Halloween Week on Heartstone Drive) are retired.
