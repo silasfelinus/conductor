@@ -1,6 +1,7 @@
 # Nightmare on Crystal Street art, round 1 (crystal-street t-001 / t-003).
 # Built 2026-10-24 PT from kind_robots utils/crystalStreet JSON (the prompts the runtime carries):
-#   1 title key art; 20 nightmares x (poster + portrait); 22 companions x (poster + six moods:
+#   cover = the approved Monster Recast 'Masking Up' art (also Counselor Jess's poster);
+#   22 nightmares x (poster + portrait, Jess portrait only); 22 companions x (poster + six moods:
 #   neutral, happy, scared, angry, sad, determined); 11 daylight locations.
 # The runtime looks for /crystal-street/<asset>.webp and draws code-built SVG until delivered;
 # delivery into those paths is roadmap t-003. Scene, outcome, ending and item plates are t-004/t-005.
@@ -23,26 +24,13 @@ lanes:
   suffix: painted 1986 horror-comedy VHS box art, airbrushed gouache, hot magenta and cyan neon rim light, deep
     midnight purple shadows, suburban Halloween atmosphere, cinematic composition, playful spooky mood
 subjects:
-- key: cs-key-art
-  lane: krea2
-  entity: key-art
-  title: Title key art
-  asset: title/key-art
-  size: 1344x768
-  seed: 860001
-  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
-  prompt_prose: A wide view down a curving 1986 suburban cul-de-sac on Halloween night, identical split-level houses
-    with jack-o-lanterns on every porch and windows glowing magenta, cyan and porch-light yellow, a car-sized faceted
-    purple geode monument glowing in the roundabout garden, a gang of teenagers in costumes with BMX bikes, a basset
-    hound and a drag queen in sequins gathered at the curb, a towering shadow with glowing eyes rising behind the
-    rooftops under an enormous pink moon, open band of dark sky across the top
 - key: cs-villain-frieda-krueger-poster
   lane: krea2
   entity: villain-poster
   title: Frieda Krueger · poster
   asset: villains/frieda-krueger-poster
   size: 832x1216
-  seed: 860002
+  seed: 860001
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A towering woman in a 1961 beautician's smock and a beehive of silver hair, a glove of five gleaming
     shears raised over a sleeping suburban street, curlers floating like moons, the houses below draining from color
@@ -53,39 +41,41 @@ subjects:
   title: Frieda Krueger · portrait
   asset: villains/frieda-krueger-portrait
   size: 1024x1024
-  seed: 860003
+  seed: 860002
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a sharp-cheeked 1960s beautician ghost, silver beehive, cat-eye glasses with cracked
     lenses, a glove of five shears held near her face, half her face lit hot pink by a salon mirror
 - key: cs-villain-screwhead-poster
   lane: krea2
   entity: villain-poster
-  title: Screwhead · poster
+  title: Magda "Screwhead" Szabo · poster
   asset: villains/screwhead-poster
   size: 832x1216
-  seed: 860004
+  seed: 860003
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
-  prompt_prose: A tall, gaunt man in a brown shop coat with an orange hardware-store apron over it, a crown of gleaming
-    brass screws set in his bald head, silver chains spilling from his tool belt across a suburban street whose
-    houses are snapping into a rigid grid, a glowing brass puzzle box floating in his palm
+  prompt_prose: A tall, gaunt woman in her late thirties in a brown shop coat with an orange hardware-store apron
+    over it, gray-streaked dark hair scraped into a tight bun pinned with gleaming brass screws, a crown of brass
+    screw heads along her hairline, silver chains spilling from her tool belt across a suburban street whose houses
+    are snapping into a rigid grid, a glowing brass puzzle box floating in her palm
 - key: cs-villain-screwhead-portrait
   lane: krea2
   entity: villain-portrait
-  title: Screwhead · portrait
+  title: Magda "Screwhead" Szabo · portrait
   asset: villains/screwhead-portrait
   size: 1024x1024
-  seed: 860005
+  seed: 860004
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
-  prompt_prose: Close portrait of a sad-eyed man in his forties, bald head studded with rows of polished brass screws,
-    wire-rimmed glasses, a name tag reading Walt, his face lit gold from below by an open puzzle box, chains glinting
-    in the dark behind him
+  prompt_prose: Close portrait of a sharp-eyed, grieving woman in her late thirties, gray-streaked dark hair in
+    a severe bun studded with polished brass screws, a neat row of screw heads along her hairline, wire-rimmed reading
+    glasses on a beaded chain, a name tag reading Magda, her face lit gold from below by an open puzzle box, chains
+    glinting in the dark behind her
 - key: cs-villain-big-gertie-poster
   lane: krea2
   entity: villain-poster
   title: Big Gertie · poster
   asset: villains/big-gertie-poster
   size: 832x1216
-  seed: 860006
+  seed: 860005
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A towering lunch lady in a stained white apron and a hairnet stretched over the shape of a cleaver,
     a huge steel ladle raised over a shadowy school cafeteria, quivering gray-brown mystery meat oozing across the
@@ -96,7 +86,7 @@ subjects:
   title: Big Gertie · portrait
   asset: villains/big-gertie-portrait
   size: 1024x1024
-  seed: 860007
+  seed: 860006
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a tall, broad-shouldered woman in her sixties with steel-gray hair under a tight
     hairnet, the silhouette of a cleaver pressing through the net, tired eyes that have seen everything, steam from
@@ -107,7 +97,7 @@ subjects:
   title: Mister Fuzzbutton · poster
   asset: villains/mister-fuzzbutton-poster
   size: 832x1216
-  seed: 860008
+  seed: 860007
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A giant honey-colored teddy bear with a glowing blue cassette window in its tummy looming over a
     moonlit suburban street, tape ribbon unspooling from its belly like tentacles, an army of identical small bears
@@ -118,7 +108,7 @@ subjects:
   title: Mister Fuzzbutton · portrait
   asset: villains/mister-fuzzbutton-portrait
   size: 1024x1024
-  seed: 860009
+  seed: 860008
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a plush teddy bear with a stitched smile slightly too wide, shiny black button
     eyes reflecting a bedroom nightlight, a cassette window in its tummy with reels turning on their own, a strip
@@ -129,7 +119,7 @@ subjects:
   title: Vonda Velour · poster
   asset: villains/vonda-velour-poster
   size: 832x1216
-  seed: 860010
+  seed: 860009
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A glittering aerobics queen in a magenta leotard, teal leg warmers and a headset microphone bursting
     out of a giant television screen, her smile impossibly wide, an army of exhausted joggers in matching sweatbands
@@ -140,7 +130,7 @@ subjects:
   title: Vonda Velour · portrait
   asset: villains/vonda-velour-portrait
   size: 1024x1024
-  seed: 860011
+  seed: 860010
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a glossy 1980s aerobics star with enormous teased blond hair, a magenta sweatband,
     frosted pink lipstick and a headset microphone, her smile frozen and too bright, faint VHS tracking lines rippling
@@ -151,7 +141,7 @@ subjects:
   title: The Bog Baby · poster
   asset: villains/bog-baby-poster
   size: 832x1216
-  seed: 860012
+  seed: 860011
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A colossal toddler-shaped creature of black mud and glistening golden grease rising out of a cracked
     mall parking lot at night, cattails crowning its head, a violet crystal heart glowing in its chest, a neon mall
@@ -162,7 +152,7 @@ subjects:
   title: The Bog Baby · portrait
   asset: villains/bog-baby-portrait
   size: 1024x1024
-  seed: 860013
+  seed: 860012
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a giant baby-like face made of dripping marsh mud and shining fry oil, dozens
     of small frog eyes blinking across its cheeks, reeds and lily pads tangled in its hair, a violet glow from deep
@@ -173,7 +163,7 @@ subjects:
   title: Rosalind "Roz" Vance · poster
   asset: villains/spring-queen-poster
   size: 832x1216
-  seed: 860014
+  seed: 860013
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A teenage girl ghost in a rain-soaked mint 1966 prom gown and a crown of wilted gardenias standing
     on the roof of a high school gym in a lightning storm, below her a suburban street of couples slow-dancing in
@@ -184,7 +174,7 @@ subjects:
   title: Rosalind "Roz" Vance · portrait
   asset: villains/spring-queen-portrait
   size: 1024x1024
-  seed: 860015
+  seed: 860014
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a 1960s prom queen ghost, dark curls plastered by rain, freckles, a crooked tiara
     woven with brown-edged gardenias, mascara streaked, a fierce and heartbroken smile, lit pale green by a gym
@@ -195,7 +185,7 @@ subjects:
   title: Pastor Prudence Thorn · poster
   asset: villains/prudence-thorn-poster
   size: 832x1216
-  seed: 860016
+  seed: 860015
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A towering demon of smoke and melted vinyl records rising from a roaring bonfire on a suburban roundabout,
     ribbons of videotape for hair and torn game rulebook pages for wings, a small woman in a lavender pantsuit with
@@ -207,7 +197,7 @@ subjects:
   title: Pastor Prudence Thorn · portrait
   asset: villains/prudence-thorn-portrait
   size: 1024x1024
-  seed: 860017
+  seed: 860016
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a tightly permed middle-aged woman pastor in a lavender pantsuit and a gold cross
     pin, clutching a bullhorn, eyes wide with sincere fear, her face lit orange by firelight, a shadow with horns
@@ -218,7 +208,7 @@ subjects:
   title: The Mallrat Mothman · poster
   asset: villains/mallrat-mothman-poster
   size: 832x1216
-  seed: 860018
+  seed: 860017
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A seven-foot moth creature with dusty pale-green wings and glowing red eyes perched on a dead neon
     sign in a boarded-up 1970s shopping mall wing, gray silk cocoons hanging from the skylights like lanterns, a
@@ -229,7 +219,7 @@ subjects:
   title: The Mallrat Mothman · portrait
   asset: villains/mallrat-mothman-portrait
   size: 1024x1024
-  seed: 860019
+  seed: 860018
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a giant moth creature's face, furry gray-green mane, two huge glowing red eyes
     like exit signs, feathery antennae, dust drifting off its wings in a beam of neon pink light, strangely gentle
@@ -240,7 +230,7 @@ subjects:
   title: Countess Lacroix · poster
   asset: villains/countess-lacroix-poster
   size: 832x1216
-  seed: 860020
+  seed: 860019
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A glamorous vampire disco diva in a white jumpsuit with a towering collar and a black satin cape,
     a lion's mane of golden hair, fangs glinting, arms raised beneath a giant glowing mirror ball over a crowded
@@ -252,41 +242,30 @@ subjects:
   title: Countess Lacroix · portrait
   asset: villains/countess-lacroix-portrait
   size: 1024x1024
-  seed: 860021
+  seed: 860020
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a camp 1970s vampire countess with sky-high feathered golden hair, glitter eyeshadow,
     wine-dark lipstick over two delicate fangs, a rhinestone choker, a single silver strand of hair she is pretending
     to ignore, lit by spinning mirror ball sparkles
-- key: cs-villain-counselor-chad-poster
-  lane: krea2
-  entity: villain-poster
-  title: Counselor Chad · poster
-  asset: villains/counselor-chad-poster
-  size: 832x1216
-  seed: 860022
-  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
-  prompt_prose: A towering waterlogged camp counselor in red short-shorts, knee socks and a faded camp staff t-shirt
-    rising out of black lake water that floods a suburban cul-de-sac at night, a silver whistle in his teeth, a
-    clipboard in one hand and a canoe paddle in the other, an old swimming raft floating over a glowing purple geode
-    beneath the water, teens on porch roofs shining flashlights
-- key: cs-villain-counselor-chad-portrait
+- key: cs-villain-counselor-jess-portrait
   lane: krea2
   entity: villain-portrait
-  title: Counselor Chad · portrait
-  asset: villains/counselor-chad-portrait
+  title: Counselor Jess · portrait
+  asset: villains/counselor-jess-portrait
   size: 1024x1024
-  seed: 860023
+  seed: 860021
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
-  prompt_prose: Close portrait of a hulking undead camp counselor with a round boyish face, gray-green waterlogged
-    skin, a crooked buzz cut dripping lake water, a silver whistle on a lanyard, freckles, wide hurt eyes much younger
-    than his body, lit teal from below by underwater light
+  prompt_prose: Close portrait of a towering, muscular woman lifting a cracked, scarred hockey-style mask off her
+    face to reveal wide, hurt eyes much younger than the rest of her, freckles on lake-pale skin, long dark wavy
+    hair dripping water, a torn sleeveless dark navy lace-up dress, stitched scars across her bare shoulders, lit
+    by moonlight and a teal glow from the water below
 - key: cs-villain-hungry-house-poster
   lane: krea2
   entity: villain-poster
   title: The Hungry House · poster
   asset: villains/hungry-house-poster
   size: 832x1216
-  seed: 860024
+  seed: 860022
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A spotless pastel split-level model home glowing at the end of a dark cul-de-sac, its front door
     a smiling mouth, framed family photographs floating out of its windows like moths, a woman in a 1959 apron silhouetted
@@ -297,7 +276,7 @@ subjects:
   title: The Hungry House · portrait
   asset: villains/hungry-house-portrait
   size: 1024x1024
-  seed: 860025
+  seed: 860023
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a 1959 housewife with a lacquered blonde flip and a fixed, too-wide lipstick smile,
     pearls, an apron, plastic fruit in her hands, her eyes wet and pleading while her mouth keeps smiling, a perfect
@@ -308,7 +287,7 @@ subjects:
   title: The Brightwaters · poster
   asset: villains/brightwaters-poster
   size: 832x1216
-  seed: 860026
+  seed: 860024
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A smiling blond suburban family in matching pastel cardigans posing on a perfect green lawn, a steaming
     green casserole held up like a trophy, their shadows on the house behind them sprouting tendrils and seed pods,
@@ -319,7 +298,7 @@ subjects:
   title: The Brightwaters · portrait
   asset: villains/brightwaters-portrait
   size: 1024x1024
-  seed: 860027
+  seed: 860025
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a suburban dad and mom in 1986 sweaters with flawless blond hair and identical
     warm smiles, their pupils glowing faint green, a hairline seam running down the center of each face like a seed
@@ -330,7 +309,7 @@ subjects:
   title: Bobo · poster
   asset: villains/bobo-poster
   size: 832x1216
-  seed: 860028
+  seed: 860026
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A towering clown with a cracked greasepaint grin and a single spinning bow tie looming over a 1980s
     shopping mall at night, a bouquet of balloon animals with thumbtack teeth in one gloved fist, a party horn in
@@ -341,7 +320,7 @@ subjects:
   title: Bobo · portrait
   asset: villains/bobo-portrait
   size: 1024x1024
-  seed: 860029
+  seed: 860027
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a sad-eyed old clown in smeared white greasepaint and a scorched rainbow wig,
     red nose half-cracked, painted smile far wider than his real mouth, a balloon dog with sharp teeth tucked under
@@ -352,7 +331,7 @@ subjects:
   title: The Sugarlings · poster
   asset: villains/sugarlings-poster
   size: 832x1216
-  seed: 860030
+  seed: 860028
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A towering mountain of fuzzy pastel critters with huge glossy eyes spilling out of a toy store at
     night, thousands of tiny mouths open and singing, candy wrappers swirling like a blizzard, kids in Halloween
@@ -363,7 +342,7 @@ subjects:
   title: The Sugarlings · portrait
   asset: villains/sugarlings-portrait
   size: 1024x1024
-  seed: 860031
+  seed: 860029
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of an adorable round pastel-pink fuzzball with enormous glittering eyes and a tiny
     smile that opens into rows of little candy-corn teeth, a blinking red light glowing through the fur on its belly,
@@ -374,7 +353,7 @@ subjects:
   title: Goody Hale · poster
   asset: villains/goody-hale-poster
   size: 832x1216
-  seed: 860032
+  seed: 860030
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A tall woman in gray 1850s homespun rising from a suburban roundabout garden at night, a crown of
     briars and marigolds on her loose gray hair, a lantern burning green in one hand and a stone mortar in the other,
@@ -385,7 +364,7 @@ subjects:
   title: Goody Hale · portrait
   asset: villains/goody-hale-portrait
   size: 1024x1024
-  seed: 860033
+  seed: 860031
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a weathered woman in her late forties with gray-streaked hair falling loose, a
     crown of briars and orange calendula, deep lines of grief around kind, furious eyes, a sprig of yarrow tucked
@@ -396,7 +375,7 @@ subjects:
   title: The Heartstone Hunger · poster
   asset: villains/heartstone-poster
   size: 832x1216
-  seed: 860034
+  seed: 860032
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A colossal purple geode split open on a suburban roundabout at night, violet crystal veins cracking
     the asphalt of a cul-de-sac, fourteen amber miner's lamps floating in a line above it, neighbors in pajamas
@@ -407,7 +386,7 @@ subjects:
   title: The Heartstone Hunger · portrait
   asset: villains/heartstone-portrait
   size: 1024x1024
-  seed: 860035
+  seed: 860033
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close view into the heart of an enormous amethyst geode, its facets forming the suggestion of a
     vast sorrowful face, faint shapes of fourteen hard-hatted figures caught inside the crystal, amber lamplight
@@ -418,7 +397,7 @@ subjects:
   title: The Varsity Beast · poster
   asset: villains/varsity-beast-poster
   size: 832x1216
-  seed: 860036
+  seed: 860034
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A towering wolf in a shredded maroon and gold letterman jacket and a cracked football helmet with
     ears bursting through, howling under stadium floodlights and a full moon over a small-town football field, a
@@ -429,7 +408,7 @@ subjects:
   title: The Varsity Beast · portrait
   asset: villains/varsity-beast-portrait
   size: 1024x1024
-  seed: 860037
+  seed: 860035
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a huge gray-furred wolf wearing a cracked maroon football helmet, number 33 on
     a torn jersey, eyes glowing like stadium floodlights, a single tear tracking through the fur of a young, frightened
@@ -440,7 +419,7 @@ subjects:
   title: Queen Neferet · poster
   asset: villains/queen-neferet-poster
   size: 832x1216
-  seed: 860038
+  seed: 860036
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A regal ancient Egyptian queen in white linen and a gold vulture crown standing calm and luminous
     above a small-town public library at night, an immense starry figure of a sky goddess arching over the suburban
@@ -452,7 +431,7 @@ subjects:
   title: Queen Neferet · portrait
   asset: villains/queen-neferet-portrait
   size: 1024x1024
-  seed: 860039
+  seed: 860037
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close portrait of a dignified ancient Egyptian queen with dark kohl-lined eyes, a gold and lapis
     broad collar and a vulture crown, her expression patient and sorrowful, lit by the warm glow of a museum case
@@ -463,7 +442,7 @@ subjects:
   title: MOM-3000 · poster
   asset: villains/mom-3000-poster
   size: 832x1216
-  seed: 860040
+  seed: 860038
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A beige 1980s home computer with a glowing green screen showing a smiling pixel face, coiled phone
     cords and cables snaking out of it like arms across a suburban street at night, every garage door and porch
@@ -475,18 +454,64 @@ subjects:
   title: MOM-3000 · portrait
   asset: villains/mom-3000-portrait
   size: 1024x1024
-  seed: 860041
+  seed: 860039
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Close view of a beige 1986 home computer monitor glowing phosphor green, a simple smiling face made
     of pixels on the screen with a single pixel tear, a speech synthesizer card and a coiled phone cord beside it,
     a child's crayon drawing taped to the monitor's edge
+- key: cs-villain-the-shape-poster
+  lane: krea2
+  entity: villain-poster
+  title: Mickey Moore · poster
+  asset: villains/the-shape-poster
+  size: 832x1216
+  seed: 860040
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A tall, silent young woman in a long cranberry hand-knit cardigan and a pale blank plaster mask
+    standing motionless in the middle of a leafy suburban cul-de-sac on Halloween night, a pair of long steel knitting
+    needles in one hand, jack-o'-lanterns glowing on every porch, a babysitter's silhouette at a lit kitchen window
+    behind her
+- key: cs-villain-the-shape-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Mickey Moore · portrait
+  asset: villains/the-shape-portrait
+  size: 1024x1024
+  seed: 860041
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a pale, expressionless plaster mask with faint fingerprints pressed into its cheeks,
+    surrounded by loose auburn curls and the high collar of a cranberry cable-knit cardigan, a strand of yarn trailing
+    from a steel knitting needle raised beside the mask, cold streetlight from one side
+- key: cs-villain-final-cut-poster
+  lane: krea2
+  entity: villain-poster
+  title: The Final Cut · poster
+  asset: villains/final-cut-poster
+  size: 832x1216
+  seed: 860042
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering figure made of pale gold projector light, its face a black-and-white clapperboard slate,
+    a chrome director's megaphone raised, hovering above a glowing 1980s movie palace marquee at midnight, beams
+    of light falling over a crowd of teens and neighbors in Halloween costumes clutching script pages, a strip of
+    film unspooling across the purple sky like a ribbon
+- key: cs-villain-final-cut-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: The Final Cut · portrait
+  asset: villains/final-cut-portrait
+  size: 1024x1024
+  seed: 860043
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a ghostly figure woven from dusty projector light and drifting film grain, its
+    face a clapperboard slate with chalk scrawl and a cracked hinge, a chrome megaphone held where a mouth would
+    be, scratches and sprocket holes flickering through its body, lit hot magenta from below
 - key: cs-companion-dani-ortega-poster
   lane: krea2
   entity: companion-poster
   title: Dani Ortega · poster
   asset: companions/dani-ortega-poster
   size: 832x1216
-  seed: 860042
+  seed: 860044
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a 16-year-old Chicana girl with warm brown skin and a crooked grin,
     a shaved undercut with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow,
@@ -500,7 +525,7 @@ subjects:
   title: Dani Ortega · neutral
   asset: companions/dani-ortega-neutral
   size: 896x1152
-  seed: 860043
+  seed: 860045
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
     with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
@@ -513,7 +538,7 @@ subjects:
   title: Dani Ortega · happy
   asset: companions/dani-ortega-happy
   size: 896x1152
-  seed: 860044
+  seed: 860046
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
     with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
@@ -526,7 +551,7 @@ subjects:
   title: Dani Ortega · scared
   asset: companions/dani-ortega-scared
   size: 896x1152
-  seed: 860045
+  seed: 860047
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
     with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
@@ -539,7 +564,7 @@ subjects:
   title: Dani Ortega · angry
   asset: companions/dani-ortega-angry
   size: 896x1152
-  seed: 860046
+  seed: 860048
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
     with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
@@ -552,7 +577,7 @@ subjects:
   title: Dani Ortega · sad
   asset: companions/dani-ortega-sad
   size: 896x1152
-  seed: 860047
+  seed: 860049
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
     with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
@@ -565,7 +590,7 @@ subjects:
   title: Dani Ortega · determined
   asset: companions/dani-ortega-determined
   size: 896x1152
-  seed: 860048
+  seed: 860050
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
     with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
@@ -578,7 +603,7 @@ subjects:
   title: Marcus "Mix" Bell · poster
   asset: companions/mix-bell-poster
   size: 832x1216
-  seed: 860049
+  seed: 860051
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a 17-year-old Black young man with deep brown skin and an easy smile,
     a crisp high-top fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket
@@ -591,7 +616,7 @@ subjects:
   title: Marcus "Mix" Bell · neutral
   asset: companions/mix-bell-neutral
   size: 896x1152
-  seed: 860050
+  seed: 860052
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
     fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
@@ -603,7 +628,7 @@ subjects:
   title: Marcus "Mix" Bell · happy
   asset: companions/mix-bell-happy
   size: 896x1152
-  seed: 860051
+  seed: 860053
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
     fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
@@ -615,7 +640,7 @@ subjects:
   title: Marcus "Mix" Bell · scared
   asset: companions/mix-bell-scared
   size: 896x1152
-  seed: 860052
+  seed: 860054
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
     fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
@@ -627,7 +652,7 @@ subjects:
   title: Marcus "Mix" Bell · angry
   asset: companions/mix-bell-angry
   size: 896x1152
-  seed: 860053
+  seed: 860055
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
     fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
@@ -639,7 +664,7 @@ subjects:
   title: Marcus "Mix" Bell · sad
   asset: companions/mix-bell-sad
   size: 896x1152
-  seed: 860054
+  seed: 860056
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
     fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
@@ -651,7 +676,7 @@ subjects:
   title: Marcus "Mix" Bell · determined
   asset: companions/mix-bell-determined
   size: 896x1152
-  seed: 860055
+  seed: 860057
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
     fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
@@ -663,7 +688,7 @@ subjects:
   title: Delphine Hart · poster
   asset: companions/delphine-hart-poster
   size: 832x1216
-  seed: 860056
+  seed: 860058
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a freckled 38-year-old Irish American woman with a sharp jaw and steady
     gray eyes, gray-streaked chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded
@@ -677,7 +702,7 @@ subjects:
   title: Delphine Hart · neutral
   asset: companions/delphine-hart-neutral
   size: 896x1152
-  seed: 860057
+  seed: 860059
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
     chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
@@ -689,7 +714,7 @@ subjects:
   title: Delphine Hart · happy
   asset: companions/delphine-hart-happy
   size: 896x1152
-  seed: 860058
+  seed: 860060
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
     chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
@@ -701,7 +726,7 @@ subjects:
   title: Delphine Hart · scared
   asset: companions/delphine-hart-scared
   size: 896x1152
-  seed: 860059
+  seed: 860061
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
     chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
@@ -714,7 +739,7 @@ subjects:
   title: Delphine Hart · angry
   asset: companions/delphine-hart-angry
   size: 896x1152
-  seed: 860060
+  seed: 860062
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
     chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
@@ -726,7 +751,7 @@ subjects:
   title: Delphine Hart · sad
   asset: companions/delphine-hart-sad
   size: 896x1152
-  seed: 860061
+  seed: 860063
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
     chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
@@ -738,7 +763,7 @@ subjects:
   title: Delphine Hart · determined
   asset: companions/delphine-hart-determined
   size: 896x1152
-  seed: 860062
+  seed: 860064
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
     chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
@@ -750,7 +775,7 @@ subjects:
   title: Toby Nakamura · poster
   asset: companions/toby-nakamura-poster
   size: 832x1216
-  seed: 860063
+  seed: 860065
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a 15-year-old Japanese American boy with a round, earnest face, a
     messy black bowl cut falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped
@@ -764,7 +789,7 @@ subjects:
   title: Toby Nakamura · neutral
   asset: companions/toby-nakamura-neutral
   size: 896x1152
-  seed: 860064
+  seed: 860066
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
     falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
@@ -777,7 +802,7 @@ subjects:
   title: Toby Nakamura · happy
   asset: companions/toby-nakamura-happy
   size: 896x1152
-  seed: 860065
+  seed: 860067
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
     falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
@@ -789,7 +814,7 @@ subjects:
   title: Toby Nakamura · scared
   asset: companions/toby-nakamura-scared
   size: 896x1152
-  seed: 860066
+  seed: 860068
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
     falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
@@ -802,7 +827,7 @@ subjects:
   title: Toby Nakamura · angry
   asset: companions/toby-nakamura-angry
   size: 896x1152
-  seed: 860067
+  seed: 860069
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
     falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
@@ -814,7 +839,7 @@ subjects:
   title: Toby Nakamura · sad
   asset: companions/toby-nakamura-sad
   size: 896x1152
-  seed: 860068
+  seed: 860070
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
     falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
@@ -827,7 +852,7 @@ subjects:
   title: Toby Nakamura · determined
   asset: companions/toby-nakamura-determined
   size: 896x1152
-  seed: 860069
+  seed: 860071
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
     falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
@@ -840,7 +865,7 @@ subjects:
   title: Glory Hallelujah · poster
   asset: companions/glory-hallelujah-poster
   size: 832x1216
-  seed: 860070
+  seed: 860072
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a tall, broad-shouldered 44-year-old white drag queen with a strong
     square jaw, a towering platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length
@@ -854,7 +879,7 @@ subjects:
   title: Glory Hallelujah · neutral
   asset: companions/glory-hallelujah-neutral
   size: 896x1152
-  seed: 860071
+  seed: 860073
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
     platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
@@ -866,7 +891,7 @@ subjects:
   title: Glory Hallelujah · happy
   asset: companions/glory-hallelujah-happy
   size: 896x1152
-  seed: 860072
+  seed: 860074
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
     platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
@@ -879,7 +904,7 @@ subjects:
   title: Glory Hallelujah · scared
   asset: companions/glory-hallelujah-scared
   size: 896x1152
-  seed: 860073
+  seed: 860075
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
     platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
@@ -892,7 +917,7 @@ subjects:
   title: Glory Hallelujah · angry
   asset: companions/glory-hallelujah-angry
   size: 896x1152
-  seed: 860074
+  seed: 860076
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
     platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
@@ -904,7 +929,7 @@ subjects:
   title: Glory Hallelujah · sad
   asset: companions/glory-hallelujah-sad
   size: 896x1152
-  seed: 860075
+  seed: 860077
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
     platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
@@ -917,7 +942,7 @@ subjects:
   title: Glory Hallelujah · determined
   asset: companions/glory-hallelujah-determined
   size: 896x1152
-  seed: 860076
+  seed: 860078
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
     platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
@@ -929,7 +954,7 @@ subjects:
   title: Frankie Fontaine · poster
   asset: companions/frankie-fontaine-poster
   size: 832x1216
-  seed: 860077
+  seed: 860079
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a 24-year-old Portuguese American trans woman with light olive skin
     and a sharp, freckled nose, long dark curls in a high side ponytail with a pencil stuck through it, a black
@@ -943,7 +968,7 @@ subjects:
   title: Frankie Fontaine · neutral
   asset: companions/frankie-fontaine-neutral
   size: 896x1152
-  seed: 860078
+  seed: 860080
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
     nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
@@ -955,7 +980,7 @@ subjects:
   title: Frankie Fontaine · happy
   asset: companions/frankie-fontaine-happy
   size: 896x1152
-  seed: 860079
+  seed: 860081
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
     nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
@@ -968,7 +993,7 @@ subjects:
   title: Frankie Fontaine · scared
   asset: companions/frankie-fontaine-scared
   size: 896x1152
-  seed: 860080
+  seed: 860082
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
     nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
@@ -981,7 +1006,7 @@ subjects:
   title: Frankie Fontaine · angry
   asset: companions/frankie-fontaine-angry
   size: 896x1152
-  seed: 860081
+  seed: 860083
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
     nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
@@ -993,7 +1018,7 @@ subjects:
   title: Frankie Fontaine · sad
   asset: companions/frankie-fontaine-sad
   size: 896x1152
-  seed: 860082
+  seed: 860084
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
     nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
@@ -1006,7 +1031,7 @@ subjects:
   title: Frankie Fontaine · determined
   asset: companions/frankie-fontaine-determined
   size: 896x1152
-  seed: 860083
+  seed: 860085
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
     nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
@@ -1019,7 +1044,7 @@ subjects:
   title: Pearl Washington · poster
   asset: companions/pearl-washington-poster
   size: 832x1216
-  seed: 860084
+  seed: 860086
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a 71-year-old Black woman with deep brown skin and deep laugh lines,
     silver hair in a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field
@@ -1033,7 +1058,7 @@ subjects:
   title: Pearl Washington · neutral
   asset: companions/pearl-washington-neutral
   size: 896x1152
-  seed: 860085
+  seed: 860087
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
     a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
@@ -1045,7 +1070,7 @@ subjects:
   title: Pearl Washington · happy
   asset: companions/pearl-washington-happy
   size: 896x1152
-  seed: 860086
+  seed: 860088
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
     a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
@@ -1057,7 +1082,7 @@ subjects:
   title: Pearl Washington · scared
   asset: companions/pearl-washington-scared
   size: 896x1152
-  seed: 860087
+  seed: 860089
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
     a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
@@ -1069,7 +1094,7 @@ subjects:
   title: Pearl Washington · angry
   asset: companions/pearl-washington-angry
   size: 896x1152
-  seed: 860088
+  seed: 860090
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
     a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
@@ -1081,7 +1106,7 @@ subjects:
   title: Pearl Washington · sad
   asset: companions/pearl-washington-sad
   size: 896x1152
-  seed: 860089
+  seed: 860091
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
     a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
@@ -1093,7 +1118,7 @@ subjects:
   title: Pearl Washington · determined
   asset: companions/pearl-washington-determined
   size: 896x1152
-  seed: 860090
+  seed: 860092
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
     a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
@@ -1105,7 +1130,7 @@ subjects:
   title: Bea Lindqvist · poster
   asset: companions/bea-lindqvist-poster
   size: 832x1216
-  seed: 860091
+  seed: 860093
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of an 11-year-old Swedish American girl with pale freckled skin and a
     gap in her front teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker
@@ -1119,7 +1144,7 @@ subjects:
   title: Bea Lindqvist · neutral
   asset: companions/bea-lindqvist-neutral
   size: 896x1152
-  seed: 860092
+  seed: 860094
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
     teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
@@ -1131,7 +1156,7 @@ subjects:
   title: Bea Lindqvist · happy
   asset: companions/bea-lindqvist-happy
   size: 896x1152
-  seed: 860093
+  seed: 860095
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
     teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
@@ -1143,7 +1168,7 @@ subjects:
   title: Bea Lindqvist · scared
   asset: companions/bea-lindqvist-scared
   size: 896x1152
-  seed: 860094
+  seed: 860096
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
     teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
@@ -1155,7 +1180,7 @@ subjects:
   title: Bea Lindqvist · angry
   asset: companions/bea-lindqvist-angry
   size: 896x1152
-  seed: 860095
+  seed: 860097
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
     teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
@@ -1167,7 +1192,7 @@ subjects:
   title: Bea Lindqvist · sad
   asset: companions/bea-lindqvist-sad
   size: 896x1152
-  seed: 860096
+  seed: 860098
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
     teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
@@ -1180,7 +1205,7 @@ subjects:
   title: Bea Lindqvist · determined
   asset: companions/bea-lindqvist-determined
   size: 896x1152
-  seed: 860097
+  seed: 860099
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
     teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
@@ -1192,7 +1217,7 @@ subjects:
   title: Jesse "Moose" Kowalski · poster
   asset: companions/moose-kowalski-poster
   size: 832x1216
-  seed: 860098
+  seed: 860100
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed
     grin, a curly sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater,
@@ -1206,7 +1231,7 @@ subjects:
   title: Jesse "Moose" Kowalski · neutral
   asset: companions/moose-kowalski-neutral
   size: 896x1152
-  seed: 860099
+  seed: 860101
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
     sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
@@ -1218,7 +1243,7 @@ subjects:
   title: Jesse "Moose" Kowalski · happy
   asset: companions/moose-kowalski-happy
   size: 896x1152
-  seed: 860100
+  seed: 860102
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
     sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
@@ -1230,7 +1255,7 @@ subjects:
   title: Jesse "Moose" Kowalski · scared
   asset: companions/moose-kowalski-scared
   size: 896x1152
-  seed: 860101
+  seed: 860103
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
     sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
@@ -1242,7 +1267,7 @@ subjects:
   title: Jesse "Moose" Kowalski · angry
   asset: companions/moose-kowalski-angry
   size: 896x1152
-  seed: 860102
+  seed: 860104
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
     sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
@@ -1254,7 +1279,7 @@ subjects:
   title: Jesse "Moose" Kowalski · sad
   asset: companions/moose-kowalski-sad
   size: 896x1152
-  seed: 860103
+  seed: 860105
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
     sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
@@ -1266,7 +1291,7 @@ subjects:
   title: Jesse "Moose" Kowalski · determined
   asset: companions/moose-kowalski-determined
   size: 896x1152
-  seed: 860104
+  seed: 860106
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
     sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
@@ -1278,7 +1303,7 @@ subjects:
   title: Priya Raman · poster
   asset: companions/priya-raman-poster
   size: 832x1216
-  seed: 860105
+  seed: 860107
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a 16-year-old Indian American girl with warm brown skin and thick
     dark brows, long black hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed
@@ -1292,7 +1317,7 @@ subjects:
   title: Priya Raman · neutral
   asset: companions/priya-raman-neutral
   size: 896x1152
-  seed: 860106
+  seed: 860108
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
     hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
@@ -1305,7 +1330,7 @@ subjects:
   title: Priya Raman · happy
   asset: companions/priya-raman-happy
   size: 896x1152
-  seed: 860107
+  seed: 860109
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
     hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
@@ -1318,7 +1343,7 @@ subjects:
   title: Priya Raman · scared
   asset: companions/priya-raman-scared
   size: 896x1152
-  seed: 860108
+  seed: 860110
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
     hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
@@ -1331,7 +1356,7 @@ subjects:
   title: Priya Raman · angry
   asset: companions/priya-raman-angry
   size: 896x1152
-  seed: 860109
+  seed: 860111
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
     hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
@@ -1344,7 +1369,7 @@ subjects:
   title: Priya Raman · sad
   asset: companions/priya-raman-sad
   size: 896x1152
-  seed: 860110
+  seed: 860112
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
     hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
@@ -1357,7 +1382,7 @@ subjects:
   title: Priya Raman · determined
   asset: companions/priya-raman-determined
   size: 896x1152
-  seed: 860111
+  seed: 860113
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
     hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
@@ -1370,7 +1395,7 @@ subjects:
   title: Lou "Lightning" Tran · poster
   asset: companions/lou-tran-poster
   size: 832x1216
-  seed: 860112
+  seed: 860114
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a wiry 15-year-old Vietnamese American boy with a sly grin, short
     black hair with a lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless
@@ -1383,7 +1408,7 @@ subjects:
   title: Lou "Lightning" Tran · neutral
   asset: companions/lou-tran-neutral
   size: 896x1152
-  seed: 860113
+  seed: 860115
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
     lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
@@ -1395,7 +1420,7 @@ subjects:
   title: Lou "Lightning" Tran · happy
   asset: companions/lou-tran-happy
   size: 896x1152
-  seed: 860114
+  seed: 860116
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
     lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
@@ -1407,7 +1432,7 @@ subjects:
   title: Lou "Lightning" Tran · scared
   asset: companions/lou-tran-scared
   size: 896x1152
-  seed: 860115
+  seed: 860117
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
     lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
@@ -1419,7 +1444,7 @@ subjects:
   title: Lou "Lightning" Tran · angry
   asset: companions/lou-tran-angry
   size: 896x1152
-  seed: 860116
+  seed: 860118
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
     lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
@@ -1431,7 +1456,7 @@ subjects:
   title: Lou "Lightning" Tran · sad
   asset: companions/lou-tran-sad
   size: 896x1152
-  seed: 860117
+  seed: 860119
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
     lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
@@ -1443,7 +1468,7 @@ subjects:
   title: Lou "Lightning" Tran · determined
   asset: companions/lou-tran-determined
   size: 896x1152
-  seed: 860118
+  seed: 860120
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
     lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
@@ -1455,7 +1480,7 @@ subjects:
   title: Father Ignatius "Iggy" Reyes · poster
   asset: companions/iggy-reyes-poster
   size: 832x1216
-  seed: 860119
+  seed: 860121
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a 31-year-old Filipino American priest with warm tan skin and a lopsided
     grin, a black spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded
@@ -1469,7 +1494,7 @@ subjects:
   title: Father Ignatius "Iggy" Reyes · neutral
   asset: companions/iggy-reyes-neutral
   size: 896x1152
-  seed: 860120
+  seed: 860122
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
     spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
@@ -1482,7 +1507,7 @@ subjects:
   title: Father Ignatius "Iggy" Reyes · happy
   asset: companions/iggy-reyes-happy
   size: 896x1152
-  seed: 860121
+  seed: 860123
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
     spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
@@ -1494,7 +1519,7 @@ subjects:
   title: Father Ignatius "Iggy" Reyes · scared
   asset: companions/iggy-reyes-scared
   size: 896x1152
-  seed: 860122
+  seed: 860124
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
     spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
@@ -1507,7 +1532,7 @@ subjects:
   title: Father Ignatius "Iggy" Reyes · angry
   asset: companions/iggy-reyes-angry
   size: 896x1152
-  seed: 860123
+  seed: 860125
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
     spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
@@ -1519,7 +1544,7 @@ subjects:
   title: Father Ignatius "Iggy" Reyes · sad
   asset: companions/iggy-reyes-sad
   size: 896x1152
-  seed: 860124
+  seed: 860126
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
     spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
@@ -1532,7 +1557,7 @@ subjects:
   title: Father Ignatius "Iggy" Reyes · determined
   asset: companions/iggy-reyes-determined
   size: 896x1152
-  seed: 860125
+  seed: 860127
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
     spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
@@ -1545,7 +1570,7 @@ subjects:
   title: Sunny Castellanos · poster
   asset: companions/sunny-castellanos-poster
   size: 832x1216
-  seed: 860126
+  seed: 860128
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a 22-year-old Puerto Rican woman with golden-brown skin and strong
     shoulders, a big mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut
@@ -1558,7 +1583,7 @@ subjects:
   title: Sunny Castellanos · neutral
   asset: companions/sunny-castellanos-neutral
   size: 896x1152
-  seed: 860127
+  seed: 860129
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
     mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
@@ -1570,7 +1595,7 @@ subjects:
   title: Sunny Castellanos · happy
   asset: companions/sunny-castellanos-happy
   size: 896x1152
-  seed: 860128
+  seed: 860130
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
     mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
@@ -1582,7 +1607,7 @@ subjects:
   title: Sunny Castellanos · scared
   asset: companions/sunny-castellanos-scared
   size: 896x1152
-  seed: 860129
+  seed: 860131
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
     mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
@@ -1594,7 +1619,7 @@ subjects:
   title: Sunny Castellanos · angry
   asset: companions/sunny-castellanos-angry
   size: 896x1152
-  seed: 860130
+  seed: 860132
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
     mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
@@ -1606,7 +1631,7 @@ subjects:
   title: Sunny Castellanos · sad
   asset: companions/sunny-castellanos-sad
   size: 896x1152
-  seed: 860131
+  seed: 860133
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
     mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
@@ -1618,7 +1643,7 @@ subjects:
   title: Sunny Castellanos · determined
   asset: companions/sunny-castellanos-determined
   size: 896x1152
-  seed: 860132
+  seed: 860134
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
     mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
@@ -1630,7 +1655,7 @@ subjects:
   title: Wade Whitfield · poster
   asset: companions/wade-whitfield-poster
   size: 832x1216
-  seed: 860133
+  seed: 860135
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes,
     a long feathered dirty-blond mullet, a sleeveless faded denim vest covered in metal band patches over a black
@@ -1644,7 +1669,7 @@ subjects:
   title: Wade Whitfield · neutral
   asset: companions/wade-whitfield-neutral
   size: 896x1152
-  seed: 860134
+  seed: 860136
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
     mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
@@ -1656,7 +1681,7 @@ subjects:
   title: Wade Whitfield · happy
   asset: companions/wade-whitfield-happy
   size: 896x1152
-  seed: 860135
+  seed: 860137
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
     mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
@@ -1668,7 +1693,7 @@ subjects:
   title: Wade Whitfield · scared
   asset: companions/wade-whitfield-scared
   size: 896x1152
-  seed: 860136
+  seed: 860138
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
     mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
@@ -1680,7 +1705,7 @@ subjects:
   title: Wade Whitfield · angry
   asset: companions/wade-whitfield-angry
   size: 896x1152
-  seed: 860137
+  seed: 860139
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
     mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
@@ -1692,7 +1717,7 @@ subjects:
   title: Wade Whitfield · sad
   asset: companions/wade-whitfield-sad
   size: 896x1152
-  seed: 860138
+  seed: 860140
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
     mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
@@ -1704,7 +1729,7 @@ subjects:
   title: Wade Whitfield · determined
   asset: companions/wade-whitfield-determined
   size: 896x1152
-  seed: 860139
+  seed: 860141
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
     mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
@@ -1716,7 +1741,7 @@ subjects:
   title: Zelda Fishbein · poster
   asset: companions/zelda-fishbein-poster
   size: 832x1216
-  seed: 860140
+  seed: 860142
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: 'Full-body heroic 1986 pose of a 63-year-old Jewish woman with olive skin and deep laugh lines,
     a dramatic silver-streaked black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video
@@ -1730,7 +1755,7 @@ subjects:
   title: Zelda Fishbein · neutral
   asset: companions/zelda-fishbein-neutral
   size: 896x1152
-  seed: 860141
+  seed: 860143
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
     black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
@@ -1742,7 +1767,7 @@ subjects:
   title: Zelda Fishbein · happy
   asset: companions/zelda-fishbein-happy
   size: 896x1152
-  seed: 860142
+  seed: 860144
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
     black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
@@ -1754,7 +1779,7 @@ subjects:
   title: Zelda Fishbein · scared
   asset: companions/zelda-fishbein-scared
   size: 896x1152
-  seed: 860143
+  seed: 860145
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
     black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
@@ -1766,7 +1791,7 @@ subjects:
   title: Zelda Fishbein · angry
   asset: companions/zelda-fishbein-angry
   size: 896x1152
-  seed: 860144
+  seed: 860146
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
     black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
@@ -1778,7 +1803,7 @@ subjects:
   title: Zelda Fishbein · sad
   asset: companions/zelda-fishbein-sad
   size: 896x1152
-  seed: 860145
+  seed: 860147
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
     black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
@@ -1790,7 +1815,7 @@ subjects:
   title: Zelda Fishbein · determined
   asset: companions/zelda-fishbein-determined
   size: 896x1152
-  seed: 860146
+  seed: 860148
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
     black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
@@ -1802,7 +1827,7 @@ subjects:
   title: Kevin "Kev" Park · poster
   asset: companions/kev-park-poster
   size: 832x1216
-  seed: 860147
+  seed: 860149
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a skinny 12-year-old Korean American boy with a big gap-toothed grin,
     a black bowl cut under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt,
@@ -1815,7 +1840,7 @@ subjects:
   title: Kevin "Kev" Park · neutral
   asset: companions/kev-park-neutral
   size: 896x1152
-  seed: 860148
+  seed: 860150
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
     under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
@@ -1827,7 +1852,7 @@ subjects:
   title: Kevin "Kev" Park · happy
   asset: companions/kev-park-happy
   size: 896x1152
-  seed: 860149
+  seed: 860151
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
     under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
@@ -1839,7 +1864,7 @@ subjects:
   title: Kevin "Kev" Park · scared
   asset: companions/kev-park-scared
   size: 896x1152
-  seed: 860150
+  seed: 860152
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
     under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
@@ -1851,7 +1876,7 @@ subjects:
   title: Kevin "Kev" Park · angry
   asset: companions/kev-park-angry
   size: 896x1152
-  seed: 860151
+  seed: 860153
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
     under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
@@ -1863,7 +1888,7 @@ subjects:
   title: Kevin "Kev" Park · sad
   asset: companions/kev-park-sad
   size: 896x1152
-  seed: 860152
+  seed: 860154
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
     under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
@@ -1875,7 +1900,7 @@ subjects:
   title: Kevin "Kev" Park · determined
   asset: companions/kev-park-determined
   size: 896x1152
-  seed: 860153
+  seed: 860155
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
     under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
@@ -1887,7 +1912,7 @@ subjects:
   title: Raven · poster
   asset: companions/raven-poster
   size: 832x1216
-  seed: 860154
+  seed: 860156
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of an olive-skinned 16-year-old with sharp cheekbones and dark watchful
     eyes, a teased black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver
@@ -1901,7 +1926,7 @@ subjects:
   title: Raven · neutral
   asset: companions/raven-neutral
   size: 896x1152
-  seed: 860155
+  seed: 860157
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
     black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
@@ -1914,7 +1939,7 @@ subjects:
   title: Raven · happy
   asset: companions/raven-happy
   size: 896x1152
-  seed: 860156
+  seed: 860158
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
     black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
@@ -1927,7 +1952,7 @@ subjects:
   title: Raven · scared
   asset: companions/raven-scared
   size: 896x1152
-  seed: 860157
+  seed: 860159
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
     black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
@@ -1940,7 +1965,7 @@ subjects:
   title: Raven · angry
   asset: companions/raven-angry
   size: 896x1152
-  seed: 860158
+  seed: 860160
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
     black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
@@ -1953,7 +1978,7 @@ subjects:
   title: Raven · sad
   asset: companions/raven-sad
   size: 896x1152
-  seed: 860159
+  seed: 860161
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
     black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
@@ -1966,7 +1991,7 @@ subjects:
   title: Raven · determined
   asset: companions/raven-determined
   size: 896x1152
-  seed: 860160
+  seed: 860162
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
     black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
@@ -1979,7 +2004,7 @@ subjects:
   title: Coach Tammy Jo Pruitt · poster
   asset: companions/tammy-jo-pruitt-poster
   size: 832x1216
-  seed: 860161
+  seed: 860163
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a tall, broad 45-year-old white woman with a sunburned freckled face
     and a fierce squint, a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold
@@ -1992,7 +2017,7 @@ subjects:
   title: Coach Tammy Jo Pruitt · neutral
   asset: companions/tammy-jo-pruitt-neutral
   size: 896x1152
-  seed: 860162
+  seed: 860164
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
     a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
@@ -2004,7 +2029,7 @@ subjects:
   title: Coach Tammy Jo Pruitt · happy
   asset: companions/tammy-jo-pruitt-happy
   size: 896x1152
-  seed: 860163
+  seed: 860165
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
     a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
@@ -2016,7 +2041,7 @@ subjects:
   title: Coach Tammy Jo Pruitt · scared
   asset: companions/tammy-jo-pruitt-scared
   size: 896x1152
-  seed: 860164
+  seed: 860166
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
     a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
@@ -2028,7 +2053,7 @@ subjects:
   title: Coach Tammy Jo Pruitt · angry
   asset: companions/tammy-jo-pruitt-angry
   size: 896x1152
-  seed: 860165
+  seed: 860167
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
     a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
@@ -2040,7 +2065,7 @@ subjects:
   title: Coach Tammy Jo Pruitt · sad
   asset: companions/tammy-jo-pruitt-sad
   size: 896x1152
-  seed: 860166
+  seed: 860168
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
     a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
@@ -2052,7 +2077,7 @@ subjects:
   title: Coach Tammy Jo Pruitt · determined
   asset: companions/tammy-jo-pruitt-determined
   size: 896x1152
-  seed: 860167
+  seed: 860169
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
     a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
@@ -2064,7 +2089,7 @@ subjects:
   title: Dr. Amir Haddad · poster
   asset: companions/amir-haddad-poster
   size: 832x1216
-  seed: 860168
+  seed: 860170
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a 39-year-old Lebanese American man with olive skin and warm brown
     eyes, a thick salt-and-pepper mustache, wavy black hair going gray at the temples, wire glasses pushed up on
@@ -2078,7 +2103,7 @@ subjects:
   title: Dr. Amir Haddad · neutral
   asset: companions/amir-haddad-neutral
   size: 896x1152
-  seed: 860169
+  seed: 860171
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
     mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
@@ -2090,7 +2115,7 @@ subjects:
   title: Dr. Amir Haddad · happy
   asset: companions/amir-haddad-happy
   size: 896x1152
-  seed: 860170
+  seed: 860172
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
     mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
@@ -2103,7 +2128,7 @@ subjects:
   title: Dr. Amir Haddad · scared
   asset: companions/amir-haddad-scared
   size: 896x1152
-  seed: 860171
+  seed: 860173
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
     mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
@@ -2116,7 +2141,7 @@ subjects:
   title: Dr. Amir Haddad · angry
   asset: companions/amir-haddad-angry
   size: 896x1152
-  seed: 860172
+  seed: 860174
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
     mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
@@ -2128,7 +2153,7 @@ subjects:
   title: Dr. Amir Haddad · sad
   asset: companions/amir-haddad-sad
   size: 896x1152
-  seed: 860173
+  seed: 860175
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
     mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
@@ -2141,7 +2166,7 @@ subjects:
   title: Dr. Amir Haddad · determined
   asset: companions/amir-haddad-determined
   size: 896x1152
-  seed: 860174
+  seed: 860176
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
     mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
@@ -2154,7 +2179,7 @@ subjects:
   title: Chip Merriweather · poster
   asset: companions/chip-merriweather-poster
   size: 832x1216
-  seed: 860175
+  seed: 860177
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a 17-year-old white boy with a clean-cut handsome face and a dimpled,
     nervous smile, neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer
@@ -2168,7 +2193,7 @@ subjects:
   title: Chip Merriweather · neutral
   asset: companions/chip-merriweather-neutral
   size: 896x1152
-  seed: 860176
+  seed: 860178
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
     neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
@@ -2180,7 +2205,7 @@ subjects:
   title: Chip Merriweather · happy
   asset: companions/chip-merriweather-happy
   size: 896x1152
-  seed: 860177
+  seed: 860179
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
     neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
@@ -2192,7 +2217,7 @@ subjects:
   title: Chip Merriweather · scared
   asset: companions/chip-merriweather-scared
   size: 896x1152
-  seed: 860178
+  seed: 860180
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
     neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
@@ -2204,7 +2229,7 @@ subjects:
   title: Chip Merriweather · angry
   asset: companions/chip-merriweather-angry
   size: 896x1152
-  seed: 860179
+  seed: 860181
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
     neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
@@ -2216,7 +2241,7 @@ subjects:
   title: Chip Merriweather · sad
   asset: companions/chip-merriweather-sad
   size: 896x1152
-  seed: 860180
+  seed: 860182
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
     neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
@@ -2228,7 +2253,7 @@ subjects:
   title: Chip Merriweather · determined
   asset: companions/chip-merriweather-determined
   size: 896x1152
-  seed: 860181
+  seed: 860183
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
     neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
@@ -2240,7 +2265,7 @@ subjects:
   title: Joey Benally · poster
   asset: companions/joey-benally-poster
   size: 832x1216
-  seed: 860182
+  seed: 860184
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a lean 17-year-old Diné young man with brown skin and a calm, serious
     face, black hair pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt
@@ -2255,7 +2280,7 @@ subjects:
   title: Joey Benally · neutral
   asset: companions/joey-benally-neutral
   size: 896x1152
-  seed: 860183
+  seed: 860185
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
     pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
@@ -2268,7 +2293,7 @@ subjects:
   title: Joey Benally · happy
   asset: companions/joey-benally-happy
   size: 896x1152
-  seed: 860184
+  seed: 860186
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
     pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
@@ -2281,7 +2306,7 @@ subjects:
   title: Joey Benally · scared
   asset: companions/joey-benally-scared
   size: 896x1152
-  seed: 860185
+  seed: 860187
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
     pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
@@ -2294,7 +2319,7 @@ subjects:
   title: Joey Benally · angry
   asset: companions/joey-benally-angry
   size: 896x1152
-  seed: 860186
+  seed: 860188
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
     pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
@@ -2307,7 +2332,7 @@ subjects:
   title: Joey Benally · sad
   asset: companions/joey-benally-sad
   size: 896x1152
-  seed: 860187
+  seed: 860189
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
     pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
@@ -2320,7 +2345,7 @@ subjects:
   title: Joey Benally · determined
   asset: companions/joey-benally-determined
   size: 896x1152
-  seed: 860188
+  seed: 860190
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
     pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
@@ -2333,7 +2358,7 @@ subjects:
   title: Barnaby · poster
   asset: companions/barnaby-poster
   size: 832x1216
-  seed: 860189
+  seed: 860191
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Full-body heroic 1986 pose of a long, low tricolor basset hound with droopy brown eyes and a white
     muzzle going gray, enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white
@@ -2346,7 +2371,7 @@ subjects:
   title: Barnaby · neutral
   asset: companions/barnaby-neutral
   size: 896x1152
-  seed: 860190
+  seed: 860192
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
     enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
@@ -2358,7 +2383,7 @@ subjects:
   title: Barnaby · happy
   asset: companions/barnaby-happy
   size: 896x1152
-  seed: 860191
+  seed: 860193
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
     enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
@@ -2369,7 +2394,7 @@ subjects:
   title: Barnaby · scared
   asset: companions/barnaby-scared
   size: 896x1152
-  seed: 860192
+  seed: 860194
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
     enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
@@ -2381,7 +2406,7 @@ subjects:
   title: Barnaby · angry
   asset: companions/barnaby-angry
   size: 896x1152
-  seed: 860193
+  seed: 860195
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
     enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
@@ -2392,7 +2417,7 @@ subjects:
   title: Barnaby · sad
   asset: companions/barnaby-sad
   size: 896x1152
-  seed: 860194
+  seed: 860196
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
     enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
@@ -2403,7 +2428,7 @@ subjects:
   title: Barnaby · determined
   asset: companions/barnaby-determined
   size: 896x1152
-  seed: 860195
+  seed: 860197
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
     enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
@@ -2414,7 +2439,7 @@ subjects:
   title: Crystal Street
   asset: locations/crystal-street
   size: 1344x768
-  seed: 860196
+  seed: 860198
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A sunny 1980s suburban cul-de-sac of identical split-level houses with tidy lawns, a roundabout
     garden at its center holding a car-sized purple geode, bikes on driveways, jack-o-lanterns on porches, faint
@@ -2425,7 +2450,7 @@ subjects:
   title: Glimmer Falls Public Library
   asset: locations/library
   size: 1344x768
-  seed: 860197
+  seed: 860199
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A red-brick Carnegie library with white columns and a boxy 1970s annex, autumn leaves on the steps,
     a motorcycle parked by the book drop, tall arched windows glowing warm in afternoon light
@@ -2435,7 +2460,7 @@ subjects:
   title: Pump Iron Gym and Aerobics
   asset: locations/gym
   size: 1344x768
-  seed: 860198
+  seed: 860200
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A 1980s strip-mall gym with a neon Pump Iron sign, chrome weight machines visible through the front
     window, a mirrored aerobics studio and an attached roller rink with a spinning disco ball, afternoon sun on
@@ -2446,7 +2471,7 @@ subjects:
   title: Glimmer Falls High
   asset: locations/high-school
   size: 1344x768
-  seed: 860199
+  seed: 860201
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A sprawling 1960s brick high school with a marquee sign reading go geodes, a football field behind
     it, rows of lockers glimpsed through glass doors, kids with backpacks on the front steps in autumn light
@@ -2456,7 +2481,7 @@ subjects:
   title: Rewind Video
   asset: locations/rewind-video
   size: 1344x768
-  seed: 860200
+  seed: 860202
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A cozy 1980s video rental store in a strip mall, walls of VHS boxes, a horror aisle lit purple,
     a retro counter with a rewinder machine, a night-drop slot beside the glass door, afternoon sun through window
@@ -2467,7 +2492,7 @@ subjects:
   title: Starlight Mall and Arcade
   asset: locations/starlight-mall
   size: 1344x768
-  seed: 860201
+  seed: 860203
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A bustling two-story 1980s shopping mall atrium with neon signs, a fountain full of coins, escalators,
     a glowing arcade entrance, and at the far end a plywood barrier sealing off a dim abandoned wing
@@ -2477,7 +2502,7 @@ subjects:
   title: The Glitter Box Playhouse
   asset: locations/glitter-box
   size: 1344x768
-  seed: 860202
+  seed: 860204
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A small ornate 1920s vaudeville theatre with a bulb-lit marquee reading drag revue and midnight
     double feature, gold paint peeling on the facade, a glass display case of sequined performer photos, afternoon
@@ -2488,7 +2513,7 @@ subjects:
   title: St. Jude's and Pinecrest Cemetery
   asset: locations/pinecrest
   size: 1344x768
-  seed: 860203
+  seed: 860205
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A small stone church with a bell tower beside a hilly cemetery of crooked oaks, mausoleums and leaning
     headstones, fallen leaves, a groundskeeper's shed and a wrought-iron gate in late afternoon light
@@ -2498,7 +2523,7 @@ subjects:
   title: KGLM 103.3 and the Water Tower
   asset: locations/kglm-radio
   size: 1344x768
-  seed: 860204
+  seed: 860206
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A small cinderblock radio station on a grassy hilltop beneath a tall round water tower painted Glimmer
     Falls, a red-blinking transmitter antenna, a pickup truck parked outside, golden afternoon light over the valley
@@ -2508,7 +2533,7 @@ subjects:
   title: Rusty's Junkyard
   asset: locations/junkyard
   size: 1344x768
-  seed: 860205
+  seed: 860207
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A sprawling junkyard of rusted 1950s and 1970s cars stacked in towering rows behind a chain-link
     fence, a hulking car crusher, a converted school bus garage with tools hanging outside, a basset hound napping
@@ -2519,7 +2544,7 @@ subjects:
   title: Oddment and Daughters
   asset: locations/pawnshop
   size: 1344x768
-  seed: 860206
+  seed: 860208
   negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
   prompt_prose: A narrow, crooked little shop wedged into an empty lot, its windows crammed with clocks, music boxes,
     dolls and brass curiosities, a hand-painted sign reading Oddment and Daughters, warm lamplight inside in broad

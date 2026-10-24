@@ -1,7 +1,7 @@
 # Nightmare on Crystal Street: design brief
 
 Working title (Silas, 2026-10-24 PT). A full single-screen, console-style 80s horror-comedy
-card adventure. One week on an idyllic suburban cul-de-sac beset by one of twenty nightmares;
+card adventure. One week on an idyllic suburban cul-de-sac beset by one of twenty-two nightmares (many flipped or bent classic villains);
 days for investigation and friendship, nights for survival. Creepy but fun, camp as a weapon,
 queer theatre and LGBT+ joy at its heart.
 
@@ -26,6 +26,23 @@ endings depending on whether the villain's central issue was explored and enough
 encounters were rolled successfully; **one Best ending per antagonist**; every run recorded in
 a **scrapbook**. Memorable scenes, captivating backstories, and many choices with 2+ options
 whose positive and negative outcomes all get art.
+
+## The re-cast: flipped and bent classics (Silas, 2026-10-24 PT)
+
+The nightmares start as gender-flipped or gender-bent takes on classic movie villains,
+not all of them. The aim is to name the stereotype each original leaned on (the queer-coded
+seducer vampire, the man in makeup as predator, sex as a death sentence, the killer-in-a-dress
+reveal, the purity rule) and find what the story gains from a queerer, different angle, without
+ever making gender variance or transness the scare. The roster is now 22: Counselor Chad
+became Counselor Jess (Jason flipped), Screwhead became Magda Szabo (Pinhead flipped), and two
+were added: The Shape in the Cardigan (Michael Myers flipped) and The Final Cut (the killer-reveal
+trope itself as the villain). Each villain carries an `inspiration` block (original, film,
+year, flip/bend/remix, old script, new lens), shown on the arrival splash and the case board.
+Full table: [WRITING-GUIDE.md](WRITING-GUIDE.md#the-re-cast-classic-villains-flipped-and-bent-silas-2026-10-24-pt).
+
+**Cover art (Silas, 2026-10-24 PT):** the approved gender-swapped Jason from the Hollywood
+Monsters Recast coloring book ("Masking Up", `projects/coloring-book/sets/monster-recast/approved/masking-up-color.webp`).
+It is the title-screen hero, the project icon/card/hero, and Counselor Jess's poster.
 
 ## Core loop
 

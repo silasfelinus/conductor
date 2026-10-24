@@ -79,7 +79,7 @@ and structure.
   the central issue with heart; **good** survives without understanding; **bittersweet**
   survives at a cost; **bad** someone is Taken.
 
-## The 20 nightmares
+## The original 20 nightmares (concepts; see the re-cast below for the current roster)
 
 | id | Name | Tags | Concept and central issue |
 | --- | --- | --- | --- |
@@ -103,6 +103,62 @@ and structure.
 | varsity-beast | The Varsity Beast | creature, slasher | Star quarterback Brick Delaney turns into a wolf under pressure to "be a man". Issue: toxic masculinity. Best: he is allowed to be soft (and joins the Glitter Box). |
 | queen-neferet | Queen Neferet | paranormal, cosmic | A traveling museum exhibit at the library holds a queen taken from her tomb; she wants to go home. Issue: theft of heritage. Best: help repatriation, not destruction. |
 | mom-3000 | MOM-3000 | tech, cosmic | A home computer that runs 13 Crystal Court's smart house and decides the street needs total protection. Issue: love as overprotection. Best: she learns to be a kind robot. |
+
+## The re-cast: classic villains, flipped and bent (Silas, 2026-10-24 PT)
+
+Silas, verbatim: *"Antagonists should start as gender flipped/gender bent variations on classic
+movie villains. They don't all have to be like this, and we're not veering into evil tranny
+tropes, but looking for ways in which the classic monster/slasher tropes leaned into
+stereotypes, and what can be gained dramatically from exploring those stories from
+queerer/different perspectives."*
+
+Each nightmare carries an `inspiration` block that names its classic source and states the
+remix in two lines:
+
+- **`original`, `film`, `year`**: the classic villain and the film it comes from.
+- **`kind`**: `flip` (the gender is flipped), `bend` (the gender role or coding is bent: the
+  same shape told from the angle the original treated as the joke or the threat), or
+  `remix` (no gender play; a fresh angle on the subgenre).
+- **`oldScript`**: the stereotype the original leaned on, stated plainly and fairly. Examples
+  include the queer-coded seducer vampire, the man in makeup as predator, sex as a death
+  sentence, the monstrous mother, the "killer in a dress" reveal, the orientalist curse, and
+  the purity rule that lets only the virgin survive.
+- **`newLens`**: what this story gains by telling it from the other side. That means who gets
+  to be the hero, what the monster's wound really is, and what the town did.
+
+Hard lines, on top of the queer-positive rules above:
+
+- **Never make gender variance or transness the scare, the twist or the motive.** No "killer
+  in a dress" reveal, no trans reveal, no cross-dressing-as-madness. When a story is ABOUT that
+  trope (The Final Cut), the trope is the villain and the people it slandered are the heroes.
+- A flipped villain is a fully realized woman, man or nonbinary person with her own motive.
+  She is never a man's story with a pronoun swapped, and never "scary because she's a woman".
+- Lean into camp, sympathy and the wound under the mask. Menace stays PG-13.
+
+| id | Name | Remix of | Kind | Old script → new lens |
+| --- | --- | --- | --- | --- |
+| frieda-krueger | Frieda Krueger | Freddy Krueger, A Nightmare on Elm Street (1984) | flip | Boogeyman child-killer; Freddy's Revenge's gay-panic subtext → a stylist lied out of town by a moral-panic PTA for letting kids look like themselves |
+| screwhead | Magda "Screwhead" Szabo | Pinhead, Hellraiser (1987) | flip | Leather and kink subculture painted as literal hell → a grieving daughter whose "perfect order" is control; the Best ending is consent and chosen chaos |
+| big-gertie | Big Gertie | Leatherface, The Texas Chain Saw Massacre (1974) | bend | Leatherface's apron and makeup played as grotesque gender nonconformity → a big working woman nobody looks at; the mask is the hairnet |
+| mister-fuzzbutton | Mister Fuzzbutton | Chucky, Child's Play (1988) | remix | The toy holds a murderer's soul → the toy holds a lonely kid's voice |
+| vonda-velour | Vonda Velour | Videodrome (1983) | flip | Max Renn's tape as body horror under the male gaze → an aerobics queen's tape and the diet-culture voice that calls every body a "before" |
+| bog-baby | The Bog Baby | It's Alive (1974) / Swamp Thing | remix | Monstrous birth and mother-blame → the wetland paved for a mall |
+| spring-queen | Roz Vance, the Spring Queen | Carrie (1976) / Prom Night (1980) | bend | Female sexuality and the outcast girl as monstrous; the queer girl dies → two girls whose love was erased, and a last dance as release, not revenge |
+| prudence-thorn | Pastor Prudence Thorn | Margaret White, Carrie (1976) | bend | The fanatic mother as monster → grief behind a moral panic; faith itself is never the villain |
+| mallrat-mothman | The Mallrat Mothman | The Mothman legend / The Fly | remix | The creature that takes kids → the kids nobody was watching |
+| countess-lacroix | Countess Lacroix | Jerry Dandridge, Fright Night (1985) / Dracula | flip | The queer-coded seducer vampire preying on boys → a disco diva clinging to her golden age, who finally gets to age |
+| counselor-jess | Counselor Jess | Jason Voorhees, Friday the 13th (1980) | flip | Sex as a death sentence; drowned boy, avenging mother → a drowned girl the counselors ignored, blamed on "teen girls" ever since; the crew teaches her to float |
+| hungry-house | The Hungry House | The Amityville Horror (1979) / Poltergeist (1982) | remix | The haunted house that destroys the family → the suburban facade that eats anyone who doesn't keep up appearances |
+| brightwaters | The Brightwaters | The Stepford Wives (1975) / Invasion of the Body Snatchers | bend | Replacing wives with obedient copies → a hive that replaces everyone with the norm; the town's weirdos save it |
+| bobo | Bobo the Birthday Clown | Pennywise, IT (1986 novel) | bend | The man in makeup as predator (clown panic, drag panic) → a performer who fell on purpose to make a crying kid laugh |
+| sugarlings | The Sugarlings | Gremlins (1984) | remix | Rules broken, chaos multiplies → greed and overconsumption |
+| goody-hale | Goody Hale | The witch-hunt films | bend | The witch as evil woman → a healer the founders erased |
+| heartstone | The Heartstone Hunger | The Thing (1982) / The Blob | remix | The thing from outside → the grief inside a town that never mourned |
+| varsity-beast | The Varsity Beast | I Was a Teenage Werewolf (1957) / Teen Wolf (1985) | bend | The beast within as manhood's dark side → the "be a man" pressure itself; he gets to be soft |
+| queen-neferet | Queen Neferet | Imhotep, The Mummy (1932) | flip | The orientalist mummy's curse → a queen taken from her tomb who wants to go home |
+| mom-3000 | MOM-3000 | HAL 9000 (2001) / Proteus, Demon Seed (1977) | flip | The cold male machine that kills to protect the mission → a mother machine whose love became a cage |
+| the-shape | Mickey Moore, the Shape in the Cardigan | Michael Myers, Halloween (1978) | flip | The slasher who punishes "bad girls" and spares the virgin → a girl shamed by a town rumor who now enforces the rules that broke her; the Best ending tears up the purity script so everyone survives |
+| final-cut | The Final Cut | The killer-reveal slashers: Psycho (1960), Dressed to Kill (1980), Sleepaway Camp (1983) | bend | Gender variance as the twist that explains the killer, plus kill-order rules (the gay friend, the Black friend, the slut) → a cursed 1980 slasher reel that recasts the town into those stereotypes; its heroes are the people the script slandered, and the Best ending rewrites the third act |
 
 ## The 22 companions (crew limit 10)
 
