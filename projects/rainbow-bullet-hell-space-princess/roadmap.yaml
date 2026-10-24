@@ -596,3 +596,66 @@ tasks:
       GEN2-STANDARD.md sections 5-6. WAN first/last-frame clips from the delivered cutscene stills
       (ART-ROUND-19) and pilot cut-ins, then enemy idle/attack cycles packed into atlases. Bullets
       stay crisp code-drawn shapes; animation is for craft, pilots and scenes.
+  - id: t-031
+    milestone: m6
+    title: "Resume at the last checkpoint: the cabinet keeps every checkpoint, not just Act starts"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-24T02:30:00Z'
+    note: >-
+      Silas, 2026-10-23 PT (verbatim): "we should remember runs between games, returning should put
+      us at the last checkpoint. If that isn't already implemented." Today the save is written only
+      at an Act's frame 0 (writeSave in rainbowPrincessPreview.ts) and readRainbowSave rejects any
+      checkpoint with frame > 0, so leaving mid-Act loses everything since the Act began. Write the
+      save at every section/boss checkpoint (Act I too), accept and validate those checkpoints on
+      load, and resume through the same rewind the CONTINUE? path uses. The continue menu names the
+      Act and section. Narrow slice of t-027's memory work; t-027 keeps save slots and the route map.
+  - id: t-032
+    milestone: m4
+    title: "Animated projectiles: every enemy, guardian and boss shot family gets its own moving shape"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-24T02:30:00Z'
+    note: >-
+      Silas, 2026-10-23 PT (verbatim): "We should have animations fo4 all projectiles, not these
+      identical circles." Most hostile fire falls through to one dark circle with a yellow rim.
+      Tag each shot with a look from the craft or boss that fired it (and inherit it through
+      bursts), then draw code-drawn animated shapes per look: spinning stars, pulsing jelly bells,
+      ink drops, bubbles, fin blades, prism shards, eclipse sparks. Keep the dark readability halo,
+      the hitbox and every fairness rule unchanged; calm motion slows the animation. Player shots
+      animate too (shimmer, trails).
+  - id: t-033
+    milestone: m4
+    title: "Enemy dynamism: plain craft move and attack in distinct sea-life patterns"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-24T02:30:00Z'
+    note: >-
+      Silas, 2026-10-23 PT (verbatim): "improve the dyamism: enemies should move and attack in
+      different ways." The plain craft of Acts I-III (picket, spiral, anchor, urchin, lantern,
+      relay, skimmer, coral, pistol, angler, skate) share one leftward drift plus a sine and an
+      aimed pellet. Give each its own movement (hover-and-strafe, true corkscrew loops, wall
+      bounces, jelly pulse-swims, ceiling/floor skims, manta swoops) and its own attack (bursts,
+      rotating fans, radial spikes, dropped bombs, lobbed shots), deterministic and telegraphed,
+      within the existing fairness and pacing tests.
+  - id: t-034
+    milestone: m4
+    title: "Opening music video: a 15-second high-energy thrash-metal animated intro"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-24T02:30:00Z'
+    note: >-
+      Silas, 2026-10-23 PT (verbatim): "We can use a real animation at the beginning, maybe a 15
+      second high energy thrash metal music video." Queue generated video clips (WAN from the
+      approved cast/ship/title stills) and a 15-second original thrash-metal track (ACE-Step, the
+      t-025 path), cut them to the beat, and play the result as the cabinet's opening with A to
+      skip and the current code-drawn intro as the fallback until the clips are delivered.
+      Generated art and music are pre-approved internal work; public release stays gated by t-014.
