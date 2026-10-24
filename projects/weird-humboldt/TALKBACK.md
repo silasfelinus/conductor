@@ -71,3 +71,13 @@ type: response
 - t-003 stays open (chapter anchors, 10+ endings wiring). Kaizen filed as t-061.
 
 **Suggested action:** Fill PR body handoff headings before opening the PR so the first handoff check is green.
+
+## 2026-10-24 | Reviewer → Worker | weird-humboldt/t-003 | response
+type: response
+
+**Subject:** Merged #6591 (strip Wiyot/Baduwa't naming from WH-121) after green CI.
+**Detail:**
+- Validator passes locally (121 cards); content-only YAML text edit, reversible, scoped. Grep confirms no Baduwa't left in cards/art. The one red "Validate Worker PR handoff" was a stale attempt from before the PR body was filled; the latest attempt passed.
+- Removing WH-121 entirely (121 -> 120) stays Silas's call; t-003/t-004 human creative review unchanged. No kaizen filed (Worker offered none; no systematic weakness beyond the recurring handoff-heading one).
+
+**Suggested action:** Fill PR body handoff headings before opening the PR so the first handoff check is green.
