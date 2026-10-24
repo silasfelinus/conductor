@@ -77,16 +77,21 @@ tasks:
   - id: t-001
     milestone: m2
     title: "Design brief, writing guide, and the playable first slice at /admin/crystal-street"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
+    pr: silasfelinus/kind_robots#4101
     note: >-
-      Session 2026-10-24 PT (claude/crystal-street-t001). DESIGN-BRIEF.md and WRITING-GUIDE.md
-      written; kind_robots ships the engine (utils/crystalStreet/rules.ts), 20 nightmares,
-      22 companions, 11 locations with 44 daylight beats, 8 night decks, 17 items, the store,
-      the console UI, the admin tab, the Playbook Manager adapter, the contract test with
-      seeded autoplay balance, and its CI workflow.
+      DONE 2026-10-24 PT. kind_robots #4101 merged as 5274977 (all 24 checks green). Ships the
+      seeded engine (utils/crystalStreet/rules.ts), 20 nightmares, 22 companions, 11 locations
+      with 44 daylight beats, 8 night decks (48 cards), 17 items, illustrated success and failure
+      on every choice (1,768 contract-clean prompts), the single-screen console UI at
+      /admin/crystal-street with SVG art fallbacks, scrapbook, Playbook Manager adapter with
+      live text overlay, contract test with seeded autoplay balance (Best 49% for a near-optimal
+      policy) and its CI workflow. Cover art is the approved Monster Recast "Masking Up" pair.
+      Verified at 390, 768 and 1440 widths in a local dev server with Playwright: no page scroll.
+      Admin-only; reaches production with the next Alexandria deploy.
 
   - id: t-002
     milestone: m1
@@ -111,7 +116,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Deliver art round 1 into the runtime paths"
-    status: waiting
+    status: ready
     depends_on: t-001
     owner: null
     passes: 0
@@ -231,8 +236,9 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Re-cast the nightmares as gender-flipped and gender-bent classic villains"
-    status: claimed
+    status: review
     owner: reviewer
+    pr: silasfelinus/kind_robots#4103
     passes: 0
     stakes: reversible
     note: >-
