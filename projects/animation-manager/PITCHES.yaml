@@ -2512,3 +2512,35 @@ pitches:
           - kind_robots PR #4058 merged (squash 3904a55), all CI checks green
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+
+  - id: wind-chime-garden
+    title: Wind Chime Garden
+    status: candidate
+    priority: 51
+    surprise: |
+      Seven wind chimes sway through slow gusts and send a faint halo from the tip of every swing.
+    passive_loop: |
+      Each chime swings on its own sum-of-sines gust wave over a 36-second wind cycle and emits one fading ring per swing, no interaction needed.
+    optional_interaction: |
+      Hovering brightens nearby chimes; a rate-limited click sends a brief gust through the garden.
+    technique: |
+      One canvas, closed-form sway angle and ring phase from a single clock.
+    reduced_motion: |
+      Draws one static frame with no motion, hover or click.
+    performance_risk: |
+      Low: seven tubes and seven rings per frame.
+    novelty: |
+      First hanging-chime swing piece; Pendulum Wave Garden is a bob row, not wind-driven.
+    acceptance:
+      - the chimes sway and ring continuously without interaction
+      - hovering brightens nearby chimes and clicking gusts at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/wind-chime-garden.vue
+        pull_request: silasfelinus/kind_robots#4109
+        released_at: '2026-10-24T13:00:00Z'
+        verification:
+          - kind_robots PR #4109 merged (squash b0cb88e), all 18 CI checks green
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
