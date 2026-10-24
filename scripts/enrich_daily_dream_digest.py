@@ -55,7 +55,10 @@ def enrich_digest(
         f"{current['proposal_date']} proposal. No newer completed bundle exists "
         f"for the {today.isoformat()} digest."
     )
-    output["current_dream_output"] = payload
+    # Keep the old bundle inspectable, but never pass it into the daily email
+    # as though the same creative work were a new submission.
+    output["latest_completed_dream_output"] = payload
+    output["current_dream_output"] = None
     output["daily_dream_output_status"] = (
         f"No new Daily Dream bundle completed for {today.isoformat()}; "
         f"latest completed output was built {built_label}."
