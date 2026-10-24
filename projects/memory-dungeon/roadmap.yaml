@@ -183,7 +183,7 @@ tasks:
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and sixteen-realm coverage checks"
-    status: review
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -191,10 +191,9 @@ tasks:
       Each of 1,024 overworld tiles and 576 dungeon spaces must have art direction or contextual environmental treatment. High priority unique art: cinematic prologue, NPCs, major choices, 32 Earth photographs, 16 guardians, 64 achievements and 12 ending variants. Queue traceable ArtJobs only via existing durable pipeline; report submitted vs DONE vs delivered IDs truthfully, with fallback coverage while art is pending.
 
       World One source art manifest now specifies 64 Briar sites, 36 House rooms, major portraits, monsters, environments, animation frames, card-back choices and 32 reusable realm cards (30 local, 2 cross-realm). An explicit delivery gate prevents undelivered images from being selectable. PR review and required workflows remain pending; no ArtJobs have been submitted or delivered by this connector session.
-    owner: worker
-    claimed_by: 2026-10-24T230426Z-memory-dungeon-t-030-r7c9
-    claimed_at: '2026-10-24T23:04:26Z'
-    updated: '2026-10-24T23:17:35Z'
+
+      Source-backed World One art production and 32-card collectible gallery infrastructure merged in Kind Robots PR #4132 (commit 44baa030ce4aafa0b3dd8269db5700782ba84f10), all PR workflows green. Conductor PR #6603 also merged new sixteen-realm gallery quality gates and 32 pending Flux2 Klein art requests. No Comfy ArtJob IDs, completed renders or final delivery URLs were verified in this session. t-030 remains ready for broader realm coverage checks, while t-035 owns actual first-realm art job submission, attachment and delivery verification.
+    updated: '2026-10-24T23:34:20Z'
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
