@@ -1,4 +1,64 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: requests
+  target: public/images/ecotone/avatars/artist.webp
+  kind: timeout
+  detail: job 45078 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/ecotone/avatars/dreamer.webp
+  kind: timeout
+  detail: job 45085 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/ecotone/avatars/elder.webp
+  kind: timeout
+  detail: job 45077 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/ecotone/avatars/glitter.webp
+  kind: timeout
+  detail: job 44948 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/ecotone/avatars/maker.webp
+  kind: timeout
+  detail: job 45024 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/ecotone/avatars/naturalist.webp
+  kind: timeout
+  detail: job 45080 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/ecotone/avatars/punk.webp
+  kind: timeout
+  detail: job 45081 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/ecotone/avatars/sage.webp
+  kind: timeout
+  detail: job 45084 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/ecotone/avatars/scholar.webp
+  kind: timeout
+  detail: job 45082 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/ecotone/avatars/star.webp
+  kind: timeout
+  detail: job 45079 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/ecotone/avatars/traveler.webp
+  kind: timeout
+  detail: job 45083 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/ecotone/avatars/wanderer.webp
+  kind: timeout
+  detail: job 45076 timed out after 300s (still queued/running)
+  first_seen: '2026-10-24'
