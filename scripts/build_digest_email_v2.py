@@ -25,7 +25,7 @@ def proposal_section(
     images: list[dict[str, Any]] | None = None,
     page_link: str = "",
 ) -> str:
-    if proposal is None and _heading == "🌙 Tomorrow\'s dream":
+    if proposal is None and _heading == "🌙 Tomorrow's dream":
         return ""
     if not proposal or str(proposal.get("display_mode") or "") != "latest-completed":
         return _BASE_PROPOSAL_SECTION(
