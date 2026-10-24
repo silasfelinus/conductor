@@ -12538,3 +12538,8 @@ Worker pattern: branches pushed without a PR again; open the PR at push time.
 ## 2026-10-24 — Reviewer: conductor#6561 (memory-dungeon/t-009 sixteen-realm roadmap + World 01 registry)
 Reviewed and found safe (docs/roadmap-only, reversible, no live code); PR was merged by another session as I waited on the last required check, so no merge from me. 24/25 checks green at review, roadmap YAML parses. t-009 stays partial — the 64 sites and 36 rooms are design records, not playable UI; t-020/t-021 carry the implementation.
 Worker pattern: good — honest "not playable yet" flags. Kaizen (from the Worker): per-realm manifest validator for duplicate coordinates, unreachable tiles and missing choice outcomes before a realm PR merges.
+
+## 2026-10-24 — Agent (branch-medic): two stranded kind_robots branches, PR-less
+- `worker/eod-t059-complete-role-first-coverage-fc3d` (11 files, Crow→Conclave prose): **superseded** — emperor-of-dust/t-059 is done via kind_robots#4090 (40d8376); a trial merge conflicts in 6 fortress act files with opposing wording. Safe to delete, but this session's `git push --delete` was denied by the auto-mode classifier. Needs `force_delete_branches` via branch-janitor or a manual delete.
+- `worker/save-plumber-console-title-20261023` (7 commits, ~1500-line `save-the-plumber.vue` rewrite: single-screen console menus + painted motion plates): **ambiguous, left alone.** Main's #4084 already shipped a competing console-tabs rewrite (and deleted `plumber-title-scene.vue`); merging main gives 11 conflict hunks. Silas/a Worker should decide whether the painted-motion work is rebased onto #4084 or dropped.
+Worker pattern: both pushed with no PR; open the PR at push time.
