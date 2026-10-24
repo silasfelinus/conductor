@@ -116,7 +116,8 @@ def test_two_day_old_latest_bundle_is_art_rich_and_truthfully_labeled(tmp_path):
         today=date(2026, 9, 13),
         probe_images=False,
     )
-    latest = result["current_dream_output"]
+    assert result["current_dream_output"] is None
+    latest = result["latest_completed_dream_output"]
 
     assert latest["display_mode"] == "latest-completed"
     assert len(latest["images"]) == 6
