@@ -784,32 +784,45 @@ tasks:
   - id: t-039
     milestone: m4
     title: "Remove the DOGS; Princess Kitty Power cut-ins; boss fire back to each creature's own look"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T05:29:38Z'
+    updated: '2026-10-24T05:39:28Z'
     note: >-
       Silas withdrew the DOGS (PLOT-MOTHERLAND.md). Remove rainbowDogs.ts commanders, barks, BAD DOG send-off and
       bone/ball/cloud boss fire (kind_robots#4097); keep C.A.T.S., co-pilots, heart and star pilot shots. Each super
       cut-in becomes a Princess Kitty Power with the pilot's co-pilot.
+
+      DONE 2026-10-23 PT: kind_robots#4099 merged. Removed the DOGS layer: commanders, barks,
+      BAD DOG, and bone/ball/cloud boss fire; bosses fire their creatures' own looks again.
+      Kept C.A.T.S., co-pilots, and heart and star shots. Every super cut-in is a Princess
+      Kitty Power with the co-pilot's face. verifyRainbowCats replaces verifyRainbowDogs.
     claimed_by: 2026-10-24T053000Z-rainbow-t039-cats-p2w7
     claimed_at: '2026-10-24T05:29:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#4099'
   - id: t-040
     milestone: m6
     title: "The Motherland turn, first slice: Act V memorial reveal and the flown allegiance choice"
-    status: claimed
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T05:39:30Z'
+    updated: '2026-10-24T05:46:56Z'
     note: >-
       PLOT-MOTHERLAND.md. At Act V's memorial the crew realizes the Motherland is the colonizer; high lane TURN ON
       THE EMPIRE (allegiance rebel), low lane STAY THE COURSE (loyal), majority of living pilots, tie stays the
       course. Flag in checkpoints and saves; one allegiance line in each later Act's OPEN. Later slices: rebel-road
       waves, two finale targets, allegiance endings.
-    claimed_by: 2026-10-24T054500Z-rainbow-t040-turn-k9d4
-    claimed_at: '2026-10-24T05:39:30Z'
+
+      DONE 2026-10-23 PT (first slice): kind_robots#4100 merged. The Act V memorial plays the
+      three-line Motherland reveal, then the flown choice: high is TURN ON THE EMPIRE (rebel),
+      low is STAY THE COURSE (loyal); majority of living pilots, a tie stays the course.
+      Allegiance is kept in checkpoints and saves and restored on continue. The lead's A06-A08
+      OPEN lines answer it. The memorial now runs 510-1050 frames, and the demo flies both
+      roads. verifyRainbowMotherland is new. Next slices in PLOT-MOTHERLAND.md: rebel-road
+      waves, two finale targets, allegiance endings; t-041 reframes Acts I-V.
+    implementation_pr: 'silasfelinus/kind_robots#4100'
   - id: t-041
     milestone: m6
     title: "Reframe Acts I-V dialogue toward the Motherland reveal (develop as we go with Silas)"
