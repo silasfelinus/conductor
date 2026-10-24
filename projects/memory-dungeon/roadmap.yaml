@@ -68,6 +68,22 @@ notes_from_silas: |
   Production deployment and external release remain separately gated.
   See DESIGN-BRIEF.md and COMBAT-PATTERNS.md.
 
+  2026-10-23 PT: Silas explicitly prioritizes Memory Dungeon delivery
+  **within this project** in this sequence: (1) all 64 Briar map
+  locations playable and individually meaningful (t-021), (2) House
+  That Remembers 36-room dungeon including alternate Warden outcomes
+  (t-022), (3) the Morrow photograph Chronicle and spoiler-safe
+  timeline (t-023), (4) traceable character, map, scene and ending
+  ArtJobs with delivered image verification (t-030). The roadmap
+  task list is ordered to enforce this priority for sequential
+  Conductor selection, not merely tagged as urgent. Chronicle and
+  art setup may proceed in parallel on the existing stable map and
+  prologue foundations; t-022 retains its map dependency. The first
+  world should be produced in small tested and merged batches,
+  preserving existing location IDs, Classic Match and saved runs.
+  Do not change other projects' previously established relative
+  priorities or imply external publication approval.
+
   2026-10-23 PT: Canon locked for the 16-realm Memory Dungeon isekai:
   an adult real-world protagonist trades bodies and life with fey changeling
   Morrow; 32 discovered photographs show Morrow's unstable, then improving,
@@ -99,6 +115,66 @@ milestones:
     weight: 15
     status: not-started
 tasks:
+  - id: t-021
+    milestone: m3
+    title: "Implement Briar Marches 64-square authored map and reachable graph"
+    status: ready
+    depends_on: t-018
+    passes: 0
+    stakes: reversible
+    note: >-
+      Convert all 64 stable 1..8 coordinates in BRIAR-MARCHES-FIRST-WORLD.md
+      to distinct interactive authored scene/site records. Expand BRIAR_LINKS
+      only with adjacent, bidirectionally reachable routes while preserving
+      current fixed sites, choice states and saved progression. Each tile
+      must reward interacting, have unique atmosphere/art contract and
+      a consequence or discovered fact; remove generic no-op squares.
+      Deliver in tested batches (16 cells per PR acceptable), with
+      scene tests for availability, no duplicate resources or softlocks.
+  - id: t-022
+    milestone: m3
+    title: "Build the House That Remembers 36-room dungeon and alternate resolutions"
+    status: waiting
+    depends_on: t-021
+    passes: 0
+    stakes: reversible
+    note: >-
+      Expand fixed 6,2 Rootbound Vault site to a 6x6, 36-room graph
+      using House design in BRIAR-MARCHES-FIRST-WORLD.md; preserve
+      existing vault-1/vault-2 save IDs, include shortcuts, four exits/
+      safe loops, clue logic, 2-card matching combat, Warden's optional
+      nonlethal resolution, informed-consent dilemmas and at least three
+      distinct end states. Seed replay, complete graph reachability,
+      failure continuations and save/reload tests required.
+  - id: t-023
+    milestone: m2
+    title: "Deliver photograph Chronicle, Earth timeline and ending spoiler gates"
+    status: ready
+    depends_on: t-018
+    passes: 0
+    stakes: reversible
+    note: >-
+      Author 32 fixed collectible photo beats, two per world, with
+      out-of-order journal reconciliation, once-only claims, proper
+      Earth chronology, and meaningful hero reactions. World 1 photos
+      occur at 2,5 (dismissal) and 8,6 (friend's humiliation).
+      Morrow later builds authentic work, friendship and romance; do
+      not unmistakably reveal their children before World 16.
+  - id: t-030
+    milestone: m3
+    title: "Build scene-art production manifest and sixteen-realm coverage checks"
+    status: ready
+    depends_on: t-018
+    passes: 0
+    stakes: reversible
+    note: >-
+      Each of 1,024 overworld tiles and 576 dungeon spaces must have
+      art direction or contextual environmental treatment. High
+      priority unique art: cinematic prologue, NPCs, major choices,
+      32 Earth photographs, 16 guardians, 64 achievements and
+      12 ending variants. Queue traceable ArtJobs only via existing
+      durable pipeline; report submitted vs DONE vs delivered IDs
+      truthfully, with fallback coverage while art is pending.
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
@@ -384,51 +460,6 @@ tasks:
 
       Kind Robots PR 4089 merged at 7c29e269 with a playable Morrow prologue, persisted origin choice, and Scylla/Char/Oren encounter callbacks. All 14 PR workflows passed. Remaining full character visuals, new ArtJobs and device QA are not done.
     updated: '2026-10-24T02:02:04Z'
-  - id: t-021
-    milestone: m3
-    title: "Implement Briar Marches 64-square authored map and reachable graph"
-    status: ready
-    depends_on: t-018
-    passes: 0
-    stakes: reversible
-    note: >-
-      Convert all 64 stable 1..8 coordinates in BRIAR-MARCHES-FIRST-WORLD.md
-      to distinct interactive authored scene/site records. Expand BRIAR_LINKS
-      only with adjacent, bidirectionally reachable routes while preserving
-      current fixed sites, choice states and saved progression. Each tile
-      must reward interacting, have unique atmosphere/art contract and
-      a consequence or discovered fact; remove generic no-op squares.
-      Deliver in tested batches (16 cells per PR acceptable), with
-      scene tests for availability, no duplicate resources or softlocks.
-  - id: t-022
-    milestone: m3
-    title: "Build the House That Remembers 36-room dungeon and alternate resolutions"
-    status: waiting
-    depends_on: t-021
-    passes: 0
-    stakes: reversible
-    note: >-
-      Expand fixed 6,2 Rootbound Vault site to a 6x6, 36-room graph
-      using House design in BRIAR-MARCHES-FIRST-WORLD.md; preserve
-      existing vault-1/vault-2 save IDs, include shortcuts, four exits/
-      safe loops, clue logic, 2-card matching combat, Warden's optional
-      nonlethal resolution, informed-consent dilemmas and at least three
-      distinct end states. Seed replay, complete graph reachability,
-      failure continuations and save/reload tests required.
-  - id: t-023
-    milestone: m2
-    title: "Deliver photograph Chronicle, Earth timeline and ending spoiler gates"
-    status: waiting
-    depends_on: t-020
-    passes: 0
-    stakes: reversible
-    note: >-
-      Author 32 fixed collectible photo beats, two per world, with
-      out-of-order journal reconciliation, once-only claims, proper
-      Earth chronology, and meaningful hero reactions. World 1 photos
-      occur at 2,5 (dismissal) and 8,6 (friend's humiliation).
-      Morrow later builds authentic work, friendship and romance; do
-      not unmistakably reveal their children before World 16.
   - id: t-024
     milestone: m3
     title: "Playtest and polish Scylla, Char, Oren and recurring party arcs"
@@ -513,21 +544,6 @@ tasks:
       permanent unlocks. Four ordinary enemies plus elite/guardian
       per realm. Verify drop boundedness, meaningful tradeoffs and
       playstyle parity with multi-seed sims; author gallery art prompts.
-  - id: t-030
-    milestone: m3
-    title: "Build scene-art production manifest and sixteen-realm coverage checks"
-    status: waiting
-    depends_on: t-021
-    passes: 0
-    stakes: reversible
-    note: >-
-      Each of 1,024 overworld tiles and 576 dungeon spaces must have
-      art direction or contextual environmental treatment. High
-      priority unique art: cinematic prologue, NPCs, major choices,
-      32 Earth photographs, 16 guardians, 64 achievements and
-      12 ending variants. Queue traceable ArtJobs only via existing
-      durable pipeline; report submitted vs DONE vs delivered IDs
-      truthfully, with fallback coverage while art is pending.
   - id: t-031
     milestone: m4
     title: "Adversarial balance, continuity and cross-world reachability suite"
