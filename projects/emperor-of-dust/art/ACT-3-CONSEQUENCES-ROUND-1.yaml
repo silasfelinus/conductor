@@ -1,0 +1,103 @@
+# Emperor of Dust t-048: private Act III consequence render requests.
+# No queue/job/render/export/wiring status implied by drafting prompts.
+round: emperor-act3-consequences-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+auto_submit: true
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: >-
+    masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style),
+    western comics (style), painterly wide shot, tactile frontier atmosphere
+  suffix: >-
+    kiln ochre, deep crimson, tarnished brass palette, dusty wasteland,
+    weathered salvage, bare and unmarked surfaces
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eod48-ford-tokens-partial
+  lane: arthemy-house
+  title: Ford tokens in the reeds
+  quest: q-d22-ford-bodies
+  variant: partial
+  asset: audiences/eod48-ford-tokens-partial
+  size: 1344x768
+  seed: 84800
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature,
+    text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    frontier society of clothed upright anthropomorphic animal residents, Wide dawn view of a cold stone river ford, two brass Abbey mission-road tokens with differently aged punched holes recovered on the muddy bank, upright anthropomorphic fox surveyor in patched oilskin coat and anthropomorphic badger river warden kneeling beside the tokens, rising water already washing away distant footprints, quiet contested evidence
+- key: eod48-blue-lantern-partial
+  lane: arthemy-house
+  title: The cellar hatch
+  quest: q-d23-blue-lantern
+  variant: partial
+  asset: audiences/eod48-blue-lantern-partial
+  size: 1344x768
+  seed: 84837
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature,
+    text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    frontier society of clothed upright anthropomorphic animal residents, Shuttered frontier tollhouse beneath the rail bridge at blue twilight, hidden cellar hatch half-open below the road, one blue oil lantern disappearing down steep stone stairs, two upright anthropomorphic animal scouts in plain canvas travel coats watching newly made frost bootprints, several well-wrapped herb parcels in a basket
+- key: eod48-mission-road-failure
+  lane: arthemy-house
+  title: The kind escort home
+  quest: q-d24-mission-road
+  variant: failure
+  asset: audiences/eod48-mission-road-failure
+  size: 1344x768
+  seed: 84874
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature,
+    text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    frontier society of clothed upright anthropomorphic animal residents, Rainy winding stone road outside the Abbey of the Silent Bell, two upright anthropomorphic otter sisters in plain modest gray robes carrying lanterns and guiding a pair of fully clothed anthropomorphic fox investigators away from the distant gates, a dry cart shed visible in the background, courteous ambiguous refusal with quiet careful distance
+- key: eod48-coldbrook-partial
+  lane: arthemy-house
+  title: The unsigned schoolwork
+  quest: q-d24-coldbrook-visit
+  variant: partial
+  asset: audiences/eod48-coldbrook-partial
+  size: 1344x768
+  seed: 84911
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature,
+    text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    frontier society of clothed upright anthropomorphic animal residents, Abbey gate opened a handspan, Sister Marrow an upright anthropomorphic white goat nun in well-kept gray habit offering a folded clean blanket and a small exercise sheet of abstract linework to a fully clothed anthropomorphic deer parent in travel coat, tidy schoolroom glimpsed inside, restrained uncertainty, an empty schoolroom in the distance
+- key: eod48-flint-evidence-partial
+  lane: arthemy-house
+  title: The two ledgers
+  quest: q-d27-flint-evidence
+  variant: partial
+  asset: audiences/eod48-flint-evidence-partial
+  size: 1344x768
+  seed: 84948
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature,
+    text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    frontier society of clothed upright anthropomorphic animal residents, A public court evidence table holding two contradictory grain ledgers with blank pages and different seals, upright anthropomorphic tortoise Duchess Flint in severe ceremonial collar and anthropomorphic badger court registrar comparing receipts, an unnamed upright anthropomorphic rabbit witness waiting in the rear, hard afternoon light and unproven accusation
+- key: eod48-rot-cure-partial
+  lane: arthemy-house
+  title: The iron-tasting loaf
+  quest: q-d28-rot-cure
+  variant: partial
+  asset: audiences/eod48-rot-cure-partial
+  size: 1344x768
+  seed: 84985
+  negative: >-
+    (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature,
+    text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: >-
+    frontier society of clothed upright anthropomorphic animal residents, Fortress kitchens beneath brass sconces, upright anthropomorphic boar foreman Dunmore Ash in a simple brown work apron studying one dark-crusted loaf isolated beneath a glass bell, rough grain sacks stained at their edges, two upright fully clothed anthropomorphic mice bakers watching, a difficult food ration decision in stark kitchen light
