@@ -2,6 +2,51 @@
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
 failures:
+- source: requests
+  target: public/images/memory-dungeon/earth-photographs/dismissal.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no visible words names text on an engine whose negative prompt is inert, so the word lands in POSITIVE
+    conditioning on a model from th…'
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/memory-dungeon/house/ending-release.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no watermark names text on an engine whose negative prompt is inert, so the word lands in POSITIVE
+    conditioning on a model from the st…'
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/memory-dungeon/house/ending-renew.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no legible text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE
+    conditioning on a model from the…'
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/memory-dungeon/house/foyer.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no readable text names text on an engine whose negative prompt is inert, so the word lands in POSITIVE
+    conditioning on a model from th…'
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/memory-dungeon/house/rootbound-warden.webp
+  kind: contract-rejected
+  rules:
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [text-exclusion-pile]
+    no text, no logo, no watermark names text on an engine whose negative prompt is inert, so the word
+    lands in POSITIVE conditioning on a…'
+  first_seen: '2026-10-24'
 - source: kr-failed-jobs
   target: ArtJob 45031
   kind: kr-job-failed

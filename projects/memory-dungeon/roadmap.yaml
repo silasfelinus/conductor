@@ -142,22 +142,18 @@ tasks:
   - id: t-022
     milestone: m3
     title: "Build the House That Remembers 36-room dungeon and alternate resolutions"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-24T211700Z-memory-dungeon-t-022-8f31
     claimed_at: '2026-10-24T21:17:00Z'
-    updated: '2026-10-24T21:17:00Z'
+    updated: '2026-10-24T21:23:00Z'
     depends_on: t-021
     passes: 0
     stakes: reversible
-    note: >-
-      Expand fixed 6,2 Rootbound Vault site to a 6x6, 36-room graph
-      using House design in BRIAR-MARCHES-FIRST-WORLD.md; preserve
-      existing vault-1/vault-2 save IDs, include shortcuts, four exits/
-      safe loops, clue logic, 2-card matching combat, Warden's optional
-      nonlethal resolution, informed-consent dilemmas and at least three
-      distinct end states. Seed replay, complete graph reachability,
-      failure continuations and save/reload tests required.
+    note: |-
+      Expand fixed 6,2 Rootbound Vault site to a 6x6, 36-room graph using House design in BRIAR-MARCHES-FIRST-WORLD.md; preserve existing vault-1/vault-2 save IDs, include shortcuts, four exits/ safe loops, clue logic, 2-card matching combat, Warden's optional nonlethal resolution, informed-consent dilemmas and at least three distinct end states. Seed replay, complete graph reachability, failure continuations and save/reload tests required.
+
+      First complete playable House prototype on a Kind Robots worker branch: all 36 named rooms with original art briefs, branching room graph, safe loops and conditional shortcuts, persistent choices and loot, optional matching Echo Chamber and fair duels, proof-based Warden negotiation or combat, three documented consent consequences, and once-only Bramble Chime reward. Legacy vault-1/vault-2 save IDs remain accepted. Await CI, merge and rendered visual QA.
   - id: t-023
     milestone: m2
     title: "Deliver photograph Chronicle, Earth timeline and ending spoiler gates"
