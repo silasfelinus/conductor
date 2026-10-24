@@ -34,7 +34,7 @@ pass or fail."
 | Set axis | Round 1 | Round 2 | Round 3 | Final |
 | --- | --- | --- | --- | --- |
 | Originality across runs | FAIL | FAIL | FAIL (narrow) | **PASS** |
-| Culprit and motive variety | FAIL | FAIL | PASS | **PASS** (skew noted) |
+| Culprit and motive variety | FAIL | FAIL | PASS | **PASS** (gender skew fixed in t-064) |
 | Mechanics variety | FAIL | FAIL | FAIL (narrow) | **PASS** |
 | Companion voices | FAIL | PASS (narrow) | PASS (narrow) | **PASS** |
 
@@ -65,8 +65,10 @@ VIII, XI), a sensitivity check on XII, and a set re-grade, after a precision pol
   live edits reaching mystery cards, ledger merge/sanitize, old saves.
 
 ## Still open (not blocking)
-- Culprit skew: the person under the mask is a woman in 11 of 12 cases. A run draws one case, so it reads fine per
-  run, but a future pass could vary it.
+- ~~Culprit skew~~ — resolved in t-064 (2026-10-24 PT, Silas: "vary the culprit genders across the twelve cases").
+  The flagged count was stale (eight women, three men, one couple on the final text), and every man under a mask was
+  in the wrong. Case I's culprit is now Hollis Ostrander, Case IV's the widower Arne Sorensen, and Case IX's Dr. Wren
+  Okonkwo-Barlow uses they/them: five women, five men, one nonbinary, one couple; wrongdoers three men, two women.
 - Dated Jugs' land-grab villain is the most classic Scooby shape in the set; it passes on its twist (her free
   warnings became his buy list).
 - The pun title "The Mystery of the Murder of Crows" was suggested for Case VIII; the title stays "Murder Mountain" per
