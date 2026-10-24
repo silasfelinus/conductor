@@ -18218,3 +18218,14 @@ records:
     and only failed in the browser. Click through a game store in a real page before merge, and clone
     store state with JSON. Also run the real artPromptContract over authored prompts, which caught 46
     format/frame violations and a "no text" house style that a negation-only check missed.
+- date: '2026-10-24'
+  project: weird-humboldt
+  task: t-065
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: For character artwork, pair stable identity IDs with canonical destination paths, source-controlled
+    idempotent prompts and UI fallback; distinguish GitHub queue requests from ArtJob IDs and delivered
+    images.

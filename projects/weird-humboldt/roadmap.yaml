@@ -1532,14 +1532,15 @@ tasks:
   - id: t-065
     milestone: m5
     title: "Create 12 coherent player-avatar portrait ArtJobs and wire character selection"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Silas explicitly approved 12 full character-select portraits for Ecotone and instructed us to submit them to the GitHub-backed art queue (October 23 2026 PT). Match the 12 persistent PLAYER_AVATARS IDs, generate coordinated painterly 2:3 images through the existing Conductor ArtJob pipeline with private traceable prompts, and replace emoji-only onboarding selection with responsive image-first cards, retaining accessible labels and missing-image fallbacks. Verify deduplication, durable submission, UI mapping, and CI.
 
       Submitted 12 idempotent private Krea 2 portrait art requests under canonical public/images/ecotone/avatars/<saved-avatar-id>.webp paths in Conductor projects/art-prompts.yaml; authored matching image-first Ecotone onboarding player selection cards and 12-identity regression checks in kind_robots. Pending exact-head CI, art-queue workflow submission, and UI review.
+
+      Merged Conductor PR #6585 (0647ea1742e233c9f77d94b2f7ee1c41408dad5c): 12 distinct private Krea 2 512x768 portrait requests committed to projects/art-prompts.yaml without deleting any previous entry, keyed to stable ecotone/avatar IDs and self-hosted media paths. GitHub triggered Auto Art Generate run 40072994485; at last inspection it was still sweeping earlier art ledgers. All 12 requests remain pending with no last_art_job_id assigned yet. This is queue submission, NOT proof of rendering or final delivery. Merged kind_robots PR #4108 (710887a8e966213e92508a931e5884c5ca4c67b9) after all 15 final-head CI checks passed. Onboarding uses responsive swipeable portrait cards, image-error fallbacks, stable saved identities and path/selection regression tests. Both working branches cleaned. No production deploy or image-render completion claimed.
     claimed_by: 2026-10-24T065900Z-wh-t065-avatar-a6f3
     claimed_at: '2026-10-24T06:59:00Z'
-    updated: '2026-10-24T07:03:00Z'
+    updated: '2026-10-24T07:15:00Z'
