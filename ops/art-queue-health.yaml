@@ -1,4 +1,27 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: requests
+  target: public/images/memory-dungeon/card-backs/briar-arcane.webp
+  kind: contract-rejected
+  rules:
+  - format-vocabulary
+  - frame-noun
+  - people-negation
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (4 violations): [format-vocabulary]
+    "card artwork" asks for a physical format, so the model renders the format — frame, title bar, and
+    invented text included. Describe the…'
+  first_seen: '2026-10-24'
+- source: requests
+  target: public/images/memory-dungeon/card-backs/briar-default.webp
+  kind: contract-rejected
+  rules:
+  - art-direction-jargon
+  - people-negation
+  - text-exclusion-pile
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (3 violations): [art-direction-jargon]
+    "legible at thumbnail size" is how you ask a person for a picture, not how you describe one. A caption-conditioned
+    model renders the…'
+  first_seen: '2026-10-24'
