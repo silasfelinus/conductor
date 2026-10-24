@@ -97,6 +97,17 @@ notes_from_silas: |
   She-Ra inspirations, but original prose and world. See SIXTEEN-REALM-
   PRODUCTION.md and BRIAR-MARCHES-FIRST-WORLD.md; these override obsolete
   provisional named-cast and linear-depth examples, without breaking saves.
+  2026-10-24 PT: Silas requires a collectible illustrated gallery for
+  each of the 16 overworlds: 32 unique match faces consisting of
+  exactly 30 world-local cast/location/event illustrations plus two
+  cross-realm collaborative pairing images. These must be unlockable
+  for later runs, with delivery verified before replay. Developing a
+  plausible 30-face gallery is a narrative depth test for each realm.
+  World One remains the vertical-slice focus: illustrated intro, one
+  fixed-screen AAA-style console, meaningful exploration and encounter
+  loop, 64 authored spots, save/load, visual cutscenes, final card
+  collection, accessibility and adversarial playtests. Prefer shared
+  consequence summaries over exponential branch multiplication.
 milestones:
   - id: m1
     title: "SHAPE — combat geometry, story and seeded systems"
@@ -582,3 +593,90 @@ tasks:
       registries and fail CI on duplicate coordinates, tiles unreachable
       from the start, sites without a persistent consequence, or art
       requirements with no ArtJob/placeholder, so later realm PRs stay honest.
+  - id: t-033
+    milestone: m3
+    title: "Produce and deliver 32-card collectible decks per realm"
+    status: waiting
+    depends_on: t-030
+    passes: 0
+    stakes: reversible
+    note: >-
+      Each world must earn a unique 32-face matching image set through its
+      characters, locations, events, artifacts, and monsters. Thirty locally
+      authored pictures feed four reveal waves (6+7+8+9). Two collaboration
+      faces connect specific other worlds; keep these separate from the
+      four reserved overworld seal coordinates. Reuse completed worlds'
+      decks in later runs through unlockable selector. Require distinct
+      scenes, fully delivered/verified Comfy images and accessibility.
+      Commit per-world manifests and validators before mass-generating.
+
+  - id: t-034
+    milestone: m2
+    title: "Polish World One as a complete one-screen console with save slots"
+    status: ready
+    depends_on: t-022
+    passes: 0
+    stakes: reversible
+    note: >-
+      Play all four reveal waves through the 64 fixed-location forest
+      and 36-room House while building a cinematic, responsive, art-led
+      single-screen front end. Preserve Classic and existing saves.
+      Add explicit new/save/load slots with guarded overwrite, first-play
+      intro, accessible dialogue portrait stage, non-generic backgrounds,
+      scene-to-fight transitions and stage navigation. Validate refresh
+      during card turns, battles and branching outcomes. User must
+      experience game screens, never nested webapp panels.
+
+  - id: t-035
+    milestone: m3
+    title: "Deliver World One Comfy portraits, monsters, backgrounds and card art"
+    status: waiting
+    depends_on: t-030
+    passes: 0
+    stakes: reversible
+    note: >-
+      Actually submit the source-backed World One manifest in traceable
+      batches via authenticated durable Comfy ArtJobs. Verify job IDs,
+      status, attached ArtImages and final URLs individually. Prioritize
+      illustrated portraits for any speaking NPC, named monster fights,
+      Briar/House/secret/combat backdrops, Morrow prologue, map-unveil
+      and second-realm transition, both selectable card backs, then
+      30+2 collectible card images and branch-specific outcomes. Prompt
+      only is never done. Record job failures, retries and image coverage.
+
+  - id: t-036
+    milestone: m4
+    title: "Adversarially playtest and review complete World One loop"
+    status: waiting
+    depends_on:
+      - t-034
+      - t-035
+    passes: 0
+    stakes: reversible
+    note: >-
+      Run repeatable seeds and full-run player personas: new mobile player,
+      fast reader, map completionist, contrarian pacifist, tactician,
+      accessibility player, interrupted save, selfish vs generous traveler,
+      and replay deck collector. Check reachability, reward repetition,
+      consequence visibility, pacing, UI affordance and ability to
+      complete House alternate endings. Produce mock critical reviews
+      with cited examples and triage refinements; visually inspect
+      phone, tablet and desktop. Silas verdict and external release
+      are separate human gates.
+
+  - id: t-037
+    milestone: m2
+    title: "Build bounded cross-realm consequence ledger"
+    status: ready
+    depends_on: t-022
+    passes: 0
+    stakes: reversible
+    note: >-
+      Preserve all World One choices in the Chronicle, but promote
+      only compact resolution, relationship, portable discovery and
+      cross-realm collaboration facts into future-world conditions.
+      Give those effects real dialogue, route, reward or ending changes;
+      retire paid debts, prevent old flags softlocking the main path,
+      and test incompatible decisions. Reuse one interpreter and
+      published story contracts instead of enumerating every
+      16-realm choice permutation.
