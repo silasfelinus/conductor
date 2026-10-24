@@ -944,14 +944,15 @@ tasks:
   - id: t-059
     milestone: m5
     title: "Complete exhaustive role-first editorial coverage of all Emperor player prose"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Silas, 2026-10-23 PT: finish the remaining parts of the no-species-as-identity rule not covered by t-058. Audit all follower biography/trait/ability/talk fields, NPC lines, quest descriptions, every outcome variant, daily/chance events, marketplace and codex strings, UI copy and scripted dialogue across all fortress source files. Fix species-based references to people in user-visible prose, including faction members, without changing actual animals, symbolic animal imagery, deliberate proper names (Young Komodo) or proper institution/faction names. Species and anatomy remain mandatory in positive art prompts and cast identity metadata. Expand nightly and PR CI coverage beyond the previously selected 19 files, with audited exemptions and adversarial fixtures; do not claim absolute natural-language completeness from a regex alone. Merge only after full checks green; no deployment.
 
       Thorough post-t058 species-as-identity correction across acts I-V, chores, betrayal and follower talk. Identified and corrected remaining Mole boy/prisoner/courier and Crow children/courier references; expanded regression guard to 33 prose source modules with negative tests for valid factions and wildlife. Code branch worker/emperor-of-dust-t-059-full-audit-8b71; CI and merge still pending; no deployment.
-    owner: worker
+
+      Completed broad role-first Emperor of Dust prose editorial audit across Acts I-V, follower biographies, quests, outcomes, and 18 fortress screens plus route/store. Fixed surviving Mole boy/prisoner/diggers and Crow messenger/children labels, retained proper political faction names and species-locked art/cast data, tightened scene titles and a Tarn biography continuity typo, and expanded the narrative regression guard from 19 to 53 files. Merged silasfelinus/kind_robots#4090 at 40d8376db68864dba62788a4edba8ffefb98d053 after all 14 final-head CI workflows completed successfully, including Emperor dispatch, adversarial, TypeScript, layout, formatting and 4 contract shards. No production deployment, public release or Arthemy ArtJob performed.
     claimed_by: 20261024T015124Z-eod-t059-full-audit-8b71
     claimed_at: '2026-10-24T01:51:24Z'
-    updated: '2026-10-24T01:55:19Z'
+    updated: '2026-10-24T02:10:50Z'
