@@ -18206,3 +18206,15 @@ records:
   lesson: A style rule that excludes only the obvious species misses the rest of the cast. Ground the
     prose linter in the complete canon species vocabulary, exempt deliberate proper faction labels and
     literal wildlife, and keep character identity in the dialogue tied to their social roles instead.
+- date: '2026-10-24'
+  project: crystal-street
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Node-side contract tests never touch the Pinia proxy, so structuredClone passed every test
+    and only failed in the browser. Click through a game store in a real page before merge, and clone
+    store state with JSON. Also run the real artPromptContract over authored prompts, which caught 46
+    format/frame violations and a "no text" house style that a negation-only check missed.
