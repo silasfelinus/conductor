@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-10-24T14:02:14.715935+00:00",
+  "generated_at": "2026-10-24T21:14:04.669203+00:00",
   "summary": {
     "roadmaps": 86,
     "active_projects": 23,
     "continuous_projects": 3,
-    "tasks": 2604,
+    "tasks": 2608,
     "ready": 202,
-    "waiting": 206,
+    "waiting": 208,
     "needs_human": 38,
-    "in_progress": 30,
-    "done": 2107,
+    "in_progress": 31,
+    "done": 2108,
     "errors": 0,
-    "warnings": 40,
-    "info": 108
+    "warnings": 39,
+    "info": 109
   },
   "projects": [
     {
@@ -24,19 +24,19 @@
       "task_count": 65,
       "counts": {
         "claimed": 2,
-        "done": 32,
+        "done": 33,
         "needs-human": 1,
-        "ready": 11,
+        "ready": 10,
         "review": 2,
         "waiting": 17
       },
-      "open_count": 33,
+      "open_count": 32,
       "human_attention": 1,
-      "ready": 11,
+      "ready": 10,
       "waiting": 17,
       "claimed": 2,
       "review": 2,
-      "done": 32
+      "done": 33
     },
     {
       "slug": "zuzu-gamebook",
@@ -254,16 +254,17 @@
       "autonomous": true,
       "task_count": 32,
       "counts": {
+        "claimed": 1,
         "done": 4,
         "needs-human": 1,
-        "ready": 11,
+        "ready": 10,
         "waiting": 16
       },
       "open_count": 28,
       "human_attention": 1,
-      "ready": 11,
+      "ready": 10,
       "waiting": 16,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 4
     },
@@ -355,16 +356,16 @@
       "override_status": "active",
       "priority_index": 17,
       "autonomous": true,
-      "task_count": 12,
+      "task_count": 16,
       "counts": {
         "done": 3,
-        "ready": 6,
-        "waiting": 3
+        "ready": 8,
+        "waiting": 5
       },
-      "open_count": 9,
+      "open_count": 13,
       "human_attention": 0,
-      "ready": 6,
-      "waiting": 3,
+      "ready": 8,
+      "waiting": 5,
       "claimed": 0,
       "review": 0,
       "done": 3
@@ -1719,7 +1720,7 @@
       "code": "STALE_IN_PROGRESS",
       "project": "animation-manager",
       "task": "t-022",
-      "message": "Task has remained claimed for 30 days."
+      "message": "Task has remained claimed for 31 days."
     },
     {
       "severity": "warning",
@@ -1740,7 +1741,7 @@
       "code": "STALE_IN_PROGRESS",
       "project": "coloring-book",
       "task": "t-058",
-      "message": "Task has remained claimed for 26 days."
+      "message": "Task has remained claimed for 27 days."
     },
     {
       "severity": "warning",
@@ -1916,13 +1917,6 @@
       "project": "tzaddik-gallery",
       "task": "t-013",
       "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-    },
-    {
-      "severity": "warning",
-      "code": "STALE_CLAIM_FIELDS",
-      "project": "weird-humboldt",
-      "task": "t-003",
-      "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
     },
     {
       "severity": "warning",
@@ -2125,6 +2119,13 @@
       "code": "APPROVAL_WITHOUT_GATE",
       "project": "crystal-street",
       "task": "t-002",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "crystal-street",
+      "task": "t-013",
       "message": "approved_by_human is set on a task that is not human-gated."
     },
     {
