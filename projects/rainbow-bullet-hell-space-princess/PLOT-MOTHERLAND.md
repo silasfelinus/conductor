@@ -64,4 +64,16 @@ The DOGS are gone: no DOG commanders, no bones, no King Rufus.
    checkpoints and saves, and one allegiance-specific line in each later Act's OPEN, so the choice is felt.
 3. **t-041:** reframe Acts I–V dialogue toward the reveal, so early "pacification" lines read differently
    after the turn. Silas steers as it develops.
+   Shipped in kind_robots#4105. The evidence trail, Act by Act:
+   - **I, Pinkwake:** the fleet fires on Motherland survey beacons. The rescued pod is logged as "feral spawn,
+     recovered". The partner doubts the word "pacify".
+   - **II, Moonjelly:** Command calls the broadcast a war signal. Lilt hears it as a lullaby, and Nemi says the
+     lights are asking them to leave.
+   - **III, Trench:** the vault locks answer to Motherland command codes. Clawburst's collar is stamped with
+     old fleet command.
+   - **IV, Rosefin:** the dolphins block the convoy like a gate, and the route data shows colony ships booked
+     on the rail.
+   - **V, Wreckyard:** the depot crew were the Regent's caretakers, and the memorial asks "whose ships they
+     were".
+   `verifyRainbowEvidence.test.ts` pins this chain.
 4. **Later:** rebel-road wave changes, the two finale targets and allegiance-aware endings.
