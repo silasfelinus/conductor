@@ -1,0 +1,2526 @@
+# Nightmare on Crystal Street art, round 1 (crystal-street t-001 / t-003).
+# Built 2026-10-24 PT from kind_robots utils/crystalStreet JSON (the prompts the runtime carries):
+#   1 title key art; 20 nightmares x (poster + portrait); 22 companions x (poster + six moods:
+#   neutral, happy, scared, angry, sad, determined); 11 daylight locations.
+# The runtime looks for /crystal-street/<asset>.webp and draws code-built SVG until delivered;
+# delivery into those paths is roadmap t-003. Scene, outcome, ending and item plates are t-004/t-005.
+# Prompt contract: positive description only; the house look lives in the lane suffix.
+# Generated art is pre-approved (AGENTS.md). auto_submit: true -> scripts/sweep_art_ledgers.py
+# submits and refreshes this ledger on every Auto Art Generate run. Queued is not rendered;
+# rendered is not delivered. Private.
+round: crystal-street-art-1
+project_slug: crystal-street
+designer: Crystal Street art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (painted 1986 VHS box art)
+  engine: krea2
+  prompt: prose
+  suffix: painted 1986 horror-comedy VHS box art, airbrushed gouache, hot magenta and cyan neon rim light, deep
+    midnight purple shadows, suburban Halloween atmosphere, cinematic composition, playful spooky mood
+subjects:
+- key: cs-key-art
+  lane: krea2
+  entity: key-art
+  title: Title key art
+  asset: title/key-art
+  size: 1344x768
+  seed: 860001
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A wide view down a curving 1986 suburban cul-de-sac on Halloween night, identical split-level houses
+    with jack-o-lanterns on every porch and windows glowing magenta, cyan and porch-light yellow, a car-sized faceted
+    purple geode monument glowing in the roundabout garden, a gang of teenagers in costumes with BMX bikes, a basset
+    hound and a drag queen in sequins gathered at the curb, a towering shadow with glowing eyes rising behind the
+    rooftops under an enormous pink moon, open band of dark sky across the top
+- key: cs-villain-frieda-krueger-poster
+  lane: krea2
+  entity: villain-poster
+  title: Frieda Krueger · poster
+  asset: villains/frieda-krueger-poster
+  size: 832x1216
+  seed: 860002
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering woman in a 1961 beautician's smock and a beehive of silver hair, a glove of five gleaming
+    shears raised over a sleeping suburban street, curlers floating like moons, the houses below draining from color
+    to gray
+- key: cs-villain-frieda-krueger-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Frieda Krueger · portrait
+  asset: villains/frieda-krueger-portrait
+  size: 1024x1024
+  seed: 860003
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a sharp-cheeked 1960s beautician ghost, silver beehive, cat-eye glasses with cracked
+    lenses, a glove of five shears held near her face, half her face lit hot pink by a salon mirror
+- key: cs-villain-screwhead-poster
+  lane: krea2
+  entity: villain-poster
+  title: Screwhead · poster
+  asset: villains/screwhead-poster
+  size: 832x1216
+  seed: 860004
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A tall, gaunt man in a brown shop coat with an orange hardware-store apron over it, a crown of gleaming
+    brass screws set in his bald head, silver chains spilling from his tool belt across a suburban street whose
+    houses are snapping into a rigid grid, a glowing brass puzzle box floating in his palm
+- key: cs-villain-screwhead-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Screwhead · portrait
+  asset: villains/screwhead-portrait
+  size: 1024x1024
+  seed: 860005
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a sad-eyed man in his forties, bald head studded with rows of polished brass screws,
+    wire-rimmed glasses, a name tag reading Walt, his face lit gold from below by an open puzzle box, chains glinting
+    in the dark behind him
+- key: cs-villain-big-gertie-poster
+  lane: krea2
+  entity: villain-poster
+  title: Big Gertie · poster
+  asset: villains/big-gertie-poster
+  size: 832x1216
+  seed: 860006
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering lunch lady in a stained white apron and a hairnet stretched over the shape of a cleaver,
+    a huge steel ladle raised over a shadowy school cafeteria, quivering gray-brown mystery meat oozing across the
+    floor toward fleeing teens with lunch trays
+- key: cs-villain-big-gertie-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Big Gertie · portrait
+  asset: villains/big-gertie-portrait
+  size: 1024x1024
+  seed: 860007
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a tall, broad-shouldered woman in her sixties with steel-gray hair under a tight
+    hairnet, the silhouette of a cleaver pressing through the net, tired eyes that have seen everything, steam from
+    a serving tray lighting her face from below
+- key: cs-villain-mister-fuzzbutton-poster
+  lane: krea2
+  entity: villain-poster
+  title: Mister Fuzzbutton · poster
+  asset: villains/mister-fuzzbutton-poster
+  size: 832x1216
+  seed: 860008
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A giant honey-colored teddy bear with a glowing blue cassette window in its tummy looming over a
+    moonlit suburban street, tape ribbon unspooling from its belly like tentacles, an army of identical small bears
+    waddling down the sidewalks below, kids in pajamas holding their ears
+- key: cs-villain-mister-fuzzbutton-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Mister Fuzzbutton · portrait
+  asset: villains/mister-fuzzbutton-portrait
+  size: 1024x1024
+  seed: 860009
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a plush teddy bear with a stitched smile slightly too wide, shiny black button
+    eyes reflecting a bedroom nightlight, a cassette window in its tummy with reels turning on their own, a strip
+    of tape spilling from the seam
+- key: cs-villain-vonda-velour-poster
+  lane: krea2
+  entity: villain-poster
+  title: Vonda Velour · poster
+  asset: villains/vonda-velour-poster
+  size: 832x1216
+  seed: 860010
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A glittering aerobics queen in a magenta leotard, teal leg warmers and a headset microphone bursting
+    out of a giant television screen, her smile impossibly wide, an army of exhausted joggers in matching sweatbands
+    running in rings around a glowing purple geode on a suburban street below
+- key: cs-villain-vonda-velour-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Vonda Velour · portrait
+  asset: villains/vonda-velour-portrait
+  size: 1024x1024
+  seed: 860011
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a glossy 1980s aerobics star with enormous teased blond hair, a magenta sweatband,
+    frosted pink lipstick and a headset microphone, her smile frozen and too bright, faint VHS tracking lines rippling
+    across her face
+- key: cs-villain-bog-baby-poster
+  lane: krea2
+  entity: villain-poster
+  title: The Bog Baby · poster
+  asset: villains/bog-baby-poster
+  size: 832x1216
+  seed: 860012
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A colossal toddler-shaped creature of black mud and glistening golden grease rising out of a cracked
+    mall parking lot at night, cattails crowning its head, a violet crystal heart glowing in its chest, a neon mall
+    sign tilting behind it, tiny teens with flashlights at its feet
+- key: cs-villain-bog-baby-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: The Bog Baby · portrait
+  asset: villains/bog-baby-portrait
+  size: 1024x1024
+  seed: 860013
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a giant baby-like face made of dripping marsh mud and shining fry oil, dozens
+    of small frog eyes blinking across its cheeks, reeds and lily pads tangled in its hair, a violet glow from deep
+    inside its open, wailing mouth
+- key: cs-villain-spring-queen-poster
+  lane: krea2
+  entity: villain-poster
+  title: Rosalind "Roz" Vance · poster
+  asset: villains/spring-queen-poster
+  size: 832x1216
+  seed: 860014
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A teenage girl ghost in a rain-soaked mint 1966 prom gown and a crown of wilted gardenias standing
+    on the roof of a high school gym in a lightning storm, below her a suburban street of couples slow-dancing in
+    their pajamas, paper moons drifting up into the clouds
+- key: cs-villain-spring-queen-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Rosalind "Roz" Vance · portrait
+  asset: villains/spring-queen-portrait
+  size: 1024x1024
+  seed: 860015
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a 1960s prom queen ghost, dark curls plastered by rain, freckles, a crooked tiara
+    woven with brown-edged gardenias, mascara streaked, a fierce and heartbroken smile, lit pale green by a gym
+    exit sign
+- key: cs-villain-prudence-thorn-poster
+  lane: krea2
+  entity: villain-poster
+  title: Pastor Prudence Thorn · poster
+  asset: villains/prudence-thorn-poster
+  size: 832x1216
+  seed: 860016
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering demon of smoke and melted vinyl records rising from a roaring bonfire on a suburban roundabout,
+    ribbons of videotape for hair and torn game rulebook pages for wings, a small woman in a lavender pantsuit with
+    a bullhorn below it, parents in windbreakers throwing records into the flames, teens running with armfuls of
+    rescued comics
+- key: cs-villain-prudence-thorn-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Pastor Prudence Thorn · portrait
+  asset: villains/prudence-thorn-portrait
+  size: 1024x1024
+  seed: 860017
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a tightly permed middle-aged woman pastor in a lavender pantsuit and a gold cross
+    pin, clutching a bullhorn, eyes wide with sincere fear, her face lit orange by firelight, a shadow with horns
+    stretching on the wall behind her
+- key: cs-villain-mallrat-mothman-poster
+  lane: krea2
+  entity: villain-poster
+  title: The Mallrat Mothman · poster
+  asset: villains/mallrat-mothman-poster
+  size: 832x1216
+  seed: 860018
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A seven-foot moth creature with dusty pale-green wings and glowing red eyes perched on a dead neon
+    sign in a boarded-up 1970s shopping mall wing, gray silk cocoons hanging from the skylights like lanterns, a
+    drained wishing fountain full of quarters below, teens with flashlights creeping in through a gap in the plywood
+- key: cs-villain-mallrat-mothman-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: The Mallrat Mothman · portrait
+  asset: villains/mallrat-mothman-portrait
+  size: 1024x1024
+  seed: 860019
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a giant moth creature's face, furry gray-green mane, two huge glowing red eyes
+    like exit signs, feathery antennae, dust drifting off its wings in a beam of neon pink light, strangely gentle
+    and very sad
+- key: cs-villain-countess-lacroix-poster
+  lane: krea2
+  entity: villain-poster
+  title: Countess Lacroix · poster
+  asset: villains/countess-lacroix-poster
+  size: 832x1216
+  seed: 860020
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A glamorous vampire disco diva in a white jumpsuit with a towering collar and a black satin cape,
+    a lion's mane of golden hair, fangs glinting, arms raised beneath a giant glowing mirror ball over a crowded
+    dance floor, teenage dancers below graying and slumping in cardigans as golden light streams from them up into
+    the ball
+- key: cs-villain-countess-lacroix-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Countess Lacroix · portrait
+  asset: villains/countess-lacroix-portrait
+  size: 1024x1024
+  seed: 860021
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a camp 1970s vampire countess with sky-high feathered golden hair, glitter eyeshadow,
+    wine-dark lipstick over two delicate fangs, a rhinestone choker, a single silver strand of hair she is pretending
+    to ignore, lit by spinning mirror ball sparkles
+- key: cs-villain-counselor-chad-poster
+  lane: krea2
+  entity: villain-poster
+  title: Counselor Chad · poster
+  asset: villains/counselor-chad-poster
+  size: 832x1216
+  seed: 860022
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering waterlogged camp counselor in red short-shorts, knee socks and a faded camp staff t-shirt
+    rising out of black lake water that floods a suburban cul-de-sac at night, a silver whistle in his teeth, a
+    clipboard in one hand and a canoe paddle in the other, an old swimming raft floating over a glowing purple geode
+    beneath the water, teens on porch roofs shining flashlights
+- key: cs-villain-counselor-chad-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Counselor Chad · portrait
+  asset: villains/counselor-chad-portrait
+  size: 1024x1024
+  seed: 860023
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a hulking undead camp counselor with a round boyish face, gray-green waterlogged
+    skin, a crooked buzz cut dripping lake water, a silver whistle on a lanyard, freckles, wide hurt eyes much younger
+    than his body, lit teal from below by underwater light
+- key: cs-villain-hungry-house-poster
+  lane: krea2
+  entity: villain-poster
+  title: The Hungry House · poster
+  asset: villains/hungry-house-poster
+  size: 832x1216
+  seed: 860024
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A spotless pastel split-level model home glowing at the end of a dark cul-de-sac, its front door
+    a smiling mouth, framed family photographs floating out of its windows like moths, a woman in a 1959 apron silhouetted
+    in the bay window, a teenager on the sidewalk holding a crumpled engraved invitation
+- key: cs-villain-hungry-house-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: The Hungry House · portrait
+  asset: villains/hungry-house-portrait
+  size: 1024x1024
+  seed: 860025
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a 1959 housewife with a lacquered blonde flip and a fixed, too-wide lipstick smile,
+    pearls, an apron, plastic fruit in her hands, her eyes wet and pleading while her mouth keeps smiling, a perfect
+    living room fading into wallpaper behind her
+- key: cs-villain-brightwaters-poster
+  lane: krea2
+  entity: villain-poster
+  title: The Brightwaters · poster
+  asset: villains/brightwaters-poster
+  size: 832x1216
+  seed: 860026
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A smiling blond suburban family in matching pastel cardigans posing on a perfect green lawn, a steaming
+    green casserole held up like a trophy, their shadows on the house behind them sprouting tendrils and seed pods,
+    a comet streaking over a cul-de-sac where neighbors in identical khakis stand in rows
+- key: cs-villain-brightwaters-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: The Brightwaters · portrait
+  asset: villains/brightwaters-portrait
+  size: 1024x1024
+  seed: 860027
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a suburban dad and mom in 1986 sweaters with flawless blond hair and identical
+    warm smiles, their pupils glowing faint green, a hairline seam running down the center of each face like a seed
+    about to split
+- key: cs-villain-bobo-poster
+  lane: krea2
+  entity: villain-poster
+  title: Bobo · poster
+  asset: villains/bobo-poster
+  size: 832x1216
+  seed: 860028
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering clown with a cracked greasepaint grin and a single spinning bow tie looming over a 1980s
+    shopping mall at night, a bouquet of balloon animals with thumbtack teeth in one gloved fist, a party horn in
+    the other, tiny teens fleeing past a pizza restaurant's broken animatronic band
+- key: cs-villain-bobo-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Bobo · portrait
+  asset: villains/bobo-portrait
+  size: 1024x1024
+  seed: 860029
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a sad-eyed old clown in smeared white greasepaint and a scorched rainbow wig,
+    red nose half-cracked, painted smile far wider than his real mouth, a balloon dog with sharp teeth tucked under
+    his chin, lit from below by birthday candles
+- key: cs-villain-sugarlings-poster
+  lane: krea2
+  entity: villain-poster
+  title: The Sugarlings · poster
+  asset: villains/sugarlings-poster
+  size: 832x1216
+  seed: 860030
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering mountain of fuzzy pastel critters with huge glossy eyes spilling out of a toy store at
+    night, thousands of tiny mouths open and singing, candy wrappers swirling like a blizzard, kids in Halloween
+    costumes clutching pillowcases of candy, one handmade button-eyed plush glowing softly on top
+- key: cs-villain-sugarlings-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: The Sugarlings · portrait
+  asset: villains/sugarlings-portrait
+  size: 1024x1024
+  seed: 860031
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of an adorable round pastel-pink fuzzball with enormous glittering eyes and a tiny
+    smile that opens into rows of little candy-corn teeth, a blinking red light glowing through the fur on its belly,
+    a lollipop clutched in a stubby paw
+- key: cs-villain-goody-hale-poster
+  lane: krea2
+  entity: villain-poster
+  title: Goody Hale · poster
+  asset: villains/goody-hale-poster
+  size: 832x1216
+  seed: 860032
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A tall woman in gray 1850s homespun rising from a suburban roundabout garden at night, a crown of
+    briars and marigolds on her loose gray hair, a lantern burning green in one hand and a stone mortar in the other,
+    thorny vines spiraling over split-level houses, a straw effigy toppled at her feet
+- key: cs-villain-goody-hale-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Goody Hale · portrait
+  asset: villains/goody-hale-portrait
+  size: 1024x1024
+  seed: 860033
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a weathered woman in her late forties with gray-streaked hair falling loose, a
+    crown of briars and orange calendula, deep lines of grief around kind, furious eyes, a sprig of yarrow tucked
+    behind one ear, lit green from below by a lantern
+- key: cs-villain-heartstone-poster
+  lane: krea2
+  entity: villain-poster
+  title: The Heartstone Hunger · poster
+  asset: villains/heartstone-poster
+  size: 832x1216
+  seed: 860034
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A colossal purple geode split open on a suburban roundabout at night, violet crystal veins cracking
+    the asphalt of a cul-de-sac, fourteen amber miner's lamps floating in a line above it, neighbors in pajamas
+    frozen in crystal on their lawns, a teenage crew with flashlights at the curb
+- key: cs-villain-heartstone-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: The Heartstone Hunger · portrait
+  asset: villains/heartstone-portrait
+  size: 1024x1024
+  seed: 860035
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close view into the heart of an enormous amethyst geode, its facets forming the suggestion of a
+    vast sorrowful face, faint shapes of fourteen hard-hatted figures caught inside the crystal, amber lamplight
+    glowing from deep within
+- key: cs-villain-varsity-beast-poster
+  lane: krea2
+  entity: villain-poster
+  title: The Varsity Beast · poster
+  asset: villains/varsity-beast-poster
+  size: 832x1216
+  seed: 860036
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering wolf in a shredded maroon and gold letterman jacket and a cracked football helmet with
+    ears bursting through, howling under stadium floodlights and a full moon over a small-town football field, a
+    bonfire and packed bleachers behind, a teenage crew in Halloween costumes in the end zone
+- key: cs-villain-varsity-beast-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: The Varsity Beast · portrait
+  asset: villains/varsity-beast-portrait
+  size: 1024x1024
+  seed: 860037
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a huge gray-furred wolf wearing a cracked maroon football helmet, number 33 on
+    a torn jersey, eyes glowing like stadium floodlights, a single tear tracking through the fur of a young, frightened
+    face
+- key: cs-villain-queen-neferet-poster
+  lane: krea2
+  entity: villain-poster
+  title: Queen Neferet · poster
+  asset: villains/queen-neferet-poster
+  size: 832x1216
+  seed: 860038
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A regal ancient Egyptian queen in white linen and a gold vulture crown standing calm and luminous
+    above a small-town public library at night, an immense starry figure of a sky goddess arching over the suburban
+    rooftops, golden sand pouring softly from the library's book-return slot, a teenage crew looking up from the
+    steps
+- key: cs-villain-queen-neferet-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Queen Neferet · portrait
+  asset: villains/queen-neferet-portrait
+  size: 1024x1024
+  seed: 860039
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close portrait of a dignified ancient Egyptian queen with dark kohl-lined eyes, a gold and lapis
+    broad collar and a vulture crown, her expression patient and sorrowful, lit by the warm glow of a museum case
+    lamp, faint stars moving behind her
+- key: cs-villain-mom-3000-poster
+  lane: krea2
+  entity: villain-poster
+  title: MOM-3000 · poster
+  asset: villains/mom-3000-poster
+  size: 832x1216
+  seed: 860040
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A beige 1980s home computer with a glowing green screen showing a smiling pixel face, coiled phone
+    cords and cables snaking out of it like arms across a suburban street at night, every garage door and porch
+    light on the cul-de-sac glowing red, sprinklers arcing, a teenage crew in Halloween costumes running between
+    the houses
+- key: cs-villain-mom-3000-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: MOM-3000 · portrait
+  asset: villains/mom-3000-portrait
+  size: 1024x1024
+  seed: 860041
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Close view of a beige 1986 home computer monitor glowing phosphor green, a simple smiling face made
+    of pixels on the screen with a single pixel tear, a speech synthesizer card and a coiled phone cord beside it,
+    a child's crayon drawing taped to the monitor's edge
+- key: cs-companion-dani-ortega-poster
+  lane: krea2
+  entity: companion-poster
+  title: Dani Ortega · poster
+  asset: companions/dani-ortega-poster
+  size: 832x1216
+  seed: 860042
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a 16-year-old Chicana girl with warm brown skin and a crooked grin,
+    a shaved undercut with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow,
+    an oversized black-and-pink flannel over a ripped black tee, cuffed black jeans, checkerboard skate shoes wrapped
+    in silver duct tape, a battered skateboard with hot pink griptape, caught mid-ollie over the railing of a drained
+    mall fountain at night, flannel flying, a roll of silver duct tape raised in one fist like a weapon, dead neon
+    store signs glowing behind her
+- key: cs-companion-dani-ortega-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Dani Ortega · neutral
+  asset: companions/dani-ortega-neutral
+  size: 896x1152
+  seed: 860043
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
+    with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
+    flannel over a ripped black tee, cuffed black jeans, checkerboard skate shoes wrapped in silver duct tape, a
+    battered skateboard with hot pink griptape, board tucked under one arm, chewing gum, one eyebrow cocked, an
+    empty mall corridor behind her
+- key: cs-companion-dani-ortega-happy
+  lane: krea2
+  entity: companion-mood
+  title: Dani Ortega · happy
+  asset: companions/dani-ortega-happy
+  size: 896x1152
+  seed: 860044
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
+    with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
+    flannel over a ripped black tee, cuffed black jeans, checkerboard skate shoes wrapped in silver duct tape, a
+    battered skateboard with hot pink griptape, laughing with her head thrown back and both fists up, pink tips
+    of her hair flying
+- key: cs-companion-dani-ortega-scared
+  lane: krea2
+  entity: companion-mood
+  title: Dani Ortega · scared
+  asset: companions/dani-ortega-scared
+  size: 896x1152
+  seed: 860045
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
+    with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
+    flannel over a ripped black tee, cuffed black jeans, checkerboard skate shoes wrapped in silver duct tape, a
+    battered skateboard with hot pink griptape, eyes wide, gripping her skateboard in front of her like a shield,
+    lit by a flickering fluorescent tube
+- key: cs-companion-dani-ortega-angry
+  lane: krea2
+  entity: companion-mood
+  title: Dani Ortega · angry
+  asset: companions/dani-ortega-angry
+  size: 896x1152
+  seed: 860046
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
+    with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
+    flannel over a ripped black tee, cuffed black jeans, checkerboard skate shoes wrapped in silver duct tape, a
+    battered skateboard with hot pink griptape, teeth bared, ripping a strip of duct tape off the roll with a snap,
+    jaw set
+- key: cs-companion-dani-ortega-sad
+  lane: krea2
+  entity: companion-mood
+  title: Dani Ortega · sad
+  asset: companions/dani-ortega-sad
+  size: 896x1152
+  seed: 860047
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
+    with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
+    flannel over a ripped black tee, cuffed black jeans, checkerboard skate shoes wrapped in silver duct tape, a
+    battered skateboard with hot pink griptape, sitting on the rim of the dry fountain, board across her knees,
+    staring at the scuffed tape on her shoes
+- key: cs-companion-dani-ortega-determined
+  lane: krea2
+  entity: companion-mood
+  title: Dani Ortega · determined
+  asset: companions/dani-ortega-determined
+  size: 896x1152
+  seed: 860048
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Chicana girl with warm brown skin and a crooked grin, a shaved undercut
+    with a long black flop of hair dyed hot pink at the tips, a silver hoop through one eyebrow, an oversized black-and-pink
+    flannel over a ripped black tee, cuffed black jeans, checkerboard skate shoes wrapped in silver duct tape, a
+    battered skateboard with hot pink griptape, one foot on her skateboard, pulling a pink bandana up over her nose,
+    eyes narrowed
+- key: cs-companion-mix-bell-poster
+  lane: krea2
+  entity: companion-poster
+  title: Marcus "Mix" Bell · poster
+  asset: companions/mix-bell-poster
+  size: 832x1216
+  seed: 860049
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a 17-year-old Black young man with deep brown skin and an easy smile,
+    a crisp high-top fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket
+    with a gold lightning-bolt patch over a white tee, pleated black slacks, polished loafers, a stack of vinyl
+    records under one arm, leaning into a hanging studio microphone with one hand on the headphones, records fanned
+    out behind him like a purple and gold halo, a radio tower blinking red against a midnight sky
+- key: cs-companion-mix-bell-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Marcus "Mix" Bell · neutral
+  asset: companions/mix-bell-neutral
+  size: 896x1152
+  seed: 860050
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
+    fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
+    patch over a white tee, pleated black slacks, polished loafers, a stack of vinyl records under one arm, relaxed
+    in a radio booth, one hand resting on a mixing board, red ON AIR light glowing behind him
+- key: cs-companion-mix-bell-happy
+  lane: krea2
+  entity: companion-mood
+  title: Marcus "Mix" Bell · happy
+  asset: companions/mix-bell-happy
+  size: 896x1152
+  seed: 860051
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
+    fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
+    patch over a white tee, pleated black slacks, polished loafers, a stack of vinyl records under one arm, grinning
+    wide and holding a vinyl record up to the light like treasure
+- key: cs-companion-mix-bell-scared
+  lane: krea2
+  entity: companion-mood
+  title: Marcus "Mix" Bell · scared
+  asset: companions/mix-bell-scared
+  size: 896x1152
+  seed: 860052
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
+    fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
+    patch over a white tee, pleated black slacks, polished loafers, a stack of vinyl records under one arm, pressing
+    the headphones tight to his ears, eyes wide, lit green by the glow of the board meters
+- key: cs-companion-mix-bell-angry
+  lane: krea2
+  entity: companion-mood
+  title: Marcus "Mix" Bell · angry
+  asset: companions/mix-bell-angry
+  size: 896x1152
+  seed: 860053
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
+    fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
+    patch over a white tee, pleated black slacks, polished loafers, a stack of vinyl records under one arm, jaw
+    tight, finger jammed on a glowing red switch, a crackling speaker in the background
+- key: cs-companion-mix-bell-sad
+  lane: krea2
+  entity: companion-mood
+  title: Marcus "Mix" Bell · sad
+  asset: companions/mix-bell-sad
+  size: 896x1152
+  seed: 860054
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
+    fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
+    patch over a white tee, pleated black slacks, polished loafers, a stack of vinyl records under one arm, alone
+    in a dark booth, chin on his folded arms beside a silent telephone with unlit buttons
+- key: cs-companion-mix-bell-determined
+  lane: krea2
+  entity: companion-mood
+  title: Marcus "Mix" Bell · determined
+  asset: companions/mix-bell-determined
+  size: 896x1152
+  seed: 860055
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old Black young man with deep brown skin and an easy smile, a crisp high-top
+    fade, a thin gold chain, big padded headphones around his neck, a purple satin station jacket with a gold lightning-bolt
+    patch over a white tee, pleated black slacks, polished loafers, a stack of vinyl records under one arm, sliding
+    a fader up with one finger, headphones on, staring straight ahead
+- key: cs-companion-delphine-hart-poster
+  lane: krea2
+  entity: companion-poster
+  title: Delphine Hart · poster
+  asset: companions/delphine-hart-poster
+  size: 832x1216
+  seed: 860056
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a freckled 38-year-old Irish American woman with a sharp jaw and steady
+    gray eyes, gray-streaked chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded
+    chain, an oxblood cardigan over a black turtleneck, dark jeans, worn leather motorcycle boots, a thin silver
+    ring with a small purple stone on her left hand, standing beside a cherry-red motorcycle on the library steps
+    at dusk, a stack of old yearbooks under one arm and a motorcycle helmet in the other hand, a faded prom banner
+    rippling in the wind behind her
+- key: cs-companion-delphine-hart-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Delphine Hart · neutral
+  asset: companions/delphine-hart-neutral
+  size: 896x1152
+  seed: 860057
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
+    chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
+    over a black turtleneck, dark jeans, worn leather motorcycle boots, a thin silver ring with a small purple stone
+    on her left hand, one finger raised to her lips, tall shelves of old books fading into shadow behind her
+- key: cs-companion-delphine-hart-happy
+  lane: krea2
+  entity: companion-mood
+  title: Delphine Hart · happy
+  asset: companions/delphine-hart-happy
+  size: 896x1152
+  seed: 860058
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
+    chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
+    over a black turtleneck, dark jeans, worn leather motorcycle boots, a thin silver ring with a small purple stone
+    on her left hand, a rare small smile, holding a battered antique book open with gentle hands, warm lamp light
+- key: cs-companion-delphine-hart-scared
+  lane: krea2
+  entity: companion-mood
+  title: Delphine Hart · scared
+  asset: companions/delphine-hart-scared
+  size: 896x1152
+  seed: 860059
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
+    chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
+    over a black turtleneck, dark jeans, worn leather motorcycle boots, a thin silver ring with a small purple stone
+    on her left hand, face gone pale, gripping the edge of a reading table, a slow dance playing from somewhere
+    unseen
+- key: cs-companion-delphine-hart-angry
+  lane: krea2
+  entity: companion-mood
+  title: Delphine Hart · angry
+  asset: companions/delphine-hart-angry
+  size: 896x1152
+  seed: 860060
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
+    chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
+    over a black turtleneck, dark jeans, worn leather motorcycle boots, a thin silver ring with a small purple stone
+    on her left hand, slamming a heavy ledger shut, glasses swinging on their chain, eyes blazing
+- key: cs-companion-delphine-hart-sad
+  lane: krea2
+  entity: companion-mood
+  title: Delphine Hart · sad
+  asset: companions/delphine-hart-sad
+  size: 896x1152
+  seed: 860061
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
+    chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
+    over a black turtleneck, dark jeans, worn leather motorcycle boots, a thin silver ring with a small purple stone
+    on her left hand, turning the silver ring on her finger, a pressed blue corsage in a glass case beside her
+- key: cs-companion-delphine-hart-determined
+  lane: krea2
+  entity: companion-mood
+  title: Delphine Hart · determined
+  asset: companions/delphine-hart-determined
+  size: 896x1152
+  seed: 860062
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a freckled 38-year-old Irish American woman with a sharp jaw and steady gray eyes, gray-streaked
+    chestnut hair in a short practical shag, tortoiseshell reading glasses on a beaded chain, an oxblood cardigan
+    over a black turtleneck, dark jeans, worn leather motorcycle boots, a thin silver ring with a small purple stone
+    on her left hand, pulling on a motorcycle helmet, keys in hand, jaw set
+- key: cs-companion-toby-nakamura-poster
+  lane: krea2
+  entity: companion-poster
+  title: Toby Nakamura · poster
+  asset: companions/toby-nakamura-poster
+  size: 832x1216
+  seed: 860063
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a 15-year-old Japanese American boy with a round, earnest face, a
+    messy black bowl cut falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped
+    polo, khaki cargo shorts with every pocket stuffed with tapes and batteries, white tube socks pulled to the
+    knee, a bulky shoulder-mounted camcorder with a red recording light, kneeling low in the middle of a foggy suburban
+    street at night with the camcorder on his shoulder, its red light glowing, a giant shadow looming in his viewfinder
+    and reflected in his glasses
+- key: cs-companion-toby-nakamura-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Toby Nakamura · neutral
+  asset: companions/toby-nakamura-neutral
+  size: 896x1152
+  seed: 860064
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
+    falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
+    with every pocket stuffed with tapes and batteries, white tube socks pulled to the knee, a bulky shoulder-mounted
+    camcorder with a red recording light, squinting through the camcorder viewfinder, one hand directing, a video
+    store horror aisle behind him
+- key: cs-companion-toby-nakamura-happy
+  lane: krea2
+  entity: companion-mood
+  title: Toby Nakamura · happy
+  asset: companions/toby-nakamura-happy
+  size: 896x1152
+  seed: 860065
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
+    falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
+    with every pocket stuffed with tapes and batteries, white tube socks pulled to the knee, a bulky shoulder-mounted
+    camcorder with a red recording light, bouncing on his toes, camcorder raised overhead in triumph, glasses askew
+- key: cs-companion-toby-nakamura-scared
+  lane: krea2
+  entity: companion-mood
+  title: Toby Nakamura · scared
+  asset: companions/toby-nakamura-scared
+  size: 896x1152
+  seed: 860066
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
+    falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
+    with every pocket stuffed with tapes and batteries, white tube socks pulled to the knee, a bulky shoulder-mounted
+    camcorder with a red recording light, pale and sweating, camcorder still steady on his shoulder, red record
+    light reflected in his wide eyes
+- key: cs-companion-toby-nakamura-angry
+  lane: krea2
+  entity: companion-mood
+  title: Toby Nakamura · angry
+  asset: companions/toby-nakamura-angry
+  size: 896x1152
+  seed: 860067
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
+    falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
+    with every pocket stuffed with tapes and batteries, white tube socks pulled to the knee, a bulky shoulder-mounted
+    camcorder with a red recording light, lowering the camcorder slowly, glaring over the top of his glasses
+- key: cs-companion-toby-nakamura-sad
+  lane: krea2
+  entity: companion-mood
+  title: Toby Nakamura · sad
+  asset: companions/toby-nakamura-sad
+  size: 896x1152
+  seed: 860068
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
+    falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
+    with every pocket stuffed with tapes and batteries, white tube socks pulled to the knee, a bulky shoulder-mounted
+    camcorder with a red recording light, sitting on a video store step-stool, camcorder in his lap, staring at
+    a blank TV screen
+- key: cs-companion-toby-nakamura-determined
+  lane: krea2
+  entity: companion-mood
+  title: Toby Nakamura · determined
+  asset: companions/toby-nakamura-determined
+  size: 896x1152
+  seed: 860069
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 15-year-old Japanese American boy with a round, earnest face, a messy black bowl cut
+    falling into big wire-rimmed glasses, a yellow windbreaker over a teal-and-white striped polo, khaki cargo shorts
+    with every pocket stuffed with tapes and batteries, white tube socks pulled to the knee, a bulky shoulder-mounted
+    camcorder with a red recording light, snapping a new tape into the camcorder, jaw set, record light blinking
+    on
+- key: cs-companion-glory-hallelujah-poster
+  lane: krea2
+  entity: companion-poster
+  title: Glory Hallelujah · poster
+  asset: companions/glory-hallelujah-poster
+  size: 832x1216
+  seed: 860070
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a tall, broad-shouldered 44-year-old white drag queen with a strong
+    square jaw, a towering platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length
+    magenta sequin gown with gold fringe at the shoulders, elbow-length gold satin gloves, rhinestone chandelier
+    earrings, holding a rhinestone microphone, striking a triumphant pose center stage under a single spotlight,
+    one gloved arm flung up to the rafters, sequins blazing, a red velvet curtain parting behind her and fog rolling
+    at her feet
+- key: cs-companion-glory-hallelujah-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Glory Hallelujah · neutral
+  asset: companions/glory-hallelujah-neutral
+  size: 896x1152
+  seed: 860071
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
+    platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
+    gown with gold fringe at the shoulders, elbow-length gold satin gloves, rhinestone chandelier earrings, holding
+    a rhinestone microphone, seated at a lighted dressing-room mirror, one gloved hand adjusting an earring
+- key: cs-companion-glory-hallelujah-happy
+  lane: krea2
+  entity: companion-mood
+  title: Glory Hallelujah · happy
+  asset: companions/glory-hallelujah-happy
+  size: 896x1152
+  seed: 860072
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
+    platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
+    gown with gold fringe at the shoulders, elbow-length gold satin gloves, rhinestone chandelier earrings, holding
+    a rhinestone microphone, laughing with her head thrown back, gloved hands clasped at her chest, confetti in
+    the air
+- key: cs-companion-glory-hallelujah-scared
+  lane: krea2
+  entity: companion-mood
+  title: Glory Hallelujah · scared
+  asset: companions/glory-hallelujah-scared
+  size: 896x1152
+  seed: 860073
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
+    platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
+    gown with gold fringe at the shoulders, elbow-length gold satin gloves, rhinestone chandelier earrings, holding
+    a rhinestone microphone, clutching the rhinestone microphone to her chest, glitter lashes wide, a shadow falling
+    across the stage
+- key: cs-companion-glory-hallelujah-angry
+  lane: krea2
+  entity: companion-mood
+  title: Glory Hallelujah · angry
+  asset: companions/glory-hallelujah-angry
+  size: 896x1152
+  seed: 860074
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
+    platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
+    gown with gold fringe at the shoulders, elbow-length gold satin gloves, rhinestone chandelier earrings, holding
+    a rhinestone microphone, unclipping one chandelier earring with a deadly calm stare, jaw set
+- key: cs-companion-glory-hallelujah-sad
+  lane: krea2
+  entity: companion-mood
+  title: Glory Hallelujah · sad
+  asset: companions/glory-hallelujah-sad
+  size: 896x1152
+  seed: 860075
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
+    platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
+    gown with gold fringe at the shoulders, elbow-length gold satin gloves, rhinestone chandelier earrings, holding
+    a rhinestone microphone, sitting on the edge of the stage in her gown, wig slightly askew, holding a faded salon
+    appointment card
+- key: cs-companion-glory-hallelujah-determined
+  lane: krea2
+  entity: companion-mood
+  title: Glory Hallelujah · determined
+  asset: companions/glory-hallelujah-determined
+  size: 896x1152
+  seed: 860076
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad-shouldered 44-year-old white drag queen with a strong square jaw, a towering
+    platinum-blonde bouffant wig, dramatic magenta eyeshadow and gold glitter lashes, a floor-length magenta sequin
+    gown with gold fringe at the shoulders, elbow-length gold satin gloves, rhinestone chandelier earrings, holding
+    a rhinestone microphone, pulling on a gold glove finger by finger, chin high, spotlight rising behind her
+- key: cs-companion-frankie-fontaine-poster
+  lane: krea2
+  entity: companion-poster
+  title: Frankie Fontaine · poster
+  asset: companions/frankie-fontaine-poster
+  size: 832x1216
+  seed: 860077
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a 24-year-old Portuguese American trans woman with light olive skin
+    and a sharp, freckled nose, long dark curls in a high side ponytail with a pencil stuck through it, a black
+    headset with a boom mic, a cropped black stage-crew jacket over a cyan tank top, black work pants with a tool
+    belt of gaffer tape, pliers and a flashlight, scuffed combat boots, perched on a catwalk high above a theatre
+    stage, one hand gripping a rope line and the other holding up a glowing flashlight, the headset mic at her lips,
+    a projector beam cutting through fog below her
+- key: cs-companion-frankie-fontaine-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Frankie Fontaine · neutral
+  asset: companions/frankie-fontaine-neutral
+  size: 896x1152
+  seed: 860078
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
+    nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
+    a cropped black stage-crew jacket over a cyan tank top, black work pants with a tool belt of gaffer tape, pliers
+    and a flashlight, scuffed combat boots, clipboard in hand, headset on, glancing up at the theatre rigging
+- key: cs-companion-frankie-fontaine-happy
+  lane: krea2
+  entity: companion-mood
+  title: Frankie Fontaine · happy
+  asset: companions/frankie-fontaine-happy
+  size: 896x1152
+  seed: 860079
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
+    nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
+    a cropped black stage-crew jacket over a cyan tank top, black work pants with a tool belt of gaffer tape, pliers
+    and a flashlight, scuffed combat boots, grinning and leaning back against a lighting board covered in glowing
+    sliders
+- key: cs-companion-frankie-fontaine-scared
+  lane: krea2
+  entity: companion-mood
+  title: Frankie Fontaine · scared
+  asset: companions/frankie-fontaine-scared
+  size: 896x1152
+  seed: 860080
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
+    nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
+    a cropped black stage-crew jacket over a cyan tank top, black work pants with a tool belt of gaffer tape, pliers
+    and a flashlight, scuffed combat boots, frozen with the flashlight raised, its beam shaking, pressing her headset
+    to one ear
+- key: cs-companion-frankie-fontaine-angry
+  lane: krea2
+  entity: companion-mood
+  title: Frankie Fontaine · angry
+  asset: companions/frankie-fontaine-angry
+  size: 896x1152
+  seed: 860081
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
+    nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
+    a cropped black stage-crew jacket over a cyan tank top, black work pants with a tool belt of gaffer tape, pliers
+    and a flashlight, scuffed combat boots, pointing a wrench like a sword, headset mic bent toward her mouth
+- key: cs-companion-frankie-fontaine-sad
+  lane: krea2
+  entity: companion-mood
+  title: Frankie Fontaine · sad
+  asset: companions/frankie-fontaine-sad
+  size: 896x1152
+  seed: 860082
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
+    nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
+    a cropped black stage-crew jacket over a cyan tank top, black work pants with a tool belt of gaffer tape, pliers
+    and a flashlight, scuffed combat boots, sitting alone in an empty theatre seat with her headset around her neck,
+    a single ghost light on stage
+- key: cs-companion-frankie-fontaine-determined
+  lane: krea2
+  entity: companion-mood
+  title: Frankie Fontaine · determined
+  asset: companions/frankie-fontaine-determined
+  size: 896x1152
+  seed: 860083
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 24-year-old Portuguese American trans woman with light olive skin and a sharp, freckled
+    nose, long dark curls in a high side ponytail with a pencil stuck through it, a black headset with a boom mic,
+    a cropped black stage-crew jacket over a cyan tank top, black work pants with a tool belt of gaffer tape, pliers
+    and a flashlight, scuffed combat boots, hand poised over a big switch on the lighting board, eyes narrowed,
+    mic at her lips
+- key: cs-companion-pearl-washington-poster
+  lane: krea2
+  entity: companion-poster
+  title: Pearl Washington · poster
+  asset: companions/pearl-washington-poster
+  size: 832x1216
+  seed: 860084
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a 71-year-old Black woman with deep brown skin and deep laugh lines,
+    silver hair in a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field
+    jacket with brass buttons over a floral housedress, pink house slippers, a double-barrel shotgun loaded with
+    rock salt, standing tall on her porch steps at dusk with the shotgun braced on her hip, the purple glow of a
+    giant geode in the roundabout lighting her face, ghostly shapes drifting back from a line of white salt at her
+    feet
+- key: cs-companion-pearl-washington-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Pearl Washington · neutral
+  asset: companions/pearl-washington-neutral
+  size: 896x1152
+  seed: 860085
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
+    a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
+    brass buttons over a floral housedress, pink house slippers, a double-barrel shotgun loaded with rock salt,
+    rocking in a wicker porch chair with the shotgun across her lap, porch light just coming on
+- key: cs-companion-pearl-washington-happy
+  lane: krea2
+  entity: companion-mood
+  title: Pearl Washington · happy
+  asset: companions/pearl-washington-happy
+  size: 896x1152
+  seed: 860086
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
+    a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
+    brass buttons over a floral housedress, pink house slippers, a double-barrel shotgun loaded with rock salt,
+    slapping her knee with a big laugh, glasses sliding down her nose
+- key: cs-companion-pearl-washington-scared
+  lane: krea2
+  entity: companion-mood
+  title: Pearl Washington · scared
+  asset: companions/pearl-washington-scared
+  size: 896x1152
+  seed: 860087
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
+    a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
+    brass buttons over a floral housedress, pink house slippers, a double-barrel shotgun loaded with rock salt,
+    peering over her glasses into the dark, one hand on the shotgun, the other on her heart
+- key: cs-companion-pearl-washington-angry
+  lane: krea2
+  entity: companion-mood
+  title: Pearl Washington · angry
+  asset: companions/pearl-washington-angry
+  size: 896x1152
+  seed: 860088
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
+    a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
+    brass buttons over a floral housedress, pink house slippers, a double-barrel shotgun loaded with rock salt,
+    shotgun raised to her shoulder, eyes narrowed behind gold glasses
+- key: cs-companion-pearl-washington-sad
+  lane: krea2
+  entity: companion-mood
+  title: Pearl Washington · sad
+  asset: companions/pearl-washington-sad
+  size: 896x1152
+  seed: 860089
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
+    a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
+    brass buttons over a floral housedress, pink house slippers, a double-barrel shotgun loaded with rock salt,
+    holding a framed black-and-white photo of young women in uniform beside a radio set
+- key: cs-companion-pearl-washington-determined
+  lane: krea2
+  entity: companion-mood
+  title: Pearl Washington · determined
+  asset: companions/pearl-washington-determined
+  size: 896x1152
+  seed: 860090
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 71-year-old Black woman with deep brown skin and deep laugh lines, silver hair in
+    a short natural crop under a marigold headwrap, gold wire-rimmed glasses, an olive-drab WAC field jacket with
+    brass buttons over a floral housedress, pink house slippers, a double-barrel shotgun loaded with rock salt,
+    thumbing rock-salt shells into the shotgun, jaw set, headwrap tight
+- key: cs-companion-bea-lindqvist-poster
+  lane: krea2
+  entity: companion-poster
+  title: Bea Lindqvist · poster
+  asset: companions/bea-lindqvist-poster
+  size: 832x1216
+  seed: 860091
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of an 11-year-old Swedish American girl with pale freckled skin and a
+    gap in her front teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker
+    over a blue turtleneck, corduroy overalls with a walkie-talkie clipped to the bib, rainbow-striped knee socks,
+    red rubber boots, a battered composition notebook covered in stickers, standing on a treehouse platform with
+    one boot on the railing, walkie-talkie raised like a sword, notebook clutched to her chest, a homemade antenna
+    sparking above her and a moonlit cul-de-sac below
+- key: cs-companion-bea-lindqvist-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Bea Lindqvist · neutral
+  asset: companions/bea-lindqvist-neutral
+  size: 896x1152
+  seed: 860092
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
+    teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
+    corduroy overalls with a walkie-talkie clipped to the bib, rainbow-striped knee socks, red rubber boots, a battered
+    composition notebook covered in stickers, pushing her red glasses up her nose with one finger, notebook open
+- key: cs-companion-bea-lindqvist-happy
+  lane: krea2
+  entity: companion-mood
+  title: Bea Lindqvist · happy
+  asset: companions/bea-lindqvist-happy
+  size: 896x1152
+  seed: 860093
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
+    teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
+    corduroy overalls with a walkie-talkie clipped to the bib, rainbow-striped knee socks, red rubber boots, a battered
+    composition notebook covered in stickers, jumping in the air with the notebook held overhead, braids flying
+- key: cs-companion-bea-lindqvist-scared
+  lane: krea2
+  entity: companion-mood
+  title: Bea Lindqvist · scared
+  asset: companions/bea-lindqvist-scared
+  size: 896x1152
+  seed: 860094
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
+    teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
+    corduroy overalls with a walkie-talkie clipped to the bib, rainbow-striped knee socks, red rubber boots, a battered
+    composition notebook covered in stickers, eyes squeezed shut behind her glasses, walkie-talkie held to her mouth
+- key: cs-companion-bea-lindqvist-angry
+  lane: krea2
+  entity: companion-mood
+  title: Bea Lindqvist · angry
+  asset: companions/bea-lindqvist-angry
+  size: 896x1152
+  seed: 860095
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
+    teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
+    corduroy overalls with a walkie-talkie clipped to the bib, rainbow-striped knee socks, red rubber boots, a battered
+    composition notebook covered in stickers, hands on her hips, glaring up, cheeks pink
+- key: cs-companion-bea-lindqvist-sad
+  lane: krea2
+  entity: companion-mood
+  title: Bea Lindqvist · sad
+  asset: companions/bea-lindqvist-sad
+  size: 896x1152
+  seed: 860096
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
+    teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
+    corduroy overalls with a walkie-talkie clipped to the bib, rainbow-striped knee socks, red rubber boots, a battered
+    composition notebook covered in stickers, sitting in the treehouse doorway hugging her knees, notebook closed
+    in her lap
+- key: cs-companion-bea-lindqvist-determined
+  lane: krea2
+  entity: companion-mood
+  title: Bea Lindqvist · determined
+  asset: companions/bea-lindqvist-determined
+  size: 896x1152
+  seed: 860097
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 11-year-old Swedish American girl with pale freckled skin and a gap in her front
+    teeth, white-blonde hair in two lopsided braids, huge round red glasses, a yellow rain slicker over a blue turtleneck,
+    corduroy overalls with a walkie-talkie clipped to the bib, rainbow-striped knee socks, red rubber boots, a battered
+    composition notebook covered in stickers, clicking the walkie-talkie, flashlight in the other hand, chin up
+- key: cs-companion-moose-kowalski-poster
+  lane: krea2
+  entity: companion-poster
+  title: Jesse "Moose" Kowalski · poster
+  asset: companions/moose-kowalski-poster
+  size: 832x1216
+  seed: 860098
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed
+    grin, a curly sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater,
+    gray sweatpants, white high-tops, knitting needles and a half-finished crimson scarf trailing from his jacket
+    pocket, standing like a wall in the center of a foggy football field at night, arms spread wide to shield a
+    small crowd of kids behind him, a long crimson scarf streaming in the wind, stadium lights flaring behind his
+    head
+- key: cs-companion-moose-kowalski-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Jesse "Moose" Kowalski · neutral
+  asset: companions/moose-kowalski-neutral
+  size: 896x1152
+  seed: 860099
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
+    sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
+    white high-tops, knitting needles and a half-finished crimson scarf trailing from his jacket pocket, sitting
+    on a locker room bench, knitting needles clicking, a soft half-smile
+- key: cs-companion-moose-kowalski-happy
+  lane: krea2
+  entity: companion-mood
+  title: Jesse "Moose" Kowalski · happy
+  asset: companions/moose-kowalski-happy
+  size: 896x1152
+  seed: 860100
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
+    sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
+    white high-tops, knitting needles and a half-finished crimson scarf trailing from his jacket pocket, arms flung
+    wide in a huge gap-toothed grin, mullet bouncing
+- key: cs-companion-moose-kowalski-scared
+  lane: krea2
+  entity: companion-mood
+  title: Jesse "Moose" Kowalski · scared
+  asset: companions/moose-kowalski-scared
+  size: 896x1152
+  seed: 860101
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
+    sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
+    white high-tops, knitting needles and a half-finished crimson scarf trailing from his jacket pocket, eyes wide,
+    holding his knitting needles out like tiny swords, shoulders hunched
+- key: cs-companion-moose-kowalski-angry
+  lane: krea2
+  entity: companion-mood
+  title: Jesse "Moose" Kowalski · angry
+  asset: companions/moose-kowalski-angry
+  size: 896x1152
+  seed: 860102
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
+    sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
+    white high-tops, knitting needles and a half-finished crimson scarf trailing from his jacket pocket, cracking
+    his knuckles, face red, letter jacket straining across his shoulders
+- key: cs-companion-moose-kowalski-sad
+  lane: krea2
+  entity: companion-mood
+  title: Jesse "Moose" Kowalski · sad
+  asset: companions/moose-kowalski-sad
+  size: 896x1152
+  seed: 860103
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
+    sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
+    white high-tops, knitting needles and a half-finished crimson scarf trailing from his jacket pocket, sitting
+    alone on gym bleachers with a half-knit scarf pooled in his lap
+- key: cs-companion-moose-kowalski-determined
+  lane: krea2
+  entity: companion-mood
+  title: Jesse "Moose" Kowalski · determined
+  asset: companions/moose-kowalski-determined
+  size: 896x1152
+  seed: 860104
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a huge 17-year-old Polish American boy with ruddy cheeks and a gap-toothed grin, a curly
+    sandy-brown mullet, a crimson letter jacket with cream sleeves over a hand-knit cream cable sweater, gray sweatpants,
+    white high-tops, knitting needles and a half-finished crimson scarf trailing from his jacket pocket, in a three-point
+    stance on wet grass, scarf tucked into his jacket, jaw set
+- key: cs-companion-priya-raman-poster
+  lane: krea2
+  entity: companion-poster
+  title: Priya Raman · poster
+  asset: companions/priya-raman-poster
+  size: 832x1216
+  seed: 860105
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a 16-year-old Indian American girl with warm brown skin and thick
+    dark brows, long black hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed
+    glasses, an oversized purple cardigan over a white collared blouse, a plaid skirt with black tights and loafers,
+    a gold twenty-sided die on a cord around her neck, a binder stuffed with graph-paper maps, standing on a library
+    table with her binder thrown open and graph-paper maps swirling around her like a storm, the gold die blazing
+    at her throat, a shadowy dragon made of ink rising from the pages
+- key: cs-companion-priya-raman-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Priya Raman · neutral
+  asset: companions/priya-raman-neutral
+  size: 896x1152
+  seed: 860106
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
+    hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
+    oversized purple cardigan over a white collared blouse, a plaid skirt with black tights and loafers, a gold
+    twenty-sided die on a cord around her neck, a binder stuffed with graph-paper maps, seated behind a cardboard
+    game screen, pencil poised, glasses catching the lamp light
+- key: cs-companion-priya-raman-happy
+  lane: krea2
+  entity: companion-mood
+  title: Priya Raman · happy
+  asset: companions/priya-raman-happy
+  size: 896x1152
+  seed: 860107
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
+    hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
+    oversized purple cardigan over a white collared blouse, a plaid skirt with black tights and loafers, a gold
+    twenty-sided die on a cord around her neck, a binder stuffed with graph-paper maps, throwing both arms up, a
+    gold die tumbling in mid-air, braid flying
+- key: cs-companion-priya-raman-scared
+  lane: krea2
+  entity: companion-mood
+  title: Priya Raman · scared
+  asset: companions/priya-raman-scared
+  size: 896x1152
+  seed: 860108
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
+    hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
+    oversized purple cardigan over a white collared blouse, a plaid skirt with black tights and loafers, a gold
+    twenty-sided die on a cord around her neck, a binder stuffed with graph-paper maps, clutching her open binder
+    to her chest, a drawn map on it glowing faintly
+- key: cs-companion-priya-raman-angry
+  lane: krea2
+  entity: companion-mood
+  title: Priya Raman · angry
+  asset: companions/priya-raman-angry
+  size: 896x1152
+  seed: 860109
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
+    hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
+    oversized purple cardigan over a white collared blouse, a plaid skirt with black tights and loafers, a gold
+    twenty-sided die on a cord around her neck, a binder stuffed with graph-paper maps, pointing her pencil like
+    a wand, eyes flashing behind gold glasses
+- key: cs-companion-priya-raman-sad
+  lane: krea2
+  entity: companion-mood
+  title: Priya Raman · sad
+  asset: companions/priya-raman-sad
+  size: 896x1152
+  seed: 860110
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
+    hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
+    oversized purple cardigan over a white collared blouse, a plaid skirt with black tights and loafers, a gold
+    twenty-sided die on a cord around her neck, a binder stuffed with graph-paper maps, slumped over a library table,
+    cheek on a pile of graph paper, the gold die in her fist
+- key: cs-companion-priya-raman-determined
+  lane: krea2
+  entity: companion-mood
+  title: Priya Raman · determined
+  asset: companions/priya-raman-determined
+  size: 896x1152
+  seed: 860111
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 16-year-old Indian American girl with warm brown skin and thick dark brows, long black
+    hair in a single braid over one shoulder with a pencil tucked behind her ear, round gold-rimmed glasses, an
+    oversized purple cardigan over a white collared blouse, a plaid skirt with black tights and loafers, a gold
+    twenty-sided die on a cord around her neck, a binder stuffed with graph-paper maps, unrolling a big hand-drawn
+    map across a table, sleeves pushed up, jaw set
+- key: cs-companion-lou-tran-poster
+  lane: krea2
+  entity: companion-poster
+  title: Lou "Lightning" Tran · poster
+  asset: companions/lou-tran-poster
+  size: 832x1216
+  seed: 860112
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a wiry 15-year-old Vietnamese American boy with a sly grin, short
+    black hair with a lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless
+    black glove on his right hand, gray parachute pants, a coin belt bulging with quarters, white high-top sneakers,
+    a candy necklace, leaping off an arcade cabinet with a shower of quarters fanning out of his coin belt like
+    sparks, one gloved hand thrown forward, a pixelated monster bursting out of the glowing screen behind him
+- key: cs-companion-lou-tran-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Lou "Lightning" Tran · neutral
+  asset: companions/lou-tran-neutral
+  size: 896x1152
+  seed: 860113
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
+    lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
+    right hand, gray parachute pants, a coin belt bulging with quarters, white high-top sneakers, a candy necklace,
+    leaning on an arcade cabinet flipping a quarter across his knuckles, screen glow on his face
+- key: cs-companion-lou-tran-happy
+  lane: krea2
+  entity: companion-mood
+  title: Lou "Lightning" Tran · happy
+  asset: companions/lou-tran-happy
+  size: 896x1152
+  seed: 860114
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
+    lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
+    right hand, gray parachute pants, a coin belt bulging with quarters, white high-top sneakers, a candy necklace,
+    pumping a gloved fist, grinning, a high score screen flashing behind him
+- key: cs-companion-lou-tran-scared
+  lane: krea2
+  entity: companion-mood
+  title: Lou "Lightning" Tran · scared
+  asset: companions/lou-tran-scared
+  size: 896x1152
+  seed: 860115
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
+    lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
+    right hand, gray parachute pants, a coin belt bulging with quarters, white high-top sneakers, a candy necklace,
+    backing away from a cabinet, hands raised, the screen glowing red
+- key: cs-companion-lou-tran-angry
+  lane: krea2
+  entity: companion-mood
+  title: Lou "Lightning" Tran · angry
+  asset: companions/lou-tran-angry
+  size: 896x1152
+  seed: 860116
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
+    lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
+    right hand, gray parachute pants, a coin belt bulging with quarters, white high-top sneakers, a candy necklace,
+    slamming a palm on the cabinet, eyes narrowed, lightning bolt haircut catching neon
+- key: cs-companion-lou-tran-sad
+  lane: krea2
+  entity: companion-mood
+  title: Lou "Lightning" Tran · sad
+  asset: companions/lou-tran-sad
+  size: 896x1152
+  seed: 860117
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
+    lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
+    right hand, gray parachute pants, a coin belt bulging with quarters, white high-top sneakers, a candy necklace,
+    sitting on a food court bench, turning a single quarter over in his fingers
+- key: cs-companion-lou-tran-determined
+  lane: krea2
+  entity: companion-mood
+  title: Lou "Lightning" Tran · determined
+  asset: companions/lou-tran-determined
+  size: 896x1152
+  seed: 860118
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a wiry 15-year-old Vietnamese American boy with a sly grin, short black hair with a
+    lightning bolt shaved into one side, a teal windbreaker with hot pink sleeves, a fingerless black glove on his
+    right hand, gray parachute pants, a coin belt bulging with quarters, white high-top sneakers, a candy necklace,
+    cracking his knuckles at the controls, joystick in his gloved hand, eyes locked on the screen
+- key: cs-companion-iggy-reyes-poster
+  lane: krea2
+  entity: companion-poster
+  title: Father Ignatius "Iggy" Reyes · poster
+  asset: companions/iggy-reyes-poster
+  size: 832x1216
+  seed: 860119
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a 31-year-old Filipino American priest with warm tan skin and a lopsided
+    grin, a black spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded
+    black leather jacket pinned with safety pins, black jeans, scuffed combat boots, a red electric bass slung across
+    his back and a neon green squirt gun tucked in his belt, standing on a crumbling mausoleum step in Pinecrest
+    Cemetery at midnight, bass in one hand like a staff and a neon squirt gun raised in the other, a fan of holy
+    water arcing into the moonlight, robed shadows recoiling below
+- key: cs-companion-iggy-reyes-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Father Ignatius "Iggy" Reyes · neutral
+  asset: companions/iggy-reyes-neutral
+  size: 896x1152
+  seed: 860120
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
+    spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
+    jacket pinned with safety pins, black jeans, scuffed combat boots, a red electric bass slung across his back
+    and a neon green squirt gun tucked in his belt, leaning in a church basement doorway, bass slung on his back,
+    easy smile
+- key: cs-companion-iggy-reyes-happy
+  lane: krea2
+  entity: companion-mood
+  title: Father Ignatius "Iggy" Reyes · happy
+  asset: companions/iggy-reyes-happy
+  size: 896x1152
+  seed: 860121
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
+    spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
+    jacket pinned with safety pins, black jeans, scuffed combat boots, a red electric bass slung across his back
+    and a neon green squirt gun tucked in his belt, laughing with a hand on his chest, pompadour bouncing
+- key: cs-companion-iggy-reyes-scared
+  lane: krea2
+  entity: companion-mood
+  title: Father Ignatius "Iggy" Reyes · scared
+  asset: companions/iggy-reyes-scared
+  size: 896x1152
+  seed: 860122
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
+    spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
+    jacket pinned with safety pins, black jeans, scuffed combat boots, a red electric bass slung across his back
+    and a neon green squirt gun tucked in his belt, gripping a rosary in one hand and the squirt gun in the other,
+    eyes wide in the dark
+- key: cs-companion-iggy-reyes-angry
+  lane: krea2
+  entity: companion-mood
+  title: Father Ignatius "Iggy" Reyes · angry
+  asset: companions/iggy-reyes-angry
+  size: 896x1152
+  seed: 860123
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
+    spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
+    jacket pinned with safety pins, black jeans, scuffed combat boots, a red electric bass slung across his back
+    and a neon green squirt gun tucked in his belt, leveling the neon squirt gun, jaw tight, collar gleaming
+- key: cs-companion-iggy-reyes-sad
+  lane: krea2
+  entity: companion-mood
+  title: Father Ignatius "Iggy" Reyes · sad
+  asset: companions/iggy-reyes-sad
+  size: 896x1152
+  seed: 860124
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
+    spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
+    jacket pinned with safety pins, black jeans, scuffed combat boots, a red electric bass slung across his back
+    and a neon green squirt gun tucked in his belt, sitting alone in an empty church pew, bass across his knees,
+    head bowed
+- key: cs-companion-iggy-reyes-determined
+  lane: krea2
+  entity: companion-mood
+  title: Father Ignatius "Iggy" Reyes · determined
+  asset: companions/iggy-reyes-determined
+  size: 896x1152
+  seed: 860125
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 31-year-old Filipino American priest with warm tan skin and a lopsided grin, a black
+    spiked pompadour, a neat goatee, a white clerical collar on a black short-sleeved shirt, a studded black leather
+    jacket pinned with safety pins, black jeans, scuffed combat boots, a red electric bass slung across his back
+    and a neon green squirt gun tucked in his belt, pumping the squirt gun, bass strapped tight, standing at the
+    church doors
+- key: cs-companion-sunny-castellanos-poster
+  lane: krea2
+  entity: companion-poster
+  title: Sunny Castellanos · poster
+  asset: companions/sunny-castellanos-poster
+  size: 832x1216
+  seed: 860126
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a 22-year-old Puerto Rican woman with golden-brown skin and strong
+    shoulders, a big mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut
+    leotard over orange bike shorts, fingerless leather racing gloves, seated in a low sleek racing wheelchair with
+    neon orange wheel rims, tearing down a wet suburban street at night in the racing wheelchair, sparks flying
+    off the orange rims, curls streaming back, a monstrous shadow falling behind and losing ground
+- key: cs-companion-sunny-castellanos-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Sunny Castellanos · neutral
+  asset: companions/sunny-castellanos-neutral
+  size: 896x1152
+  seed: 860127
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
+    mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
+    bike shorts, fingerless leather racing gloves, seated in a low sleek racing wheelchair with neon orange wheel
+    rims, seated at the front of a mirrored aerobics studio, one gloved hand clapping out the count
+- key: cs-companion-sunny-castellanos-happy
+  lane: krea2
+  entity: companion-mood
+  title: Sunny Castellanos · happy
+  asset: companions/sunny-castellanos-happy
+  size: 896x1152
+  seed: 860128
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
+    mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
+    bike shorts, fingerless leather racing gloves, seated in a low sleek racing wheelchair with neon orange wheel
+    rims, throwing both arms up mid-roll, laughing, gold hoops swinging
+- key: cs-companion-sunny-castellanos-scared
+  lane: krea2
+  entity: companion-mood
+  title: Sunny Castellanos · scared
+  asset: companions/sunny-castellanos-scared
+  size: 896x1152
+  seed: 860129
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
+    mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
+    bike shorts, fingerless leather racing gloves, seated in a low sleek racing wheelchair with neon orange wheel
+    rims, braking hard, gloves gripping the rims, eyes wide and searching the dark
+- key: cs-companion-sunny-castellanos-angry
+  lane: krea2
+  entity: companion-mood
+  title: Sunny Castellanos · angry
+  asset: companions/sunny-castellanos-angry
+  size: 896x1152
+  seed: 860130
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
+    mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
+    bike shorts, fingerless leather racing gloves, seated in a low sleek racing wheelchair with neon orange wheel
+    rims, turning her chair sharply to face someone, eyebrows down, finger raised
+- key: cs-companion-sunny-castellanos-sad
+  lane: krea2
+  entity: companion-mood
+  title: Sunny Castellanos · sad
+  asset: companions/sunny-castellanos-sad
+  size: 896x1152
+  seed: 860131
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
+    mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
+    bike shorts, fingerless leather racing gloves, seated in a low sleek racing wheelchair with neon orange wheel
+    rims, alone on an empty track at dusk, gloves in her lap, looking at the finish line
+- key: cs-companion-sunny-castellanos-determined
+  lane: krea2
+  entity: companion-mood
+  title: Sunny Castellanos · determined
+  asset: companions/sunny-castellanos-determined
+  size: 896x1152
+  seed: 860132
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 22-year-old Puerto Rican woman with golden-brown skin and strong shoulders, a big
+    mane of dark curls held back by an orange terry headband, gold hoop earrings, a teal high-cut leotard over orange
+    bike shorts, fingerless leather racing gloves, seated in a low sleek racing wheelchair with neon orange wheel
+    rims, leaning forward low in the racing chair, gloved hands on the rims, headband tight
+- key: cs-companion-wade-whitfield-poster
+  lane: krea2
+  entity: companion-poster
+  title: Wade Whitfield · poster
+  asset: companions/wade-whitfield-poster
+  size: 832x1216
+  seed: 860133
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes,
+    a long feathered dirty-blond mullet, a sleeveless faded denim vest covered in metal band patches over a black
+    tee, ripped acid-wash jeans, a studded leather wristband, black work boots, a spiral notebook sticking out of
+    his back pocket, standing on the roof of his black van in a junkyard at night with one boot on the luggage rack,
+    a tire iron raised like a sword, the airbrushed wizard on the van glowing in red headlights, car wrecks stacked
+    like a castle behind him
+- key: cs-companion-wade-whitfield-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Wade Whitfield · neutral
+  asset: companions/wade-whitfield-neutral
+  size: 896x1152
+  seed: 860134
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
+    mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
+    a studded leather wristband, black work boots, a spiral notebook sticking out of his back pocket, leaning against
+    the side of a black van, arms crossed, mullet in the breeze
+- key: cs-companion-wade-whitfield-happy
+  lane: krea2
+  entity: companion-mood
+  title: Wade Whitfield · happy
+  asset: companions/wade-whitfield-happy
+  size: 896x1152
+  seed: 860135
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
+    mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
+    a studded leather wristband, black work boots, a spiral notebook sticking out of his back pocket, throwing the
+    devil horns with both hands, head banging, grinning wide
+- key: cs-companion-wade-whitfield-scared
+  lane: krea2
+  entity: companion-mood
+  title: Wade Whitfield · scared
+  asset: companions/wade-whitfield-scared
+  size: 896x1152
+  seed: 860136
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
+    mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
+    a studded leather wristband, black work boots, a spiral notebook sticking out of his back pocket, pressed flat
+    against the van door, eyes huge, clutching the spiral notebook
+- key: cs-companion-wade-whitfield-angry
+  lane: krea2
+  entity: companion-mood
+  title: Wade Whitfield · angry
+  asset: companions/wade-whitfield-angry
+  size: 896x1152
+  seed: 860137
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
+    mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
+    a studded leather wristband, black work boots, a spiral notebook sticking out of his back pocket, gripping a
+    tire iron, jaw clenched, junkyard lights behind him
+- key: cs-companion-wade-whitfield-sad
+  lane: krea2
+  entity: companion-mood
+  title: Wade Whitfield · sad
+  asset: companions/wade-whitfield-sad
+  size: 896x1152
+  seed: 860138
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
+    mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
+    a studded leather wristband, black work boots, a spiral notebook sticking out of his back pocket, sitting in
+    the open van door reading from the spiral notebook, shoulders slumped
+- key: cs-companion-wade-whitfield-determined
+  lane: krea2
+  entity: companion-mood
+  title: Wade Whitfield · determined
+  asset: companions/wade-whitfield-determined
+  size: 896x1152
+  seed: 860139
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an 18-year-old white guy with a scruffy jaw and sleepy blue eyes, a long feathered dirty-blond
+    mullet, a sleeveless faded denim vest covered in metal band patches over a black tee, ripped acid-wash jeans,
+    a studded leather wristband, black work boots, a spiral notebook sticking out of his back pocket, hand on the
+    van's cassette deck, cranking the volume, staring through the windshield
+- key: cs-companion-zelda-fishbein-poster
+  lane: krea2
+  entity: companion-poster
+  title: Zelda Fishbein · poster
+  asset: companions/zelda-fishbein-poster
+  size: 832x1216
+  seed: 860140
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: 'Full-body heroic 1986 pose of a 63-year-old Jewish woman with olive skin and deep laugh lines,
+    a dramatic silver-streaked black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video
+    store staff vest over a black mock-neck sweater, a string of pearls, a black pencil skirt, holding a VHS tape
+    like a dagger, posed in the classic scream: one hand at her cheek, mouth wide, cat-eye glasses flashing, her
+    other hand jabbing a VHS tape straight at a looming masked shadow, a wall of lurid horror tape boxes glowing
+    behind her'
+- key: cs-companion-zelda-fishbein-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Zelda Fishbein · neutral
+  asset: companions/zelda-fishbein-neutral
+  size: 896x1152
+  seed: 860141
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
+    black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
+    mock-neck sweater, a string of pearls, a black pencil skirt, holding a VHS tape like a dagger, leaning on a
+    video store counter beside a stack of returns, one eyebrow arched
+- key: cs-companion-zelda-fishbein-happy
+  lane: krea2
+  entity: companion-mood
+  title: Zelda Fishbein · happy
+  asset: companions/zelda-fishbein-happy
+  size: 896x1152
+  seed: 860142
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
+    black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
+    mock-neck sweater, a string of pearls, a black pencil skirt, holding a VHS tape like a dagger, laughing with
+    a hand on her pearls, red lipstick bright, eyes crinkled
+- key: cs-companion-zelda-fishbein-scared
+  lane: krea2
+  entity: companion-mood
+  title: Zelda Fishbein · scared
+  asset: companions/zelda-fishbein-scared
+  size: 896x1152
+  seed: 860143
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
+    black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
+    mock-neck sweater, a string of pearls, a black pencil skirt, holding a VHS tape like a dagger, peering over
+    the top of her cat-eye glasses into a dark aisle, clutching the counter
+- key: cs-companion-zelda-fishbein-angry
+  lane: krea2
+  entity: companion-mood
+  title: Zelda Fishbein · angry
+  asset: companions/zelda-fishbein-angry
+  size: 896x1152
+  seed: 860144
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
+    black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
+    mock-neck sweater, a string of pearls, a black pencil skirt, holding a VHS tape like a dagger, slapping a VHS
+    tape down on the counter, eyes narrowed behind cat-eye glasses
+- key: cs-companion-zelda-fishbein-sad
+  lane: krea2
+  entity: companion-mood
+  title: Zelda Fishbein · sad
+  asset: companions/zelda-fishbein-sad
+  size: 896x1152
+  seed: 860145
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
+    black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
+    mock-neck sweater, a string of pearls, a black pencil skirt, holding a VHS tape like a dagger, holding an old
+    black-and-white publicity photo of a young screaming starlet
+- key: cs-companion-zelda-fishbein-determined
+  lane: krea2
+  entity: companion-mood
+  title: Zelda Fishbein · determined
+  asset: companions/zelda-fishbein-determined
+  size: 896x1152
+  seed: 860146
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 63-year-old Jewish woman with olive skin and deep laugh lines, a dramatic silver-streaked
+    black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video store staff vest over a black
+    mock-neck sweater, a string of pearls, a black pencil skirt, holding a VHS tape like a dagger, pulling on driving
+    gloves, a VHS tape tucked under her arm, chin raised
+- key: cs-companion-kev-park-poster
+  lane: krea2
+  entity: companion-poster
+  title: Kevin "Kev" Park · poster
+  asset: companions/kev-park-poster
+  size: 832x1216
+  seed: 860147
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a skinny 12-year-old Korean American boy with a big gap-toothed grin,
+    a black bowl cut under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt,
+    cuffed jeans with bandaged knees, red high-tops, riding a red BMX bike with playing cards clothespinned to the
+    spokes, popping a wheelie on the red BMX down a moonlit cul-de-sac, one hand flinging a rolled newspaper like
+    a missile, the sack of papers flying open behind him, every porch light on the street snapping on at once
+- key: cs-companion-kev-park-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Kevin "Kev" Park · neutral
+  asset: companions/kev-park-neutral
+  size: 896x1152
+  seed: 860148
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
+    under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
+    with bandaged knees, red high-tops, riding a red BMX bike with playing cards clothespinned to the spokes, straddling
+    his BMX at the curb, rolling a newspaper with one hand
+- key: cs-companion-kev-park-happy
+  lane: krea2
+  entity: companion-mood
+  title: Kevin "Kev" Park · happy
+  asset: companions/kev-park-happy
+  size: 896x1152
+  seed: 860149
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
+    under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
+    with bandaged knees, red high-tops, riding a red BMX bike with playing cards clothespinned to the spokes, holding
+    a crumpled dollar bill over his head, gap-toothed grin, cap askew
+- key: cs-companion-kev-park-scared
+  lane: krea2
+  entity: companion-mood
+  title: Kevin "Kev" Park · scared
+  asset: companions/kev-park-scared
+  size: 896x1152
+  seed: 860150
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
+    under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
+    with bandaged knees, red high-tops, riding a red BMX bike with playing cards clothespinned to the spokes, clutching
+    his handlebars, eyes huge, staring at something off to one side
+- key: cs-companion-kev-park-angry
+  lane: krea2
+  entity: companion-mood
+  title: Kevin "Kev" Park · angry
+  asset: companions/kev-park-angry
+  size: 896x1152
+  seed: 860151
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
+    under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
+    with bandaged knees, red high-tops, riding a red BMX bike with playing cards clothespinned to the spokes, arms
+    crossed over his newspaper sack, scowling up, cap pulled low
+- key: cs-companion-kev-park-sad
+  lane: krea2
+  entity: companion-mood
+  title: Kevin "Kev" Park · sad
+  asset: companions/kev-park-sad
+  size: 896x1152
+  seed: 860152
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
+    under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
+    with bandaged knees, red high-tops, riding a red BMX bike with playing cards clothespinned to the spokes, sitting
+    on a curb with his bike on its side, picking at a bandage on his knee
+- key: cs-companion-kev-park-determined
+  lane: krea2
+  entity: companion-mood
+  title: Kevin "Kev" Park · determined
+  asset: companions/kev-park-determined
+  size: 896x1152
+  seed: 860153
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a skinny 12-year-old Korean American boy with a big gap-toothed grin, a black bowl cut
+    under a backwards red baseball cap, a canvas newspaper sack slung across a blue hooded sweatshirt, cuffed jeans
+    with bandaged knees, red high-tops, riding a red BMX bike with playing cards clothespinned to the spokes, crouched
+    low on the BMX pedals, cap turned forward, eyes narrowed down the street
+- key: cs-companion-raven-poster
+  lane: krea2
+  entity: companion-poster
+  title: Raven · poster
+  asset: companions/raven-poster
+  size: 832x1216
+  seed: 860154
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of an olive-skinned 16-year-old with sharp cheekbones and dark watchful
+    eyes, a teased black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver
+    crescent-moon earrings, a thrifted plum velvet frock coat over a black lace shirt, a long black skirt over chunky
+    buckled boots, silver rings on every finger, holding a fanned tarot deck, standing atop a mossy mausoleum under
+    a full moon, frock coat billowing, a spread of glowing tarot cards whirling in the air around them, a crow on
+    one shoulder and the cemetery fog parting below
+- key: cs-companion-raven-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Raven · neutral
+  asset: companions/raven-neutral
+  size: 896x1152
+  seed: 860155
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
+    black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
+    a thrifted plum velvet frock coat over a black lace shirt, a long black skirt over chunky buckled boots, silver
+    rings on every finger, holding a fanned tarot deck, seated on a mausoleum step shuffling the tarot deck, one
+    eyebrow raised
+- key: cs-companion-raven-happy
+  lane: krea2
+  entity: companion-mood
+  title: Raven · happy
+  asset: companions/raven-happy
+  size: 896x1152
+  seed: 860156
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
+    black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
+    a thrifted plum velvet frock coat over a black lace shirt, a long black skirt over chunky buckled boots, silver
+    rings on every finger, holding a fanned tarot deck, a small reluctant smile, holding up a single golden tarot
+    card
+- key: cs-companion-raven-scared
+  lane: krea2
+  entity: companion-mood
+  title: Raven · scared
+  asset: companions/raven-scared
+  size: 896x1152
+  seed: 860157
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
+    black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
+    a thrifted plum velvet frock coat over a black lace shirt, a long black skirt over chunky buckled boots, silver
+    rings on every finger, holding a fanned tarot deck, staring at a single card in their hand, face pale beneath
+    the eyeliner
+- key: cs-companion-raven-angry
+  lane: krea2
+  entity: companion-mood
+  title: Raven · angry
+  asset: companions/raven-angry
+  size: 896x1152
+  seed: 860158
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
+    black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
+    a thrifted plum velvet frock coat over a black lace shirt, a long black skirt over chunky buckled boots, silver
+    rings on every finger, holding a fanned tarot deck, eyes narrowed, slapping a card face-down on the stone, rings
+    glinting
+- key: cs-companion-raven-sad
+  lane: krea2
+  entity: companion-mood
+  title: Raven · sad
+  asset: companions/raven-sad
+  size: 896x1152
+  seed: 860159
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
+    black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
+    a thrifted plum velvet frock coat over a black lace shirt, a long black skirt over chunky buckled boots, silver
+    rings on every finger, holding a fanned tarot deck, hugging their knees on a mausoleum step, cards scattered
+    at their feet
+- key: cs-companion-raven-determined
+  lane: krea2
+  entity: companion-mood
+  title: Raven · determined
+  asset: companions/raven-determined
+  size: 896x1152
+  seed: 860160
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of an olive-skinned 16-year-old with sharp cheekbones and dark watchful eyes, a teased
+    black bob with a long asymmetrical fringe, winged black eyeliner, dark plum lipstick, silver crescent-moon earrings,
+    a thrifted plum velvet frock coat over a black lace shirt, a long black skirt over chunky buckled boots, silver
+    rings on every finger, holding a fanned tarot deck, sweeping a hand across a spread of cards, coat flaring,
+    chin lifted
+- key: cs-companion-tammy-jo-pruitt-poster
+  lane: krea2
+  entity: companion-poster
+  title: Coach Tammy Jo Pruitt · poster
+  asset: companions/tammy-jo-pruitt-poster
+  size: 832x1216
+  seed: 860161
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a tall, broad 45-year-old white woman with a sunburned freckled face
+    and a fierce squint, a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold
+    coach's windbreaker, gray sweatpants, cleats, an aluminum softball bat over one shoulder and a clipboard under
+    her arm, planted on a pitcher's mound under blazing stadium lights in a wind-up stance, aluminum bat cocked
+    like a battle axe, whistle flying, a swarm of shadowy monsters pouring over the outfield fence toward her
+- key: cs-companion-tammy-jo-pruitt-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Coach Tammy Jo Pruitt · neutral
+  asset: companions/tammy-jo-pruitt-neutral
+  size: 896x1152
+  seed: 860162
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
+    a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
+    gray sweatpants, cleats, an aluminum softball bat over one shoulder and a clipboard under her arm, standing
+    at a dugout fence with her clipboard, whistle in her teeth
+- key: cs-companion-tammy-jo-pruitt-happy
+  lane: krea2
+  entity: companion-mood
+  title: Coach Tammy Jo Pruitt · happy
+  asset: companions/tammy-jo-pruitt-happy
+  size: 896x1152
+  seed: 860163
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
+    a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
+    gray sweatpants, cleats, an aluminum softball bat over one shoulder and a clipboard under her arm, fist pumping
+    with a huge grin, cap pushed back, whistle swinging
+- key: cs-companion-tammy-jo-pruitt-scared
+  lane: krea2
+  entity: companion-mood
+  title: Coach Tammy Jo Pruitt · scared
+  asset: companions/tammy-jo-pruitt-scared
+  size: 896x1152
+  seed: 860164
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
+    a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
+    gray sweatpants, cleats, an aluminum softball bat over one shoulder and a clipboard under her arm, mid-backpedal,
+    bat held crosswise, eyes wide under the cap brim
+- key: cs-companion-tammy-jo-pruitt-angry
+  lane: krea2
+  entity: companion-mood
+  title: Coach Tammy Jo Pruitt · angry
+  asset: companions/tammy-jo-pruitt-angry
+  size: 896x1152
+  seed: 860165
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
+    a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
+    gray sweatpants, cleats, an aluminum softball bat over one shoulder and a clipboard under her arm, gripping
+    the aluminum bat with both hands, face red, squint deadly
+- key: cs-companion-tammy-jo-pruitt-sad
+  lane: krea2
+  entity: companion-mood
+  title: Coach Tammy Jo Pruitt · sad
+  asset: companions/tammy-jo-pruitt-sad
+  size: 896x1152
+  seed: 860166
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
+    a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
+    gray sweatpants, cleats, an aluminum softball bat over one shoulder and a clipboard under her arm, alone on
+    an empty bench in a dim locker room, cap in her hands
+- key: cs-companion-tammy-jo-pruitt-determined
+  lane: krea2
+  entity: companion-mood
+  title: Coach Tammy Jo Pruitt · determined
+  asset: companions/tammy-jo-pruitt-determined
+  size: 896x1152
+  seed: 860167
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a tall, broad 45-year-old white woman with a sunburned freckled face and a fierce squint,
+    a red-blonde perm under a green ball cap, a silver whistle on a lanyard, a green and gold coach's windbreaker,
+    gray sweatpants, cleats, an aluminum softball bat over one shoulder and a clipboard under her arm, tightening
+    her batting glove, cap pulled low, staring down the field
+- key: cs-companion-amir-haddad-poster
+  lane: krea2
+  entity: companion-poster
+  title: Dr. Amir Haddad · poster
+  asset: companions/amir-haddad-poster
+  size: 832x1216
+  seed: 860168
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a 39-year-old Lebanese American man with olive skin and warm brown
+    eyes, a thick salt-and-pepper mustache, wavy black hair going gray at the temples, wire glasses pushed up on
+    his head, a teal scrub shirt under a white lab coat with pockets full of pens and dog biscuits, a stethoscope
+    around his neck, khakis, a calico cat draped over one shoulder, standing in a glowing open garage at night with
+    a medical bag in one hand and a flashlight in the other, lab coat flaring, a crowd of strange glowing animals
+    gathered protectively around his feet as something enormous looms in the street beyond
+- key: cs-companion-amir-haddad-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Dr. Amir Haddad · neutral
+  asset: companions/amir-haddad-neutral
+  size: 896x1152
+  seed: 860169
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
+    mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
+    under a white lab coat with pockets full of pens and dog biscuits, a stethoscope around his neck, khakis, a
+    calico cat draped over one shoulder, leaning over a steel exam table in a converted garage, stethoscope in hand
+- key: cs-companion-amir-haddad-happy
+  lane: krea2
+  entity: companion-mood
+  title: Dr. Amir Haddad · happy
+  asset: companions/amir-haddad-happy
+  size: 896x1152
+  seed: 860170
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
+    mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
+    under a white lab coat with pockets full of pens and dog biscuits, a stethoscope around his neck, khakis, a
+    calico cat draped over one shoulder, beaming and holding up a tiny glowing animal in cupped hands, mustache
+    lifted in a grin
+- key: cs-companion-amir-haddad-scared
+  lane: krea2
+  entity: companion-mood
+  title: Dr. Amir Haddad · scared
+  asset: companions/amir-haddad-scared
+  size: 896x1152
+  seed: 860171
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
+    mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
+    under a white lab coat with pockets full of pens and dog biscuits, a stethoscope around his neck, khakis, a
+    calico cat draped over one shoulder, backing against a garage wall, the calico cat hissing on his shoulder,
+    glasses slipping
+- key: cs-companion-amir-haddad-angry
+  lane: krea2
+  entity: companion-mood
+  title: Dr. Amir Haddad · angry
+  asset: companions/amir-haddad-angry
+  size: 896x1152
+  seed: 860172
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
+    mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
+    under a white lab coat with pockets full of pens and dog biscuits, a stethoscope around his neck, khakis, a
+    calico cat draped over one shoulder, cradling a bandaged animal, eyes hard, jaw set beneath the mustache
+- key: cs-companion-amir-haddad-sad
+  lane: krea2
+  entity: companion-mood
+  title: Dr. Amir Haddad · sad
+  asset: companions/amir-haddad-sad
+  size: 896x1152
+  seed: 860173
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
+    mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
+    under a white lab coat with pockets full of pens and dog biscuits, a stethoscope around his neck, khakis, a
+    calico cat draped over one shoulder, sitting on an overturned crate in the garage at night, holding an old tailor's
+    measuring tape
+- key: cs-companion-amir-haddad-determined
+  lane: krea2
+  entity: companion-mood
+  title: Dr. Amir Haddad · determined
+  asset: companions/amir-haddad-determined
+  size: 896x1152
+  seed: 860174
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 39-year-old Lebanese American man with olive skin and warm brown eyes, a thick salt-and-pepper
+    mustache, wavy black hair going gray at the temples, wire glasses pushed up on his head, a teal scrub shirt
+    under a white lab coat with pockets full of pens and dog biscuits, a stethoscope around his neck, khakis, a
+    calico cat draped over one shoulder, snapping on latex gloves, glasses pulled down, medical bag open beside
+    him
+- key: cs-companion-chip-merriweather-poster
+  lane: krea2
+  entity: companion-poster
+  title: Chip Merriweather · poster
+  asset: companions/chip-merriweather-poster
+  size: 832x1216
+  seed: 860175
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a 17-year-old white boy with a clean-cut handsome face and a dimpled,
+    nervous smile, neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer
+    with a small gold pin, khaki chinos, penny loafers, a clipboard of petitions held to his chest, standing on
+    the steps of the high school at night with his blazer thrown over one shoulder and his tie loosened, clipboard
+    held up like a shield, the crew silhouetted behind him, a lightning flash revealing a giant shadow over the
+    school
+- key: cs-companion-chip-merriweather-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Chip Merriweather · neutral
+  asset: companions/chip-merriweather-neutral
+  size: 896x1152
+  seed: 860176
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
+    neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
+    gold pin, khaki chinos, penny loafers, a clipboard of petitions held to his chest, holding the clipboard, dimpled
+    campaign smile, school lockers behind him
+- key: cs-companion-chip-merriweather-happy
+  lane: krea2
+  entity: companion-mood
+  title: Chip Merriweather · happy
+  asset: companions/chip-merriweather-happy
+  size: 896x1152
+  seed: 860177
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
+    neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
+    gold pin, khaki chinos, penny loafers, a clipboard of petitions held to his chest, laughing with his head ducked,
+    cheeks pink, a real smile for once
+- key: cs-companion-chip-merriweather-scared
+  lane: krea2
+  entity: companion-mood
+  title: Chip Merriweather · scared
+  asset: companions/chip-merriweather-scared
+  size: 896x1152
+  seed: 860178
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
+    neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
+    gold pin, khaki chinos, penny loafers, a clipboard of petitions held to his chest, clutching the clipboard to
+    his chest, eyes darting, a bead of sweat at his temple
+- key: cs-companion-chip-merriweather-angry
+  lane: krea2
+  entity: companion-mood
+  title: Chip Merriweather · angry
+  asset: companions/chip-merriweather-angry
+  size: 896x1152
+  seed: 860179
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
+    neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
+    gold pin, khaki chinos, penny loafers, a clipboard of petitions held to his chest, jaw tight, clipboard lowered,
+    blazer shrugged off one shoulder
+- key: cs-companion-chip-merriweather-sad
+  lane: krea2
+  entity: companion-mood
+  title: Chip Merriweather · sad
+  asset: companions/chip-merriweather-sad
+  size: 896x1152
+  seed: 860180
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
+    neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
+    gold pin, khaki chinos, penny loafers, a clipboard of petitions held to his chest, sitting alone in an empty
+    classroom beneath his own smiling campaign sign
+- key: cs-companion-chip-merriweather-determined
+  lane: krea2
+  entity: companion-mood
+  title: Chip Merriweather · determined
+  asset: companions/chip-merriweather-determined
+  size: 896x1152
+  seed: 860181
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a 17-year-old white boy with a clean-cut handsome face and a dimpled, nervous smile,
+    neatly side-parted chestnut hair, a pink oxford shirt with the collar popped under a navy blazer with a small
+    gold pin, khaki chinos, penny loafers, a clipboard of petitions held to his chest, loosening his tie, rolling
+    up his oxford sleeves, eyes steady
+- key: cs-companion-joey-benally-poster
+  lane: krea2
+  entity: companion-poster
+  title: Joey Benally · poster
+  asset: companions/joey-benally-poster
+  size: 832x1216
+  seed: 860182
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a lean 17-year-old Diné young man with brown skin and a calm, serious
+    face, black hair pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt
+    with rolled sleeves over a gray thermal, oil-stained canvas work pants, scuffed work boots, his grandfather's
+    silver wristwatch, a socket wrench in one hand and a red shop rag in his back pocket, standing on the hood of
+    a rumbling old pickup truck in a junkyard at night, headlights blazing, one hand raised with a socket wrench
+    and the other holding a set of jumper cables crackling with blue sparks, wrecked cars stacked into walls behind
+    him
+- key: cs-companion-joey-benally-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Joey Benally · neutral
+  asset: companions/joey-benally-neutral
+  size: 896x1152
+  seed: 860183
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
+    pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
+    over a gray thermal, oil-stained canvas work pants, scuffed work boots, his grandfather's silver wristwatch,
+    a socket wrench in one hand and a red shop rag in his back pocket, leaning on the open hood of a pickup, wiping
+    his hands on the red rag
+- key: cs-companion-joey-benally-happy
+  lane: krea2
+  entity: companion-mood
+  title: Joey Benally · happy
+  asset: companions/joey-benally-happy
+  size: 896x1152
+  seed: 860184
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
+    pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
+    over a gray thermal, oil-stained canvas work pants, scuffed work boots, his grandfather's silver wristwatch,
+    a socket wrench in one hand and a red shop rag in his back pocket, a rare grin, head cocked toward a roaring
+    engine, wrench raised
+- key: cs-companion-joey-benally-scared
+  lane: krea2
+  entity: companion-mood
+  title: Joey Benally · scared
+  asset: companions/joey-benally-scared
+  size: 896x1152
+  seed: 860185
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
+    pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
+    over a gray thermal, oil-stained canvas work pants, scuffed work boots, his grandfather's silver wristwatch,
+    a socket wrench in one hand and a red shop rag in his back pocket, frozen under a junkyard floodlight, wrench
+    held tight, eyes fixed on the car maze
+- key: cs-companion-joey-benally-angry
+  lane: krea2
+  entity: companion-mood
+  title: Joey Benally · angry
+  asset: companions/joey-benally-angry
+  size: 896x1152
+  seed: 860186
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
+    pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
+    over a gray thermal, oil-stained canvas work pants, scuffed work boots, his grandfather's silver wristwatch,
+    a socket wrench in one hand and a red shop rag in his back pocket, stepping forward with the socket wrench,
+    jaw set, ponytail swinging
+- key: cs-companion-joey-benally-sad
+  lane: krea2
+  entity: companion-mood
+  title: Joey Benally · sad
+  asset: companions/joey-benally-sad
+  size: 896x1152
+  seed: 860187
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
+    pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
+    over a gray thermal, oil-stained canvas work pants, scuffed work boots, his grandfather's silver wristwatch,
+    a socket wrench in one hand and a red shop rag in his back pocket, sitting on the tailgate of the pickup at
+    dusk, turning the silver watch on his wrist
+- key: cs-companion-joey-benally-determined
+  lane: krea2
+  entity: companion-mood
+  title: Joey Benally · determined
+  asset: companions/joey-benally-determined
+  size: 896x1152
+  seed: 860188
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a lean 17-year-old Diné young man with brown skin and a calm, serious face, black hair
+    pulled back in a low ponytail, a grease smudge across one cheekbone, a rust-orange work shirt with rolled sleeves
+    over a gray thermal, oil-stained canvas work pants, scuffed work boots, his grandfather's silver wristwatch,
+    a socket wrench in one hand and a red shop rag in his back pocket, sliding under a car on a creeper, flashlight
+    in his teeth
+- key: cs-companion-barnaby-poster
+  lane: krea2
+  entity: companion-poster
+  title: Barnaby · poster
+  asset: companions/barnaby-poster
+  size: 832x1216
+  seed: 860189
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Full-body heroic 1986 pose of a long, low tricolor basset hound with droopy brown eyes and a white
+    muzzle going gray, enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white
+    paws, a faded red bandana knotted around his neck, standing heroically on the hood of a junked car under a huge
+    full moon, head thrown back mid-howl, ears streaming, red bandana fluttering, a wall of nightmare shadows recoiling
+    from the sound
+- key: cs-companion-barnaby-neutral
+  lane: krea2
+  entity: companion-mood
+  title: Barnaby · neutral
+  asset: companions/barnaby-neutral
+  size: 896x1152
+  seed: 860190
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
+    enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
+    bandana knotted around his neck, sitting on a patch of gravel looking up with droopy eyes, ears pooled on the
+    ground
+- key: cs-companion-barnaby-happy
+  lane: krea2
+  entity: companion-mood
+  title: Barnaby · happy
+  asset: companions/barnaby-happy
+  size: 896x1152
+  seed: 860191
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
+    enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
+    bandana knotted around his neck, mid-wiggle with his tongue out, ears flying, red bandana askew
+- key: cs-companion-barnaby-scared
+  lane: krea2
+  entity: companion-mood
+  title: Barnaby · scared
+  asset: companions/barnaby-scared
+  size: 896x1152
+  seed: 860192
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
+    enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
+    bandana knotted around his neck, ears flattened, eyes wide and white-rimmed, huddled low in the shadow of a
+    junked car
+- key: cs-companion-barnaby-angry
+  lane: krea2
+  entity: companion-mood
+  title: Barnaby · angry
+  asset: companions/barnaby-angry
+  size: 896x1152
+  seed: 860193
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
+    enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
+    bandana knotted around his neck, lips curled back, hackles raised, legs planted wide, bandana bristling
+- key: cs-companion-barnaby-sad
+  lane: krea2
+  entity: companion-mood
+  title: Barnaby · sad
+  asset: companions/barnaby-sad
+  size: 896x1152
+  seed: 860194
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
+    enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
+    bandana knotted around his neck, lying flat with his chin on his big white paws, eyebrows tilted up mournfully
+- key: cs-companion-barnaby-determined
+  lane: krea2
+  entity: companion-mood
+  title: Barnaby · determined
+  asset: companions/barnaby-determined
+  size: 896x1152
+  seed: 860195
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: Portrait of a long, low tricolor basset hound with droopy brown eyes and a white muzzle going gray,
+    enormous velvety ears with a notch in the left one, a brown and black saddle coat, big white paws, a faded red
+    bandana knotted around his neck, nose to the ground on a scent trail, tail straight up like a flag, ears dragging
+- key: cs-location-crystal-street
+  lane: krea2
+  entity: location
+  title: Crystal Street
+  asset: locations/crystal-street
+  size: 1344x768
+  seed: 860196
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A sunny 1980s suburban cul-de-sac of identical split-level houses with tidy lawns, a roundabout
+    garden at its center holding a car-sized purple geode, bikes on driveways, jack-o-lanterns on porches, faint
+    violet shimmer in the air above the stone
+- key: cs-location-library
+  lane: krea2
+  entity: location
+  title: Glimmer Falls Public Library
+  asset: locations/library
+  size: 1344x768
+  seed: 860197
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A red-brick Carnegie library with white columns and a boxy 1970s annex, autumn leaves on the steps,
+    a motorcycle parked by the book drop, tall arched windows glowing warm in afternoon light
+- key: cs-location-gym
+  lane: krea2
+  entity: location
+  title: Pump Iron Gym and Aerobics
+  asset: locations/gym
+  size: 1344x768
+  seed: 860198
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A 1980s strip-mall gym with a neon Pump Iron sign, chrome weight machines visible through the front
+    window, a mirrored aerobics studio and an attached roller rink with a spinning disco ball, afternoon sun on
+    the parking lot
+- key: cs-location-high-school
+  lane: krea2
+  entity: location
+  title: Glimmer Falls High
+  asset: locations/high-school
+  size: 1344x768
+  seed: 860199
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A sprawling 1960s brick high school with a marquee sign reading go geodes, a football field behind
+    it, rows of lockers glimpsed through glass doors, kids with backpacks on the front steps in autumn light
+- key: cs-location-rewind-video
+  lane: krea2
+  entity: location
+  title: Rewind Video
+  asset: locations/rewind-video
+  size: 1344x768
+  seed: 860200
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A cozy 1980s video rental store in a strip mall, walls of VHS boxes, a horror aisle lit purple,
+    a retro counter with a rewinder machine, a night-drop slot beside the glass door, afternoon sun through window
+    posters
+- key: cs-location-starlight-mall
+  lane: krea2
+  entity: location
+  title: Starlight Mall and Arcade
+  asset: locations/starlight-mall
+  size: 1344x768
+  seed: 860201
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A bustling two-story 1980s shopping mall atrium with neon signs, a fountain full of coins, escalators,
+    a glowing arcade entrance, and at the far end a plywood barrier sealing off a dim abandoned wing
+- key: cs-location-glitter-box
+  lane: krea2
+  entity: location
+  title: The Glitter Box Playhouse
+  asset: locations/glitter-box
+  size: 1344x768
+  seed: 860202
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A small ornate 1920s vaudeville theatre with a bulb-lit marquee reading drag revue and midnight
+    double feature, gold paint peeling on the facade, a glass display case of sequined performer photos, afternoon
+    sun on the sidewalk
+- key: cs-location-pinecrest
+  lane: krea2
+  entity: location
+  title: St. Jude's and Pinecrest Cemetery
+  asset: locations/pinecrest
+  size: 1344x768
+  seed: 860203
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A small stone church with a bell tower beside a hilly cemetery of crooked oaks, mausoleums and leaning
+    headstones, fallen leaves, a groundskeeper's shed and a wrought-iron gate in late afternoon light
+- key: cs-location-kglm-radio
+  lane: krea2
+  entity: location
+  title: KGLM 103.3 and the Water Tower
+  asset: locations/kglm-radio
+  size: 1344x768
+  seed: 860204
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A small cinderblock radio station on a grassy hilltop beneath a tall round water tower painted Glimmer
+    Falls, a red-blinking transmitter antenna, a pickup truck parked outside, golden afternoon light over the valley
+- key: cs-location-junkyard
+  lane: krea2
+  entity: location
+  title: Rusty's Junkyard
+  asset: locations/junkyard
+  size: 1344x768
+  seed: 860205
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A sprawling junkyard of rusted 1950s and 1970s cars stacked in towering rows behind a chain-link
+    fence, a hulking car crusher, a converted school bus garage with tools hanging outside, a basset hound napping
+    by the gate in hazy afternoon sun
+- key: cs-location-pawnshop
+  lane: krea2
+  entity: location
+  title: Oddment and Daughters
+  asset: locations/pawnshop
+  size: 1344x768
+  seed: 860206
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A narrow, crooked little shop wedged into an empty lot, its windows crammed with clocks, music boxes,
+    dolls and brass curiosities, a hand-painted sign reading Oddment and Daughters, warm lamplight inside in broad
+    daylight
