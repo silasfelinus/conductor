@@ -734,17 +734,25 @@ tasks:
   - id: t-037
     milestone: m4
     title: "C.A.T.S. vs DOGS in game: names, DOG commanders on boss bars and cut-ins, bones and hearts, doodle UI"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T04:26:43Z'
+    updated: '2026-10-24T04:34:32Z'
     note: >-
       DOODLE-DIRECTION.md step 3. Faction names in comms and HUD; each boss bar names its DOG commander; boss
       fire drawn as bones, tennis balls and storm clouds, player fire as hearts and stars (decoration only, hitboxes
       unchanged); bubble-letter titles and sticker pickups. Code-drawn first; swap in t-036 art as it lands.
+
+      DONE 2026-10-23 PT (code-drawn layer): kind_robots#4097 merged. The C.A.T.S. squadron
+      and cat co-pilots appear on the Pilots tab. A DOG commander per boss is named on the
+      boss bar, barks on arrival, and is sent home with BAD DOG! on defeat. Boss fire is
+      bones, balls and clouds; pilot fire is hearts and stars. verifyRainbowDogs covers all
+      nine across the demo campaign. Painted commander art and the doodle UI skin follow from
+      t-036 once t-035 picks the engine.
     claimed_by: 2026-10-24T044500Z-rainbow-t037-dogs-z3c6
     claimed_at: '2026-10-24T04:26:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#4097'
   - id: t-038
     milestone: m4
     title: "Recut the thrash-metal opening from the doodle art"
