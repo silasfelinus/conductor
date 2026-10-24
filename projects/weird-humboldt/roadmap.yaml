@@ -450,7 +450,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Author and test all 120 complete encounter records, callbacks and chapter anchors"
-    status: ready
+    status: done
     depends_on: t-002
     passes: 0
     stakes: reversible
@@ -470,10 +470,14 @@ tasks:
 
       2026-10-24 PT: 8 archetype records (reactions to all six anchors) merged via #6575 with validate_archetypes + tests. Remaining scope: writing review only.
       2026-10-24 PT: agent writing review in WRITING-REVIEW-2026-10-24.md (structure, variety, repetition and exclusion scans clean). One open owner question: WH-121 (Mad River / Wiyot-language naming) vs EXCLUDED-CONTENT-2026-10-22.md; t-004 human creative review still applies.
-    updated: '2026-10-24T05:47:30Z'
+
+      2026-10-24 PT: Wiyot naming stripped from WH-121 (#6591). All scope delivered; whether
+      to remove WH-121 outright is Silas's call (WRITING-REVIEW-2026-10-24.md).
+    updated: '2026-10-24T16:45:19Z'
     owner: null
     claimed_by: wh-t003-archetypes
     claimed_at: '2026-10-24T05:47:30Z'
+    implementation_pr: 'silasfelinus/conductor#6591'
   - id: t-004
     milestone: m1
     title: "Creative review: optional mystery, stage rhythm, comedy-horror register and cast"
