@@ -2,8 +2,8 @@
 """Daily Dream digest enrichment with completed-output freshness awareness.
 
 The implementation snapshot lives in ``enrich_daily_dream_digest_impl.py``.  This wrapper
-preserves that behavior for a normal daily cycle, but prevents an older completed bundle from appearing as another daily email
-submission. Stale output remains in the diagnostic JSON, while the email receives
+preserves normal-cycle behavior, but prevents an old completed bundle from appearing
+as another daily email submission. Stale output remains in diagnostic JSON; email gets
 a dated missing-fresh-output status.
 """
 from pathlib import Path as _WrapperPath
