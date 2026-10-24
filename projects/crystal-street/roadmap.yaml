@@ -91,6 +91,16 @@ notes_from_silas: |
   fraternity doing a drag night. so you get the classic tropes of the woman breaking her heel in
   the woods, but as the stalker gets closer, your "damsel" is Chad in a bad wig and lipstick."
 
+  2026-10-24 PT: "Here's the expectation: six scenes is too small, not random enough for
+  replayability. I would imagine a seven day/night playthrough, a daytime sequence where the user
+  needs to allocate a certain number of actions to things like going to library, school, market,
+  nurse, and then having a night cycle where they draw from either the generic encounter deck or
+  the villain deck. A villain deck should have at least 2-3 encounters for each Act, with
+  remembered consequences for the finale. We can 't have failures in the first act guarantee a not
+  passing finale challenge, but things should be easier if challenges have passed and more
+  straightforward choices are available to handle what is otherwise a very high skill check or
+  checks."
+
 milestones:
   - id: m1
     title: "SHAPE — design brief, writing guide, rosters"
@@ -405,22 +415,32 @@ tasks:
 
   - id: t-018
     milestone: m2
-    title: "Nightmare encounter pools: three or more special moments per week, drawn from a larger pool"
-    status: ready
-    owner: null
+    title: "Acts and villain decks: a deck choice every night, three cards per act, finale edges"
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
+    pr: silasfelinus/kind_robots#4131
+    claimed_by: 2026-10-24T135800Z-cs-art-delivery
+    claimed_at: '2026-10-24T23:20:00Z'
+    updated: '2026-10-24T23:20:00Z'
     note: >-
-      Silas 2026-10-24 PT: "each monster should have at least three interstitial exciting moments
-      (decided from a random collection of monster encounters special to that monster, interspersed
-      with draws from the random encounters that match the type of the monster". Today each
-      nightmare has exactly three fixed signature scenes on nights 2, 4 and 6. Grow each to a pool of
-      six (three new per nightmare, 66 cards), deal three or more per week by seeded draw, and allow a
-      special moment to interrupt a day as well as a night. Rework the night decks around monster
-      types that read at a glance (supernatural, slasher, creature, alien, biohazard, tech, cult,
-      camp, dream, with generic suburban trouble), retagging nightmares and adding decks for the new
-      types. Lean into tropes. Keep the validator, autoplay balance and art contract green; new cards
-      bring their own scene and outcome prompts.
+      Silas 2026-10-24 PT (both notes above; the second supersedes the six-scene pool). Design: the
+      week runs in three acts (nights 1-2, 3-4, 5-6) and Halloween. Each night deals two cards and
+      the player picks the deck for each: the nightmare's villain deck (cards of the current act,
+      harder) or the street deck its kind shares. Beating any villain card of an act earns that
+      act's edge; each edge adds +1 to every finale roll and unlocks an edge choice (target 7) that
+      remembers the act and counts as fight, trick or heart. Base finale checks are all hard (11);
+      Best needs the heart and ten night wins, so first-act failures cost edges but never lock the
+      finale.
+
+      Progress 2026-10-24 PT: kind_robots #4129 merged (66 extra villain cards, six per nightmare).
+      #4131 (open) ships acts, the nightly deck choice, edges, approach-aware endings, the night
+      deck screen, and two cards per act. In flight: three more cards per nightmare (one per act,
+      reaching three per act, 198 villain cards) and three finale edge choices per nightmare.
+      Still to do: regroup the street decks around monster types that read at a glance
+      (supernatural, slasher, creature, alien, biohazard, tech, cult, camp, dream, generic suburban
+      trouble) and grow them (t-010), and add the nurse and market daytime stops Silas listed.
 
   - id: t-019
     milestone: m2
