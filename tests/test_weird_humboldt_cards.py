@@ -96,3 +96,21 @@ def test_endings_reject_unearnable_flag_and_missing_core():
     endings[0]["requires_flags"] = ["never_set_flag"]
     assert any("never_set_flag" in p for p in wh.validate_endings(endings, wh.load_cards()))
     assert any("missing core" in p for p in wh.validate_endings(endings[1:], wh.load_cards()))
+
+
+def test_eight_archetypes_are_valid():
+    archetypes = wh.load_archetypes()
+    assert len(archetypes) == 8
+    assert wh.validate_archetypes(archetypes, wh.load_anchors()) == []
+
+
+def test_archetype_rejects_bad_points_missing_reaction_and_mystic_framing():
+    anchors = wh.load_anchors()
+    arch = wh.load_archetypes()
+    arch[0]["skills"]["rizz"] = 3
+    arch[1]["anchor_reactions"].pop("WH-A3")
+    arch[4]["perk"] += " A sacred racial ability."
+    problems = wh.validate_archetypes(arch, anchors)
+    assert any("total 6" in p for p in problems)
+    assert any("one reaction per anchor" in p for p in problems)
+    assert any("mystical" in p for p in problems)
