@@ -1,0 +1,72 @@
+date: '2026-10-24'
+entries:
+- slug: animation-kite-festival-sky
+  title: 'Animation Manager: Kite Festival Sky screensaver'
+  target: animation-manager
+  kind: animation
+  summary: Six kites drift on closed-form thermals with bowed strings and ribbon tails, with hover glow, click lift and reduced-motion support.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4111
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/40079413456
+  merge_sha: ad044d6ad04ca1e1ec6cf91eeb281414b59783ee
+  checks: passed
+  verification: All 18 check runs on the final head were green incl. TypeScript, Contract shards 1-4, Changed-file Prettier and facet-catalog; animation catalog tests pass locally. Merged is not deployed; not eyeballed in a browser.
+  art:
+    status: not-required
+    note: Pure canvas animation, no raster assets.
+- slug: brick-bloom-tangle-column-ladybot-ring
+  title: 'Brick Bloom: ladybot ring on Vine Hall Tangle Column'
+  target: kr-arcade
+  kind: arcade stage
+  summary: Adds a five-ladybot ring guarding the centre crate of Vine Hall wall vine-2b, reusing the existing ring logic with a one-entry data change.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4110
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/40079407013
+  merge_sha: 3937262640caf4180c608d02459bb0b79d88db18
+  checks: passed
+  verification: All 18 check runs on the final head passed incl. Contract shards 1-4, Contract verifiers, TypeScript and Changed-file Prettier; ladybot, mite, snail and cabinet tests extended and passing. Merged is not deployed.
+  art:
+    status: not-required
+    note: Reuses existing ladybot sprites.
+- slug: emperor-tarn-toll-talk
+  title: 'Emperor of Dust: Tarn second talk, The Toll Nobody Wrote Down'
+  target: emperor-of-dust
+  kind: encounter
+  summary: Adds hidden-wanderer talk tarn-2 with two costly choices, each leaving its own flag and a remembered epilogue variant.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4114
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/40079534871
+  merge_sha: 28822875a9ff7ee4633624841ef25b35699387bd
+  checks: passed
+  verification: All 19 check runs on the final head passed incl. Contract shards 1-4, Seeded dispatch contract, TypeScript and Changed-file Prettier; secret-talks test extended to play the tarn-1, tarn-2, epilogue chain. Merged is not deployed.
+  art:
+    status: not-required
+    note: Text-only encounter content.
+- slug: shifting-desks-companion-memory-echoes
+  title: 'Shifting Desks: companion-memory echoes in five Board endings'
+  target: shifting-desks
+  kind: gamebook branch
+  summary: Five previously unread player decisions now get authored epilogue lines across five Board endings, each asserted once by contract test.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4112
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/40079449784
+  merge_sha: 89075790bcf22c638f1372f415ef47be752e890b
+  checks: passed
+  verification: Required checks green on the final head incl. TypeScript, Changed-file Prettier and Contract verifiers; all five Shifting Desks scripts incl. the 3000-run simulation pass locally. Merged is not deployed; no browser check.
+  art:
+    status: not-required
+    note: Text-only branch content.
+- slug: shifting-lands-v7-deed-echoes-kindness
+  title: 'Shifting Lands: three new deed echoes'
+  target: zuzu-shifting-lands
+  kind: world echoes
+  summary: Three presentation-only world echoes remember a yielded place, a burned debt and a fed deserter, shown on arrival in Dustwater or the canyon.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4113
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/40079493760
+  merge_sha: 706533f2b6de685abd020ed8e383aa686778fa12
+  checks: passed
+  verification: All 18 check runs passed on the final head; 21 verifyShifting tests pass locally with pinned hashes and V7/V8 simulations unchanged (balance neutral). No human playtest; merged is not deployed.
+  art:
+    status: not-required
+    note: Text-only echoes.
