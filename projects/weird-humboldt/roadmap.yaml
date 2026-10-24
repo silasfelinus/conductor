@@ -1532,19 +1532,14 @@ tasks:
   - id: t-065
     milestone: m5
     title: "Create 12 coherent player-avatar portrait ArtJobs and wire character selection"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Silas explicitly approved 12 full character-select portraits for Ecotone
-      and instructed us to submit them to the GitHub-backed art queue
-      (October 23 2026 PT). Match the 12 persistent PLAYER_AVATARS IDs,
-      generate coordinated painterly 2:3 images through the existing
-      Conductor ArtJob pipeline with private traceable prompts, and
-      replace emoji-only onboarding selection with responsive image-first
-      cards, retaining accessible labels and missing-image fallbacks.
-      Verify deduplication, durable submission, UI mapping, and CI.
+    note: |-
+      Silas explicitly approved 12 full character-select portraits for Ecotone and instructed us to submit them to the GitHub-backed art queue (October 23 2026 PT). Match the 12 persistent PLAYER_AVATARS IDs, generate coordinated painterly 2:3 images through the existing Conductor ArtJob pipeline with private traceable prompts, and replace emoji-only onboarding selection with responsive image-first cards, retaining accessible labels and missing-image fallbacks. Verify deduplication, durable submission, UI mapping, and CI.
+
+      Submitted 12 idempotent private Krea 2 portrait art requests under canonical public/images/ecotone/avatars/<saved-avatar-id>.webp paths in Conductor projects/art-prompts.yaml; authored matching image-first Ecotone onboarding player selection cards and 12-identity regression checks in kind_robots. Pending exact-head CI, art-queue workflow submission, and UI review.
     claimed_by: 2026-10-24T065900Z-wh-t065-avatar-a6f3
     claimed_at: '2026-10-24T06:59:00Z'
-    updated: '2026-10-24T06:59:00Z'
+    updated: '2026-10-24T07:03:00Z'
