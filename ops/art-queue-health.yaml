@@ -4,24 +4,11 @@
 failures:
 - source: requests
   target: public/images/memory-dungeon/card-backs/briar-arcane.webp
-  kind: contract-rejected
-  rules:
-  - format-vocabulary
-  - frame-noun
-  - people-negation
-  - text-exclusion-pile
-  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (4 violations): [format-vocabulary]
-    "card artwork" asks for a physical format, so the model renders the format — frame, title bar, and
-    invented text included. Describe the…'
+  kind: timeout
+  detail: job 44929 timed out after 300s (still queued/running)
   first_seen: '2026-10-24'
 - source: requests
   target: public/images/memory-dungeon/card-backs/briar-default.webp
-  kind: contract-rejected
-  rules:
-  - art-direction-jargon
-  - people-negation
-  - text-exclusion-pile
-  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (3 violations): [art-direction-jargon]
-    "legible at thumbnail size" is how you ask a person for a picture, not how you describe one. A caption-conditioned
-    model renders the…'
+  kind: timeout
+  detail: job 44928 timed out after 300s (still queued/running)
   first_seen: '2026-10-24'
