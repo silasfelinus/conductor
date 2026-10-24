@@ -624,11 +624,11 @@ tasks:
   - id: t-032
     milestone: m4
     title: "Animated projectiles: every enemy, guardian and boss shot family gets its own moving shape"
-    status: review
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T02:56:26Z'
+    updated: '2026-10-24T03:15:20Z'
     note: >-
       Silas, 2026-10-23 PT (verbatim): "We should have animations fo4 all projectiles, not these
       identical circles." Most hostile fire falls through to one dark circle with a yellow rim.
@@ -637,6 +637,12 @@ tasks:
       ink drops, bubbles, fin blades, prism shards, eclipse sparks. Keep the dark readability halo,
       the hitbox and every fairness rule unchanged; calm motion slows the animation. Player shots
       animate too (shimmer, trails).
+
+      DONE 2026-10-23 PT: kind_robots#4093 merged (b96288d). Every hostile shot carries a look
+      from the craft, guardian or boss that fired it, drawn by rainbowShotLooks.ts as one of
+      20 animated code-drawn shapes. Hitboxes and fairness are unchanged; the 8 px halo
+      softened. Pilot shots leave wakes. verifyRainbowEffects checks every plain pellet has a
+      look, 14+ looks across the campaign, and that each look animates.
     implementation_pr: 'silasfelinus/kind_robots#4093'
   - id: t-033
     milestone: m4
