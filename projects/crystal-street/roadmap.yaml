@@ -60,6 +60,14 @@ notes_from_silas: |
   2026-10-24 PT: "I like It Came from the Terrors on Crystal Street." Then: "Change to “Terrors on
   Crystal Street”" (the title; closes t-002)
 
+  2026-10-24 PT: "Deliver first round art to the game. Create the front end in Play, and include a
+  link to Terrors on the user dashboard highlight reel. We should have a complete front end, and a
+  1 minute long high energy Addams family meets Halloween theme punk music video. You have the
+  capabilities to set that up as music video project. Then user gets the title screen, single
+  screen interface, options to start, settings, gallery of monsters faced, their backstories, and
+  viewing endings, etc. then we work 9n the first playable slice. Make an outline of what needs to
+  be done first"
+
 milestones:
   - id: m1
     title: "SHAPE — design brief, writing guide, rosters"
@@ -251,3 +259,68 @@ tasks:
       (Michael Myers flipped) and The Final Cut (the killer-reveal trope as the villain, with
       the slandered actress as hero). Roster 22. Rules: WRITING-GUIDE.md "The re-cast".
 
+  - id: t-013
+    milestone: m2
+    title: "Play front end: /play/crystal-street, arcade tab, and the home highlight reel"
+    status: ready
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    approved_by_human: true
+    note: >-
+      Silas asked for it in session 2026-10-24 PT ("Create the front end in Play, and include a link to
+      Terrors on the user dashboard highlight reel"), which is the publish approval for the Play front
+      end; visual acceptance of the finished game stays t-011. Move the game from /admin/crystal-street
+      to /play/crystal-street (admin route redirects, as Save the Plumber does), add
+      content/channels/arcade/crystal-street.md, set the Kind Robots Project presentation fields
+      (liveUrl, channelKey, tabKey), and add Terrors to components/home/home-visitor-directory.vue
+      (an Explore feature card and a Just updated entry). Update the route contract tests together.
+
+  - id: t-014
+    milestone: m2
+    title: "Main menu shell: title screen, start and continue, settings, monster gallery, endings, crew"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      One-screen console menu over the cover: Start a week, Continue, Settings, Monster Gallery,
+      Endings, Crew, Scrapbook, How to Play, Credits. Settings (store-owned, persisted): text size,
+      reduced motion, high contrast, music and effects volume, dice animation speed. Monster Gallery:
+      all 22 nightmares with delivered poster and portrait art, locked silhouettes until met,
+      backstory and the old script / new lens once faced, endings found per nightmare. Endings
+      viewer: the 88 endings (22 x 4) as a gallery; found ones open full text and art, locked ones show
+      the tier and a hint. Crew gallery with the six mood portraits and poster toggle. Check 390, 768
+      and 1440 widths with screenshots.
+
+  - id: t-015
+    milestone: m2
+    title: "Theme music video: 60-second high-energy punk theme, Addams-meets-Halloween"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Build with scripts/build_music_video.py (MusicVideo doc, lyrics, ACE-Step song, beat-grid scenes,
+      stills through the ArtJob queue, ffmpeg MP4). Brief: a 60-second, about 170 BPM punk song with a
+      macabre finger-snap, harpsichord and organ hook (the Addams side) and a cold five-four synth
+      slasher pulse (the Halloween side), gang vocals, lyrics about Crystal Street and its nightmares.
+      Use style words only; pass --banned-terms for the film and franchise names. Scenes reuse the
+      round-1 cast and cover art where they fit. Export the MP4 into kind_robots
+      public/crystal-street/video/ (pattern: scripts/export_rainbow_opening.py) and give the title
+      screen a "Watch the theme" player. Renders take hours on the one GPU; the run resumes.
+
+  - id: t-016
+    milestone: m2
+    title: "First playable slice (scope after the front end lands)"
+    status: waiting
+    depends_on: [t-013, t-014]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas: "then we work on the first playable slice". Proposed scope to confirm when we get there: one
+      nightmare played end to end at full polish (Counselor Jess, the cover star), with scene and outcome
+      art for her leads, nights, finale and endings; the daylight beats and decks she can deal; an
+      onboarding first day; sound effects and the theme; and a balance and narrative pass on that path.
