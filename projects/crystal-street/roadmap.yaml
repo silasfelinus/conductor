@@ -1,0 +1,251 @@
+# Nightmare on Crystal Street: 80s horror-comedy day/night card adventure (Silas, 2026-10-24 PT).
+# One week on an idyllic suburban cul-de-sac, twenty-two nightmares, twenty-two companions (ten
+# active), illustrated choices, four endings per nightmare and a scrapbook of every run.
+# Design: DESIGN-BRIEF.md. Content rules and rosters: WRITING-GUIDE.md.
+# Runtime: silasfelinus/kind_robots /admin/crystal-street (admin preview until release).
+project: crystal-street
+kind: software
+autonomous: true
+goal: >-
+  A full single-screen, console-style horror-comedy card adventure at /admin/crystal-street
+  (later /play/crystal-street). A week of seven Days and Nights on Crystal Street against one
+  of twenty or more nightmares, each with a backstory, central issue, three leads, three
+  signature nights, a fight/trick/heart Halloween finale and four endings (one Best per
+  nightmare). Days visit ten locations and a traveling pawnshop for daylight beats, leads,
+  training, gear and companions; nights deal signature scenes and tag-deck pulls with
+  teleports. Twenty or more companions (ten active) with perks, six emotions, portrait and
+  poster art. Every choice has two or more options whose success and failure outcomes are
+  illustrated. Every run is recorded in a scrapbook. Queer-positive, PG-13, deterministic and
+  seeded, no LLM at play time. Finished only after painted art is delivered for key art,
+  cast and scenes, a balance pass, phone/tablet/desktop review, and Silas's acceptance.
+notes_from_silas: |
+  2026-10-24 PT: "New playbook games concept: Nightmare on Crystal Street style remix, set in
+  an idyllic suburb, with creepy but 80's fun exploration of horror, camp, slasher genres,
+  queer theatre, and lgbt+ positive themes. The game should involve one week on Crystal
+  Street (another name worth considering), that is beset upon by a malevolent entity. There
+  should be at least 20 villains, and each game round is either spending actions during the
+  Day or Night. During the day, they can visit the library, gym, the traveling pawnshop,
+  school, etc, gaining information, solving daylight adventure beats, and developing skills.
+  At night they might encounter situations unique to that entity, or randomized pulls from an
+  entity's shared tags (a "paranormal" entity such as Screwhead or Frieda Krueger might pull
+  from the paranormal encounter deck, which teleports the user to the Junkyard, pulling
+  another encounter and facing a maze of endless cars.
+
+  Use Emperor of Dust, ecotone, shifting desks, and shifting lands as guides for level of
+  complexity, more ideas, inventory...ooh, companions: we should have at least 20, you can
+  keep 10 active max: each follower should have a range of emotions and illustrated and
+  poster formats.
+
+  Multiple endings, depending on whether the villains central issue has been explored, and a
+  series of interesting encounters have been successfully rolled, the user should get one
+  Best ending per antagonist, with all runs recorded in a scrapbook. Full single screen aaa
+  console game design. The gameplay variety should involve memorable scenes, captivating back
+  stories, and a lot of intriguing choices that have 2+ interesting choices that all have
+  positive or negative outcomes that are given art."
+
+  2026-10-24 PT: "Antagonists should start as gender flipped/gender bent variations on
+  classic movie villains. They don't all have to be like this, and we're not veering into
+  evil tranny tropes, but looking for ways in which the classic monster/slasher tropes leaned
+  into stereotypes, and what can be gained dramatically from exploring those stories from
+  queerer/different perspectives
+  As quickly as possible, I want this prototyped, presented as a front end single screen AAA
+  console game interface, with a fully playable day night cycle game and a randomized series
+  of encounters that cover the gamut of adventures from the lens of 80's horror cinema looked
+  at through a fresh lens"
+
+  2026-10-24 PT: "the cover art for this project should be our gender swapped jason from the
+  hollywood monsters recast coloring book project" (approved Masking Up pair,
+  projects/coloring-book/sets/monster-recast/approved/masking-up-color.webp).
+
+milestones:
+  - id: m1
+    title: "SHAPE — design brief, writing guide, rosters"
+    weight: 20
+    status: done
+
+  - id: m2
+    title: "BUILD — engine, content, playable admin slice, art rounds"
+    weight: 55
+    status: in-progress
+
+  - id: m3
+    title: "POLISH & SHIP — balance, narrative audit, visual acceptance, release"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m2
+    title: "Design brief, writing guide, and the playable first slice at /admin/crystal-street"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    pr: silasfelinus/kind_robots#4101
+    note: >-
+      DONE 2026-10-24 PT. kind_robots #4101 merged as 5274977 (all 24 checks green). Ships the
+      seeded engine (utils/crystalStreet/rules.ts), 20 nightmares, 22 companions, 11 locations
+      with 44 daylight beats, 8 night decks (48 cards), 17 items, illustrated success and failure
+      on every choice (1,768 contract-clean prompts), the single-screen console UI at
+      /admin/crystal-street with SVG art fallbacks, scrapbook, Playbook Manager adapter with
+      live text overlay, contract test with seeded autoplay balance (Best 49% for a near-optimal
+      policy) and its CI workflow. Cover art is the approved Monster Recast "Masking Up" pair.
+      Verified at 390, 768 and 1440 widths in a local dev server with Playwright: no page scroll.
+      Admin-only; reaches production with the next Alexandria deploy.
+
+  - id: t-002
+    milestone: m1
+    title: "Optional: confirm scope and the title"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    gate_reason: creative-approval
+    recommendation: >-
+      Keep "Nightmare on Crystal Street" as the working title and the 20-nightmare,
+      22-companion scope as built; revisit the title before public release.
+    note: >-
+      FOR SILAS: soft checkpoint, nothing is blocked on it. The game is playable at
+      kindrobots.org/admin/crystal-street once kind_robots deploys. Read DESIGN-BRIEF.md
+      (loop, endings, companions) and the "Title alternatives" list at its end.
+      TO APPROVE: keep or change the title (Nightmare on Lavender Lane, Seven Nights on
+      Crystal Street, Glimmer Falls After Dark...), and redirect anything in the cast tables
+      in WRITING-GUIDE.md. Development continues either way.
+
+  - id: t-003
+    milestone: m2
+    title: "Deliver art round 1 into the runtime paths"
+    status: ready
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      art/ROUND-1.yaml (auto_submit) renders 21 villain posters and 22 portraits, 22 companion
+      posters, 132 companion mood portraits and 11 locations as ArtImages. Wire delivery: the
+      runtime looks for /crystal-street/villains/<id>-poster.webp (the cover and Counselor Jess poster already ship),
+      /crystal-street/companions/<id>-<emotion|poster>.webp and /crystal-street/locations/<id>.webp
+      and falls back to code-drawn SVG. Either export DONE ArtImages to those media paths (follow
+      the Emperor of Dust / Shifting Lands export pattern) or map ids to ArtImage URLs in a
+      manifest the store reads. Verify final URLs, not job status.
+
+  - id: t-004
+    milestone: m2
+    title: "Art round 2: encounter scene plates (every lead, signature, finale, beat, deck card and meeting)"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      About 270 scene prompts already live in the JSON (`art` on each encounter). Build a
+      ledger from them (generated art is pre-approved), batch it behind round 1, and deliver to
+      /crystal-street/scenes/<encounter-id>.webp.
+
+  - id: t-005
+    milestone: m2
+    title: "Art round 3: success and failure outcome plates, endings and items"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Every choice outcome has its own prompt (Silas: all outcomes "are given art"). Paths:
+      /crystal-street/outcomes/<encounter-id>--<choice-id>-<success|failure>.webp, endings at
+      /crystal-street/endings/<villain>-<tier>.webp, items at /crystal-street/items/<id>.webp.
+      Split into batches the render box can absorb; prioritize finales and signature scenes.
+
+  - id: t-006
+    milestone: m3
+    title: "Balance pass from the seeded autoplay report"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      verifyCrystalStreet.test.ts prints the ending mix across 240 autoplayed weeks. Tune
+      BEST_WINS, targets, dread penalties, perk strength and night card difficulty so a careful
+      week reaches Best for every nightmare without making it automatic, and so weak archetype
+      matchups stay winnable. Add per-villain and per-archetype rates to a BALANCE-REPORT.md.
+
+  - id: t-007
+    milestone: m3
+    title: "Narrative audit: voice, continuity, and the queer-positive rules across all cards"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Content was written in parallel. Read every nightmare, companion meeting, beat and deck
+      card against WRITING-GUIDE.md: consistent NPC names, no villain contradicting the cast
+      table, no slurs or queer-coded menace, PG-13, parody brand names, each choice a real
+      dilemma, clue trios that actually explain the central issue. Fix in place; log findings.
+
+  - id: t-008
+    milestone: m2
+    title: "Companion depth: personal arcs and nightmare-specific reactions"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Give each companion a three-step personal thread across the week (Chip's coming out to a
+      crew that has his back, Delphine and Roz's last dance, Glory and Frieda, Wade's poetry),
+      plus reactions when their friendship tag matches a nightmare. Loyalty should matter to
+      endings without adding new ending slots.
+
+  - id: t-009
+    milestone: m3
+    title: "Scrapbook polish: highlight polaroids, ending gallery, run sharing"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Show each run's highlight outcome art as polaroids, a full ending gallery per nightmare
+      (80 tiles), and a share card with seed so a friend can replay the same week.
+
+  - id: t-010
+    milestone: m3
+    title: "Content expansion: more daylight beats and night cards for replay variety"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Grow decks from 6 to 10 cards per tag and locations from 4 to 6 beats, keep the validator
+      green, and add weekday-specific beats (school on weekdays, the Saturday midnight movie).
+
+  - id: t-011
+    milestone: m3
+    title: "Visual acceptance and public release to /play/crystal-street"
+    status: waiting
+    depends_on: [t-003, t-006, t-007]
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    note: >-
+      Release gate. After art delivery, balance and the narrative audit, screenshot phone,
+      tablet and desktop, then ask Silas to accept the visual state and approve moving the game
+      from the admin preview to a public /play route and arcade tab.
+
+  - id: t-012
+    milestone: m2
+    title: "Re-cast the nightmares as gender-flipped and gender-bent classic villains"
+    status: done
+    owner: reviewer
+    pr: silasfelinus/kind_robots#4103
+    passes: 0
+    stakes: reversible
+    note: >-
+      DONE 2026-10-24 PT: kind_robots #4103 merged as 34ea24f (all 22 checks green). Session 2026-10-24 PT. Every villain gains an inspiration block (classic original, film,
+      year, flip/bend/remix, old script, new lens) shown on the arrival splash and case board.
+      Counselor Chad becomes Counselor Jess (Jason flipped, matching the cover art), Screwhead
+      becomes Magda Szabo (Pinhead flipped), and two are added: The Shape in the Cardigan
+      (Michael Myers flipped) and The Final Cut (the killer-reveal trope as the villain, with
+      the slandered actress as hero). Roster 22. Rules: WRITING-GUIDE.md "The re-cast".
+
