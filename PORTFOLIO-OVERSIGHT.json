@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-24T16:03:27.687978+00:00",
+  "generated_at": "2026-10-24T20:57:31.616480+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 40,
+    "roadmap_warnings": 39,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-21T15:01:39+00:00",
-    "hours_since": 73.03,
+    "hours_since": 77.93,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,19 +35,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-24T16:03:27.687982+00:00",
+    "generated_at": "2026-10-24T20:57:31.616484+00:00",
     "summary": {
       "roadmaps": 86,
       "active_projects": 23,
       "continuous_projects": 3,
       "tasks": 2604,
-      "ready": 202,
+      "ready": 201,
       "waiting": 206,
       "needs_human": 38,
       "in_progress": 30,
-      "done": 2107,
+      "done": 2108,
       "errors": 0,
-      "warnings": 40,
+      "warnings": 39,
       "info": 108
     },
     "errors": [],
@@ -64,7 +64,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "animation-manager",
         "task": "t-022",
-        "message": "Task has remained claimed for 30 days."
+        "message": "Task has remained claimed for 31 days."
       },
       {
         "severity": "warning",
@@ -85,7 +85,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "coloring-book",
         "task": "t-058",
-        "message": "Task has remained claimed for 26 days."
+        "message": "Task has remained claimed for 27 days."
       },
       {
         "severity": "warning",
@@ -261,13 +261,6 @@
         "project": "tzaddik-gallery",
         "task": "t-013",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_CLAIM_FIELDS",
-        "project": "weird-humboldt",
-        "task": "t-003",
-        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
