@@ -2,9 +2,9 @@
 """Daily Dream digest enrichment with completed-output freshness awareness.
 
 The implementation snapshot lives in ``enrich_daily_dream_digest_impl.py``.  This wrapper
-preserves that behavior for a normal daily cycle, but stops pretending an older completed
-bundle was "just built" when the builder has produced nothing new.  Stale latest output
-gets its art probed and is labeled as the latest completed bundle instead.
+preserves normal-cycle behavior, but prevents an old completed bundle from appearing
+as another daily email submission. Stale output remains in diagnostic JSON; email gets
+a dated missing-fresh-output status.
 """
 from pathlib import Path as _WrapperPath
 
@@ -55,7 +55,10 @@ def enrich_digest(
         f"{current['proposal_date']} proposal. No newer completed bundle exists "
         f"for the {today.isoformat()} digest."
     )
-    output["current_dream_output"] = payload
+    # Keep the old bundle inspectable, but never pass it into the daily email
+    # as though the same creative work were a new submission.
+    output["latest_completed_dream_output"] = payload
+    output["current_dream_output"] = None
     output["daily_dream_output_status"] = (
         f"No new Daily Dream bundle completed for {today.isoformat()}; "
         f"latest completed output was built {built_label}."

@@ -116,7 +116,8 @@ def test_two_day_old_latest_bundle_is_art_rich_and_truthfully_labeled(tmp_path):
         today=date(2026, 9, 13),
         probe_images=False,
     )
-    latest = result["current_dream_output"]
+    assert result["current_dream_output"] is None
+    latest = result["latest_completed_dream_output"]
 
     assert latest["display_mode"] == "latest-completed"
     assert len(latest["images"]) == 6
@@ -127,3 +128,27 @@ def test_two_day_old_latest_bundle_is_art_rich_and_truthfully_labeled(tmp_path):
     assert "Latest completed output" in html
     assert "Just built this cycle" not in html
     assert "Previous completed output" not in html
+
+
+def test_stale_bundle_is_diagnostic_only_not_another_daily_email_submission(tmp_path):
+    previous = _completed_proposal(
+        tmp_path / "completed.md", "2026-10-21T08:10:00-07:00"
+    )
+    digest = enrich.enrich_digest(
+        {}, [previous], today=date(2026, 10, 24), probe_images=False
+    )
+    assert digest["current_dream_output"] is None
+    assert digest["latest_completed_dream_output"]["title"] == "Recovered Dream"
+
+    digest.update(
+        date="2026-10-24",
+        projects=[],
+        pitches_awaiting_vote=[],
+        all_needs_attention=[],
+    )
+    payload = email.build_payload(digest)
+    html = payload["htmlContent"]
+    assert "Daily Dream not refreshed" in html
+    assert "latest completed output was built 2026-10-21" in html
+    assert "Recovered Dream" not in html
+    assert "No proposal yet" not in html
