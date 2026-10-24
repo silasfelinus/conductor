@@ -599,11 +599,11 @@ tasks:
   - id: t-031
     milestone: m6
     title: "Resume at the last checkpoint: the cabinet keeps every checkpoint, not just Act starts"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T02:42:12Z'
+    updated: '2026-10-24T02:52:58Z'
     note: >-
       Silas, 2026-10-23 PT (verbatim): "we should remember runs between games, returning should put
       us at the last checkpoint. If that isn't already implemented." Today the save is written only
@@ -612,16 +612,23 @@ tasks:
       save at every section/boss checkpoint (Act I too), accept and validate those checkpoints on
       load, and resume through the same rewind the CONTINUE? path uses. The continue menu names the
       Act and section. Narrow slice of t-027's memory work; t-027 keeps save slots and the route map.
+
+      DONE 2026-10-23 PT: kind_robots#4092 merged (da34189). The cabinet save is written at
+      every section and boss checkpoint (Act I included) and validated against the engine's
+      own checkpoint list on load (isRainbowCheckpoint). Continuing resumes the Act clock on
+      that checkpoint frame through the CONTINUE? rewind, and the flight log names the
+      section. All 34 Rainbow verifiers and 18 CI checks are green.
     claimed_by: 2026-10-24T024500Z-rainbow-t031-resume-q7m3
     claimed_at: '2026-10-24T02:42:12Z'
+    implementation_pr: 'silasfelinus/kind_robots#4092'
   - id: t-032
     milestone: m4
     title: "Animated projectiles: every enemy, guardian and boss shot family gets its own moving shape"
-    status: claimed
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T02:53:01Z'
+    updated: '2026-10-24T03:15:20Z'
     note: >-
       Silas, 2026-10-23 PT (verbatim): "We should have animations fo4 all projectiles, not these
       identical circles." Most hostile fire falls through to one dark circle with a yellow rim.
@@ -630,16 +637,21 @@ tasks:
       ink drops, bubbles, fin blades, prism shards, eclipse sparks. Keep the dark readability halo,
       the hitbox and every fairness rule unchanged; calm motion slows the animation. Player shots
       animate too (shimmer, trails).
-    claimed_by: 2026-10-24T030000Z-rainbow-t032-shots-v4n8
-    claimed_at: '2026-10-24T02:53:01Z'
+
+      DONE 2026-10-23 PT: kind_robots#4093 merged (b96288d). Every hostile shot carries a look
+      from the craft, guardian or boss that fired it, drawn by rainbowShotLooks.ts as one of
+      20 animated code-drawn shapes. Hitboxes and fairness are unchanged; the 8 px halo
+      softened. Pilot shots leave wakes. verifyRainbowEffects checks every plain pellet has a
+      look, 14+ looks across the campaign, and that each look animates.
+    implementation_pr: 'silasfelinus/kind_robots#4093'
   - id: t-033
     milestone: m4
     title: "Enemy dynamism: plain craft move and attack in distinct sea-life patterns"
-    status: claimed
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T03:15:22Z'
+    updated: '2026-10-24T03:47:18Z'
     note: >-
       Silas, 2026-10-23 PT (verbatim): "improve the dyamism: enemies should move and attack in
       different ways." The plain craft of Acts I-III (picket, spiral, anchor, urchin, lantern,
@@ -648,16 +660,24 @@ tasks:
       bounces, jelly pulse-swims, ceiling/floor skims, manta swoops) and its own attack (bursts,
       rotating fans, radial spikes, dropped bombs, lobbed shots), deterministic and telegraphed,
       within the existing fairness and pacing tests.
-    claimed_by: 2026-10-24T031500Z-rainbow-t033-craft-h2x9
-    claimed_at: '2026-10-24T03:15:22Z'
+
+      DONE 2026-10-23 PT: kind_robots#4094 merged (a52ee28). Each Act I-III plain craft swims
+      and fires its own WORLD-BIBLE way: picket sidestep lead, spiral loop-the-loop with
+      turning spokes, anchor mines, urchin wall-roll with an 8-spine fan, lantern pulse-swim
+      with a gapped ring, relay link, skimmer rails with bead columns, coral floor lobs, skate
+      manta swoop. Courier pods past the left edge no longer take hits. Two scripted test bots
+      tightened (assertions unchanged); verifyRainbowCraftVariety is new. Side fix:
+      kind_robots#4095 repaired main's broken production image build (ecotone-board inline
+      handler from #4087).
+    implementation_pr: 'silasfelinus/kind_robots#4094'
   - id: t-034
     milestone: m4
     title: "Opening music video: a 15-second high-energy thrash-metal animated intro"
-    status: claimed
-    owner: worker
+    status: review
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T03:47:21Z'
+    updated: '2026-10-24T03:51:10Z'
     note: >-
       Silas, 2026-10-23 PT (verbatim): "We can use a real animation at the beginning, maybe a 15
       second high energy thrash metal music video." Queue generated video clips (WAN from the
@@ -665,5 +685,10 @@ tasks:
       t-025 path), cut them to the beat, and play the result as the cabinet's opening with A to
       skip and the current code-drawn intro as the fallback until the clips are delivered.
       Generated art and music are pre-approved internal work; public release stays gated by t-014.
-    claimed_by: 2026-10-24T034000Z-rainbow-t034-opening-m5k2
-    claimed_at: '2026-10-24T03:47:21Z'
+
+      2026-10-23 PT: player on the Fly tab in kind_robots#4096; clip ledger + exporter in
+      conductor#6568. Renders queued: ACE-Step thrash track ArtJob 44644, WAN clips
+      44645-44653 (A14B first/last frame, overnight). Next: once 44644 is DONE run
+      scripts/export_rainbow_opening.py --kind-robots ../kind_robots and ship the delivery PR
+      (stills stand in for clips not yet rendered); re-run as clips land.
+    implementation_pr: 'silasfelinus/kind_robots#4096'
