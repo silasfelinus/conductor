@@ -118,7 +118,7 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Implement Briar Marches 64-square authored map and reachable graph"
-    status: review
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -126,10 +126,9 @@ tasks:
       Convert all 64 stable 1..8 coordinates in BRIAR-MARCHES-FIRST-WORLD.md to distinct interactive authored scene/site records. Expand BRIAR_LINKS only with adjacent, bidirectionally reachable routes while preserving current fixed sites, choice states and saved progression. Each tile must reward interacting, have unique atmosphere/art contract and a consequence or discovered fact; remove generic no-op squares. Deliver in tested batches (16 cells per PR acceptable), with scene tests for availability, no duplicate resources or softlocks.
 
       First scoped batch authors 16 reachable and formerly generic Briar encounter sites with two persistent choices each, callbacks, art prompts, and save/reachability regression tests. The remaining 64-location map work is not complete.
-    owner: worker
-    claimed_by: 2026-10-24T022100Z-memory-dungeon-t-021-a5f92
-    claimed_at: '2026-10-24T02:21:00Z'
-    updated: '2026-10-24T02:24:30Z'
+
+      First sixteen additional authored Briar scenes merged in kind_robots PR 4091 at 9b0cd4ed7801484ccec61404adb7fbd86b0f3c72, with persistent branch choices, linked callbacks and reachable tile tests. All 12 PR workflows passed including TypeScript, formatting and full contract tests. t-021 remains incomplete: 64 locations still need full authored interaction and every coordinate must become reachable, save-safe and visually checked.
+    updated: '2026-10-24T02:40:01Z'
   - id: t-022
     milestone: m3
     title: "Build the House That Remembers 36-room dungeon and alternate resolutions"
