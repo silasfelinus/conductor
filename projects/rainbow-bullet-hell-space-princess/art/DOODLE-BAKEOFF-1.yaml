@@ -1,0 +1,103 @@
+# Rainbow Space Princess doodle direction bake-off, txt2img (t-035, 2026-10-23 PT). DOODLE-DIRECTION.md: a gifted kid's
+# 1980s neon airbrush school-folder art; C.A.T.S. (the princesses' squadron, cat ships, cat co-pilots) versus the
+# DOGS. Six subjects on Z-Image Turbo and Krea 2 to see which engine holds the look before anything is restyled.
+# Prompts describe the era's qualities and never name an artist or brand. Princess likenesses are NOT drawn here
+# (the Kontext ledger DOODLE-BAKEOFF-KONTEXT-1.yaml restyles them from their identity locks). Private.
+round: rainbow-doodle-bakeoff-1
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: zimage
+  label: Z-Image Turbo
+  engine: zimage
+  prompt: prose
+- key: krea2
+  label: Krea 2
+  engine: krea2
+  prompt: prose
+subjects:
+- key: dd-cats-emblem
+  entity: emblem
+  title: C.A.T.S. squadron emblem
+  size: 1024x1024
+  seed: 835001
+  negative: text, letters, words, numbers, watermark, signature, photorealistic, photograph, 3d render, blurry,
+    scary, gore
+  prompt_prose: A round squadron patch of a smiling cat face wearing a tiny star crown, a rainbow arcing behind
+    it, hearts and four-point sparkles around the rim, 1980s neon airbrush school-folder sticker art, hot pink,
+    electric purple, turquoise, lime and sunshine yellow gradients, clean confident outlines, glossy highlights,
+    centred on a black starry background
+  jobs:
+    zimage: 44654
+    krea2: 44655
+- key: dd-key-art
+  entity: title
+  title: Title key art, four cat ships over a rainbow sea
+  size: 1344x768
+  seed: 835002
+  negative: text, letters, words, numbers, logo, watermark, signature, photorealistic, photograph, 3d render, blurry,
+    people, characters, scary
+  prompt_prose: Four cute cat-shaped starfighters with cat ears, whiskers and curling tails zoom across a starry
+    black sky above a glowing rainbow ocean, one rose pink, one cyan, one butter yellow, one lilac, rainbow exhaust
+    trails, hearts, stars and glitter sparkles everywhere, a pearl palace on the horizon, 1980s neon airbrush school-folder
+    art drawn by a very talented kid, glossy, clean outlines, joyful
+  jobs:
+    zimage: 44656
+    krea2: 44657
+- key: dd-copilots
+  entity: cast
+  title: The four cat co-pilots
+  size: 1344x768
+  seed: 835003
+  negative: text, letters, words, numbers, watermark, signature, photorealistic, photograph, 3d render, blurry,
+    people, humans, scary
+  prompt_prose: Four cartoon cats in tiny flight helmets posing together like a team photo, a ginger tabby with
+    one torn ear, a sleek blue-cream Siamese, a huge fluffy golden Maine Coon and a lilac hairless sphynx in a tiny
+    leather jacket, big glossy eyes, rainbow gradient background with hearts and stars, 1980s neon airbrush school-folder
+    sticker art, clean confident outlines, joyful
+  jobs:
+    zimage: 44658
+    krea2: 44659
+- key: dd-king-rufus
+  entity: villain
+  title: King Rufus, Top Dog of the DOGS
+  size: 832x1216
+  seed: 835004
+  negative: text, letters, words, numbers, watermark, signature, photorealistic, photograph, 3d render, blurry,
+    gore, realistic dog, scary
+  prompt_prose: A grumpy cartoon bulldog king in a spiky violet space crown and a purple velvet cape, scowling with
+    his arms crossed on a throne shaped like a giant dog bowl, a little grumpy storm cloud over his head, bones
+    and tennis balls floating around him in starry space, 1980s neon airbrush school-folder art drawn by a very
+    talented kid, funny not scary, glossy, clean outlines
+  jobs:
+    zimage: 44660
+    krea2: 44661
+- key: dd-corporal-chihuahua
+  entity: villain
+  title: Corporal Chihuahua (Act I DOG commander)
+  size: 832x1216
+  seed: 835005
+  negative: text, letters, words, numbers, watermark, signature, photorealistic, photograph, 3d render, blurry,
+    gore, realistic dog, scary
+  prompt_prose: A tiny furious cartoon chihuahua in an oversized space-commander helmet and a little uniform with
+    one shiny medal, shaking with rage, standing on a control panel, starry neon background with hearts and sparkles,
+    1980s neon airbrush school-folder art drawn by a very talented kid, funny not scary, glossy, clean outlines
+  jobs:
+    zimage: 44662
+    krea2: 44663
+- key: dd-collared-seahorse
+  entity: enemy
+  title: A hypnotized seahorse ship in a DOG obedience collar
+  size: 1024x1024
+  seed: 835006
+  negative: text, letters, words, numbers, watermark, signature, photorealistic, photograph, 3d render, blurry,
+    gore, scary
+  prompt_prose: A cute pink robot seahorse spaceship with big swirly hypnotized eyes wearing a glowing spiked dog
+    collar with a bone-shaped tag, floating in starry space with bubbles, hearts and sparkles, side view on a plain
+    dark background, 1980s neon airbrush school-folder sticker art, glossy, clean outlines
+  jobs:
+    zimage: 44664
+    krea2: 44665
