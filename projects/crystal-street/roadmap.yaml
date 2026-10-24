@@ -295,7 +295,7 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Play front end: /play/crystal-street, arcade tab, and the home highlight reel"
-    status: ready
+    status: done
     depends_on: t-003
     pr: silasfelinus/kind_robots#4128
     owner: null
@@ -315,10 +315,17 @@ tasks:
       admin redirect, arcade tab, projectPlacements entry, highlight-reel card and update, route
       contracts. Close when it merges.
 
+      DONE 2026-10-24 PT. kind_robots #4128 merged as b3fcf57 (all checks green):
+      /play/crystal-street with the /admin URL 301-redirecting, the arcade tab (mask icon),
+      projectPlacements, and a home highlight-reel feature card plus Just updated entry; route
+      contracts updated.
+    updated: '2026-10-24T22:10:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#4128'
+
   - id: t-014
     milestone: m2
     title: "Main menu shell: title screen, start and continue, settings, monster gallery, endings, crew"
-    status: ready
+    status: done
     pr: silasfelinus/kind_robots#4128
     owner: null
     passes: 0
@@ -340,6 +347,14 @@ tasks:
       (music and effects volume arrive with t-015 and sound). Screenshots at 390, 768 and 1440 show
       no page scroll. Close when it merges.
 
+      DONE 2026-10-24 PT. kind_robots #4128 merged as b3fcf57: main menu over the idyllic
+      street title (TERRORS large) with a slideshow of survived nightmares' ending photos,
+      monster gallery, endings reel (88), friends roster, scrapbook, how to play, settings,
+      credits, and the Pick your look avatar strip. Verified at 390, 768 and 1440 with no page
+      scroll.
+    updated: '2026-10-24T22:10:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#4128'
+
   - id: t-015
     milestone: m2
     title: "Theme music video: 60-second high-energy punk theme, Addams-meets-Halloween"
@@ -360,7 +375,7 @@ tasks:
   - id: t-016
     milestone: m2
     title: "First playable slice (scope after the front end lands)"
-    status: waiting
+    status: ready
     depends_on: [t-013, t-014]
     owner: null
     passes: 0
