@@ -118,7 +118,7 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Implement Briar Marches 64-square authored map and reachable graph"
-    status: review
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -130,10 +130,9 @@ tasks:
       First sixteen additional authored Briar scenes merged in kind_robots PR 4091 at 9b0cd4ed7801484ccec61404adb7fbd86b0f3c72, with persistent branch choices, linked callbacks and reachable tile tests. All 12 PR workflows passed including TypeScript, formatting and full contract tests. t-021 remains incomplete: 64 locations still need full authored interaction and every coordinate must become reachable, save-safe and visually checked.
 
       Second scoped Briar map installment on a Kind Robots worker branch: all 64 fixed coordinates connected by legal map paths, 16 additional decision-bearing scenes bringing authored count to 47, and named map markers for story-only sites. Contains save/graph/reaction tests. Full 64-site narrative completion remains outstanding.
-    updated: '2026-10-24T05:14:22Z'
-    owner: worker
-    claimed_by: 2026-10-24T050715Z-memory-dungeon-t-021-b2d41
-    claimed_at: '2026-10-24T05:07:15Z'
+
+      Second map batch merged in Kind Robots PR 4098 at 7ae63c06a9e5a4be470e60a0d3911b579fd4d87f. The fixed 8x8 Briar graph now has 64 legal reachable coordinates with at most two new routes per source. Added 16 more authored scene choices, conditional consequences, visual briefs and visible scene map names, bringing the total to 47 scripted sites. All 14 GitHub workflows passed. This remains an incomplete map milestone: 17 locations need additional authored encounters or integration, four cross-world sigils remain intentionally outside the Briar reveal waves, and real art delivery and rendered mobile/tablet/desktop QA are not verified. Continue next with remaining 17 sites and save-safe cross-world unlocks.
+    updated: '2026-10-24T05:21:36Z'
   - id: t-022
     milestone: m3
     title: "Build the House That Remembers 36-room dungeon and alternate resolutions"
