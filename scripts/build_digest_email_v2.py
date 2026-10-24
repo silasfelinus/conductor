@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Daily digest email renderer with a truthful stale-latest Dream heading.
 
-The implementation snapshot lives in ``build_digest_email_v2_impl.py``.  The only overlay
-here is presentation for a completed Dream that is older than the current cycle: it still
-gets the art-rich cards, but it is labeled "Latest completed output" rather than either
-"Previous" or "Just built".
+The implementation snapshot lives in ``build_digest_email_v2_impl.py``. An
+unrefreshed Daily Dream gets a dated status notice instead of recycling a previous
+bundle's cards. Diagnostic callers can still render historical completed art.
 """
 from pathlib import Path as _WrapperPath
 
