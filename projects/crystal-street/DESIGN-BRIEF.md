@@ -5,8 +5,8 @@ card adventure. One week on an idyllic suburban cul-de-sac beset by one of twent
 days for investigation and friendship, nights for survival. Creepy but fun, camp as a weapon,
 queer theatre and LGBT+ joy at its heart.
 
-- **Runtime:** kind_robots `/admin/crystal-street` (admin-only development preview, per the
-  admin route contract). Moves to `/play/crystal-street` only when Silas releases it.
+- **Runtime:** kind_robots `/play/crystal-street`, a public work in progress (Silas asked for the Play
+  front end on 2026-10-24 PT; `/admin/crystal-street` redirects there). Visual acceptance stays t-011.
 - **Content:** kind_robots `utils/crystalStreet/` (JSON validated by `validate.ts`). Rules and
   rosters: [WRITING-GUIDE.md](WRITING-GUIDE.md). Complexity benchmarks: Emperor of Dust (days,
   followers, ledgers), Ecotone (companions, many endings), Shifting Desks (dealt encounter cards,
@@ -43,6 +43,25 @@ Full table: [WRITING-GUIDE.md](WRITING-GUIDE.md#the-re-cast-classic-villains-fli
 **Cover art (Silas, 2026-10-24 PT):** the approved gender-swapped Jason from the Hollywood
 Monsters Recast coloring book ("Masking Up", `projects/coloring-book/sets/monster-recast/approved/masking-up-color.webp`).
 It is the title-screen hero, the project icon/card/hero, and Counselor Jess's poster.
+
+## Front end (Silas, 2026-10-24 PT)
+
+- **Title:** an idyllic, white-clapboard Crystal Street in autumn sun ("a white housed suburbia,
+  idyllic"), with **TERRORS** set large and "on Crystal Street" smaller beneath it. Once the title
+  loads, a slideshow cycles through the ending photo of every nightmare the player has survived.
+- **Ending photos:** every nightmare gets one, in the style of the Masking Up cover ("this is the
+  standard we'll use for the lake killer monster"). The cover is Counselor Jess's ending photo; the
+  others render in an inked horror-comic lane ([art/FRONT-1.yaml](art/FRONT-1.yaml)). They appear on
+  the ending screen, the scrapbook polaroids, the endings reel and the monster gallery.
+- **Avatars:** sixteen selectable player avatars, full-figure characters in exaggerated poses with
+  androgynous looks and a natural spread of genders, ages, skin tones and bodies, each written as one
+  specific person rather than a checklist.
+- **Menu:** continue, new week, monster gallery, endings, friends, scrapbook, how to play, settings
+  and credits, all on one screen.
+- **Coming (roadmap t-018 to t-020):** a larger pool of special moments per nightmare drawn at
+  random each week; decks regrouped around monster types; four factions (friends, family,
+  officials, neighbors) whose collapse each triggers its own ending, friends leading to an inclusive
+  Final Girl sequence; and a frat drag-night slumber-party remix.
 
 ## Core loop
 

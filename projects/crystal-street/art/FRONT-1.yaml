@@ -1,0 +1,524 @@
+# Terrors on Crystal Street front-end art (crystal-street t-017; Silas, 2026-10-24 PT).
+# Built from kind_robots utils/crystalStreet JSON (title-art.json, avatars.json, villain endingPhoto):
+#   the idyllic daytime street behind the title ("a white housed suburbia, idyllic");
+#   an ending photo for every nightmare in the style of the approved Masking Up cover ("this is the
+#   standard we'll use"), which is Counselor Jess's own ending photo and so is not re-rendered;
+#   sixteen selectable player avatars in exaggerated poses.
+# The runtime looks for /crystal-street/<asset>.webp and draws code-built SVG until delivered;
+# delivery is scripts/export_crystal_street_art.py. Prompt contract: positive description only.
+# Generated art is pre-approved (AGENTS.md). auto_submit: true. Private.
+round: crystal-street-front-1
+project_slug: crystal-street
+designer: Crystal Street art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: street
+  label: Krea 2 (idyllic 1980s suburb matte painting)
+  engine: krea2
+  prompt: prose
+  suffix: painted 1980s movie matte painting, warm golden afternoon light, crisp nostalgic detail, idyllic autumn
+    suburbia, cinematic wide composition
+- key: ink
+  label: Krea 2 (inked horror comic, the Masking Up standard)
+  engine: krea2
+  prompt: prose
+  suffix: detailed inked horror comic illustration, bold confident ink linework with fine crosshatching, rich painted
+    color over the ink, moonlit night, cinematic depth, darkly comic 1980s slasher energy
+- key: avatar
+  label: Krea 2 (VHS-painted player avatar)
+  engine: krea2
+  prompt: prose
+  suffix: painted 1986 horror-comedy VHS box art character, full figure from head to shoes, airbrushed gouache,
+    hot magenta and cyan rim light, deep midnight purple studio backdrop, playful spooky mood
+subjects:
+- key: cs-title-crystal-street
+  lane: street
+  entity: title
+  title: Crystal Street · title screen
+  asset: title/crystal-street
+  size: 1216x832
+  seed: 862001
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A wide sunny view down Crystal Street, a gently curving cul-de-sac of white clapboard two-story
+    houses with black shutters and white picket fences, manicured green lawns, maple trees blazing red and gold,
+    carved pumpkins on every porch step, a kid on a red bicycle and a sprinkler arcing over a lawn, a station wagon
+    in a driveway, soft clear blue sky filling the upper third
+  jobs:
+    street: 45094
+- key: cs-villain-big-gertie-ending
+  lane: ink
+  entity: villain-ending
+  title: Big Gertie · ending photo
+  asset: villains/big-gertie-ending
+  size: 912x1216
+  seed: 862002
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering lunch lady in a stained white apron and stretched hairnet hoisting a steaming steel pot
+    of quivering gray mystery meat over her head in a dark school kitchen, a meat cleaver on her belt, trays of
+    sloppy food sliding off the counter, teens in letterman jackets skidding on spilled pudding as they flee through
+    the swinging doors behind her
+  jobs:
+    ink: 45095
+- key: cs-villain-bobo-ending
+  lane: ink
+  entity: villain-ending
+  title: Bobo · ending photo
+  asset: villains/bobo-ending
+  size: 912x1216
+  seed: 862003
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering clown with a cracked greasepaint grin and a spinning bow tie looming over a birthday
+    party at a pizza parlor at night, balloon animals with thumbtack teeth in his fist, a cake with flickering candles
+    in the foreground, animatronic band animals slumped on stage, teens in party hats sliding under tables
+  jobs:
+    ink: 45096
+- key: cs-villain-bog-baby-ending
+  lane: ink
+  entity: villain-ending
+  title: The Bog Baby · ending photo
+  asset: villains/bog-baby-ending
+  size: 912x1216
+  seed: 862004
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A colossal toddler-shaped creature of black mud and golden grease sitting in a cracked mall parking
+    lot under sodium lights, cattails in its hair, gently lifting a station wagon like a toy with a violet crystal
+    heart pulsing in its chest, teens ducking behind shopping carts and a toppled mall sign in the background
+  jobs:
+    ink: 45097
+- key: cs-villain-brightwaters-ending
+  lane: ink
+  entity: villain-ending
+  title: The Brightwaters · ending photo
+  asset: villains/brightwaters-ending
+  size: 912x1216
+  seed: 862005
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A smiling blond suburban family in matching pastel cardigans holding out a steaming green casserole
+    on a perfect green lawn at dusk, their long shadows on the white house sprouting curling tendrils and seed pods,
+    a comet streaking overhead, teens backing away down the sidewalk clutching a dish of their own homemade lasagna
+  jobs:
+    ink: 45098
+- key: cs-villain-countess-lacroix-ending
+  lane: ink
+  entity: villain-ending
+  title: Countess Lacroix · ending photo
+  asset: villains/countess-lacroix-ending
+  size: 912x1216
+  seed: 862006
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A glamorous vampire disco diva in a white jumpsuit and black satin cape gliding down a light-up
+    dance floor staircase, golden lion's-mane hair and gleaming fangs, a giant mirror ball scattering moonlight,
+    dancers in glitter hypnotized mid-hustle, teens with garlic necklaces and a mirror sneaking along the bar behind
+    her
+  jobs:
+    ink: 45099
+- key: cs-villain-final-cut-ending
+  lane: ink
+  entity: villain-ending
+  title: The Final Cut · ending photo
+  asset: villains/final-cut-ending
+  size: 912x1216
+  seed: 862007
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering figure of pale gold projector light with a black-and-white clapperboard for a face, raising
+    a chrome megaphone on the stage of an old movie palace at midnight, a beam of light pouring from the projection
+    booth, the velvet curtain parting, teens in the front row throwing popcorn and pointing at the screen
+  jobs:
+    ink: 45100
+- key: cs-villain-frieda-krueger-ending
+  lane: ink
+  entity: villain-ending
+  title: Frieda Krueger · ending photo
+  asset: villains/frieda-krueger-ending
+  size: 912x1216
+  seed: 862008
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A tall woman in a pink 1961 beautician's smock and a towering silver beehive leaning over a sleeping
+    teenager's bed, her glove of five gleaming salon shears snipping a curl of dream-smoke, rows of hooded salon
+    dryers looming like tombstones in a bedroom that melts into a midnight beauty parlor, pajama-clad friends bursting
+    through the bedroom door behind her
+  jobs:
+    ink: 45101
+- key: cs-villain-goody-hale-ending
+  lane: ink
+  entity: villain-ending
+  title: Goody Hale · ending photo
+  asset: villains/goody-hale-ending
+  size: 912x1216
+  seed: 862009
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A tall woman in gray 1850s homespun rising from a suburban roundabout garden at night, a crown of
+    briars and marigolds on her loose gray hair, a lantern burning green in her hand, thorny vines curling over
+    mailboxes and lawn flamingos, a ring of teens joining hands around her with candles
+  jobs:
+    ink: 45102
+- key: cs-villain-heartstone-ending
+  lane: ink
+  entity: villain-ending
+  title: The Heartstone Hunger · ending photo
+  asset: villains/heartstone-ending
+  size: 912x1216
+  seed: 862010
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A colossal purple geode split open in the middle of a suburban cul-de-sac at night, violet crystal
+    veins cracking the asphalt, fourteen amber miner's lamps floating in a line above it, a neighbor in a bathrobe
+    half-crystallized on a lawn, teens shielding their eyes at the curb with a garden hose and a shovel
+  jobs:
+    ink: 45103
+- key: cs-villain-hungry-house-ending
+  lane: ink
+  entity: villain-ending
+  title: The Hungry House · ending photo
+  asset: villains/hungry-house-ending
+  size: 912x1216
+  seed: 862011
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A spotless pastel split-level model home at the end of a cul-de-sac at night, its front door yawning
+    open into a warm golden glow like a mouth, a welcome mat curling like a tongue, floating framed family photographs
+    drifting from the windows, a woman in a 1959 apron smiling in the bay window, teens on bikes braking hard on
+    the lawn
+  jobs:
+    ink: 45104
+- key: cs-villain-mallrat-mothman-ending
+  lane: ink
+  entity: villain-ending
+  title: The Mallrat Mothman · ending photo
+  asset: villains/mallrat-mothman-ending
+  size: 912x1216
+  seed: 862012
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A seven-foot moth creature with dusty pale-green wings and glowing red eyes crouched on the rim
+    of a drained mall fountain, wings spread wide under a cracked skylight and a full moon, silk cocoons hanging
+    from a dead neon sign, teens pressed against a boarded-up arcade doorway holding a flickering lantern
+  jobs:
+    ink: 45105
+- key: cs-villain-mister-fuzzbutton-ending
+  lane: ink
+  entity: villain-ending
+  title: Mister Fuzzbutton · ending photo
+  asset: villains/mister-fuzzbutton-ending
+  size: 912x1216
+  seed: 862013
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A giant honey-colored teddy bear with a glowing blue cassette window in its tummy leaning over a
+    child's bed with a tender, unsettling smile, magnetic tape unspooling from its belly across the bedroom floor,
+    a crowd of identical little bears peeking over the windowsill, teens in pajamas hiding under a blanket fort
+    with a walkie-talkie
+  jobs:
+    ink: 45106
+- key: cs-villain-mom-3000-ending
+  lane: ink
+  entity: villain-ending
+  title: MOM-3000 · ending photo
+  asset: villains/mom-3000-ending
+  size: 912x1216
+  seed: 862014
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A beige 1980s home computer with a glowing green smiling pixel face on a kitchen table at night,
+    coiled phone cords and ribbon cables reaching across the room like arms to tuck in the chairs, every appliance
+    lit red, a printer spilling a curfew list, teens creeping past in socks carrying a floppy disk
+  jobs:
+    ink: 45107
+- key: cs-villain-prudence-thorn-ending
+  lane: ink
+  entity: villain-ending
+  title: Pastor Prudence Thorn · ending photo
+  asset: villains/prudence-thorn-ending
+  size: 912x1216
+  seed: 862015
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A small woman in a lavender pantsuit shouting into a bullhorn in front of a roaring bonfire of vinyl
+    records and videotapes on a suburban roundabout, a towering demon of smoke rising behind her with tape-ribbon
+    hair, concerned parents in cardigans holding signs, teens rescuing an armful of records and a game rulebook
+    from the flames
+  jobs:
+    ink: 45108
+- key: cs-villain-queen-neferet-ending
+  lane: ink
+  entity: villain-ending
+  title: Queen Neferet · ending photo
+  asset: villains/queen-neferet-ending
+  size: 912x1216
+  seed: 862016
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A regal ancient Egyptian queen in white linen and a gold vulture crown standing calm and luminous
+    in the reading room of a small-town library at night, golden sand pouring from the card catalog drawers, an
+    immense starry sky goddess arching across the ceiling, teens peering over a stack of encyclopedias holding a
+    library card like a talisman
+  jobs:
+    ink: 45109
+- key: cs-villain-screwhead-ending
+  lane: ink
+  entity: villain-ending
+  title: Magda "Screwhead" Szabo · ending photo
+  asset: villains/screwhead-ending
+  size: 912x1216
+  seed: 862017
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A gaunt woman in a brown shop coat and orange hardware-store apron with brass screws pinned through
+    her tight gray-streaked bun, calmly tightening a giant brass screw into a glowing puzzle box on a workbench,
+    hanging chains and pegboard tools swinging around her in a midnight hardware aisle, teens frozen mid-step at
+    the end of the aisle with flashlights
+  jobs:
+    ink: 45110
+- key: cs-villain-spring-queen-ending
+  lane: ink
+  entity: villain-ending
+  title: Rosalind "Roz" Vance · ending photo
+  asset: villains/spring-queen-ending
+  size: 912x1216
+  seed: 862018
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A teenage girl ghost in a rain-soaked mint 1966 prom gown and a crown of wilted gardenias floating
+    above a high school gym stage in a lightning storm, a single spotlight on her, crepe paper streamers whipping
+    around, a disco of teens in rented tuxedos and puffy dresses frozen mid-slow-dance on the gym floor below
+  jobs:
+    ink: 45111
+- key: cs-villain-sugarlings-ending
+  lane: ink
+  entity: villain-ending
+  title: The Sugarlings · ending photo
+  asset: villains/sugarlings-ending
+  size: 912x1216
+  seed: 862019
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering avalanche of fuzzy pastel critters with huge glossy eyes pouring out of a toy store doorway
+    at night, thousands of tiny singing mouths, candy wrappers swirling like snow, a cash register buried to the
+    keys, costumed trick-or-treaters and teens surfing away on a capsized toy shelf
+  jobs:
+    ink: 45112
+- key: cs-villain-the-shape-ending
+  lane: ink
+  entity: villain-ending
+  title: Mickey Moore · ending photo
+  asset: villains/the-shape-ending
+  size: 912x1216
+  seed: 862020
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A tall, silent young woman in a long cranberry hand-knit cardigan and a pale blank plaster mask
+    standing motionless behind billowing white laundry on a backyard clothesline on Halloween night, steel knitting
+    needles in one hand, jack-o'-lanterns glowing on the porch steps, teens in costumes freezing at the picket fence
+  jobs:
+    ink: 45113
+- key: cs-villain-varsity-beast-ending
+  lane: ink
+  entity: villain-ending
+  title: The Varsity Beast · ending photo
+  asset: villains/varsity-beast-ending
+  size: 912x1216
+  seed: 862021
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A towering wolf in a shredded maroon and gold letterman jacket and a cracked football helmet howling
+    at midfield under stadium floodlights and a full moon, the scoreboard reading home 13, a bonfire behind the
+    bleachers, cheerleaders and teens scattering from the end zone with pom-poms and a megaphone
+  jobs:
+    ink: 45114
+- key: cs-villain-vonda-velour-ending
+  lane: ink
+  entity: villain-ending
+  title: Vonda Velour · ending photo
+  asset: villains/vonda-velour-ending
+  size: 912x1216
+  seed: 862022
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A glittering aerobics queen in a magenta leotard, teal leg warmers and a headset microphone climbing
+    halfway out of a giant curved television screen in a dark living room, one hand reaching for the remote, static
+    crackling off her teeth, exhausted joggers in sweatbands collapsing across the shag carpet behind her mid-jumping-jack
+  jobs:
+    ink: 45115
+- key: cs-avatar-scream-queen
+  lane: avatar
+  entity: avatar
+  title: The Scream Queen · avatar
+  asset: avatars/scream-queen
+  size: 832x1216
+  seed: 862023
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A lanky teenager with a buzzed platinum head and smeared mascara in an oversized sequined prom jacket
+    over ripped jeans, mid-scream in a dramatic backbend, both hands pressed to their cheeks, one knee popped
+  jobs:
+    avatar: 45116
+- key: cs-avatar-flashlight
+  lane: avatar
+  entity: avatar
+  title: Flashlight Duelist · avatar
+  asset: avatars/flashlight
+  size: 832x1216
+  seed: 862024
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A round-faced teenager with warm brown skin and a high-top fade in a huge flannel shirt and cargo
+    shorts, crouched low in a fencing stance, brandishing a giant chrome flashlight like a sword, one eye squinting
+  jobs:
+    avatar: 45117
+- key: cs-avatar-rake-grandparent
+  lane: avatar
+  entity: avatar
+  title: Rake-Wielding Neighbor · avatar
+  asset: avatars/rake-grandparent
+  size: 832x1216
+  seed: 862025
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A wiry neighbor in their sixties with close-cropped silver hair and deep brown skin, in a mustard
+    cardigan and orthopedic sneakers, lunging forward with a garden rake raised high overhead like a battle standard
+  jobs:
+    avatar: 45118
+- key: cs-avatar-fainting-goth
+  lane: avatar
+  entity: avatar
+  title: The Fainting Goth · avatar
+  asset: avatars/fainting-goth
+  size: 832x1216
+  seed: 862026
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A soft, curvy teenager with pale freckled skin and long black hair, black lace top, velvet skirt
+    and combat boots, collapsing in a theatrical swoon with one wrist pressed to the forehead and a silver crucifix
+    swinging
+  jobs:
+    avatar: 45119
+- key: cs-avatar-wrench
+  lane: avatar
+  entity: avatar
+  title: The Wrench · avatar
+  asset: avatars/wrench
+  size: 832x1216
+  seed: 862027
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A broad, barrel-chested mechanic in their forties with a shaved head and tattooed forearms, grease-stained
+    coveralls tied at the waist, mid-war-cry with a huge wrench raised in both hands
+  jobs:
+    avatar: 45120
+- key: cs-avatar-roller
+  lane: avatar
+  entity: avatar
+  title: Roller Derby · avatar
+  asset: avatars/roller
+  size: 832x1216
+  seed: 862028
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A teenager with big curly puffs of hair and freckles across dark cheeks on rainbow roller skates,
+    spinning on one skate with arms flung wide, glow necklaces whirling, knee pads covered in stickers
+  jobs:
+    avatar: 45121
+- key: cs-avatar-wheelie
+  lane: avatar
+  entity: avatar
+  title: Wheelie King · avatar
+  asset: avatars/wheelie
+  size: 832x1216
+  seed: 862029
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A grinning teenager with a spiked violet mohawk popping a wheelie in a sticker-covered wheelchair,
+    a baseball bat slung over one shoulder, studded fingerless gloves on the rims
+  jobs:
+    avatar: 45122
+- key: cs-avatar-vampire-hunter
+  lane: avatar
+  entity: avatar
+  title: Vampire Hunter · avatar
+  asset: avatars/vampire-hunter
+  size: 832x1216
+  seed: 862030
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A skinny teenager with thick round glasses and a tucked-in argyle sweater vest leaping into the
+    air, a braid of garlic in one hand and a wooden stake in the other, tie flying over one shoulder
+  jobs:
+    avatar: 45123
+- key: cs-avatar-vogue
+  lane: avatar
+  entity: avatar
+  title: The Diva · avatar
+  asset: avatars/vogue
+  size: 832x1216
+  seed: 862031
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A stocky person with a full black beard, golden glitter eyeshadow and a flowing satin kimono striking
+    a sharp vogue pose, one hand framing the face and the other flaring a lace fan
+  jobs:
+    avatar: 45124
+- key: cs-avatar-goalie
+  lane: avatar
+  entity: avatar
+  title: The Goalie · avatar
+  asset: avatars/goalie
+  size: 832x1216
+  seed: 862032
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A tall, muscular teenager with short copper curls in a varsity jacket and knee socks, braced in
+    a low athletic crouch with a field hockey stick, teeth bared in a fierce grin
+  jobs:
+    avatar: 45125
+- key: cs-avatar-librarian
+  lane: avatar
+  entity: avatar
+  title: The Night Librarian · avatar
+  asset: avatars/librarian
+  size: 832x1216
+  seed: 862033
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A plump middle-aged person with a sleek gray bob and reading glasses on a beaded chain, holding
+    up a thick library book like a shield and hopping backward with one leg kicked up in comic fright
+  jobs:
+    avatar: 45126
+- key: cs-avatar-stage-diver
+  lane: avatar
+  entity: avatar
+  title: The Stage Diver · avatar
+  asset: avatars/stage-diver
+  size: 832x1216
+  seed: 862034
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A teenager with a tall green liberty-spike mohawk and a studded denim vest caught mid-air in a stage
+    dive, arms spread wide, an electric guitar strapped across their back, sneakers kicking
+  jobs:
+    avatar: 45127
+- key: cs-avatar-prep-shriek
+  lane: avatar
+  entity: avatar
+  title: The Prep · avatar
+  asset: avatars/prep-shriek
+  size: 832x1216
+  seed: 862035
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A teenager with a glossy black bob and a popped pink polo collar recoiling in an exaggerated shriek,
+    gripping a tennis racket in both hands like a bat, sweater tied around their shoulders
+  jobs:
+    avatar: 45128
+- key: cs-avatar-pizza-runner
+  lane: avatar
+  entity: avatar
+  title: Pizza Runner · avatar
+  asset: avatars/pizza-runner
+  size: 832x1216
+  seed: 862036
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A lanky twenty-something with long braids under a red delivery cap sprinting mid-stride, a tower
+    of pizza boxes balanced up to the chin, one sneaker flying off
+  jobs:
+    avatar: 45129
+- key: cs-avatar-cheer-captain
+  lane: avatar
+  entity: avatar
+  title: Cheer Captain · avatar
+  asset: avatars/cheer-captain
+  size: 832x1216
+  seed: 862037
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A stocky teenager with a sweep of dark hair in a maroon and gold cheer uniform frozen at the top
+    of a high kick, pom-poms thrown up like fireworks, a megaphone at their feet
+  jobs:
+    avatar: 45130
+- key: cs-avatar-magician
+  lane: avatar
+  entity: avatar
+  title: The Magician · avatar
+  asset: avatars/magician
+  size: 832x1216
+  seed: 862038
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A small, elderly stage magician with a pencil mustache and a sequined cape flinging a fan of playing
+    cards into the air with a dramatic flourish, a white rabbit peeking out of their top hat
+  jobs:
+    avatar: 45132
