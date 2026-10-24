@@ -14,6 +14,13 @@ goal: >-
   No runtime LLM. Accept only after measured end-to-end gameplay, 1/2/3/4
   player soak, art and accessibility review, and Silas's hands-on verdict.
 notes_from_silas: |
+  2026-10-23 PT (verbatim): "Space princess design. This should have the joyous innocence of an 80's Lisa
+  frank inspired artist making doodles in her trapper keeper. A very talented artist. But with the mind of a
+  child: the good team is "C.A.T.S.", the villains are DOGS." Decided the same evening: the princesses keep
+  their identities and lead C.A.T.S. (cat ships, cat co-pilots); the DOGS command the hypnotized sea fleet
+  (bosses get DOG commanders, the Crown Voice becomes King Rufus); the opening is recut from new-style art.
+  Full direction: DOODLE-DIRECTION.md. Tasks t-035..t-038.
+
   2026-10-22 PT (verbatim, after asking Save the Plumber and Ghost Trail to aim for Super
   Mario Bros 3 / Super Mario World depth): "rainbow space princess should have the same
   consideration. games should have memory, recognize progress, etc. So we need open world
@@ -692,3 +699,54 @@ tasks:
       scripts/export_rainbow_opening.py --kind-robots ../kind_robots and ship the delivery PR
       (stills stand in for clips not yet rendered); re-run as clips land.
     implementation_pr: 'silasfelinus/kind_robots#4096'
+  - id: t-035
+    milestone: m4
+    title: "Doodle direction bake-off: C.A.T.S. emblem, cat-ship key art, co-pilots, DOG commanders, restyled Maribel"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-24T04:20:00Z'
+    note: >-
+      DOODLE-DIRECTION.md step 1. Render the 1980s neon airbrush school-folder look on two or more engines before
+      restyling anything: C.A.T.S. emblem, title key art of the four cat ships, the four cat co-pilots (Biscuit,
+      Comet, Butter, Glitch), King Rufus and Corporal Chihuahua, and Maribel restyled by Kontext from identity
+      lock 246030. Pick the engine that holds the look and record it. Never name the artist or brand in a prompt.
+  - id: t-036
+    milestone: m4
+    title: "Doodle restyle of the cast, ships, co-pilot cut-ins and the nine DOG commanders"
+    status: waiting
+    depends_on: [t-035]
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-24T04:20:00Z'
+    note: >-
+      DOODLE-DIRECTION.md step 2. Kontext-restyle every approved princess asset from its identity lock (CAST-QA
+      identity still binding); cat ships keeping each silhouette and P1-P4 glyph; super cut-ins with each pilot's
+      co-pilot; the nine DOG commanders per the table. Uses the engine t-035 picks.
+  - id: t-037
+    milestone: m4
+    title: "C.A.T.S. vs DOGS in game: names, DOG commanders on boss bars and cut-ins, bones and hearts, doodle UI"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-24T04:20:00Z'
+    note: >-
+      DOODLE-DIRECTION.md step 3. Faction names in comms and HUD; each boss bar names its DOG commander; boss
+      fire drawn as bones, tennis balls and storm clouds, player fire as hearts and stars (decoration only, hitboxes
+      unchanged); bubble-letter titles and sticker pickups. Code-drawn first; swap in t-036 art as it lands.
+  - id: t-038
+    milestone: m4
+    title: "Recut the thrash-metal opening from the doodle art"
+    status: waiting
+    depends_on: [t-036]
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-24T04:20:00Z'
+    note: >-
+      Silas chose to hold the old-style opening clips (44645-44653) and recut from new-style stills. New WAN
+      clip ledger from t-035/t-036 keepers, then scripts/export_rainbow_opening.py with the new SHOTS; the thrash
+      track (44644) stays.

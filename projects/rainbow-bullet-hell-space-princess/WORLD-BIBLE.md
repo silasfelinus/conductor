@@ -2,6 +2,10 @@
 Status: **proposed authored canon (design only)**. Owner: rainbow-bullet-hell-space-princess. 2026-10-11 PT. This document is a production specification, not a claim of finished levels, generated art, implemented weapons, or multiplayer netcode.
 
 ## One-sentence world rule
+
+> **Factions (Silas, 2026-10-23 PT):** the princesses fly as **C.A.T.S.**; the villains are the **DOGS**, who
+> collared the sea fleet, with a DOG commander in every boss machine and King Rufus in place of the Crown Voice.
+> See [DOODLE-DIRECTION.md](DOODLE-DIRECTION.md).
 The Luminous Ocean is a navigable star sea where living beings and machine-reef ships coexist. The **Prism Eclipse** turns wildlife-shaped rescue fleets into aggressive instrument-ships. The princess pilots must disrupt its control signal while preserving the infected creatures inside the hulls: defeat hostile hardware, save the life within. Never render boss death as animal cruelty.
 
 ## Four pilots: narrative and exact gameplay roles
