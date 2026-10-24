@@ -70,6 +70,13 @@ This ordering is deliberate. A longer same-cycle wait is not a substitute for th
 one-day pipeline: digest morning must not be the generation starting gun for the art it
 is about to showcase.
 
+If the most recent completed Dream is already two or more Pacific calendar days
+old, its art and records remain available in digest diagnostics, but its cards are
+**not** resent as another newly featured Daily Dream. The email instead reports
+that no fresh Dream was completed, including the actual last build date. Other
+new daily project deliveries still appear as normal. A green digest-delivery run
+must not be mistaken for a fresh creation.
+
 ## 3. Build today's proposal for tomorrow
 
 After the email payload is frozen, `scripts/run_daily_dream_build.py --date <today>`
