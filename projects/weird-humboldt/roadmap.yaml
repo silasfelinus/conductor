@@ -1528,3 +1528,20 @@ tasks:
       On the final t-063 text the person under the mask was a woman in eight cases (the "11 of 12" in the playtest record was stale), three men, one couple, and every man under a mask was a wrongdoer. Three sympathetic culprits change: Case I Bev Ostrander -> Hollis Ostrander; Case IV the widow Ione -> the widower Arne Sorensen (the yellow oilskins are Ione's, so the ghost still reads as hers); Case IX Dr. Wren Okonkwo-Barlow uses they/them, with no commentary (ending "The Arrow That Points at Wren", id unchanged). Result: five women, five men, one nonbinary, one couple; wrongdoers three men, two women. Plot, clues, gates, ids and effects unchanged; validator, test:ecotone-mysteries and test:playbook pass. Culprit-depicting art briefs in art/MYSTERIES-ROUND-1.yaml re-briefed and resubmitted (old job ids kept as superseded_jobs).
 
       Merged 2026-10-23 PT: kind_robots #4088 squash ecb889605e8dd78a90c4106c02d6f0e9961896f4 (all 17 checks green). The 19 new art prompts are queued by the next Auto Art Generate sweep; queued is not rendered.
+
+  - id: t-065
+    milestone: m5
+    title: "Create 12 coherent player-avatar portrait ArtJobs and wire character selection"
+    status: ready
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas explicitly approved 12 full character-select portraits for Ecotone
+      and instructed us to submit them to the GitHub-backed art queue
+      (October 23 2026 PT). Match the 12 persistent PLAYER_AVATARS IDs,
+      generate coordinated painterly 2:3 images through the existing
+      Conductor ArtJob pipeline with private traceable prompts, and
+      replace emoji-only onboarding selection with responsive image-first
+      cards, retaining accessible labels and missing-image fallbacks.
+      Verify deduplication, durable submission, UI mapping, and CI.
