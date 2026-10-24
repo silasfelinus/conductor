@@ -11,9 +11,12 @@ goal: >-
   cross-project Zuzu Character/Facet/Scenario/Reward/ArtImage reuse, interactive
   board-grid travel, consequences, companions, skills, equipment, save/resume,
   card fronts/backs, physical draw/discard decks, deal/flip/reveal animations,
-  sound and accessible mobile/tablet/desktop acceptance. Polish and play
-  acceptance by Silas, and human authorization before outward public publication,
-  stay gated.
+  sound and accessible mobile/tablet/desktop acceptance. Complete every authored
+  follower quest, all encounter/quest/result/ending art and a verified ending
+  graph, then adversarially exercise all branches and visual surfaces.
+  Only once every creation and agent-owned QA task is DONE is Silas's final
+  creative acceptance requested. Outward public publication and production
+  deployment separately require explicit human authorization.
 notes_from_silas: |
   2026-10-09 PT: A new, independent Armello-style experiential digital board
   game. Zuzu travels through five mutable lands starting in the wasteland;
@@ -40,6 +43,16 @@ notes_from_silas: |
   central world registry. The Abbess's ritual agenda and the mystery of former humanity are
   intentional public-repository worldbuilding spoilers; Silas authorized
   documenting them openly on GitHub.
+  2026-10-24 PT, FINAL HUMAN APPROVAL ORDER: Silas directs all authorship,
+  follower quests, each required outcome illustration, graph coverage for
+  every ending, and exhaustive adversarial playtest + visual QA BEFORE the
+  very last human creative approval step. Do not put any discretionary
+  needs-human checkpoints ahead of content/art/QA completion. Source of
+  the full checklist: kind_robots issue #3917 (Master Completion Roadmap).
+  Incomplete assets or test failures create autonomous scoped repair work;
+  publishing, spending, secrets and irreversible production changes retain
+  separate external authorization requirements.
+
   Technical UI source of truth: projects/zuzu-shifting-lands/BOARD-CARD-ARCHITECTURE.md.
   Agents must reuse existing Kind Robots card components first.
   Agents are authorized to build reversible code and internal art drafts
@@ -98,26 +111,23 @@ tasks:
 
   - id: t-002
     milestone: m1
-    title: "Confirm and refine scope after playable first slice"
-    status: needs-human
+    title: "Autonomous first-slice design integration audit; defer Silas review to final"
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
-    soft_gate: true
-    gate_rechecked: '2026-10-23'
-    note: >-
-      Re-checked 2026-10-09: still a legitimate soft gate; no playable first slice
-      exists yet (t-003 to t-005 all ready, none started), so there is nothing for
-      Silas to react to. Soft design checkpoint. Silas already authorized this project.
-      Agents work on t-003 onward without waiting. Later ask for
-      creative reactions to first land, UI and balance; publication,
-      live irreversible changes remain separate gates; GitHub lore may be explicit.
-
-      Re-checked 2026-10-23: the playable first slice now exists (board/reader
-      t-015/t-016/t-021, V8 balance t-042 done), so the checkpoint is reachable. Remains a
-      reversible soft gate for Silas's creative reactions; agents continue
-      t-014/t-024/t-029/t-033 without waiting; publication stays a separate gate.
-    updated: '2026-10-23T01:49:02Z'
+    source: silas-2026-10-24-master-roadmap
+    note: |-
+      Silas on 2026-10-24 explicitly removed the early optional creative-review
+      checkpoint. The first playable slice exists. Worker should self-review
+      scope, cast/quest taxonomy, core design cohesion, missing follower paths,
+      game feel and source-of-truth drift, recording concrete follow-up tasks
+      and linking findings into master kind_robots#3917. No needs-human
+      transition, creative-approval request or release gate at this stage.
+      Historically t-002 was a soft needs-human checkpoint, rechecked on
+      2026-10-23; that obsolete checkpoint must not delay all-agent creation
+      or adversarial testing. ONLY final t-018 is creative approval.
+    updated: '2026-10-24'
 
   - id: t-003
     milestone: m1
@@ -342,19 +352,25 @@ tasks:
 
   - id: t-018
     milestone: m5
-    title: "Phone/tablet/desktop and authenticated live UI acceptance, publication gate"
+    title: "FINAL ONLY — human approval of fully built, illustrated and adversarially tested Shifting Lands"
     status: waiting
     owner: null
     passes: 0
     stakes: outward-facing
     gate_human: true
-    depends_on: [t-017]
+    gate_reason: creative-approval
+    depends_on: [t-048]
+    source_issue: "silasfelinus/kind_robots#3917"
     note: >-
-      Verify screenshots with actual image-backed cards at 375/768/1440
-      widths and Silas's visual acceptance. Check authorization, content
-      rating and production deployment. Do NOT open
-      public play to non-admins until Silas explicitly approves.
-
+      The ONLY Shifting Lands creative-approval gate. Do not advance to
+      needs-human or ask Silas for final visual/game acceptance until
+      t-048 proves all authored cards/trials/journals, all follower quests,
+      all requisite encounter, quest, consequence and ending images,
+      every ending graph path and reached trace, and complete adversarial
+      simulations and visual QA have passed. Once all prerequisites are
+      verified and merged, offer Silas an Approve/Request revisions verdict
+      backed by full evidence. His approval stays explicit; public release,
+      spending or production deployment remains separately authorized.
   - id: t-019
     milestone: m4
     title: "Make Shifting Lands persistent encounter flip readable"
@@ -611,10 +627,10 @@ tasks:
     claimed_at: '2026-10-20T21:47:39Z'
     stakes: reversible
     passes: 0
-    source_issue: "silasfelinus/kind_robots#3917"
+    source: silas-2026-10-20-editorial-scope-of-master-3917
     updated: '2026-10-20T21:47:39Z'
     note: |-
-      FROM GITHUB ISSUE silasfelinus/kind_robots#3917 (https://github.com/silasfelinus/kind_robots/issues/3917), opened by @silasfelinus on 2026-10-20. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3917`) so it closes on merge; the bridge closes it otherwise once this task is done.
+      [HISTORICAL EDITORIAL SUBTASK; GITHUB MASTER ISSUE NOW MAPS TO t-018]\n      FROM GITHUB ISSUE silasfelinus/kind_robots#3917 (https://github.com/silasfelinus/kind_robots/issues/3917), opened by @silasfelinus on 2026-10-20. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#3917`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
       ## Direction (Silas, 2026-10-20 PT)
       Accelerate Shifting Lands beyond quantity toward **finished creative content**, including polished second-person narrative text, engagement, and art fidelity. Art prompt production is under conductor PR #6401. This issue covers the separate **runtime/player-visible** writing pass, not a discussion-only style proposal.
@@ -638,7 +654,7 @@ tasks:
 
       Dustwater editorial batch 2 prepared in Kind Robots. All 24 Dustwater encounter cards (nine existing and 15 V6) have focused prose revisions plus nine older cards' extra V6 choices. Original choice ids, dice, costs, flags, and V6 save fingerprint are preserved. PR/checks pending. Tablelands, Deep Cave, Verge and five trials remain unedited by this batch.
 
-      Dustwater prose batch merged to kind_robots main in PR 3930 (2d35a70259cbe2ff1fe3076c0fdb4b98e7a287e7), all 14 current-head CI workflows completed successfully including dedicated Shifting Lands gameplay and 4-shard Contract Tests. Edited all 24 Dustwater encounter cards (nine older plus 15 V6), plus extra choice text on all nine older cards, 85 targeted prose changes. Exact mechanical projections from original and branch matched. First two lands now through editorial passes (48/120); remaining Tablelands, Deep Cave, Verge (72 cards), five trials and final journal/voice audit. Keep issue 3917 open and task ready for another land batch. No art generation or production deployment.
+      2026-10-24: #3917 is now the whole-game master roadmap, not an auto-close\n      trigger when prose alone completes. t-036 remains independently claimed\n      for 72 encounter cards, five trials and global prose review. Completion\n      of t-036 never bypasses t-043..t-048 or final signoff t-018.\n\n      Dustwater prose batch merged to kind_robots main in PR 3930 (2d35a70259cbe2ff1fe3076c0fdb4b98e7a287e7), all 14 current-head CI workflows completed successfully including dedicated Shifting Lands gameplay and 4-shard Contract Tests. Edited all 24 Dustwater encounter cards (nine older plus 15 V6), plus extra choice text on all nine older cards, 85 targeted prose changes. Exact mechanical projections from original and branch matched. First two lands now through editorial passes (48/120); remaining Tablelands, Deep Cave, Verge (72 cards), five trials and final journal/voice audit. Keep issue 3917 open and task ready for another land batch. No art generation or production deployment.
   - id: t-037
     milestone: m5
     title: "V7 kindness, preparedness and evidence-gate balance upgrade"
@@ -736,3 +752,133 @@ tasks:
     claimed_by: 20261023T020000Z-zsl-t042-gpt6-6f2a
     claimed_at: '2026-10-23T02:00:00Z'
     updated: '2026-10-23T02:47:00Z'
+
+  - id: t-043
+    milestone: m3
+    title: "Author and implement all follower and companion questlines, decisions and relationship outcomes"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-010, t-034]
+    source: silas-2026-10-24-master-roadmap
+    note: >-
+      Audit the complete actual companion/follower roster and source-backed
+      identity. Each recruitable traveler must have at least one meaningful
+      fully authored multi-beat quest, encountered or declined introduction,
+      success/failure and departure/betrayal/reunion effects, interaction
+      with cross-land choices, and accurate journal/character rail UI.
+      No species-based morality, invented database entity, dead quest route,
+      or empty decorative companion. Build a cast x quest x decision/result
+      matrix with testable save/replay-safe flags and concrete seed/action
+      traces. Coordinate bespoke art manifest in t-044. Split delivery into
+      independently tested land/follower PRs.
+
+  - id: t-044
+    milestone: m3
+    title: "Close complete scene-to-image coverage for cards, followers, quests, choice outcomes and endings"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-029, t-033, t-043]
+    source: silas-2026-10-24-master-roadmap
+    note: >-
+      Build inspectable requirements-driven asset coverage matrix for all
+      120 encounter fronts, custom backs, every authored choice's success
+      and failure image, all trials/approaches/results, every follower quest
+      beat/result and terminal ending and milestone reveal. Enumerate
+      image requirements from actual runtime/story registry, not hardcoded
+      guesses; group explicitly justified identical-context reuse only.
+      Missing/unverified art must enter durable real ArtJobs and be verified
+      rendered, imported, displayed in the correct scene and visually
+      faithful to text (Three Cups must literally have three cups). Do not
+      count queued, failed, fallback, stock, generic placeholder, or wrong
+      subject art as complete. Keep IDs, prompt provenance and keeper
+      mappings; no paid model spend without money approval.
+
+  - id: t-045
+    milestone: m5
+    title: "Generate and verify exhaustive endings/branches graph with reachable seed-action witnesses"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-043, t-034, t-040]
+    source: silas-2026-10-24-master-roadmap
+    note: >-
+      Graph actual game-state predicates and path transitions, including
+      five trials, encounter flags, follower quest outcomes, moral marks,
+      items, victory, death, retirement, bittersweet and secret endings.
+      Export readable graph (Mermaid/Graphviz and machine-readable registry)
+      with node/edge labels and precise prerequisites. Test all branches
+      reachable with deterministic seed/action traces or document and
+      repair unreachable/dead paths; verify mutually exclusive conditions,
+      correct credit, uniqueness, journal callbacks and spoiler control.
+      Do not infer path completeness from an ending count alone.
+
+  - id: t-046
+    milestone: m5
+    title: "Full adversarial end-to-end playtest battery, art/quest/ending reachability and repairs"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-017, t-036, t-043, t-044, t-045]
+    source: silas-2026-10-24-master-roadmap
+    note: >-
+      After all content and art are delivered, run reproducible multi-seed
+      adverse policy agents for kind, ruthless, greedy, cautious, mixed,
+      chaotic and pathological saves and attempts. Hit each quest beat,
+      action success/failure, return, refusal, betrayal, five boss paths,
+      all endings and rendered image routes with actual reducer transitions.
+      Verify rare path witnesses and adversarial soft locks, resource
+      exploits, unearned flags, RNG tampering, save versions, high/low luck,
+      rapid UI actions and recovery. Fail coverage gate if any required
+      path or art is unreachable or unpainted. Record coverage dashboards,
+      test traces, objective failure triage, fixes and reruns. Mock reviewer
+      personas must be labeled synthetic, not actual human reviews.
+
+  - id: t-047
+    milestone: m5
+    title: "Actual illustrated console-quality visual QA at phone, tablet and desktop widths"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-044, t-046]
+    source: silas-2026-10-24-master-roadmap
+    note: >-
+      Render and interact with a fully authored board, encounter, follower
+      quest, victory, death, gallery, journal and ending at 390px, 768px,
+      1440px and wide display. Check stage prominence, legible all-width
+      art and decisions, single-screen no-webapp layout, reachable
+      controls/scroll owners, art cropping, audio/mute, reduced-motion,
+      keyboard/touch, save resume and inaccessible paths. Save actual
+      screenshots/video and structured issues. Repair blocking defects
+      autonomously and rerun QA; no signoff from hypothetical screenshots
+      or static grep tests.
+
+  - id: t-048
+    milestone: m5
+    title: "Agent-only final readiness dossier: prove nothing authored, painted, mapped or tested is missing"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-002, t-004, t-012, t-014, t-017, t-024, t-029, t-033, t-036, t-043, t-044, t-045, t-046, t-047]
+    source: silas-2026-10-24-master-roadmap
+    note: >-
+      Prior to any human-approval request, produce single verifiable
+      completeness dossier linked from kind_robots#3917: every authored
+      card/choice/follower/quest/result/trial and painted image bound to
+      the correct UI slot; all endings graphed and visited by real seeded
+      traces; all adversarial and accessibility/visual test findings
+      corrected; all latest-head CI checks green; live resources verified
+      and source manifest reconciled. Audit EVERY project task and verify
+      all non-human development dependencies done. Block t-018 while
+      any critical/high defect, unreviewed human-like quest branch,
+      missing image, fallback, untested outcome, or invalid save exists.
+      Create scoped repair tasks rather than declaring success through
+      checkboxes. No final creative gate until this dossier is DONE.
+
