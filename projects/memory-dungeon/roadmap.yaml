@@ -142,11 +142,10 @@ tasks:
   - id: t-022
     milestone: m3
     title: "Build the House That Remembers 36-room dungeon and alternate resolutions"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-10-24T211700Z-memory-dungeon-t-022-8f31
     claimed_at: '2026-10-24T21:17:00Z'
-    updated: '2026-10-24T21:23:00Z'
+    updated: '2026-10-24T22:04:45Z'
     depends_on: t-021
     passes: 0
     stakes: reversible
@@ -154,6 +153,8 @@ tasks:
       Expand fixed 6,2 Rootbound Vault site to a 6x6, 36-room graph using House design in BRIAR-MARCHES-FIRST-WORLD.md; preserve existing vault-1/vault-2 save IDs, include shortcuts, four exits/ safe loops, clue logic, 2-card matching combat, Warden's optional nonlethal resolution, informed-consent dilemmas and at least three distinct end states. Seed replay, complete graph reachability, failure continuations and save/reload tests required.
 
       First complete playable House prototype on a Kind Robots worker branch: all 36 named rooms with original art briefs, branching room graph, safe loops and conditional shortcuts, persistent choices and loot, optional matching Echo Chamber and fair duels, proof-based Warden negotiation or combat, three documented consent consequences, and once-only Bramble Chime reward. Legacy vault-1/vault-2 save IDs remain accepted. Await CI, merge and rendered visual QA.
+
+      Kind Robots PR 4126 merged to main at 25bea52c02ed05d0c2472f2381db6441d4469db9 after all 14 workflows passed. The 36 authored House rooms, conditional shortcuts, save-safe state, fair matching combat, Warden alternatives and three ending consequences are merged. A genuine bug exposing the HD-06 shortcut before discovery was repaired and regression-tested; new files fully formatted. Room ArtJob prompts are not proof of delivered artwork and rendered 390/768/1440 QA or production deployment is not yet verified; keep those in separate art/visual delivery tasks.
   - id: t-023
     milestone: m2
     title: "Deliver photograph Chronicle, Earth timeline and ending spoiler gates"
@@ -487,7 +488,7 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Author and build the other three Act I overworlds and dungeons"
-    status: waiting
+    status: ready
     depends_on: t-022
     passes: 0
     stakes: reversible
