@@ -118,9 +118,9 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Deliver art round 1 into the runtime paths"
-    status: ready
+    status: claimed
     depends_on: t-001
-    owner: null
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: >-
@@ -131,6 +131,9 @@ tasks:
       and falls back to code-drawn SVG. Either export DONE ArtImages to those media paths (follow
       the Emperor of Dust / Shifting Lands export pattern) or map ids to ArtImage URLs in a
       manifest the store reads. Verify final URLs, not job status.
+    claimed_by: 2026-10-24T135800Z-cs-art-delivery
+    claimed_at: '2026-10-24T21:08:02Z'
+    updated: '2026-10-24T21:08:02Z'
 
   - id: t-004
     milestone: m2
