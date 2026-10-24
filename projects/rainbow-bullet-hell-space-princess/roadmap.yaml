@@ -673,11 +673,11 @@ tasks:
   - id: t-034
     milestone: m4
     title: "Opening music video: a 15-second high-energy thrash-metal animated intro"
-    status: ready
+    status: review
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T02:30:00Z'
+    updated: '2026-10-24T03:51:10Z'
     note: >-
       Silas, 2026-10-23 PT (verbatim): "We can use a real animation at the beginning, maybe a 15
       second high energy thrash metal music video." Queue generated video clips (WAN from the
@@ -685,3 +685,10 @@ tasks:
       t-025 path), cut them to the beat, and play the result as the cabinet's opening with A to
       skip and the current code-drawn intro as the fallback until the clips are delivered.
       Generated art and music are pre-approved internal work; public release stays gated by t-014.
+
+      2026-10-23 PT: player on the Fly tab in kind_robots#4096; clip ledger + exporter in
+      conductor#6568. Renders queued: ACE-Step thrash track ArtJob 44644, WAN clips
+      44645-44653 (A14B first/last frame, overnight). Next: once 44644 is DONE run
+      scripts/export_rainbow_opening.py --kind-robots ../kind_robots and ship the delivery PR
+      (stills stand in for clips not yet rendered); re-run as clips land.
+    implementation_pr: 'silasfelinus/kind_robots#4096'
