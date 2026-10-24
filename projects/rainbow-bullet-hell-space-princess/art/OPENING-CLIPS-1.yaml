@@ -1,0 +1,144 @@
+# Rainbow Space Princess opening music video, clips round 1 (t-034, 2026-10-23 PT). Silas: "We can use a real
+# animation at the beginning, maybe a 15 second high energy thrash metal music video." Nine WAN 2.2 first/last-frame
+# clips (the A14B pair, which moves; first-frame-only 5B barely does, see zuzu-pinball T019-CROC-CLIPS.yaml), each
+# pinned to one approved still at both ends so every frame stays on model (CAST-QA.md): four story beats, the four
+# pilots' super cut-ins for the fast cuts, and the four ships over the palace as the title hit. kind_robots
+# utils/arcade/games/rainbowOpening.ts holds the shot list and beat grid; conductor scripts/export_rainbow_opening.py
+# cuts the delivered clips (or the still, with a punch-in, for any clip not yet rendered) to the ACE-Step thrash
+# track and ships public/rainbow-princess-video/opening.{webm,mp4}. Submit/refresh with
+# scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: opening-clips-1
+project_slug: rainbow-bullet-hell-space-princess
+designer: Rainbow Space Princess art bay
+is_public: false
+is_mature: false
+lanes:
+- key: wan-clips
+  label: WAN 2.2 image-to-video (14B), first frame to last frame
+  engine: wan
+  prompt: prose
+  fps: 16
+  output_format: webp
+  negative: morphing, melting, face distortion, extra limbs, flicker, text, letters, watermark, logo, blurry, photorealistic,
+    3d render, gore
+subjects:
+- key: opening-01-palace-storm
+  entity: cinematic
+  title: 'Opening clip 1: the pearl palace as the storm breaks'
+  size: 832x480
+  seed: 834001
+  source_image_id: 247738
+  last_image_id: 247738
+  duration: 4
+  loop: true
+  prompt_prose: Violet lightning forks across the dawn sky and the glowing ocean heaves into crashing waves; the
+    pearl palace's towers flare with pink alarm lights and the clouds race. Fast, intense, high-energy cartoon animation
+    in the same flat western style.
+  jobs:
+    wan-clips: 44645
+- key: opening-02-lilt-alarm
+  entity: cinematic
+  title: 'Opening clip 2: Lilt at the cracked mirror screen'
+  size: 832x480
+  seed: 834002
+  source_image_id: 247809
+  last_image_id: 247809
+  duration: 4
+  loop: true
+  prompt_prose: Red warning light strobes hard across the cracked mirror screen, sparks spit from the cracks and
+    the glass shudders while the liaison turns sharply in alarm. Fast, intense cartoon animation in the same flat
+    style.
+  jobs:
+    wan-clips: 44646
+- key: opening-03-eclipse-orb
+  entity: cinematic
+  title: 'Opening clip 3: the eclipse orb wakes'
+  size: 832x480
+  seed: 834003
+  source_image_id: 247752
+  last_image_id: 247752
+  duration: 4
+  loop: true
+  prompt_prose: The dark eclipse orb throbs with violet energy, rings of light pulse outward and crackling lightning
+    races along the glowing chains. Ominous, fast, high-energy cartoon animation in the same flat style.
+  jobs:
+    wan-clips: 44647
+- key: opening-04-maribel
+  entity: cinematic
+  title: 'Opening clip 4: Maribel powers up'
+  size: 832x480
+  seed: 834004
+  source_image_id: 247644
+  last_image_id: 247644
+  duration: 3
+  loop: true
+  prompt_prose: The pink-haired pilot leans into the charge as her hair whips back, pink petals of light blast outward
+    and sparks stream past; a fierce, heroic power-up. Fast, punchy cartoon animation in the same flat style.
+  jobs:
+    wan-clips: 44648
+- key: opening-05-azure
+  entity: cinematic
+  title: 'Opening clip 5: Azure powers up'
+  size: 832x480
+  seed: 834005
+  source_image_id: 247649
+  last_image_id: 247649
+  duration: 3
+  loop: true
+  prompt_prose: The cyan-coated pilot snaps her lance forward as a beam of cyan light flares and her coat whips
+    in the blast; a fierce, heroic power-up. Fast, punchy cartoon animation in the same flat style.
+  jobs:
+    wan-clips: 44649
+- key: opening-06-solenne
+  entity: cinematic
+  title: 'Opening clip 6: Solenne powers up'
+  size: 832x480
+  seed: 834006
+  source_image_id: 247803
+  last_image_id: 247803
+  duration: 3
+  loop: true
+  prompt_prose: The muscular pilot braces as her golden halo ring spins up and blazes, rings of warm light pulsing
+    outward; a fierce, heroic power-up. Fast, punchy cartoon animation in the same flat style.
+  jobs:
+    wan-clips: 44650
+- key: opening-07-vivi
+  entity: cinematic
+  title: 'Opening clip 7: Vivi powers up'
+  size: 832x480
+  seed: 834007
+  source_image_id: 247844
+  last_image_id: 247844
+  duration: 3
+  loop: true
+  prompt_prose: The punk pilot grins as lilac comet sparks burst around them and their hair streaks back in the
+    rush; a fierce, heroic power-up. Fast, punchy cartoon animation in the same flat style.
+  jobs:
+    wan-clips: 44651
+- key: opening-08-dolphin-fleet
+  entity: cinematic
+  title: 'Opening clip 8: the robot dolphin fleet surges'
+  size: 832x480
+  seed: 834008
+  source_image_id: 247740
+  last_image_id: 247740
+  duration: 4
+  loop: true
+  prompt_prose: The robot dolphin fleet surges across the starry sky at full speed, glowing trails streaking behind
+    them and stars rushing past. Fast, thrilling cartoon animation in the same flat style.
+  jobs:
+    wan-clips: 44652
+- key: opening-09-ships-launch
+  entity: cinematic
+  title: 'Opening clip 9: the four ships blast off over the palace'
+  size: 832x480
+  seed: 834009
+  source_image_id: 247508
+  last_image_id: 247508
+  duration: 4
+  loop: true
+  prompt_prose: The four pilot ships blast forward over the pearl palace, engines flaring in pink, cyan, gold and
+    lilac rainbow trails, sparks and light streaks whipping past. Triumphant, fast, high-energy cartoon animation
+    in the same flat style.
+  jobs:
+    wan-clips: 44653
