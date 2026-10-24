@@ -67,6 +67,20 @@ notes_from_silas: |
   internal art may proceed without waiting for subjective feedback.
   Production deployment and external release remain separately gated.
   See DESIGN-BRIEF.md and COMBAT-PATTERNS.md.
+
+  2026-10-23 PT: Canon locked for the 16-realm Memory Dungeon isekai:
+  an adult real-world protagonist trades bodies and life with fey changeling
+  Morrow; 32 discovered photographs show Morrow's unstable, then improving,
+  life as a data researcher and ultimately parenthood. The final ethical
+  dilemma concerns reclaiming one's body without casually erasing Morrow's
+  children and relationships. Twin mermaid princesses Scylla and Charybdis
+  (Char) are identical by merfolk identity despite coloration differences,
+  sturdy in build, proper versus authentically goth, both quick-witted and
+  chaotic. Oren remains perpetually masked, axe-bearing and logistically
+  brilliant. Dark Grimm atmosphere with warmth, wit, Fables/Fable/Alice/
+  She-Ra inspirations, but original prose and world. See SIXTEEN-REALM-
+  PRODUCTION.md and BRIAR-MARCHES-FIRST-WORLD.md; these override obsolete
+  provisional named-cast and linear-depth examples, without breaking saves.
 milestones:
   - id: m1
     title: "SHAPE — combat geometry, story and seeded systems"
@@ -355,3 +369,181 @@ tasks:
       motion, workmanlike tutorial in sidebar. Visual/subjective
       game acceptance is for Silas; production deploy/outward-facing
       release are separate explicit human gates.
+
+  - id: t-020
+    milestone: m3
+    title: "Adopt sixteen-realm canon, prototype prologue and compatibility inventory"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Source: SIXTEEN-REALM-PRODUCTION.md. Replace former provisional
+      Forgotten Depths opening with a modern Earth data-researcher life
+      exchange with Morrow. Preserve Classic, BRIAR_START, gallery choices,
+      existing 13 scenes and save keys or migrate them deliberately. Intro
+      is skippable, cinematic and androgynous; first choice inside 90
+      seconds. Add verified character canon for mermaid twins Scylla/Char
+      and Oren the permanently hooded headsman/logistics expert.
+      Implement a playable opening on /play/memory, test save/Classic
+      preservation, and create ArtJob requests or honest art placeholders.
+  - id: t-021
+    milestone: m3
+    title: "Implement Briar Marches 64-square authored map and reachable graph"
+    status: ready
+    depends_on: t-018
+    passes: 0
+    stakes: reversible
+    note: >-
+      Convert all 64 stable 1..8 coordinates in BRIAR-MARCHES-FIRST-WORLD.md
+      to distinct interactive authored scene/site records. Expand BRIAR_LINKS
+      only with adjacent, bidirectionally reachable routes while preserving
+      current fixed sites, choice states and saved progression. Each tile
+      must reward interacting, have unique atmosphere/art contract and
+      a consequence or discovered fact; remove generic no-op squares.
+      Deliver in tested batches (16 cells per PR acceptable), with
+      scene tests for availability, no duplicate resources or softlocks.
+  - id: t-022
+    milestone: m3
+    title: "Build the House That Remembers 36-room dungeon and alternate resolutions"
+    status: waiting
+    depends_on: t-021
+    passes: 0
+    stakes: reversible
+    note: >-
+      Expand fixed 6,2 Rootbound Vault site to a 6x6, 36-room graph
+      using House design in BRIAR-MARCHES-FIRST-WORLD.md; preserve
+      existing vault-1/vault-2 save IDs, include shortcuts, four exits/
+      safe loops, clue logic, 2-card matching combat, Warden's optional
+      nonlethal resolution, informed-consent dilemmas and at least three
+      distinct end states. Seed replay, complete graph reachability,
+      failure continuations and save/reload tests required.
+  - id: t-023
+    milestone: m2
+    title: "Deliver photograph Chronicle, Earth timeline and ending spoiler gates"
+    status: waiting
+    depends_on: t-020
+    passes: 0
+    stakes: reversible
+    note: >-
+      Author 32 fixed collectible photo beats, two per world, with
+      out-of-order journal reconciliation, once-only claims, proper
+      Earth chronology, and meaningful hero reactions. World 1 photos
+      occur at 2,5 (dismissal) and 8,6 (friend's humiliation).
+      Morrow later builds authentic work, friendship and romance; do
+      not unmistakably reveal their children before World 16.
+  - id: t-024
+    milestone: m3
+    title: "Playtest and polish Scylla, Char, Oren and recurring party arcs"
+    status: waiting
+    depends_on: t-020
+    passes: 0
+    stakes: reversible
+    note: >-
+      Give matching-faced, different-colored mermaid twins strong farm
+      builds and real proper/goth clothing; no waif or pin-up forms.
+      Keep mermaid identity meaningful. Friendly instigators with
+      individual agency, complementary abilities, and genuinely
+      changing relationships. Oren wears headsman's hood at all times,
+      carries an axe, shines in logistics and needs no invented traumatic
+      reveal. Author first scene, mid-campaign conflict, and earned
+      reconciliation. Request key character art and verify delivery.
+  - id: t-025
+    milestone: m3
+    title: "Author and build the other three Act I overworlds and dungeons"
+    status: waiting
+    depends_on: t-022
+    passes: 0
+    stakes: reversible
+    note: >-
+      Worlds 2-4: Hearth & Hunger, Glass Orchard and Undertide Crown.
+      Each has a distinct 64-cell map and 36-room dungeon, 2 Earth
+      photographs, its own NPC conflicts, 4 regular enemies, elite,
+      guardian, and one cross-realm connection. Break into scoped
+      reviewed PRs per world. Test walkable geography, alternatives
+      and progression into Act II.
+  - id: t-026
+    milestone: m3
+    title: "Author and build Act II: Stories We Inherit"
+    status: waiting
+    depends_on: t-025
+    passes: 0
+    stakes: reversible
+    note: >-
+      Worlds 5-8: Cinder Borough, Candle Fen, Carnival of Debts,
+      Ironroot Mountain. Four maps × 64, four dungeons × 36;
+      ethics of class, growing up, promises and collective ecology;
+      8 Earth photos covering a better job and friendships.
+      Branch into four reviewable realm deliveries.
+  - id: t-027
+    milestone: m3
+    title: "Author and build Act III: The Better Life"
+    status: waiting
+    depends_on: t-026
+    passes: 0
+    stakes: reversible
+    note: >-
+      Worlds 9-12: Winterglass Reach, Bellspire City, Red Hunt and
+      Looking Lake. Four 64-site maps plus four 36-room dungeons.
+      Introduce identity/body trade rules and Morrow's honest romance.
+      Preserve multiple fair solutions, encounter variation and
+      gallery art per narrative milestone.
+  - id: t-028
+    milestone: m3
+    title: "Author Act IV and twelve fully consequence-backed ending variants"
+    status: waiting
+    depends_on: t-027
+    passes: 0
+    stakes: reversible
+    note: >-
+      Worlds 13-16: Thorned Crown, Paper Kingdom, Between Sea,
+      Unwritten Country. Final children revelation must reframe the
+      player's desire to reclaim their rightful body. Produce 3
+      endings × 4 distinct relationship epilogues with unique artwork,
+      consent and no perfect reset, plus 256 map locations and 144
+      dungeon rooms. Tests cover endings reachable without spoilers.
+  - id: t-029
+    milestone: m3
+    title: "Establish full enemy, item, achievements and unlock economy"
+    status: waiting
+    depends_on: t-021
+    passes: 0
+    stakes: reversible
+    note: >-
+      Across 16 realms target 96 distinct enemy identities,
+      128 item definitions (16 relics, 32 charms, 48 tools/consumables,
+      32 keys/mementos), 64 achievements and 64 non-stat-inflation
+      permanent unlocks. Four ordinary enemies plus elite/guardian
+      per realm. Verify drop boundedness, meaningful tradeoffs and
+      playstyle parity with multi-seed sims; author gallery art prompts.
+  - id: t-030
+    milestone: m3
+    title: "Build scene-art production manifest and sixteen-realm coverage checks"
+    status: waiting
+    depends_on: t-021
+    passes: 0
+    stakes: reversible
+    note: >-
+      Each of 1,024 overworld tiles and 576 dungeon spaces must have
+      art direction or contextual environmental treatment. High
+      priority unique art: cinematic prologue, NPCs, major choices,
+      32 Earth photographs, 16 guardians, 64 achievements and
+      12 ending variants. Queue traceable ArtJobs only via existing
+      durable pipeline; report submitted vs DONE vs delivered IDs
+      truthfully, with fallback coverage while art is pending.
+  - id: t-031
+    milestone: m4
+    title: "Adversarial balance, continuity and cross-world reachability suite"
+    status: waiting
+    depends_on: t-028
+    passes: 0
+    stakes: reversible
+    note: >-
+      Test 16×64 map uniqueness/reachability and 16×36 room graphs;
+      all difficulty/depth combinations, multiple world/Chronicle
+      versions, four ethical ending trajectories, companion conflicts
+      and wrong-order photographs. Run expert, casual, pacifist,
+      completionist, greedy and speedrun simulations with failure
+      continuations. Preserve Classic behavior, prove no no-op tiles,
+      save duplication or unresolvable story locks. Phone/tablet/
+      desktop one-screen art-first review and Silas's verdict remain
+      separate gates.

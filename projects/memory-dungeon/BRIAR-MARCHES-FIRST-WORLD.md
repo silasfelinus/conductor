@@ -23,7 +23,7 @@
 | `4,1` | Rain Mirror | treasure | The puddle reflects a traveler carrying a lantern not yet purchased. | Take a future lantern at the price of a disclosed debt, or leave the vision intact. |
 | `5,1` | Honeymoon Gutter | side | Two newlyweds are escaping a story that insists one is a monster. | Hide their path, earning their trust but angering the village registrar. |
 | `6,1` | Rootbound Threshold | travel | A root arch links the upper marsh to the House's service passage. | Discover a one-way shortcut back from the dungeon; never replace the fixed vault site. |
-| `7,1` | Wrongful Gallows | danger | A gallows grows a fresh branch for every rumor spoken beneath it. | Free the accused by investigating, or fight the hangman's animated rope. |
+| `7,1` | Wrongful Gallows | main | A gallows grows a fresh branch for every rumor spoken beneath it. | Free the accused by investigating, or fight the hangman's animated rope. |
 | `8,1` | Whitewing Cipher | lore | A feather seal insists its reflection is hiding in the Salt Cliffs. | Record the cipher for a later realm's location-based pair. |
 | `1,2` | Forty-Five Bells | danger | A flock of bell-wearing crows warns travelers by sounding different counts. | Decode the danger and avoid a fight, or disturb the flock and meet its sentinel. |
 | `2,2` | Old Wolf Track | lore | Wolf prints march toward town but every set leaves the village again. | Note the defensive route that suggests the wolves are guarding the village. |
@@ -31,7 +31,7 @@
 | `4,2` | Mosswick's Stall | travel | A merchant prices goods in wildflowers or enforceable promises. | Trade one flower for a Lantern, or examine the disputed ledger. |
 | `5,2` | Sleeping Sigil | puzzle | Half a paired seal is warm with the breath of sleeping roots. | Take its trace; a second half exists beyond the House. |
 | `6,2` | Rootbound Vault | travel | The existing dungeon entrance leads into the House That Remembers. | Enter the House; keep the saved vault-1/vault-2 aliases until migration. |
-| `7,2` | Splinter Court | side | The saplings sue an oak for stealing their sunlight. | Arbitrate shade versus growth; change the patrol's later testimony. |
+| `7,2` | Splinter Court | travel | The saplings sue an oak for stealing their sunlight across a public footpath. | Arbitrate shade versus growth; earn a grove shortcut and change patrol testimony. |
 | `8,2` | Great Hunger | danger | A famine specter follows only travelers who have lied about eating. | Admit a theft or defeat the creature with remembered pair sequences. |
 | `1,3` | Bent Spoon | treasure | A spoon feeds its owner a remembered taste, not actual nourishment. | Keep the comforting relic or return it to an exhausted cook. |
 | `2,3` | Storm Bride | side | A bride's wedding procession continues after her partner vanished. | Search for a living explanation rather than assume a curse. |
@@ -49,7 +49,7 @@
 | `6,4` | Pip's Contradiction | main | A courier brings two legitimate and mutually exclusive royal orders. | Choose which letter to deliver and own the human cost of suppressing the other. |
 | `7,4` | The Index of Persons | main | An official demands the protagonist's name while refusing to disclose its custodian. | Register with a copy or decline and acquire an inconvenient classification. |
 | `8,4` | Thorn Gate | travel | The regional exit beats with a bell buried under the path. | Use the Bramble Chime or an earned alternative resolution, not random loot. |
-| `1,5` | A Sleepwalker's Warning | danger | An elderly sleepwalker is stalked by their own awakened dreams. | Protect them by reading dream symbols; failure costs supplies but not their life. |
+| `1,5` | A Sleepwalker's Warning | main | An elderly sleepwalker is stalked by their own awakened dreams. | Protect them by reading dream symbols; failure costs supplies but not their life. |
 | `2,5` | Photograph: Dismissal | photo | A real-world photograph shows Morrow in the protagonist's body leaving a research office, dismissed. | File the image as a dated Chronicle clue; do not allow selling or duplicate claims. |
 | `3,5` | Pip's Borrowed Voice | companion | Pip argues with a stump that repeats their voice and edits yesterday. | Use lanternlight to free a moth-like thief or listen and learn a harder truth. |
 | `4,5` | The Shoemaker's Child | side | A child repairs shoes in exchange for stories no one else remembers. | Pay with a personal memory clue or supply leather from the camp. |
@@ -82,7 +82,7 @@
 | `7,8` | Echo of the Barn | side | The barn remembers a childhood no present villager claims. | Open the barn for truth or protect the village's useful lie. |
 | `8,8` | Moonroot Knot | lore | A last paired seal promises another knot under Moonwell Vale. | Keep its rune in the Chronicle for a future-world unlock. |
 
-**Registry check:** 64 unique stable entries, 8 rows × 8 columns. Current program only gives interactive story scenes to 13 coordinates; writing a registry does **not** make the other tiles accessible. Extend `BRIAR_LINKS`, authored `BRIAR_SCENES`, site behaviors and state transitions in incremental app PRs; validate every square is reachable on at least one legal route without breaking old save IDs. Use unique art references and conditional text for branch outcomes rather than copy-pasted flavor.
+**Registry check:** 64 unique stable entries, 8 rows × 8 columns; 8 main, 8 side, 12 danger, 8 puzzle, 8 lore, 8 treasure, 6 travel, 4 companion and 2 Earth photographs, matching the realm budget. Current program only gives interactive story scenes to 13 coordinates; writing a registry does **not** make the other tiles accessible. Extend `BRIAR_LINKS`, authored `BRIAR_SCENES`, site behaviors and state transitions in incremental app PRs; validate every square is reachable on at least one legal route without breaking old save IDs. Use unique art references and conditional text for branch outcomes rather than copy-pasted flavor.
 
 ## First dungeon: The House That Remembers
 
