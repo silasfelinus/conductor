@@ -599,11 +599,11 @@ tasks:
   - id: t-031
     milestone: m6
     title: "Resume at the last checkpoint: the cabinet keeps every checkpoint, not just Act starts"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T02:42:12Z'
+    updated: '2026-10-24T02:42:51Z'
     note: >-
       Silas, 2026-10-23 PT (verbatim): "we should remember runs between games, returning should put
       us at the last checkpoint. If that isn't already implemented." Today the save is written only
@@ -614,6 +614,7 @@ tasks:
       Act and section. Narrow slice of t-027's memory work; t-027 keeps save slots and the route map.
     claimed_by: 2026-10-24T024500Z-rainbow-t031-resume-q7m3
     claimed_at: '2026-10-24T02:42:12Z'
+    implementation_pr: 'silasfelinus/kind_robots#4092'
   - id: t-032
     milestone: m4
     title: "Animated projectiles: every enemy, guardian and boss shot family gets its own moving shape"
