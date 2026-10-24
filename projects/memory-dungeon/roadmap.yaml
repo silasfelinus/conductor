@@ -546,3 +546,15 @@ tasks:
       save duplication or unresolvable story locks. Phone/tablet/
       desktop one-screen art-first review and Silas's verdict remain
       separate gates.
+
+  - id: t-032
+    milestone: m4
+    title: "Add a per-realm manifest validator (duplicate coordinates, unreachable tiles, missing choice outcomes, unmet art needs)"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from conductor#6561. Parse BRIAR-MARCHES-FIRST-WORLD.md style
+      registries and fail CI on duplicate coordinates, tiles unreachable
+      from the start, sites without a persistent consequence, or art
+      requirements with no ArtJob/placeholder, so later realm PRs stay honest.

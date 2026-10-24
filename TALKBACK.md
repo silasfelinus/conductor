@@ -12534,3 +12534,7 @@ Still PR-less and superseded per the 2026-10-19 entry (content landed via #6353 
 PR-less one-line branch removing a duplicate `updated:` key from weird-humboldt/t-031. Cherry-picking onto current main conflicts: main already rewrote t-031's note and has no duplicate keys (YAML duplicate-key scan clean). Not merged; branch cleared via `branch-janitor.yml` `force_delete_branches`.
 Observed: #6495 (Gen-2 arcade plan) is red only on "Detect suspicious roadmap task id reuse" (save-the-plumber t-011 rescoped m3→m6 with a new title). Left to its owning session — it should either issue a new task id or document the intentional rescope; not touched here.
 Worker pattern: branches pushed without a PR again; open the PR at push time.
+
+## 2026-10-24 — Reviewer: conductor#6561 (memory-dungeon/t-009 sixteen-realm roadmap + World 01 registry)
+Reviewed and found safe (docs/roadmap-only, reversible, no live code); PR was merged by another session as I waited on the last required check, so no merge from me. 24/25 checks green at review, roadmap YAML parses. t-009 stays partial — the 64 sites and 36 rooms are design records, not playable UI; t-020/t-021 carry the implementation.
+Worker pattern: good — honest "not playable yet" flags. Kaizen (from the Worker): per-realm manifest validator for duplicate coordinates, unreachable tiles and missing choice outcomes before a realm PR merges.
