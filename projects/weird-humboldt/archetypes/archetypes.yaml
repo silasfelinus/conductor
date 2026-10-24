@@ -1,0 +1,170 @@
+# Weird Humboldt v1 — the eight playable archetypes and their reaction to each guaranteed chapter anchor.
+# Source table: DESIGN-BRIEF.md "Player archetypes". Six starting skill points each (0-3 per skill);
+# no ethnicity, origin, body type or disability carries a numeric modifier. Text only: no art, no ArtJobs.
+# Checked by scripts/validate_weird_humboldt_cards.py (validate_archetypes).
+# Excluded per EXCLUDED-CONTENT-2026-10-22.md: nothing here touches Wiyot/Tuluwat material, and no tribe is named.
+- id: reporter
+  name: North Coast Reporter
+  vantage: Writes for an independent weekly; addicted to getting the quote, bad at accepting a no.
+  skills:
+    rizz: 2
+    burly: 0
+    wits: 2
+    local_lore: 1
+    psyche: 1
+  perk: Once per chapter, ask one extra sourcing question before a choice.
+  anchor_reactions:
+    WH-A1: You photograph the sign and then, from habit, ask Dolores how to spell her name and who else has seen it. Two sources, one chalk drawing, and the first
+      honest paragraph of a story that will not fit in a weekly.
+    WH-A2: You ask the stranger for a second source before you pick a side, and the fog-bound argument slows down long enough for everyone to notice they were each
+      only half right.
+    WH-A3: You write both newcomers' claims in the same notebook, side by side, and the page itself becomes the neutral table nobody else thought to set.
+    WH-A4: You ask the council of radios for a quote on the record, and a gym full of static discovers it quite likes being taken seriously.
+    WH-A5: Walking the last stretch, you admit the story you were chasing is smaller than the promises you made along the way, and you strike a line you were proud
+      of.
+    WH-A6: You take no notes at dawn. For once the best quote is the one you decline to print, and the county notices that you left your recorder in your pocket.
+  hopeful_note: 'Hopeful future: the weekly runs a correction column that people actually read, and a no from a source is finally allowed to be the end of a question.'
+- id: student
+  name: Cal Poly Student
+  vantage: Smart, sleep-deprived, uncertain what to believe.
+  skills:
+    rizz: 1
+    burly: 1
+    wits: 2
+    local_lore: 1
+    psyche: 1
+  perk: Reframe one failure as a partial success via study notes.
+  anchor_reactions:
+    WH-A1: Your notes from a seminar you barely stayed awake for turn out to contain this exact six-winged shape in the margins. You are not sure whether that is
+      spooky or just very on-brand for 2 a.m.
+    WH-A2: You offer the tide table and the stranger's account as two competing hypotheses, which is the first time anyone on the pier has treated the disagreement
+      as a thing that could be tested.
+    WH-A3: You bring a cheap portable charger, a sandwich and an annotated reading list to a street meeting, and the meeting improves in ways nobody can quite credit
+      to the reading list.
+    WH-A4: You move to table the vote on whether you exist pending further research, and a room full of radios respects procedure more than it respects you.
+    WH-A5: You are tired enough to be honest. You tell the companion exactly which promises you made without having thought them through, and the big trees are kind
+      about it.
+    WH-A6: You stand up with a half-finished thesis and say, aloud, that you do not know what the sign is, and that not knowing is the reason to ask the county together.
+  hopeful_note: 'Hopeful future: the thesis is never finished, the sleep schedule improves, and a campus-and-town committee meets monthly because of you.'
+- id: rower
+  name: Bay Rower
+  vantage: Knows currents, crews and cold water; impulsively volunteers.
+  skills:
+    rizz: 1
+    burly: 3
+    wits: 1
+    local_lore: 1
+    psyche: 0
+  perk: Ignore one environmental travel penalty per chapter.
+  anchor_reactions:
+    WH-A1: You are already walking the Plaza stones in rowing shoes, because you volunteered to help the sweeper before anyone asked. The sign is large; the rowing
+      shed in your head says it is a set of oars.
+    WH-A2: The fog, the tide and the cold are old coworkers. You read the water, tell everybody the table is right and the harbor is merely sulking, and offer your
+      boat before you have been asked.
+    WH-A3: You carry the van's heavy crate without comment, and a street of people who were all pretending not to look at each other suddenly has a rhythm to fall
+      into.
+    WH-A4: You count the room into a stroke rate. A gym of voting radios is not a crew, but it is willing to be coxed for the length of one motion.
+    WH-A5: You have over-promised, as usual, and you know the cost to the ounce. You lay the promises out like oars on a dock and decide which can be shipped and
+      which must be handed over.
+    WH-A6: At dawn you take the last position in the boat at the edge of the sign, and let the others pull at the front.
+  hopeful_note: 'Hopeful future: the harbor crew now rows a mixed-ability novice class, and nobody drowns in a good mood.'
+- id: local
+  name: Lifelong Humboldt Local
+  vantage: Has family and community connections and contradictory memories of town.
+  skills:
+    rizz: 2
+    burly: 1
+    wits: 0
+    local_lore: 3
+    psyche: 0
+  perk: Recognize a local connection on one eligible card per chapter.
+  anchor_reactions:
+    WH-A1: Dolores is a cousin of someone you went to high school with, and the pickup truck two streets over belongs to your uncle's old friend. The Plaza has always
+      been a small town in disguise.
+    WH-A2: You know which pier plank gives and which stranger is lying because you were in the same Little League. The fog does not ask for credentials from people
+      who grew up here.
+    WH-A3: You name the street's last three businesses and who ran them, and the second newcomer stops to listen, because a place that knows its own history is rare
+      to find out loud.
+    WH-A4: You recognize half the council by their kitchens. The radios are less sure what to do with someone who knows how this gym floods.
+    WH-A5: You promised things in this county to people who will still be here in forty years. You know that is the actual weight of the word.
+    WH-A6: You have a memory of the Plaza that contradicts your sister's. You tell both versions and let the county decide that being contradictory is a form of being
+      home.
+  hopeful_note: 'Hopeful future: two contradictory family stories get printed side by side, and the county discovers it likes it that way.'
+- id: organizer
+  name: Tribal Community Organizer
+  vantage: 'A contemporary fictional character (no tribe named) with independent commitments, humor, boundaries and local relationships. Cultural-review note: develop
+    with tribal-authored sources before any publication; no ceremony, site, language or monster-detector framing.'
+  skills:
+    rizz: 2
+    burly: 0
+    wits: 1
+    local_lore: 2
+    psyche: 1
+  perk: Invoke community-network support with permission and reciprocity; never a racial ability.
+  anchor_reactions:
+    WH-A1: You ask Dolores whether she wants help or just company, then call two people you know who work the night shift, and you do it because that is what you
+      do on a Tuesday. The sign is odd. The meeting about it is ordinary, which is the point.
+    WH-A2: Before you take a side on the pier, you ask whose boat it is and whose permission you need. The stranger, surprised to be asked, answers.
+    WH-A3: You do not call in a favor you have not earned. You introduce yourself, state what you can offer in return, and listen to what the newcomer needs first.
+    WH-A4: 'You treat the council of radios like any council: you ask who is not at the table, you arrange a seat, and you bring snacks.'
+    WH-A5: You keep the promises that can be kept and report honestly on the ones that cannot. Your community's word is only as good as your last explanation.
+    WH-A6: At dawn you decline to speak for anyone. You introduce yourself, say who you answer to, and let the county see that listening is also a kind of power.
+  hopeful_note: 'Hopeful future: a standing table where the county''s decisions include the people who actually live with them, long after the sign fades.'
+- id: mechanic
+  name: Kinetic Sculpture Mechanic
+  vantage: Knows broken things and unreliable teams; never leaves a contraption behind.
+  skills:
+    rizz: 0
+    burly: 2
+    wits: 3
+    local_lore: 1
+    psyche: 0
+  perk: Improvise a mechanical workaround at a material cost.
+  anchor_reactions:
+    WH-A1: You walk around the sign twice, decide it is a linkage drawn as a bird, and ask Dolores whether the Plaza has any spare zip ties. It has.
+    WH-A2: You fix the stranger's tide gauge in four minutes with a bobby pin and bad language, and it turns out the gauge was never the disagreement. It was a warm-up.
+    WH-A3: You rebuild the heavy crate's broken hinge while the two newcomers are still introducing themselves, and a street full of tension finds out it has something
+      to do with its hands.
+    WH-A4: The council's radios are vintage and cranky. You repair one mid-motion, and its voice cracks into a grateful hum that quiets the back rows.
+    WH-A5: You promised a lot of things that were really just parts you meant to return. You inventory them honestly, which is the only honest way to build.
+    WH-A6: At dawn you leave the toolbox where the whole county can reach it and walk away from the contraption you built, for once.
+  hopeful_note: 'Hopeful future: the shop hosts a monthly repair night, and no contraption is ever left behind again.'
+- id: gardener
+  name: Backwoods Gardener
+  vantage: Knowledgeable about cultivation, land-use disputes and survival; wary of authorities.
+  skills:
+    rizz: 0
+    burly: 2
+    wits: 1
+    local_lore: 2
+    psyche: 1
+  perk: Identify environmental and practical risks, not plant-based magic.
+  anchor_reactions:
+    WH-A1: 'You kneel and smell the chalk: lime and creek mud, not magic. The sign is a drawing, and somebody patient with a steady hand and a lot of free evenings
+      made it.'
+    WH-A2: You read the tide table, the stranger's boots and the air, and tell the pier that the fog will lift by nine, and that you would not trust either of them
+      in a boat until it does.
+    WH-A3: You see the crate is leaking something that should not be near the curb and quietly move it. Nobody asks why. Everyone remembers.
+    WH-A4: You are wary of any room that votes on whether you exist, and you say so. The radios, who are also wary of authority, like you immediately.
+    WH-A5: You have lived long enough to know that a kept promise is a seed, not a trophy. You tell the truth about which ones will not sprout.
+    WH-A6: At dawn you say plainly what the land can and cannot hold, and the county hears a neighbor, not a rep from the agency they all distrust.
+  hopeful_note: 'Hopeful future: a shared garden on a contested lot, with a lease that nobody is afraid to sign.'
+- id: dealer
+  name: Night-Shift Casino Dealer
+  vantage: Reads tells effortlessly, chronically tired, accustomed to fantastic stories.
+  skills:
+    rizz: 2
+    burly: 0
+    wits: 1
+    local_lore: 1
+    psyche: 2
+  perk: Once per chapter, test whether an NPC is bluffing without revealing the truth.
+  anchor_reactions:
+    WH-A1: Dolores is not lying. You know a bluff when you see one, and she has none of the three tells. What worries you is that the sign is not bluffing either.
+    WH-A2: The stranger knows your name and is certain of it. You read a person who has been awake too long, who is frightened and who is not trying to trick anyone,
+      which is a rarer table than it sounds.
+    WH-A3: The second newcomer is calm in a way that costs effort. You read the effort and decide to be kind about it.
+    WH-A4: The radios are bluffing about the vote, and you can tell. You say nothing, and let the room discover its own tell.
+    WH-A5: You have heard every promise a person can make at four in the morning. You know which kind they keep. You tell the companion which kind you are.
+    WH-A6: 'At dawn the whole county has a tell: relief. You call the hand only after everyone has had a chance to show it.'
+  hopeful_note: 'Hopeful future: the night shift gets a regular meeting with the day shift, and the house learns to lose gracefully.'

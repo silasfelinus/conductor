@@ -25,6 +25,7 @@ SCHEMA = PROJECT / "design" / "card.schema.json"
 CARD_DIR = PROJECT / "cards"
 ANCHOR_FILE = PROJECT / "anchors" / "anchors.yaml"
 ENDING_FILE = PROJECT / "endings" / "endings.yaml"
+ARCHETYPE_FILE = PROJECT / "archetypes" / "archetypes.yaml"
 SEEDS = PROJECT / "ENCOUNTER-SEEDS.md"
 # Chapters 1-5 hold seeds 1-20 (chapter 2 also WH-121); chapter 6 holds all 20 incl. WH-120 (county vote finale).
 PER_CHAPTER = {1: 20, 2: 21, 3: 20, 4: 20, 5: 20, 6: 20}
@@ -185,6 +186,47 @@ def load_anchors() -> list[dict]:
 
 def load_endings() -> list[dict]:
     return yaml.safe_load(ENDING_FILE.read_text()) or []
+
+
+def load_archetypes() -> list[dict]:
+    return yaml.safe_load(ARCHETYPE_FILE.read_text()) or []
+
+
+ARCHETYPE_IDS = ["reporter", "student", "rower", "local", "organizer", "mechanic", "gardener", "dealer"]
+SKILL_KEYS = ["rizz", "burly", "wits", "local_lore", "psyche"]
+MYSTIC_TERMS = re.compile(r"\b(mystic|shaman|spirit guide|ancestral power|sacred)\b", re.I)
+
+
+def validate_archetypes(archetypes: list[dict], anchors: list[dict]) -> list[str]:
+    """Eight archetypes, six starting skill points each, one authored reaction per chapter anchor."""
+    problems: list[str] = []
+    if [a.get("id") for a in archetypes] != ARCHETYPE_IDS:
+        problems.append(f"archetypes: ids must be exactly {ARCHETYPE_IDS}")
+    anchor_ids = [a["id"] for a in anchors]
+    for a in archetypes:
+        aid = a.get("id", "?")
+        skills = a.get("skills", {})
+        if sorted(skills) != sorted(SKILL_KEYS):
+            problems.append(f"{aid}: skills must be exactly {SKILL_KEYS}")
+        elif sum(skills.values()) != 6 or not all(0 <= v <= 3 for v in skills.values()):
+            problems.append(f"{aid}: skills must be 0-3 each and total 6 points")
+        for key in ("name", "vantage", "perk", "hopeful_note"):
+            if not a.get(key):
+                problems.append(f"{aid}: missing {key}")
+        reactions = a.get("anchor_reactions", {})
+        if sorted(reactions) != sorted(anchor_ids):
+            problems.append(f"{aid}: needs exactly one reaction per anchor {anchor_ids}")
+        for anchor, text in reactions.items():
+            if words(text) < 20:
+                problems.append(f"{aid}.{anchor}: reaction under 20 words")
+        blob = json.dumps(a, ensure_ascii=False)
+        if EXCLUDED_TERMS.search(blob):
+            problems.append(f"{aid}: touches excluded Wiyot/Tuluwat material")
+        if BANNED.search(blob):
+            problems.append(f"{aid}: contains real-world drug instruction wording")
+        if MYSTIC_TERMS.search(blob):
+            problems.append(f"{aid}: identity must not be framed as a mystical ability")
+    return problems
 
 
 MIN_ENDINGS = 10
@@ -376,6 +418,10 @@ def main() -> int:
     problems = validate(cards)
     if problems:
         print("\n".join(problems), file=sys.stderr if args.playtest is not None else sys.stdout)
+        return 1
+    arch_problems = validate_archetypes(load_archetypes(), load_anchors())
+    if arch_problems:
+        print("\n".join(arch_problems))
         return 1
     if args.playtest is not None:
         skills = {"rizz": 1, "burly": 1, "wits": 2, "local_lore": 1, "psyche": 1}
