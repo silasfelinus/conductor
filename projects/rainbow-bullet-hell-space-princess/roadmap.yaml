@@ -624,11 +624,11 @@ tasks:
   - id: t-032
     milestone: m4
     title: "Animated projectiles: every enemy, guardian and boss shot family gets its own moving shape"
-    status: ready
+    status: review
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T02:30:00Z'
+    updated: '2026-10-24T02:56:26Z'
     note: >-
       Silas, 2026-10-23 PT (verbatim): "We should have animations fo4 all projectiles, not these
       identical circles." Most hostile fire falls through to one dark circle with a yellow rim.
@@ -637,6 +637,7 @@ tasks:
       ink drops, bubbles, fin blades, prism shards, eclipse sparks. Keep the dark readability halo,
       the hitbox and every fairness rule unchanged; calm motion slows the animation. Player shots
       animate too (shimmer, trails).
+    implementation_pr: 'silasfelinus/kind_robots#4093'
   - id: t-033
     milestone: m4
     title: "Enemy dynamism: plain craft move and attack in distinct sea-life patterns"
