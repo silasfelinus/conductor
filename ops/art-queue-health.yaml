@@ -1,22 +1,4 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures:
-- source: kr-failed-jobs
-  target: ArtJob 44269
-  kind: kr-job-failed
-  rules:
-  - frame-noun
-  detail: 'engine=COMFY; error=ArtJob validation failed before claim: Art prompt rejected by the prompt
-    contract (1 violation): [frame-noun] "Center frame: one full bulging brown LEATHER WATER BAG with
-    stitched seams and tied neck, hanging by its car…'
-  first_seen: '2026-10-24'
-- source: kr-failed-jobs
-  target: ArtJob 44273
-  kind: kr-job-failed
-  rules:
-  - frame-noun
-  detail: 'engine=COMFY; error=ArtJob validation failed before claim: Art prompt rejected by the prompt
-    contract (1 violation): [frame-noun] "Clear legible composition, accurate subject framing, concrete
-    physical objects, faithful illustrated story s…'
-  first_seen: '2026-10-24'
+failures: []
