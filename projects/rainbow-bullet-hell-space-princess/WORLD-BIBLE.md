@@ -3,9 +3,10 @@ Status: **proposed authored canon (design only)**. Owner: rainbow-bullet-hell-sp
 
 ## One-sentence world rule
 
-> **Factions (Silas, 2026-10-23 PT):** the princesses fly as **C.A.T.S.**; the villains are the **DOGS**, who
-> collared the sea fleet, with a DOG commander in every boss machine and King Rufus in place of the Crown Voice.
-> See [DOODLE-DIRECTION.md](DOODLE-DIRECTION.md).
+> **Factions (Silas, 2026-10-23 PT, revised the same night):** the princesses fly as **C.A.T.S.** for their
+> **Motherland**. The space animals are the enemy fleet, until the Act V turn shows the Motherland is the
+> colonizer and the crew chooses a side. See [PLOT-MOTHERLAND.md](PLOT-MOTHERLAND.md) and
+> [DOODLE-DIRECTION.md](DOODLE-DIRECTION.md). There are no DOGS.
 The Luminous Ocean is a navigable star sea where living beings and machine-reef ships coexist. The **Prism Eclipse** turns wildlife-shaped rescue fleets into aggressive instrument-ships. The princess pilots must disrupt its control signal while preserving the infected creatures inside the hulls: defeat hostile hardware, save the life within. Never render boss death as animal cruelty.
 
 ## Four pilots: narrative and exact gameplay roles

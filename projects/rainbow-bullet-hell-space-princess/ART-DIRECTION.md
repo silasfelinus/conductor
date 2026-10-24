@@ -3,7 +3,7 @@
 ## Non-negotiable look
 
 > **Superseded look (Silas, 2026-10-23 PT):** the game is now a gifted kid's 1980s trapper-keeper doodle world:
-> C.A.T.S. (the princesses' squadron, with cat ships and cat co-pilots) versus the DOGS. See
+> C.A.T.S. (the princesses' squadron, with cat ships and cat co-pilots) against the space-animal fleet. See
 > [DOODLE-DIRECTION.md](DOODLE-DIRECTION.md), which overrides the paragraph below. Every other rule in this file holds.
 
 Polished hand-painted 2.5D space opera: candy pink, lilac, peach, powder cyan, soft butter-yellow and opalescent turquoise with rich deep navy negative space. Premium animation on gently iridescent metal and translucent jellyfish glass. Everything glows, floats and refracts, yet the world stays friendly and readable. **The world is soft; the combat is precise.** Aim for richly composed high-definition illustrations, not a coarse early-80s arcade reskin.

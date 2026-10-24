@@ -14,6 +14,13 @@ goal: >-
   No runtime LLM. Accept only after measured end-to-end gameplay, 1/2/3/4
   player soak, art and accessibility review, and Silas's hands-on verdict.
 notes_from_silas: |
+  2026-10-23 PT, later the same night (verbatim): "Ok, so I want you to do ditch the dog and cats theme…actually,
+  just the dogs part. They can be cats and have a special princess kitty power or whatever, that's cool. But keep
+  the villains to be the bioecology space animals, and we can develop plot as we go (but having a turn when the
+  princesses realize they are supporting the colonizers, and they can choose to attack the empire or stay the
+  course for the Motherland". The DOGS are withdrawn; C.A.T.S., cat co-pilots and the doodle look stay. Plot
+  spine: PLOT-MOTHERLAND.md. Tasks t-039..t-041.
+
   2026-10-23 PT (verbatim): "Space princess design. This should have the joyous innocence of an 80's Lisa
   frank inspired artist making doodles in her trapper keeper. A very talented artist. But with the mind of a
   child: the good team is "C.A.T.S.", the villains are DOGS." Decided the same evening: the princesses keep
@@ -718,6 +725,10 @@ tasks:
       restyled from identity locks with co-pilots). Next: --status both ledgers, review
       keepers against DOODLE-DIRECTION.md and CAST-QA identity, pick the engine, record it
       here, send Silas the contact sheet.
+
+      2026-10-23 PT: Silas withdrew the DOGS. Skip dd-king-rufus, dd-corporal-chihuahua and
+      dd-collared-seahorse (withdrawn in the ledger); review only the emblem, key art, co-
+      pilots and princess restyles.
   - id: t-036
     milestone: m4
     title: "Doodle restyle of the cast, ships, co-pilot cut-ins and the nine DOG commanders"
@@ -731,6 +742,10 @@ tasks:
       DOODLE-DIRECTION.md step 2. Kontext-restyle every approved princess asset from its identity lock (CAST-QA
       identity still binding); cat ships keeping each silhouette and P1-P4 glyph; super cut-ins with each pilot's
       co-pilot; the nine DOG commanders per the table. Uses the engine t-035 picks.
+
+      2026-10-23 PT: no DOG commanders (Silas withdrew the DOGS). Restyle the space-animal
+      fleet as the villains instead, plus Princess Kitty Power cut-ins with each co-pilot
+      (PLOT-MOTHERLAND.md).
   - id: t-037
     milestone: m4
     title: "C.A.T.S. vs DOGS in game: names, DOG commanders on boss bars and cut-ins, bones and hearts, doodle UI"
@@ -766,3 +781,39 @@ tasks:
       Silas chose to hold the old-style opening clips (44645-44653) and recut from new-style stills. New WAN
       clip ledger from t-035/t-036 keepers, then scripts/export_rainbow_opening.py with the new SHOTS; the thrash
       track (44644) stays.
+  - id: t-039
+    milestone: m4
+    title: "Remove the DOGS; Princess Kitty Power cut-ins; boss fire back to each creature's own look"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-24T05:00:00Z'
+    note: >-
+      Silas withdrew the DOGS (PLOT-MOTHERLAND.md). Remove rainbowDogs.ts commanders, barks, BAD DOG send-off and
+      bone/ball/cloud boss fire (kind_robots#4097); keep C.A.T.S., co-pilots, heart and star pilot shots. Each super
+      cut-in becomes a Princess Kitty Power with the pilot's co-pilot.
+  - id: t-040
+    milestone: m6
+    title: "The Motherland turn, first slice: Act V memorial reveal and the flown allegiance choice"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-24T05:00:00Z'
+    note: >-
+      PLOT-MOTHERLAND.md. At Act V's memorial the crew realizes the Motherland is the colonizer; high lane TURN ON
+      THE EMPIRE (allegiance rebel), low lane STAY THE COURSE (loyal), majority of living pilots, tie stays the
+      course. Flag in checkpoints and saves; one allegiance line in each later Act's OPEN. Later slices: rebel-road
+      waves, two finale targets, allegiance endings.
+  - id: t-041
+    milestone: m6
+    title: "Reframe Acts I-V dialogue toward the Motherland reveal (develop as we go with Silas)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-24T05:00:00Z'
+    note: >-
+      Early lines speak the Motherland's "pacification" story; Acts III-V plant the evidence (Motherland hardware,
+      colony ships behind the convoy, the creatures' carers at the depot). Keep three scenes per Act and Lilt's arc.

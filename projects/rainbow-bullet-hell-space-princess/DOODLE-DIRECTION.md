@@ -1,4 +1,11 @@
-# Trapper-keeper doodle direction: C.A.T.S. versus the DOGS
+# Trapper-keeper doodle direction: C.A.T.S.
+
+> **Revised the same night (Silas, 2026-10-23 PT): the DOGS are gone.** Keep the doodle look, C.A.T.S. and the
+> cat co-pilots, and add a Princess Kitty Power. The villains are the bio-ecological space animals again, and
+> the plot now turns on the princesses discovering their Motherland is a colonizer
+> ([PLOT-MOTHERLAND.md](PLOT-MOTHERLAND.md)). Everything below about the DOGS, the DOG commanders, the collars'
+> owners, King Rufus and bones is withdrawn and kept only as history.
+
 
 Silas, 2026-10-23 PT (verbatim): *"Space princess design. This should have the joyous innocence of an 80's Lisa
 frank inspired artist making doodles in her trapper keeper. A very talented artist. But with the mind of a child:
