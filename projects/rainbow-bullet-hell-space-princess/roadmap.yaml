@@ -647,11 +647,11 @@ tasks:
   - id: t-033
     milestone: m4
     title: "Enemy dynamism: plain craft move and attack in distinct sea-life patterns"
-    status: review
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T03:16:19Z'
+    updated: '2026-10-24T03:47:18Z'
     note: >-
       Silas, 2026-10-23 PT (verbatim): "improve the dyamism: enemies should move and attack in
       different ways." The plain craft of Acts I-III (picket, spiral, anchor, urchin, lantern,
@@ -660,6 +660,15 @@ tasks:
       bounces, jelly pulse-swims, ceiling/floor skims, manta swoops) and its own attack (bursts,
       rotating fans, radial spikes, dropped bombs, lobbed shots), deterministic and telegraphed,
       within the existing fairness and pacing tests.
+
+      DONE 2026-10-23 PT: kind_robots#4094 merged (a52ee28). Each Act I-III plain craft swims
+      and fires its own WORLD-BIBLE way: picket sidestep lead, spiral loop-the-loop with
+      turning spokes, anchor mines, urchin wall-roll with an 8-spine fan, lantern pulse-swim
+      with a gapped ring, relay link, skimmer rails with bead columns, coral floor lobs, skate
+      manta swoop. Courier pods past the left edge no longer take hits. Two scripted test bots
+      tightened (assertions unchanged); verifyRainbowCraftVariety is new. Side fix:
+      kind_robots#4095 repaired main's broken production image build (ecotone-board inline
+      handler from #4087).
     implementation_pr: 'silasfelinus/kind_robots#4094'
   - id: t-034
     milestone: m4
