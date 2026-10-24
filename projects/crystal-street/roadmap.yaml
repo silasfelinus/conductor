@@ -68,6 +68,29 @@ notes_from_silas: |
   viewing endings, etc. then we work 9n the first playable slice. Make an outline of what needs to
   be done first"
 
+  2026-10-24 PT: "great start! OK, as much as I love the intro image, I want the initial to be more
+  of a classic suburbia vibe....but you have inspired me to make new connections: we should have an
+  ending photo for each monster. this is the standard we'll use for the lake killer monster,
+  whatever we'll call her. And so the user should start with a view of Crystal Street, a white
+  housed suburbia, idyllic. But the Title needs to show TERRORS larger, on crystal street is below
+  and smaller..
+
+  We should have actual selectable image avatars, characters in excagerrated poses, aiming for
+  androgynous looks, mixed genders, ages, ethnicities, and body types, without looking like you're
+  trying to fill a diversity sheet."
+
+  2026-10-24 PT: "after the title screen loads, we can show a slideshow of it final villain poses
+  we've unlocked. Since each monster should have at least three interstitial exciting moments
+  (decided from a random collection of monster encounters special to that monster, interspersed
+  with draws from the random encounters that match the type of the monster (supernatural,
+  biohazzard, alien encounter, slasher, generic, etc...do what makes the most sense. We want lots
+  of exciting moments, playing with tropes. We could do factions: friends family officials
+  neighbors. if any of them drop to zero that could trigger a special end sequence depending on
+  which dropped. If it's friends then they enter Final Girl sequence (if we can find a way to make
+  that inclusive).(I've wanted to do a story using slumber party massacre setup, but it's a boys
+  fraternity doing a drag night. so you get the classic tropes of the woman breaking her heel in
+  the woods, but as the stalker gets closer, your "damsel" is Chad in a bad wig and lipstick."
+
 milestones:
   - id: m1
     title: "SHAPE — design brief, writing guide, rosters"
@@ -153,7 +176,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Art round 2: encounter scene plates (every lead, signature, finale, beat, deck card and meeting)"
-    status: waiting
+    status: ready
     depends_on: t-003
     owner: null
     passes: 0
@@ -272,8 +295,9 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Play front end: /play/crystal-street, arcade tab, and the home highlight reel"
-    status: waiting
+    status: ready
     depends_on: t-003
+    pr: silasfelinus/kind_robots#4128
     owner: null
     passes: 0
     stakes: outward-facing
@@ -287,10 +311,15 @@ tasks:
       (liveUrl, channelKey, tabKey), and add Terrors to components/home/home-visitor-directory.vue
       (an Explore feature card and a Just updated entry). Update the route contract tests together.
 
+      2026-10-24 PT: implemented in kind_robots #4128 (open, together with t-014): /play route, 301
+      admin redirect, arcade tab, projectPlacements entry, highlight-reel card and update, route
+      contracts. Close when it merges.
+
   - id: t-014
     milestone: m2
     title: "Main menu shell: title screen, start and continue, settings, monster gallery, endings, crew"
     status: ready
+    pr: silasfelinus/kind_robots#4128
     owner: null
     passes: 0
     stakes: reversible
@@ -303,6 +332,13 @@ tasks:
       viewer: the 88 endings (22 x 4) as a gallery; found ones open full text and art, locked ones show
       the tier and a hint. Crew gallery with the six mood portraits and poster toggle. Check 390, 768
       and 1440 widths with screenshots.
+
+      2026-10-24 PT: implemented in kind_robots #4128 (open). Per Silas's follow-ups the title is now
+      an idyllic daytime Crystal Street with TERRORS set large and "on Crystal Street" below, then a
+      slideshow of every survived nightmare's ending photo; New week has a Pick your look avatar
+      strip. Settings shipped: text size, contrast, motion, give up the week, erase the scrapbook
+      (music and effects volume arrive with t-015 and sound). Screenshots at 390, 768 and 1440 show
+      no page scroll. Close when it merges.
 
   - id: t-015
     milestone: m2
@@ -334,3 +370,77 @@ tasks:
       nightmare played end to end at full polish (Counselor Jess, the cover star), with scene and outcome
       art for her leads, nights, finale and endings; the daylight beats and decks she can deal; an
       onboarding first day; sound effects and the theme; and a balance and narrative pass on that path.
+
+  - id: t-017
+    milestone: m2
+    title: "Front-end art: the idyllic title street, an ending photo per nightmare, sixteen avatars"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-24 PT (notes above). art/FRONT-1.yaml (auto_submit) queued 38 renders on
+      2026-10-24 (ArtJobs 45095-45132): title/crystal-street (white clapboard cul-de-sac in autumn
+      sun), villains/<id>-ending for 21 nightmares in an inked horror-comic lane matching the
+      Masking Up cover (which is Counselor Jess's ending photo, already shipped), and avatars/<id>
+      for the sixteen player avatars in kind_robots utils/crystalStreet/avatars.json. Review the
+      contact sheet (scripts/export_crystal_street_art.py --sheet), re-roll misses, then export into
+      kind_robots public/crystal-street/ and open the PR. The runtime already reads all three paths
+      and falls back to drawn art until they land.
+
+  - id: t-018
+    milestone: m2
+    title: "Nightmare encounter pools: three or more special moments per week, drawn from a larger pool"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-24 PT: "each monster should have at least three interstitial exciting moments
+      (decided from a random collection of monster encounters special to that monster, interspersed
+      with draws from the random encounters that match the type of the monster". Today each
+      nightmare has exactly three fixed signature scenes on nights 2, 4 and 6. Grow each to a pool of
+      six (three new per nightmare, 66 cards), deal three or more per week by seeded draw, and allow a
+      special moment to interrupt a day as well as a night. Rework the night decks around monster
+      types that read at a glance (supernatural, slasher, creature, alien, biohazard, tech, cult,
+      camp, dream, with generic suburban trouble), retagging nightmares and adding decks for the new
+      types. Lean into tropes. Keep the validator, autoplay balance and art contract green; new cards
+      bring their own scene and outcome prompts.
+
+  - id: t-019
+    milestone: m2
+    title: "Factions (friends, family, officials, neighbors) and their special endings, including Final Girl"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-24 PT: "We could do factions: friends family officials neighbors. if any of them
+      drop to zero that could trigger a special end sequence depending on which dropped. If it's
+      friends then they enter Final Girl sequence (if we can find a way to make that inclusive)."
+      Four standing meters moved by choice effects and shown in the HUD. Zero in one triggers its own
+      end sequence: family (grounded, locked in your room the night it comes for you), officials
+      (the sheriff and the principal blame you), neighbors (the cul-de-sac turns on you, torches and
+      casseroles). Friends at zero starts the Final Girl sequence: a solo last-stand chapter where
+      "Final Girl" is a title the player earns whatever their pronouns, with its own cards and an
+      ending in each nightmare's scrapbook row. Write it so the role is about who survives, never
+      about gender. Each sequence needs effects on existing cards, new cards, endings and art
+      prompts; the scrapbook and endings reel gain a special-endings row.
+
+  - id: t-020
+    milestone: m2
+    title: "New nightmare: frat house drag night, a slumber-party-massacre remix"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas 2026-10-24 PT: "a story using slumber party massacre setup, but it's a boys fraternity
+      doing a drag night. so you get the classic tropes of the woman breaking her heel in the woods,
+      but as the stalker gets closer, your "damsel" is Chad in a bad wig and lipstick." Add it as the
+      23rd nightmare (a remix of The Slumber Party Massacre's driller killer) with full cast data:
+      leads, a signature pool, finale, four endings, poster, portrait and ending photo. Guardrails
+      from WRITING-GUIDE.md: the joke is the old damsel tropes landing on the frat brothers (the heel
+      snaps, the phone line is dead, someone says "I'll be right back"), never drag or queerness as
+      the punchline. The drag night is sincere, coached by Glory Hallelujah from the Glitter Box,
+      and the brothers who commit to it are the ones who make it to morning.
