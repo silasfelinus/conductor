@@ -1,6 +1,6 @@
-# Nightmare on Crystal Street: design brief
+# It Came from the Terrors on Crystal Street: design brief
 
-Working title (Silas, 2026-10-24 PT). A full single-screen, console-style 80s horror-comedy
+Title chosen by Silas, 2026-10-24 PT (it began as Nightmare on Crystal Street). A full single-screen, console-style 80s horror-comedy
 card adventure. One week on an idyllic suburban cul-de-sac beset by one of twenty-two nightmares (many flipped or bent classic villains);
 days for investigation and friendship, nights for survival. Creepy but fun, camp as a weapon,
 queer theatre and LGBT+ joy at its heart.
@@ -119,13 +119,8 @@ villain posters, companion posters and mood portraits, and locations
 - Parody villains (Frieda Krueger, Screwhead) are original characters, not licensed ones.
 - Admin-only until Silas accepts the visual state and approves a public release.
 
-## Title alternatives
+## Title
 
-Silas asked for other names worth considering. "Crystal Street" keeps the Elm Street rhythm and
-nods to Crystal Lake; alternatives:
-
-- **Nightmare on Lavender Lane** (lavender as queer history, a sweeter suburban sound)
-- **Seven Nights on Crystal Street** (says the structure out loud)
-- **Slumber Party on Sapphire Court**
-- **Glimmer Falls After Dark** (the town, not the street)
-- **Halloween Week on Heartstone Drive** (names the geode at the street's center)
+**Decided (Silas, 2026-10-24 PT):** *"I like It Came from the Terrors on Crystal Street."* The earlier
+alternatives (Nightmare on Lavender Lane, Seven Nights on Crystal Street, Slumber Party on Sapphire
+Court, Glimmer Falls After Dark, Halloween Week on Heartstone Drive) are retired.

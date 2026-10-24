@@ -1,4 +1,4 @@
-# Nightmare on Crystal Street: writing guide and cast bible
+# It Came from the Terrors on Crystal Street: writing guide and cast bible
 
 The rules every authored card follows, plus the canonical rosters. Runtime content lives in
 kind_robots `utils/crystalStreet/` (JSON validated by `utils/crystalStreet/validate.ts`). The
