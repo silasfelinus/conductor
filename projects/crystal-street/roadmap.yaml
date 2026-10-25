@@ -679,14 +679,15 @@ tasks:
   - id: t-022
     milestone: m3
     title: "Separate player identity from nightmare selection on final new-week screen"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     claimed_by: 2026-10-25T205300Z-crystal-t022-a8f7
     claimed_at: '2026-10-25T20:56:12.673Z'
-    updated: '2026-10-25T20:57:47.571Z'
+    updated: '2026-10-25T21:08:31.616Z'
     note: |-
       Silas 2026-10-25 PT provided an iPad screenshot: the player's portrait and name immediately beneath "The nightmare" makes it look like the player is the antagonist. Move the player identity above that heading or to a distinct footer, clearly label the player, retain villain-selection controls and one-screen bounded layout.
 
       Player portrait/name relocated above the Nightmare heading on the final new-week step. The villain selector stays beneath its heading, without changes to game state.
+
+      DONE 2026-10-25 PT. kind_robots PR #4187 merged as 0c0cb4280133b45c3c9ace875a886608d0876383. The final wizard places a labeled player character summary above the Nightmare title, leaving villain selection distinct and gameplay unchanged. All 19 PR check runs passed, including formatting, TypeScript, layout and Crystal Street gameplay contract. Self-hosted release remains a separate deployment state; no manual deploy triggered.
