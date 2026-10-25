@@ -1,0 +1,571 @@
+{
+  "format": "kind-robots-consequence-pack-v1",
+  "project_slug": "comet-city-academy",
+  "display_name": "Capes & Tassels: Prom of Doom",
+  "content_stage": "authored-not-yet-runtime-integrated",
+  "calendar": "days 1–30 (these scenes: days 8–28)",
+  "resolution_rule": "Every choice has seeded success and failure; failure advances the story and sets recoverable consequences. No result silently negates a prior consent or roster constraint.",
+  "cast_reference": "Existing prototype IDs Mina Quill, Sol Navarro, Imani Vale, Nix Venn, Kit Rowan remain stable; ages 18+.",
+  "encounters": [
+    {
+      "id": "ct-d11-last-dry-street",
+      "day_range": [
+        8,
+        12
+      ],
+      "phase": "night",
+      "location_id": "town-lower-docks",
+      "factions": [
+        "civic",
+        "rogue",
+        "underworld"
+      ],
+      "party": [
+        "mina",
+        "nix",
+        "kit"
+      ],
+      "villain_signal": "A brass control cabinet carries the same crescent-and-three-dots emblem as an unopened prom equipment crate.",
+      "title": "The Last Dry Street",
+      "opening": "A storm pushes the canal above its marker. The city built a single overflow channel, and someone quietly sold the dry side to a luxury developer. Hospital patients need electricity. The market tenants have nowhere to store their food. An engineer offers you the floodgate controls without asking whether the people downstream agree.",
+      "conflict": "Which district gets to wake up dry, and who has permission to decide?",
+      "choices": [
+        {
+          "id": "hospital-first",
+          "label": "Seal the hospital gate",
+          "approach": "Public hero rescue under protest",
+          "check": {
+            "power_any": [
+              "elemental",
+              "kinetic"
+            ],
+            "difficulty": 5
+          },
+          "cost": "The hospital receives power; market stalls take the flood.",
+          "success": {
+            "narrative": "The hospital stays lit, but market vendors stand waist-deep in water handing food through broken windows. Mina asks you to put every displaced family on the academy guest list. The hospital board offers a medal you may not want.",
+            "flags": [
+              "hospital_powered",
+              "market_displaced",
+              "mina_demands_housing"
+            ],
+            "delta": {
+              "public_reputation": 2,
+              "civic_harm": 2,
+              "resources": -1
+            },
+            "art": {
+              "scene": "Eye-level view from the covered market. Knee-high brown water runs between overturned produce crates. Across the canal, the hospital windows glow gold above dry steps. Mina in her ivory rescue coat lifts a soaked merchant over the stall counter. A small rescue boat approaches from the left."
+            },
+            "callback": "Days 17–20: find emergency beds for vendors; refusal closes Mina's sidekick route."
+          },
+          "failure": {
+            "narrative": "The gate jams half-open. The hospital basement fills while the market roof collapses under rain. Kit carries two patients on a wheelchair ramp, and the engineer disappears before you can ask who approved the valve.",
+            "flags": [
+              "hospital_basement_damaged",
+              "market_displaced",
+              "kit_injured_until_next_day",
+              "valve_sabotage_clue"
+            ],
+            "delta": {
+              "public_reputation": -1,
+              "civic_harm": 3,
+              "resources": -2
+            },
+            "art": {
+              "scene": "Wide view of a steel floodgate stuck diagonally above rushing water. On the left, a hospital basement door is submerged and white-coated patients gather on upper steps. On the right, the covered market's metal awning sags into water. Kit in a green medic vest pushes a wheelchair across a wet concrete ramp."
+            },
+            "callback": "Day 14: a damaged valve with the crescent emblem appears at the infirmary."
+          }
+        },
+        {
+          "id": "evacuate-hospital",
+          "label": "Open the overflow and carry the patients",
+          "approach": "Volunteer-led civil rescue",
+          "check": {
+            "power_any": [
+              "spatial",
+              "biotech"
+            ],
+            "difficulty": 6
+          },
+          "cost": "The hospital closes for repairs; market homes and stalls stay dry.",
+          "success": {
+            "narrative": "The hospital goes dark, but Nix folds a temporary route between two lit stairwells and the university gym. Everyone escapes. The market cheers, then asks why a hospital was ever built on the lowest bank.",
+            "flags": [
+              "hospital_closed",
+              "market_spared",
+              "volunteer_evacuation_network"
+            ],
+            "delta": {
+              "public_reputation": 1,
+              "civic_harm": 0,
+              "resources": -2
+            },
+            "art": {
+              "scene": "High-angle view of a hospital rooftop beside a deep black canal. A violet rectangular portal connects the roof to a bright gymnasium door across the street. Nix in a white jacket gestures patients through. The market stalls on the far bank remain above the brown waterline."
+            },
+            "callback": "Day 21: the evacuation volunteers will help at prom if you honored their independent decisions."
+          },
+          "failure": {
+            "narrative": "The folding route collapses before the last floor clears. Mina keeps a rescue line attached to a hospital balcony as the gym fills with stretchers; Nix is injured and furious that you hurried the count.",
+            "flags": [
+              "hospital_closed",
+              "nix_injured_until_next_day",
+              "market_spared",
+              "patient_transfer_delayed"
+            ],
+            "delta": {
+              "public_reputation": -1,
+              "civic_harm": 1,
+              "resources": -2
+            },
+            "art": {
+              "scene": "Night view of a hospital balcony above dark water. A cracked violet portal flickers over the street. Mina hangs from a bright orange rescue cable beside three stranded patients. Nix lies on a dry stretcher, their white jacket torn at the elbow. Far-off market tents remain dry."
+            },
+            "callback": "Day 13: an infirmary visit can shorten Nix's recovery but costs a daytime slot."
+          }
+        },
+        {
+          "id": "divert-developer",
+          "label": "Flood the developer's underground car park",
+          "approach": "Unauthorized rerouting and evidence theft",
+          "check": {
+            "power_any": [
+              "technopathy",
+              "spatial"
+            ],
+            "difficulty": 7
+          },
+          "cost": "Use the contractor's private storm channels without notifying the city.",
+          "success": {
+            "narrative": "The hospital and market stay above water. The developer's garage floods, exposing a maintenance locker filled with copied city contracts. Sol wants to publish the documents; a tenant leader wants them used as bargaining chips instead.",
+            "flags": [
+              "hospital_powered",
+              "market_spared",
+              "contractor_evidence",
+              "rogue_legal_exposure"
+            ],
+            "delta": {
+              "rogue_independence": 2,
+              "underworld_status": 1,
+              "faculty_standing": -2
+            },
+            "art": {
+              "scene": "Inside a luxury tower parking garage. Brown water surrounds black sports cars, polished concrete columns and a fallen security gate. Sol in an amber visor kneels beside an open steel locker containing damp rolled maps and brass crescent badges. Light from the open garage ramp silhouettes him."
+            },
+            "callback": "Days 18–23: the contracts can expose a villain agent or blackmail the developer; both routes cost an ally."
+          },
+          "failure": {
+            "narrative": "An automatic lock seals the tunnel with Sol inside. The diverted water reaches the market anyway. You can recover the incriminating contract or open the emergency door first; Sol later remembers which you chose.",
+            "flags": [
+              "sol_injured_until_next_day",
+              "rogue_legal_exposure",
+              "market_displaced",
+              "contract_fragment"
+            ],
+            "delta": {
+              "rogue_independence": 1,
+              "civic_harm": 2,
+              "trust_sol": -2
+            },
+            "art": {
+              "scene": "Low camera inside a concrete drainage tunnel lit by one red emergency lamp. Water rises to Sol's waist behind a closed mesh gate, his amber visor glowing beside an open yellow waterproof document case. A second student pulls at the gate wheel from the dry foreground."
+            },
+            "callback": "Day 15: Sol challenges any future order that treats evidence as more valuable than a person."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ct-d18-letters-of-merit",
+      "day_range": [
+        16,
+        21
+      ],
+      "phase": "day",
+      "location_id": "campus-hall-of-laurels",
+      "factions": [
+        "faculty",
+        "civic",
+        "rogue"
+      ],
+      "party": [
+        "sol",
+        "imani",
+        "mina"
+      ],
+      "villain_signal": "The scholarship algorithm penalizes applicants who attended the Lower Docks relief center; its developer also supplies the prom security system.",
+      "title": "Letters of Merit",
+      "opening": "At the scholarship ceremony, the brass ranking machine rejects nearly every student who helped during the flood. Dean's office calls it a statistical anomaly. Sol sees the disqualifying field in the source. Imani spots names attached to private medical and family records. A donor offers to fund the emergency clinic if you leave today's award list untouched.",
+      "conflict": "Who owns a fair result when proving it would expose the people already injured by the system?",
+      "choices": [
+        {
+          "id": "publish-logs",
+          "label": "Project the full scoring ledger on the ceremony wall",
+          "approach": "Open disclosure including personal records",
+          "check": {
+            "power_any": [
+              "technopathy",
+              "empathy"
+            ],
+            "difficulty": 5
+          },
+          "cost": "Affected students lose control of private information.",
+          "success": {
+            "narrative": "Students can finally see the rigging. The donor leaves, three scholarships are frozen, and a student whose medical history appeared without permission will not speak to you. Imani refuses to call this a clean victory.",
+            "flags": [
+              "rigged_scores_public",
+              "scholarships_frozen",
+              "privacy_breach",
+              "donor_exposed"
+            ],
+            "delta": {
+              "faculty_standing": -2,
+              "public_reputation": 1,
+              "trust_imani": -2
+            },
+            "art": {
+              "scene": "Wide view of the stone scholarship hall. Three brass ranking machines project hundreds of tiny illuminated rows over the high wall. Students point at the projection while some turn their faces away. Imani with long black braids stands under the projection with her arms folded. An empty donor chair sits at the front."
+            },
+            "callback": "Day 26: students may organize a public vote but the privacy-breach victim can refuse the player's leadership."
+          },
+          "failure": {
+            "narrative": "The machine blanks its display halfway through the upload. A leaked medical chart appears first and a security guard confiscates the terminal. The dean blames Sol and suspends him from network duty.",
+            "flags": [
+              "partial_score_leak",
+              "sol_restricted",
+              "privacy_breach",
+              "donor_coverup"
+            ],
+            "delta": {
+              "faculty_standing": -3,
+              "trust_sol": -1,
+              "public_reputation": -1
+            },
+            "art": {
+              "scene": "Close view of a large brass scholarship machine at the hall dais. One wall projection shows a single rectangular medical chart with fine illegible markings; the remaining panels are dark. A uniformed security guard takes a glowing amber tablet from Sol as seated students stare."
+            },
+            "callback": "Day 24: a donor-sponsored reporter offers to restore Sol's badge if you sign a false retraction."
+          }
+        },
+        {
+          "id": "replace-rank",
+          "label": "Secretly redirect awards to excluded students",
+          "approach": "Covert redistribution of private money",
+          "check": {
+            "power_any": [
+              "technopathy",
+              "spatial"
+            ],
+            "difficulty": 7
+          },
+          "cost": "The donor stays powerful and your friends carry the secret.",
+          "success": {
+            "narrative": "The excluded students receive their letters, but the donor can now prove somebody forged his signatures. Sol holds the backup key, which means you must trust him with an ugly secret; Imani asks whether the students should have been allowed to choose.",
+            "flags": [
+              "awards_redirected",
+              "covert_signature_trail",
+              "donor_not_exposed",
+              "sol_holds_key"
+            ],
+            "delta": {
+              "rogue_independence": 2,
+              "resources": 2,
+              "trust_imani": -1
+            },
+            "art": {
+              "scene": "Medium view of a wooden award table. Four adult students hold sealed cream envelopes beside a brass ranking machine showing green lamps. Sol in his amber visor slips a small brass key into his navy coat pocket. A donor in a silver suit claps at the rear of the hall."
+            },
+            "callback": "Day 25: the signature trail can finance night patrol or become a lever used by the mastermind."
+          },
+          "failure": {
+            "narrative": "The machine detects the rewrite. Hundreds of blank award letters fall from its mechanical printer onto the marble floor. The donor claims the entire class is dishonest, and scholarship housing payments are withheld until the hearing.",
+            "flags": [
+              "scholarships_frozen",
+              "donor_not_exposed",
+              "housing_payments_delayed",
+              "sol_under_investigation"
+            ],
+            "delta": {
+              "faculty_standing": -2,
+              "resources": -2,
+              "trust_sol": -1
+            },
+            "art": {
+              "scene": "Ground-level view of white unprinted certificates scattered across polished stone below an open brass printing machine. A suited donor points at Sol standing by the podium; adult students gather their papers from the floor. An amber warning lamp is lit above the printer."
+            },
+            "callback": "Day 22: the tenants from the flood arrive at campus asking why students can no longer pay rent."
+          }
+        },
+        {
+          "id": "student-audit",
+          "label": "Let affected students lead a public audit",
+          "approach": "Slow procedural accountability and shared control",
+          "check": {
+            "power_any": [
+              "empathy",
+              "kinetic"
+            ],
+            "difficulty": 6
+          },
+          "cost": "Delay the money and surrender control of the investigation.",
+          "success": {
+            "narrative": "The students vote to suspend the ceremony and elect three auditors. The clinic loses two weeks of donor funding, but the award process is no longer controlled by either the donor or you. Imani agrees to serve only if you step away from the chair.",
+            "flags": [
+              "student_audit",
+              "clinic_funding_delayed",
+              "award_oversight_shared"
+            ],
+            "delta": {
+              "community_trust": 2,
+              "faculty_standing": 1,
+              "resources": -1
+            },
+            "art": {
+              "scene": "A circle of adult students stands around three tables in the scholarship hall. Imani in her navy coat places a brass ballot box in the center. Mina and Sol hold up open empty hands rather than the ranking tablet. Through high windows, afternoon light falls on folded chairs and closed award envelopes."
+            },
+            "callback": "Day 27: the auditors can testify to the prom council, even if they vote against the player's preferred plan."
+          },
+          "failure": {
+            "narrative": "The donor walks out carrying his backup discs while the assembly argues over procedure. The clinic closes for a day, and a donor-funded newspaper prints a photograph of students accusing each other. The elected auditors remain together, though angry.",
+            "flags": [
+              "student_audit",
+              "donor_escapes_with_backup",
+              "clinic_closed_one_day",
+              "press_backlash"
+            ],
+            "delta": {
+              "community_trust": 1,
+              "faculty_standing": -1,
+              "resources": -2
+            },
+            "art": {
+              "scene": "View from the high gallery above the scholarship hall. Students argue around a brass ballot box while a silver-suited donor crosses an open side door holding a hard black case. Two closed clinic donation tins sit on the empty dais; loose envelopes lie beneath a chair."
+            },
+            "callback": "Day 23: the donor's backup discs appear in prom security's inventory, creating a narrow opportunity to recover them."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ct-d27-one-last-dance",
+      "day_range": [
+        25,
+        28
+      ],
+      "phase": "night",
+      "location_id": "campus-ballroom",
+      "factions": [
+        "hero",
+        "villain",
+        "rogue"
+      ],
+      "party": [
+        "imani",
+        "nix",
+        "kit"
+      ],
+      "villain_signal": "A twelve-sided chandelier broadcasts to municipal shield towers when the fourth dance begins. The signal belongs to the run-selected city-threat faction.",
+      "title": "The Fourth Dance",
+      "opening": "Prom rehearsal has already begun. The academy's crystal chandelier clicks one rotation whenever the string quartet changes key. From the lighting booth, Nix sees the same crescent signal at the hospital, market and scholarship machines. Student council asks you not to ruin the dance without proof. The antagonist offers a private channel through the backstage board.",
+      "conflict": "Do you stop a threat everyone can see, risk the crowded room for evidence, or make yourself useful to the person behind it?",
+      "choices": [
+        {
+          "id": "cut-power",
+          "label": "Kill the ballroom feed before the fourth dance",
+          "approach": "Immediate public safety at the cost of a panic",
+          "check": {
+            "power_any": [
+              "kinetic",
+              "technopathy"
+            ],
+            "difficulty": 6
+          },
+          "cost": "Prom guests cannot see the exits and city defenders lose the signal trace.",
+          "success": {
+            "narrative": "The chandelier stops, the city shields stay quiet, and guests exit along glow-stick lines carried by student volunteers. Half the class calls you a coward. A couple who met under the chandelier invites you to their quiet rooftop prom instead.",
+            "flags": [
+              "broadcast_stopped",
+              "prom_disrupted",
+              "volunteer_exit_network",
+              "villain_signal_lost"
+            ],
+            "delta": {
+              "public_reputation": -1,
+              "civic_harm": -1,
+              "community_trust": 2
+            },
+            "art": {
+              "scene": "Wide view of a dark ballroom. The twelve-sided glass chandelier hangs unlit and motionless. Students in formal clothes follow two rows of turquoise glow sticks toward open side doors. Imani in a teal scarf holds the door while Mina raises a small amber shield over the steps."
+            },
+            "callback": "Day 30: the volunteers can organize a citywide evacuation even if the player has no official authority."
+          },
+          "failure": {
+            "narrative": "Emergency breakers fail, leaving one set of side doors locked. The chandelier keeps turning in the dark, and shards fall into an empty circle as the guests scramble. Kit is hurt opening a manual stairwell door.",
+            "flags": [
+              "broadcast_partially_active",
+              "kit_injured_until_next_day",
+              "prom_panicked",
+              "emergency_route_found"
+            ],
+            "delta": {
+              "civic_harm": 2,
+              "public_reputation": -2,
+              "community_trust": 0
+            },
+            "art": {
+              "scene": "Low view of the ballroom floor covered in small glass fragments beneath the still-glowing central chandelier. Kit in a green medic vest crouches by a heavy steel exit door with a torn sleeve. Students in blue and silver formal clothes gather behind a dark railing while red emergency lamps glow."
+            },
+            "callback": "Day 29: entering the infirmary to help Kit sacrifices the last chance to gather official prom evidence."
+          }
+        },
+        {
+          "id": "keep-dancing",
+          "label": "Follow the signal while the dance continues",
+          "approach": "Undercover investigation with the crowd still present",
+          "check": {
+            "power_any": [
+              "spatial",
+              "empathy"
+            ],
+            "difficulty": 7
+          },
+          "cost": "The crowd remains exposed while the team traces the sender.",
+          "success": {
+            "narrative": "You locate a transmitter inside an empty conductor's baton case. Its link points to an occupied city control room, not the ballroom. The dancers finish the song unaware. Nix is shaken that you chose secrecy, but the villain has lost the advantage of surprise.",
+            "flags": [
+              "transmitter_located",
+              "city_control_room_known",
+              "dance_preserved",
+              "nix_trust_strained"
+            ],
+            "delta": {
+              "evidence": 2,
+              "public_reputation": 1,
+              "trust_nix": -1
+            },
+            "art": {
+              "scene": "Behind the ballroom musicians, an open black velvet instrument case lies on a chair. Inside is a copper transmitter with four pale blue indicator bulbs. Nix in a white jacket kneels beside it, one hand on a glowing purple doorway. Through parted curtains, adult students dance beneath the intact glass chandelier."
+            },
+            "callback": "Day 30: you can attack the city control room or warn the public; both give the antagonist time for a counterplan."
+          },
+          "failure": {
+            "narrative": "The fourth dance begins before the trace completes. The chandelier releases a ring of metallic surveillance discs. Guests scatter as floating cameras project private hallway footage on the walls. The team rescues people, but loses the sender.",
+            "flags": [
+              "city_spy_discs_released",
+              "dance_preserved_briefly",
+              "privacy_breach",
+              "sender_unknown"
+            ],
+            "delta": {
+              "evidence": -1,
+              "public_reputation": -1,
+              "civic_harm": 1
+            },
+            "art": {
+              "scene": "Full view of the ballroom at night. Small silver discs hover above formalwear-clad students, each throwing a rectangular blue image onto a stone wall. The central chandelier turns above them. Imani holds a large curtain across one projection while Nix opens a small violet portal toward a side stairwell."
+            },
+            "callback": "Day 29: a student whose secret footage was revealed demands an apology before helping against the villain."
+          }
+        },
+        {
+          "id": "answer-villain",
+          "label": "Offer the mastermind access to the academy shield in exchange for proof",
+          "approach": "Rogue bargaining at personal and civic risk",
+          "check": {
+            "power_any": [
+              "technopathy",
+              "biotech"
+            ],
+            "difficulty": 8
+          },
+          "cost": "The villain receives a conditional access token; classmates are not consulted.",
+          "success": {
+            "narrative": "The villain sends the city plan and accepts a time-limited key. You can identify the evacuation routes, but the mastermind now knows which people you prioritize. Imani learns the truth through the security ledger and asks you to tell your partners personally.",
+            "flags": [
+              "villain_blueprint",
+              "villain_has_timed_key",
+              "imani_demands_disclosure"
+            ],
+            "delta": {
+              "underworld_status": 2,
+              "evidence": 2,
+              "trust_imani": -2
+            },
+            "art": {
+              "scene": "Close view in a narrow backstage utility room. A brass municipal cabinet stands open with a blue star-shaped switch inside. A violet communications screen shows the silhouette of a hooded adult figure. Sol's brass-lined glove holds a small copper key near the cabinet; Imani is visible in the doorway with her hands lowered."
+            },
+            "callback": "Day 30: the villain knows which hospital, friend or street you will refuse to sacrifice."
+          },
+          "failure": {
+            "narrative": "The mastermind broadcasts the bargain before you receive the blueprint. The chandelier projects your face and a recorded handshake onto the ballroom wall. The city council withdraws its authority from you, but an independent rescue crew offers a harder path.",
+            "flags": [
+              "villain_deal_exposed",
+              "authority_removed",
+              "rogue_rescuers_offer_help",
+              "blueprint_missing"
+            ],
+            "delta": {
+              "faculty_standing": -3,
+              "underworld_status": 1,
+              "community_trust": -1
+            },
+            "art": {
+              "scene": "View across the ballroom from the stage. The huge wall behind the dancers shows a blue holographic image of a student and a cloaked figure shaking hands. Several adult students point toward the backstage balcony where the player stands. The chandelier shines pale purple over an almost-empty dance floor."
+            },
+            "callback": "Day 30: rescue without credentials is possible through the docks network; faculty assistance is closed."
+          }
+        }
+      ]
+    }
+  ],
+  "endings": [
+    {
+      "id": "ct-ending-rooftop-assembly",
+      "type": "hero-community",
+      "requires": [
+        "volunteer_evacuation_network",
+        "student_audit",
+        "broadcast_stopped"
+      ],
+      "title": "Graduation Above the Floodline",
+      "intro": "The academy loses its exclusive rescue charter after the public hearings.",
+      "epilogue": "The graduation is held on the rebuilt market roofs. The clinic shares a generator with the vendors who once housed its patients. Mina refuses the medal and asks for a shift roster instead. No one knows whether the new council will last. Every district now has a key to the gates, and no one gets to turn them alone.",
+      "cost": "The campus loses political privilege and your class loses its planned ball. The city keeps its people and a far less convenient form of safety.",
+      "art": {
+        "scene": "Early morning view across market rooftops repaired with mismatched red and blue sheet metal. Long tables and folding chairs fill the roofs, with adults in ivory graduation robes standing among shopkeepers and hospital staff. Mina in an ivory rescue coat hangs orange safety bunting along a railing. Behind them, the old academy towers are distant and the canal barrier has multiple open pedestrian bridges."
+      }
+    },
+    {
+      "id": "ct-ending-private-shield",
+      "type": "villain-order",
+      "requires": [
+        "awards_redirected",
+        "villain_has_timed_key"
+      ],
+      "title": "The City That Never Goes Dark",
+      "intro": "Your emergency command prevents the mastermind's final cascade, then refuses to end.",
+      "epilogue": "Hospital lights remain on; the market's new tenants are vetted at a guarded bridge. Sol maintains the city grid because somebody has to keep people alive. At graduation, the dean pins your medal to a uniform nobody chose. Each night your council postpones restoring independent ward votes for one more day.",
+      "cost": "Public safety is purchased with permanent surveillance, and former friends keep asking whether they can leave.",
+      "art": {
+        "scene": "Night panorama of Comet City from above the canal. Every hospital and apartment window glows white beneath a broad translucent blue shield. Three black security drones hover over a guarded metal footbridge; a small queue of civilians waits at a checkpoint. At the front of an academy balcony, a solitary graduate in a navy cape wears a gold medal while Sol stands several steps behind beside a lit control console."
+      }
+    },
+    {
+      "id": "ct-ending-empty-stage",
+      "type": "rogue-evacuation",
+      "requires": [
+        "rogue_rescuers_offer_help",
+        "market_displaced"
+      ],
+      "title": "The Prom That Became a Ferry",
+      "intro": "Without academy authority, you turn the city's emergency vessels into a patchwork evacuation fleet.",
+      "epilogue": "The ballroom survives, but everyone leaves it empty. Market families and injured faculty share blankets on the harbor ferries. The antagonist loses the crowd needed to seize control; much of the waterfront is wrecked anyway. Your diploma arrives weeks later by post, addressed to a boat no longer tied to that dock.",
+      "cost": "The city survives without its shoreline, the official victory parade never happens, and several allies choose to rebuild somewhere else.",
+      "art": {
+        "scene": "Wide sunrise shot from a harbor pier. Four crowded orange-and-white passenger ferries sail past damaged docks and half-submerged market roofs. Students in torn formal clothes hand water bottles to families beneath deck awnings. The academy glass ballroom stands undamaged on the hill at upper right with unlit windows. A single navy graduation cap rests on a coil of rope in the foreground."
+      }
+    }
+  ]
+}
