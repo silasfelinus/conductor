@@ -140,6 +140,19 @@ kind_robots #2663–#2668 sat open for three weeks (2026-10-01).
   issues whose project is paused/retired/finished are reported by the sweep
   (`issue_bridge`), never auto-imported.
 
+### Master GitHub issues: deep brief, not prompt ballast
+
+**After** a project/task is assigned, check that slug in
+[`docs/agents/master-issues.yaml`](docs/agents/master-issues.yaml). Its linked
+master issue holds detailed scope, evidence and shared findings. Read just the
+relevant sections/comments; never preload every project's full issue into the
+agent prompt. Follow the focused [project issue context and handoff
+protocol](docs/agents/project-issue-context.md) to post important cross-task
+findings with source/section/PR permalinks, not bulky copied text. The issue
+does not replace Conductor ownership, task status, safety gates or `CONTROL.md`.
+An umbrella labeled `conductor:skip` is still a context source, not a
+single bridge-imported task.
+
 ## Picking what to work on
 1. **Check Todos first** — run `scripts/fetch_todos.py` and handle the top OPEN todo
    before continuing to roadmap tasks (see "Todos" section above).
