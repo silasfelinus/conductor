@@ -48,19 +48,19 @@
 
 ### Mara (working name): Lines That Last (Sober first-meeting, all states)
 
-**Need:** She is a talented modern Indigenous tattoo artist with her own independent studio, a fictional casino-revenue-supported tribal small-business grant in her background, and personal sobriety based on precision. She has clients, bills, collaborators and aspirations; she is **not** a mystical key to Indigenous knowledge.
+**Correction 2026-10-25 (t-009):** the earlier version of this section gave Mara a tribal identity, a casino-revenue grant and a cultural-review gate. That is **withdrawn** under [EXCLUDED-CONTENT-2026-10-22.md](EXCLUDED-CONTENT-2026-10-22.md); Mara is a fictional independent tattoo artist with no tribe-specific ancestry, grant scheme or coded designs. First-meeting prose: [COMPANION-INTROS.md](COMPANION-INTROS.md).
 
-**Three earned beats:** (a) follow evidence of a plagiarized modern studio design and respect client confidentiality; (b) help defend her shop from fictional exploitative commercial terms while also weighing how creative businesses actually survive; (c) support a voluntary apprenticeship/professional network with consent, fair pay and shared credit, with community participation not dictated by the outsider protagonist.
+**Need:** She is a professionally established tattoo artist with her own studio and a personal preference for sobriety (precision). She has clients, bills and aspirations, and is not a mystical key to anything.
 
-**Hard decision:** trust emerging artists with work and authority she could control herself, without the player deciding what her nation should endorse or treating her identity as moral currency.
+**Three earned beats:** (a) follow evidence of a copied modern studio design while respecting client confidentiality; (b) help defend her shop from fictional exploitative commercial terms while weighing how creative businesses survive; (c) support a voluntary apprenticeship/professional network with consent, fair pay and shared credit, with participation set by the artists, not the protagonist.
 
-**Optimal result:** she keeps agency over her craft, her studio becomes durably viable, and apprentices create new work rather than merely copy her style. She retains meaningful ties to her community on her own terms. **Tradeoff:** mentorship consumes time; her personal artistry changes as she makes space for others.
+**Hard decision:** trust emerging artists with work and authority she could control herself, without the player deciding for her.
 
-**Non-optimal dignity:** she may opt for independence, switch studio space, protect a client at the cost of public recognition, or continue building after a costly compromise.
+**Optimal result:** she keeps agency over her craft, her studio becomes durably viable, and apprentices create new work rather than copy her style. **Tradeoff:** mentorship consumes time and changes her own art.
+
+**Non-optimal dignity:** she may opt for independence, switch studio space, protect a client at the cost of recognition, or continue after a costly compromise.
 
 **Possible flags:** `mara_client_trust_kept`, `mara_studio_autonomy_secured`, `mara_lines_that_last`.
-
-**Editorial gate:** before culture-specific published scenes, research a geographically coherent specific nation and seek appropriate contemporary Indigenous perspectives. No invented actual casino program, tribe-wide consensus, sacred tattoo designs or tribal consent checks.
 
 ### Cedar (working name): Two Ribbons, One Home (Tripping first-meeting, all states)
 
