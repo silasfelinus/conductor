@@ -333,3 +333,41 @@ tasks:
       Preserve Honor/Taint, replay the 15 frozen ending fixtures, and extend
       adversarial route tests across injured-entry cases. Require current-head
       TypeScript, contract tests, and any relevant responsive preview checks.
+  - id: t-014
+    title: "Zuzu Gamebook | Master completion roadmap"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#4139"
+    updated: '2026-10-25'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4139 (https://github.com/silasfelinus/kind_robots/issues/4139), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4139`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      # Zuzu: Koala Assassin Gamebook | Master completion roadmap
+
+      **Status: ACTIVE DEVELOPMENT / ADVERSARIAL QA. Not ready for human approval.**  
+      **Priority:** High. **Owner of coordination:** [Conductor `zuzu-gamebook` roadmap](https://github.com/silasfelinus/conductor/blob/main/projects/zuzu-gamebook/roadmap.yaml). **Implementation:** `/play/zuzu-gamebook` in Kind Robots.  
+      **Purpose:** One durable, whole-project issue tracking the gamebook from its existing playable foundation to a *finished, illustrated, polished, thoroughly adversarially tested* high-quality game experience, **then and only then** requesting Silas's final creative verdict.
+
+      > **Do not turn this into an early human checkpoint.** Agents own the remaining writing, art, engineering, reviews, playtesting, retries and fixes. No request for design approval while any actionable art, text, route, usability, or verification issue remains. Final approval is a subjective-acceptance gate, not a substitute for automated completion. Separate permissions remain required for public publication, spending and irreversible production operations.
+
+      ## Starting point and existing work
+
+      The October 22–24 development passes established a nine-act, deterministic TypeScript branching adventure with **377 sections, 15 endings**, Honor/Taint consequences, dice/skills/combat, inventory, save recovery, and illustrated scenes (revalidate those counts against the current source; they are a previous tested baseline, not a claim of final acceptance).
+
+      Completed engineering examples:
+      - [Kind Robots #4029](https://github.com/silasfelinus/kind_robots/pull/4029): no silent loss of full-pack loot and recoverable restarts.
+      - [Kind Robots #4032](https://github.com/silasfelinus/kind_robots/pull/4032): legitimate seeded paths to all 15 endings, including Wren's Lamp, and improved Feint/Guard/Quiet Draw balance.
+      - [Kind Robots #4037](https://github.com/silasfelinus/kind_robots/pull/4037): **15 frozen, replayable complete-story witnesses comprising 1,217 player actions**, plus a six-encounter wounded/Resolve stress matrix.
+      - [Conductor #6509](https://github.com/silasfelinus/conductor/pull/6509): queued wounded-route fairness review (`t-013`).
+
+      **Important reconciliation:** Historical Conductor `t-010` (“Public launch and Silas's visual/story verdict”) is marked `done` while `t-009` final QA is still `waiting` and `t-006`/`t-007`/`t-008`/`t-012`/`t-013` remain open. **Do not interpret that historical `done` as approval of this complete final design, nor auto-close this issue.** Establish a *new final-only gate* in Conductor after the exhaustive agent-owned completion work below, with `gate_human: true`, `gate_reason: subjective-acceptance`, and dependencies on every remaining acceptance stage.
+
+      ## Exit checklist: all sections must be satisfied before the issue changes to human-gate status
+
+      ### 1. Scope and complete narrative content
+
+      - [ ] Audit the entire canonical Book One graph, nine acts, all section entries/exits, side
+
+      [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4139]
