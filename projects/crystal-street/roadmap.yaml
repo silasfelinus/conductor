@@ -486,7 +486,7 @@ tasks:
   - id: t-019
     milestone: m2
     title: "Factions (friends, family, officials, neighbors) and their special endings, including Final Girl"
-    status: claimed
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -512,9 +512,21 @@ tasks:
       out of the cul-de-sac); friends at zero starts the Final Girl sequence: the finale comes
       early, solo, crew bonuses off and edges kept, and a win earns the Final Girl title
       whatever the player's pronouns. Scrapbook gains a special-endings row.
-    updated: '2026-10-25T01:58:56Z'
+
+      Closed 2026-10-25 PT: kind_robots #4151 merged as ae5a572. Final rules: failures cost
+      standing (family once a night for a lost nightmare card; officials for failed sneaky or
+      reckless night rolls; neighbors once a night for a failed street card; friends for a
+      shaken or dismissed friend or a night faced alone), and rest, comfort food, study at
+      library or high school, kind successes and recruits mend it. Family starts at 4, others
+      at 3, max 5. Collapses end the week as Grounded, Blamed or Run Out of the Cul-de-Sac;
+      friends at zero bring the finale that night with no crew bonuses and a win stamps Final
+      Girl. Near-optimal autoplay best 59% with ~2% special endings; random play collapses
+      ~23% and wins Final Girl ~5%. Art: art/SPECIAL-1.yaml jobs 45341-45344, delivery
+      pending.
+    updated: '2026-10-25T02:31:40Z'
     claimed_by: 2026-10-24T135800Z-cs-art-delivery
     claimed_at: '2026-10-25T02:05:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#4151'
 
   - id: t-020
     milestone: m2
