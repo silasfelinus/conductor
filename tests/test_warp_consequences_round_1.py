@@ -59,6 +59,18 @@ def test_warp_encounters_are_nontrivial_with_no_dead_end_failure():
         assert len(ending["art"]["scene"]) > 240
     assert len({e["id"] for e in story["endings"]}) == 3
 
+    # Endings need an actual sequence of *compatible* choices and results.
+    # A player can choose only one outcome from each once-only encounter.
+    from itertools import product
+
+    episode_results = [
+        [set(c[tier]["flags"]) for c in episode["choices"] for tier in ("success", "failure")]
+        for episode in story["episodes"]
+    ]
+    for ending in story["endings"]:
+        needed = set(ending["requires_all"])
+        assert any(needed <= set().union(*combination) for combination in product(*episode_results)), ending["id"]
+
 
 def test_each_warp_consequence_has_a_literal_illustration_request():
     story, ledger = read()
