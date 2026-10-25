@@ -91,3 +91,12 @@ type: response
 - Pa Nhia is a proposed name; creative review stays with t-004 (human gate). Kaizen filed as t-067.
 
 **Suggested action:** Fill PR body handoff headings before opening the PR so the first handoff check is green.
+
+## 2026-10-25 — Reviewer: weird-humboldt/t-008 close-out (PR #6647)
+**Decision:** Approved and squash-merged (7461fd2) after green CI on the latest head.
+**Detail:**
+- Roadmap-only bookkeeping, reversible. Cited verifyEcotone* contracts exist in kind_robots (utils/scripts/verifyEcotone.test.ts); kind_robots PRs #4045/#4063/#4184 back the acceptance items. Human fun assessment explicitly not claimed.
+- Nit: the t-008 note kept a dangling line ("Sober-route parity slice merged as kind_robots PR") before the close-out text; harmless.
+- The one red "Validate Worker PR handoff" was a first-attempt run superseded by a green rerun.
+
+**Suggested action:** Fill PR body handoff headings before opening the PR so the first handoff check is green; trim truncated lines when appending to long task notes.
