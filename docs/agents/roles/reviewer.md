@@ -8,6 +8,13 @@ Read AGENTS.md (core) first; this playbook adds only what this role needs.
 
 ### If you're reviewing
 - Read the project's `kind` first.
+- **Project-wide review context:** when the assigned project appears in
+  `docs/agents/master-issues.yaml`, consult only the issue section and
+  evidence comments relevant to the PR. Use
+  `docs/agents/project-issue-context.md` to report a confirmed cross-task
+  correction with direct issue-section, test and PR links. Avoid copying the
+  entire discussion into TALKBACK or roadmap notes.
+
 - **Before reviewing:** check the project's `TALKBACK.md` for any prior critique context
   on this task or recurring Worker patterns. Use it to calibrate your review.
 - **software, reversible, does the task, scoped:** approve and merge if the Worker has not
