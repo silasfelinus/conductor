@@ -691,7 +691,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-24T03:51:10Z'
+    updated: '2026-10-25T06:56:00Z'
     note: >-
       Silas, 2026-10-23 PT (verbatim): "We can use a real animation at the beginning, maybe a 15
       second high energy thrash metal music video." Queue generated video clips (WAN from the
@@ -705,7 +705,14 @@ tasks:
       44645-44653 (A14B first/last frame, overnight). Next: once 44644 is DONE run
       scripts/export_rainbow_opening.py --kind-robots ../kind_robots and ship the delivery PR
       (stills stand in for clips not yet rendered); re-run as clips land.
-    implementation_pr: 'silasfelinus/kind_robots#4096'
+
+      2026-10-25 PT: Silas asked for this intro to run in the Music Video creator.
+      All renders were DONE (track 44644 -> ArtImage 252834, clips 44645-44653 ->
+      252835-252849), but the clips are animated webp, which the creator's exporter
+      cannot decode. kind_robots#4165 (merged 7421ad0) adds the prepared spec
+      rainbow-princess-opening (16 s, 176 BPM, the nine ledger stills, the finished
+      track, 6 hero shots). Next: Create from spec, then Produce, which re-animates the
+      hero shots as mp4; attach the final video to the cabinet opening (RAINBOW_OPENING).
   - id: t-035
     milestone: m4
     title: "Doodle direction bake-off: C.A.T.S. emblem, cat-ship key art, co-pilots, DOG commanders, restyled Maribel"
