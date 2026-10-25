@@ -190,6 +190,25 @@ def test_refresh_status_keeps_a_delivered_image_when_the_lookup_fails(tmp_path):
     saved = yaml.safe_load(path.read_text())
     assert saved["subjects"][0]["art"] == {"zimage-turbo": {"status": "DONE", "art_image_id": 9}}
 
+def test_refresh_status_leaves_a_rejected_lane_alone(tmp_path):
+    path = _ledger(tmp_path)
+    header, ledger = enq.load_ledger(path)
+    ledger["subjects"][0]["jobs"] = {"zimage-turbo": 7}
+    ledger["subjects"][0]["art"] = {"zimage-turbo": {"status": "REJECTED", "art_image_id": None}}
+    enq.refresh_status(path, header, ledger, get=lambda job_id: (200, {"data": {"job": {"status": "DONE", "artImageId": 9}}}))
+    saved = yaml.safe_load(path.read_text())
+    assert saved["subjects"][0]["art"] == {"zimage-turbo": {"status": "REJECTED", "art_image_id": None}}
+
+
+def test_refresh_status_skips_job_ids_listed_as_rejected(tmp_path):
+    path = _ledger(tmp_path)
+    header, ledger = enq.load_ledger(path)
+    ledger["subjects"][0]["jobs"] = {"zimage-turbo": 7}
+    ledger["subjects"][0]["rejected"] = [7]
+    enq.refresh_status(path, header, ledger, get=lambda job_id: (200, {"data": {"job": {"status": "DONE", "artImageId": 9}}}))
+    assert "zimage-turbo" not in (yaml.safe_load(path.read_text())["subjects"][0].get("art") or {})
+
+
 KONTEXT_LEDGER = {
     "lanes": [{"key": "angles", "engine": "kontext", "prompt": "prose", "steps": 20, "guidance": 2.5}],
     "subjects": [
