@@ -71,6 +71,12 @@ then be invisible to every subsequent agent).
    - Soft blockers should be documented, then task selection should continue if other safe work exists.
    - If the task has `passes > 0`, read its `retry_context:` field first and shape the
      retry around it — never retry blind (see AGENTS.md "Retry context").
+   - **After assignment**, find this project's one master completion issue in
+     `docs/agents/master-issues.yaml`, if listed. Consult only relevant
+     sections/comments per `docs/agents/project-issue-context.md`; publish
+     consequential shared findings as short source-linked comments, not
+     duplicated multi-page context in the next agent's prompt.
+
 
 4. Keep the implementation small.
    - Change only the files required by the task.
