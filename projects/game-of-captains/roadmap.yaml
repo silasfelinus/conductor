@@ -1,0 +1,179 @@
+# New original playbook, approved as high priority 2026-10-25 PT.
+project: game-of-captains
+kind: software
+autonomous: true
+goal: >-
+  Deliver a funny but ethically consequential space-command playbook: captain and senior crew
+  selection, ship/away missions with 0-3 assigned crew, twelve evolving stars/ports, unique
+  intervention dilemmas, 30 missions, 40 encounter cards, eight seeded alien antagonists
+  interfering throughout a three-act voyage, sixteen deeply earned endings and original
+  character arcs. Reuse canon Vox, sentient Serendipity Space Bar and Captain Fluke
+  Improbability Starcruiser without conflating narrator identities. Private AAA-like
+  one-screen console experience, art delivered, seeded adversarial replay and final human
+  design review; publication gated separately.
+notes_from_silas: |
+  2026-10-25 PT: Silas proposed a HIGH-priority comedy sci-fi space playbook influenced by
+  Space Quest, Red Dwarf, Hitchhikers Guide, Star Wars, Star Trek, Lower Decks, Barbarella
+  and The Orville. Player chooses captain and crew, runs space/away team missions and
+  non-interference ethics scenarios, faces a randomized persistent alien antagonist and earns
+  endings at varying destinations. Reuse established Barkeep Vox, Serendipity Space Bar and
+  Captain Fluke. Master issue: https://github.com/silasfelinus/kind_robots/issues/4182.
+  DESIGN-BRIEF.md explains verified continuity and original-story boundaries.
+milestones:
+  - id: m1
+    title: "FOUNDATION - cast, lore, choice systems"
+    weight: 20
+    status: in-progress
+  - id: m2
+    title: "PLAYABLE - console experience and deterministic engine"
+    weight: 35
+    status: not-started
+  - id: m3
+    title: "CONTENT - story, encounters, endings and delivered art"
+    weight: 30
+    status: not-started
+  - id: m4
+    title: "QUALITY - adversarial playtests, full coverage, acceptance"
+    weight: 15
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m2
+    title: "Build polished private bridge console and complete playable first voyage"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Initial PR delivers original title art, six-style captain choice, crew selection, star-chart
+      mission, 0-3 away assignments, ethical consequence, one seeded antagonist complication,
+      debrief and saves with tests. No generic website. Matching conductorSlug Kind Robots Project
+      record.
+  - id: t-002
+    milestone: m1
+    title: "Write existing-canon reconciliation, captain/crew, stars and narrative bibles"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Preserve Vox distinct from sentient Serendipity, Fluke as seeded narrator; flesh out 6
+      captains, 16 crew, 12 connected ports, factions, command doctrine, ship resources, 3 acts and
+      finale requirements.
+  - id: t-003
+    milestone: m2
+    title: "Implement deterministic voyage, ship/away staffing, ethics and persistence engine"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Seeded ship and away assignments, crew skill/injury/trust/absence, intervention consequences,
+      antagonist effects, star-map unlocking, resources, saves/migration and battle-tested fail
+      paths; no LLM at play time.
+  - id: t-004
+    milestone: m3
+    title: "Write 30 substantial space and away missions with consequence layers"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Varied diplomacy, exploration, rescue, scientific hazards, trade, first contact, crew
+      disagreement and ship trouble, each with original success/mixed/fail/withdrawal, remembered
+      people and policies.
+  - id: t-005
+    milestone: m3
+    title: "Write 40 distinctive location, faction and shipboard encounter cards"
+    status: waiting
+    depends_on: t-002
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      At least 12 locations; evolving local decks, Vox/Serendipity callbacks, consent/intervention
+      complexities, crew arcs and alternative solutions without universal perfect specialist.
+  - id: t-006
+    milestone: m3
+    title: "Build eight personalized alien antagonist arcs and interrupt decks"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Each seed picks unique alien goal/method/complications/clues and interference, with nontrivial
+      bargain/defeat/reconciliation/complicity resolutions and captain/crew combination coverage.
+  - id: t-007
+    milestone: m3
+    title: "Finish three-act destination graph and 16 earned ending epilogues"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Causally reflect captain doctrine, crew choices, people rescued/abandoned, diplomacy,
+      promises, antagonist relationship, tech contamination and alternate finale destinations.
+  - id: t-008
+    milestone: m3
+    title: "Deliver project, ship, captain, crew, world and antagonist art"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Art prompt ledger and queue; icon/card/hero, bridge, original crew, poses/expressions, 12
+      planets and 8 antagonists. Reuse existing seed assets where appropriate; verify delivered URLs
+      and ArtJob provenance.
+  - id: t-009
+    milestone: m3
+    title: "Deliver unique mission outcome, conversation and ending illustration coverage"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Audit all significant scene/choice/result/ending paths; render and review actual branching
+      images, failures as well as triumphs, no mere pending prompts counted as finished.
+  - id: t-010
+    milestone: m4
+    title: "Run antagonist-by-captain-by-crew adversarial and every-ending seeded traces"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      From-new-game action logs for all 16 endings, noninterventionist/exploiter/legalist/rescuer,
+      depleted fuel/hull, absent and wounded crew, missed calls, low-trust diplomacy, strange event
+      orders, old saves and softlock probes.
+  - id: t-011
+    milestone: m4
+    title: "Independent canon, ethics, prose, visual and responsive-console red team"
+    status: waiting
+    depends_on: t-010
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Read complete playthrough transcripts; check narrative originality, non-stereotyped culture
+      ethics, genuine comedy, earned endings, delivered art, accessibility and
+      phone/tablet/desktop/gamepad/touch; fix and retest.
+  - id: t-012
+    milestone: m4
+    title: "Final human design acceptance after completion; separate publish gate"
+    status: waiting
+    depends_on: t-011
+    gate_human: true
+    gate_reason: subjective-acceptance
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Not a blocker today. Rename umbrella issue awaiting final human verdict only when no
+      agent-actionable writing/art/engine/UX/tests remain. Silas approves or asks for rewrites; do
+      not infer public release.
