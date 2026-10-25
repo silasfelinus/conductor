@@ -3,23 +3,40 @@ project: comet-city-academy
 kind: software
 autonomous: true
 goal: >-
-  Deliver an original 21-day superhero-school playbook with six mechanically distinct starter
-  power sets, real hero/villain/independent choice paths, 1-3-volunteer dispatch training
-  simulations, school and Comet City location cards, sixteen distinctive classmates and staff,
-  24 patrol cases, 36 encounter cards, prom/graduation crisis with at least 12 earned endings,
-  art actually delivered for important success/failure outcomes, reproducible seeded playtests
-  and a cinematic console-like private Admin preview. Final design verdict belongs to Silas;
-  any public publication is separately gated.
+  Deliver Capes & Tassels: Prom of Doom, a thirty-day, day/night, single-screen
+  superhero graduation RPG. Two geographically consistent campus/town maps,
+  weekly gated authored and seeded encounters, hero/villain/rogue patrol cases,
+  1-3-follower dispatch, romances and sidekick bonds including at least two
+  fully consensual throuple routes, injuries and infirmary recovery, one of
+  eight city-destruction villains per run, powers with unique mission solutions,
+  Hero, Followers, Scrapbook and Settings pages, real save/load/card backs and
+  twelve consequential endings. High-priority art-first Play experience with
+  verified branching art, adversarial seeded tests and final human design review.
 notes_from_silas: |
-  2026-10-25 PT: Silas requested a new HIGH-priority superhero school playbook building on
-  Ecotone, Shifting Desks/Lands, Emperor of Dust and Terrors on Crystal Street. Select power
-  sets with unique quest solutions, become hero or villain through choices, run
-  Dispatch-style training simulations assigning classmates and staff as volunteer heroes,
-  draw school and Comet City location encounter cards, develop daily NPC interactions, reach
-  prom without the world being blown up. Master issue:
-  https://github.com/silasfelinus/kind_robots/issues/4181. New-project creative scope
-  confirmation is soft and never blocks reversible building; DESIGN-BRIEF.md controls
-  details.
+  2026-10-25 PT: Original prompt called for a hero/villain academy, powers,
+  dispatch simulation, classmates, Comet City cards and a graduation threat.
+  Latest same-day revision SUPERSEDES the old 21-day/three-week description:
+  display title "Capes & Tassels: Prom of Doom" (short "Capes & Tassels"),
+  ALL action takes place over the last thirty days before graduation, with
+  campus/town day exploration and night patrol or villain/rogue dispatch.
+  Campus map contains northwest town edge; town map contains southeast campus
+  landmarks, both rendered from one geographically consistent site graph.
+  Romanceable adult NPCs span gender/body types; partners can be field sidekicks,
+  romances, both, with at least two negotiated throuple routes in full game.
+  Recruitable followers receive large multi-emotion splash/portrait and injured
+  art. A wounded follower misses the following day unless a daytime infirmary
+  action heals them early. Hero, evil, rogue/shared missions are all playable.
+  Run-selected antagonist attempts to destroy the city, with relevant plot
+  variants. Full-screen image-led console has Main, both Maps, Dispatch,
+  Followers, Hero, Scrapbook (villains/cinematics/ending variants/affinity),
+  Settings (save/load, card backs), Finale and relationship views. Distinct
+  scripted and random weekly events grow harder and deeper. Stable Conductor
+  slug is comet-city-academy, stable existing Play URL /play/comet-city-academy.
+  The seven-day original demo in kind_robots PR #4183 is a valid starting
+  slice only, NOT the final calendar or canonical game shape. Preserve saved
+  games through explicit versioning or First Week compatibility.
+  Definitive content bible: DESIGN-BRIEF.md. Master issue:
+  https://github.com/silasfelinus/kind_robots/issues/4181
 milestones:
   - id: m1
     title: "FOUNDATION - cast, lore, choice systems"
@@ -53,108 +70,180 @@ tasks:
       Implemented complete seven-day Academy vertical slice and Play route on worker/comet-city-academy-t001-20261025. Single-screen illustrated original title, powers, 1-3 volunteer simulator, incident debrief, school choices, earned prom demo ending, Pinia autosave and seeded test. Pending code PR CI; art is an original illustrated SVG panorama, not yet painted Arthemy delivery.
 
       DONE 2026-10-25 PT. kind_robots #4183 squash merged as 3629b57e3c3f1694c3f9886acf9a9342b5176807 after all 23 checks completed successfully, including typecheck, navigation/layout, CSS formatting, four contract shards and production image build. Play route /play/comet-city-academy includes an illustrated single-screen original stage, six powers, seven-day first-week simulation with 1-3-person team dispatch, campus encounter, saved run and Comet Ball preview finale. Art is static illustrated vector stage (not completed painted ArtJobs). Companion game #4185 adds the two requested main dashboard cards. Full term, painted scene art, deep QA and final design acceptance remain separate roadmap tasks. Merge is not proof of self-hosted production deployment.
-  - id: t-002
-    milestone: m1
-    title: "Write the complete academy bible, power strategy matrix, cast, locations and story graph"
+  - id: t-012
+    milestone: m2
+    title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Detail 6 families and per-act distinct mechanics, 16 complete named NPC arcs, 12 visited
-      sites, 21-day three-act prom buildup, factions, school rules, city ecology and at least 12
-      finale routes.
+      Update Play route visible title, main dashboard highlight and project
+      presentation, retaining comet-city-academy route, conductorSlug and old save.
+      Replace first-week same-loop design with an explicit first 7 of 30 days,
+      two mutually consistent campus/town maps using the exact same node IDs:
+      town edge northwest on campus map, campus southeast on city map.
+      Add real daytime location draws and nighttime patrol/dispatch slots,
+      heroic/villain/rogue plus shared missions, 1-3 follower staffing,
+      and save migration. This is the highest-priority next reversible playable
+      slice, not a rewrite of t-001 or a release approval.
+  - id: t-013
+    milestone: m2
+    title: "Make follower/romance and injury/infirmary interactions playable in the week-one slice"
+    status: waiting
+    depends_on: t-012
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Six individual followers, three adult romanceable NPCs, one sidekick
+      who can also be a romance, visible mutual affinity and compatibility,
+      an explicitly negotiated non-instant triad preview, consequential
+      partner/sidekick assignment, injured state through next day with an
+      alternate infirmary action. Protect consent and staff-student boundaries.
+  - id: t-014
+    milestone: m2
+    title: "Make villain variability and functional console sub-screens playable"
+    status: waiting
+    depends_on: t-013
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Seed-select two different villains with separate methods/clues and
+      actual scene effects in demo; implement navigable Hero, Followers,
+      Scrapbook/yearbook, Settings/save/load/card backs and full illustrated
+      scene views. Record villain appearances, cinematic choices, romance,
+      affinity and alternate early endings. No decorative dead tabs.
+  - id: t-015
+    milestone: m4
+    title: "Verify revised seven-day slice against thirty-day contracts at all widths"
+    status: waiting
+    depends_on: t-014
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Seeded tests for day-night transitions, both aligned map projections,
+      1-3 hero/evil/rogue assignments, once-only cards, weekly gated events,
+      injured-follower exclusion and infirmary exception, relationship
+      consent/triad conditions, autosave/load/migration and different villains.
+      Full from-start 7-day action trace plus 390/768/1440 screenshot
+      verification: main image and primary action visible; no shell scroll.
+  - id: t-002
+    milestone: m1
+    title: "Write 30-day cast/power/romance villain and connected-map bible"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Detail a thirty-day five-band story, six power families with week-specific unique approaches,
+      sixteen recruits and eight romanceable adults across body and gender diversity, two mutually
+      negotiated throuple arcs, twenty-four geographically consistent campus and city sites, eight
+      villains and twelve endings. Reconcile the six existing prototype student IDs.
   - id: t-003
     milestone: m2
-    title: "Build 21-day loop, training cases, fatigue/trust, encounter and save engine"
+    title: "Build 30-day day/night map, dispatch, relationship and save engine"
     status: ready
     depends_on: t-001
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Implement seeded deterministic assignments, odds, 1-3 volunteer responder eligibility,
-      simulated versus real impact, classroom/relationship resources, crises, versioned saves and
-      state migration. No LLM at play time.
+      Implement seeded day/night with scripted anchors and weekly location draws, one-to-three
+      hero/villain/rogue/shared volunteer assignments, changing real versus simulated stakes, power
+      solutions, romance consent and compatibility, follower injuries and infirmary recovery, timed
+      villains and versioned saves including prior first-week conversion. No LLM at runtime.
   - id: t-004
     milestone: m3
-    title: "Author at least 24 training/patrol missions with every result tier"
+    title: "Author at least 36 good/evil/rogue patrol cases with meaningful results"
     status: waiting
     depends_on: t-003
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Write mission-specific triumph/success/mixed/fail/decline consequences, distinctive
-      responders, volunteer disputes, grades, injuries, callbacks and failure-forward play.
+      Create thirty-six distinct training, heroic, villainous and rogue/shared cases across five
+      calendar bands; write meaningful success/mixed/failure/decline, roster conflicts, injuries,
+      unique-power approaches and delayed faction callbacks. Clearly distinguish training simulation
+      from real danger.
   - id: t-005
     milestone: m3
-    title: "Author at least 36 location cards and deep NPC social arcs"
+    title: "Author 30 daily anchors, 60 location cards and relationship scenes"
     status: waiting
     depends_on: t-002
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Unique local decks with at least two power-family-specific solutions per family per act,
-      universal alternative routes, earned friendships/rivalries, consequences on
-      pass/mixed/fail/decline.
+      Create thirty unique scripted day anchors and sixty week-gated random/location cards across
+      twenty-four connected campus/city nodes, with changing day/night versions, individual follower
+      arcs and eight romance routes including two fully negotiated throuples, sidekick conflicts,
+      betrayal and non-power alternatives.
   - id: t-006
     milestone: m3
-    title: "Finish three acts, prom catastrophe and at least 12 distinct endings"
+    title: "Deliver days 1-30, eight villain plans, prom and twelve earned endings"
     status: waiting
     depends_on: t-004
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Map all entry requirements, companions missing and evidence variants; generate real playable
-      crisis resolutions for hero/villain/independent paths, including comeback after mistakes.
+      Complete thirty-day escalating story, days twenty-nine and thirty prom/graduation climax,
+      eight villain-specific destroy-city schemes with differentiated resolution and at least twelve
+      full end states spanning hero/villain/rogue, relationship and sidekick variants; trace every
+      ending prerequisite.
   - id: t-007
     milestone: m3
-    title: "Queue, review and deliver key/cast/location/patrol art to usable paths"
+    title: "Deliver academy key, map, follower emotion and injury art"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Project icon/card/hero, 16 NPC portrait+moods, 12 sites, case scenes; track
-      source/prompt/model/ArtJob and verify rendered final URLs, not just submitted manifests.
+      Produce icon/card/hero, consistent large campus/town maps, sixteen follower full-body splashes
+      and small portraits in emotional states including injured artwork, location and villain
+      imagery. Log ArtJob provenance and delivered final URLs; SVG is temporary concept art.
   - id: t-008
     milestone: m3
-    title: "Illustrate consequence branches, result tiers and ending scenes"
+    title: "Illustrate all patrol, location, relationship and ending branches"
     status: waiting
     depends_on: t-006
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Inventory every consequential choice and actual result; deliver unique illustrated successes
-      and failures, prom sequences and epilogues, with machine-readable asset coverage.
+      Inventory scene and event IDs and paint real mission offer/result variants including
+      success/mixed/failure/refusal, villain reveals, romance/sidekick milestones, hero/evil/rogue
+      finals, injured/recovered figures, scrapbook cinema and card backs. Count only verified
+      delivered assets.
   - id: t-009
     milestone: m4
-    title: "Run seeded adversarial power, roster and every-ending playthroughs"
+    title: "Graph and simulate every ending, power, villain, romance and injury branch"
     status: waiting
     depends_on: t-006
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      From new game reproduce every ending without injected flags; all six powers, neglected cases,
-      fatigue, missing volunteers, villain/hero indecision, weird order, saves and exploit/softlock
-      probes.
+      Record legitimate from-new-game seeded thirty-day action traces for each finale, six powers,
+      eight villains, good/evil/rogue players, roster exhaustion, friendship/romance/throuple
+      eligibility, injuries and infirmary, map crossover, skipped scenes and migrated saves. Compare
+      authored, reachable, rendered and delivered counts.
   - id: t-010
     milestone: m4
-    title: "Complete independent editorial, art, UX and balance red team"
+    title: "Independent thirty-day narrative/consent, art and viewport red team"
     status: waiting
     depends_on: t-009
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Read whole-game transcripts, test interesting losses and coherent stakes, polish all
-      actionable gaps, verify actual images and phone/tablet/desktop/gamepad/touch in cinematic
-      views.
+      Read whole-run transcripts for unique mission choices, plausible romance/triad consent and
+      adult agency, villains, readable stage, injury and recovery, moral balance and earned
+      consequences. Audit rendered art and 390/768/1440 screens, gamepad/touch access, fix and
+      retest.
   - id: t-011
     milestone: m4
     title: "Final human design acceptance after all agent-owned QA and separate release authorization"
