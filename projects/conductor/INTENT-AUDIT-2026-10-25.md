@@ -17,7 +17,7 @@ Source-grounded semantic review by the existing Conductor agent (no paid model A
 
 1. **kind-pinball lifecycle** (carried since 10-13): `finished` while t-016 (Silas's play verdict) is `ready` and the project sits 8th in priority. Needs Silas: keep `finished`, or return to `active`?
 2. **Open kind_robots PRs** from the last audit (#3995, #4005 Patron/Stripe — human-gated; #4024, #4035, #4040) were not re-verified this run (no live PR access in this sandbox); a reviewer pass is still owed on the non-gated ones.
-3. **crystal-street** is receiving heavy daily work but is outside the named focus tier; confirm it is intended as ordinary lifecycle work and not displacing the seven (no evidence it is: the focus tier's ready queue is non-empty).
+3. **crystal-street** (Silas, 2026-10-24: ACTIVE/high, CONTROL.md section present, in `priority.yaml`) is explicitly directed work, not drift. Its heavy daily activity is consistent with that direction.
 4. Deployed-site checks of `/play/*` remain unverified (no live access).
 
 ## Next review
