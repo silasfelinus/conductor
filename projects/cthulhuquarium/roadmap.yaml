@@ -94,6 +94,11 @@ milestones:
   weight: 25
   status: in-progress
 
+- id: m5
+  title: "FULL-GAME RELEASE CANDIDATE — story/art coverage, adversarial QA, final-only human verdict"
+  weight: 50
+  status: in-progress
+
 tasks:
   # ---------------------------------------------------------------- m1 SHAPE
 - id: t-001
@@ -1350,11 +1355,10 @@ tasks:
   implementation_pr: 'silasfelinus/kind_robots#2640'
 
 - id: t-069
-  milestone: m3
-  title: 'FOR SILAS: re-audit Cthulhuquarium once art is delivered and the layout bugs are fixed'
-  status: needs-human
+  milestone: m5
+  title: 'FINAL HUMAN GATE ONLY: approve Cthulhuquarium final design or request rewrites'
+  status: waiting
   gate_human: true
-  owner: worker
   stakes: reversible
   passes: 0
   depends_on:
@@ -1362,6 +1366,16 @@ tasks:
     - t-066
     - t-067
     - t-083
+    - t-084
+    - t-085
+    - t-089
+    - t-090
+    - t-091
+    - t-092
+    - t-093
+    - t-094
+    - t-095
+    - t-096
   note: >-
     FOR SILAS: Cthulhuquarium failed your 2026-09-11 audit, and your verdict stands: "this is
     nothing like the pitched experience except in the barest of bones", "we need a much better
@@ -1397,7 +1411,19 @@ tasks:
     layout, fullscreen, readable prices, and reported the First Demand re-order bug, all
     handled in t-086 (kind_robots #3448). The gate stays open for his look after that
     deploy.
-  updated: '2026-10-10T11:15:55Z'
+    2026-10-24 PT SUPERSEDING DIRECTIVE: The human verdict must be the LAST stage,
+    not the early post-layout/art checkpoint documented above. Full master
+    completion scope, evidence checklist and exact WAITING FOR HUMAN GATE title:
+    https://github.com/silasfelinus/kind_robots/issues/4140. Keep this task
+    WAITING until ALL dependencies are DONE, cinematic art rendered and reviewed,
+    game/editorial/QA defects resolved, multi-policy adversarial playtests passed,
+    final challenge review produces no substantial improvements, and final
+    readiness dossier is attached. Only then transition to needs-human for
+    Silas's Approve Final Design / Request Rewrites decision. The older 'TO
+    APPROVE now' paragraphs above are historical and no longer actionable.
+    Do not infer approval or close the umbrella issue on a CI pass.
+
+  updated: '2026-10-25T00:54:00Z'
   gate_reason: subjective-acceptance
   gate_rechecked: '2026-10-10'
 
@@ -1654,3 +1680,103 @@ tasks:
     on the actual self-hosted deployment or a faithful rendered preview;
     source tests alone do not establish layout acceptance.
   updated: '2026-10-23T11:40:00Z'
+
+- id: t-092
+  milestone: m5
+  title: Comprehensive writing, event, fish/progression and canon editorial pass
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Master completion issue kind_robots#4140. Inventory the whole canonical
+    fish/bestiary, currency/upgrade/room unlock progression, Charlotte/Wilbur
+    character writing, visual-novel intro and all event/interstitial triggers.
+    Correct stale breeding/egg/hidden-stat story beats without restoring those
+    removed mechanics; revise generic/weak dialogue, lore and quest payoffs.
+    Validate 20+ distinctive fish and review actual complete-session transcripts,
+    including rare events, first-return flow and story replays. Deliver a
+    machine-readable event/canon coverage report and a human-readable editorial
+    verdict, then merge proven improvements.
+  updated: '2026-10-25T00:54:00Z'
+- id: t-093
+  milestone: m5
+  title: Finish and visually verify every required aquarium art/scene asset
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-090
+    - t-092
+  note: >-
+    Master completion issue kind_robots#4140. Produce the authoritative
+    species/variant/background/menu/decor/portrait/expression/interstitial/outcome
+    art ledger with canonical source, ArtJob, DONE render, reachable URL, binding
+    and actual full-screen visual review. Commission, finish and integrate any
+    missing critical assets, prioritizing cinematic Charlotte and Wilbur.
+    Reject wrong characters, placeholder SVG, broken/low-res images and
+    mismatched scenes. Queued or drafted prompts are not delivered art.
+  updated: '2026-10-25T00:54:00Z'
+- id: t-094
+  milestone: m5
+  title: Full adversarial aquarium, idle economy, persistence and exploit suite
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Master completion issue kind_robots#4140. Build deterministic multi-seed
+    player simulations and report short/casual, idle 12h/24h/7d, rapid tap,
+    extreme high-density tank, broke/spender, completionist, save reload,
+    interrupted art, private/public tank and exploit-hunter strategies.
+    Assert feeding scatter, fish targeting, tap pickups, economy balance,
+    offline returns, privacy, race-safe rewards and legitimate unlocks.
+    Independently critique actual FUN and pacing, fix all high-impact issues,
+    then rerun the suite and publish action transcripts/defect evidence.
+  updated: '2026-10-25T00:54:00Z'
+- id: t-095
+  milestone: m5
+  title: Full-screen art-first UX and accessibility acceptance on real rendered viewports
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-089
+    - t-091
+    - t-093
+  note: >-
+    Master completion issue kind_robots#4140. Verify the tank as the default
+    one-screen stage plus all six illustrated game menus and full-screen
+    cinematic dialogue on 375px phone, 768px tablet, landscape tablet,
+    desktop and short-wide. Capture actual browser evidence, no outer scroll,
+    accurate canvas hit targets, keyboard/touch, readable labels, reduced
+    motion and image/network recovery. Repair and reverify failures, not just
+    pass static contract checks.
+  updated: '2026-10-25T00:54:00Z'
+- id: t-096
+  milestone: m5
+  title: Independent adversarial release-candidate review and complete evidence dossier
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-084
+    - t-085
+    - t-092
+    - t-093
+    - t-094
+    - t-095
+  note: >-
+    Master completion issue kind_robots#4140. Reconcile all existing game
+    tasks, migrations/legacy content, PRs and ArtJobs, verify current-head CI
+    fully green, no high/critical defects, no pending mandatory art or text
+    improvements. Require independent creative, technical, economic and
+    adversarial reviewers to challenge readiness; apply fixes and rerun.
+    Publish source-backed art/scene coverage, economic seed logs, complete
+    browser screenshots, gameplay verdict, job/PR/check links and exact
+    unblocked final review instructions. No human approval request until this
+    dossier and ALL other prereqs are done.
+  updated: '2026-10-25T00:54:00Z'
