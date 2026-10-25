@@ -16,6 +16,13 @@ Read AGENTS.md (core) first; this playbook adds only what this role needs.
   `status: claimed`/`owner: worker`/`updated` commit straight to `main` for you. On
   `ALREADY_CLAIMED`, do not implement this task — pick the next `ready` task instead.
 - Branch `worker/<project>-<task-id>`. Do ONLY that task.
+- **On assignment, fetch context selectively:** check the assigned project in
+  `docs/agents/master-issues.yaml` and follow the relevant heading(s) on its
+  master issue, per `docs/agents/project-issue-context.md`. Don't load every
+  issue or duplicate its text in the task note. Post a concise linked
+  shared-finding comment only when the discovery affects other tasks;
+  link that exact comment from your PR/handoff.
+
 - **Rebase onto `origin/main` immediately before opening the PR** (all kinds): run
   `git fetch origin main && git rebase origin/main` (or merge) right before `gh pr
   create`, so the PR opens conflict-free against the current tip instead of drifting

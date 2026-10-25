@@ -8,6 +8,11 @@ At the start of every session, before responding to any task, run a conductor sw
 
 1. Read `AGENTS.md` in full — it is the core manual. Per-role step lists live in `docs/agents/roles/`; load
    only the one `select_role.py` names in its `playbook` field (or the one matching an explicit ask).
+   **Once assigned a project**, consult its entry in
+   `docs/agents/master-issues.yaml` and only the relevant issue sections,
+   following `docs/agents/project-issue-context.md`; do not preload these
+   issues during the general startup sweep.
+
 2. `git status` / `git log --oneline -5`, 3. open agent PRs, and 4. the ready / needs-human / claimed scan
    are already in the SessionStart hook's `CONDUCTOR STARTUP SWEEP` message — use it rather than re-running
    them. Re-run only if that message is missing (hook not loaded, or not a remote session); then use the
