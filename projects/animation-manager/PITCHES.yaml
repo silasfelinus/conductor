@@ -2544,3 +2544,35 @@ pitches:
           - kind_robots PR #4109 merged (squash b0cb88e), all 18 CI checks green
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+
+  - id: newton-cradle-chain
+    title: Newton Cradle Chain
+    status: candidate
+    priority: 52
+    surprise: |
+      Two steel cradles pass momentum end to end, stepping through one, two, then three swinging balls.
+    passive_loop: |
+      Closed-form swing angle from one clock: the lifted balls swing out and back, the far side answers, and the ball count steps each cycle, no interaction needed.
+    optional_interaction: |
+      Hovering brightens nearby balls; a rate-limited click adds one extra swinger for a moment.
+    technique: |
+      One canvas, radial-gradient balls, closed-form angles from a single clock.
+    reduced_motion: |
+      Draws one static frame with no motion, hover or click.
+    performance_risk: |
+      Low: fourteen balls and strings per frame.
+    novelty: |
+      Momentum-transfer cradle; Pendulum Wave Garden is a phase-drifting bob row, not a collision chain.
+    acceptance:
+      - the cradles swing continuously without interaction
+      - hovering brightens nearby balls and clicking boosts at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/newton-cradle-chain.vue
+        pull_request: silasfelinus/kind_robots#4176
+        released_at: '2026-10-25T14:00:00Z'
+        verification:
+          - kind_robots PR #4176 merged (squash b45f62d), all 18 CI checks green
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
