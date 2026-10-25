@@ -296,13 +296,20 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Scrapbook polish: highlight polaroids, ending gallery, run sharing"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     note: >-
       Show each run's highlight outcome art as polaroids, a full ending gallery per nightmare
       (80 tiles), and a share card with seed so a friend can replay the same week.
+
+      Scrapbook shipped in kind_robots #4167 (merged 14bed77): highlight polaroids using
+      round-3 outcome plates with drawn-scene fallback, the 92-tile endings wall, and share-a-
+      week links (?week=&nightmare=) validated by sharedWeekFrom with round-trip and same-deal
+      tests.
+    updated: '2026-10-25T07:13:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#4167'
 
   - id: t-010
     milestone: m3
