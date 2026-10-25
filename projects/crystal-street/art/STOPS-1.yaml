@@ -1,0 +1,52 @@
+# Terrors on Crystal Street day stops (crystal-street t-018; Silas, 2026-10-24 PT: "going to library,
+# school, market, nurse"): Mercy Valley Clinic and Thriftee-Mart, in the round-1 location lane.
+# Built from kind_robots utils/crystalStreet/locations.json. Generated art is pre-approved. Private.
+round: crystal-street-stops-1
+project_slug: crystal-street
+designer: Crystal Street art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (painted 1986 VHS box art)
+  engine: krea2
+  prompt: prose
+  suffix: painted 1986 horror-comedy VHS box art, airbrushed gouache, hot magenta and cyan neon rim light, deep
+    midnight purple shadows, suburban Halloween atmosphere, cinematic composition, playful spooky mood
+subjects:
+- key: cs-location-mercy-clinic
+  lane: krea2
+  entity: location
+  title: Mercy Valley Clinic · location
+  asset: locations/mercy-clinic
+  size: 1344x768
+  seed: 863001
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A low flat-roofed 1960s walk-in clinic of pale green brick with a red cross painted above wide glass
+    doors, potted marigolds and a wooden bench out front, a parked bicycle, a warm waiting room of orange plastic
+    chairs glowing through big windows in bright afternoon sun
+  jobs:
+    krea2: 45199
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 253124
+- key: cs-location-thriftee-mart
+  lane: krea2
+  entity: location
+  title: Thriftee-Mart · location
+  asset: locations/thriftee-mart
+  size: 1344x768
+  seed: 863002
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A sprawling 1980s supermarket storefront with wide plate-glass windows, a pyramid of orange pumpkins
+    and a row of shopping carts out front, bright fluorescent aisles glowing inside, a bag boy in a red apron pushing
+    a long train of carts across a sunny parking lot
+  jobs:
+    krea2: 45200
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 253125
