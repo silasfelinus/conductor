@@ -31,11 +31,11 @@ This is not permission for a public launch, billing, or irreversible changes.
 
 **New creative project (Silas, 2026-10-22 PT):** Memory Dungeon is ACTIVE and HIGH priority after the seven-project 2026-10-21 focus tier and the protected earlier four-project order in the deterministic task queue. This **adds** a project without changing their relative tie-break order. Extend existing `/play/memory` and retain the home directory and Play entry, Classic mode and the match engine. The RPG adds spatial-pattern/bullseye weapons, Minesweeper-style logical trap rooms, varied puzzles, meaningful companion and story progress, and seeded replay. See `projects/memory-dungeon/`. Public deployment remains gated.
 
-**New playbook projects (Silas, 2026-10-25 PT):** Comet City Academy and Game of Captains are two independent ACTIVE, HIGH-priority software projects. Inserted after the previously protected seven-project creative tier, four-project arcade band and Memory Dungeon, without reordering them. Both receive original full-screen console experiences, complete authored choices, actual generated art, seeded adversarial playtesting and final subjective acceptance only after all agent work. Their scope confirmation is soft; develop reversible previews immediately. See `projects/comet-city-academy/` and `projects/game-of-captains/`. Public release is separately gated.
+**New playbook projects (Silas, 2026-10-25 PT):** Comet City Academy and Game of Captains are two independent ACTIVE, HIGH-priority software projects. Inserted behind the previously protected seven-project focus, four-project arcade band, Memory Dungeon, and Cthulhuquarium/Kind Economy pair without reordering those earlier commitments. Both receive original full-screen console experiences, complete authored choices, actual generated art, seeded adversarial playtesting and final subjective acceptance only after all agent work. Their scope confirmation is soft; develop reversible previews immediately. See `projects/comet-city-academy/` and `projects/game-of-captains/`. Public release is separately gated.
 
 **Priority order this week:** weird-humboldt → zuzu-gamebook → zuzu-shifting-lands → emperor-of-dust → rainbow-bullet-hell-space-princess → save-the-plumber →
 shifting-desks → kind-pinball → zuzu-lair → kr-arcade → zuzu-showdown → memory-dungeon →
-comet-city-academy → game-of-captains → cthulhuquarium → kind-economy → butterfly-gallery → art-archive.
+cthulhuquarium → kind-economy → comet-city-academy → game-of-captains → butterfly-gallery → art-archive.
 
 <!-- Historical priority record: 2026-10-19 elevated Ecotone behind the four
 2026-10-07 arcade/Zuzu leaders. Superseded for ordinary project selection by
