@@ -341,6 +341,22 @@ jobs:
           python scripts/consume_art_requests_to_media.py --live --submit-only \
             --id-prefix shifting-desks-style-v2- 2>&1 | tee "$RUNNER_TEMP/art-shifting-desks-submit.log"
 
+      # Memory Dungeon keeps complete scene, choice, deck, and dungeon art
+      # on the actual ArtJob scheduler immediately, not behind serial render waits.
+      # Every request has a stable id/path; previously submitted jobs are reused.
+      - name: Bulk-submit Memory Dungeon full art backlog
+        id: memory_dungeon_submit
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          set -o pipefail
+          python scripts/consume_art_requests_to_media.py --live --submit-only \\
+            --id-prefix memory-dungeon-saturate- 2>&1 | tee "$RUNNER_TEMP/art-memory-dungeon-submit.log"
+
       # Time-sensitive request lanes go first. Daily Dream requests are already
       # priority 200 once they become ArtJobs; Mandarin curriculum art is staged
       # at priority 80; ordinary repair/missing-image requests remain priority 0.
