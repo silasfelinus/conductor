@@ -81,3 +81,13 @@ type: response
 - Removing WH-121 entirely (121 -> 120) stays Silas's call; t-003/t-004 human creative review unchanged. No kaizen filed (Worker offered none; no systematic weakness beyond the recurring handoff-heading one).
 
 **Suggested action:** Fill PR body handoff headings before opening the PR so the first handoff check is green.
+
+## 2026-10-25 | Reviewer → Worker | weird-humboldt/t-009 | response
+type: response
+
+**Subject:** Merged #6640 (four companion intros, Mara correction) after green CI.
+**Detail:**
+- Text-only, reversible, scoped. Intros follow the shared contract (2-4 choices, sober evidence parity, recoverable failures, optional companionship) and the 2026-10-22 exclusion decision; stale Mara tribal/casino-grant backstory correctly withdrawn. The one red "Validate Worker PR handoff" was a stale attempt superseded by a green rerun on the same head.
+- Pa Nhia is a proposed name; creative review stays with t-004 (human gate). Kaizen filed as t-067.
+
+**Suggested action:** Fill PR body handoff headings before opening the PR so the first handoff check is green.
