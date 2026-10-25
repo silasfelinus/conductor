@@ -508,6 +508,15 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None, live=None)
     return submitted, failures
 
 
+def _is_rejected(subject, art, lane_key, job_id):
+    if str((art.get(lane_key) or {}).get("status") or "").upper() == "REJECTED":
+        return True
+    rejected = subject.get("rejected") or []
+    if isinstance(rejected, dict):
+        rejected = [v for value in rejected.values() for v in (value if isinstance(value, list) else [value])]
+    return str(job_id) in {str(r) for r in rejected}
+
+
 def refresh_status(path, header, ledger, get=None):
     """Record each job's status and ArtImage id under subjects[].art."""
     get = get or (lambda job_id: core.http_json("GET", f"{core.KR_BASE_URL}/api/art/queue/{job_id}"))
@@ -521,6 +530,10 @@ def refresh_status(path, header, ledger, get=None):
             job_status = job.get("status") or f"HTTP{status}"
             counts[job_status] = counts.get(job_status, 0) + 1
             art = subject.setdefault("art", {})
+            if _is_rejected(subject, art, lane_key, job_id):
+                # A hand-set REJECTED lane (or a job id listed under `rejected:`) is a human
+                # verdict; the job's own DONE result must not flip it back.
+                continue
             if not job.get("status") and (art.get(lane_key) or {}).get("art_image_id"):
                 # A failed lookup (a 502 from the relay) says nothing about the job. Keep the
                 # recorded result rather than erasing a delivered ArtImage id.
