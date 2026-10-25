@@ -356,6 +356,9 @@ jobs:
           set -o pipefail
           python scripts/consume_art_requests_to_media.py --live --submit-only \\
             --id-prefix memory-dungeon-saturate- 2>&1 | tee "$RUNNER_TEMP/art-memory-dungeon-submit.log"
+          python scripts/consume_art_requests_to_media.py --live --submit-only \
+            --queue-file projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml \
+            --id-prefix memory-dungeon-saturate- 2>&1 | tee "$RUNNER_TEMP/art-memory-dungeon-additional-submit.log"
 
       # Time-sensitive request lanes go first. Daily Dream requests are already
       # priority 200 once they become ArtJobs; Mandarin curriculum art is staged
