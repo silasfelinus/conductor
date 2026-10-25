@@ -57,6 +57,11 @@ milestones:
   weight: 50
   status: done
 
+- id: m6
+  title: "COMPLETE GAME — kingdom branches, delivered art, console QA, adversarial runs and final verdict"
+  weight: 120
+  status: in-progress
+
 tasks:
 - id: t-001
   milestone: m1
@@ -558,9 +563,9 @@ tasks:
   gate_rechecked: '2026-09-30'
   approved_by_human: true
 - id: t-032
-  milestone: m4
-  title: 'FOR SILAS: re-audit Ruler Hooked once the vertical slice is real'
-  status: needs-human
+  milestone: m6
+  title: 'FINAL HUMAN GATE ONLY: approve Ruler Hooked final design or request rewrites'
+  status: waiting
   gate_human: true
   stakes: reversible
   passes: 0
@@ -573,6 +578,15 @@ tasks:
     - t-028
     - t-029
     - t-030
+    - t-031
+    - t-044
+    - t-045
+    - t-046
+    - t-047
+    - t-048
+    - t-049
+    - t-050
+    - t-051
   note: |-
     FOR SILAS: this is the exit gate for the m4 vertical slice, and it exists because the last completion number this project reported was wrong in a way that cost you an evening.
     Your 2026-09-11 verdict, kept verbatim so it is not softened by later summaries: "we still have ruler is done at 85% and 21/22 done on projects, which is ABSURD unless there is a lot of background stuff that we again haven't worked into the front end. I see no visuals of the kingdom, no interactions with populous, no ability to see text based prompts with an image that asks me to decide important things, no shop to purchase upgrades to finishing or to upgrade the kingdom, no ability to catch treasures when fishing that might be spent at said shop on gear or the kingdom, etc. The roadmap needs a serious overhaul, the interface needs serious upgrades, more art needs to be submitted and integrated, scenarios need to be written, shop needs to be planned, more fish need to be added, kingdom sections need to be built."
@@ -583,10 +597,20 @@ tasks:
 
     GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
     session): Legitimate: a look/feel or play verdict that only Silas can give.
-  updated: '2026-09-30T06:00:00Z'
-  claimed_by: openai-scheduled-2026-09-24T101808Z-ruler-hooked-t032-a11
-  claimed_at: '2026-09-24T10:22:49+00:00'
-  soft_gate: false
+    2026-10-24 PT OVERRIDE: This early vertical-slice play verdict is no longer
+    Silas's next actionable approval request. The complete game must be written,
+    rendered, adversarially played, redesigned and independently accepted by
+    agents FIRST. See master scope and required evidence in
+    https://github.com/silasfelinus/kind_robots/issues/4144.
+    Keep this as WAITING until every dependency is DONE, every ending and
+    ecology pathway has a legitimate seed/action witness, delivered art is
+    inspected, all devices pass real rendered visual QA, all critical/high bugs
+    and substantial art/text weaknesses are repaired, and the final readiness
+    dossier is posted. Then and only then request Approve Final Design or
+    Request Rewrites from Silas. Old 'play and judge worth scaling' paragraphs
+    above remain historical, NOT a gate to trigger now.
+
+  updated: '2026-10-25T00:54:00Z'
   gate_reason: subjective-acceptance
   gate_rechecked: '2026-09-30'
 - id: t-033
@@ -802,3 +826,128 @@ tasks:
     available at each location. Keep the offline deterministic story engine and
     add adversarial playtests for distinct player philosophies and replay paths.
   updated: '2026-10-23T07:41:00Z'
+
+- id: t-046
+  milestone: m6
+  title: Audit and polish every kingdom quest, faction arc, NPC choice and ending
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-045
+  note: >-
+    Master completion issue kind_robots#4144. Inventory the entire card/deck,
+    arc, faction, visiting NPC, multi-day choice and ending graph, then polish
+    all story prose, dialogue, delayed callbacks and narrative consequences
+    to Emperor of Dust standards for long-running depth. Ensure nuanced
+    different philosophies, no generic consequence funnels, meaningful failure
+    scenes, multiple revisits and every ending graph prerequisite.
+    Provide full-run edited transcript evidence and make missing arcs/tasks
+    explicit; no outstanding substantial text rewrites.
+  updated: '2026-10-25T00:54:00Z'
+- id: t-047
+  milestone: m6
+  title: Deliver and visually audit all required coronation, fish, NPC, map and ending art
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Master completion issue kind_robots#4144. Build a per-asset ledger for the
+    player-creation portraits ONLY, kingdom day/night maps and region variants,
+    location art, visiting character poses, meaningful decision consequences,
+    all fishes/species and rarity, item/shop, catch, quest and ending plates.
+    Regenerate legacy art showing the visible player ruler outside the opening;
+    preserve the first-person POV in the runtime compositor and ArtJobs pipeline.
+    Submit actual jobs, inspect completed renders, verify readable live asset
+    URLs and scene binding, eliminate fallbacks, wrong casts and sprite sheets.
+    Prompt YAML or an uninspected pending job never counts as delivered.
+  updated: '2026-10-25T00:54:00Z'
+- id: t-048
+  milestone: m6
+  title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Master completion issue kind_robots#4144. Model the two moving-target
+    timing stops and tap/release reeling against newbie, careless, expert,
+    rapid spam, unlucky, assistive, latency, slow-device, shop-gear and
+    economy exploit personas. Verify common fish can reliably be caught by
+    a first-timer following visible cues; tune uncommon/rare difficulties
+    without untelegraphed failure. Test tension, slack, timed clicks, reel
+    pacing, species/gear modifiers, reward/saves, invalid state transitions
+    and input parity. Publish reproducible seeds and repair with regression
+    tests; run a fresh adversarial challenge after fixes.
+  updated: '2026-10-25T00:54:00Z'
+- id: t-049
+  milestone: m6
+  title: Full policy-matrix kingdom simulator and witnessed complete ending graph
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-031
+    - t-045
+    - t-046
+  note: >-
+    Master completion issue kind_robots#4144. Simulate compassionate, selfish,
+    greedy, industrial, nature-positive, chaotic, fishing-only, completionist,
+    diplomatic, low-resource, deliberately unlucky and exploiter runs. Verify
+    all map location gates and closures, ecology and fish availability by
+    world state, NPC arc/relationship consequences, impossible predicate
+    detection and ALL authored endings from legal new-game seeds/actions.
+    Require all quests/branches outcome coverage, save/load determinism,
+    meaningful route difference and no softlocks; publish replay witnesses,
+    full ending graph and independent editorial reports.
+  updated: '2026-10-25T00:54:00Z'
+- id: t-050
+  milestone: m6
+  title: Full-screen console accessibility and image-first device QA with rendered evidence
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-046
+    - t-047
+    - t-048
+  note: >-
+    Master completion issue kind_robots#4144. Visually interact with the actual
+    intro/coronation, save archive, location map, lake/fishing, NPC briefings,
+    decisions, catch reveal, shop, bestiary and endings at phone, iPad
+    portrait/landscape, desktop and short-wide viewports. Verify app nav,
+    no outer scroll or modal stacks, large illustrated screens, legible text
+    and target controls, first-person imagery, input keyboard/touch,
+    reduced motion and offline/recovery. Attach screenshots and tests,
+    repair discovered failures and rerun actual browser QA.
+  updated: '2026-10-25T00:54:00Z'
+- id: t-051
+  milestone: m6
+  title: Final independent creative/technical/adversarial audit and readiness dossier
+  status: waiting
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-031
+    - t-046
+    - t-047
+    - t-048
+    - t-049
+    - t-050
+  note: >-
+    Master completion issue kind_robots#4144. Reconcile all previous tasks,
+    art, quest story sources, world/fish ecology graph, saves, and app code.
+    Independently challenge actual long-form fun, all outcome writing,
+    imagery, fish encounter balance, faction consequences, accessibility,
+    performance and real device behavior; open/fix missing tasks, rerun all
+    adversarial suites and demand 0 high/critical defects, no substantial
+    art/text improvement and no queued mandatory art. Publish an inspectable
+    final design readiness package with all legal ending witnesses, rendered
+    screenshots, asset/quest/fish ledger, PRs, ArtJobs, CI and remaining risks.
+    Only once finished may the legacy t-032 become Silas's final gate.
+  updated: '2026-10-25T00:54:00Z'
