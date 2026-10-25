@@ -1,0 +1,71 @@
+# Terrors on Crystal Street special endings (crystal-street t-019; Silas, 2026-10-24 PT: "factions: friends family
+# officials neighbors. if any of them drop to zero that could trigger a special end sequence"): Grounded, Blamed,
+# Run Out of the Cul-de-Sac and Final Girl, in the round-1 VHS lane. Built from kind_robots
+# utils/crystalStreet/special-endings.json. Generated art is pre-approved. Private.
+round: crystal-street-special-1
+project_slug: crystal-street
+designer: Crystal Street art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (painted 1986 VHS box art)
+  engine: krea2
+  prompt: prose
+  suffix: painted 1986 horror-comedy VHS box art, airbrushed gouache, hot magenta and cyan neon rim light, deep
+    midnight purple shadows, suburban Halloween atmosphere, cinematic composition, playful spooky mood
+subjects:
+- key: cs-ending-special-family
+  lane: krea2
+  entity: ending
+  title: Grounded · special ending
+  asset: endings/special-family
+  size: 1344x768
+  seed: 866001
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A teenager in pajamas with their forehead pressed to a bedroom window on Halloween night, a locked
+    door and a plate of untouched dinner behind them, far below on a suburban cul-de-sac flickering streetlights
+    and a tall shadow crossing a roundabout garden
+  jobs:
+    krea2: 45341
+- key: cs-ending-special-officials
+  lane: krea2
+  entity: ending
+  title: Blamed · special ending
+  asset: endings/special-officials
+  size: 1344x768
+  seed: 866002
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A teenager slumped on a bench in a small-town sheriff's station at night holding a paper cup of
+    cocoa, a clipboard and a stack of incident reports on the desk, a deputy at the window watching a purple glow
+    over the suburban rooftops
+  jobs:
+    krea2: 45342
+- key: cs-ending-special-neighbors
+  lane: krea2
+  entity: ending
+  title: Run Out of the Cul-de-Sac · special ending
+  asset: endings/special-neighbors
+  size: 1344x768
+  seed: 866003
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A crowd of suburban neighbors in bathrobes and curlers on a front lawn at night holding flashlights,
+    a rolling pin and casserole dishes, a teenager on the porch with a backpack, Halloween pumpkins on the steps
+    and a purple glow behind the houses
+  jobs:
+    krea2: 45343
+- key: cs-ending-special-final-girl
+  lane: krea2
+  entity: ending
+  title: Final Girl · special ending
+  asset: endings/special-final-girl
+  size: 1344x768
+  seed: 866004
+  negative: nsfw, nudity, gore, watermark, text, letters, signature, logo, blurry, lowres, extra limbs
+  prompt_prose: A teenager sitting on a suburban curb at dawn holding a dead flashlight, jacket torn, grinning,
+    a hand-drawn paper badge pinned to the jacket, a crowd of relieved friends running toward them down a cul-de-sac
+    strewn with Halloween debris
+  jobs:
+    krea2: 45344
