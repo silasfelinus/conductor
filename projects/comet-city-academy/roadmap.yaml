@@ -41,17 +41,18 @@ tasks:
   - id: t-001
     milestone: m2
     title: "Design private console UI and ship a fully playable one-day slice"
-    status: review
+    status: done
     claimed_by: 2026-10-25T203300Z-comet-t001-g6r9
     claimed_at: '2026-10-25T20:33:00Z'
-    updated: '2026-10-25T20:40:00Z'
-    owner: worker
+    updated: '2026-10-25T21:20:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Include original visual title screen, avatar/power selection, class/NPC conversation, real 1/2/3-person simulation board, unique location card, debrief, save and seeded tests; no placeholder web dashboard. Project registration with matching conductorSlug via canonical Kind Robots API/projection.
 
       Implemented complete seven-day Academy vertical slice and Play route on worker/comet-city-academy-t001-20261025. Single-screen illustrated original title, powers, 1-3 volunteer simulator, incident debrief, school choices, earned prom demo ending, Pinia autosave and seeded test. Pending code PR CI; art is an original illustrated SVG panorama, not yet painted Arthemy delivery.
+
+      DONE 2026-10-25 PT. kind_robots #4183 squash merged as 3629b57e3c3f1694c3f9886acf9a9342b5176807 after all 23 checks completed successfully, including typecheck, navigation/layout, CSS formatting, four contract shards and production image build. Play route /play/comet-city-academy includes an illustrated single-screen original stage, six powers, seven-day first-week simulation with 1-3-person team dispatch, campus encounter, saved run and Comet Ball preview finale. Art is static illustrated vector stage (not completed painted ArtJobs). Companion game #4185 adds the two requested main dashboard cards. Full term, painted scene art, deep QA and final design acceptance remain separate roadmap tasks. Merge is not proof of self-hosted production deployment.
   - id: t-002
     milestone: m1
     title: "Write the complete academy bible, power strategy matrix, cast, locations and story graph"
@@ -66,7 +67,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Build 21-day loop, training cases, fatigue/trust, encounter and save engine"
-    status: waiting
+    status: ready
     depends_on: t-001
     owner: null
     passes: 0
