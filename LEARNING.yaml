@@ -18229,3 +18229,13 @@ records:
   lesson: For character artwork, pair stable identity IDs with canonical destination paths, source-controlled
     idempotent prompts and UI fallback; distinguish GitHub queue requests from ArtJob IDs and delivered
     images.
+- date: '2026-10-25'
+  project: conductor
+  task: t-208
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A status refresh must treat human verdicts (REJECTED lanes, listed rejected job ids) as authoritative
+    over the job's own result; Worker PR bodies need every AGENTS.md handoff heading or the handoff check fails.
