@@ -1,0 +1,46 @@
+# Three This Means Warp front-end images.
+# Krea 2 prompts specify physical contents, placements, camera and actual lighting.
+# Captain Vale / Pell / Vela / Mox-9 appearance is provisional concept continuity;
+# do not overwrite existing canonical Vox, Serendipity or Fluke narrator seeds.
+# Auto Art Generate submits once per cell and records ArtJob/ArtImage status.
+round: this-means-warp-front-1
+project_slug: game-of-captains
+designer: This Means Warp visual production
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+  - key: krea2
+    label: Krea 2 original illustration
+    engine: krea2
+    prompt: prose
+    suffix: A hand-painted 2D science-fiction adventure illustration with solid gouache shading, precise metal and fabric surfaces, fine ink contours, cool cyan instrument lights and warm amber cabin lamps.
+subjects:
+  - key: warp-front-title-01
+    lane: krea2
+    entity: play-splash
+    title: "This Means Warp — command bridge title painting"
+    asset: game-of-captains/front/splash
+    size: "1344x768"
+    seed: 960201
+    prompt_prose: >-
+      View from the open rear doorway of an eccentric starship command bridge. The room has curved cream metal walls, exposed copper pipes, amber analog switches, a worn red captain's chair and a wide trapezoidal forward window. Through the window is a ringed teal planet at upper center and a violet-blue nebula streaked with stars. On the right side stands Captain Vale, a middle-aged brown-skinned woman with a shaved head in a charcoal command coat with a high burgundy collar and brass shoulder bars, one hand braced against the chair. At her right, Bosun Pell, a short stocky freckled red-skinned engineer in grey overalls with a metal prosthetic forearm, works on an open panel that releases a handful of orange sparks. Dr. Vela Sorn, a broad lilac-skinned alien with small pointed ears and a sea-green medical jacket, holds a white medical case. A small silver round robot with one blue eye and three thin legs watches the sparks. The lower-left foreground contains an unoccupied stretch of dark navy console and floor. Camera at eye level, looking toward the window.
+  - key: warp-front-tutorial-01
+    lane: krea2
+    entity: tutorial-scene
+    title: "This Means Warp — away mission briefing"
+    asset: game-of-captains/front/tutorial
+    size: "1344x768"
+    seed: 960202
+    prompt_prose: >-
+      Interior of the starship's small briefing compartment, camera looking diagonally across a dark metal table at seated eye height. The room contains curved cream metal panels, copper piping, four amber ceiling lamps and a round porthole showing a blue planet. At the right half of the table, Captain Vale, a brown-skinned middle-aged woman with shaved hair and a dark coat with a high burgundy collar, points to a blue holographic globe hovering above the table. Three colored orbit lines encircle the globe, with a small silver rescue ship at one line and a pale-yellow moon at another. Dr. Vela Sorn, a broad lilac-skinned alien with small pointed ears and a sea-green medical jacket, places a sealed white medical case beside the hologram. Bosun Pell, a short stocky freckled red-skinned engineer in grey overalls with a metal prosthetic forearm, adjusts a palm-sized radio with an exposed copper coil. A folded orange pressure suit and two clear helmets rest on a nearby bench. The left side is an uninterrupted dark-blue metal wall above empty table space.
+  - key: warp-front-dashboard-01
+    lane: krea2
+    entity: home-feature
+    title: "This Means Warp — dashboard feature painting"
+    asset: game-of-captains/front/dashboard-highlight
+    size: "1216x768"
+    seed: 960203
+    prompt_prose: >-
+      Exterior three-quarter view of an asymmetrical steel-grey starship flying from lower left toward upper right. Its nose is broad and flat with three amber cockpit windows. The port-side engine is a large cylindrical pod with copper bands; the starboard engine is smaller, mounted farther back on a dark brace. Both engines leave long bright cyan exhaust trails. Rectangular hull repair plates, exposed fasteners and a red cargo hatch are visible along the ship's side. A huge striped orange-and-cream ringed planet fills the far-right background, while scattered turquoise asteroid fragments pass beneath the ship. Near the upper left is a compact round station with many yellow windows and an open docking ring, the Serendipity Space Bar. A smaller red courier spacecraft turns away from the station. Low viewing angle beneath the starship, its entire hull and both engines visible, with light from the orange planet along the hull's upper edge.
