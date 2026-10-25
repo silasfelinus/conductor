@@ -3,22 +3,32 @@ project: game-of-captains
 kind: software
 autonomous: true
 goal: >-
-  Deliver a funny but ethically consequential space-command playbook: captain and senior crew
-  selection, ship/away missions with 0-3 assigned crew, twelve evolving stars/ports, unique
-  intervention dilemmas, 30 missions, 40 encounter cards, eight seeded alien antagonists
-  interfering throughout a three-act voyage, sixteen deeply earned endings and original
-  character arcs. Reuse canon Vox, sentient Serendipity Space Bar and Captain Fluke
-  Improbability Starcruiser without conflating narrator identities. Private AAA-like
-  one-screen console experience, art delivered, seeded adversarial replay and final human
-  design review; publication gated separately.
+  Build This Means Warp, a premium art-first comedic science-fiction captain
+  playbook, using stable game-of-captains slug and Play route. Select a captain
+  and senior crew, command shipboard and 0-3-person away teams, resolve major
+  intervention ethics dilemmas, experience twelve evolving star systems and
+  thirty mission families, face eight distinctive run-randomized alien
+  antagonists across a three-act voyage, and reach sixteen earned endings.
+  Preserve Barkeep Vox, sentient Serendipity and Captain Fluke narrator canon.
+  Playable console-like slice, rendered branching art, seeded adversarial
+  whole-run QA, final subjective approval and separate outward-release gate.
 notes_from_silas: |
-  2026-10-25 PT: Silas proposed a HIGH-priority comedy sci-fi space playbook influenced by
-  Space Quest, Red Dwarf, Hitchhikers Guide, Star Wars, Star Trek, Lower Decks, Barbarella
-  and The Orville. Player chooses captain and crew, runs space/away team missions and
-  non-interference ethics scenarios, faces a randomized persistent alien antagonist and earns
-  endings at varying destinations. Reuse established Barkeep Vox, Serendipity Space Bar and
-  Captain Fluke. Master issue: https://github.com/silasfelinus/kind_robots/issues/4182.
-  DESIGN-BRIEF.md explains verified continuity and original-story boundaries.
+  2026-10-25 PT: Silas selected "This Means Warp" as the new display title.
+  "Game of Captains" describes the genre only; retain game-of-captains
+  as stable Conductor slug and /play/game-of-captains as compatibility
+  URL to avoid breaking links, dashboard features or persisted saves.
+  The game remains a captain-and-crew comedy sci-fi playbook inspired
+  by Space Quest, Red Dwarf, Hitchhiker's Guide, Star Wars, Star Trek,
+  Lower Decks, Barbarella and The Orville: away missions, ethical
+  intervention, randomized persistent antagonist, destination-specific
+  conclusions, Vox, sentient Serendipity and Fluke canon.
+  Approved user-facing Play/highlight placement, art-first viewport
+  console screens; full cast and rendered art remain required.
+  The existing kind_robots PR #4185 is the original name's
+  early playable slice, not full three-act completion. Coordinate with
+  its pending review rather than editing another worker's branch.
+  Master issue: https://github.com/silasfelinus/kind_robots/issues/4182
+  Definitive new design brief: DESIGN-BRIEF.md
 milestones:
   - id: m1
     title: "FOUNDATION - cast, lore, choice systems"
@@ -53,15 +63,16 @@ tasks:
       Implemented captain/crew selector, three-mission star-map voyage, away team staffing, persistent randomized antagonist, differentiated intervention dilemmas, multiple short-voyage finales and Pinia save/resume on Play. Original vector bridge art, Play tab and project placement, and both home highlight cards included. Pending implementation PR and CI; painted ArtJobs and full 3-act content remain separate tasks.
   - id: t-002
     milestone: m1
-    title: "Write existing-canon reconciliation, captain/crew, stars and narrative bibles"
+    title: "Write This Means Warp captain, crew, location, antagonist and ethics bibles"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Preserve Vox distinct from sentient Serendipity, Fluke as seeded narrator; flesh out 6
-      captains, 16 crew, 12 connected ports, factions, command doctrine, ship resources, 3 acts and
-      finale requirements.
+      Lock the This Means Warp title and original sci-fi comedy voice. Confirm Vox, sentient
+      Serendipity and Fluke narrator seeds without rewriting them; author six captain perspectives,
+      sixteen crew arcs, twelve substantial systems, eight antagonists, faction ethics doctrine,
+      three-act clue graph and sixteen ending prerequisites.
   - id: t-003
     milestone: m2
     title: "Implement deterministic voyage, ship/away staffing, ethics and persistence engine"
@@ -121,15 +132,16 @@ tasks:
       promises, antagonist relationship, tech contamination and alternate finale destinations.
   - id: t-008
     milestone: m3
-    title: "Deliver project, ship, captain, crew, world and antagonist art"
+    title: "Deliver This Means Warp key art, bridge, crew, worlds and antagonist renders"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Art prompt ledger and queue; icon/card/hero, bridge, original crew, poses/expressions, 12
-      planets and 8 antagonists. Reuse existing seed assets where appropriate; verify delivered URLs
-      and ArtJob provenance.
+      Deliver branded This Means Warp project icon/card/hero, detailed bridge/starmap, original
+      personnel and emotional portraits, Vox/Serendipity/Fluke continuity plates, twelve worlds and
+      eight antagonist identities; verify final URLs, ArtJobs and render provenance rather than
+      SVG/placeholders.
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
@@ -155,16 +167,17 @@ tasks:
       orders, old saves and softlock probes.
   - id: t-011
     milestone: m4
-    title: "Independent canon, ethics, prose, visual and responsive-console red team"
+    title: "Independently red-team This Means Warp's humor, ethics and console visuals"
     status: waiting
     depends_on: t-010
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Read complete playthrough transcripts; check narrative originality, non-stereotyped culture
-      ethics, genuine comedy, earned endings, delivered art, accessibility and
-      phone/tablet/desktop/gamepad/touch; fix and retest.
+      Read full seeded transcripts and verify culture, consent and crew agency, villain motives,
+      meaningful intervention consequences and earned laughter; audit actual painted assets, original
+      identity, responsive screen stages, gamepad/touch and save/load; fix actionable issues before
+      final gate.
   - id: t-012
     milestone: m4
     title: "Final human design acceptance after completion; separate publish gate"
@@ -179,3 +192,21 @@ tasks:
       Not a blocker today. Rename umbrella issue awaiting final human verdict only when no
       agent-actionable writing/art/engine/UX/tests remain. Silas approves or asks for rewrites; do
       not infer public release.
+  - id: t-013
+    milestone: m2
+    title: "Rename Play UI, dashboard highlight and project title to This Means Warp"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Once kind_robots PR #4185 has passed all checks and merged, update
+      visible captain title, title-screen lettering, Play navigation,
+      dashboard featured experience and owned Project presentation to
+      This Means Warp. Keep Conductor slug game-of-captains, existing
+      /play/game-of-captains deep link, save key, user progress and
+      Fluke/Vox/Serendipity narrator entities unchanged. Ensure working
+      captain/crew/away/log/settings navigation, no broken route, and
+      screenshot plus seeded test coverage. If PR #4185 is still in
+      review, do not clobber its branch; coordinate on merge order.
