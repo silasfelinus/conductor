@@ -277,6 +277,9 @@ tasks:
     note: >-
       Grow decks from 6 to 10 cards per tag and locations from 4 to 6 beats, keep the validator
       green, and add weekday-specific beats (school on weekdays, the Saturday midnight movie).
+      From t-018 (2026-10-25 PT): regroup the street decks around monster types that read at a
+      glance (supernatural, slasher, creature, alien, biohazard, tech, cult, camp, dream, generic
+      suburban trouble) as part of the growth.
 
   - id: t-011
     milestone: m3
@@ -292,6 +295,11 @@ tasks:
       Release gate. After art delivery, balance and the narrative audit, screenshot phone,
       tablet and desktop, then ask Silas to accept the visual state and approve moving the game
       from the admin preview to a public /play route and arcade tab.
+      Tracking issue (Silas, 2026-10-25 PT): silasfelinus/kind_robots#4143 holds the full roadmap,
+      adversarial testing included. When every box there is checked and no art or text improvement
+      is left, rename the issue to "[Waiting for human gate] Terrors on Crystal Street: approve
+      final design or submit rewrites" and move this task to needs-human; rewrites reopen the
+      relevant phase.
 
   - id: t-012
     milestone: m2
@@ -440,14 +448,14 @@ tasks:
   - id: t-018
     milestone: m2
     title: "Acts and villain decks: a deck choice every night, three cards per act, finale edges"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
     pr: silasfelinus/kind_robots#4131
     claimed_by: 2026-10-24T135800Z-cs-art-delivery
     claimed_at: '2026-10-24T23:20:00Z'
-    updated: '2026-10-24T23:20:00Z'
+    updated: '2026-10-25T01:00:23Z'
     note: >-
       Silas 2026-10-24 PT (both notes above; the second supersedes the six-scene pool). Design: the
       week runs in three acts (nights 1-2, 3-4, 5-6) and Halloween. Each night deals two cards and
@@ -467,6 +475,13 @@ tasks:
       bad 5%. Still to do: regroup the street decks around monster types that read at a glance
       (supernatural, slasher, creature, alien, biohazard, tech, cult, camp, dream, generic suburban
       trouble) and grow them (t-010), and add the nurse and market daytime stops Silas listed.
+
+      Closed 2026-10-25 PT: #4135 merged as 5f8107d (Mercy Valley Clinic with Nurse Inez
+      Duarte: See the nurse for +3 nerve and steadies shaken friends; Thriftee-Mart: comfort
+      food for 2 quarters, +1 nerve and -1 dread), and #4137 delivered both location paintings
+      (art/STOPS-1.yaml). The street-deck regroup by monster type moves to t-010. Best now
+      needs twelve night wins (#4141, after character style bonuses).
+    implementation_pr: 'silasfelinus/kind_robots#4135'
 
   - id: t-019
     milestone: m2
@@ -505,3 +520,30 @@ tasks:
       snaps, the phone line is dead, someone says "I'll be right back"), never drag or queerness as
       the punchline. The drag night is sincere, coached by Glory Hallelujah from the Glitter Box,
       and the brothers who commit to it are the ones who make it to morning.
+
+  - id: t-021
+    milestone: m2
+    title: "Look + clique = character: 96 profiles with style synergy, their portraits, and the screen dial"
+    status: claimed
+    owner: null
+    passes: 0
+    stakes: reversible
+    pr: silasfelinus/kind_robots#4141
+    claimed_by: 2026-10-24T135800Z-cs-art-delivery
+    claimed_at: '2026-10-25T01:00:00Z'
+    updated: '2026-10-25T01:00:00Z'
+    note: >-
+      Silas 2026-10-24 PT: "I'll accept the avatar and then class choice if we plan out the synergy
+      for each character and have a profile built for each combination with a fresh piece of
+      illustrated art ... please feel free to redesign these choices for optimum fun", "there is
+      definitely some confusion between role and character in the select screen", and "settings,
+      info, character bio, scrapbook can be reached via icons on the top, rotating for which is
+      selected". Design: each of the 16 looks has a style (brave, clever, kind, camp, sneaky,
+      reckless) that adds to choices played that way (+2 for the rarer camp/sneaky/reckless, +1
+      otherwise); each clique has a home style, Typecast when it matches (+1 more), Against type
+      otherwise (+1 on the clique's style). 96 characters with name, tagline, bio, catchphrase and
+      portrait prompt in kind_robots utils/crystalStreet/characters.json; the wizard is Pick a look,
+      Pick a clique, Meet your character, The nightmare; "The Prep" look is now Match Point. Best
+      ending moved to twelve night wins (near-optimal autoplay 58%). Portraits: art/CHARACTERS-1.yaml
+      (jobs 45217-45312), delivered with scripts/export_crystal_street_art.py. Done when #4141 is
+      merged and all 96 portraits are delivered to /crystal-street/characters/.
