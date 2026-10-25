@@ -1,0 +1,554 @@
+{
+  "format": "kind-robots-canonical-climax-v1",
+  "project_slug": "comet-city-academy",
+  "display_name": "Capes & Tassels: Prom of Doom",
+  "content_stage": "authored-not-yet-runtime-integrated",
+  "mandatory_real_prom": true,
+  "prom_day": 30,
+  "never_replace_with_rehearsal": true,
+  "foreshadow_reference": "ct-d27-one-last-dance (The Fourth Dance) is rehearsal/foreshadowing, and does not satisfy the real Prom of Doom.",
+  "episode_29": {
+    "id": "ct-d29-the-guest-list",
+    "day": 29,
+    "phase": "day",
+    "location_id": "campus-ballroom",
+    "title": "The Guest List",
+    "mandatory": true,
+    "can_skip": false,
+    "has_fallback": true,
+    "opening": "The afternoon before the real graduation prom, the academy's ballroom doors are being repainted. The city council insists the dance proceed: a public promise that the comet threat is under control. Guests from the Lower Docks, injured students, and displaced scholarship recipients are gathered outside the gates. A night porter finds identical crescent-and-three-dots seals inside the emergency-lit chandelier and at three municipal shelters. Imani asks who gets to enter when the music starts. Sol asks who can still reach the emergency switch.",
+    "question": "Who gets the keys, and who must trust the person holding them?",
+    "prior_flag_reactions": [
+      {
+        "flag": "market_displaced",
+        "effect": "Displaced market families are waiting outside, seeking shelter, not invitations."
+      },
+      {
+        "flag": "student_audit",
+        "effect": "The elected scholarship auditors can approve a shared emergency plan, but may refuse the player's preferred allocations."
+      },
+      {
+        "flag": "villain_has_timed_key",
+        "effect": "A prior bargain gave the mastermind one expiring access key to the city's shields."
+      },
+      {
+        "flag": "broadcast_stopped",
+        "effect": "The rehearsal's volunteer exit network already knows which hallway doors jam."
+      },
+      {
+        "flag": "city_spy_discs_released",
+        "effect": "Students demand a plan to prevent another involuntary public recording."
+      }
+    ],
+    "choices": [
+      {
+        "id": "open-doors",
+        "label": "Open the ballroom as a public shelter",
+        "method": "Public emergency assembly led by students and market tenants",
+        "check": {
+          "power_any": [
+            "empathy",
+            "kinetic"
+          ],
+          "difficulty": 5
+        },
+        "cost": "The donor guests withdraw money; crowds get shelter but security screening weakens.",
+        "success": {
+          "narrative": "Students and market tenants organize the dance floor into color-coded care zones; the first aid station opens beside the orchestra pit. The donor's paid guard staff leaves. The crowd chooses a council that can overrule the player when the real attack begins. Imani accepts its decision even when it inconveniences her.",
+          "flags": [
+            "prom_open_shelter",
+            "public_prom_council",
+            "donor_guards_depart"
+          ],
+          "delta": {
+            "community_trust": 3,
+            "faculty_standing": -1,
+            "resources": -2
+          },
+          "art": {
+            "scene": "Wide interior view of the academy ballroom at late afternoon. Adults in formal jackets and work clothes carry folding cots onto a polished circular dance floor beneath a twelve-sided crystal chandelier. Imani Vale, a plus-size copper-brown-skinned adult woman with long braids and a teal scarf, stands next to a small wooden ballot box. Two empty security guard posts flank the doors, and damp orange coats hang on a rack."
+          },
+          "callback": "Day 30: the elected council can help distribute crowd-control decisions; it will not simply obey."
+        },
+        "failure": {
+          "narrative": "Too many people push through one passage as a false fire alert sounds. Kit is hurt bracing a side door while the volunteer line holds. The families stay, but the guest-list database is overwritten and the culprit escapes into the crowd.",
+          "flags": [
+            "prom_open_shelter",
+            "kit_injured_until_next_day",
+            "guest_list_lost",
+            "unknown_infiltrator"
+          ],
+          "delta": {
+            "community_trust": 1,
+            "civic_harm": 1,
+            "resources": -2
+          },
+          "art": {
+            "scene": "Interior of a stone ballroom entrance. A heavy bronze-trimmed side door hangs crooked on one hinge. Kit Rowan, a broad-hipped pale-skinned adult with auburn hair and a green medic vest, sits on the floor holding a bandaged wrist as formal-dressed students lift the door. Families carrying blankets stand behind a yellow safety rope; a red alarm lamp glows above the corridor."
+          },
+          "callback": "Day 30: a volunteer, not academy security, knows who arrived before the false alarm."
+        }
+      },
+      {
+        "id": "private-guard",
+        "label": "Check identities and keep the prom by invitation",
+        "method": "Faculty and donor-sponsored perimeter",
+        "check": {
+          "power_any": [
+            "technopathy",
+            "biotech"
+          ],
+          "difficulty": 6
+        },
+        "cost": "Security stays strong, but the people without invitations remain outside.",
+        "success": {
+          "narrative": "Every listed student passes the checkpoint and the ballroom is sealed. The security machines flag a forged donor credential and reveal the mastermind's entry route. Outside, market families watch the lit windows from the rain; Mina tells you the barrier now looks like the city's floodgate all over again.",
+          "flags": [
+            "prom_private_perimeter",
+            "infiltration_route_found",
+            "market_families_excluded"
+          ],
+          "delta": {
+            "faculty_standing": 2,
+            "evidence": 2,
+            "trust_mina": -2,
+            "community_trust": -2
+          },
+          "art": {
+            "scene": "Outside an academy ballroom entrance at dusk. Two tall security arches glow pale green beneath gold double doors. Adult students in formal coats pass inside; a woman with two children holds a damp paper invitation behind a locked waist-high barrier in the rain. Mina Quill, tall and broad-shouldered with dark skin, short curls, an ivory coat and orange gauntlets, stands by the barrier with a tight expression."
+          },
+          "callback": "Day 30: the private security gate can block the attack's first wave, but the excluded families need another refuge."
+        },
+        "failure": {
+          "narrative": "The computerized gate identifies every unauthorized visitor as hostile, including volunteer medics. When emergency shutters drop, an injured student and two rescue crew members are stranded on the wrong side. Sol discovers the contractor's rules are still being updated remotely.",
+          "flags": [
+            "prom_private_perimeter",
+            "medics_locked_out",
+            "security_rules_compromised"
+          ],
+          "delta": {
+            "faculty_standing": -1,
+            "community_trust": -2,
+            "civic_harm": 2
+          },
+          "art": {
+            "scene": "Medium view of a brightly illuminated mechanical security gate across the academy steps. A red warning lamp shines above a row of waist-high turnstiles. Two adults in green medic vests kneel beside a student on the rain-soaked pavement while an amber-visor-wearing Sol Navarro examines an exposed wall panel through the bars."
+          },
+          "callback": "Day 30: private security's remote control can be redirected only by sacrificing one other municipal defense."
+        }
+      },
+      {
+        "id": "steal-access",
+        "label": "Copy the emergency keys and quietly recruit a second response team",
+        "method": "Covert independent evacuation logistics",
+        "check": {
+          "power_any": [
+            "spatial",
+            "technopathy"
+          ],
+          "difficulty": 7
+        },
+        "cost": "Secret copies create a second rescue path but betray the trust of whoever owned the originals.",
+        "success": {
+          "narrative": "Nix duplicates the mechanical keys and leaves a set with the market volunteers. When the dean arrives, the doors look normal, but two independent escape routes now exist. Nix asks whether you plan to tell the student council, or only ask forgiveness if everything goes wrong.",
+          "flags": [
+            "duplicate_emergency_keys",
+            "rogue_rescue_cell",
+            "faculty_key_theft"
+          ],
+          "delta": {
+            "rogue_independence": 2,
+            "community_trust": 1,
+            "faculty_standing": -2,
+            "trust_nix": 1
+          },
+          "art": {
+            "scene": "Close view inside a narrow maintenance corridor. Nix Venn, a slender tan-skinned adult with short silver hair and a white jacket with purple collar lining, kneels over two brass emergency keys on a black velvet work mat. Behind Nix stands an older market volunteer carrying a green tool bag. On the wall hang grey breaker cabinets with small orange indicator lamps."
+          },
+          "callback": "Day 30: the rogue rescue cell can rescue trapped people even if the official doors are locked."
+        },
+        "failure": {
+          "narrative": "A copy jams in a turnstile and exposes the theft. Guards detain Nix while an unknown courier escapes with one working key. The independent volunteers still know the side passages, but the mastermind may also have the map.",
+          "flags": [
+            "nix_detained",
+            "rogue_rescue_cell",
+            "villain_has_emergency_map"
+          ],
+          "delta": {
+            "rogue_independence": 1,
+            "faculty_standing": -3,
+            "trust_nix": -1
+          },
+          "art": {
+            "scene": "Eye-level view of a brass turnstile in the academy service hallway. A broken key sticks out of the lock. Nix, a silver-haired adult in a white jacket, stands between two academy guards under pale orange ceiling lamps. Beyond an open side door, a courier in a dark raincoat runs away holding a green map tube."
+          },
+          "callback": "Day 30: Nix can be freed through due process or the underground passages, each costing a different ally."
+        }
+      }
+    ]
+  },
+  "episode_30": {
+    "id": "ct-d30-prom-of-doom",
+    "day": 30,
+    "phase": "night",
+    "location_id": "campus-ballroom",
+    "title": "PROM OF DOOM",
+    "mandatory": true,
+    "can_skip": false,
+    "has_fallback": true,
+    "arrival": "The real graduation prom begins. Adult classmates arrive in formal clothes with their capes over their shoulders. The dance floor is occupied, the musicians are playing, and the front doors have been closed. At the first note of the fourth dance, the twelve-sided chandelier turns upside down, its glass facets lock into a brass ring, and an enormous blue transmission beam strikes the city shield towers outside. Windows buckle. A long red fracture spreads across the ballroom's glass roof. The mastermind's run-specific city-destruction sequence has begun, with the prom guests trapped at its center.",
+    "physical_event": "A catastrophic attack happens during the actual dance. The ballroom is physically damaged; the connected towers are activated, and guests need rescue. No ending may summarize the catastrophe without staging and resolving it.",
+    "scripted_beats": [
+      "The arrival dance creates at least one personal interaction with an existing chosen partner or companion; non-romantic players meet a trusted friend instead.",
+      "The brass chandelier becomes the antagonist's live antenna while the guests are physically inside the ballroom.",
+      "Two simultaneous rescue demands force an allocation decision before the mastermind can be confronted.",
+      "The villain speaks or acts according to the per-run mastermind identity, offering a specific bargain or counterattack.",
+      "The chosen finale option resolves with authored success or failure, injuries and visible physical aftermath; an ending plate and epilogue follow."
+    ],
+    "villain_adapters": [
+      {
+        "id": "gilded-current",
+        "name": "The Gilded Current",
+        "plan": "Invert municipal floodgates and force canal water through the hospital and market while the ballroom powers the shield network.",
+        "ballroom_effect": "Water pours down the glass walls as electrically charged bronze sluice controls spin beneath the dance floor.",
+        "cost_of_bargain": "Give a private syndicate the only flood-control keys."
+      },
+      {
+        "id": "glass-choir",
+        "name": "The Glass Choir",
+        "plan": "Use the chandelier's transmitter to broadcast stolen student voices through evacuation sirens, sending the city's crowds toward the wrong exits.",
+        "ballroom_effect": "Hundreds of little glass mirrors descend over the guests; each mirror repeats a person's voice from a different hallway.",
+        "cost_of_bargain": "Accept a permanent citywide public-identity recorder."
+      },
+      {
+        "id": "borrowed-sun",
+        "name": "The Borrowed Sun",
+        "plan": "Redirect the city's night shield grid into an artificial star over the harbor that will burn the crowded waterfront at sunrise.",
+        "ballroom_effect": "A bright orange miniature star forms in the chandelier's brass center; gold-hot light crosses the floor and melts plastic seats.",
+        "cost_of_bargain": "Shut down several city blocks and let the inventor choose which stay in darkness."
+      }
+    ],
+    "full_game_contract": "These are three distinct candidate physical villain adapters, not a false claim of all eight required masterminds. Expand to eight before the final 30-day game is complete.",
+    "prior_flag_reactions": [
+      {
+        "flag": "public_prom_council",
+        "effect": "Crowd representatives share control of evacuation doors but can disobey self-serving orders."
+      },
+      {
+        "flag": "infiltration_route_found",
+        "effect": "Player knows which station handles the antenna's uplink."
+      },
+      {
+        "flag": "duplicate_emergency_keys",
+        "effect": "A second independently operated rescue corridor opens."
+      },
+      {
+        "flag": "rogue_rescuers_offer_help",
+        "effect": "Non-academy rescuers can operate an emergency ferry or staircase."
+      },
+      {
+        "flag": "villain_has_timed_key",
+        "effect": "The villain's borrowed municipal key activates early and shortens the response window."
+      },
+      {
+        "flag": "student_audit",
+        "effect": "Student auditors can verify the city shield's public cost reports and expose a concealed casualty forecast."
+      }
+    ],
+    "choices": [
+      {
+        "id": "evacuate-everyone",
+        "label": "Move the guests first and let the antenna finish its first cycle",
+        "method": "Rescue-first evacuation with no promise of stopping citywide damage",
+        "check": {
+          "power_any": [
+            "spatial",
+            "kinetic"
+          ],
+          "difficulty": 6
+        },
+        "cost": "The ballroom clears, but the city shields absorb a destructive pulse and the waterfront may be damaged.",
+        "success": {
+          "narrative": "The exit doors open in sequence. Imani and the volunteers hold lighted ropes while Nix brings out the last injured guest. The ballroom's roof collapses after the crowd reaches the wet courtyard. The city's harbor district loses its shield for an hour, and market homes are damaged again. Nobody at prom dies because you chose them first.",
+          "flags": [
+            "prom_guests_evacuated",
+            "ballroom_destroyed",
+            "harbor_shield_down",
+            "no_prom_guest_deaths"
+          ],
+          "delta": {
+            "community_trust": 3,
+            "civic_harm": 2,
+            "resources": -2
+          },
+          "art": {
+            "scene": "Night view from the academy courtyard: dozens of adults in torn graduation formalwear cross wet stone steps behind Imani Vale, a plus-size copper-brown-skinned woman with braids and a teal scarf holding a luminous rope. Behind them the ballroom's broken glass roof slopes into the hall, while a blue beam climbs from the brass chandelier into the sky. Harbor tower lights flicker far below."
+          },
+          "callback": "Prom ending: survivors thank the player, and waterfront tenants can publicly challenge the decision."
+        },
+        "failure": {
+          "narrative": "One balcony staircase collapses under rushing guests. Kit and Mina use emergency ladders to get people down, but injured dancers remain inside after the first shield pulse crosses the harbor. The crowd is mostly safe; the rescue is unfinished when the city powers fail.",
+          "flags": [
+            "prom_partial_evacuation",
+            "injured_prom_guests",
+            "harbor_shield_down",
+            "kit_injured_until_next_day"
+          ],
+          "delta": {
+            "community_trust": 1,
+            "civic_harm": 3,
+            "resources": -3
+          },
+          "art": {
+            "scene": "Inside a torn ballroom stairwell at night. An orange emergency ladder bridges a broken marble staircase. Mina Quill in an ivory coat and orange gauntlets braces the ladder while Kit Rowan in a green medic vest helps an adult in blue formal clothes climb down. Through a cracked glass wall, a bright blue beam rises from the chandelier and harbor lights go out."
+          },
+          "callback": "Prom ending: the player must accept delayed rescues and may lose trust of a partner whose friend was injured."
+        }
+      },
+      {
+        "id": "destroy-antenna",
+        "label": "Shatter the chandelier before it sends the last command",
+        "method": "Direct assault that risks the crowd still below",
+        "check": {
+          "power_any": [
+            "elemental",
+            "kinetic"
+          ],
+          "difficulty": 7
+        },
+        "cost": "Stopping the citywide attack may drop the heavy brass chandelier onto the dance floor.",
+        "success": {
+          "narrative": "A focused strike breaks the chandelier's brass core. The beam snaps off over the harbor, and the city shield towers survive. The falling crystal ring crushes the empty orchestra stage after several guests drag the musicians clear. The academy loses its historic ballroom but the waterfront remains lit. The last violinist asks who will pay for a prosthetic hand.",
+          "flags": [
+            "antenna_destroyed",
+            "city_shields_saved",
+            "orchestra_injured",
+            "ballroom_destroyed"
+          ],
+          "delta": {
+            "public_reputation": 2,
+            "civic_harm": 1,
+            "faculty_standing": -2
+          },
+          "art": {
+            "scene": "Interior wide shot of the academy ballroom. A twelve-sided glass chandelier has split into two jagged pieces above the dance floor, surrounded by sparks and blue mist. One brass ring crashes into an empty orchestra platform, splintering cellos and music stands. Mina in an ivory coat extends an orange shield over three musicians rushing toward an open side exit."
+          },
+          "callback": "Prom ending: the city survives, and the orchestra seeks compensation the academy refuses to pay."
+        },
+        "failure": {
+          "narrative": "The chandelier's frame catches the strike and throws it across the glass roof. Shards fall onto occupied tables and the transmitter continues for one more cycle. Your allies save the dancers nearest them; the hospital loses a critical shield segment.",
+          "flags": [
+            "antenna_active_one_cycle",
+            "prom_glass_injuries",
+            "hospital_shield_down",
+            "ballroom_damaged"
+          ],
+          "delta": {
+            "public_reputation": -1,
+            "civic_harm": 3,
+            "resources": -2
+          },
+          "art": {
+            "scene": "Low angle from an occupied ballroom table. Broken glass from the ceiling covers white plates and blue paper garlands. A brass chandelier hangs tilted on one cable, its blue transmission beam still shining through the roof. Adults in formal clothes crouch under overturned oak tables while a red hospital shield tower flashes through the windows."
+          },
+          "callback": "Prom ending: the city was defended imperfectly; injured people know which command you gave."
+        }
+      },
+      {
+        "id": "take-command",
+        "label": "Accept the mastermind's control console and choose which district gets protection",
+        "method": "Authoritarian victory using the antagonist's own apparatus",
+        "check": {
+          "power_any": [
+            "technopathy",
+            "empathy"
+          ],
+          "difficulty": 8
+        },
+        "cost": "The player may save most people by handing one district to the villain and keeping access to surveillance controls.",
+        "success": {
+          "narrative": "You seize the control console and reroute the lethal pulse into an empty freight canal. The city survives. One sector loses its voting machinery and the shield controllers now answer directly to you. Sol says the override will stay yours until you surrender it voluntarily. Imani asks for that surrender before the graduation photographs.",
+          "flags": [
+            "prom_attack_redirected",
+            "player_controls_city_shields",
+            "one_sector_disempowered",
+            "villain_countered"
+          ],
+          "delta": {
+            "underworld_status": 2,
+            "public_reputation": 1,
+            "community_trust": -3,
+            "trust_imani": -3
+          },
+          "art": {
+            "scene": "Side view inside a ballroom control alcove. A graduate in a dark navy cape places one hand on a large brass console with three bright red switches and a semicircle of green lamps. Beyond the alcove window, the chandelier's blue beam bends toward an empty concrete freight canal. Sol Navarro in amber visor stands behind the console; Imani in a teal scarf watches from an open doorway."
+          },
+          "callback": "Prom ending: the city survives beneath a new master; classmates may leave the player."
+        },
+        "failure": {
+          "narrative": "The console obeys the borrowed access key instead. The ballroom beam cuts out, but the shield towers lock onto the player's command seal and city guards arrive to arrest them. The mastermind leaves through the maintenance stair while students tear down the newly installed command banners.",
+          "flags": [
+            "player_implicated",
+            "villain_escapes",
+            "shield_ownership_locked",
+            "prom_stopped"
+          ],
+          "delta": {
+            "underworld_status": -1,
+            "public_reputation": -3,
+            "faculty_standing": -3
+          },
+          "art": {
+            "scene": "Night interior of the ballroom's narrow control alcove. A brass console glows red with a hand-shaped warning panel. City guards in white-and-blue jackets stand at the open door holding magnetic cuffs. A navy-caped graduate holds both hands above the controls while, beyond the glass, a hooded figure descends a dark service staircase under a flashing blue light."
+          },
+          "callback": "Prom ending: future city council demands accountability; a friend may testify against the player."
+        }
+      },
+      {
+        "id": "break-network",
+        "label": "Open the civic shield grid to every neighborhood and destroy the central control key",
+        "method": "Rogue decentralization with unpredictable local failures",
+        "check": {
+          "power_any": [
+            "spatial",
+            "biotech"
+          ],
+          "difficulty": 8
+        },
+        "cost": "Local crews gain power to protect themselves; no one can guarantee coordinated rescue and the city can never restore its old central shield easily.",
+        "success": {
+          "narrative": "The central brass switch fractures. Separate neighborhood emergency units light up one by one: harbor ferries, the hospital, market and student volunteers operate their own shields. The chandelier's beam splits harmlessly into the night sky. Some neighborhoods refuse academy orders. The city is alive and less controllable than before.",
+          "flags": [
+            "city_shields_decentralized",
+            "prom_saved",
+            "rogue_rescuers_in_charge",
+            "central_authority_ended"
+          ],
+          "delta": {
+            "rogue_independence": 3,
+            "community_trust": 2,
+            "faculty_standing": -3
+          },
+          "art": {
+            "scene": "High-angle view from the ballroom roof at night. The central brass chandelier below has cracked into several dark segments. Across Comet City, small independent blue shield domes cover a hospital, crowded market, three orange harbor ferries and two apartment blocks. On the foreground roof, Nix in a white jacket hands a bundle of brass keys to a market volunteer."
+          },
+          "callback": "Prom ending: each district negotiates a new, sometimes conflicting rescue charter."
+        },
+        "failure": {
+          "narrative": "The central control shatters before the neighborhood units finish loading. Only the market and hospital switch on their local domes; dormitories and the academy stay exposed to the collapsing chandelier beam. Unaffiliated rescuers answer the alarm while faculty refuse to authorize the player.",
+          "flags": [
+            "decentralization_partial",
+            "dormitory_damaged",
+            "rogue_rescuers_in_charge",
+            "faculty_rejected"
+          ],
+          "delta": {
+            "rogue_independence": 2,
+            "civic_harm": 3,
+            "faculty_standing": -3
+          },
+          "art": {
+            "scene": "Wide nighttime view from the academy roof. The ballroom glass roof is broken open and a blue beam strikes a row of stone dormitory towers, breaking windows. Farther down the hill a small blue shield dome covers the hospital while an orange market ferry shines beneath a separate dome. A market volunteer carries a coil of rescue rope toward the academy door."
+          },
+          "callback": "Prom ending: independent rescuers save lives, while the ruined dormitories remain visible at graduation."
+        }
+      }
+    ]
+  },
+  "key_moments": [
+    {
+      "key": "ct-prom-d29-ballroom-doors",
+      "title": "Day 29, ballroom preparations",
+      "seed": 962101,
+      "scene": "Late afternoon outside a grand academy ballroom with cream stone columns and tall gold double doors. Adult students in purple, silver and dark blue formal outfits arrive past orange emergency lanterns, while market families wearing coats stand beside folding cots. Mina Quill, a broad-shouldered dark-skinned woman with short curls in an ivory rescue coat, stands beside Imani Vale, a copper-brown-skinned woman with long black braids and teal scarf. High above the open doorway, a twelve-sided glass chandelier is visible through the windows."
+    },
+    {
+      "key": "ct-prom-d30-first-waltz",
+      "title": "Day 30, the real prom begins",
+      "seed": 962102,
+      "scene": "Interior of a large academy ballroom during a night graduation prom. Dozens of adult students dance on a polished circular wooden floor in long blue, burgundy and cream formalwear; several wear colored capes over their evening clothes. An actual string quartet plays on a low platform beside the dance floor. Above them a twelve-sided crystal chandelier glows gold beneath a broad glass dome. Purple paper garlands hang from stone columns and guests stand beside a refreshment table near open terrace doors."
+    },
+    {
+      "key": "ct-prom-d30-the-chandelier-turns",
+      "title": "Prom of Doom begins",
+      "seed": 962103,
+      "scene": "Wide interior view of the same graduation ballroom at night, during the real dance. The twelve-sided crystal chandelier has flipped upside down and its facets form a rotating brass ring. A huge straight blue beam rises through the breaking glass roof toward three shield towers visible across the city. A red fracture crosses the ceiling panes. Adult dancers in blue, cream and burgundy formal clothes stumble away from shattered glass while an orchestra member grabs a falling music stand."
+    }
+  ],
+  "endings": [
+    {
+      "id": "ct-prom-finale-a-thousand-keys",
+      "title": "A City with a Thousand Keys",
+      "alignment": "rogue-community",
+      "requires_any": [
+        [
+          "city_shields_decentralized"
+        ],
+        [
+          "city_shields_decentralized",
+          "public_prom_council"
+        ]
+      ],
+      "narrative": "At dawn, the market vendors refuse to hand their shield back. The hospital keeps its own grid. Faculty surrender the academy's old emergency charter. Graduation takes place on the broken ballroom stairs, where students and city residents write repair shifts on scraps of paper. Nobody appoints you the new commander. Your partner, if you have one, asks where you want to be when the rebuilding becomes ordinary work.",
+      "cost": "Some districts coordinate badly. The first storm after prom damages homes the old centralized system might have protected.",
+      "art": {
+        "scene": "Morning outside a wrecked academy ballroom. The glass roof is open to the pale sky and broken brass chandelier pieces lie in the doorway. Adult graduates stand on wet stone steps in navy and ivory gowns, passing small brass keys to hospital nurses, dock workers and market residents. Behind them, three independent pale-blue shield domes shine above separate neighborhoods."
+      }
+    },
+    {
+      "id": "ct-prom-finale-iron-corsage",
+      "title": "The Iron Corsage",
+      "alignment": "villain-order",
+      "requires_any": [
+        [
+          "player_controls_city_shields"
+        ]
+      ],
+      "narrative": "The city's children sleep behind reliable shields and three checkpoints. The council calls you a hero for saving the prom and a tyrant for keeping the console. A bouquet of metal roses arrives at graduation without a signature. Imani does not come. Sol has left you a manual showing how to return power to the wards. The last page remains unread in your office drawer.",
+      "cost": "Safety persists while residents lose agency and friends refuse ceremonial gratitude.",
+      "art": {
+        "scene": "Night view inside an academy office overlooking a densely illuminated Comet City. A navy-caped graduate sits behind a broad black desk with a gold medal and a bouquet of small silver metal roses. Through the window, blue citywide shields cover buildings, and a line of white security checkpoints crosses an orange-lit bridge. On the desk lies a thin closed manual beside a lit brass key."
+      }
+    },
+    {
+      "id": "ct-prom-finale-empty-orchestra",
+      "title": "The Empty Orchestra",
+      "alignment": "hero-sacrifice",
+      "requires_any": [
+        [
+          "antenna_destroyed"
+        ],
+        [
+          "prom_guests_evacuated"
+        ]
+      ],
+      "narrative": "The city is still standing, but the old stage has no musicians left to play the last dance. Students graduate outside, on splintered orchestra platforms built into a temporary ramp. A violinist accepts your apology and refuses your medal. Mina files paperwork for every injured guest before she signs your yearbook. The city remembers who was saved and who paid for it.",
+      "cost": "The city wins but the orchestra carries permanent injuries and the academy's celebration is gone.",
+      "art": {
+        "scene": "Afternoon outside a damaged academy ballroom. Broken music stands, cello cases and scattered sheet music lie on a temporary wooden ramp. A musician in a burgundy coat has one prosthetic silver hand and holds a violin case with the other. Mina Quill in an ivory coat with orange gauntlets stands nearby with a folder of hospital papers. Behind them adult graduates in navy formal clothing sit quietly on stone steps."
+      }
+    },
+    {
+      "id": "ct-prom-finale-last-boat",
+      "title": "The Last Dance Leaves by Boat",
+      "alignment": "mixed-rescue",
+      "requires_any": [
+        [
+          "prom_partial_evacuation"
+        ],
+        [
+          "decentralization_partial"
+        ],
+        [
+          "harbor_shield_down"
+        ]
+      ],
+      "narrative": "The ballroom stood for one final song before the city lights vanished. The survivors ride orange harbor ferries under emergency lanterns. Some passengers sing the academy waltz because silence feels worse. The next morning the flood line is painted high on the market's wall, where everyone can see it. You helped enough to be thanked and failed enough to be questioned, often by the same people.",
+      "cost": "Prom is interrupted, neighborhoods are damaged and the survivors demand more than a neat victory speech.",
+      "art": {
+        "scene": "Blue predawn harbor with three orange-and-white ferries carrying adults in soaked formal clothes, rescue coats and blankets. Yellow lanterns hang from boat railings. One student holds a crumpled blue corsage while another steadies an injured passenger on a bench. Across the water the academy ballroom's broken glass roof stands above dark city towers and a red waterline painted on market stalls."
+      }
+    }
+  ],
+  "validation": "Every seed reaches the real day-30 ball even after missed quests, injured followers or failed skill checks. Player choice changes who controls shields, which neighborhoods are damaged, whether guests live, and how the city is governed. No generic instant-win ending."
+}
