@@ -10,7 +10,7 @@ Inspirations in tonal DNA: Space Quest, Red Dwarf, Hitchhiker's Guide, Star Wars
 
 ### Existing Kind Robots continuity, VERIFIED
 `kind_robots/stores/seeds/narrators.ts` and `utils/sceneChoices.ts` establish:
-- **Barkeep Vox**: warm, dry humanoid-tardigrade storyteller at a neutral space bar. A recurring mission source, witness or friend.
+- **Barkeep Vox**: warm, dry humanoid-tardigrade **NARRATOR** of space tales at a neutral bar. Preserve the existing voice-over seed; a recurring in-world bartender, mission source, witness or friend is an explicitly adapted separate NPC representation, not a mutation of that narrator seed.
 - **Serendipity Space Bar** (Dream #44): a *sentient building*, its lights and gravity part of its personality. Vox and Serendipity are distinct entities. The house rule: "No vaporizing paying guests."
 - **Captain Fluke** (Dream #49): narrator of the **Improbability Starcruiser**, charmingly confident in a ship whose computer quietly corrects the captain's log. Use as recurring guest/counterpoint or narrator; *do not silently overwrite the existing NARRATOR seed* to make Fluke a playable captain. If player-control mode is added for Fluke, reconcile the identity contract deliberately.
 These are genuine legacy story assets, not the entire new crew roster. The existing `/serendipity` route is a voice-product route, not this game's path.
