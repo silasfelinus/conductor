@@ -159,6 +159,7 @@ Hard lines, on top of the queer-positive rules above:
 | mom-3000 | MOM-3000 | HAL 9000 (2001) / Proteus, Demon Seed (1977) | flip | The cold male machine that kills to protect the mission → a mother machine whose love became a cage |
 | the-shape | Mickey Moore, the Shape in the Cardigan | Michael Myers, Halloween (1978) | flip | The slasher who punishes "bad girls" and spares the virgin → a girl shamed by a town rumor who now enforces the rules that broke her; the Best ending tears up the purity script so everyone survives |
 | final-cut | The Final Cut | The killer-reveal slashers: Psycho (1960), Dressed to Kill (1980), Sleepaway Camp (1983) | bend | Gender variance as the twist that explains the killer, plus kill-order rules (the gay friend, the Black friend, the slut) → a cursed 1980 slasher reel that recasts the town into those stereotypes; its heroes are the people the script slandered, and the Best ending rewrites the third act |
+| dot-ruskin | Dot Ruskin, the Slumber Party Driller | Russ Thorn, The Slumber Party Massacre (1982) | flip | The sleepover slasher where girls in nightgowns are punished and the drill stands in for the camera's leer → a 1966 shop-class girl the town blamed for fighting back against a frat's "harmless" panty raid; in 1986 the damsel tropes land on the brothers at their sincere drag night, and the Best ending returns what was taken and puts her at the workbench |
 
 ## The 22 companions (crew limit 10)
 
