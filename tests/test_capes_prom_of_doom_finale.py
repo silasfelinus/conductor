@@ -21,6 +21,9 @@ def test_real_prom_of_doom_is_a_day_thirty_mandatory_scenario():
     assert story["never_replace_with_rehearsal"] is True
     assert story["prom_day"] == 30
     assert story["episode_29"]["day"] == 29
+    assert story["episode_29"]["mandatory"] is True
+    assert story["episode_29"]["can_skip"] is False
+    assert story["episode_29"]["has_fallback"] is True
     assert story["episode_30"]["day"] == 30
     assert story["episode_30"]["title"] == "PROM OF DOOM"
     assert story["episode_30"]["mandatory"] is True
