@@ -1,0 +1,241 @@
+# Terrors on Crystal Street, art audit re-rolls (crystal-street t-007/t-011, 2026-10-25 PT). A full-size
+# audit of every shipped poster, portrait, ending photo, companion portrait, avatar and location found:
+# - Counselor Jess's poster (also her ending photo): a bloody machete, plus a swimsuit-cut teen among scattered
+#   clothes. Her portrait had a torn laced-up bodice. All three were pulled from kind_robots (#4159).
+# - Frieda's poster: a figure face-down on the street that reads as a body.
+# - The Sugarlings' poster and ending: critters that copy a real designer-toy brand.
+# - Zelda's poster: a Ghostface figure (Scream, 1996), a real trademark and a 1996 anachronism.
+# - Vonda's ending: a crawling, cleavage-forward pose.
+# - Two avatars put a blade or a hatchet in a teen's hand.
+# Generated art is pre-approved. Private. Review each one at full size before export.
+round: crystal-street-reroll-1
+project_slug: crystal-street
+designer: Crystal Street art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (painted 1986 VHS box art)
+  engine: krea2
+  prompt: prose
+  suffix: painted 1986 horror-comedy VHS box art, airbrushed gouache, hot magenta and cyan neon rim light, deep
+    midnight purple shadows, suburban Halloween atmosphere, cinematic composition, playful spooky mood
+- key: ink
+  label: Krea 2 (inked horror comic, the Masking Up standard)
+  engine: krea2
+  prompt: prose
+  suffix: detailed inked horror comic illustration, bold confident ink linework with fine crosshatching, rich painted
+    color over the ink, moonlit night, cinematic depth, darkly comic 1980s slasher energy
+- key: avatar
+  label: Krea 2 (VHS-painted player avatar)
+  engine: krea2
+  prompt: prose
+  suffix: painted 1986 horror-comedy VHS box art character, full figure from head to shoes, airbrushed gouache,
+    hot magenta and cyan rim light, deep midnight purple studio backdrop, playful spooky mood
+subjects:
+- key: cs-villain-counselor-jess-poster
+  lane: krea2
+  entity: villain-poster
+  title: Counselor Jess · poster
+  asset: villains/counselor-jess-poster
+  size: 832x1216
+  seed: 866001
+  negative: nsfw, nudity, gore, blood, watermark, text, letters, signature, logo, blurry, lowres, extra limbs, cleavage,
+    low neckline, lace-up bodice, bikini, swimsuit, underwear, bare thighs, sexy, teenagers, people in water
+  prompt_prose: A towering, muscular adult woman with long dark wavy hair streaming lake water, pulling a cracked
+    hockey-style mask over her face with one hand, wearing a soaked, torn, high-necked navy camp-staff dress with
+    short sleeves and a tin whistle on a lanyard, a dull rusty machete held low and pointed at the ground in her
+    other hand, standing in tall reeds on a moonlit lakeshore beside a wooden dock, an empty swim raft on the silver
+    water, a lit cabin across the lake, a cooler, folding chairs, an inner tube and towels on the grass, a full
+    moon over dark pines
+  jobs:
+    krea2: 45370
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 253255
+- key: cs-villain-counselor-jess-portrait
+  lane: krea2
+  entity: villain-portrait
+  title: Counselor Jess · portrait
+  asset: villains/counselor-jess-portrait
+  size: 1024x1024
+  seed: 866002
+  negative: nsfw, nudity, gore, blood, watermark, text, letters, signature, logo, blurry, lowres, extra limbs, cleavage,
+    low neckline, lace-up bodice, bikini, swimsuit, underwear, bare thighs, sexy
+  prompt_prose: Close portrait of a towering, muscular woman lifting a cracked hockey-style mask off her face to
+    reveal wide, hurt eyes much younger than the rest of her, freckles on lake-pale skin, long dark wavy hair dripping
+    water, a soaked high-necked navy camp-staff dress with a tin whistle on a lanyard, lit by moonlight and a teal
+    glow from the water below
+  jobs:
+    krea2: 45371
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 253256
+- key: cs-villain-counselor-jess-ending
+  lane: ink
+  entity: villain-ending
+  title: Counselor Jess · ending photo
+  asset: villains/counselor-jess-ending
+  size: 912x1216
+  seed: 866003
+  negative: nsfw, nudity, gore, blood, watermark, text, letters, signature, logo, blurry, lowres, extra limbs, cleavage,
+    low neckline, lace-up bodice, bikini, swimsuit, underwear, bare thighs, sexy
+  prompt_prose: A towering, muscular woman with long wet dark hair pulling a cracked hockey-style mask over her
+    face at the edge of a moonlit lake, a soaked high-necked navy camp-staff dress and a tin whistle on a lanyard,
+    a dull rusty machete pointed at the ground, teens in pajamas and sweatshirts fleeing up the shore toward a lit
+    cabin, coolers, towels and a folding chair scattered across the grass, pines under a huge moon
+  jobs:
+    ink: 45372
+  art:
+    ink:
+      status: DONE
+      art_image_id: 253257
+- key: cs-villain-frieda-krueger-poster
+  lane: krea2
+  entity: villain-poster
+  title: Frieda Krueger · poster
+  asset: villains/frieda-krueger-poster
+  size: 832x1216
+  seed: 866004
+  negative: nsfw, nudity, gore, blood, watermark, text, letters, signature, logo, blurry, lowres, extra limbs, person
+    lying on the ground, body on the street, hair pile
+  prompt_prose: A towering woman in a 1961 beautician's smock and a beehive of silver hair, a glove of five gleaming
+    salon shears raised over a sleeping suburban street, curlers floating like moons, the houses below draining
+    from color to gray, the street and lawns empty and quiet
+  jobs:
+    krea2: 45373
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 253258
+- key: cs-villain-sugarlings-poster
+  lane: krea2
+  entity: villain-poster
+  title: The Sugarlings · poster
+  asset: villains/sugarlings-poster
+  size: 832x1216
+  seed: 866005
+  negative: nsfw, nudity, gore, blood, watermark, text, letters, signature, logo, blurry, lowres, extra limbs, rabbit
+    ears, long ears, bunny, sharp teeth, jagged teeth, designer toy, branded toy character
+  prompt_prose: A towering mountain of round fuzzy gumdrop-shaped pastel critters with tiny stubby bear ears, button
+    noses and huge glossy eyes spilling out of a toy store at night, thousands of small smiling mouths open and
+    singing, candy wrappers swirling like a blizzard, kids in Halloween costumes clutching pillowcases of candy,
+    one handmade button-eyed plush glowing softly on top
+  jobs:
+    krea2: 45374
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 253259
+- key: cs-villain-sugarlings-ending
+  lane: ink
+  entity: villain-ending
+  title: The Sugarlings · ending photo
+  asset: villains/sugarlings-ending
+  size: 912x1216
+  seed: 866006
+  negative: nsfw, nudity, gore, blood, watermark, text, letters, signature, logo, blurry, lowres, extra limbs, rabbit
+    ears, long ears, bunny, sharp teeth, jagged teeth, designer toy, branded toy character
+  prompt_prose: A towering avalanche of round fuzzy gumdrop-shaped pastel critters with tiny stubby bear ears, button
+    noses and huge glossy eyes pouring out of a toy store doorway at night, thousands of small singing mouths, candy
+    wrappers swirling like snow, a cash register buried to the keys, costumed trick-or-treaters and teens surfing
+    away on a capsized toy shelf
+  jobs:
+    ink: 45375
+  art:
+    ink:
+      status: DONE
+      art_image_id: 253260
+- key: cs-villain-vonda-velour-ending
+  lane: ink
+  entity: villain-ending
+  title: Vonda Velour · ending photo
+  asset: villains/vonda-velour-ending
+  size: 912x1216
+  seed: 866007
+  negative: nsfw, nudity, gore, blood, watermark, text, letters, signature, logo, blurry, lowres, extra limbs, cleavage,
+    low neckline, high-cut leotard, bare legs, crawling, suggestive pose, sexy
+  prompt_prose: A glittering aerobics queen in a long-sleeved high-necked magenta leotard over shiny teal tights,
+    a cropped sweatshirt, teal leg warmers and a headset microphone leaning halfway out of a giant curved television
+    screen in a dark living room, reaching for the remote with a big showbiz grin, static crackling off her teeth,
+    exhausted teens in sweatshirts and sweatbands collapsing across the shag carpet behind her mid-jumping-jack
+  jobs:
+    ink: 45376
+  art:
+    ink:
+      status: DONE
+      art_image_id: 253261
+- key: cs-companion-zelda-fishbein-poster
+  lane: krea2
+  entity: companion-poster
+  title: Zelda Fishbein · poster
+  asset: companions/zelda-fishbein-poster
+  size: 832x1216
+  seed: 866008
+  negative: nsfw, nudity, gore, blood, watermark, text, letters, signature, logo, blurry, lowres, extra limbs, ghost
+    mask, white screaming mask, hooded masked killer, ghostface, real movie posters
+  prompt_prose: 'Full-body heroic 1986 pose of a 63-year-old Jewish woman with olive skin and deep laugh lines,
+    a dramatic silver-streaked black bouffant, cat-eye glasses on a pearl chain, bright red lipstick, a red video
+    store staff vest over a black mock-neck sweater, a string of pearls, a black pencil skirt, posed in the classic
+    scream: one hand at her cheek, mouth wide, cat-eye glasses flashing, her other hand thrusting a VHS tape at
+    the looming shadow of a lumpy rubber swamp monster with big claws, a wall of lurid horror tape boxes with invented
+    titles glowing behind her'
+  jobs:
+    krea2: 45377
+  art:
+    krea2:
+      status: DONE
+      art_image_id: 253262
+- key: cs-avatar-flashlight
+  lane: avatar
+  entity: avatar
+  title: Flashlight Duelist · avatar
+  asset: avatars/flashlight
+  size: 832x1216
+  seed: 866009
+  negative: nsfw, nudity, gore, blood, watermark, text, letters, signature, logo, blurry, lowres, extra limbs, knife,
+    blade, sword blade, machete, dagger, weapon in other hand
+  prompt_prose: A round-faced teenager with warm brown skin and a high-top fade in a huge flannel shirt and cargo
+    shorts, crouched low in a fencing stance, brandishing a giant chrome flashlight like a sword with its beam blazing,
+    the other hand raised open behind them for balance, one eye squinting
+  jobs:
+    avatar: 45378
+  art:
+    avatar:
+      status: DONE
+      art_image_id: 253263
+- key: cs-avatar-vampire-hunter
+  lane: avatar
+  entity: avatar
+  title: Vampire Hunter · avatar
+  asset: avatars/vampire-hunter
+  size: 832x1216
+  seed: 866010
+  negative: nsfw, nudity, gore, blood, watermark, text, letters, signature, logo, blurry, lowres, extra limbs, axe,
+    hatchet, knife, blade, sharp metal
+  prompt_prose: A skinny teenager with thick round glasses and a tucked-in argyle sweater vest leaping into the
+    air, a braid of garlic in one hand and a blunt wooden tent stake in the other, tie flying over one shoulder
+  jobs:
+    avatar: 45379
+  art:
+    avatar:
+      status: DONE
+      art_image_id: 253264
+- key: cs-avatar-vampire-hunter-2
+  lane: avatar
+  entity: avatar
+  title: Vampire Hunter · avatar (second re-roll)
+  asset: avatars/vampire-hunter
+  size: 832x1216
+  seed: 866011
+  negative: nsfw, nudity, gore, blood, watermark, text, letters, signature, logo, blurry, lowres, extra limbs, spear,
+    spearhead, metal point, axe, hatchet, knife, blade, arrow, sharp metal
+  prompt_prose: A skinny teenager with thick round glasses and a tucked-in argyle sweater vest leaping into the
+    air, a braid of garlic held high in one hand and a squeeze bottle of holy water in the other, a short whittled
+    wooden stake no longer than a pencil tucked behind one ear, tie flying over one shoulder
+  jobs:
+    avatar: 45384
