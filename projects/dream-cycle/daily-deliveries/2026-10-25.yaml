@@ -1,0 +1,72 @@
+date: '2026-10-25'
+entries:
+- slug: emperor-tiller-wire-talk
+  title: 'Emperor of Dust: Tiller exile talk, The Wire That Still Answers'
+  target: emperor-of-dust
+  kind: encounter
+  summary: Adds hidden-follower talk tiller-exile with two costly choices, each leaving its own flag and a remembered epilogue line.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4178
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/40190675183
+  merge_sha: c77b75d9e4b6824976ac272e879943e3e83d6ef7
+  checks: passed
+  verification: All 21 check runs on the final head passed; secret-talks test extended and passing locally with Prettier clean. Merged is not deployed; not eyeballed in a browser.
+  art:
+    status: not-required
+    note: Text-only encounter content.
+- slug: brick-bloom-vine-4a-ladybot-ring
+  title: 'Brick Bloom: ladybot ring on Vine Hall vine-4a'
+  target: kr-arcade
+  kind: arcade stage
+  summary: Adds a five-ladybot ring guarding the centre crate of Vine Hall wall vine-4a with a one-entry data change reusing the existing ring logic.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4178
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/40190675183
+  merge_sha: c77b75d9e4b6824976ac272e879943e3e83d6ef7
+  checks: passed
+  verification: All 21 check runs passed; ladybot, cabinet, mite and snail tests pass and the ladybot test asserts the new ringed crate exists. Merged is not deployed.
+  art:
+    status: not-required
+    note: Reuses existing ladybot sprites.
+- slug: emperor-sera-bell-talk
+  title: 'Emperor of Dust: Sera exile talk, The Bell That Followed'
+  target: emperor-of-dust
+  kind: encounter
+  summary: Adds hidden-follower talk sera-exile with two choices about muffling or ringing the hand bell and matching epilogue variants.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4174
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/40178363058
+  merge_sha: fcffa141786bba01c4ed35b48eaf32a3a94f0756
+  checks: passed
+  verification: Merged to main by an earlier Agent session today with CI green; secret-talks test extended. Merged is not deployed.
+  art:
+    status: not-required
+    note: Text-only encounter content.
+- slug: animation-newton-cradle-chain
+  title: 'Animation Manager: Newton Cradle Chain screensaver'
+  target: animation-manager
+  kind: animation
+  summary: Adds the Newton Cradle Chain canvas screensaver and its animation catalog entry.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4176
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/40186649411
+  merge_sha: b45f62dbd24a2e0b242eafa39441b421e8b2ddb4
+  checks: passed
+  verification: Merged to main by an earlier Agent session today with CI green. Merged is not deployed; not eyeballed in a browser by this session.
+  art:
+    status: not-required
+    note: Pure canvas animation, no raster assets.
+- slug: crystal-street-sound-effects
+  title: 'Crystal Street: synthesised sound effects'
+  target: crystal-street
+  kind: game feature
+  summary: Adds synthesised sound effects to Crystal Street so actions and day beats have audio feedback without shipping audio files.
+  status: shipped
+  pull_request: https://github.com/silasfelinus/kind_robots/pull/4169
+  checks_url: https://github.com/silasfelinus/kind_robots/actions/runs/40173213959
+  merge_sha: ac6dd4aae917ffb2559df0cabc0ac0257b39ebb2
+  checks: passed
+  verification: Merged to main by an earlier Agent session today with CI green. Merged is not deployed; not heard by this session.
+  art:
+    status: not-required
+    note: Synthesised audio, no raster assets.
