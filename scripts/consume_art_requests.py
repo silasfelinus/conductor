@@ -604,7 +604,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--queue-file",
-        default="projects/art-prompts.yaml",
+        default=None,
         help="Conductor-relative YAML request ledger; allows separately tracked large queues",
     )
     parser.add_argument("--live", action="store_true", help="actually queue, download, and mark done")
@@ -650,11 +650,16 @@ def main():
     # file writes via a workflow argument. The request consumer's existing
     # idempotency and durable last_art_job_id rules apply unchanged.
     global ART_PROMPTS_FILE
-    queue_file = (ROOT / args.queue_file).resolve()
-    if not queue_file.is_relative_to(ROOT / "projects") or queue_file.suffix != ".yaml":
-        parser.error("--queue-file must reference a YAML file under projects/")
+    if args.queue_file is None:
+        # Default to the configured ledger. This also preserves callers that
+        # inject an isolated ledger (tests, local batch tools) without --queue-file.
+        queue_file = Path(ART_PROMPTS_FILE).resolve()
+    else:
+        queue_file = (ROOT / args.queue_file).resolve()
+        if not queue_file.is_relative_to(ROOT / "projects") or queue_file.suffix != ".yaml":
+            parser.error("--queue-file must reference a YAML file under projects/")
     if not queue_file.is_file():
-        parser.error(f"request ledger does not exist: {args.queue_file}")
+        parser.error(f"request ledger does not exist: {queue_file}")
     ART_PROMPTS_FILE = queue_file
 
     # Rescue pass first: a row whose ArtJob already finished can never reach the
