@@ -1,0 +1,168 @@
+# New original playbook, approved as high priority 2026-10-25 PT.
+project: comet-city-academy
+kind: software
+autonomous: true
+goal: >-
+  Deliver an original 21-day superhero-school playbook with six mechanically distinct starter
+  power sets, real hero/villain/independent choice paths, 1-3-volunteer dispatch training
+  simulations, school and Comet City location cards, sixteen distinctive classmates and staff,
+  24 patrol cases, 36 encounter cards, prom/graduation crisis with at least 12 earned endings,
+  art actually delivered for important success/failure outcomes, reproducible seeded playtests
+  and a cinematic console-like private Admin preview. Final design verdict belongs to Silas;
+  any public publication is separately gated.
+notes_from_silas: |
+  2026-10-25 PT: Silas requested a new HIGH-priority superhero school playbook building on
+  Ecotone, Shifting Desks/Lands, Emperor of Dust and Terrors on Crystal Street. Select power
+  sets with unique quest solutions, become hero or villain through choices, run
+  Dispatch-style training simulations assigning classmates and staff as volunteer heroes,
+  draw school and Comet City location encounter cards, develop daily NPC interactions, reach
+  prom without the world being blown up. Master issue:
+  https://github.com/silasfelinus/kind_robots/issues/4181. New-project creative scope
+  confirmation is soft and never blocks reversible building; DESIGN-BRIEF.md controls
+  details.
+milestones:
+  - id: m1
+    title: "FOUNDATION - cast, lore, choice systems"
+    weight: 20
+    status: in-progress
+  - id: m2
+    title: "PLAYABLE - console experience and deterministic engine"
+    weight: 35
+    status: not-started
+  - id: m3
+    title: "CONTENT - story, encounters, endings and delivered art"
+    weight: 30
+    status: not-started
+  - id: m4
+    title: "QUALITY - adversarial playtests, full coverage, acceptance"
+    weight: 15
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m2
+    title: "Design private console UI and ship a fully playable one-day slice"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Include original visual title screen, avatar/power selection, class/NPC conversation, real
+      1/2/3-person simulation board, unique location card, debrief, save and seeded tests; no
+      placeholder web dashboard. Project registration with matching conductorSlug via canonical Kind
+      Robots API/projection.
+  - id: t-002
+    milestone: m1
+    title: "Write the complete academy bible, power strategy matrix, cast, locations and story graph"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Detail 6 families and per-act distinct mechanics, 16 complete named NPC arcs, 12 visited
+      sites, 21-day three-act prom buildup, factions, school rules, city ecology and at least 12
+      finale routes.
+  - id: t-003
+    milestone: m2
+    title: "Build 21-day loop, training cases, fatigue/trust, encounter and save engine"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Implement seeded deterministic assignments, odds, 1-3 volunteer responder eligibility,
+      simulated versus real impact, classroom/relationship resources, crises, versioned saves and
+      state migration. No LLM at play time.
+  - id: t-004
+    milestone: m3
+    title: "Author at least 24 training/patrol missions with every result tier"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Write mission-specific triumph/success/mixed/fail/decline consequences, distinctive
+      responders, volunteer disputes, grades, injuries, callbacks and failure-forward play.
+  - id: t-005
+    milestone: m3
+    title: "Author at least 36 location cards and deep NPC social arcs"
+    status: waiting
+    depends_on: t-002
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Unique local decks with at least two power-family-specific solutions per family per act,
+      universal alternative routes, earned friendships/rivalries, consequences on
+      pass/mixed/fail/decline.
+  - id: t-006
+    milestone: m3
+    title: "Finish three acts, prom catastrophe and at least 12 distinct endings"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Map all entry requirements, companions missing and evidence variants; generate real playable
+      crisis resolutions for hero/villain/independent paths, including comeback after mistakes.
+  - id: t-007
+    milestone: m3
+    title: "Queue, review and deliver key/cast/location/patrol art to usable paths"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Project icon/card/hero, 16 NPC portrait+moods, 12 sites, case scenes; track
+      source/prompt/model/ArtJob and verify rendered final URLs, not just submitted manifests.
+  - id: t-008
+    milestone: m3
+    title: "Illustrate consequence branches, result tiers and ending scenes"
+    status: waiting
+    depends_on: t-006
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Inventory every consequential choice and actual result; deliver unique illustrated successes
+      and failures, prom sequences and epilogues, with machine-readable asset coverage.
+  - id: t-009
+    milestone: m4
+    title: "Run seeded adversarial power, roster and every-ending playthroughs"
+    status: waiting
+    depends_on: t-006
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      From new game reproduce every ending without injected flags; all six powers, neglected cases,
+      fatigue, missing volunteers, villain/hero indecision, weird order, saves and exploit/softlock
+      probes.
+  - id: t-010
+    milestone: m4
+    title: "Complete independent editorial, art, UX and balance red team"
+    status: waiting
+    depends_on: t-009
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Read whole-game transcripts, test interesting losses and coherent stakes, polish all
+      actionable gaps, verify actual images and phone/tablet/desktop/gamepad/touch in cinematic
+      views.
+  - id: t-011
+    milestone: m4
+    title: "Final human design acceptance after all agent-owned QA and separate release authorization"
+    status: waiting
+    depends_on: t-010
+    gate_human: true
+    gate_reason: subjective-acceptance
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Not a current obstacle. Only after all content, art, playtests, fixes and responsive reviews
+      pass should master issue become awaiting final human verdict. Final design approval does not
+      imply publish or deploy.
