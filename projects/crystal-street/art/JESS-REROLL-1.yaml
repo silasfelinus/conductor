@@ -1,0 +1,91 @@
+# Terrors on Crystal Street re-rolls: Jess slice review 2026-10-25 PT: inspection (red on the machete), finale (machete raised over kids), night swim (teen in a bikini top), nurse's office (cartoon girl in a bikini), and the finale fight plate (a teen holding the machete).
+# Prompts fixed at the source (kind_robots utils/crystalStreet) and rebuilt from artPrompts.ts. Generated art is pre-approved. Private.
+round: crystal-street-jess-reroll-1
+project_slug: crystal-street
+designer: Crystal Street art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (painted 1986 VHS box art)
+  engine: krea2
+  prompt: prose
+  suffix: painted 1986 horror-comedy VHS box art, airbrushed gouache, hot magenta and cyan neon rim light, deep
+    midnight purple shadows, suburban Halloween atmosphere, cinematic composition, playful spooky mood
+subjects:
+- key: cs-scenes-counselor-jess-inspection
+  lane: krea2
+  entity: scene
+  title: scenes/counselor-jess-inspection
+  asset: scenes/counselor-jess-inspection
+  size: 1216x832
+  seed: 869001
+  negative: nsfw, nudity, gore, blood, weapon, watermark, text, letters, signature, logo, blurry, lowres, extra
+    limbs
+  prompt_prose: Teens in pajamas lined up on wet grass along a moonlit lakeshore beside a row of folding chairs
+    and a cooler, a towering muscular woman in a torn navy dress pacing in front of them with a dull grey steel
+    machete held low and pointed at the grass and a cracked hockey mask pushed up on her head, reading from a clipboard,
+    a distant swim raft glowing over a purple geode
+  jobs:
+    krea2: 45526
+- key: cs-scenes-counselor-jess-finale
+  lane: krea2
+  entity: scene
+  title: scenes/counselor-jess-finale
+  asset: scenes/counselor-jess-finale
+  size: 1216x832
+  seed: 869002
+  negative: nsfw, nudity, gore, blood, weapon, watermark, text, letters, signature, logo, blurry, lowres, extra
+    limbs
+  prompt_prose: A suburban cul-de-sac completely flooded under a full moon with black water up to the porch roofs,
+    jack-o'-lanterns, a cooler and folding chairs floating, a wooden swim raft glowing purple from a sunken geode
+    below, a towering muscular woman in a torn high-necked navy dress and cracked hockey mask standing on it with
+    a dull grey steel machete held low and pointed at the water, teens in Halloween costumes treading water around
+    her
+  jobs:
+    krea2: 45527
+- key: cs-scenes-counselor-jess-night-swim
+  lane: krea2
+  entity: scene
+  title: scenes/counselor-jess-night-swim
+  asset: scenes/counselor-jess-night-swim
+  size: 1216x832
+  seed: 869003
+  negative: nsfw, nudity, gore, blood, weapon, watermark, text, letters, signature, logo, blurry, lowres, extra
+    limbs
+  prompt_prose: A moonlit lake over a drowned suburban cul-de-sac, a wooden swim raft above a glowing purple geode
+    under the surface, two teens in T-shirts swimming shoulder-deep off the end of a dock beside a heap of jeans
+    and sweatshirts, sneakers, a cooler and a radio, a small boy in a striped T-shirt on a sagging inner tube paddling
+    toward the raft, a towering masked woman with a machete wading in from a lit cabin on the far shore
+  jobs:
+    krea2: 45528
+- key: cs-scenes-counselor-jess-clue-nurses-office
+  lane: krea2
+  entity: scene
+  title: scenes/counselor-jess-clue-nurses-office
+  asset: scenes/counselor-jess-clue-nurses-office
+  size: 1216x832
+  seed: 869004
+  negative: nsfw, nudity, gore, blood, weapon, watermark, text, letters, signature, logo, blurry, lowres, extra
+    limbs
+  prompt_prose: A small school nurse's office with a cot and a bowl of butterscotch candies, a middle-aged nurse
+    at her desk staring at a faded swim-safety placard of a cartoon girl in a one-piece swimsuit and a bright orange
+    life jacket waving from a dock
+  jobs:
+    krea2: 45529
+- key: cs-outcomes-counselor-jess-finale--fight-success
+  lane: krea2
+  entity: outcome
+  title: outcomes/counselor-jess-finale--fight-success
+  asset: outcomes/counselor-jess-finale--fight-success
+  size: 1216x832
+  seed: 869005
+  negative: nsfw, nudity, gore, blood, weapon, watermark, text, letters, signature, logo, blurry, lowres, extra
+    limbs
+  prompt_prose: A teen gripping a towering masked woman's wrist with both hands on a moonlit raft as her machete
+    spins away into the lake and she topples backward into the water, black floodwater swirling down storm drains,
+    the street draining dry
+  jobs:
+    krea2: 45530
