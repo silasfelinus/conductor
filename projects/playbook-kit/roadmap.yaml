@@ -1,0 +1,154 @@
+# Playbook Kit: the shared frame for every Kind Robots story game (Silas, 2026-10-26 PT).
+# Code lives in kind_robots (utils/playbookKit, components/playbook-kit, /admin/playbook-kit);
+# recipe in kind_robots docs/playbook-kit/README.md. New playbooks start with
+# `python scripts/new_playbook.py` here and `npm run playbook:new` there.
+project: playbook-kit
+kind: software
+autonomous: true
+goal: >-
+  One shared frame and complexity budget for every Kind Robots story game
+  (playbook). New playbooks start consistent and small (Vignette tier) and grow
+  only when earned; existing playbooks (Emperor of Dust, Zuzu: Shifting Lands,
+  Shifting Desks, Prom of Doom, This Means Warp, Ecotone) converge on the same
+  one-screen shell, settings, title trailer, scrapbook of cinematic moments,
+  cast, factions, secrets and endings without losing their own engines.
+notes_from_silas: |
+  2026-10-26 PT, Silas: "Create a consistent framework so I can iterate
+  development on new playbooks. In the manner of emperor of dust, shifting
+  lands, shifting desks, prom of doom, this means warp, Ecotone, create a
+  consistent framework, front end consistently single screen, settings,
+  scrapbook of cinematic moments, followers, villains, endings, etc, trailer,
+  factions, different revealed moments, romances, etc. needs to be smart
+  about how many complexities to allow."
+milestones:
+  - id: m1
+    title: "FRAMEWORK - spec, budget, shell, scaffold"
+    weight: 30
+    status: in-progress
+  - id: m2
+    title: "ADOPTION - each existing playbook declares a spec and mounts the shell"
+    weight: 50
+    status: not-started
+  - id: m3
+    title: "STUDIO - kit playbooks in the Story Atlas, rendered reference art"
+    weight: 20
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Playbook Kit framework: spec, complexity budget, one-screen shell, scaffold and templates"
+    status: review
+    claimed_by: 2026-10-26T1700Z-playbook-kit-t001-q8n4
+    claimed_at: '2026-10-26T17:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Created and built in the same Silas-directed session (no prior task to claim).
+      kind_robots PR #4214: PlaybookKitSpec, Vignette/Standard/Saga budget with
+      attention and parallel-thread caps, written allowances, integrity rules and
+      a nine-rung ladder; shell with Cast/Factions/Secrets/Scrapbook/Endings/Settings
+      panes, spoiler-free trailer and moment view; playbookKitStore; /admin/playbook-kit
+      console; npm run playbook:new; test:playbook-kit + playbook-kit.yml; reference
+      Vignette "The Lantern Ferry". Conductor: this project, templates/ (design brief
+      and roadmap ladder) and scripts/new_playbook.py.
+  - id: t-002
+    milestone: m2
+    title: "Adopt the kit in This Means Warp (game-of-captains): spec, shell, settings, scrapbook, endings"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Declare utils/playbookKit/games/thisMeansWarp.ts describing the current slice
+      (captains are player choices, not followers; 12 crew; 3 antagonists; 4 endings).
+      It already exceeds Standard's 8 followers: declare tier saga or add a written
+      allowance. Mount PlaybookKitShell around the existing bridge console, report
+      unlocks with kit.unlock, and replace the bare finale with the Endings pane and
+      Scrapbook. Keep the game-of-captains-voyage-v1 save key. Coordinate with the
+      owning roadmap (projects/game-of-captains) and master issue kind_robots#4182,
+      whose UX spec already asks for a captain's log and discovered-ending scrapbook.
+  - id: t-003
+    milestone: m2
+    title: "Adopt the kit in Prom of Doom (comet-city-academy): spec, shell, settings, scrapbook, endings"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Prom has no settings at all today and 4 title-string endings. Declare a Standard
+      spec (6 students as followers, sidekick/romance bonds as optional romance,
+      heroes-vs-villains allegiance), mount the shell around the stage/console split,
+      and move the Yearbook into the Endings pane. Keep comet-city-academy-slice-v1.
+      Owning roadmap: projects/comet-city-academy; master issue kind_robots#4181.
+  - id: t-004
+    milestone: m2
+    title: "Adopt the kit in Shifting Desks: spec and shell; retire its own endings gallery and journal into kit panes"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Shifting Desks has the only standalone endings gallery
+      (shifting-desks-endings-gallery.vue, 11 endings) and a journal. Declare its
+      spec (6 Societies as factions, clue chains as reveals) and move those surfaces
+      into the kit panes. Keep its art-style picker as a game-specific control.
+      Owning roadmap: projects/shifting-desks.
+  - id: t-005
+    milestone: m2
+    title: "Adopt the kit in Emperor of Dust: spec with written allowances, shell around the court"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Emperor's reading preferences are the model for the kit's settings; migrate
+      them to the kit store (read kr-emperor-of-dust-reading-v1 once as the default).
+      25 followers and 15 factions exceed even Saga: the spec needs written
+      allowances, and this task should recommend whether the kingdom factions read
+      as one dimension. Owning roadmap: projects/emperor-of-dust.
+  - id: t-006
+    milestone: m2
+    title: "Adopt the kit in Zuzu: Shifting Lands: spec, shell, move presentation prefs into kit settings"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Shifting Lands has reducedMotion/soundEnabled prefs and a Journal tab, 5 trial
+      bosses and 10+7 endings, no factions or romance. Owning roadmap:
+      projects/zuzu-shifting-lands.
+  - id: t-007
+    milestone: m2
+    title: "Adopt the kit in Ecotone (weird-humboldt): spec over authored ending families, settings into kit"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Ecotone's 84 ending ids are combinatorial (leads x lenses x fates); the spec
+      declares authored ending families, not the cross product. Mysteries are its
+      reveals. Ecotone's display settings (scale/speed) map to textSize/textSpeed.
+      Respect EXCLUDED-CONTENT-2026-10-22.md. Owning roadmap: projects/weird-humboldt.
+  - id: t-008
+    milestone: m3
+    title: "Playbook Studio adapter: kit playbooks appear in the Story Atlas automatically"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from t-001. Build utils/playbook/kit.ts that turns a PlaybookKitSpec
+      into the Playbook Manager's Playbook (endings, cast, reveals, moments as
+      nodes) and register every KIT_PLAYBOOKS entry in PLAYBOOK_GAMES.
+  - id: t-009
+    milestone: m3
+    title: "Render The Lantern Ferry's 21 reference art briefs through ArtJobs and wire the src URLs"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      The reference Vignette ships with briefs only (rung 9 open). Queue the key art,
+      faction emblems, portraits, endings and moments as durable ArtJobs, verify
+      each delivered URL, then set src in utils/playbookKit/games/lanternFerry.ts so
+      the console and trailer show real paintings. Generated art is pre-approved.

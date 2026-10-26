@@ -784,3 +784,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 
 
 **New project (Silas, 2026-10-25 PT):** ACTIVE, HIGH priority comedy science-fiction playbook, working title "Game of Captains". Choose a captain and senior crew, undertake ship and away-team missions, wrestle with ethical intervention by technologically advanced civilizations, confront one of several run-randomized alien antagonists who actually interfere throughout, and earn destination-specific endings. Reuse existing Kind Robots Barkeep Vox, **sentient** Serendipity Space Bar and Captain Fluke / Improbability Starcruiser without conflating their established narrator identities. Original writing evokes comedy sci-fi adventure without copying franchise plots. Fully illustrated single-screen console UI, seeded adversarial whole-run verification and a final design approval only after agent work is complete. See `projects/game-of-captains/DESIGN-BRIEF.md`; master issue kind_robots#4182. Public release separately gated.
+
+### playbook-kit  (software)
+**Direction:** One shared frame and complexity budget for every Kind Robots story game (playbook), so new playbooks start consistent and small and existing ones converge on the same one-screen shell, settings, trailer, scrapbook, cast, factions, secrets and endings.
+**Notes:**
+- (your notes)
