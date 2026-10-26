@@ -36,7 +36,9 @@ def test_capes_113_krea2_prompts_are_unique_and_reproducible():
         expected.add(f'prom-{p["id"]}')
     assert len(expected)==113
     assert art["project_slug"]=="comet-city-academy"
-    assert art["auto_submit"] is True
+    # Superseded by the 48-person origin x affinity roster (IDENTITY-SYSTEM.md):
+    # kept for provenance, never submitted again.
+    assert art["auto_submit"] is False
     assert art["lanes"][0]["engine"]=="krea2"
     rows=art["subjects"]
     assert len(rows)==113
