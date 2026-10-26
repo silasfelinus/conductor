@@ -475,6 +475,9 @@ def playbook_challenge_section(challenge: dict[str, Any] | None) -> str:
             f'<p><strong>Difference:</strong> {esc(pitch["novelty_against_existing"])}</p>'
             f'<p><strong>Estimate: {units["art_units"]} unique finished images'
             f' + {units["text_units"]} authored text beats.</strong> '
+            f'Processing plan: {units["image_generation_passes"]} image passes + '
+            f'{units["text_authoring_passes"]} editorial passes = '
+            f'{units["total_planned_passes"]} estimated passes. '
             f'{cast["playable"]} playable characters, {cast["npcs"]} NPCs, '
             f'{cast["followers"]} followers ({units["unique_people"]} unique people, '
             f'{cast["portraits_per_person"]} portrait expressions each). '
@@ -496,7 +499,7 @@ def playbook_challenge_section(challenge: dict[str, Any] | None) -> str:
         f'{len(challenge["pitches"])} fresh pitches, for consideration only. '
         'No new project, ArtJob or spending is authorized. '
         'Image units count finished targets, not style passes. '
-        'Text units count authored beats, not tokens.</p>'
+        'Text units count authored beats, not tokens; model passes are planning assumptions, not billed token totals.</p>'
         + "".join(rows) +
         f'<p><a href="{url}">Read source challenge docket</a></p></section>'
     )
