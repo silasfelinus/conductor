@@ -455,6 +455,10 @@ def playbook_challenge_section(challenge: dict[str, Any] | None) -> str:
                         for k, v in units["art_breakdown"].items())
         beats = ", ".join(f"{k.replace('_', ' ')}: {v}"
                           for k, v in units["text_breakdown"].items())
+        systems = "".join(
+            f'<li style="margin:0 0 6px">{esc(system)}</li>'
+            for system in pitch["signature_systems"]
+        )
         moments = []
         for spot in pitch["collisions"]:
             moments.append(
@@ -468,8 +472,15 @@ def playbook_challenge_section(challenge: dict[str, Any] | None) -> str:
         rows.append(
             '<article style="border-top:1px solid #e2e8f0;padding-top:12px;margin-top:12px">'
             f'<h3 style="font-family:Georgia,serif;margin:0 0 4px">{esc(pitch["title"])}</h3>'
+            f'<p><strong>Genre pillar:</strong> {esc(pitch["genre_pillar"])}</p>'
+            f'<p><strong>Genre gap:</strong> {esc(pitch["genre_gap"])}</p>'
+            f'<p><strong>Audience:</strong> {esc(pitch["audience"])}</p>'
+            f'<p><strong>World and acts:</strong> {esc(pitch["world_scope"])}</p>'
+            f'<p><strong>Emotional promise:</strong> {esc(pitch["emotional_promise"])}</p>'
             f'<p>{esc(pitch["hook"])}</p>'
             f'<p><strong>Core play:</strong> {esc(pitch["core_loop"])}</p>'
+            '<p><strong>Genre-defining systems:</strong></p>'
+            f'<ul style="padding-left:22px">{systems}</ul>'
             f'<p><strong>New mechanic:</strong> {esc(pitch["unique_mechanic"])}</p>'
             f'<p><strong>Opening characters:</strong> {esc(pitch["opening_choices"])}</p>'
             f'<p><strong>Difference:</strong> {esc(pitch["novelty_against_existing"])}</p>'
@@ -498,6 +509,7 @@ def playbook_challenge_section(challenge: dict[str, Any] | None) -> str:
         f'<p style="color:#64748b;font-size:12px">{esc(date)} PT · '
         f'{len(challenge["pitches"])} fresh pitches, for consideration only. '
         'No new project, ArtJob or spending is authorized. '
+        'Start with missing, full-scale genres, not novelty gimmicks. '
         'Image units count finished targets, not style passes. '
         'Text units count authored beats, not tokens; model passes are planning assumptions, not billed token totals.</p>'
         + "".join(rows) +
