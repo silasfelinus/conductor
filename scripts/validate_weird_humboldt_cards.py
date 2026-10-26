@@ -27,13 +27,45 @@ ANCHOR_FILE = PROJECT / "anchors" / "anchors.yaml"
 ENDING_FILE = PROJECT / "endings" / "endings.yaml"
 ARCHETYPE_FILE = PROJECT / "archetypes" / "archetypes.yaml"
 SEEDS = PROJECT / "ENCOUNTER-SEEDS.md"
-# Chapters 1-5 hold seeds 1-20 (chapter 2 also WH-121); chapter 6 holds all 20 incl. WH-120 (county vote finale).
-PER_CHAPTER = {1: 20, 2: 21, 3: 20, 4: 20, 5: 20, 6: 20}
-EXPECTED_CARDS = sum(PER_CHAPTER.values())
+# The seed catalog is the source of truth for the deck's size and chapter placement.
+# Only bold bullet premises beneath numbered chapter headings count as seeds.
+SEED_CHAPTER_RE = re.compile(r"^## ([1-6]) · ")
+SEED_ID_RE = re.compile(r"^- \\*\\*(WH-[0-9]+) · ")
 EFFECT_RE = re.compile(r"^((goodwill|nerve|time|weird|clarity)[+-][0-9]|flag:[a-z0-9_]+|evidence:[a-z_]+|lose:free_draw)$")
 BANNED = re.compile(r"\b(dosage|milligram|snort|inject|how to (cook|make|score)|where to buy)\b", re.I)
 STATES = ["sober", "tipsy", "stoned", "tripping_balls"]
 LEADS = ["mara", "kit", "juniper", "cedar"]
+
+
+def parse_seed_chapters(text: str) -> tuple[dict[str, int], list[str]]:
+    """Map catalogued seed IDs to their chapter, excluding prose-only references.
+
+    A malformed or duplicate premise must fail validation rather than silently
+    changing the expected deck size. WH-121 is counted in chapter 2 because it
+    has its own seed bullet; WH-122..126 appear only in editorial prose.
+    """
+    chapter = None
+    chapters: dict[str, int] = {}
+    problems: list[str] = []
+    for line_no, line in enumerate(text.splitlines(), 1):
+        heading = SEED_CHAPTER_RE.match(line)
+        if heading:
+            chapter = int(heading.group(1))
+            continue
+        match = SEED_ID_RE.match(line)
+        if not match:
+            continue
+        cid = match.group(1)
+        if chapter is None:
+            problems.append(f"seed {cid}: no chapter heading (line {line_no})")
+        elif cid in chapters:
+            problems.append(f"seed {cid}: duplicate premise (line {line_no})")
+        else:
+            chapters[cid] = chapter
+    for ch in range(1, 7):
+        if ch not in chapters.values():
+            problems.append(f"seed catalog: chapter {ch} has no premises")
+    return chapters, problems
 
 
 def load_cards() -> list[dict]:
@@ -91,7 +123,9 @@ def validate(cards: list[dict]) -> list[str]:
     schema = json.loads(SCHEMA.read_text())
     enums = {"skill": schema["$defs"]["option"]["properties"]["skill"]["enum"],
              "tier": schema["properties"]["tier"]["enum"], "rarity": schema["properties"]["rarity"]["enum"]}
-    seeds_text = SEEDS.read_text()
+    seed_chapters, seed_problems = parse_seed_chapters(SEEDS.read_text())
+    problems.extend(seed_problems)
+    expected_per_chapter = {ch: sum(v == ch for v in seed_chapters.values()) for ch in range(1, 7)}
     required = schema["required"]
     seen: set[str] = set()
     per_chapter: dict[int, int] = {}
@@ -104,8 +138,10 @@ def validate(cards: list[dict]) -> list[str]:
         if cid in seen:
             problems.append(f"{cid}: duplicate id")
         seen.add(cid)
-        if f"**{cid} ·" not in seeds_text:
+        if cid not in seed_chapters:
             problems.append(f"{cid}: not a seed in ENCOUNTER-SEEDS.md")
+        elif c.get("chapter") != seed_chapters[cid]:
+            problems.append(f"{cid}: chapter {c.get('chapter')} disagrees with seed chapter {seed_chapters[cid]}")
         per_chapter[c.get("chapter")] = per_chapter.get(c.get("chapter"), 0) + 1
         if c.get("tier") not in enums["tier"]:
             problems.append(f"{cid}: bad tier")
@@ -164,11 +200,14 @@ def validate(cards: list[dict]) -> list[str]:
                         check_option(cid, eo, enums, problems, f"{st}.")
         if BANNED.search(json.dumps(c, ensure_ascii=False)):
             problems.append(f"{cid}: contains real-world drug instruction wording")
-    for ch in range(1, 7):
-        if per_chapter.get(ch, 0) != PER_CHAPTER[ch]:
-            problems.append(f"chapter {ch}: expected {PER_CHAPTER[ch]} cards, has {per_chapter.get(ch, 0)}")
-    if len(cards) != EXPECTED_CARDS:
-        problems.append(f"deck has {len(cards)} cards, expected {EXPECTED_CARDS}")
+    for ch, expected in expected_per_chapter.items():
+        if per_chapter.get(ch, 0) != expected:
+            problems.append(f"chapter {ch}: expected {expected} cards, has {per_chapter.get(ch, 0)}")
+    if len(cards) != len(seed_chapters):
+        problems.append(f"deck has {len(cards)} cards, expected {len(seed_chapters)}")
+    for ch in per_chapter:
+        if ch not in expected_per_chapter:
+            problems.append(f"deck contains invalid chapter {ch!r}")
     for c in cards:
         for key in ("requires_flags", "excludes_flags"):
             for fl in c.get("eligibility", {}).get(key, []):
