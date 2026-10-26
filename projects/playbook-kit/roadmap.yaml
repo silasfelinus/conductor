@@ -23,21 +23,25 @@ notes_from_silas: |
 milestones:
   - id: m1
     title: "FRAMEWORK - spec, budget, shell, scaffold"
-    weight: 30
-    status: in-progress
+    weight: 15
+    status: done
   - id: m2
     title: "ADOPTION - each existing playbook declares a spec and mounts the shell"
-    weight: 50
+    weight: 35
     status: not-started
   - id: m3
     title: "STUDIO - kit playbooks in the Story Atlas, rendered reference art"
-    weight: 20
+    weight: 15
     status: not-started
+  - id: m4
+    title: "FORGE - idea-to-project admin console with live gen-time forecasts"
+    weight: 35
+    status: in-progress
 tasks:
   - id: t-001
     milestone: m1
     title: "Playbook Kit framework: spec, complexity budget, one-screen shell, scaffold and templates"
-    status: review
+    status: done
     claimed_by: 2026-10-26T1700Z-playbook-kit-t001-q8n4
     claimed_at: '2026-10-26T17:00:00Z'
     passes: 0
@@ -51,6 +55,10 @@ tasks:
       console; npm run playbook:new; test:playbook-kit + playbook-kit.yml; reference
       Vignette "The Lantern Ferry". Conductor: this project, templates/ (design brief
       and roadmap ladder) and scripts/new_playbook.py.
+      DONE 2026-10-26 PT: kind_robots #4214 merged as c9428c3 after 23/23 green checks;
+      conductor half lands with this roadmap (#6678). Silas then asked for the next
+      layer (playbook-kit t-010+): Playbook Forge admin console, manager integration and
+      an AAA console visual pass replacing the web-app look of the first shell.
   - id: t-002
     milestone: m2
     title: "Adopt the kit in This Means Warp (game-of-captains): spec, shell, settings, scrapbook, endings"
@@ -152,3 +160,60 @@ tasks:
       faction emblems, portraits, endings and moments as durable ArtJobs, verify
       each delivered URL, then set src in utils/playbookKit/games/lanternFerry.ts so
       the console and trailer show real paintings. Generated art is pre-approved.
+  - id: t-010
+    milestone: m4
+    title: "Forge design: common core vs extras across every playbook, save/load, character creation, estimator model, AAA console spec"
+    status: claimed
+    claimed_by: 2026-10-26T1830Z-playbook-kit-t010-forge
+    claimed_at: '2026-10-26T18:30:00Z'
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-10-26 PT: "This should integrate with the playbook manager for each
+      project, with consistency. Figure out what is similar and what are extras, and how
+      to create a front end manager that allows any of those options and more. In a
+      minimalist straightforward interface. This investigation should be including: how
+      to handle save load. Different factors for character avatar: opening creator,
+      images, factors to build from." Final version: "a front end admin project where I
+      can input an idea, configure factors like character, end sequences, acts, with an
+      aim to have a strong helper with estimates of how each factor will affect estimated
+      gen time (based on checkpoint, text needs, image gen average, etc.) ... create a new
+      project, kind robots front end (placed in admin or play or projects), and give it
+      genre, expectations: stats, followers, quests, character gen, number of unique
+      endings, pass/fail versus always interesting, skill checks, etc. It should also be
+      able to analyze and adjust prospected plans for existing projects." And: "Every one
+      of those screenshots is backwards. We should be using aaa console game design specs,
+      those shots were 100% old webapp."
+      Deliverable: DESIGN-FORGE.md in this project.
+  - id: t-011
+    milestone: m4
+    title: "AAA console visual system for the kit shell and the Forge (dark full-bleed theme, safe area, focus/gamepad navigation, bumper tabs, button prompts)"
+    status: waiting
+    depends_on: t-010
+    owner: null
+    passes: 0
+    stakes: reversible
+  - id: t-012
+    milestone: m4
+    title: "Playbook Forge admin console: idea, genre, placement, factor loadout, live forecast and per-factor deltas, launch as a Kind Robots project"
+    status: waiting
+    depends_on: t-010
+    owner: null
+    passes: 0
+    stakes: reversible
+  - id: t-013
+    milestone: m4
+    title: "Playbook Studio integration: every game (kit spec or adapter) reports the same blueprint shape"
+    status: waiting
+    depends_on: t-010
+    owner: null
+    passes: 0
+    stakes: reversible
+  - id: t-014
+    milestone: m4
+    title: "Analyze and adjust existing playbooks in the Forge: actual counts vs planned floors, remaining gen time"
+    status: waiting
+    depends_on: [t-012, t-013]
+    owner: null
+    passes: 0
+    stakes: reversible
