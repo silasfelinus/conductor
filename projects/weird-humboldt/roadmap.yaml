@@ -682,7 +682,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Test future-state branching, sober parity and no forced ideal outcome"
-    status: claimed
+    status: done
     depends_on: [t-011, t-012]
     owner: worker
     passes: 0
@@ -698,9 +698,13 @@ tasks:
       personal optimal outcomes are reachable by story play without
       a fixed opening perception, and that Cedar's parents remain
       together in all endings. No art or Play deployment.
+
+      12 text-only tests in tests/test_weird_humboldt_future_branching.py: sober parity, no
+      identity gates, hopeful outcomes reachable, no dominant vote flag, Cedar parents intact.
     claimed_by: agent-2026-10-26
     claimed_at: '2026-10-26T08:47:05Z'
-    updated: '2026-10-26T08:47:05Z'
+    updated: '2026-10-26T08:52:17Z'
+    implementation_pr: 'silasfelinus/conductor#6671'
   - id: t-014
     milestone: m4
     title: "Specify Ecotone single-surface board and responsive tab layout"
