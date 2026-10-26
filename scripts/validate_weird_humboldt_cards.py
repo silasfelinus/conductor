@@ -25,6 +25,7 @@ SCHEMA = PROJECT / "design" / "card.schema.json"
 CARD_DIR = PROJECT / "cards"
 ANCHOR_FILE = PROJECT / "anchors" / "anchors.yaml"
 ENDING_FILE = PROJECT / "endings" / "endings.yaml"
+SIGNATURE_FILE = PROJECT / "endings" / "signatures.yaml"
 ARCHETYPE_FILE = PROJECT / "archetypes" / "archetypes.yaml"
 SEEDS = PROJECT / "ENCOUNTER-SEEDS.md"
 # The seed catalog is the source of truth for the deck's size and chapter placement.
@@ -215,7 +216,10 @@ def validate(cards: list[dict]) -> list[str]:
                     problems.append(f"{c['id']}: eligibility references unknown flag {fl}")
     problems += no_dead_end_problems(cards)
     problems += validate_anchors(load_anchors(), enums)
-    problems += validate_endings(load_endings(), cards)
+    endings = load_endings()
+    problems += validate_endings(endings, cards)
+    problems += validate_signatures(load_signatures(), endings)
+    problems += validate_county_motifs(endings)
     return problems
 
 
@@ -225,6 +229,76 @@ def load_anchors() -> list[dict]:
 
 def load_endings() -> list[dict]:
     return yaml.safe_load(ENDING_FILE.read_text()) or []
+
+
+def load_signatures() -> dict:
+    return yaml.safe_load(SIGNATURE_FILE.read_text()) or {}
+
+
+OPENINGS = ["sober", "tipsy", "stoned", "tripping", "cocaine", "meth", "mdma"]
+# The original 32 IDs from ECOTONE-32-ENDINGS.md; these must never change.
+ORIGINAL_OPENINGS = OPENINGS[:4]
+SIGNATURE_ART_KEYS = ("subject", "place_time", "visual_contrast")
+MIN_COUNTY_MOTIFS = 10
+
+
+def validate_signatures(data: dict, endings: list[dict]) -> list[str]:
+    """56 signatures: 7 openings x 4 leads x 2 fates, one paragraph and one art brief each."""
+    problems: list[str] = []
+    sigs = data.get("signatures", [])
+    expected = {f"{lead}.{op}.{fate}" for lead in LEADS for op in OPENINGS for fate in ("hope", "dark")}
+    ids = [s.get("id") for s in sigs]
+    if len(set(ids)) != len(ids):
+        problems.append("signatures: duplicate ids")
+    for missing in sorted(expected - set(ids)):
+        problems.append(f"signatures: missing {missing}")
+    for extra in sorted(set(ids) - expected):
+        problems.append(f"signatures: unexpected id {extra}")
+    shared = data.get("shared_art", {})
+    for key in ("style", "must_not_imply", "review_status"):
+        if not shared.get(key):
+            problems.append(f"signatures: shared_art missing {key}")
+    core_ids = {e.get("id") for e in endings if e.get("kind") == "core"}
+    titles = [s.get("title") for s in sigs]
+    if len(set(titles)) != len(titles):
+        problems.append("signatures: duplicate titles")
+    for s in sigs:
+        sid = s.get("id", "?")
+        parts = sid.split(".")
+        if len(parts) == 3 and s.get("core") != f"E-{parts[0]}.{parts[2]}":
+            problems.append(f"{sid}: core must be E-{parts[0]}.{parts[2]}")
+        if s.get("core") not in core_ids:
+            problems.append(f"{sid}: core {s.get('core')!r} is not an ending core")
+        n = words(s.get("paragraph", ""))
+        if not 30 <= n <= 90:
+            problems.append(f"{sid}: paragraph must be 30-90 words, has {n}")
+        art = s.get("art", {})
+        for key in SIGNATURE_ART_KEYS:
+            if not art.get(key):
+                problems.append(f"{sid}: art missing {key}")
+        if words(s.get("alt_text", "")) < 8:
+            problems.append(f"{sid}: alt_text missing or under 8 words")
+        blob = json.dumps(s, ensure_ascii=False)
+        if EXCLUDED_TERMS.search(blob):
+            problems.append(f"{sid}: touches excluded Wiyot/Tuluwat material")
+        if BANNED.search(blob):
+            problems.append(f"{sid}: contains real-world drug instruction wording")
+        if s.get("id", "").startswith("cedar.") and not re.search(r"parents|father|mother", blob, re.I):
+            problems.append(f"{sid}: Cedar's parents must stay together in every timeline")
+    return problems
+
+
+def validate_county_motifs(endings: list[dict]) -> list[str]:
+    """Ten noncollectible county-future motifs, each with its own title and 1/10/30-year beats."""
+    county = [e for e in endings if e.get("kind") == "county"]
+    problems = []
+    if len(county) < MIN_COUNTY_MOTIFS:
+        problems.append(f"county motifs: need {MIN_COUNTY_MOTIFS}, have {len(county)}")
+    for e in county:
+        for beat in ENDING_BEATS:
+            if words(e.get(beat, "")) < 15:
+                problems.append(f"{e.get('id', '?')}: {beat} missing or under 15 words")
+    return problems
 
 
 def load_archetypes() -> list[dict]:
