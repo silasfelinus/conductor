@@ -61,3 +61,47 @@ def test_camel_case_matches_the_kind_robots_scaffold():
     assert new_playbook.camel_case("moon-laundry") == "moonLaundry"
     assert new_playbook.camel_case("lantern-ferry-two") == "lanternFerryTwo"
     assert intake.slugify("Moon Laundry") == "moon-laundry"
+
+
+FORGE_PITCH = """Moon Laundry: a playbook forged in /admin/playbook-forge.
+Socks are portals.
+
+Images: 299 on Illustrious, about 1h 55m of render time
+<!-- playbook-blueprint -->
+```json
+{"slug": "moon-laundry", "title": "Moon Laundry", "idea": "Socks are portals.", "tier": null,
+ "placement": "admin", "checkpoint": "illustrious", "artStyles": 1, "creator": "roster",
+ "portraits": "per-option", "followers": 8, "partySize": 3, "villains": 3, "villainPerRun": true,
+ "factions": 1, "romances": 1, "acts": 2, "encounters": 24, "quests": 6, "reveals": 3,
+ "moments": 9, "stats": 2, "checks": "percent", "outcomes": "four-tier", "failForward": true,
+ "endings": 4, "finaleBeats": 2, "saveStyle": "snapshot", "unreadable": "hold", "saveSlots": 0,
+ "undo": "last-choice"}
+```
+<!-- /playbook-blueprint -->"""
+
+
+def test_new_playbook_reads_a_forge_blueprint(tmp_path, monkeypatch):
+    root, projects = _fixture_repo(tmp_path, monkeypatch)
+    pitch = tmp_path / "pitch.txt"
+    pitch.write_text(FORGE_PITCH)
+    assert new_playbook.main(["moon-laundry", "Moon Laundry", "--blueprint", str(pitch)]) == 0
+
+    pdir = projects / "moon-laundry"
+    saved = yaml.safe_load((pdir / "BLUEPRINT.json").read_text())
+    assert saved["endings"] == 4 and saved["checks"] == "percent"
+    roadmap = yaml.safe_load((pdir / "roadmap.yaml").read_text())
+    assert "24 encounters" in roadmap["goal"] and "4 unique endings" in roadmap["goal"]
+    assert roadmap["notes_from_silas"].startswith("Forged in /admin/playbook-forge. Idea: Socks are portals.")
+    brief = (pdir / "DESIGN-BRIEF.md").read_text()
+    assert "## Blueprint from the Playbook Forge" in brief
+    assert "| Outcome tiers | four-tier |" in brief
+
+
+def test_read_blueprint_accepts_bare_json_and_rejects_other_text():
+    assert new_playbook.read_blueprint('{"endings": 3}')["endings"] == 3
+    try:
+        new_playbook.read_blueprint('{"title": "no endings"}')
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("a non-blueprint was accepted")
