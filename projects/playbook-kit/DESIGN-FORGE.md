@@ -235,3 +235,53 @@ and form rows. The console system replaces that:
 - **Fullscreen** is on the header and on ☰ / F, as the arcade cabinets do.
 
 The kit shell (playbook-kit-shell) moves onto the same system in t-011.
+
+## 10. Production ledger (t-016)
+
+Silas, 2026-10-26: *"any of our games can be loaded and it will enumerate all of its
+computations and how much they will and have taken. If all is complete, will be stared and
+shiny, all all will be super shiny, but showing where are discrepancies. Will submit sections
+for processing, to be read by relay or next agent."*
+
+**Load a game** in the Forge opens its ledger (`/admin/playbook-forge?ledger=<slug>`).
+
+- **Units.** Every beat the game's Playbook Studio adapter knows, grouped by node kind into
+  sections. A beat's art moves through four states: missing → queued → rendered → delivered.
+  It can also be failed, when every job for it failed. Rendered is not delivered until the
+  game shows the picture: a DONE job on a beat with no `artUrl` is a discrepancy, "not wired".
+  A beat's words are its scene text plus success and failure text for each checked choice.
+  Checks that branch to other beats (the Zuzu Gamebook) expect no outcome text.
+- **Spent.** Spend comes from the real relay time of the ArtJobs linked to the beat by
+  Studio `art-request` notes, measured from the relay claiming the job to its image being
+  saved. Project totals come from every ArtJob tagged to the game's `artProject`.
+- **Left.** Render time left is the missing and failed beats × the calibrated lane median ×
+  (1 + reroll rate). Words left use the Forge word rates.
+- **Shine.** A section earns ★ when every beat in it is delivered and written. The game is
+  **super shiny** when every section is starred and no measured plan factor is short.
+- **Discrepancies.** The ledger lists:
+  - unwired renders;
+  - beats that only ever failed;
+  - beats with no art and no job;
+  - missing text;
+  - plan gaps;
+  - Studio edits not yet folded into the authored source;
+  - games with no Studio adapter (Warp and Prom until t-013).
+- **Submit.**
+  - *Submit art* sends a section's missing and failed beats to kr-relay as Studio art
+    requests: the same prompt, shape and project tag Studio uses. It sends at most 60 per
+    press and never re-sends queued or rendered art.
+  - *Send writing* creates a HIGH-priority AGENT Todo listing the missing text beat by beat,
+    which the next agent takes before any roadmap work.
+- **Server.** `GET /api/admin/playbook-ledger/[slug]` is admin-only and read-only, and reads
+  at most 5000 jobs.
+
+Ledger read from code alone on 2026-10-26, with no relay data:
+
+| Game | Art delivered | Starred sections |
+|---|---|---|
+| Ecotone | 42/301 | 4 of 7 |
+| Emperor of Dust | 248/253 (5 follower portraits) | 4 of 5 |
+| Shifting Lands | 140/140 | all |
+| Shifting Desks | 155/155 | all |
+| Zuzu Gamebook | 380/380 | all |
+| Crystal Street | 436/436 | all |
