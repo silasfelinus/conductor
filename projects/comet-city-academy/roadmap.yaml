@@ -277,8 +277,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver academy key, map, follower emotion and injury art"
-    status: claimed
-    updated: '2026-10-26T20:53:08.158Z'
+    status: review
+    updated: '2026-10-26T20:55:11.380Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -289,6 +289,8 @@ tasks:
       Added art-ledger branch with auto_submit=true Krea 2 generation requests: two geographically continuous campus/Comet City map paintings and four distinct mastermind portraits keyed to the first playable 30-day seeded villain variants. Existing DONE splash/tutorial/dashboard and 21 finale art images not duplicated. Requests are new, not yet submitted/generated until verified PR merge and Auto Art Generate workflow; no rendered assets counted without ArtJob IDs/final URLs.
 
       MERGED Conductor art PR #6689 at 3f1af5fe541407fc4585223404c51cde3f7836cd after green Worker PR CI, security, handoff and tests. New auto_submit Krea 2 ledger MAPS-AND-MASTERMINDS-ROUND-1.yaml provides six unique non-public art prompts: two geographically coherent campus and town map paintings, and four distinctive current mastermind portraits. The Auto Art Generate workflow #40323501228 started and reached Sweep opted-in art ledgers, but as of this update no new ArtJob IDs or image IDs have appeared in that ledger. Treat these as requests MERGED, queue/renderer handoff UNCONFIRMED, and delivery NOT DONE. DO NOT duplicate existing DONE splash/promo/consequence/finale art; verify original ledger results and rendered URLs. This task remains ready for confirming six ArtJob creations/outputs and integrating assets, 16 follower emotions/injuries, eight masterminds, map coordinate visual QA, art provenance and more complete narrative outcome coverage.
+
+      Added four nonpublic auto_submit Krea2 portrait requests for new 30-day mastermind variants: Mercy Circuit, Mirror Chancellor, Orchard Engine and Static Commissioner. Reuses the previously submitted original four portraits without duplication. New art ledger is staged in Conductor PR pending CI; until Auto Art Generate actually assigns ArtJob IDs and images, these are REQUESTS only, not delivered art.
     owner: worker
     claimed_by: 2026-10-26T2053Z-prom-villain-art-7c4d
     claimed_at: '2026-10-26T20:53:08.158Z'
