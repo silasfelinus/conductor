@@ -23,6 +23,14 @@ REPLACEMENTS = (
     ("cinematic frame", "cinematic composition"),
     ("single-frame reveal", "one-scene reveal"),
     ("single frame", "single illustration"),
+    # Four Unclaimed Portrait requests were left without ArtJob IDs after the
+    # first 748/752 bulk submission. Their literal picture-frame nouns were
+    # interpreted as ambiguous composition metadata by the Krea2 contract.
+    # Describe the physical prop without the overloaded noun.
+    ("Haunting painted empty chair and silhouetted absent subject in ornate cracked portrait frame",
+     "Haunted portrait painting depicting an empty chair and the silhouette of an absent sitter, bordered by cracked carved wood"),
+    ("Empty portrait frame on dark wall",
+     "Empty wall-mounted portrait showing bare plaster within a carved gilded border"),
 )
 
 
