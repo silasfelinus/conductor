@@ -180,8 +180,8 @@ CI enforces that:
 ## New-playbook daily challenge (2026-10-26 PT)
 
 Separate from both the original 14-asset Daily Dream and the five **already-built**
-daily project upgrades, each Pacific day's digest offers 1–3 original,
-unapproved game-playbook concepts for Silas to consider. The owner is the
+daily project upgrades, each Pacific day's digest offers exactly three
+unapproved, **evolving** game-playbook concepts for Silas to consider. The owner is the
 Conductor session creative-docket step in `CLAUDE.md`, not a second scheduled
 object creator. The digest workflow reads the dated, committed proposal file
 `pitches/playbook-challenges/YYYY-MM-DD.yaml` through
@@ -190,8 +190,9 @@ seed/prose/art interactions in its own email section.
 
 Before authoring: inspect the **current** Kind Robots `utils/playbook/games.ts`
 registry and relevant Conductor active-project briefs, including Prom of Doom
-and This Means Warp. Use `--brief` to see the eight-game baseline, recent
-pitches and genre-gap shortlist. **Silas's 2026-10-26 calibration is genre
+and This Means Warp. Use `--brief` to see the eight-game baseline, the
+full-history concept-memory shelf and genre-gap shortlist; use `--memory`
+to inspect the indexed concept ancestry and editorial decisions in detail. **Silas's 2026-10-26 calibration is genre
 first**: broad missing paradigms matter more than isolated clever mechanics.
 Already represented genres include Weird West, post-apocalypse, superheroes,
 slice of life, theatre of place, dark humor and psychedelia. Current missing
@@ -213,11 +214,34 @@ Avoid borrowing named authors' exact styles, characters or stories. The
 rejected first-pass 2026-10-26 concepts are preserved in the archive; the
 live dated docket contains the three revised genre-calibrated pitches.
 
-`python scripts/daily_playbook_challenge.py --check --date YYYY-MM-DD` enforces
-the 1–3 pitch budget and rejects repeat slugs; `--payload` produces
-`ready`, `invalid`, or `missing`. Only `ready` entries for the exact
-Pacific day appear as fresh concepts. An absent/invalid docket yields an
-honest status message, not previously seen ideas. A concept is *not* a project,
+**Versioned creative memory:** dated dockets are preserved unchanged as
+historical creative snapshots. Each pitch includes permanent `concept_id`,
+`mode: new|expand|meld`, `parents` (prior `YYYY-MM-DD/slug` snapshots),
+`evolution` (substantive new design work), `preserve`, `challenge` and
+at least two specific `next_questions`. `expand` keeps the same concept ID
+and cites exactly one earlier version; `meld` establishes a NEW ID and cites
+at least two earlier DIFFERENT families; `new` has no ancestors. All three
+modes occupy one of the day's three pitches. A date after a seed docket must
+advance at least one existing lineage; do not force a merger where no
+complementary premises exist. `pitches/playbook-challenges/MEMORY.yaml` is
+the separate human/editorial ledger of statuses, strengths, guardrails,
+creative tags and next moves, including rejected older attempts; it does
+not edit or secretly endorse a historical proposal. Do not erase disagreements.
+
+`scripts/playbook_pitch_memory.py` reads the **whole prior history**, builds
+a stable version and concept tree, and ranks the curator shelf by explicit
+editorial state and freshness, not arbitrary age-based forgetting. The
+daily authoring brief uses that shelf, while each digest pitch shows its
+`new/expand/meld` label, genealogy, changed/retained ideas and next questions.
+`python scripts/daily_playbook_challenge.py --check --date YYYY-MM-DD`
+enforces exactly **three** and rejects bad/missing ancestry, same-day
+duplicates, historical copies masquerading as new, and rejected parents
+without conscious editorial reactivation. `--payload` produces
+`ready`, `invalid` or `missing`; only the exact Pacific-day `ready`
+docket appears. An absent/invalid docket yields an honest notice and does
+not recycle previous work. The system DOES NOT itself schedule or pay
+for daily content authoring: a Conductor session must commit each day's
+three versions before the morning digest. A concept is *not* a project,
 approval, ArtJob, expense, or publication. Counts are planning estimates:
 distinct render targets vs. optional multiple model passes per target and
 authored scenes vs. editorial passes; no token or price guarantees.

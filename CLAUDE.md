@@ -74,8 +74,25 @@ At the start of every session, before responding to any task, run a conductor sw
    registry (`kind_robots/utils/playbook/games.ts`) plus current active game
    DESIGN-BRIEFs (including **Prom of Doom** and **This Means Warp** even before
    they enter the Studio). Run `python scripts/daily_playbook_challenge.py --brief`
-   and author **1–3 fresh, non-derivative game pitches** at
+   and author **exactly three evolving pitches** at
    `pitches/playbook-challenges/<Pacific-date>.yaml` with production costs.
+   **Persistent concept memory (Silas, 2026-10-26 PT):** Every day build on
+   yesterday AND the entire history, rather than inventing three disconnected
+   ideas. Use `python scripts/daily_playbook_challenge.py --memory` and
+   the `--brief` full-history curator shelf, plus
+   `pitches/playbook-challenges/MEMORY.yaml` for human/editorial decisions,
+   strengths, objections and next moves. Choose each slot freely from
+   `new` (unoccupied genre), `expand` (a meaningful revision of one
+   older concept, same permanent ID), or `meld` (a justified fusion of
+   at least two DIFFERENT older concept families, new permanent ID).
+   Do not force a fusion or a novelty-only idea; once a prior concept exists
+   at least one of the daily three must advance a previous lineage.
+   Each entry records stable concept_id, mode, dated parent version refs,
+   substantial design evolution, what to preserve, what to question and
+   two+ next-day creative questions. Historical date files are snapshots,
+   not things to rewrite; editorial memory is the separate living index.
+   Never imply a rejected pitch is active without a conscious editorial
+   status change. Run `--check --date YYYY-MM-DD` before digest handoff.
    **Genre-first calibration (Silas, 2026-10-26 PT):** Do not select a narrow
    unusual mechanic and call it a complete new game. Map the broad genres
    already occupied (Weird West, post-apocalypse, superheroes, slice of life,
@@ -94,8 +111,10 @@ At the start of every session, before responding to any task, run a conductor sw
    finale art; prose beats and processing-pass assumptions; at least three
    explicit seeded-state × authored/optional LLM prose × selected/generated
    art collisions and their actual gameplay consequences.
-   Run `--check` for that date; do not recycle yesterday's pitches or call
-   missing/invalid entries authored. Sessions write the dated creative docket,
+   Validate exactly three each day; reuse is allowed only via explicit,
+   substantial expansion or fusion with discoverable lineage, never as an
+   unmarked fresh proposal. Do not call missing/invalid entries authored.
+   Sessions write the dated creative docket,
    **not** the scheduled workflow (paid authoring remains opt-in).
    A pitch is a proposal for Silas, not approval to create projects, start
    ArtJobs, pay for models, publish, or replace the five shipped upgrades.

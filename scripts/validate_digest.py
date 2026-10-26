@@ -64,8 +64,8 @@ def main() -> int:
         print("digest.json daily_playbook_challenge.pitches must be a list", file=sys.stderr)
         return 1
     if challenge["status"] == "ready":
-        if challenge.get("date") != digest.get("date") or not 1 <= len(challenge["pitches"]) <= 3:
-            print("digest.json must have 1-3 current-date playbook pitches", file=sys.stderr)
+        if challenge.get("date") != digest.get("date") or len(challenge["pitches"]) != 3:
+            print("digest.json must have exactly 3 current-date evolving playbook pitches", file=sys.stderr)
             return 1
 
     daily = digest.get("daily_pitches")
