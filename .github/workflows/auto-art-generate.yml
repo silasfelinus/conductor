@@ -182,16 +182,28 @@ jobs:
         run: |
           set +e
           set -o pipefail
-          python scripts/consume_art_requests_to_media.py --live --submit-only \
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
             --id-prefix memory-dungeon-saturate- 2>&1 | tee "$RUNNER_TEMP/art-memory-dungeon-submit.log"
           primary_status=${PIPESTATUS[0]}
-          python scripts/consume_art_requests_to_media.py --live --submit-only \
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
             --queue-file projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml \
             --id-prefix memory-dungeon-saturate- 2>&1 | tee "$RUNNER_TEMP/art-memory-dungeon-additional-submit.log"
           additional_status=${PIPESTATUS[0]}
           if [ "$primary_status" -ne 0 ] || [ "$additional_status" -ne 0 ]; then
-            echo "::warning::Memory Dungeon submitted accepted requests but some failed; IDs will still be checkpointed."
-            exit 1
+            echo "::warning::Some Memory Dungeon requests failed submission. Recover accepted jobs and retry the incomplete batch."
+            python scripts/reconcile_memory_dungeon_art_jobs.py --live || exit 1
+            sleep 3
+            python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+              --id-prefix memory-dungeon-saturate- 2>&1 | tee "$RUNNER_TEMP/art-memory-dungeon-retry.log"
+            primary_status=${PIPESTATUS[0]}
+            python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+              --queue-file projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml \
+              --id-prefix memory-dungeon-saturate- 2>&1 | tee "$RUNNER_TEMP/art-memory-dungeon-additional-retry.log"
+            additional_status=${PIPESTATUS[0]}
+            if [ "$primary_status" -ne 0 ] || [ "$additional_status" -ne 0 ]; then
+              echo "::warning::Some ArtJobs still missing after retry. Checkpoint submitted IDs and let the coverage audit fail explicitly."
+              exit 1
+            fi
           fi
 
       # The generic art consumers below can run for hours. Save the ArtJob IDs
@@ -219,6 +231,14 @@ jobs:
               exit 1
             fi
           fi
+
+      # A dashboard page or partially completed runner can show 150 entries
+      # while hundreds of authored jobs have not reached Kind Robots. Check
+      # ALL 752 request IDs rather than assuming no HTTP errors means coverage.
+      - name: Audit uncapped Memory Dungeon art handoff
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        working-directory: conductor
+        run: python scripts/audit_memory_dungeon_art_submission.py
 
       - name: Repair and requeue failed Kind Robots ArtJobs
         id: repair_failed
