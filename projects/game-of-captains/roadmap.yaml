@@ -199,7 +199,10 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Rename Play UI, dashboard highlight and project title to This Means Warp"
-    status: ready
+    status: review
+    owner: worker
+    claimed_by: 20261026T214900Z-space-couch-t013-q71
+    claimed_at: '2026-10-26T21:49:00Z'
     depends_on: t-001
     passes: 0
     stakes: reversible
@@ -209,4 +212,6 @@ tasks:
       Submitted save-compatible in-game display-brand update with Play title/menu, main home highlighted game cards, and tests. For Capes & Tassels this is only the title and week-one simulation clarification part of the larger map/day-night t-012; subsequent gameplay work remains open.
 
       Merged kind_robots #4188 as 0f9c4843 after all 22 checks green. Visible This Means Warp title, full-screen page, Play tab, home highlight and browser title now renamed; old route and save keys preserved. The existing Kind Robots Project database title field was not updated or verified in production (KR_API_TOKEN unavailable). This last metadata/API verification remains to be done under t-013. No further frontend rename required. Production self-hosted deploy has not been verified.
-    updated: '2026-10-25T21:43:18.510Z'
+
+      Space Couch user-directed renaming and couch-vessel gameplay shipped to kind_robots PR #4248, plus Conductor canon and Krea2/Arthemy art requests. Preserve game-of-captains routes and saves. Project database title and painted ArtJobs still unverified; mark incomplete rather than falsely done.
+    updated: '2026-10-26T22:00:00Z'

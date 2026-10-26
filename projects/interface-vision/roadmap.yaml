@@ -2395,15 +2395,13 @@ tasks:
   status: ready
   passes: 0
   stakes: reversible
-  note: >-
-    Audit every reachable gallery, facet selector, project gallery, dream and
-    art chooser for a last item reachable by scrolling inside a bounded region
-    or via explicit pagination. Keep big images and normal creative actions.
-    Inspect responsive-route-audit viewport-ownership.json, identify
-    document-flow and clipped-bottom offenders, fix highest-traffic galleries
-    first. Add actual-element/browser fixture coverage, not only source regex.
-    Treat dynamic content, loading states and zero-results separately; preserve
-    accessible keyboard navigation and report route coverage at 390/820/1440.
+  note: |-
+    Audit every reachable gallery, facet selector, project gallery, dream and art chooser for a last item reachable by scrolling inside a bounded region or via explicit pagination. Keep big images and normal creative actions. Inspect responsive-route-audit viewport-ownership.json, identify document-flow and clipped-bottom offenders, fix highest-traffic galleries first. Add actual-element/browser fixture coverage, not only source regex. Treat dynamic content, loading states and zero-results separately; preserve accessible keyboard navigation and report route coverage at 390/820/1440.
+
+    Scoped homepage gallery fix prepared on kind_robots branch worker/interface-vision-mobile-featured-scroll-20261026: moved the Crystal Street promotion, heading and category controls inside the featured panel's existing bounded scroll owner, switched phone featured cards to one column and preserved wider breakpoint layouts, with source regression checks. This is one slice of the broader gallery audit; return the umbrella task to ready after CI-green merge.
+
+    Shipped one scoped visitor-home gallery reachability fix in silasfelinus/kind_robots#4249, merged SHA 762a98ea7f730e7a33445ec82f8611c2c1c3685e. Exact head 24e98df0b89f73461add6fa476ef7f6abd2c682a passed 21 of 21 completed GitHub check runs, including TypeScript, Navigation Consolidation, Layout Contract, Prettier and all four contract shards. Crystal Street promo, heading, filters and featured cards share one bounded scroll owner; phones show one wider card, tablets two, desktop three or four. Live deployment and responsive screenshot acceptance not yet verified. Resume the remaining gallery reachability audit under this task.
+  updated: '2026-10-26T22:16:18Z'
 
 - id: t-145
   milestone: m6
