@@ -383,7 +383,7 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Build bullseye sweet spots and solver-verified minefield challenge floors"
-    status: review
+    status: done
     depends_on: t-006
     passes: 0
     stakes: reversible
@@ -395,8 +395,9 @@ tasks:
       Engine merged in kind_robots#4050 (utils/memoryDungeon/minefield.ts): seeded 8x8/10x10 floors kept only when a deduction solver clears them with no forced guess (40-46% of draws redrawn), recoverable missteps, exact one-cell disarms, provenCells hints from visible state, leak-free screen-reader text. Bullseye crits are live in combat.ts (+2 on a sweet-spot pair). Remaining for done: the floor UI (zoomable bounded grid, keyboard map) and a site on the map that opens it.
 
       Built the playable Minefield Archive UI as an optional side chamber of Briar Three Quiet Stones (2,7), unlocked after solving the existing leaf-leaf-sun puzzle. Includes the proven guess-free engine's 8x8 and later 10x10 floors, exact-cell disarms, clue-preserving flags, paid non-leaking lantern hints, zoomable one-screen game-board, touch and keyboard navigation, deterministic replay/safe save migration, once-only rewards and new tests. Kind Robots PR follows; hold for CI, merge and final review. Artwork render acceptance stays separate.
-    updated: '2026-10-26T01:46:05Z'
-    owner: worker
+
+      Completed and merged playable minefield archive t-016 in Kind Robots PR #4197 at squash commit 9a1c0a09224443dd6dfff306a79e4c88befc55f1; all 14 required workflows green, including TypeScript, full contract tests and changed-file Prettier. Three Quiet Stones at 2,7 now opens 8x8 and later 10x10 solver-verified no-mandatory-guess archive floors, with touch/keyboard tools, zoom, exact cell disarms, non-leaking lantern hints, recoverable failure, versioned move-replay save/resume and once-only progression rewards. Existing rune quest, Briar save IDs, main exploration, Dark Briar and Classic remain intact. Browser device-width visual checks and image delivery still require separate acceptance; final game release and human gate remain closed.
+    updated: '2026-10-26T01:58:55Z'
     claimed_by: 2026-10-26T014030Z-memory-dungeon-t-016-minefield-c2f7
     claimed_at: '2026-10-26T01:40:30Z'
   - id: t-017
