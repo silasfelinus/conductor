@@ -3,7 +3,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 
-from scripts.audit_memory_dungeon_art_submission import positive_job_id, summarize
+from scripts.audit_memory_dungeon_art_submission import MIN_REQUESTS, positive_job_id, summarize
 
 
 class MemoryArtSubmissionAuditTests(unittest.TestCase):
@@ -30,6 +30,23 @@ class MemoryArtSubmissionAuditTests(unittest.TestCase):
             self.assertEqual(report["submitted"], 752)
             self.assertEqual(report["unresolved"], [])
             self.assertEqual(report["duplicate_ids"], [])
+
+    def test_drained_live_queue_still_passes_on_the_permanent_ledger(self):
+        # The workflow drains done rows from art-prompts.yaml; the permanent
+        # 525-row ledger alone must clear the floor.
+        with TemporaryDirectory() as d:
+            root = Path(d)
+            live = root / "art-prompts.yaml"
+            known = root / "known.yaml"
+            live.write_text("requests: []\n")
+            known.write_text("requests:\n" + "".join(
+                f"- id: memory-dungeon-saturate-{i}\n  last_art_job_id: {i + 40000}\n"
+                for i in range(525)
+            ))
+            report = summarize((live, known))
+            self.assertEqual(report["total"], 525)
+            self.assertGreaterEqual(report["total"], MIN_REQUESTS)
+            self.assertEqual(report["unresolved"], [])
 
     def test_partial_submission_exposes_missing_jobs(self):
         with TemporaryDirectory() as d:
