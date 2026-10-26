@@ -3,7 +3,7 @@ project: game-of-captains
 kind: software
 autonomous: true
 goal: >-
-  Build This Means Warp, a premium art-first comedic science-fiction captain
+  Build Space Couch, a premium art-first comedic science-fiction captain
   playbook, using stable game-of-captains slug and Play route. Select a captain
   and senior crew, command shipboard and 0-3-person away teams, resolve major
   intervention ethics dilemmas, experience twelve evolving star systems and
@@ -13,6 +13,14 @@ goal: >-
   Playable console-like slice, rendered branching art, seeded adversarial
   whole-run QA, final subjective approval and separate outward-release gate.
 notes_from_silas: |
+  2026-10-26 PT: Silas renamed the game SPACE COUCH. The ship is a LONG RED COUCH
+  protected by an invisible force shield and capable of unfolding temporary
+  miniaturized holodecks, war rooms and other rooms BEHIND its backrest.
+  This replaces all conventional starship bridge imagery, rewrites quest canon,
+  and updates the Play/home/project presentation, Playbook Kit/Forge and art queue.
+  Keep game-of-captains slug, Play URL, and existing saves intact. Rendered
+  painterly art, project database title and adversarial verification are real
+  completion gates. Temporary SVG does not complete the art task.
   2026-10-25 PT: Silas selected "This Means Warp" as the new display title.
   "Game of Captains" describes the genre only; retain game-of-captains
   as stable Conductor slug and /play/game-of-captains as compatibility
@@ -136,13 +144,13 @@ tasks:
       promises, antagonist relationship, tech contamination and alternate finale destinations.
   - id: t-008
     milestone: m3
-    title: "Deliver This Means Warp key art, bridge, crew, worlds and antagonist renders"
+    title: "Deliver Space Couch painted red-sofa ship, pocket-room, shield, crew and world art"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Deliver branded This Means Warp project icon/card/hero, detailed bridge/starmap, original
+      Deliver branded Space Couch project icon/card/hero, detailed red couch/force bubble/pocket room/starmap, original
       personnel and emotional portraits, Vox/Serendipity/Fluke continuity plates, twelve worlds and
       eight antagonist identities; verify final URLs, ArtJobs and render provenance rather than
       SVG/placeholders.
@@ -171,7 +179,7 @@ tasks:
       orders, old saves and softlock probes.
   - id: t-011
     milestone: m4
-    title: "Independently red-team This Means Warp's humor, ethics and console visuals"
+    title: "Independently red-team Space Couch humor, ethics and couch/force bubble visuals"
     status: waiting
     depends_on: t-010
     owner: null
@@ -198,7 +206,7 @@ tasks:
       not infer public release.
   - id: t-013
     milestone: m2
-    title: "Rename Play UI, dashboard highlight and project title to This Means Warp"
+    title: "Replace Warp display identity with Space Couch across app and Project row"
     status: claimed
     owner: worker
     claimed_by: 20261026T214900Z-space-couch-t013-q71
@@ -213,3 +221,19 @@ tasks:
 
       Merged kind_robots #4188 as 0f9c4843 after all 22 checks green. Visible This Means Warp title, full-screen page, Play tab, home highlight and browser title now renamed; old route and save keys preserved. The existing Kind Robots Project database title field was not updated or verified in production (KR_API_TOKEN unavailable). This last metadata/API verification remains to be done under t-013. No further frontend rename required. Production self-hosted deploy has not been verified.
     updated: '2026-10-25T21:43:18.510Z'
+
+  - id: t-014
+    milestone: m3
+    title: "Rewrite all authored scenes and outcomes for the literal couch-ship premise"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Audit every existing and new voyage, planet, away-team and antagonist script
+      to make the red couch the spaceship. Integrate miniaturized rooms, persistent
+      vacuum bubble, docking and seating constraints in meaningful mission branches;
+      no old conventional bridge/cockpit or ordinary cruiser illustrations.
+      Coordinate with claimed t-002 and t-003, preserving Vox/Serendipity/Fluke seeds.
+      Adversarially verify couch resource choices and art/script consistency.
