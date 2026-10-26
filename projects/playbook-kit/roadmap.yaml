@@ -191,7 +191,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "AAA console visual system for the kit shell and the Forge (dark full-bleed theme, safe area, focus/gamepad navigation, bumper tabs, button prompts)"
-    status: ready
+    status: done
     depends_on: t-010
     owner: null
     passes: 0
@@ -200,11 +200,14 @@ tasks:
       The Forge ships the console system (forge theme, safe area, focus/gamepad,
       bumper tabs, prompt bar). Remaining: move playbook-kit-shell and /admin/playbook-kit
       onto it (shared CSS out of the forge console component into one stylesheet).
+      DONE 2026-10-26 PT: kind_robots #4227 merged as 329b435 (shared assets/css/playbook-console.css, console
+      kit shell, settings as option rows; fixed a scoped @layer in playbook-kit-art that let
+      Tailwind's preflight beat component styles when its chunk loaded first).
 
   - id: t-012
     milestone: m4
     title: "Playbook Forge admin console: idea, genre, placement, factor loadout, live forecast and per-factor deltas, launch as a Kind Robots project"
-    status: review
+    status: done
     depends_on: t-010
     owner: null
     passes: 0
@@ -216,6 +219,8 @@ tasks:
       handoff), playbookForgeStore, scoped `forge` theme, utils/consoleInput.ts (focus
       navigation + gamepad), verifyPlaybookForge.test.ts. Conductor: new_playbook.py
       --blueprint.
+      DONE 2026-10-26 PT: kind_robots #4219 merged as d90a1b5 (25/25 checks green after a
+      nav-summary length fix); conductor #6684 merged as 497f6b2.
 
   - id: t-013
     milestone: m4
@@ -233,7 +238,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Analyze and adjust existing playbooks in the Forge: actual counts vs planned floors, remaining gen time"
-    status: review
+    status: done
     depends_on: t-012
     owner: null
     passes: 0
@@ -242,3 +247,18 @@ tasks:
       Analyze a game: eight playbooks, Built counted live from Playbook Studio adapters (or
       Warp/Prom rules modules) against Conductor-goal plans; Send plan to agents creates a
       high-priority agent Todo with the diff and blueprint.
+      DONE 2026-10-26 PT: shipped in kind_robots #4219 (Analyze a game + Send plan to agents).
+  - id: t-015
+    milestone: m4
+    title: "Daily playbook challenge costs come from the Forge calibration, not a second estimate"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      CLAUDE.md step 9 (2026-10-26) asks each daily playbook pitch for production costs
+      (unique render targets, authored scenes). The Forge already holds measured render
+      times per checkpoint (kind_robots utils/playbookForge/calibration.ts, 202 ArtJobs)
+      and per-factor image and word terms (estimate.ts). Have daily_playbook_challenge.py
+      emit a Forge blueprint per pitch (or read those constants) so pitch costs and Forge
+      forecasts agree, and link each pitch to /admin/playbook-forge for adjustment.
