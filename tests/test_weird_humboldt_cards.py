@@ -188,3 +188,23 @@ def test_anchor_no_roll_choice_must_leave_persistent_consequence():
     no_roll["success"]["effects"] = ["time-1"]
     problems = wh.validate_anchors(anchors, _enums())
     assert any("no-roll outcome needs a persistent flag or evidence" in p for p in problems)
+
+
+def test_signatures_cover_all_56_ids():
+    sigs = wh.load_signatures()
+    assert len(sigs["signatures"]) == 56
+    assert wh.validate_signatures(sigs, wh.load_endings()) == []
+
+
+def test_signatures_reject_missing_id_and_cedar_without_parents():
+    sigs = wh.load_signatures()
+    short = {**sigs, "signatures": sigs["signatures"][1:]}
+    assert any("missing" in p for p in wh.validate_signatures(short, wh.load_endings()))
+    sigs["signatures"][-1]["paragraph"] = "Cedar built a long quiet network of friendly neighbours across the whole county, and nothing else of note happened there."
+    sigs["signatures"][-1]["alt_text"] = "A man stands beside a cabinet near a road."
+    assert any("parents" in p for p in wh.validate_signatures(sigs, wh.load_endings()))
+
+
+def test_ten_county_motifs():
+    assert wh.validate_county_motifs(wh.load_endings()) == []
+    assert any("need" in p for p in wh.validate_county_motifs([]))
