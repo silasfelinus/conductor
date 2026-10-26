@@ -2504,15 +2504,20 @@ tasks:
 - id: t-150
   milestone: m6
   title: "Let logged-out visitors rate public games"
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   note: |-
     From Silas's 2026-10-26 PT fresh-visitor audit: no game on kindrobots.org has a single rating, partly because the arcade review form (components/arcade/arcade-reviews.vue) and the reaction form only accept signed-in users, and almost every visitor is anonymous. Add a guest star rating (optional short comment) for public games with abuse damping (per-browser and per-day rate limits, length caps, server-side moderation hold for comments, no IP stored in plain text), and show the share/give support card after a rating is posted. Keep signed-in reviews unchanged. Screenshot 390/768/1440 before handoff.
+
+    Merged kind_robots#4238 (ffec7e1): guest star ratings via ArcadeGuestRating, hashed
+    browser token, burst+daily limits, held notes. Not done: 390/768/1440 screenshots and a
+    moderation UI to release held notes.
   owner: worker
   claimed_by: 01EC4J8eGLw14NnjwjXQUqAD
   claimed_at: '2026-10-26T18:53:28Z'
-  updated: '2026-10-26T18:53:28Z'
+  updated: '2026-10-26T19:03:27Z'
+  implementation_pr: 'silasfelinus/kind_robots#4238'
 
 - id: t-151
   milestone: m6
