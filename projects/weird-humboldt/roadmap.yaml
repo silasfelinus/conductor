@@ -1608,17 +1608,16 @@ tasks:
   - id: t-066
     milestone: m5
     title: "Polish Ecotone opening, route previews, customizable player portraits, and tablet layout"
-    status: review
-    owner: worker
-    claimed_by: 2026-10-26T22:19:45Z-weird-humboldt-t066-ecotone-stage-n7h4
-    claimed_at: '2026-10-26T22:19:45Z'
-    updated: '2026-10-26T22:23:55Z'
+    status: ready
+    updated: '2026-10-26T22:40:10Z'
     passes: 0
     stakes: reversible
     note: |-
       Silas's October 24 2026 PT tablet screenshot: PC portraits are not visible, players need to change/upload their own image, opening route cards must preview what might happen before committing, and opening prose must be shorter without advance companion or drug spoilers. Reduce fixed left-column title footprint; preserve one-screen reading and existing saved games and art IDs. Verify exact-head CI, queue/media delivery state, and tablet presentation.
 
       Silas-directed Ecotone stage repair: encounter prose and immediate choices occupy a scrollable left column, portraits/scene art their own right panel; earned endings render a collectible image card. Responsive mobile stage retains bounded art above content, and existing onboarding test asserts layout, direct-choice and ending behaviors. Kind Robots worker PR follows; no art jobs or deploy.
+
+      2026-10-26 PT: Silas-directed encounter/ending layout slice MERGED to Kind Robots main as PR #4252 (squash 059d1035007c76e8d435a5d8c110b737b0d6eb3b). All 15 latest-head workflows on a8ea7ee4aa3c49327dcaa60bfab736cc33d16e63 completed successfully: TypeScript, layout, formatting, Ecotone gameplay and full contract tests included. Art is now isolated on right at wide screens, narration and immediate choices on left, responsive art above text at phone widths, unlocked ending card shown in art panel. No new ArtJobs or deploy. Keep this broader t-066 ready for outstanding actual rendered phone/tablet/desktop verification after self-hosted deployment and remaining portrait media delivery.
 
   - id: t-067
     milestone: m1
