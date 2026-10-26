@@ -545,6 +545,7 @@ def main():
         "pitches_awaiting_vote": scan_pitches(),
         "daily_pitches": daily_pitches_payload(),
         "daily_project_deliveries": daily_project_deliveries_payload(),
+        "daily_playbook_challenge": daily_playbook_challenge_payload(),
         "open_branches": scan_branches(),
         "render_engine": render_engine_health(),
         "container_logs": container_log_health(),
