@@ -1,6 +1,8 @@
 """Regression contract for Memory Dungeon's interrupted 752-request art handoff."""
 import sys
 import unittest
+
+import yaml
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,6 +15,35 @@ from repair_memory_dungeon_art_prompts import repair_text  # noqa: E402
 
 
 class MemoryArtQueueTests(unittest.TestCase):
+
+    def test_both_complete_ledgers_have_700_plus_unique_requests(self):
+        sources = [
+            ROOT / "projects/art-prompts.yaml",
+            ROOT / "projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml",
+        ]
+        ids = []
+        for source in sources:
+            data = yaml.safe_load(source.read_text()) or {}
+            subset = [
+                item for item in data.get("requests") or []
+                if str(item.get("id") or "").startswith("memory-dungeon-saturate-")
+            ]
+            self.assertGreater(len(subset), 100, str(source))
+            for item in subset:
+                ids.append(item["id"])
+                self.assertTrue(item.get("image_path"))
+                self.assertEqual(item.get("project_slug"), "memory-dungeon")
+                self.assertTrue(item.get("prompt"))
+                for bad, _replacement in (
+                    ("horizontal scenic frame", ""),
+                    ("wide single frame", ""),
+                    ("Square frame", ""),
+                    ("cinematic frame", ""),
+                ):
+                    self.assertNotIn(bad, item["prompt"], item["id"])
+        self.assertGreaterEqual(len(ids), 700)
+        self.assertEqual(len(ids), len(set(ids)), "Duplicate requests would create duplicate ArtJobs")
+
     def test_recovers_an_existing_job_without_minting_another(self):
         entry = """requests:
 - id: "memory-dungeon-saturate-a"
