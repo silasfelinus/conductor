@@ -33,8 +33,12 @@ class DailyPlaybookChallengeTest(unittest.TestCase):
         self.assertEqual(challenge.compute_units(museum)["unique_people"], 22)
         self.assertEqual(challenge.compute_units(museum)["art_units"], 298)
         self.assertEqual(challenge.compute_units(museum)["text_units"], 200)
+        self.assertEqual(challenge.compute_units(museum)["image_generation_passes"], 596)
+        self.assertEqual(challenge.compute_units(museum)["text_authoring_passes"], 400)
+        self.assertEqual(challenge.compute_units(museum)["total_planned_passes"], 996)
         self.assertEqual(challenge.compute_units(broadcast)["art_units"], 286)
         self.assertEqual(challenge.compute_units(broadcast)["text_units"], 186)
+        self.assertEqual(challenge.compute_units(broadcast)["total_planned_passes"], 944)
         self.assertEqual(challenge.compute_units(broadcast)["art_breakdown"]["portraits"], 105)
 
     def test_stale_docket_is_not_recycled(self):
