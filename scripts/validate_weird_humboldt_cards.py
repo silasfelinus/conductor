@@ -30,7 +30,7 @@ SEEDS = PROJECT / "ENCOUNTER-SEEDS.md"
 # The seed catalog is the source of truth for the deck's size and chapter placement.
 # Only bold bullet premises beneath numbered chapter headings count as seeds.
 SEED_CHAPTER_RE = re.compile(r"^## ([1-6]) · ")
-SEED_ID_RE = re.compile(r"^- \\*\\*(WH-[0-9]+) · ")
+SEED_ID_RE = re.compile(r"^- \*\*(WH-[0-9]+) · ")
 EFFECT_RE = re.compile(r"^((goodwill|nerve|time|weird|clarity)[+-][0-9]|flag:[a-z0-9_]+|evidence:[a-z_]+|lose:free_draw)$")
 BANNED = re.compile(r"\b(dosage|milligram|snort|inject|how to (cook|make|score)|where to buy)\b", re.I)
 STATES = ["sober", "tipsy", "stoned", "tripping_balls"]
