@@ -13,7 +13,7 @@ read-only call to `/api/admin/art-review` for real render times (202 ArtJobs).
 ## 1. What every playbook shares
 
 Eight story games were surveyed: Emperor of Dust, Zuzu: Shifting Lands, Shifting
-Desks, Prom of Doom, This Means Warp, Ecotone, Terrors on Crystal Street and the
+Desks, Prom of Doom, Space Couch, Ecotone, Terrors on Crystal Street and the
 Zuzu gamebook.
 
 The common core is the same in all of them:
@@ -37,7 +37,7 @@ The common core is the same in all of them:
 | Export / import | Ecotone | Save → Export saves |
 | Share link / daily seed | Crystal Street, Shifting Desks | Save → Share a run |
 | Cross-run scrapbook, endings, codex | Emperor, Desks, Ecotone, Crystal St, Gamebook | Save → Keep between runs |
-| Character creator | Prom (form × element), Ecotone (archetype, name, avatar), Crystal St (avatar × clique), Desks (job), Warp (captain + crew) | Player tab |
+| Character creator | Prom (form × element), Ecotone (archetype, name, avatar), Crystal St (avatar × clique), Desks (job), Space Couch (captain + crew) | Player tab |
 | Player-uploaded portrait | Ecotone | Player → Upload own portrait |
 | Followers / crew | Emperor, Ecotone, Crystal St, Warp, Prom | Cast → Followers, Party size |
 | Factions | Emperor (15), Crystal St (4), Desks (6 Societies) | Cast → Factions |

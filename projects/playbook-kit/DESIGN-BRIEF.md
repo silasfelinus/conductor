@@ -2,7 +2,7 @@
 
 Started 2026-10-26 PT at Silas's request: one consistent framework for iterating
 on new playbooks, in the manner of Emperor of Dust, Zuzu: Shifting Lands,
-Shifting Desks, Prom of Doom, This Means Warp and Ecotone, and smart about how
+Shifting Desks, Prom of Doom, Space Couch and Ecotone, and smart about how
 much complexity it allows.
 
 ## What it is
