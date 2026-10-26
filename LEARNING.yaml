@@ -18299,3 +18299,14 @@ records:
   failure_category: null
   lesson: Survey every sibling game before designing a shared frame, and render it at three widths before
     calling it designed; structural CI passed while the look still read as a web app, not a console.
+- date: 2026-10-26
+  project: playbook-kit
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Never declare a CSS @layer inside a Vue component style; a chunk that loads before tailwind.css
+    reorders the cascade layers so the preflight reset beats every component style. Share console CSS
+    through an @import in tailwind.css instead.
