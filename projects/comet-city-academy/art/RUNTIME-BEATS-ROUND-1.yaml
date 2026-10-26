@@ -1,0 +1,540 @@
+# Capes & Tassels runtime beats, round 1 (comet-city-academy t-007 / playbook-kit t-013).
+# The picture slots the play page shows that had no render on 2026-10-26 (Playbook Forge ledger):
+# six patrol incidents, seven campus encounters, seventeen district scenes
+# and six endings, plus the four masterminds added to the campaign on 2026-10-26 (the first four
+# are in MAPS-AND-MASTERMINDS-ROUND-1).
+# Assets match kind_robots utils/cometAcademy/artSlots.ts; export with scripts/export_round_art.py
+# (--manifest utils/cometAcademy/artManifest.ts).
+# The fixed week-one students are a prototype cast the seeded identity roster replaces (t-016),
+# so no portraits are requested for them.
+round: capes-runtime-beats-1
+project_slug: comet-city-academy
+designer: Capes and Tassels runtime art
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 painted runtime plates
+  engine: krea2
+  prompt: prose
+  suffix: Hand-painted 2D illustration, ink contours, gouache color, visible glass fractures, fabric folds, stone
+    walls, metal reflections, warm amber light, blue night shadows.
+subjects:
+- key: capes-runtime-monorail-incidents
+  lane: krea2
+  entity: incident-plate
+  title: 'Runaway Monorail: a brakeless elevated monorail between towers at dusk with a rescuer suspended over the
+    tracks'
+  asset: comet-city-academy/incidents/monorail
+  size: 1344x768
+  seed: 968306
+  prompt_prose: Wide exterior view of Comet City at violet dusk, where a gleaming elevated monorail hangs between
+    glittering glass towers on a curved track high above the street. Its lead carriage tilts forward with sparks
+    spraying from locked wheels, and adult commuters press their hands against the lit windows. A lone passenger
+    crouches on the carriage roof, pointing at a small blinking antenna bolted there. Just ahead of the train, a
+    student rescuer in a short cape is suspended in midair over the rails inside a ring of shimmering violet portal
+    light, one arm braced toward the lead car. Farther down the line, the track curves above a hospital with a brightly
+    lit emergency entrance. The comet hangs above the towers.
+- key: capes-runtime-museum-incidents
+  lane: krea2
+  entity: incident-plate
+  title: 'Museum of Tomorrow: a cracking glass diorama under holographic beacons as a silver sculpture falls'
+  asset: comet-city-academy/incidents/museum
+  size: 1344x768
+  seed: 968307
+  prompt_prose: Wide interior view of a civic museum gallery at midnight after a late gala, with abandoned glasses
+    and folded napkins left on cocktail tables. At the center, a huge glass diorama of a miniature future city cracks
+    in long white lines beneath floating holographic rescue beacons that pulse cyan. A polished silver sculpture
+    tips from its plinth above the diorama, slowly falling. Guests in evening wear and two security guards lead
+    a small group of fully clothed schoolchildren toward a lit exit. On a shadowed balcony, a buyer in a gray suit
+    holds out a slim metal case toward a glowing archive key resting on a pedestal.
+- key: capes-runtime-flood-incidents
+  lane: krea2
+  entity: incident-plate
+  title: 'The Lower Docks: the harbor rises into a translucent wall above the market stalls under siren light'
+  asset: comet-city-academy/incidents/flood
+  size: 1344x768
+  seed: 968308
+  prompt_prose: Wide exterior view of the lower waterfront market at night as the blue harbor rises into a towering
+    translucent wall of water above rows of canvas stalls. Broken red and blue light from rescue sirens scatters
+    through the curling wave. Vendors in raincoats tug at locked stall shutters, while others carry crates of medicine
+    and bundled folders up a flooded ramp. On a high seawall walkway, an operator in a hard hat points toward a
+    bright, dry promenade of luxury shops. Wind tears at the awnings and rain slants across the scene.
+- key: capes-runtime-garden-incidents
+  lane: krea2
+  entity: incident-plate
+  title: 'Greenhouse Breach: an overgrown emerald greenhouse across a fire lane with a tiny amber beacon in its
+    roots'
+  asset: comet-city-academy/incidents/garden
+  size: 1344x768
+  seed: 968309
+  prompt_prose: Wide exterior view at night of an emerald glass greenhouse that has burst its frame and grown across
+    a residential fire lane between small brick apartment buildings. Huge luminous leaves press against the green
+    panes and spill over the street, glowing softly. Deep in the tangled roots, a tiny amber emergency beacon blinks
+    beside a botanist in a lab coat, cradled unharmed in a hollow of vines. The thick vines curl back from the flashlights
+    as if frightened. Residents in pajamas watch from their balconies while institute staff wheel a sealed incinerator
+    cart to the edge of the lane.
+- key: capes-runtime-broadcast-incidents
+  lane: krea2
+  entity: incident-plate
+  title: 'The Unwanted Broadcast: a plaza crowd under a colossal floating screen, split between celebration and
+    alarm'
+  asset: comet-city-academy/incidents/broadcast
+  size: 1344x768
+  seed: 968310
+  prompt_prose: Wide exterior view of a crowded media-district plaza at dusk beneath a colossal floating screen
+    glowing with abstract swirling orange warning patterns. The crowd below is split down the middle. On one side
+    people cheer and raise their drinks under strings of festival lights, while on the other side people clutch
+    each other, point upward and begin to back away. Tall glass broadcast towers with dish antennas ring the plaza.
+    On a rooftop ledge, a figure in a long dark coat holds a small transmitter and watches the reaction.
+- key: capes-runtime-skybridge-incidents
+  lane: krea2
+  entity: incident-plate
+  title: 'The Skybridge: a glass bridge falls in shards between school towers at sunset as cleaners run to safety'
+  asset: comet-city-academy/incidents/skybridge
+  size: 1344x768
+  seed: 968311
+  prompt_prose: Wide exterior view between two immense academy towers at sunset, where a brilliant glass skybridge
+    breaks apart and falls in glittering shards. Eight cleaners in blue work uniforms, pushing mops and supply carts,
+    run along the last intact span toward the east-tower landing. A small white shuttle tumbles more slowly beside
+    the falling glass, its running lights blinking. A student rescuer wrapped in rippling waves of kinetic force
+    holds a buckling section of the walkway steady with both outstretched arms. Orange and violet sunset light blazes
+    through the shards, and the comet hangs above the towers.
+- key: capes-runtime-a-promise-on-the-roof-encounters
+  lane: krea2
+  entity: encounter-plate
+  title: 'A Promise on the Roof: Imani reads an impossible report by lantern light on the academy roof'
+  asset: comet-city-academy/encounters/a-promise-on-the-roof
+  size: 1344x768
+  seed: 968312
+  prompt_prose: Wide exterior view of the academy roof at night, a gravel deck with vent stacks, potted tomato plants
+    and a low parapet overlooking the glowing glass towers and the harbor. Imani Vale, a plus-size copper-brown-skinned
+    woman with long black braids and a teal scarf, stands near the edge holding a single sheet of paper beneath
+    a small lantern. The page shows only faint abstract lines, yet she stares at it in alarm. A second student in
+    an academy jacket stands across from her, seen from behind. Her teal scarf lifts in the night wind as the comet
+    hangs bright in the violet sky.
+- key: capes-runtime-the-fire-drill-that-wasnt-encounters
+  lane: krea2
+  entity: encounter-plate
+  title: 'The Fire Drill That Wasn''t: a rehearsal stage glows with a strange counting ring beneath frozen dancers'
+  asset: comet-city-academy/encounters/the-fire-drill-that-wasnt
+  size: 1344x768
+  seed: 968313
+  prompt_prose: Wide interior view of the academy theater wing during a prom committee rehearsal. On a large stage
+    dressed with painted cardboard skyscrapers and a prop rescue ladder, adult students in rehearsal capes freeze
+    mid-pose. The stage floor itself glows with a spiraling ring of abstract geometric marks that light up one after
+    another, like a countdown. Spotlights swing wildly overhead and a fog machine spills haze across the boards.
+    Dancers in practice clothes crowd toward the aisle exits, while one student in the front row holds up a wrist
+    device to record the glow.
+- key: capes-runtime-the-principals-favor-encounters
+  lane: krea2
+  entity: encounter-plate
+  title: 'The Principal''s Favor: an instructor slides a graduation roster across a table in the lamplit archive'
+  asset: comet-city-academy/encounters/the-principals-favor
+  size: 1344x768
+  seed: 968314
+  prompt_prose: Wide interior view of the academy archive stacks at night, with towering wooden shelves of bound
+    records and rolling ladders fading into shadow. A tall instructor in a tailored charcoal faculty coat leans
+    close to a student beneath a single green-shaded reading lamp. The instructor slides a graduation roster across
+    the table with a pen resting on it, the roster showing only blank gray lines. Dust drifts through the lamplight.
+    Behind them, a narrow iron door to the staff tunnels stands slightly ajar.
+- key: capes-runtime-the-stray-blade-arrives-encounters
+  lane: krea2
+  entity: encounter-plate
+  title: 'The Stray Blade Arrives: Zuzu drops from a portal above the commuter rail with his sword drawn'
+  asset: comet-city-academy/encounters/the-stray-blade-arrives
+  size: 1344x768
+  seed: 968315
+  prompt_prose: Wide exterior view above an elevated commuter rail line in Comet City on a bright afternoon, where
+    a jagged circular portal tears open in the air, crackling with turquoise light. Zuzu, a short grey koala in
+    a weatherworn rust-brown poncho, a wide straw kasa and an orange sash, lands in a crouch on the station canopy
+    with his katana already drawn. A tattered sheet of paper sketched with a rough inked koala face flutters from
+    his belt. Commuters on the platform below look up in surprise. On a nearby gantry, a corporate gate operator
+    in a crisp silver uniform holds out a glowing reward token toward the viewer.
+- key: capes-runtime-a-visitor-from-the-stars-encounters
+  lane: krea2
+  entity: encounter-plate
+  title: 'A Visitor from the Stars: Tess Helio steps through a fractured jump gate in the observatory with her star
+    chart'
+  asset: comet-city-academy/encounters/a-visitor-from-the-stars
+  size: 1344x768
+  seed: 968316
+  prompt_prose: Wide interior view of the domed city observatory at night, its great brass telescope aimed through
+    an open slit at a violet sky where the comet hangs. A fractured jump gate crackles in midair beneath the dome,
+    a broken ring of white and indigo light. Tess Helio, a starship navigator in a worn midnight-blue flight jacket
+    with patched pockets, steps through holding a scratched star chart whose lines swirl and blur where a destination
+    should be. Across the telescope floor, the academy dean in a long formal robe extends an open hand toward the
+    chart. Through the dome slit, a distant boxy refugee ship waits among the stars.
+- key: capes-runtime-the-unclaimed-scholarship-encounters
+  lane: krea2
+  entity: encounter-plate
+  title: 'The Unclaimed Scholarship: an injured student beside a crate of prom fireworks in the grants hall'
+  asset: comet-city-academy/encounters/the-unclaimed-scholarship
+  size: 1344x768
+  seed: 968317
+  prompt_prose: Wide interior view of the civic grants hall, a marble room with long oak tables and tall arched
+    windows looking out over the harbor. On one table, an open ledger of blank ruled columns sits beside an open
+    crate packed with prom fireworks rockets. An adult student on crutches, one knee bandaged, stands beside a clerk
+    and stares at the crate. On a wall screen, the faceless silhouette of an anonymous donor glows in flat blue
+    light. Afternoon sun slants across rows of filing cabinets marked only with colored tabs.
+- key: capes-runtime-the-class-list-has-two-endings-encounters
+  lane: krea2
+  entity: encounter-plate
+  title: 'The Class List Has Two Endings: a prediction machine projects one student as both hero and jailer'
+  asset: comet-city-academy/encounters/the-class-list-has-two-endings
+  size: 1344x768
+  seed: 968318
+  prompt_prose: Wide interior view of the academy transit lab, a high-ceilinged workshop filled with model tracks,
+    brass gears and a large ring-shaped prediction machine humming at its center. The machine projects two life-size
+    holographic figures of the same adult student side by side. On the left the figure wears a bright rescue cape
+    before a cheering crowd of tiny glowing citizens, and on the right the same figure wears a dark angular mask
+    before a looming projected prison tower. Two classmates watch from the foreground, one reaching a hand toward
+    the projections. Cool blue and deep red light divide the room.
+- key: capes-runtime-student-commons-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Meal Nobody Funded: Mina finds rerouted invoices beneath a hologram of full pantry shelves'
+  asset: comet-city-academy/districts/student-commons
+  size: 1344x768
+  seed: 968319
+  prompt_prose: Wide interior view of the student commons at lunchtime, a bright cafeteria with long tables and
+    rows of empty steel pantry shelves. A floating donor hologram above the shelves shows glowing images of crates
+    full of apples and bread, hovering over the bare metal beneath. Mina Quill, a broad-shouldered dark-skinned
+    woman with short curls in an ivory rescue coat, kneels by an empty shelf holding a bundle of invoices covered
+    in blank ruled lines. Behind the kitchen pass, a nervous volunteer in an apron and hairnet peeks out with one
+    finger raised to their lips. Students with empty trays wait in line.
+- key: capes-runtime-infirmary-districts
+  lane: krea2
+  entity: district-plate
+  title: 'A Name Erased in Ink: Kit sits beside a bandaged volunteer whose record screen is blank'
+  asset: comet-city-academy/districts/infirmary
+  size: 1344x768
+  seed: 968320
+  prompt_prose: Wide interior view of the campus infirmary at night, a quiet ward of curtained beds lit by soft
+    blue monitor glow. An injured adult student volunteer lies awake in one bed, an arm in a clean white sling and
+    a bandage around the forehead, looking worried. Kit Rowan, a broad-hipped pale-skinned adult with auburn hair
+    in a green medic vest, sits beside the bed holding a small recorder, seed packets tucked in the vest pockets.
+    The bedside monitor shows an empty panel where the patient's record should be. In the doorway, an insurer in
+    a gray suit holds a clipboard and a sealed envelope.
+- key: capes-runtime-training-arena-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Sponsored Duel: Sol faces a wealthy trainee under broadcast lights while a technician watches'
+  asset: comet-city-academy/districts/training-arena
+  size: 1344x768
+  seed: 968321
+  prompt_prose: Wide interior view of the academy training arena under harsh broadcast lights, a sunken sand floor
+    ringed by tiered seats and hovering camera drones. Sol Navarro, a slim olive-skinned man with close-cropped
+    black hair and an amber visor, stands at the center facing a wealthy trainee in a gleaming gold-trimmed sparring
+    suit. Threads of amber light flicker around Sol's raised hand. Sponsor banners in the stands show only abstract
+    stripes and blank panels. In a shadowed backstage doorway, a technician in a headset and worn overalls watches
+    with a coiled cable over one shoulder.
+- key: capes-runtime-engineering-workshop-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Off Switch: Ash lifts a glowing command chip out of a classmate''s rescue armor'
+  asset: comet-city-academy/districts/engineering-workshop
+  size: 1344x768
+  seed: 968322
+  prompt_prose: Wide interior view of the academy engineering workshop, cluttered with workbenches, hanging cables,
+    welding curtains and half-built rescue armor on stands. Ash Calder, a lanky pale adult with wind-tousled ash-blond
+    hair in a storm-gray weather-tech coat with copper sensor buttons, leans over the open chest plate of a heroic
+    armor suit. With fine tweezers they lift out a tiny black command chip glowing a sickly red. The classmate who
+    owns the armor stands beside the bench in a padded undersuit, looking stunned. Late afternoon light falls through
+    high factory windows, and small whirls of air from Ash's free hand keep the sparks away.
+- key: capes-runtime-botanical-conservatory-districts
+  lane: krea2
+  entity: district-plate
+  title: 'A Cure with Roots: a locked-out gardener and Kit at the gate of a rare glowing vine'
+  asset: comet-city-academy/districts/botanical-conservatory
+  size: 1344x768
+  seed: 968323
+  prompt_prose: Wide interior view of the botanical conservatory, a sunlit glass hall crowded with ferns, hanging
+    moss and a single rare vine climbing a trellis, its pale blue flowers glowing softly. A locked iron gate with
+    a heavy padlock blocks the path to the vine. On the near side, an elderly gardener in a muddy apron grips the
+    bars beside Kit Rowan, a broad-hipped pale-skinned adult with auburn hair in a green medic vest, who holds an
+    empty glass vial. Beyond the gate, an institute official in a crisp white coat stands guard beside the vine.
+    Warm mist hangs in the humid air.
+- key: capes-runtime-student-dormitory-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Borrowed Curfew Pass: Nix picks up a vanished student''s pass slipped under their door'
+  asset: comet-city-academy/districts/student-dormitory
+  size: 1344x768
+  seed: 968324
+  prompt_prose: Wide interior view of a narrow student dormitory hallway at night, with plain wooden doors, soft
+    sconce light and a worn runner rug. Nix Venn, a slender tan-skinned adult with short silver hair in a white
+    jacket with purple collar lining, crouches in an open doorway, picking up a curfew pass card that was slid beneath
+    the door. The card has only a blank photo square and a faint glowing stripe. A small violet portal flickers
+    uncertainly beside them. On a corkboard at the end of the hall hangs a missing-person flyer showing only a hand-drawn
+    portrait sketch.
+- key: capes-runtime-ethics-hall-districts
+  lane: krea2
+  entity: district-plate
+  title: 'Who Watches the Rescuers?: a civilian review panel faces student heroes as the dean offers a waiver'
+  asset: comet-city-academy/districts/ethics-hall
+  size: 1344x768
+  seed: 968325
+  prompt_prose: Wide interior view of the academy ethics hall, a round wood-paneled chamber with tiered benches.
+    A civilian review panel of residents, including a baker in an apron, an elderly man with a cane and a bus driver
+    in uniform, sits behind a long table facing a row of student heroes in capes. At the front, the dean in a long
+    formal robe holds out a blank waiver and a pen to one student. Imani Vale, a plus-size copper-brown-skinned
+    woman with long black braids and a teal scarf, stands to one side with her hand raised to speak. Afternoon light
+    falls through tall windows onto the polished floor.
+- key: capes-runtime-academy-docks-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Relief Boat''s Second Manifest: dockworkers refuse to unload a barge hiding robotic guards'
+  asset: comet-city-academy/districts/academy-docks
+  size: 1344x768
+  seed: 968326
+  prompt_prose: Wide exterior view of the academy docks at dawn, where a rusty relief barge loaded with yellow emergency
+    generators is tied to a pier beneath tall cranes. An open cargo hatch reveals three hulking dormant robotic
+    guards hidden below deck, their single lens eyes glowing a faint red. Dockworkers in hard hats and orange vests
+    stand in a line on the pier with their arms folded, refusing to unload. A shipping clerk holds out a clipboard
+    while gulls wheel overhead. Mist drifts across the canal, and the glass towers of Comet City rise beyond the
+    harbor.
+- key: capes-runtime-waterfront-market-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Price of Dry Ground: a broker sells costly flood barriers while vendors plan to clear a drain'
+  asset: comet-city-academy/districts/waterfront-market
+  size: 1344x768
+  seed: 968327
+  prompt_prose: Wide exterior view of the waterfront market under a cloudy sky, with damp cobblestones and patched
+    canvas stalls. A protection broker in a sharp teal suit gestures at a gleaming row of expensive steel flood
+    barriers stacked on a flatbed truck. Nearby, a group of vendors in rain boots gathers around an old clogged
+    storm drain, holding shovels and a hand-drawn map of channels. One vendor clutches a permit folder struck through
+    with a plain red mark. Puddles reflect the glass towers, and the harbor waterline creeps toward the stalls.
+- key: capes-runtime-transit-union-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Last Safe Route: striking drivers picket before an unsafe train as the mayor points past them'
+  asset: comet-city-academy/districts/transit-union
+  size: 1344x768
+  seed: 968328
+  prompt_prose: Wide exterior view of a transit union rail yard at dusk, where train drivers in blue uniforms stand
+    in a picket line holding blank cardboard signs. Behind them, an idle commuter train sits on the tracks while
+    a mechanic shines a flashlight on a cracked brake assembly. A plain white van with its back doors open waits
+    at the gate, stacked with medical supply crates. The mayor in a dark overcoat stands beside a caped academy
+    student, pointing past the picket line toward the train. Yard floodlights flick on against the violet sky.
+- key: capes-runtime-neon-arcade-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Game That Knows Too Much: AR players'' secret identities hover above them as Sol pries open the machine'
+  asset: comet-city-academy/districts/neon-arcade
+  size: 1344x768
+  seed: 968329
+  prompt_prose: Wide interior view of a neon arcade at night, filled with glowing cabinets and a crowd of adult
+    students wearing augmented-reality headsets on a lit tournament floor. Above each player floats a translucent
+    holographic silhouette of a shadowy caped alter ego. Sol Navarro, a slim olive-skinned man with close-cropped
+    black hair and an amber visor, stands at a maintenance panel with its cover pried open, pulling streams of glowing
+    data dots out of the machine on threads of amber light. On a raised platform, the game's creator in a sleek
+    white jacket spreads his arms proudly. Pink and cyan neon washes over everything.
+- key: capes-runtime-civic-hospital-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Triage Camera: a ceiling camera ranks a hospital waiting room while nurses frown'
+  asset: comet-city-academy/districts/civic-hospital
+  size: 1344x768
+  seed: 968330
+  prompt_prose: Wide interior view of a civic hospital waiting room, with rows of plastic chairs and pale green
+    walls. A sleek triage camera on a ceiling arm sweeps the room with a fan of white light, and a large wall screen
+    ranks the patients as a column of blank glowing bars, the top bars bright gold. Patients wait with bandaged
+    hands and ice packs. Far down the row of chairs, a small, fully clothed child sits quietly beside a parent under
+    the dimmest bar. Nurses in scrubs confer at the desk, frowning up at the camera, while an administrator in a
+    suit watches with a tablet.
+- key: capes-runtime-industrial-foundry-districts
+  lane: krea2
+  entity: district-plate
+  title: 'A Sword for Every Soldier: foundry workers gather by a furnace casting armor and blades'
+  asset: comet-city-academy/districts/industrial-foundry
+  size: 1344x768
+  seed: 968331
+  prompt_prose: Wide interior view of an industrial foundry at night, where a towering furnace pours molten orange
+    alloy into ingot molds along a long conveyor. Workers in heat-proof aprons, goggles pushed up on their foreheads,
+    gather around a shift supervisor holding an order folder, their faces troubled. Freshly cast armor plates and
+    long steel blades lie stacked on pallets nearby. Through a wide loading door, a row of small family homes with
+    lit windows stands beneath power lines that run straight from the plant. Sparks drift upward into the dark rafters.
+- key: capes-runtime-skyport-districts
+  lane: krea2
+  entity: district-plate
+  title: 'No Corridor for the Lost: a refugee shuttle hovers off the skyport deck, denied clearance'
+  asset: comet-city-academy/districts/skyport
+  size: 1344x768
+  seed: 968332
+  prompt_prose: Wide exterior view of the Comet Skyport at night, a broad landing deck of glowing runway lights
+    on a tall platform above the harbor. A battered refugee shuttle hovers just off the deck with its landing lights
+    blinking, passenger faces visible at its round windows. In the glass control tower, a skyport controller in
+    a stiff gray uniform holds a flat palm against the window, refusing clearance. Out on the deck, volunteer pilots
+    in mismatched flight jackets roll out portable runway lamps. Above them the comet hangs in a violet sky streaked
+    with distant starship trails.
+- key: capes-runtime-media-spire-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Broadcast with Two Endings: two screens show the same bridge rescue in opposite versions'
+  asset: comet-city-academy/districts/media-spire
+  size: 1344x768
+  seed: 968333
+  prompt_prose: Wide interior view of a media spire control room high above the city, a curved wall of monitors
+    glowing in the dark. Two large central screens show the same bridge rescue from opposite angles. On one, a caped
+    hero carries a resident to safety, and on the other the same hero stands blocking the only exit as smoke rises
+    behind. An editor in rolled shirtsleeves and a student in an academy jacket lean toward the screens, comparing
+    them. Through the floor-to-ceiling windows behind them, the real bridge glows across the night harbor.
+- key: capes-runtime-labor-museum-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Hero They Unnamed: a retired engineer opens a rescue notebook beneath a bronze hero statue'
+  asset: comet-city-academy/districts/labor-museum
+  size: 1344x768
+  seed: 968334
+  prompt_prose: Wide interior view of a labor museum hall inside an old brick factory with iron trusses and preserved
+    machinery. A towering bronze statue of an early caped hero lifts a factory beam above a polished blank plaque.
+    In front of it, a retired engineer in a flat cap and work jacket opens a battered notebook full of hand-drawn
+    rescue diagrams of pulleys and harnesses. Two other retired workers stand behind her, each holding a stack of
+    worn notebooks. Dusty sunlight falls through the high factory windows across the statue's shoulders.
+- key: capes-runtime-night-bazaar-districts
+  lane: krea2
+  entity: district-plate
+  title: 'The Clinic Under the Lanterns: an underground medic treats neighbors as patrol lights approach'
+  asset: comet-city-academy/districts/night-bazaar
+  size: 1344x768
+  seed: 968335
+  prompt_prose: Wide exterior view of the night bazaar, a narrow alley strung with paper lanterns in red, gold and
+    teal above crowded food carts. Behind a half-drawn curtain in a tucked-away stall, an underground medic in a
+    patched apron bandages the hand of an elderly neighbor seated on a folding cot. Shelves of unmarked medicine
+    boxes and glass bottles stand behind her. Other neighbors wait quietly on crates in the lantern light. At the
+    far end of the alley, the beams of academy patrol flashlights sweep across the cobblestones toward the stall.
+- key: capes-runtime-the-broken-grid-endings
+  lane: krea2
+  entity: ending-plate
+  title: 'The Broken Grid: dawn after prom, scattered neighborhood shields glow over a damaged city'
+  asset: comet-city-academy/endings/the-broken-grid
+  size: 1344x768
+  seed: 968336
+  prompt_prose: Wide exterior view at dawn from the shattered academy ballroom terrace, looking out over Comet City
+    after prom night. Through the open terrace doors behind, the twelve-sided crystal chandelier lies overturned
+    on the dance floor beneath a fractured glass dome. Across the city, dozens of small separate shield domes glow
+    pale blue over individual neighborhoods, a few of them flickering, and some rooftops between them are scorched
+    and broken. Adult students in torn formalwear and capes sit on the terrace steps sharing blankets, some with
+    bandaged arms, each holding a small brass emergency key. The comet fades into a pink and gold sunrise over the
+    harbor.
+- key: capes-runtime-the-price-of-a-single-switch-endings
+  lane: krea2
+  entity: ending-plate
+  title: 'The Price of a Single Switch: dawn in the wrecked ballroom, one student alone at the shield console'
+  asset: comet-city-academy/endings/the-price-of-a-single-switch
+  size: 1344x768
+  seed: 968337
+  prompt_prose: Wide interior view at dawn of the wrecked academy ballroom after prom night, the twelve-sided crystal
+    chandelier overturned on the wooden floor and pink light spilling through the fractured glass dome. At the center
+    stands a single large control console with one heavy switch thrown, joined by a thick beam of light to a distant
+    shield tower seen through the broken roof. One student in a tattered cape and formal suit stands alone at the
+    console, a hand still on the switch. Other students and guests in torn evening clothes sit apart along the walls,
+    wrapped in blankets and watching uneasily. Outside, a single vast shield dome glows over the whole city.
+- key: capes-runtime-honors-in-the-prom-simulation-endings
+  lane: krea2
+  entity: ending-plate
+  title: 'Honors in the Prom Simulation: linked classmates watch a holographic comet turn aside'
+  asset: comet-city-academy/endings/honors-in-the-prom-simulation
+  size: 1344x768
+  seed: 968338
+  prompt_prose: Wide interior view of a faculty holographic training hall staging a prom-night disaster, with glowing
+    cyan grid lines running across the floor, walls and ceiling and rows of ceiling-mounted projectors casting beams
+    of light. A projected ballroom shimmers around the space, its holographic chandelier and dance floor semi-transparent.
+    Adult students in capes over formalwear stand shoulder to shoulder with arms linked, looking up as a projected
+    comet bends harmlessly away through the simulated glass dome. Faculty observers in a glass booth high on the
+    wall stand and applaud. Warm gold hologram light glows against the cool blue grid.
+- key: capes-runtime-the-rescue-that-counted-endings
+  lane: krea2
+  entity: ending-plate
+  title: 'The Rescue That Counted: a student shields a classmate in holographic rubble as their grade bar dims'
+  asset: comet-city-academy/endings/the-rescue-that-counted
+  size: 1344x768
+  seed: 968339
+  prompt_prose: Wide interior view of a faculty holographic training hall, with cyan grid lines across the floor
+    and walls and projectors mounted along the ceiling. A simulated prom ballroom lies half collapsed in flickering
+    holographic debris. One student in a cape kneels in the projected rubble, shielding a classmate who sits safely
+    against a hologram column. Other classmates rush toward them with hands outstretched. On a floating holographic
+    scoreboard above, a single blank grade bar dims from gold to gray. The flickering projections cast soft blue
+    light over their faces.
+- key: capes-runtime-master-of-the-simulation-endings
+  lane: krea2
+  entity: ending-plate
+  title: 'Master of the Simulation: one student rewrites the disaster simulation as the dean takes notes'
+  asset: comet-city-academy/endings/master-of-the-simulation
+  size: 1344x768
+  seed: 968340
+  prompt_prose: Wide interior view of a faculty holographic training hall where a prom-night disaster simulation
+    bends to one student's will. The cyan grid lines across the floor and walls warp into new patterns, and the
+    ceiling projectors swivel to follow the student's raised hands. Wearing a dark cape over formalwear, the student
+    stands atop a glowing control dais as holographic chandeliers, falling glass and a projected comet freeze in
+    midair and rearrange themselves. Classmates step back in awe and unease. In an observation booth high on the
+    wall, the dean in a formal robe writes quickly on a tablet.
+- key: capes-runtime-an-unexpected-reboot-endings
+  lane: krea2
+  entity: ending-plate
+  title: 'An Unexpected Reboot: a rival pulls a student free of a glitching simulation console'
+  asset: comet-city-academy/endings/an-unexpected-reboot
+  size: 1344x768
+  seed: 968341
+  prompt_prose: Wide interior view of a faculty holographic training hall thrown into chaos during a prom-night
+    disaster simulation. Ceiling projectors spark and strobe, and the cyan grid lines on the floor and walls glitch
+    into jagged loops. A student in a formal suit and cape is tangled in ribbons of looping hologram light rising
+    from a central control console. A rival classmate in a crimson cape grabs the student's wrist and pulls them
+    free, both unharmed. Around them the projected ballroom, chandelier and comet stutter and dissolve into fragments
+    of broken light.
+- key: capes-runtime-mercy-circuit-portrait-villains
+  lane: krea2
+  entity: antagonist-portrait
+  title: 'The Mercy Circuit: mastermind portrait'
+  asset: comet-city-academy/villains/mercy-circuit-portrait
+  size: 1024x1024
+  seed: 968350
+  prompt_prose: Studio-length portrait, standing full height from knees up, face and both hands fully visible, frontal
+    three-quarter view. An adult man in a spotless pale mint surgical coat with silver piping and a high collar,
+    gentle smile, holding a slim chrome injector shaped like a flower stem. A cloud of tiny glowing petal-shaped
+    nanites drifts from his open palm. Behind him a row of white volunteer medkits stands open on a clinic counter
+    under soft green lamps, and through a tall window the city shield shimmers faintly pink. His kindness looks
+    sincere and unsettling, not monstrous.
+- key: capes-runtime-mirror-chancellor-portrait-villains
+  lane: krea2
+  entity: antagonist-portrait
+  title: 'The Mirror Chancellor: mastermind portrait'
+  asset: comet-city-academy/villains/mirror-chancellor-portrait
+  size: 1024x1024
+  seed: 968351
+  prompt_prose: Studio-length portrait, standing full height from knees up, face and both hands fully visible, frontal
+    three-quarter view. An adult woman official in a long charcoal ceremonial robe trimmed with mirrored silver
+    panels, sleek black hair pinned high, holding a hand mirror whose reflection shows a different, smiling version
+    of the room. Behind her two tall mirrored shield towers rise from a council chamber, each reflecting the scene
+    from a slightly different angle. Her expression is calm and courteous, the face of someone who believes every
+    story can be revised.
+- key: capes-runtime-orchard-engine-portrait-villains
+  lane: krea2
+  entity: antagonist-portrait
+  title: 'The Orchard Engine: mastermind portrait'
+  asset: comet-city-academy/villains/orchard-engine-portrait
+  size: 1024x1024
+  seed: 968352
+  prompt_prose: Studio-length portrait, standing full height from knees up, face and both hands fully visible, frontal
+    three-quarter view. An adult botanist in a moss-green greenhouse coat with brass buttons and rolled sleeves,
+    braided auburn hair threaded with tiny white blossoms, cradling a glass seed canister that glows with drifting
+    golden spores. Thick living roots coil across a cracked concrete floor around their boots and climb a steel
+    shield repeater behind them. A vaulted academy greenhouse with fogged glass panes frames the scene in warm amber
+    light. Their expression is serene and certain.
+- key: capes-runtime-static-commissioner-portrait-villains
+  lane: krea2
+  entity: antagonist-portrait
+  title: 'The Static Commissioner: mastermind portrait'
+  asset: comet-city-academy/villains/static-commissioner-portrait
+  size: 1024x1024
+  seed: 968353
+  prompt_prose: Studio-length portrait, standing full height from knees up, face and both hands fully visible, frontal
+    three-quarter view. A tall adult man in a crisp navy emergency-services commissioner uniform with silver radio
+    insignia, short gray hair, one gloved hand pressed to an earpiece and the other holding a black handheld radio.
+    A wall of emergency broadcast consoles behind him flickers with blue static and abstract waveform lines. Rescue
+    crews on small monitors pause mid-stride. His face is composed and authoritative, the calm voice of a false
+    evacuation order.

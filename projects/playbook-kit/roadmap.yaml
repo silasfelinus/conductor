@@ -232,8 +232,10 @@ tasks:
     stakes: reversible
     note: |-
       Done in the Forge PR: Playbook Studio shows Analyze in Forge for every game the
-      forge knows, and forge counts read the Studio adapters. Remaining: kitAdapter so
-      KIT_PLAYBOOKS appear in Studio, and Studio adapters for Prom of Doom and This Means Warp.
+      forge knows, and forge counts read the Studio adapters. 2026-10-26 PT: Studio adapters
+      for This Means Warp and Prom of Doom shipped in kind_robots #4246 (read-only until their
+      engines read the live text overlay). Remaining: kitAdapter so KIT_PLAYBOOKS appear in
+      Studio, and live-overlay support for Warp and Prom.
 
   - id: t-014
     milestone: m4
@@ -276,3 +278,25 @@ tasks:
       shown; sections submit to the relay or the next agent. Design: DESIGN-FORGE.md section 10.
       DONE 2026-10-26 PT: shipped in kind_robots #4232, merged as ae77ac8 (Forge Load a game
       ledger, /api/admin/playbook-ledger/[slug], Submit art / Send writing per section).
+  - id: t-017
+    milestone: m4
+    title: "Export the 2026-10-26 missing-art rounds into the games once rendered (Ecotone round 2, Warp and Capes runtime beats)"
+    status: ready
+    depends_on: t-016
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas 2026-10-26: "Submit missing art for Ecotone, et al." The Forge ledger's missing beats
+      went out as auto_submit rounds: weird-humboldt/art/ART-STANDARD-ROUND-2.yaml (252 subjects x 4
+      styles), game-of-captains/art/RUNTIME-BEATS-ROUND-1.yaml (10) and
+      comet-city-academy/art/RUNTIME-BEATS-ROUND-1.yaml (42; masterminds are in
+      MAPS-AND-MASTERMINDS-ROUND-1). Once their cells read DONE (sweep_art_ledgers.py --status),
+      review a contact sheet and export: python scripts/export_ecotone_art.py
+      projects/weird-humboldt/art/ART-STANDARD-ROUND-2.yaml --kind-robots ../kind_robots, and
+      scripts/export_round_art.py for Warp (--manifest utils/gameOfCaptains/artManifest.ts
+      --manifest-root game-of-captains --manifest-const WARP_ART) and Capes
+      (--manifest utils/cometAcademy/artManifest.ts --manifest-root comet-city-academy
+      --manifest-const PROM_ART, plus MAPS-AND-MASTERMINDS-ROUND-1 --only villains/). Portraits
+      --max-edge 640, plates 1344. Open the kind_robots PR; the Forge ledger then reads them as
+      delivered and the sections star.
