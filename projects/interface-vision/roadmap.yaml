@@ -2392,22 +2392,17 @@ tasks:
 - id: t-144
   milestone: m6
   title: "Full-gallery reachability sweep across public and creator collections"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
-  note: >-
-    Audit every reachable gallery, facet selector, project gallery, dream and
-    art chooser for a last item reachable by scrolling inside a bounded region
-    or via explicit pagination. Keep big images and normal creative actions.
-    Inspect responsive-route-audit viewport-ownership.json, identify
-    document-flow and clipped-bottom offenders, fix highest-traffic galleries
-    first. Add actual-element/browser fixture coverage, not only source regex.
-    Treat dynamic content, loading states and zero-results separately; preserve
-    accessible keyboard navigation and report route coverage at 390/820/1440.
+  note: |-
+    Audit every reachable gallery, facet selector, project gallery, dream and art chooser for a last item reachable by scrolling inside a bounded region or via explicit pagination. Keep big images and normal creative actions. Inspect responsive-route-audit viewport-ownership.json, identify document-flow and clipped-bottom offenders, fix highest-traffic galleries first. Add actual-element/browser fixture coverage, not only source regex. Treat dynamic content, loading states and zero-results separately; preserve accessible keyboard navigation and report route coverage at 390/820/1440.
+
+    Scoped homepage gallery fix prepared on kind_robots branch worker/interface-vision-mobile-featured-scroll-20261026: moved the Crystal Street promotion, heading and category controls inside the featured panel's existing bounded scroll owner, switched phone featured cards to one column and preserved wider breakpoint layouts, with source regression checks. This is one slice of the broader gallery audit; return the umbrella task to ready after CI-green merge.
   owner: worker
   claimed_by: 2026-10-26T215945Z-interface-vision-t144-mb7q
   claimed_at: '2026-10-26T21:59:45Z'
-  updated: '2026-10-26T21:59:45Z'
+  updated: '2026-10-26T22:03:10Z'
 
 - id: t-145
   milestone: m6
