@@ -12555,3 +12555,7 @@ Worker pattern: handoff-heading failures recur on first push; check the PR body 
 ## 2026-10-26 — Reviewer: worker/eod-art-submission-api-host-20261026-f4c2 (not merged)
 One-line change pointing `auto-art-generate.yml` `KR_BASE_URL` at `https://kind-robots.vercel.app`. Not merged: from this sandbox that host answers `503 x-vercel-error: DEPLOYMENT_PAUSED` on `/api/health`, while `https://kindrobots.org/api/health/database` returns 200 (`schemaCurrent: true`). Merging would route Auto Art Generate health checks and submissions to a paused deployment, and the other eleven workflows still use kindrobots.org. The branch is PR-less and left in place in case Silas is mid-work (he may know of an API-routing problem not visible from here); if the vercel deployment is intentionally un-paused, re-verify and open a PR at push time.
 Worker pattern: branch pushed with no PR again; open the PR at push time.
+
+## 2026-10-26 — Reviewer: conductor#6684 (Playbook Forge design, t-010) and #6685 (audience backlog t-150/t-151)
+Both merged (squash 497f6b2, 4e8a957): docs/roadmap/script-only, reversible, latest-attempt CI green. #6684 adds `new_playbook.py --blueprint` with two tests; t-012/t-014 sit at `review` pending the kind_robots Forge PR. #6685 adds two ready interface-vision tasks (t-151 is date-gated to 2026-11-02 PT).
+Worker pattern: good scoping; when marking tasks `review` for a cross-repo PR, name the kind_robots PR number in the note so the next reviewer can find it.
