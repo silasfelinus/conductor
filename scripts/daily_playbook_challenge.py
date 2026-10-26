@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Author, check, and serve the *new-game* playbook challenge in the Daily Digest.
+"""Author and render exactly three evolving, proposal-only daily game pitches.
 
-This is a proposal-only lane: no new projects, artwork, paid LLM calls, or
-automatic approval. Sessions write one Pacific-dated YAML docket, and the
-morning renderer refuses to recycle yesterday's ideas as today's.
+No new projects, artwork, paid LLM calls or automatic approvals. Immutable
+Pacific-dated snapshots plus curated full-history memory give concepts lineage.
 """
 from __future__ import annotations
 
@@ -15,6 +14,8 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import yaml
+
+import playbook_pitch_memory as memory
 
 ROOT = Path(__file__).resolve().parent.parent
 DOCKETS = ROOT / "pitches" / "playbook-challenges"
@@ -110,8 +111,8 @@ def validate(date: str, docket: object, previous: set[str] | None = None) -> lis
     if not isinstance(reviewed, list) or set(reviewed) != set(EXISTING_PLAYBOOKS) or len(reviewed) != len(EXISTING_PLAYBOOKS):
         errors.append("reviewed_playbooks must identify all eight known playbooks once each")
     pitches = docket.get("pitches")
-    if not isinstance(pitches, list) or not 1 <= len(pitches) <= 3:
-        return errors + ["pitches must contain 1–3 new-game concepts"]
+    if not isinstance(pitches, list) or len(pitches) != 3:
+        return errors + ["pitches must contain exactly three evolving game concepts"]
     seen = set(previous or ())
     known = set(EXISTING_PLAYBOOKS)
     for index, pitch in enumerate(pitches, 1):
@@ -122,13 +123,13 @@ def validate(date: str, docket: object, previous: set[str] | None = None) -> lis
         slug = pitch.get("slug")
         if not isinstance(slug, str) or not SLUG_PATTERN.fullmatch(slug):
             errors.append(f"{prefix}: invalid slug")
-        elif slug in seen or slug in known:
+        elif slug in known or (slug in seen and pitch.get("mode") != "expand"):
             errors.append(f"{prefix}: duplicate or existing game slug {slug}")
         else:
             seen.add(slug)
         title = str(pitch.get("title") or "").strip().casefold()
         title_key = "title:" + re.sub(r"[^a-z0-9]+", "-", title).strip("-")
-        if title_key in seen:
+        if title_key in seen and pitch.get("mode") != "expand":
             errors.append(f"{prefix}: duplicate concept title {pitch.get('title')}")
         else:
             seen.add(title_key)
@@ -171,6 +172,11 @@ def validate(date: str, docket: object, previous: set[str] | None = None) -> lis
                 if spot["stage"] in stages:
                     errors.append(f"{prefix}: collision stages must be distinct")
                 stages.add(spot["stage"])
+    try:
+        index = memory.build_index(DOCKETS, before=date)
+        errors.extend(memory.verify_lineage(date, pitches, index))
+    except (OSError, yaml.YAMLError, ValueError, TypeError, KeyError) as exc:
+        errors.append(f"persistent concept memory could not be verified: {exc}")
     return errors
 
 
@@ -197,7 +203,7 @@ def payload(date: str) -> dict:
         return {"date": date, "status": "missing", "pitches": []}
     try:
         docket = yaml.safe_load(path.read_text(encoding="utf-8"))
-        errors = validate(date, docket, historical_slugs(date))
+        errors = validate(date, docket)
         if errors:
             return {"date": date, "status": "invalid", "pitches": [], "errors": errors}
         result = []
@@ -209,19 +215,12 @@ def payload(date: str) -> dict:
 
 
 def brief(date: str) -> str:
-    recent = sorted(DOCKETS.glob("????-??-??.yaml"), reverse=True)[:7]
-    prior = []
-    for path in recent:
-        try:
-            body = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-            prior += [f"{path.stem}: {p.get('title')} ({p.get('slug')})" for p in body.get("pitches", []) if isinstance(p, dict)]
-        except (OSError, yaml.YAMLError, TypeError):
-            pass
+    index = memory.build_index(DOCKETS, before=date)
     games = "\n".join(f"- {name}: {loop}" for name, loop in EXISTING_PLAYBOOKS.items())
     covered = ", ".join(ALREADY_COVERED_GENRES)
     gaps = "\n".join(f"- {name}" for name in PRIORITY_GENRE_GAPS)
     return (
-        f"Daily new-playbook pitch challenge for {date} PT. Draft 1–3 FRESH concepts to "
+        f"Daily evolving-playbook pitch challenge for {date} PT. Draft exactly THREE substantive concepts to "
         f"pitches/playbook-challenges/{date}.yaml. Review the live Kind Robots "
         "utils/playbook/games.ts and current Conductor active-project DESIGN-BRIEFs first; "
         "do not clone their core loops.\n"
@@ -239,6 +238,18 @@ def brief(date: str) -> str:
         "mechanical, not only visual. Afterlife games must let the player judge "
         "souls and bear consequences for eternal outcomes, with meaningful "
         "evidence, bias and appeal mechanics. No imitation of protected characters.\n"
+        "CHOOSE each slot deliberately: mode=new (a genuinely missing genre pillar), "
+        "mode=expand (same stable concept_id and slug; point parents at ONE older dated "
+        "version) or mode=meld (NEW concept_id and slug; cite at least TWO dated ancestor "
+        "versions from different concepts and explain why the merger improves gameplay). "
+        "Each pitch needs concept_id, mode, parents, evolution, preserve, challenge and "
+        "at least two actionable next_questions. Build on the strongest lines, no "
+        "cosmetic rewording. Keep the full version tree and editorial memory intact; "
+        "a prior idea may appear again ONLY as an explicit expansion. Never reintroduce "
+        "a rejected idea without editorial reactivation. Since a prior concept exists, "
+        "at least ONE of today's three must be expansion or fusion. Meld only when "
+        "the combined genre and system work is stronger, never for quota. Consult "
+        "pitches/playbook-challenges/MEMORY.yaml for what to keep or avoid. "
         "Each pitch needs: a distinct core loop and novelty comparison; explicit opening "
         "character choices; disjoint playable/NPC/follower cast counts and portraits per "
         "person (base, 2+ expressions/injury where appropriate); maps, opening-choice, "
@@ -247,9 +258,9 @@ def brief(date: str) -> str:
         "encounters, romance, villain and finales; at least 3 concrete intersections "
         "between seed/RNG, generated or authored prose, art selection/generation, and "
         "consequential game state. Count actual render targets, not vaguely 'lots of art'. "
-        "No real ArtJobs, projects, API billing, or sends. No repeat of earlier pitches. "
+        "No real ArtJobs, projects, API billing, or sends. No unlabelled repeat of earlier pitches. "
         "Keep the five existing shipped-project upgrades and Daily Dream independent.\n"
-        "Past week's pitches to avoid:\n" + ("\n".join(prior) if prior else "(none)") + "\n"
+        memory.memory_summary(index) + "\n"
     )
 
 
@@ -259,6 +270,7 @@ def main() -> int:
     group.add_argument("--brief", action="store_true")
     group.add_argument("--check", action="store_true")
     group.add_argument("--payload", action="store_true")
+    group.add_argument("--memory", action="store_true", help="print full history and editorial shelf JSON")
     parser.add_argument("--date", default=pacific_today())
     args = parser.parse_args()
     try:
@@ -268,6 +280,9 @@ def main() -> int:
     if args.brief:
         print(brief(args.date))
         return 0
+    if args.memory:
+        print(json.dumps(memory.build_index(DOCKETS), indent=2, ensure_ascii=False))
+        return 0
     result = payload(args.date)
     if args.payload:
         print(json.dumps(result, indent=2, ensure_ascii=False))
@@ -275,7 +290,7 @@ def main() -> int:
     if result["status"] != "ready":
         print(json.dumps(result, indent=2), file=__import__("sys").stderr)
         return 1
-    print(f"{args.date}: {len(result['pitches'])} original playbook pitches validated")
+    print(f"{args.date}: {len(result['pitches'])} evolving playbook pitches validated")
     return 0
 
 
