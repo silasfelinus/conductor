@@ -451,6 +451,15 @@ def playbook_challenge_section(challenge: dict[str, Any] | None) -> str:
     rows = []
     for pitch in challenge["pitches"]:
         units, cast = pitch["units"], pitch["cast"]
+        mode = pitch.get("mode", "new")
+        names = {"new": "New genre pitch", "expand": "Expanded concept",
+                 "meld": "Concept fusion"}
+        provenance = "".join(
+            '<li><a href="https://github.com/silasfelinus/conductor/blob/main/'
+            f'pitches/playbook-challenges/{esc(ref.split("/")[0])}.yaml">'
+            f'{esc(ref)}</a></li>'
+            for ref in pitch.get("parents", [])
+        )
         art = ", ".join(f"{k.replace('_', ' ')}: {v}"
                         for k, v in units["art_breakdown"].items())
         beats = ", ".join(f"{k.replace('_', ' ')}: {v}"
@@ -472,6 +481,14 @@ def playbook_challenge_section(challenge: dict[str, Any] | None) -> str:
         rows.append(
             '<article style="border-top:1px solid #e2e8f0;padding-top:12px;margin-top:12px">'
             f'<h3 style="font-family:Georgia,serif;margin:0 0 4px">{esc(pitch["title"])}</h3>'
+            f'<p><strong>{esc(names.get(mode, mode))}</strong> · '
+            f'Lineage: {esc(pitch.get("concept_id", pitch["slug"]))}</p>'
+            + (f'<p><strong>Builds on:</strong></p><ul>{provenance}</ul>' if provenance else '')
+            + f'<p><strong>What evolves:</strong> {esc(pitch.get("evolution", ""))}</p>'
+            f'<p><strong>Keep:</strong> {esc(pitch.get("preserve", ""))}</p>'
+            f'<p><strong>Reconsider:</strong> {esc(pitch.get("challenge", ""))}</p>'
+            f'<p><strong>Next design questions:</strong> '
+            f'{esc("; ".join(pitch.get("next_questions", [])))}</p>'
             f'<p><strong>Genre pillar:</strong> {esc(pitch["genre_pillar"])}</p>'
             f'<p><strong>Genre gap:</strong> {esc(pitch["genre_gap"])}</p>'
             f'<p><strong>Audience:</strong> {esc(pitch["audience"])}</p>'
@@ -507,7 +524,8 @@ def playbook_challenge_section(challenge: dict[str, Any] | None) -> str:
         'padding:12px 14px;margin:16px 0;background:#f8fafc">'
         '<h2 style="margin:0 0 4px">🎲 New-playbook challenge</h2>'
         f'<p style="color:#64748b;font-size:12px">{esc(date)} PT · '
-        f'{len(challenge["pitches"])} fresh pitches, for consideration only. '
+        f'{len(challenge["pitches"])} evolving pitches (new, expanded or fused), '
+        'for consideration only. '
         'No new project, ArtJob or spending is authorized. '
         'Start with missing, full-scale genres, not novelty gimmicks. '
         'Image units count finished targets, not style passes. '
