@@ -1,0 +1,8 @@
+version: 1
+project: comet-city-academy
+task: t-007
+operation: ready
+session: 2026-10-26T2053Z-prom-villain-art-7c4d
+updated: '2026-10-26T21:02:08.597Z'
+note: >-
+  Added four distinct Krea 2 mastermind portrait requests to open Conductor PR #6697 (Mercy Circuit, Mirror Chancellor, Orchard Engine, Static Commissioner). PR security and handoff checks passed but full Worker PR CI failed on pre-existing Memory Dungeon queue ledger inconsistency: projects/art-prompts.yaml has zero memory-dungeon-saturate requests versus 525 in KNOWN-ART-REQUESTS.yaml, violating tests/test_memory_dungeon_art_queue.py. Do not circumvent CI, merge, or claim ArtJobs. PR remains OPEN pending separate reconciliation or test repair by appropriate owner. Resume task after CI is green, merge, verify auto_submit generated real ArtJob IDs and rendered URLs, and integrate. Task remains incomplete for character continuity/injury portraits/visual device QA.
