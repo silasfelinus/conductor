@@ -16,9 +16,32 @@ def test_deck_is_valid():
 
 def test_deck_shape():
     cards = wh.load_cards()
-    assert len(cards) == 121
-    assert {c["chapter"] for c in cards} == {1, 2, 3, 4, 5, 6}
-    assert len({c["id"] for c in cards}) == 121
+    seed_chapters, problems = wh.parse_seed_chapters(wh.SEEDS.read_text())
+    assert problems == []
+    assert len(cards) == len(seed_chapters)
+    assert {c["id"] for c in cards} == set(seed_chapters)
+    assert {c["chapter"] for c in cards} == set(seed_chapters.values())
+    assert all(c["chapter"] == seed_chapters[c["id"]] for c in cards)
+
+
+def test_seed_catalog_ignores_editorial_mentions_and_rejects_duplicates():
+    text = wh.SEEDS.read_text()
+    seed_chapters, problems = wh.parse_seed_chapters(text)
+    assert problems == []
+    assert seed_chapters["WH-121"] == 2
+    assert "WH-122" not in seed_chapters  # mentioned in prose, not a seed bullet
+    duplicated = text.replace("- **WH-001 ·", "- **WH-121 · Duplicate:** test.\n- **WH-001 ·", 1)
+    _, problems = wh.parse_seed_chapters(duplicated)
+    assert any("duplicate premise" in p for p in problems)
+
+
+def test_validator_rejects_wrong_chapter_and_missing_seed():
+    cards = wh.load_cards()
+    cards[0]["chapter"] = 2
+    assert any("disagrees with seed chapter" in p for p in wh.validate(cards))
+    cards = wh.load_cards()
+    cards.pop()
+    assert any("deck has" in p and "expected" in p for p in wh.validate(cards))
 
 
 def test_playtest_is_deterministic_and_states_keep_canon():
