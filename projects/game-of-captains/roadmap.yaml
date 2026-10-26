@@ -13,6 +13,15 @@ goal: >-
   Playable console-like slice, rendered branching art, seeded adversarial
   whole-run QA, final subjective approval and separate outward-release gate.
 notes_from_silas: |
+  2026-10-26 PT (Forge ledger review, kind_robots#4182 comment): the scope reads far too
+  small. Expect (1) a RANDOMIZED GALACTIC ENEMY: one principal nemesis seeded per run
+  shapes missions, escalation and finale (t-006); (2) INDIVIDUAL CREW QUESTS that take
+  you around the universe: each crew member's personal multi-step quest crosses star
+  systems, so the trio you pick routes the voyage (t-015); (3) OPENINGS CHANGE ENDINGS:
+  three crew colour an ending through epilogue lines, the captain MULTIPLIES it, one
+  version of each ending per captain (t-016); (4) TONE: lean into the absurdity of it
+  all, but DRY: deadpan, procedural, understated about ridiculous things, never zany.
+  The Playbook Forge plan for this slug carries these numbers (kind_robots#4255).
   2026-10-26 PT: Silas renamed the game SPACE COUCH. The ship is a LONG RED COUCH
   protected by an invisible force shield and capable of unfolding temporary
   miniaturized holodecks, war rooms and other rooms BEHIND its backrest.
@@ -131,6 +140,7 @@ tasks:
     note: >-
       Each seed picks unique alien goal/method/complications/clues and interference, with nontrivial
       bargain/defeat/reconciliation/complicity resolutions and captain/crew combination coverage.
+      Silas 2026-10-26: this is the randomized galactic enemy, one principal nemesis drawn per run.
   - id: t-007
     milestone: m3
     title: "Finish three-act destination graph and 16 earned ending epilogues"
@@ -239,3 +249,35 @@ tasks:
       no old conventional bridge/cockpit or ordinary cruiser illustrations.
       Coordinate with claimed t-002 and t-003, preserving Vox/Serendipity/Fluke seeds.
       Adversarially verify couch resource choices and art/script consistency.
+  - id: t-015
+    milestone: m3
+    title: "Crew personal quests: every crew member's three-step quest crosses the galaxy"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: >-
+      Silas 2026-10-26: "individual crew quests that take you around the universe." Each of the
+      sixteen crew carries a personal quest of three steps set in different star systems; the
+      away-team trio chosen decides which quests are live and so where the couch goes. Quest
+      outcomes feed the crew epilogue lines in every ending (t-016). Dry absurdist register:
+      crew grievances treated with total procedural seriousness. Forge plan: followerQuestSteps 3,
+      locations 12 (kind_robots#4255); the ledger reads 0 of 3 steps built until this lands.
+  - id: t-016
+    milestone: m3
+    title: "Per-captain ending versions and crew epilogues (16 endings x 6 captains)"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: >-
+      Silas 2026-10-26: "different opening combos will create different end game endings ... a set
+      of three crew members isn't remarkably complex, but adding a captain to the mix will multiply
+      it." Write and paint each of the sixteen endings once per captain (96 versions); the crew trio
+      adds one epilogue line per crew member, not separate endings. Forge plan endingVersions
+      per-hero with followerEpilogues (kind_robots#4255). Seeded traces in t-010 must cover every
+      captain version.

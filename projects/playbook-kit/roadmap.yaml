@@ -300,3 +300,52 @@ tasks:
       --manifest-const PROM_ART, plus MAPS-AND-MASTERMINDS-ROUND-1 --only villains/). Portraits
       --max-edge 640, plates 1344. Open the kind_robots PR; the Forge ledger then reads them as
       delivered and the sections star.
+  - id: t-018
+    milestone: m4
+    title: "One admin manager: Playbook Studio beats and the Kit console inside the Forge; library percent complete, sortable"
+    status: done
+    depends_on: t-016
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: |-
+      Silas 2026-10-26: "we don't need two admin managers ... playbook studio was built next to
+      playbook kit, instead of implementing it." The Forge absorbs the Studio (Beats screen: list
+      or cards, Edit / As played) and the Kit console; /admin/playbook-manager and
+      /admin/playbook-kit redirect into it. Then: "the percentage complete should be viewable, and
+      sortable" on Load a game. DONE 2026-10-26 PT: kind_robots #4251 merged as f781cff.
+  - id: t-019
+    milestone: m4
+    title: "Ledger Adjust panel: change plan numbers, add elements, post direction to the game's GitHub issue; openings multiply endings"
+    status: done
+    depends_on: t-018
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: |-
+      Silas 2026-10-26: "type out adjustments that ideally get posted to the github issues ... add
+      elements from this screen, or change assumptions like number of followers ... adding a
+      captain to the mix will multiply [the endings]." New factors: places on the map, follower
+      quest steps, ending versions (one each / per hero). Posts go to the master issue in
+      docs/agents/master-issues.yaml via POST /api/playbook-forge/adjustment (server GITHUB_TOKEN).
+      DONE 2026-10-26 PT: kind_robots #4255 merged as ed3e614. Live posting is unverified until a
+      production admin posts one (the token's kind_robots issue scope is not confirmed).
+  - id: t-020
+    milestone: m4
+    title: "Kind Robots Facets as design material in the Forge: genre shelf, spark deck, draw elements"
+    status: review
+    depends_on: t-019
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: |-
+      Silas 2026-10-26: "use the kind robots facets: genres for more ideas. The other facets can be
+      used to generate other ideas to go into a design." GENRE Facets start from the nearest
+      loadout; MOOD/SETTING/THEME/ARCHETYPE/OCCUPATION/SPECIES/QUIRK/BACKSTORY/MATERIAL/ART_DIRECTION
+      are dealt into tone, world, question, hero, companion, quirk, villain, artifact and look slots,
+      carried on the blueprint as sparks into the Conductor pitch; Draw from Facets names ledger
+      additions. kind_robots #4258.
+
