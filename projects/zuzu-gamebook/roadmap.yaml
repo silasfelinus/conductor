@@ -315,10 +315,7 @@ tasks:
   - id: t-013
     milestone: m5
     title: Wounded-route risk signals and meaningful retreat paths
-    status: review
-    owner: worker
-    claimed_by: 2026-10-26T114733Z-zuzu-gamebook-t-013-q8v6
-    claimed_at: '2026-10-26T11:47:33Z'
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-002]
@@ -338,7 +335,9 @@ tasks:
       2026-10-26 PT: Merged Kind Robots PR #4212 (squash e79ed8e214261f35c3032dcbc2c17990f56e1cf4) after 13/13 exact-head workflows passed, including TypeScript, formatting and all four contract shards. Act I failed terrain rolls now warn of injury/cornering; coyote-warned plus bandage unlocks a costly ridge retreat, losing the bandage and 1 Resolve and recording an unpaid debt. Fresh-start seeded test traverses 120 approaches and confirms the failed terrain route enters at 10 HP; synthetic 1/3/6/12 HP x 0/4 Resolve tests preserve saved state, Honor/Taint, locks, positional choices and no-heal. No ArtJobs or deployment. t-013 still needs broader real-route wounded QA, ending replay coverage, and dedicated scene art; keep ready, not done.
 
       Scoped Hollis from-new-game witnesses for earned and unearned sister rescue, with persistent rescue debt and named journal entries; implementation branch worker/zuzu-gamebook-t-013-hollis-witness-q8v6 awaits PR CI.
-    updated: '2026-10-26T11:52:24Z'
+
+      2026-10-26 PT: Merged Kind Robots PR #4224 (squash 1a9ce298712055f5fea80523cc396b394d41d3d7) after all 13 exact-head workflows passed (contract run 40318578787, TypeScript 40318578849, formatting 40318578854). Fixed the Hollis sister rescue remaining available after later sister-wary betrayal; recorded named sister and coyote debts. Added three full seeded from-start Hollis witnesses (seed 48 trusted/estranged, seed 1 untrusted) proving real rolls, costs, alternatives and save integrity. No ArtJobs or deployment. Remaining t-013: broader real-route wounded audit through Abbess and other fights, all risk cues and dedicated scene art; return ready, not done. Evidence: kind_robots issue #4139 comment 6415522984.
+    updated: '2026-10-26T12:03:08Z'
   - id: t-014
     title: "Zuzu Gamebook | Master completion roadmap"
     status: ready
