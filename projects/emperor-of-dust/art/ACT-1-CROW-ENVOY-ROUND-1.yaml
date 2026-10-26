@@ -1,0 +1,61 @@
+# Emperor of Dust Day 2 Storm Crow envoy: distinct portrait + throne consequence plates.
+# Requested/private only. Job IDs, rendered images, review and exports are not yet verified.
+round: emperor-act1-crow-envoy-1
+project_slug: emperor-of-dust
+designer: Comic Studio
+auto_submit: true
+is_public: false
+is_mature: false
+cast_loras: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style), weathered, dramatic lighting, painterly
+  suffix: kiln ochre, deep crimson, tarnished brass palette, dusty wasteland, tactile salvage
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: eod-crow-envoy-neutral
+  lane: arthemy-house
+  title: Conclave envoy, rain bargain portrait
+  audience: d02-rain-bargain
+  variant: neutral
+  asset: npcs/storm-crow-envoy/illustrated/neutral
+  size: 768x1344
+  seed: 81511
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: single upright anthropomorphic black crow aristocratic envoy, long polished obsidian beak, piercing pale gold eyes, folded feathered wings beneath black oilcloth travel mantle, layered dull brass Conclave rank pins and rain-measuring glass vials, slim weathered leather gloves, rolled parchment contract clenched in one taloned hand, severe composed expression, full body three quarter stance on ancient stone fortress threshold, white-grey overcast sky behind silhouette, original post-apocalyptic weird west court, detailed painterly character design
+- key: eod-crow-envoy-defiant
+  lane: arthemy-house
+  title: The envoy names the price
+  audience: d02-rain-bargain
+  variant: angry
+  asset: npcs/storm-crow-envoy/illustrated/angry
+  size: 768x1344
+  seed: 81512
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: single upright anthropomorphic black crow envoy with pale gold eyes, long polished obsidian beak, raised charcoal feather crest, black oilcloth mantle, brass Conclave weather pins, gloved talon pointing toward the imperial chair, long rain contract flowing from the other hand, displeased proud face, ancient stone fortress doorway and dusky desert light, dramatic low angle full-body visual-novel character illustration, original weird west frontier
+- key: eod-crow-envoy-relieved
+  lane: arthemy-house
+  title: Contract amended at the tower
+  audience: d02-rain-bargain
+  variant: happy
+  asset: npcs/storm-crow-envoy/illustrated/happy
+  size: 768x1344
+  seed: 81513
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: single upright anthropomorphic black crow envoy with pale gold eyes and long obsidian beak, neatly furled charcoal wings, black oilcloth mantle, brass Conclave weather pins and glass vials, a guarded satisfied smile while holding a furled blank treaty, upright full body pose beside a sunlit stone fortress threshold, dry desert hills in background, expressive premium western comic fantasy illustration
+- key: eod-crow-envoy-bargain-scene
+  lane: arthemy-house
+  title: A season of rain for one unnamed favour
+  audience: d02-rain-bargain
+  variant: introduction
+  asset: audiences/d02-rain-bargain-intro
+  size: 1344x768
+  seed: 81514
+  negative: (nude:1.4), nsfw, lowres, worst quality, blurry, jpeg artifacts, watermark, signature, text, letters, words, logo, writing, caption, ui, frame, border, deformed, human, multiple views
+  prompt_tags: cinematic widescreen view inside worn desert fortress throne hall, upright anthropomorphic black crow emissary with pale golden eyes and long polished obsidian beak dressed in black oilcloth cloak with dull brass Conclave pins, spreading an enormous rolled blank parchment rain contract from top of stone dais across worn carpet to the doors, storm light gleaming through high windows, distant drought-cracked ochre hills, painterly original anthropomorphic weird west epic narrative scene, intricate stonework and large visual storytelling props
