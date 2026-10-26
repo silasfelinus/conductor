@@ -277,8 +277,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver academy key, map, follower emotion and injury art"
-    status: review
-    updated: '2026-10-26T20:55:11.380Z'
+    status: ready
+    updated: '2026-10-26T21:02:08.597Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -291,9 +291,8 @@ tasks:
       MERGED Conductor art PR #6689 at 3f1af5fe541407fc4585223404c51cde3f7836cd after green Worker PR CI, security, handoff and tests. New auto_submit Krea 2 ledger MAPS-AND-MASTERMINDS-ROUND-1.yaml provides six unique non-public art prompts: two geographically coherent campus and town map paintings, and four distinctive current mastermind portraits. The Auto Art Generate workflow #40323501228 started and reached Sweep opted-in art ledgers, but as of this update no new ArtJob IDs or image IDs have appeared in that ledger. Treat these as requests MERGED, queue/renderer handoff UNCONFIRMED, and delivery NOT DONE. DO NOT duplicate existing DONE splash/promo/consequence/finale art; verify original ledger results and rendered URLs. This task remains ready for confirming six ArtJob creations/outputs and integrating assets, 16 follower emotions/injuries, eight masterminds, map coordinate visual QA, art provenance and more complete narrative outcome coverage.
 
       Added four nonpublic auto_submit Krea2 portrait requests for new 30-day mastermind variants: Mercy Circuit, Mirror Chancellor, Orchard Engine and Static Commissioner. Reuses the previously submitted original four portraits without duplication. New art ledger is staged in Conductor PR pending CI; until Auto Art Generate actually assigns ArtJob IDs and images, these are REQUESTS only, not delivered art.
-    owner: worker
-    claimed_by: 2026-10-26T2053Z-prom-villain-art-7c4d
-    claimed_at: '2026-10-26T20:53:08.158Z'
+
+      Added four distinct Krea 2 mastermind portrait requests to open Conductor PR #6697 (Mercy Circuit, Mirror Chancellor, Orchard Engine, Static Commissioner). PR security and handoff checks passed but full Worker PR CI failed on pre-existing Memory Dungeon queue ledger inconsistency: projects/art-prompts.yaml has zero memory-dungeon-saturate requests versus 525 in KNOWN-ART-REQUESTS.yaml, violating tests/test_memory_dungeon_art_queue.py. Do not circumvent CI, merge, or claim ArtJobs. PR remains OPEN pending separate reconciliation or test repair by appropriate owner. Resume task after CI is green, merge, verify auto_submit generated real ArtJob IDs and rendered URLs, and integrate. Task remains incomplete for character continuity/injury portraits/visual device QA.
   - id: t-008
     milestone: m3
     title: "Illustrate all patrol, location, relationship and ending branches"
