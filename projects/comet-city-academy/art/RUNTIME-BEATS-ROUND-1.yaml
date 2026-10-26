@@ -1,9 +1,11 @@
 # Capes & Tassels runtime beats, round 1 (comet-city-academy t-007 / playbook-kit t-013).
 # The picture slots the play page shows that had no render on 2026-10-26 (Playbook Forge ledger):
-# six student portraits, six patrol incidents, seven campus encounters, seventeen district scenes
+# six patrol incidents, seven campus encounters, seventeen district scenes
 # and six endings. The four mastermind portraits are already in MAPS-AND-MASTERMINDS-ROUND-1.
 # Assets match kind_robots utils/cometAcademy/artSlots.ts; export with scripts/export_round_art.py
 # (--manifest utils/cometAcademy/artManifest.ts).
+# The fixed week-one students are a prototype cast the seeded identity roster replaces (t-016),
+# so no portraits are requested for them.
 round: capes-runtime-beats-1
 project_slug: comet-city-academy
 designer: Capes and Tassels runtime art
@@ -19,85 +21,6 @@ lanes:
   suffix: Hand-painted 2D illustration, ink contours, gouache color, visible glass fractures, fabric folds, stone
     walls, metal reflections, warm amber light, blue night shadows.
 subjects:
-- key: capes-runtime-mina-students
-  lane: krea2
-  entity: student-portrait
-  title: 'Mina Quill: waist-up portrait of the rescue engineer in her ivory coat holding a rescue harness'
-  asset: comet-city-academy/students/mina
-  size: 1024x1024
-  seed: 968300
-  prompt_prose: Waist-up portrait of Mina Quill, a broad-shouldered dark-skinned woman with short curls in an ivory
-    rescue coat, turned in a frontal three-quarter view with her face fully visible and both eyes clear. She stands
-    in an academy rescue training bay with padded walls, hanging climbing ropes and a stack of foam practice rubble
-    behind her. In one gloved hand she holds a coiled rescue harness with a bright steel carabiner, while faint
-    ripples of kinetic force bend the air around her other open palm. A small unpolished trophy sits forgotten on
-    a shelf behind her shoulder. Through a tall window, glass towers and the comet glow against a violet evening
-    sky. Her expression is steady and kind.
-- key: capes-runtime-sol-students
-  lane: krea2
-  entity: student-portrait
-  title: 'Sol Navarro: waist-up portrait of the systems prodigy in a server corridor with a diagnostic tablet'
-  asset: comet-city-academy/students/sol
-  size: 1024x1024
-  seed: 968301
-  prompt_prose: Waist-up portrait of Sol Navarro, a slim olive-skinned man with close-cropped black hair, shown
-    in a frontal three-quarter view. His amber visor is pushed up onto his forehead, so his face and both eyes are
-    fully visible. He stands in a dim academy server corridor lined with humming equipment racks, a ceiling security
-    camera angled away from him. Thin threads of amber light drift from his fingertips toward a handheld diagnostic
-    tablet that shows only abstract glowing lines. Cool blue cable light mixes with the warm glow of the visor.
-    He wears a fitted dark academy jacket and a knowing half smile.
-- key: capes-runtime-imani-students
-  lane: krea2
-  entity: student-portrait
-  title: 'Imani Vale: waist-up portrait of the mediator in a lamplit counseling lounge offering tea'
-  asset: comet-city-academy/students/imani
-  size: 1024x1024
-  seed: 968302
-  prompt_prose: Waist-up portrait of Imani Vale, a plus-size copper-brown-skinned woman with long black braids and
-    a teal scarf, in a frontal three-quarter view with her face and both eyes fully visible. She sits on the edge
-    of a cushioned bench in an academy counseling lounge with tall potted plants, mismatched armchairs and warm
-    lamplight. A soft teal glow of empathic light surrounds her hand, which rests over her heart. In her other hand
-    she holds out a paper cup of tea toward someone just out of frame. Behind her, harbor lights shimmer through
-    the window under a violet sky. Her expression is patient and attentive.
-- key: capes-runtime-ash-students
-  lane: krea2
-  entity: student-portrait
-  title: 'Ash Calder: waist-up portrait of the weather artisan on a rooftop weather deck with a palm-sized cloud'
-  asset: comet-city-academy/students/ash
-  size: 1024x1024
-  seed: 968303
-  prompt_prose: Waist-up portrait of Ash Calder, a lanky pale adult with wind-tousled ash-blond hair, in a storm-gray
-    weather-tech coat with copper sensor buttons. They stand in a frontal three-quarter view, face and both eyes
-    fully visible, on an academy rooftop weather deck beside spinning anemometers and a brass rain gauge. A small
-    swirling cloud of mist with tiny sparks of lightning hovers above their cupped palm. Under their other arm they
-    carry a worn logbook and a thermos, with a maintenance worker's spare cap clipped to the strap. Behind them,
-    glass towers and the comet glow beneath a breezy violet sky full of fast-moving clouds.
-- key: capes-runtime-nix-students
-  lane: krea2
-  entity: student-portrait
-  title: 'Nix Venn: waist-up portrait of the portal runner in a transit atrium beside a small violet portal'
-  asset: comet-city-academy/students/nix
-  size: 1024x1024
-  seed: 968304
-  prompt_prose: Waist-up portrait of Nix Venn, a slender tan-skinned adult with short silver hair, wearing a white
-    jacket with purple collar lining, in a frontal three-quarter view with face and both eyes fully visible. They
-    stand in a busy academy transit atrium where travelers blur past along glass walkways. Beside their shoulder
-    a small ring-shaped portal glows violet, framing a glimpse of a distant rooftop. In one hand they turn over
-    a sealed, unopened envelope with a plain blank face. Morning light falls through the high glass ceiling. Their
-    expression is restless and guarded, their quick feet planted still for once.
-- key: capes-runtime-kit-students
-  lane: krea2
-  entity: student-portrait
-  title: 'Kit Rowan: waist-up portrait of the field medic in the infirmary with bandages and seed-filled pockets'
-  asset: comet-city-academy/students/kit
-  size: 1024x1024
-  seed: 968305
-  prompt_prose: Waist-up portrait of Kit Rowan, a broad-hipped pale-skinned adult with auburn hair, wearing a green
-    medic vest, in a frontal three-quarter view with face and both eyes fully visible. They stand in a sunny corner
-    of the academy infirmary beside a cot with folded blankets and a window box of sprouting herbs. In one hand
-    they hold a roll of white bandage, and small seed packets with plain painted flower fronts peek out of every
-    vest pocket. A faint green biotech glow twines around their fingertips like a growing tendril. Past the window,
-    the glass towers and harbor shine under a soft violet morning. Their expression is warm and practical.
 - key: capes-runtime-monorail-incidents
   lane: krea2
   entity: incident-plate
