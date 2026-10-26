@@ -175,3 +175,34 @@ CI enforces that:
 - Hourly Conductor uses the report-only entrypoint;
 - active dream specs still identify `build_dream_records.py` as the sole object writer;
 - retired direct-REST stage instructions do not return.
+
+
+## New-playbook daily challenge (2026-10-26 PT)
+
+Separate from both the original 14-asset Daily Dream and the five **already-built**
+daily project upgrades, each Pacific day's digest offers 1–3 original,
+unapproved game-playbook concepts for Silas to consider. The owner is the
+Conductor session creative-docket step in `CLAUDE.md`, not a second scheduled
+object creator. The digest workflow reads the dated, committed proposal file
+`pitches/playbook-challenges/YYYY-MM-DD.yaml` through
+`scripts/daily_playbook_challenge.py`, then renders the resulting budget and
+seed/prose/art interactions in its own email section.
+
+Before authoring: inspect the **current** Kind Robots `utils/playbook/games.ts`
+registry and relevant Conductor active-project briefs, including Prom of Doom
+and This Means Warp. Use `--brief` to see the eight-game current baseline and
+recent already-pitched concepts. Write a truly different core loop and practical
+starting character choices; count disjoint playable/NPC/follower characters,
+portrait emotions or injured states, maps, scene art, opening illustrations,
+relationship/villain scenes, finale frames, UI art and separate authored text
+beats. Identify at least three places where seed-driven state controls actual
+prose and finished/generative art choices **and** changes what happens next.
+
+`python scripts/daily_playbook_challenge.py --check --date YYYY-MM-DD` enforces
+the 1–3 pitch budget and rejects repeat slugs; `--payload` produces
+`ready`, `invalid`, or `missing`. Only `ready` entries for the exact
+Pacific day appear as fresh concepts. An absent/invalid docket yields an
+honest status message, not previously seen ideas. A concept is *not* a project,
+approval, ArtJob, expense, or publication. Counts are planning estimates:
+distinct render targets vs. optional multiple model passes per target and
+authored scenes vs. editorial passes; no token or price guarantees.

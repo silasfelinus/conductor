@@ -1,0 +1,219 @@
+# First authored example of the NEW-playbook challenge. Not a project intake.
+# Each art unit is one image render target, not a token estimate or an ArtJob.
+# Disjoint cast roles: a character who becomes a follower is counted once.
+date: '2026-10-26'
+reviewed_playbooks:
+  - ecotone
+  - emperor-of-dust
+  - shifting-lands
+  - shifting-desks
+  - zuzu-gamebook
+  - crystal-street
+  - comet-city-academy
+  - game-of-captains
+pitches:
+  - slug: museum-of-unfinished-tomorrows
+    title: The Museum of Unfinished Tomorrows
+    hook: >-
+      Curate artifacts from futures that never happened, then discover that someone
+      is murdering timelines by changing what the public believes belongs in history.
+    core_loop: >-
+      Each shift, examine three contradictory artifacts, reconstruct their origin
+      on a living gallery map, choose which timeline to exhibit, and watch that
+      choice rewrite characters' memories and the museum itself.
+    unique_mechanic: >-
+      Exhibit provenance is an evidence-combination puzzle: labels become reality.
+      A forged label can save a visitor but erase another person's childhood.
+      Contradictory truths are simultaneously playable, not a simple morality meter.
+    opening_choices: >-
+      Two curator starts (exiled conservator or newly awakened exhibit), each with
+      four distinct origin/evidence kits; eight authored openings and eight
+      painted opening-choice illustrations. Neither start is a cosmetic swap.
+    novelty_against_existing: >-
+      Unlike Ecotone's location mystery or Memory Dungeon's card flips, the primary
+      verb is reconstructing and exhibiting evidence; the exhibit physically
+      alters past-and-future relationships on a persistent, explorable gallery.
+    runtime_llm: optional
+    cast:
+      playable: 2
+      npcs: 14
+      followers: 6
+      portraits_per_person: 5 # neutral, joy, fear, anger, wounded/changed
+    production:
+      art_passes_per_image: 2 # Krea2 framing + Arthemy finish; estimate only
+      text_passes_per_beat: 2 # first draft + editorial revision
+      maps: 4 # lobby and three mutable wings
+      opening_choice_images: 8
+      scene_illustrations: 96 # artifacts, wings, discovery and consequence plates
+      romance_illustrations: 18
+      villain_illustrations: 20
+      finale_frames: 24 # 12 endings, two handoff shots per ending
+      interface_art: 18 # evidence tools, exhibit cards, save/menu/navigation
+      opening_scenes: 12
+      encounter_scenes: 128
+      romance_scenes: 24
+      villain_scenes: 20
+      finale_scripts: 16
+    collisions:
+      - stage: Origin display case
+        seeded_state: >-
+          A seeded inheritance artifact assigns contradictory family histories to
+          the chosen curator and one recruitable witness.
+        text_variation: >-
+          Authored provenance fragments are recombined into a personalized label;
+          optional LLM prose only elaborates a validated truth table.
+        image_variation: >-
+          The case selects painted artifact, witness expression and damaged/whole
+          gallery plate from a seeded visual manifest, never an unverified URL.
+        consequence: >-
+          The chosen label changes which visitor recognizes the protagonist and
+          which wing opens on the next shift.
+      - stage: Gallery-night romance
+        seeded_state: >-
+          Exhibit provenance and two followers' conflicting memories determine
+          who trusts whom and whether a romance is mutually desired.
+        text_variation: >-
+          Consent-aware dialogue branches on the remembered relationship, with
+          a generated optional epistolary flourish that cannot overrule consent.
+        image_variation: >-
+          Matching paired emotional portraits and an illustrated wing backdrop
+          produce scene-specific variants with separately verified art assets.
+        consequence: >-
+          Intimacy, alliance, friendship or distance survives timeline edits and
+          unlocks different evidence from a trusted person.
+      - stage: The forger's reveal
+        seeded_state: >-
+          The mastermind's motive is sampled from three coherent conspiracies;
+          previously accepted forgeries decide which one can still be true.
+        text_variation: >-
+          Evidence-backed accusation and defense lines vary with every
+          exhibited artifact rather than selecting a random villain monologue.
+        image_variation: >-
+          The masked forger illustration resolves to the actual character's
+          identity and altered expression on the reveal panel.
+        consequence: >-
+          The accusation determines whether visitors rally, riot or forget the
+          museum, and what rooms survive.
+      - stage: Closing exhibition cinematic
+        seeded_state: >-
+          The endgame uses the player's exhibit chain, rescued witnesses and
+          rejected truths to select a consistent ending state.
+        text_variation: >-
+          An ending script stitches authored scenes with optional LLM connective
+          prose constrained by the preserved timeline graph.
+        image_variation: >-
+          Two or more pre-rendered finale frames, persistent gallery state,
+          and survivor portraits match the actual final evidence ledger.
+        consequence: >-
+          The scrapbook permanently records the chosen historical account and
+          opens a divergent New Game Plus provenance puzzle.
+    production_notes: >-
+      Estimated 298 distinct art render targets (22 unique people times 5 portrait
+      states = 110, plus 188 environment/choice/sequence/interface renders) and
+      200 authored text beats. Krea2 framing, Arthemy consistency pass; a style pass
+      may double processing passes but does NOT double unique deliverable images.
+      No live image generation required; optional LLM writing is gated by player
+      choice and safely falls back to authored prose.
+
+  - slug: last-broadcast-from-utopia
+    title: The Last Broadcast from Utopia
+    hook: >-
+      Run a pirate radio station in a too-perfect city where every song erases a
+      public secret, while listeners secretly change sides between each broadcast.
+    core_loop: >-
+      Scout a neighborhood, recruit voices, assemble a nightly signal from three
+      segments (news, music, confession), then handle the next morning's real
+      consequence: unlocked alleys, betrayals, protests, reconciliation or arrests.
+    unique_mechanic: >-
+      The dial is a playable social puzzle. Frequency, transmitter placement and
+      speaker chemistry jointly decide which neighborhoods believe a story.
+      Songs function as signal patterns rather than dialogue-menu cosmetics.
+    opening_choices: >-
+      Three hosts (former censor, displaced singer, clandestine engineer), each
+      with three starting broadcast agendas and portrait/console introductions;
+      nine painted origin-choice images across nine starts.
+    novelty_against_existing: >-
+      Unlike This Means Warp's ship orders and Prom of Doom's power combos, the
+      main control is a public information network: broadcast composition plus
+      topological reception determines whom the city trusts.
+    runtime_llm: optional
+    cast:
+      playable: 3
+      npcs: 11
+      followers: 7
+      portraits_per_person: 5 # neutral, hopeful, furious, frightened, exhausted/injured
+    production:
+      art_passes_per_image: 2
+      text_passes_per_beat: 2
+      maps: 3 # city signal atlas, station console, underground relay network
+      opening_choice_images: 9
+      scene_illustrations: 88 # neighborhoods, broadcasts and morning aftermaths
+      romance_illustrations: 16
+      villain_illustrations: 24
+      finale_frames: 26 # multiple endings with multi-frame transitions
+      interface_art: 15 # waveform tiles, transmitter emblems, signal controls
+      opening_scenes: 12
+      encounter_scenes: 110
+      romance_scenes: 22
+      villain_scenes: 24
+      finale_scripts: 18
+    collisions:
+      - stage: First voice on the air
+        seeded_state: >-
+          A seeded neighborhood signal map and caller's private motive determine
+          which opening voice breaks through interference.
+        text_variation: >-
+          The first broadcast has authored messages recombined around the
+          host's background, audience and signal strength.
+        image_variation: >-
+          The dial assembles matching illustrated studio shots, caller portraits
+          and a changed neighborhood skyline.
+        consequence: >-
+          An unheard caller may become a future ally or enemy, while the reached
+          district gains a different rumor and recruitment path.
+      - stage: Confession after midnight
+        seeded_state: >-
+          Listener memory, faction loyalties and mutual feelings determine which
+          safe encounter might become romance, friendship or an argument.
+        text_variation: >-
+          A relationship-aware scene uses authored branches with optional
+          opt-in prose expansion and clear boundaries on intimacy.
+        image_variation: >-
+          Pair portraits select the right emotional expressions against a painted
+          rooftop or studio illustration.
+        consequence: >-
+          Mutual trust influences duet bonuses and whether the next transmitter
+          location can be safely disclosed.
+      - stage: The censor's counter-broadcast
+        seeded_state: >-
+          A persistent adversary learns the player's pattern and recruits one
+          threatened or disgruntled contact according to prior decisions.
+        text_variation: >-
+          Propaganda lines are assembled from facts the player did broadcast,
+          so the antagonist targets the player's actual compromises.
+        image_variation: >-
+          Villain expression, targeted follower portrait and district illustration
+          align with the chosen counter-signal outcome.
+        consequence: >-
+          The station loses access to one relay or exposes a hidden supporter;
+          the city's trust graph changes visibly.
+      - stage: Final citywide transmission
+        seeded_state: >-
+          Reception topology, consent of contributors and the integrity of the
+          public archive determine which of the final scripts is reachable.
+        text_variation: >-
+          The last broadcast draws on the player's real excerpts and authored
+          finales, with optional LLM connective lines validated against state.
+        image_variation: >-
+          The selected finale storyboard combines saved city-district changes,
+          exact character emotions and a consistent skyline epilogue.
+        consequence: >-
+          The ending credits reveal who heard, who acted, and whether the city
+          will allow the radio station to remain independent.
+    production_notes: >-
+      Estimated 286 distinct art render targets (21 unique characters times 5
+      portraits = 105 plus 181 map, cinematic, scene, selection and UI images),
+      and 186 authored text beats. Audio stems and mixing logic are additional
+      work not included in image counts. A Krea2-to-Arthemy style pass may require
+      two model passes per target. Runtime LLM remains optional; all consequential
+      scenes must work from preauthored material when offline.

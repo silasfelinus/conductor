@@ -431,6 +431,80 @@ def daily_deliveries_section(daily: dict[str, Any] | None) -> str:
     )
 
 
+def playbook_challenge_section(challenge: dict[str, Any] | None) -> str:
+    """Separate, unapproved new-game concepts. Never imply production/shipping."""
+    if not isinstance(challenge, dict):
+        return ""
+    date = str(challenge.get("date") or "")
+    if challenge.get("status") != "ready":
+        reason = ("Today's new-game docket failed validation."
+                  if challenge.get("status") == "invalid"
+                  else "No new playbook pitch was authored for this Pacific day.")
+        return (
+            '<section style="border:1px solid #cbd5e1;border-radius:10px;'
+            'padding:12px;margin:16px 0">'
+            '<h2 style="margin:0 0 6px">🎲 New-playbook challenge</h2>'
+            f'<p style="margin:0;color:#64748b">{esc(reason)} '
+            'Older pitches are not presented as new.</p></section>'
+        )
+
+    rows = []
+    for pitch in challenge["pitches"]:
+        units, cast = pitch["units"], pitch["cast"]
+        art = ", ".join(f"{k.replace('_', ' ')}: {v}"
+                        for k, v in units["art_breakdown"].items())
+        beats = ", ".join(f"{k.replace('_', ' ')}: {v}"
+                          for k, v in units["text_breakdown"].items())
+        moments = []
+        for spot in pitch["collisions"]:
+            moments.append(
+                '<li style="margin:0 0 8px">'
+                f'<strong>{esc(spot["stage"])}</strong>: '
+                f'<em>Seed:</em> {esc(spot["seeded_state"])} '
+                f'<em>Text:</em> {esc(spot["text_variation"])} '
+                f'<em>Art:</em> {esc(spot["image_variation"])} '
+                f'<em>Impact:</em> {esc(spot["consequence"])}</li>'
+            )
+        rows.append(
+            '<article style="border-top:1px solid #e2e8f0;padding-top:12px;margin-top:12px">'
+            f'<h3 style="font-family:Georgia,serif;margin:0 0 4px">{esc(pitch["title"])}</h3>'
+            f'<p>{esc(pitch["hook"])}</p>'
+            f'<p><strong>Core play:</strong> {esc(pitch["core_loop"])}</p>'
+            f'<p><strong>New mechanic:</strong> {esc(pitch["unique_mechanic"])}</p>'
+            f'<p><strong>Opening characters:</strong> {esc(pitch["opening_choices"])}</p>'
+            f'<p><strong>Difference:</strong> {esc(pitch["novelty_against_existing"])}</p>'
+            f'<p><strong>Estimate: {units["art_units"]} unique finished images'
+            f' + {units["text_units"]} authored text beats.</strong> '
+            f'Processing plan: {units["image_generation_passes"]} image passes + '
+            f'{units["text_authoring_passes"]} editorial passes = '
+            f'{units["total_planned_passes"]} estimated passes. '
+            f'{cast["playable"]} playable characters, {cast["npcs"]} NPCs, '
+            f'{cast["followers"]} followers ({units["unique_people"]} unique people, '
+            f'{cast["portraits_per_person"]} portrait expressions each). '
+            f'{pitch["production"]["maps"]} maps. '
+            f'Runtime LLM: {esc(pitch["runtime_llm"])}.</p>'
+            f'<p style="font-size:12px"><strong>Art units:</strong> {esc(art)}.</p>'
+            f'<p style="font-size:12px"><strong>Text units:</strong> {esc(beats)}.</p>'
+            '<p><strong>Seed × text × image intersections:</strong></p>'
+            f'<ol style="padding-left:22px">{"".join(moments)}</ol>'
+            f'<p style="font-size:12px;color:#475569">{esc(pitch.get("production_notes"))}</p>'
+            '</article>'
+        )
+    url = f"https://github.com/silasfelinus/conductor/blob/main/pitches/playbook-challenges/{esc(date)}.yaml"
+    return (
+        '<section style="border:1px solid #94a3b8;border-radius:10px;'
+        'padding:12px 14px;margin:16px 0;background:#f8fafc">'
+        '<h2 style="margin:0 0 4px">🎲 New-playbook challenge</h2>'
+        f'<p style="color:#64748b;font-size:12px">{esc(date)} PT · '
+        f'{len(challenge["pitches"])} fresh pitches, for consideration only. '
+        'No new project, ArtJob or spending is authorized. '
+        'Image units count finished targets, not style passes. '
+        'Text units count authored beats, not tokens; model passes are planning assumptions, not billed token totals.</p>'
+        + "".join(rows) +
+        f'<p><a href="{url}">Read source challenge docket</a></p></section>'
+    )
+
+
 def daily_pitches_section(daily: dict[str, Any] | None, links_for=None, fallback_url: str = "", inbox: str | None = None) -> str:
     """Today's five pitches with signed links into the one pitch inbox, then undecided ones from earlier days."""
     if not isinstance(daily, dict) or not daily.get("pitches"):
@@ -641,7 +715,7 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     animation_html = animation_release_section(digest)
     operational_html = engine_banner(digest) + container_log_banner(digest) + review_html
     pitch_html = next_pitch_section(digest.get("next_dream_proposal"))
-    middle = animation_html + operational_html + pitch_html + daily_deliveries_section(digest.get("daily_project_deliveries")) + daily_pitches_section(digest.get("daily_pitches"))
+    middle = animation_html + operational_html + pitch_html + daily_deliveries_section(digest.get("daily_project_deliveries")) + playbook_challenge_section(digest.get("daily_playbook_challenge")) + daily_pitches_section(digest.get("daily_pitches"))
 
     # Place health and the next text pitch directly after the previous pitch's generated output.
     # If a build failed so there is no fresh output, put them immediately after
