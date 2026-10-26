@@ -137,7 +137,7 @@ def test_cedar_parents_never_split_in_endings_signatures_or_cards():
 
 
 def test_signatures_do_not_invent_stay_follow_jumps_or_assign_outcomes_by_opening():
-    jump = re.compile(r"\byou (stayed with|stayed behind|followed|switched|left her|left him|left them)\b", re.I)
+    jump = re.compile(r"\byou (stayed with|stayed behind|followed (her|him|them|mara|kit|juniper|cedar)|switched|left (her|him|them))\b", re.I)
     caused = re.compile(r"because you (were|got) (sober|drunk|high|stoned|tipsy)", re.I)
     for s in SIGS:
         assert not jump.search(s["paragraph"]), s["id"]
