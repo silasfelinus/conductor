@@ -108,5 +108,24 @@ class MemoryArtQueueTests(unittest.TestCase):
         self.assertEqual(repair_text(result), (result, 0))
 
 
+    def test_repairs_unclaimed_portrait_frame_noun_rejections(self):
+        source = """requests:
+- id: memory-dungeon-saturate-house-outcome-hd-27-keep
+  prompt: "Haunting painted empty chair and silhouetted absent subject in ornate cracked portrait frame."
+- id: memory-dungeon-saturate-dark-house-hd-27
+  prompt: "Haunting painted empty chair and silhouetted absent subject in ornate cracked portrait frame."
+- id: memory-dungeon-saturate-dark-house-outcome-hd-27-keep
+  prompt: "Haunting painted empty chair and silhouetted absent subject in ornate cracked portrait frame."
+- id: memory-dungeon-saturate-dark-house-hd-27-attend
+  prompt: "Empty portrait frame on dark wall, adult traveler holding an image."
+"""
+        result, count = repair_text(source)
+        self.assertEqual(count, 4)
+        self.assertNotIn("portrait frame", result)
+        self.assertIn("cracked carved wood", result)
+        self.assertIn("carved gilded border", result)
+        self.assertEqual(repair_text(result), (result, 0))
+
+
 if __name__ == "__main__":
     unittest.main()
