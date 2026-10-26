@@ -137,3 +137,55 @@ def test_archetype_rejects_bad_points_missing_reaction_and_mystic_framing():
     assert any("total 6" in p for p in problems)
     assert any("one reaction per anchor" in p for p in problems)
     assert any("mystical" in p for p in problems)
+
+
+
+def test_anchor_id_must_match_chapter_and_be_unique():
+    anchors = wh.load_anchors()
+    anchors[0]["id"] = "WH-A2"
+    problems = wh.validate_anchors(anchors, _enums())
+    assert any("duplicate ids" in p for p in problems)
+    assert any("id must match chapter" in p for p in problems)
+
+
+def test_anchor_requires_authored_schema_and_unique_options():
+    anchors = wh.load_anchors()
+    anchors[0]["scene"] = "An unfinished placeholder."
+    anchors[0]["provenance"] = "uncited"
+    anchors[0]["options"][1]["id"] = anchors[0]["options"][0]["id"]
+    anchors[0]["options"][0].pop("success")
+    problems = wh.validate_anchors(anchors, _enums())
+    assert any("scene under 60 words" in p for p in problems)
+    assert any("provenance too thin" in p for p in problems)
+    assert any("duplicate option ids" in p for p in problems)
+    assert any("missing success outcome" in p for p in problems)
+
+
+def test_crossroads_stay_and_follow_must_each_be_no_roll():
+    anchors = wh.load_anchors()
+    crossroads = anchors[1]
+    follow = next(o for o in crossroads["options"] if o["skill"] == "none"
+                  and "flag:crossroads1_followed" in o["success"]["effects"])
+    follow["success"]["effects"].remove("flag:crossroads1_followed")
+    # A rolled success setting the flag must not mask a missing guaranteed route.
+    rolled = next(o for o in crossroads["options"] if o["skill"] != "none")
+    rolled["success"]["effects"].append("flag:crossroads1_followed")
+    problems = wh.validate_anchors(anchors, _enums())
+    assert any("no-roll route" in p and "crossroads1_followed" in p for p in problems)
+
+
+def test_crossroads_rolled_failure_cannot_be_a_dead_end():
+    anchors = wh.load_anchors()
+    rolled = next(o for o in anchors[1]["options"] if o["skill"] != "none")
+    rolled["failure"]["effects"] = [e for e in rolled["failure"]["effects"]
+                                      if not e.startswith("flag:crossroads1_")]
+    problems = wh.validate_anchors(anchors, _enums())
+    assert any("failure sets no crossroads1 flag" in p for p in problems)
+
+
+def test_anchor_no_roll_choice_must_leave_persistent_consequence():
+    anchors = wh.load_anchors()
+    no_roll = next(o for o in anchors[0]["options"] if o["skill"] == "none")
+    no_roll["success"]["effects"] = ["time-1"]
+    problems = wh.validate_anchors(anchors, _enums())
+    assert any("no-roll outcome needs a persistent flag or evidence" in p for p in problems)
