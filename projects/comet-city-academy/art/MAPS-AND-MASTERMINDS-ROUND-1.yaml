@@ -1,0 +1,98 @@
+# Requested supplemental art for Comet City's newly playable 30-day campaign.
+# Four fresh mastermind identity portraits and two matching regional painted map plates.
+# Existing DONE Krea 2 splash, prompt consequence and real prom finale ledgers are NOT re-enqueued.
+round: capes-thirty-day-map-mastermind-1
+project_slug: comet-city-academy
+designer: Comet City campaign production
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 physical map and antagonist paintings
+  engine: krea2
+  prompt: prose
+  suffix: Hand-painted 2D fantasy-science-fiction adventure game illustration, ink outlines, gouache colors, accurate
+    visible architecture, metal and glass surfaces with readable spatial depth, no rendered letters or captions.
+subjects:
+- key: ct-campus-map-day
+  lane: krea2
+  entity: location-background
+  title: 'Comet City Academy: southeast campus district master map'
+  asset: comet-city-academy/map/campus-day-v1
+  size: 1344x768
+  seed: 965201
+  prompt_prose: 'High camera above and slightly northwest of Comet City Academy looking southeast, almost a bird''s-eye
+    oblique view. The academy occupies the right and lower half: three ivory stone spires around a central quadrangle;
+    a huge glass-domed training arena at far right; a theater hall with purple awnings on the upper right; a gray
+    archive wing on the left of the academy roof; a green botanical conservatory at bottom right; student residences
+    along the southeast edge; a rectangular engineering workshop near the west perimeter; docks on a narrow channel
+    at bottom left. Northwest, a luminous dimensional transit gate stands on the road between campus and city. The
+    same railway enters from the northwest toward the academy. Streets, courtyards and buildings distinct and navigable,
+    empty of readable lettering and giant text, no labels, no inset maps or UI, morning sun from east.'
+- key: ct-comet-city-map-night
+  lane: krea2
+  entity: location-background
+  title: 'Comet City: northwest civic district master map'
+  asset: comet-city-academy/map/comet-city-night-v1
+  size: 1344x768
+  seed: 965202
+  prompt_prose: 'High camera above and slightly northwest of Comet City looking southeast in a single geographically
+    continuous oblique view, night with blue and amber lights. The city fills upper and left: bright harbor and
+    flooded waterfront market toward lower left, civic hospital beside a canal at center right, train union depot
+    close to a raised monorail track on the southeastern road, long factory blocks at far west, neon arcade on the
+    road to the academy, a tall pointed broadcast media spire at the northwestern edge, a skyport beyond the observatory''s
+    white domed roof near the top, government grants hall southwest of the luminous dimensional gate. At the far
+    lower right edge, the EXACT three ivory stone academy spires and glass-domed training arena seen on the daytime
+    campus map enter the frame; a railway and road join them continuously to the city. Streets and buildings visible
+    without labels, UI, people silhouettes, or large writing.'
+- key: ct-villain-glass-architect
+  lane: krea2
+  entity: antagonist-portrait
+  title: 'The Glass Architect: mastermind identification plate'
+  asset: comet-city-academy/villains/glass-architect-portrait
+  size: 1024x1024
+  seed: 965203
+  prompt_prose: Studio-length portrait of the Glass Architect, an adult woman engineer with silver braided hair,
+    angular translucent prism eyepiece over one eye, dark indigo tailored coat with copper lapels and geometric
+    embroidered cuffs, holding a palm-size twelve-point glass prism in gloved fingers. Behind her sits a miniature
+    angular model of the Comet City shield towers and a square glass workbench under teal task lamps. Her expression
+    is patient and calculating, not a monstrous caricature. Face and both hands fully visible, standing full height
+    from knees up, no text.
+- key: ct-villain-null-registrar
+  lane: krea2
+  entity: antagonist-portrait
+  title: 'The Null Registrar: mastermind identification plate'
+  asset: comet-city-academy/villains/null-registrar-portrait
+  size: 1024x1024
+  seed: 965204
+  prompt_prose: Adult nonbinary masked city official in a rigid midnight-blue long coat, one half of a polished
+    white porcelain face mask lifted to show a thoughtful brown-skinned face beneath, holding a brass-edged student
+    identity registry with empty rectangular photograph windows. Behind the figure stand wall-high black archive
+    drawers and an electrical broadcast mast visible through a stained glass window. One hand points to the blank
+    space where a person's picture should be. Whole upper body and mask visible with no words or readable numbers.
+- key: ct-villain-tidemaker
+  lane: krea2
+  entity: antagonist-portrait
+  title: 'The Tidemaker: mastermind identification plate'
+  asset: comet-city-academy/villains/tidemaker-portrait
+  size: 1024x1024
+  seed: 965205
+  prompt_prose: Adult male floodworks investor wearing a pale green impermeable trench coat over burgundy business
+    clothes, slick black hair with one white streak, heavy brass floodgate control wheel clasped at waist, leather
+    case holding harbor deeds at one side, standing before a round illuminated tank of swirling harbor water and
+    a row of industrial sluice valves. His expression is persuasive and cold, a human face with worry lines, coastal
+    damp shining on brass. Framed from knees up, two hands visible, no words or symbols resembling a logo.
+- key: ct-villain-eclipse-choir
+  lane: krea2
+  entity: antagonist-portrait
+  title: 'The Eclipse Choir: mastermind identification plate'
+  asset: comet-city-academy/villains/eclipse-choir-portrait
+  size: 1024x1024
+  seed: 965206
+  prompt_prose: Adult conductor of an underground music society, an older woman with short platinum curls and translucent
+    hearing aids, wearing a dark plum tailcoat over a steel-gray high-collar dress. She raises a silver conductor
+    baton next to a bronze frequency oscillator and a complicated open mechanical music box. In the background four
+    narrow radio transmitter rods glow behind dusty auditorium curtains, with a cracked chandelier hanging in silhouette.
+    Clear expressive human face and hands in three-quarter view, high from knees up, no writing.

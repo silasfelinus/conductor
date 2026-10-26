@@ -682,9 +682,9 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Test future-state branching, sober parity and no forced ideal outcome"
-    status: ready
+    status: done
     depends_on: [t-011, t-012]
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -698,6 +698,13 @@ tasks:
       personal optimal outcomes are reachable by story play without
       a fixed opening perception, and that Cedar's parents remain
       together in all endings. No art or Play deployment.
+
+      12 text-only tests in tests/test_weird_humboldt_future_branching.py: sober parity, no
+      identity gates, hopeful outcomes reachable, no dominant vote flag, Cedar parents intact.
+    claimed_by: agent-2026-10-26
+    claimed_at: '2026-10-26T08:47:05Z'
+    updated: '2026-10-26T08:52:17Z'
+    implementation_pr: 'silasfelinus/conductor#6671'
   - id: t-014
     milestone: m4
     title: "Specify Ecotone single-surface board and responsive tab layout"
@@ -760,27 +767,19 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Author four optimistic companion routes and personal epilogues"
-    status: ready
+    status: done
     depends_on: [t-002, t-009, t-011]
-    owner: null
+    claimed_by: 2026-10-26T090745Z-wh-t017-c9f7
+    claimed_at: '2026-10-26T09:07:45Z'
+    updated: '2026-10-26T09:18:45Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Draft and validate four distinctive earned companion paths:
-      Juniper/shared canopy, Kit/living return, Mara/lines that last,
-      Cedar/two ribbons one home. Use guaranteeable intro,
-      contradiction, commitment, repair and payoff anchors across
-      regional chapters, with 2-4 real choices and outcomes.
-      Opening perception and declining the first invite must never
-      lock the optimal path; every route is available sober.
-      Cedar's grower-family/logging-family parents are still
-      together from the start and stay together regardless of
-      player decisions; happiness is not a reunification trophy.
-      Keep county future families separate from companion-optimal
-      flags and avoid simplistic pro-tech/pro-hippie moral scores.
-      Keep Mara's route grounded in her independent studio, choices and
-      relationships, with no nation-specific backstory or imagery.
-      Text only, no art or deployment.
+    note: |-
+      Draft and validate four distinctive earned companion paths: Juniper/shared canopy, Kit/living return, Mara/lines that last, Cedar/two ribbons one home. Use guaranteeable intro, contradiction, commitment, repair and payoff anchors across regional chapters, with 2-4 real choices and outcomes. Opening perception and declining the first invite must never lock the optimal path; every route is available sober. Cedar's grower-family/logging-family parents are still together from the start and stay together regardless of player decisions; happiness is not a reunification trophy. Keep county future families separate from companion-optimal flags and avoid simplistic pro-tech/pro-hippie moral scores. Keep Mara's route grounded in her independent studio, choices and relationships, with no nation-specific backstory or imagery. Text only, no art or deployment.
+
+      Four companion routes authored as 20 chapter anchors and 60 choices with recoverable checked failures, late-follow catch-up, earned payoff flags and hopeful/scarred epilogues. Draft in COMPANION-CHAPTER-ANCHORS.md; structural tests in tests/test_ecotone_companion_chapter_anchors.py. Text only: reducer integration, seeded runtime reachability and artwork remain.
+
+      MERGED conductor#6673 (7c692939): four authored companion routes, 20 guaranteed chapter anchors, 60 choices, 8 personal epilogues, late-follow recovery and structural tests. All exact-head checks green; Python suite 3046 passed, 53 skipped. Text-only milestone complete. Reducer integration, seeded journey verification and rendered art remain agent work under separate Ecotone roadmap tasks; no human gate yet.
   - id: t-018
     milestone: m3
     title: "Verify optimal companion paths, parental continuity and hopeful tone"
@@ -1448,19 +1447,38 @@ tasks:
   - id: t-058
     milestone: m3
     title: "Ecotone P1: consequential mid-story decisions change later playable options"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
-    note: >-
-      Triage 2026-10-22 PT: mechanical ending divergence is not enough.
-      On fixed non-sensitive route beats, create two genuinely consequential
-      choice pairs per opening event whose successes/failures lead to different
-      subsequent playable options or negotiated trade-offs, rather than only
-      stats, flavor asides or finale callbacks. Document source flags and
-      reproducible paired seeds; guard saved games and solo agency. Coordinate
-      ownership with claimed t-003 (regional encounters) and t-044 (Kinetic
-      race) to avoid editing their in-flight material. No extra WH-ID dump.
-      Source: PLAYSTYLE-TRIAGE-2026-10-22.md.
+    note: |-
+      Triage 2026-10-22 PT: mechanical ending divergence is not enough. On fixed non-sensitive route beats, create two genuinely consequential choice pairs per opening event whose successes/failures lead to different subsequent playable options or negotiated trade-offs, rather than only stats, flavor asides or finale callbacks. Document source flags and reproducible paired seeds; guard saved games and solo agency. Coordinate ownership with claimed t-003 (regional encounters) and t-044 (Kinetic race) to avoid editing their in-flight material. No extra WH-ID dump. Source: PLAYSTYLE-TRIAGE-2026-10-22.md.
+
+      Scoped Green Ribbon forest-loop consequence implementation: GR-4 seam success/failure unlock different GR-5 negotiation actions, with reducer/UI gating and seeded save tests. Kind Robots implementation PR pending exact-head CI; t-058 retains other opening routes.
+
+      Merged Kind Robots PR #4217 (5ecd732c) for the first Green Ribbon causal pair: GR-4 seam success/failure unlock distinct GR-5 negotiations. All 13 exact-head workflows passed, including four contract shards, Ecotone seeded adversarial journeys, formatting, and TypeScript. Remaining: second Green Ribbon pair; two Quiet and two Kinetic pairs; full from-new-game witnesses; dedicated art jobs. Master issue kind_robots#4145 comment 6414310883.
+
+      Scoped second Green Ribbon causal pair implemented on Kind Robots worker branch: GR-4 slug glade discovery versus rescue-marker failure unlock separate GR-5 negotiated tradeoffs, with seeded reducer, forged-choice, save/restore and from-new-game witnesses. PR and exact-head CI pending; Quiet and Kinetic remain.
+
+      Merged Kind Robots PR #4231 at 80751ce3eed16ecc631635604be1910886e62e00: second Green Ribbon causal pair, GR-4 slug success loop_glade_music versus failed rescue loop_exit_marked, unlocking separate checked GR-5 negotiations and persistent outcomes. All 13 exact-head workflows passed, including 1764 Ecotone seeded journeys, both authentic new-game witness routes, forged-choice rejection and save/restore. Master issue kind_robots#4145 comment 6416923879. No ArtJobs or deployment. Still required: Quiet and Kinetic causal pairs, dedicated scene art, broader adversarial routes and UI/device QA.
+
+      Scoped Quiet Way ranger success/failure causal pair implemented on Kind Robots worker branch: copied log or follow-up safety incident unlocks separate QW-5 checked stewardship options, with genuine seeded from-new-game witnesses, anti-forgery, and save/restore tests. Awaiting PR and exact-head CI. Remaining Quiet road pair and Kinetic pairs keep t-058 active.
+
+      Merged Kind Robots PR silasfelinus/kind_robots#4233 at e12386e6e3a19351f10f5a5bc19546f0a735c527. Quiet Way QW-2 bench success/failure now unlocks mutually exclusive QW-4 checked stewardship options, with four distinct results and QW-5 callbacks. All 13 exact-head workflows passed, including 1764 Ecotone seeded journeys, 200 genuine new-game branch witnesses, TypeScript, formatting and four contract shards. No ArtJobs or deployment. Remaining t-058: second Quiet road/photo pair, two Kinetic pairs coordinated with the separate claimed owner, and dedicated outcome art and visual QA. This task remains ready, not done.
+
+      Quiet Way second causal pair implemented on worker/weird-humboldt-t-058-quiet-road-k0v37s: QW-4 road success/failure changes QW-5 monitoring plan, with distinct checked tradeoffs, companion/solo dialogue, and 300 fresh seeded witness journeys. PR and exact-head CI pending; Kinetic and dedicated art remain.
+
+      Merged Kind Robots PR #4235 at e06230c31e1c9eab5058c7d77a2b78d7f5078c01. Second Quiet Way causal pair: QW-4 coast-road success now records elk_road_tracks_vanished; its failed future-photo history remains elk_future_photo. QW-5 monitor preserves all four saved choice IDs but offers distinct wildlife corridor survey vs consent-based photo audit, each with checked success/failure, four-Saturday commitments, solo/companion dialogue, and persistent flags. All 13 exact-head workflows passed on f5cdf7cd4cbc0aead6510d9522f6a17f31bd18b8, including TypeScript, Prettier, four contract shards/verifier and Ecotone 1764 seeded adversarial journeys. 300 fresh Quiet journeys witnessed photo success seed 1, tracks success 5, tracks failure 8, photo failure 32; save/restore and solo paths passed. No ArtJobs or deployment. Still open: two Kinetic causal pairs coordinated with t-044, dedicated outcome art, broader UI/device and adversarial QA. Keep t-058 ready, not done.
+
+      Implemented first Kinetic causal pair on worker/weird-humboldt-t-058-kinetic-dot-r8f2: KN-4 Dot aboard versus chase-bike outcome unlocks mutually exclusive checked KN-5 rescue strategies, four persistent outcomes, KN-6 callbacks and 320 fresh-seed test witnesses. Awaiting exact-head CI and PR review; second Kinetic pair and dedicated art remain open.
+
+      Merged Kind Robots PR #4241 at 2314c801fa3f75547f2c1f9d471bf5187cac9de1: first Kinetic causal pair, KN-4 Dot aboard vs shore chase unlocks different checked KN-5 rescue choices, four persistent outcomes, KN-6 callbacks, consistent Dot location, and four reserved outcome art slots. All 13 exact-head workflows passed on 6fdc2dd724470c5b0e877558b77d451633b458d8, including TypeScript, formatting, all four contract shards and Ecotone gameplay with 1764 adversarial plus 320 new-game Kinetic journeys. Witness seeds: aboard success 1, aboard failure 2, ashore success 3, ashore failure 63. Master issue kind_robots#4145 comment 6426534150. No ArtJobs or deployment. Remaining: second Kinetic causal pair, real art, full UI/device and adversarial QA; task stays active.
+
+      Scoped second Kinetic causal pair prepared in worker/weird-humboldt-t-058-kinetic-finish-c7p4: KN-5 sinking vs upright crossing unlocks different KN-6 checked rescue compromises, with four persistent results, saved-game/solo/anti-forgery and seeded-route tests, plus four reserved art slots. Implementation PR and exact-head CI to follow.
+
+      2026-10-26 PT: Merged kind_robots PR #4243 (squash cb95fb30241873122ff100d1c0ee26f74ba65fbe). Completed the second Kinetic causal pair: KN-5 slug_sank vs upright crossing unlocks mutually exclusive KN-6 shared-wheel repair vs marshal-approved tandem tow, each with a checked success/failure, meaningful finish cost, four durable flags and solo/companion dialogue. Preserved original three choice positions and versioned saves. All 13 exact-head GitHub workflows passed at 0e91b2019bc77c71576f9b620b42394eddd8f94b, including TypeScript, formatting, Ecotone Gameplay Contract (run 40399980052), and four contract shards (run 40399980283). Genuine 320 Dot plus 360 original-bay new-game journeys; witnesses upright failure seed 1, sunk success seed 2, upright success seed 4, sunk failure seed 13. 1764 seeded Ecotone journeys. This closes all six P1 causal pairs across Green Ribbon, Quiet Way and Kinetic. Four KN-6 outcome art slots are reserved but NO ArtJobs submitted/rendered; art completeness remains with t-042 and master issue #4145, along with wider editorial/adversarial and device UI QA. No deployment or human gate.
+    updated: '2026-10-26T21:04:41Z'
+    claimed_by: 20261026T204857Z-wh-t058-kinetic2-c7p4
+    claimed_at: '2026-10-26T20:48:57Z'
 
   - id: t-059
     milestone: m3
@@ -1591,16 +1609,15 @@ tasks:
     milestone: m5
     title: "Polish Ecotone opening, route previews, customizable player portraits, and tablet layout"
     status: ready
-    owner: worker
+    updated: '2026-10-26T22:40:10Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Silas's October 24 2026 PT tablet screenshot: PC portraits are not visible,
-      players need to change/upload their own image, opening route cards must
-      preview what might happen before committing, and opening prose must be shorter
-      without advance companion or drug spoilers. Reduce fixed left-column title
-      footprint; preserve one-screen reading and existing saved games and art IDs.
-      Verify exact-head CI, queue/media delivery state, and tablet presentation.
+    note: |-
+      Silas's October 24 2026 PT tablet screenshot: PC portraits are not visible, players need to change/upload their own image, opening route cards must preview what might happen before committing, and opening prose must be shorter without advance companion or drug spoilers. Reduce fixed left-column title footprint; preserve one-screen reading and existing saved games and art IDs. Verify exact-head CI, queue/media delivery state, and tablet presentation.
+
+      Silas-directed Ecotone stage repair: encounter prose and immediate choices occupy a scrollable left column, portraits/scene art their own right panel; earned endings render a collectible image card. Responsive mobile stage retains bounded art above content, and existing onboarding test asserts layout, direct-choice and ending behaviors. Kind Robots worker PR follows; no art jobs or deploy.
+
+      2026-10-26 PT: Silas-directed encounter/ending layout slice MERGED to Kind Robots main as PR #4252 (squash 059d1035007c76e8d435a5d8c110b737b0d6eb3b). All 15 latest-head workflows on a8ea7ee4aa3c49327dcaa60bfab736cc33d16e63 completed successfully: TypeScript, layout, formatting, Ecotone gameplay and full contract tests included. Art is now isolated on right at wide screens, narration and immediate choices on left, responsive art above text at phone widths, unlocked ending card shown in art panel. No new ArtJobs or deploy. Keep this broader t-066 ready for outstanding actual rendered phone/tablet/desktop verification after self-hosted deployment and remaining portrait media delivery.
 
   - id: t-067
     milestone: m1

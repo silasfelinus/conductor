@@ -56,6 +56,18 @@ def main() -> int:
             print(f"digest.json {key} must be an object or null", file=sys.stderr)
             return 1
 
+    challenge = digest.get("daily_playbook_challenge")
+    if not isinstance(challenge, dict) or challenge.get("status") not in ("ready", "missing", "invalid"):
+        print("digest.json daily_playbook_challenge needs ready/missing/invalid status", file=sys.stderr)
+        return 1
+    if not isinstance(challenge.get("pitches"), list):
+        print("digest.json daily_playbook_challenge.pitches must be a list", file=sys.stderr)
+        return 1
+    if challenge["status"] == "ready":
+        if challenge.get("date") != digest.get("date") or len(challenge["pitches"]) != 3:
+            print("digest.json must have exactly 3 current-date evolving playbook pitches", file=sys.stderr)
+            return 1
+
     daily = digest.get("daily_pitches")
     if not (daily is None or (isinstance(daily, dict) and isinstance(daily.get("pitches"), list))):
         print("digest.json daily_pitches must be null or an object with a pitches list", file=sys.stderr)

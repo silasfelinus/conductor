@@ -175,3 +175,73 @@ CI enforces that:
 - Hourly Conductor uses the report-only entrypoint;
 - active dream specs still identify `build_dream_records.py` as the sole object writer;
 - retired direct-REST stage instructions do not return.
+
+
+## New-playbook daily challenge (2026-10-26 PT)
+
+Separate from both the original 14-asset Daily Dream and the five **already-built**
+daily project upgrades, each Pacific day's digest offers exactly three
+unapproved, **evolving** game-playbook concepts for Silas to consider. The owner is the
+Conductor session creative-docket step in `CLAUDE.md`, not a second scheduled
+object creator. The digest workflow reads the dated, committed proposal file
+`pitches/playbook-challenges/YYYY-MM-DD.yaml` through
+`scripts/daily_playbook_challenge.py`, then renders the resulting budget and
+seed/prose/art interactions in its own email section.
+
+Before authoring: inspect the **current** Kind Robots `utils/playbook/games.ts`
+registry and relevant Conductor active-project briefs, including Prom of Doom
+and This Means Warp. Use `--brief` to see the eight-game baseline, the
+full-history concept-memory shelf and genre-gap shortlist; use `--memory`
+to inspect the indexed concept ancestry and editorial decisions in detail. **Silas's 2026-10-26 calibration is genre
+first**: broad missing paradigms matter more than isolated clever mechanics.
+Already represented genres include Weird West, post-apocalypse, superheroes,
+slice of life, theatre of place, dark humor and psychedelia. Current missing
+pillars: original family-friendly nonsense/literary children's adventure,
+cyberpunk with evolved embodiment/identity rights mechanically represented,
+and Heaven/Hell eternal soul-judgment simulator with cases, evidence, appeals
+and downstream eternal consequences.
+
+Each proposal must justify its genre gap, intended audience, full-act world
+scope and emotional promise, plus **three or more genre-scale systems**. Then
+explain the core loop, practical opening choices and disjoint playable/NPC/
+follower cast counts. Count portraits by emotion and evolution, maps,
+illustrations, friendship scenes (important for child-safe games), optional
+romance, villain/conflict scenes, transformative moments, finale frames,
+interface art and authored text beats; add model-pass estimates separately.
+Identify at least three places where seed-driven state controls actual
+prose and finished/generative art choices **and** changes what happens next.
+Avoid borrowing named authors' exact styles, characters or stories. The
+rejected first-pass 2026-10-26 concepts are preserved in the archive; the
+live dated docket contains the three revised genre-calibrated pitches.
+
+**Versioned creative memory:** dated dockets are preserved unchanged as
+historical creative snapshots. Each pitch includes permanent `concept_id`,
+`mode: new|expand|meld`, `parents` (prior `YYYY-MM-DD/slug` snapshots),
+`evolution` (substantive new design work), `preserve`, `challenge` and
+at least two specific `next_questions`. `expand` keeps the same concept ID
+and cites exactly one earlier version; `meld` establishes a NEW ID and cites
+at least two earlier DIFFERENT families; `new` has no ancestors. All three
+modes occupy one of the day's three pitches. A date after a seed docket must
+advance at least one existing lineage; do not force a merger where no
+complementary premises exist. `pitches/playbook-challenges/MEMORY.yaml` is
+the separate human/editorial ledger of statuses, strengths, guardrails,
+creative tags and next moves, including rejected older attempts; it does
+not edit or secretly endorse a historical proposal. Do not erase disagreements.
+
+`scripts/playbook_pitch_memory.py` reads the **whole prior history**, builds
+a stable version and concept tree, and ranks the curator shelf by explicit
+editorial state and freshness, not arbitrary age-based forgetting. The
+daily authoring brief uses that shelf, while each digest pitch shows its
+`new/expand/meld` label, genealogy, changed/retained ideas and next questions.
+`python scripts/daily_playbook_challenge.py --check --date YYYY-MM-DD`
+enforces exactly **three** and rejects bad/missing ancestry, same-day
+duplicates, historical copies masquerading as new, and rejected parents
+without conscious editorial reactivation. `--payload` produces
+`ready`, `invalid` or `missing`; only the exact Pacific-day `ready`
+docket appears. An absent/invalid docket yields an honest notice and does
+not recycle previous work. The system DOES NOT itself schedule or pay
+for daily content authoring: a Conductor session must commit each day's
+three versions before the morning digest. A concept is *not* a project,
+approval, ArtJob, expense, or publication. Counts are planning estimates:
+distinct render targets vs. optional multiple model passes per target and
+authored scenes vs. editorial passes; no token or price guarantees.

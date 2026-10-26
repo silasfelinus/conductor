@@ -112,5 +112,5 @@ inherit today's original Dream vibe, location, links, or visual style.
 -->
 
 <!-- build-attempt-data
-{"status": "retry", "attempted_at": "2026-10-19T09:47:03.802633-07:00", "message": "ladlemoot: 2/21 API calls failed (HTTP 0); rolled back 18 rows.", "failed_calls": [{"endpoint": "/api/scenarios", "status": 0, "label": "art_prompt contract: Gate Price", "message": "art_prompt for 'Gate Price' (zuzu-emperor-of-dust-gate-price-scenario) fails the conditional-instruction contract: conditional-instruction: 'only if'"}, {"endpoint": "art-ledger", "status": 0, "label": "complete Daily Dream art inventory", "message": "expected 14 distinct art requests, got 13"}], "rolled_back": 18, "attempt_count": 1}
+{"status": "retry", "attempted_at": "2026-10-26T09:35:34.597699-07:00", "message": "ladlemoot: 2/21 API calls failed (HTTP 0); rolled back 18 rows.", "failed_calls": [{"endpoint": "/api/scenarios", "status": 0, "label": "art_prompt contract: Gate Price", "message": "art_prompt for 'Gate Price' (zuzu-emperor-of-dust-gate-price-scenario) fails the conditional-instruction contract: conditional-instruction: 'only if'"}, {"endpoint": "art-ledger", "status": 0, "label": "complete Daily Dream art inventory", "message": "expected 14 distinct art requests, got 13"}], "rolled_back": 18, "attempt_count": 2}
 -->

@@ -2380,5 +2380,25 @@ tasks:
     Under umbrella issue silasfelinus/kind_robots#3379 (deliberately no source_issue, as t-144..t-146).
 
     Full history: projects/kind-robots/HISTORY.md#t-147
+
+- id: t-148
+  milestone: m6
+  title: 'Universal end-of-run Playbook reviews linked to gameplay traces'
+  status: needs-human
+  claimed_by: 2026-10-26T105400Z-kind-robots-t-148-k6fw
+  claimed_at: '2026-10-26T10:54:00Z'
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  source_issue: 'silasfelinus/kind_robots#4216'
+  updated: '2026-10-26T12:01:00Z'
+  note: |-
+    Silas-directed cross-playbook improvement: https://github.com/silasfelinus/kind_robots/issues/4216. Build a reusable persisted review contract and integrate all eight ending flows. Additive schema only, with admin-only history inspection and replay/restore coverage.
+
+    Implementation in PR #4218 passed 35 check runs with one expected skip; seven prior failures repaired (Prisma generated-client log corruption and Emperor Node test shim). Review is code complete and verified; do not merge pending outward-facing release approval.
+
+    All 35 runnable checks on implementation PR #4218 passed (one expected skip), including generated-client parity, TypeScript, seeded playthroughs and contract shards. Seven earlier failing checks were repaired; final outward-facing publication and production migration remain gated on Silas's explicit approval. Leave PR open.
+  soft_gate: false
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.

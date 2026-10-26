@@ -594,14 +594,18 @@ tasks:
   - id: t-032
     milestone: m4
     title: "Add a per-realm manifest validator (duplicate coordinates, unreachable tiles, missing choice outcomes, unmet art needs)"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
-    note: >-
-      Kaizen from conductor#6561. Parse BRIAR-MARCHES-FIRST-WORLD.md style
-      registries and fail CI on duplicate coordinates, tiles unreachable
-      from the start, sites without a persistent consequence, or art
-      requirements with no ArtJob/placeholder, so later realm PRs stay honest.
+    note: |-
+      Kaizen from conductor#6561. Parse BRIAR-MARCHES-FIRST-WORLD.md style registries and fail CI on duplicate coordinates, tiles unreachable from the start, sites without a persistent consequence, or art requirements with no ArtJob/placeholder, so later realm PRs stay honest.
+
+      Added a reusable runtime realm-manifest validator and CI contract for all 64 Briar sites and 36 House rooms, with malformed graph, choice, persistence and art fixtures. Implementation PR pending tests and review.
+
+      Completed reusable runtime content-manifest validation for all 64 Briar locations and 36 House rooms, covering duplicate coordinates/sites, unreachable nodes, choices and persistent outcome keys, scene-specific art briefs and honest pending/queued/delivered ArtJob claims. Broken-manifest regression fixtures are part of the required CI shard. Merged Kind Robots PR #4215 at e680afb0f7749fa7fa282bfa0115b0b11415174f; all 12 PR workflows, including four contract shards, TypeScript and Prettier, completed successfully. This uses executable Kind Robots registries instead of duplicating Conductor's editorial Markdown registry; editorial drift is a separate follow-up. No actual image delivery, visual QA or production deployment was verified.
+    claimed_by: 2026-10-26T104020Z-memory-dungeon-t-032-a83f
+    claimed_at: '2026-10-26T10:40:20Z'
+    updated: '2026-10-26T10:54:45Z'
   - id: t-033
     milestone: m3
     title: "Produce and deliver 32-card collectible decks per realm"
@@ -686,7 +690,11 @@ tasks:
       First-two-reality adversarial slice: initial minefield exit was guaranteed safe and immediately awarded victory; now requires full safe-floor clearance. Added recovery from exhausted 600-move logs, dropped no-op actions and blocked double-purchase of an unchanged lantern hint. Added 24 greedy/expert seed checks, 16 cross-map seal combination checks and 24 first-two-reality Earth photo collection order checks. Source-backed findings and remaining device, narrative and art-delivery gaps documented in Kind Robots. PR review underway; do not close full t-037 cross-realm ledger work or t-036 full-world QA.
 
       Early adversarial first-two-world gameplay pass merged as Kind Robots PR #4202, squash b0b40d940b401bf125dbd026ecba79bb812285bf, all fourteen required PR workflows green. Repaired P0 instant-win minefield exit (exit is intentionally safe), P1 600-move save softlock/repeated no-op logging (now restartable) and P2 duplicate lantern hint charges. Added 24 seed-scoped greedy/expert archive runs, 16 reflected/original seal inspection combinations and 24 ordered cross-reality photo collections plus a reproducible findings/limitations report. Master issue #4136 updated with commit and precise scope. Return t-037 to READY because full bounded cross-realm consequence ledger is not complete. Keep t-036 full human/device/art-dependent adversarial acceptance blocked until its separate prerequisites; do not imply browser image review or final release.
-    updated: '2026-10-26T07:51:29.159Z'
+
+      Second adversarial pass on the 36-room mirrored House uncovered skip-through progression: rooms without memory/logic mini-challenges let players advance into unvisited rooms without making their authored decisions. Updated darkHouseExits to require both solved challenges and committed consequences before first-entry advancement, preserving visited retreat and old saves. Added in-game explanation and two full 36-room DFS persona playthrough contract tests, each with all 36 choices, six matching trials, five logic puzzles, alternate return/commons endings and save reload after every chamber. Kind Robots PR in review; do not mark art/browser QA complete.
+
+      Second first-two-reality adversarial gameplay pass merged as Kind Robots PR #4211, squash ce708e2a0b0260d160343e4f8b3ab1959fa72b49, with all 14 required workflows green. Fixed mirrored 36-room House story bypass: ordinary rooms and completed puzzle chambers previously allowed onward travel without committing authored consequences. New unvisited doors require both completed challenges and a room decision; visited retreats and legacy paths stay usable. Added DFS adversarial reducer simulations of both complete 36-room House endings, 72 committed decisions, six memory and five logic puzzle types per route, full reload/backtracking and distinct ethical verdicts. Added visible player explanation and updated first-two-world QA report. Master Kind Robots #4136 updated. Return t-037 READY for the broader cross-realm consequence ledger; do not mark t-036 browser/art/human QA complete or advance final human gate.
+    updated: '2026-10-26T09:45:28.098Z'
   - id: t-038
     title: "Memory Dungeon master bible: Reimaginer, 8 world concepts / 16 realities, shifting-reality epic finale"
     status: ready

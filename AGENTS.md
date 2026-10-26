@@ -96,6 +96,11 @@ Screenshot phone and desktop widths before handing off (`docs/agents/frontend-ve
 An active project whose front page is still placeholder-grade gets a front-page pass before more
 engine or backend work. Reference implementation: kind_robots `pages/admin/save-the-plumber.vue`.
 
+**New story games ("playbooks") start on the Playbook Kit** (Silas, 2026-10-26): run
+`python scripts/new_playbook.py <slug> "<Title>"` here and `npm run playbook:new` in kind_robots,
+start at the Vignette tier, and grow only through the kit's complexity budget
+(`projects/playbook-kit/DESIGN-BRIEF.md`).
+
 ## Todos — Silas's priority overrides
 
 Silas creates Todos in the kind_robots workspace as lightweight, one-off tasks for agents

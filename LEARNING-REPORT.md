@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-10-26T07:59:08Z
+Generated: 2026-10-26T22:25:15Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1315**
-- Outcomes: blocked: 19, cancelled: 2, done: 1294
+- Closed tasks recorded: **1319**
+- Outcomes: blocked: 19, cancelled: 2, done: 1298
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -62,6 +62,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | music-video | 2 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
+| playbook-kit | 2 | 100% |
 | rainbow-bullet-hell-space-princess | 12 | 100% |
 | rainbow-butterflies | 21 | 100% |
 | ruler-hooked | 30 | 100% |
@@ -77,7 +78,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | taskmaster | 3 | 100% |
 | text-generation | 8 | 100% |
 | tzaddik-gallery | 26 | 100% |
-| weird-humboldt | 18 | 100% |
+| weird-humboldt | 20 | 100% |
 | zuzu-pinball | 4 | 100% |
 | zuzu-shifting-lands | 4 | 100% |
 | zuzu-showdown | 9 | 100% |
@@ -87,7 +88,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 18 | 50% |
-| software | 1297 | 99% |
+| software | 1301 | 99% |
 
 ## Failure categories
 
@@ -109,16 +110,16 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-10-26 `weird-humboldt/t-058` — Keep mutually exclusive earned choices in one UI/reducer resolver and replay real seeded routes before closing causal-story tasks.
+- 2026-10-26 `playbook-kit/t-011` — Never declare a CSS @layer inside a Vue component style; a chunk that loads before tailwind.css reorders the cascade layers so the preflight reset beats every component style. Share console CSS through an @import in tailwind.css instead.
+- 2026-10-26 `playbook-kit/t-001` — Survey every sibling game before designing a shared frame, and render it at three widths before calling it designed; structural CI passed while the look still read as a web app, not a console.
+- 2026-10-26 `weird-humboldt/t-017` — Guarantee companion repair anchors independently of opening lens and random draws; validate authored choices before runtime integration.
 - 2026-10-26 `weird-humboldt/t-067` — Keep withdrawn character origins out of current briefs while retaining immutable art-job provenance and explicitly quarantining legacy keepers until replacement.
 - 2026-10-26 `weird-humboldt/t-061` — For guaranteed narrative crossroads, validate no-roll route availability and each rolled branch separately, not merely the union of all flags.
 - 2026-10-26 `weird-humboldt/t-030` — Derive validation expectations from the canonical authored catalog, including chapter identity, rather than synchronizing independent hard-coded totals.
 - 2026-10-26 `weird-humboldt/t-011` — For narrative-design tasks, make each promise a named witnessed action with a later playable consequence; explicitly separate design traces from executed reducer witnesses.
 - 2026-10-25 `conductor/t-208` — A status refresh must treat human verdicts (REJECTED lanes, listed rejected job ids) as authoritative over the job's own result; Worker PR bodies need every AGENTS.md handoff heading or the handoff check fails.
 - 2026-10-24 `weird-humboldt/t-065` — For character artwork, pair stable identity IDs with canonical destination paths, source-controlled idempotent prompts and UI fallback; distinguish GitHub queue requests from ArtJob IDs and delivered images.
-- 2026-10-24 `crystal-street/t-001` — Node-side contract tests never touch the Pinia proxy, so structuredClone passed every test and only failed in the browser. Click through a game store in a real page before merge, and clone store state with JSON. Also run the real artPromptContract over authored prompts, which caught 46 format/frame violations and a "no text" house style that a negation-only check missed.
-- 2026-10-23 `emperor-of-dust/t-058` — A style rule that excludes only the obvious species misses the rest of the cast. Ground the prose linter in the complete canon species vocabulary, exempt deliberate proper faction labels and literal wildlife, and keep character identity in the dialogue tied to their social roles instead.
-- 2026-10-23 `ruler-hooked/t-044` — User clarified that removing ruler customization was the wrong fix. Retaining cosmetic identity exclusively as an opening ceremony preserves roleplaying while preventing a generic monarch from contaminating first-person environment art. The old implementation stayed visible because the prior branch had not merged.
-- 2026-10-23 `emperor-of-dust/t-057` — A translucent shared panel token exposes dense room artwork through gameplay text; use solid theme surfaces and guard CSS backgrounds in layout tests.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-26T07:59:08Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-26T22:25:15Z_

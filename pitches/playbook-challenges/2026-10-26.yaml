@@ -1,0 +1,520 @@
+# REVISED 2026-10-26 PT after Silas's genre-calibration feedback.
+# Three full genre pillars, not small novelty mechanics. Proposals only, no authorization.
+# The rejected first draft is preserved in archive/2026-10-26-rejected-first-pass.md.
+# Each art unit counts ONE deliverable image; processing passes include revision/style.
+date: "2026-10-26"
+reviewed_playbooks:
+  - "ecotone"
+  - "emperor-of-dust"
+  - "shifting-lands"
+  - "shifting-desks"
+  - "zuzu-gamebook"
+  - "crystal-street"
+  - "comet-city-academy"
+  - "game-of-captains"
+pitches:
+  -
+    slug: "the-bumbledown-atlas"
+    concept_id: "the-bumbledown-atlas"
+    mode: "new"
+    parents: []
+    evolution: >-
+      Establishes a missing family-friendly literary-adventure genre through language
+      physics, navigable storybook realms, cooperative riddles and lasting friendships.
+    preserve: >-
+      Preserve child-first agency, read-aloud access, original visual nonsense,
+      friendship-first character development and a changing illustrated atlas.
+    challenge: >-
+      Test whether word recombination and its puzzle rules work across six realms,
+      not just one scripted adjective demonstration or borrowed literary voice.
+    next_questions:
+      - "What three atlas rules can children discover through pictures before reading?"
+      - "How do different followers remember and forgive an important broken promise?"
+    title: "The Bumbledown Atlas"
+    hook: >-
+      A hand-painted, read-aloud wonderland adventure where the world has misplaced its rules
+      and three unlikely young travelers must make stories, songs, and friendship hold it
+      together before the final page folds shut.
+    genre_pillar: "Children's literary fantasy and family-friendly illustrated wonderland RPG"
+    genre_gap: >-
+      A substantial playful children's game is missing from a portfolio of more mature horror,
+      satire, surrealism, heroes, and wastelands. This brings curious kids and families a whole
+      genre rather than a costume for an adult ruleset.
+    audience: >-
+      Independent readers around eight to twelve, younger children with read-aloud help, and
+      adults who enjoy emotionally generous literary nonsense. Text and puzzle difficulty must
+      have child-friendly and grown-up modes.
+    world_scope: >-
+      Six contiguous storybook realms across three acts: the Town of Unsaid Things, a sea above
+      the clouds, an inside-out orchard, a backward railroad, the Sleeping Library, and the
+      Unwritten Edge. Each has local puzzles, communities, companions, and an optional secret
+      story.
+    emotional_promise: >-
+      A child can be kind, brave, silly, mistaken, forgiven, and important. Characters have
+      real feelings; failure opens a different way through the page instead of punishing the
+      player with cruelty or death.
+    core_loop: >-
+      Choose a traveler and an opening promise. Explore a big living pop-up atlas, collect
+      curious words and objects, solve contradictions by rearranging rules or visual rhyme,
+      help neighbors with their problems, recruit friends, and watch the map literally redraw
+      itself after each consequential kindness or mistake.
+    unique_mechanic: >-
+      Sentences are world physics: swap a found adjective or rhyme in a place-name to transform
+      its geography. A little bridge made 'long' can reach a friend, while a 'wrong' bridge
+      leads somewhere surprising. Every transformation has authored limits, illustrations and
+      character consequences.
+    signature_systems:
+      - >-
+          Word-and-world cartography: collect words as physical inventory, unlock map
+          alterations from verified grammar-like recipes, and see locations and sidequests
+          change; never send unconstrained text directly to the world-state parser.
+      - >-
+          Feelings as relationships, not morality bars: companions remember promises and
+          misunderstandings, can disagree constructively, ask forgiveness, and change how
+          group puzzles work depending on trust.
+      - >-
+          Nonsense puzzles with discoverable rules: visual riddles, pattern play, rhyming
+          riddles and perspective tricks support alternative non-reading paths, read-aloud
+          narration and selectable hint tiers.
+      - >-
+          A three-act living storybook: pages fold, rotate, and connect across six
+          colorful realms, and the ending atlas visibly records every friend helped,
+          secret found and word rewritten.
+    opening_choices: >-
+      Three heroes with three starting dilemmas apiece: the Apprentice Cloud-Stitcher (lost a
+      storm), the child-sized Question Mark (looking for its sentence), and the Junior Lullaby
+      Keeper (whose last song escaped). Nine distinct illustrated openings select different
+      word kits, mentors and early alliances.
+    novelty_against_existing: >-
+      Not another darkly comic choice deck, surreal festival, western fable or combat
+      adventure. Its primary gameplay is world-changing language, visual puzzles, read-aloud
+      exploration and lasting child-friendly friendship, staged across an interconnected
+      illustrated land.
+    runtime_llm: "optional"
+    cast:
+      playable: 3
+      npcs: 16
+      followers: 10
+      portraits_per_person: 5
+    production:
+      art_passes_per_image: 2
+      text_passes_per_beat: 2
+      maps: 6
+      opening_choice_images: 9
+      scene_illustrations: 132
+      friendship_illustrations: 36
+      romance_illustrations: 0
+      villain_illustrations: 18
+      transformation_illustrations: 20
+      finale_frames: 30
+      interface_art: 26
+      opening_scenes: 12
+      encounter_scenes: 168
+      friendship_scenes: 44
+      romance_scenes: 0
+      villain_scenes: 24
+      finale_scripts: 20
+    collisions:
+      -
+        stage: "First footstep onto the wrong page"
+        seeded_state: >-
+          The chosen child and missing-rule seed determine which of three starting dilemmas is
+          true and which realm is already changing.
+        text_variation: >-
+          Opening lines are authored for each protagonist; optional playful prose may riff on
+          collected words but must honor the saved page rules.
+        image_variation: >-
+          Nine painted openings select the correct traveling hero, physical word object and
+          altered landscape; the chosen emotion portrait matches the actual scene.
+        consequence: >-
+          The first repair opens a different atlas route, introduces a particular follower, and
+          establishes a promise the ending will test.
+      -
+        stage: "The friendship that doesn't rhyme"
+        seeded_state: >-
+          A follower's fears and the player's prior promises determine whether the problem is
+          disagreement, grief or a comic misunderstanding.
+        text_variation: >-
+          Branching dialogue offers listening, apology, cooperative wordplay or waiting; no
+          forced romance, violence or adult themes.
+        image_variation: >-
+          Multiple portrait expressions and one of thirty-six bespoke friendship illustrations
+          match the exact relationship turn.
+        consequence: >-
+          A companion may stay, take a little time apart, or invent an alternate solution to a
+          blocked map puzzle.
+      -
+        stage: "The Unwritten Edge wakes"
+        seeded_state: >-
+          The lost words and places rewritten determine the shape and motivation of a
+          sympathetic antagonist who wants stories to end.
+        text_variation: >-
+          The antagonist's speeches address actual neglected places and mistakes; witty
+          language is original, not a reproduction of a named author's prose.
+        image_variation: >-
+          A rotating set of painted antagonist emotions, world transformations and wide
+          page-turning spreads makes the chosen ending of the act legible.
+        consequence: >-
+          The antagonist can be reassured, challenged or outwitted; each solution restores
+          different stories and friendships.
+      -
+        stage: "The final spread and the read-aloud finale"
+        seeded_state: >-
+          The run's atlas, friendships and promises assemble the ending route and reveal which
+          missing word the world most needs.
+        text_variation: >-
+          Authored final verses and epilogues adapt to the saved cast and geography; optional
+          LLM polish is validated against state and accessible reading level.
+        image_variation: >-
+          Thirty animated-bookplate storyboard frames and changed map pieces assemble a
+          coherent cinematic storybook ending.
+        consequence: >-
+          The completed personalized atlas persists in a collectible bookshelf, unlocking a new
+          traveler starting dilemma for the next run.
+    production_notes: >-
+      Budget: 29 distinct named people times five expressions (neutral, joy, worry,
+      exasperation and comfort) = 145 character portrait images; plus 277 maps, openings,
+      scenes, friendship sequences, transformation spreads, conflict, finales and UI = 422
+      unique finished art images. Two composition/style passes plus two authored/edit passes
+      for 268 scenes yield 1,380 estimated processing passes. Original picture-book voice, no
+      protected-character resemblance. Romance budget is explicitly zero; friendship is the
+      emotional centerpiece. Voice acting, localization, animation rigging, QA and compute
+      tokens are not included.
+  -
+    slug: "afterbody-the-human-question"
+    concept_id: "afterbody-the-human-question"
+    mode: "new"
+    parents: []
+    evolution: >-
+      Establishes the cyberpunk and transhuman genre pillar with body-mod systems,
+      consciousness continuity, memory licensing and long-term community consequences.
+    preserve: >-
+      Preserve hardware compatibility, identity and consent as mechanics, nuanced
+      companion arcs, accessible non-augment choices and multi-district repercussions.
+    challenge: >-
+      Test whether firmware ownership and copied selves make genuinely new choices,
+      rather than superficial dialogue about cybernetics beside ordinary RPG combat.
+    next_questions:
+      - "How can a player test conflicting body and memory builds without losing selfhood?"
+      - "What specific evidence distinguishes copied memories from legal identity rights?"
+    title: "Afterbody: The Human Question"
+    hook: >-
+      In a glittering city where bodies are rented, memories have licensing terms and people
+      can live across several nervous systems, lead a found family through a cybernetic
+      revolution and decide what a person is allowed to become.
+    genre_pillar: "Cyberpunk transhumanist RPG and systemic speculative science fiction"
+    genre_gap: >-
+      A full neon cyberpunk and human-evolution pillar is absent. This is more than cybernetic
+      gunplay: the game turns embodiment, augment autonomy, brain interfaces, labor, continuity
+      of identity and posthuman rights into persistent choice-driven systems.
+    audience: >-
+      Teen and adult science-fiction players seeking high-stakes story, action with
+      consequences, relational depth, identity dilemmas and clear explanations of genuinely
+      strange technologies; accessibility avoids disability-as-corruption stereotypes.
+    world_scope: >-
+      Seven maps in four acts: the corporate Zenith, the patchwork undercity, a community
+      prosthetics clinic, the flooded data commons, the orbital sensor garden, the synthetic
+      wetlands and a shared-dream infrastructure. District control, bodies and faction
+      infrastructure transform between acts.
+    emotional_promise: >-
+      Spectacular high-tech ambition collides with intimate vulnerability. Every upgrade offers
+      genuine capacity and meaningful tradeoffs, but no person's worth or sanity is graded by
+      hardware; liberation can be collective, individual, costly or compromised.
+    core_loop: >-
+      Select a body history and current livelihood, explore a factional metropolis, complete
+      stealth, social and action missions, negotiate implant access and neural trust, train
+      followers, evolve a modular body and choose what parts of your memories, autonomy and
+      relationships can be copied or shared.
+    unique_mechanic: >-
+      A live embodiment-and-continuity graph distinguishes body hardware, owned memories,
+      shared senses, consent grants, network links and legal personhood. Upgrades unlock verbs;
+      each backup, fork, loaned implant and co-conscious connection produces concrete narrative
+      consequences instead of a generic power stat.
+    signature_systems:
+      - >-
+          Modular cyberware as an actual build system: nervous-interface bandwidth, heat,
+          sensory translation, firmware trust and physical compatibility create creative
+          loadout synergies across movement, combat, infiltration, repair and care, with
+          alternate non-implant routes.
+      - >-
+          Continuity and consent: copied memories, restored versions and neural
+          cohabitation have identity ledgers, revocable permissions and branching NPC
+          responses; the story never equates hardware with moral worth.
+      - >-
+          Citywide political economy: clinics, patents, unions, public infrastructure,
+          data brokers and open-source engineers react to who controls augment repair and
+          basic survival; side quests can shift systemic access rather than only
+          reputation.
+      - >-
+          Companions evolve physically and philosophically: followers can reject updates,
+          choose alternate embodiments, pursue romance or friendship, betray a cause or
+          reconcile, and each evolution changes their mission kit and cinematic
+          appearance.
+    opening_choices: >-
+      Four protagonists (indentured test pilot, civic implant medic, data-commons courier, or
+      synthetic-body heir) with three incompatible body-history starts each, for twelve
+      illustrated openings and twelve distinct first missions. Each has a different legal
+      status and a personal relationship to the city's core upgrade technology.
+    novelty_against_existing: >-
+      Prom of Doom focuses on powers and heroic identities; This Means Warp on starship
+      command. Afterbody focuses on bodily self-authorship, cybernetic architecture, identity
+      continuity, rights and infrastructure change. Its mission engine and augment simulation
+      are built around transhuman choices rather than genre dressing.
+    runtime_llm: "optional"
+    cast:
+      playable: 4
+      npcs: 20
+      followers: 14
+      portraits_per_person: 6
+    production:
+      art_passes_per_image: 2
+      text_passes_per_beat: 2
+      maps: 7
+      opening_choice_images: 12
+      scene_illustrations: 180
+      friendship_illustrations: 30
+      romance_illustrations: 42
+      villain_illustrations: 38
+      transformation_illustrations: 64
+      finale_frames: 40
+      interface_art: 36
+      opening_scenes: 16
+      encounter_scenes: 210
+      friendship_scenes: 36
+      romance_scenes: 48
+      villain_scenes: 42
+      finale_scripts: 26
+    collisions:
+      -
+        stage: "The first body you can call yours"
+        seeded_state: >-
+          The starting identity and body-history seed determine owned implants, a withheld
+          memory, the firm's contract and who considers the protagonist a person.
+        text_variation: >-
+          Authored opening exchanges change with embodiment history, and optional prose is
+          constrained by the implant/consent ledger.
+        image_variation: >-
+          Twelve opening illustrations, authentic loadout silhouettes and matching prosthetic
+          portraits establish exactly which body the player inhabits.
+        consequence: >-
+          A distinct contact, legal vulnerability and first mission open while certain
+          augmentation routes remain possible but costly.
+      -
+        stage: "The clinic's impossible upgrade"
+        seeded_state: >-
+          Faction patents, damaged hardware, followers' consenting sensorium links and the
+          player's firmware-trust graph define viable repair paths.
+        text_variation: >-
+          Engine-authored tradeoffs explain capability and social cost; optional LLM dialogue
+          can personalize the clinic discussion without inventing implant capabilities.
+        image_variation: >-
+          Transformation art depicts the actual chosen hardware family, follower reaction and
+          interface before the loadout is accepted.
+        consequence: >-
+          A better augment may reduce autonomy or shift dependence; a communal open-source
+          repair may alter future NPC access and unlock a district route.
+      -
+        stage: "Love with two minds and three bodies"
+        seeded_state: >-
+          A relationship arc tests continuity, mutual consent and whether a copied persona
+          should count as the same partner; each person's boundaries are explicit.
+        text_variation: >-
+          Authored romantic, platonic and separation sequences honor the actual identities
+          present, not a generic romance score or mandatory pairing.
+        image_variation: >-
+          Emotion-specific portraits and painted alternate embodiment scenes reflect precisely
+          which versions agree to be present.
+        consequence: >-
+          Trust changes which sensory links can be used in later missions; a declined
+          relationship can become a resilient alliance without a penalty.
+      -
+        stage: "The fork that owns the city"
+        seeded_state: >-
+          The endgame mastermind is selected among competing visions of evolution; the player
+          can have multiple legally distinct copies and followers with divergent loyalties.
+        text_variation: >-
+          The antagonist confronts the player's own memory and consent decisions; a finale
+          script reconciles all extant copies and previously liberated districts.
+        image_variation: >-
+          Villain reveal shots, alternate bodies, district transformation plates and final wide
+          cinematic frames are all selected by world state.
+        consequence: >-
+          Endings decide whether consciousness remains property, becomes commons, escapes the
+          network or fractures into multiple self-governing successors.
+    production_notes: >-
+      Budget: 38 unique characters times six expressions (neutral, warmth, anger, fear, injury
+      and changed identity) = 228 portrait renders, plus 449 world maps, mission illustrations,
+      relationships, villain scenes, 64 specific augmentation/transformation images, endings
+      and interface = 677 unique images. Two art passes per image and two writing/edit passes
+      per 378 authored beats = 2,110 planned passes. Hardware loadouts should be composited
+      from reusable, reviewed parts, not generated from scratch for every combination. No
+      automatic depiction of neurodivergence or prosthetics as corruption; include non-augment
+      solutions and consent. Physics/animation/voice/network architecture and model token costs
+      are not in this count.
+  -
+    slug: "the-scales-of-forever"
+    concept_id: "the-scales-of-forever"
+    mode: "new"
+    parents: []
+    evolution: >-
+      Establishes a metaphysical afterlife simulation where soul evidence, rulings,
+      appeals and precedent reshape two competing eternal destination societies.
+    preserve: >-
+      Preserve genuine difficult moral cases, conflicting testimony, accountable
+      appeal rights and navigable changing Heaven and Hell with long-term consequences.
+    challenge: >-
+      Test whether eternal verdicts feel earned through investigation and whether
+      realm simulation is more than simplistic salvation-or-damnation counters.
+    next_questions:
+      - "How does a successful appeal reverse and repair a mistaken eternal sentence?"
+      - "What happens if accumulated rulings undermine Heaven or Hell's legitimacy?"
+    title: "The Scales of Forever"
+    hook: >-
+      You have been appointed to decide where the dead spend eternity. Hear the lives of
+      saints, monsters, ordinary people and contradictory witnesses, then discover that Heaven
+      and Hell have been changing the rules of judgment behind your back.
+    genre_pillar: "Epic metaphysical Heaven-and-Hell judgment simulator / cosmic moral drama"
+    genre_gap: >-
+      The existing portfolio has myth, politics, weird adventures and dark humor but no major
+      playable cosmology centered on choosing souls' eternal fate. This delivers a full
+      heaven-and-hell simulation rather than another workplace satire.
+    audience: >-
+      Teen and adult players interested in moral philosophy, mythology, relationship drama,
+      evidence, forgiveness, accountability and consequential impossible decisions. Fictional
+      cosmology is original, non-sectarian and respectful of real beliefs.
+    world_scope: >-
+      Eight visually distinct cosmic regions in five acts: the Gate of Last Breath, Memory Sea,
+      Gardens Above, Foundries Below, Witness Archive, Covenant Bridge, Court of Appeals and
+      the unfinished Third Eternity. Court precedent permanently alters realm architecture and
+      the souls who inhabit it.
+    emotional_promise: >-
+      Judgment is awe-inspiring, terrifying and human. A decision feels irreversible enough to
+      matter, but truth is hard; the game explores accountability, mercy and the institutional
+      power behind the supposedly final answer.
+    core_loop: >-
+      Choose an arbiter origin, interrogate witnesses, play reconstructed memory tableaux,
+      investigate contradictions across eight afterlife maps, consult and recruit celestial or
+      infernal advocates, deliver an initial ascent/descent ruling and withstand appeals,
+      consequences and pressure from both eternities.
+    unique_mechanic: >-
+      A living precedent engine records reasons, evidence and counterexamples. Similar souls
+      may receive different outcomes only when the player articulates a defensible distinction,
+      and past decisions change which kinds of eternity the two realms can sustainably provide.
+    signature_systems:
+      - >-
+          Soul dossier investigation: each life has conflicting testimonials, timeline
+          evidence, harms and kindnesses, unreliable memory fragments and hidden context.
+          Verdicts must cite evidence and can be appealed.
+      - >-
+          Dual-eternity population simulation: sending souls Above or Below visibly
+          changes neighborhoods, mentors, factions, resources and relationships in both
+          realms. Salvation and damnation have consequences beyond a tally.
+      - >-
+          Law, mercy and legitimacy: recurring precedents, bargains, coerced confessions
+          and revealed celestial bias shift the court's authority. Players must
+          distinguish accountability from revenge without a single good/evil meter.
+      - >-
+          Long-form angel, demon and mortal companion arcs: partners may advocate for
+          their own loved ones, oppose corruption, change their views, leave the court or
+          romance consenting adult peers.
+    opening_choices: >-
+      Three arbiters, each with three formative cases: a recently dead mortal granted an
+      impossible second hearing, an angelic keeper who discovered a false record, and an
+      infernal advocate refusing a predetermined verdict. Nine painted intros change alliances,
+      abilities to read testimony and the soul pool's early mysteries.
+    novelty_against_existing: >-
+      Emperor of Dust rules living followers; Shifting Desks satirizes bureaucracy. Here the
+      center is theological cosmology, ethical legal reasoning and eternal destinations for the
+      dead. Heaven and Hell are navigable, mutable societies, and verdicts permanently reshape
+      both worlds.
+    runtime_llm: "optional"
+    cast:
+      playable: 3
+      npcs: 19
+      followers: 12
+      portraits_per_person: 5
+    production:
+      art_passes_per_image: 2
+      text_passes_per_beat: 2
+      maps: 8
+      opening_choice_images: 9
+      scene_illustrations: 160
+      friendship_illustrations: 26
+      romance_illustrations: 18
+      villain_illustrations: 36
+      transformation_illustrations: 40
+      finale_frames: 48
+      interface_art: 32
+      opening_scenes: 12
+      encounter_scenes: 190
+      friendship_scenes: 30
+      romance_scenes: 24
+      villain_scenes: 44
+      finale_scripts: 32
+    collisions:
+      -
+        stage: "The first soul at the gate"
+        seeded_state: >-
+          The starting arbiter, soul identity and case-seed create a plausible but incomplete
+          biography, an alleged harm and two contradictory witnesses.
+        text_variation: >-
+          Preauthored dossier fragments and testimony branches reveal genuine contradictions;
+          optional LLM summation cannot manufacture facts or override the evidence graph.
+        image_variation: >-
+          A painted lifetime scene, age-appropriate soul portrait and distinct
+          heavenly/infernal visual outcomes accompany the hearing.
+        consequence: >-
+          The ascent/descent ruling changes who lives in each realm and forms a precedent the
+          court will later use against or for the player.
+      -
+        stage: "The witness you trusted has an eternity to lose"
+        seeded_state: >-
+          Prior judgments determine which celestial or infernal follower has a conflict of
+          interest and what relationships make their request difficult.
+        text_variation: >-
+          Witness confrontation scenes incorporate the cited verdict, consent and affected
+          loved ones, with a defensible path to disclose or recuse.
+        image_variation: >-
+          Correct witness emotions and cosmic relationship scenes reveal grief, loyalty or
+          manipulation without visually declaring one side righteous.
+        consequence: >-
+          A companion may resign, reconcile, testify or challenge precedent, altering the
+          evidence available in future cases.
+      -
+        stage: "A rebellion in the Gardens Above"
+        seeded_state: >-
+          Accumulated souls in both realms, contested rulings and the presiding faction decide
+          whether Heaven or Hell becomes the engine of injustice.
+        text_variation: >-
+          Villain and faction arguments quote actual court decisions, not random sermon
+          templates; appeal scenes make competing obligations explicit.
+        image_variation: >-
+          Thirty-six antagonist images and forty evolving cosmology illustrations depict the
+          people and realms the player's judgments have changed.
+        consequence: >-
+          The court can lose legitimacy, open appeal rights or conceal systemic harm, shifting
+          faction alliances and the final cases.
+      -
+        stage: "A verdict on the whole of forever"
+        seeded_state: >-
+          The full precedent ledger, appeals granted, released souls, surviving companions and
+          two populations control the attainable endings.
+        text_variation: >-
+          Thirty-two authored finale scripts select an accountable cosmological outcome and
+          address who has been saved, condemned or allowed to return for review.
+        image_variation: >-
+          Forty-eight final cinematic panels and the two altered eternity maps present the
+          actual faces and consequences of the final ruling.
+        consequence: >-
+          The ending permanently archives a moral history, and New Game Plus begins with the
+          precedent of the last arbiter rather than a meaningless reset.
+    production_notes: >-
+      Budget: 34 named arbiters, NPCs and recruitable advocates times five emotional portrait
+      states = 170 portraits, plus 377 unique illustrated soul cases, scenes, maps,
+      relationships, evolved realms, conflicts, finales and interface targets = 547 art images.
+      Two image composition/style passes and two editorial passes per 332 story beats = 1,758
+      planned processing passes. The 160 scene illustrations include 120 individual soul
+      dossiers rather than counting those twice. Cosmic aesthetics are invented, not a claim
+      about any living faith. A firm Heaven/Hell outcome must be possible for each soul, with
+      evidence and meaningful appeals; neither human spirituality nor moral value should be
+      reduced to a simplistic meter.
