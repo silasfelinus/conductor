@@ -177,6 +177,9 @@ def feedback():
     return work
 
 
+AUDIENCE_WINDOW_END = "2026-11-25"
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--date", default=today())
@@ -193,6 +196,13 @@ def main():
               "In-progress: next_step. Prefer five shipped; never mislabel progress as finished.")
         print("Then --materialize and --check; deliver using the existing signed review inbox. "
               "Use --feedback to pick up user modification and rollback requests.")
+        if args.date <= AUDIENCE_WINDOW_END:
+            print(f"Audience-first window (through {AUDIENCE_WINDOW_END} PT): at least three of the five "
+                  "entries must make Kind Robots easier to find, understand, share or support for a "
+                  "first-time visitor (front door, link previews, share/give prompts, review flow, "
+                  "fixes for drop-offs seen in /admin/site-stats or playtest notes). New stages, "
+                  "enemies or branches count only when they fix something real players hit. "
+                  "Backlog: interface-vision t-150, t-151.")
         return 0
     if args.feedback:
         print("\n".join(feedback()) or "No delivery feedback requiring agent work.")
