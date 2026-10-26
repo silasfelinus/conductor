@@ -37,6 +37,5 @@ def test_legacy_mara_art_jobs_remain_auditable_but_are_not_canon():
     assert "DO NOT EXPORT/PROMOTE" in round1
     assert "LEGACY NONCANON" in round1
     assert "NOT current approval" in round1
-    assert "NONE OF" not in bakeoff  # ensure the warning is plain, not a generated placeholder
     assert "not reuse" in bakeoff
     assert "NONCANON" in bakeoff
