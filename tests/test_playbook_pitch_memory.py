@@ -51,7 +51,7 @@ class EvolvingPitchMemoryTest(unittest.TestCase):
         fresh["mode"] = "new"
         fresh["slug"] = "the-barrowlight-sea"
         fresh["concept_id"] = fresh["slug"]
-        fresh["title"] = "The Barrowlight Sea"
+        fresh["title"] = "The Barrowlight Sea of Echoes"
         fresh["parents"] = []
 
         fused["mode"] = "meld"
