@@ -262,3 +262,16 @@ tasks:
       and per-factor image and word terms (estimate.ts). Have daily_playbook_challenge.py
       emit a Forge blueprint per pitch (or read those constants) so pitch costs and Forge
       forecasts agree, and link each pitch to /admin/playbook-forge for adjustment.
+  - id: t-016
+    milestone: m4
+    title: "Production ledger: load any game, enumerate every beat's art and words, spent vs left, stars, super shiny, discrepancies, submit sections to relay or agent"
+    status: in-progress
+    depends_on: t-014
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas 2026-10-26: any game loads and enumerates all its computations, what they took
+      and what is left; complete sections star, all complete is super shiny; discrepancies
+      shown; sections submit to the relay or the next agent. Design: DESIGN-FORGE.md section 10.
+      Implementation: kind_robots #4232 (Forge Load a game ledger, /api/admin/playbook-ledger).
