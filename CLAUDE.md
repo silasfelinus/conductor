@@ -108,6 +108,7 @@ Then report:
   Facet, art, and digest state; legacy Dream outlines are idea inventory rather
   than queued object builds (warn when useful idea inventory falls below five)
 - **Daily upgrades**: report five PR-backed shipped/in-progress additions, actual CI runs and merge SHA, playable and art evidence, plus the modifications/rollback feedback queue (daily_project_deliveries.py --check / --feedback). Historical decisions remain in daily_pitches.py --approved.
+- **New playbook challenge**: dated 1–3 new-game proposals or honest missing/invalid status; quantify unique render targets and authored scenes separately from LLM tokens, and do not imply approval.
 - **Daily Tzaddik**: from the sweep's `tzaddik_review` section (`python scripts/tzaddik_review.py --check`
   for the full list), report the
   approved/rejected/deferred/pending counts across every discovery docket. List
