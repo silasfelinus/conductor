@@ -153,6 +153,17 @@ def daily_project_deliveries_payload():
         return {"entries": [], "missing": True}
 
 
+def daily_playbook_challenge_payload():
+    """Pacific-dated proposals for entirely new story games, not daily upgrades."""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import daily_playbook_challenge
+        return daily_playbook_challenge.payload(daily_playbook_challenge.pacific_today())
+    except Exception as exc:
+        return {"date": datetime.datetime.now(_TZ).date().isoformat(),
+                "status": "invalid", "pitches": [], "errors": [str(exc)]}
+
+
 def daily_pitches_payload():
     """Today's five project pitches (pitches/daily/<date>.yaml), or None when not authored yet."""
     try:
