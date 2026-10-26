@@ -2,6 +2,8 @@
 
 **2026-10-19 PT · user-led direction · text-only design.** This document makes explicit Silas's requirement that **every companion has an optimal personal exploration path**, Cedar's logger-and-grower parents **remain together**, and the speculative-fantasy / sci-fi / horror adventure is **fundamentally hopeful** because the player's decisions can materially improve the future. Character paths below are authored **proposals**, not finalized encounter cards. There is no art or release approval. `Cedar` and `Mara` remain working names.
 
+**2026-10-26 authored follow-through:** [COMPANION-CHAPTER-ANCHORS.md](COMPANION-CHAPTER-ANCHORS.md) supplies 20 guaranteed scene anchors, 60 consequential choices, recoverable checks, and four hopeful/scarred personal epilogues. These are authored text and structural tests, not yet integrated reducer scenes or delivered artwork. The provisional route principles below remain the creative contract.
+
 ## Core covenant: hope with teeth
 
 1. **Hope is the thesis, not the default difficulty.** A catastrophe, betrayal, dystopian county, terrifying phenomenon, or bitter personal setback may still be reachable. The player should always be able to recognize a *specific causal way their decisions mattered*, including near-misses where one ordinary act preserved someone.
