@@ -756,26 +756,19 @@ tasks:
   - id: t-043
     milestone: m3
     title: "Author and implement all follower and companion questlines, decisions and relationship outcomes"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-010, t-034]
     source: silas-2026-10-24-master-roadmap
-    note: >-
-      Audit the complete actual companion/follower roster and source-backed
-      identity. Each recruitable traveler must have at least one meaningful
-      fully authored multi-beat quest, encountered or declined introduction,
-      success/failure and departure/betrayal/reunion effects, interaction
-      with cross-land choices, and accurate journal/character rail UI.
-      No species-based morality, invented database entity, dead quest route,
-      or empty decorative companion. Build a cast x quest x decision/result
-      matrix with testable save/replay-safe flags and concrete seed/action
-      traces. Coordinate bespoke art manifest in t-044. Split delivery into
-      independently tested land/follower PRs.
+    note: |-
+      Audit the complete actual companion/follower roster and source-backed identity. Each recruitable traveler must have at least one meaningful fully authored multi-beat quest, encountered or declined introduction, success/failure and departure/betrayal/reunion effects, interaction with cross-land choices, and accurate journal/character rail UI. No species-based morality, invented database entity, dead quest route, or empty decorative companion. Build a cast x quest x decision/result matrix with testable save/replay-safe flags and concrete seed/action traces. Coordinate bespoke art manifest in t-044. Split delivery into independently tested land/follower PRs.
+
+      First source-anchored kitchen novice relationship arc implemented for V8 as three deterministic earned callbacks (Dustwater, Tablelands, Cave), with trust, departure and conditional reconciliation from actual encounter and trial choices. Dedicated CI regression added. This is a partial t-043 slice: no party recruitment, explicit follower action UI or full roster coverage yet; keep task active.
     claimed_by: 2026-10-26T175045Z-zsl-t043-gpt6-p7k9
     claimed_at: '2026-10-26T17:50:45Z'
-    updated: '2026-10-26T17:50:45Z'
+    updated: '2026-10-26T18:08:00Z'
 
   - id: t-044
     milestone: m3
