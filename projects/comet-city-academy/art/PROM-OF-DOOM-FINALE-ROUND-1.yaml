@@ -9,268 +9,369 @@ is_mature: false
 cast_loras: false
 auto_submit: true
 lanes:
-  - key: krea2
-    label: Krea 2 painted Prom of Doom plates
-    engine: krea2
-    prompt: prose
-    suffix: "Hand-painted 2D illustration, ink contours, gouache color, visible glass fractures, fabric folds, stone walls, metal reflections, warm amber light, blue night shadows."
+- key: krea2
+  label: Krea 2 painted Prom of Doom plates
+  engine: krea2
+  prompt: prose
+  suffix: Hand-painted 2D illustration, ink contours, gouache color, visible glass fractures, fabric folds, stone
+    walls, metal reflections, warm amber light, blue night shadows.
 subjects:
-  - key: ct-prom-d29-ballroom-doors
-    lane: krea2
-    entity: cinematic-beat
-    title: "Day 29, ballroom preparations"
-    asset: comet-city-academy/prom-of-doom/ct-prom-d29-ballroom-doors
-    size: "1344x768"
-    seed: 962101
-    prompt_prose: >-
-      Late afternoon outside a grand academy ballroom with cream stone columns and tall gold double doors.
-      Adult students in purple, silver and dark blue formal outfits arrive past orange emergency lanterns,
-      while market families wearing coats stand beside folding cots. Mina Quill, a broad-shouldered
-      dark-skinned woman with short curls in an ivory rescue coat, stands beside Imani Vale, a
-      copper-brown-skinned woman with long black braids and teal scarf. High above the open doorway, a
-      twelve-sided glass chandelier is visible through the windows.
-  - key: ct-prom-d30-first-waltz
-    lane: krea2
-    entity: cinematic-beat
-    title: "Day 30, the real prom begins"
-    asset: comet-city-academy/prom-of-doom/ct-prom-d30-first-waltz
-    size: "1344x768"
-    seed: 962102
-    prompt_prose: >-
-      Interior of a large academy ballroom during a night graduation prom. Dozens of adult students dance on
-      a polished circular wooden floor in long blue, burgundy and cream formalwear; several wear colored
-      capes over their evening clothes. An actual string quartet plays on a low platform beside the dance
-      floor. Above them a twelve-sided crystal chandelier glows gold beneath a broad glass dome. Purple paper
-      garlands hang from stone columns and guests stand beside a refreshment table near open terrace doors.
-  - key: ct-prom-d30-the-chandelier-turns
-    lane: krea2
-    entity: cinematic-beat
-    title: "Prom of Doom begins"
-    asset: comet-city-academy/prom-of-doom/ct-prom-d30-the-chandelier-turns
-    size: "1344x768"
-    seed: 962103
-    prompt_prose: >-
-      Wide interior view of the same graduation ballroom at night, during the real dance. The twelve-sided
-      crystal chandelier has flipped upside down and its facets form a rotating brass ring. A huge straight
-      blue beam rises through the breaking glass roof toward three shield towers visible across the city. A
-      red fracture crosses the ceiling panes. Adult dancers in blue, cream and burgundy formal clothes
-      stumble away from shattered glass while an orchestra member grabs a falling music stand.
-  - key: ct-d29-the-guest-list-open-doors-success
-    lane: krea2
-    entity: choice-outcome
-    title: "The Guest List: Open the ballroom as a public shelter — success"
-    asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-open-doors-success
-    size: "1344x768"
-    seed: 962104
-    prompt_prose: >-
-      Wide interior view of the academy ballroom at late afternoon. Adults in formal jackets and work clothes
-      carry folding cots onto a polished circular dance floor beneath a twelve-sided crystal chandelier.
-      Imani Vale, a plus-size copper-brown-skinned adult woman with long braids and a teal scarf, stands next
-      to a small wooden ballot box. Two empty security guard posts flank the doors, and damp orange coats
-      hang on a rack.
-  - key: ct-d29-the-guest-list-open-doors-failure
-    lane: krea2
-    entity: choice-outcome
-    title: "The Guest List: Open the ballroom as a public shelter — failure"
-    asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-open-doors-failure
-    size: "1344x768"
-    seed: 962105
-    prompt_prose: >-
-      Interior of a stone ballroom entrance. A heavy bronze-trimmed side door hangs crooked on one hinge. Kit
-      Rowan, a broad-hipped pale-skinned adult with auburn hair and a green medic vest, sits on the floor
-      holding a bandaged wrist as formal-dressed students lift the door. Families carrying blankets stand
-      behind a yellow safety rope; a red alarm lamp glows above the corridor.
-  - key: ct-d29-the-guest-list-private-guard-success
-    lane: krea2
-    entity: choice-outcome
-    title: "The Guest List: Check identities and keep the prom by invitation — success"
-    asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-private-guard-success
-    size: "1344x768"
-    seed: 962106
-    prompt_prose: >-
-      Outside an academy ballroom entrance at dusk. Two tall security arches glow pale green beneath gold
-      double doors. Adult students in formal coats pass inside; a woman with two children holds a damp paper
-      invitation behind a locked waist-high barrier in the rain. Mina Quill, tall and broad-shouldered with
-      dark skin, short curls, an ivory coat and orange gauntlets, stands by the barrier with a tight
-      expression.
-  - key: ct-d29-the-guest-list-private-guard-failure
-    lane: krea2
-    entity: choice-outcome
-    title: "The Guest List: Check identities and keep the prom by invitation — failure"
-    asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-private-guard-failure
-    size: "1344x768"
-    seed: 962107
-    prompt_prose: >-
-      Medium view of a brightly illuminated mechanical security gate across the academy steps. A red warning
-      lamp shines above a row of waist-high turnstiles. Two adults in green medic vests kneel beside a
-      student on the rain-soaked pavement while an amber-visor-wearing Sol Navarro examines an exposed wall
-      panel through the bars.
-  - key: ct-d29-the-guest-list-steal-access-success
-    lane: krea2
-    entity: choice-outcome
-    title: "The Guest List: Copy the emergency keys and quietly recruit a second response team — success"
-    asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-steal-access-success
-    size: "1344x768"
-    seed: 962108
-    prompt_prose: >-
-      Close view inside a narrow maintenance corridor. Nix Venn, a slender tan-skinned adult with short
-      silver hair and a white jacket with purple collar lining, kneels over two brass emergency keys on a
-      black velvet work mat. Behind Nix stands an older market volunteer carrying a green tool bag. On the
-      wall hang grey breaker cabinets with small orange indicator lamps.
-  - key: ct-d29-the-guest-list-steal-access-failure
-    lane: krea2
-    entity: choice-outcome
-    title: "The Guest List: Copy the emergency keys and quietly recruit a second response team — failure"
-    asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-steal-access-failure
-    size: "1344x768"
-    seed: 962109
-    prompt_prose: >-
-      Eye-level view of a brass turnstile in the academy service hallway. A broken key sticks out of the
-      lock. Nix, a silver-haired adult in a white jacket, stands between two academy guards under pale orange
-      ceiling lamps. Beyond an open side door, a courier in a dark raincoat runs away holding a green map
-      tube.
-  - key: ct-d30-prom-of-doom-evacuate-everyone-success
-    lane: krea2
-    entity: choice-outcome
-    title: "PROM OF DOOM: Move the guests first and let the antenna finish its first cycle — success"
-    asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-evacuate-everyone-success
-    size: "1344x768"
-    seed: 962110
-    prompt_prose: >-
-      Night view from the academy courtyard: dozens of adults in torn graduation formalwear cross wet stone
-      steps behind Imani Vale, a plus-size copper-brown-skinned woman with braids and a teal scarf holding a
-      luminous rope. Behind them the ballroom's broken glass roof slopes into the hall, while a blue beam
-      climbs from the brass chandelier into the sky. Harbor tower lights flicker far below.
-  - key: ct-d30-prom-of-doom-evacuate-everyone-failure
-    lane: krea2
-    entity: choice-outcome
-    title: "PROM OF DOOM: Move the guests first and let the antenna finish its first cycle — failure"
-    asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-evacuate-everyone-failure
-    size: "1344x768"
-    seed: 962111
-    prompt_prose: >-
-      Inside a torn ballroom stairwell at night. An orange emergency ladder bridges a broken marble
-      staircase. Mina Quill in an ivory coat and orange gauntlets braces the ladder while Kit Rowan in a
-      green medic vest helps an adult in blue formal clothes climb down. Through a cracked glass wall, a
-      bright blue beam rises from the chandelier and harbor lights go out.
-  - key: ct-d30-prom-of-doom-destroy-antenna-success
-    lane: krea2
-    entity: choice-outcome
-    title: "PROM OF DOOM: Shatter the chandelier before it sends the last command — success"
-    asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-destroy-antenna-success
-    size: "1344x768"
-    seed: 962112
-    prompt_prose: >-
-      Interior wide shot of the academy ballroom. A twelve-sided glass chandelier has split into two jagged
-      pieces above the dance floor, surrounded by sparks and blue mist. One brass ring crashes into an empty
-      orchestra platform, splintering cellos and music stands. Mina in an ivory coat extends an orange shield
-      over three musicians rushing toward an open side exit.
-  - key: ct-d30-prom-of-doom-destroy-antenna-failure
-    lane: krea2
-    entity: choice-outcome
-    title: "PROM OF DOOM: Shatter the chandelier before it sends the last command — failure"
-    asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-destroy-antenna-failure
-    size: "1344x768"
-    seed: 962113
-    prompt_prose: >-
-      Low angle from an occupied ballroom table. Broken glass from the ceiling covers white plates and blue
-      paper garlands. A brass chandelier hangs tilted on one cable, its blue transmission beam still shining
-      through the roof. Adults in formal clothes crouch under overturned oak tables while a red hospital
-      shield tower flashes through the windows.
-  - key: ct-d30-prom-of-doom-take-command-success
-    lane: krea2
-    entity: choice-outcome
-    title: "PROM OF DOOM: Accept the mastermind's control console and choose which district gets protection — success"
-    asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-take-command-success
-    size: "1344x768"
-    seed: 962114
-    prompt_prose: >-
-      Side view inside a ballroom control alcove. A graduate in a dark navy cape places one hand on a large
-      brass console with three bright red switches and a semicircle of green lamps. Beyond the alcove window,
-      the chandelier's blue beam bends toward an empty concrete freight canal. Sol Navarro in amber visor
-      stands behind the console; Imani in a teal scarf watches from an open doorway.
-  - key: ct-d30-prom-of-doom-take-command-failure
-    lane: krea2
-    entity: choice-outcome
-    title: "PROM OF DOOM: Accept the mastermind's control console and choose which district gets protection — failure"
-    asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-take-command-failure
-    size: "1344x768"
-    seed: 962115
-    prompt_prose: >-
-      Night interior of the ballroom's narrow control alcove. A brass console glows red with a hand-shaped
-      warning panel. City guards in white-and-blue jackets stand at the open door holding magnetic cuffs. A
-      navy-caped graduate holds both hands above the controls while, beyond the glass, a hooded figure
-      descends a dark service staircase under a flashing blue light.
-  - key: ct-d30-prom-of-doom-break-network-success
-    lane: krea2
-    entity: choice-outcome
-    title: "PROM OF DOOM: Open the civic shield grid to every neighborhood and destroy the central control key — success"
-    asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-break-network-success
-    size: "1344x768"
-    seed: 962116
-    prompt_prose: >-
-      High-angle view from the ballroom roof at night. The central brass chandelier below has cracked into
-      several dark segments. Across Comet City, small independent blue shield domes cover a hospital, crowded
-      market, three orange harbor ferries and two apartment blocks. On the foreground roof, Nix in a white
-      jacket hands a bundle of brass keys to a market volunteer.
-  - key: ct-d30-prom-of-doom-break-network-failure
-    lane: krea2
-    entity: choice-outcome
-    title: "PROM OF DOOM: Open the civic shield grid to every neighborhood and destroy the central control key — failure"
-    asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-break-network-failure
-    size: "1344x768"
-    seed: 962117
-    prompt_prose: >-
-      Wide nighttime view from the academy roof. The ballroom glass roof is broken open and a blue beam
-      strikes a row of stone dormitory towers, breaking windows. Farther down the hill a small blue shield
-      dome covers the hospital while an orange market ferry shines beneath a separate dome. A market
-      volunteer carries a coil of rescue rope toward the academy door.
-  - key: ct-prom-finale-a-thousand-keys
-    lane: krea2
-    entity: ending-plate
-    title: "A City with a Thousand Keys"
-    asset: comet-city-academy/prom-of-doom/ct-prom-finale-a-thousand-keys
-    size: "1344x768"
-    seed: 962118
-    prompt_prose: >-
-      Morning outside a wrecked academy ballroom. The glass roof is open to the pale sky and broken brass
-      chandelier pieces lie in the doorway. Adult graduates stand on wet stone steps in navy and ivory gowns,
-      passing small brass keys to hospital nurses, dock workers and market residents. Behind them, three
-      independent pale-blue shield domes shine above separate neighborhoods.
-  - key: ct-prom-finale-iron-corsage
-    lane: krea2
-    entity: ending-plate
-    title: "The Iron Corsage"
-    asset: comet-city-academy/prom-of-doom/ct-prom-finale-iron-corsage
-    size: "1344x768"
-    seed: 962119
-    prompt_prose: >-
-      Night view inside an academy office overlooking a densely illuminated Comet City. A navy-caped graduate
-      sits behind a broad black desk with a gold medal and a bouquet of small silver metal roses. Through the
-      window, blue citywide shields cover buildings, and a line of white security checkpoints crosses an
-      orange-lit bridge. On the desk lies a thin closed manual beside a lit brass key.
-  - key: ct-prom-finale-empty-orchestra
-    lane: krea2
-    entity: ending-plate
-    title: "The Empty Orchestra"
-    asset: comet-city-academy/prom-of-doom/ct-prom-finale-empty-orchestra
-    size: "1344x768"
-    seed: 962120
-    prompt_prose: >-
-      Afternoon outside a damaged academy ballroom. Broken music stands, cello cases and scattered sheet
-      music lie on a temporary wooden ramp. A musician in a burgundy coat has one prosthetic silver hand and
-      holds a violin case with the other. Mina Quill in an ivory coat with orange gauntlets stands nearby
-      with a folder of hospital papers. Behind them adult graduates in navy formal clothing sit quietly on
-      stone steps.
-  - key: ct-prom-finale-last-boat
-    lane: krea2
-    entity: ending-plate
-    title: "The Last Dance Leaves by Boat"
-    asset: comet-city-academy/prom-of-doom/ct-prom-finale-last-boat
-    size: "1344x768"
-    seed: 962121
-    prompt_prose: >-
-      Blue predawn harbor with three orange-and-white ferries carrying adults in soaked formal clothes,
-      rescue coats and blankets. Yellow lanterns hang from boat railings. One student holds a crumpled blue
-      corsage while another steadies an injured passenger on a bench. Across the water the academy ballroom's
-      broken glass roof stands above dark city towers and a red waterline painted on market stalls.
+- key: ct-prom-d29-ballroom-doors
+  lane: krea2
+  entity: cinematic-beat
+  title: Day 29, ballroom preparations
+  asset: comet-city-academy/prom-of-doom/ct-prom-d29-ballroom-doors
+  size: 1344x768
+  seed: 962101
+  prompt_prose: Late afternoon outside a grand academy ballroom with cream stone columns and tall gold double doors.
+    Adult students in purple, silver and dark blue formal outfits arrive past orange emergency lanterns, while market
+    families wearing coats stand beside folding cots. Mina Quill, a broad-shouldered dark-skinned woman with short
+    curls in an ivory rescue coat, stands beside Imani Vale, a copper-brown-skinned woman with long black braids
+    and teal scarf. High above the open doorway, a twelve-sided glass chandelier is visible through the windows.
+  jobs:
+    krea2: 46392
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-prom-d30-first-waltz
+  lane: krea2
+  entity: cinematic-beat
+  title: Day 30, the real prom begins
+  asset: comet-city-academy/prom-of-doom/ct-prom-d30-first-waltz
+  size: 1344x768
+  seed: 962102
+  prompt_prose: Interior of a large academy ballroom during a night graduation prom. Dozens of adult students dance
+    on a polished circular wooden floor in long blue, burgundy and cream formalwear; several wear colored capes
+    over their evening clothes. An actual string quartet plays on a low platform beside the dance floor. Above them
+    a twelve-sided crystal chandelier glows gold beneath a broad glass dome. Purple paper garlands hang from stone
+    columns and guests stand beside a refreshment table near open terrace doors.
+  jobs:
+    krea2: 46393
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-prom-d30-the-chandelier-turns
+  lane: krea2
+  entity: cinematic-beat
+  title: Prom of Doom begins
+  asset: comet-city-academy/prom-of-doom/ct-prom-d30-the-chandelier-turns
+  size: 1344x768
+  seed: 962103
+  prompt_prose: Wide interior view of the same graduation ballroom at night, during the real dance. The twelve-sided
+    crystal chandelier has flipped upside down and its facets form a rotating brass ring. A huge straight blue beam
+    rises through the breaking glass roof toward three shield towers visible across the city. A red fracture crosses
+    the ceiling panes. Adult dancers in blue, cream and burgundy formal clothes stumble away from shattered glass
+    while an orchestra member grabs a falling music stand.
+  jobs:
+    krea2: 46394
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d29-the-guest-list-open-doors-success
+  lane: krea2
+  entity: choice-outcome
+  title: 'The Guest List: Open the ballroom as a public shelter — success'
+  asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-open-doors-success
+  size: 1344x768
+  seed: 962104
+  prompt_prose: Wide interior view of the academy ballroom at late afternoon. Adults in formal jackets and work
+    clothes carry folding cots onto a polished circular dance floor beneath a twelve-sided crystal chandelier. Imani
+    Vale, a plus-size copper-brown-skinned adult woman with long braids and a teal scarf, stands next to a small
+    wooden ballot box. Two empty security guard posts flank the doors, and damp orange coats hang on a rack.
+  jobs:
+    krea2: 46395
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d29-the-guest-list-open-doors-failure
+  lane: krea2
+  entity: choice-outcome
+  title: 'The Guest List: Open the ballroom as a public shelter — failure'
+  asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-open-doors-failure
+  size: 1344x768
+  seed: 962105
+  prompt_prose: Interior of a stone ballroom entrance. A heavy bronze-trimmed side door hangs crooked on one hinge.
+    Kit Rowan, a broad-hipped pale-skinned adult with auburn hair and a green medic vest, sits on the floor holding
+    a bandaged wrist as formal-dressed students lift the door. Families carrying blankets stand behind a yellow
+    safety rope; a red alarm lamp glows above the corridor.
+  jobs:
+    krea2: 46396
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d29-the-guest-list-private-guard-success
+  lane: krea2
+  entity: choice-outcome
+  title: 'The Guest List: Check identities and keep the prom by invitation — success'
+  asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-private-guard-success
+  size: 1344x768
+  seed: 962106
+  prompt_prose: Outside an academy ballroom entrance at dusk. Two tall security arches glow pale green beneath gold
+    double doors. Adult students in formal coats pass inside; a woman with two children holds a damp paper invitation
+    behind a locked waist-high barrier in the rain. Mina Quill, tall and broad-shouldered with dark skin, short
+    curls, an ivory coat and orange gauntlets, stands by the barrier with a tight expression.
+  jobs:
+    krea2: 46397
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d29-the-guest-list-private-guard-failure
+  lane: krea2
+  entity: choice-outcome
+  title: 'The Guest List: Check identities and keep the prom by invitation — failure'
+  asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-private-guard-failure
+  size: 1344x768
+  seed: 962107
+  prompt_prose: Medium view of a brightly illuminated mechanical security gate across the academy steps. A red warning
+    lamp shines above a row of waist-high turnstiles. Two adults in green medic vests kneel beside a student on
+    the rain-soaked pavement while an amber-visor-wearing Sol Navarro examines an exposed wall panel through the
+    bars.
+  jobs:
+    krea2: 46398
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d29-the-guest-list-steal-access-success
+  lane: krea2
+  entity: choice-outcome
+  title: 'The Guest List: Copy the emergency keys and quietly recruit a second response team — success'
+  asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-steal-access-success
+  size: 1344x768
+  seed: 962108
+  prompt_prose: Close view inside a narrow maintenance corridor. Nix Venn, a slender tan-skinned adult with short
+    silver hair and a white jacket with purple collar lining, kneels over two brass emergency keys on a black velvet
+    work mat. Behind Nix stands an older market volunteer carrying a green tool bag. On the wall hang grey breaker
+    cabinets with small orange indicator lamps.
+  jobs:
+    krea2: 46399
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d29-the-guest-list-steal-access-failure
+  lane: krea2
+  entity: choice-outcome
+  title: 'The Guest List: Copy the emergency keys and quietly recruit a second response team — failure'
+  asset: comet-city-academy/prom-of-doom/ct-d29-the-guest-list-steal-access-failure
+  size: 1344x768
+  seed: 962109
+  prompt_prose: Eye-level view of a brass turnstile in the academy service hallway. A broken key sticks out of the
+    lock. Nix, a silver-haired adult in a white jacket, stands between two academy guards under pale orange ceiling
+    lamps. Beyond an open side door, a courier in a dark raincoat runs away holding a green map tube.
+  jobs:
+    krea2: 46400
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d30-prom-of-doom-evacuate-everyone-success
+  lane: krea2
+  entity: choice-outcome
+  title: 'PROM OF DOOM: Move the guests first and let the antenna finish its first cycle — success'
+  asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-evacuate-everyone-success
+  size: 1344x768
+  seed: 962110
+  prompt_prose: 'Night view from the academy courtyard: dozens of adults in torn graduation formalwear cross wet
+    stone steps behind Imani Vale, a plus-size copper-brown-skinned woman with braids and a teal scarf holding a
+    luminous rope. Behind them the ballroom''s broken glass roof slopes into the hall, while a blue beam climbs
+    from the brass chandelier into the sky. Harbor tower lights flicker far below.'
+  jobs:
+    krea2: 46401
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d30-prom-of-doom-evacuate-everyone-failure
+  lane: krea2
+  entity: choice-outcome
+  title: 'PROM OF DOOM: Move the guests first and let the antenna finish its first cycle — failure'
+  asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-evacuate-everyone-failure
+  size: 1344x768
+  seed: 962111
+  prompt_prose: Inside a torn ballroom stairwell at night. An orange emergency ladder bridges a broken marble staircase.
+    Mina Quill in an ivory coat and orange gauntlets braces the ladder while Kit Rowan in a green medic vest helps
+    an adult in blue formal clothes climb down. Through a cracked glass wall, a bright blue beam rises from the
+    chandelier and harbor lights go out.
+  jobs:
+    krea2: 46402
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d30-prom-of-doom-destroy-antenna-success
+  lane: krea2
+  entity: choice-outcome
+  title: 'PROM OF DOOM: Shatter the chandelier before it sends the last command — success'
+  asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-destroy-antenna-success
+  size: 1344x768
+  seed: 962112
+  prompt_prose: Interior wide shot of the academy ballroom. A twelve-sided glass chandelier has split into two jagged
+    pieces above the dance floor, surrounded by sparks and blue mist. One brass ring crashes into an empty orchestra
+    platform, splintering cellos and music stands. Mina in an ivory coat extends an orange shield over three musicians
+    rushing toward an open side exit.
+  jobs:
+    krea2: 46403
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d30-prom-of-doom-destroy-antenna-failure
+  lane: krea2
+  entity: choice-outcome
+  title: 'PROM OF DOOM: Shatter the chandelier before it sends the last command — failure'
+  asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-destroy-antenna-failure
+  size: 1344x768
+  seed: 962113
+  prompt_prose: Low angle from an occupied ballroom table. Broken glass from the ceiling covers white plates and
+    blue paper garlands. A brass chandelier hangs tilted on one cable, its blue transmission beam still shining
+    through the roof. Adults in formal clothes crouch under overturned oak tables while a red hospital shield tower
+    flashes through the windows.
+  jobs:
+    krea2: 46404
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d30-prom-of-doom-take-command-success
+  lane: krea2
+  entity: choice-outcome
+  title: 'PROM OF DOOM: Accept the mastermind''s control console and choose which district gets protection — success'
+  asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-take-command-success
+  size: 1344x768
+  seed: 962114
+  prompt_prose: Side view inside a ballroom control alcove. A graduate in a dark navy cape places one hand on a
+    large brass console with three bright red switches and a semicircle of green lamps. Beyond the alcove window,
+    the chandelier's blue beam bends toward an empty concrete freight canal. Sol Navarro in amber visor stands behind
+    the console; Imani in a teal scarf watches from an open doorway.
+  jobs:
+    krea2: 46405
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d30-prom-of-doom-take-command-failure
+  lane: krea2
+  entity: choice-outcome
+  title: 'PROM OF DOOM: Accept the mastermind''s control console and choose which district gets protection — failure'
+  asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-take-command-failure
+  size: 1344x768
+  seed: 962115
+  prompt_prose: Night interior of the ballroom's narrow control alcove. A brass console glows red with a hand-shaped
+    warning panel. City guards in white-and-blue jackets stand at the open door holding magnetic cuffs. A navy-caped
+    graduate holds both hands above the controls while, beyond the glass, a hooded figure descends a dark service
+    staircase under a flashing blue light.
+  jobs:
+    krea2: 46406
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d30-prom-of-doom-break-network-success
+  lane: krea2
+  entity: choice-outcome
+  title: 'PROM OF DOOM: Open the civic shield grid to every neighborhood and destroy the central control key — success'
+  asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-break-network-success
+  size: 1344x768
+  seed: 962116
+  prompt_prose: High-angle view from the ballroom roof at night. The central brass chandelier below has cracked
+    into several dark segments. Across Comet City, small independent blue shield domes cover a hospital, crowded
+    market, three orange harbor ferries and two apartment blocks. On the foreground roof, Nix in a white jacket
+    hands a bundle of brass keys to a market volunteer.
+  jobs:
+    krea2: 46407
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d30-prom-of-doom-break-network-failure
+  lane: krea2
+  entity: choice-outcome
+  title: 'PROM OF DOOM: Open the civic shield grid to every neighborhood and destroy the central control key — failure'
+  asset: comet-city-academy/prom-of-doom/ct-d30-prom-of-doom-break-network-failure
+  size: 1344x768
+  seed: 962117
+  prompt_prose: Wide nighttime view from the academy roof. The ballroom glass roof is broken open and a blue beam
+    strikes a row of stone dormitory towers, breaking windows. Farther down the hill a small blue shield dome covers
+    the hospital while an orange market ferry shines beneath a separate dome. A market volunteer carries a coil
+    of rescue rope toward the academy door.
+  jobs:
+    krea2: 46408
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-prom-finale-a-thousand-keys
+  lane: krea2
+  entity: ending-plate
+  title: A City with a Thousand Keys
+  asset: comet-city-academy/prom-of-doom/ct-prom-finale-a-thousand-keys
+  size: 1344x768
+  seed: 962118
+  prompt_prose: Morning outside a wrecked academy ballroom. The glass roof is open to the pale sky and broken brass
+    chandelier pieces lie in the doorway. Adult graduates stand on wet stone steps in navy and ivory gowns, passing
+    small brass keys to hospital nurses, dock workers and market residents. Behind them, three independent pale-blue
+    shield domes shine above separate neighborhoods.
+  jobs:
+    krea2: 46409
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-prom-finale-iron-corsage
+  lane: krea2
+  entity: ending-plate
+  title: The Iron Corsage
+  asset: comet-city-academy/prom-of-doom/ct-prom-finale-iron-corsage
+  size: 1344x768
+  seed: 962119
+  prompt_prose: Night view inside an academy office overlooking a densely illuminated Comet City. A navy-caped graduate
+    sits behind a broad black desk with a gold medal and a bouquet of small silver metal roses. Through the window,
+    blue citywide shields cover buildings, and a line of white security checkpoints crosses an orange-lit bridge.
+    On the desk lies a thin closed manual beside a lit brass key.
+  jobs:
+    krea2: 46410
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-prom-finale-empty-orchestra
+  lane: krea2
+  entity: ending-plate
+  title: The Empty Orchestra
+  asset: comet-city-academy/prom-of-doom/ct-prom-finale-empty-orchestra
+  size: 1344x768
+  seed: 962120
+  prompt_prose: Afternoon outside a damaged academy ballroom. Broken music stands, cello cases and scattered sheet
+    music lie on a temporary wooden ramp. A musician in a burgundy coat has one prosthetic silver hand and holds
+    a violin case with the other. Mina Quill in an ivory coat with orange gauntlets stands nearby with a folder
+    of hospital papers. Behind them adult graduates in navy formal clothing sit quietly on stone steps.
+  jobs:
+    krea2: 46411
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-prom-finale-last-boat
+  lane: krea2
+  entity: ending-plate
+  title: The Last Dance Leaves by Boat
+  asset: comet-city-academy/prom-of-doom/ct-prom-finale-last-boat
+  size: 1344x768
+  seed: 962121
+  prompt_prose: Blue predawn harbor with three orange-and-white ferries carrying adults in soaked formal clothes,
+    rescue coats and blankets. Yellow lanterns hang from boat railings. One student holds a crumpled blue corsage
+    while another steadies an injured passenger on a bench. Across the water the academy ballroom's broken glass
+    roof stands above dark city towers and a red waterline painted on market stalls.
+  jobs:
+    krea2: 46412
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null

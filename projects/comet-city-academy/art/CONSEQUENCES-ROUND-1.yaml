@@ -8,248 +8,350 @@ is_mature: false
 cast_loras: false
 auto_submit: true
 lanes:
-  - key: krea2
-    label: Krea 2 painted story consequences
-    engine: krea2
-    prompt: prose
-    suffix: "Hand-painted 2D illustration with gouache color blocks, ink outlines, visible cloth seams, stone and metal textures, purple-blue night shadows and warm amber lamps."
+- key: krea2
+  label: Krea 2 painted story consequences
+  engine: krea2
+  prompt: prose
+  suffix: Hand-painted 2D illustration with gouache color blocks, ink outlines, visible cloth seams, stone and metal
+    textures, purple-blue night shadows and warm amber lamps.
 subjects:
-  - key: ct-d11-last-dry-street-hospital-first-success
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Last Dry Street: Seal the hospital gate (success)"
-    asset: comet-city-academy/consequences/ct-d11-last-dry-street-hospital-first-success
-    size: "1344x768"
-    seed: 961001
-    prompt_prose: >-
-      Eye-level view from the covered market. Knee-high brown water runs between overturned produce crates.
-      Across the canal, the hospital windows glow gold above dry steps. Mina in her ivory rescue coat lifts a
-      soaked merchant over the stall counter. A small rescue boat approaches from the left.
-  - key: ct-d11-last-dry-street-hospital-first-failure
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Last Dry Street: Seal the hospital gate (failure)"
-    asset: comet-city-academy/consequences/ct-d11-last-dry-street-hospital-first-failure
-    size: "1344x768"
-    seed: 961002
-    prompt_prose: >-
-      Wide view of a steel floodgate stuck diagonally above rushing water. On the left, a hospital basement
-      door is submerged and white-coated patients gather on upper steps. On the right, the covered market's
-      metal awning sags into water. Kit in a green medic vest pushes a wheelchair across a wet concrete ramp.
-  - key: ct-d11-last-dry-street-evacuate-hospital-success
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Last Dry Street: Open the overflow and carry the patients (success)"
-    asset: comet-city-academy/consequences/ct-d11-last-dry-street-evacuate-hospital-success
-    size: "1344x768"
-    seed: 961003
-    prompt_prose: >-
-      High-angle view of a hospital rooftop beside a deep black canal. A violet rectangular portal connects
-      the roof to a bright gymnasium door across the street. Nix in a white jacket gestures patients through.
-      The market stalls on the far bank remain above the brown waterline.
-  - key: ct-d11-last-dry-street-evacuate-hospital-failure
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Last Dry Street: Open the overflow and carry the patients (failure)"
-    asset: comet-city-academy/consequences/ct-d11-last-dry-street-evacuate-hospital-failure
-    size: "1344x768"
-    seed: 961004
-    prompt_prose: >-
-      Night view of a hospital balcony above dark water. A cracked violet portal flickers over the street.
-      Mina hangs from a bright orange rescue cable beside three stranded patients. Nix lies on a dry
-      stretcher, their white jacket torn at the elbow. Far-off market tents remain dry.
-  - key: ct-d11-last-dry-street-divert-developer-success
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Last Dry Street: Flood the developer's underground car park (success)"
-    asset: comet-city-academy/consequences/ct-d11-last-dry-street-divert-developer-success
-    size: "1344x768"
-    seed: 961005
-    prompt_prose: >-
-      Inside a luxury tower parking garage. Brown water surrounds black sports cars, polished concrete columns
-      and a fallen security gate. Sol in an amber visor kneels beside an open steel locker containing damp
-      rolled maps and brass crescent badges. Light from the open garage ramp silhouettes him.
-  - key: ct-d11-last-dry-street-divert-developer-failure
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Last Dry Street: Flood the developer's underground car park (failure)"
-    asset: comet-city-academy/consequences/ct-d11-last-dry-street-divert-developer-failure
-    size: "1344x768"
-    seed: 961006
-    prompt_prose: >-
-      Low camera inside a concrete drainage tunnel lit by one red emergency lamp. Water rises to Sol's waist
-      behind a closed mesh gate, his amber visor glowing beside an open yellow waterproof document case. A
-      second student pulls at the gate wheel from the dry foreground.
-  - key: ct-d18-letters-of-merit-publish-logs-success
-    lane: krea2
-    entity: encounter-outcome
-    title: "Letters of Merit: Project the full scoring ledger on the ceremony wall (success)"
-    asset: comet-city-academy/consequences/ct-d18-letters-of-merit-publish-logs-success
-    size: "1344x768"
-    seed: 961007
-    prompt_prose: >-
-      Wide view of the stone scholarship hall. Three brass ranking machines project hundreds of tiny
-      illuminated rows over the high wall. Students point at the projection while some turn their faces away.
-      Imani with long black braids stands under the projection with her arms folded. An empty donor chair sits
-      at the front.
-  - key: ct-d18-letters-of-merit-publish-logs-failure
-    lane: krea2
-    entity: encounter-outcome
-    title: "Letters of Merit: Project the full scoring ledger on the ceremony wall (failure)"
-    asset: comet-city-academy/consequences/ct-d18-letters-of-merit-publish-logs-failure
-    size: "1344x768"
-    seed: 961008
-    prompt_prose: >-
-      Close view of a large brass scholarship machine at the hall dais. One wall projection shows a single
-      rectangular medical chart with fine illegible markings; the remaining panels are dark. A uniformed
-      security guard takes a glowing amber tablet from Sol as seated students stare.
-  - key: ct-d18-letters-of-merit-replace-rank-success
-    lane: krea2
-    entity: encounter-outcome
-    title: "Letters of Merit: Secretly redirect awards to excluded students (success)"
-    asset: comet-city-academy/consequences/ct-d18-letters-of-merit-replace-rank-success
-    size: "1344x768"
-    seed: 961009
-    prompt_prose: >-
-      Medium view of a wooden award table. Four adult students hold sealed cream envelopes beside a brass
-      ranking machine showing green lamps. Sol in his amber visor slips a small brass key into his navy coat
-      pocket. A donor in a silver suit claps at the rear of the hall.
-  - key: ct-d18-letters-of-merit-replace-rank-failure
-    lane: krea2
-    entity: encounter-outcome
-    title: "Letters of Merit: Secretly redirect awards to excluded students (failure)"
-    asset: comet-city-academy/consequences/ct-d18-letters-of-merit-replace-rank-failure
-    size: "1344x768"
-    seed: 961010
-    prompt_prose: >-
-      Ground-level view of white unprinted certificates scattered across polished stone below an open brass
-      printing machine. A suited donor points at Sol standing by the podium; adult students gather their
-      papers from the floor. An amber warning lamp is lit above the printer.
-  - key: ct-d18-letters-of-merit-student-audit-success
-    lane: krea2
-    entity: encounter-outcome
-    title: "Letters of Merit: Let affected students lead a public audit (success)"
-    asset: comet-city-academy/consequences/ct-d18-letters-of-merit-student-audit-success
-    size: "1344x768"
-    seed: 961011
-    prompt_prose: >-
-      A circle of adult students stands around three tables in the scholarship hall. Imani in her navy coat
-      places a brass ballot box in the center. Mina and Sol hold up open empty hands rather than the ranking
-      tablet. Through high windows, afternoon light falls on folded chairs and closed award envelopes.
-  - key: ct-d18-letters-of-merit-student-audit-failure
-    lane: krea2
-    entity: encounter-outcome
-    title: "Letters of Merit: Let affected students lead a public audit (failure)"
-    asset: comet-city-academy/consequences/ct-d18-letters-of-merit-student-audit-failure
-    size: "1344x768"
-    seed: 961012
-    prompt_prose: >-
-      View from the high gallery above the scholarship hall. Students argue around a brass ballot box while a
-      silver-suited donor crosses an open side door holding a hard black case. Two closed clinic donation tins
-      sit on the empty dais; loose envelopes lie beneath a chair.
-  - key: ct-d27-one-last-dance-cut-power-success
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Fourth Dance: Kill the ballroom feed before the fourth dance (success)"
-    asset: comet-city-academy/consequences/ct-d27-one-last-dance-cut-power-success
-    size: "1344x768"
-    seed: 961013
-    prompt_prose: >-
-      Wide view of a dark ballroom. The twelve-sided glass chandelier hangs unlit and motionless. Students in
-      formal clothes follow two rows of turquoise glow sticks toward open side doors. Imani in a teal scarf
-      holds the door while Mina raises a small amber shield over the steps.
-  - key: ct-d27-one-last-dance-cut-power-failure
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Fourth Dance: Kill the ballroom feed before the fourth dance (failure)"
-    asset: comet-city-academy/consequences/ct-d27-one-last-dance-cut-power-failure
-    size: "1344x768"
-    seed: 961014
-    prompt_prose: >-
-      Low view of the ballroom floor covered in small glass fragments beneath the still-glowing central
-      chandelier. Kit in a green medic vest crouches by a heavy steel exit door with a torn sleeve. Students
-      in blue and silver formal clothes gather behind a dark railing while red emergency lamps glow.
-  - key: ct-d27-one-last-dance-keep-dancing-success
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Fourth Dance: Follow the signal while the dance continues (success)"
-    asset: comet-city-academy/consequences/ct-d27-one-last-dance-keep-dancing-success
-    size: "1344x768"
-    seed: 961015
-    prompt_prose: >-
-      Behind the ballroom musicians, an open black velvet instrument case lies on a chair. Inside is a copper
-      transmitter with four pale blue indicator bulbs. Nix in a white jacket kneels beside it, one hand on a
-      glowing purple doorway. Through parted curtains, adult students dance beneath the intact glass
-      chandelier.
-  - key: ct-d27-one-last-dance-keep-dancing-failure
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Fourth Dance: Follow the signal while the dance continues (failure)"
-    asset: comet-city-academy/consequences/ct-d27-one-last-dance-keep-dancing-failure
-    size: "1344x768"
-    seed: 961016
-    prompt_prose: >-
-      Full view of the ballroom at night. Small silver discs hover above formalwear-clad students, each
-      throwing a rectangular blue image onto a stone wall. The central chandelier turns above them. Imani
-      holds a large curtain across one projection while Nix opens a small violet portal toward a side
-      stairwell.
-  - key: ct-d27-one-last-dance-answer-villain-success
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Fourth Dance: Offer the mastermind access to the academy shield in exchange for proof (success)"
-    asset: comet-city-academy/consequences/ct-d27-one-last-dance-answer-villain-success
-    size: "1344x768"
-    seed: 961017
-    prompt_prose: >-
-      Close view in a narrow backstage utility room. A brass municipal cabinet stands open with a blue
-      star-shaped switch inside. A violet communications screen shows the silhouette of a hooded adult figure.
-      Sol's brass-lined glove holds a small copper key near the cabinet; Imani is visible in the doorway with
-      her hands lowered.
-  - key: ct-d27-one-last-dance-answer-villain-failure
-    lane: krea2
-    entity: encounter-outcome
-    title: "The Fourth Dance: Offer the mastermind access to the academy shield in exchange for proof (failure)"
-    asset: comet-city-academy/consequences/ct-d27-one-last-dance-answer-villain-failure
-    size: "1344x768"
-    seed: 961018
-    prompt_prose: >-
-      View across the ballroom from the stage. The huge wall behind the dancers shows a blue holographic image
-      of a student and a cloaked figure shaking hands. Several adult students point toward the backstage
-      balcony where the player stands. The chandelier shines pale purple over an almost-empty dance floor.
-  - key: ct-ending-rooftop-assembly
-    lane: krea2
-    entity: ending-scene
-    title: "Ending: Graduation Above the Floodline"
-    asset: comet-city-academy/consequences/ct-ending-rooftop-assembly
-    size: "1344x768"
-    seed: 961019
-    prompt_prose: >-
-      Early morning view across market rooftops repaired with mismatched red and blue sheet metal. Long tables
-      and folding chairs fill the roofs, with adults in ivory graduation robes standing among shopkeepers and
-      hospital staff. Mina in an ivory rescue coat hangs orange safety bunting along a railing. Behind them,
-      the old academy towers are distant and the canal barrier has multiple open pedestrian bridges.
-  - key: ct-ending-private-shield
-    lane: krea2
-    entity: ending-scene
-    title: "Ending: The City That Never Goes Dark"
-    asset: comet-city-academy/consequences/ct-ending-private-shield
-    size: "1344x768"
-    seed: 961020
-    prompt_prose: >-
-      Night panorama of Comet City from above the canal. Every hospital and apartment window glows white
-      beneath a broad translucent blue shield. Three black security drones hover over a guarded metal
-      footbridge; a small queue of civilians waits at a checkpoint. At the front of an academy balcony, a
-      solitary graduate in a navy cape wears a gold medal while Sol stands several steps behind beside a lit
-      control console.
-  - key: ct-ending-empty-stage
-    lane: krea2
-    entity: ending-scene
-    title: "Ending: The Prom That Became a Ferry"
-    asset: comet-city-academy/consequences/ct-ending-empty-stage
-    size: "1344x768"
-    seed: 961021
-    prompt_prose: >-
-      Wide sunrise shot from a harbor pier. Four crowded orange-and-white passenger ferries sail past damaged
-      docks and half-submerged market roofs. Students in torn formal clothes hand water bottles to families
-      beneath deck awnings. The academy glass ballroom stands undamaged on the hill at upper right with unlit
-      windows. A single navy graduation cap rests on a coil of rope in the foreground.
+- key: ct-d11-last-dry-street-hospital-first-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Last Dry Street: Seal the hospital gate (success)'
+  asset: comet-city-academy/consequences/ct-d11-last-dry-street-hospital-first-success
+  size: 1344x768
+  seed: 961001
+  prompt_prose: Eye-level view from the covered market. Knee-high brown water runs between overturned produce crates.
+    Across the canal, the hospital windows glow gold above dry steps. Mina in her ivory rescue coat lifts a soaked
+    merchant over the stall counter. A small rescue boat approaches from the left.
+  jobs:
+    krea2: 46368
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d11-last-dry-street-hospital-first-failure
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Last Dry Street: Seal the hospital gate (failure)'
+  asset: comet-city-academy/consequences/ct-d11-last-dry-street-hospital-first-failure
+  size: 1344x768
+  seed: 961002
+  prompt_prose: Wide view of a steel floodgate stuck diagonally above rushing water. On the left, a hospital basement
+    door is submerged and white-coated patients gather on upper steps. On the right, the covered market's metal
+    awning sags into water. Kit in a green medic vest pushes a wheelchair across a wet concrete ramp.
+  jobs:
+    krea2: 46369
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d11-last-dry-street-evacuate-hospital-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Last Dry Street: Open the overflow and carry the patients (success)'
+  asset: comet-city-academy/consequences/ct-d11-last-dry-street-evacuate-hospital-success
+  size: 1344x768
+  seed: 961003
+  prompt_prose: High-angle view of a hospital rooftop beside a deep black canal. A violet rectangular portal connects
+    the roof to a bright gymnasium door across the street. Nix in a white jacket gestures patients through. The
+    market stalls on the far bank remain above the brown waterline.
+  jobs:
+    krea2: 46370
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d11-last-dry-street-evacuate-hospital-failure
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Last Dry Street: Open the overflow and carry the patients (failure)'
+  asset: comet-city-academy/consequences/ct-d11-last-dry-street-evacuate-hospital-failure
+  size: 1344x768
+  seed: 961004
+  prompt_prose: Night view of a hospital balcony above dark water. A cracked violet portal flickers over the street.
+    Mina hangs from a bright orange rescue cable beside three stranded patients. Nix lies on a dry stretcher, their
+    white jacket torn at the elbow. Far-off market tents remain dry.
+  jobs:
+    krea2: 46371
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d11-last-dry-street-divert-developer-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Last Dry Street: Flood the developer''s underground car park (success)'
+  asset: comet-city-academy/consequences/ct-d11-last-dry-street-divert-developer-success
+  size: 1344x768
+  seed: 961005
+  prompt_prose: Inside a luxury tower parking garage. Brown water surrounds black sports cars, polished concrete
+    columns and a fallen security gate. Sol in an amber visor kneels beside an open steel locker containing damp
+    rolled maps and brass crescent badges. Light from the open garage ramp silhouettes him.
+  jobs:
+    krea2: 46372
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d11-last-dry-street-divert-developer-failure
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Last Dry Street: Flood the developer''s underground car park (failure)'
+  asset: comet-city-academy/consequences/ct-d11-last-dry-street-divert-developer-failure
+  size: 1344x768
+  seed: 961006
+  prompt_prose: Low camera inside a concrete drainage tunnel lit by one red emergency lamp. Water rises to Sol's
+    waist behind a closed mesh gate, his amber visor glowing beside an open yellow waterproof document case. A second
+    student pulls at the gate wheel from the dry foreground.
+  jobs:
+    krea2: 46373
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d18-letters-of-merit-publish-logs-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Letters of Merit: Project the full scoring ledger on the ceremony wall (success)'
+  asset: comet-city-academy/consequences/ct-d18-letters-of-merit-publish-logs-success
+  size: 1344x768
+  seed: 961007
+  prompt_prose: Wide view of the stone scholarship hall. Three brass ranking machines project hundreds of tiny illuminated
+    rows over the high wall. Students point at the projection while some turn their faces away. Imani with long
+    black braids stands under the projection with her arms folded. An empty donor chair sits at the front.
+  jobs:
+    krea2: 46374
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d18-letters-of-merit-publish-logs-failure
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Letters of Merit: Project the full scoring ledger on the ceremony wall (failure)'
+  asset: comet-city-academy/consequences/ct-d18-letters-of-merit-publish-logs-failure
+  size: 1344x768
+  seed: 961008
+  prompt_prose: Close view of a large brass scholarship machine at the hall dais. One wall projection shows a single
+    rectangular medical chart with fine illegible markings; the remaining panels are dark. A uniformed security
+    guard takes a glowing amber tablet from Sol as seated students stare.
+  jobs:
+    krea2: 46375
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d18-letters-of-merit-replace-rank-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Letters of Merit: Secretly redirect awards to excluded students (success)'
+  asset: comet-city-academy/consequences/ct-d18-letters-of-merit-replace-rank-success
+  size: 1344x768
+  seed: 961009
+  prompt_prose: Medium view of a wooden award table. Four adult students hold sealed cream envelopes beside a brass
+    ranking machine showing green lamps. Sol in his amber visor slips a small brass key into his navy coat pocket.
+    A donor in a silver suit claps at the rear of the hall.
+  jobs:
+    krea2: 46376
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d18-letters-of-merit-replace-rank-failure
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Letters of Merit: Secretly redirect awards to excluded students (failure)'
+  asset: comet-city-academy/consequences/ct-d18-letters-of-merit-replace-rank-failure
+  size: 1344x768
+  seed: 961010
+  prompt_prose: Ground-level view of white unprinted certificates scattered across polished stone below an open
+    brass printing machine. A suited donor points at Sol standing by the podium; adult students gather their papers
+    from the floor. An amber warning lamp is lit above the printer.
+  jobs:
+    krea2: 46377
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d18-letters-of-merit-student-audit-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Letters of Merit: Let affected students lead a public audit (success)'
+  asset: comet-city-academy/consequences/ct-d18-letters-of-merit-student-audit-success
+  size: 1344x768
+  seed: 961011
+  prompt_prose: A circle of adult students stands around three tables in the scholarship hall. Imani in her navy
+    coat places a brass ballot box in the center. Mina and Sol hold up open empty hands rather than the ranking
+    tablet. Through high windows, afternoon light falls on folded chairs and closed award envelopes.
+  jobs:
+    krea2: 46378
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d18-letters-of-merit-student-audit-failure
+  lane: krea2
+  entity: encounter-outcome
+  title: 'Letters of Merit: Let affected students lead a public audit (failure)'
+  asset: comet-city-academy/consequences/ct-d18-letters-of-merit-student-audit-failure
+  size: 1344x768
+  seed: 961012
+  prompt_prose: View from the high gallery above the scholarship hall. Students argue around a brass ballot box
+    while a silver-suited donor crosses an open side door holding a hard black case. Two closed clinic donation
+    tins sit on the empty dais; loose envelopes lie beneath a chair.
+  jobs:
+    krea2: 46379
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d27-one-last-dance-cut-power-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Fourth Dance: Kill the ballroom feed before the fourth dance (success)'
+  asset: comet-city-academy/consequences/ct-d27-one-last-dance-cut-power-success
+  size: 1344x768
+  seed: 961013
+  prompt_prose: Wide view of a dark ballroom. The twelve-sided glass chandelier hangs unlit and motionless. Students
+    in formal clothes follow two rows of turquoise glow sticks toward open side doors. Imani in a teal scarf holds
+    the door while Mina raises a small amber shield over the steps.
+  jobs:
+    krea2: 46380
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d27-one-last-dance-cut-power-failure
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Fourth Dance: Kill the ballroom feed before the fourth dance (failure)'
+  asset: comet-city-academy/consequences/ct-d27-one-last-dance-cut-power-failure
+  size: 1344x768
+  seed: 961014
+  prompt_prose: Low view of the ballroom floor covered in small glass fragments beneath the still-glowing central
+    chandelier. Kit in a green medic vest crouches by a heavy steel exit door with a torn sleeve. Students in blue
+    and silver formal clothes gather behind a dark railing while red emergency lamps glow.
+  jobs:
+    krea2: 46381
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d27-one-last-dance-keep-dancing-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Fourth Dance: Follow the signal while the dance continues (success)'
+  asset: comet-city-academy/consequences/ct-d27-one-last-dance-keep-dancing-success
+  size: 1344x768
+  seed: 961015
+  prompt_prose: Behind the ballroom musicians, an open black velvet instrument case lies on a chair. Inside is a
+    copper transmitter with four pale blue indicator bulbs. Nix in a white jacket kneels beside it, one hand on
+    a glowing purple doorway. Through parted curtains, adult students dance beneath the intact glass chandelier.
+  jobs:
+    krea2: 46382
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d27-one-last-dance-keep-dancing-failure
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Fourth Dance: Follow the signal while the dance continues (failure)'
+  asset: comet-city-academy/consequences/ct-d27-one-last-dance-keep-dancing-failure
+  size: 1344x768
+  seed: 961016
+  prompt_prose: Full view of the ballroom at night. Small silver discs hover above formalwear-clad students, each
+    throwing a rectangular blue image onto a stone wall. The central chandelier turns above them. Imani holds a
+    large curtain across one projection while Nix opens a small violet portal toward a side stairwell.
+  jobs:
+    krea2: 46383
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d27-one-last-dance-answer-villain-success
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Fourth Dance: Offer the mastermind access to the academy shield in exchange for proof (success)'
+  asset: comet-city-academy/consequences/ct-d27-one-last-dance-answer-villain-success
+  size: 1344x768
+  seed: 961017
+  prompt_prose: Close view in a narrow backstage utility room. A brass municipal cabinet stands open with a blue
+    star-shaped switch inside. A violet communications screen shows the silhouette of a hooded adult figure. Sol's
+    brass-lined glove holds a small copper key near the cabinet; Imani is visible in the doorway with her hands
+    lowered.
+  jobs:
+    krea2: 46384
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-d27-one-last-dance-answer-villain-failure
+  lane: krea2
+  entity: encounter-outcome
+  title: 'The Fourth Dance: Offer the mastermind access to the academy shield in exchange for proof (failure)'
+  asset: comet-city-academy/consequences/ct-d27-one-last-dance-answer-villain-failure
+  size: 1344x768
+  seed: 961018
+  prompt_prose: View across the ballroom from the stage. The huge wall behind the dancers shows a blue holographic
+    image of a student and a cloaked figure shaking hands. Several adult students point toward the backstage balcony
+    where the player stands. The chandelier shines pale purple over an almost-empty dance floor.
+  jobs:
+    krea2: 46385
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-ending-rooftop-assembly
+  lane: krea2
+  entity: ending-scene
+  title: 'Ending: Graduation Above the Floodline'
+  asset: comet-city-academy/consequences/ct-ending-rooftop-assembly
+  size: 1344x768
+  seed: 961019
+  prompt_prose: Early morning view across market rooftops repaired with mismatched red and blue sheet metal. Long
+    tables and folding chairs fill the roofs, with adults in ivory graduation robes standing among shopkeepers and
+    hospital staff. Mina in an ivory rescue coat hangs orange safety bunting along a railing. Behind them, the old
+    academy towers are distant and the canal barrier has multiple open pedestrian bridges.
+  jobs:
+    krea2: 46386
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-ending-private-shield
+  lane: krea2
+  entity: ending-scene
+  title: 'Ending: The City That Never Goes Dark'
+  asset: comet-city-academy/consequences/ct-ending-private-shield
+  size: 1344x768
+  seed: 961020
+  prompt_prose: Night panorama of Comet City from above the canal. Every hospital and apartment window glows white
+    beneath a broad translucent blue shield. Three black security drones hover over a guarded metal footbridge;
+    a small queue of civilians waits at a checkpoint. At the front of an academy balcony, a solitary graduate in
+    a navy cape wears a gold medal while Sol stands several steps behind beside a lit control console.
+  jobs:
+    krea2: 46387
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-ending-empty-stage
+  lane: krea2
+  entity: ending-scene
+  title: 'Ending: The Prom That Became a Ferry'
+  asset: comet-city-academy/consequences/ct-ending-empty-stage
+  size: 1344x768
+  seed: 961021
+  prompt_prose: Wide sunrise shot from a harbor pier. Four crowded orange-and-white passenger ferries sail past
+    damaged docks and half-submerged market roofs. Students in torn formal clothes hand water bottles to families
+    beneath deck awnings. The academy glass ballroom stands undamaged on the hill at upper right with unlit windows.
+    A single navy graduation cap rests on a coil of rope in the foreground.
+  jobs:
+    krea2: 46388
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null

@@ -11,36 +11,78 @@ is_mature: false
 cast_loras: false
 auto_submit: true
 lanes:
-  - key: krea2
-    label: Krea 2 original illustration
-    engine: krea2
-    prompt: prose
-    suffix: A hand-painted 2D adventure-game illustration with solid gouache shading, clean dark contours, detailed stone, metal and fabric surfaces, directional colored light.
+- key: krea2
+  label: Krea 2 original illustration
+  engine: krea2
+  prompt: prose
+  suffix: A hand-painted 2D adventure-game illustration with solid gouache shading, clean dark contours, detailed
+    stone, metal and fabric surfaces, directional colored light.
 subjects:
-  - key: ct-front-title-01
-    lane: krea2
-    entity: play-splash
-    title: "Capes and Tassels — first-week title panorama"
-    asset: comet-city-academy/front/splash
-    size: "1344x768"
-    seed: 960101
-    prompt_prose: >-
-      Wide view from a stone courtyard facing a hilltop academy with three high towers, tall arched doors, brass-trimmed windows and a glass rescue arena. A dense coastal city of apartment towers, raised trains and harbor cranes is visible behind the academy to the left. Three college-age adults stand together at the lower right: Mina Quill, a tall broad-shouldered dark-brown-skinned woman with short black curls, ivory rescue coat, navy trousers and heavy orange gauntlets; Imani Vale, a plus-size copper-brown-skinned woman with long black braids, navy school coat and teal scarf; Sol Navarro, a slim olive-skinned man with close-cropped black hair, a clear amber visor and brass-lined fingerless tech gloves. Mina holds a translucent amber rescue shield in front of them. A white comet with a long pale-orange tail crosses the purple evening sky. The lower-left courtyard is broad dark blue stone pavement with a few long shadows. Eye-level camera from the front gate, characters occupy the right third.
-  - key: ct-front-tutorial-01
-    lane: krea2
-    entity: tutorial-scene
-    title: "Capes and Tassels — first class rescue assignment"
-    asset: comet-city-academy/front/tutorial
-    size: "1344x768"
-    seed: 960102
-    prompt_prose: >-
-      Interior of a spacious academy rescue-training hall, viewed diagonally from near the doorway. High stone arches, teal glass roof panels and two rows of orange rescue lockers. At the center-right, a waist-high round table supports a physical miniature of four city blocks: small apartment buildings, one red tram, a bridge with a cracked span and a tiny ambulance. Mina Quill, a tall broad-shouldered dark-brown-skinned woman with short black curls and orange rescue gloves, points at the bridge. Sol Navarro, a slim olive-skinned man with an amber visor and brass-lined tech gloves, adjusts three blue light markers above the miniature. Imani Vale, a plus-size copper-brown-skinned woman with long black braids and a teal scarf, leans toward a worried student in a navy coat beside the table. Afternoon sunlight falls in narrow stripes across the polished stone floor. The left third contains a continuous deep-navy paneled wall and an unoccupied section of floor. Medium-wide camera from chest height.
-  - key: ct-front-dashboard-01
-    lane: krea2
-    entity: home-feature
-    title: "Capes and Tassels — dashboard feature painting"
-    asset: comet-city-academy/front/dashboard-highlight
-    size: "1216x768"
-    seed: 960103
-    prompt_prose: >-
-      Medium-wide view from a flat academy rooftop at sunset. Mina Quill stands on the left, a tall broad-shouldered dark-brown-skinned woman with short black curls, ivory rescue coat and heavy orange gauntlets. Her left gauntlet projects a transparent amber hexagonal shield taller than her torso. Imani Vale stands close on the right, a plus-size copper-brown-skinned woman with long black braids, a fitted navy academy jacket and teal scarf, holding a folded cream invitation tied with a copper ribbon. Both are looking toward a white comet above the distant Comet City skyline. Behind them are three academy stone towers, a glass dome and dark roof railings. Below is a dense city with elevated trains and bright apartment windows. The two students fill most of the foreground, from knees to head; their faces, orange shield, comet, and academy towers are completely visible. Camera is level with the students at a distance of four meters.
+- key: ct-front-title-01
+  lane: krea2
+  entity: play-splash
+  title: Capes and Tassels — first-week title panorama
+  asset: comet-city-academy/front/splash
+  size: 1344x768
+  seed: 960101
+  prompt_prose: 'Wide view from a stone courtyard facing a hilltop academy with three high towers, tall arched doors,
+    brass-trimmed windows and a glass rescue arena. A dense coastal city of apartment towers, raised trains and
+    harbor cranes is visible behind the academy to the left. Three college-age adults stand together at the lower
+    right: Mina Quill, a tall broad-shouldered dark-brown-skinned woman with short black curls, ivory rescue coat,
+    navy trousers and heavy orange gauntlets; Imani Vale, a plus-size copper-brown-skinned woman with long black
+    braids, navy school coat and teal scarf; Sol Navarro, a slim olive-skinned man with close-cropped black hair,
+    a clear amber visor and brass-lined fingerless tech gloves. Mina holds a translucent amber rescue shield in
+    front of them. A white comet with a long pale-orange tail crosses the purple evening sky. The lower-left courtyard
+    is broad dark blue stone pavement with a few long shadows. Eye-level camera from the front gate, characters
+    occupy the right third.'
+  jobs:
+    krea2: 46389
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-front-tutorial-01
+  lane: krea2
+  entity: tutorial-scene
+  title: Capes and Tassels — first class rescue assignment
+  asset: comet-city-academy/front/tutorial
+  size: 1344x768
+  seed: 960102
+  prompt_prose: 'Interior of a spacious academy rescue-training hall, viewed diagonally from near the doorway. High
+    stone arches, teal glass roof panels and two rows of orange rescue lockers. At the center-right, a waist-high
+    round table supports a physical miniature of four city blocks: small apartment buildings, one red tram, a bridge
+    with a cracked span and a tiny ambulance. Mina Quill, a tall broad-shouldered dark-brown-skinned woman with
+    short black curls and orange rescue gloves, points at the bridge. Sol Navarro, a slim olive-skinned man with
+    an amber visor and brass-lined tech gloves, adjusts three blue light markers above the miniature. Imani Vale,
+    a plus-size copper-brown-skinned woman with long black braids and a teal scarf, leans toward a worried student
+    in a navy coat beside the table. Afternoon sunlight falls in narrow stripes across the polished stone floor.
+    The left third contains a continuous deep-navy paneled wall and an unoccupied section of floor. Medium-wide
+    camera from chest height.'
+  jobs:
+    krea2: 46390
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
+- key: ct-front-dashboard-01
+  lane: krea2
+  entity: home-feature
+  title: Capes and Tassels — dashboard feature painting
+  asset: comet-city-academy/front/dashboard-highlight
+  size: 1216x768
+  seed: 960103
+  prompt_prose: Medium-wide view from a flat academy rooftop at sunset. Mina Quill stands on the left, a tall broad-shouldered
+    dark-brown-skinned woman with short black curls, ivory rescue coat and heavy orange gauntlets. Her left gauntlet
+    projects a transparent amber hexagonal shield taller than her torso. Imani Vale stands close on the right, a
+    plus-size copper-brown-skinned woman with long black braids, a fitted navy academy jacket and teal scarf, holding
+    a folded cream invitation tied with a copper ribbon. Both are looking toward a white comet above the distant
+    Comet City skyline. Behind them are three academy stone towers, a glass dome and dark roof railings. Below is
+    a dense city with elevated trains and bright apartment windows. The two students fill most of the foreground,
+    from knees to head; their faces, orange shield, comet, and academy towers are completely visible. Camera is
+    level with the students at a distance of four meters.
+  jobs:
+    krea2: 46391
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
