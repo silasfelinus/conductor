@@ -317,20 +317,44 @@ EXCLUDED_TERMS = re.compile(r"wiyot|tuluwat", re.I)
 
 
 def validate_anchors(anchors: list[dict], enums: dict) -> list[str]:
-    """The six guaranteed chapter anchors: one per chapter, never flag-gated, no dead ends."""
+    """Validate six guaranteed, authored chapter anchors and every traversable outcome.
+
+    In particular, a rolled crossroads success is not a substitute for a guaranteed
+    no-roll stay/follow route: failed rolls must also lead somewhere.
+    """
     problems: list[str] = []
     schema = json.loads(SCHEMA.read_text())
-    if sorted(a.get("chapter") for a in anchors) != [1, 2, 3, 4, 5, 6]:
+    chapters = [a.get("chapter") for a in anchors]
+    ids = [a.get("id") for a in anchors]
+    if len(anchors) != 6 or any(chapters.count(ch) != 1 for ch in range(1, 7)):
         problems.append("anchors: need exactly one anchor per chapter 1-6")
+    if len(set(ids)) != len(ids):
+        problems.append("anchors: duplicate ids")
     for a in anchors:
         aid = a.get("id", "?")
-        if not re.match(r"^WH-A[1-6]$", str(aid)):
-            problems.append(f"{aid}: anchor id must be WH-A1..WH-A6")
+        chapter = a.get("chapter")
+        if chapter not in range(1, 7) or aid != f"WH-A{chapter}":
+            problems.append(f"{aid}: anchor id must match chapter (WH-A1..WH-A6)")
         for key in schema["required"]:
             if key not in a:
                 problems.append(f"{aid}: missing {key}")
         if not a.get("anchor"):
             problems.append(f"{aid}: missing anchor stage label")
+        if not isinstance(a.get("revision"), int) or a["revision"] < 1:
+            problems.append(f"{aid}: revision must be a positive integer")
+        if a.get("tier") not in enums["tier"]:
+            problems.append(f"{aid}: bad tier")
+        if a.get("rarity") not in enums["rarity"]:
+            problems.append(f"{aid}: bad rarity")
+        for key in ("location", "title"):
+            if not a.get(key):
+                problems.append(f"{aid}: missing {key}")
+        if len(a.get("provenance", "")) < 40:
+            problems.append(f"{aid}: provenance too thin")
+        if not a.get("tone") or not a.get("cast"):
+            problems.append(f"{aid}: tone and cast must be authored")
+        if len(a.get("canon", [])) < 2:
+            problems.append(f"{aid}: needs at least 2 canon facts")
         if a.get("eligibility", {}).get("requires_flags") or a.get("eligibility", {}).get("excludes_flags"):
             problems.append(f"{aid}: a guaranteed anchor cannot be flag-gated")
         if words(a.get("scene", "")) < 60:
@@ -338,27 +362,46 @@ def validate_anchors(anchors: list[dict], enums: dict) -> list[str]:
         opts = a.get("options", [])
         if not 2 <= len(opts) <= 4:
             problems.append(f"{aid}: needs 2-4 options, has {len(opts)}")
+        option_ids = [o.get("id") for o in opts]
+        if len(set(option_ids)) != len(option_ids):
+            problems.append(f"{aid}: duplicate option ids")
         for o in opts:
+            if not re.fullmatch(r"[a-d]", str(o.get("id", ""))):
+                problems.append(f"{aid}: invalid option id {o.get('id')!r}")
+            if "success" not in o:
+                problems.append(f"{aid}.{o.get('id')}: missing success outcome")
+            elif "effects" not in o["success"]:
+                problems.append(f"{aid}.{o.get('id')}: success missing effects")
+            if o.get("skill") != "none" and "failure" in o and "effects" not in o["failure"]:
+                problems.append(f"{aid}.{o.get('id')}: failure missing effects")
             check_option(aid, o, enums, problems, "")
-        if not any(o.get("skill") == "none" for o in opts):
+        no_roll = [o for o in opts if o.get("skill") == "none"]
+        if not no_roll:
             problems.append(f"{aid}: needs a no-roll option so no player can be blocked by dice")
+        for o in no_roll:
+            if not any(e.startswith(("flag:", "evidence:")) for e in o.get("success", {}).get("effects", [])):
+                problems.append(f"{aid}.{o.get('id')}: no-roll outcome needs a persistent flag or evidence")
         for lead in LEADS:
             if words(a.get("lead_reactions", {}).get(lead, "")) < 8:
                 problems.append(f"{aid}: lead_reactions.{lead} missing or under 8 words")
-        fx = effects_of(a)
+        fx = {e for o in opts for branch in ("success", "failure")
+              for e in o.get(branch, {}).get("effects", [])}
         for cb in a.get("callbacks", []):
             if f"flag:{cb}" not in fx:
                 problems.append(f"{aid}: callback {cb!r} is never set by an effect")
-        prefix = CROSSROADS.get(a.get("chapter"))
+        prefix = CROSSROADS.get(chapter)
         if prefix:
+            # Each route must be available without a dice roll or prerequisite.
             for kind in ("stayed", "followed"):
-                if f"flag:{prefix}_{kind}" not in fx:
+                if not any(f"flag:{prefix}_{kind}" in o.get("success", {}).get("effects", [])
+                           for o in no_roll):
                     problems.append(f"{aid}: crossroads needs a no-roll route that sets {prefix}_{kind}")
             for o in opts:
                 if o.get("skill") != "none":
-                    # a failed room-brokering roll must still resolve to a stay/follow flag
-                    if not any(e.startswith(f"flag:{prefix}_") for e in o["failure"]["effects"] + o["success"]["effects"]):
-                        problems.append(f"{aid}.{o['id']}: crossroads option sets no {prefix} flag")
+                    for branch in ("success", "failure"):
+                        if not any(e.startswith(f"flag:{prefix}_")
+                                   for e in o.get(branch, {}).get("effects", [])):
+                            problems.append(f"{aid}.{o.get('id')}: {branch} sets no {prefix} flag")
         blob = json.dumps(a, ensure_ascii=False)
         if BANNED.search(blob):
             problems.append(f"{aid}: contains real-world drug instruction wording")
