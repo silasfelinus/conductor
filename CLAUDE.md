@@ -69,6 +69,23 @@ At the start of every session, before responding to any task, run a conductor sw
    python scripts/daily_pitches.py --approved preserves legacy behavior.
    dream-cycle/t-035 is the recurring build-and-report commitment.
 
+9. **New-playbook challenge, separate from the five shipped daily upgrades:**
+   Every Pacific day, review the current authored Kind Robots Playbook Studio
+   registry (`kind_robots/utils/playbook/games.ts`) plus current active game
+   DESIGN-BRIEFs (including **Prom of Doom** and **This Means Warp** even before
+   they enter the Studio). Run `python scripts/daily_playbook_challenge.py --brief`
+   and author **1–3 fresh, non-derivative game pitches** at
+   `pitches/playbook-challenges/<Pacific-date>.yaml` with production costs.
+   Specify playable opening choices; unique NPC/follower cast; emotional and
+   injured portraits; maps; encounter/romance/villain/finale illustrations;
+   text-scene estimates; at least three explicit seeded-state × authored/LLM
+   prose × selected/generated-art moments and their actual game consequences.
+   Run `--check` for that date; do not recycle yesterday's pitches or call
+   missing/invalid entries authored. Sessions write the dated creative docket,
+   **not** the scheduled workflow (paid authoring remains opt-in).
+   A pitch is a proposal for Silas, not approval to create projects, start
+   ArtJobs, pay for models, publish, or replace the five shipped upgrades.
+
 Then report:
 - **Branch** and whether the working tree is clean
 - **Open PRs** (if any Worker PRs are waiting for review)
