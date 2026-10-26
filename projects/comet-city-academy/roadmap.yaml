@@ -269,8 +269,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver academy key, map, follower emotion and injury art"
-    status: review
-    updated: '2026-10-26T12:25:38.144Z'
+    status: ready
+    updated: '2026-10-26T12:44:46.878Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -279,9 +279,8 @@ tasks:
       Partial delivery of art task. User corrected Krea 2 prompt philosophy: concrete spatial descriptions and visible objects, never abstract art direction. Six fresh front-end prompts across Capes & Tassels and This Means Warp were written as two auto_submit true Krea 2 ledgers and merged via Conductor PR #6646 at 85b6ea470584416796837e4094cb5e4bb61c5251, all 24 checks green with 1 skipped. Auto Art Generate run #40240930231 was pending at last verification, not assigned to runner and ArtJob IDs had not appeared in either ledger. Next owner must verify actual ArtJob creation, review outputs, deliver exact front-end assets and wire both splash, tutorial and dashboard images before counting art done. Task t-007 remains open for maps, roster emotional and injured art, and other large delivered scope. No duplicates.
 
       Added art-ledger branch with auto_submit=true Krea 2 generation requests: two geographically continuous campus/Comet City map paintings and four distinct mastermind portraits keyed to the first playable 30-day seeded villain variants. Existing DONE splash/tutorial/dashboard and 21 finale art images not duplicated. Requests are new, not yet submitted/generated until verified PR merge and Auto Art Generate workflow; no rendered assets counted without ArtJob IDs/final URLs.
-    owner: worker
-    claimed_by: 2026-10-26T1224Z-prom-art-a5e3
-    claimed_at: '2026-10-26T12:23:57.670Z'
+
+      MERGED Conductor art PR #6689 at 3f1af5fe541407fc4585223404c51cde3f7836cd after green Worker PR CI, security, handoff and tests. New auto_submit Krea 2 ledger MAPS-AND-MASTERMINDS-ROUND-1.yaml provides six unique non-public art prompts: two geographically coherent campus and town map paintings, and four distinctive current mastermind portraits. The Auto Art Generate workflow #40323501228 started and reached Sweep opted-in art ledgers, but as of this update no new ArtJob IDs or image IDs have appeared in that ledger. Treat these as requests MERGED, queue/renderer handoff UNCONFIRMED, and delivery NOT DONE. DO NOT duplicate existing DONE splash/promo/consequence/finale art; verify original ledger results and rendered URLs. This task remains ready for confirming six ArtJob creations/outputs and integrating assets, 16 follower emotions/injuries, eight masterminds, map coordinate visual QA, art provenance and more complete narrative outcome coverage.
   - id: t-008
     milestone: m3
     title: "Illustrate all patrol, location, relationship and ending branches"
