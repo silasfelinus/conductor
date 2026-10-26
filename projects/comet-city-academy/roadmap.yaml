@@ -37,6 +37,15 @@ notes_from_silas: |
   games through explicit versioning or First Week compatibility.
   Definitive content bible: DESIGN-BRIEF.md. Master issue:
   https://github.com/silasfelinus/kind_robots/issues/4181
+  2026-10-26 PT: NEW identity evolution scope. Every one of the 48
+  signature combinations defines a person with student/sidekick, hero,
+  villain forms and differing powers and original questlines when playable
+  as protagonist or encountered as antagonist. Bond/partner/consenting
+  romance quests can open the shift; none is an obligatory romance gate.
+  Every full run has a foreshadowed NPC heel turn, plus multiple active
+  villain accomplices. Preserve existing saves while extending the
+  element/focus taxonomy (Animal + Technical Training => Zuzu, Koala
+  Samurai example). Canon: IDENTITY-SYSTEM.md. New t-016/017/018.
 milestones:
   - id: m1
     title: "FOUNDATION - cast, lore, choice systems"
@@ -126,6 +135,55 @@ tasks:
       consent/triad conditions, autosave/load/migration and different villains.
       Full from-start 7-day action trace plus 390/768/1440 screenshot
       verification: main image and primary action visible; no shell scroll.
+  - id: t-016
+    milestone: m2
+    title: "Build playable student-hero-villain evolution, betrayal and accomplice state"
+    status: waiting
+    depends_on: t-003
+    passes: 0
+    stakes: reversible
+    note: >-
+      Preserve the existing 48 signature/save identities, version and migrate
+      old saves, extend the choice taxonomy to explicit element plus focus,
+      reconcile Animal + Technical Training and the Zuzu example with existing
+      canon, and implement persistent person/role/relationship history.
+      Build the first six fully playable six-viewpoint/form character arcs,
+      meaningful partner and optional romance choices, distinct hero/villain
+      tactics, at least four seeded foreshadowed betrayal candidates with
+      a guaranteed real NPC heel turn per run, redemption/prevention logic
+      that doesn't counterfeit player choice, and at least two independent
+      evil accomplices per early mastermind. See IDENTITY-SYSTEM.md.
+  - id: t-017
+    milestone: m3
+    title: "Write and illustrate all 48 three-form six-track identity questlines"
+    status: waiting
+    depends_on: t-016
+    passes: 0
+    stakes: reversible
+    note: >-
+      Minimum 48 people and 144 distinct student/hero/villain treatments,
+      with six separate authored protagonist/antagonist form tracks per person
+      (288 minimum), their own setup, branching choice, success/mixed/failure/
+      refusal outcomes, romance or platonic partner variants and genuine
+      role transformations. Deliver consistent costume, emotion, injury,
+      partner, betrayal, foe counterplay, evolution and ending artwork with
+      ArtJob provenance and verified final URLs. No generic name swaps
+      and no credit for prompt-only or pending art.
+  - id: t-018
+    milestone: m4
+    title: "Adversarially validate identity graph, mandatory heel turn and all art"
+    status: waiting
+    depends_on: t-017
+    passes: 0
+    stakes: reversible
+    note: >-
+      Whole-run seeded action traces for six roles/viewpoints across each
+      of 48 identities, choose/decline romance and partner arcs, rescue
+      alternatives, role-switch agency and reversals, independent henchpeople,
+      at least one foreshadowed NPC heel turn in every seed, prevention and
+      reconciliation without forced allegiance, old-save migration,
+      branch reachability and hero/villain skill divergence. Review
+      rendered art and 390/768/1440 screenshots; repair and retest.
   - id: t-002
     milestone: m1
     title: "Write 30-day cast/power/romance villain and connected-map bible"
@@ -250,7 +308,7 @@ tasks:
     milestone: m4
     title: "Final human design acceptance after all agent-owned QA and separate release authorization"
     status: waiting
-    depends_on: t-010
+    depends_on: [t-010, t-018]
     gate_human: true
     gate_reason: subjective-acceptance
     owner: null
