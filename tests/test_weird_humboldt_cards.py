@@ -30,7 +30,7 @@ def test_seed_catalog_ignores_editorial_mentions_and_rejects_duplicates():
     assert problems == []
     assert seed_chapters["WH-121"] == 2
     assert "WH-122" not in seed_chapters  # mentioned in prose, not a seed bullet
-    duplicated = text.replace("- **WH-001 ·", "- **WH-121 · Duplicate:** test.\\n- **WH-001 ·", 1)
+    duplicated = text.replace("- **WH-001 ·", "- **WH-121 · Duplicate:** test.\n- **WH-001 ·", 1)
     _, problems = wh.parse_seed_chapters(duplicated)
     assert any("duplicate premise" in p for p in problems)
 
