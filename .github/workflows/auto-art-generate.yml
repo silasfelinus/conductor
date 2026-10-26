@@ -150,24 +150,71 @@ jobs:
             echo "::warning::Kind Robots API unavailable (HTTP ${STATUS:-000}) — preserving queues and skipping API-dependent art work this run."
           fi
 
-      # Memory Dungeon keeps complete scene, choice, deck, and dungeon art
-      # on the actual ArtJob scheduler immediately, not behind serial render waits.
-      # Every request has a stable id/path; previously submitted jobs are reused.
+      # Memory Dungeon: preserve every request id/path and reuse jobs already on
+      # the server. An earlier submit step had TWO slashes after --submit-only,
+      # exited 2, and the broad consumer rendered serially until cancellation.
+      # Recover those orphaned IDs BEFORE posting anything again.
+      - name: Repair Memory Dungeon art prompt contract
+        if: ${{ steps.krhealth.outputs.up == 'true' }}
+        working-directory: conductor
+        run: python scripts/repair_memory_dungeon_art_prompts.py --write
+
+      - name: Recover unrecorded Memory Dungeon ArtJob IDs
+        id: memory_dungeon_reconcile
+        if: ${{ steps.krhealth.outputs.up == 'true' }}
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: python scripts/reconcile_memory_dungeon_art_jobs.py --live
+
       - name: Bulk-submit Memory Dungeon full art backlog
         id: memory_dungeon_submit
-        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
         continue-on-error: true
         working-directory: conductor
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           KR_MEDIA_ORIGIN: https://media.acrocatranch.com
         run: |
+          set +e
           set -o pipefail
-          python scripts/consume_art_requests_to_media.py --live --submit-only \\
+          python scripts/consume_art_requests_to_media.py --live --submit-only \
             --id-prefix memory-dungeon-saturate- 2>&1 | tee "$RUNNER_TEMP/art-memory-dungeon-submit.log"
+          primary_status=${PIPESTATUS[0]}
           python scripts/consume_art_requests_to_media.py --live --submit-only \
             --queue-file projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml \
             --id-prefix memory-dungeon-saturate- 2>&1 | tee "$RUNNER_TEMP/art-memory-dungeon-additional-submit.log"
+          additional_status=${PIPESTATUS[0]}
+          if [ "$primary_status" -ne 0 ] || [ "$additional_status" -ne 0 ]; then
+            echo "::warning::Memory Dungeon submitted accepted requests but some failed; IDs will still be checkpointed."
+            exit 1
+          fi
+
+      # The generic art consumers below can run for hours. Save the ArtJob IDs
+      # NOW, not at the end of the 150-minute rendering workflow. A cancelled
+      # workflow must not orphan accepted jobs and then enqueue them again.
+      - name: Checkpoint Memory Dungeon ArtJob IDs before rendering
+        if: ${{ steps.memory_dungeon_reconcile.outcome == 'success' && steps.krhealth.outputs.up == 'true' }}
+        working-directory: conductor
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/art-prompts.yaml projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml
+          if git diff --staged --quiet; then
+            echo "Memory Dungeon ledgers already match submitted ArtJobs."
+          else
+            git commit -m "chore: checkpoint Memory Dungeon ArtJob IDs [skip ci]"
+            pushed=false
+            for attempt in 1 2 3 4 5; do
+              if git push origin HEAD:main; then pushed=true; break; fi
+              echo "Checkpoint push race (attempt $attempt), integrating newer main."
+              git pull --rebase --autostash origin main || exit 1
+            done
+            if [ "$pushed" != true ]; then
+              echo "::error::Could not persist ArtJob IDs; stopping before more work."
+              exit 1
+            fi
+          fi
 
       - name: Repair and requeue failed Kind Robots ArtJobs
         id: repair_failed
