@@ -2576,3 +2576,35 @@ pitches:
           - kind_robots PR #4176 merged (squash b45f62d), all 18 CI checks green
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+
+  - id: abacus-bead-tides
+    title: Abacus Bead Tides
+    status: candidate
+    priority: 53
+    surprise: |
+      Nine abacus rods slide their beads in a slow rolling tide from side to side.
+    passive_loop: |
+      Beads-on-right count per rod is a closed-form sine of one clock with a per-rod phase offset, so a tide rolls down the frame with no input.
+    optional_interaction: |
+      Hovering brightens nearby beads; a rate-limited click adds a quick extra ripple.
+    technique: |
+      One canvas, radial-gradient beads, closed-form positions from a single clock.
+    reduced_motion: |
+      Draws one static frame with no motion, hover or click.
+    performance_risk: |
+      Low: ninety beads per frame.
+    novelty: |
+      Counting-frame bead tide; not a pendulum, cradle, or particle effect.
+    acceptance:
+      - the beads slide continuously without interaction
+      - hovering brightens nearby beads and clicking ripples at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/abacus-bead-tides.vue
+        pull_request: silasfelinus/kind_robots#4203
+        released_at: '2026-10-26T14:00:00Z'
+        verification:
+          - see PR for CI results
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
