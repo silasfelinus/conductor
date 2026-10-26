@@ -260,7 +260,7 @@ def brief(date: str) -> str:
         "consequential game state. Count actual render targets, not vaguely 'lots of art'. "
         "No real ArtJobs, projects, API billing, or sends. No unlabelled repeat of earlier pitches. "
         "Keep the five existing shipped-project upgrades and Daily Dream independent.\n"
-        memory.memory_summary(index) + "\n"
+        + memory.memory_summary(index) + "\n"
     )
 
 
