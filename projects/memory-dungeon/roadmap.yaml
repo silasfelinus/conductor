@@ -680,11 +680,8 @@ tasks:
   - id: t-037
     milestone: m2
     title: "Build bounded cross-realm consequence ledger"
-    status: review
-    owner: worker
-    claimed_by: 20261026T225256Z-memory-dungeon-t-037-b3aaa1
-    claimed_at: '2026-10-26T22:54:03.455Z'
-    updated: '2026-10-26T22:54:40.437Z'
+    status: ready
+    updated: '2026-10-26T23:06:28.862Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -700,6 +697,8 @@ tasks:
       Second first-two-reality adversarial gameplay pass merged as Kind Robots PR #4211, squash ce708e2a0b0260d160343e4f8b3ab1959fa72b49, with all 14 required workflows green. Fixed mirrored 36-room House story bypass: ordinary rooms and completed puzzle chambers previously allowed onward travel without committing authored consequences. New unvisited doors require both completed challenges and a room decision; visited retreats and legacy paths stay usable. Added DFS adversarial reducer simulations of both complete 36-room House endings, 72 committed decisions, six memory and five logic puzzle types per route, full reload/backtracking and distinct ethical verdicts. Added visible player explanation and updated first-two-world QA report. Master Kind Robots #4136 updated. Return t-037 READY for the broader cross-realm consequence ledger; do not mark t-036 browser/art/human QA complete or advance final human gate.
 
       Scoped campaign-persistence repair: replay saved world completions through legal route prerequisites, reject forged future progress, and preserve a valid finale commitment after Hearth and Market without Crossing. Kind Robots focused PR and exact-head CI pending. The broader consequence ledger remains unfinished.
+
+      2026-10-26 PT: Merged Kind Robots PR #4254 (27d8ca3849ce8c558b8879e09407e83a72b37f33) after all 12 exact-head workflows passed. Replays restored campaign progress through legal routes, rejects impossible future saves, and preserves an earned e13 finale commitment after Hearth + Market without e12. Deterministic e01-e14 and forged-save regressions passed. Conductor PR #6701 repaired task-event claim timestamp duplication and PR dry-run validation; review event consumed. Master issue kind_robots#4136 updated. This is partial t-037 work: bounded cross-world relationship/custody/portable-discovery interpreter and future-world hooks remain. No ArtJobs or deployment. Not For Human Gate.
   - id: t-038
     title: "Memory Dungeon master bible: Reimaginer, 8 world concepts / 16 realities, shifting-reality epic finale"
     status: ready
