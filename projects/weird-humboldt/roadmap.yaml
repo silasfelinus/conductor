@@ -615,7 +615,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Validate companion and perception continuity across all routes"
-    status: claimed
+    status: done
     depends_on: t-009
     owner: worker
     passes: 0
@@ -632,9 +632,16 @@ tasks:
       invitations, per COMPANION-OPTIMAL-PATHS.md. Cedar's parents_together
       must be invariant in every future. Coordinate with t-008; do not
       duplicate its seeded lens tests.
+
+      2026-10-25 PT: verifyEcotoneCompanionContinuity.test.ts (441 campaigns: 7 shipped
+      archetypes x 7 opening states x 3 events x decline/follow/accept) merged in
+      kind_robots#4196, CI green. Every companion reachable from every opening state; declined
+      invitations reconnect; no card separates Cedar's parents. Gap: design lists 8
+      archetypes, engine ships 7 (organizer unbuilt).
     claimed_by: 2026-10-26T-agent-wh010
     claimed_at: '2026-10-26T00:45:39Z'
-    updated: '2026-10-26T00:45:39Z'
+    updated: '2026-10-26T00:57:40Z'
+    implementation_pr: 'silasfelinus/kind_robots#4196'
   - id: t-011
     milestone: m1
     title: "Design Ecotone civic-fate core, competing factions and future consequences"
