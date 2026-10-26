@@ -615,9 +615,9 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Validate companion and perception continuity across all routes"
-    status: ready
+    status: done
     depends_on: t-009
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -632,21 +632,30 @@ tasks:
       invitations, per COMPANION-OPTIMAL-PATHS.md. Cedar's parents_together
       must be invariant in every future. Coordinate with t-008; do not
       duplicate its seeded lens tests.
+
+      2026-10-25 PT: verifyEcotoneCompanionContinuity.test.ts (441 campaigns: 7 shipped
+      archetypes x 7 opening states x 3 events x decline/follow/accept) merged in
+      kind_robots#4196, CI green. Every companion reachable from every opening state; declined
+      invitations reconnect; no card separates Cedar's parents. Gap: design lists 8
+      archetypes, engine ships 7 (organizer unbuilt).
+    claimed_by: 2026-10-26T-agent-wh010
+    claimed_at: '2026-10-26T00:45:39Z'
+    updated: '2026-10-26T00:57:40Z'
+    implementation_pr: 'silasfelinus/kind_robots#4196'
   - id: t-011
     milestone: m1
     title: "Design Ecotone civic-fate core, competing factions and future consequences"
-    status: ready
-    owner: null
+    status: review
+    owner: worker
+    claimed_by: 2026-10-26T010700Z-wh-t011-f9b2
+    claimed_at: '2026-10-26T01:07:00Z'
+    updated: '2026-10-26T01:12:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Text-only design follow-up based on Silas's 2026-10-19 direction.
-      Prototype the one-weekend convergence and decision/flag contract in
-      ECOTONE-CORE.md; distinguish actual Humboldt governance and proposals
-      from fictional predictions. Develop morally complex fictional corporate,
-      grassroots, ecological and workers' factions; avoid tribe-specific
-      fictional representation or consultation dependencies. Four opening states,
-      all archetypes, 120 encounter seed IDs and characters remain. No art.
+    note: |-
+      Text-only design follow-up based on Silas's 2026-10-19 direction. Prototype the one-weekend convergence and decision/flag contract in ECOTONE-CORE.md; distinguish actual Humboldt governance and proposals from fictional predictions. Develop morally complex fictional corporate, grassroots, ecological and workers' factions; avoid tribe-specific fictional representation or consultation dependencies. Four opening states, all archetypes, 120 encounter seed IDs and characters remain. No art.
+
+      Authored six-chapter civic promise/flag contract and a fully branched chapter-three prototype in ECOTONE-CORE.md, including faction dissent, failure repairs and deterministic replay handoff. Implementation PR pending checks; design only.
   - id: t-012
     milestone: m2
     title: "Design 56 modular outcome signatures and ten county motifs"

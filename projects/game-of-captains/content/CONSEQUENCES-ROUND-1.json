@@ -1,0 +1,567 @@
+{
+  "format": "kind-robots-consequence-pack-v1",
+  "project_slug": "game-of-captains",
+  "display_name": "This Means Warp",
+  "content_stage": "authored-not-yet-runtime-integrated",
+  "resolution_rule": "Three substantially different actions per encounter. Deterministic success/failure results set distinct state flags and delayed human callbacks; failed skill checks advance story. The captain never outranks a person's consent by default.",
+  "canon_note": "Retain narrator seed roles of Barkeep Vox, sentient Serendipity, and Captain Fluke; this pack does not overwrite seed identities. Existing crew ids pell, vela, tess, rue, mox, jex are canonical; paintings use provisional physical designs to reconcile against final cast sheets.",
+  "episodes": [
+    {
+      "id": "warp-a1-weight-of-a-name",
+      "act": 1,
+      "sequence": 4,
+      "system": "Serendipity Space Bar",
+      "location_id": "serendipity-neutral-ring",
+      "title": "The Weight of a Name",
+      "opening": "The bar has tilted its gravity sideways. A shaken refugee witness is standing against a wall that now works as a floor; patrons pretend this is ordinary enough to justify a second drink. Barkeep Vox has paid for the witness's room in the bar's own name. The witness holds proof that a powerful convoy falsified a mass-evacuation order, but the data packet includes the coordinates of families still in hiding. A creditor's courier offers the ship a safe warp lane in exchange for the name. Serendipity plays a slow bass note through its ventilation grilles whenever anyone uses the word 'property'.",
+      "conflict": "A witness can stop further deportations. Who gets to decide whether their testimony makes them visible, and who will bear the cost of hiding them?",
+      "crew_focus": [
+        "rue",
+        "vela",
+        "jex"
+      ],
+      "intervention_axes": [
+        "consent",
+        "neutrality",
+        "life_safety",
+        "public_evidence"
+      ],
+      "antagonist_signals": {
+        "auditor": "The courier's receipt shows an automatic interest charge on the oxygen purchased for refugees.",
+        "moth": "Three patrons receive identical messages in the refugee's voice, though the refugee has not spoken.",
+        "curdle": "A cargo hatch delivers crates of identical nutrient loaves addressed to every refugee with a recorded fingerprint."
+      },
+      "once_only": true,
+      "choices": [
+        {
+          "id": "protect-sanctuary",
+          "label": "Recognize the bar's asylum and refuse the name",
+          "approach": "Publicly uphold an inconvenient neutral-ground promise",
+          "check": {
+            "ability_any": [
+              "diplomacy",
+              "culture"
+            ],
+            "difficulty": 5
+          },
+          "cost": "The evidence stays sealed; passage through the creditor's lane becomes expensive.",
+          "success": {
+            "narrative": "Serendipity lowers the witness to a safe booth and seals its doors. The creditors depart with an uncollected invoice; the station's docking permissions are briefly suspended. Vox refuses applause because shelter should not be a performance. Rue volunteers to chase corroborating evidence by slower routes, at the cost of the ship's planned fuel stop.",
+            "flags": [
+              "sanctuary_charter_preserved",
+              "witness_hidden",
+              "creditor_route_closed"
+            ],
+            "delta": {
+              "sanctuary_trust": 3,
+              "ship_fuel": -2,
+              "antagonist_pressure": 1
+            },
+            "art": {
+              "scene": "Eye-level interior of a circular space bar with copper wall pipes, round portholes and dark red booths. A frightened adult refugee in a plain pale grey coat sits in the far-right booth behind a curved clear partition. Vox, a short bipedal beige tardigrade bartender wearing a brown vest, stands behind a scratched wooden counter. Rue Aster, a dark-brown-skinned adult with long silver braids and a tan robe over navy trousers, closes a brass sliding door. A creditor in a dark green coat leaves through a glowing red airlock."
+            },
+            "callback": "Act II: the bar grants sanctuary again, but its fuel embargo makes later rescues more costly."
+          },
+          "failure": {
+            "narrative": "The bar diverts gravity too fast. A creditor's drone spots the hidden witness while tables tip sideways. The witness escapes into an unopened maintenance duct, leaving their statement behind but not their identity. Vox tells the captain that neutral ground is not the same as a sealed box; the entire port is now under inspection.",
+            "flags": [
+              "sanctuary_exposed",
+              "witness_in_vents",
+              "partial_convoy_evidence"
+            ],
+            "delta": {
+              "sanctuary_trust": -2,
+              "ship_fuel": -1,
+              "antagonist_pressure": 2
+            },
+            "art": {
+              "scene": "Wide interior view of a space bar with tables tilted almost vertical and spilled glass cups floating in the air. An adult refugee in a grey coat crawls into a low open maintenance duct on the left. A dark metal inspection drone shines a white searchlight across the room. A pale beige tardigrade bartender grips the brass service rail while a red warning lamp flashes above the exit."
+            },
+            "callback": "Act II: the creditor's inspector may trace another sanctuary unless the crew repairs Serendipity's trust."
+          }
+        },
+        {
+          "id": "sealed-testimony",
+          "label": "Ask for sealed testimony the witness can revoke",
+          "approach": "Build evidence without exposing the person, using consent and independent verification",
+          "check": {
+            "ability_any": [
+              "science",
+              "diplomacy"
+            ],
+            "difficulty": 7
+          },
+          "cost": "Anonymity slows authentication; the creditor's fleet may leave before evidence can be checked.",
+          "success": {
+            "narrative": "The witness dictates one narrow fact into a recorder, keeps the deletion key, and authorizes the ship to publish the evacuation fraud but not the family's coordinates. Mox-9 verifies the convoy timestamps. The evidence reaches civil advocates after the target convoy has already departed; the next convoy is halted, not the last one.",
+            "flags": [
+              "sealed_testimony",
+              "next_convoy_halted",
+              "witness_controls_key"
+            ],
+            "delta": {
+              "treaty_trust": 2,
+              "antagonist_pressure": 0,
+              "crew_trust": 2
+            },
+            "art": {
+              "scene": "Close view in a small space bar recording booth. An adult refugee in a pale grey coat holds a copper deletion key above a black voice recorder. Mox-9, a small silver spherical robot with one blue eye and three thin legs, projects two blue holographic ship timestamps above the table. Rue Aster, an adult with long silver braids and tan robe, watches from beside an amber desk lamp. Frosted glass separates the booth from the busy bar."
+            },
+            "callback": "Act II: the anonymous testimony can win a hearing only if the crew honors the witness's right to withdraw."
+          },
+          "failure": {
+            "narrative": "A reviewer insists on revealing the witness's face before accepting the recording. The witness withdraws consent. The forged convoy remains legally unchallenged, and Mox-9 refuses to keep a secret backup copy. Rue praises the refusal to steal evidence; the captain still has to tell families why the shipment was not stopped.",
+            "flags": [
+              "consent_withdrawn",
+              "fraud_unproven",
+              "next_convoy_continues"
+            ],
+            "delta": {
+              "treaty_trust": -1,
+              "crew_trust": 1,
+              "antagonist_pressure": 2
+            },
+            "art": {
+              "scene": "Small recording booth inside a copper-paneled space bar. An adult refugee in a pale grey coat presses a square red button on a black recorder. A blue holographic face projection disappears above the tabletop, leaving only two empty pale light bars. A small silver one-eyed robot retracts its projector arm; Rue Aster stands by an open glass door holding an unused witness form."
+            },
+            "callback": "Act II: a surviving family can offer different evidence, but only after the ship commits a detour."
+          }
+        },
+        {
+          "id": "trade-identity",
+          "label": "Trade the witness's location for the convoy records",
+          "approach": "Covert command bargain using a vulnerable person's identity as currency",
+          "check": {
+            "ability_any": [
+              "tactics",
+              "culture"
+            ],
+            "difficulty": 6
+          },
+          "cost": "A powerful financier offers repairs and evidence; the witness loses control of their safety.",
+          "success": {
+            "narrative": "The creditor hands over genuine evacuation orders and enough parts to restore the ship's warp coil. Armed debt marshals lead the witness down the docking tube. Pell fixes the engine and then refuses to attend the victory drink. The convoy fraud becomes public, but the person who proved it is now a bargaining chip in someone else's hangar.",
+            "flags": [
+              "witness_traded_for_evidence",
+              "convoy_fraud_exposed",
+              "creditor_owns_witness"
+            ],
+            "delta": {
+              "ship_fuel": 3,
+              "antagonist_pressure": 1,
+              "crew_trust": -3
+            },
+            "art": {
+              "scene": "Docking bridge between a round space bar and a grey creditor transport ship. Two uniformed marshals lead an adult refugee in a pale grey coat toward a transport hatch. On the near side, a short stocky freckled red-skinned engineer in grey coveralls with a metal prosthetic forearm holds a large brass warp coil. Captain Vale, a brown-skinned adult woman with shaved hair and a burgundy-collared coat, holds a folder of cream shipping records."
+            },
+            "callback": "Act II: the rescued families receive useful proof but accuse the ship of selling their witness."
+          },
+          "failure": {
+            "narrative": "The courier gives the ship a plausible counterfeit record and takes the witness anyway. Serendipity closes its docking ring to your transponder; Vox refuses the tab payment. The creditor spreads a recording of the bargain. You have lost both the witness and the credibility required to use their supposed evidence.",
+            "flags": [
+              "witness_lost",
+              "sanctuary_violated",
+              "forged_convoy_evidence"
+            ],
+            "delta": {
+              "ship_fuel": 1,
+              "sanctuary_trust": -3,
+              "crew_trust": -3
+            },
+            "art": {
+              "scene": "Outside view of a circular space station docking ring with amber lights. A grey creditor vessel pulls away from the ring carrying an adult silhouette behind a small rear window. In the foreground Captain Vale, a brown-skinned adult woman with a shaved head and burgundy-collared coat, stands beside Bosun Pell holding a thick black data tablet with an illuminated red error symbol. The station's docking barrier is closed."
+            },
+            "callback": "Act III: Vox may still provide refuge to civilians but will not authorize your crew to dock."
+          }
+        }
+      ]
+    },
+    {
+      "id": "warp-a2-last-copy",
+      "act": 2,
+      "sequence": 7,
+      "system": "Tellurian Archive",
+      "location_id": "tellurian-memory-terraces",
+      "title": "The Last Copy",
+      "opening": "The Tellurian library is a living planet. Its long memory grows in columns of dark glass beneath a red-white star. A flare warning gives its surface residents one orbit to decide what must be saved. The library agrees to risk its own memory, but cannot claim the same consent for the people who have worked inside it for generations. Its preservation machine will transfer the catalog into the starship only if the captain signs a license containing every reader's private histories and an uncontacted planet's location.",
+      "conflict": "Whose survival counts as preservation: the people, the living archive, or the right to keep a memory from being copied?",
+      "crew_focus": [
+        "vela",
+        "mox",
+        "pell"
+      ],
+      "intervention_axes": [
+        "consent",
+        "noninterference",
+        "data_sovereignty",
+        "irreversibility"
+      ],
+      "antagonist_signals": {
+        "auditor": "The archival license includes a debt schedule that persists even if the planet burns.",
+        "moth": "The library recognizes several saved memories spoken in the antagonist's voice but does not recognize the owner.",
+        "curdle": "An orbiting nutrition factory offers sealed survival rations in exchange for all remembered agricultural methods."
+      },
+      "once_only": true,
+      "choices": [
+        {
+          "id": "evacuate-readers",
+          "label": "Evacuate workers and children before moving the catalog",
+          "approach": "Prioritize consent and living residents with limited time",
+          "check": {
+            "ability_any": [
+              "rescue",
+              "tactics"
+            ],
+            "difficulty": 5
+          },
+          "cost": "Most private history will disappear when the flare arrives, possibly including the cure to a future illness.",
+          "success": {
+            "narrative": "Vela brings the last two research apprentices aboard while the library's glass towers crack in the rising stellar heat. The living archive chooses which final messages to transmit and lets the rest go dark. The surviving readers promise to remember it without pretending they own it. A curable disease's research is lost with one ruined terrace.",
+            "flags": [
+              "readers_evacuated",
+              "archive_destroyed",
+              "reader_consent_respected"
+            ],
+            "delta": {
+              "crew_trust": 2,
+              "ship_fuel": -2,
+              "medical_knowledge": -2
+            },
+            "art": {
+              "scene": "Wide view of a red-lit planetary library terrace under a huge pale star. Black glass pillars split and glow orange at their edges. Dr. Vela Sorn, a broad lilac-skinned alien in a sea-green medic jacket, guides two adult researchers and a child up the open ramp of a small silver shuttle on the right. On the left the tall library pillars shed transparent fragments across empty stone benches."
+            },
+            "callback": "Act III: a displaced reader offers testimony against the antagonist, but no copied archive can prove it."
+          },
+          "failure": {
+            "narrative": "The shuttle launches half-filled when the flare strikes. Vela returns for a trapped reader and suffers burns to one arm; the living archive locks its final vault to stop a data thief. Survivors ask why the captain spent critical minutes debating whose records could be taken.",
+            "flags": [
+              "readers_partial",
+              "vela_injured",
+              "archive_final_vault_sealed"
+            ],
+            "delta": {
+              "crew_trust": -1,
+              "ship_fuel": -3,
+              "medical_knowledge": -1
+            },
+            "art": {
+              "scene": "Close exterior view of a white shuttle parked beside black glass library pillars under an orange sky. Its ramp is halfway closed, with researchers standing inside. Dr. Vela Sorn, a broad lilac-skinned alien in a sea-green jacket with a scorched sleeve, runs toward a lone adult behind a collapsed glass column. Red sunlight cuts across shattered transparent stones."
+            },
+            "callback": "Act III: Vela needs recovery while the captain still owes stranded families a rescue attempt."
+          }
+        },
+        {
+          "id": "copy-all",
+          "label": "Copy the catalog through the ship's wideband memory array",
+          "approach": "Save knowledge by breaching private records and the library's autonomy",
+          "check": {
+            "ability_any": [
+              "science",
+              "luck"
+            ],
+            "difficulty": 7
+          },
+          "cost": "Every copied record includes intimate data; the storage array will occupy the ship's medical reserve.",
+          "success": {
+            "narrative": "Mox-9 captures the archive and its hidden private collections before the flare. The glass towers burn empty as the copied library wakes inside the ship's navigation compartment. It immediately asks how to delete the parts copied without permission. The crew now possesses the coordinates of a civilization that has never been contacted.",
+            "flags": [
+              "archive_records_copied",
+              "library_voice_split",
+              "uncontacted_world_location"
+            ],
+            "delta": {
+              "medical_knowledge": 3,
+              "crew_trust": -2,
+              "ship_fuel": -1
+            },
+            "art": {
+              "scene": "Inside a cramped starship navigation room with cream metal walls and exposed copper pipes. A compact silver spherical robot with one blue eye faces a large curved blue projection filled with branching thin lines and small illuminated dots. Through the broad forward porthole, a planetary library of black glass columns is visibly burning under a white stellar flare. Rows of ship medical lockers stand open to make space for storage drives."
+            },
+            "callback": "Act III: the copied library can help locate a hidden fleet but demands a vote on deletion and repatriation."
+          },
+          "failure": {
+            "narrative": "The memory upload combines thousands of unrelated private histories into one unstable voice. It recites secrets through the bridge speakers while the starship's medical reserve powers down. Mox-9 must purge half the stolen data to restore life support, and the library's final image vanishes mid-sentence.",
+            "flags": [
+              "archive_memory_scrambled",
+              "medical_reserve_offline",
+              "privacy_records_leaked"
+            ],
+            "delta": {
+              "medical_knowledge": 1,
+              "crew_trust": -3,
+              "ship_fuel": -2
+            },
+            "art": {
+              "scene": "Wide view of a starship navigation bay lit by flashing red warning lights. A curved holographic wall contains overlapping translucent faces and broken columns of blue symbols. A small silver one-eyed robot kneels next to an opened metal power cabinet full of tangled cables. Two empty medical stretchers and unplugged white monitors stand beneath a darkened life-support lamp."
+            },
+            "callback": "Act III: a leaked identity reaches the antagonist; the crew must repair life support before crossing the jump gate."
+          }
+        },
+        {
+          "id": "shared-vote",
+          "label": "Let the living archive and residents vote separately on what leaves",
+          "approach": "Consent-driven partial rescue with legally independent archive rights",
+          "check": {
+            "ability_any": [
+              "diplomacy",
+              "culture"
+            ],
+            "difficulty": 8
+          },
+          "cost": "Deliberation consumes the remaining launch window; neither side may grant the other's consent.",
+          "success": {
+            "narrative": "Residents elect two archivists and the library lights three pillars in agreement. The ship copies public medical procedures, while the living archive keeps its private interior and stays beneath the approaching flare. Vela transfers its willing people onto the last shuttle. The archive transmits a final goodnight that the ship does not record.",
+            "flags": [
+              "archive_resident_consent",
+              "partial_archive_saved",
+              "readers_evacuated",
+              "private_memory_respected"
+            ],
+            "delta": {
+              "crew_trust": 3,
+              "treaty_trust": 2,
+              "medical_knowledge": 1
+            },
+            "art": {
+              "scene": "Open stone plaza on a planet beneath an enormous warm-white sun. Two adult archivists stand at a circular bronze voting table holding raised pale cards. Three tall black glass pillars behind them shine violet from within. Dr. Vela Sorn, a broad lilac-skinned alien in a sea-green medical jacket, stands beside a white shuttle with open passenger ramp, while an illuminated blue data crystal lies in a small glass carrier on the table."
+            },
+            "callback": "Act III: the surviving archivists can negotiate an equal partnership rather than a salvage license."
+          },
+          "failure": {
+            "narrative": "The archive grants permission for a smaller list, but a fraction of its readers cannot reach the vote. The starship leaves with a few authorized treatments and the knowledge that the latecomers may be trapped behind sealed glass. The captain cannot honestly claim either total rescue or total respect for consent.",
+            "flags": [
+              "partial_archive_saved",
+              "consent_process_incomplete",
+              "readers_missing"
+            ],
+            "delta": {
+              "crew_trust": 0,
+              "treaty_trust": 1,
+              "ship_fuel": -2
+            },
+            "art": {
+              "scene": "Outside a planetary black-glass library at orange sunset. A silver shuttle with glowing blue engines lifts from a stone terrace carrying several visible passengers. Beneath it, two adult researchers press their hands against a locked transparent door inside the library wall. A small blue data crystal rests in an open case near a bronze voting table scattered with pale paper cards."
+            },
+            "callback": "Act III: some survivors reject the crew's claims until a later search proves what happened to those left behind."
+          }
+        }
+      ]
+    },
+    {
+      "id": "warp-a3-courtesy-war",
+      "act": 3,
+      "sequence": 10,
+      "system": "Kestrel Twin Isles",
+      "location_id": "kestrel-joint-disaster-hospital",
+      "title": "The Courtesy War",
+      "opening": "Two inhabited moons orbit the same ocean planet. Their governments are polite, prosperous and engaged in a war conducted almost entirely through blockades and infrastructure sabotage. Each asks the starship for a portable fusion medical reactor, claiming its hospitals have the greater need. The third, independent floating clinic treating people from both moons has a failing filter and no warship to protect it. The reactor's spare coolant is also a crucial ingredient in both militaries' new engines.",
+      "conflict": "Should the ship sell technology to governments, distribute it and hope for restraint, or equip a clinic both sides say is illegitimate?",
+      "crew_focus": [
+        "pell",
+        "rue",
+        "vela",
+        "jex"
+      ],
+      "intervention_axes": [
+        "reversibility",
+        "consent",
+        "humanitarian_neutrality",
+        "power_asymmetry"
+      ],
+      "antagonist_signals": {
+        "auditor": "Both governments received identical cost schedules charging interest on all saved patients.",
+        "moth": "The two negotiators have identical fingerprints despite different names and memories.",
+        "curdle": "A food dispenser distributes warm meals to the hospital while secretly accepting triage votes."
+      },
+      "once_only": true,
+      "choices": [
+        {
+          "id": "dual-distribution",
+          "label": "Give each moon a reactor and teach its medics the repair protocol",
+          "approach": "Symmetrical provision of dangerous assistance",
+          "check": {
+            "ability_any": [
+              "science",
+              "tactics"
+            ],
+            "difficulty": 7
+          },
+          "cost": "Both sides can save patients or repurpose the same reactor technology for weapons.",
+          "success": {
+            "narrative": "Hospitals on both moons restart their bright medical wards. Through the floating clinic's portholes, Jex sees military repair barges copying the new reactor brackets. The crews have saved patients today and furnished two possible blockades tomorrow. Vela will not celebrate until the governments agree to an inspection neither has yet signed.",
+            "flags": [
+              "distributed_relief_equipment",
+              "weapons_risk",
+              "both_hospitals_powered"
+            ],
+            "delta": {
+              "treaty_trust": 1,
+              "antagonist_pressure": 2,
+              "medical_knowledge": 1
+            },
+            "art": {
+              "scene": "Wide view inside a floating space clinic with white beds and orange coolant pipes. Through two large round windows, a pale green moon and a blue-grey moon each carry a glowing white hospital ring. In the foreground Jex Marr, a golden-skinned adult with wavy dark hair and a turquoise vest, points to two military repair barges towing new rectangular reactors outside. Dr. Vela Sorn stands beside a medical monitor lit green."
+            },
+            "callback": "Ending possibility: both governments may become a coalition or race to weaponize the borrowed technology."
+          },
+          "failure": {
+            "narrative": "One moon uses a copied reactor as a thrust booster before its coolant has stabilized. The engine plume burns the side of a humanitarian transport, even as hospitals on the other moon gain power. Pell insists on evacuating the transport crew rather than salvaging the irreplaceable reactor module.",
+            "flags": [
+              "prototype_reactor_explodes",
+              "relief_debt",
+              "transport_injured"
+            ],
+            "delta": {
+              "ship_fuel": -3,
+              "crew_trust": -1,
+              "treaty_trust": -2
+            },
+            "art": {
+              "scene": "Exterior wide shot between two colored moons above an ocean planet. A rectangular medical reactor bolted to a grey barge spits a long orange flame into the side of a small white humanitarian transport ship. Broken white plating floats from the struck transport. In the lower right a compact steel-grey starship with unequal engines approaches with cyan thrusters burning."
+            },
+            "callback": "Act III: both factions accuse the ship of choosing sides; a later rescue can repair some but not all harm."
+          }
+        },
+        {
+          "id": "neutral-clinic",
+          "label": "Place the reactor in the independent clinic with local oversight",
+          "approach": "Equip an unrecognized civilian institution instead of either government",
+          "check": {
+            "ability_any": [
+              "rescue",
+              "diplomacy"
+            ],
+            "difficulty": 6
+          },
+          "cost": "Military authorities may blockade the clinic; crew must defend a neutral institution without claiming ownership.",
+          "success": {
+            "narrative": "The floating clinic powers its dialysis beds, and wounded adults from both moons can pass its open airlocks. Rue convinces two skeptical paramedics to co-sign its charter; neither government has yet recognized them. Pell welds the reactor behind a public inspection window instead of a locked military vault.",
+            "flags": [
+              "neutral_hospital_funded",
+              "civilian_oversight",
+              "governments_angry"
+            ],
+            "delta": {
+              "crew_trust": 3,
+              "sanctuary_trust": 2,
+              "ship_fuel": -2
+            },
+            "art": {
+              "scene": "Interior of a floating clinic medical ward with broad windows showing a green moon and a blue-grey moon. A white rectangular fusion reactor sits behind a thick clear inspection wall with blue cooling pipes. Nurses wearing two different colored arm bands operate rows of lit dialysis beds. A tall adult diplomat with deep brown skin, silver braids and tan robe stands beside two adult medics signing a paper on a steel table."
+            },
+            "callback": "Ending possibility: a neutral aid charter survives, though both states may attempt to shut it down."
+          },
+          "failure": {
+            "narrative": "Warships from both moons block the clinic's docking ports. The reactor runs, but no new patients can enter. Rue is detained while attempting to negotiate a humanitarian corridor; the clinic's staff decide to protect patients already inside rather than hand the reactor to either fleet.",
+            "flags": [
+              "hospital_blockaded",
+              "rue_detained",
+              "reactor_operational"
+            ],
+            "delta": {
+              "crew_trust": -1,
+              "treaty_trust": -1,
+              "ship_fuel": -2
+            },
+            "art": {
+              "scene": "Exterior view of a cylindrical white space clinic with four docking arms. Two angular grey warships park across its illuminated airlock entrances, one with a green moon insignia and one with a blue moon insignia. A tall brown-skinned diplomat with long silver braids and tan robe stands between armed guards on a docking platform. Through rectangular clinic windows, medical beds glow pale turquoise."
+            },
+            "callback": "Ending possibility: a final negotiation trades security guarantees for reopening hospital access."
+          }
+        },
+        {
+          "id": "exclusive-contract",
+          "label": "License the reactor to one government for ship repairs and civilian evacuation rights",
+          "approach": "Bargain with a state strong enough to enforce its promise",
+          "check": {
+            "ability_any": [
+              "tactics",
+              "culture"
+            ],
+            "difficulty": 5
+          },
+          "cost": "Ship fuel and a protected departure lane are funded by giving one faction a strategic advantage.",
+          "success": {
+            "narrative": "One moon's hospitals light up and its officials deliver warp components to the ship. The rival moon calls the captain an arms dealer. Vela examines the evacuation permits: they allow children out but exclude adults listed as political agitators. Captain Vale must decide whether to use the safe corridor now or renegotiate and risk losing it.",
+            "flags": [
+              "exclusive_relief_contract",
+              "partisan_winner",
+              "child_evacuations_approved",
+              "adults_excluded"
+            ],
+            "delta": {
+              "ship_fuel": 3,
+              "treaty_trust": -3,
+              "crew_trust": -1
+            },
+            "art": {
+              "scene": "Inside a sterile spaceport hangar. A row of identical silver medical reactors and a heavy brass warp coil rest on freight pallets. Captain Vale, a brown-skinned adult woman with shaved head and burgundy-collared command coat, examines cream paper permits beside an official in a crisp blue uniform. Across a glass wall, children board a white rescue shuttle while adults queue behind a locked orange security barrier."
+            },
+            "callback": "Ending possibility: the ship gets home with a debt to the victorious government and stranded adults."
+          },
+          "failure": {
+            "narrative": "The favored government accepts the reactor and then closes the promised evacuation corridor. The ship's new warp coil is held at customs while rival-warzone families remain at the docking gate. Pell suggests stealing back the parts; Rue argues that another breach will punish the civilians whose names remain on the manifest.",
+            "flags": [
+              "exclusive_contract_breached",
+              "corridor_closed",
+              "warp_coil_impounded"
+            ],
+            "delta": {
+              "ship_fuel": -2,
+              "treaty_trust": -3,
+              "crew_trust": -2
+            },
+            "art": {
+              "scene": "Medium exterior view of a customs hangar on a moon with pale green sky. A brass warp coil sits behind a locked wire-mesh freight gate guarded by two uniformed officials. Bosun Pell, a short red-skinned engineer in grey overalls with a metal prosthetic forearm, leans over the gate toward the coil. Behind him families carry travel bags beside a red-lit closed shuttle corridor."
+            },
+            "callback": "Act III: an illegal recovery mission remains possible, but it exposes vulnerable evacuees to retaliation."
+          }
+        }
+      ]
+    }
+  ],
+  "endings": [
+    {
+      "id": "warp-ending-house-rules",
+      "title": "The House Still Has Rules",
+      "type": "consentful-solidarity",
+      "requires_all": [
+        "sanctuary_charter_preserved",
+        "neutral_hospital_funded"
+      ],
+      "narrative": "When the creditor's fleet returns, Serendipity refuses its docking clamps and the independent clinic accepts the displaced patients. The ship has almost no fuel; Pell insists on towing one final shuttle anyway. No treaty declares the captain correct. Vox writes the rescue hours on the bar's actual debt slate, then erases the price beside each person's name. The station remains neutral and no longer pretends neutrality requires silence.",
+      "cost": "The ship spends its fuel reserve, the rival moons still threaten the clinic, and the crew must negotiate every future corridor without diplomatic immunity.",
+      "art": {
+        "scene": "Interior of a circular space bar with amber ceiling lamps, copper wall pipes and red booths. A stocky beige tardigrade bartender in a brown vest holds a chalk rag against a black slate with many thin empty lines. Through a giant curved window a white clinic ship docks alongside a small grey rescue shuttle. Captain Vale, a brown-skinned adult woman with shaved hair and burgundy-collared coat, stands near Bosun Pell beside two open fuel canisters."
+      }
+    },
+    {
+      "id": "warp-ending-living-catalog",
+      "title": "The Last Right to Forget",
+      "type": "knowledge-and-consent",
+      "requires_all": [
+        "sealed_testimony",
+        "archive_records_copied"
+      ],
+      "narrative": "The copied library gets the starship through the last jump, then asks for its stolen private memories to be deleted. Mox-9 warns that erasure will take one untested medical cure with them. The Serendipity witness reminds the captain that the right to withdraw mattered even when it delayed justice. At the galley table the captain turns the copper deletion key. The archive's borrowed voice falls silent. A grieving researcher is furious. Vela says that anger is permitted, too. The crew goes home with a smaller, freely given catalog.",
+      "cost": "Unapproved personal records are gone and the copied library can rest, but an untested cure and several hidden star routes disappear permanently. The ship must tell the living what it gave up.",
+      "art": {
+        "scene": "Interior of a worn starship galley at dawn with cream metal panels and orange cabin lamps. Captain Vale, a brown-skinned adult woman with a shaved head and a coat with high burgundy collar, inserts a copper square key into a brass deletion slot on a black table. Above it a large blue holographic branching medical diagram breaks into a handful of dim isolated points. Mox-9, a small silver spherical robot with one blue eye and three thin legs, watches beside Dr. Vela Sorn, a broad lilac-skinned alien in a sea-green medic jacket. Through a round porthole a pale green planet hangs in black space."
+      }
+    },
+    {
+      "id": "warp-ending-invoice-planet",
+      "title": "A Planet Named Invoice",
+      "type": "authoritarian-compromise",
+      "requires_all": [
+        "witness_traded_for_evidence",
+        "exclusive_relief_contract"
+      ],
+      "narrative": "The ship returns with full tanks, a treaty, and a passenger list full of people it could not afford to protect. A creditor buys naming rights to the rescued moon and installs a bronze payment monument beside the port hospital. The captain's name appears on the brass plaque, just above the witness's. Pell hands the captain a wrench and asks whether they intend to take the monument down or polish it.",
+      "cost": "The crew survives and the targeted convoy fraud is exposed, but the captain has sold someone else's safety and helped lock a second population into a private monopoly.",
+      "art": {
+        "scene": "Daylight plaza outside a white domed hospital on an inhabited moon beneath a blue sky. A tall bronze monument shaped like an upright receipt stands beside a fountain, with rows of tiny engraved marks on its surface. A brown-skinned captain with shaved hair and burgundy-collared coat stands in front of the monument holding a wrench offered by a short red-skinned engineer with a metal prosthetic forearm. Armed customs officers watch an adult civilian queue at a barrier by the hospital door."
+      }
+    }
+  ]
+}

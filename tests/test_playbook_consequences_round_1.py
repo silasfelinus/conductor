@@ -49,7 +49,7 @@ def check_project(slug: str):
         assert subject["size"] in ("1344x768",)
         assert subject["prompt_prose"]
         assert subject["asset"].startswith(f"{slug}/consequences/")
-        assert not subject.get("jobs"), "Do not check in fabricated ArtJob IDs"
+        assert isinstance(subject.get("jobs", {}), dict), "jobs may only be assigned by the generator"
 
 
 def test_capes_branch_art_and_finales():

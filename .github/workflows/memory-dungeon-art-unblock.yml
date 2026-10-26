@@ -1,0 +1,49 @@
+name: Release blocked Memory Dungeon art submission
+
+# One-shot recovery after the pre-fix six-hour auto-art run held the shared
+# concurrency lock. Only a change to THIS file triggers it; ordinary app and
+# project pushes do not. The corrected Auto Art Generate run is already pending
+# and will start when the obsolete workflow stops.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/memory-dungeon-art-unblock.yml"
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  release-stale-art-run:
+    if: github.repository == 'silasfelinus/conductor'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Cancel only the verified old serial render workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STALE_RUN_ID: "40244988429"
+          STALE_HEAD_SHA: "abcb341b2054199449e61fa02a0bfc5a3e4726bf"
+        run: |
+          set -euo pipefail
+          endpoint="repos/${GITHUB_REPOSITORY}/actions/runs/${STALE_RUN_ID}"
+          details="$(gh api "$endpoint")"
+          name="$(jq -r '.name' <<< "$details")"
+          head_sha="$(jq -r '.head_sha' <<< "$details")"
+          status="$(jq -r '.status' <<< "$details")"
+          if [ "$name" != "Auto Art Generate" ] || [ "$head_sha" != "$STALE_HEAD_SHA" ]; then
+            echo "::error::Stale run signature changed; refusing to cancel an unrelated job."
+            exit 1
+          fi
+          if [ "$status" = "completed" ]; then
+            echo "Old art runner completed; no cancellation needed."
+            exit 0
+          fi
+          if [ "$status" != "in_progress" ]; then
+            echo "Old art runner is '$status'; no active job to cancel."
+            exit 0
+          fi
+          echo "Releasing the serial pre-fix run ${STALE_RUN_ID} so the deduplicating bulk queue can start."
+          gh api --method POST "$endpoint/cancel" >/dev/null
+          echo "::notice::Cancellation accepted for obsolete art run; accepted ArtJobs remain durable in Kind Robots."

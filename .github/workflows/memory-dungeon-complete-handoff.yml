@@ -1,0 +1,76 @@
+name: Complete Memory Dungeon four-request art handoff
+
+# One-shot path-triggered recovery for the four rejected Unclaimed Portrait
+# requests. Enqueues jobs only; the Kind Robots art relay owns rendering.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/memory-dungeon-complete-handoff.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: memory-dungeon-four-art-handoff
+  cancel-in-progress: false
+
+jobs:
+  submit-missing-memory-art:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      KR_BASE_URL: https://kindrobots.org
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: conductor
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install pyyaml Pillow
+      - name: Reconcile and submit only the four previously rejected images
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          set -euo pipefail
+          python scripts/repair_memory_dungeon_art_prompts.py --write
+          python scripts/reconcile_memory_dungeon_art_jobs.py --live
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+            --queue-file projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml \
+            --id-prefix memory-dungeon-saturate-house-outcome-hd-27-keep
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+            --queue-file projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml \
+            --id-prefix memory-dungeon-saturate-dark-house-hd-27
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+            --queue-file projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml \
+            --id-prefix memory-dungeon-saturate-dark-house-outcome-hd-27-keep
+          python scripts/audit_memory_dungeon_art_submission.py
+      - name: Commit request provenance and complete 752-job ledger
+        working-directory: conductor
+        run: |
+          set -euo pipefail
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/art-prompts.yaml projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml
+          if git diff --staged --quiet; then
+            echo "Complete Memory Dungeon request ledger already committed."
+          else
+            git commit -m "chore(memory-dungeon): record all 752 art submissions [skip ci]"
+            pushed=false
+            for attempt in 1 2 3 4 5; do
+              if git push origin HEAD:main; then pushed=true; break; fi
+              git pull --rebase --autostash origin main
+            done
+            if [ "$pushed" != true ]; then
+              echo "::error::ArtJobs created but unable to checkpoint IDs."
+              exit 1
+            fi
+          fi

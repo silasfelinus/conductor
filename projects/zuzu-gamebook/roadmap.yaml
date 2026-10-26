@@ -316,23 +316,16 @@ tasks:
     milestone: m5
     title: Wounded-route risk signals and meaningful retreat paths
     status: ready
-    owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-002]
-    note: >-
-      PR #4037 documented a 6-encounter, 4-health, 3-Resolve, 4-strategy
-      adversarial matrix. At 3 HP, none of the four benchmarked tactics won
-      the crocodile, Abbess or Hollis's band battles in 90 deterministic seeds
-      per setup. Not all losses are dead ends: some authored scenes restore HP
-      and continue, which must be preserved. Audit actual player routes for
-      avoidable and forced encounters; identify when a wounded player is
-      funnelled into near-certain defeat without fair foreshadowing or a
-      meaningful alternative. Add concise one-screen risk cues or narrative
-      retreat options where earned, not blanket stat buffs or free escapes.
-      Preserve Honor/Taint, replay the 15 frozen ending fixtures, and extend
-      adversarial route tests across injured-entry cases. Require current-head
-      TypeScript, contract tests, and any relevant responsive preview checks.
+    note: |-
+      PR #4037 documented a 6-encounter, 4-health, 3-Resolve, 4-strategy adversarial matrix. At 3 HP, none of the four benchmarked tactics won the crocodile, Abbess or Hollis's band battles in 90 deterministic seeds per setup. Not all losses are dead ends: some authored scenes restore HP and continue, which must be preserved. Audit actual player routes for avoidable and forced encounters; identify when a wounded player is funnelled into near-certain defeat without fair foreshadowing or a meaningful alternative. Add concise one-screen risk cues or narrative retreat options where earned, not blanket stat buffs or free escapes. Preserve Honor/Taint, replay the 15 frozen ending fixtures, and extend adversarial route tests across injured-entry cases. Require current-head TypeScript, contract tests, and any relevant responsive preview checks.
+
+      First wounded-route slice: sister-free flag unlocks a costly alternative to the Abbess battle after the wound. New scene and low-HP/Resolve route regression assertions; awaiting PR CI. Other encounters remain for the wider t-013 audit.
+
+      2026-10-25 PT: Merged silasfelinus/kind_robots#4200 (squash 3cfe24528406f7eb77b34c10e1b1a2109fe07b31) after all 13 exact-head workflows passed, including all four contract shards, TypeScript, formatting and 15 golden replay witnesses. Added sister-free-gated retreat after wounded Abbess bargain: rescue both children and leave the breach unresolved, or turn back to fight. Tests cover 1/3/6/12 HP, 0/4 Resolve, locked sister condition, moral flags and preserved positional choice indices. No ArtJobs or production deploy. Remaining t-013: Croc/Hollis low-HP route fairness, real seeded wounded-entry witnesses and broader player risk-cue audit; new scene currently shares sister-dagger art pending its own keeper.
+    updated: '2026-10-26T03:06:15.913Z'
   - id: t-014
     title: "Zuzu Gamebook | Master completion roadmap"
     status: ready
