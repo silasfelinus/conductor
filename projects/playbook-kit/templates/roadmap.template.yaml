@@ -1,0 +1,140 @@
+# __TITLE__: a playbook on the Playbook Kit, scaffolded __DATE__ by scripts/new_playbook.py.
+# The tasks follow the kit's build ladder. Grow the tier only when t-007 says it is earned.
+project: __SLUG__
+kind: software
+autonomous: true
+goal: >-
+  __GOAL__
+notes_from_silas: |
+  __NOTES__
+milestones:
+  - id: m1
+    title: "SHAPE - brief, spec and first screen at Vignette"
+    weight: 20
+    status: not-started
+  - id: m2
+    title: "PLAYABLE VIGNETTE - one sitting, start to ending"
+    weight: 40
+    status: not-started
+  - id: m3
+    title: "GROW - only what the vignette earned"
+    weight: 20
+    status: not-started
+  - id: m4
+    title: "POLISH & SHIP - art, adversarial QA, acceptance"
+    weight: 20
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write DESIGN-BRIEF.md, scaffold the kit spec and ship an art-led first screen"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      In kind_robots: npm run playbook:new -- __SLUG__ "__TITLE__". Fill the brief's
+      sections 1-4, then rungs 1-2 of the spec (premise, key art, cast with one
+      principal villain). Build the game's stage inside PlaybookKitShell on
+      /admin/__SLUG__ with an art-led first screen (code-drawn until art renders) and
+      queue ArtJobs for the key art and cast portraits. Screenshot 390/768/1440 px.
+  - id: t-002
+    milestone: m1
+    title: "Scope check-in for Silas (soft, runs in parallel with building)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Write a FOR SILAS summary of the brief's premise, cast and tier. This is a soft
+      gate: keep building; course-correct when Silas answers.
+  - id: t-003
+    milestone: m2
+    title: "Playable loop: one act start to finish, meters wired to the shell"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Deterministic, seeded rules in utils/<camel>/, a store for run state, meter
+      values passed to the shell, and a verify<Pascal>.test.ts seeded playthrough.
+  - id: t-004
+    milestone: m2
+    title: "Endings and scrapbook: every ending reachable, every moment unlocked by play"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Ladder rungs 3-4. Report kit.unlock('endings' | 'moments') from play. The test
+      proves each ending is reachable from a fresh seed with a replayable trace.
+  - id: t-005
+    milestone: m2
+    title: "Trailer and the rest of the art queue"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Ladder rung 5. Spoiler-free beats from scrapbook moments; queue ArtJobs for every
+      remaining brief.
+  - id: t-006
+    milestone: m3
+    title: "Reveals, and factions if the brief calls for them"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Ladder rungs 6-7. Every faction and reveal must change what the player can do or
+      how a character reads; the kit audit warns on anything unfelt.
+  - id: t-007
+    milestone: m3
+    title: "Tier review: recommend staying at Vignette or growing, with playtest evidence"
+    status: waiting
+    depends_on: t-006
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Play every ending, then write the recommendation in DESIGN-BRIEF.md section 2.
+      Growing a tier is a reversible product decision: park it at needs-human with
+      gate_reason creative-approval and the recommendation; the 2026-09-30
+      default-recommendation rule applies after 7 days.
+  - id: t-008
+    milestone: m4
+    title: "Rendered art delivered and URL-verified for every brief"
+    status: waiting
+    depends_on: t-005
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Ladder rung 9. Queued is not rendered is not delivered: verify each final URL,
+      then set src on the spec.
+  - id: t-009
+    milestone: m4
+    title: "Adversarial seeded playthroughs, settings and save checks at three widths"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Exploit, neglect and refusal runs; every ending from a fresh seed; settings and
+      saves survive reload; 390/768/1440 px with no page overflow.
+  - id: t-010
+    milestone: m4
+    title: "Visual acceptance and public /play release"
+    status: waiting
+    depends_on: [t-008, t-009]
+    gate_human: true
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    note: |-
+      FOR SILAS: play /admin/__SLUG__ and accept the visual state; then the game moves
+      to /play/__SLUG__ (publish gate).
