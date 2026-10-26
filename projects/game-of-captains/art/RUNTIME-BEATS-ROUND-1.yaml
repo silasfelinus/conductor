@@ -1,0 +1,134 @@
+# This Means Warp runtime beats, round 1 (game-of-captains t-008 / playbook-kit t-013).
+# The picture slots the play page shows that had no render on 2026-10-26 (Playbook Forge ledger):
+# the three runtime mission plates, the three antagonists the finale stages, and the four endings
+# finishVoyage can reach. Assets match kind_robots utils/gameOfCaptains/artSlots.ts; export with
+# scripts/export_round_art.py (--manifest utils/gameOfCaptains/artManifest.ts).
+round: this-means-warp-runtime-beats-1
+project_slug: game-of-captains
+designer: This Means Warp runtime art
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 painted runtime plates
+  engine: krea2
+  prompt: prose
+  suffix: Hand-painted 2D science-fiction adventure art with ink outlines, gouache color blocks, detailed copper and
+    metal surfaces, cloth folds, blue instrument lighting and warm amber lamps.
+subjects:
+- key: warp-runtime-mission-refugees
+  lane: krea2
+  entity: mission-plate
+  title: 'The Last Lifeboat: two refugee ships sharing one life support unit'
+  asset: game-of-captains/missions/refugees
+  size: 1344x768
+  seed: 969101
+  prompt_prose: Wide view of deep space beside a dim violet nebula. Two battered civilian transport ships drift side
+    by side, joined by a sagging flexible corridor, their hull lights flickering. Only one ship has a glowing green
+    life support module on its spine; the other's windows are dark and frosted. Through a large round window, adult
+    families in thermal blankets crowd together, children asleep against them. Far off, a sleek gray government patrol
+    cruiser holds position, its searchlight fixed on the convoy.
+- key: warp-runtime-mission-archive
+  lane: krea2
+  entity: mission-plate
+  title: 'The Library Planet: a sentient archive world before a stellar flare'
+  asset: game-of-captains/missions/archive
+  size: 1344x768
+  seed: 969102
+  prompt_prose: Wide view of a small planet whose whole surface is terraced stone library stacks, lit amber from
+    within like a lantern. Long bridges of shelving spiral around its equator and tiny reading-room windows glow along
+    the cliffs. Behind it a huge orange star swells, a bright flare curling off its surface toward the planet. A small
+    copper-hulled starship hovers near the library's open courtyard, its boarding ramp lowered, as a few robed visitors
+    hesitate at the top of the steps.
+- key: warp-runtime-mission-bar
+  lane: krea2
+  entity: mission-plate
+  title: 'The Patron Who Was Never Here: the Serendipity Space Bar'
+  asset: game-of-captains/missions/bar
+  size: 1344x768
+  seed: 969103
+  prompt_prose: Interior of a cozy space bar inside a ring station, warm amber lamps over a curved brass counter.
+    Through a long window the stars turn slowly. Gravity bends strangely in one corner, where drinks, coasters and
+    a cloak float upward around an empty booth. A tall calm bartender with four arms polishes a glass and looks straight
+    at a starship captain in a burgundy coat. Patrons of many shapes and colors sit at small tables, pretending not
+    to watch.
+- key: warp-runtime-antagonist-auditor
+  lane: krea2
+  entity: antagonist-portrait
+  title: 'The Galactic Auditor: a cosmic debt collector'
+  asset: game-of-captains/antagonists/auditor
+  size: 1344x768
+  seed: 969104
+  prompt_prose: A towering stern figure in a long charcoal coat with brass ledger plates stacked down its front stands
+    at the bridge viewscreen of a starship, larger than life. Its face is a smooth pale mask with thin glowing gold
+    eyes, and it holds a long brass abacus like a staff. Holographic sheets of blank glowing ledger columns hang in
+    the air around it. Below, the bridge crew in burgundy and navy uniforms look up from their consoles, uneasy.
+- key: warp-runtime-antagonist-moth
+  lane: krea2
+  entity: antagonist-portrait
+  title: 'The Queen of Borrowed Faces: a collector of identities'
+  asset: game-of-captains/antagonists/moth
+  size: 1344x768
+  seed: 969105
+  prompt_prose: A graceful tall woman in a sweeping cloak of pale gray layered fabric that flares behind her like moth
+    wings stands in a dark mirrored throne room aboard a drifting palace ship. Dozens of porcelain masks, each a different
+    calm adult face, hang on thin threads around her and turn slowly. Her own face is serene and half hidden behind
+    a silver mask held up on a slender rod. Soft silver moonlight falls across a polished black floor.
+- key: warp-runtime-antagonist-curdle
+  lane: krea2
+  entity: antagonist-portrait
+  title: 'Dr. Curdle: the accidental tyrant and his orbital food dispenser'
+  asset: game-of-captains/antagonists/curdle
+  size: 1344x768
+  seed: 969106
+  prompt_prose: A round cheerful middle-aged scientist in a stained white lab coat, thick goggles pushed up on his
+    bald head, beams beside a colossal food dispenser machine floating in orbit over a green planet. The machine is
+    the size of a city block, all chrome nozzles, conveyor chutes and steaming copper vats, with neat cubes of pale
+    nutrient paste tumbling out into space. Tiny cargo shuttles queue at its hatches. A brass mayoral sash hangs from
+    one of the machine's mechanical arms.
+- key: warp-runtime-ending-captain-of-the-open-horizon
+  lane: krea2
+  entity: ending-plate
+  title: 'Captain of the Open Horizon: the worlds protected without being owned'
+  asset: game-of-captains/endings/captain-of-the-open-horizon
+  size: 1344x768
+  seed: 969107
+  prompt_prose: The bridge of a copper-trimmed starship at dawn over a blue planet. The captain in a burgundy coat
+    stands at the open viewscreen with three officers beside them, all relaxed and smiling. Outside, ships of many
+    different peoples sail freely through an open jump gate glowing white. On a console, a small glass of something
+    amber sits on a coaster, a gift left for the captain. Warm golden light pours across the deck.
+- key: warp-runtime-ending-the-last-ship-home
+  lane: krea2
+  entity: ending-plate
+  title: 'The Last Ship Home: bringing the wounded home'
+  asset: game-of-captains/endings/the-last-ship-home
+  size: 1344x768
+  seed: 969108
+  prompt_prose: A scorched and dented starship rests in a rainy spaceport landing bay at night, its ramp lowered.
+    Adult crew carry bandaged survivors down on stretchers into the arms of waiting families under umbrellas. A tired
+    captain in a torn burgundy coat helps an elderly civilian down the last step. Medics with lanterns move between
+    the stretchers, and a few officials in stiff gray uniforms watch disapprovingly from a balcony above.
+- key: warp-runtime-ending-the-galactic-bargain
+  lane: krea2
+  entity: ending-plate
+  title: 'The Galactic Bargain: passage negotiated with the enemy'
+  asset: game-of-captains/endings/the-galactic-bargain
+  size: 1344x768
+  seed: 969109
+  prompt_prose: A long polished table floats in the middle of a vast dark jump gate chamber lit by cold blue light.
+    On one side sits a starship captain in a burgundy coat, signing a heavy brass-bound ledger with a quill pen. On
+    the other side looms a shadowy towering figure whose face stays in darkness. Behind the captain, the starship waits
+    in the open gate, its hull lights on. A thin chain of light runs from the ledger to the captain's wrist.
+- key: warp-runtime-ending-the-cost-of-command
+  lane: krea2
+  entity: ending-plate
+  title: 'The Cost of Command: the crew refuses to abandon the captain'
+  asset: game-of-captains/endings/the-cost-of-command
+  size: 1344x768
+  seed: 969110
+  prompt_prose: The dim smoking bridge of a damaged starship lit only by red emergency lamps. The captain, coat torn
+    and one arm in a sling, sits on the steps below the command chair. Around them the crew have gathered instead
+    of leaving, sharing a flask, patching a console and laughing tiredly. In the empty command chair rests the captain's
+    folded coat and medal, waiting for the next captain. Through the cracked viewscreen a calm blue nebula glows.
