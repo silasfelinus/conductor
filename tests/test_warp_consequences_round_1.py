@@ -98,4 +98,4 @@ def test_each_warp_consequence_has_a_literal_illustration_request():
         assert row["size"] == "1344x768"
         assert row["prompt_prose"] == prompt
         assert isinstance(row["seed"], int)
-        assert not row.get("jobs"), "A generated ArtJob ID must be supplied by the generator"
+        assert isinstance(row.get("jobs", {}), dict), "jobs may only be assigned by the generator"

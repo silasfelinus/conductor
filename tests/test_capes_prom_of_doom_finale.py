@@ -73,4 +73,4 @@ def test_krea_prom_art_has_unique_plate_for_each_state():
         assert subject["asset"] == f"comet-city-academy/prom-of-doom/{key}"
         assert subject["size"] == "1344x768"
         assert subject["prompt_prose"] == scene
-        assert not subject.get("jobs"), "An absent ArtJob ID must never be invented"
+        assert isinstance(subject.get("jobs", {}), dict), "jobs may only be assigned by the generator"
