@@ -76,6 +76,12 @@ def compute_units(pitch: dict) -> dict:
         "art_units": sum(art.values()),
         "text_breakdown": text,
         "text_units": sum(text.values()),
+        "image_generation_passes": sum(art.values()) * production["art_passes_per_image"],
+        "text_authoring_passes": sum(text.values()) * production["text_passes_per_beat"],
+        "total_planned_passes": (
+            sum(art.values()) * production["art_passes_per_image"]
+            + sum(text.values()) * production["text_passes_per_beat"]
+        ),
     }
 
 
@@ -119,6 +125,9 @@ def validate(date: str, docket: object, previous: set[str] | None = None) -> lis
         if not isinstance(production, dict) or any(not isinstance(production.get(k), int) or isinstance(production.get(k), bool) or production[k] < 0 for k in (*ART_FIELDS, *TEXT_FIELDS)):
             errors.append(f"{prefix}: production must give nonnegative integer counts for every art and text category")
             continue
+        for field in ("art_passes_per_image", "text_passes_per_beat"):
+            if not isinstance(production.get(field), int) or isinstance(production.get(field), bool) or not 1 <= production[field] <= 4:
+                errors.append(f"{prefix}: {field} must be 1–4 model passes per deliverable")
         if cast["playable"] < 1 or production["maps"] < 1:
             errors.append(f"{prefix}: at least one playable opening and one map required")
         spots = pitch.get("collisions")
