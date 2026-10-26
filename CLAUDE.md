@@ -68,6 +68,13 @@ At the start of every session, before responding to any task, run a conductor sw
    Never rewrite historical pitch votes. For old intake only,
    python scripts/daily_pitches.py --approved preserves legacy behavior.
    dream-cycle/t-035 is the recurring build-and-report commitment.
+   **Audience-first window, 2026-10-26 → 2026-11-25 PT** (Silas, 2026-10-26, after a
+   fresh-visitor audit found ~15 polished games but almost no outside players): at
+   least three of the five daily upgrades must help a first-time visitor find,
+   understand, share or support the site (front door, link previews, share/give
+   prompts, review flow, drop-offs seen in `/admin/site-stats` or playtest notes).
+   New content counts only when it fixes something real players hit. Backlog:
+   interface-vision t-150, t-151. The `--brief` prints this until the window ends.
 
 9. **New-playbook challenge, separate from the five shipped daily upgrades:**
    Every Pacific day, review the current authored Kind Robots Playbook Studio
