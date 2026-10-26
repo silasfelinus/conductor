@@ -2500,3 +2500,21 @@ tasks:
     Direct request from Silas on 2026-10-20 PT: retire the separate Zuzu channel and world-hub homepage link, move its game tabs to Play without changing permission boundaries, and show independent homepage cards for Emperor of Dust, Zuzu Pinball, Zuzu Shifting Lands, Zuzu Gamebook and Ecotone. Preserve public game routes, the admin-only Zuzu Lair preview, artwork and tutorial/route contracts. Code work: silasfelinus/kind_robots branch worker/interface-vision-t105-zuzu-play-20261020-74ae.
 
     Silas-directed navigation consolidation implemented on worker/interface-vision-t105-zuzu-play-20261020-74ae in Kind Robots. Direct homepage links for Emperor of Dust, Zuzu Pinball, Shifting Lands, Gamebook, and Ecotone, Zuzu tabs now under Play, removed dedicated Zuzu channel, retained admin-only Lair access, and updated navigation tests. PR/CI follow.
+
+- id: t-150
+  milestone: m6
+  title: "Let logged-out visitors rate public games"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: |-
+    From Silas's 2026-10-26 PT fresh-visitor audit: no game on kindrobots.org has a single rating, partly because the arcade review form (components/arcade/arcade-reviews.vue) and the reaction form only accept signed-in users, and almost every visitor is anonymous. Add a guest star rating (optional short comment) for public games with abuse damping (per-browser and per-day rate limits, length caps, server-side moderation hold for comments, no IP stored in plain text), and show the share/give support card after a rating is posted. Keep signed-in reviews unchanged. Screenshot 390/768/1440 before handoff.
+
+- id: t-151
+  milestone: m6
+  title: "Fix the top first-visit drop-offs from site stats and playtest notes"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: |-
+    Audience-first follow-up from Silas's 2026-10-26 PT audit. Start once /admin/site-stats (kind_robots site-stats PR) has a week of production data, i.e. on or after 2026-11-02 PT; before then re-arm as a no-op. Read top pages, referrers and support:* events, find the two public pages where first-time visitors most often stop (a game they open and leave within a minute, a dead end such as the empty-mana art studio or the API-key storybook gate), and ship one scoped fix per page. Include any hesitation points Silas reports from the Crystal Street launch-week playtests. Report the before/after numbers in the PR body.
