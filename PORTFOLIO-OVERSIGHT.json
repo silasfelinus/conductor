@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-26T04:57:39.400831+00:00",
+  "generated_at": "2026-10-26T13:16:40.857153+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 42,
+    "roadmap_warnings": 46,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -15,7 +15,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-25T01:09:44+00:00",
-    "hours_since": 27.8,
+    "hours_since": 36.12,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -35,20 +35,20 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-26T04:57:39.400838+00:00",
+    "generated_at": "2026-10-26T13:16:40.857159+00:00",
     "summary": {
-      "roadmaps": 88,
-      "active_projects": 25,
+      "roadmaps": 89,
+      "active_projects": 26,
       "continuous_projects": 3,
-      "tasks": 2670,
-      "ready": 215,
-      "waiting": 234,
-      "needs_human": 35,
-      "in_progress": 31,
-      "done": 2134,
+      "tasks": 2691,
+      "ready": 219,
+      "waiting": 236,
+      "needs_human": 36,
+      "in_progress": 33,
+      "done": 2146,
       "errors": 0,
-      "warnings": 42,
-      "info": 108
+      "warnings": 46,
+      "info": 109
     },
     "errors": [],
     "warnings": [
@@ -78,7 +78,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "art-archive",
         "task": "t-044",
-        "message": "Task has remained claimed for 22 days."
+        "message": "Task has remained claimed for 23 days."
       },
       {
         "severity": "warning",
@@ -103,6 +103,13 @@
       },
       {
         "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "cthulhuquarium",
+        "task": "t-089",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
         "code": "STALE_CLAIM_FIELDS",
         "project": "emperor-of-dust",
         "task": "t-033",
@@ -120,7 +127,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "interface-vision",
         "task": "t-149",
-        "message": "Task has remained review for 5 days."
+        "message": "Task has remained review for 6 days."
       },
       {
         "severity": "warning",
@@ -141,21 +148,21 @@
         "code": "STALE_IN_PROGRESS",
         "project": "kind-robots",
         "task": "t-127",
-        "message": "Task has remained review for 21 days."
+        "message": "Task has remained review for 22 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "kind-robots",
         "task": "t-131",
-        "message": "Task has remained review for 19 days."
+        "message": "Task has remained review for 20 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "kind-robots",
         "task": "t-133",
-        "message": "Task has remained review for 18 days."
+        "message": "Task has remained review for 19 days."
       },
       {
         "severity": "warning",
@@ -163,6 +170,13 @@
         "project": "kind-robots",
         "task": "t-139",
         "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+      },
+      {
+        "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "kind-robots",
+        "task": "t-148",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
       },
       {
         "severity": "warning",
@@ -204,14 +218,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "kr-arcade",
         "task": "t-075",
-        "message": "Task has remained claimed for 13 days."
+        "message": "Task has remained claimed for 14 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "kr-arcade",
         "task": "t-083",
-        "message": "Task has remained claimed for 7 days."
+        "message": "Task has remained claimed for 8 days."
       },
       {
         "severity": "warning",
@@ -239,28 +253,42 @@
         "code": "STALE_IN_PROGRESS",
         "project": "mandarin-tutor",
         "task": "t-030",
-        "message": "Task has remained claimed for 22 days."
+        "message": "Task has remained claimed for 23 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "rainbow-bullet-hell-space-princess",
         "task": "t-011",
-        "message": "Task has remained claimed for 8 days."
+        "message": "Task has remained claimed for 9 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "rainbow-bullet-hell-space-princess",
         "task": "t-012",
-        "message": "Task has remained claimed for 8 days."
+        "message": "Task has remained claimed for 9 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "rainbow-bullet-hell-space-princess",
         "task": "t-022",
-        "message": "Task has remained claimed for 10 days."
+        "message": "Task has remained claimed for 11 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "shifting-desks",
+        "task": "t-040",
+        "message": "Task has remained review for 3 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "shifting-desks",
+        "task": "t-043",
+        "message": "Task has remained review for 3 days."
       },
       {
         "severity": "warning",
@@ -323,7 +351,7 @@
         "code": "STALE_IN_PROGRESS",
         "project": "zuzu-lair",
         "task": "t-014",
-        "message": "Task has remained review for 15 days."
+        "message": "Task has remained review for 16 days."
       },
       {
         "severity": "warning",
