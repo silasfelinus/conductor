@@ -676,7 +676,7 @@ tasks:
   - id: t-037
     milestone: m2
     title: "Build bounded cross-realm consequence ledger"
-    status: review
+    status: ready
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -688,10 +688,9 @@ tasks:
       Early adversarial first-two-world gameplay pass merged as Kind Robots PR #4202, squash b0b40d940b401bf125dbd026ecba79bb812285bf, all fourteen required PR workflows green. Repaired P0 instant-win minefield exit (exit is intentionally safe), P1 600-move save softlock/repeated no-op logging (now restartable) and P2 duplicate lantern hint charges. Added 24 seed-scoped greedy/expert archive runs, 16 reflected/original seal inspection combinations and 24 ordered cross-reality photo collections plus a reproducible findings/limitations report. Master issue #4136 updated with commit and precise scope. Return t-037 to READY because full bounded cross-realm consequence ledger is not complete. Keep t-036 full human/device/art-dependent adversarial acceptance blocked until its separate prerequisites; do not imply browser image review or final release.
 
       Second adversarial pass on the 36-room mirrored House uncovered skip-through progression: rooms without memory/logic mini-challenges let players advance into unvisited rooms without making their authored decisions. Updated darkHouseExits to require both solved challenges and committed consequences before first-entry advancement, preserving visited retreat and old saves. Added in-game explanation and two full 36-room DFS persona playthrough contract tests, each with all 36 choices, six matching trials, five logic puzzles, alternate return/commons endings and save reload after every chamber. Kind Robots PR in review; do not mark art/browser QA complete.
-    updated: '2026-10-26T09:37:13.001Z'
-    owner: worker
-    claimed_by: 20261026T093500Z-memory-dungeon-t037-house-adversarial-c4e8
-    claimed_at: '2026-10-26T09:35:00Z'
+
+      Second first-two-reality adversarial gameplay pass merged as Kind Robots PR #4211, squash ce708e2a0b0260d160343e4f8b3ab1959fa72b49, with all 14 required workflows green. Fixed mirrored 36-room House story bypass: ordinary rooms and completed puzzle chambers previously allowed onward travel without committing authored consequences. New unvisited doors require both completed challenges and a room decision; visited retreats and legacy paths stay usable. Added DFS adversarial reducer simulations of both complete 36-room House endings, 72 committed decisions, six memory and five logic puzzle types per route, full reload/backtracking and distinct ethical verdicts. Added visible player explanation and updated first-two-world QA report. Master Kind Robots #4136 updated. Return t-037 READY for the broader cross-realm consequence ledger; do not mark t-036 browser/art/human QA complete or advance final human gate.
+    updated: '2026-10-26T09:45:28.098Z'
   - id: t-038
     title: "Memory Dungeon master bible: Reimaginer, 8 world concepts / 16 realities, shifting-reality epic finale"
     status: ready
