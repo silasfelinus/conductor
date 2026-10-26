@@ -1506,17 +1506,17 @@ tasks:
   - id: t-061
     milestone: m2
     title: "Add chapter-anchor scene schema to the card validator before authoring the six anchors"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Kaizen from #6533 review: extend validate_weird_humboldt_cards.py with a
-      chapter-anchor scene schema check (one anchor per chapter, authored text,
-      no-dead-end rules) so anchors are validated from their first commit.
+    note: |-
+      Kaizen from #6533 review: extend validate_weird_humboldt_cards.py with a chapter-anchor scene schema check (one anchor per chapter, authored text, no-dead-end rules) so anchors are validated from their first commit.
+
+      Implemented stricter chapter-anchor validation and five adversarial regression tests on worker/weird-humboldt-t061-anchor-schema-b8e7. CI verification and PR merge pending.
     claimed_by: 2026-10-26T055000Z-weird-humboldt-t061-anchor-schema-b8e7
     claimed_at: '2026-10-26T05:50:00Z'
-    updated: '2026-10-26T05:50:00Z'
+    updated: '2026-10-26T05:51:35Z'
   - id: t-062
     milestone: m2
     title: "Mysteries: twelve once-per-run local cases, three gates, true path, Real Endings and Case Files"
