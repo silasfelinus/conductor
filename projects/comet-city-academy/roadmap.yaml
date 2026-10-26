@@ -216,19 +216,18 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Build 30-day day/night map, dispatch, relationship and save engine"
-    status: claimed
+    status: review
     depends_on: t-001
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Implement seeded day/night with scripted anchors and weekly location draws, one-to-three
-      hero/villain/rogue/shared volunteer assignments, changing real versus simulated stakes, power
-      solutions, romance consent and compatibility, follower injuries and infirmary recovery, timed
-      villains and versioned saves including prior first-week conversion. No LLM at runtime.
+    note: |-
+      Implement seeded day/night with scripted anchors and weekly location draws, one-to-three hero/villain/rogue/shared volunteer assignments, changing real versus simulated stakes, power solutions, romance consent and compatibility, follower injuries and infirmary recovery, timed villains and versioned saves including prior first-week conversion. No LLM at runtime.
+
+      First partial day-1-to-day-30 playable campaign engine implemented on an isolated Kind Robots branch: 30 authored daily anchors; four seeded mastermind strategies; full 30-day map/day-night/dispatch debrief loop; seven-day legacy saves retained; day-29 Guest List and four-way actual Prom of Doom catastrophe on day 30, not a rehearsal; wound state, assignment exclusions and daytime infirmary action; deterministic multi-seed run tests and migration assertions. NOT full roadmap t-003: full relationship consent, 8 mastermind schemes, 36 distinct patrols, branch art and adversarial QA still needed. Await PR CI and merge.
     claimed_by: 2026-10-26T1215Z-prom-thirty-c9a8
     claimed_at: '2026-10-26T12:14:08.137Z'
-    updated: '2026-10-26T12:14:08.137Z'
+    updated: '2026-10-26T12:22:58.593Z'
   - id: t-004
     milestone: m3
     title: "Author at least 36 good/evil/rogue patrol cases with meaningful results"
