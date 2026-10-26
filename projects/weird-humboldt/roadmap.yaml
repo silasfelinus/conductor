@@ -1491,17 +1491,17 @@ tasks:
   - id: t-030
     milestone: m2
     title: "Derive validator PER_CHAPTER card counts from ENCOUNTER-SEEDS.md instead of hand-maintained constants"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-26T004800Z-wh-t030-seedcount-9f2c
     claimed_at: '2026-10-26T00:48:00Z'
-    updated: '2026-10-26T00:48:00Z'
+    updated: '2026-10-26T00:58:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Kaizen from WH-120 review (#6527): validate_weird_humboldt_cards.py and
-      tests/test_weird_humboldt_cards.py hard-code deck sizes, so each new card
-      needs three coordinated edits. Derive counts from the seeds file.
+    note: |-
+      Kaizen from WH-120 review (#6527): validate_weird_humboldt_cards.py and tests/test_weird_humboldt_cards.py hard-code deck sizes, so each new card needs three coordinated edits. Derive counts from the seeds file.
+
+      Scoped seed-catalog-driven deck counts and chapter-membership validation implemented on worker/weird-humboldt-t030-seed-counts-9f2c. Added tests for duplicate seeds, editorial-only references, wrong chapter and missing cards; awaiting PR CI before merging.
   - id: t-061
     milestone: m2
     title: "Add chapter-anchor scene schema to the card validator before authoring the six anchors"
