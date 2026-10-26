@@ -190,13 +190,28 @@ seed/prose/art interactions in its own email section.
 
 Before authoring: inspect the **current** Kind Robots `utils/playbook/games.ts`
 registry and relevant Conductor active-project briefs, including Prom of Doom
-and This Means Warp. Use `--brief` to see the eight-game current baseline and
-recent already-pitched concepts. Write a truly different core loop and practical
-starting character choices; count disjoint playable/NPC/follower characters,
-portrait emotions or injured states, maps, scene art, opening illustrations,
-relationship/villain scenes, finale frames, UI art and separate authored text
-beats. Identify at least three places where seed-driven state controls actual
+and This Means Warp. Use `--brief` to see the eight-game baseline, recent
+pitches and genre-gap shortlist. **Silas's 2026-10-26 calibration is genre
+first**: broad missing paradigms matter more than isolated clever mechanics.
+Already represented genres include Weird West, post-apocalypse, superheroes,
+slice of life, theatre of place, dark humor and psychedelia. Current missing
+pillars: original family-friendly nonsense/literary children's adventure,
+cyberpunk with evolved embodiment/identity rights mechanically represented,
+and Heaven/Hell eternal soul-judgment simulator with cases, evidence, appeals
+and downstream eternal consequences.
+
+Each proposal must justify its genre gap, intended audience, full-act world
+scope and emotional promise, plus **three or more genre-scale systems**. Then
+explain the core loop, practical opening choices and disjoint playable/NPC/
+follower cast counts. Count portraits by emotion and evolution, maps,
+illustrations, friendship scenes (important for child-safe games), optional
+romance, villain/conflict scenes, transformative moments, finale frames,
+interface art and authored text beats; add model-pass estimates separately.
+Identify at least three places where seed-driven state controls actual
 prose and finished/generative art choices **and** changes what happens next.
+Avoid borrowing named authors' exact styles, characters or stories. The
+rejected first-pass 2026-10-26 concepts are preserved in the archive; the
+live dated docket contains the three revised genre-calibrated pitches.
 
 `python scripts/daily_playbook_challenge.py --check --date YYYY-MM-DD` enforces
 the 1–3 pitch budget and rejects repeat slugs; `--payload` produces

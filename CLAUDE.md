@@ -76,10 +76,24 @@ At the start of every session, before responding to any task, run a conductor sw
    they enter the Studio). Run `python scripts/daily_playbook_challenge.py --brief`
    and author **1–3 fresh, non-derivative game pitches** at
    `pitches/playbook-challenges/<Pacific-date>.yaml` with production costs.
-   Specify playable opening choices; unique NPC/follower cast; emotional and
-   injured portraits; maps; encounter/romance/villain/finale illustrations;
-   text-scene estimates; at least three explicit seeded-state × authored/LLM
-   prose × selected/generated-art moments and their actual game consequences.
+   **Genre-first calibration (Silas, 2026-10-26 PT):** Do not select a narrow
+   unusual mechanic and call it a complete new game. Map the broad genres
+   already occupied (Weird West, post-apocalypse, superheroes, slice of life,
+   theatre of place, dark comedy, psychedelia) and prioritize missing
+   long-form genre pillars. The first three requested gaps are an original,
+   family-friendly children's literary wonderland (playful nonsense,
+   friendship and adventure, no romance), **cyberpunk with deeply mechanical
+   body evolution and human selfhood**, and **Heaven/Hell final-soul judgment
+   simulation** with evidence, eternal consequences and appeal.
+   Explicitly state genre, gap, audience, multi-act world scope, emotional
+   promise and at least three substantial genre-defining systems. Re-reading
+   and copying earlier fantasy pitches is not enough; do not imitate named
+   writers or copyrighted characters. Specify playable opening choices;
+   disjoint NPC/follower cast; emotional/injury/evolved portraits; maps;
+   encounter, friendship, optional romance, villain, transformation and
+   finale art; prose beats and processing-pass assumptions; at least three
+   explicit seeded-state × authored/optional LLM prose × selected/generated
+   art collisions and their actual gameplay consequences.
    Run `--check` for that date; do not recycle yesterday's pitches or call
    missing/invalid entries authored. Sessions write the dated creative docket,
    **not** the scheduled workflow (paid authoring remains opt-in).
@@ -108,7 +122,7 @@ Then report:
   Facet, art, and digest state; legacy Dream outlines are idea inventory rather
   than queued object builds (warn when useful idea inventory falls below five)
 - **Daily upgrades**: report five PR-backed shipped/in-progress additions, actual CI runs and merge SHA, playable and art evidence, plus the modifications/rollback feedback queue (daily_project_deliveries.py --check / --feedback). Historical decisions remain in daily_pitches.py --approved.
-- **New playbook challenge**: dated 1–3 new-game proposals or honest missing/invalid status; quantify unique render targets and authored scenes separately from LLM tokens, and do not imply approval.
+- **New playbook challenge**: dated 1–3 new-game proposals or honest missing/invalid status; explain the unoccupied GENRE pillar and three+ genre-scale systems before novelty mechanics; quantify unique render targets and authored scenes separately from LLM tokens, and do not imply approval.
 - **Daily Tzaddik**: from the sweep's `tzaddik_review` section (`python scripts/tzaddik_review.py --check`
   for the full list), report the
   approved/rejected/deferred/pending counts across every discovery docket. List

@@ -37,14 +37,29 @@ EXISTING_PLAYBOOKS = {
 }
 ART_FIELDS = (
     "maps", "opening_choice_images", "scene_illustrations",
-    "romance_illustrations", "villain_illustrations",
+    "friendship_illustrations", "romance_illustrations",
+    "villain_illustrations", "transformation_illustrations",
     "finale_frames", "interface_art",
 )
 TEXT_FIELDS = (
-    "opening_scenes", "encounter_scenes", "romance_scenes",
-    "villain_scenes", "finale_scripts",
+    "opening_scenes", "encounter_scenes", "friendship_scenes",
+    "romance_scenes", "villain_scenes", "finale_scripts",
 )
 SPOT_FIELDS = ("stage", "seeded_state", "text_variation", "image_variation", "consequence")
+
+# A genre is the foundation of a playable world, not simply a decorative mechanic.
+# This is human guidance, not a closed enum: future genre gaps can be added.
+ALREADY_COVERED_GENRES = (
+    "Weird West / anthropomorphic fable", "post-apocalyptic survival",
+    "superhero origins and graduation", "slice of life / relationship drama",
+    "theatre of place and community", "dark-humor bureaucracy",
+    "psychedelic surrealism",
+)
+PRIORITY_GENRE_GAPS = (
+    "Family-friendly literary wonderland / children's mythic adventure",
+    "High-technology cyberpunk and transhuman selfhood",
+    "Metaphysical heaven/hell and eternal soul-judgment simulation",
+)
 
 
 def pacific_today() -> str:
@@ -111,9 +126,23 @@ def validate(date: str, docket: object, previous: set[str] | None = None) -> lis
             errors.append(f"{prefix}: duplicate or existing game slug {slug}")
         else:
             seen.add(slug)
-        for field in ("title", "hook", "core_loop", "unique_mechanic", "opening_choices", "novelty_against_existing"):
+        title = str(pitch.get("title") or "").strip().casefold()
+        title_key = "title:" + re.sub(r"[^a-z0-9]+", "-", title).strip("-")
+        if title_key in seen:
+            errors.append(f"{prefix}: duplicate concept title {pitch.get('title')}")
+        else:
+            seen.add(title_key)
+        for field in ("title", "hook", "genre_pillar", "genre_gap", "audience",
+                      "world_scope", "emotional_promise", "core_loop",
+                      "unique_mechanic", "opening_choices",
+                      "novelty_against_existing"):
             if not isinstance(pitch.get(field), str) or len(pitch[field].strip()) < 20:
                 errors.append(f"{prefix}: {field} needs substantive text")
+        systems = pitch.get("signature_systems")
+        if not isinstance(systems, list) or len(systems) < 3 or any(
+            not isinstance(s, str) or len(s.strip()) < 35 for s in systems
+        ):
+            errors.append(f"{prefix}: at least three substantive genre-defining systems required")
         if pitch.get("runtime_llm") not in ("none", "optional", "required"):
             errors.append(f"{prefix}: runtime_llm must be none, optional, or required")
         cast = pitch.get("cast")
@@ -155,6 +184,8 @@ def historical_slugs(date: str) -> set[str]:
             for pitch in body.get("pitches", []):
                 if isinstance(pitch, dict) and pitch.get("slug"):
                     slugs.add(str(pitch["slug"]))
+                    title = str(pitch.get("title") or "").strip().casefold()
+                    slugs.add("title:" + re.sub(r"[^a-z0-9]+", "-", title).strip("-"))
         except (OSError, yaml.YAMLError, AttributeError, TypeError):
             continue
     return slugs
@@ -187,16 +218,32 @@ def brief(date: str) -> str:
         except (OSError, yaml.YAMLError, TypeError):
             pass
     games = "\n".join(f"- {name}: {loop}" for name, loop in EXISTING_PLAYBOOKS.items())
+    covered = ", ".join(ALREADY_COVERED_GENRES)
+    gaps = "\n".join(f"- {name}" for name in PRIORITY_GENRE_GAPS)
     return (
         f"Daily new-playbook pitch challenge for {date} PT. Draft 1–3 FRESH concepts to "
         f"pitches/playbook-challenges/{date}.yaml. Review the live Kind Robots "
         "utils/playbook/games.ts and current Conductor active-project DESIGN-BRIEFs first; "
         "do not clone their core loops.\n"
         f"Known baseline:\n{games}\n"
+        f"ALREADY represented genre families: {covered}.\n"
+        f"Current high-value MISSING genre paradigms:\n{gaps}\n"
+        "FIRST select a missing, expansive genre pillar, its audience, world scope "
+        "and emotional promise; invent at least three substantial genre-defining "
+        "systems and multiple acts. A charming isolated mechanic or theme mash-up "
+        "is not enough. Prioritize worlds big enough to sustain a full game and "
+        "differentiate them structurally from existing titles. Children\'s adventures "
+        "use original whimsical voices, read-aloud accessibility, friendship arcs "
+        "and safe stakes, NEVER forced romance or horror. Cyberpunk must make "
+        "cybernetics, body autonomy, identity continuity and social consequences "
+        "mechanical, not only visual. Afterlife games must let the player judge "
+        "souls and bear consequences for eternal outcomes, with meaningful "
+        "evidence, bias and appeal mechanics. No imitation of protected characters.\n"
         "Each pitch needs: a distinct core loop and novelty comparison; explicit opening "
         "character choices; disjoint playable/NPC/follower cast counts and portraits per "
         "person (base, 2+ expressions/injury where appropriate); maps, opening-choice, "
-        "scene, romance, villain, finale and UI image counts; text units for openings, "
+        "scene, friendship, optional romance, villain, transformation, finale and UI "
+        "image counts; text units for openings, "
         "encounters, romance, villain and finales; at least 3 concrete intersections "
         "between seed/RNG, generated or authored prose, art selection/generation, and "
         "consequential game state. Count actual render targets, not vaguely 'lots of art'. "
