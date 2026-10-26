@@ -139,7 +139,6 @@ def test_archetype_rejects_bad_points_missing_reaction_and_mystic_framing():
     assert any("mystical" in p for p in problems)
 
 
-
 def test_anchor_id_must_match_chapter_and_be_unique():
     anchors = wh.load_anchors()
     anchors[0]["id"] = "WH-A2"
