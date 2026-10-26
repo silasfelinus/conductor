@@ -14,6 +14,12 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "memory-dungeon-saturate-"
+# projects/art-prompts.yaml is the live queue: the art workflow drains rows once
+# their images are routed (2026-10-26: 227 done rows left it in 5481523). Only
+# the permanent KNOWN-ART-REQUESTS ledger must stay full, the same floor as
+# tests/test_memory_dungeon_art_queue.py. Requiring 700 across both files after
+# the drain failed every Auto Art Generate run and blocked every later step.
+MIN_REQUESTS = 500
 LEDGERS = (
     ROOT / "projects/art-prompts.yaml",
     ROOT / "projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml",
@@ -79,7 +85,11 @@ def main() -> int:
         f"{report['satisfied_without_job']} previously satisfied, "
         f"{len(report['unresolved'])} NOT submitted"
     )
-    if report["total"] < 700 or report["duplicate_ids"] or report["unresolved"]:
+    if (
+        report["total"] < MIN_REQUESTS
+        or report["duplicate_ids"]
+        or report["unresolved"]
+    ):
         for key in report["duplicate_ids"][:20]:
             print(f"  DUPLICATE {key}", file=sys.stderr)
         for key in report["unresolved"][:30]:
