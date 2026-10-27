@@ -12564,3 +12564,7 @@ Worker pattern: good scoping; when marking tasks `review` for a cross-repo PR, n
 - Branch changed `auto-art-generate.yml` KR_BASE_URL from `https://kindrobots.org` to `https://kind-robots.vercel.app`.
 - That host is the retired origin (`tests/test_canonical_kindrobots_origin.py` pins it as retired; it returns 503/DEPLOYMENT_PAUSED). `kindrobots.org/api/health` returns 200 now.
 - Branch also has no merge base with main (stale snapshot). Not merged; branch is superseded and can be cleared by branch-janitor. Lesson: check `test_canonical_kindrobots_origin.py` before changing KR_BASE_URL.
+
+## 2026-10-27 — Reviewer: conductor#6693 closed (no merge)
+Closed the open PR for the `worker/eod-art-submission-api-host-20261026-f4c2` branch. Live probe this run: `kindrobots.org/api/health` 200, `kind-robots.vercel.app/api/health` 503, so the canonical origin is healthy and the PR would have pointed Auto Art Generate at the failing host. Four earlier reviewer passes had held it open for a Silas decision; the probe settles it. Branch is superseded (no merge base with main) for branch-janitor.
+Worker pattern: probe both origins before proposing a KR_BASE_URL change.
