@@ -23,6 +23,19 @@ class DailyPlaybookChallengeTest(unittest.TestCase):
         cls.path = ROOT / "pitches/playbook-challenges/2026-10-26.yaml"
         cls.docket = yaml.safe_load(cls.path.read_text(encoding="utf-8"))
 
+    def test_every_committed_dated_docket_validates_with_full_lineage(self):
+        """Catch malformed new daily dockets before the digest reads them."""
+        for path in sorted((ROOT / "pitches/playbook-challenges").glob("????-??-??.yaml")):
+            with self.subTest(date=path.stem):
+                docket = yaml.safe_load(path.read_text(encoding="utf-8"))
+                self.assertEqual(challenge.validate(path.stem, docket), [])
+                payload = challenge.payload(path.stem)
+                self.assertEqual(payload["status"], "ready")
+                self.assertEqual(len(payload["pitches"]), 3)
+                for pitch in payload["pitches"]:
+                    self.assertGreater(pitch["units"]["art_units"], 0)
+                    self.assertGreater(pitch["units"]["text_units"], 0)
+
     def test_all_eight_playbooks_reviewed_and_three_missing_genres_pitched(self):
         self.assertEqual(challenge.validate("2026-10-26", self.docket, set()), [])
         self.assertEqual(len(self.docket["reviewed_playbooks"]), 8)
