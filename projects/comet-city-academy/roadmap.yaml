@@ -357,3 +357,22 @@ tasks:
       Not a current obstacle. Only after all content, art, playtests, fixes and responsive reviews
       pass should master issue become awaiting final human verdict. Final design approval does not
       imply publish or deploy.
+  - id: t-019
+    milestone: m3
+    title: "Author identity portrait prompts: 48 people plus 2 guests, student form first, as an auto_submit round"
+    status: ready
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: |-
+      Silas 2026-10-26 submitted the 58 identity beats from the Playbook Forge ledger, which answers
+      the open question of whether to queue the roster portraits: yes. Those requests used
+      title-built prompts and were cancelled. Write a described-picture prompt for each person in
+      CHARACTER_ROSTER (kind_robots utils/cometAcademy/identityArcs.json plus the guests Zuzu and
+      Tess Helio), student form first, with hero and villain forms to follow. Each prompt covers
+      the person's look, origin and affinity cues, and pose. No names, titles or lettering. Write
+      them as projects/comet-city-academy/art/IDENTITY-PORTRAITS-ROUND-1.yaml with assets
+      comet-city-academy/identities/<signature>/student and auto_submit: true, and dry-run them
+      with enqueue_art_requests.py. Export with scripts/export_round_art.py --manifest when DONE.
+

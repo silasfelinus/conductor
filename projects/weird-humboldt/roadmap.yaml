@@ -1634,3 +1634,18 @@ tasks:
       Corrected current Mara bio in three Ecotone design documents, flagged withdrawn Mara ArtJobs 40846/40847 and checkpoint candidates as noncanon audit-only, and added a regression test. PR and CI verification in progress.
 
       Merged conductor PR #6664 (742c0f3a6adf3da1965851a25237c3eb1f2e1d18). Removed obsolete Mara biography from active Ecotone docs, flagged original portrait ArtJobs 40846/40847 and checkpoint jobs 40884-40891 as noncanon provenance, and added tests. All 23 exact-head checks completed successfully, including full Python suite; no ArtJobs generated and no deployment. Master issue master issue 4145 comment 6410038612 tracks replacement-art/export follow-up.
+  - id: t-068
+    milestone: m5
+    title: "Ecotone: author art prompts for the Wild Way (ecotopia) ending storyline renders"
+    status: ready
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: |-
+      2026-10-26 Playbook Forge audit: every ending storyline except ecotopia (and the
+      consultation-held Mara) has endings/<lead>-<lens>-<fate> renders in all four styles. Write
+      described-picture prompts for ecotopia × each open lens × hope/dark as an auto_submit round
+      in four styles, with no titles or lettering, then export with export_ecotone_art.py. The
+      Forge ledger shows the storyline as unpainted until then.
+
