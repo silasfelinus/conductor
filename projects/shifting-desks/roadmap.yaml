@@ -683,28 +683,28 @@ tasks:
   - id: t-040
     milestone: m4
     title: 'First-clear Personnel Archive: persistent illustrated milestones, endings and run dossiers'
-    status: review
+    status: done
     depends_on: t-012
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-23T10:21:00Z'
+    updated: '2026-10-27T17:13:00Z'
     note: |-
       P1, owner directive 2026-10-23 PT. A finished run must leave visible evidence of accomplishment, immediately and across browser reloads. First naturally reached ending unlocks an accessible one-screen Personnel Archive and clearly announces the unlock on the ending screen, with persistent navigation at the front desk and from the ending. Tabs: Milestones, Endings, Achievements, Runs (discoveries optional). Cards show art/badges, earned timestamp, progress, silhouette/redaction for locked, filled/partial for progress, distinct rare treatment without spoilers. Initial milestones: first completion, first ending, full five-department clear, first mutation, secret-society membership, successor use, Board approval, first test report, form thresholds; never award a milestone unearned. Persist bounded finished-run dossiers (end ID, job, society, mutation, floors, employee count, forms, grades, date, seed) idempotently on reload; migrate existing endingsFound/current finished save as fairly as evidence permits and never invent unseen run histories. Honor reduced motion and responsive internal gallery scroll. Existing ending-gallery collection must remain available and 11 ending IDs unchanged. Test first win, refresh, repeat win, no win, tampered saves, mobile widths.
 
-      First-clear archive / mixed test report implementation PR silasfelinus/kind_robots#4066 open. Runtime holds persistent receipts, four visual archive tabs, ending image panel and mixed institutional evaluations preserving original numeric scores. GitHub PR checks still pending. Follow-up art delivery and final full visual acceptance remain separate tasks.
+      First-clear archive and mixed test reports landed in merged silasfelinus/kind_robots#4066 on 2026-10-23 PT; its Shifting Desks gameplay contract, TypeScript typecheck, and other recorded CI workflows passed. This task's original implementation scope is complete. Ending hero/badge art, ceremony, print cabinet, full visual acceptance and real-device QA remain independent follow-ups (t-032, t-041, t-042, t-044 through t-046).
     claimed_by: 2026-10-23T101400Z-shifting-desks-reward-gpt6-c82f
     claimed_at: '2026-10-23T10:14:00Z'
 
   - id: t-041
     milestone: m3
     title: 'Deliver unique illustrated ending hero artwork and linked achievement badges for all endings'
-    status: blocked
+    status: waiting
     depends_on: t-032
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-23T09:58:00Z'
+    updated: '2026-10-27T17:13:00Z'
     note: >-
       P1 ART DELIVERY. Eleven authored endings already have art_prompt in
       canonical/runtime endings; don't re-request existing confirmed ArtJobs.
@@ -721,12 +721,12 @@ tasks:
   - id: t-042
     milestone: m4
     title: 'End-of-run reward ceremony: achievement unlock, milestone progress and clear run summary'
-    status: blocked
+    status: ready
     depends_on: t-040
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-23T09:58:00Z'
+    updated: '2026-10-27T17:13:00Z'
     note: >-
       P1. On first win show unlocked archive call-to-action; on every finish
       show earned ending hero, at least one linked achievement or milestone
@@ -742,27 +742,27 @@ tasks:
   - id: t-043
     milestone: m5
     title: 'Test Results: credible mixed evaluations, liabilities and sharper HR writing'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-23T10:21:00Z'
+    updated: '2026-10-27T17:13:00Z'
     note: |-
       P1. The first human full run had Empathy 13, Ingenuity 8, Obedience 7, Spite 6, all tagged Exceptional: unfun. Keep raw grades, seed, skill gates, thresholds and engine balance unchanged. Presentation may award at most one Exceptional; others gain relative or corporate liability descriptors (e.g. Productive Liability, Admirably Compliant, Valuable in Limited Amounts), with score-dependent and rank-dependent observations, paradoxical counterbalances and different report verdicts on repeat builds. No invented stat penalties or downgrading hidden numeric rolls. Preserve level/bar accessibility. Add golden case with 13/8/7/6, all-low and tied scores, varied seeded playthrough reports and first-read humor review. Any gameplay tradeoff proposal must be separate and balance-tested before touching mechanics.
 
-      First-clear archive / mixed test report implementation PR silasfelinus/kind_robots#4066 open. Runtime holds persistent receipts, four visual archive tabs, ending image panel and mixed institutional evaluations preserving original numeric scores. GitHub PR checks still pending. Follow-up art delivery and final full visual acceptance remain separate tasks.
+      First-clear archive and mixed test reports landed in merged silasfelinus/kind_robots#4066 on 2026-10-23 PT; its Shifting Desks gameplay contract, TypeScript typecheck, and other recorded CI workflows passed. This task's original implementation scope is complete. Ending hero/badge art, ceremony, print cabinet, full visual acceptance and real-device QA remain independent follow-ups (t-032, t-041, t-042, t-044 through t-046).
     claimed_by: 2026-10-23T101500Z-shifting-desks-report-gpt6-c82f
     claimed_at: '2026-10-23T10:15:00Z'
 
   - id: t-044
     milestone: m4
     title: 'Collectible printable personnel dossier with ending art, awards and run receipt'
-    status: blocked
+    status: ready
     depends_on: t-040
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-23T09:58:00Z'
+    updated: '2026-10-27T17:13:00Z'
     note: >-
       P2. Print/share layout includes verified ending splash and achievement
       imagery, ending text, unlocked milestone(s), file number, actual job,
@@ -774,12 +774,12 @@ tasks:
   - id: t-045
     milestone: m4
     title: 'Personnel Archive achievement cabinet: global progress, badges and replay targets'
-    status: blocked
+    status: ready
     depends_on: t-040
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-23T09:58:00Z'
+    updated: '2026-10-27T17:13:00Z'
     note: >-
       P2. Build the illustrated archive achievements wall and unify it with
       existing Kind Robots codes (survived review, faced Board, Sub-Level Zero)
@@ -793,7 +793,7 @@ tasks:
   - id: t-046
     milestone: m5
     title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'
-    status: blocked
+    status: waiting
     depends_on:
       - t-040
       - t-041
@@ -804,7 +804,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-10-23T09:58:00Z'
+    updated: '2026-10-27T17:13:00Z'
     note: >-
       P2 after art and reward implementation. Simulate at least 2000 seeded
       diverse styles; every reachable ending shows distinct payoff and a saved
