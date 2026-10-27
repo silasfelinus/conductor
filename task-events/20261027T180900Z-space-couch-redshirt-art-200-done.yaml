@@ -1,0 +1,23 @@
+version: 1
+project: game-of-captains
+task: t-025
+operation: done
+owner: worker
+session: 20261027T180900Z-space-couch-redshirt-art-200
+updated: '2026-10-27T18:10:00Z'
+note: >-
+  User explicitly requested live redshirt art batch submission on October 27 PT.
+  Created and merged Conductor PR 6736, the 200-request Krea2 ledger,
+  dedicated deduplicating credentialed submit script, safety tests and
+  trigger workflow. Actual run 40556939008 completed successfully;
+  fetched ledger from main afterward and verified exactly 200 unique accepted
+  ArtJob IDs 48128-48327, one recruitment portrait and one secret-power
+  plate for each of 100 stable rs-001..rs-100 aliens from Kind Robots PR 4305.
+  The requested deliverable is authenticated ArtJob submission only.
+  Images are not marked rendered, approved or wired to the client.
+learning: >-
+  A standalone sparse checkout and dedicated submit owner avoids both large
+  repository history checkout latency and collisions with the general art
+  sweep. Reconcile full live queue by exact prompt, recover accepted IDs,
+  and checkpoint 200 returned IDs before asserting success; art quality and
+  provenance must be assessed separately.
