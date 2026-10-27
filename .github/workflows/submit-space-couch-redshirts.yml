@@ -13,7 +13,7 @@ on:
 
 concurrency:
   group: submit-space-couch-redshirts-200
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -26,11 +26,16 @@ jobs:
       KR_BASE_URL: https://kindrobots.org
 
     steps:
-      - name: Check out current Conductor main
+      - name: Check out only art submitter files from Conductor main
         uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 0
+          fetch-depth: 1
+          sparse-checkout: |
+            scripts
+            tests
+            projects/game-of-captains/art
+          sparse-checkout-cone-mode: true
 
       - uses: actions/setup-python@v5
         with:
