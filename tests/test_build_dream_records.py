@@ -470,3 +470,16 @@ def test_legacy_multi_asset_proposal_is_not_eligible(env):
 
     assert selected is None
     assert "invalid canonical proposal" in reason
+
+
+def test_sheet_hook_fits_its_512_char_column():
+    # 2026-10-22 build: a ~620-char location art_direction 500'd as "value too long for column: hook".
+    short = "A glasshouse wedding hall full of tomato vines."
+    assert bdr.clip_to_column(short) == short
+    long_prose = " ".join(f"Sentence number {i} describes a brass lamp on a wet pier." for i in range(20))
+    clipped = bdr.clip_to_column(long_prose)
+    assert len(clipped) <= bdr.SHEET_HOOK_MAX
+    assert clipped.endswith(".")
+    one_run = "word " * 200
+    clipped = bdr.clip_to_column(one_run)
+    assert len(clipped) <= bdr.SHEET_HOOK_MAX and clipped.endswith("…")
