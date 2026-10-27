@@ -643,7 +643,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-27T094554Z-memory-dungeon-t-034-8c72
     claimed_at: '2026-10-27T09:45:54Z'
@@ -660,7 +660,9 @@ tasks:
       Focused three-slot checkpoint implementation on worker/memory-dungeon-t-034-manual-checkpoints-f7d2c: versioned whole-expedition snapshots, overwrite/load confirmation, corruption rejection and source-backed regression tests. PR/CI pending; t-034 remains incomplete.
 
       2026-10-27 PT: Kind Robots PR #4294 merged at b4fbcb97fb80e406a24dd71f7ac4f11934596c4e after 18/18 exact-head check runs succeeded (head 230dec7c60d4c2a79ef37d04cb308600e975fdd9; contract shard 1 executed verifyMemoryWorld.test.ts, TypeScript and Prettier green). Three manual, versioned, guarded expedition slots now snapshot original/mirrored Briar, Houses, campaign and cross-map seals; Chronicle/gallery unlocks remain persistent. Initial formatting failure fixed and complete final-head checks passed. No new ArtJobs or deploy. Remaining t-034: rendered device QA, browser-timed animation/load tests, visual console polish and final art acceptance. Keep active, not For Human Gate.
-    updated: '2026-10-27T09:45:54Z'
+
+      Scoped checkpoint corruption repair: malformed nested Dark Briar map-card entries now invalidate the manual checkpoint, while the mirrored autosave restorer safely discards invalid cards rather than throwing. Regression tests cover isolated slot rejection, preservation of adjacent slots, and safe autosave recovery. Focused Kind Robots PR and exact-head CI to follow; console/browser/art acceptance remain open.
+    updated: '2026-10-27T09:51:00Z'
 
   - id: t-035
     milestone: m3
