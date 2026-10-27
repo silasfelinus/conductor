@@ -137,7 +137,9 @@ def memory_summary(index: dict, limit: int | None = None) -> str:
         for item in waiting:
             for n in item["silas_notes"]:
                 if n.get("status", "open") == "open":
-                    sections.append(f"- {item['concept_id']} ({n.get('at', '')[:10]}): {n['note']}")
+                    # PyYAML reads an unquoted ISO time as a datetime.
+                    at = str(n.get("at", ""))[:10]
+                    sections.append(f"- {item['concept_id']} ({at}): {n['note']}")
     for item in index["shelf"][:limit]:
         note = item["editorial"]
         latest = item["latest"]

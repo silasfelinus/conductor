@@ -33,7 +33,7 @@ def test_open_notes_lead_the_memory_summary():
     with TemporaryDirectory() as d:
         root = _dockets(Path(d), """notes:
   moon-laundry:
-    - at: '2026-10-26T23:50:00Z'
+    - at: 2026-10-26T23:50:00Z
       by: silas
       note: Make the socks sentient and unionized.
       status: open
@@ -48,6 +48,7 @@ def test_open_notes_lead_the_memory_summary():
         summary = memory.memory_summary(index)
         assert "OPEN NOTES FROM SILAS" in summary
         assert "Make the socks sentient and unionized." in summary
+        assert "(2026-10-26)" in summary, "an unquoted timestamp still prints its date"
         assert "An older note already answered." not in summary
 
 
