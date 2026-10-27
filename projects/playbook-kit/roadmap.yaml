@@ -335,7 +335,7 @@ tasks:
   - id: t-020
     milestone: m4
     title: "Kind Robots Facets as design material in the Forge: genre shelf, spark deck, draw elements"
-    status: review
+    status: done
     depends_on: t-019
     owner: null
     passes: 0
@@ -347,5 +347,35 @@ tasks:
       loadout; MOOD/SETTING/THEME/ARCHETYPE/OCCUPATION/SPECIES/QUIRK/BACKSTORY/MATERIAL/ART_DIRECTION
       are dealt into tone, world, question, hero, companion, quirk, villain, artifact and look slots,
       carried on the blueprint as sparks into the Conductor pitch; Draw from Facets names ledger
-      additions. kind_robots #4258.
+      additions. DONE 2026-10-26 PT: kind_robots #4258 merged.
+  - id: t-021
+    milestone: m4
+    title: "Never prompt art from titles; progress credits writing; Memory Dungeon in the Forge"
+    status: done
+    depends_on: t-020
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: |-
+      Silas 2026-10-26: Forge-submitted prompts carried chapter titles; "ecotone is more developed
+      than you give it credit for"; "can we also get support for memory dungeon?" Authored
+      PlaybookNode.artPrompt is the only prompt; beats without one queue a prompt-writing Todo.
+      Progress is half writing, half art. Memory Dungeon is a Studio adapter (240 beats) whose
+      image-store art the ledger API confirms per file. 317 title-built jobs were cancelled and 363
+      notes resolved on production. DONE 2026-10-26 PT: kind_robots #4261 merged as 6e2aedf.
+  - id: t-022
+    milestone: m4
+    title: "Gestation: the daily playbook pitches growing in the Forge, with Silas's notes for the next development"
+    status: review
+    depends_on: t-021
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: |-
+      Silas 2026-10-26: "have them in a gestational area, and include a place for me to leave
+      comments for the next development." The Forge reads the dated dockets, MEMORY.yaml and
+      SILAS-NOTES.yaml and writes notes back (conductor #6704 merged; the brief answers open notes
+      first). "Forge this" turns a pitch into a draft. kind_robots #4264.
 
