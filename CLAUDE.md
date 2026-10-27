@@ -88,7 +88,10 @@ At the start of every session, before responding to any task, run a conductor sw
    ideas. Use `python scripts/daily_playbook_challenge.py --memory` and
    the `--brief` full-history curator shelf, plus
    `pitches/playbook-challenges/MEMORY.yaml` for human/editorial decisions,
-   strengths, objections and next moves. Choose each slot freely from
+   strengths, objections and next moves. Silas's notes from the Playbook Forge's
+   Gestation screen (`pitches/playbook-challenges/SILAS-NOTES.yaml`) are listed
+   first by `--brief`; answer open notes before anything else and mark each one
+   `addressed` with `addressed_in: <date>/<slug>`. Choose each slot freely from
    `new` (unoccupied genre), `expand` (a meaningful revision of one
    older concept, same permanent ID), or `meld` (a justified fusion of
    at least two DIFFERENT older concept families, new permanent ID).
