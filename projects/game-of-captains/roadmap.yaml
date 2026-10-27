@@ -13,6 +13,12 @@ goal: >-
   Playable console-like slice, rendered branching art, seeded adversarial
   whole-run QA, final subjective approval and separate outward-release gate.
 notes_from_silas: |
+  2026-10-26 PT: Adult romance is an authored game system, not an automatic
+  crew perk. At least one full interspecies four-person polyamorous path
+  (captain + Vela + Taal + Omi) with independent consent, relationship
+  negotiation, breakup/rejection and earned commitment; Rue and Tess also
+  have solo romance possibilities with unfavorable branches. Preserve three
+  chosen crew and saved games; full spec: content/RELATIONSHIPS-BIBLE.md.
   2026-10-26 PT (Forge ledger review, kind_robots#4182 comment): the scope reads far too
   small. Expect (1) a RANDOMIZED GALACTIC ENEMY: one principal nemesis seeded per run
   shapes missions, escalation and finale (t-006); (2) INDIVIDUAL CREW QUESTS that take
@@ -284,3 +290,22 @@ tasks:
       adds one epilogue line per crew member, not separate endings. Forge plan endingVersions
       per-hero with followerEpilogues (kind_robots#4255). Seeded traces in t-010 must cover every
       captain version.
+
+  - id: t-017
+    milestone: m2
+    title: "Ship the consent-first alien fourple and branching romance prototype"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      User-directed adult romance: three authored scenes for a four-person
+      relationship with captain, Vela, Taal and Omi, individual consent,
+      boundaries, earned commitment, principled rejection and breakups;
+      additional individual Rue and Tess relationship routes that may fail.
+      Save choices under the existing voyage key, without stat penalties for
+      romantic refusal or forced relationships. Add visual bounded-screen
+      story encounters and deterministic tests for all routes, rejection,
+      old-save restoration and earned epilogues. Isolate a pure romance module
+      from the concurrently claimed core-voyage engine t-003. Additional
+      rendered art remains t-008. See content/RELATIONSHIPS-BIBLE.md.

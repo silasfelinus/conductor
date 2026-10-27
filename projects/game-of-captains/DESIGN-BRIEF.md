@@ -10,6 +10,10 @@
 
 These are **authored design references, not proof of live mechanics or generated portraits**. The current Play first voyage remains six captains, twelve selectable crew, three seeded rivals and four short endings; implementation, painted artwork and seeded outcome coverage remain open roadmap work.
 
+### Romance and four-person relationship contract (2026-10-26 PT)
+
+[RELATIONSHIPS-BIBLE.md](content/RELATIONSHIPS-BIBLE.md) is required canon: adult Rue and Tess have distinct courtship branches and the captain + alien officers **Vela, Taal and Omi** have a fully authored, mutually consensual four-person polyamorous arc, including independent negotiation, respect for power imbalance, possible joyful commitment and possible unsuccessful endings. Choosing a crew slot or high rolls never buys romance, and declining it does not harm a crew member's competence or lock missions. Record consent and relationship history in save data, carry consequences into earned finale epilogues, illustrate every material branch, and test reachable good/bad/refusal outcomes. See active Conductor `t-015` for the first playable stage.
+
 ## 0. Canonical couch-shaped starship (supersedes old bridge design)
 
 **The spaceship is literally a long, scarlet upholstered couch.** Art continuity checks should detect and reject traditional starship silhouettes as substitutes for the red sofa in scenes that depict the player vessel. Four people can travel seated on it through the vacuum. An invisible protective force shield maintains atmosphere, pressure and survivability around the couch. The couch must remain visually recognizable in ship images, character deployments, cutscenes and dashboard art; a normal starship exterior, conventional cockpit or separate ship bridge would violate the premise.
