@@ -1,17 +1,17 @@
 # Prom of Doom: 48 personal mysteries and identity consequences
 
-This is **authoring canon and production scope**, not final 288-track completion. The playable first expansion is [Kind Robots `utils/cometAcademy/personalQuests.ts`](https://github.com/silasfelinus/kind_robots/blob/main/utils/cometAcademy/personalQuests.ts) paired with `personalQuests.json`. Branch source is subject to green PR merge.
+This is **authoring canon and production scope**, not final 288-track completion. The additional case chain complements the existing `identitySerial.ts` chapters on days **4, 12, 21, and 27**, without replacing any of them. The playable first expansion is [Kind Robots `utils/cometAcademy/personalQuests.ts`](https://github.com/silasfelinus/kind_robots/blob/main/utils/cometAcademy/personalQuests.ts) paired with `personalQuests.json`. Branch source is subject to green PR merge.
 
 ## Drama model
 
-Each original adult Comet City character owns a civilian past, a **student/sidekick**, a materially different **hero**, and a materially different **villain** future. New playable personal cases create four escalating decision scenes on days **6, 12, 19, 27**:
+Each original adult Comet City character owns a civilian past, a **student/sidekick**, a materially different **hero**, and a materially different **villain** future. New playable personal cases create four escalating decision scenes on days **6, 9, 19, 22**:
 
 1. **Day 6 · Secret and witness:** reveal the physical evidence of the origin scandal. Protect the person at risk, confront the institution, or exploit the information.
-2. **Day 12 · Intimacy and trust:** the identified adult witness/ally sets an original personal boundary. Invite an equal partnership, disclose the evidence and accept their decision, or break confidence. This creates **no automatic romance** and never lets a player force consent.
+2. **Day 9 · Intimacy and trust:** the identified adult witness/ally sets an original personal boundary. Invite an equal partnership, disclose the evidence and accept their decision, or break confidence. This creates **no automatic romance** and never lets a player force consent.
 3. **Day 19 · Personal betrayal:** the distinct character-local betrayal surfaces, separately from the campaign's compulsory but independently foreshadowed NPC heel turn. The witness may be protected, the accused confronted, or the scandal weaponized.
-4. **Day 27 · The identity reckoning:** student, hero, and villain have different canonical methods, and the last personal choice changes the story's graduating epilogue. This is separate from the previously earned day-16/day-23 hero/villain mantle checkpoints.
+4. **Day 22 · The identity reckoning:** student, hero, and villain have different canonical methods, and the last personal choice changes the story's graduating epilogue. This is separate from the previously earned day-16/day-23 hero/villain mantle checkpoints.
 
-Choice history is validated and saved as `AcademyRun.personalHistory`. Older saved games without that property remain valid. Trust/betrayal modifies night-patrol effectiveness and prom-night support; personal relationships have negotiated boundaries and consequences, but the existing 6-student social engine is **not** silently expanded to 48 romance options. Four stages × three options × 48 identities = **576 accessible personal decision opportunities**, not 576 independent new quest scripts. Each of the 48 cases has a unique location, named witness, evidence, betrayer and repair gesture.
+Choice history is validated and saved as `AcademyRun.personalHistory`. Older saved games without that property remain valid. Trust/betrayal modifies night-patrol effectiveness and prom-night support; personal relationships have negotiated boundaries and consequences, but the existing 6-student social engine is **not** silently expanded to 48 romance options. Four stages × three options × 48 identities = **576 new personal decision opportunities** added to the existing 576 choices across four identity-serial chapters, not 1,152 independent authored scripts. Each of the 48 cases has a unique location, named witness, evidence, betrayer and repair gesture.
 
 ## Individual cases and actor autonomy
 
