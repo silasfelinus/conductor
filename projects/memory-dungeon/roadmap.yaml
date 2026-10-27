@@ -643,7 +643,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: claimed
+    status: review
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -673,7 +673,9 @@ tasks:
       Focused interrupted-combat recovery increment: autosave hydration and manual checkpoint loading now settle already-recorded combat defeat/retreat exactly once, including House bedchamber and last-heart camp recovery. Regression witnesses cover repeat reload, House origin, victory and active fights. Kind Robots branch prepared for exact-head CI; rendered browser/device acceptance remains open.
 
       2026-10-27 PT: Kind Robots PR #4298 merged at 52d5859d0125d7b8e11108008ba18915e2d52b9c after 18/18 exact-head checks passed at c507c7d4b61a29e4144472c937750f11b2bf5ed4 (Contract Tests #40508347180, TypeScript #40508347328, Changed-file Prettier #40508347327). Fixed a mid-defeat autosave/manual-checkpoint softlock: terminal combat defeat now settles its one heart and correct trail/camp/House retreat once on restoration. Adversarial tests cover repeated reload, last heart, House origin, victory and active combat. Master issue #4136 comment 6442642539 has evidence. No new ArtJobs or deployment. Return READY for browser animation/device acceptance, visual polish and remaining artwork; not For Human Gate.
-    updated: '2026-10-27T13:45:22Z'
+
+      Scoped World One interruption fix: when the third failed classic chamber pair has been persisted but its delayed heart penalty is interrupted by reload or checkpoint load, settle exactly one heart, preserving learned pairs; last-heart retreat follows existing camp/House rules. Focused Kind Robots PR and exact-head CI pending. Browser animation/device and art acceptance remain outstanding.
+    updated: '2026-10-27T14:07:00Z'
     owner: worker
     claimed_by: 2026-10-27T134522Z-memory-dungeon-t-034-mismatch-8f4c
     claimed_at: '2026-10-27T13:45:22Z'
