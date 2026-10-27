@@ -1,0 +1,54 @@
+# Storybook home Featured Experiences painting, round 1. Silas, 2026-10-27 PT: Storybook
+# "need[s] new art for [its] dashboard highlight link." The card borrowed the generic Play
+# channel banner (public/images/channels/play/channel.webp). Storybook is a card-driven
+# storymaker: element cards chosen from a hand onto a storyboard, bot narrators, many endings
+# (roadmap.yaml goal). Two compositions; the selected one ships as
+# public/images/storybook/dashboard-highlight.webp.
+round: storybook-home-feature-1
+project_slug: storybook
+designer: Storybook home feature
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 original illustration
+  engine: krea2
+  prompt: prose
+  suffix: A hand-painted 2D storybook illustration with solid gouache shading, clean dark contours, warm paper and
+    wood textures, soft golden lamplight with teal and violet accents.
+subjects:
+- key: sb-home-feature-01-pop-up-world
+  lane: krea2
+  entity: home-feature
+  title: Storybook — a world unfolds from the open book
+  asset: images/storybook/dashboard-highlight
+  size: 1216x768
+  seed: 1027401
+  prompt_prose: A large open storybook lies on a wooden table in warm lamplight, seen from a slightly raised three-quarter
+    angle. From its two pages a paper-craft world rises like a pop-up book, a winding blue river, a castle on a
+    green hill, a striped lighthouse, a small sailing ship and a dark pine forest, all joined by glowing golden
+    dotted paths that split into three branches toward different horizons. A fan of illustrated playing tiles lies
+    across the table in front of the book, each tile painted with one picture, a knight, a dragon, a fox, a moon,
+    a key and a small robot. A friendly small round copper robot with glowing teal eyes stands at the right edge
+    of the book and places one tile onto the left page with a slim hand. Tiny paper stars float above the pages.
+  jobs:
+    krea2: 48453
+- key: sb-home-feature-02-family-table
+  lane: krea2
+  entity: home-feature
+  title: Storybook — a family builds a story together
+  asset: images/storybook/dashboard-highlight-alt
+  size: 1216x768
+  seed: 1027402
+  prompt_prose: A cozy evening kitchen with a round wooden table under a warm hanging lamp. A smiling grandmother
+    with silver hair in a bun and a cardigan sits beside a curious ten-year-old with curly hair and a yellow sweater.
+    Together they lay illustrated tiles in a row along a long sheet of paper on the table, each tile painted with
+    one picture, a dragon, a lantern, a door and a sailing ship. Above the row of tiles, the story they are making
+    rises into the air as glowing translucent painted scenes, a dragon circling a castle tower, a sailing ship on
+    moonlit waves and a lantern-lit forest path that forks in two directions. A small round copper robot with glowing
+    teal eyes sits on the table edge holding an open book and reading aloud. Both faces are fully visible and lit
+    by the golden glow of the floating scenes.
+  jobs:
+    krea2: 48454
