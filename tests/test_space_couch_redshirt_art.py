@@ -54,7 +54,7 @@ class RedshirtArtTests(unittest.TestCase):
             "payload": {"promptString": "An unrelated painting"}
         }]), 0)
 
-    def test_refuses_incomplete_or_mis-scoped_remote_queue(self):
+    def test_refuses_incomplete_or_mis_scoped_remote_queue(self):
         with self.assertRaisesRegex(RuntimeError, "Partial ArtJob"):
             submit.fetch_existing_jobs(lambda method, url: (
                 200, {"success": True, "data": {
