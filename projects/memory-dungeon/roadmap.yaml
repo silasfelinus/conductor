@@ -643,10 +643,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: review
-    owner: worker
-    claimed_by: 2026-10-27T094554Z-memory-dungeon-t-034-8c72
-    claimed_at: '2026-10-27T09:45:54Z'
+    status: ready
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -662,7 +659,9 @@ tasks:
       2026-10-27 PT: Kind Robots PR #4294 merged at b4fbcb97fb80e406a24dd71f7ac4f11934596c4e after 18/18 exact-head check runs succeeded (head 230dec7c60d4c2a79ef37d04cb308600e975fdd9; contract shard 1 executed verifyMemoryWorld.test.ts, TypeScript and Prettier green). Three manual, versioned, guarded expedition slots now snapshot original/mirrored Briar, Houses, campaign and cross-map seals; Chronicle/gallery unlocks remain persistent. Initial formatting failure fixed and complete final-head checks passed. No new ArtJobs or deploy. Remaining t-034: rendered device QA, browser-timed animation/load tests, visual console polish and final art acceptance. Keep active, not For Human Gate.
 
       Scoped checkpoint corruption repair: malformed nested Dark Briar map-card entries now invalidate the manual checkpoint, while the mirrored autosave restorer safely discards invalid cards rather than throwing. Regression tests cover isolated slot rejection, preservation of adjacent slots, and safe autosave recovery. Focused Kind Robots PR and exact-head CI to follow; console/browser/art acceptance remain open.
-    updated: '2026-10-27T09:51:00Z'
+
+      2026-10-27 PT: Kind Robots PR #4295 merged at 4174ea457d8e459f105515326b977ffc4dfbd625 after all 12 workflows and 17 exact-head checks passed at 3bd0d47a893b8743f8fead645857ebbadf0b1660 (Contract Tests #40483868599, TypeScript #40483868557, formatting #40483868514). Malformed nested Dark Briar checkpoint decks now reject without replacing a valid expedition; mirrored autosave recovery no longer throws on null card entries. Master issue #4136 comment 6438815284 records the reproduction and evidence. Initial formatting failure corrected before full green. No new ArtJobs or deployment. Return READY for browser-timed save/load and flip testing, device visual QA, remaining art integration and final console acceptance; not For Human Gate.
+    updated: '2026-10-27T09:57:05Z'
 
   - id: t-035
     milestone: m3
