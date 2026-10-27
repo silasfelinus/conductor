@@ -643,7 +643,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: review
+    status: ready
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -671,10 +671,9 @@ tasks:
       2026-10-27 PT: Kind Robots PR #4297 merged at a0035164a4ab5547957f03f6afa935295f721ba6 after all 13 exact-head workflows passed on 1f0279fd24e7273520f8536fce831d2882129562 (Contract Tests #40498880151, TypeScript #40498880268, formatting #40498880041). Mirrored Dark Briar now restores an interrupted first picture or settles an already-paid matching pair once from autosave/manual slots, with forged-image/overflip/unpaid-pair protection and adversarial reducer tests. Master issue #4136 comment 6441231098 documents evidence. No ArtJobs, deploy or browser acceptance. Return READY for browser-timed combat/checkpoint testing, console visual QA and art acceptance; not For Human Gate.
 
       Focused interrupted-combat recovery increment: autosave hydration and manual checkpoint loading now settle already-recorded combat defeat/retreat exactly once, including House bedchamber and last-heart camp recovery. Regression witnesses cover repeat reload, House origin, victory and active fights. Kind Robots branch prepared for exact-head CI; rendered browser/device acceptance remains open.
-    updated: '2026-10-27T12:55:08.821Z'
-    owner: worker
-    claimed_by: 20261027T125242Z-memory-dungeon-t-034-b9e2
-    claimed_at: '2026-10-27T12:52:42.345Z'
+
+      2026-10-27 PT: Kind Robots PR #4298 merged at 52d5859d0125d7b8e11108008ba18915e2d52b9c after 18/18 exact-head checks passed at c507c7d4b61a29e4144472c937750f11b2bf5ed4 (Contract Tests #40508347180, TypeScript #40508347328, Changed-file Prettier #40508347327). Fixed a mid-defeat autosave/manual-checkpoint softlock: terminal combat defeat now settles its one heart and correct trail/camp/House retreat once on restoration. Adversarial tests cover repeated reload, last heart, House origin, victory and active combat. Master issue #4136 comment 6442642539 has evidence. No new ArtJobs or deployment. Return READY for browser animation/device acceptance, visual polish and remaining artwork; not For Human Gate.
+    updated: '2026-10-27T13:07:07.742Z'
 
   - id: t-035
     milestone: m3
