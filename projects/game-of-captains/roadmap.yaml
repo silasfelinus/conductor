@@ -19,6 +19,15 @@ notes_from_silas: |
   negotiation, breakup/rejection and earned commitment; Rue and Tess also
   have solo romance possibilities with unfavorable branches. Preserve three
   chosen crew and saved games; full spec: content/RELATIONSHIPS-BIBLE.md.
+  2026-10-26 PT (Forge ledger review, kind_robots#4182 comment): the scope reads far too
+  small. Expect (1) a RANDOMIZED GALACTIC ENEMY: one principal nemesis seeded per run
+  shapes missions, escalation and finale (t-006); (2) INDIVIDUAL CREW QUESTS that take
+  you around the universe: each crew member's personal multi-step quest crosses star
+  systems, so the trio you pick routes the voyage (t-015); (3) OPENINGS CHANGE ENDINGS:
+  three crew colour an ending through epilogue lines, the captain MULTIPLIES it, one
+  version of each ending per captain (t-016); (4) TONE: lean into the absurdity of it
+  all, but DRY: deadpan, procedural, understated about ridiculous things, never zany.
+  The Playbook Forge plan for this slug carries these numbers (kind_robots#4255).
   2026-10-26 PT: Silas renamed the game SPACE COUCH. The ship is a LONG RED COUCH
   protected by an invisible force shield and capable of unfolding temporary
   miniaturized holodecks, war rooms and other rooms BEHIND its backrest.
@@ -94,18 +103,18 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Implement deterministic voyage, ship/away staffing, ethics and persistence engine"
-    status: claimed
+    status: review
     depends_on: t-001
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Seeded ship and away assignments, crew skill/injury/trust/absence, intervention consequences,
-      antagonist effects, star-map unlocking, resources, saves/migration and battle-tested fail
-      paths; no LLM at play time.
+    note: |-
+      Seeded ship and away assignments, crew skill/injury/trust/absence, intervention consequences, antagonist effects, star-map unlocking, resources, saves/migration and battle-tested fail paths; no LLM at play time.
+
+      Submitted persistent crew-driven star-chart detours integrated with the three-stop voyage. All 12 existing crew have three original world encounters, two ethically different approach choices, return consequences and save-safe progress. Eight nemeses receive named specialist counterplay unlocked by two witnessed stages, adding an earned final council option. Six captains add distinctive outcome-specific reckoning; exact full sixteen ending families, four more crew, painted art and multi-act campaign remain sequel tasks. App PR upcoming with seeded replay and scarce-supply tests.
     claimed_by: 20261027T011100Z-space-couch-t003-b71c
     claimed_at: '2026-10-27T01:11:00Z'
-    updated: '2026-10-27T01:11:00Z'
+    updated: '2026-10-27T01:33:00Z'
   - id: t-004
     milestone: m3
     title: "Write 30 substantial space and away missions with consequence layers"
@@ -140,6 +149,7 @@ tasks:
     note: >-
       Each seed picks unique alien goal/method/complications/clues and interference, with nontrivial
       bargain/defeat/reconciliation/complicity resolutions and captain/crew combination coverage.
+      Silas 2026-10-26: this is the randomized galactic enemy, one principal nemesis drawn per run.
   - id: t-007
     milestone: m3
     title: "Finish three-act destination graph and 16 earned ending epilogues"
@@ -248,23 +258,54 @@ tasks:
       no old conventional bridge/cockpit or ordinary cruiser illustrations.
       Coordinate with claimed t-002 and t-003, preserving Vox/Serendipity/Fluke seeds.
       Adversarially verify couch resource choices and art/script consistency.
-
   - id: t-015
+    milestone: m3
+    title: "Crew personal quests: every crew member's three-step quest crosses the galaxy"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: >-
+      Silas 2026-10-26: "individual crew quests that take you around the universe." Each of the
+      sixteen crew carries a personal quest of three steps set in different star systems; the
+      away-team trio chosen decides which quests are live and so where the couch goes. Quest
+      outcomes feed the crew epilogue lines in every ending (t-016). Dry absurdist register:
+      crew grievances treated with total procedural seriousness. Forge plan: followerQuestSteps 3,
+      locations 12 (kind_robots#4255); the ledger reads 0 of 3 steps built until this lands.
+  - id: t-016
+    milestone: m3
+    title: "Per-captain ending versions and crew epilogues (16 endings x 6 captains)"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: >-
+      Silas 2026-10-26: "different opening combos will create different end game endings ... a set
+      of three crew members isn't remarkably complex, but adding a captain to the mix will multiply
+      it." Write and paint each of the sixteen endings once per captain (96 versions); the crew trio
+      adds one epilogue line per crew member, not separate endings. Forge plan endingVersions
+      per-hero with followerEpilogues (kind_robots#4255). Seeded traces in t-010 must cover every
+      captain version.
+
+  - id: t-017
     milestone: m2
-    title: "Ship the consent-first Space Couch alien fourple and branching romance prototype"
+    title: "Ship the consent-first alien fourple and branching romance prototype"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      User-directed adult romance support: first playable three-beat four-person
-      path with captain, Vela, Taal and Omi, full written courtship, separate
-      consent, compatibility gates, earned happy ending and respectful breakup;
-      individual Rue and Tess romances with rejection and conditional outcomes.
-      Save decisions on the existing voyage key; no automatic romance from
-      recruitment/dispatch, no punitive stat changes for rejection, no mission
-      softlock. Add illustrated bounded-screen conversation and deterministic
-      tests for happy, breakup, refusal, non-romance, save-resume and unique
-      earned epilogue paths. Respect active t-003 ownership of core mission engine;
-      isolate romance in a standalone pure module. Follow full writer contract
-      content/RELATIONSHIPS-BIBLE.md; generated art is separately t-008.
+      User-directed adult romance: three authored scenes for a four-person
+      relationship with captain, Vela, Taal and Omi, individual consent,
+      boundaries, earned commitment, principled rejection and breakups;
+      additional individual Rue and Tess relationship routes that may fail.
+      Save choices under the existing voyage key, without stat penalties for
+      romantic refusal or forced relationships. Add visual bounded-screen
+      story encounters and deterministic tests for all routes, rejection,
+      old-save restoration and earned epilogues. Isolate a pure romance module
+      from the concurrently claimed core-voyage engine t-003. Additional
+      rendered art remains t-008. See content/RELATIONSHIPS-BIBLE.md.
