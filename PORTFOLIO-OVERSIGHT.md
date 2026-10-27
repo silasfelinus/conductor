@@ -1,23 +1,22 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-10-27T12:24:09.186467+00:00`
+Generated: `2026-10-27T22:23:05.051012+00:00`
 
-Overall status: **action-needed**
+Overall status: **semantic-review-upcoming**
 
 This is a deterministic sensor. For semantic roadmap/progress intent review, follow `projects/conductor/OVERSIGHT-AGENT.md`.
 
 ## Legacy OpenAI scheduled-agent git diagnostic
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-10-25T01:09:44+00:00` (59.24h ago; overdue at 6.0h).
+- Latest visible OpenAI scheduled-Agent activity: `2026-10-25T01:09:44+00:00` (69.22h ago; overdue at 6.0h).
 - Stale by legacy threshold: **true**
 - Authoritative for ChatGPT scheduler health: **false**
 - Note: Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness.
 
 ## Kind Robots ↔ Conductor project parity
 
-- Forward drift (KR row claims missing roadmap): **1**
+- Forward drift (KR row claims missing roadmap): **0**
 - Reverse orphans (active Conductor roadmap missing KR row): **0**
-  - `rebel-button` claimed by KR Project #2161 'Rebel Button', but the roadmap is missing.
 
 ## Roadmap/CONTROL structural audit
 
