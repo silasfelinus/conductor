@@ -396,11 +396,23 @@ tasks:
   - id: t-020
     milestone: m3
     title: 'Playbook Forge upgrade: literal Krea 2 prompts for every Prom of Doom beat and the missing encounters'
-    status: claimed
+    status: done
     owner: worker
     stakes: reversible
     passes: 0
-    note: 'Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 94 unpainted beats have no prompt; plan gaps encounters 30/60, endings 10/12. Port prompts from this project''s art ledgers where they map to beats, rewriting any that are figurative.'
-    updated: '2026-10-27T18:56:14Z'
+    note: >-
+      Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 94 unpainted beats have no prompt; plan gaps encounters 30/60, endings 10/12. Port prompts from this project's art ledgers where they map to beats, rewriting any that are figurative.
+
+      DONE 2026-10-27 PT: kind_robots #4312 (c8e609e, prompts), #4320 (659c699, 30 encounters)
+      and #4325 (4e0ddf4, 2 endings), all checks green. Prompts are 126/126 with
+      artPromptsComplete on; castLooks.ts fixes one look per person, and the 50 identity
+      portraits are new. Encounters went from 30 to 60: 24 landmark return visits and 6 late
+      night calls. New runs use incidentDeckVersion 2; old saves keep the six-case rotation.
+      Endings went from 10 to 12 (THE SHIELD CHANGES HANDS, THE TRANSMITTER GOES DARK), both
+      reached from untouched 30-day runs in tests. Follow-up: 44 DONE RUNTIME-BEATS renders
+      still need export (playbook-kit t-017). MISSION-REACTIONS cast looks are being aligned
+      to castLooks before they render.
+    updated: '2026-10-27T19:28:00Z'
     claimed_by: 2026-10-27T18:10:00Z-forge-cca
     claimed_at: '2026-10-27T18:56:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#4325'
