@@ -643,7 +643,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: claimed
+    status: review
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -669,7 +669,9 @@ tasks:
       Focused mirrored-world interruption repair: recover first flipped picture and already-paid matching pairs from Dark Briar autosaves and manual checkpoints; reject mismatched artwork, extra exposed faces and uncharged pairs. Kind Robots branch worker/memory-dungeon-t-034-dark-reload-b7a9 prepared with reducer regressions; exact-head CI and PR review pending. Browser/device art acceptance and full console polish remain active.
 
       2026-10-27 PT: Kind Robots PR #4297 merged at a0035164a4ab5547957f03f6afa935295f721ba6 after all 13 exact-head workflows passed on 1f0279fd24e7273520f8536fce831d2882129562 (Contract Tests #40498880151, TypeScript #40498880268, formatting #40498880041). Mirrored Dark Briar now restores an interrupted first picture or settles an already-paid matching pair once from autosave/manual slots, with forged-image/overflip/unpaid-pair protection and adversarial reducer tests. Master issue #4136 comment 6441231098 documents evidence. No ArtJobs, deploy or browser acceptance. Return READY for browser-timed combat/checkpoint testing, console visual QA and art acceptance; not For Human Gate.
-    updated: '2026-10-27T12:52:42.345Z'
+
+      Focused interrupted-combat recovery increment: autosave hydration and manual checkpoint loading now settle already-recorded combat defeat/retreat exactly once, including House bedchamber and last-heart camp recovery. Regression witnesses cover repeat reload, House origin, victory and active fights. Kind Robots branch prepared for exact-head CI; rendered browser/device acceptance remains open.
+    updated: '2026-10-27T12:55:08.821Z'
     owner: worker
     claimed_by: 20261027T125242Z-memory-dungeon-t-034-b9e2
     claimed_at: '2026-10-27T12:52:42.345Z'
