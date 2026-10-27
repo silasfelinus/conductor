@@ -183,10 +183,7 @@ tasks:
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and sixteen-realm coverage checks"
-    status: review
-    owner: worker
-    claimed_by: 2026-10-27T024303Z-memory-dungeon-t-030-9e71
-    claimed_at: '2026-10-27T02:43:03Z'
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -210,7 +207,9 @@ tasks:
       2026-10-26 PT: Merged Kind Robots PR #4269 (dddba98ca1f94d3491267dd13ee3ab94839536b6) after all 14 workflows passed on exact head 1a1c4ba30b763fc8fc50a338ea443eaf3a79149e. Dark Briar encounter panel now renders production scene images for 60 encounters, 120 recorded choice outcomes and four seals, with missing-image fallback and manifest-backed tests. No new ArtJobs; prior Conductor audit #40429786760 verified 752/752 media deliveries. Still needed: original Briar, both Houses, maps, portraits, galleries, visual QA and later worlds. Keep ACTIVE; no human gate.
 
       Original Briar illustration selector and 192 manifest-backed scene/outcome paths implemented on a focused Kind Robots branch; awaiting exact-head CI and PR review before merge.
-    updated: '2026-10-27T02:49:00Z'
+
+      2026-10-26 PT: Kind Robots PR #4276 merged at db480603262765635567c7771ff4df2e72090a11; 64 original Briar scene paintings and 128 authored outcome paths now selected in the encounter pane with SVG fallback and invalid-choice protection. All 14 exact-head checks green at df3393b6ea2c0a677ef65f1528748f2f4a8e1a39. No new ArtJobs; prior audit #40429786760 verified 752 media deliveries. Still need original and mirrored House consequence art, maps, portraits, galleries, visual QA, later worlds. Keep active, not human gate.
+    updated: '2026-10-27T02:57:00Z'
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
