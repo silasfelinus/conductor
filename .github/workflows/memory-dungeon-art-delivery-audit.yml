@@ -1,0 +1,51 @@
+name: Memory Dungeon Art Delivery Audit
+
+# Read-only. Submission receipts, rendered ArtImages and live media are three
+# separate milestones. Never enqueue, publish, or mutate production from here.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/audit_memory_dungeon_art_delivery.py"
+      - "projects/memory-dungeon/art/DRAINED-SUBMISSION-RECEIPTS.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: memory-dungeon-art-delivery-audit
+  cancel-in-progress: false
+
+jobs:
+  verify-delivery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+      KR_BASE_URL: https://kindrobots.org
+      KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Verify all 752 durable request receipts
+        run: python scripts/audit_memory_dungeon_art_delivery.py --report "$RUNNER_TEMP/memory-dungeon-delivery.json"
+      - name: Reconcile actual ArtJobs and HEAD-check delivered media
+        run: |
+          if [ -z "$KR_API_TOKEN" ]; then
+            echo "::warning::KR_API_TOKEN unavailable; inventory verified but render/delivery status unknown."
+          else
+            python scripts/audit_memory_dungeon_art_delivery.py --live \
+              --report "$RUNNER_TEMP/memory-dungeon-delivery.json"
+          fi
+      - name: Preserve evidence without declaring incomplete art delivered
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: memory-dungeon-art-delivery-evidence
+          path: ${{ runner.temp }}/memory-dungeon-delivery.json
+          if-no-files-found: warn
+          retention-days: 14
