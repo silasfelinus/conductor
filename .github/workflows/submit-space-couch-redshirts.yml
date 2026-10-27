@@ -1,0 +1,78 @@
+name: Submit Space Couch Redshirt ArtJobs
+
+# A single, targeted ArtJob owner for 100 named recruits x 2 original views.
+# This is deliberately not in the generic auto-art sweep (auto_submit:false).
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/submit-space-couch-redshirts.yml"
+      - "scripts/submit_space_couch_redshirts.py"
+      - "projects/game-of-captains/art/REDSHIRTS-200-ROUND-1.yaml"
+  workflow_dispatch:
+
+concurrency:
+  group: submit-space-couch-redshirts-200
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      KR_BASE_URL: https://kindrobots.org
+
+    steps:
+      - name: Check out current Conductor main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install art queue dependencies
+        run: python -m pip install pyyaml pillow
+
+      - name: Validate the exact 200-job manifest
+        run: python -m unittest discover -s tests -p 'test_space_couch_redshirt_art.py'
+
+      - name: Reconcile and submit all missing redshirt ArtJobs
+        id: enqueue
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          set -o pipefail
+          python scripts/submit_space_couch_redshirts.py --live
+
+      # Save any accepted IDs even if some submissions failed.
+      # A retry reconciles the full project queue before making a new POST.
+      - name: Checkpoint accepted ArtJob IDs
+        if: always()
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/game-of-captains/art/REDSHIRTS-200-ROUND-1.yaml
+          if git diff --staged --quiet; then
+            echo "No new redshirt ArtJob IDs to record."
+          else
+            git commit -m "chore: checkpoint Space Couch redshirt ArtJobs [skip ci]"
+            pushed=false
+            for attempt in 1 2 3 4 5; do
+              if git push origin HEAD:main; then
+                pushed=true
+                break
+              fi
+              git pull --rebase --autostash origin main || exit 1
+              sleep "$attempt"
+            done
+            if [ "$pushed" != true ]; then
+              echo "::error::ArtJob IDs could not be recorded; rerun will reconcile remote submissions."
+              exit 1
+            fi
+          fi
