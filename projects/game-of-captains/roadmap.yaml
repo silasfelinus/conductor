@@ -419,23 +419,16 @@ tasks:
   - id: t-025
     milestone: m3
     title: "Submit 200 distinctive redshirt portraits and secret-power mission plates"
-    status: claimed
-    owner: worker
+    status: done
     claimed_by: 20261027T180900Z-space-couch-redshirt-art-200
     claimed_at: '2026-10-27T18:09:00Z'
-    updated: '2026-10-27T18:09:00Z'
+    updated: '2026-10-27T18:10:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      User on October 27 PT explicitly requested immediate redshirt art submission
-      while the home art generator has capacity. Reuse the exact 100 stable
-      identities, anatomy, histories and powers in Kind Robots PR #4305;
-      submit 100 recruitment portraits plus 100 secret-power action paintings
-      to the authenticated Kind Robots ArtJob queue using an auto-submit
-      Conductor ledger. Ensure consistent bright red uniforms with radically
-      diverse alien body plans, unique seeded prompts and persistent ArtJob
-      IDs, idempotent reruns and real provenance before calling art delivered.
-      Render results and production manifests require separate verification.
+    note: |-
+      User on October 27 PT explicitly requested immediate redshirt art submission while the home art generator has capacity. Reuse the exact 100 stable identities, anatomy, histories and powers in Kind Robots PR #4305; submit 100 recruitment portraits plus 100 secret-power action paintings to the authenticated Kind Robots ArtJob queue using an auto-submit Conductor ledger. Ensure consistent bright red uniforms with radically diverse alien body plans, unique seeded prompts and persistent ArtJob IDs, idempotent reruns and real provenance before calling art delivered. Render results and production manifests require separate verification.
+
+      User explicitly requested live redshirt art batch submission on October 27 PT. Created and merged Conductor PR 6736, the 200-request Krea2 ledger, dedicated deduplicating credentialed submit script, safety tests and trigger workflow. Actual run 40556939008 completed successfully; fetched ledger from main afterward and verified exactly 200 unique accepted ArtJob IDs 48128-48327, one recruitment portrait and one secret-power plate for each of 100 stable rs-001..rs-100 aliens from Kind Robots PR 4305. The requested deliverable is authenticated ArtJob submission only. Images are not marked rendered, approved or wired to the client.
   - id: t-026
     milestone: m3
     title: 'Playbook Forge upgrade: literal Krea 2 prompts for every Space Couch beat and Act II-III missions in dry space-comedy satire'
