@@ -183,7 +183,7 @@ tasks:
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and sixteen-realm coverage checks"
-    status: ready
+    status: claimed
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -201,7 +201,10 @@ tasks:
       Scoped delivery audit: preserved the 227 drained submission receipts alongside 525 permanent requests; added read-only ArtJob identity/status and live-media HEAD evidence with offline regression tests and an internal audit workflow. This is partial t-030, not delivered art or a human gate. PR/CI pending.
 
       2026-10-26 PT: Merged Conductor PR #6710 at 4f2c524ff48d53249138c43d888b77c5a8063776 after all 23 exact-head checks passed (Python suite 3083+ tests, security, worker handoff and YAML). Preserved 227 drained historical ArtJob receipts, alongside 525 permanent ledger rows: 752 unique request IDs, ArtJob IDs and image destinations. Added read-only ArtJob/status/ArtImage/media HEAD delivery auditor, regressions and scoped-push/manual evidence workflow. No new ArtJobs, no image-delivery or visual acceptance claim. Audit run #40429786760 queued after merge; inspect its artifact and repair any missing/failed/stale images. This is partial t-030, not a final human gate. Return READY.
-    updated: '2026-10-27T00:59:05.118Z'
+    updated: '2026-10-27T01:48:02Z'
+    owner: worker
+    claimed_by: 2026-10-27T014802Z-memory-dungeon-t-030-f5d7c9
+    claimed_at: '2026-10-27T01:48:02Z'
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
