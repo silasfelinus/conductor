@@ -103,22 +103,23 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Implement deterministic voyage, ship/away staffing, ethics and persistence engine"
-    status: review
+    status: done
     depends_on: t-001
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Seeded ship and away assignments, crew skill/injury/trust/absence, intervention consequences, antagonist effects, star-map unlocking, resources, saves/migration and battle-tested fail paths; no LLM at play time.
 
       Submitted persistent crew-driven star-chart detours integrated with the three-stop voyage. All 12 existing crew have three original world encounters, two ethically different approach choices, return consequences and save-safe progress. Eight nemeses receive named specialist counterplay unlocked by two witnessed stages, adding an earned final council option. Six captains add distinctive outcome-specific reckoning; exact full sixteen ending families, four more crew, painted art and multi-act campaign remain sequel tasks. App PR upcoming with seeded replay and scarce-supply tests.
+
+      Merged Kind Robots PR #4266 as 5705e103e4b16ea202fde80ae57da942ab4a8071, with 16 of 16 completed green workflow checks on head 2cff7186898c19d2af66d5bdaeef5b766d32f191. New deterministic crew-directed chapter detours, 36 authored personal encounters for 12 playable crew, eight nemesis-specific earned counterplay routes, six captain epilogues, scarcity and save safety checks. The existing main missions still work. Full campaign, remaining four recruitable crew, art delivery, and comprehensive ending routes remain follow-up work.
     claimed_by: 20261027T011100Z-space-couch-t003-b71c
     claimed_at: '2026-10-27T01:11:00Z'
-    updated: '2026-10-27T01:33:00Z'
+    updated: '2026-10-27T01:34:02.442Z'
   - id: t-004
     milestone: m3
     title: "Write 30 substantial space and away missions with consequence layers"
-    status: waiting
+    status: ready
     depends_on: t-003
     owner: null
     passes: 0
@@ -141,7 +142,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: "Build eight personalized alien antagonist arcs and interrupt decks"
-    status: waiting
+    status: ready
     depends_on: t-003
     owner: null
     passes: 0
@@ -246,7 +247,7 @@ tasks:
   - id: t-014
     milestone: m3
     title: "Rewrite all authored scenes and outcomes for the literal couch-ship premise"
-    status: waiting
+    status: ready
     depends_on: t-003
     owner: null
     passes: 0
@@ -261,7 +262,7 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Crew personal quests: every crew member's three-step quest crosses the galaxy"
-    status: waiting
+    status: ready
     depends_on: t-003
     owner: null
     passes: 0
