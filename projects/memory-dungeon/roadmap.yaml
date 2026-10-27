@@ -643,7 +643,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: review
+    status: ready
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -667,10 +667,9 @@ tasks:
       2026-10-27 PT: Kind Robots PR #4296 merged at e1f842532b2c209743c6fd9c85c028f7516d965c after all 12 exact-head GitHub Actions workflows passed on 1de0fb3f71a414475b57f36be76a0a80347d0983. Original Briar map and combat checkpoint cards now reject malformed nested records before replacing a valid expedition; tests cover corrupted decks, independent slot recovery and valid interrupted flips. Master issue #4136 comment 6440085918 records evidence. No new ArtJobs or deployment. Return READY for browser-timed save/load, rendered device QA, remaining art integration and final console acceptance. Keep active, not For Human Gate.
 
       Focused mirrored-world interruption repair: recover first flipped picture and already-paid matching pairs from Dark Briar autosaves and manual checkpoints; reject mismatched artwork, extra exposed faces and uncharged pairs. Kind Robots branch worker/memory-dungeon-t-034-dark-reload-b7a9 prepared with reducer regressions; exact-head CI and PR review pending. Browser/device art acceptance and full console polish remain active.
-    updated: '2026-10-27T11:49:20Z'
-    owner: worker
-    claimed_by: 20261027T114402Z-memory-dungeon-t-034-b7a9
-    claimed_at: '2026-10-27T11:44:02Z'
+
+      2026-10-27 PT: Kind Robots PR #4297 merged at a0035164a4ab5547957f03f6afa935295f721ba6 after all 13 exact-head workflows passed on 1f0279fd24e7273520f8536fce831d2882129562 (Contract Tests #40498880151, TypeScript #40498880268, formatting #40498880041). Mirrored Dark Briar now restores an interrupted first picture or settles an already-paid matching pair once from autosave/manual slots, with forged-image/overflip/unpaid-pair protection and adversarial reducer tests. Master issue #4136 comment 6441231098 documents evidence. No ArtJobs, deploy or browser acceptance. Return READY for browser-timed combat/checkpoint testing, console visual QA and art acceptance; not For Human Gate.
+    updated: '2026-10-27T12:02:00Z'
 
   - id: t-035
     milestone: m3
