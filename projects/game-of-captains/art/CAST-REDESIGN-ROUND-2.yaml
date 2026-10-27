@@ -1,0 +1,614 @@
+# Canonical Space Couch cast redesign (round 2). Round 1 remains historical evidence,
+# but its conventional starship backgrounds and superseded captain/robot bodies are NOT canon.
+# Derived from live Kind Robots artPrompts CAPTAIN_LOOKS/CREW_LOOKS and CHARACTER-VOICE-ATLAS.
+# Six captains, twelve playable crew, four authored future crew. Each has three fresh expressions.
+# Versioned output paths protect legacy assets until DONE renders are exported and reviewed.
+# auto_submit sends requests to the private in-house Krea 2 ArtJob pipeline on the next sweep.
+round: space-couch-cast-redesign-2
+project_slug: game-of-captains
+designer: Space Couch canonical character redesign
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+  - key: krea2
+    label: Canonical red couch cast
+    engine: krea2
+    prompt: prose
+    suffix: Original painted 2D science-fiction character illustration with clean ink outlines, opaque gouache shadows, detailed velvet fabric, brass highlights and violet space light.
+subjects:
+  - key: sc-cast-v2-captain-fluke-primary
+    lane: krea2
+    entity: captain-portrait
+    title: "Space Couch captain fluke primary"
+    asset: game-of-captains/portraits/v2/captain-fluke
+    size: 1024x1024
+    seed: 1031001
+    prompt_prose: >-
+      Full-body character painting of a rumpled middle-aged man with wild grey hair and stubble, a patched teal dress coat with a brass cuff on one wrist, shoes of two different colors, and a brass pocket watch with thirteen hands hanging from a chain. He stands beside one rolled armrest of a long scarlet velvet couch, frowning at the pocket watch while a second identical copy of him waits two steps behind. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-fluke-defiant
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain fluke defiant"
+    asset: game-of-captains/portraits/v2/captain-fluke-defiant
+    size: 1024x1024
+    seed: 1031002
+    prompt_prose: >-
+      Full-body character painting of a rumpled middle-aged man with wild grey hair and stubble, a patched teal dress coat with a brass cuff on one wrist, shoes of two different colors, and a brass pocket watch with thirteen hands hanging from a chain. The character stands beside the couch in a decisive upright pose, jaw set, holding a thirteen-hand pocket watch, a duplicate time traveler. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-fluke-vulnerable
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain fluke vulnerable"
+    asset: game-of-captains/portraits/v2/captain-fluke-vulnerable
+    size: 1024x1024
+    seed: 1031003
+    prompt_prose: >-
+      Full-body character painting of a rumpled middle-aged man with wild grey hair and stubble, a patched teal dress coat with a brass cuff on one wrist, shoes of two different colors, and a brass pocket watch with thirteen hands hanging from a chain. The character sits near the couch backrest with shoulders lowered, resting a thirteen-hand pocket watch, a duplicate time traveler beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-vale-primary
+    lane: krea2
+    entity: captain-portrait
+    title: "Space Couch captain vale primary"
+    asset: game-of-captains/portraits/v2/captain-vale
+    size: 1024x1024
+    seed: 1031004
+    prompt_prose: >-
+      Full-body character painting of a wiry young adult woman with asymmetric hair dyed electric green and pink and shaved on one side, a black leather jacket covered in sewn patches, and a heavy brass soldering gauntlet on her right hand. She sits on the back of a long scarlet velvet couch, soldering a small copper gadget, with a pile of confiscated gadgets beside her boots. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-vale-defiant
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain vale defiant"
+    asset: game-of-captains/portraits/v2/captain-vale-defiant
+    size: 1024x1024
+    seed: 1031005
+    prompt_prose: >-
+      Full-body character painting of a wiry young adult woman with asymmetric hair dyed electric green and pink and shaved on one side, a black leather jacket covered in sewn patches, and a heavy brass soldering gauntlet on her right hand. The character stands beside the couch in a decisive upright pose, jaw set, holding the black leather jacket, electric green and pink asymmetric hair, the brass soldering gauntlet. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-vale-vulnerable
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain vale vulnerable"
+    asset: game-of-captains/portraits/v2/captain-vale-vulnerable
+    size: 1024x1024
+    seed: 1031006
+    prompt_prose: >-
+      Full-body character painting of a wiry young adult woman with asymmetric hair dyed electric green and pink and shaved on one side, a black leather jacket covered in sewn patches, and a heavy brass soldering gauntlet on her right hand. The character sits near the couch backrest with shoulders lowered, resting the black leather jacket, electric green and pink asymmetric hair, the brass soldering gauntlet beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-solace-primary
+    lane: krea2
+    entity: captain-portrait
+    title: "Space Couch captain solace primary"
+    asset: game-of-captains/portraits/v2/captain-solace
+    size: 1024x1024
+    seed: 1031007
+    prompt_prose: >-
+      Full-body character painting of a tired Black adult with close-cropped hair and dark circles under the eyes, grey janitor coveralls with a hand-sewn gold captain patch, holding a mop and three folded laminated maps. They stand guard at the end of a long scarlet velvet couch, back to the cushions, looking over one shoulder toward a dark doorway. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-solace-defiant
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain solace defiant"
+    asset: game-of-captains/portraits/v2/captain-solace-defiant
+    size: 1024x1024
+    seed: 1031008
+    prompt_prose: >-
+      Full-body character painting of a tired Black adult with close-cropped hair and dark circles under the eyes, grey janitor coveralls with a hand-sewn gold captain patch, holding a mop and three folded laminated maps. The character stands beside the couch in a decisive upright pose, jaw set, holding the mop, the gold captain patch, the laminated escape maps. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-solace-vulnerable
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain solace vulnerable"
+    asset: game-of-captains/portraits/v2/captain-solace-vulnerable
+    size: 1024x1024
+    seed: 1031009
+    prompt_prose: >-
+      Full-body character painting of a tired Black adult with close-cropped hair and dark circles under the eyes, grey janitor coveralls with a hand-sewn gold captain patch, holding a mop and three folded laminated maps. The character sits near the couch backrest with shoulders lowered, resting the mop, the gold captain patch, the laminated escape maps beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-rex-primary
+    lane: krea2
+    entity: captain-portrait
+    title: "Space Couch captain rex primary"
+    asset: game-of-captains/portraits/v2/captain-rex
+    size: 1024x1024
+    seed: 1031010
+    prompt_prose: >-
+      Full-body character painting of a broad older man with a square jaw and a silver pompadour, a crimson hero uniform with oversized gold medals pinned on the right side, and a long gold cape blown sideways by a small chrome desk fan at his feet. He poses on the cushion of a long scarlet velvet couch with one boot raised and fists on his hips, his eyes glancing sideways. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-rex-defiant
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain rex defiant"
+    asset: game-of-captains/portraits/v2/captain-rex-defiant
+    size: 1024x1024
+    seed: 1031011
+    prompt_prose: >-
+      Full-body character painting of a broad older man with a square jaw and a silver pompadour, a crimson hero uniform with oversized gold medals pinned on the right side, and a long gold cape blown sideways by a small chrome desk fan at his feet. The character stands beside the couch in a decisive upright pose, jaw set, holding the crimson hero costume, oversized medals, sideways gold cape and chrome wind machine. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-rex-vulnerable
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain rex vulnerable"
+    asset: game-of-captains/portraits/v2/captain-rex-vulnerable
+    size: 1024x1024
+    seed: 1031012
+    prompt_prose: >-
+      Full-body character painting of a broad older man with a square jaw and a silver pompadour, a crimson hero uniform with oversized gold medals pinned on the right side, and a long gold cape blown sideways by a small chrome desk fan at his feet. The character sits near the couch backrest with shoulders lowered, resting the crimson hero costume, oversized medals, sideways gold cape and chrome wind machine beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-quill-primary
+    lane: krea2
+    entity: captain-portrait
+    title: "Space Couch captain quill primary"
+    asset: game-of-captains/portraits/v2/captain-quill
+    size: 1024x1024
+    seed: 1031013
+    prompt_prose: >-
+      Full-body character painting of a tall pale man with slicked black hair in a matte black sealed bodysuit with a clear collar ring, holding a dented silver hip flask with a thin drinking tube. He sits very upright at the end of a long scarlet velvet couch, raising the flask in a formal toast, gloved hands steady. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-quill-defiant
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain quill defiant"
+    asset: game-of-captains/portraits/v2/captain-quill-defiant
+    size: 1024x1024
+    seed: 1031014
+    prompt_prose: >-
+      Full-body character painting of a tall pale man with slicked black hair in a matte black sealed bodysuit with a clear collar ring, holding a dented silver hip flask with a thin drinking tube. The character stands beside the couch in a decisive upright pose, jaw set, holding the matte black airtight bio-suit, clear collar ring and dented silver drinking flask. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-quill-vulnerable
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain quill vulnerable"
+    asset: game-of-captains/portraits/v2/captain-quill-vulnerable
+    size: 1024x1024
+    seed: 1031015
+    prompt_prose: >-
+      Full-body character painting of a tall pale man with slicked black hair in a matte black sealed bodysuit with a clear collar ring, holding a dented silver hip flask with a thin drinking tube. The character sits near the couch backrest with shoulders lowered, resting the matte black airtight bio-suit, clear collar ring and dented silver drinking flask beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-ro-primary
+    lane: krea2
+    entity: captain-portrait
+    title: "Space Couch captain ro primary"
+    asset: game-of-captains/portraits/v2/captain-ro
+    size: 1024x1024
+    seed: 1031016
+    prompt_prose: >-
+      Full-body character painting of a slender brown-skinned adult with a tall swept black coiffure, a black velvet suit, antique silver rings and a jet brooch, holding a gilt-edged envelope, with low white stage fog around the ankles. They lounge across a long scarlet velvet couch beside a silver candelabra, one hand lifted in greeting. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-ro-defiant
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain ro defiant"
+    asset: game-of-captains/portraits/v2/captain-ro-defiant
+    size: 1024x1024
+    seed: 1031017
+    prompt_prose: >-
+      Full-body character painting of a slender brown-skinned adult with a tall swept black coiffure, a black velvet suit, antique silver rings and a jet brooch, holding a gilt-edged envelope, with low white stage fog around the ankles. The character stands beside the couch in a decisive upright pose, jaw set, holding the black velvet stage clothes, antique silver rings, gilt invitation and stage fog. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-captain-ro-vulnerable
+    lane: krea2
+    entity: captain-emotion
+    title: "Space Couch captain ro vulnerable"
+    asset: game-of-captains/portraits/v2/captain-ro-vulnerable
+    size: 1024x1024
+    seed: 1031018
+    prompt_prose: >-
+      Full-body character painting of a slender brown-skinned adult with a tall swept black coiffure, a black velvet suit, antique silver rings and a jet brooch, holding a gilt-edged envelope, with low white stage fog around the ankles. The character sits near the couch backrest with shoulders lowered, resting the black velvet stage clothes, antique silver rings, gilt invitation and stage fog beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-pell-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew pell primary"
+    asset: game-of-captains/portraits/v2/crew-pell
+    size: 1024x1024
+    seed: 1031019
+    prompt_prose: >-
+      Full-body character painting of a short stocky red-skinned man with a shaved scalp, dark freckles and one steel prosthetic forearm, in oil-stained grey coveralls, with a palm-sized brass wind-up beetle on his shoulder. He tightens a bolt on the brass foot of a long scarlet velvet couch while the beetle holds a confiscated wrench in its jaws. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-pell-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew pell defiant"
+    asset: game-of-captains/portraits/v2/crew-pell-defiant
+    size: 1024x1024
+    seed: 1031020
+    prompt_prose: >-
+      Full-body character painting of a short stocky red-skinned man with a shaved scalp, dark freckles and one steel prosthetic forearm, in oil-stained grey coveralls, with a palm-sized brass wind-up beetle on his shoulder. The character stands beside the couch in a decisive upright pose, jaw set, holding the brass wind-up beetle, steel forearm and oil-stained sleeves. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-pell-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew pell vulnerable"
+    asset: game-of-captains/portraits/v2/crew-pell-vulnerable
+    size: 1024x1024
+    seed: 1031021
+    prompt_prose: >-
+      Full-body character painting of a short stocky red-skinned man with a shaved scalp, dark freckles and one steel prosthetic forearm, in oil-stained grey coveralls, with a palm-sized brass wind-up beetle on his shoulder. The character sits near the couch backrest with shoulders lowered, resting the brass wind-up beetle, steel forearm and oil-stained sleeves beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-vela-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew vela primary"
+    asset: game-of-captains/portraits/v2/crew-vela
+    size: 1024x1024
+    seed: 1031022
+    prompt_prose: >-
+      Full-body character painting of a broad lilac-skinned alien woman with small pointed ears, a sea-green surgical mantle printed with coral patterns, and a small brass hand bell on her belt. She kneels beside a patient on a long scarlet velvet couch, holding the bell up and waiting for an answer. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-vela-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew vela defiant"
+    asset: game-of-captains/portraits/v2/crew-vela-defiant
+    size: 1024x1024
+    seed: 1031023
+    prompt_prose: >-
+      Full-body character painting of a broad lilac-skinned alien woman with small pointed ears, a sea-green surgical mantle printed with coral patterns, and a small brass hand bell on her belt. The character stands beside the couch in a decisive upright pose, jaw set, holding the brass consent bell, sea-green surgical mantle and lilac skin. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-vela-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew vela vulnerable"
+    asset: game-of-captains/portraits/v2/crew-vela-vulnerable
+    size: 1024x1024
+    seed: 1031024
+    prompt_prose: >-
+      Full-body character painting of a broad lilac-skinned alien woman with small pointed ears, a sea-green surgical mantle printed with coral patterns, and a small brass hand bell on her belt. The character sits near the couch backrest with shoulders lowered, resting the brass consent bell, sea-green surgical mantle and lilac skin beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-tess-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew tess primary"
+    asset: game-of-captains/portraits/v2/crew-tess
+    size: 1024x1024
+    seed: 1031025
+    prompt_prose: >-
+      Full-body character painting of a lean East Asian woman with straight shoulder-length black hair, silver goggles pushed up on her forehead, and a navy bomber jacket embroidered with star maps. She leans on a rolled armrest of a long scarlet velvet couch, holding a transparent navigation disk with six green dots. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-tess-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew tess defiant"
+    asset: game-of-captains/portraits/v2/crew-tess-defiant
+    size: 1024x1024
+    seed: 1031026
+    prompt_prose: >-
+      Full-body character painting of a lean East Asian woman with straight shoulder-length black hair, silver goggles pushed up on her forehead, and a navy bomber jacket embroidered with star maps. The character stands beside the couch in a decisive upright pose, jaw set, holding the embroidered star map with one empty constellation, navy bomber jacket and silver goggles. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-tess-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew tess vulnerable"
+    asset: game-of-captains/portraits/v2/crew-tess-vulnerable
+    size: 1024x1024
+    seed: 1031027
+    prompt_prose: >-
+      Full-body character painting of a lean East Asian woman with straight shoulder-length black hair, silver goggles pushed up on her forehead, and a navy bomber jacket embroidered with star maps. The character sits near the couch backrest with shoulders lowered, resting the embroidered star map with one empty constellation, navy bomber jacket and silver goggles beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-rue-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew rue primary"
+    asset: game-of-captains/portraits/v2/crew-rue
+    size: 1024x1024
+    seed: 1031028
+    prompt_prose: >-
+      Full-body character painting of a tall dark-brown-skinned adult with long silver braids and thin angular glasses, a tan wrap robe with a lopsided collar sewn with paper slips, holding a small wooden gavel. They stand behind a long scarlet velvet couch, reading a folded treaty held at arm’s length. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-rue-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew rue defiant"
+    asset: game-of-captains/portraits/v2/crew-rue-defiant
+    size: 1024x1024
+    seed: 1031029
+    prompt_prose: >-
+      Full-body character painting of a tall dark-brown-skinned adult with long silver braids and thin angular glasses, a tan wrap robe with a lopsided collar sewn with paper slips, holding a small wooden gavel. The character stands beside the couch in a decisive upright pose, jaw set, holding the talking wooden gavel, stitched amendment slips and long silver braids. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-rue-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew rue vulnerable"
+    asset: game-of-captains/portraits/v2/crew-rue-vulnerable
+    size: 1024x1024
+    seed: 1031030
+    prompt_prose: >-
+      Full-body character painting of a tall dark-brown-skinned adult with long silver braids and thin angular glasses, a tan wrap robe with a lopsided collar sewn with paper slips, holding a small wooden gavel. The character sits near the couch backrest with shoulders lowered, resting the talking wooden gavel, stitched amendment slips and long silver braids beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-mox-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew mox primary"
+    asset: game-of-captains/portraits/v2/crew-mox
+    size: 1024x1024
+    seed: 1031031
+    prompt_prose: >-
+      Full-body character painting of a slim silver android with transparent chest plates over blue wiring, one round eye with a blue lid and one with an orange lid, and a white pin badge on the chest. It sits on the cushion of a long scarlet velvet couch, hands folded, looking at a small paper birthday crown in its lap. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-mox-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew mox defiant"
+    asset: game-of-captains/portraits/v2/crew-mox-defiant
+    size: 1024x1024
+    seed: 1031032
+    prompt_prose: >-
+      Full-body character painting of a slim silver android with transparent chest plates over blue wiring, one round eye with a blue lid and one with an orange lid, and a white pin badge on the chest. The character stands beside the couch in a decisive upright pose, jaw set, holding the transparent-chested silver android body, two asymmetrically colored eyelids and personal birthday crown. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-mox-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew mox vulnerable"
+    asset: game-of-captains/portraits/v2/crew-mox-vulnerable
+    size: 1024x1024
+    seed: 1031033
+    prompt_prose: >-
+      Full-body character painting of a slim silver android with transparent chest plates over blue wiring, one round eye with a blue lid and one with an orange lid, and a white pin badge on the chest. The character sits near the couch backrest with shoulders lowered, resting the transparent-chested silver android body, two asymmetrically colored eyelids and personal birthday crown beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-jex-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew jex primary"
+    asset: game-of-captains/portraits/v2/crew-jex
+    size: 1024x1024
+    seed: 1031034
+    prompt_prose: >-
+      Full-body character painting of a golden-skinned alien man with wavy dark hair and small pointed lower ears, a turquoise vest over an indigo shirt, carrying a polished wooden string instrument. He sits on the armrest of a long scarlet velvet couch beside a travel case painted with two different striped flags. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-jex-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew jex defiant"
+    asset: game-of-captains/portraits/v2/crew-jex-defiant
+    size: 1024x1024
+    seed: 1031035
+    prompt_prose: >-
+      Full-body character painting of a golden-skinned alien man with wavy dark hair and small pointed lower ears, a turquoise vest over an indigo shirt, carrying a polished wooden string instrument. The character stands beside the couch in a decisive upright pose, jaw set, holding the wooden string instrument, turquoise vest and rival peace flags. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-jex-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew jex vulnerable"
+    asset: game-of-captains/portraits/v2/crew-jex-vulnerable
+    size: 1024x1024
+    seed: 1031036
+    prompt_prose: >-
+      Full-body character painting of a golden-skinned alien man with wavy dark hair and small pointed lower ears, a turquoise vest over an indigo shirt, carrying a polished wooden string instrument. The character sits near the couch backrest with shoulders lowered, resting the wooden string instrument, turquoise vest and rival peace flags beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-sora-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew sora primary"
+    asset: game-of-captains/portraits/v2/crew-sora
+    size: 1024x1024
+    seed: 1031037
+    prompt_prose: >-
+      Full-body character painting of a tall grey-violet alien woman with six jointed arms in three pairs, large dark eyes and a smooth oval head, in charcoal overalls with orange geometric patches. She repairs a copper coupling at the back of a long scarlet velvet couch, using four hands at once while two hands hold a clipboard. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-sora-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew sora defiant"
+    asset: game-of-captains/portraits/v2/crew-sora-defiant
+    size: 1024x1024
+    seed: 1031038
+    prompt_prose: >-
+      Full-body character painting of a tall grey-violet alien woman with six jointed arms in three pairs, large dark eyes and a smooth oval head, in charcoal overalls with orange geometric patches. The character stands beside the couch in a decisive upright pose, jaw set, holding the six articulated arms, charcoal geometric overalls and copper coupling. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-sora-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew sora vulnerable"
+    asset: game-of-captains/portraits/v2/crew-sora-vulnerable
+    size: 1024x1024
+    seed: 1031039
+    prompt_prose: >-
+      Full-body character painting of a tall grey-violet alien woman with six jointed arms in three pairs, large dark eyes and a smooth oval head, in charcoal overalls with orange geometric patches. The character sits near the couch backrest with shoulders lowered, resting the six articulated arms, charcoal geometric overalls and copper coupling beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-kivo-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew kivo primary"
+    asset: game-of-captains/portraits/v2/crew-kivo
+    size: 1024x1024
+    seed: 1031040
+    prompt_prose: >-
+      Full-body character painting of a small slim alien with dusty blue skin, a crest of short pale teal feathers, long thin wrists in grey pressure sleeves, and an amber-and-grey scout jacket. They crouch on a long scarlet velvet couch with one thin wrist raised, a round brass pressure compass in the other hand. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-kivo-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew kivo defiant"
+    asset: game-of-captains/portraits/v2/crew-kivo-defiant
+    size: 1024x1024
+    seed: 1031041
+    prompt_prose: >-
+      Full-body character painting of a small slim alien with dusty blue skin, a crest of short pale teal feathers, long thin wrists in grey pressure sleeves, and an amber-and-grey scout jacket. The character stands beside the couch in a decisive upright pose, jaw set, holding the pale teal feather crest, narrow pressure-sensitive wrist sleeves and brass compass. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-kivo-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew kivo vulnerable"
+    asset: game-of-captains/portraits/v2/crew-kivo-vulnerable
+    size: 1024x1024
+    seed: 1031042
+    prompt_prose: >-
+      Full-body character painting of a small slim alien with dusty blue skin, a crest of short pale teal feathers, long thin wrists in grey pressure sleeves, and an amber-and-grey scout jacket. The character sits near the couch backrest with shoulders lowered, resting the pale teal feather crest, narrow pressure-sensitive wrist sleeves and brass compass beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-taal-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew taal primary"
+    asset: game-of-captains/portraits/v2/crew-taal
+    size: 1024x1024
+    seed: 1031043
+    prompt_prose: >-
+      Full-body character painting of an amphibious alien man with ivory-white segmented shell plates, a broad smooth face, black oval eyes and webbed fingers, in a navy envoy coat with a pale-blue shawl. He stands beside a long scarlet velvet couch holding a frosted rectangular voting slate, pale cold mist rising from his shoulders. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-taal-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew taal defiant"
+    asset: game-of-captains/portraits/v2/crew-taal-defiant
+    size: 1024x1024
+    seed: 1031044
+    prompt_prose: >-
+      Full-body character painting of an amphibious alien man with ivory-white segmented shell plates, a broad smooth face, black oval eyes and webbed fingers, in a navy envoy coat with a pale-blue shawl. The character stands beside the couch in a decisive upright pose, jaw set, holding the white shell plating, pale-blue thermal shawl and frost-covered voting tablet. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-taal-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew taal vulnerable"
+    asset: game-of-captains/portraits/v2/crew-taal-vulnerable
+    size: 1024x1024
+    seed: 1031045
+    prompt_prose: >-
+      Full-body character painting of an amphibious alien man with ivory-white segmented shell plates, a broad smooth face, black oval eyes and webbed fingers, in a navy envoy coat with a pale-blue shawl. The character sits near the couch backrest with shoulders lowered, resting the white shell plating, pale-blue thermal shawl and frost-covered voting tablet beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-brin-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew brin primary"
+    asset: game-of-captains/portraits/v2/crew-brin
+    size: 1024x1024
+    seed: 1031046
+    prompt_prose: >-
+      Full-body character painting of a tall green-skinned mycelial woman with hair of soft fern fronds, small pink mushrooms growing at her shoulders, a leafy living respirator at her neck and an olive field jacket. She tends a basket of green vines growing out of the back of a long scarlet velvet couch. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-brin-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew brin defiant"
+    asset: game-of-captains/portraits/v2/crew-brin-defiant
+    size: 1024x1024
+    seed: 1031047
+    prompt_prose: >-
+      Full-body character painting of a tall green-skinned mycelial woman with hair of soft fern fronds, small pink mushrooms growing at her shoulders, a leafy living respirator at her neck and an olive field jacket. The character stands beside the couch in a decisive upright pose, jaw set, holding the living oxygen garden, green leaf respirator and fern hair. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-brin-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew brin vulnerable"
+    asset: game-of-captains/portraits/v2/crew-brin-vulnerable
+    size: 1024x1024
+    seed: 1031048
+    prompt_prose: >-
+      Full-body character painting of a tall green-skinned mycelial woman with hair of soft fern fronds, small pink mushrooms growing at her shoulders, a leafy living respirator at her neck and an olive field jacket. The character sits near the couch backrest with shoulders lowered, resting the living oxygen garden, green leaf respirator and fern hair beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-omi-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew omi primary"
+    asset: game-of-captains/portraits/v2/crew-omi
+    size: 1024x1024
+    seed: 1031049
+    prompt_prose: >-
+      Full-body character painting of a small faceted slate-grey stone being with a tapered crystal head, two amber eyes, a round brass resonator set in the chest and six small brass bells on clipped ribbons. It stands on the cushion of a long scarlet velvet couch, holding a long thin tuning rod against one bell. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-omi-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew omi defiant"
+    asset: game-of-captains/portraits/v2/crew-omi-defiant
+    size: 1024x1024
+    seed: 1031050
+    prompt_prose: >-
+      Full-body character painting of a small faceted slate-grey stone being with a tapered crystal head, two amber eyes, a round brass resonator set in the chest and six small brass bells on clipped ribbons. The character stands beside the couch in a decisive upright pose, jaw set, holding the faceted stone body, chest resonator and six tiny brass bells. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-omi-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew omi vulnerable"
+    asset: game-of-captains/portraits/v2/crew-omi-vulnerable
+    size: 1024x1024
+    seed: 1031051
+    prompt_prose: >-
+      Full-body character painting of a small faceted slate-grey stone being with a tapered crystal head, two amber eyes, a round brass resonator set in the chest and six small brass bells on clipped ribbons. The character sits near the couch backrest with shoulders lowered, resting the faceted stone body, chest resonator and six tiny brass bells beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-fen-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew fen primary"
+    asset: game-of-captains/portraits/v2/crew-fen
+    size: 1024x1024
+    seed: 1031052
+    prompt_prose: >-
+      Full-body character painting of a broad-shouldered man with deep tan skin, short black hair and a thin scar under the right eyebrow, in a plain navy jacket and heavy scuffed black guard boots. He stands at the end of a long scarlet velvet couch, holding a folded civilian corridor map and an old white travel pass. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-fen-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew fen defiant"
+    asset: game-of-captains/portraits/v2/crew-fen-defiant
+    size: 1024x1024
+    seed: 1031053
+    prompt_prose: >-
+      Full-body character painting of a broad-shouldered man with deep tan skin, short black hair and a thin scar under the right eyebrow, in a plain navy jacket and heavy scuffed black guard boots. The character stands beside the couch in a decisive upright pose, jaw set, holding the heavy obsolete checkpoint boots, passage map and battered civilian travel pass. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-fen-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew fen vulnerable"
+    asset: game-of-captains/portraits/v2/crew-fen-vulnerable
+    size: 1024x1024
+    seed: 1031054
+    prompt_prose: >-
+      Full-body character painting of a broad-shouldered man with deep tan skin, short black hair and a thin scar under the right eyebrow, in a plain navy jacket and heavy scuffed black guard boots. The character sits near the couch backrest with shoulders lowered, resting the heavy obsolete checkpoint boots, passage map and battered civilian travel pass beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-nyra-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew nyra primary"
+    asset: game-of-captains/portraits/v2/crew-nyra
+    size: 1024x1024
+    seed: 1031055
+    prompt_prose: >-
+      Full-body character painting of a tall alien legal historian with translucent amber skin, seven ink-stained fingers on each hand and a living parchment shawl over a navy travel suit. She spreads a folded evacuation decree across the red couch cushions while checking its wax seal with one ink-stained finger. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-nyra-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew nyra defiant"
+    asset: game-of-captains/portraits/v2/crew-nyra-defiant
+    size: 1024x1024
+    seed: 1031056
+    prompt_prose: >-
+      Full-body character painting of a tall alien legal historian with translucent amber skin, seven ink-stained fingers on each hand and a living parchment shawl over a navy travel suit. The character stands beside the couch in a decisive upright pose, jaw set, holding her seven inked fingers, living parchment shawl and sealed evacuation order. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-nyra-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew nyra vulnerable"
+    asset: game-of-captains/portraits/v2/crew-nyra-vulnerable
+    size: 1024x1024
+    seed: 1031057
+    prompt_prose: >-
+      Full-body character painting of a tall alien legal historian with translucent amber skin, seven ink-stained fingers on each hand and a living parchment shawl over a navy travel suit. The character sits near the couch backrest with shoulders lowered, resting her seven inked fingers, living parchment shawl and sealed evacuation order beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-gleam-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew gleam primary"
+    asset: game-of-captains/portraits/v2/crew-gleam
+    size: 1024x1024
+    seed: 1031058
+    prompt_prose: >-
+      Full-body character painting of an adult crystalline xenobiologist with a rainbow refracting faceted body and a practical grey jacket. They study a small crystal ecosystem under a copper field microscope perched on a red couch cushion. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-gleam-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew gleam defiant"
+    asset: game-of-captains/portraits/v2/crew-gleam-defiant
+    size: 1024x1024
+    seed: 1031059
+    prompt_prose: >-
+      Full-body character painting of an adult crystalline xenobiologist with a rainbow refracting faceted body and a practical grey jacket. The character stands beside the couch in a decisive upright pose, jaw set, holding the rainbow-refracted crystal anatomy, grey jacket and copper field microscope. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-gleam-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew gleam vulnerable"
+    asset: game-of-captains/portraits/v2/crew-gleam-vulnerable
+    size: 1024x1024
+    seed: 1031060
+    prompt_prose: >-
+      Full-body character painting of an adult crystalline xenobiologist with a rainbow refracting faceted body and a practical grey jacket. The character sits near the couch backrest with shoulders lowered, resting the rainbow-refracted crystal anatomy, grey jacket and copper field microscope beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-harrow-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew harrow primary"
+    asset: game-of-captains/portraits/v2/crew-harrow
+    size: 1024x1024
+    seed: 1031061
+    prompt_prose: >-
+      Full-body character painting of an enormous soft-bodied adult alien labor organizer in burgundy workwear with a brass union pin and six sturdy arms. They test a folding emergency-exit ladder attached behind the red couch while holding a worn factory roster. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-harrow-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew harrow defiant"
+    asset: game-of-captains/portraits/v2/crew-harrow-defiant
+    size: 1024x1024
+    seed: 1031062
+    prompt_prose: >-
+      Full-body character painting of an enormous soft-bodied adult alien labor organizer in burgundy workwear with a brass union pin and six sturdy arms. The character stands beside the couch in a decisive upright pose, jaw set, holding six broad arms, the brass union badge, burgundy uniform and emergency-exit toolbox. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-harrow-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew harrow vulnerable"
+    asset: game-of-captains/portraits/v2/crew-harrow-vulnerable
+    size: 1024x1024
+    seed: 1031063
+    prompt_prose: >-
+      Full-body character painting of an enormous soft-bodied adult alien labor organizer in burgundy workwear with a brass union pin and six sturdy arms. The character sits near the couch backrest with shoulders lowered, resting six broad arms, the brass union badge, burgundy uniform and emergency-exit toolbox beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-edda-primary
+    lane: krea2
+    entity: crew-portrait
+    title: "Space Couch crew edda primary"
+    asset: game-of-captains/portraits/v2/crew-edda
+    size: 1024x1024
+    seed: 1031064
+    prompt_prose: >-
+      Full-body character painting of an elderly alien courier with two articulated prosthetic right hands, an olive flight cloak and an empty canvas satchel. She places an empty canvas courier satchel beside a recovered ledger on the red couch and sorts metal tribute tokens in her two mechanical hands. The character's full body and hands are visible, with a distinctive easy-to-read silhouette. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-edda-defiant
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew edda defiant"
+    asset: game-of-captains/portraits/v2/crew-edda-defiant
+    size: 1024x1024
+    seed: 1031065
+    prompt_prose: >-
+      Full-body character painting of an elderly alien courier with two articulated prosthetic right hands, an olive flight cloak and an empty canvas satchel. The character stands beside the couch in a decisive upright pose, jaw set, holding two mechanical right hands, olive cloak, empty canvas satchel and old tribute ledger. Their eyes meet the camera with a challenging expression. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
+  - key: sc-cast-v2-crew-edda-vulnerable
+    lane: krea2
+    entity: crew-emotion
+    title: "Space Couch crew edda vulnerable"
+    asset: game-of-captains/portraits/v2/crew-edda-vulnerable
+    size: 1024x1024
+    seed: 1031066
+    prompt_prose: >-
+      Full-body character painting of an elderly alien courier with two articulated prosthetic right hands, an olive flight cloak and an empty canvas satchel. The character sits near the couch backrest with shoulders lowered, resting two mechanical right hands, olive cloak, empty canvas satchel and old tribute ledger beside them. Their eyes show a quiet moment of grief or uncertainty. One long button-tufted scarlet velvet couch with rolled armrests and four small brass feet is the spacecraft. The couch floats inside a transparent spherical protective bubble with a faint blue rim, surrounded by distant stars. A small folding room opens directly behind the backrest. Eye-level three-quarter portrait, clear full face and clothing, balanced square framing.
