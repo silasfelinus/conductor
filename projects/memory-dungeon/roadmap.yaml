@@ -643,23 +643,18 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: claimed
+    status: review
     depends_on: t-022
     passes: 0
     stakes: reversible
-    note: >-
-      Play all four reveal waves through the 64 fixed-location forest
-      and 36-room House while building a cinematic, responsive, art-led
-      single-screen front end. Preserve Classic and existing saves.
-      Add explicit new/save/load slots with guarded overwrite, first-play
-      intro, accessible dialogue portrait stage, non-generic backgrounds,
-      scene-to-fight transitions and stage navigation. Validate refresh
-      during card turns, battles and branching outcomes. User must
-      experience game screens, never nested webapp panels.
+    note: |-
+      Play all four reveal waves through the 64 fixed-location forest and 36-room House while building a cinematic, responsive, art-led single-screen front end. Preserve Classic and existing saves. Add explicit new/save/load slots with guarded overwrite, first-play intro, accessible dialogue portrait stage, non-generic backgrounds, scene-to-fight transitions and stage navigation. Validate refresh during card turns, battles and branching outcomes. User must experience game screens, never nested webapp panels.
+
+      Scoped interrupted-flip reload repair: recover one face-up card or settle a completed matching pair from a valid saved animation frame; close mismatches and reject malformed exposed faces. Three-file Kind Robots PR pending CI. World One save slots, visual acceptance and full campaign remain open.
     owner: worker
     claimed_by: 20261027T075207Z-memory-dungeon-t-034-2xjkvy
     claimed_at: '2026-10-27T07:52:07.591Z'
-    updated: '2026-10-27T07:52:07.591Z'
+    updated: '2026-10-27T07:53:42.331Z'
 
   - id: t-035
     milestone: m3
