@@ -2,6 +2,8 @@
 
 **Approved creative direction (2026-10-26 PT):** Some of Space Couch's *adult* crew may develop romances with the captain, with one **fully written, mechanically attainable four-person consensual alien polyamorous relationship**. Romance is never automatic, mandatory, a reward for dispatch success, or a reliable happy ending. This writing contract extends [CAST-BIBLE.md](CAST-BIBLE.md) and the [galaxy/nemesis bible](GALAXY-AND-NEMESIS-BIBLE.md). It does not change the six captains, three-appointed-crew limit, established species identities or narrator seeds.
 
+See [the relationship expansion atlas](RELATIONSHIP-EXPANSION.md) for individual, pair, and future-crew arcs.
+
 ## Consent and consequences are the mechanics
 
 - The **captain + Vela Sorn + Taal Venn + Omi Six-Bells** can form a *four-person interspecies polycule*. All four are independent adults; Vela, Taal and Omi are alien crew members, and no captain background is prevented from participating. Four people in a romantic agreement is a **fourple**, not a collection of three captain-to-crew conquests. Include distinct bonds *between* crew members, jealousy, obligations, competing wishes and opportunities to say no.
