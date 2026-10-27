@@ -300,8 +300,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver academy key, map, follower emotion and injury art"
-    status: claimed
-    updated: '2026-10-27T17:21:00Z'
+    status: review
+    updated: '2026-10-27T17:45:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -316,6 +316,8 @@ tasks:
       Added four nonpublic auto_submit Krea2 portrait requests for new 30-day mastermind variants: Mercy Circuit, Mirror Chancellor, Orchard Engine and Static Commissioner. Reuses the previously submitted original four portraits without duplication. New art ledger is staged in Conductor PR pending CI; until Auto Art Generate actually assigns ArtJob IDs and images, these are REQUESTS only, not delivered art.
 
       Added four distinct Krea 2 mastermind portrait requests to open Conductor PR #6697 (Mercy Circuit, Mirror Chancellor, Orchard Engine, Static Commissioner). PR security and handoff checks passed but full Worker PR CI failed on pre-existing Memory Dungeon queue ledger inconsistency: projects/art-prompts.yaml has zero memory-dungeon-saturate requests versus 525 in KNOWN-ART-REQUESTS.yaml, violating tests/test_memory_dungeon_art_queue.py. Do not circumvent CI, merge, or claim ArtJobs. PR remains OPEN pending separate reconciliation or test repair by appropriate owner. Resume task after CI is green, merge, verify auto_submit generated real ArtJob IDs and rendered URLs, and integrate. Task remains incomplete for character continuity/injury portraits/visual device QA.
+
+      Verified 144 Prom of Doom personal outcome requests lacked all ArtJob IDs. A scoped credentialed workflow now reconciles prior server ArtJobs before posting only unrecorded personal requests and checkpoints every accepted ID. Repaired unsafe Krea2 negative prompt wording. Review app and workflow CI, merge when green, then verify real ArtJob IDs. Image delivery remains pending.
     owner: worker
     claimed_by: 2026-10-27T172100Z-comet-city-academy-t-007-prom-art-n7q4
     claimed_at: '2026-10-27T17:21:00Z'
