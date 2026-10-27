@@ -101,6 +101,43 @@ def compute_units(pitch: dict) -> dict:
     }
 
 
+# Silas, 2026-10-26: the Forge's Gestation shows each pitch as designs (an
+# authored picture per key element), so from 2026-10-27 every pitch carries
+# design prompts, written to the live art prompt contract (no titles or
+# lettering in the prompt).
+DESIGNS_REQUIRED_FROM = "2026-10-27"
+DESIGN_KINDS = ("follower", "villain", "quest", "encounter", "place", "ending", "other")
+MIN_DESIGNS = 4
+TITLE_IN_PROMPT = re.compile(r"\b(?:title|subtitle|chapter|caption|logo|lettering|text reading)\b", re.IGNORECASE)
+
+
+def design_errors(prefix: str, pitch: dict, date: str) -> list[str]:
+    """Design prompts: optional before DESIGNS_REQUIRED_FROM, then at least four."""
+    designs = pitch.get("designs")
+    if designs is None:
+        return [] if date < DESIGNS_REQUIRED_FROM else [
+            f"{prefix}: designs needs at least {MIN_DESIGNS} authored art prompts (key art, hero, villain, a place)"]
+    if not isinstance(designs, list):
+        return [f"{prefix}: designs must be a list"]
+    errors: list[str] = []
+    if date >= DESIGNS_REQUIRED_FROM and len(designs) < MIN_DESIGNS:
+        errors.append(f"{prefix}: designs needs at least {MIN_DESIGNS} authored art prompts")
+    for i, design in enumerate(designs, 1):
+        if not isinstance(design, dict):
+            errors.append(f"{prefix}: design {i} must be an object")
+            continue
+        if design.get("kind") not in DESIGN_KINDS:
+            errors.append(f"{prefix}: design {i} kind must be one of {', '.join(DESIGN_KINDS)}")
+        if not isinstance(design.get("title"), str) or not design["title"].strip():
+            errors.append(f"{prefix}: design {i} needs a title")
+        prompt = design.get("prompt")
+        if not isinstance(prompt, str) or len(prompt.strip()) < 60:
+            errors.append(f"{prefix}: design {i} prompt must describe the picture in plain prose")
+        elif TITLE_IN_PROMPT.search(prompt):
+            errors.append(f"{prefix}: design {i} prompt must not ask for titles, captions or lettering")
+    return errors
+
+
 def validate(date: str, docket: object, previous: set[str] | None = None) -> list[str]:
     errors: list[str] = []
     if not isinstance(docket, dict):
@@ -160,6 +197,7 @@ def validate(date: str, docket: object, previous: set[str] | None = None) -> lis
                 errors.append(f"{prefix}: {field} must be 1–4 model passes per deliverable")
         if cast["playable"] < 1 or production["maps"] < 1:
             errors.append(f"{prefix}: at least one playable opening and one map required")
+        errors.extend(design_errors(prefix, pitch, date))
         spots = pitch.get("collisions")
         if not isinstance(spots, list) or len(spots) < 3:
             errors.append(f"{prefix}: include at least three prose/art/randomness intersections")
@@ -260,6 +298,13 @@ def brief(date: str) -> str:
         "consequential game state. Count actual render targets, not vaguely 'lots of art'. "
         "No real ArtJobs, projects, API billing, or sends. No unlabelled repeat of earlier pitches. "
         "Keep the five existing shipped-project upgrades and Daily Dream independent.\n"
+        "DESIGNS (Silas, 2026-10-26; required from 2026-10-27): every pitch carries a `designs` list of "
+        "at least four {kind, title, prompt} entries (kind: follower, villain, quest, encounter, place, "
+        "ending or other), at least key art, the hero, the villain and a place. Each prompt describes the "
+        "picture in plain prose (who is there, where, what is happening, light and mood) and follows the "
+        "live art prompt contract: no titles, captions or lettering, state what is present rather than what "
+        "is absent. The Forge's Gestation screen shows them as the pitch's look, and Forge this carries them "
+        "onto its design board to render.\n"
         + memory.memory_summary(index) + "\n"
     )
 
