@@ -88,6 +88,12 @@ class MemoryDungeonDeliveryAuditTests(unittest.TestCase):
         headers = {"Content-Type": "image/webp",
                    "Last-Modified": "Mon, 26 Oct 2026 01:00:01 GMT"}
         self.assertEqual(assess_media_headers(headers, created), "delivered")
+        self.assertEqual(assess_media_headers(headers, created, "public/images/memory-dungeon/a.webp"), "delivered")
+        self.assertEqual(assess_media_headers(
+            {**headers, "Content-Type": "image/svg+xml"}, created,
+            "public/images/memory-dungeon/a.webp"), "media_wrong_format")
+        self.assertEqual(assess_media_headers(
+            {**headers, "Content-Length": "0"}, created), "media_empty")
         self.assertEqual(assess_media_headers(
             {**headers, "Content-Type": "text/html"}, created), "media_not_image")
         self.assertEqual(assess_media_headers(
