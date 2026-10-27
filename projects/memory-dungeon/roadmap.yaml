@@ -183,7 +183,7 @@ tasks:
   - id: t-030
     milestone: m3
     title: "Build scene-art production manifest and sixteen-realm coverage checks"
-    status: review
+    status: ready
     depends_on: t-018
     passes: 0
     stakes: reversible
@@ -199,10 +199,9 @@ tasks:
       Memory Dungeon 752-request art submission: GitHub Actions run #40250564670 successfully bulk submitted and checkpointed 227/227 main plus 521/525 secondary requests (748 ArtJob IDs). PR #6656 merged at 389b4219ffdc6e8fe14a0c397a5424b36708dbcc with green CI; adds uncapped submission, incomplete-batch retry, full ledger audit, and repairs four Unclaimed Portrait picture-frame prompt rejections. Short independent workflow #40253541060 is IN PROGRESS to submit the last four and checkpoint 752/752 if accepted. Master kind_robots#4136 comment records exact evidence. Do not equate submissions to renders or delivered/approved images. Continue checking fast-run result, eventual DONE ArtImages/media URLs, visual QA, and first-two-realities complete coverage. No human gate yet.
 
       Scoped delivery audit: preserved the 227 drained submission receipts alongside 525 permanent requests; added read-only ArtJob identity/status and live-media HEAD evidence with offline regression tests and an internal audit workflow. This is partial t-030, not delivered art or a human gate. PR/CI pending.
-    updated: '2026-10-27T00:49:32.920Z'
-    owner: worker
-    claimed_by: 20261027T004659308Z-memory-dungeon-t-030-enfje4
-    claimed_at: '2026-10-27T00:46:59.308Z'
+
+      2026-10-26 PT: Merged Conductor PR #6710 at 4f2c524ff48d53249138c43d888b77c5a8063776 after all 23 exact-head checks passed (Python suite 3083+ tests, security, worker handoff and YAML). Preserved 227 drained historical ArtJob receipts, alongside 525 permanent ledger rows: 752 unique request IDs, ArtJob IDs and image destinations. Added read-only ArtJob/status/ArtImage/media HEAD delivery auditor, regressions and scoped-push/manual evidence workflow. No new ArtJobs, no image-delivery or visual acceptance claim. Audit run #40429786760 queued after merge; inspect its artifact and repair any missing/failed/stale images. This is partial t-030, not a final human gate. Return READY.
+    updated: '2026-10-27T00:59:05.118Z'
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
