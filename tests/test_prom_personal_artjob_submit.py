@@ -10,6 +10,14 @@ import enqueue_art_requests as enq  # noqa: E402
 from repair_negation_art_prompts import violations  # noqa: E402
 
 
+def unsubmitted():
+    """The live ledger with its recorded ArtJob ids removed, as before the first submit."""
+    ledger = submit.parse_ledger()
+    for subject in ledger["subjects"]:
+        subject.pop("jobs", None)
+    return ledger
+
+
 class PromArtSubmitTests(unittest.TestCase):
     def test_all_144_cells_are_unique_and_safe(self):
         ledger = submit.parse_ledger()
@@ -26,7 +34,7 @@ class PromArtSubmitTests(unittest.TestCase):
             self.assertFalse(violations(prompt), subject["key"])
 
     def test_recovers_previous_artjob_before_posting(self):
-        ledger = submit.parse_ledger()
+        ledger = unsubmitted()
         first = ledger["subjects"][0]
         prompt = enq.compose_prompt(ledger["lanes"][0], first)
         existing = [{"id": 41623, "projectSlug": "comet-city-academy", "payload": {"promptString": prompt}}]
@@ -51,7 +59,7 @@ class PromArtSubmitTests(unittest.TestCase):
             }}))
 
     def test_different_prompt_never_reuses_an_unrelated_job(self):
-        ledger = submit.parse_ledger()
+        ledger = unsubmitted()
         unrelated = [{"id": 42, "projectSlug": "comet-city-academy", "payload": {"promptString": "Different image"}}]
         self.assertEqual(submit.recover_submitted(ledger, unrelated), 0)
         self.assertFalse(any(subject.get("jobs") for subject in ledger["subjects"]))
