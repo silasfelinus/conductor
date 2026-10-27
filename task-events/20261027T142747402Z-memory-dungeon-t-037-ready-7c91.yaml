@@ -1,0 +1,20 @@
+version: 1
+project: memory-dungeon
+task: t-037
+operation: ready
+owner: worker
+session: 20261027T141545877Z-memory-dungeon-t-037-7c91
+updated: '2026-10-27T14:27:47.402Z'
+note: >-
+  2026-10-27 PT: Kind Robots PR #4300 merged at 25f3a00decb1064f2e48114533268ebf5de3374a
+  (exact final head fe6a8f035970718c023b29e88449bbf0019db8c1).
+  Fixed three original-to-mirrored Briar callbacks: camp courier previously
+  referenced a nonexistent scene choice, and missing/forged original choices
+  fabricated alternate-branch memories. Explicitly mapped the real courier,
+  princess and Earth-photo decisions, rewrote affected consequences, and
+  regression-tested all source choice IDs, both outcomes, unvisited/invalid
+  records and save round trips. All 17 exact-head GitHub check runs passed,
+  including four contract shards, verifiers, TypeScript and Prettier.
+  No new ArtJobs or deployment. Continue t-037 for substantive cross-reality
+  mechanical consequences, later playable worlds and full narrative QA;
+  do not mark For Human Gate.
