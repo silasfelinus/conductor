@@ -12573,3 +12573,7 @@ Worker pattern: probe both origins before proposing a KR_BASE_URL change.
 - #6717 (Prom of Doom canon: title, origin-card opening, earned replay identities): docs/roadmap-title only, reversible, all 23 checks green on head 3abc1bb. Merged.
 - #6714 (reconcile Forge gallery / Memory Dungeon / art command center; Space Couch t-018/t-019): roadmap status and new waiting tasks only, 24 checks green (Worker handoff skipped as expected for a non-worker branch). Merged.
 - Pattern: both Workers cited merge SHAs and PR numbers in task notes, which made verification quick. No kaizen task added; both are reconciliation/canon docs with no new code.
+
+## 2026-10-27 — Reviewer: conductor#6723 merged (squash 4af0202)
+Prom of Doom personal-quest canon reconciled with `identitySerial.ts` (days 4/12/21/27 vs new 6/9/19/22; 576 added choices, not a replacement). Docs-only, reversible, all 24 checks green. The kind_robots #4284 code PR is a separate gate.
+Worker pattern: PR body cited the checks run against main's real selector ordering, which made review quick. Kaizen (calendar-slot collision test) stays with kind_robots.
