@@ -791,3 +791,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Direction:** One shared frame and complexity budget for every Kind Robots story game (playbook), so new playbooks start consistent and small and existing ones converge on the same one-screen shell, settings, trailer, scrapbook, cast, factions, secrets and endings.
 **Notes:**
 - (your notes)
+
+### rebel-button  (software)
+**Direction:** Turn the Rebel Button into a playful 100-press journey: after ten presses the button moves, shrinks, hides behind walls, triggers surprise minigames (aim a cannon to break a wall, spot the real button among decoys), and at 100 offers keep pressing for a high score, rate art, share a malaria-net fundraiser post, or donate.
+**Notes:**
+- (your notes)
