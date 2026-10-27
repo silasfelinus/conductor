@@ -18,6 +18,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 import json
+import os
 from pathlib import Path
 import sys
 import urllib.error
@@ -123,7 +124,7 @@ def assess_media_headers(headers: Any, created_at: object) -> str:
 def probe_media(path: str, created_at: object) -> str:
     if not valid_destination(path):
         return "media_unsafe_path"
-    origin = __import__("os").environ.get(
+    origin = os.environ.get(
         "KR_MEDIA_ORIGIN", "https://media.acrocatranch.com"
     ).rstrip("/")
     url = origin + "/" + urllib.parse.quote(path.removeprefix("public/"), safe="/")
