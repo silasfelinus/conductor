@@ -1,0 +1,17 @@
+version: 1
+project: memory-dungeon
+task: t-030
+operation: ready
+owner: worker
+session: 20261027T004659308Z-memory-dungeon-t-030-enfje4
+updated: '2026-10-27T00:59:05.118Z'
+note: >-
+  2026-10-26 PT: Merged Conductor PR #6710 at 4f2c524ff48d53249138c43d888b77c5a8063776
+  after all 23 exact-head checks passed (Python suite 3083+ tests, security,
+  worker handoff and YAML). Preserved 227 drained historical ArtJob receipts,
+  alongside 525 permanent ledger rows: 752 unique request IDs, ArtJob IDs and
+  image destinations. Added read-only ArtJob/status/ArtImage/media HEAD delivery
+  auditor, regressions and scoped-push/manual evidence workflow. No new ArtJobs,
+  no image-delivery or visual acceptance claim. Audit run #40429786760 queued
+  after merge; inspect its artifact and repair any missing/failed/stale images.
+  This is partial t-030, not a final human gate. Return READY.
