@@ -643,7 +643,10 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 20261027T104702550Z-memory-dungeon-t-034-bff3d3
+    claimed_at: '2026-10-27T10:47:14.952Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -661,7 +664,7 @@ tasks:
       Scoped checkpoint corruption repair: malformed nested Dark Briar map-card entries now invalidate the manual checkpoint, while the mirrored autosave restorer safely discards invalid cards rather than throwing. Regression tests cover isolated slot rejection, preservation of adjacent slots, and safe autosave recovery. Focused Kind Robots PR and exact-head CI to follow; console/browser/art acceptance remain open.
 
       2026-10-27 PT: Kind Robots PR #4295 merged at 4174ea457d8e459f105515326b977ffc4dfbd625 after all 12 workflows and 17 exact-head checks passed at 3bd0d47a893b8743f8fead645857ebbadf0b1660 (Contract Tests #40483868599, TypeScript #40483868557, formatting #40483868514). Malformed nested Dark Briar checkpoint decks now reject without replacing a valid expedition; mirrored autosave recovery no longer throws on null card entries. Master issue #4136 comment 6438815284 records the reproduction and evidence. Initial formatting failure corrected before full green. No new ArtJobs or deployment. Return READY for browser-timed save/load and flip testing, device visual QA, remaining art integration and final console acceptance; not For Human Gate.
-    updated: '2026-10-27T09:57:05Z'
+    updated: '2026-10-27T10:47:14.952Z'
 
   - id: t-035
     milestone: m3
