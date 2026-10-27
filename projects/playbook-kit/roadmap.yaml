@@ -383,7 +383,7 @@ tasks:
   - id: t-023
     milestone: m4
     title: "The Forge as an art-forward command center: design boards and the Catalogue"
-    status: review
+    status: done
     depends_on: t-022
     owner: null
     passes: 0
@@ -396,5 +396,73 @@ tasks:
       else prompt) with add/edit and render through /api/art/enqueue; a Catalogue of Facets,
       Characters, Locations, Scenarios, Rewards and game art with a brainstorm tray that starts a
       playbook or adds designs to the open game; pitches carry designs (conductor #6708 requires
-      them from 2026-10-27). kind_robots #4265.
+      them from 2026-10-27). DONE 2026-10-26 PT: kind_robots #4265 merged as cd04cae; conductor
+      #6708 merged as e476cb7.
+
+  - id: t-024
+    milestone: m4
+    title: "Memory Dungeon planned at sixteen realms; ledger progress counts unbuilt scope"
+    status: done
+    depends_on: t-021
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: |-
+      Silas 2026-10-27: "Each overworld has 64 encounters, there are 16 overworlds." The plan follows
+      projects/memory-dungeon/SIXTEEN-REALM-PRODUCTION.md (1,600 positions, 96 enemies, 128
+      sidequests, 32 photographs, 64 achievements, 12 endings); the count measures every overworld
+      tile and House room (200 of 1,600); ledger progress scales by encounters built of planned.
+      DONE 2026-10-26 PT: kind_robots #4267 merged as d163a90.
+
+  - id: t-025
+    milestone: m4
+    title: "Forge gallery: sections and people as large art, with prompts, renders and comments"
+    status: done
+    depends_on: t-023
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: |-
+      Silas 2026-10-27: "images representing each section, it's interactive and allows comments,
+      resubmissions, and reart gen prompt writing and reviewing ... if followers are an important
+      junction, I should see their page and a gallery of all entries, or acknowledgements of the
+      missing." Ledger -> Gallery: section and person shelves, large beat cards with honest status,
+      an inspector with renders, the prompt to review/render/propose/ask for, and notes on beats,
+      sections (section:<kind>) and people (person:<id>). DONE 2026-10-26 PT: kind_robots #4271
+      merged as 1286537.
+
+  - id: t-026
+    milestone: m4
+    title: "Space Couch planned at 220 crew trios: party adventures, party endings, boss endings, romances"
+    status: review
+    depends_on: t-025
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: |-
+      Silas 2026-10-27: "there are 220 different combinations of 3 crew members with 12 options ...
+      each crew combo can get 2 unique endings, and an interstitial unique multiple step adventure
+      ... endings for each galactic boss, there's romance threads for each crewmember." New Forge
+      factors (party adventure steps, endings per party, endings per villain) and the Space Couch
+      plan; the build work itself is game-of-captains t-018 and t-019 (trios, endings) and t-021
+      (romances). kind_robots #4272.
+
+  - id: t-027
+    milestone: m4
+    title: "Cthulhuquarium and The Ruler Is Hooked in the Forge (adapters, plans, ledgers, galleries)"
+    status: claimed
+    depends_on: t-025
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    claimed_by: 2026-10-27-forge-session
+    claimed_at: '2026-10-27T02:10:00Z'
+    note: |-
+      Silas 2026-10-27: "next we need support for cthulhuquarium and the ruler is hooked." Studio
+      adapters over each game's authored content with art paths and prompts, plans from their design
+      briefs, ledger and gallery entries.
 

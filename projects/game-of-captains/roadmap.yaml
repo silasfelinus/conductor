@@ -227,7 +227,7 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Replace Warp display identity with Space Couch across app and Project row"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20261026T214900Z-space-couch-t013-q71
     claimed_at: '2026-10-26T21:49:00Z'
@@ -242,6 +242,8 @@ tasks:
       Merged kind_robots #4188 as 0f9c4843 after all 22 checks green. Visible This Means Warp title, full-screen page, Play tab, home highlight and browser title now renamed; old route and save keys preserved. The existing Kind Robots Project database title field was not updated or verified in production (KR_API_TOKEN unavailable). This last metadata/API verification remains to be done under t-013. No further frontend rename required. Production self-hosted deploy has not been verified.
 
       Space Couch user-directed renaming and couch-vessel gameplay shipped to kind_robots PR #4248, plus Conductor canon and Krea2/Arthemy art requests. Preserve game-of-captains routes and saves. Project database title and painted ArtJobs still unverified; mark incomplete rather than falsely done.
+
+      DONE 2026-10-26 PT: kind_robots #4248 merged 2026-10-26T23:35Z (Space Couch identity, share preview and covers from painted art). Production Project 2159 (conductorSlug game-of-captains) read "space-couch"; set to "Space Couch" through PATCH /api/projects/2159 and read back. Painted ArtJobs are tracked by t-008 and the RUNTIME-BEATS round, not this rename.
     updated: '2026-10-26T22:00:00Z'
 
   - id: t-014
@@ -291,6 +293,37 @@ tasks:
       adds one epilogue line per crew member, not separate endings. Forge plan endingVersions
       per-hero with followerEpilogues (kind_robots#4255). Seeded traces in t-010 must cover every
       captain version.
+
+  - id: t-018
+    milestone: m3
+    title: "An interstitial adventure for every crew trio (220 trios x 3 steps)"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: >-
+      Silas 2026-10-27: "there are 220 different combinations of 3 crew members with 12 options.
+      that means each crew combo can get ... an interstitial unique multiple step adventure ... this
+      is an adventure across an insane universe, and we're just along for the ride." Each trio gets
+      its own three-step adventure between the main beats (660 scenes), written dry, with authored
+      art prompts. Forge plan partyAdventureSteps 3 (kind_robots #4272).
+
+  - id: t-019
+    milestone: m3
+    title: "Endings of their own: two per crew trio (440) and three per galactic boss (24)"
+    status: waiting
+    depends_on: t-016
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: >-
+      Silas 2026-10-27: "each crew combo can get 2 unique endings ... even just the endings for each
+      galactic boss ... we should just have more interesting things than four endings planned
+      anyway." 440 trio endings and 24 boss endings, each written and painted, on top of the sixteen
+      per-captain endings (t-016). Forge plan partyEndings 2, villainEndings 3 (kind_robots #4272).
 
   - id: t-017
     milestone: m2
