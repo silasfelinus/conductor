@@ -643,10 +643,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: review
-    owner: worker
-    claimed_by: 20261027T104702550Z-memory-dungeon-t-034-bff3d3
-    claimed_at: '2026-10-27T10:47:14.952Z'
+    status: ready
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -666,7 +663,9 @@ tasks:
       2026-10-27 PT: Kind Robots PR #4295 merged at 4174ea457d8e459f105515326b977ffc4dfbd625 after all 12 workflows and 17 exact-head checks passed at 3bd0d47a893b8743f8fead645857ebbadf0b1660 (Contract Tests #40483868599, TypeScript #40483868557, formatting #40483868514). Malformed nested Dark Briar checkpoint decks now reject without replacing a valid expedition; mirrored autosave recovery no longer throws on null card entries. Master issue #4136 comment 6438815284 records the reproduction and evidence. Initial formatting failure corrected before full green. No new ArtJobs or deployment. Return READY for browser-timed save/load and flip testing, device visual QA, remaining art integration and final console acceptance; not For Human Gate.
 
       Scoped checkpoint integrity increment: original Briar map and combat card arrays are now structurally checked before a manual slot can replace active progress. Regression cases cover damaged decks, slot isolation and an interrupted first flip. Kind Robots branch awaits PR exact-head CI. Browser/device QA and art acceptance remain outstanding; not For Human Gate.
-    updated: '2026-10-27T10:47:49.695Z'
+
+      2026-10-27 PT: Kind Robots PR #4296 merged at e1f842532b2c209743c6fd9c85c028f7516d965c after all 12 exact-head GitHub Actions workflows passed on 1de0fb3f71a414475b57f36be76a0a80347d0983. Original Briar map and combat checkpoint cards now reject malformed nested records before replacing a valid expedition; tests cover corrupted decks, independent slot recovery and valid interrupted flips. Master issue #4136 comment 6440085918 records evidence. No new ArtJobs or deployment. Return READY for browser-timed save/load, rendered device QA, remaining art integration and final console acceptance. Keep active, not For Human Gate.
+    updated: '2026-10-27T10:53:27.023Z'
 
   - id: t-035
     milestone: m3
