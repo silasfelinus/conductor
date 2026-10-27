@@ -1,0 +1,274 @@
+# Memory Dungeon art, round 2 (memory-dungeon t-039, Playbook Forge upgrade, 2026-10-27).
+# Purpose: queue the 23 pictures that the Forge round-1 PRs added to the game with no ledger entry:
+#   12 House epilogues (kind_robots PR #4331, utils/memoryDungeon/houseEpilogues.ts, house/epilogues/<id>.webp);
+#    3 House guardian combat plates (PR #4333, utils/memoryDungeon/rooms.ts COMBAT_ROOMS hearth-guard, collector
+#      and twinned-guard; the Forge names them monsters/<enemy-name>.webp);
+#    8 World One side-quest plates (PR #4335, utils/memoryDungeon/briarQuests.ts, briar/quests/<id>.webp).
+# Prompts are copied word for word from each source's artPrompt, which already ends with the game's style line,
+#   so the single Krea 2 lane (the game's artLanes[0]) carries no suffix. The Index Collector prompt is the
+#   literal rewrite landing in kind_robots with the round-2 wrapper cleanup ("in armor of overlapping stiff paper
+#   sheets" in place of a simile).
+# `asset` is the runtime path under kind_robots public/ (export with scripts/export_round_art.py).
+# auto_submit: true -> scripts/sweep_art_ledgers.py submits and refreshes this ledger on every Auto Art Generate run.
+# Queued is not rendered; rendered is not shipped. Generated art is pre-approved (no human gate).
+round: memory-dungeon-art-2
+project_slug: memory-dungeon
+designer: Memory Dungeon art bay
+is_public: false
+is_mature: false
+cast_loras: false
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2 (literal prose, style line carried by the source prompt)
+  engine: krea2
+  prompt: prose
+subjects:
+- key: md-epilogue-release-community
+  entity: house-epilogue
+  title: The Jars Go Home by Cart
+  asset: images/memory-dungeon/house/epilogues/release-community
+  size: 1344x768
+  seed: 87401
+  prompt_prose: A wooden handcart loaded with glowing glass jars stands at a cottage door on a muddy village lane.
+    Oren, a very tall broad man in a rough brown cloth executioner hood with two eyeholes and a leather apron of
+    pouches reads from a long ledger while a grey-haired woman takes a jar from the cart in both hands. Two forest
+    guards in bark armor push the cart. Behind them, a mill wall with a lit lamp beside a shelf of jars. Morning
+    light. Wide shot. Hand-painted gouache and ink illustration, warm candlelight and deep green shadows.
+- key: md-epilogue-release-bonds
+  entity: house-epilogue
+  title: Tea on the Landing
+  asset: images/memory-dungeon/house/epilogues/release-bonds
+  size: 1344x768
+  seed: 87402
+  prompt_prose: On a lantern-lit stair landing, Scylla, a stout broad-shouldered woman with light brown skin, a
+    chestnut braid and a small silver crown, in a navy travel coat, holds out a small glowing glass jar to Char,
+    her twin with the same broad face, deep brown skin, a high black braid and black velvet and lace, who holds
+    its lid in one hand and laughs. Oren, a very tall broad man in a rough brown cloth executioner hood with two
+    eyeholes and a leather apron of pouches, pours tea from a dented pot beside them. Through a window behind, villagers
+    argue in the lane below. Medium shot. Hand-painted gouache and ink illustration, warm candlelight and deep green
+    shadows.
+- key: md-epilogue-release-obligation
+  entity: house-epilogue
+  title: What the Chime Costs
+  asset: images/memory-dungeon/house/epilogues/release-obligation
+  size: 1344x768
+  seed: 87403
+  prompt_prose: an androgynous fey traveller with long pointed ears, short silver hair and a dark green cloak stands
+    at a forest crossroads holding a small golden bell. Around the traveller, a stooped grey-bearded merchant in
+    a moss-green coat, a thin figure in layered paper armor at a roll-top desk and two forest guards in bark armor
+    each hold out a paper slip. Late afternoon light. Wide shot. Hand-painted gouache and ink illustration, warm
+    candlelight and deep green shadows.
+- key: md-epilogue-release-honesty
+  entity: house-epilogue
+  title: Every Jar Opened
+  asset: images/memory-dungeon/house/epilogues/release-honesty
+  size: 1344x768
+  seed: 87404
+  prompt_prose: In a village meeting hall with plain wooden benches, villagers hold open glass jars that glow faintly.
+    An old man in the front row stares at his jar with wet eyes, while a woman beside him turns her back on a cloaked
+    fey traveller standing by the door. A grey wolf in a leather harness sits at the traveller's feet. Cold daylight
+    from high windows. Wide shot. Hand-painted gouache and ink illustration, warm candlelight and deep green shadows.
+- key: md-epilogue-renew-community
+  entity: house-epilogue
+  title: The Commons Has a Rota
+  asset: images/memory-dungeon/house/epilogues/renew-community
+  size: 1344x768
+  seed: 87405
+  prompt_prose: Villagers sit on benches around the rootwood hearth of a manor, passing a ledger from hand to hand.
+    the Rootbound Warden, a towering guardian of knotted oak roots and brass keys with a carved wooden mask for
+    a face, stands by the open front door holding a broom, waiting its turn. A child hands a cup of soup to a muddy
+    stranger in the doorway. Warm firelight. Wide shot. Hand-painted gouache and ink illustration, warm candlelight
+    and deep green shadows.
+- key: md-epilogue-renew-bonds
+  entity: house-epilogue
+  title: A Key on Every Hook
+  asset: images/memory-dungeon/house/epilogues/renew-bonds
+  size: 1344x768
+  seed: 87406
+  prompt_prose: A row of four brass keys hangs on hooks along a lantern-lit stair landing, the fourth hook empty.
+    Oren, a very tall broad man in a rough brown cloth executioner hood with two eyeholes and a leather apron of
+    pouches, hangs the third key. Scylla, a stout broad-shouldered woman with light brown skin, a chestnut braid
+    and a small silver crown, in a navy travel coat, writes in a ledger at a small desk, and Char, her twin with
+    the same broad face, deep brown skin, a high black braid and black velvet and lace, leans over her shoulder
+    pointing at a page. Warm lamplight. Medium-wide shot. Hand-painted gouache and ink illustration, warm candlelight
+    and deep green shadows.
+- key: md-epilogue-renew-obligation
+  entity: house-epilogue
+  title: Steward by Contract
+  asset: images/memory-dungeon/house/epilogues/renew-obligation
+  size: 1344x768
+  seed: 87407
+  prompt_prose: At a long oak table in a root-grown manor, an androgynous fey traveller with long pointed ears,
+    short silver hair and a dark green cloak sits in a tall chair at the head while the Rootbound Warden, a towering
+    guardian of knotted oak roots and brass keys with a carved wooden mask for a face, sets a stack of bound ledgers
+    in front of them. Down both sides of the table, empty chairs each hold a folded paper slip. Candlelight. Medium-wide
+    shot. Hand-painted gouache and ink illustration, warm candlelight and deep green shadows.
+- key: md-epilogue-renew-honesty
+  entity: house-epilogue
+  title: Minutes Kept in Plain Speech
+  asset: images/memory-dungeon/house/epilogues/renew-honesty
+  size: 1344x768
+  seed: 87408
+  prompt_prose: In a dim manor hall, elderly villagers stand in a half-circle, some with arms crossed and one woman
+    with her hand over her mouth. A young clerk at a lectern writes in an open ledger. the Rootbound Warden, a towering
+    guardian of knotted oak roots and brass keys with a carved wooden mask for a face, kneels at the back with its
+    head bowed. Grey morning light through tall windows. Wide shot. Hand-painted gouache and ink illustration, warm
+    candlelight and deep green shadows.
+- key: md-epilogue-break-community
+  entity: house-epilogue
+  title: The Village Builds a Smaller House
+  asset: images/memory-dungeon/house/epilogues/break-community
+  size: 1344x768
+  seed: 87409
+  prompt_prose: Villagers raise the timber frame of a small hall beside a water mill at dusk, passing beams hand
+    to hand. In the background on the hill, a huge dark manor of roots leans at a crooked angle with lights moving
+    in its windows. A grey wolf and two guards in bark armor stand watch by a bonfire. Wide shot. Hand-painted gouache
+    and ink illustration, warm candlelight and deep green shadows.
+- key: md-epilogue-break-bonds
+  entity: house-epilogue
+  title: Four Travellers and a Loose House
+  asset: images/memory-dungeon/house/epilogues/break-bonds
+  size: 1344x768
+  seed: 87410
+  prompt_prose: 'Four travellers walk away down a forest road at dawn: Oren, a very tall broad man in a rough brown
+    cloth executioner hood with two eyeholes and a leather apron of pouches, Scylla, a stout broad-shouldered woman
+    with light brown skin, a chestnut braid and a small silver crown, in a navy travel coat, Char, her twin with
+    the same broad face, deep brown skin, a high black braid and black velvet and lace, and an androgynous fey traveller
+    with long pointed ears, short silver hair and a dark green cloak. Char ties a small cord knot around the traveller''s
+    wrist as they walk. Far behind them on a hill, a dark manor of roots leans against the sky. Wide shot from behind.
+    Hand-painted gouache and ink illustration, warm candlelight and deep green shadows.'
+- key: md-epilogue-break-obligation
+  entity: house-epilogue
+  title: The Hammer Still Owed
+  asset: images/memory-dungeon/house/epilogues/break-obligation
+  size: 1344x768
+  seed: 87411
+  prompt_prose: On a forest road, an androgynous fey traveller with long pointed ears, short silver hair and a dark
+    green cloak walks with a rune hammer over one shoulder. Behind follow a small green-skinned goblin courier writing
+    in a notebook, two forest guards in bark armor, and the Rootbound Warden, a towering guardian of knotted oak
+    roots and brass keys with a carved wooden mask for a face, its roots dragging loose soil. Overcast afternoon
+    light. Wide shot. Hand-painted gouache and ink illustration, warm candlelight and deep green shadows.
+- key: md-epilogue-break-honesty
+  entity: house-epilogue
+  title: Nothing Left to Hide Behind
+  asset: images/memory-dungeon/house/epilogues/break-honesty
+  size: 1344x768
+  seed: 87412
+  prompt_prose: In the ruins of a rootwood hearth, glowing fragments of glass jars drift up through a cracked manor
+    roof. an androgynous fey traveller with long pointed ears, short silver hair and a dark green cloak stands among
+    angry villagers, open hands raised, answering an old woman who points at the broken hearth. A grey wolf in a
+    leather harness sits beside the traveller. Grey dawn light. Wide shot. Hand-painted gouache and ink illustration,
+    warm candlelight and deep green shadows.
+- key: md-monster-hearth-guard
+  entity: monster
+  title: Hearth-Guard
+  asset: images/memory-dungeon/monsters/hearth-guard
+  size: 1344x768
+  seed: 87413
+  prompt_prose: A man-sized defender shaped from glowing coal stands in front of a stone manor hearth in a wide
+    fighting stance, fists raised. Three orange markings on its chest glow in a row, the third brightest. Sparks
+    drift up around it. Firelight from below, deep green shadows in the room. Low-angle medium shot. Hand-painted
+    gouache and ink illustration, warm candlelight and deep green shadows.
+- key: md-monster-index-collector
+  entity: monster
+  title: Index Collector
+  asset: images/memory-dungeon/monsters/index-collector
+  size: 1344x768
+  seed: 87414
+  prompt_prose: A tall thin figure in armor of overlapping stiff paper sheets and an ink-stained black coat sweeps
+    one paper gauntlet across a stone archive hall. A grid of glowing pale squares hangs in the air before it, two
+    columns lit brighter. Loose paper slips swirl around its feet. Cold blue light. Low-angle wide shot. Hand-painted
+    gouache and ink illustration, warm candlelight and deep green shadows.
+- key: md-monster-twinned-guard
+  entity: monster
+  title: Twinned Guard
+  asset: images/memory-dungeon/monsters/twinned-guard
+  size: 1344x768
+  seed: 87415
+  prompt_prose: Two identical guardians in armor of rootwood and brass stand back to back in a stone hall, each
+    holding a tall shield across the other. Between them, pairs of glowing matching tiles hover in the air. One
+    raises a heavy mace. Cold light from a high window. Medium-wide shot. Hand-painted gouache and ink illustration,
+    warm candlelight and deep green shadows.
+- key: md-quest-every-letter-delivered
+  entity: briar-quest
+  title: Every Letter Delivered
+  asset: images/memory-dungeon/briar/quests/every-letter-delivered
+  size: 1344x768
+  seed: 87416
+  prompt_prose: 'Three couriers stand at a lantern-lit forest crossroads at night: a young courier in a dark cloak,
+    an adult courier in a red hooded cloak and a small green-skinned goblin in a patched brown coat. Each holds
+    out a sealed envelope toward a wooden post where a brass lantern hangs from a hook. Warm lantern light, cold
+    blue moonlight. Wide shot. Hand-painted gouache and ink illustration in muted moss green, ember orange and slate
+    blue.'
+- key: md-quest-the-patrols-defense
+  entity: briar-quest
+  title: The Patrol’s Defense
+  asset: images/memory-dungeon/briar/quests/the-patrols-defense
+  size: 1344x768
+  seed: 87417
+  prompt_prose: A large grey she-wolf with a scarred muzzle and a leather harness of supply pouches sits upright
+    in a stone manor hall beside a lectern with an open ledger. Villagers in winter coats stand across the hall
+    holding folded wool blankets. Lantern light from the left. Medium-wide shot. Hand-painted gouache and ink illustration
+    in muted moss green, ember orange and slate blue.
+- key: md-quest-orens-emergency-manifest
+  entity: briar-quest
+  title: Oren’s Emergency Manifest
+  asset: images/memory-dungeon/briar/quests/orens-emergency-manifest
+  size: 1344x768
+  seed: 87418
+  prompt_prose: A very tall broad man in a rough brown cloth executioner hood with two eyeholes sits on a crate
+    in a lantern-lit manor cellar, writing in a large open ledger balanced on his knee. Bright ribbons are tied
+    to the stair rail behind him, and a water cask stands by the steps. Warm lamplight. Medium shot. Hand-painted
+    gouache and ink illustration in muted moss green, ember orange and slate blue.
+- key: md-quest-different-waters-same-face
+  entity: briar-quest
+  title: Different Waters, Same Face
+  asset: images/memory-dungeon/briar/quests/different-waters-same-face
+  size: 1344x768
+  seed: 87419
+  prompt_prose: Two stout broad-shouldered women with the same face sit side by side on a cushioned bench on a lantern-lit
+    stair landing, trading teacups. One has light brown skin, a chestnut braid and a small silver crown with a navy
+    travel coat. The other has deep brown skin, a high black braid and black velvet and lace with silver rings.
+    Warm lamplight. Medium shot. Hand-painted gouache and ink illustration in muted moss green, ember orange and
+    slate blue.
+- key: md-quest-mosswicks-true-account
+  entity: briar-quest
+  title: Mosswick’s True Account
+  asset: images/memory-dungeon/briar/quests/mosswicks-true-account
+  size: 1344x768
+  seed: 87420
+  prompt_prose: A stooped old man with a long grey braided beard and a patched moss-green coat stands behind a forest
+    stall of brass lanterns, writing on an open black ledger with a quill. A traveller’s hand lays a thin carbon-paper
+    sheet on the ledger beside him. Warm lantern light, dark blue evening forest. Medium close-up. Hand-painted
+    gouache and ink illustration in muted moss green, ember orange and slate blue.
+- key: md-quest-an-apology-for-the-door
+  entity: briar-quest
+  title: An Apology for the Door
+  asset: images/memory-dungeon/briar/quests/an-apology-for-the-door
+  size: 1344x768
+  seed: 87421
+  prompt_prose: A tall knight in dented brass plate armor kneels before the root-grown front door of a dark manor,
+    holding out a sealed envelope in both gauntlets. A knee-high moss-covered sprite with a leaf cap watches from
+    the porch rail. Early morning mist. Medium-wide shot. Hand-painted gouache and ink illustration in muted moss
+    green, ember orange and slate blue.
+- key: md-quest-feed-the-orchard-workers
+  entity: briar-quest
+  title: Feed the Orchard Workers
+  asset: images/memory-dungeon/briar/quests/feed-the-orchard-workers
+  size: 1344x768
+  seed: 87422
+  prompt_prose: Orchard pickers in patched work clothes sit at a long trestle table under apple trees at dusk, eating
+    bread and stew from wooden bowls. A weary middle-aged cook with rolled sleeves ladles stew from an iron pot.
+    A grey-haired orchard keeper sets down a basket of red apples. Warm lantern light. Wide shot. Hand-painted gouache
+    and ink illustration in muted moss green, ember orange and slate blue.
+- key: md-quest-names-on-the-lintel
+  entity: briar-quest
+  title: Names on the Lintel
+  asset: images/memory-dungeon/briar/quests/names-on-the-lintel
+  size: 1344x768
+  seed: 87423
+  prompt_prose: On the crooked wooden porch of a dark manor grown from roots, a cloaked fey traveller with long
+    pointed ears reads from an open notebook to a crowd of villagers on the steps. Two elderly women in shawls raise
+    their hands. The heavy carved lintel above the door is covered in small notches. Late afternoon light. Wide
+    shot. Hand-painted gouache and ink illustration in muted moss green, ember orange and slate blue.
