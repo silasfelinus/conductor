@@ -14,7 +14,8 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
-from datetime import datetime, timezone
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 import json
 from pathlib import Path
@@ -112,7 +113,7 @@ def assess_media_headers(headers: Any, created_at: object) -> str:
         modified = parsedate_to_datetime(str(headers.get("Last-Modified") or ""))
         if created.tzinfo is None or modified.tzinfo is None:
             return "media_unproven"
-        if modified.astimezone(timezone.utc) < created.astimezone(timezone.utc):
+        if modified.astimezone(timezone.utc) + timedelta(seconds=1) < created.astimezone(timezone.utc):
             return "media_stale"
     except (ValueError, TypeError, IndexError):
         return "media_unproven"
@@ -150,7 +151,7 @@ def audit_jobs(
         if job_id > 0:
             by_id[job_id] = job
     results: list[dict[str, Any]] = []
-    counts: Counter[str] = Counter()
+    probes: list[tuple[int, str, object]] = []
     for receipt in receipts:
         job = by_id.get(receipt["jobId"])
         status = "job_missing"
@@ -168,15 +169,26 @@ def audit_jobs(
                 if state in ("PENDING", "RUNNING", "FAILED", "CANCELLED"):
                     status = state.lower()
                 elif state == "DONE":
-                    status = (
-                        media_probe(receipt["imagePath"], job.get("createdAt"))
-                        if art_image_id
-                        else "done_without_art_image"
-                    )
+                    status = "done_without_art_image"
+                    if art_image_id:
+                        status = "media_unreachable"
+                        probes.append((len(results), receipt["imagePath"], job.get("createdAt")))
                 else:
                     status = "unknown_job_state"
-        counts[status] += 1
         results.append({**receipt, "artImageId": art_image_id, "status": status})
+    # A stalled media host must not make 752 serial 12-second HEAD requests.
+    # Keep the queue read-only and bound concurrent probes to a small pool.
+    with ThreadPoolExecutor(max_workers=12) as pool:
+        futures = {
+            pool.submit(media_probe, path, created): index
+            for index, path, created in probes
+        }
+        for future in as_completed(futures):
+            try:
+                results[futures[future]]["status"] = future.result()
+            except Exception:  # Network/probe failure is not delivery proof.
+                results[futures[future]]["status"] = "media_unreachable"
+    counts = Counter(row["status"] for row in results)
     return {
         "total": len(receipts),
         "counts": dict(sorted(counts.items())),
