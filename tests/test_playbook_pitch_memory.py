@@ -36,6 +36,19 @@ class EvolvingPitchMemoryTest(unittest.TestCase):
         docket = copy.deepcopy(self.root)
         docket["date"] = "2026-10-27"
         expanded, fresh, fused = docket["pitches"]
+        # From 2026-10-27 every pitch carries authored design prompts.
+        for pitch in docket["pitches"]:
+            pitch["designs"] = [
+                {
+                    "kind": kind,
+                    "title": f"{pitch['title']}: {kind}",
+                    "prompt": (
+                        "A wide painted scene of a lantern-lit harbour at dusk, "
+                        f"centred on the {kind}, warm amber light and deep blue shadow."
+                    ),
+                }
+                for kind in ("other", "follower", "villain", "place")
+            ]
 
         expanded["mode"] = "expand"
         expanded["parents"] = ["2026-10-26/the-bumbledown-atlas"]
