@@ -367,7 +367,7 @@ tasks:
   - id: t-022
     milestone: m4
     title: "Gestation: the daily playbook pitches growing in the Forge, with Silas's notes for the next development"
-    status: review
+    status: done
     depends_on: t-021
     owner: null
     passes: 0
@@ -377,5 +377,24 @@ tasks:
       Silas 2026-10-26: "have them in a gestational area, and include a place for me to leave
       comments for the next development." The Forge reads the dated dockets, MEMORY.yaml and
       SILAS-NOTES.yaml and writes notes back (conductor #6704 merged; the brief answers open notes
-      first). "Forge this" turns a pitch into a draft. kind_robots #4264.
+      first). "Forge this" turns a pitch into a draft. DONE 2026-10-26 PT: kind_robots #4264 merged
+      as 64d0bf0.
+
+  - id: t-023
+    milestone: m4
+    title: "The Forge as an art-forward command center: design boards and the Catalogue"
+    status: review
+    depends_on: t-022
+    owner: null
+    passes: 0
+    approved_by_human: true
+    stakes: reversible
+    note: |-
+      Silas 2026-10-26: "I should see designs or text prompts for all pitches, or have the ability
+      to add/edit, etc new designs ... more like an interface than a museum ... facets, characters,
+      locations, rewards, scenarios, viewable as a catalogue for brainstorming." Design boards (image,
+      else prompt) with add/edit and render through /api/art/enqueue; a Catalogue of Facets,
+      Characters, Locations, Scenarios, Rewards and game art with a brainstorm tray that starts a
+      playbook or adds designs to the open game; pitches carry designs (conductor #6708 requires
+      them from 2026-10-27). kind_robots #4265.
 
