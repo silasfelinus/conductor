@@ -165,17 +165,16 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Deliver Space Couch painted red-sofa ship, pocket-room, shield, crew and world art"
-    status: review
-    owner: worker
-    claimed_by: 2026-10-27T235000Z-space-couch-t008-c83a7
-    claimed_at: '2026-10-27T23:50:00Z'
-    updated: '2026-10-27T23:56:00Z'
+    status: ready
+    updated: '2026-10-27T23:59:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Deliver branded Space Couch project icon/card/hero, detailed red couch/force bubble/pocket room/starmap, original personnel and emotional portraits, Vox/Serendipity/Fluke continuity plates, twelve worlds and eight antagonist identities; verify final URLs, ArtJobs and render provenance rather than SVG/placeholders.
 
       Canonical cast portrait redesign round submitted for code/art review. 66 new Krea2 requests in CAST-REDESIGN-ROUND-2.yaml, with a Kind Robots v2 art-slot preference and legacy fallback. This is only the first art tranche: rendered delivery, runtime exports, ship/world/outcome coverage and visual review remain open.
+
+      2026-10-27 PT cast redesign tranche merged: Conductor PR #6759 (9f39f1e849164660dedc42108cc277f029755fb8), app PR #4353 (d1ed41f468944a765edb58022f048ea14b6bdaff). All 4 Conductor and 17 Kind Robots current-head workflow groups passed. The 66 Krea2 canonical portraits (6 captains, 12 playable plus 4 future crew, three expressions each) are authored at CAST-REDESIGN-ROUND-2.yaml with auto_submit, versioned portraits/v2 keys and legacy fallback. Post-merge audit found 0/66 ArtJob IDs, 0/66 DONE and 0 exported v2 assets at that time. Continue via automatic art sweep, reconcile actual ArtJob IDs, inspect render quality, export .webp and update app generated art manifest, validate crops at phone/tablet/desktop, then finish remaining title/icon, couch room, 12 worlds, antagonists and story consequence art. No art-complete or human design gate.
   - id: t-009
     milestone: m3
     title: "Deliver unique mission outcome, conversation and ending illustration coverage"
