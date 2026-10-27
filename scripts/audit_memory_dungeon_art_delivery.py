@@ -104,11 +104,22 @@ def job_identity(job: dict[str, Any]) -> tuple[str, str, str] | None:
     )
 
 
-def assess_media_headers(headers: Any, created_at: object) -> str:
+def assess_media_headers(headers: Any, created_at: object, path: str = "") -> str:
     """A live image needs image MIME and a timestamp no older than its ArtJob."""
     mime = str(headers.get("Content-Type") or "").split(";", 1)[0].strip().lower()
     if not mime.startswith("image/"):
         return "media_not_image"
+    expected_mime = {".webp": "image/webp", ".png": "image/png",
+                     ".jpg": "image/jpeg", ".jpeg": "image/jpeg"}.get(Path(path).suffix)
+    if expected_mime and mime != expected_mime:
+        return "media_wrong_format"
+    length = headers.get("Content-Length")
+    if length is not None:
+        try:
+            if int(length) <= 0:
+                return "media_empty"
+        except (ValueError, TypeError):
+            return "media_unproven"
     try:
         created = datetime.fromisoformat(str(created_at).replace("Z", "+00:00"))
         modified = parsedate_to_datetime(str(headers.get("Last-Modified") or ""))
@@ -133,7 +144,7 @@ def probe_media(path: str, created_at: object) -> str:
         with urllib.request.urlopen(request, timeout=12) as response:
             if not 200 <= response.status < 300:
                 return "media_unreachable"
-            return assess_media_headers(response.headers, created_at)
+            return assess_media_headers(response.headers, created_at, path)
     except (urllib.error.URLError, TimeoutError, OSError):
         return "media_unreachable"
 
