@@ -643,7 +643,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: review
+    status: ready
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -651,10 +651,9 @@ tasks:
       Play all four reveal waves through the 64 fixed-location forest and 36-room House while building a cinematic, responsive, art-led single-screen front end. Preserve Classic and existing saves. Add explicit new/save/load slots with guarded overwrite, first-play intro, accessible dialogue portrait stage, non-generic backgrounds, scene-to-fight transitions and stage navigation. Validate refresh during card turns, battles and branching outcomes. User must experience game screens, never nested webapp panels.
 
       Scoped interrupted-flip reload repair: recover one face-up card or settle a completed matching pair from a valid saved animation frame; close mismatches and reject malformed exposed faces. Three-file Kind Robots PR pending CI. World One save slots, visual acceptance and full campaign remain open.
-    owner: worker
-    claimed_by: 20261027T075207Z-memory-dungeon-t-034-2xjkvy
-    claimed_at: '2026-10-27T07:52:07.591Z'
-    updated: '2026-10-27T07:53:42.331Z'
+
+      2026-10-27 PT: Kind Robots PR #4293 merged at 01439146cb408fce151608be47ca271e9a0f6e03 after all 13 workflows and 18 exact-head checks passed (head 18ec04636cec662bff43afa085aa24f54400e09f). Valid single map flips and already successful two-card reveals now survive browser reload; mismatches and malformed saves reset safely, without duplicate attempts. Tests cover replay, corrupted faces and wave completion. Master issue #4136 comment 6436707958 has evidence. No ArtJobs or deployment. Return READY: guarded save/load slots, browser animation/device tests and visual art acceptance remain. Not For Human Gate.
+    updated: '2026-10-27T08:00:14.923Z'
 
   - id: t-035
     milestone: m3
