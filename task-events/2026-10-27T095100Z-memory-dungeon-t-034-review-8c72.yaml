@@ -1,0 +1,14 @@
+version: 1
+project: memory-dungeon
+task: t-034
+operation: review
+owner: worker
+session: 2026-10-27T094554Z-memory-dungeon-t-034-8c72
+updated: '2026-10-27T09:51:00Z'
+note: >-
+  Scoped checkpoint corruption repair: malformed nested Dark Briar map-card
+  entries now invalidate the manual checkpoint, while the mirrored autosave
+  restorer safely discards invalid cards rather than throwing. Regression tests
+  cover isolated slot rejection, preservation of adjacent slots, and safe
+  autosave recovery. Focused Kind Robots PR and exact-head CI to follow;
+  console/browser/art acceptance remain open.
