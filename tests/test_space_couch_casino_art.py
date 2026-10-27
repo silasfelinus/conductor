@@ -6,7 +6,7 @@ import unittest
 from scripts.submit_space_couch_casinos import (
     EXPECTED, parse_ledger, reconcile, normalized,
 )
-from scripts.enqueue_art_requests import compose_prompt
+from scripts.enqueue_art_requests import compose_prompt, contract_rules, iter_cells
 
 
 class CasinoArtManifestTests(unittest.TestCase):
@@ -30,6 +30,15 @@ class CasinoArtManifestTests(unittest.TestCase):
             self.assertIn("scarlet velvet couch", prompt.lower())
         self.assertTrue(any("tex-mex" in prompt.lower() for prompt in prompts))
         self.assertTrue(any("arcade sports bar" in prompt.lower() for prompt in prompts))
+
+    def test_every_prompt_passes_submitter_contract(self):
+        _, data = parse_ledger()
+        invalid = [
+            (data["subjects"][i]["key"], broken)
+            for i, broken in enumerate(contract_rules(list(iter_cells(data))))
+            if broken
+        ]
+        self.assertEqual(invalid, [], "All twenty requests must pass the real submitter rules")
 
     def test_reconcile_exact_prompt_and_never_repost(self):
         _, data = parse_ledger()
