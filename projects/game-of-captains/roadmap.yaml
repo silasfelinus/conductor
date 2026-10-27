@@ -295,14 +295,15 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Ship the consent-first alien fourple and branching romance prototype"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       User-directed adult romance: three authored scenes for a four-person relationship with captain, Vela, Taal and Omi, individual consent, boundaries, earned commitment, principled rejection and breakups; additional individual Rue and Tess relationship routes that may fail. Save choices under the existing voyage key, without stat penalties for romantic refusal or forced relationships. Add visual bounded-screen story encounters and deterministic tests for all routes, rejection, old-save restoration and earned epilogues. Isolate a pure romance module from the concurrently claimed core-voyage engine t-003. Additional rendered art remains t-008. See content/RELATIONSHIPS-BIBLE.md.
 
       Authored and wired an optional three-chapter four-person alien romance with Vela, Taal and Omi, plus conditional Rue/Tess romance arcs, separate consent, pressure rejection and amicable breakups. Saves store relationship decisions on the existing VoyageRun object and original local key; finite ending epilogues respect the primary galactic finale. Added consent, save and seeded tests. Kind Robots implementation PR opening after this review event.
+
+      Merged complete optional first-voyage romance slice in Kind Robots PR #4268, commit f21510f6ad61ec5094b69f278599e5a03ed7b8c5. It adds the Three-scene Four-Cushion Accord among the captain, Vela, Taal and Omi, with independent consent, ethical rejection, amicable breakup and a committed four-person path. Optional Rue and Tess romantic stories have separate doctrine restrictions and non-happy branches. Pure story code, bounded-screen debrief dialogue with portrait fallbacks, saved relationship decisions and distinct final epilogues preserve the existing game-of-captains-voyage-v1 local storage key, mission stats and 3-officer roster. All 16/16 GitHub Actions workflows completed green on final PR head de17669cd28bd9ead15150d89ce6a23c6e8bb254, including game seeded tests, TypeScript, Prettier and contract shards. Original design brief and ROMANCE-BIBLE merged through Conductor #6711, commit c141f538a4c0f2140f49d5b012727f5eae7f96b7. Rendered romance illustrations, wider campaign consequences and real self-hosted deployment remain later art/quality tasks; no ArtJob IDs or production release verification claimed.
     claimed_by: 2026-10-27T012900Z-space-couch-t017-8f74
     claimed_at: '2026-10-27T01:29:00Z'
-    updated: '2026-10-27T01:42:00Z'
+    updated: '2026-10-27T01:49:00Z'
