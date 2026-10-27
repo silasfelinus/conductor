@@ -1035,11 +1035,22 @@ tasks:
   - id: t-061
     milestone: m5
     title: 'Playbook Forge upgrade: close the last encounter and quest gaps (116/120 encounters, 97/100 quests)'
-    status: claimed
+    status: done
     owner: worker
     stakes: reversible
     passes: 0
-    note: 'Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: every beat is painted or has art; the plan is short four encounters and three quests.'
-    updated: '2026-10-27T18:55:46Z'
+    note: >-
+      Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: every beat is painted or has art; the plan is short four encounters and three quests.
+
+      DONE 2026-10-27 PT: kind_robots #4322 merged as ea6455f after 20/20 checks. Four new
+      audiences, each with a probe beat and a callback flag: Day 12 Brown Water, Day 28 The
+      Post Comes Back, Day 31 Next Year in a Sack, Day 36 Over the Wall. Three new quests:
+      Thirty-One Feet Down, Ninety-One Letters, The Carts in the Cut. Forge: encounters
+      116->120 (plan 120), quests 97->101 (plan 100). Adapter now counts quests posted inside
+      audience beats and gives follower speakers follower art. The seven petitioners with
+      rendered but unexported plates carry literal prompts (artPromptsComplete). The verifier
+      now audits every node.
+    updated: '2026-10-27T19:38:15Z'
     claimed_by: 2026-10-27T185546Z-forge-eod
     claimed_at: '2026-10-27T18:55:46Z'
+    implementation_pr: 'silasfelinus/kind_robots#4322'
