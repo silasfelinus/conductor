@@ -18377,3 +18377,15 @@ records:
     Test two full new-game paths with identical seed but different party and policies. Check odds using
     staffed teams because min/max clamps can hide bonuses on empty-team previews. Finish contract lint-ratchet
     and source formatting on the exact merge SHA.
+- date: '2026-10-27'
+  project: game-of-captains
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A standalone sparse checkout and dedicated submit owner avoids both large repository history
+    checkout latency and collisions with the general art sweep. Reconcile full live queue by exact prompt,
+    recover accepted IDs, and checkpoint 200 returned IDs before asserting success; art quality and provenance
+    must be assessed separately.

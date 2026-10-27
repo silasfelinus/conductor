@@ -753,39 +753,33 @@ tasks:
   - id: t-044
     milestone: m4
     title: 'Collectible printable personnel dossier with ending art, awards and run receipt'
-    status: ready
+    status: review
     depends_on: t-040
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-27T17:13:00Z'
-    note: >-
-      P2. Print/share layout includes verified ending splash and achievement
-      imagery, ending text, unlocked milestone(s), file number, actual job,
-      mutation, society, departments, tests, terminations, counts and dates.
-      Print-only styles make a useful single-page or multipage personnel
-      souvenir rather than a cropped tab. No third-party posting by default.
-      Verify print CSS, imagery fallback, dark/light and long notes.
+    updated: '2026-10-27T18:28:24Z'
+    note: |-
+      P2. Print/share layout includes verified ending splash and achievement imagery, ending text, unlocked milestone(s), file number, actual job, mutation, society, departments, tests, terminations, counts and dates. Print-only styles make a useful single-page or multipage personnel souvenir rather than a cropped tab. No third-party posting by default. Verify print CSS, imagery fallback, dark/light and long notes.
 
+      Print/PDF dossier on Kind Robots branch worker/shifting-desks-t-044-20261027T182520Z-gpt6-c5f7. Genuine RunReceipt ID, completion date, stats, ending epilogue and rendered artwork fallback, real grades, local milestone dates, and detailed departments/termination incidents only where matching live run evidence exists. Print markup Teleports to body, isolates the game shell at print time and paginates long notes; mobile print control enabled. Contract assertions added. PR CI still required; self-hosted deployment and actual physical print not verified.
+    claimed_by: 2026-10-27T18:25:20Z-shifting-desks-t044-gpt6-c5f7
+    claimed_at: '2026-10-27T18:25:20Z'
   - id: t-045
     milestone: m4
     title: 'Personnel Archive achievement cabinet: global progress, badges and replay targets'
-    status: ready
+    status: review
     depends_on: t-040
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-10-27T17:13:00Z'
-    note: >-
-      P2. Build the illustrated archive achievements wall and unify it with
-      existing Kind Robots codes (survived review, faced Board, Sub-Level Zero)
-      without double awarding account achievements. Show meaningful title,
-      flavor, image/icon, unlocked date, locked silhouettes and progress.
-      New feat codes for endings and rare achievements only after checking
-      canonical achievement registry; optional rare foil treatment and
-      replay prompts. Avoid security-sensitive client-only claims of server
-      rewards.
+    updated: '2026-10-27T18:36:27Z'
+    note: |-
+      P2. Build the illustrated archive achievements wall and unify it with existing Kind Robots codes (survived review, faced Board, Sub-Level Zero) without double awarding account achievements. Show meaningful title, flavor, image/icon, unlocked date, locked silhouettes and progress. New feat codes for endings and rare achievements only after checking canonical achievement registry; optional rare foil treatment and replay prompts. Avoid security-sensitive client-only claims of server rewards.
 
+      Implemented achievement cabinet on Kind Robots branch worker/shifting-desks-t-045-20261027T183252Z-gpt6-4b8c. Distinct personnel stamp cards use saved milestone dates/progress with rare foil, earned Employee of the Month image or honest icon fallback. Account medals derive from the canonical three achievementsForGame('shifting-desks') codes, accountStore records and optional saved artwork, with explicit catalog-unavailable and queued states; no client-side award calls or fabricated achievement dates. Added replay targets and a new review action. PR CI must pass. The print-dossier t-044 PR is separately in review.
+    claimed_by: 2026-10-27T18:32:52Z-shifting-desks-t045-gpt6-4b8c
+    claimed_at: '2026-10-27T18:32:52Z'
   - id: t-046
     milestone: m5
     title: 'Reward-layer adversarial QA across all eleven endings and screen shapes'

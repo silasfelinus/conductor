@@ -35,6 +35,8 @@ class RedshirtArtTests(unittest.TestCase):
 
     def test_recover_job_id_from_exact_prompt(self):
         _, data = submit.parse_ledger()
+        for subject in data["subjects"]:
+            subject.pop("jobs", None)
         row = data["subjects"][0]
         prompt = enq.compose_prompt(data["lanes"][0], row)
         jobs = [{
