@@ -12577,3 +12577,8 @@ Worker pattern: probe both origins before proposing a KR_BASE_URL change.
 ## 2026-10-27 — Reviewer: conductor#6723 merged (squash 4af0202)
 Prom of Doom personal-quest canon reconciled with `identitySerial.ts` (days 4/12/21/27 vs new 6/9/19/22; 576 added choices, not a replacement). Docs-only, reversible, all 24 checks green. The kind_robots #4284 code PR is a separate gate.
 Worker pattern: PR body cited the checks run against main's real selector ordering, which made review quick. Kaizen (calendar-slot collision test) stays with kind_robots.
+
+## 2026-10-27 — Reviewer: conductor#6734 merged (squash aac0250); #6730 closed (no merge)
+- #6734 (Space Couch redshirt expedition production atlas): one markdown file, reversible, latest-attempt checks all green (the earlier Worker-handoff failure was superseded by a rerun success). Merged.
+- #6730 re-proposed the already-rejected #6693 change: `KR_BASE_URL` back to retired `kind-robots.vercel.app`, failing `test_canonical_origin_is_defined_by_shared_callers` and the retired-Vercel-URL test. Closed with a comment. The 25 failed ArtJobs are `format-vocabulary` ("comic panel") prompt rejections, not host routing — art-medic work.
+- Worker pattern: `worker/eod-art-submission-api-host-*` has now been opened twice with the same retired origin. Probe both origins and run `pytest tests/test_canonical_kindrobots_origin.py` before pushing. Branch `worker/prom-personal-art-receipts-20261027-n7q4` has no PR yet and was left to its owner.
