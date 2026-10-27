@@ -72,6 +72,23 @@ DESIGNER = "dream-cycle"
 CREATION_SOURCE = os.environ.get("DREAM_CREATION_SOURCE", "AI").strip().upper() or "AI"
 PAGE_URL = KR_BASE_URL
 
+# PitchSheet.hook is VARCHAR(512) in kind_robots; an untrimmed location
+# art_direction (~620 chars) 500'd the 2026-10-22 build.
+SHEET_HOOK_MAX = 512
+
+
+def clip_to_column(text: str, limit: int = SHEET_HOOK_MAX) -> str:
+    """Fit prose into a fixed-width column, ending on a sentence when one fits."""
+    text = (text or "").strip()
+    if len(text) <= limit:
+        return text
+    head = text[:limit]
+    end = max(head.rfind(". "), head.rfind("! "), head.rfind("? "))
+    if end > limit // 2:
+        return head[: end + 1]
+    return head[: limit - 1].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+
+
 CARD_SIZE = "512x768"  # pitch-card portrait, matches the site's card asset standard
 NOTES_PLACEHOLDER = "(leave notes here"
 VALID_RARITIES = {"COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY"}
@@ -779,6 +796,8 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                                      **({"projectTarget": project_target} if project_target else {})}),
             **sheet_overrides,
         }
+        if sheet_body.get("hook"):
+            sheet_body["hook"] = clip_to_column(sheet_body["hook"])
         sheet = kr_call("POST", f"/api/sheets/by-dream/{dream['id']}", sheet_body,
                         dry_run, results, f"sheet: {dtitle}")
         if sheet:

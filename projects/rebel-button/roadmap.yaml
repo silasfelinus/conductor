@@ -1,0 +1,101 @@
+# Copy this folder to projects/<your-project>/ to add a project.
+# Default scaffold per PROJECT-CREATION.md (approved by Silas 2026-07-04):
+# three milestones — SHAPE / BUILD / POLISH & SHIP — with a NON-BLOCKING scope
+# gate. Agents build the design brief and start working immediately; scope
+# confirmation runs in parallel as a soft needs-human. Two-word slugs preferred.
+project: rebel-button
+kind: software
+goal: "The Rebel Button (kind_robots components/pages/rebel-button.vue, content/button.md) becomes a playful 100-press journey: from press 10 the button moves, shrinks, hides behind walls and springs surprise minigames, and press 100 opens a finale offering a high-score run, art rating, a malaria-net fundraiser share, or a donation."
+
+notes_from_silas: |
+  Silas, 2026-10-26 (Kind Robots Todo #1324, verbatim): "An upgrade to the rebel button experience. it should be more
+  playful, after the first ten it starts moving around the space. then gets smaller, builds walls in front of it,
+  offers minigame surprise encounters, lets say one is having to aim a cannon at an arch to destroy the wall blocking
+  the button from being pressed. putting out a bunch of fake buttons with an obvious difference...still aiming for a
+  100 button press experience. But once it reaches 100, giving the user the choice of pressing longer for high score,
+  or rating art, or ending out social media posts to raise money for malaria nets, or donating."
+
+milestones:
+  - id: m1
+    title: "SHAPE — outline, brainstorm, design brief"
+    weight: 25
+    status: not-started
+
+  - id: m2
+    title: "BUILD — actualize, adjust, test"
+    weight: 50
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — aesthetics, performance, delivery"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and start building"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Take the idea and run: write DESIGN-BRIEF.md (what it is, who it serves,
+      the creative direction, MVP shape), then immediately create and claim the
+      first BUILD tasks. Do NOT wait for scope approval — that's t-002, and it
+      runs in parallel.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    # AGENTS.md, "Hard vs soft needs-human": scope gates on NEW projects are soft
+    # (Silas, 2026-07-04) -- the whole point of this task is that it runs in
+    # parallel and blocks nothing. Without soft_gate, audit_human_gates.py
+    # classifies it `[hard]` and it reports to Silas as a blocker every session.
+    soft_gate: true
+    note: >
+      FOR SILAS: soft checkpoint, nothing is blocked on it. Read DESIGN-BRIEF.md
+      and confirm or redirect the scope. Development is already underway; if you
+      redirect, agents fold your correction into the roadmap and keep moving.
+      (Outward-facing/irreversible steps still hard-gate as always.)
+
+  - id: t-003
+    milestone: m2
+    title: "Escalating button: moves after press 10, shrinks, raises walls; seeded and state in a store"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Extend the existing kind_robots Rebel Button rather than adding a new route. Presses 1-10 behave as today;
+      from 11 the button relocates within its stage, scales down in steps, and walls appear in front of it.
+      Press state lives in a Pinia store (components never touch localStorage). Phone/tablet/desktop widths.
+
+  - id: t-004
+    milestone: m2
+    title: "Surprise minigames: cannon-at-the-arch wall breaker and spot-the-real-button decoys"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Two encounters triggered at seeded press counts between 11 and 99: aim a cannon at an arch to destroy the
+      wall blocking the button; and a field of decoy buttons with one obvious visible difference. Touch, mouse
+      and keyboard playable; failing never loses progress.
+
+  - id: t-005
+    milestone: m2
+    title: "Press-100 finale: keep pressing for high score, rate art, share fundraiser, or donate"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      At 100 presses offer four choices: an endless high-score mode, the existing art-rating flow, a prepared
+      share post for the againstmalaria.com/amibot fundraiser that the visitor sends from their own account, and
+      the existing donation link. The site never posts on anyone's behalf.
+
