@@ -129,7 +129,7 @@ def main(argv=None):
         jobs = fetch_existing_jobs()
         recovered = recover_submitted(data, jobs)
         if recovered:
-            header = enq.split_header(LEDGER.read_text(encoding="utf-8"))[0]
+            header = enq.split_header(LEDGER.read_text(encoding="utf-8"))
             enq.save_ledger(LEDGER, header, data)
         print(f"Reconciled {len(jobs)} existing project jobs; recovered {recovered} personal outcomes.")
         # Existing enqueue script checks the prompt contract and persists each ID
