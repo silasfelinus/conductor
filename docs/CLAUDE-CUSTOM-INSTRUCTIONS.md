@@ -99,10 +99,10 @@ Everything else is yours to finish.
 ### Credentials in your environment
 
 `KR_API_TOKEN` — a live kind_robots JWT for Silas's account. Base URL
-`https://kind-robots.vercel.app` (not `kindrobots.org`, which 404s the API).
+`https://kindrobots.org`.
 `DATABASE_URL` is also set.
 
-    curl -H "Authorization: Bearer $KR_API_TOKEN" https://kind-robots.vercel.app/api/projects
+    curl -H "Authorization: Bearer $KR_API_TOKEN" https://kindrobots.org/api/projects
 
 Use it to check reality instead of speculating — projects, todos, dreams, art jobs, queue
 state. Prefer the wrapping script in `conductor/scripts/` where one exists.

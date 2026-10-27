@@ -11,7 +11,7 @@ def daily_dream_entry(**overrides):
         "target_repo": "silasfelinus/kind_robots",
         "image_path": "public/images/dreams/moonlit-greenhouse/world-card.webp",
         "source_url": "/images/dreams/moonlit-greenhouse/world-card.webp",
-        "page_url": "https://kind-robots.vercel.app",
+        "page_url": "https://kindrobots.org",
         "label": "Moonlit Greenhouse",
         "entity_type": "dream",
         "entity_id": 4242,

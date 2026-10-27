@@ -78,7 +78,7 @@ pm2 logs kr-relay --lines 50
 Expected startup line:
 
 ```text
-agent <hostname> polling https://kind-robots.vercel.app every 10.0s
+agent <hostname> polling https://kindrobots.org every 10.0s
 ```
 
 For a direct job, expect:

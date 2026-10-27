@@ -43,7 +43,7 @@ def proposal(
     if built:
         built_data = {
             "built_at": built_at or f"{proposal_date}T10:00:00-07:00",
-            "page": "https://kind-robots.vercel.app",
+            "page": "https://kindrobots.org",
             "records": {
                 "world": {"id": 1},
                 "locations": [{"id": 3}],
