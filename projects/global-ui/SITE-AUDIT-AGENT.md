@@ -79,7 +79,7 @@ This is a read-and-report run. Changes to roadmaps are the ONLY writes permitted
 
 ## Boundaries (hard)
 
-- No live HTTP requests to kind-robots.vercel.app
+- No live HTTP requests to the Kind Robots host
 - No changes to `main` branch directly
 - No writing to roadmaps marked `gate_human: true` without approval
 - No deleting existing tasks or roadmap entries

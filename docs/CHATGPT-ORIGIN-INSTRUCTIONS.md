@@ -73,7 +73,7 @@ Everything else is yours to finish.
 ### Credentials
 
 `KR_API_TOKEN`, when present, is a live kind_robots JWT for Silas's account. Base URL
-`https://kind-robots.vercel.app` (not `kindrobots.org`, which 404s the API). Prefer the
+`https://kindrobots.org`. Prefer the
 wrapping script in `conductor/scripts/` where one exists — `fetch_todos.py`,
 `complete_todo.py`, `sync_projects.py`. If the token is absent, log the warning and carry on
 with roadmap tasks rather than stalling.
