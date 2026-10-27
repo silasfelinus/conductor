@@ -954,11 +954,21 @@ tasks:
 - id: t-052
   milestone: m6
   title: 'Playbook Forge upgrade: literal Krea 2 prompts for 87 beats and the missing encounters and quests'
-  status: claimed
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
-  note: 'Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 87 unpainted beats have no prompt; plan gaps encounters 25/40, quests 3/6. Advances t-045 without closing it.'
-  updated: '2026-10-27T18:59:13Z'
+  note: >-
+    Silas, 2026-10-27 PT: "Anything that is in playbook forge and has quests unwritten or art prompts unwritten should be upgraded. (Memory dungeon will take the longest and should be last). Space couch has a lot of fresh writing still in need and still looking to capture that right blend of space comedy and satire. All art prompts should be written for the appropriate engine, no metaphors for krea2." Shared bar: kind_robots PR #4308 (verifyPlaybookArtPrompts, artPromptsComplete). Forge 2026-10-27: 87 unpainted beats have no prompt; plan gaps encounters 25/40, quests 3/6. Advances t-045 without closing it.
+
+    DONE 2026-10-27 PT: kind_robots #4311 (515d4a6, prompts), #4319 (07ed0ed, 15 encounters)
+    and #4324 (27f4dbb, 3 quest arcs), each merged with all checks green. Prompts are
+    114/114 with artPromptsComplete on, and one CAST_LOOK per character. Encounters went
+    from 25 to 49 (plan 40): faction incidents with follow-ups. Quests went from 3 to 6
+    (plan 6): Millrace Weir, Reed Shallows and Castle Moat open and close fishing species
+    through the new FishUnlock.closes. Species went from 15 to 18. Latent: arc.advance sets
+    the step on every active arc; harmless while at most one arc is pending. Advances t-045.
+  updated: '2026-10-27T19:27:55Z'
   claimed_by: 2026-10-27T00:00:00Z-rulerhooked
   claimed_at: '2026-10-27T18:59:13Z'
+  implementation_pr: 'silasfelinus/kind_robots#4324'
