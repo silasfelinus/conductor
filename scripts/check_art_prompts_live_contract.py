@@ -30,6 +30,7 @@ import json
 import subprocess
 import sys
 import tempfile
+import urllib.request
 from pathlib import Path
 
 import yaml
@@ -38,6 +39,7 @@ ROOT = Path(__file__).resolve().parent.parent
 ACTIVE = {"pending", "queued", "running", "processing"}
 CONTRACT = "server/utils/artPromptContract.ts"
 QUALITY = "server/utils/artPromptQuality.ts"
+RAW_URL = "https://raw.githubusercontent.com/silasfelinus/kind_robots/{ref}/{path}"
 
 RUNNER = """
 import { readFileSync } from 'node:fs'
@@ -74,6 +76,31 @@ def git_show(repo: Path, ref: str, path: str) -> str:
                           check=True, capture_output=True, text=True).stdout
 
 
+def fetch_raw(ref: str, path: str) -> str:
+    url = RAW_URL.format(ref=ref.removeprefix("origin/"), path=path)
+    with urllib.request.urlopen(url, timeout=30) as resp:
+        return resp.read().decode("utf-8")
+
+
+def contract_sources(kr_repo: Path, ref: str) -> tuple[str, str] | None:
+    """(contract, quality) TypeScript from a local checkout, else from kind_robots on GitHub.
+
+    No CI runner has a kind_robots checkout beside conductor, so until 2026-10-27 every
+    Auto Art Generate and Prom-outcomes submission ran the negation mirror alone: 48 Prom of
+    Doom prompts saying "comic panel" were queued and all failed [format-vocabulary] at claim
+    (ArtJobs 47984-48125)."""
+    try:
+        return git_show(kr_repo, ref, CONTRACT), git_show(kr_repo, ref, QUALITY)
+    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        local_error = exc
+    try:
+        return fetch_raw(ref, CONTRACT), fetch_raw(ref, QUALITY)
+    except (OSError, ValueError) as exc:
+        print(f"cannot read the contract from {kr_repo} at {ref} ({local_error}) "
+              f"or from GitHub ({exc})", file=sys.stderr)
+        return None
+
+
 def ledger_rows(paths: list[Path] | None = None) -> list[dict]:
     """Unsubmitted cells of the round ledgers (projects/*/art/*.yaml with lanes and subjects).
 
@@ -101,12 +128,10 @@ def ledger_rows(paths: list[Path] | None = None) -> list[dict]:
 def run_contract(checked: list[dict], kr_repo: str | Path = ROOT.parent / "kind_robots",
                  ref: str = "origin/main") -> list[dict] | None:
     """[{id, violations}] from the real artPromptContract.ts, or None when it cannot run here."""
-    try:
-        contract = git_show(Path(kr_repo), ref, CONTRACT)
-        quality = git_show(Path(kr_repo), ref, QUALITY)
-    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
-        print(f"cannot read the contract from {kr_repo} at {ref}: {exc}", file=sys.stderr)
+    sources = contract_sources(Path(kr_repo), ref)
+    if sources is None:
         return None
+    contract, quality = sources
     # The two edits that let Node run the server file standalone: h3 is only
     # used to throw in assertArtPromptContract, and ESM needs the extension.
     contract = contract.replace("import { createError } from 'h3'",

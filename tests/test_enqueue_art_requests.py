@@ -168,6 +168,24 @@ def test_live_checker_reads_only_unsubmitted_ledger_cells(tmp_path):
     assert rows[0]["prompt"] == "a koala ronin on a dune"
 
 
+def test_live_contract_falls_back_to_github_without_a_checkout(tmp_path, monkeypatch):
+    # CI runners have no kind_robots beside conductor; the preflight must still read the
+    # real contract rather than quietly running the negation mirror alone (ArtJobs 47984-48125).
+    from scripts import check_art_prompts_live_contract as live_check
+
+    fetched = []
+    monkeypatch.setattr(live_check, "fetch_raw", lambda ref, path: fetched.append((ref, path)) or path)
+    sources = live_check.contract_sources(tmp_path / "missing", "origin/main")
+    assert sources == (live_check.CONTRACT, live_check.QUALITY)
+    assert fetched == [("origin/main", live_check.CONTRACT), ("origin/main", live_check.QUALITY)]
+
+    def offline(ref, path):
+        raise OSError("network down")
+
+    monkeypatch.setattr(live_check, "fetch_raw", offline)
+    assert live_check.contract_sources(tmp_path / "missing", "origin/main") is None
+
+
 def test_refresh_status_records_art_image(tmp_path):
     path = _ledger(tmp_path)
     header, ledger = enq.load_ledger(path)

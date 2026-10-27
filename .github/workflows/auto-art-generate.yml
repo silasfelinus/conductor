@@ -85,6 +85,13 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml Pillow
 
+      # The prompt-contract preflight (check_art_prompts_live_contract.py) runs kind_robots'
+      # artPromptContract.ts under Node type stripping, which needs Node 22. Without it the
+      # preflight falls back to the negation mirror and claim-time rejections reach the queue.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
       - name: Canonicalize committed art requests
         working-directory: conductor
         run: python scripts/repair_art_request_defaults.py --write
