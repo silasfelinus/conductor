@@ -652,7 +652,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: review
+    status: ready
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -696,10 +696,9 @@ tasks:
       2026-10-27 2:03 PM PT: Merged Kind Robots PR #4340 at 91392c6a35855e3ca453fc02937f3514cd105555 after all 19 exact-head checks and 14 workflows passed on 3ee3cbbdd936e1f8d7bca6f701a217ee6e745ba7 (Contract Tests #40581724964, TypeScript #40581724322, Changed-file Prettier #40581724287). Returning from Dark Briar during a paid successful 680ms pair now settles the earned squares before cancelling the callback; mismatches, first flips, final wave and repeated return are regression-tested. Initial formatting failure corrected. Master issue #4136 comment 6453381697 records evidence. No ArtJobs or deployment. Return READY for browser-timed interaction/device QA, art delivery and remaining console/campaign acceptance; not For Human Gate.
 
       Focused checkpoint integrity repair: validate mirrored House room, decisions, trials, puzzles and echo bookkeeping before loading a manual save, preventing silent partial progress loss. Regression cases cover corrupt fields, slot isolation and valid interrupted trials. Kind Robots focused PR and exact-head CI pending; full browser, art and campaign acceptance remain outstanding.
-    updated: '2026-10-27T21:54:56.078Z'
-    owner: worker
-    claimed_by: 20261027T215254003Z-memory-dungeon-t-034-c7e9
-    claimed_at: '2026-10-27T21:52:54.003Z'
+
+      2026-10-27 PT: Kind Robots PR #4346 merged at d9cdc2882c842e580f081fc288ad1297e0f79c23 after all 18 exact-head check runs and 13 workflows passed on d10940e2662fc27f2e4c617bb4a97b1d936d483d (Contract Tests #40590917968, TypeScript #40590917776, Changed-file Prettier #40590917811). Damaged mirrored House decision, room, trial, puzzle and echo checkpoint structures now reject before restoring; nine adversarial corruption cases, neighboring-slot isolation and valid interrupted challenge state are tested. Master issue #4136 comment 6454704596 has evidence. No ArtJobs or deploy. Return READY for browser-timed checkpoint tests, rendered device QA, production-art acceptance and remaining campaign work. Not For Human Gate.
+    updated: '2026-10-27T22:02:11.565Z'
 
   - id: t-035
     milestone: m3
