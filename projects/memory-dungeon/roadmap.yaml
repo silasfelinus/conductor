@@ -643,7 +643,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: claimed
+    status: review
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -677,7 +677,9 @@ tasks:
       Scoped World One interruption fix: when the third failed classic chamber pair has been persisted but its delayed heart penalty is interrupted by reload or checkpoint load, settle exactly one heart, preserving learned pairs; last-heart retreat follows existing camp/House rules. Focused Kind Robots PR and exact-head CI pending. Browser animation/device and art acceptance remain outstanding.
 
       2026-10-27 PT: Merged Kind Robots PR #4299 (78b3d013afc04f5ca7adcf8e25c2ac396ff7f405) after all 18 exact-head checks passed on ce8e69d0ddac06cccb1df060dee0b363222614ae. Autosave and checkpoint restore now settle an interrupted third-miss classic chamber heart penalty once, including last-heart camp/House retreat; regression-tested. Master issue #4136 comment 6444082268 records evidence. No ArtJobs or deployment. Keep READY for browser-timed and rendered device QA, art acceptance and campaign work; not For Human Gate.
-    updated: '2026-10-27T16:53:00Z'
+
+      Scoped original Briar chamber interruption repair: a valid first flipped picture now survives autosave hydration and manual checkpoint loading with its selection reconnected; mismatches, lantern previews, tampered picture identities and combat states do not expose extra cards. Focused Kind Robots branch prepared with deterministic regression tests. PR exact-head CI pending; browser/device visual and production-art acceptance remain outstanding.
+    updated: '2026-10-27T17:08:00Z'
     owner: worker
     claimed_by: 2026-10-27T165300Z-memory-dungeon-t-034-8f91
     claimed_at: '2026-10-27T16:53:00Z'
