@@ -643,7 +643,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: ready
+    status: claimed
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -665,7 +665,10 @@ tasks:
       Scoped checkpoint integrity increment: original Briar map and combat card arrays are now structurally checked before a manual slot can replace active progress. Regression cases cover damaged decks, slot isolation and an interrupted first flip. Kind Robots branch awaits PR exact-head CI. Browser/device QA and art acceptance remain outstanding; not For Human Gate.
 
       2026-10-27 PT: Kind Robots PR #4296 merged at e1f842532b2c209743c6fd9c85c028f7516d965c after all 12 exact-head GitHub Actions workflows passed on 1de0fb3f71a414475b57f36be76a0a80347d0983. Original Briar map and combat checkpoint cards now reject malformed nested records before replacing a valid expedition; tests cover corrupted decks, independent slot recovery and valid interrupted flips. Master issue #4136 comment 6440085918 records evidence. No new ArtJobs or deployment. Return READY for browser-timed save/load, rendered device QA, remaining art integration and final console acceptance. Keep active, not For Human Gate.
-    updated: '2026-10-27T10:53:27.023Z'
+    updated: '2026-10-27T11:44:02Z'
+    owner: worker
+    claimed_by: 20261027T114402Z-memory-dungeon-t-034-b7a9
+    claimed_at: '2026-10-27T11:44:02Z'
 
   - id: t-035
     milestone: m3
