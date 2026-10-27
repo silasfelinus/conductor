@@ -11,6 +11,10 @@ on:
       - "scripts/submit_prom_personal_outcomes.py"
       - "projects/comet-city-academy/art/PERSONAL-CONSEQUENCES-ROUND-1.yaml"
   workflow_dispatch:
+  # GitHub App merge commits do not necessarily emit a runnable push workflow.
+  # Exactly one trusted comment on the already-merged submission PR can start it.
+  issue_comment:
+    types: [created]
 
 concurrency:
   group: auto-art-generate
@@ -21,6 +25,11 @@ permissions:
 
 jobs:
   submit:
+    if: >-
+      github.event_name != 'issue_comment' ||
+      (github.event.issue.number == 6733 &&
+       github.event.comment.body == '/submit-prom-outcomes-144 n7q4' &&
+       github.event.comment.user.login == 'silasfelinus')
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
