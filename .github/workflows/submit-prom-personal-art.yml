@@ -66,6 +66,47 @@ jobs:
         run: |
           python scripts/submit_prom_personal_outcomes.py --live
 
+      - name: Record durable submission receipt
+        if: always() && steps.checkout.outcome == 'success'
+        env:
+          SUBMIT_RESULT: ${{ steps.submit_art.outcome }}
+          CURRENT_RUN: ${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import yaml
+
+          path = Path("projects/comet-city-academy/art/PERSONAL-CONSEQUENCES-ROUND-1.yaml")
+          output = Path("ops/prom-of-doom-personal-art-submit.json")
+          result = os.getenv("SUBMIT_RESULT", "unknown")
+          ids = []
+          images = []
+          try:
+              data = yaml.safe_load(path.read_text())
+              subjects = data.get("subjects", [])
+              ids = [s["jobs"]["krea2"] for s in subjects
+                     if isinstance(s.get("jobs"), dict) and isinstance(s["jobs"].get("krea2"), int)]
+              images = [(s.get("art") or {}).get("krea2", {}).get("art_image_id")
+                        for s in subjects if isinstance(s.get("art"), dict)]
+              images = [v for v in images if isinstance(v, int) and v > 0]
+          except Exception:
+              result = "invalid-ledger"
+          body = {
+              "artRound": "prom-of-doom-personal-consequences-20261027",
+              "workflowRunId": int(os.getenv("CURRENT_RUN", "0")),
+              "submitStepOutcome": result,
+              "requested": 144,
+              "artJobsRecorded": len(ids),
+              "artImagesRecorded": len(images),
+              "allSubmitted": len(ids) == 144,
+          }
+          output.parent.mkdir(parents=True, exist_ok=True)
+          output.write_text(json.dumps(body, indent=2) + "\n")
+          print("Prom of Doom submission receipt:", body)
+          PY
+
       # Commit accepted ArtJob IDs even if a partial batch failed. The next
       # run queries the server and recovers uncommitted jobs before POSTing.
       - name: Checkpoint accepted IDs and statuses
@@ -74,6 +115,7 @@ jobs:
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
           git add projects/comet-city-academy/art/PERSONAL-CONSEQUENCES-ROUND-1.yaml
+          git add ops/prom-of-doom-personal-art-submit.json
           if git diff --staged --quiet; then
             echo "No new personal ArtJob IDs or statuses to checkpoint."
           else
