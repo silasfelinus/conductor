@@ -12568,3 +12568,8 @@ Worker pattern: good scoping; when marking tasks `review` for a cross-repo PR, n
 ## 2026-10-27 — Reviewer: conductor#6693 closed (no merge)
 Closed the open PR for the `worker/eod-art-submission-api-host-20261026-f4c2` branch. Live probe this run: `kindrobots.org/api/health` 200, `kind-robots.vercel.app/api/health` 503, so the canonical origin is healthy and the PR would have pointed Auto Art Generate at the failing host. Four earlier reviewer passes had held it open for a Silas decision; the probe settles it. Branch is superseded (no merge base with main) for branch-janitor.
 Worker pattern: probe both origins before proposing a KR_BASE_URL change.
+
+## 2026-10-27 — Reviewer: conductor#6717 and #6714 merged
+- #6717 (Prom of Doom canon: title, origin-card opening, earned replay identities): docs/roadmap-title only, reversible, all 23 checks green on head 3abc1bb. Merged.
+- #6714 (reconcile Forge gallery / Memory Dungeon / art command center; Space Couch t-018/t-019): roadmap status and new waiting tasks only, 24 checks green (Worker handoff skipped as expected for a non-worker branch). Merged.
+- Pattern: both Workers cited merge SHAs and PR numbers in task notes, which made verification quick. No kaizen task added; both are reconciliation/canon docs with no new code.
