@@ -197,7 +197,11 @@ tasks:
       Scoped 752-request art queue handoff repaired in Conductor PR #6653 (squash merge 370e0f48609af9839cd39f81baf8b074972b21c1), after Worker PR CI, Python full test suite, security and handoff checks passed. Corrected doubled backslash that broke --submit-only, adopted pending ArtJobs via request-ID/path reconciliation, repaired 189 prompt-contract frame-noun violations, and checkpointed ledger IDs before long render runs. The new Auto Art Generate run #40250564670 is queued behind older still running #40244988429; no claim of 752 queued or delivered ArtImages until its post-merge logs and updated ledger are checked. Continue t-030 for cross-realm art coverage, actual submitted/DONE/delivered reconciliation, and first-two-world visual acceptance; keep master kind_robots#4136 OPEN.
 
       Memory Dungeon 752-request art submission: GitHub Actions run #40250564670 successfully bulk submitted and checkpointed 227/227 main plus 521/525 secondary requests (748 ArtJob IDs). PR #6656 merged at 389b4219ffdc6e8fe14a0c397a5424b36708dbcc with green CI; adds uncapped submission, incomplete-batch retry, full ledger audit, and repairs four Unclaimed Portrait picture-frame prompt rejections. Short independent workflow #40253541060 is IN PROGRESS to submit the last four and checkpoint 752/752 if accepted. Master kind_robots#4136 comment records exact evidence. Do not equate submissions to renders or delivered/approved images. Continue checking fast-run result, eventual DONE ArtImages/media URLs, visual QA, and first-two-realities complete coverage. No human gate yet.
-    updated: '2026-10-26T01:24:45Z'
+
+      Scoped delivery audit: preserved the 227 drained submission receipts alongside 525 permanent requests; added read-only ArtJob identity/status and live-media HEAD evidence with offline regression tests and an internal audit workflow. This is partial t-030, not delivered art or a human gate. PR/CI pending.
+
+      2026-10-26 PT: Merged Conductor PR #6710 at 4f2c524ff48d53249138c43d888b77c5a8063776 after all 23 exact-head checks passed (Python suite 3083+ tests, security, worker handoff and YAML). Preserved 227 drained historical ArtJob receipts, alongside 525 permanent ledger rows: 752 unique request IDs, ArtJob IDs and image destinations. Added read-only ArtJob/status/ArtImage/media HEAD delivery auditor, regressions and scoped-push/manual evidence workflow. No new ArtJobs, no image-delivery or visual acceptance claim. Audit run #40429786760 queued after merge; inspect its artifact and repair any missing/failed/stale images. This is partial t-030, not a final human gate. Return READY.
+    updated: '2026-10-27T00:59:05.118Z'
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
@@ -681,7 +685,7 @@ tasks:
     milestone: m2
     title: "Build bounded cross-realm consequence ledger"
     status: ready
-    updated: '2026-10-26T23:06:28.862Z'
+    updated: '2026-10-26T23:55:51.638Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -699,6 +703,10 @@ tasks:
       Scoped campaign-persistence repair: replay saved world completions through legal route prerequisites, reject forged future progress, and preserve a valid finale commitment after Hearth and Market without Crossing. Kind Robots focused PR and exact-head CI pending. The broader consequence ledger remains unfinished.
 
       2026-10-26 PT: Merged Kind Robots PR #4254 (27d8ca3849ce8c558b8879e09407e83a72b37f33) after all 12 exact-head workflows passed. Replays restored campaign progress through legal routes, rejects impossible future saves, and preserves an earned e13 finale commitment after Hearth + Market without e12. Deterministic e01-e14 and forged-save regressions passed. Conductor PR #6701 repaired task-event claim timestamp duplication and PR dry-run validation; review event consumed. Master issue kind_robots#4136 updated. This is partial t-037 work: bounded cross-world relationship/custody/portable-discovery interpreter and future-world hooks remain. No ArtJobs or deployment. Not For Human Gate.
+
+      Scoped t-037 increment: derive bounded witness-record and Oren-provision facts from real Briar choices and project them into the two mirrored House ending verdicts. Focused Kind Robots implementation branch ready for exact-head CI; full cross-realm ledger and art/device QA remain open.
+
+      2026-10-26 PT: Merged Kind Robots PR #4259 (b1a6b17fd7583662d9247c23e8d4bc5cbf7bd703) after all 13 exact-head workflows passed on a52f534bec6a597234efcfa59b68b7fedeb26ab6. Bounded witness-privacy and Oren-logistics ledger now changes both mirrored House endings; four cross-choice endings, invalid inputs, pre-ending spoilers and save round-trip tested. Master issue #4136 comment 6430171790 has evidence. Partial t-037 only: later-realm hooks, art delivery and visual QA remain; no ArtJobs or deployment. Return READY, not For Human Gate.
   - id: t-038
     title: "Memory Dungeon master bible: Reimaginer, 8 world concepts / 16 realities, shifting-reality epic finale"
     status: ready

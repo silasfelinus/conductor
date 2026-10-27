@@ -12,6 +12,8 @@ import yaml
 
 VERSION = re.compile(r"^(\d{4}-\d{2}-\d{2})/([a-z0-9]+(?:-[a-z0-9]+)*)$")
 STATES = ("incubating", "promising", "parked", "rejected", "approved")
+NOTES_FILE = "SILAS-NOTES.yaml"
+NOTE_STATES = ("open", "addressed", "dismissed")
 
 
 def review_memory(dockets: Path) -> dict:
@@ -26,6 +28,34 @@ def review_memory(dockets: Path) -> dict:
         if not isinstance(meta, dict) or meta.get("status", "incubating") not in STATES:
             raise ValueError(f"invalid editorial state for {cid}")
     return data
+
+
+def silas_notes(dockets: Path) -> dict[str, list[dict]]:
+    """Silas's notes per concept, written from the Playbook Forge Gestation screen.
+
+    Each note is {at, by, note, status: open|addressed|dismissed, addressed_in?}.
+    The next development of a concept answers its open notes first.
+    """
+    path = dockets / NOTES_FILE
+    if not path.exists():
+        return {}
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    raw = data.get("notes") or {}
+    if not isinstance(raw, dict):
+        raise TypeError(f"{NOTES_FILE} must contain a notes mapping")
+    notes: dict[str, list[dict]] = {}
+    for cid, rows in raw.items():
+        if not isinstance(rows, list):
+            raise TypeError(f"{NOTES_FILE}: notes for {cid} must be a list")
+        clean = []
+        for row in rows:
+            if not isinstance(row, dict) or not str(row.get("note") or "").strip():
+                continue
+            if row.get("status", "open") not in NOTE_STATES:
+                raise ValueError(f"{NOTES_FILE}: invalid note status for {cid}")
+            clean.append(row)
+        notes[str(cid)] = clean
+    return notes
 
 
 def build_index(dockets: Path, before: str | None = None) -> dict:
@@ -60,7 +90,9 @@ def build_index(dockets: Path, before: str | None = None) -> dict:
             group["versions"].append(key)
             group["latest"] = snapshot
     editorial = review_memory(dockets)
+    silas = silas_notes(dockets)
     for cid, group in concepts.items():
+        group["silas_notes"] = silas.get(cid, [])
         notes = editorial.get("concepts", {}).get(cid, {})
         group["editorial"] = {
             "status": notes.get("status", "incubating"),
@@ -91,6 +123,23 @@ def memory_summary(index: dict, limit: int | None = None) -> str:
         "continue an existing lineage once any earlier root exists; do NOT force "
         "a merger if no two concepts gain a genuinely new game loop.",
     ]
+    waiting = [
+        item for item in index["shelf"]
+        if any(n.get("status", "open") == "open" for n in item.get("silas_notes", []))
+    ]
+    if waiting:
+        sections.append(
+            "OPEN NOTES FROM SILAS (Playbook Forge Gestation). Answer these before anything "
+            "else: a concept with open notes is today's expand slot unless you say why not, and "
+            "the version that answers a note sets it to status: addressed with addressed_in: "
+            "<date>/<slug> in SILAS-NOTES.yaml."
+        )
+        for item in waiting:
+            for n in item["silas_notes"]:
+                if n.get("status", "open") == "open":
+                    # PyYAML reads an unquoted ISO time as a datetime.
+                    at = str(n.get("at", ""))[:10]
+                    sections.append(f"- {item['concept_id']} ({at}): {n['note']}")
     for item in index["shelf"][:limit]:
         note = item["editorial"]
         latest = item["latest"]

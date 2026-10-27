@@ -3,6 +3,13 @@
 
 **Creative direction:** Silas, updated 2026-10-26 PT. High-priority original Kind Robots illustrated comic science-fiction captain/crew playbook. Master issue [kind_robots #4182](https://github.com/silasfelinus/kind_robots/issues/4182), Conductor task ledger `projects/game-of-captains/roadmap.yaml`. First Play slice currently proposed in [kind_robots PR #4185](https://github.com/silasfelinus/kind_robots/pull/4185); reconcile the name on that live surface in a follow-up scoped code PR or before its safe merge if coordinated.
 
+## Cast and galaxy writer source files (2026-10-26 PT)
+
+- [Six captain and sixteen crew quest bible](content/CAST-BIBLE.md): portrait framing, dry voice, backstories, three-beat galaxy-spanning crew quests and captain-specific contradictions.
+- [Twelve-system, eight-nemesis and endings bible](content/GALAXY-AND-NEMESIS-BIBLE.md): the Showrunner's planet-scale game dungeon, original alien enemies, three-act clue graph, intervention doctrine and sixteen earned ending families with 96 captain variants.
+
+These are **authored design references, not proof of live mechanics or generated portraits**. The current Play first voyage remains six captains, twelve selectable crew, three seeded rivals and four short endings; implementation, painted artwork and seeded outcome coverage remain open roadmap work.
+
 ## 0. Canonical couch-shaped starship (supersedes old bridge design)
 
 **The spaceship is literally a long, scarlet upholstered couch.** Art continuity checks should detect and reject traditional starship silhouettes as substitutes for the red sofa in scenes that depict the player vessel. Four people can travel seated on it through the vacuum. An invisible protective force shield maintains atmosphere, pressure and survivability around the couch. The couch must remain visually recognizable in ship images, character deployments, cutscenes and dashboard art; a normal starship exterior, conventional cockpit or separate ship bridge would violate the premise.
