@@ -1,0 +1,236 @@
+# New tactical playbook project; first campaign: Prom of Doom: Crossfire.
+project: every-villain-tactics
+kind: software
+autonomous: true
+goal: >-
+  Build an AAA-console-feeling browser tactical squad game with visible move previews,
+  correct line of sight and hit odds, cover, abilities, animated illustrated cards
+  and tactical AI. First campaign has six authored Comet City missions, each with
+  opening, triggered and closing conversation trees. Reuse all 48 permanent
+  Prom of Doom identities and artwork; write four distinct role perspectives
+  per hero and a bespoke fixed-cast six-mission personal path for each. Ship a
+  shareable save/load level and cinematic editor, adversarial tests, verified art,
+  and separate human design and public publishing gates.
+notes_from_silas: |
+  2026-10-28 PT: A tactical squad movement shooter with XCOM 2, Advance Wars
+  and Divinity 2 inspiration but an immersive browser console feel. Unit cards
+  flip, strike, react to damage or die. Before a move show new position LOS and
+  attack success percentage. Six levels increase in complexity and carry
+  mid-fight events plus bespoke openings and finales. Editor creates and shares
+  maps and opening/triggered/closing cinematic conversation trees.
+  Each of Prom of Doom's 48 identities has written hero, villain, henchman and
+  sidekick storylines. Each also has an exclusive preset squad/cast path with
+  unique six-stage dialogue. Everyone is a villain in someone else's story.
+  Existing Prom of Doom codenames stay permanent across roles, and its 30-day
+  game and saved runs remain untouched. First campaign is Prom of Doom: Crossfire.
+  Master issue: https://github.com/silasfelinus/kind_robots/issues/4407
+milestones:
+  - id: m1
+    title: "SHAPE - art-led front end, combat mathematics and role matrix"
+    weight: 20
+    status: not-started
+  - id: m2
+    title: "VIGNETTE - polished first battle plus level and cutscene editor"
+    weight: 35
+    status: not-started
+  - id: m3
+    title: "CAMPAIGN - six missions, roles, routes, AI and sharing"
+    weight: 30
+    status: not-started
+  - id: m4
+    title: "POLISH - real art, adversarial QA and final human gates"
+    weight: 15
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Build Playbook Kit Vignette spec and designed console front screen"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      npm run playbook:new in kind_robots; one-screen illustrated stage at
+      /admin/every-villain-tactics, a real map, cast cards and tutorial battle
+      instead of forms/status copy. Reuse real existing Prom of Doom character
+      art and stable IDs. Queue painted new art with provenance, not fake coverage.
+      Test 390/768/1440 widths, touch/keyboard/controller, reduced motion.
+  - id: t-002
+    milestone: m1
+    title: "Create deterministic movement, cover, LOS and accuracy mechanics"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Pure seeded tile/elevation combat engine: pathfinding, AP, directional
+      half/full cover, line blockers, high ground, range, flank, statuses,
+      overwatch, attack hit and damage. Show LOS/available targets/hit percentages
+      from a hovered destination BEFORE moving; display formula breakdown and
+      use exactly that formula for resolved attacks and enemy AI.
+  - id: t-003
+    milestone: m2
+    title: "Playable First Bell battle in all four authored perspectives"
+    status: waiting
+    depends_on: [t-001, t-002]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      One complete start-to-ending seeded battle with two tactical approaches,
+      independently authored hero/villain/henchman/sidekick dialogue, cinematic
+      opening, multiple triggered exchanges, closing/ending, and a first bespoke
+      fixed-cast route. Correct flip/strike/hit/death animations and accessible
+      alternatives. Treat this as Playbook Kit Vignette, not full Saga.
+  - id: t-004
+    milestone: m2
+    title: "Map designer with terrain, cover, spawns, objectives and testing"
+    status: waiting
+    depends_on: t-002
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Admin in-browser paintable tile/elevation/obstacle editor with destructible
+      props, squad spawn areas, victory/fail criteria, reinforcements, hazards,
+      timings and AI behavior. Playtest in editor with exact game rules.
+  - id: t-005
+    milestone: m2
+    title: "Opening/triggered/closing conversation tree and cinematic editor"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Author speaker/identity/role/emotion/camera, choice nodes, conditional
+      branches, state effects and triggers for turn, tile, line of sight,
+      health, rescue, objective, faction, kill, secret and chained conditions.
+      Graph validator detects unreachable nodes, softlocks and missing actors/art.
+  - id: t-006
+    milestone: m2
+    title: "Save/load battle and level state including RNG and fired events"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Persist reproducible seeded state, unit positions/conditions, story flags,
+      trigger history and schema version; multiple save slots, migration and
+      tests. Do not disturb original Prom of Doom saved games.
+  - id: t-007
+    milestone: m3
+    title: "Write and implement all six distinctive tactical story missions"
+    status: waiting
+    depends_on: [t-003, t-005, t-006]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      First Bell: basic combat; Science Wing Lockdown: doors and destructible
+      cover; Crosswalk Crisis: civilian rescue/split objectives; Rooftop Broadcast:
+      elevation/overwatch/betrayal; Under-Comet Breach: hazards/timer/multi-squad;
+      Prom Night Everybody's Villain: three-phase finale. Each needs original
+      opening, branching mid-fight, closing scenes, story callbacks and losses.
+  - id: t-008
+    milestone: m3
+    title: "Author and verify 48 x 4 unique role-specific story arcs"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      For every permanent Prom of Doom hero identity, independent hero,
+      villain, henchman and sidekick motivations/dialogue/secret interactions
+      and endings. Audit 192 genuinely written arcs with every scene reachable,
+      not string replacements or renamed identities.
+  - id: t-009
+    milestone: m3
+    title: "Author 48 bespoke six-level fixed-cast personal routes"
+    status: waiting
+    depends_on: t-008
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Each character gets hand-selected adversaries, allies, sidekicks and
+      henchmen plus fully custom dialogue across all six missions and ending.
+      Require 48/48 playable distinct scripts and automated coverage reports.
+  - id: t-010
+    milestone: m3
+    title: "Henchmen, lackeys, guests and smart tactical enemy behavior"
+    status: waiting
+    depends_on: t-007
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Named motivated lackeys and special guests, power-specific attacks,
+      recruitment/reversal, role-specific responses and enemy AI that flanks,
+      retreats, uses cover/overwatch and follows same LOS/chance rules.
+  - id: t-011
+    milestone: m3
+    title: "Save, fork, share and browse versioned community levels"
+    status: waiting
+    depends_on: [t-004, t-005]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Authenticated drafts, private permissions, immutable versions, provenance,
+      editable forks and level browsing. Validate user scenario schemas,
+      scripts and referenced assets; prevent code execution/private asset leaks.
+      External public publishing remains a separate human gate.
+  - id: t-012
+    milestone: m4
+    title: "Audit and deliver painted art, reused portraits and animation states"
+    status: waiting
+    depends_on: [t-007, t-010]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Track stable existing Prom art links, actual ArtJob/ArtImage IDs and
+      verified URLs for each battleground, guest, role portrait and
+      idle/turn/strike/hit/death state; queued or SVG fallback is incomplete.
+  - id: t-013
+    milestone: m4
+    title: "Adversarial full-campaign tests and rendered cross-device QA"
+    status: waiting
+    depends_on: [t-006, t-009, t-011, t-012]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Test corner/cover/elevation LOS, preview equals actual chance,
+      movement exploits, AI, triggers, all 48 personal paths and four roles,
+      save/resume/RNG, editor graph failures, permissions, every ending. Verify
+      full cinematic stage at 390/768/1440/XL, touch/gamepad/reduced motion.
+  - id: t-014
+    milestone: m4
+    title: "Human gameplay and AAA-console visual acceptance"
+    status: waiting
+    depends_on: t-013
+    gate_human: true
+    gate_reason: creative-approval
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      FOR SILAS: Only after all engineering, authored content and art QA, accept
+      the finished game/editor visual quality and tactical feel.
+  - id: t-015
+    milestone: m4
+    title: "Separate approval for public Play route and community publishing"
+    status: waiting
+    depends_on: t-014
+    gate_human: true
+    gate_reason: publish
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    note: >-
+      FOR SILAS: Explicitly approve any public game release, external access to
+      community level gallery or publishing; admin previews are internal only.
