@@ -43,6 +43,10 @@ class CasinoArtManifestTests(unittest.TestCase):
     def test_reconcile_exact_prompt_and_never_repost(self):
         _, data = parse_ledger()
         first, second = data["subjects"][:2]
+        # Production ledgers gain job IDs asynchronously. Reconciliation tests
+        # must start with an unclaimed fixture, not assume a blank live ledger.
+        first.pop("jobs", None)
+        second.pop("jobs", None)
         sample = compose_prompt(data["lanes"][0], first)
         matches = [{"id": 95123, "projectSlug": "game-of-captains", "payload": {"promptString": sample}}]
         self.assertEqual(reconcile(data, matches), 1)
@@ -52,6 +56,7 @@ class CasinoArtManifestTests(unittest.TestCase):
 
     def test_reject_duplicate_remote_without_valid_artjob(self):
         _, data = parse_ledger()
+        data["subjects"][0].pop("jobs", None)
         sample = compose_prompt(data["lanes"][0], data["subjects"][0])
         with self.assertRaises(RuntimeError):
             reconcile(data, [{"id": None, "payload": {"promptString": sample}}])
