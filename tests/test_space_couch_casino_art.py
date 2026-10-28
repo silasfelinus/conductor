@@ -45,8 +45,8 @@ class CasinoArtManifestTests(unittest.TestCase):
         first, second = data["subjects"][:2]
         # Production ledgers gain job IDs asynchronously. Reconciliation tests
         # must start with an unclaimed fixture, not assume a blank live ledger.
-        first.pop("jobs", None)
-        second.pop("jobs", None)
+        first["jobs"] = {}
+        second["jobs"] = {}
         sample = compose_prompt(data["lanes"][0], first)
         matches = [{"id": 95123, "projectSlug": "game-of-captains", "payload": {"promptString": sample}}]
         self.assertEqual(reconcile(data, matches), 1)
