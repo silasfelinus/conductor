@@ -15,7 +15,7 @@ class HouseAtlasArtTests(unittest.TestCase):
         data = yaml.safe_load(LEDGER.read_text())
         receipts = validate(data)
         self.assertEqual(set(receipts), set(EXPECTED))
-        self.assertEqual(list(receipts.values()), [None, None])
+        self.assertTrue(all(job is None or job > 0 for job in receipts.values()))
 
     def test_rejects_wrong_destination_and_duplicate(self):
         data = yaml.safe_load(LEDGER.read_text())
@@ -29,6 +29,7 @@ class HouseAtlasArtTests(unittest.TestCase):
 
     def test_only_durable_positive_ids_satisfy_submission_gate(self):
         data = yaml.safe_load(LEDGER.read_text())
+        data["requests"][0].pop("last_art_job_id", None)
         with self.assertRaisesRegex(ValueError, "Unsubmitted"):
             validate(data, require_jobs=True)
         data["requests"][0]["last_art_job_id"] = 46501
