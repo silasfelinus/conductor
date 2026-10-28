@@ -1,0 +1,8 @@
+version: 1
+project: memory-dungeon
+task: t-034
+operation: ready
+session: 2026-10-28T224832Z-memory-dungeon-t-034-house-provenance-7f8a
+updated: '2026-10-28T22:57:28Z'
+note: >-
+  2026-10-28 PT: Merged Kind Robots PR #4405 at 8538749fa225076eab92d8ccec1c56a0b8e3649d after 19/19 exact-head checks and 14/14 workflows passed on d4ab99064d34902a6c40a2d06de09c7ee4598ff8 (Contract Tests #40783218508, TypeScript #40783218555, changed-file formatting #40783218536, browser interruption #40783218498). Restored House decisions now require visited rooms, while legacy current-room decisions remain compatible; Hearth endings, Warden, Chime and duel-origin flags require source-room provenance. Tests cover forged valid choices, unearned witness/shortcut, mismatched endings, earned progress and repeat reloads. Initial Contract shard 1 failed on an unvisited rare-event fixture; corrected the fixture and verified final green. Master issue #4136 comment 6482854599 has evidence. No new ArtJobs or deployment. Return READY for rendered 390/768/1440 console QA, graph-aware visit validation, House atlas delivery (last audit 50365/50366 pending), and full campaign; not For Human Gate.
