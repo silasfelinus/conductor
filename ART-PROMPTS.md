@@ -642,3 +642,11 @@ Icon, card and hero are committed in `projects/images/` (2026-10-24 PT). Per Sil
 - `hybridizer-icon.webp` (256×256): One brass coil-bound fusion cylinder shaped like a scientific device, an animal specimen and a banana shape converging into an invented luminous hybrid, deep purple enamel and iridescent lime sparks, small icon silhouette, painterly collectible-game finish.
 - `hybridizer-card.webp` (512×768): A strangely elegant vampire bananacat with expressive cat ears, peeled banana tail and tiny fangs, dramatic theatrical lighting, copper-and-violet creature laboratory backdrop, vertical game poster composition, energetic hand-painted detail.
 - `hybridizer-hero.webp` (1280×720): Wide fantastical retrofuturist creature hybridization console, two enormous glass specimen chambers with mismatched ingredients, electric coils converging on a single fantastical illustrated hybrid, plum and neon citrus color grading, ornate copper physics apparatus, wide screen presentation with open dark UI-safe edges.
+
+## Every Villain Tactics — initial project identity (requested 2026-10-28 PT)
+
+- `every-villain-tactics-icon.webp` (256×256): Single diagonally split collectible comic shield-card, electric blue and vermilion rival heroic silhouettes, premium tactical game emblem, sculpted enamel, square composition and bare unlettered surfaces.
+- `every-villain-tactics-card.webp` (512×768): Colorful painted comic-book tactical squad face-off on isometric terrain, rival costumed protector shielding a civilian, kinetic collectible-card motion, dramatic portrait illustration and blue/amber lighting, bare unlettered surfaces.
+- `every-villain-tactics-hero.webp` (1280×720): Panoramic Comet City superhero high school rooftop and prom-lit skyline as an isometric collectible-card tactical battlefield, opposing character standees behind cover, cinematic lighting and strong depth, open dark edges for UI, bare unlettered surfaces.
+
+Prompts only. No rendered images or ArtJob completions are claimed; verify generated image files and final URLs before declaring coverage.
