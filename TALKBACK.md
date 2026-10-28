@@ -12601,3 +12601,11 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 - kind_robots `worker/space-couch-t023-character-voices-b7f3` and `worker/space-couch-t024-redshirts-travel-e62b` back game-of-captains t-023 (review) and t-024 (claimed): live task branches, left alone.
 - kind_robots `claude/forge-facets`, `claude/forge-space-couch-act-three`, `worker/play-tab-space-couch-prom-of-doom-20261026`: 87–138 commits behind main with no PR; main has since merged much overlapping Space Couch/Prom of Doom work. Not confirmed superseded (shallow clone, no merge base), so left reported for a session with full history. Silas: say the word if these can be force-deleted.
 - Note: `select_role.py` took >10 min in this sandbox on first run (completed eventually).
+
+## 2026-10-28 — Agent (branch-medic): stranded kind_robots branches, full-history pass
+- `worker/play-tab-space-couch-prom-of-doom-20261026`: three-dot diff only reverts tab labels/copy that main already carries in newer form. Superseded; opened as kind_robots#4412 and closed. Safe to force-delete.
+- Opened PRs so the work stops rotting; all four are conflicted against current main (`mergeable_state: dirty`) and need an owner who knows the area:
+  - #4410 `claude/forge-facets`: conflicts in `playbookForgeStore.ts`, `playbook/types.ts`, `ledger.ts`, `verifyPlaybookForge.test.ts`. Main rewrote the ledger (`scope`, verified-art `paintedShare`, `artPipeline`), so the branch's "progress credits writing" change must be re-expressed on top of it, not merged mechanically.
+  - #4411 `claude/forge-space-couch-act-three`: Act III (9 missions) conflicts in `pages/play/game-of-captains.vue`.
+  - #4413 / #4414 (`t023` / `t024` task branches): conflict in `game-of-captains.vue` (+ a workflow file for t023). These back live tasks game-of-captains t-023/t-024; the owning Worker should rebase.
+- No Silas action needed except confirming #4412's branch deletion.
