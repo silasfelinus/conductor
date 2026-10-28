@@ -465,8 +465,8 @@ tasks:
   - id: t-028
     milestone: m2
     title: "Build single-screen episodic dispatch board, fog-of-war redshirts and three encounter decks"
-    status: claimed
-    updated: '2026-10-28T03:40:00Z'
+    status: review
+    updated: '2026-10-28T03:42:30Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -484,6 +484,8 @@ tasks:
       Additional Space Couch polish increment in worker/space-couch-t028-interleaved-quests-b72c: allow unfinished minor redshirt quests to reopen after mandatory main quest dispatch and between successive planetary, blue-giant casino and Serendipity plot cards; retain completed deck state and one-round timing. Remove fictional successful-outcome prose and unearned venue credit when a command team fails its seeded check, preserve the attempt record without advancing host consent or bar stage, and gate earned faction standings on successful outcomes while retaining legacy save credits. Added deterministic failure, side-quest, resume and UI contract regression tests. Pending PR/CI; no device screenshot or live deploy claimed.
 
       2026-10-27 PT: Kind Robots PR #4368 squash-MERGED into main at 0e332bed4502104b2b8f213e0c5a63c403cfac56 after 18 of 18 exact-head Actions groups completed successfully (TypeScript, seeded Space Couch gameplay, 4 contract shards, changed-file Prettier, layout and production-container build). Shipped UI access to unresolved minor redshirt quests after mandatory main quest dispatch and between subsequent planet/casino/Serendipity/constellation/nemesis plot scenes; existing one-round dispatch and deck draw histories survive interruption and v1 restoration. Fifteen authored choice-specific setback responses distinguish failed command objectives from earned successes. Failed blue-giant casino and Serendipity visits preserve an attempt record but cannot pretend host consent, award a completed venue beat or unlock undeserved reputation; faction finale scoring now ignores failed contemporary results while respecting old draw records. New interleave/failure/legacy regression suite passed. Verified code on main and merged PR state; successful container build is not evidence of live deployment. Keep READY for genuine rendered multi-device playtesting, long-run adversarial pacing, painted art verification and later final approval, not HUMAN GATE.
+
+      Continuation after merged Space Couch PR #4368 (0e332bed4502104b2b8f213e0c5a63c403cfac56, 19/19 CI green): authored encounter skill/crew spotlight pass in Kind Robots PR #4369. Episode opening teaser now matches the actual planet card; all 10 planet scenes and 8 casino incidents have theme-specific skill checks; the 20 Serendipity settings, 12 signs and 8 nemeses get consistent thematic requirements. A named crew specialist grants +12 chance on their connected planet plot; recurring successful two-person teams earn a capped +15 rapport bonus with Lead/Support labels and readable recaps. Full seeded regression and TypeScript/contract CI pending; no live device or art approval claimed.
     owner: worker
     claimed_by: 2026-10-28T034000Z-space-couch-t028-specialties-d93e
     claimed_at: '2026-10-28T03:40:00Z'
