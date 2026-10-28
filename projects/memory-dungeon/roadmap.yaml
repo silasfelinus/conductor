@@ -712,11 +712,8 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: review
-    owner: worker
-    claimed_by: 2026-10-28T23:46:27Z-memory-dungeon-t-034-c7f2
-    claimed_at: '2026-10-28T23:46:27Z'
-    updated: '2026-10-28T23:51:21Z'
+    status: ready
+    updated: '2026-10-29T00:03:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -796,6 +793,8 @@ tasks:
       2026-10-28 PT: Merged Kind Robots PR #4405 at 8538749fa225076eab92d8ccec1c56a0b8e3649d after 19/19 exact-head checks and 14/14 workflows passed on d4ab99064d34902a6c40a2d06de09c7ee4598ff8 (Contract Tests #40783218508, TypeScript #40783218555, changed-file formatting #40783218536, browser interruption #40783218498). Restored House decisions now require visited rooms, while legacy current-room decisions remain compatible; Hearth endings, Warden, Chime and duel-origin flags require source-room provenance. Tests cover forged valid choices, unearned witness/shortcut, mismatched endings, earned progress and repeat reloads. Initial Contract shard 1 failed on an unvisited rare-event fixture; corrected the fixture and verified final green. Master issue #4136 comment 6482854599 has evidence. No new ArtJobs or deployment. Return READY for rendered 390/768/1440 console QA, graph-aware visit validation, House atlas delivery (last audit 50365/50366 pending), and full campaign; not For Human Gate.
 
       Focused mirrored-House save-integrity repair prepared on worker/memory-dungeon-t-034-mirror-visit-integrity-c7f2: only visited/current rooms retain authored choices, trials, puzzles and earned echoes. Legacy current-room recovery retained. Three-file PR and exact-head CI pending; rendered device/art acceptance remains open.
+
+      2026-10-28 PT: Merged kind_robots PR #4416 (squash 46082ce3f3090cd3c6ee70461a8b1e160ade7e8e) after all 14 exact-head Actions workflows passed on 0bc474f4f6c0b64dc23ba2f4b08a055cf1a56072 (Contract Tests #40790268561, TypeScript #40790268537, formatting #40790268610, browser interruption #40790268565). Mirrored House restoration now rejects choices, completed trials and solved puzzles in unvisited chambers, preventing forged HD-35 verdicts and recall echoes; current-room legacy compatibility retained. Three-file regression-tested patch. Master issue #4136 comment 6483921438 has evidence. No new ArtJobs, deployment or rendered QA. Return READY for graph-aware traversal, painted House atlas acceptance and device tests; not For Human Gate.
 
   - id: t-035
     milestone: m3
