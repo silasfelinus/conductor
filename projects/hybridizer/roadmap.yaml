@@ -72,19 +72,16 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Build art-led one-screen Hybridizer prototype in Kind Robots Admin"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
-    note: >-
-      First implementation needs full-size concept art slots, two interactive
-      selection trays, fusion animation with reduced-motion alternative, a
-      large hybrid reveal, shared discovery browsing and a real playable flow.
-      Follow Kind Robots Admin route/tab convention, self-hosted UI verification,
-      and project placement sync. Avoid claiming demo art as actual ArtJobs.
+    note: |-
+      First implementation needs full-size concept art slots, two interactive selection trays, fusion animation with reduced-motion alternative, a large hybrid reveal, shared discovery browsing and a real playable flow. Follow Kind Robots Admin route/tab convention, self-hosted UI verification, and project placement sync. Avoid claiming demo art as actual ArtJobs.
+
+      Kind Robots PR #4406 merged at 719c1b18c0457202641ba36b4eab939027ff6725. First Admin-only interactive console, 200-starter selection, accessible fusion animation, recursive local studies, visual discovery shelf and known Facet art integration landed. All 15 GitHub CI workflows succeeded, including full TypeScript and four contract shards. Pre-merge rendered frontend geometry unavailable without a deployed build. Global cache, asynchronous ArtJob generation, user submissions and notifications remain distinct uncompleted follow-on tasks.
     claimed_by: 2026-10-28T230500Z-hybridizer-t-003-f74c
     claimed_at: '2026-10-28T23:05:00Z'
-    updated: '2026-10-28T23:07:00Z'
+    updated: '2026-10-28T23:23:00Z'
   - id: t-004
     milestone: m2
     title: "Persist global canonical unordered pairs and recursive fusion provenance"
@@ -150,7 +147,7 @@ tasks:
   - id: t-009
     milestone: m4
     title: "Adversarial QA, full-width layout review and final subjective acceptance"
-    status: waiting
+    status: ready
     depends_on: t-003
     owner: null
     passes: 0
