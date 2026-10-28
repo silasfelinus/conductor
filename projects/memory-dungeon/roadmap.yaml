@@ -672,11 +672,8 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: review
-    owner: worker
-    claimed_by: 2026-10-28T084256Z-memory-dungeon-t-034-a8c4d6
-    claimed_at: '2026-10-28T08:42:56Z'
-    updated: '2026-10-28T08:48:00Z'
+    status: ready
+    updated: '2026-10-28T08:57:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -740,6 +737,8 @@ tasks:
       2026-10-28 1:03 AM PT: Merged Kind Robots PR #4382 at c45f8c364321336fa6975b8eda2d177ecab0d512 after all 16 exact-head workflows passed on 75353b999ac8f80e942947d6eea0db3c0a4aa88a. Earth Chronicle, Threads and settings now trap Tab/Shift+Tab, restore opener focus, and settings handles Escape. Chromium #40653737401 passed nine cases, including keyboard loops at 390/768/1440; Contract Tests #40653737464, TypeScript #40653737396 and Prettier #40653737363 passed. An initial browser test caught reverse-Tab escape from the focused dialog root; formatting and Vue lint-order failures were also corrected before final green. Master issue #4136 comment 6463925787 records scope and evidence. No new ArtJobs or deployment. Return READY for fully rendered route/device QA, 6x6 House map artwork, and campaign completion; not For Human Gate.
 
       Focused compact-console navigation patch prepared: World One header uses a separate phone title row; House exit controls stay in a bounded horizontally scrollable command strip with full accessible destination names. Target branch worker/memory-dungeon-t-034-compact-command-deck-a8c4d6; CI and final visual acceptance remain pending.
+
+      2026-10-28 PT: Merged Kind Robots PR #4383 at 5416219e14c47e3f30028c7bb32238367cd6ebae after 20/20 checks and 15/15 workflows passed on exact head ed8619f1a47e54fcf672a4b4dcbfb554315d3648. World One phone header now reserves a full title row instead of crushing navigation controls, and original House passage buttons stay in a bounded horizontal command strip with short visible IDs and full accessible names. Changed only two Memory Dungeon components plus source-contract assertions. Initial Prettier and layout one-scroll failures were repaired before final green CI. No ArtJobs submitted; no deployment initiated or verified. Keep READY: actual rendered phone/tablet/desktop acceptance, dedicated painted House maps, additional game polish and full campaign remain unfinished.
 
   - id: t-035
     milestone: m3
