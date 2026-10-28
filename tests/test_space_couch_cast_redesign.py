@@ -54,8 +54,11 @@ class SpaceCouchCastRedesignTests(unittest.TestCase):
             self.assertEqual(subject["asset"], expected)
             self.assertEqual(subject["lane"], "krea2")
             self.assertEqual(subject["size"], "1024x1024")
-            # No fake DONE or legacy job IDs. The automatic sweep writes these later.
-            self.assertNotIn("art", subject)
+            # No fake DONE or legacy art. The automatic sweep may later write PENDING
+            # lane status with a fresh job id, but never a finished image.
+            for lane_art in subject.get("art", {}).values():
+                self.assertNotEqual(lane_art.get("status"), "DONE")
+                self.assertIsNone(lane_art.get("art_image_id"))
 
         expected = {
             (kind, identity, expression)
