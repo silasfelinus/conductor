@@ -224,8 +224,8 @@ jobs:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           KR_MEDIA_ORIGIN: https://media.acrocatranch.com
         run: |
-          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \\
-            --queue-file projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml \\
+          python scripts/consume_art_requests_to_media.py --live --submit-only --limit 0 \
+            --queue-file projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml \
             --id-prefix memory-dungeon-saturate-house-atlas-
 
       # The generic art consumers below can run for hours. Save the ArtJob IDs
