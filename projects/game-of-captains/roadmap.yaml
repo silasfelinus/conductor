@@ -480,30 +480,29 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Redshirt cloning saga: persistent generations, memorial quests and earned endgame"
-    status: claimed
-    owner: worker
-    claimed_by: 2026-10-28T003200Z-space-couch-clones-5fb91
-    claimed_at: '2026-10-28T00:32:00Z'
-    updated: '2026-10-28T00:32:00Z'
+    status: ready
+    updated: '2026-10-28T01:00:00Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
-    note: >-
-      Silas 2026-10-27 continuation: dead miniaturized redshirts can be recovered in
-      later episodes as clones, but never as an unpriced resurrection. Track a stable
-      original identity, generation count, clone history, field memories, accumulated
-      discoveries, death memorial, abilities and consequences across save/restore.
-      Original death still matters; the clone must become a distinct continuing
-      character, not just an identical reset. Build escalating clone tiers, each
-      requiring earned research, missions, scarce supplies and ethical choices.
-      Introduce a substantial multi-episode authored clone questline that unlocks
-      one tier at a time and requires increasingly advanced living clones for its
-      later story beats; allow refusal, consent and non-clone alternatives. Future
-      expeditions can bring back fallen personnel and use differentiated clone
-      abilities, with player-visible generations, memories and mission consequences.
-      Include clone-dependent faction reactions and unique finale/epilogue, not
-      purely cosmetic progression. Preserve one hundred existing redshirt IDs,
-      fog-of-war learning, independent casualty outcomes, seeded episode boards,
-      old v1 save compatibility and the separate outstanding t-024/t-028/t-026
-      workers' changes. Reconcile those PRs rather than overwriting their files;
-      ship tested staged playable progress and keep unfinished story/art scope open.
+    note: |-
+      Silas 2026-10-27 continuation: dead miniaturized redshirts can be recovered in later episodes as clones, but never as an unpriced resurrection. Track a stable original identity, generation count, clone history, field memories, accumulated discoveries, death memorial, abilities and consequences across save/restore. Original death still matters; the clone must become a distinct continuing character, not just an identical reset. Build escalating clone tiers, each requiring earned research, missions, scarce supplies and ethical choices. Introduce a substantial multi-episode authored clone questline that unlocks one tier at a time and requires increasingly advanced living clones for its later story beats; allow refusal, consent and non-clone alternatives. Future expeditions can bring back fallen personnel and use differentiated clone abilities, with player-visible generations, memories and mission consequences. Include clone-dependent faction reactions and unique finale/epilogue, not purely cosmetic progression. Preserve one hundred existing redshirt IDs, fog-of-war learning, independent casualty outcomes, seeded episode boards, old v1 save compatibility and the separate outstanding t-024/t-028/t-026 workers' changes. Reconcile those PRs rather than overwriting their files; ship tested staged playable progress and keep unfinished story/art scope open.
+
+      First playable Red Thread clone-story tranche in Kind Robots PR #4357. Five authored chapters with branching consent/evidence/shortcut choices, 4 generations, field-experience/episode gating, memorial and lineage records, generation bonuses and unique clone-rights or coerced-copy finale codas. A versioned v1 save extension retains existing IDs. Compact clone lab integrated with the new episode console and tested in seeded gameplay and save restore. CI currently being verified. Concurrent t-034 duplicate-key blocker was surgically corrected before this event's retry. Art variants, UI geometry post-deploy and further adversarial whole-run review remain to complete before any human gate.
+
+      Kind Robots Space Couch PR #4357 merged at df1ccd739206ad2deb587211a73581a2bb2edbfd after 19 of 19 current-head workflow groups finished successfully (head b48b528b66093e59e73fc65038de62accb3c310c). Implemented a 5-act branching Red Thread storyline, four increasingly expensive and capable clone generations, previous-episode field experience and story gating, original memorial continuity, additive v1 save validation, console lab and crew-card badges, clone-rights/consent endings and seeded regression tests. Future t-029 increments remain: produce and verify each clone generation's distinct character artwork, visually inspect deployed phone/tablet/desktop geometry, and run longer adversarial whole-run/branch-ending simulations. No new clone portraits, live deployment or final human acceptance claimed.
+
+  - id: t-030
+    milestone: m2
+    title: "Space Couch opening constellation personality test and sign-exclusive quest arcs"
+    status: ready
+    updated: '2026-10-28T01:14:00Z'
+    depends_on: t-003
+    passes: 0
+    stakes: reversible
+    note: |-
+      User direction 2026-10-27 PT: Start every fresh Space Couch voyage with three or four distinct personality choices. Reveal one of a complete original fictional constellation zodiac (e.g. Northern Sloth and Princess Mantic Shrimp), allow returning to change answers before accepting the result, then retain the assessment and sign with the captain's saved voyage. No silent skip, fixed sign by captain choice, real-world horoscope, or unrelated form-driven website UI. Provide story-rich sign-gated exclusive quest cards on the actual episode board so only captains with the corresponding matching sign see and resolve their quests. Choices alter flags, narrative and finale recognition, with seeded deterministic eligibility and replay/farming guards. Preserve old v1 saves, existing captain/crew selections, persistent clone saga and other currently active PR authors. Test all reachable signs, redo/accept boundaries, profile restore, cross-sign quest exclusion, gating, draw sequencing, and endings. No publication or human gate until final design and visual QA.
+
+      Four-question original constellation assessment and cinematic full-screen opening implemented in Kind Robots PR #4361. The twelve fictional signs include Northern Sloth and Princess Mantic Shrimp. All twelve are reachable through valid 4-choice responses; explicit reveal and keep/change answers gate captain/crew launch. Thirty-six sign-exclusive episodic quests (three per sign; chapters 1/4/7) persist world flags and earn separate constellation finale codas. Existing version-1 voyage saves remain valid. Concurrent clone saga PR #4357 was merged into the exact PR branch by a normal two-parent reconciliation commit, preserving clone features. Seeded gameplay, changed-file formatting, TypeScript and other CI passed; remaining contract/container checks pending, then PR may merge if green. Further rendered phone/tablet/desktop visual QA and bespoke constellation paintings remain future acceptance gates, not a human gate yet.
+
+      2026-10-27 PT: Merged Kind Robots PR #4361 on main with squash commit 5f5090dc0c974d4659366c6e8325ea4707b3e024 after 19 of 19 exact-head CI workflow groups passed at ff99c55aee79d027d50786464139c110005111ec. Original four-question cinematic Couchscope now gates first captain/crew selection, scores 12 valid original constellation signs, offers explicit reveal, retake and keep. Three sign-only quests per constellation create 36 unique episodes unlocking on chapters 1/4/7; choices, flags and complete/unfinished constellation codas persist in validated v1 saves. Reconciled concurrent clone-saga PR #4357 via non-forced two-parent merge; clone lab and generation bonuses kept intact. Master issue #4182 has details. No claim of bespoke generated constellation paintings or live deployed device rendering. Return READY for phone/tablet/desktop QA, missing artwork, adversarial whole-run polish and final design acceptance; not For Human Gate.
