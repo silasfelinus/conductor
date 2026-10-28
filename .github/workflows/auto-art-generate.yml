@@ -267,6 +267,22 @@ jobs:
         working-directory: conductor
         run: python scripts/audit_memory_dungeon_house_atlases.py --require-jobs
 
+      # Submission receipts alone cannot prove a render reached the media host.
+      # Probe the two NEW House atlas jobs separately from the immutable 752-job
+      # inventory. Missing media is expected while rendering; publish explicit
+      # machine-readable evidence instead of calling a green submission "done".
+      - name: Audit Memory Dungeon House atlas render and media delivery
+        id: memory_dungeon_house_atlas_delivery
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          python scripts/audit_memory_dungeon_house_atlases.py --live \
+            --report projects/memory-dungeon/art/HOUSE-ATLAS-STATUS.json
+
       - name: Repair and requeue failed Kind Robots ArtJobs
         id: repair_failed
         if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
