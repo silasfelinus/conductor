@@ -635,3 +635,10 @@ Icon, card and hero are committed in `projects/images/` (2026-10-24 PT). Per Sil
 - `game-of-captains-shield-backup.webp` (1280×720): Long red couch and four seated crew under thin blue backup force sphere during a dangerous meteor field transit, strained but safely breathing travelers, compressed bubble lines, painterly lighting.
 
 **Canon audit:** original Vox, sentient Serendipity and Captain Fluke remain distinct existing Kind Robots story entities. Avoid a conventional starship bridge, cockpit, hull or new spaceship in the picture: Krea2 prompts above describe positive scene elements only. Track prompt, model, seed, ArtJob, ArtImage and delivered URL per asset. Do not treat this markdown queue request as an actual submitted ArtJob or completed painted asset.
+
+
+## Hybridizer — initial project identity (requested 2026-10-28 PT)
+
+- `hybridizer-icon.webp` (256×256): One brass coil-bound fusion cylinder shaped like a scientific device, an animal specimen and a banana shape converging into an invented luminous hybrid, deep purple enamel and iridescent lime sparks, small icon silhouette, painterly collectible-game finish.
+- `hybridizer-card.webp` (512×768): A strangely elegant vampire bananacat with expressive cat ears, peeled banana tail and tiny fangs, dramatic theatrical lighting, copper-and-violet creature laboratory backdrop, vertical game poster composition, energetic hand-painted detail.
+- `hybridizer-hero.webp` (1280×720): Wide fantastical retrofuturist creature hybridization console, two enormous glass specimen chambers with mismatched ingredients, electric coils converging on a single fantastical illustrated hybrid, plum and neon citrus color grading, ornate copper physics apparatus, wide screen presentation with open dark UI-safe edges.
