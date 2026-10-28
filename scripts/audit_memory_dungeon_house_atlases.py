@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Validate the two dedicated House atlas requests and their durable ArtJob receipts.
+"""Validate the two dedicated House atlas ArtJobs and optional live media proof.
 
-This is a submission check, not proof of a completed render or accessible image.
+Offline checks establish submission only. --live audits ArtJob identity, render
+status, and fresh unauthenticated image HEAD responses; visual QA remains separate.
 """
 from __future__ import annotations
 
@@ -52,7 +53,6 @@ def validate(data: dict, require_jobs: bool = False) -> dict[str, int | None]:
     if len(assigned) != len(set(assigned)):
         raise ValueError("Duplicate House atlas ArtJob ID")
     return receipts
-
 
 
 def audit_delivery(data: dict, jobs: list[dict], media_probe=None) -> dict:
@@ -111,6 +111,7 @@ def main() -> int:
     except (OSError, yaml.YAMLError, ValueError, RuntimeError) as error:
         print(f"::error::House atlas audit blocked: {error}")
         return 1
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
