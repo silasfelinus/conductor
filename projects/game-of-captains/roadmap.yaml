@@ -495,28 +495,15 @@ tasks:
   - id: t-030
     milestone: m2
     title: "Space Couch opening constellation personality test and sign-exclusive quest arcs"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-28T010000Z-space-couch-stars-2c8e1
     claimed_at: '2026-10-28T01:00:00Z'
-    updated: '2026-10-28T01:00:00Z'
+    updated: '2026-10-28T01:05:00Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
-    note: >-
-      User direction 2026-10-27 PT: Start every fresh Space Couch voyage
-      with three or four distinct personality choices. Reveal one of a
-      complete original fictional constellation zodiac (e.g. Northern Sloth
-      and Princess Mantic Shrimp), allow returning to change answers before
-      accepting the result, then retain the assessment and sign with the
-      captain's saved voyage. No silent skip, fixed sign by captain choice,
-      real-world horoscope, or unrelated form-driven website UI. Provide
-      story-rich sign-gated exclusive quest cards on the actual episode
-      board so only captains with the corresponding matching sign see and
-      resolve their quests. Choices alter flags, narrative and finale
-      recognition, with seeded deterministic eligibility and replay/farming
-      guards. Preserve old v1 saves, existing captain/crew selections,
-      persistent clone saga and other currently active PR authors. Test
-      all reachable signs, redo/accept boundaries, profile restore,
-      cross-sign quest exclusion, gating, draw sequencing, and endings.
-      No publication or human gate until final design and visual QA.
+    note: |-
+      User direction 2026-10-27 PT: Start every fresh Space Couch voyage with three or four distinct personality choices. Reveal one of a complete original fictional constellation zodiac (e.g. Northern Sloth and Princess Mantic Shrimp), allow returning to change answers before accepting the result, then retain the assessment and sign with the captain's saved voyage. No silent skip, fixed sign by captain choice, real-world horoscope, or unrelated form-driven website UI. Provide story-rich sign-gated exclusive quest cards on the actual episode board so only captains with the corresponding matching sign see and resolve their quests. Choices alter flags, narrative and finale recognition, with seeded deterministic eligibility and replay/farming guards. Preserve old v1 saves, existing captain/crew selections, persistent clone saga and other currently active PR authors. Test all reachable signs, redo/accept boundaries, profile restore, cross-sign quest exclusion, gating, draw sequencing, and endings. No publication or human gate until final design and visual QA.
+
+      Four-question original constellation assessment and cinematic full-screen opening implemented in Kind Robots PR #4361. The twelve fictional signs include Northern Sloth and Princess Mantic Shrimp. All twelve are reachable through valid 4-choice responses; explicit reveal and keep/change answers gate captain/crew launch. Thirty-six sign-exclusive episodic quests (three per sign; chapters 1/4/7) persist world flags and earn separate constellation finale codas. Existing version-1 voyage saves remain valid. Concurrent clone saga PR #4357 was merged into the exact PR branch by a normal two-parent reconciliation commit, preserving clone features. Seeded gameplay, changed-file formatting, TypeScript and other CI passed; remaining contract/container checks pending, then PR may merge if green. Further rendered phone/tablet/desktop visual QA and bespoke constellation paintings remain future acceptance gates, not a human gate yet.
