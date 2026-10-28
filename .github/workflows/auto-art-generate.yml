@@ -262,6 +262,11 @@ jobs:
         working-directory: conductor
         run: python scripts/audit_memory_dungeon_art_submission.py
 
+      - name: Verify both House atlas ArtJob receipts
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        working-directory: conductor
+        run: python scripts/audit_memory_dungeon_house_atlases.py --require-jobs
+
       - name: Repair and requeue failed Kind Robots ArtJobs
         id: repair_failed
         if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
