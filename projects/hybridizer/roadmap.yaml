@@ -85,19 +85,17 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Persist global canonical unordered pairs and recursive fusion provenance"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261028T233353172Z-hybridizer-t004-9f7c
     claimed_at: '2026-10-28T23:33:53.172Z'
-    updated: '2026-10-28T23:33:53.172Z'
+    updated: '2026-10-28T23:36:59.723Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Model deduplicated pair keys on stable input identities, composition
-      revision and model recipe, atomic claim/lookup and failure retry;
-      preserve lineage and make prior hybrids reusable ingredients. Two inputs
-      make 19,900 unique unordered starter pairs, not 4,000. Preserve
-      provenance to prevent cache poison and enforce art visibility.
+    note: |-
+      Model deduplicated pair keys on stable input identities, composition revision and model recipe, atomic claim/lookup and failure retry; preserve lineage and make prior hybrids reusable ingredients. Two inputs make 19,900 unique unordered starter pairs, not 4,000. Preserve provenance to prevent cache poison and enforce art visibility.
+
+      Durable unordered pair keys, recursive provenance DAG, authenticated public/owner visibility boundaries, global discovery lookup and local fallback added in Kind Robots worker branch. Await full PR checks.
   - id: t-005
     milestone: m2
     title: "Connect ArtJob queue, background completion notification and missed-result retry"
