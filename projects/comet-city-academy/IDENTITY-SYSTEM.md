@@ -1,6 +1,16 @@
-# Prom of Doom: Identity Triads, Evolution and Heel Turns
+# Prom of Doom: One Identity, Three Contexts, Evolution and Heel Turns
 
-**Directive:** Silas, 2026-10-26 PT. **Status:** canonical expansion of the [30-day DESIGN-BRIEF](DESIGN-BRIEF.md), not completion of its runtime/quest/art/QA gates. The paired Kind Robots runtime catalogue is `utils/cometAcademy/identityArcs.json`.
+**Directive:** Silas, 2026-10-26 PT, superseded where inconsistent by the 2026-10-28 PT single-name revision. **Status:** canonical expansion of the [30-day DESIGN-BRIEF](DESIGN-BRIEF.md), not completion of its runtime/quest/art/QA gates. The paired Kind Robots runtime catalogue is `utils/cometAcademy/identityArcs.json`.
+
+## Canonical revision: one permanent name, three story splashes (2026-10-28 PT)
+
+**48 distinct people, not 144 characters.** Every origin × affinity combination maps to exactly one stable person, one codename, one recognizable anatomy/face/silhouette and one canonical look. For example, Granny Mayhem is **always Granny Mayhem** whether the story casts her as protagonist, sidekick/partner or villainous opponent. Do not create Hotplate/Backdraft/Flashpoint as three independently named identities for one person; Dez Okafor's sole superhero name is **Backdraft** across roles. Old variant names in git history are retired presentation labels, not save keys.
+
+**Three different splash pages per person are still required:** (a) rookie/sidekick life, (b) self-directed heroic intervention, (c) antagonist/heel circumstances. Each is an original scene and composition with the **same character model**, not a new costume, codename or unrelated anatomy. 48 people × 3 contexts = 144 illustrated *scenes*, never 144 different character designs. The existing stable art keys `identities/<signature>/student|hero|villain` are preserved for compatibility, but their suffixes now mean narrative context; do not report three rendered character identities. Optional additional emotion/injury/quest art still counts separately, with rendered/exported/verified evidence.
+
+Hero, rogue, ally, romance, sidekick and villain routes may change methods, stats, alliances, moral agency, consequences and dialogue, but never **who that person is called**. The player chooses a role and writes a history, not a new superhero. Keep the six origins × eight affinities, relationships, heel-turn/antagonist variety, forty-eight existing biographies, unique face/body variety, saved signatures and Yearbook records. The former mandatory **288 six-track** quantity is **revoked** as a content budget; author however many substantive unique scenes and alternative methods each person and relationship actually needs, proving accessibility via seeded tests. Cross-project guests retain their prior canonical identities until reconciled with their source games.
+
+**Night patrol revision:** first two nights open with the protagonist talking alone on patrol; night three brings two simultaneous catastrophes and a friend who joins the roster by phone. The player chooses to split coverage or combine forces for one exceptional rescue with a second explicit refusal consequence. Afterward night patrol grows gradually alongside earned contacts. See Kind Robots #4402 / #4404.
 
 ## Origin × Affinity (canonical selection, Silas 2026-10-26 PT)
 
@@ -9,7 +19,7 @@ Silas replaced the old **Form × Affinity** picker (Impact/Arc/Veil/Step/Weave/B
 - **Origin** (where the power came from, 6): Freak Accident, Mutant, Tech, Magic, Alien / Dimensional, Psychic.
 - **Affinity** (what the power answers to, 8): Fire, Air, Earth, Water, Discipline, Genius, Birthright, Social.
 
-6 × 8 = **48 people**, signature IDs `<origin>-<affinity>` (e.g. `accident-fire` = Dez Okafor: Hotplate → Backdraft / Flashpoint). Each person has a **student/sidekick, hero and villain persona**, and each persona carries its own `focus` (one of 17 play styles: brawler, blaster, speedster, acrobat, duelist, tank, controller, infiltrator, mastermind, gadgeteer, healer, face, summoner, shapeshifter, mentalist, trickster, commander) and its own six stats (Might, Speed, Smarts, Heart, Control, Grit; 1–5 each; students total 12–16, heroes and villains 18–23). The 48 do **not** share motifs by origin or affinity, and a villain is expected to abandon the hero's toolkit rather than reskin it: the runtime test requires hero ≠ villain stats for every person and a different focus for at least 36 of 48.
+6 × 8 = **48 people**, signature IDs `<origin>-<affinity>` (e.g. `accident-fire` = Dez Okafor, superhero **Backdraft** throughout). Each person has **student/sidekick, hero and villain story contexts**, and each persona carries its own `focus` (one of 17 play styles: brawler, blaster, speedster, acrobat, duelist, tank, controller, infiltrator, mastermind, gadgeteer, healer, face, summoner, shapeshifter, mentalist, trickster, commander) and its own six stats (Might, Speed, Smarts, Heart, Control, Grit; 1–5 each; students total 12–16, heroes and villains 18–23). The 48 do **not** share motifs by origin or affinity, and a villain is expected to abandon the hero's toolkit rather than reskin it: the runtime test requires hero ≠ villain stats for every person and a different focus for at least 36 of 48.
 
 The student persona's strongest stat sets the run's field skill (Might→kinetic, Speed→spatial, Smarts→technopathy, Heart→empathy, Control→elemental, Grit→biotech), so origin and affinity choices change dispatch odds, and dispatch cards now say which stat a call needs.
 
@@ -19,21 +29,21 @@ Runtime source: Kind Robots `utils/cometAcademy/specialPowers.json` (origins, af
 
 ## Premise: choose potential, live into identity
 
-Each combination of **origin + affinity** selects a *person*, not merely an attack move. Every person has a **student/sidekick identity**, **hero identity**, and **villain identity**. Their names, silhouette, costumes, signature methods, relationships, social position, dialogue, quests and ending consequences may be significantly different across the three. A heroic identity may use acrobatics while its villain incarnation prefers a powered suit, laboratories or coercion. Shared origin is a narrative through-line, **not a demand for compatible ability kits**.
+Each combination of **origin + affinity** selects a *person*, not merely an attack move. Every person has three different **narrative contexts and art splashes** (student/sidekick, hero and antagonist), while one immutable superhero name and recognizable physical design connect them. Their methods, relationships, social position, dialogue, quests and ending consequences can differ across contexts. A heroic identity may use acrobatics while its villain incarnation prefers a powered suit, laboratories or coercion. Shared origin is a narrative through-line, **not a demand for compatible ability kits**.
 
 The playable prototype uses 6 origins × 8 affinities = **48 signature IDs** and separately records one of three vows. Its 48-person catalogue is in Kind Robots; those 48 identities are *original candidates*, not evidence of 48 finished six-path quest graphs. Pre-redesign saves migrate through the explicit legacy map above rather than being thrown away. The requested **Animal + Technical Training → Zuzu, Koala Samurai** remains a visiting guest outside the 48 (Zuzu's natural fit would be Alien / Dimensional × Discipline, but that slot belongs to Raxa Vel; do not overwrite either without cross-project reconciliation). A 48-or-so count is flexible; content quality and compatibility win.
 
 ### Required identity model (all 48+ characters)
 
 - `signatureId`, `studentId`, stable identity/person ID, name/pronouns and adult consent/boundaries. NPC and protagonist use the **same underlying person**, regardless of viewpoint.
-- `student`: distinct alias, novice kit, uniform, insecurity, early field mistakes and at least one mentoring/partner scene.
-- `hero`: distinct name, mask/costume, evolved specialty, ethical compromise, civilian cost, signature victory and hero epilogue.
-- `villain`: distinct name, costume, potentially different technology/tactics, intelligible motivation, accomplice network, counterplay and villain epilogue.
+- `student`: same codename, novice kit, insecurity, early field mistakes and at least one mentoring/partner scene.
+- `hero`: same codename and body, evolved specialty, ethical compromise, civilian cost, signature victory and hero epilogue.
+- `villain`: same codename and recognizable body, different choices/tactics, intelligible motivation, accomplice network, counterplay and villain epilogue.
 - `relationship`: platonic partner path, optional consensual romance path, rivalry, break-up, loyalty and defection conditions. **Romance is not mandatory for evolution.** Relationship quests can precipitate a hero or villain choice; agency must remain with the person whose identity is evolving.
 - `quests`: **six authored tracks minimum** per character: protagonist in student/hero/villain mode, antagonist in student/hero/villain mode. Each track needs a setup, escalating choice, differentiated success/mixed/failure/refusal consequences, culmination, and at least one relationship/sidekick callback. Protagonist routes are playable with meaningful agency; antagonist routes aren't merely the protagonist text with pronouns inverted.
 - `art`: consistent student, hero, villain character turnarounds and full-body splashes; role-specific emotional portraits including injury; evolution cinematics, relationship beats and consequence/finale plates. Track request, queued, rendered, delivered and verified separately; placeholders do not fulfill this obligation.
 
-48 × 3 forms = **144 identity designs** and at least 48 × 3 × 2 = **288 authored viewpoint/form quest tracks**, before romance, partner, allegiance, accomplice and villain-specific variants. This is a production planning count, not a claim that these are implemented.
+48 × 3 contexts = **144 story splash pages** using only **48 underlying character designs**. The former 288-track floor is retired; branching scene quality, replay reachability and personal consequences govern production, not a claim that these are implemented.
 
 ## State machine and pacing
 
@@ -96,7 +106,7 @@ Their first-week arrival cases and choice callbacks live in Kind Robots `utils/c
 
 ## Implementation and adversarial acceptance
 
-**Initial scaffold:** runtime has 48 distinct student/hero/villain aliases, divergent methods, one personal conflict, a protagonist hook, antagonist hook and partner decision per signature, plus a typed lookup, selection preview, first-week simulated ending foreshadow, and catalogue tests. This is **not** the completed 288 quest-track engine, heel-turn director or delivered art.
+**Historical initial scaffold (superseded 2026-10-28):** runtime originally had 48 distinct student/hero/villain aliases, divergent methods, one personal conflict, a protagonist hook, antagonist hook and partner decision per signature, plus a typed lookup, selection preview, first-week simulated ending foreshadow, and catalogue tests. This is **not** the completed 288 quest-track engine, heel-turn director or delivered art.
 
 Continue with sequenced slices:
 
