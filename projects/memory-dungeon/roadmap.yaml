@@ -672,8 +672,8 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: ready
-    updated: '2026-10-28T05:03:26Z'
+    status: claimed
+    updated: '2026-10-28T06:50:54Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -727,6 +727,9 @@ tasks:
       Scoped checkpoint integrity increment: validate full reality progress and reachable campaign history before manual slot restoration. Focused Kind Robots PR and exact-head CI verification follow. No new art or deployment; full device QA remains open.
 
       2026-10-27 10:03 PM PT: Kind Robots PR #4373 merged at 6ea1cb3e3397db54a6abda5795e4666d1133f8d3 after all 18 exact-head checks and 13 workflows passed on b76beddf1dcae4fcece8fae5fbb958ed0d2c03cc (Contract Tests #40635182575, TypeScript #40635182581, formatting #40635182510). Manual checkpoints now reject malformed, duplicated, unearned, or unreachable campaign history and invalid active-reality/finale flags instead of silently erasing progress during restoration; regression covers eight invalid histories, active-reality guard, valid mirrored progress and neighboring-slot isolation. Formatting and TS failures on superseded heads were corrected before final green. No ArtJobs or deployment. Return READY: browser interruption tests, rendered device QA, delivered art and full campaign remain unfinished; not For Human Gate.
+    owner: worker
+    claimed_by: 20261028T065054Z-memory-dungeon-t-034-gl447fdq
+    claimed_at: '2026-10-28T06:50:54Z'
 
   - id: t-035
     milestone: m3
