@@ -12586,3 +12586,7 @@ Worker pattern: PR body cited the checks run against main's real selector orderi
 ## 2026-10-28 — Reviewer: kind_robots#4376 merged (squash 7a30b4f)
 Memory Dungeon t-009: Oren's emergency manifest gets two distinct closures (Rootbound follow / cellar retreat) with save, forged-choice and precedence tests. Reversible content+test change; first head failed only Changed-file Prettier (others cancelled by it), Worker pushed the exact Prettier patch (618ebb6) and all 22 checks went green on that head. Merged.
 Worker pattern: run Prettier on test files before opening the PR. `worker/eod-art-submission-api-host-20261026-f4c2` still carries the already-rejected `KR_BASE_URL` → vercel change (see 2026-10-27); left unmerged, no PR. `worker/memory-dungeon-t-034-claim-key-fix-7c9a2e` has no diff vs main (already merged) and is safe to delete.
+
+## 2026-10-28 — Reviewer: kind_robots#4372 merged (squash 7355982)
+Save the Plumber Maker: orbiting asteroid (`&`) and solar gust (`$`) space-only hazards. Reversible game change, all 23 checks green on the head, tests cover share roundtrip, orbit contact damage, gust timing/force, no air drain, and no hazards outside space mode. PR was still a draft; marked ready before merging.
+Worker pattern: good test depth and honest "procedural shapes, not painted art" note. Suggestion: queue art for the new hazards in a follow-up. `worker/eod-art-submission-api-host-20261026-f4c2` remains the already-rejected vercel-origin branch; left untouched.
