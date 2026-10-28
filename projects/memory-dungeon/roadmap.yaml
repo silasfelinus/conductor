@@ -672,11 +672,11 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-28T075317Z-memory-dungeon-t-034-c6e2
     claimed_at: '2026-10-28T07:53:17Z'
-    updated: '2026-10-28T07:53:17Z'
+    updated: '2026-10-28T08:01:09Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -734,6 +734,8 @@ tasks:
       Scoped browser-timed interruption suite prepared: real Pinia Memory World store in Chromium with localStorage, real timers and page reloads. Six adversarial cases cover original/mirrored earned pairs, first flips, mismatches, mid-animation checkpoint rollback and return to Briar. New dedicated Actions workflow and artifact. PR and exact-head CI pending; this is not rendered route/device acceptance.
 
       2026-10-28 12:03 AM PT: Merged Kind Robots PR #4381 at 6b8a6a4a77080680c0d16bef3a5667316410c662 after all 13 exact-head workflows passed on d634895721a6be8d8e2593385f1c016454519bd5. New Chromium browser suite #40646883734 executed six real Pinia-store interruption cases using browser timers/localStorage/reloads: Dark Briar paid match, mismatch, checkpoint rollback and earned restoration, return mid-animation; original Briar paid match and first flip. TypeScript #40646883548, Prettier #40646883536, and all Contract Tests #40646883568 passed. Initial formatting failure corrected before final green. This is browser-level store integration, NOT rendered /play/memory component/device acceptance. No ArtJobs, schema changes or deployment. Return READY for rendered phone/tablet/desktop UI tests, gameplay interactions, art QA and remaining campaign; not For Human Gate.
+
+      Focused console keyboard-accessibility increment: trap Tab/Shift+Tab inside Earth Chronicle, Threads and settings; restore focus to each opener, support Escape in settings; Chromium keyboard tests at 390/768/1440 and source-wiring contract checks. PR and exact-head CI pending; rendered route/device acceptance and full art remain open.
 
   - id: t-035
     milestone: m3
