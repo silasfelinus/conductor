@@ -672,8 +672,8 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: review
-    updated: '2026-10-28T06:54:06.037Z'
+    status: ready
+    updated: '2026-10-28T07:03:02.103Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -729,9 +729,8 @@ tasks:
       2026-10-27 10:03 PM PT: Kind Robots PR #4373 merged at 6ea1cb3e3397db54a6abda5795e4666d1133f8d3 after all 18 exact-head checks and 13 workflows passed on b76beddf1dcae4fcece8fae5fbb958ed0d2c03cc (Contract Tests #40635182575, TypeScript #40635182581, formatting #40635182510). Manual checkpoints now reject malformed, duplicated, unearned, or unreachable campaign history and invalid active-reality/finale flags instead of silently erasing progress during restoration; regression covers eight invalid histories, active-reality guard, valid mirrored progress and neighboring-slot isolation. Formatting and TS failures on superseded heads were corrected before final green. No ArtJobs or deployment. Return READY: browser interruption tests, rendered device QA, delivered art and full campaign remain unfinished; not For Human Gate.
 
       Scoped browser-timed interruption suite prepared: real Pinia Memory World store in Chromium with localStorage, real timers and page reloads. Six adversarial cases cover original/mirrored earned pairs, first flips, mismatches, mid-animation checkpoint rollback and return to Briar. New dedicated Actions workflow and artifact. PR and exact-head CI pending; this is not rendered route/device acceptance.
-    owner: worker
-    claimed_by: 20261028T065054Z-memory-dungeon-t-034-gl447fdq
-    claimed_at: '2026-10-28T06:50:54Z'
+
+      2026-10-28 12:03 AM PT: Merged Kind Robots PR #4381 at 6b8a6a4a77080680c0d16bef3a5667316410c662 after all 13 exact-head workflows passed on d634895721a6be8d8e2593385f1c016454519bd5. New Chromium browser suite #40646883734 executed six real Pinia-store interruption cases using browser timers/localStorage/reloads: Dark Briar paid match, mismatch, checkpoint rollback and earned restoration, return mid-animation; original Briar paid match and first flip. TypeScript #40646883548, Prettier #40646883536, and all Contract Tests #40646883568 passed. Initial formatting failure corrected before final green. This is browser-level store integration, NOT rendered /play/memory component/device acceptance. No ArtJobs, schema changes or deployment. Return READY for rendered phone/tablet/desktop UI tests, gameplay interactions, art QA and remaining campaign; not For Human Gate.
 
   - id: t-035
     milestone: m3
