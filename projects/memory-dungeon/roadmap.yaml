@@ -337,11 +337,8 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Author floor story, recurring cast and consequential decisions"
-    status: review
-    owner: worker
-    claimed_by: 2026-10-28T204934Z-memory-dungeon-t-009-f4e9a1
-    claimed_at: '2026-10-28T20:49:34Z'
-    updated: '2026-10-28T20:51:00Z'
+    status: ready
+    updated: '2026-10-28T21:04:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -408,6 +405,8 @@ tasks:
       2026-10-28 PT: Kind Robots PR #4399 merged at 0634ce30955cf4c2e2d8c46194bf9e3ac0bc34a9 after all 15 exact-head workflows passed on 30209e5751dfa9465c08abd5338c99a0403e63e1. HD-35 now freezes the earned House epilogue lens across backtracking and saved/restored expeditions; legacy completed saves backfill once from valid choices. Regression tests cover post-ending choices, invalid lens strings, save restoration and 1500 seeded journeys. Conductor PR #6775 repaired a duplicate updated field that blocked session-aware task events, and the review event subsequently applied. Master issue kind_robots#4136 comment 6479406669 records evidence. No ArtJobs or deployment. Return READY for the three-floor narrative, remaining art and rendered device acceptance; not For Human Gate.
 
       Scoped save-integrity hardening prepared: only accept authored Briar scene choices for restored visited coordinates, blocking forged valid option IDs from granting unearned photographs and downstream story consequences. Regression fixtures preserve legitimate visited choices and legacy current-tile recovery. Kind Robots PR and exact-head CI pending; three-floor story, art and device QA remain active.
+
+      2026-10-28 PT: Kind Robots PR #4400 merged at 7548ea439f89b901150e030821e874ba3ac859a6 after all 18 exact-head checks and 13 Actions workflows passed on e2669476bfd36d980fa6436477692869108bb2ed (Contract Tests #40767297347, TypeScript #40767297580, formatting #40767297528, Memory browser interruptions #40767297532). Restored Briar scene decisions now require actually visited and revealed coordinates, rejecting forged valid choice IDs that could otherwise mint unearned Earth photos, quest outcomes, rare-event prerequisites and callbacks. Legacy current-tile saves remain compatible; six source/test files changed. One unrelated CI cancellation was rerun successfully. Master issue #4136 comment 6480571111 records evidence. No new ArtJobs or deployment. Return READY for three-floor campaign, further loss continuations, House atlas jobs 50365/50366 delivery and rendered device QA; not For Human Gate.
   - id: t-010
     milestone: m3
     title: "Ship riddle and logic minigame framework plus authored puzzle pack"
