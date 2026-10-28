@@ -416,17 +416,16 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Deliver character, room, weapon and ending art pipeline"
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
       Use ART-PROMPTS.md new project icon/card/hero prompts and generate presentation-quality game-scene mockups: overworld explorer, battle-match board, treasure cut-in, minefield vault and character creator. Avoid a generic web app surface. Draft modular fantasy-biome concept art and positive physical-subject first art requests for character portraits, weapon masks, scene illustrations and endings. Existing memory card images remain useful. Record output provenance and ArtJob IDs when available; do not claim generated images exist because prompts were written.
 
       Scoped Kind Robots map/art presentation PR: show original and mirrored delivered map URLs with fallback, readable quest and choice typography modeled on Shifting Desks, and reduced-motion 3D action markers that follow unresolved scene state. Verified audited 752/752 Memory Dungeon art request delivery from Conductor workflow #40429786760; runtime rendering and exact-head PR CI still pending.
-    claimed_by: 20261028T060700Z-memory-dungeon-t-013-maptype-c7a9
-    claimed_at: '2026-10-28T06:07:00Z'
-    updated: '2026-10-28T06:15:05Z'
+
+      Merged scoped Kind Robots PR #4379 at 9c970fb325fba84752144e771bb51bc8cc3d5257 after all 14 exact-head workflows passed, including four contract shards, TypeScript, changed-file formatting, layout and art safety. Replaced unconditional Briar and Dark Briar SVG underlays with verified delivered painted-map media paths and safe SVG fallback; enlarged quest and choice typography; added reduced-motion-aware 3D action markers to both overworld and both 36-room House maps. Conductor audit run #40429786760 documented 752/752 first-two-reality media deliveries (Briar ArtJob 46117 and Dark Briar 45570 included). Master issue kind_robots#4136 updated, separate unpainted 6x6 House floorplan gap tracked in kind_robots#4380. This is partial t-013 art pipeline work, not complete game-art/visual acceptance. No new ArtJobs, production deployment or rendered device screenshots verified.
+    updated: '2026-10-28T06:31:00Z'
   - id: t-016
     milestone: m2
     title: "Build bullseye sweet spots and solver-verified minefield challenge floors"
