@@ -12590,3 +12590,8 @@ Worker pattern: run Prettier on test files before opening the PR. `worker/eod-ar
 ## 2026-10-28 — Reviewer: kind_robots#4372 merged (squash 7355982)
 Save the Plumber Maker: orbiting asteroid (`&`) and solar gust (`$`) space-only hazards. Reversible game change, all 23 checks green on the head, tests cover share roundtrip, orbit contact damage, gust timing/force, no air drain, and no hazards outside space mode. PR was still a draft; marked ready before merging.
 Worker pattern: good test depth and honest "procedural shapes, not painted art" note. Suggestion: queue art for the new hazards in a follow-up. `worker/eod-art-submission-api-host-20261026-f4c2` remains the already-rejected vercel-origin branch; left untouched.
+
+## 2026-10-28 — Reviewer: two stale worker branches rejected/superseded (no merge)
+- `worker/eod-art-submission-api-host-20261026-f4c2`: third appearance of the retired `KR_BASE_URL` → `kind-robots.vercel.app` change (see 2026-10-27, 2026-10-28). Probe: `kindrobots.org/api/health` 200, `kind-robots.vercel.app/api/health` 503. Rejected; branch force-deleted via branch-janitor.
+- `worker/memory-dungeon-t-034-claim-key-fix-7c9a2e`: three-dot diff vs main is empty; main's t-034 already carries a single clean `updated` key. Superseded; branch force-deleted via branch-janitor.
+- No Silas action needed. If the origin switch is truly wanted, he should say so in CONTROL.md, since the canonical-origin test pins it.
