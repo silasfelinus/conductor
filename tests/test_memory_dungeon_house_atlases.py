@@ -7,7 +7,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from audit_memory_dungeon_house_atlases import EXPECTED, LEDGER, validate  # noqa: E402
+from audit_memory_dungeon_house_atlases import EXPECTED, LEDGER, audit_delivery, validate  # noqa: E402
 
 
 class HouseAtlasArtTests(unittest.TestCase):
@@ -38,6 +38,69 @@ class HouseAtlasArtTests(unittest.TestCase):
         data["requests"][1]["last_art_job_id"] = "not-an-id"
         with self.assertRaisesRegex(ValueError, "Invalid"):
             validate(data, require_jobs=True)
+
+
+    def test_live_audit_proves_exact_jobs_and_fresh_image_media(self):
+        data = yaml.safe_load(LEDGER.read_text())
+        calls = []
+        jobs = []
+        for row in data["requests"]:
+            jobs.append({
+                "id": row["last_art_job_id"],
+                "status": "DONE",
+                "artImageId": row["last_art_job_id"] + 1000,
+                "createdAt": "2026-10-28T10:00:00Z",
+                "payload": {"conductorRequest": {
+                    "id": row["id"],
+                    "imagePath": row["image_path"],
+                    "targetRepo": row["target_repo"],
+                }},
+            })
+        def head(path, created):
+            calls.append((path, created))
+            return "delivered"
+        report = audit_delivery(data, jobs, head)
+        self.assertEqual(report["total"], 2)
+        self.assertEqual(report["delivered"], 2)
+        self.assertEqual({row["jobId"] for row in report["results"]}, {50365, 50366})
+        self.assertEqual({path for path, _ in calls}, set(EXPECTED.values()))
+
+    def test_live_audit_does_not_conflate_render_and_delivery(self):
+        data = yaml.safe_load(LEDGER.read_text())
+        original, mirrored = data["requests"]
+        jobs = [
+            {
+                "id": original["last_art_job_id"],
+                "status": "RUNNING",
+                "payload": {"conductorRequest": {
+                    "id": original["id"], "imagePath": original["image_path"],
+                    "targetRepo": original["target_repo"],
+                }},
+            },
+            {
+                "id": mirrored["last_art_job_id"],
+                "status": "DONE",
+                "artImageId": 555,
+                "createdAt": "2026-10-28T10:00:00Z",
+                "payload": {"conductorRequest": {
+                    "id": mirrored["id"], "imagePath": mirrored["image_path"],
+                    "targetRepo": mirrored["target_repo"],
+                }},
+            },
+        ]
+        report = audit_delivery(data, jobs, lambda *_: "media_unreachable")
+        self.assertEqual([row["status"] for row in report["results"]],
+                         ["running", "media_unreachable"])
+        self.assertEqual(report["delivered"], 0)
+        jobs[1]["payload"]["conductorRequest"]["imagePath"] = original["image_path"]
+        report = audit_delivery(data, jobs, lambda *_: self.fail("wrong job must not HEAD"))
+        self.assertEqual(report["results"][1]["status"], "job_identity_mismatch")
+
+    def test_delivery_audit_requires_both_real_job_ids(self):
+        data = yaml.safe_load(LEDGER.read_text())
+        data["requests"][1].pop("last_art_job_id")
+        with self.assertRaisesRegex(ValueError, "Unsubmitted"):
+            audit_delivery(data, [], lambda *_: self.fail("no HEAD"))
 
 
 if __name__ == "__main__":
