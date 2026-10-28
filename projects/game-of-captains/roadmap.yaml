@@ -465,8 +465,8 @@ tasks:
   - id: t-028
     milestone: m2
     title: "Build single-screen episodic dispatch board, fog-of-war redshirts and three encounter decks"
-    status: claimed
-    updated: '2026-10-28T03:12:30Z'
+    status: review
+    updated: '2026-10-28T03:20:00Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -480,6 +480,8 @@ tasks:
       2026-10-27 PT: Player-requested episode pacing refinement: replace 1-3-day redshirt quest contracts with one-round resolution, cap unique recruits at 8 originals per voyage including fallen identities, and remember tested per-skill stats across new voyages on this browser. Solar-system plot deck cards receive explicit captain/three-officer casting, seeded one- or two-seat capacity, skill forecasts and single-round results, preserving constellation/clone/venue story systems. Implementation branch worker/space-couch-t028-one-round-c31f, pending PR and full CI. No cloud-profile sync or deployed visual verification claimed.
 
       User-requested one-round Space Couch encounter and redshirt scarcity pass merged in silasfelinus/kind_robots PR #4366 (squash commit 93b31f7d793e5b65dc53126750b0439bc6f2ff05), with 19/19 head-SHA GitHub Actions workflows green, including seeded gameplay, TypeScript, full four-shard contract suite, changed-file formatting, layout and production-container build. Six starter originals and only two additional unique recruitment contracts per voyage; casualty history still counts against the eight-original cap. Per-person, per-skill field reports saved in independent local-browser knowledge ledger across new voyages, without changing v1 saves. Every expedition quest now resolves in one simultaneous round; planet, casino, Serendipity, constellation and nemesis plot cards require named 1 or occasionally 2 command officers from captain + selected three crew, with seeded skill forecast, persisted outcome, consequence and recap. Reused prior clone and 12-sign story. Remaining creative/release gaps: visually inspect actual deployed phone/tablet/desktop card layout and long-play pacing, verify persona/device persistence expectation, review plot narrative consequences and delivered portraits; no live deploy or final human approval claimed. Return t-028 to READY rather than DONE.
+
+      Additional Space Couch polish increment in worker/space-couch-t028-interleaved-quests-b72c: allow unfinished minor redshirt quests to reopen after mandatory main quest dispatch and between successive planetary, blue-giant casino and Serendipity plot cards; retain completed deck state and one-round timing. Remove fictional successful-outcome prose and unearned venue credit when a command team fails its seeded check, preserve the attempt record without advancing host consent or bar stage, and gate earned faction standings on successful outcomes while retaining legacy save credits. Added deterministic failure, side-quest, resume and UI contract regression tests. Pending PR/CI; no device screenshot or live deploy claimed.
     owner: worker
     claimed_by: 2026-10-28T031230Z-space-couch-t028-encounter-thread-b72c
     claimed_at: '2026-10-28T03:12:30Z'
