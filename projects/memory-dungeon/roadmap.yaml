@@ -892,12 +892,11 @@ tasks:
     claimed_at: '2026-10-27T19:16:02Z'
   - id: t-040
     title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
-    status: review
+    status: ready
     stakes: reversible
-    owner: worker
     passes: 0
     source_issue: "silasfelinus/kind_robots#4380"
-    updated: '2026-10-28T10:00:35Z'
+    updated: '2026-10-28T10:09:57.049Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4380 (https://github.com/silasfelinus/kind_robots/issues/4380), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4380`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -915,5 +914,5 @@ tasks:
       Related: [Memory Dungeon master roadmap #4136](https://github.com/silasfelinus/kind_robots/issues/4136), [UI repair PR #4379](https://github.com/silasfelinus/kind_robots/pull/4379), [direct-media audit](https://github.com/silasfelinus/conductor/actions/runs/40429786760).
 
       Scoped House atlas increment in review: immutable 6x6 row-major overlay and two Krea2 production requests. Do not close issue #4380 until both ArtJob IDs, delivered media, painted topology and rendered device acceptance are verified.
-    claimed_by: 2026-10-28T094619Z-memory-dungeon-t-040-f2a9c73d
-    claimed_at: '2026-10-28T09:46:19Z'
+
+      Partial t-040 increment merged: kind_robots#4384 and conductor#6766. Original/mirrored House atlas layers, stable HD-01..HD-36 overlays, two Krea2 request entries, orphan-job reconciliation and strict receipt audit are committed. Both requests remain pending without verified ArtJob IDs or delivered media. Next worker: verify the Auto Art Generate handoff, actual positive job IDs and media HEAD, then inspect painted 6x6 geometry and rendered 390/768/1440 gameplay. Issue kind_robots#4380 remains open; no human gate.
