@@ -672,11 +672,11 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-28T124746Z-memory-dungeon-t-034-c9a2
     claimed_at: '2026-10-28T12:47:46Z'
-    updated: '2026-10-28T12:47:46Z'
+    updated: '2026-10-28T12:52:02Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -742,6 +742,8 @@ tasks:
       Focused compact-console navigation patch prepared: World One header uses a separate phone title row; House exit controls stay in a bounded horizontally scrollable command strip with full accessible destination names. Target branch worker/memory-dungeon-t-034-compact-command-deck-a8c4d6; CI and final visual acceptance remain pending.
 
       2026-10-28 PT: Merged Kind Robots PR #4383 at 5416219e14c47e3f30028c7bb32238367cd6ebae after 20/20 checks and 15/15 workflows passed on exact head ed8619f1a47e54fcf672a4b4dcbfb554315d3648. World One phone header now reserves a full title row instead of crushing navigation controls, and original House passage buttons stay in a bounded horizontal command strip with short visible IDs and full accessible names. Changed only two Memory Dungeon components plus source-contract assertions. Initial Prettier and layout one-scroll failures were repaired before final green CI. No ArtJobs submitted; no deployment initiated or verified. Keep READY: actual rendered phone/tablet/desktop acceptance, dedicated painted House maps, additional game polish and full campaign remain unfinished.
+
+      Scoped checkpoint preview polish: each manual slot shows its saved reality, House or map location, reveal round and attempts, with original Briar hearts, accessible Save/Load labels, and contextual overwrite/restore confirmation. Four deterministic preview cases and UI wiring assertions added. Full console/art acceptance remains open.
 
   - id: t-035
     milestone: m3
