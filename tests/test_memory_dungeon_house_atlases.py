@@ -62,7 +62,8 @@ class HouseAtlasArtTests(unittest.TestCase):
         report = audit_delivery(data, jobs, head)
         self.assertEqual(report["total"], 2)
         self.assertEqual(report["delivered"], 2)
-        self.assertEqual({row["jobId"] for row in report["results"]}, {50365, 50366})
+        self.assertEqual({row["jobId"] for row in report["results"]},
+                         {row["last_art_job_id"] for row in data["requests"]})
         self.assertEqual({path for path, _ in calls}, set(EXPECTED.values()))
 
     def test_live_audit_does_not_conflate_render_and_delivery(self):
@@ -95,6 +96,20 @@ class HouseAtlasArtTests(unittest.TestCase):
         jobs[1]["payload"]["conductorRequest"]["imagePath"] = original["image_path"]
         report = audit_delivery(data, jobs, lambda *_: self.fail("wrong job must not HEAD"))
         self.assertEqual(report["results"][1]["status"], "job_identity_mismatch")
+
+    def test_auto_art_workflow_records_delivery_evidence_without_blocking_render(self):
+        workflow = yaml.safe_load(
+            (ROOT / ".github/workflows/auto-art-generate.yml").read_text()
+        )
+        steps = workflow["jobs"]["generate"]["steps"]
+        audit = next(step for step in steps if step.get("id") ==
+                     "memory_dungeon_house_atlas_delivery")
+        self.assertTrue(audit["continue-on-error"])
+        self.assertIn("--live", audit["run"])
+        self.assertIn("--report projects/memory-dungeon/art/HOUSE-ATLAS-STATUS.json",
+                      audit["run"])
+        self.assertIn("KR_API_TOKEN", audit["env"])
+        self.assertNotIn("--require-delivered", audit["run"])
 
     def test_delivery_audit_requires_both_real_job_ids(self):
         data = yaml.safe_load(LEDGER.read_text())
