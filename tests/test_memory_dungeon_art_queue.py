@@ -1,6 +1,6 @@
 """Regression contract for Memory Dungeon's interrupted 752-request art handoff."""
-import sys
 import shlex
+import sys
 import unittest
 
 import yaml
@@ -131,9 +131,7 @@ class MemoryArtQueueTests(unittest.TestCase):
         self.assertIn("carved gilded border", result)
         self.assertEqual(repair_text(result), (result, 0))
 
-
-
-    def test_house_atlas_workflow_submits_exact_queue_without_shell_escape_errors(self):
+    def test_house_atlas_submission_command_has_valid_shell_continuations(self):
         workflow = yaml.safe_load(
             (ROOT / ".github/workflows/auto-art-generate.yml").read_text()
         )
