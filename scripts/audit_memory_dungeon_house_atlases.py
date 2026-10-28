@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Validate the two dedicated House atlas requests and their durable ArtJob receipts.
+"""Validate the two dedicated House atlas ArtJobs and optional live media proof.
 
-This is a submission check, not proof of a completed render or accessible image.
+Offline checks establish submission only. --live audits ArtJob identity, render
+status, and fresh unauthenticated image HEAD responses; visual QA remains separate.
 """
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 import yaml
@@ -53,20 +55,62 @@ def validate(data: dict, require_jobs: bool = False) -> dict[str, int | None]:
     return receipts
 
 
+def audit_delivery(data: dict, jobs: list[dict], media_probe=None) -> dict:
+    """Read-only status and media proof for exactly these two atlas receipts.
+
+    Reuse the existing 752-image auditor's ArtJob identity and HEAD/Last-Modified
+    rules, but never mix these two newer requests into its immutable baseline.
+    """
+    from audit_memory_dungeon_art_delivery import audit_jobs
+
+    receipts = [
+        {"id": key, "jobId": job_id, "imagePath": EXPECTED[key]}
+        for key, job_id in validate(data, require_jobs=True).items()
+    ]
+    if media_probe is None:
+        return audit_jobs(receipts, jobs)
+    return audit_jobs(receipts, jobs, media_probe)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--require-jobs", action="store_true")
+    parser.add_argument("--live", action="store_true",
+                        help="read existing ArtJobs and HEAD-check their exact media URLs")
+    parser.add_argument("--report", type=Path,
+                        help="write machine-readable evidence (live mode only)")
+    parser.add_argument("--require-delivered", action="store_true",
+                        help="fail until both distinct ArtJobs and media HEADs prove delivery")
     args = parser.parse_args()
+    if (args.require_delivered or args.report) and not args.live:
+        parser.error("--report and --require-delivered require --live")
     try:
         data = yaml.safe_load(LEDGER.read_text(encoding="utf-8")) or {}
-        receipts = validate(data, require_jobs=args.require_jobs)
-    except (OSError, yaml.YAMLError, ValueError) as error:
-        print(f"::error::House atlas art ledger invalid: {error}")
+        receipts = validate(data, require_jobs=args.require_jobs or args.live)
+        if args.live:
+            import consume_art_queue as consumer
+            from reconcile_memory_dungeon_art_jobs import server_jobs
+
+            if not consumer.KR_API_TOKEN:
+                raise RuntimeError("KR_API_TOKEN unavailable; no live delivery claim")
+            report = audit_delivery(data, server_jobs())
+            if args.report:
+                args.report.parent.mkdir(parents=True, exist_ok=True)
+                args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+            print(json.dumps({key: value for key, value in report.items()
+                              if key != "results"}, sort_keys=True))
+            for row in report["results"]:
+                print(f"  {row['status']}: {row['id']} (ArtJob {row['jobId']})")
+            if args.require_delivered and report["delivered"] != len(EXPECTED):
+                return 2
+        else:
+            for key, job_id in receipts.items():
+                print(f"{key}: ArtJob {job_id if job_id else 'PENDING'}")
+            print("Submission contract verified; live render/media QA not checked.")
+        return 0
+    except (OSError, yaml.YAMLError, ValueError, RuntimeError) as error:
+        print(f"::error::House atlas audit blocked: {error}")
         return 1
-    for key, job_id in receipts.items():
-        print(f"{key}: ArtJob {job_id if job_id else 'PENDING'}")
-    print("Submission contract verified; render, media HEAD and visual QA are separate gates.")
-    return 0
 
 
 if __name__ == "__main__":

@@ -267,6 +267,47 @@ jobs:
         working-directory: conductor
         run: python scripts/audit_memory_dungeon_house_atlases.py --require-jobs
 
+      # Submission receipts alone cannot prove a render reached the media host.
+      # Probe the two NEW House atlas jobs separately from the immutable 752-job
+      # inventory. Missing media is expected while rendering; publish explicit
+      # machine-readable evidence instead of calling a green submission "done".
+      - name: Audit Memory Dungeon House atlas render and media delivery
+        id: memory_dungeon_house_atlas_delivery
+        if: ${{ steps.krhealth.outputs.up == 'true' && steps.memory_dungeon_reconcile.outcome == 'success' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          python scripts/audit_memory_dungeon_house_atlases.py --live \
+            --report projects/memory-dungeon/art/HOUSE-ATLAS-STATUS.json
+
+      # The broad render consumer can run for hours. Checkpoint the two-row
+      # status report now so an interrupted run still leaves durable evidence.
+      - name: Checkpoint House atlas delivery status before rendering
+        if: ${{ steps.memory_dungeon_house_atlas_delivery.outcome == 'success' }}
+        working-directory: conductor
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/memory-dungeon/art/HOUSE-ATLAS-STATUS.json
+          if git diff --staged --quiet; then
+            echo "House atlas delivery status unchanged."
+          else
+            git commit -m "chore: checkpoint House atlas media status [skip ci]"
+            pushed=false
+            for attempt in 1 2 3 4 5; do
+              if git push origin HEAD:main; then pushed=true; break; fi
+              echo "House atlas status checkpoint push race (attempt $attempt)."
+              git pull --rebase --autostash origin main || exit 1
+            done
+            if [ "$pushed" != true ]; then
+              echo "::error::Could not persist House atlas delivery evidence."
+              exit 1
+            fi
+          fi
+
       - name: Repair and requeue failed Kind Robots ArtJobs
         id: repair_failed
         if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
