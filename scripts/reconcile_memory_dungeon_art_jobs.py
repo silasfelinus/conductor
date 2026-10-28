@@ -24,6 +24,7 @@ import consume_art_requests as requests  # noqa: E402
 LEDGERS = (
     ROOT / "projects/art-prompts.yaml",
     ROOT / "projects/memory-dungeon/art/KNOWN-ART-REQUESTS.yaml",
+    ROOT / "projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml",
 )
 PREFIX = "memory-dungeon-saturate-"
 PROJECT = "memory-dungeon"
