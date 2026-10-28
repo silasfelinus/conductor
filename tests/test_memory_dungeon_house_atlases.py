@@ -110,6 +110,12 @@ class HouseAtlasArtTests(unittest.TestCase):
                       audit["run"])
         self.assertIn("KR_API_TOKEN", audit["env"])
         self.assertNotIn("--require-delivered", audit["run"])
+        checkpoint = next(step for step in steps if step.get("name") ==
+                          "Checkpoint House atlas delivery status before rendering")
+        self.assertIn("steps.memory_dungeon_house_atlas_delivery.outcome",
+                      checkpoint["if"])
+        self.assertIn("git add projects/memory-dungeon/art/HOUSE-ATLAS-STATUS.json",
+                      checkpoint["run"])
 
     def test_delivery_audit_requires_both_real_job_ids(self):
         data = yaml.safe_load(LEDGER.read_text())
