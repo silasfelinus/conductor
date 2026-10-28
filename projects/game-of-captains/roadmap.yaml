@@ -465,8 +465,8 @@ tasks:
   - id: t-028
     milestone: m2
     title: "Build single-screen episodic dispatch board, fog-of-war redshirts and three encounter decks"
-    status: claimed
-    updated: '2026-10-28T16:20:05Z'
+    status: review
+    updated: '2026-10-28T16:30:00Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -488,6 +488,8 @@ tasks:
       Continuation after merged Space Couch PR #4368 (0e332bed4502104b2b8f213e0c5a63c403cfac56, 19/19 CI green): authored encounter skill/crew spotlight pass in Kind Robots PR #4369. Episode opening teaser now matches the actual planet card; all 10 planet scenes and 8 casino incidents have theme-specific skill checks; the 20 Serendipity settings, 12 signs and 8 nemeses get consistent thematic requirements. A named crew specialist grants +12 chance on their connected planet plot; recurring successful two-person teams earn a capped +15 rapport bonus with Lead/Support labels and readable recaps. Full seeded regression and TypeScript/contract CI pending; no live device or art approval claimed.
 
       2026-10-27 PT: Two Space Couch gameplay increments merged and verified. PR #4368 squash 0e332bed4502104b2b8f213e0c5a63c403cfac56 with 19/19 workflow groups green: side redshirt quests remain playable between seeded one-round plot encounters, failed casino/Serendipity attempts no longer advance completed venue objectives or fabricate outcomes, and new adversarial resume tests cover the transition. PR #4369 squash dd5c9e2d4fa526fc920d61b00cbad1463a9fbabc with 18/18 groups green: opening teaser references the actual planet story, 10 planet and 8 casino encounters plus 20 Serendipity venues, 12 star signs and eight nemeses have coherent thematic skill checks; connected officer +12 specialty and prior successful lead/support pairing +5 per win (capped +15), with display and seeded regression. Main verified. Master issue #4182 updated. Remaining: real device screenshot review, original delivered art, full multivoyage adversarial narrative balance, and possible account-backed redshirt memory; task remains READY, not DONE or human-gated. No independently verified live production rollout.
+
+      Scoped episode dispatch follow-up: added a mission-by-mission casting comparison console with known skill forecasts, explicitly classified untried redshirt aptitudes, safe one-to-one crew swaps, clear and undo, and deterministic tests. No saved VoyageRun schema or encounter mutation. Implemented on worker/space-couch-t028-compare-cast-6bd4; pending PR and exact-head CI before merge. Final rendered device QA, painted images and long-play analysis remain for future increments.
     owner: worker
     claimed_by: 20261028T162005Z-space-couch-t028-tv-console-6bd4
     claimed_at: '2026-10-28T16:20:05Z'
