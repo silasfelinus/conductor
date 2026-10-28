@@ -1,4 +1,5 @@
 """Regression contract for Memory Dungeon's interrupted 752-request art handoff."""
+import shlex
 import sys
 import unittest
 
@@ -129,6 +130,31 @@ class MemoryArtQueueTests(unittest.TestCase):
         self.assertIn("cracked carved wood", result)
         self.assertIn("carved gilded border", result)
         self.assertEqual(repair_text(result), (result, 0))
+
+    def test_house_atlas_submission_command_has_valid_shell_continuations(self):
+        workflow = yaml.safe_load(
+            (ROOT / ".github/workflows/auto-art-generate.yml").read_text()
+        )
+        steps = workflow["jobs"]["generate"]["steps"]
+        runs = [
+            step["run"] for step in steps
+            if step.get("name") == "Submit Memory Dungeon House atlas ArtJobs"
+        ]
+        self.assertEqual(len(runs), 1)
+        lines = [line.strip() for line in runs[0].splitlines() if line.strip()]
+        self.assertEqual(len(lines), 3)
+        for line in lines[:-1]:
+            self.assertTrue(line.endswith("\\") and not line.endswith("\\\\"), line)
+        self.assertFalse(lines[-1].endswith("\\"))
+        command = " ".join(
+            line[:-1].strip() if line.endswith("\\") else line for line in lines
+        )
+        self.assertEqual(shlex.split(command), [
+            "python", "scripts/consume_art_requests_to_media.py",
+            "--live", "--submit-only", "--limit", "0",
+            "--queue-file", "projects/memory-dungeon/art/HOUSE-ATLAS-REQUESTS.yaml",
+            "--id-prefix", "memory-dungeon-saturate-house-atlas-",
+        ])
 
 
 if __name__ == "__main__":
