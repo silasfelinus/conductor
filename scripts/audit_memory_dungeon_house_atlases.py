@@ -42,9 +42,14 @@ def validate(data: dict, require_jobs: bool = False) -> dict[str, int | None]:
             job_id = int(raw_id) if raw_id is not None else None
         except (TypeError, ValueError) as error:
             raise ValueError(f"Invalid House atlas ArtJob ID: {key}") from error
-        if require_jobs and (job_id is None or job_id <= 0):
+        if job_id is not None and job_id <= 0:
+            raise ValueError(f"Invalid nonpositive House atlas ArtJob ID: {key}")
+        if require_jobs and job_id is None:
             raise ValueError(f"Unsubmitted House atlas ArtJob: {key}")
         receipts[key] = job_id
+    assigned = [job for job in receipts.values() if job is not None]
+    if len(assigned) != len(set(assigned)):
+        raise ValueError("Duplicate House atlas ArtJob ID")
     return receipts
 
 
