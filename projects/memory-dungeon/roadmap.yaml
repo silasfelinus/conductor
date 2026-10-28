@@ -882,3 +882,26 @@ tasks:
     updated: '2026-10-27T19:16:02Z'
     claimed_by: 2026-10-27T00:00:00Z-mdforge
     claimed_at: '2026-10-27T19:16:02Z'
+  - id: t-040
+    title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#4380"
+    updated: '2026-10-28'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4380 (https://github.com/silasfelinus/kind_robots/issues/4380), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4380`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      ### Gap confirmed October 27, 2026 PT
+      The **original Briar / Dark Briar 8×8 overworld** already has rendered, delivered map assets (ArtJobs 46117 and 45570). PR #4379 fixes UI hardcoding that kept showing `briar-camp.svg`.
+
+      The **House That Remembers and Unremembered House 6×6 dungeon maps** remain interactive colored number grids, not painted floorplans. The existing `house-interior.webp` render is a room backdrop, not a coherent 36-room overhead atlas. No verified dedicated House atlas ArtJob was found in the Memory Dungeon art ledgers. Do not mark this House-map requirement complete on the strength of the 752/752 *other* delivered requests.
+
+      ### Acceptance
+      1. Author **two original 6×6 top-down painterly maps**, one House and one mirrored House, each matching the existing immutable HD-01–HD-36 layout and paths/door orientations. Coordinate guide against `utils/memoryDungeon/house.ts` and `darkHouse.ts`. Render through normal durable Krea2 ArtJobs, record IDs, prompt, engine, image destination.
+      2. Deliver to predictable runtime media paths and verify actual image URLs via unauthenticated HEAD plus appropriate status, not just the request or `DONE`.
+      3. Integrate into `components/memory-dungeon/house-stage.vue` and `dark-house-stage.vue` beneath still-legible 6×6 clickable overlays; retain room orientation, disabled-state boundaries, reactivated 3D markers, keyboard focus, and SVG/design fallback on failed media.
+      4. Validate 390/768/1440-width one-screen layout, painted-map/room coordinate alignment, map visibility on first paint, save/resume compatibility and reduced-motion preference. No public-release human gate until art and adversarial QA complete.
+
+      Related: [Memory Dungeon master roadmap #4136](https://github.com/silasfelinus/kind_robots/issues/4136), [UI repair PR #4379](https://github.com/silasfelinus/kind_robots/pull/4379), [direct-media audit](https://github.com/silasfelinus/conductor/actions/runs/40429786760).
