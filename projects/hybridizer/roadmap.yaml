@@ -1,0 +1,172 @@
+project: hybridizer
+kind: software
+autonomous: true
+goal: >-
+  Build a beautiful one-screen hybrid creation laboratory in Kind Robots where
+  people can fuse any two illustrated ingredients, use prior hybrids as inputs,
+  browse shared permanent discoveries, add their own accessible art, and continue
+  playing while missing combinations are generated in the existing ArtJob queue.
+  Ship 200 curated starting ingredients, an audited 4000-image pre-generation
+  campaign, deterministic global pair matching, original hybrids with provenance,
+  accessible animation and status notifications; finish only after adversarial
+  functionality and rendered mobile/tablet/desktop checks and subjective design approval.
+notes_from_silas: |
+  2026-10-28 PT: New Conductor front-end project Hybridizer. Begin with 200 animals
+  plus playful extras (fruit such as banana and concepts such as zombie/vampire).
+  Curate 200 total initial concepts; about 4,000 pre-generated combinations initially.
+  Let players choose two concepts and trigger a fusion animation that reveals the
+  illustrated hybrid. Let users contribute images, share past matches and remix
+  already-hybridized creations; immediately reuse globally cached matches.
+  Generation misses run asynchronously through the existing artwork pipeline;
+  player remains able to play and receives a notification upon completion.
+  Create design renderings after project registration.
+  Clarification: Monsters are canonical Facet taxonomy SPECIES, not a separate
+  Hybridizer taxonomy. Preserve ANIMAL for real animals; fruits are OTHER with
+  groupKey fruit until a shared fruit taxonomy is explicitly introduced.
+  Full 200-starter catalog is STARTER-CATALOG.json. Existing 73 animal Facet IDs
+  are known but image delivery status is NOT verified.
+
+milestones:
+  - id: m1
+    title: "SHAPE — roster, concept art, data model"
+    weight: 20
+    status: in-progress
+  - id: m2
+    title: "BUILD — fusion laboratory, cache and art queue"
+    weight: 45
+    status: not-started
+  - id: m3
+    title: "ART — image coverage, authored hybrids and ingestion"
+    weight: 20
+    status: not-started
+  - id: m4
+    title: "POLISH — accessibility, adversarial tests and human acceptance"
+    weight: 15
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Register project, curate 200-starter taxonomy catalog and art-led design brief"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Bootstrap by explicit user request; register project and lifecycle,
+      reconcile 73 named existing ANIMAL Facets, supply 200 unique starters
+      and map monster concepts to the existing SPECIES taxonomy. Source images
+      must still be audited. Subsequent app work belongs to t-003 onward.
+  - id: t-002
+    milestone: m1
+    title: "Optional creative direction review"
+    status: needs-human
+    soft_gate: true
+    gate_reason: creative-approval
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      FOR SILAS: The draft 200-starter roster and initial fusion-lab visual
+      direction are in DESIGN-BRIEF.md and STARTER-CATALOG.json. Provide
+      creative changes if wanted. Nothing is blocked while agents build.
+  - id: t-003
+    milestone: m2
+    title: "Build art-led one-screen Hybridizer prototype in Kind Robots Admin"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      First implementation needs full-size concept art slots, two interactive
+      selection trays, fusion animation with reduced-motion alternative, a
+      large hybrid reveal, shared discovery browsing and a real playable flow.
+      Follow Kind Robots Admin route/tab convention, self-hosted UI verification,
+      and project placement sync. Avoid claiming demo art as actual ArtJobs.
+  - id: t-004
+    milestone: m2
+    title: "Persist global canonical unordered pairs and recursive fusion provenance"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Model deduplicated pair keys on stable input identities, composition
+      revision and model recipe, atomic claim/lookup and failure retry;
+      preserve lineage and make prior hybrids reusable ingredients. Two inputs
+      make 19,900 unique unordered starter pairs, not 4,000. Preserve
+      provenance to prevent cache poison and enforce art visibility.
+  - id: t-005
+    milestone: m2
+    title: "Connect ArtJob queue, background completion notification and missed-result retry"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Existing Krea2/Arthemy queue and ArtImage linkage, idempotent request,
+      bounded concurrency, retained status, polling plus optional in-app
+      notification; never block play or pretend a requested render is complete.
+  - id: t-006
+    milestone: m3
+    title: "Reconcile all 200 input Facets and audit real image availability"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Audit existing animal Facets and art paths, resolve duplicates and
+      aliases, create missing reusable Facets with canonical taxonomy.
+      Monster concepts (vampire, zombie, etc.) must be SPECIES. Do not create
+      an invented monster taxonomy; produce traceable ArtJobs for missing art.
+  - id: t-007
+    milestone: m3
+    title: "Pre-generate and verify curated 4,000 launch hybrids"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Bias coverage to strong readable animal x animal and oddball combinations
+      without cross-product explosion; schedule batches with immutable pair
+      keys and explicit art-workflow provenance. Verify each delivered image,
+      not a submitted prompt count. Human-visible progress against 4,000.
+  - id: t-008
+    milestone: m2
+    title: "Accept user-submitted ingredient images securely"
+    status: waiting
+    depends_on: t-004
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Auth/consent, ownership and visibility, allowed content, size and type
+      validation, abuse controls, safety review, provenance and rights;
+      user art must not silently become a public reusable input.
+  - id: t-009
+    milestone: m4
+    title: "Adversarial QA, full-width layout review and final subjective acceptance"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Test cache races, A+B equivalence B+A, recursive lineage, unavailable
+      artwork, auth, private uploads, failed/retried jobs, stale notifications,
+      reduced motion, 390/768/1440/XL UI; no fake image completeness.
+      Move to final human design verdict only after all agent work clears.
+  - id: t-010
+    milestone: m4
+    title: "Authorize external public release separately"
+    status: needs-human
+    gate_reason: publish
+    gate_human: true
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    note: >-
+      FOR SILAS: Only after all artwork, engineering and tests complete,
+      authorize promotion from the Admin prototype to the public Play
+      experience. No public publication was authorized by project creation.
