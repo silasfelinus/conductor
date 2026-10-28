@@ -465,8 +465,8 @@ tasks:
   - id: t-028
     milestone: m2
     title: "Build single-screen episodic dispatch board, fog-of-war redshirts and three encounter decks"
-    status: review
-    updated: '2026-10-28T02:15:00Z'
+    status: ready
+    updated: '2026-10-28T02:41:00Z'
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -478,9 +478,8 @@ tasks:
       2026-10-27 PT Space Couch episodic dispatch console first playable increment MERGED in kind_robots PR #4356 (b387db38ac2eec6b8177af8f42925404d0c5bfd8). All 19/19 PR workflow groups completed green (TypeScript, full contract, gameplay slice, format, layout contract, Docker container build). Implemented one-screen redshirt/crew/captain card assignments with classified redshirt skills until first encounter, 1-3-day majority-one-day contracts, seeded simultaneous resolution and consequences, authored planet inciting cards, unique planet/casino/Serendipity encounter decks, every second-episode persistent nemesis card, faction-conditioned ending codas and tune-in-next-week stingers; saved VoyageRun v1 compatible. Next agent-owned work: live rendered phone/tablet/desktop cross-width assessment once manually deployed, test a whole episode from fresh save and after resume, audit visual/card legibility, balance and mission-result prose consistency, extend deck variations and finale conditions and adversarially test long-run pacing. The app PR merged without a production deploy; do not mark the full t-028 creative or device-test objective complete until these checks pass. Do not park at final human approval yet.
 
       2026-10-27 PT: Player-requested episode pacing refinement: replace 1-3-day redshirt quest contracts with one-round resolution, cap unique recruits at 8 originals per voyage including fallen identities, and remember tested per-skill stats across new voyages on this browser. Solar-system plot deck cards receive explicit captain/three-officer casting, seeded one- or two-seat capacity, skill forecasts and single-round results, preserving constellation/clone/venue story systems. Implementation branch worker/space-couch-t028-one-round-c31f, pending PR and full CI. No cloud-profile sync or deployed visual verification claimed.
-    owner: worker
-    claimed_by: 2026-10-28T020930Z-couch-rounds-c31f
-    claimed_at: '2026-10-28T02:09:30Z'
+
+      User-requested one-round Space Couch encounter and redshirt scarcity pass merged in silasfelinus/kind_robots PR #4366 (squash commit 93b31f7d793e5b65dc53126750b0439bc6f2ff05), with 19/19 head-SHA GitHub Actions workflows green, including seeded gameplay, TypeScript, full four-shard contract suite, changed-file formatting, layout and production-container build. Six starter originals and only two additional unique recruitment contracts per voyage; casualty history still counts against the eight-original cap. Per-person, per-skill field reports saved in independent local-browser knowledge ledger across new voyages, without changing v1 saves. Every expedition quest now resolves in one simultaneous round; planet, casino, Serendipity, constellation and nemesis plot cards require named 1 or occasionally 2 command officers from captain + selected three crew, with seeded skill forecast, persisted outcome, consequence and recap. Reused prior clone and 12-sign story. Remaining creative/release gaps: visually inspect actual deployed phone/tablet/desktop card layout and long-play pacing, verify persona/device persistence expectation, review plot narrative consequences and delivered portraits; no live deploy or final human approval claimed. Return t-028 to READY rather than DONE.
 
   - id: t-029
     milestone: m3
