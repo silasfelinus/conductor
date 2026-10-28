@@ -527,3 +527,32 @@ tasks:
       - State exactly which art jobs were queued, completed, reviewed, exported and deployed. No "submitted" claim without a real job/ledger reference.
 
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
+  - id: t-027
+    title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#4347"
+    updated: '2026-10-28'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4347 (https://github.com/silasfelinus/kind_robots/issues/4347), opened by @silasfelinus on 2026-10-27. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4347`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      ## Save the Plumber Maker: console-grade level creation and community lifecycle
+
+      ### Intended experience
+      A one-screen console-style Level Maker from the Save the Plumber title screen, with icon-first categorized tools, full-size playable stage/editor preview, contextual settings, bounded scrolling for object catalog, keyboard and touch editing, undo/redo, clear and copy, local drafts, browse, edit, import and export/share by link. Shared levels must launch directly in a playable run using the real Save the Plumber physics and assets, not a dead preview, and never mutate campaign save slots. Validated level serialization with schema version and limits; title/creator/theme/darkness as settings. Completed levels have rate/review UI and meaningful sorting. Player ratings must be attributed and persisted on the server before any claim of community-wide average.
+
+      ### Complexity target, and truthful parity report
+      Audit against Super Mario Maker 1 & 2: terrain, slopes, pipes/subareas, enemies, powerups, bosses, events, switches, theme/time variants, vertical stages, auto-scroll, clear conditions, checkpoints, upload/discovery/rating, edit-test iteration. Audit against Geometry Dash 2.2: grid editing, selection/grouping, copy/paste, undo/redo, keyframe/trigger/camera/effects scripting, event timing, playtesting, online publishing/rating. Show shipped, partial, absent, and planned separately. Never claim parity on tile count alone. Maintain a shared capability catalog so the maker evolves in lockstep with the runtime mechanic registry.
+
+      ### Slices
+      1. **Playable foundation**: typed/versioned schema + strict validator; palette automatically generated from parser/engine-supported symbols; local save/list/load/edit, undo/redo; deep-link share/import, full real-engine playtest; menu navigation + bounded console maker. Source-level tests covering import attacks, duplicate starts/goals, tile validation and campaign isolation.
+      2. **Community**: authenticated ownership, user-friendly public sharing workflow with stable IDs, update/version/fork and deletion permissions, ratings (one per account per version), comments, completion/attempt metrics, browse/search/filter moderation/reporting, spoiler-aware discovery, server-side validation and rate limiting. Explicit public publication gate.
+      3. **Advanced toolcraft**: drag painting, rectangle/fill/multi-select/copy, controller/touch editing, selection properties, sub-area/vertical/secret-exit editor, slopes and all runtime mechanics, instrumentation, automatic fair-play / softlock checks, clear-proof publishing gate, template and sample levels.
+      4. **Complexity milestones**: specific gap matrix against Mario Maker 1/2 and Geometry Dash 2.2; aim for comparable creative depth but an original Save the Plumber identity. New runtime mechanics must register editor tools, validation, playable tests, and serialization migrations before marking maker parity.
+
+      ### Acceptance
+      Persist and restore three drafts without corrupting campa
+
+      [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4347]
