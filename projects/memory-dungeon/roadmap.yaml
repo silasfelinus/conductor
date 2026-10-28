@@ -337,11 +337,11 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Author floor story, recurring cast and consequential decisions"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-10-28T19:50:46Z-memory-t009-a7f2c
     claimed_at: '2026-10-28T19:50:46Z'
-    updated: '2026-10-28T19:50:46Z'
+    updated: '2026-10-28T19:54:14.084Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -402,6 +402,8 @@ tasks:
       Focused House loss-position invariant repair: preserve the last valid Briar overworld coordinate on House combat/chamber defeat, both live and interrupted-save paths. Add regression coverage for House at Rootbound Vault and outside-House camp retreat. Kind Robots PR and exact-head CI follow; full three-floor story and art remain active.
 
       2026-10-28 12:24 PM PT: Merged Kind Robots PR #4398 at 78b9b2f8052a9f1345658a709c751b88ed56a860 after all 19 exact-head checks and 14 Actions workflows passed on b75c87cc2010a775c96af6884c5325c201c324c8. House combat and Echo Chamber last-heart defeats now preserve the saved Briar exterior coordinate instead of silently teleporting from Rootbound Vault to Briar Camp, for live timers and interrupted-save recovery. Tests cover both paths, non-House resets and idempotent reload. Master issue #4136 comment 6478442427 records evidence. No new ArtJobs or deploy. Keep t-009 READY for three-floor story, additional loss continuations, painted House maps and rendered gameplay acceptance; not For Human Gate.
+
+      Scoped adversarial continuity fix prepared: lock the House Hearth's earned epilogue lens when the player resolves HD-35, preserve it after backtracking, and migrate legacy completed House saves on restore. Target Kind Robots PR and exact-head CI verification follow; three-floor story and art remain open.
   - id: t-010
     milestone: m3
     title: "Ship riddle and logic minigame framework plus authored puzzle pack"
