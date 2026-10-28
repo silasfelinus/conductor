@@ -892,11 +892,11 @@ tasks:
     claimed_at: '2026-10-27T19:16:02Z'
   - id: t-040
     title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4380"
-    updated: '2026-10-28T11:42:06Z'
+    updated: '2026-10-28T11:52:06Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4380 (https://github.com/silasfelinus/kind_robots/issues/4380), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4380`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -920,6 +920,8 @@ tasks:
       Focused House atlas ArtJob pipeline fix prepared: correct doubled shell line-continuation escapes in Auto Art Generate and add a parsed-workflow command regression test. Await exact-head CI and PR merge. Two ArtJob receipts and painted-media acceptance remain unverified; task and issue must stay active.
 
       2026-10-28 PT partial House atlas production unblock: merged conductor PR #6767 (a809c8b4ee950022388668e1a2132039f975b6de) repairing doubled Bash line continuations in Auto Art Generate, with workflow-token regression test. Exact-head Worker PR CI #40675772650 passed 3110 tests (53 skipped), Security Audit #40675772595 and final handoff #40675834313 passed. Auto Art Generate #40676293032 passed House atlas submission/checkpoint and two-ID receipt audit. Original 6x6 House Krea2 ArtJob #50365 and mirrored House Krea2 ArtJob #50366 are durably recorded in HOUSE-ATLAS-REQUESTS.yaml. Both remain pending, with rendered media HEAD, 36-room topology and 390/768/1440 device acceptance unverified. Keep issue kind_robots#4380 open, project active, no human gate.
+
+      Focused House atlas delivery-evidence audit is ready for CI: reuse ArtJob identity and strict image HEAD proof, publish two-row status in Auto Art Generate, and keep issue #4380 open pending actual painted art and device QA.
     owner: worker
     claimed_by: 2026-10-28T114206Z-memory-dungeon-t-040-d4c9
     claimed_at: '2026-10-28T11:42:06Z'
