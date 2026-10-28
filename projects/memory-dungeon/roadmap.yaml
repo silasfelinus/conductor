@@ -892,12 +892,12 @@ tasks:
     claimed_at: '2026-10-27T19:16:02Z'
   - id: t-040
     title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
-    status: claimed
+    status: review
     stakes: reversible
     owner: worker
     passes: 0
     source_issue: "silasfelinus/kind_robots#4380"
-    updated: '2026-10-28T09:46:19Z'
+    updated: '2026-10-28T10:00:35Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4380 (https://github.com/silasfelinus/kind_robots/issues/4380), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4380`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -913,5 +913,7 @@ tasks:
       4. Validate 390/768/1440-width one-screen layout, painted-map/room coordinate alignment, map visibility on first paint, save/resume compatibility and reduced-motion preference. No public-release human gate until art and adversarial QA complete.
 
       Related: [Memory Dungeon master roadmap #4136](https://github.com/silasfelinus/kind_robots/issues/4136), [UI repair PR #4379](https://github.com/silasfelinus/kind_robots/pull/4379), [direct-media audit](https://github.com/silasfelinus/conductor/actions/runs/40429786760).
+
+      Scoped House atlas increment in review: immutable 6x6 row-major overlay and two Krea2 production requests. Do not close issue #4380 until both ArtJob IDs, delivered media, painted topology and rendered device acceptance are verified.
     claimed_by: 2026-10-28T094619Z-memory-dungeon-t-040-f2a9c73d
     claimed_at: '2026-10-28T09:46:19Z'
