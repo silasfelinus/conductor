@@ -12595,3 +12595,9 @@ Worker pattern: good test depth and honest "procedural shapes, not painted art" 
 - `worker/eod-art-submission-api-host-20261026-f4c2`: third appearance of the retired `KR_BASE_URL` → `kind-robots.vercel.app` change (see 2026-10-27, 2026-10-28). Probe: `kindrobots.org/api/health` 200, `kind-robots.vercel.app/api/health` 503. Rejected; branch force-deleted via branch-janitor.
 - `worker/memory-dungeon-t-034-claim-key-fix-7c9a2e`: three-dot diff vs main is empty; main's t-034 already carries a single clean `updated` key. Superseded; branch force-deleted via branch-janitor.
 - No Silas action needed. If the origin switch is truly wanted, he should say so in CONTROL.md, since the canonical-origin test pins it.
+
+## 2026-10-28 — Agent (branch-medic): stranded-branch triage
+- `claude/focused-johnson-wybuwp-close` (conductor): close commit for interface-vision/t-150, already `done` on main (kind_robots#4238). Superseded; direct ref delete failed, `branch-janitor.yml` dispatched with `force_delete_branches`.
+- kind_robots `worker/space-couch-t023-character-voices-b7f3` and `worker/space-couch-t024-redshirts-travel-e62b` back game-of-captains t-023 (review) and t-024 (claimed): live task branches, left alone.
+- kind_robots `claude/forge-facets`, `claude/forge-space-couch-act-three`, `worker/play-tab-space-couch-prom-of-doom-20261026`: 87–138 commits behind main with no PR; main has since merged much overlapping Space Couch/Prom of Doom work. Not confirmed superseded (shallow clone, no merge base), so left reported for a session with full history. Silas: say the word if these can be force-deleted.
+- Note: `select_role.py` took >10 min in this sandbox on first run (completed eventually).
