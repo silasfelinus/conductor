@@ -11,3 +11,13 @@
 **Kaizen:** Follow-up t-024 adds real deployment, Yearbook/Forge cards, ArtJob provenance and adversarial tests without inflating authored coverage. A future Forge progress panel should separately report authored, queued, rendered, attached and playtested counts.
 
 **PR evidence:** Conductor #6791 (38da5c2), Kind Robots #4452 (8e2a21a). No publication, production deploy, irreversible data changes or human acceptance claimed.
+
+## 2026-10-29 PT | Reviewer | comet-city-academy/t-002 | 48 power openings, lairs and lieutenants
+
+**Decision:** approved and merged Conductor #6793 (squash 6bd4a01). Scoped planning/canon content, reversible, all 26 head checks green, no comments outstanding.
+
+**What was good:** Authored-vs-built is stated explicitly (96 scenes and 48 lieutenants are not marked playable); new Prom tasks t-025/t-026 are correctly `waiting` on t-021/t-016; the six-stage Crossfire backbone is preserved and no saves/identities are rewritten.
+
+**What to improve:** Roadmap notes grow with each scoped pass; keep new `notes_from_silas` entries to a pointer plus the bible file name.
+
+**Kaizen:** t-027 added to keep a per-count authored/queued/rendered/playtested tracker so progress claims never conflate stages.

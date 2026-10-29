@@ -607,3 +607,16 @@ tasks:
       each; a lieutenant may be defeated, recruited or abandon the
       villain on a scripted basis. Reuse canonical identityCampaignStages
       lookup and link actual validated ArtJobs.
+  - id: t-027
+    milestone: m3
+    title: "Track 48 openings, lairs and lieutenants as authored / queued / rendered / playtested counts"
+    status: waiting
+    depends_on: [t-021]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Add a small generated status table (one count per stage, per
+      content kind) so progress reports never conflate authored text
+      with built maps, rendered art or playtested combat. Reviewer
+      kaizen from PR #6793; claims nothing is playable yet.
