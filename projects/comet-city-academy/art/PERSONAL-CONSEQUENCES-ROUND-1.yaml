@@ -4,6 +4,14 @@
 # 2026-10-27: 48 prompts opened "superhero comic panel at", which the server contract rejects
 # [format-vocabulary] at claim (ArtJobs 47984-48125, step 3). CI preflight had no kind_robots checkout,
 # so only the negation mirror ran. Reworded to "superhero scene at"; job ids cleared to resubmit.
+# 2026-10-29: Silas flagged these as obviously substandard. The 48 student prompts were stitched from
+# canon-table fields ("<name> as <alias> ... finds evidence of <sentence>; <witness> is present as an
+# independent witness"): a name, an abstract plot clause and no visible person, prop or place, and the
+# suffix ordered "insignia" on a cfg-1 engine. Rewritten as concrete scenes (the character's look from
+# their IDENTITY-OUTCOMES partner prompt, the case's location, the evidence as a physical prop, the witness
+# described rather than named) and pushed onto the same pending ArtJobs with /api/art/queue/<id>/edit,
+# seed kept. The hero/villain rows here rendered from the same template; their asset paths are
+# re-commissioned with concrete prompts by IDENTITY-OUTCOMES-ROUND-1.yaml, which supersedes them.
 round: prom-of-doom-personal-consequences-20261027
 project_slug: comet-city-academy
 designer: Original superhero identity story outcomes
@@ -16,10 +24,10 @@ lanes:
   label: Krea 2 three-persona consequences
   engine: krea2
   prompt: prose
-  suffix: Original hand-painted 2D comic illustration for an emotionally mature, non-explicit superhero ensemble.
-    Expressive adult faces, believable physical blocking, distinct original uniforms and insignia, vivid urban neon,
-    bold ink contours, lifelike perspective. All visible surfaces bare and unmarked, contemporary city architecture,
-    PG-13 superhero action.
+  suffix: Hand-painted superhero comic illustration with ink outlines, saturated color, dynamic foreground action,
+    colorful original costumes and expressive adult faces in real city streets and interiors. Every person is a
+    fully clothed adult. One wide cinematic scene with separate bodies and hands, accurate anatomy and perspective,
+    every surface bare and unmarked.
 subjects:
 - key: pod-personal-accident-fire-student
   lane: krea2
@@ -28,10 +36,13 @@ subjects:
   asset: comet-city-academy/identities/accident-fire/outcomes/student
   size: 1344x768
   seed: 982000
-  prompt_prose: 'Original cinematic superhero scene at Neon Row kitchen: Dez Okafor as Hotplate, an adult academy
-    student with expressive visible face, finds evidence of the gas inspection ledger was signed after the explosion;
-    Marta Bell, the food-cart union steward is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A broad-shouldered young man with dark brown skin, short black curls and a faint orange glow under
+    the skin of his forearms, wearing a worn navy academy coat over a white line-cook shirt and thick quilted oven
+    mitts, crouches in the scorched back kitchen of a Neon Row food truck at night beside a blackened, split-open
+    gas pipe, holding a soot-stained inspection logbook open in his mitts beside a warped, melted wall clock. In
+    the doorway stands a stocky middle-aged food-cart union steward with grey-streaked black hair, a quilted vest
+    and a whistle on a lanyard, one hand over her mouth. Pink and blue neon spills through the serving hatch, and
+    his forearms glow orange. Medium-wide shot at counter height.
   jobs:
     krea2: 49842
   art:
@@ -80,10 +91,13 @@ subjects:
   asset: comet-city-academy/identities/accident-air/outcomes/student
   size: 1344x768
   seed: 982003
-  prompt_prose: 'Original cinematic superhero scene at Comet Airfield hangar: Pip Marchetti as Windsock, an adult
-    academy student with expressive visible face, finds evidence of the lightning rods were intentionally disconnected;
-    Raul Chen, the runway marshal is present as an independent witness. Crisp compositional depth, saturated inked
-    art, every surface bare and unmarked.'
+  prompt_prose: A small wiry young woman with light olive skin, a windblown dark brown pixie cut and a pale branching
+    lightning scar down her left arm, wearing a faded red skydiving jumpsuit tied at the waist over a grey academy
+    hoodie, hovers a few feet above the concrete floor of a vast dim aircraft hangar during a thunderstorm, holding
+    up the cleanly cut end of a thick braided copper lightning cable beside a steel roof column, the fresh cut bright
+    on the copper. Below her stands a lean middle-aged runway marshal with a grey crew cut, an orange high-visibility
+    vest and two lit marshalling wands lowered at his sides, staring up at the cable. Rain streams past the open
+    hangar doors and white lightning flashes over a parked propeller plane. Low-angle wide shot.
   jobs:
     krea2: 49843
   art:
@@ -132,10 +146,13 @@ subjects:
   asset: comet-city-academy/identities/accident-earth/outcomes/student
   size: 1344x768
   seed: 982006
-  prompt_prose: 'Original cinematic superhero scene at Old Quarry tunnel: Tobias "Tug" Brannigan as Pebble, an adult
-    academy student with expressive visible face, finds evidence of a day-six stop-work order hides a private bank
-    entrance; Selma Pike, the rescue diver is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A stocky barrel-chested young man with ruddy pale skin, a shaved head, a thick red beard and grey
+    granite patches across his knuckles and cheekbones, wearing a mud-stained orange tunnel-crew vest over a navy
+    academy sweatshirt, shoulders aside a fallen slab of rock in a half-flooded quarry tunnel lit by work lamps,
+    uncovering a polished steel vault door set into the raw stone behind a torn plywood barrier. Waist-deep in the
+    dark water beside him, a broad-shouldered rescue diver in her forties with a black wetsuit, a mask pushed up
+    on her forehead and a coil of yellow rope on one shoulder, shines a dive torch across the gleaming door. Cold
+    white lamp light on dripping rock. Wide shot at water level.
   jobs:
     krea2: 49844
   art:
@@ -185,10 +202,13 @@ subjects:
   asset: comet-city-academy/identities/accident-water/outcomes/student
   size: 1344x768
   seed: 982009
-  prompt_prose: 'Original cinematic superhero scene at Comet Power spillway: Marisol Reyes as Splash, an adult academy
-    student with expressive visible face, finds evidence of cooling-pond discharge reports were altered; Greta Solis,
-    the family attorney is present as an independent witness. Crisp compositional depth, saturated inked art, every
-    surface bare and unmarked.'
+  prompt_prose: A slim young woman with warm tan skin, long black hair that is always dripping wet and faint blue
+    ripples of gill skin along her throat, wearing a navy academy blazer over a damp turquoise swim top, kneels
+    at the edge of a concrete power-plant spillway at dusk, holding up a glass jar of cloudy glowing green water
+    from the outflow pipe while dead silver fish drift in the foam below. Beside her stands a tall silver-haired
+    attorney in her sixties in a charcoal trench coat, clutching a leather briefcase to her chest and leaning in
+    to study the jar. Cooling towers steam against an orange sky and sodium lamps glint on wet concrete. Medium-wide
+    shot from the spillway rail.
   jobs:
     krea2: 49845
   art:
@@ -237,10 +257,13 @@ subjects:
   asset: comet-city-academy/identities/accident-discipline/outcomes/student
   size: 1344x768
   seed: 982012
-  prompt_prose: 'Original cinematic superhero scene at Narrows satellite observatory: Kenji Watanabe-Cole as Bokken,
-    an adult academy student with expressive visible face, finds evidence of a defense contractor planted the orbital
-    fragment; Yuki Dela Cruz, the sparring partner is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A lean young man with light brown skin, a short black topknot and a small pale starburst scar on
+    his left temple, wearing a navy kendo hakama and white practice jacket under an academy windbreaker, stands
+    under the open dome of a hilltop observatory at night, lifting the lid of a dull grey military steel crate with
+    a broken seal to reveal a dull grey meteor fragment glowing faintly blue in foam packing. Next to him stands
+    a compact young woman with tan skin and a high black ponytail in a white sparring jacket, a bamboo practice
+    sword over her shoulder and her eyes narrowed at the crate. Starlight falls through the dome slit and the great
+    telescope looms overhead. Medium-wide shot.
   jobs:
     krea2: 49846
   art:
@@ -289,10 +312,13 @@ subjects:
   asset: comet-city-academy/identities/accident-genius/outcomes/student
   size: 1344x768
   seed: 982015
-  prompt_prose: 'Original cinematic superhero scene at Morrow Pharmaceuticals cold room: Ottoline "Otto" Fairweather
-    as Beaker, an adult academy student with expressive visible face, finds evidence of the unlabeled beaker belonged
-    to a discontinued memory trial; Bea Ruiz, the lab custodian is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A tall gangly young woman with freckled pale skin, a frizzy copper-red bun stuck through with pencils
+    and faint green stains on her fingertips, wearing an oversized lab coat with scorched cuffs over a mustard academy
+    sweater, stands in a frosted pharmaceutical cold room with frost on her eyelashes, holding a small blank glass
+    beaker of faintly glowing green liquid beside an open freezer drawer packed with dozens of identical beakers.
+    Behind her, a short older lab custodian with brown skin, a grey bun and a blue work uniform, holds the heavy
+    insulated door open with one hip, a mop in her hand and worry on her face. Pale blue refrigeration light on
+    steel shelving, breath clouding in the cold. Medium shot.
   jobs:
     krea2: 49847
   art:
@@ -341,10 +367,13 @@ subjects:
   asset: comet-city-academy/identities/accident-birthright/outcomes/student
   size: 1344x768
   seed: 982018
-  prompt_prose: 'Original cinematic superhero scene at Valcourt family trophy room: Augustin "Gus" Valcourt-Hale
-    as Hand-Me-Down, an adult academy student with expressive visible face, finds evidence of a lightning rig was
-    hidden behind grandfather''s medals; Nico Vale, the estate archivist is present as an independent witness. Crisp
-    compositional depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A tall slim young man with pale skin, slicked-back blond hair and a narrow face, wearing a pressed
+    navy academy blazer, with an old faded crimson-and-gold cape fused to his back at the shoulders and trailing
+    to the floor, stands in a dark wood-panelled family trophy room, swinging open a glass display case of old gold
+    medals to reveal a tangle of copper coils and a sparking capacitor rig hidden in the wall behind them, the crimson
+    hem of his cape lit by the sparks. Beside him, a thin elderly estate archivist with brown skin, white hair,
+    half-moon spectacles and white cotton gloves, holds a brass lamp up toward the hidden machinery. Warm lamp light
+    against cold blue sparks. Medium-wide shot.
   jobs:
     krea2: 49848
   art:
@@ -393,10 +422,13 @@ subjects:
   asset: comet-city-academy/identities/accident-social/outcomes/student
   size: 1344x768
   seed: 982021
-  prompt_prose: 'Original cinematic superhero scene at Old Market broadcast kiosk: Fen Halloran as Busker, an adult
-    academy student with expressive visible face, finds evidence of a signal booster altered every busker''s voiceprint;
-    Zadie Moon, the street percussionist is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A lanky young adult with pale freckled skin, a shaggy dyed-green mullet and silver rings in both
+    ears, wearing a patched denim jacket covered in safety pins over an academy t-shirt, with a battered acoustic
+    guitar on a strap, pries open the back panel of a cramped wooden broadcast kiosk in an old covered market at
+    night, pulling out a humming black signal box with blinking green lights and a nest of fresh wires. Beside them
+    stands a tall dark-skinned street percussionist with grey locs and a beaded vest, a battered snare drum slung
+    at her hip and drumsticks in one fist, leaning in to look. String lights hang over shuttered stalls and the
+    box casts a cool green glow. Medium shot at eye level.
   jobs:
     krea2: 49849
   art:
@@ -445,10 +477,13 @@ subjects:
   asset: comet-city-academy/identities/mutant-fire/outcomes/student
   size: 1344x768
   seed: 982024
-  prompt_prose: 'Original cinematic superhero scene at Mutation Ministry archives: Ruby Szabo as Tinder, an adult
-    academy student with expressive visible face, finds evidence of the copied memory is stored as an active government
-    file; Darla Finch, the registry clerk is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A petite young woman with fair skin, soot-smudged freckles and short ember-red hair with small gold
+    flames flickering at the tips, wearing a charcoal fire-resistant academy jumpsuit and a red bandana around her
+    neck, stands between towering grey filing cabinets in a basement government archive, holding open a thick manila
+    folder with a clipped school photograph of her younger self, the flames at the tips of her hair flaring brighter.
+    Beside her stands a plump middle-aged registry clerk with pale skin, a grey cardigan, cat-eye glasses on a chain
+    and a ring of keys, shining a flashlight on the folder and glancing back toward the door. Flickering fluorescent
+    light and deep shadows down the aisle. Medium shot.
   jobs:
     krea2: 49850
   art:
@@ -497,10 +532,13 @@ subjects:
   asset: comet-city-academy/identities/mutant-air/outcomes/student
   size: 1344x768
   seed: 982027
-  prompt_prose: 'Original cinematic superhero scene at Garment District feather mill: Corvin Ashe as Fledgling,
-    an adult academy student with expressive visible face, finds evidence of designer capes contain feathers plucked
-    from captive mutants; Evelyn Moss, the union tailor is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A tall thin young man with light brown skin, black curls, rows of dark grey feathers along both
+    forearms and large folded dark grey wings rising from his shoulder blades, wearing an oversized black overcoat
+    slit at the back for his wings and a knitted academy scarf, stands in a dim garment-district workshop among
+    rows of sewing machines, lifting the lining of a luxurious black feathered designer cape on a dress form to
+    uncover grey feathers identical to his own, his wings half spread in shock. Beside him, a small elderly union
+    tailor with dark brown skin, a measuring tape around her neck and a pincushion on her wrist, holds open a burlap
+    sack spilling the same grey feathers. Dusty shafts of light fall from high windows. Medium-wide shot.
   jobs:
     krea2: 49851
   art:
@@ -549,10 +587,14 @@ subjects:
   asset: comet-city-academy/identities/mutant-earth/outcomes/student
   size: 1344x768
   seed: 982030
-  prompt_prose: 'Original cinematic superhero scene at Subway Seismic Institute: Hattie Nkemelu as Tremor, an adult
-    academy student with expressive visible face, finds evidence of the childhood seismograms track hattie''s every
-    step; Dr. Leena Anwar, the field geologist is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A seven-and-a-half-foot-tall broad young woman with deep brown skin, close-cropped natural hair
+    and smooth slate-grey mineral plates along her cheekbones, shoulders and forearms, wearing a custom-tailored
+    oversized academy blazer and wide grey trousers, stands in a cramped underground lab beside a subway tunnel,
+    staring at a long roll of seismograph paper spilling from a clattering machine, its jagged ink line jumping
+    in time with her heavy footsteps on the concrete. Beside her, a lean South Asian field geologist in her fifties
+    with a grey streak in her black hair, a canvas field jacket and a rock hammer on her belt, holds the paper up
+    to the lamp. A subway train blurs past the window behind them. Warm desk lamp against cold tunnel light. Medium-wide
+    shot.
   jobs:
     krea2: 49852
   art:
@@ -601,10 +643,13 @@ subjects:
   asset: comet-city-academy/identities/mutant-water/outcomes/student
   size: 1344x768
   seed: 982033
-  prompt_prose: 'Original cinematic superhero scene at East Harbor fish market: Ilya Sorokin-Baptiste as Guppy,
-    an adult academy student with expressive visible face, finds evidence of runoff from a luxury aquarium is killing
-    nursery shoals; Papa Luc, the fishing co-op leader is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A lean young man with pale olive skin, short wet sandy curls, gill slits behind both ears and webbed
+    fingers, wearing a dripping dark blue wetsuit under an unbuttoned academy blazer, crouches waist-deep in the
+    shallows under a wooden fish-market pier at dawn, cupping a handful of tiny dead silver fry beside a sleek outflow
+    pipe pouring cloudy blue water from a glass-walled luxury aquarium tower on the shore. Kneeling on the pier
+    above him, a heavyset old fisherman with weathered brown skin, a white beard, rubber overalls and a knit cap,
+    reaches down with an empty bucket. Pink dawn light, wheeling gulls and crates of ice on the pier. Low wide shot
+    from the water.
   jobs:
     krea2: 49853
   art:
@@ -654,10 +699,12 @@ subjects:
   asset: comet-city-academy/identities/mutant-discipline/outcomes/student
   size: 1344x768
   seed: 982036
-  prompt_prose: 'Original cinematic superhero scene at Venkataraman dance academy: Asha Venkataraman as Mudra, an
-    adult academy student with expressive visible face, finds evidence of recruiters catalogued dancers as combat
-    assets; Nirmala Rao, the senior choreographer is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A poised young woman with medium brown skin, a long black braid and a second pair of slender arms
+    below her first, wearing a fitted maroon dance top, loose black training trousers and small brass bells at her
+    ankles, stands in a dance-academy office at night, spreading a stack of glossy surveillance photographs of students
+    caught mid-leap across a desk with all four hands. Beside her, a regal grey-haired choreographer in her sixties
+    in a deep green sari and shawl with silver bangles, holds one photograph close to her face, lips pressed tight.
+    Mirrors and ballet barres show through the open door behind them under a single desk lamp. Medium shot.
   jobs:
     krea2: 49854
   art:
@@ -706,10 +753,12 @@ subjects:
   asset: comet-city-academy/identities/mutant-genius/outcomes/student
   size: 1344x768
   seed: 982039
-  prompt_prose: 'Original cinematic superhero scene at Saint Abel neurology ward: Theo Lindqvist as Probability,
-    an adult academy student with expressive visible face, finds evidence of a researcher sells theo''s scans as
-    tactical forecasts; Dr. Ren Sato, the overnight neurologist is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A twenty-year-old with pale skin, short dark hair and a subtle crystalline growth behind the temples,
+    wearing a loose teal cardigan over a grey academy shirt, stands at a darkened hospital ward window holding up
+    a glowing tablet of rainbow brain-scan heat maps laid over a grid of city streets, the crystals behind the temples
+    catching the screen light. Beside the student, a tired East Asian neurologist in his forties with messy black
+    hair, a white coat over blue scrubs and a stethoscope, leans over the tablet with a coffee cup frozen halfway
+    to his mouth. Empty hospital beds and green monitor glow. Medium shot.
   jobs:
     krea2: 49855
   art:
@@ -758,10 +807,12 @@ subjects:
   asset: comet-city-academy/identities/mutant-birthright/outcomes/student
   size: 1344x768
   seed: 982042
-  prompt_prose: 'Original cinematic superhero scene at Delacroix Moon guardian crypt: Seraphine Delacroix-Moon as
-    Pinfeather, an adult academy student with expressive visible face, finds evidence of a missing ancestor refused
-    the guardian oath and survived; Odette Vance, the skeptical cousin is present as an independent witness. Crisp
-    compositional depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A statuesque young woman with dark brown skin, a high crown of silver-white braids and large white
+    feathered wings folded at her back, wearing a cream academy blazer with gold buttons over a white high-collared
+    shirt, kneels in a candlelit family crypt among marble tombs, her white wings half raised, lifting the lid of
+    an empty stone coffin that holds only a folded traveling cloak and a pair of worn walking boots. Behind her,
+    a sharp-featured cousin with olive skin and a short black bob in a tailored grey coat, holds a candelabra high
+    and peers in with one eyebrow raised. Cold stone and golden candle light on white feathers. Medium-wide shot.
   jobs:
     krea2: 49856
   art:
@@ -810,10 +861,12 @@ subjects:
   asset: comet-city-academy/identities/mutant-social/outcomes/student
   size: 1344x768
   seed: 982045
-  prompt_prose: 'Original cinematic superhero scene at East Station firehouse: Lucky Mbatha as Charmer, an adult
-    academy student with expressive visible face, finds evidence of lucky''s foundling note contains a compulsion
-    charm pattern; Marsha Mbatha, the off-duty firefighter is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A handsome young man with deep brown skin, a neat high-top fade, a wide easy smile and a small beige
+    adhesive patch on the side of his neck, wearing a bright yellow bomber jacket over an academy polo shirt, sits
+    on the bumper of a red fire engine in a firehouse bay at night, holding up a yellowed baby blanket embroidered
+    with a swirling gold spiral that glows softly in his hands. Beside him stands a strong grey-haired Black woman
+    in her fifties in navy firefighter work pants, a grey t-shirt and red suspenders, arms folded, frowning at the
+    glowing spiral. Red engine paint, warm bay lights and a brass pole behind them. Medium shot.
   jobs:
     krea2: 49857
   art:
@@ -862,10 +915,14 @@ subjects:
   asset: comet-city-academy/identities/tech-fire/outcomes/student
   size: 1344x768
   seed: 982048
-  prompt_prose: 'Original cinematic superhero scene at West End condemned apartments: Valentina "Vee" Castellanos
-    as Sparks, an adult academy student with expressive visible face, finds evidence of an insurer paid contractors
-    to bypass sprinklers; Tomas Guerrero, the tenant organizer is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A muscular young woman with light brown skin, an undercut of black hair in a short ponytail and
+    old burn scars across her knuckles, wearing a scorched leather welding apron over a black academy tank top,
+    with a heavy homemade steel gauntlet with glowing orange vents on her right arm, climbs a stepladder in the
+    smoky hallway of a condemned apartment building, pulling down a ceiling tile with her steel gauntlet to uncover
+    a sprinkler pipe capped with a fresh steel plug and a fat roll of cash taped beside it. Below her, a heavyset
+    middle-aged tenant organizer with tan skin, a grey moustache and a flannel shirt, steadies the ladder with one
+    hand and aims a flashlight up with the other. Peeling paint and flashlight beams through haze. Low-angle medium
+    shot.
   jobs:
     krea2: 49858
   art:
@@ -914,10 +971,13 @@ subjects:
   asset: comet-city-academy/identities/tech-air/outcomes/student
   size: 1344x768
   seed: 982051
-  prompt_prose: 'Original cinematic superhero scene at Skyloop prototype workshop: Jun-ho Park as Propwash, an adult
-    academy student with expressive visible face, finds evidence of jun-ho''s wingsuit schematics were sold during
-    the safety inquiry; Dr. Min Park, the aerospace mentor is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A slim young man with light skin, spiky black hair dyed blue at the tips and racing goggles pushed
+    up on his forehead, wearing a sleek charcoal wingsuit with small fans at the wrists and ankles under an open
+    academy hoodie, stands at a cluttered aerospace workbench at night, pulling a tiny black chip out of the casing
+    of his own wingsuit, a thin wire trailing from it to a hidden transmitter the size of a matchbox. Beside him,
+    a slight Korean aerospace engineer in her sixties with short silver hair, reading glasses and a grease-stained
+    lab coat, holds a magnifying lamp over the chip. Prototype glider wings hang overhead in cool blue light. Medium
+    shot.
   jobs:
     krea2: 49859
   art:
@@ -966,10 +1026,12 @@ subjects:
   asset: comet-city-academy/identities/tech-earth/outcomes/student
   size: 1344x768
   seed: 982054
-  prompt_prose: 'Original cinematic superhero scene at Comet Planning Hall: Delphine Okonkwo as Hard Hat, an adult
-    academy student with expressive visible face, finds evidence of the rebar certificate hides a politician''s
-    signature; Etta Bell, the structural surveyor is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A sturdy young woman with dark brown skin, short locs tied back with a bandana and a small scar
+    through one eyebrow, wearing grease-stained yellow coveralls, steel-toed boots and a battered white hard hat,
+    stands in the dusty basement storeroom of a city planning hall, snapping a steel rebar sample over her knee
+    so it crumbles into rusty flakes beside an open crate of identical samples. Beside her, a lanky older Black
+    structural surveyor with short white hair, a reflective orange vest and a surveying tripod over one shoulder,
+    catches a falling flake in her open palm. A bare bulb lights shelves of rolled blueprints. Medium-wide shot.
   jobs:
     krea2: 49860
   art:
@@ -1018,10 +1080,13 @@ subjects:
   asset: comet-city-academy/identities/tech-water/outcomes/student
   size: 1344x768
   seed: 982057
-  prompt_prose: 'Original cinematic superhero scene at Yacht Club rescue pier: Nalani Kahale as Snorkel, an adult
-    academy student with expressive visible face, finds evidence of rescue boats were sold below scrap price; Commander
-    Reva Cruz, the retired lifeguard is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A strong young woman with brown skin and long wavy black hair pulled into a high ponytail, wearing
+    a bulky rebuilt orange-and-white rescue diving suit open to the waist over an academy t-shirt, stands on a floodlit
+    yacht-club pier at night, hauling back a canvas tarp to reveal three rescue boats freshly repainted glossy white
+    with gold trim, moored among the luxury yachts. Beside her, a weathered Filipina woman in her sixties with cropped
+    grey hair, a faded red lifeguard jacket and a whistle around her neck, rests one hand on a hull where scuffed
+    orange rescue paint shows through the new white. Floodlights on dark water and a forest of masts. Wide shot
+    at pier level.
   jobs:
     krea2: 49861
   art:
@@ -1070,10 +1135,12 @@ subjects:
   asset: comet-city-academy/identities/tech-discipline/outcomes/student
   size: 1344x768
   seed: 982060
-  prompt_prose: 'Original cinematic superhero scene at Civic Gymnastics Annex: Marcus Fairbanks as Stride, an adult
-    academy student with expressive visible face, finds evidence of the rewritten fall report conceals a faulty
-    exoskeleton; Amir Price, the rehabilitation coach is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: An athletic young man with dark brown skin, a shaved head, a trimmed beard and two carbon-fiber
+    running-blade prosthetics below the knee, wearing a red academy track jacket and black running shorts, kneels
+    on blue gymnastics mats in an empty training annex at night, holding up the cracked metal knee joint of a dismantled
+    leg exoskeleton, its snapped bolt glinting. Beside him crouches a broad middle-aged rehabilitation coach with
+    light brown skin, a salt-and-pepper beard, a grey polo shirt and a whistle, turning a broken hydraulic piston
+    over in his hands. Parallel bars and a vaulting horse sit in shadow under a single overhead light. Medium shot.
   jobs:
     krea2: 49862
   art:
@@ -1122,10 +1189,12 @@ subjects:
   asset: comet-city-academy/identities/tech-genius/outcomes/student
   size: 1344x768
   seed: 982063
-  prompt_prose: 'Original cinematic superhero scene at Raman family repair shop: Priya Raman as Ping, an adult academy
-    student with expressive visible face, finds evidence of the audio company copied mabel''s training archive;
-    Mabel, the grandfather-voice home assistant is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A small young woman with medium brown skin, thick black hair in a messy side braid and round tortoiseshell
+    glasses, wearing an oversized purple academy hoodie with the sleeves pulled over her hands, sits at a cluttered
+    electronics repair bench in a small family shop at night, prying open a round brass home-assistant speaker whose
+    single amber light glows like a worried eye, a thin cable running from its insides to a sleek black corporate
+    data drive. An old photograph of a smiling grey-haired grandfather leans against the speaker on a lace doily.
+    Soldering irons, shelves of old radios and warm lamp light. Close medium shot.
   jobs:
     krea2: 49863
   art:
@@ -1174,10 +1243,12 @@ subjects:
   asset: comet-city-academy/identities/tech-birthright/outcomes/student
   size: 1344x768
   seed: 982066
-  prompt_prose: 'Original cinematic superhero scene at Sterling Dynamics loading bay: Bartholomew "Bart" Sterling
-    IV as Prototype, an adult academy student with expressive visible face, finds evidence of a shipment ties sterling
-    rifles to gang violence; Iona Clarke, the whistleblower engineer is present as an independent witness. Crisp
-    compositional depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A tall square-jawed young man with pale skin, perfectly styled chestnut hair and a tight anxious
+    smile, wearing a tailored navy academy blazer over a silver armor undersuit, stands in a corporate loading bay
+    at night beside a forklift, prying open a long wooden shipping crate to reveal rows of sleek silver rifles packed
+    in straw, his face drained pale. Beside him, a wiry red-haired engineer in her thirties with pale freckled skin,
+    a hard hat under one arm and a work jacket, holds up a phone to photograph the crate. Yellow sodium lights,
+    roll-up doors and a black van idling outside. Medium-wide shot.
   jobs:
     krea2: 49864
   art:
@@ -1226,10 +1297,12 @@ subjects:
   asset: comet-city-academy/identities/tech-social/outcomes/student
   size: 1344x768
   seed: 982069
-  prompt_prose: 'Original cinematic superhero scene at Media District plaza: Dani Mercado as Viral, an adult academy
-    student with expressive visible face, finds evidence of the viral clip exposed protestors through metadata;
-    Suri Diaz, the activist photographer is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A slender young adult with tan skin, a sleek black bob with bleached front streaks and a septum
+    ring, wearing chunky white livestream glasses with a tiny red recording light and an oversized pink windbreaker
+    over an academy shirt, stands in a rainy media-district plaza under giant glowing video screens, holding up
+    a phone whose screen shows a city map with red pins dropped on dozens of homes. Beside them, a stocky young
+    Latina photographer with an undercut, a long-lens camera around her neck and a clear rain poncho, stares at
+    the phone with rain dripping off her hood. Neon reflections ripple across the wet paving. Medium shot.
   jobs:
     krea2: 49865
   art:
@@ -1278,10 +1351,12 @@ subjects:
   asset: comet-city-academy/identities/magic-fire/outcomes/student
   size: 1344x768
   seed: 982072
-  prompt_prose: 'Original cinematic superhero scene at Old Lantern candlemaker''s shop: Hollis Graymalkin as Wick,
-    an adult academy student with expressive visible face, finds evidence of the salamander''s contract names an
-    imprisoned ancestor; Moss Holloway, the night candlemaker is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A plump young woman with pale skin, rosy cheeks and a long auburn braid streaked with grey, wearing
+    a wax-spattered brown shop apron over a moss-green academy cardigan, kneels before a brick hearth in an old
+    candle shop at night, holding a small glass lantern in which a tiny glowing orange salamander presses its hands
+    against the glass, a crumbling red wax seal in her other palm. Behind her, a tall gaunt elderly candlemaker
+    with pale skin, a long white beard and a leather apron spattered with wax, holds a dipping rack of half-made
+    candles and watches. Hundreds of hanging candles and golden firelight. Medium shot.
   jobs:
     krea2: 49866
   art:
@@ -1331,10 +1406,11 @@ subjects:
   asset: comet-city-academy/identities/magic-air/outcomes/student
   size: 1344x768
   seed: 982075
-  prompt_prose: 'Original cinematic superhero scene at University rare-book vault: Ambrose Fairlie as Whistle, an
-    adult academy student with expressive visible face, finds evidence of the grimoire was written by a silenced
-    stormcaller; Merrin Shaw, the student librarian is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A slight young man with pale skin, wavy light-brown hair and large grey eyes, wearing a white choir
+    collar under a grey academy cardigan, stands in a locked rare-book vault as wind whips around him, a heavy leather
+    grimoire open in his hands, its pages flipping on their own as small grey storm clouds curl out of them. Beside
+    him, a petite student librarian with dark brown skin, short twists and a yellow cardigan, braces the vault door
+    shut with her back. Brass reading lamps, swaying iron shelves and flickering blue light. Medium-wide shot.
   jobs:
     krea2: 49867
   art:
@@ -1383,10 +1459,13 @@ subjects:
   asset: comet-city-academy/identities/magic-earth/outcomes/student
   size: 1344x768
   seed: 982078
-  prompt_prose: 'Original cinematic superhero scene at Founders Circle parking structure: Willa Thornbury as Seedling,
-    an adult academy student with expressive visible face, finds evidence of a developer paved over a voluntary
-    ancient nature pact; Evelyn Thorn, the urban gardener is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A sturdy round-faced young woman with freckled light brown skin, a frizzy mass of dark curls tied
+    up with garden twine and soil under her fingernails, wearing patched green dungarees over an academy t-shirt
+    and muddy rubber boots, kneels on the cracked floor of a concrete parking garage with both palms flat, as thick
+    roots heave up through the paving around a buried ring of ancient standing stones now showing through the broken
+    concrete. Beside her, a lanky middle-aged urban gardener with ruddy skin, a grey ponytail, canvas overalls and
+    a trowel, kneels to brush soil from the top of a stone. Fluorescent garage light, parked cars and creeping moss.
+    Wide shot at floor level.
   jobs:
     krea2: 49868
   art:
@@ -1436,10 +1515,12 @@ subjects:
   asset: comet-city-academy/identities/magic-water/outcomes/student
   size: 1344x768
   seed: 982081
-  prompt_prose: 'Original cinematic superhero scene at Canal pawnbroker stall: Caspian Lowe as Puddle, an adult
-    academy student with expressive visible face, finds evidence of the augury bowl contains the drowned owner''s
-    testimony; Noor Shafik, the canal boatwright is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A lanky young man with tan skin, a pencil mustache, slicked-back black hair and silver rings on
+    every finger, wearing a shabby maroon velvet magician waistcoat over a white academy shirt, leans over a pawnbroker's
+    stall on a canal-side walkway at night, staring into a dented silver bowl of water where the pale face of a
+    drowned old man rises to the surface, his lips moving. Beside him stands a strong Arab boatwright in her forties
+    with a headscarf, a canvas work apron, a wooden mallet in one hand and wood shavings on her sleeves, gripping
+    his shoulder. Lantern light on black canal water and moored narrowboats. Medium shot.
   jobs:
     krea2: 49869
   art:
@@ -1487,10 +1568,12 @@ subjects:
   asset: comet-city-academy/identities/magic-discipline/outcomes/student
   size: 1344x768
   seed: 982084
-  prompt_prose: 'Original cinematic superhero scene at Abbey refugee hospice: Adaeze "Ada" Ibekwe as Novice, an
-    adult academy student with expressive visible face, finds evidence of the order rejected refugees after a secret
-    donation; Sister Tamsin, the dissenting nun is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A tall lean young woman with deep brown skin, a shaved head and a row of small iron rings along
+    one ear, wearing a faded saffron mountain-order robe belted with rope under an academy jacket, and leather sandals,
+    stands at the iron gate of a stone abbey at night, lifting the gate chain to show a shiny new padlock, while
+    families with bundles and suitcases wait in the cold on the other side. Beside her, a short elderly nun with
+    pale skin, round wire glasses, a grey habit and a lantern, presses a heavy ring of old iron keys into her hand.
+    Blue moonlight on stone and a warm lantern glow. Medium-wide shot.
   jobs:
     krea2: 49870
   art:
@@ -1539,10 +1622,12 @@ subjects:
   asset: comet-city-academy/identities/magic-genius/outcomes/student
   size: 1344x768
   seed: 982087
-  prompt_prose: 'Original cinematic superhero scene at Comet Mathematics Faculty: Lucan Ferro as Footnote, an adult
-    academy student with expressive visible face, finds evidence of lucan''s stolen proof could erase someone from
-    a ledger; Professor Alba Senn, the former collaborator is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A thin young man with olive skin, black hair falling into his eyes, wire-rim glasses and ink-stained
+    fingers, wearing a rumpled tweed jacket over an academy sweater, stands before a vast chalkboard of glowing
+    chalk spirals and lines in an empty lecture hall at night, as one corner of the diagram glows white and a nearby
+    wooden chair fades half transparent. Beside him, a tall older mathematician with olive skin, grey hair in a
+    loose bun, a black turtleneck and a stub of chalk, stares at the vanishing chair with one hand on his arm. Moonlight
+    through tall windows and chalk dust in the air. Medium-wide shot.
   jobs:
     krea2: 49871
   art:
@@ -1591,10 +1676,13 @@ subjects:
   asset: comet-city-academy/identities/magic-birthright/outcomes/student
   size: 1344x768
   seed: 982090
-  prompt_prose: 'Original cinematic superhero scene at Blackwood manor kitchen: Isadora Blackwood as Inkling, an
-    adult academy student with expressive visible face, finds evidence of a cookbook holds the final forbidden spell;
-    Aunt Nyx, the keeper of keys is present as an independent witness. Crisp compositional depth, saturated inked
-    art, every surface bare and unmarked.'
+  prompt_prose: A pale young woman with long straight black hair, a sharp face, dark plum lipstick and a silver
+    crescent-moon pendant, wearing a long black academy coat over a deep plum dress and fingerless lace gloves,
+    stands at a long manor kitchen table at midnight before a thick old cookbook, a curl of violet smoke in the
+    shape of a crow rising from its pages as a hidden black envelope slides out of the spine. Behind her stands
+    a tall gaunt elderly woman with grey skin, silver hair in a high knot, a long black dress and a huge ring of
+    iron keys at her belt, one hand on her niece's shoulder. Copper pots, a fire in a vast hearth and green candle
+    light. Medium shot.
   jobs:
     krea2: 49872
   art:
@@ -1643,10 +1731,12 @@ subjects:
   asset: comet-city-academy/identities/magic-social/outcomes/student
   size: 1344x768
   seed: 982093
-  prompt_prose: 'Original cinematic superhero scene at Civic Playhouse backstage: Remy Lafleur as Understudy, an
-    adult academy student with expressive visible face, finds evidence of the crossroads spirit owns closing-night
-    applause; Talia Wynn, the stage manager is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A charming young man with medium brown skin, a thin mustache, a neat black pompadour and one gold
+    tooth, wearing a glittering emerald sequined cabaret jacket over a white academy shirt, stands backstage among
+    ropes and painted scenery flats, staring at a smoky antlered figure in a top hat hovering in the wings, holding
+    out a yellowed scroll tied with red ribbon toward him. Beside him, a brisk young stage manager with dark brown
+    skin, a shaved head, all-black clothes and a headset, aims a flashlight at the figure. Blue backstage work light
+    and the edge of a red velvet curtain. Medium shot.
   jobs:
     krea2: 49873
   art:
@@ -1694,10 +1784,13 @@ subjects:
   asset: comet-city-academy/identities/alien-fire/outcomes/student
   size: 1344x768
   seed: 982096
-  prompt_prose: 'Original cinematic superhero scene at Orbital refuge depot: Ixi Solenne as Sunspot, an adult academy
-    student with expressive visible face, finds evidence of the authorities hid survivors of ixi''s colony; Captain
-    Sela Va, the escape-pod pilot is present as an independent witness. Crisp compositional depth, saturated inked
-    art, every surface bare and unmarked.'
+  prompt_prose: A slender young alien woman with luminous golden skin that glows brighter in sunlight, short white-gold
+    hair and solid amber eyes, wearing a faded academy hoodie over a plain grey refugee jumpsuit, stands in a dim
+    spaceport cargo depot, pressing her glowing golden palm against the frosted window of a sealed cryogenic pod
+    where another golden-skinned alien adult sleeps, rows of identical frosted pods stretching away behind her.
+    Beside her, a tall weathered alien pilot with dusky green skin, cropped white hair, a battered flight jacket
+    and a helmet under one arm, wipes frost off the next pod. Cold blue depot lights against the golden glow. Medium-wide
+    shot.
   jobs:
     krea2: 49874
   art:
@@ -1746,10 +1839,13 @@ subjects:
   asset: comet-city-academy/identities/alien-air/outcomes/student
   size: 1344x768
   seed: 982099
-  prompt_prose: 'Original cinematic superhero scene at Western dimensional gate: Quillon Vey as Fogbank, an adult
-    academy student with expressive visible face, finds evidence of reopening the rift would burn a residential
-    district as fuel; Miren, the bilingual customs mediator is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A tall willowy alien with pale lilac translucent skin, a drifting cloud of white vapor in place
+    of hair and long fine fingers, their feet floating a hand above the floor, wearing flowing pale blue diplomatic
+    sashes over an academy blazer, floats beside a huge dormant ring-shaped dimensional gate on the western edge
+    of the city at dusk, holding up a glowing translucent sphere in which the rooftops of a nearby neighborhood
+    burn red. Beside them stands a stout middle-aged customs mediator with brown skin, grey-and-black hair, a long
+    customs coat and a small translator earpiece, looking from the sphere to the real rooftops below. Violet sky
+    and the cold blue glow of the gate. Wide shot.
   jobs:
     krea2: 49875
   art:
@@ -1798,10 +1894,13 @@ subjects:
   asset: comet-city-academy/identities/alien-earth/outcomes/student
   size: 1344x768
   seed: 982102
-  prompt_prose: 'Original cinematic superhero scene at Civic Meteorite Museum: Kesh Tarrow as Geode, an adult academy
-    student with expressive visible face, finds evidence of collected stones contain living fragments of kesh''s
-    people; Archivist Ori, the mineral conservator is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A broad heavy alien man with a body of dark grey crystalline stone streaked with purple quartz veins
+    and glowing violet eyes, wearing an extra-large academy sweatshirt stretched over his stone shoulders, stands
+    in a dark museum gallery among glass cases of meteorites, one stone hand pressed to a case where a geode glows
+    violet in time with the veins in his arm, tiny crystal sparks pulsing inside it like a heartbeat. Beside him,
+    a small elderly mineral conservator with pale skin, white hair, a jeweler's loupe on her forehead and white
+    cotton gloves, cradles a second glowing stone in both hands. Moonlight through a skylight and violet glow. Medium
+    shot.
   jobs:
     krea2: 49876
   art:
@@ -1850,10 +1949,13 @@ subjects:
   asset: comet-city-academy/identities/alien-water/outcomes/student
   size: 1344x768
   seed: 982105
-  prompt_prose: 'Original cinematic superhero scene at East Quay whirlpool: Thessaly Nauren as Starfish, an adult
-    academy student with expressive visible face, finds evidence of the portal tide bears messages from thessaly''s
-    ocean; Ari Sable, the deepwater navigator is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A graceful young alien woman with glossy blue-green skin, small dark fins in place of ears, long
+    trailing kelp-green hair and large black eyes, wearing a shimmering silver wrap dress under an academy cardigan,
+    stands at the edge of a stone quay at night above a vast glowing blue-green whirlpool in the harbor, catching
+    a fist-sized glowing seashell flung up from the water while a rusty drilling barge looms at the whirlpool's
+    rim. Beside her, a lean weathered deepwater navigator with dark skin, a grey beard, a navy peacoat and a brass
+    sextant on a strap, holds a lantern out over the swirling water. Moonlight, sea mist and bioluminescent glow.
+    Wide shot.
   jobs:
     krea2: 49877
   art:
@@ -1902,10 +2004,12 @@ subjects:
   asset: comet-city-academy/identities/alien-discipline/outcomes/student
   size: 1344x768
   seed: 982108
-  prompt_prose: 'Original cinematic superhero scene at Gatewatch barracks: Raxa Vel as Recruit, an adult academy
-    student with expressive visible face, finds evidence of the commander''s pursuit orders list civilian hostages;
-    Mara Kes, Raxa''s former squadmate is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A tall muscular alien woman with ash-grey skin, a ridge of bony plates along her scalp, sharp golden
+    eyes and old ritual scars across her arms, wearing a crisp academy uniform worn with military precision and
+    a broken bronze officer insignia on a cord around her neck, stands in a dim military barracks at night between
+    rows of bunks, holding up a glowing blue hologram of rows of small faces of ordinary city civilians. Beside
+    her, a tall alien soldier with ash-grey skin, a ridged scalp, one arm in a sling and a plain grey uniform, glances
+    nervously toward the door. Cold blue light, steel lockers and an empty rifle rack. Medium shot.
   jobs:
     krea2: 49878
   art:
@@ -1954,10 +2058,12 @@ subjects:
   asset: comet-city-academy/identities/alien-genius/outcomes/student
   size: 1344x768
   seed: 982111
-  prompt_prose: 'Original cinematic superhero scene at Interspecies research lab: Oorin Faal as Exchange Student,
-    an adult academy student with expressive visible face, finds evidence of uplift trials made consent a biological
-    reflex; Dr. Farah Bloom, the exchange scientist is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A small slender alien man with smooth pale blue skin, an elongated hairless skull, four long fingers
+    on each hand and large silver eyes, wearing a white high-collared tunic under an academy lab coat, stands in
+    a gleaming white research lab at night, looking through glass into an observation room where a row of adult
+    alien volunteers with glowing silver implants at their temples all nod in perfect unison. Beside him, a plump
+    middle-aged exchange scientist with brown skin, a purple headscarf, a lab coat and safety goggles pushed up,
+    presses her palm flat against the glass in alarm. Clinical white light and blinking monitors. Medium-wide shot.
   jobs:
     krea2: 49879
   art:
@@ -2006,10 +2112,13 @@ subjects:
   asset: comet-city-academy/identities/alien-birthright/outcomes/student
   size: 1344x768
   seed: 982114
-  prompt_prose: 'Original cinematic superhero scene at Mirror Palace transit dock: Ysolde Quarren as Pretender,
-    an adult academy student with expressive visible face, finds evidence of a mirror hid proof that exile was a
-    rescue; Esmé Quarren, the foster mother''s assistant is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A tall young woman with pale silvery skin, long platinum hair, violet eyes and a shimmering band
+    of tiny scales across her forehead, wearing a thrift-store denim jacket over an academy shirt and chipped black
+    nail polish, kneels on the marble floor of a glittering transit dock lined with tall mirrors, holding a shattered
+    hand mirror whose shard shows a moving image of a cloaked woman leading a silver-haired young woman onto a departing
+    ship through flames. Beside her, a slim middle-aged woman with light brown skin, a sensible grey bob, a cardigan
+    and a leather satchel, kneels and touches the shard with trembling fingers. Silver reflections and warm dock
+    lamps. Medium shot.
   jobs:
     krea2: 49880
   art:
@@ -2058,10 +2167,12 @@ subjects:
   asset: comet-city-academy/identities/alien-social/outcomes/student
   size: 1344x768
   seed: 982117
-  prompt_prose: 'Original cinematic superhero scene at Crashsite Assembly Hall: Pellanor Six as Solo, an adult academy
-    student with expressive visible face, finds evidence of a salvaged receiver can reconnect the hive by force;
-    Mika Six, an independent collective fragment is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A slim alien with smooth amber chitin skin, a narrow head patterned with hexagons, large compound
+    eyes and two short antennae, wearing a plain grey academy jumpsuit, stands in a crowded salvage hall built inside
+    the hull of a crashed starship, holding a heavy cracked amber receiver dish that pulses with hexagonal light
+    and makes their own antennae glow. Beside them, a smaller slim alien of the same amber chitin with one bent
+    antenna and a patched brown poncho, flinches back with both hands raised. Hanging cables, piles of scrap and
+    warm amber light. Medium shot.
   jobs:
     krea2: 49881
   art:
@@ -2110,10 +2221,12 @@ subjects:
   asset: comet-city-academy/identities/psychic-fire/outcomes/student
   size: 1344x768
   seed: 982120
-  prompt_prose: 'Original cinematic superhero scene at Saint Meridian pharmacy: Cassidy Molloy as Fever, an adult
-    academy student with expressive visible face, finds evidence of medicine suppresses empathy while amplifying
-    anger; Nadia Tran, the community pharmacist is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A wiry young woman with pale freckled skin, a messy copper-red shag haircut and dark circles under
+    her eyes, wearing a red flannel shirt over an academy t-shirt, stands at the counter of a small all-night pharmacy,
+    shaking red capsules from an orange pill bottle into her palm while a candle in a jar beside her flares high.
+    Behind the counter, a slight Vietnamese pharmacist in her forties with a neat black bun, a white coat and reading
+    glasses, slices one capsule open under a lamp, glowing red powder spilling out. Fluorescent shelves of medicine
+    and a warm red glow. Medium shot.
   jobs:
     krea2: 49882
   art:
@@ -2162,10 +2275,12 @@ subjects:
   asset: comet-city-academy/identities/psychic-air/outcomes/student
   size: 1344x768
   seed: 982123
-  prompt_prose: 'Original cinematic superhero scene at Kwan family attic: Avery Kwan as Hover, an adult academy
-    student with expressive visible face, finds evidence of a scrapbook proves three generations hid levitation;
-    Grandmother Mei Kwan, the retired glider is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A slim young adult with light skin, a short black asymmetric haircut and calm dark eyes, wearing
+    pale blue nursing scrubs under an academy windbreaker and white sneakers, floats cross-legged a foot above the
+    floorboards of a dusty family attic, a thick scrapbook open in their lap full of faded photographs of relatives
+    floating above rooftops. Beside them, a tiny elderly Chinese woman with white hair in a bun, a quilted jacket
+    and a cane, also hovers an inch above an old trunk with a sly smile. Sunbeams through a round window and drifting
+    dust. Medium shot.
   jobs:
     krea2: 49883
   art:
@@ -2214,10 +2329,12 @@ subjects:
   asset: comet-city-academy/identities/psychic-earth/outcomes/student
   size: 1344x768
   seed: 982126
-  prompt_prose: 'Original cinematic superhero scene at City Hall cornerstone vault: Rafael "Rafa" Medeiros as Touchstone,
-    an adult academy student with expressive visible face, finds evidence of the foundation contains a confession
-    to a buried crime; Detective Rosa Hale, the records examiner is present as an independent witness. Crisp compositional
-    depth, saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A stocky young man with warm brown skin, short wavy black hair and a neat beard, wearing thick brown
+    leather work gloves and a canvas geology vest full of rock samples over an academy shirt, kneels in a stone
+    vault beneath city hall with his bare left hand pressed to a huge carved cornerstone, as glowing amber ghost
+    images of men in old-fashioned suits sealing a strongbox into the wall rise out of the stone around him. Beside
+    him stands a tall Latina records examiner in her fifties with grey-streaked dark hair, a tan trench coat and
+    a flashlight, staring at the ghostly figures. Lamplight on old masonry and amber glow. Medium-wide shot.
   jobs:
     krea2: 49884
   art:
@@ -2266,10 +2383,12 @@ subjects:
   asset: comet-city-academy/identities/psychic-water/outcomes/student
   size: 1344x768
   seed: 982129
-  prompt_prose: 'Original cinematic superhero scene at Canal mental-health center: Lior Ben-Ami as Ripple, an adult
-    academy student with expressive visible face, finds evidence of a board sells patients'' sorrow to power tranquilizers;
-    Elena Ben-Ami, Lior''s mother is present as an independent witness. Crisp compositional depth, saturated inked
-    art, every surface bare and unmarked.'
+  prompt_prose: A tall young man with olive skin, curly dark hair, a short beard and gentle sea-grey eyes, wearing
+    a heavy cream cable-knit fisherman sweater and an academy scarf, stands in the basement of a canal-side mental-health
+    clinic, rain spiraling around his shoulders, staring at rows of glass tanks of slowly swirling blue water piped
+    into a humming machine that fills small vials with glowing blue liquid. Beside him stands his mother, a slender
+    woman in her fifties with olive skin, curly grey hair, a knitted cardigan over a hospital gown and slippers,
+    holding his arm. Cold blue glow and dripping pipes. Medium-wide shot.
   jobs:
     krea2: 49885
   art:
@@ -2318,10 +2437,12 @@ subjects:
   asset: comet-city-academy/identities/psychic-discipline/outcomes/student
   size: 1344x768
   seed: 982132
-  prompt_prose: 'Original cinematic superhero scene at Shuttered Mind Library: Mei Lin Zhao as Bookworm, an adult
-    academy student with expressive visible face, finds evidence of a purge list names graduates of the secret school;
-    Teacher Hana Li, the hiding librarian is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A small compact young woman with light skin, a sleek black bob with blunt bangs and calm narrow
+    eyes, wearing a grey academy cardigan over a black martial-arts top, with reading glasses on a chain, stands
+    in a dusty shuttered library lit by a single candle, pulling a slim black folder out of a hollowed-out book
+    on a high shelf. Beside her, a frail elderly librarian with short white hair, a dark padded jacket and round
+    spectacles, peers from behind a bookcase with one finger to her lips. Thin moonlight through boarded windows
+    and toppled chairs. Medium shot.
   jobs:
     krea2: 49886
   art:
@@ -2370,10 +2491,12 @@ subjects:
   asset: comet-city-academy/identities/psychic-genius/outcomes/student
   size: 1344x768
   seed: 982135
-  prompt_prose: 'Original cinematic superhero scene at Academy admissions office: Ezra Calloway as Cheat Sheet,
-    an adult academy student with expressive visible face, finds evidence of the answer key came from a blackmail
-    network; Tutor Felix Ward, the exam proctor is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A lanky pale young man with neat sandy-blond hair, a nervous smile and a faint violet glow at his
+    temples, wearing a pressed academy blazer and a loosened tie, stands in a darkened academy admissions office
+    with the violet glow at his temples flaring, holding a sealed exam envelope tied with red string to a bundle
+    of candid photographs of other students. Beside him, a balding middle-aged exam proctor with brown skin, a sweater
+    vest, a bow tie and a stopwatch on a cord, holds a desk lamp over the bundle. Filing cabinets and blinds striping
+    the moonlight. Medium shot.
   jobs:
     krea2: 49887
   art:
@@ -2422,10 +2545,12 @@ subjects:
   asset: comet-city-academy/identities/psychic-birthright/outcomes/student
   size: 1344x768
   seed: 982138
-  prompt_prose: 'Original cinematic superhero scene at Prom prophecy observatory: Celestine Arbogast as Omen, an
-    adult academy student with expressive visible face, finds evidence of the vision shows the precise chandelier
-    failure; Yvette Marlow, the skeptical astronomer is present as an independent witness. Crisp compositional depth,
-    saturated inked art, every surface bare and unmarked.'
+  prompt_prose: A slight young woman with pale skin, long pale-blonde hair and milky white irises that glow faintly,
+    wearing a high-necked midnight-blue velvet dress under an academy blazer and a string of pearls, stands under
+    the dome of an old observatory at night, her milky eyes glowing as a translucent silver vision of a crystal
+    chandelier snapping its chain above a crowded ballroom hangs in the air before her. Beside her, a stocky astronomer
+    in her forties with ruddy skin, cropped auburn hair, a puffy vest and a rolled star chart under her arm, steps
+    back from the vision with her mouth open. Starlight through the dome and a cold silver glow. Medium-wide shot.
   jobs:
     krea2: 49888
   art:
@@ -2474,10 +2599,12 @@ subjects:
   asset: comet-city-academy/identities/psychic-social/outcomes/student
   size: 1344x768
   seed: 982141
-  prompt_prose: 'Original cinematic superhero scene at Comet Tribune pressroom: Juniper Okeke as Scoop, an adult
-    academy student with expressive visible face, finds evidence of the leak was planted by a sponsor to silence
-    a witness; Owen Bell, the union reporter is present as an independent witness. Crisp compositional depth, saturated
-    inked art, every surface bare and unmarked.'
+  prompt_prose: A curvy young woman with deep brown skin, big round glasses and natural hair in two puffs, wearing
+    a mustard cardigan over an academy shirt with a pencil tucked behind one ear, stands beside a roaring newspaper
+    printing press at night, holding up a thick envelope of cash she has just pulled from beneath the rollers. Beside
+    her, a lanky older union reporter with pale skin, rolled sleeves, ink-stained hands and a pencil behind his
+    ear, leans in close to look at the envelope. Rolling sheets of blank newsprint and harsh work lights. Medium
+    shot.
   jobs:
     krea2: 49889
   art:
