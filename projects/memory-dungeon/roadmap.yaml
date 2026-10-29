@@ -965,11 +965,11 @@ tasks:
     claimed_at: '2026-10-27T19:16:02Z'
   - id: t-040
     title: "Memory Dungeon: deliver painted 6×6 House dungeon floorplans, not just the 8×8 overworld maps"
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4380"
-    updated: '2026-10-28T11:53:58Z'
+    updated: '2026-10-29T03:49:27Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4380 (https://github.com/silasfelinus/kind_robots/issues/4380), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4380`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -997,3 +997,6 @@ tasks:
       Focused House atlas delivery-evidence audit is ready for CI: reuse ArtJob identity and strict image HEAD proof, publish two-row status in Auto Art Generate, and keep issue #4380 open pending actual painted art and device QA.
 
       2026-10-28 PT partial House atlas evidence increment merged: conductor PR #6768 (bc21797d8f7a619d92cdb755ab6a5453efb8e121). A read-only live two-job audit now verifies ArtJob identity, ArtImage and fresh image HEAD, checkpoints HOUSE-ATLAS-STATUS.json before long render work, and provides strict --require-delivered gating. Exact-head Worker PR CI #40682908879 passed 3114 tests (53 skipped), Security Audit #40682908838 and handoff #40682908849 passed. Existing Krea2 ArtJobs #50365 and #50366 remain unverified for delivery until live Auto Art Generate #40683403903 reports. Next: inspect live status and delivered images for 6x6 topology, then 390/768/1440 rendered, keyboard, reduced-motion and save/resume acceptance. Keep issue #4380 open, project active, no deployment or human gate.
+    owner: worker
+    claimed_by: 2026-10-29T034927Z-memory-dungeon-t-040-8c6d
+    claimed_at: '2026-10-29T03:49:27Z'
