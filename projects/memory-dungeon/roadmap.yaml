@@ -230,17 +230,16 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Seeded expedition reducer, room schema and Classic adapter"
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
       Inspect existing memoryStore.ts and memory-dungeon.vue, preserve its current matching/scoring/reward paths; design typed versioned run state, seeded draws, event log, room outcomes and deterministic 3-floor text simulator. Include regression tests for existing Classic mode. Scope to a first testable implementation in kind_robots, PR and merge on complete green checks.
 
       Scoped seeded-run foundation hardening: original and mirrored House save restoration now refuse HD-36 visits before an earned Hearth verdict, even when a forged visited array contains a graph-connected path. Existing earned original legacy and mirrored endings remain restorable. Four focused code/test files on Kind Robots branch; exact-head CI and merge follow. Full seeded expedition reducer and three-floor simulator remain outstanding; return READY after partial merge.
-    claimed_by: 2026-10-29T064428Z-memory-dungeon-t-001-7b91
-    claimed_at: '2026-10-29T06:44:28Z'
-    updated: '2026-10-29T06:55:01Z'
+
+      2026-10-28 PT: Scoped House save-integrity increment merged in kind_robots PR #4426 at 779546b12c169a3c7113e381ea694fdf835bf7cf. Exact final head dfe12124649add93bea9b8bac801360365db4da4 passed all 14 workflows: Contract Tests #40831551803, TypeScript #40831551837, formatting #40831551821, browser interruption #40831551850. Original and mirrored HD-36 visits now require a Hearth verdict during save restoration; forged final-room decisions and contradictory endings cannot bypass the exit. Legacy earned endings preserved. Master issue #4136 comment 6490108647. No new ArtJobs, deploy or public release. Return READY: full seeded expedition reducer, deterministic three-floor simulator, and Classic adapter remain unimplemented. Warden passage gate and rendered device acceptance remain further work. Not For Human Gate.
+    updated: '2026-10-29T07:04:05Z'
   - id: t-002
     milestone: m1
     title: "Optional scope feedback on story and complexity"
