@@ -26,7 +26,7 @@ def _ledger():
 def test_exact_student_slots_are_canonically_named_and_deduplicated():
     ledger = _ledger()
     assert ledger["auto_submit"] is True
-    assert ledger["status"] == "awaiting-submission"
+    assert ledger["status"] in {"awaiting-submission", "submitted"}
     assert len(ledger["lanes"]) == 1
     assert ledger["lanes"][0]["engine"] == "krea2"
     subjects = ledger["subjects"]
@@ -43,9 +43,18 @@ def test_exact_student_slots_are_canonically_named_and_deduplicated():
         item["asset"] == f"comet-city-academy/identities/{item['entity']}/student"
         for item in subjects
     )
-    # The ledger describes intended renders. Job ids and delivery claims only
-    # appear when the real queue and exporter have confirmed them.
-    assert all(not item.get("jobs") and not item.get("art") for item in subjects)
+    # Submitting a round must not invalidate our tests: before live enqueue there
+    # are no jobs; afterward the queue's 50 distinct ids provide provenance.
+    job_ids = [
+        item.get("jobs", {}).get("krea2-student")
+        for item in subjects
+    ]
+    present = [job for job in job_ids if job is not None]
+    assert all(isinstance(job, int) and job > 0 for job in present)
+    assert len(set(present)) == len(present)
+    if ledger["status"] == "submitted":
+        assert len(present) == len(subjects)
+    assert all(not item.get("art") for item in subjects)
 
 
 def test_image_prompts_are_literally_paintable_without_names_or_negation():
@@ -78,6 +87,11 @@ def test_zuzu_is_the_same_physical_person_in_core_and_legacy_guest_scenes():
 def test_real_enqueue_script_dry_run(capsys):
     assert enqueue.main([str(LEDGER)]) == 0
     stdout = capsys.readouterr().out
-    assert "DRY RUN: 50 of 50 cells would be submitted" in stdout
-    assert stdout.count("[krea2-student]") == 50
+    ledger = _ledger()
+    pending = sum(
+        not subject.get("jobs", {}).get("krea2-student")
+        for subject in ledger["subjects"]
+    )
+    assert f"DRY RUN: {pending} of 50 cells would be submitted" in stdout
+    assert stdout.count("[krea2-student]") == pending
     assert "REJECTED" not in stdout
