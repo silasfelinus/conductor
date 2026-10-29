@@ -436,3 +436,68 @@ tasks:
     claimed_by: 2026-10-27T18:10:00Z-forge-cca
     claimed_at: '2026-10-27T18:56:14Z'
     implementation_pr: 'silasfelinus/kind_robots#4325'
+  - id: t-021
+    title: "Prom of Doom: 48-origin × affinity visual identity revival, Dr. Frog and Granny Mayhem"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#4403"
+    updated: '2026-10-29'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4403 (https://github.com/silasfelinus/kind_robots/issues/4403), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4403`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      ## Character-direction editorial audit (2026-10-28 PT)
+      Companion to [master roadmap #4181](https://github.com/silasfelinus/kind_robots/issues/4181). **Do not delete or arbitrarily rename the existing 48 real people**, their hero/villain forms, origin/affinity axes, story memory or existing cross-project guests.
+
+      ### Verified starting point
+      `utils/cometAcademy/identityArcs.json` defines **48 identities, exactly 6 origins × 8 affinities**, with original civilian biographies and student/hero/villain names. `identityArcs.ts` preserves story hooks. These are meaningful writing assets; preserve them. But the data lacks a formal morphology, silhouette, visual-comedy, metamorphosis or memorable signature-prop contract. Many powers are described as human-shaped people in suits; some already have *excellent* seeds (Corvin's feathers, Hattie's mineral plates, Asha's four arms, Kesh's silicon anatomy, Quillon's cloud body, Pellanor's drone/hive). The key is to make their *visual character* as distinct as their biographies.
+
+      ### Approved flavor / cast anchors
+      - **Dr. Frog:** unforgettable amphibian scientist with a genuinely amphibian body, bizarre chemistry, a plausible agenda, and rescue/heel/mentorship alternatives. Needs to matter in school by day and in a night mission.
+      - **Granny Mayhem:** visibly older, formidable, impractical superhero gear, funny but neither incompetent nor an elderly stereotype. A powerful intergenerational civilian contact/ally/foil with her own moral code and a repeatable story arc.
+      - **Zuzu Koala Assassin:** *already canon* as a dimensional guest in `guestIdentities.ts`. Preserve his other-world origin, oath, autonomy and possible Shogun Null turn. Make his silhouette, movement, temperament and choices conspicuous without treating him as a 49th native origin/affinity slot.
+      - These exemplify the intended **tonal audacity**: immediate recognition from across a screen, strange bodies or equipment, distinctive motives and something surprising to say. The target is not 48 humans with different capes, nor random anatomy disconnected from the story.
+
+      ### Map the actual identity axes before redesign
+      Rows = origin; columns = affinity: **Fire, Air, Earth, Water, Discipline, Genius, Birthright, Social.** Names below refer to current *hero* identities; each cell offers an optional silhouette/art-direction pivot compatible with the existing bio, subject to consistent character design and editorial review.
+
+      | Origin | Fire | Air | Earth | Water | Discipline | Genius | Birthright | Social |
+      |---|---|---|---|---|---|---|---|---|
+      | **Accident** | Backdraft: glowing industrial heat-shell | Skyline: permanently-falling kite silhouette | Cornerstone: tunnel-strata arms and miner lamp | Tidewarden: transparent water-lung body | Second Hand: time-stutter afterimages, satellite shards | Eureka: walking portable chemistry contraption | Captain Valcourt: haunted ancestral cape as co-character | Chorus: visible multi-voice sound shadows |
+      | **Mutant** | A
+
+      [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4403]
+  - id: t-022
+    title: "Prom of Doom: rewrite nighttime patrol as player-led missions with authored secrets and roster growth"
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    source_issue: "silasfelinus/kind_robots#4402"
+    updated: '2026-10-29'
+    note: |-
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4402 (https://github.com/silasfelinus/kind_robots/issues/4402), opened by @silasfelinus on 2026-10-28. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4402`) so it closes on merge; the bridge closes it otherwise once this task is done.
+
+      ## Editorial diagnosis (2026-10-28 PT)
+      This is a **focused implementing task** under [Prom of Doom master roadmap #4181](https://github.com/silasfelinus/kind_robots/issues/4181), not a replacement for the 30-day project or a claim that existing prose is absent.
+
+      ### Verified code findings
+      - `utils/cometAcademy/rules.ts`: `startingContacts()` returns **two classmates** at the start, `incidentsFor()` always produces **two** calls from the 12-case `NIGHT_DECK`, and `assignTeam()` / `resolveDispatch()` use only the selectable `StudentId` ally roster. The protagonist has no explicit field slot.
+      - `pages/play/comet-city-academy.vue`: the 30-day mode (`flowVersion === 3`) shows **TRAINING SIMULATION / RUN TRAINING SIMULATIONS** in its real-night dispatch branches; the rich `realNightCase()` briefing is gated behind `flowVersion === 2 && day > 2`. The debrief similarly distinguishes only version 2 as 'Night debrief'. Correct this first, with regression tests.
+      - `utils/cometAcademy/nightCases.ts` **does have** distinct authored briefings and honors/pass/partial/failed consequences for 12 cases; `utils/cometAcademy/missionTeams.ts` has character-specific reactions and special combination routes. Preserve them. At present, the bonus route is advertised before assignment and most cases ultimately resolve as grade prose plus a modifier, so secrets, tactics and callbacks are underpowered.
+      - Canon [DESIGN-BRIEF.md](https://github.com/silasfelinus/conductor/blob/main/projects/comet-city-academy/DESIGN-BRIEF.md) calls for **36 distinct patrol/case families**. Don't report 36 as shipped.
+
+      ### Required gameplay spine: player on patrol, not omniscient dispatcher
+      1. **The protagonist is always a playable night asset.** Days 1-3: no followers initially, one mandatory personal patrol case in a chosen academy/town district, and meaningful first-person options. The first friend is earned via a daytime school dilemma or a patrol rescue; do not grant two roster slots at New Game. Save-migrate existing two-contact runs without loss. If night choice is refused, produce an authored non-dead-end consequence.
+      2. Separate **day school** (classes, friendships, labs, discipline, rivalries, recruitment and rumor discovery) from **night hero work**. Every evening is explicitly after the daytime event, with the same place names and canonical map IDs.
+      3. Progress in a **controlled authored ramp**, with active choice budget below the displayed opportunity count:
+         - Days 1-3: 1 local patrol and 0 independent team assignments.
+         - Days 4-7: 1-2 calls, generally player-led; optional friend teams only when recruited.
+         - Days 8-14: 2-3 potential calls, up to 2 assignments.
+         - Days 15-21: 3-4 potential calls, up to 3 assignments.
+         - Days 22-28: 4-5 potential calls, up to 3 staffed assignments; some must be abandoned or deferred.
+         - Days 29-30: bespoke city emergency and prom finale, not repetitive dispatch board grinding.
+         Roster, injury, villain pressure and school consequences
+
+      [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4402]
