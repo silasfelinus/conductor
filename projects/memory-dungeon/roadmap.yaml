@@ -639,7 +639,7 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
-    status: review
+    status: ready
     depends_on: t-021
     passes: 0
     stakes: reversible
@@ -663,10 +663,9 @@ tasks:
       2026-10-29 12:58 PM PT: Merged kind_robots PR #4446 (squash 150147f68571df174ecc0dc535b78185c7d7d04b) after 19/19 exact-head checks and 14/14 workflows passed at b94dcb112fcf91bf3bd806ccdecd641d4f71c188. Seeded combat checkpoint restoration now rejects shuffled pair positions and more than two matched pairs per action while preserving legitimate redeals; 32-seed full-clear/save regressions pass. Contract #40943852537, TypeScript #40943852586, formatting #40943852790, Memory browser #40943852794. Master issue #4136 comment 6506942159. No new ArtJobs or deployment. Return READY for 96 enemies, 128 items, 64 achievements, 64 unlocks, action-journal verification, art and device QA; not For Human Gate.
 
       Scoped adversarial combat checkpoint fix prepared: cap replay validation at 512 turns and reject invalid, unknown or impossible weapon cooldown entries instead of silently clearing them on reload. Regression tests cover forged 100000-turn saves, invalid cooldowns, valid active cooldowns and older missing-ledger saves. Kind Robots focused PR and exact-head CI to follow. Full enemy/item/unlock economy, production art and campaign QA remain open.
-    updated: '2026-10-29T20:53:00Z'
-    owner: worker
-    claimed_by: 2026-10-29T204828Z-memory-dungeon-t-029-11f7e92
-    claimed_at: '2026-10-29T20:48:28Z'
+
+      2026-10-29 PT: Merged kind_robots PR #4450 (squash 2fd38c0169dd126e04eed3abb0834fa86440c361) after 19/19 completed exact-head checks and 14/14 Actions workflows passed at 7cf096dd412fe4907884cdcae4a0bb7e07629b0a. Combat restore now bounds seeded-board validation to 512 turns and rejects malformed, unknown or over-maximum weapon cooldowns rather than silently resetting them; legitimate cooldowns and older missing-ledger saves are preserved. Contract Tests #40952867753, TypeScript #40952867717, formatting #40952867787 and Memory browser #40952867661 passed. Master issue #4136 comment 6508173822. No new ArtJobs or deployment. Return READY for action-journal replay, 96 enemies, 128 items, 64 achievements, 64 unlocks, art and rendered device QA; not For Human Gate.
+    updated: '2026-10-29T20:59:00Z'
   - id: t-031
     milestone: m4
     title: "Adversarial balance, continuity and cross-world reachability suite"
