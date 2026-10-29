@@ -28,7 +28,7 @@ def test_capes_style_check_six_by_six_and_engine_formulas():
         if lane["key"] == "krea2":
             assert lane["prompt"] == "prose"
             assert "checkpoint" not in lane
-        if lane["checkpoint"] if lane.get("checkpoint") else False:
+        if lane.get("checkpoint"):
             assert lane["prompt"] in ("tags", "prose")
     cells = []
     for subject in subjects:
