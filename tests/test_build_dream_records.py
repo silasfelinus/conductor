@@ -483,3 +483,36 @@ def test_sheet_hook_fits_its_512_char_column():
     one_run = "word " * 200
     clipped = bdr.clip_to_column(one_run)
     assert len(clipped) <= bdr.SHEET_HOOK_MAX and clipped.endswith("…")
+
+
+def test_v3_scenario_prompt_preflight_rejects_conditional_before_writes():
+    """A single blocked art prompt must never create then roll back 18 records."""
+    base = {
+        "bundle_version": 3,
+        "zuzu_assets": {
+            "locations": [
+                {"project_target": "zuzu-gamebook", "title": "Crow Canyon"},
+                {"project_target": "emperor-of-dust", "title": "Cinder Toll Road"},
+            ],
+            "scenarios": [
+                {
+                    "project_target": "emperor-of-dust",
+                    "checkpoint_family": "illustrious",
+                    "title": "Gate Price",
+                    "setup": (
+                        "At the Cinder Toll Road, guards open the gate only if "
+                        "a follower is left behind."
+                    ),
+                }
+            ],
+        },
+    }
+    errors = bdr.preflight_v3_scenario_art(base)
+    assert errors and "Gate Price" in errors[0]
+    assert "conditional-instruction" in errors[0]
+
+    base["zuzu_assets"]["scenarios"][0]["setup"] = (
+        "At the Cinder Toll Road, guards demand a named follower as surety "
+        "and raise their iron portcullis."
+    )
+    assert bdr.preflight_v3_scenario_art(base) == []
