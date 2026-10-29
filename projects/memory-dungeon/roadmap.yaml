@@ -627,7 +627,7 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Establish full enemy, item, achievements and unlock economy"
-    status: review
+    status: ready
     depends_on: t-021
     passes: 0
     stakes: reversible
@@ -639,10 +639,9 @@ tasks:
       2026-10-29 PT: Merged kind_robots PR #4429 at fbce49c61c04b687b0b58c7166e8c0ef9853936c after all 15 exact-head workflows passed on eb8f155f815b0e0dc38de70a6347fb0fab8d3f0b. Fixed duplicate loot from restored/repeated Dark Briar duels, original-Briar sprite/patrol bouts and 8x8/10x10 minefield completions using a common one-time reward ledger. 64 seeded 80-attempt reward simulations, save roundtrips and independent reality ledgers are regression tested in verifyMemoryWorld. Initial changed-file Prettier failure corrected; final formatting, TypeScript, four contract shards, layout and Memory browser workflows passed. No new ArtJobs or deployment. Return READY for the remaining enemy/item/achievement/unlock economy and art; not For Human Gate.
 
       Scoped combat checkpoint integrity increment: reject impossible pair inventories, half-matched cards, obstacle forgeries and contradictory fight outcomes. Kind Robots branch worker/memory-dungeon-t-029-combat-restore-5a81; focused PR and exact-head CI to follow. This does not complete the 96-enemy/128-item/64-achievement/64-unlock catalog or art acceptance.
-    updated: '2026-10-29T14:45:45.838Z'
-    owner: worker
-    claimed_by: 2026-10-29T144214Z-memory-dungeon-t-029-5a81
-    claimed_at: '2026-10-29T14:42:14Z'
+
+      2026-10-29 PT: Merged Kind Robots PR #4436 (squash 0b844f19779f32c8d21b58b752f928e5fce2479c), head 50b996ef7f587607e1bf4f5c264ce493e7aaa1e6, after all 14 exact-head Actions workflows completed successfully: Contract Tests #40894828803 (four shards), TypeScript #40894828900, formatting #40894828948 and Memory Dungeon browser interruption #40894830117. Combat checkpoint restoration now rejects missing/renumbered pairs, half-matched pairs, forged obstacle inventories and health/outcome contradictions, with legitimate 5x5 obstacle and terminal-state regressions. Two Memory Dungeon files only; no ArtJobs, deploy or schema changes. Return READY for 96 enemies, 128 items, 64 achievements, 64 permanent unlocks, production art and multi-seed balance; not For Human Gate.
+    updated: '2026-10-29T14:52:30.989Z'
   - id: t-031
     milestone: m4
     title: "Adversarial balance, continuity and cross-world reachability suite"
