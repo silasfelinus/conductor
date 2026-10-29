@@ -712,8 +712,8 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Polish World One as a complete one-screen console with save slots"
-    status: claimed
-    updated: '2026-10-29T01:49:00Z'
+    status: review
+    updated: '2026-10-29T02:04:00Z'
     depends_on: t-022
     passes: 0
     stakes: reversible
@@ -799,6 +799,8 @@ tasks:
       Scoped adversarial save-restoration hardening: reject inherited JavaScript prototype keys masquerading as original/mirrored House rooms. Both restore paths, room lookup and regression tests updated. Kind Robots PR and exact-head CI pending.
 
       2026-10-28 PT: Merged Kind Robots PR #4419 (82bd84f8457d98f1e15b4c79ad43175c574f3b8b) after all 14 exact-head workflows passed on 4ccdde8d011d657cd349de0cead7d3f6f9c01a1b. Both House save restorers and room lookup now reject inherited prototype-key fake room IDs; adversarial tests cover constructor, toString and __proto__, fake decisions and mirrored challenges. Master issue #4136 comment 6484865403 has evidence. Branch deleted. No new ArtJobs or deployment. Return READY for graph-aware traversal, House atlas delivery and rendered console QA; not For Human Gate.
+
+      Focused graph-aware House save-restoration increment prepared in Kind Robots: original and mirrored chambers must connect through authored passages from HD-01; Scylla's earned service shortcut is preserved. Forged distant Hearth and mirrored verdicts are stripped, while adjacent legacy current rooms survive. Focused PR and exact-head CI verification follow. Full rendered device QA, painted House atlas delivery, and campaign acceptance remain open.
     owner: worker
     claimed_by: 2026-10-29T014900Z-memory-dungeon-t-034-c8a9
     claimed_at: '2026-10-29T01:49:00Z'
