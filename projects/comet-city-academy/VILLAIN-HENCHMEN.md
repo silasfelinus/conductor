@@ -82,6 +82,16 @@
 
 **The Confidante** sends the **Rumor Mites** to forge accusations across Comet City. Scoop Two remembers and saves contradictory evidence; the counter to a false claim is an actual source.
 
+## Provisional fan-favorite assignments pending t-021 reconciliation
+
+The **current** Kind Robots 48-entry `identityArcs.json` does not yet list **Granny Mayhem** or **Dr. Frog** among its signature IDs; **Zuzu Koala Assassin** is an established dimensional guest, *outside* the 48 native origins. Task t-021/#4403 is the existing roster-and-visual reconciliation lane. **Do not silently overwrite an unrelated hero's ID or claim 51 of 48 playable slots.** The following three signature henchmen are ready for authors to use once their patron identity is confirmed:
+
+- **Granny Mayhem → The Murder Doilies**, led by **Miss Hemstitch**. Hardened lace table mats with tiny brass-knuckle tassels slither beneath banquet tables, then cinch a lace circle around one hero's boots. The crochet pattern shows their next destination; pull the loose yarn to unravel the trap. Miss Hemstitch wants the villain to stop using the neighborhood mutual-aid sewing circle as a recruitment office. Comedy comes from formidable domestic equipment, **never** Granny's age.
+- **Dr. Frog → The Prototype Puddles**, led by **Lab Assistant Blorp**. Walking leaked serum samples in mismatched spring-loaded exoskeletons ricochet between laboratory benches, coating one square with adhesive frog-spawn foam. The glowing pipette telegraphs the jump; activate the lab's rinse station to neutralize the goo. Blorp has learned that the formula changes bodies without asking and may help the protagonist expose the botched trials.
+- **Zuzu Koala Assassin / possible Shogun Null → The Null-Ronin**, led by **Quiet Leaf**. Origami eucalyptus-mask sprites dart between two marked shadow squares, leaving a single silence zone rather than lethal harm. Illuminate the destination glyph to stop the jump. Quiet Leaf believes Zuzu's home-world oath outranks any mechanized villain persona and can refuse a dishonorable order.
+
+These are **creative proposals**, not machine-linked rows, spawned enemies or art. Final bindings require the reconciled stable identities and consent to the established cross-game guest canon.
+
 ## Delivery and verification gates
 
 1. The runtime catalogue must cover exactly the same **48 stable signatures** as `identityArcs.json`, with 48 unique names, named representatives, distinct tactics, counters, one-hit rule and story hooks. Automated test and Playbook Slices CI are required.
