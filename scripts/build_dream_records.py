@@ -1216,6 +1216,47 @@ def attach_art(dry_run: bool) -> int:
 
 # ── Entry point ──────────────────────────────────────────────────────────
 
+def preflight_v3_scenario_art(proposal: dict[str, Any]) -> list[str]:
+    """Validate constructed supplemental scenario prompts before any live writes.
+
+    Previously the conditional-prompt guard lived inside queue_art(), after
+    18+ successful REST creations. A single prose phrase could then force a
+    full rollback and pin the oldest proposal indefinitely.
+    """
+    if proposal.get("bundle_version") != 3:
+        return []
+    extras = proposal["zuzu_assets"]
+    locations = {
+        row["project_target"]: row["title"]
+        for row in extras["locations"]
+    }
+    errors: list[str] = []
+    for scene in extras["scenarios"]:
+        project = scene["project_target"]
+        family = str(scene["checkpoint_family"]).lower()
+        location = locations.get(project, "")
+        setup = scene["setup"]
+        staged_at = location if location and location.casefold() in setup.casefold() else ""
+        world = (
+            "Zuzu Koala Assassin, a samurai wanderer in the Weird West"
+            if project == "zuzu-gamebook"
+            else "Emperor of Dust, pre-Zuzu kingdom of ash and brass"
+        )
+        tone = (
+            "anthropomorphic animal folk, Edo samurai and Weird West, strange landscapes"
+            if project == "zuzu-gamebook"
+            else "ragged banners, salvage, patched leather, ash-gray skies, brass lanterns"
+        )
+        prompt = scenario_prompt(
+            scene["title"], setup, staged_at, world, tone,
+            style=CHECKPOINT_LANES[family]["style"],
+        )
+        violations = conditional_instruction_violations(prompt)
+        if violations:
+            errors.append(f"{scene['title']}: {'; '.join(violations)}")
+    return errors
+
+
 def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     path, reason = eligible_proposal(date_override)
     if path is None:
@@ -1243,6 +1284,13 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     contract_errors = _canonical_proposal_errors(proposal)
     if contract_errors:
         message = f"{path.name}: invalid canonical proposal — " + "; ".join(contract_errors)
+        return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
+    art_errors = preflight_v3_scenario_art(proposal)
+    if art_errors:
+        message = (
+            f"{path.name}: supplemental art prompt preflight failed BEFORE DB writes: "
+            + "; ".join(art_errors)
+        )
         return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
     if proposal.get("bundle_version") == 3 and not dry_run:
         # Resolve BOTH real checkpoint resources before creating any DB objects.
