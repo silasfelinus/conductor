@@ -102,18 +102,17 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Map designer with terrain, cover, spawns, objectives and testing"
-    status: review
+    status: ready
     depends_on: t-002
-    owner: worker
-    claimed_by: 2026-10-29T210100Z-every-villain-tactics-t004-ix7f
-    claimed_at: '2026-10-29T21:01:00Z'
-    updated: '2026-10-29T21:13:00Z'
+    updated: '2026-10-29T21:20:22Z'
     passes: 0
     stakes: reversible
     note: |-
       Admin in-browser paintable tile/elevation/obstacle editor with destructible props, squad spawn areas, victory/fail criteria, reinforcements, hazards, timings and AI behavior. Playtest in editor with exact game rules.
 
       Submitted editable 9x6 studio implementation: fountain/quad, lab, plaza and First Bell stage presets; wall/cover/elevation/spawn/secret/hazard brushes, legality and accessible UI, seeded combat playtesting and regression CI. Initial editor is intentionally a Vignette slice. Fully interactive hazards, reinforcements, scripted triggers and saved/community-level editing remain t-004/t-005/t-011 follow-on scope; do not call them complete.
+
+      Merged Kind Robots PR #4451 as 3dfd9ace on main with all 16 head checks completed successfully. Delivered editable 9x6 walls, directional cover, elevation, squad/rival lead spawns, objective and turn limit, secrets and hazard markers, First Bell/fountain quad/science lab/plaza presets, validation and seeded battle playtests using the actual stage map, LOS, deterministic hit math and AI. This is a t-004 Vignette increment, NOT the full editor deliverable. Remaining t-004 work includes runtime destructible props, actual hazard and secret effects, reinforcement waves/AI scripting, flexible victory/failure criteria, and editor playtest coverage for each. Stage drafts are not persisted/shared yet; the linked t-005/t-006/t-011 tasks own cinematic editing, save-state and community sharing. No authentic new art, authored Picnic Panic battle, production deployment or final visual acceptance claimed.
   - id: t-005
     milestone: m2
     title: "Opening/triggered/closing conversation tree and cinematic editor"
