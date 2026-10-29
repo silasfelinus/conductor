@@ -54,7 +54,17 @@ def test_exact_student_slots_are_canonically_named_and_deduplicated():
     assert len(set(present)) == len(present)
     if ledger["status"] == "submitted":
         assert len(present) == len(subjects)
-    assert all(not item.get("art") for item in subjects)
+    # A later --status refresh may add genuine ArtImage records. Keep the
+    # test valid through QUEUED, DONE and export while requiring each art
+    # record to be attached to a previously recorded ArtJob.
+    for subject in subjects:
+        for lane, record in (subject.get("art") or {}).items():
+            assert lane == "krea2-student"
+            assert subject.get("jobs", {}).get(lane)
+            assert isinstance(record.get("status"), str)
+            image_id = record.get("art_image_id")
+            if image_id is not None:
+                assert isinstance(image_id, int) and image_id > 0
 
 
 def test_image_prompts_are_literally_paintable_without_names_or_negation():
